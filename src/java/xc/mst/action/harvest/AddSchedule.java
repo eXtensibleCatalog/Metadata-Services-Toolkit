@@ -1,0 +1,581 @@
+/**
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  */
+
+package xc.mst.action.harvest;
+
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import xc.mst.bo.harvest.HarvestSchedule;
+import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Provider;
+import xc.mst.bo.provider.Set;
+import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.harvester.Hexception;
+import xc.mst.harvester.ValidateRepository;
+import xc.mst.manager.harvest.DefaultScheduleService;
+import xc.mst.manager.harvest.ScheduleService;
+import xc.mst.manager.repository.DefaultFormatService;
+import xc.mst.manager.repository.DefaultProviderService;
+import xc.mst.manager.repository.DefaultSetService;
+import xc.mst.manager.repository.FormatService;
+import xc.mst.manager.repository.ProviderService;
+import xc.mst.manager.repository.SetService;
+
+import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
+import java.util.Iterator;
+import xc.mst.bo.harvest.Harvest;
+
+
+
+/**
+ * Action to add/edit a schedule
+ *
+ * @author Sharmila Ranganathan
+ */
+public class AddSchedule extends ActionSupport
+{
+    /** Eclipse generated id */
+	private static final long serialVersionUID = 4317442764979283556L;
+
+	/** A reference to the logger for this class */
+	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+
+	/** Schedule to be added */
+	private HarvestSchedule schedule = new HarvestSchedule();
+
+	/** Schedule to be edited */
+	private int scheduleId;
+
+	/** All repositories */
+	private List<Provider> repositories;
+
+	/** Id of repository selected */
+	private int repositoryId;
+
+	/** Repository selected */
+	private Provider repository;
+
+	/** List of Ids of sets selected */
+	private int[] selectedSetIds;
+
+	/** List of Ids of formats selected */
+	private int[] selectedFormatIds;
+
+	/** Hour at which the schedule should run every day */
+	private int dailyHour;
+
+	/** Email id to notify the schedule */
+	private String notifyEmail;
+
+	/** Name of schedule */
+	private String scheduleName;
+
+	/** Recurrence of the schedule */
+	private String recurrence;
+
+	/** Recurrence day of week to run schedule */
+	private int dayOfWeek;
+
+	/**  Hour at which the schedule should run every week */
+	private int hour;
+
+	/** Minutes at which the schedule should run every hour */
+	private int minute;
+
+	/** Start date for schedule to run */
+	private Date startDate;
+
+	/** End date for schedule to stop */
+	private Date endDate;
+
+	/** End date for schedule  */
+	private String endDateDisplayFormat;
+
+	/** Start date for schedule */
+	private String startDateDisplayFormat;
+
+	/** Schedule service */
+	private ScheduleService scheduleService = new DefaultScheduleService();
+
+	/** Provider service */
+	private ProviderService providerService = new DefaultProviderService();
+
+	/** Set service */
+	private SetService setService = new DefaultSetService();
+
+	/** Format service */
+	private FormatService formatService = new DefaultFormatService();
+
+
+	/**
+     * Overriding default implementation to view add schedule.
+     *
+     * @return {@link #SUCCESS}
+     */
+    @Override
+    public String execute()
+    {
+    	log.debug("In Add schedule Execute()");
+        List<Provider> addProviderList = new ArrayList<Provider>();
+        List<Provider> tempProvidersList = providerService.getAllProviders();       //start a process to ensure that providers which are already associated with a schedule are not displayed.
+
+        List<HarvestSchedule> tempSchedulesList = scheduleService.getAllSchedules();
+        Iterator<Provider> provIter = tempProvidersList.iterator();
+
+        boolean flag = true;
+        while(provIter.hasNext())
+        {
+            flag = true;
+            Provider provider = (Provider)provIter.next();
+            Iterator<HarvestSchedule> schedIter = tempSchedulesList.iterator();
+            while(schedIter.hasNext())
+            {
+
+                HarvestSchedule harvest = (HarvestSchedule)schedIter.next();
+
+                if(harvest.getProvider().getId()==provider.getId())
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag==true)
+            {
+
+                addProviderList.add(provider);
+            }
+        }
+        repositories = addProviderList;
+    	return SUCCESS;
+    }
+
+    /**
+     * Add new schedule
+     *
+     * @return
+     * @throws DataException
+     */
+    public String addSchedule() throws DataException {
+
+    	log.debug("AddSchedule::addSchedule():: scheduleName=" + scheduleName);
+
+    	repository = providerService.getProviderById(repositoryId);
+
+    	try {
+	    	ValidateRepository validateRepository = new ValidateRepository();
+	        validateRepository.validate(repositoryId);
+    	} catch (Hexception he) {
+    		log.debug(he);
+    	}
+
+    	schedule = new HarvestSchedule();
+    	schedule.setProvider(repository);
+    	schedule.setScheduleName(scheduleName);
+    	schedule.setRecurrence(recurrence);
+
+    	if (recurrence != null) {
+			if (recurrence.equalsIgnoreCase("Daily")) {
+				schedule.setHour(dailyHour);
+				// Reset other values
+				schedule.setMinute(-1);
+				schedule.setDayOfWeek(0);
+			}
+
+			if (recurrence.equalsIgnoreCase("Hourly")) {
+				schedule.setMinute(minute);
+
+				// Reset other values
+				schedule.setDayOfWeek(0);
+				schedule.setHour(-1);
+
+			}
+
+			if (recurrence.equalsIgnoreCase("Weekly")) {
+				schedule.setDayOfWeek(dayOfWeek);
+				schedule.setHour(hour);
+
+				//Reset other values
+				schedule.setMinute(-1);
+			}
+    	}
+
+    	schedule.setStartDate(startDate);
+    	schedule.setEndDate(endDate);
+
+    	// CHeck if a schedule with same name exist
+    	HarvestSchedule otherSchedule = scheduleService.getScheduleByName(scheduleName);
+
+    	if (otherSchedule == null) {
+
+	    	// Add schedule
+	    	scheduleService.insertSchedule(schedule);
+
+	    	// Load the added schedule
+	    	schedule = scheduleService.getScheduleByName(scheduleName);
+    	} else {
+    		addFieldError("scheduleNameExist", "Schedule name already exists - " + scheduleName);
+    		repositories = providerService.getAllProviders();
+    		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        	endDateDisplayFormat = format.format(schedule.getEndDate());
+        	startDateDisplayFormat = format.format(schedule.getStartDate());
+    		return INPUT;
+    	}
+    	return SUCCESS;
+
+    }
+
+    /**
+     * Update schedule
+     *
+     * @return
+     * @throws DataException
+     */
+    public String updateSchedule() throws DataException {
+
+    	log.debug("In update schedule updateSchedule()");
+
+    	schedule = scheduleService.getScheduleById(scheduleId);
+
+
+		schedule.setScheduleName(scheduleName);
+		schedule.setStartDate(startDate);
+    	schedule.setEndDate(endDate);
+		schedule.setRecurrence(recurrence);
+
+     	if (recurrence != null) {
+			if (recurrence.equalsIgnoreCase("Daily")) {
+				schedule.setHour(dailyHour);
+				// Reset other values
+				schedule.setMinute(-1);
+				schedule.setDayOfWeek(0);
+			}
+
+			if (recurrence.equalsIgnoreCase("Hourly")) {
+				schedule.setMinute(minute);
+
+				// Reset other values
+				schedule.setDayOfWeek(0);
+				schedule.setHour(-1);
+
+			}
+
+			if (recurrence.equalsIgnoreCase("Weekly")) {
+				schedule.setDayOfWeek(dayOfWeek);
+				schedule.setHour(hour);
+
+				//Reset other values
+				schedule.setMinute(-1);
+			}
+    	}
+
+    	repository = providerService.getProviderById(repositoryId);
+    	schedule.setProvider(repository);
+
+    	// Check if a schedule with same name exist
+    	HarvestSchedule otherSchedule = scheduleService.getScheduleByName(scheduleName);
+
+    	if (otherSchedule == null || otherSchedule.getId() == schedule.getId()) {
+
+	    	// Add schedule
+	    	scheduleService.updateSchedule(schedule);
+
+
+    	} else {
+    		addFieldError("scheduleNameExist", "Schedule name already exists - " + scheduleName);
+    		repositories = providerService.getAllProviders();
+    		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        	endDateDisplayFormat = format.format(schedule.getEndDate());
+        	startDateDisplayFormat = format.format(schedule.getStartDate());
+    		return INPUT;
+    	}
+    	return SUCCESS;
+
+    }
+
+    /**
+     * Add/update sets and formats for schedule
+     *
+     * @return
+     * @throws DataException
+     */
+    public String addSetFormatForSchedule() throws DataException {
+
+    	log.debug("AddSchedule::addSetFormatForSchedule():: scheduleId=" + scheduleId);
+
+    	schedule = scheduleService.getScheduleById(scheduleId);
+    	schedule.setNotifyEmail(notifyEmail);
+    	schedule.removeAllFormats();
+    	schedule.removeAllSets();
+
+    	if (selectedSetIds != null) {
+	    	for (int setId:selectedSetIds) {
+	    		Set set = setService.getSetById(setId);
+	    		schedule.addSet(set);
+	    	}
+    	}
+
+    	if (selectedFormatIds != null) {
+	    	for (int formatId:selectedFormatIds) {
+	    		Format format = formatService.getFormatById(formatId);
+	    		schedule.addFormat(format);
+	    	}
+    	}
+
+    	// Add schedule
+    	scheduleService.updateSchedule(schedule);
+
+    	// TODO DONOT remove this commented code
+    	// This is code to harvest the repository manually
+    	// Later this will be moved to a servlet as Scheduler Thread
+//    	log.debug("schedule new :"+schedule);
+//    	log.debug("schedule new Id :"+schedule.getId());
+//    	try {
+//    		HarvestScheduleStepDAO d = new DefaultHarvestScheduleStepDAO();
+//    		List<HarvestScheduleStep> steps = d.getStepsForSchedule(schedule.getId());
+//
+//    		log.debug("steps:"+steps);
+//
+//    		for(HarvestScheduleStep step:steps) {
+//	    		log.debug("steps Id :"+step.getId());
+//
+//	    		HarvestRunner h = new HarvestRunner(step.getId());
+//	    		h.runHarvest();
+//    		}
+//    	} catch (Exception e) {
+//    		e.printStackTrace();
+//    	}
+
+    	// End of harvest code
+
+    	return SUCCESS;
+
+    }
+
+    /**
+     * To view the edit page for add schedule
+     *
+     * @return
+     */
+    public String viewEdit() {
+
+    	log.debug("AddSchedule::viewEdit():: scheduleId=" + scheduleId);
+
+    	schedule = scheduleService.getScheduleById(scheduleId);
+
+    	if (schedule != null) {
+	    	SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+	    	endDateDisplayFormat = format.format(schedule.getEndDate());
+	    	startDateDisplayFormat = format.format(schedule.getStartDate());
+
+	    	repositories = providerService.getAllProviders();
+    	} else {
+    		addFieldError("scheduleNotExist", "Schedule does not exists.");
+    		return INPUT;
+    	}
+    	return SUCCESS;
+    }
+
+    /**
+     * Get schedule
+     *
+     * @return
+     */
+	public HarvestSchedule getSchedule() {
+		return schedule;
+	}
+
+	/**
+	 * Set schedule
+	 *
+	 * @param schedule
+	 */
+	public void setSchedule(HarvestSchedule schedule) {
+		this.schedule = schedule;
+	}
+
+	/**
+	 * Get repositories
+	 *
+	 * @return
+	 */
+	public List<Provider> getRepositories() {
+		return repositories;
+	}
+
+	/**
+	 * Set repository id
+	 *
+	 * @param repositoryId
+	 */
+	public void setRepositoryId(int repositoryId) {
+		this.repositoryId = repositoryId;
+	}
+
+	/**
+	 * Get repository
+	 *
+	 * @return
+	 */
+	public Provider getRepository() {
+		return repository;
+	}
+
+	/**
+	 * Get format ids
+	 *
+	 * @return
+	 */
+	public int[] getSelectedFormatIds() {
+		return selectedFormatIds;
+	}
+
+	/**
+	 * Set format ids
+	 *
+	 * @param selectedFormatIds
+	 */
+	public void setSelectedFormatIds(int[] selectedFormatIds) {
+		this.selectedFormatIds = selectedFormatIds;
+	}
+
+	/**
+	 * Set set ids
+	 *
+	 * @param selectedSetIds
+	 */
+	public void setSelectedSetIds(int[] selectedSetIds) {
+		this.selectedSetIds = selectedSetIds;
+	}
+
+	/**
+	 * Get schedule id
+	 *
+	 * @return
+	 */
+	public int getScheduleId() {
+		return scheduleId;
+	}
+
+	/**
+	 * Set schedule id
+	 *
+	 * @param scheduleId
+	 */
+	public void setScheduleId(int scheduleId) {
+		this.scheduleId = scheduleId;
+	}
+
+	/**
+	 * Get daily hour
+	 *
+	 * @return
+	 */
+	public int getDailyHour() {
+		return dailyHour;
+	}
+
+	/**
+	 * Set daily hour
+	 *
+	 * @param dailyHour
+	 */
+	public void setDailyHour(int dailyHour) {
+		this.dailyHour = dailyHour;
+	}
+
+	/**
+	 * Set notify email
+	 *
+	 * @param notifyEmail
+	 */
+	public void setNotifyEmail(String notifyEmail) {
+		this.notifyEmail = notifyEmail;
+	}
+
+	/**
+	 * Set schedule name
+	 *
+	 * @param scheduleName
+	 */
+	public void setScheduleName(String scheduleName) {
+		this.scheduleName = scheduleName;
+	}
+
+	/**
+	 * Set recurrence type
+	 *
+	 * @param recurrence
+	 */
+	public void setRecurrence(String recurrence) {
+		this.recurrence = recurrence;
+	}
+
+	/**
+	 * Set day of week
+	 *
+	 * @param dayOfWeek
+	 */
+	public void setDayOfWeek(int dayOfWeek) {
+		this.dayOfWeek = dayOfWeek;
+	}
+
+	/**
+	 * Set hour
+	 *
+	 * @param hour
+	 */
+	public void setHour(int hour) {
+		this.hour = hour;
+	}
+
+	/**
+	 * Set minute
+	 *
+	 * @param minute
+	 */
+	public void setMinute(int minute) {
+		this.minute = minute;
+	}
+
+	/**
+	 * Set start date
+	 *
+	 * @param startDate
+	 */
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	/**
+	 * Set end date
+	 *
+	 * @param endDate
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getEndDateDisplayFormat() {
+		return endDateDisplayFormat;
+	}
+
+	public String getStartDateDisplayFormat() {
+		return startDateDisplayFormat;
+	}
+
+
+
+
+}

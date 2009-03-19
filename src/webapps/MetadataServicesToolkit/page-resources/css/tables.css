@@ -1,0 +1,220 @@
+/*
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/. 
+  *
+  */
+ 
+ /* this is forms created using tables */
+.basicTable {
+	align: left;
+}
+.basicTable td, th { padding: 10px; }
+
+.basicTable td.label {
+    padding-top: 10px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    font-weight: bold;
+}
+.basicTable td.input {
+    padding-top: 10px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+}
+
+.basicTable td.buttons
+{
+	align: right;
+}
+
+
+/** Table for displaying the view of repositories, schedules, processing directives */
+.viewTable
+{
+	margin-top: 25px;
+	padding: 0;
+}
+
+.viewTable table
+{
+	border: 1px solid #C0C8CA;
+}
+
+.viewTable td {
+	padding-top: 2px;
+	padding-right: 3px;
+	padding-bottom: 2px;
+	padding-left: 3px;
+	border-bottom: 1px solid #C0C8CA;
+	text-align: center;
+    color:#292929;
+	font-size:12px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+.viewTable thead td {
+	border-left: 1px solid #C0C8CA;
+	border-right: 1px solid #C0C8CA;
+    height: 32px;
+    padding-right: 5px;
+    padding-left: 5px;
+    background: url(../img/grayslice.gif);
+    color:#292929;
+	font-size:12px;
+    font-weight:bold;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+
+/* this is forms created using tables */
+.formTable {
+	align: left;
+}
+.formTable td { padding-top: 5px;
+		padding-right: 3px;
+		padding-bottom: 5px;
+		padding-left: 3px; }
+
+.formTable td.label {
+    font-weight: bold;
+}
+
+.formTable td.buttons
+{
+	align: right;
+}
+
+
+/* Browse records - Facet */
+.facetContainer
+{
+	float: left;
+	margin-right: 30px;
+	width: 220px;
+	
+}
+
+.facetTitle {
+	background-color:#D7DFE2;
+	border: 2px solid #CBD0D4;
+	padding: 5px;
+	width: 100%;
+	float: left;
+	clear: both;
+}
+
+.contentBoxTitle p {
+	padding-left: 5px;
+	padding-top: 5px;
+	font-weight: bold;
+	width: 220px;
+	clear: both;
+}
+
+.facetContent {
+	border-right: 2px solid #D6D6D6;
+	padding: 5px;
+	width: 222px;
+	float: left;
+	clear: both;
+}
+
+.facet_search_results
+{
+	float: left;
+	border-top: 2px solid #CBD0D4;
+	margin-top: 20px;
+	width:100%
+}
+
+.search_box_div {
+	margin-top: 20px;
+	float: right;
+	
+}
+
+.search_results_div {
+	
+	float: right;
+	width: 690px;
+}
+
+.search_div_pager {
+	float: right;
+/*	background-color: #65696A; */
+	background-color: #E0F2FF;
+    	text-align: center;
+    	/* color: #E2E2E2; */
+    	padding: 5px;
+	width: 100%;
+}
+
+.record_result_odd_div {
+	
+	float: right;
+	width: 100%;
+	border-bottom: 1px solid #D6D6D6;
+	padding:5px;
+}
+
+.record_text {
+	padding:7px;
+}
+
+.record_result_even_div {
+	
+	float: right;
+	width: 100%;
+	border-bottom: 1px solid #D6D6D6;
+	background-color: #F8F8F8;
+	padding:5px;
+}
+.facet_container {
+	float: left;
+	margin-right: 12px;
+	width: 220px;
+    border: 1px solid;
+}
+
+.facet_search_selection {
+	background-color: #e3e3e3;
+    width: 200px;
+    margin-top: 0px;
+    float: left;
+    padding: 10px;
+	border-bottom: 1px solid #808080;
+}
+
+.facet_name {
+    background-color: #e3e3e3;
+    width: 200px;
+    margin-top: 0px;
+    float: left;
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+/* hack for IE 6 fix*/
+* html .facet_search_selection
+{
+	width: 220px;
+}
+
+.facets
+{
+	clear: both;
+	float: left;
+    width: 200px;
+    padding: 10px;
+}
+
+/* hack for IE 6 fix*/
+* html .facets
+{
+	width: 220px;
+}
