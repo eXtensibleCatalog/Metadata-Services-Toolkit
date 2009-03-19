@@ -1,0 +1,270 @@
+<project name="MetadataServicesToolkit" default="compile">
+
+	<!-- Use the build.properties file for user specific settings -->
+	<property file="build.properties"/>
+
+	<!-- Allow users to see their properties and how they are set -->
+	<target name="echo-properties"
+		description="Ouput the project properties for users when needed" >
+		<echo message="sourcedir = ${sourcedir}"/>
+		<echo message="distdir = ${distdir}"/>
+		<echo message="dist.project.dir = ${dist.project.dir}"/>
+		<echo message="librarydir = ${librarydir}"/>
+		<echo message="project.name = ${project.name}"/>
+		<echo message="version = ${version}"/>
+	</target>
+
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp/>
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${targetdir}"/>
+		<mkdir dir="${dist.project.dir}"/>
+		<mkdir dir="${targetdir}/classes"/>
+		<mkdir dir="${librarydir}"/>
+	</target>
+
+	<fileset id="main_src_libs" dir="${librarydir}">
+		<include name="mail.jar" />
+		<include name="castor-1.2.jar"/>
+		<include name="castor-1.2-xml.jar"/>
+		<include name="jconfig.jar"/>
+		<include name="log4j-1.2.15.jar"/>
+		<include name="mysql-connector-java-5.0.8-bin.jar"/>
+		<include name="DLESETools.jar"/>
+		<include name="lucene-core-2.4.0.jar"/>
+		<include name="LatteLibUtil-3.0.0.jar"/>
+		<include name="jaxen-1.1.1.jar"/>
+		<include name="jdom-1.0.jar"/>
+		<include name="jstl-1.1.2.jar"/>
+		<include name="standard.jar" />
+		<include name="freemarker.jar" />
+		<include name="commons-fileupload-1.2.1.jar" />
+		<include name="commons-io-1.4.jar" />
+		<include name="ognl-2.6.11.jar" />
+		<include name="xwork-2.1.1.jar" />
+		<include name="struts2-core-2.1.2.jar" />
+		<include name="commons-logging-1.1.jar" />
+		<include name="commons-beanutils-1.7.jar" />
+		<include name="commons-collections-3.2.jar" />
+		<include name="apache-solr-solrj-1.3.0.jar" />
+		<include name="apache-solr-common-1.3.0.jar" />
+		<include name="commons-httpclient-3.1.jar" />
+		<include name="commons-codec-1.3.jar" />
+	</fileset>
+
+	<!-- This is the path for testing -->
+    <path id="testlibs" location="{testlibrarydir}">
+        <fileset dir="${testlibrarydir}">
+			<include name="testng-5.5-jdk15.jar" />
+            <include name="tempClasses.jar" />
+            <include name="tempjar.jar" />
+            <include name="MST.jar" />
+            <include name="mail.jar" />
+            <include name="castor-1.2.jar"/>
+            <include name="castor-1.2-xml.jar"/>
+            <include name="jconfig.jar"/>
+            <include name="log4j-1.2.15.jar"/>
+            <include name="mysql-connector-java-5.0.8-bin.jar"/>
+            <include name="DLESETools.jar"/>
+            <include name="lucene-core-2.4.0.jar"/>
+            <include name="LatteLibUtil-3.0.0.jar"/>
+            <include name="jaxen-1.1.1.jar"/>
+            <include name="jdom-1.0.jar"/>
+            <include name="jstl-1.1.2.jar"/>
+            <include name="standard.jar" />
+            <include name="freemarker.jar" />
+            <include name="commons-fileupload-1.2.1.jar" />
+            <include name="commons-io-1.4.jar" />
+            <include name="ognl-2.6.11.jar" />
+            <include name="xwork-2.1.1.jar" />
+            <include name="struts2-core-2.1.2.jar" />
+            <include name="commons-logging-1.1.jar" />
+            <include name="commons-beanutils-1.7.jar" />
+            <include name="commons-collections-3.2.jar" />
+            <include name="apache-solr-solrj-1.3.0.jar" />
+            <include name="apache-solr-common-1.3.0.jar" />
+            <include name="commons-httpclient-3.1.jar" />
+            <include name="commons-codec-1.3.jar" />
+		</fileset>
+    </path>
+    
+	<path id="testLibraries">
+		<path refid="libraries"/>
+		<pathelement location="${targetdir}/classes"/>
+
+		<fileset dir="${librarydir}">
+			<include name="testng-5.5-jdk15.jar" />
+            
+<!--			<include name="ehcache/ehcache-1.5.0/ehcache-1.5.0.jar"/>
+		    <include name="ehcache/ehcache-1.5.0/backport-util-concurrent-3.0.jar"/>
+		    <include name="ehcache/ehcache-1.5.0/jsr107cache-1.0.jar"/> -->
+		</fileset>
+	</path>
+
+	<!-- Set the location where the libraries this project is dependent -->
+	<path id="libraries">
+		<fileset refid="main_src_libs"/>
+		<fileset dir="${tomcat.lib.dir}">
+			<include name="jsp-api.jar"/>
+			<include name="servlet-api.jar"/>
+		</fileset>
+	</path>
+
+
+	<!-- Clean up the build -->
+	<target name="clean">
+		<delete dir="${targetdir}" />
+		<delete dir="${distdir}" />
+	</target>
+
+	<!-- Create the distriubtion file -->
+	<target name="create-jar" depends="compile">
+		<jar destfile="${dist.project.dir}/${project.name}.jar"
+		       basedir="${targetdir}/classes"
+		       excludes="**/*Test.class, **/*testng*" />
+	</target>
+
+	<!-- Copy non java resources -->
+	<target name="copy-resources">
+		<copy todir="${targetdir}/classes">
+			<fileset dir="${sourcedir}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Compile for regular classes -->
+	<target name="compile" depends="clean,init,copy-resources">
+		<javac srcdir="${sourcedir}"
+			destdir="${targetdir}/classes"
+			target="${java.target}"
+			classpathref="libraries"
+			debug="on"
+			deprecation="on"
+			debuglevel="lines,vars,source"/>
+	</target>
+
+	<!-- build the distribution jar -->
+	<target name="dist-jar" depends="compile"
+	        description="generate the distribution" >
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist.project.dir}/lib"/>
+
+		<!-- Put everything in ${build} into the {project.name}-version.jar file -->
+		<jar jarfile="${dist.project.dir}/${project.name}-${version}.jar"
+			basedir="${targetdir}/classes"/>
+	</target>
+
+	<!-- build the distribution jar -->
+	<target name="full-dist" depends="compile, dist-jar, javadoc"
+	        description="generate the distribution" >
+		<zip destfile="${distdir}/${project.name}-${version}.zip"
+		       basedir="${distdir}"/>
+	</target>
+
+	<!-- test compiling -->
+	<target name="testCompile" depends="compile">
+		<javac srcdir="${testdir}"
+			destdir="${targetdir}/classes"
+			target="${java.target}"
+			debug="on"
+		    debuglevel="lines,vars,source"
+			classpathref="testLibraries" />
+	</target>
+
+	<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
+
+	<!-- run the tests -->
+	<target name="run-tests" description="run examples with java">
+
+		<echo message="testng-run " />
+        
+		<testng classpathref="testlibs"
+		        outputDir="${test.output.dir}/output"
+		        haltOnfailure="true"
+                verbose="2"
+			    dumpCommand="true">
+
+		   <xmlfileset dir="${testlibrarydir}" includes="testng.xml"/>
+		</testng>
+	</target>
+
+
+	<!-- Java Doc the Project -->
+	<target name="javadoc"  description="build the javadocs">
+		<javadoc
+	           destdir="${dist.project.dir}/docs/api"
+	           author="true"
+	           version="true"
+	           use="true"
+	           windowtitle="University of Rochester Digital Storage">
+
+	        <fileset dir="src/java" defaultexcludes="yes">
+			    <include name="edu/ur/**"/>
+		    </fileset>
+
+		    <doctitle>
+				<![CDATA[<h1>University of Rochester Libraries File Database Web Interface</h1>]]>
+		    </doctitle>
+		    <bottom>
+			    <![CDATA[<i>Copyright &#169; 2006 University of Rochester Libraries</i>]]>
+		    </bottom>
+	        <tag name="todo" scope="all" description="To do:"/>
+	        <link offline="true" href="http://java.sun.com/j2se/1.5.0/docs/api/"
+	       	    packagelistLoc="C:\downloaded_programs\java\jdk-1.5api"/>
+        </javadoc>
+    </target>
+
+    <!-- Copy needed files to the web-inf directory
+	     This is so the webapp can point directly
+	     to your jsp files and you can modify them
+	     and view the result by refresing the browser.
+	     You must first tell your web-browser to look
+	     at your webapps directory viewBrowseRecords -->
+
+    <target name="prepareWebApp" depends="compile,testCompile">
+
+        <!-- Remove the old classes -->
+        <delete dir="${webapp.classes.dir}" />
+
+        <!-- Remove the old libraries -->
+        <delete dir="${webapp.lib.dir}"/>
+
+        <mkdir dir="${webapp.classes.dir}"/>
+        <mkdir dir="${webapp.lib.dir}"/>
+
+        <!-- Copy the classes directory into the web classes dir -->
+        <copy todir="${webapp.classes.dir}">
+	       <fileset dir="${targetdir}/classes"/>
+        </copy>
+
+        <copy todir="${webapp.lib.dir}" flatten="true">
+	        <fileset refid="main_src_libs"/>
+        </copy>
+
+        <copy todir="${webapp.webinf.dir}">
+	        <fileset dir="${conf.dir}/WEB-INF"/>
+        </copy>
+
+        <copy todir="${webapp.webinf.dir}"
+			file="${conf.dir}/web.xml"/>
+     </target>
+
+     <!-- Make the war file for deployment -->
+     <target name="makeWar" depends="compile">
+         <war destfile="${project.name}.war" webxml="${conf.dir}/web.xml">
+	         <webinf dir="${conf.dir}/WEB-INF"/>
+	         <fileset dir="${webapp.dir}">
+		         <exclude name="WEB-INF/**"/>
+	         </fileset>
+	         <classes dir="${targetdir}/classes"/>
+
+	         <lib dir="${webapp.lib.dir}">
+		        <exclude name="testng-4.4.1-jdk15.jar"/>
+	         </lib>
+        </war>
+    </target>
+
+
+</project>
