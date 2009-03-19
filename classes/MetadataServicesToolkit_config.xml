@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<properties>
+  <variables>
+  </variables>
+  <category name="general">
+    <property name="LoggerConfigFileLocation" value="C:\AllXcProjects\MetadataServicesToolkit\classes\log4j.config.txt" />
+
+    <property name="LuceneIndexerRAMBufferMB" value="1024" />
+
+    <property name="OrganizationCode" value="NRU" />
+
+    <property name="MaxRunningHarvestJobs" value="1" />
+    <property name="MaxRunningServiceJobs" value="1" />
+
+    <property name="LuceneIndexDirectory" value="C:\lucene_MST" />
+
+    <property name="DatabaseUrl" value="jdbc:mysql://localhost:3306/MetadataServicesToolkit" />
+    <property name="DatabaseUsername" value="root" />
+    <property name="DatabasePassword" value="root" />
+
+    <property name="OaiRepoName" value="University of Rochester" />
+    <property name="OaiRepoBaseUrl" value = "http://localhost:8080/MetadataServicesToolkit/oaiRepository" />
+    <property name="OaiRepoProtocolVersion" value="2.0" />
+    <property name="OaiRepoAdminEmail" value="pkiraly@tesuji.eu" />
+    <property name="OaiRepoDeletedRecord" value="transient" />
+    <property name="OaiRepoGranularity" value="YYYY-MM-DDThh:mm:ssZ" />
+    <property name="OaiRepoCompression" value="gzip;compress;deflate" />
+    <property name="OaiRepoDelimiter" value=":" />
+    <property name="OaiRepoScheme" value="oai" />
+    <property name="OaiRepoIdentifier" value="MetadataServicesToolkit" />
+    <property name="OaiRepoSampleIdentifier" value="oai:MetadataServicesToolkit:testDataSet:1" />
+    <property name="OaiRepoMaxIdentifiers" value="50" />
+    <property name="OaiRepoMaxRecords" value="50" />
+    <property name="OaiRepoMaxIdentifiersLength" value="1000000" />
+    <property name="OaiRepoMaxRecordsLength" value="1000000" />
+  </category>
+</properties>
