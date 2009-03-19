@@ -57,10 +57,11 @@ public interface ProviderService {
      */
     public List<Provider> getAllProviders();
 
-    /**
-     * returns a list of all providers sorted by their names
-     * @param sort boolean field that determines whether the provider names should be sorted in ascending or descending order
-     * @return list of providers
-     */
-    public List<Provider> getAllProvidersSortedByName(boolean sort);
+  /**
+   * returns a list of all providers sorted
+   * @param sort determines if the rows are to be sorted in ascending or descending order
+   * @param columnSorted column on which the sorting is done
+   * @return list of providers
+   */
+    public List<Provider> getAllProvidersSorted(boolean sort,String columnSorted);
 }
