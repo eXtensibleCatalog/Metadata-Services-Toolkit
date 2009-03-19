@@ -38,6 +38,9 @@ public class AllRepository extends ActionSupport
     /** boolean value which determines if the rows are to be sorted in ascending order*/
     private boolean isAscendingOrder = false;
 
+    /** determines the name of the column on which the sorting is to be done */
+    private String columnSorted;
+
     /**
      * The list of Repositories that is returned
      */
@@ -53,7 +56,8 @@ public class AllRepository extends ActionSupport
         try
         {
            ProviderService providerService = new DefaultProviderService();
-           Repositories = providerService.getAllProvidersSortedByName(isAscendingOrder);
+           System.out.println("Inside execute, columnSorted is "+columnSorted);
+           Repositories = providerService.getAllProvidersSorted(isAscendingOrder,columnSorted);
            return SUCCESS;
         }
         catch(Exception e)
@@ -92,6 +96,23 @@ public class AllRepository extends ActionSupport
         return this.isAscendingOrder;
     }
 
+    /**
+     * sets the name of the column on which the sorting should be performed
+     * @param columnSorted name of the column
+     */
+    public void setColumnSorted(String columnSorted)
+    {
+        System.out.println("Setting column sorted as "+columnSorted);
+        this.columnSorted = columnSorted;
+    }
 
+    /**
+     * returns the name of the column on which sorting should be performed
+     * @return column name
+     */
+    public String getColumnSorted()
+    {
+        return this.columnSorted;
+    }
 
 }
