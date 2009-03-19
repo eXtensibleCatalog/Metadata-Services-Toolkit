@@ -15,12 +15,17 @@ import org.apache.log4j.PropertyConfigurator;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
+import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
+import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.harvester.HarvestRunner;
+import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.scheduling.SchedulingException;
+import xc.mst.utils.index.RecordList;
+import xc.mst.utils.index.SolrIndexManager;
 
 public class EOTests
 {
@@ -61,9 +66,9 @@ public class EOTests
 	{
 		try
 		{
-			Provider service = new DefaultProviderDAO().getById(1);
-			service.setErrors(5);
-			new DefaultProviderDAO().update(service);
+			RecordList records = new DefaultRecordService().getByErrorCode("error code");
+			for(Record record : records)
+				System.out.println(record.getWarningCodes().get(0));
 			if(true) return;
 
 			// Construct the XC_Harvester object.  This will automatically run the harvester
@@ -80,8 +85,7 @@ public class EOTests
 		}
 		finally
 		{
-			// TODO removed IndexManager
-			//IndexManager.closeIndex();
+			SolrIndexManager.getInstance().commitIndex();
 		}
 	}
 }

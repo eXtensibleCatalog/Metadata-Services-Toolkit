@@ -73,7 +73,7 @@ public class SolrIndexManager {
 
 		if (server == null) {
 			try {
-				String url = "http://localhost:8085/solr/";
+				String url = "http://localhost:8080/solr/";
 				server = new CommonsHttpSolrServer( url );
 				log.debug("Solar Server::"+ server);
 			} catch (MalformedURLException me) {

@@ -45,13 +45,14 @@ import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 import xc.mst.utils.index.RecordList;
+import xc.mst.utils.index.SolrIndexManager;
 
 public class TestServices
 {
-	private static File unprocessedRecordsDir = new File("C:\\MetadataServicesToolkit\\MetadataServicesToolkit\\testRecordsForServices\\aggServiceInput");
-	private static File processedRecordsDir = new File("C:\\MetadataServicesToolkit\\MetadataServicesToolkit\\testRecordsForServices\\aggServiceOutput");
+	private static File unprocessedRecordsDir = new File("C:\\serviceinput");
+	private static File processedRecordsDir = new File("C:\\serviceoutput");
 
-	private static int serviceId = 3;
+	private static int serviceId = 1;
 
 	/**
 	 * Manager for getting, inserting and updating records
@@ -76,12 +77,24 @@ public class TestServices
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
 	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+	protected static Configuration configuration = null;
 
-	// Set the location of the logger's configuration file
 	static
 	{
-		PropertyConfigurator.configure(configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION));
+		// Load the configuration file
+		configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+
+		// Configure the log file location as the value found in the configuration file.
+		String logConfigFileLocation = configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
+		if(logConfigFileLocation != null)
+			PropertyConfigurator.configure(logConfigFileLocation);
+
+		// Abort if we could not find the configuration file
+		else
+		{
+			System.err.println("The configuration file was invalid or did not exist.");
+			System.exit(1);
+		}
 	}
 
 	/**
@@ -102,6 +115,7 @@ public class TestServices
 			Thread.sleep(1000);
 			// TODO removed IndexManager
 			//IndexManager.getInstance().maybeReOpen();
+			SolrIndexManager.getInstance().commitIndex();
 			Thread.sleep(1000);
 			System.out.println(formatter.format(new Date()));
 			MetadataService.runService(serviceId, -1);
@@ -109,12 +123,30 @@ public class TestServices
 			Thread.sleep(1000);
 			// TODO removed IndexManager
 			//IndexManager.getInstance().maybeReOpen();
+			SolrIndexManager.getInstance().commitIndex();
 			Thread.sleep(1000);
 			RecordList records = recordService.getAll();
 			for(Record record: records)
 			{
-				if(record.getService().getId() == serviceId)
+				if(record.getService() != null && record.getService().getId() == serviceId)
 					saveRecordToFile(processedRecordsDir, record);
+				
+				System.out.println("WARNING CODES:");
+				for(String wc : record.getWarningCodes())
+					System.out.println(wc);
+				
+				System.out.println("WARNINGS:");
+				for(String wc : record.getWarnings())
+					System.out.println(wc);
+				
+				System.out.println("ERROR CODES:");
+				for(String ec : record.getErrorCodes())
+					System.out.println(ec);
+				
+				System.out.println("ERRORS:");
+				for(String ec : record.getErrors())
+					System.out.println(ec);
+				
 				recordService.delete(record);
 			}
 		}
@@ -204,7 +236,7 @@ public class TestServices
 			// An XPATH expression to get the recordIDs
 			XPath xpath = XPath.newInstance("//xc:entity[@type='manifestation']/xc:recordID[@type='NRU']");
 
-			List<Element> elements = xpath.selectNodes(builder.build(new InputSource(new StringReader(record.getOaiXml()))));
+			List<Element> elements = null;//xpath.selectNodes(builder.build(new InputSource(new StringReader(record.getOaiXml()))));
 
 			if(elements == null || elements.size() == 0)
 				controlNumber = "" + ++counter;

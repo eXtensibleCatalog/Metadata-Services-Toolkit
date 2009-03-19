@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.document.Document;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.solr.common.SolrDocument;
@@ -200,6 +199,16 @@ public abstract class RecordService
 	protected final static String FIELD_ERROR = "error";
 
 	/**
+	 * The name of the warning codes field
+	 */
+	protected final static String FIELD_WARNING_CODE = "warning_code";
+
+	/**
+	 * The name of the error codes field
+	 */
+	protected final static String FIELD_ERROR_CODE = "error_code";
+	
+	/**
 	 * All default search fields
 	 */
 	protected final static String FIELD_ALL = "all";
@@ -277,6 +286,22 @@ public abstract class RecordService
 	 */
 	public abstract RecordList getByFormatIdAndServiceId(int formatId, int serviceId);
 
+	/**
+	 * Gets all records from the index with the passed warning code
+	 *
+	 * @param warningCode the warning code to query on
+	 * @return A list all records in the index with the passed warning code
+	 */
+	public abstract RecordList getByWarningCode(String warningCode);
+	
+	/**
+	 * Gets all records from the index with the passed error code
+	 *
+	 * @param errorCode the error code to query on
+	 * @return A list all records in the index with the passed error code
+	 */
+	public abstract RecordList getByErrorCode(String errorCode);
+	
 	/**
 	 * Gets all records from the index contained in the set with the passed name
 	 *
@@ -474,7 +499,7 @@ public abstract class RecordService
 		// TODO delete implementation
 		// Delete all records with the matching record ID
 		boolean result = false;
-//		boolean result = indexMgr.deleteDoc(FIELD_RECORD_ID, Long.toString(record.getId()));
+		// boolean result = indexMgr.deleteDoc(FIELD_RECORD_ID, Long.toString(record.getId()));
 
 		// If the delete was successful, also delete rows in the MySQL tables which reference it
 		if(result)

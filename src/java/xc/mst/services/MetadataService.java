@@ -569,6 +569,35 @@ public abstract class MetadataService
 	} // end method processRecords(int)
 
 	/**
+	 * Adds warning and errors to the record and updates it in the index
+	 * 
+	 * @param record The record to add warnings and errors to
+	 * @param warnings A list of warnings to add to the record
+	 * @param warningCodes A list of warning codes to add to the record
+	 * @param errors A list of errors to add to the record
+	 * @param errorCodes A list of error codes to add to the record
+	 */
+	protected void addWarningsAndErrorsToRecord(Record record, List<String> warnings, List<String> warningCodes, List<String> errors, List<String> errorCodes)
+	{
+		try
+		{
+			// Set the fields for warnings and errors on the record
+			record.setWarnings(warnings);
+			record.setWarningCodes(warningCodes);
+			record.setErrors(errors);
+			record.setErrorCodes(errorCodes);
+			
+			// Update the record.
+			if(!recordService.update(record))
+				log.error("The update failed for the record with ID " + record.getId() + ".");
+		} // end try(update the record)
+		catch (DataException e)
+		{
+			log.error("An exception occurred while updating the record into the index.", e);
+		} // end catch(DataException)
+	}
+	
+	/**
 	 * Inserts a record in the Lucene index and sets up RecordInput values
 	 * for any processing directives the record matched so the appropriate
 	 * services process the record

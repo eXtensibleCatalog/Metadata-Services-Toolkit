@@ -25,7 +25,6 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
-import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
@@ -221,7 +220,7 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get the Documents with the requested provider ID
 		SolrQuery query = new SolrQuery();
 		query.setQuery(FIELD_PROVIDER_ID + ":" + Integer.toString(providerId) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + Record.indexedObjectType);
+				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
@@ -453,6 +452,66 @@ public class DefaultRecordService extends RecordService
 		return new RecordList(docs);
 	} // end method getByProviderUrl(String)
 
+	@Override
+	public RecordList getByWarningCode(String warningCode)
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting all records from the set with the warning code " + warningCode);
+
+		// Create a query to get the Documents with the requested warning code
+		SolrQuery query = new SolrQuery();
+		query.setQuery(FIELD_WARNING_CODE + ":" + warningCode + " AND "
+				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+
+		// Get the result of the query
+		SolrDocumentList docs = indexMgr.getDocumentList(query);
+
+		// Return the empty list if we couldn't find the records
+		if(docs == null)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Could not find the any records from the set with the warning code " + warningCode + ".");
+
+			return new RecordList(null);
+		} // end if(no results found)
+
+		if(log.isDebugEnabled())
+			log.debug("Parcing the " + docs.size() + " records from the set with warning code " + warningCode + " from the Lucene Documents they were stored in.");
+
+		// Return the list of results
+		return new RecordList(docs);
+	} // end method getByWarningCode(String)
+	
+	@Override
+	public RecordList getByErrorCode(String errorCode)
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting all records from the set with the error code " + errorCode);
+
+		// Create a query to get the Documents with the requested error code
+		SolrQuery query = new SolrQuery();
+		query.setQuery(FIELD_ERROR_CODE + ":" + errorCode + " AND "
+				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+
+		// Get the result of the query
+		SolrDocumentList docs = indexMgr.getDocumentList(query);
+
+		// Return the empty list if we couldn't find the records
+		if(docs == null)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Could not find the any records from the set with the error code " + errorCode + ".");
+
+			return new RecordList(null);
+		} // end if(no results found)
+
+		if(log.isDebugEnabled())
+			log.debug("Parcing the " + docs.size() + " records from the set with error code " + errorCode + " from the Lucene Documents they were stored in.");
+
+		// Return the list of results
+		return new RecordList(docs);
+	} // end method getByErrorCode(String)
+	
 	@Override
 	public RecordList getBySetName(String setName)
 	{
@@ -698,7 +757,7 @@ public class DefaultRecordService extends RecordService
 	@Override
 	public Record getEarliest(int serviceId)
 	{
-		// TODO Implement for Lucene
+		// TODO Implement for Solr
 		return null;
 	} // end method getEarliest(int)
 
@@ -995,11 +1054,53 @@ public class DefaultRecordService extends RecordService
 			for(Object set : sets)
 				record.addSet(setDao.getBySetSpec((String)set));
 
+		Collection<Object> warningCodes = doc.getFieldValues(FIELD_WARNING_CODE);
+		if(warningCodes != null)
+			for(Object warningCode : warningCodes)
+				record.addWarningCode((String)warningCode);
 
+		Collection<Object> errorCodes = doc.getFieldValues(FIELD_ERROR_CODE);
+		if(errorCodes != null)
+			for(Object errorCode : errorCodes)
+				record.addErrorCode((String)errorCode);
+		
+		Collection<Object> warnings = doc.getFieldValues(FIELD_WARNING);
+		if(warnings != null)
+			for(Object warning : warnings)
+				record.addWarning((String)warning);
 
+		Collection<Object> errors = doc.getFieldValues(FIELD_ERROR);
+		if(errors != null)
+			for(Object error : errors)
+				record.addError((String)error);
+		
+		Collection<Object> uplinks = doc.getFieldValues(FIELD_UP_LINK);
+		if(uplinks != null)
+			for(Object uplink : uplinks)
+				record.addUpLink(loadBasicRecord(Long.parseLong((String)uplink)));
+		
+		Collection<Object> processedFroms = doc.getFieldValues(FIELD_PROCESSED_FROM);
+		if(processedFroms != null)
+			for(Object processedFrom : processedFroms)
+				record.addProcessedFrom(getById(Long.parseLong((String)processedFrom)));
+
+		Collection<Object> inputForServices = doc.getFieldValues(FIELD_INPUT_FOR_SERVICE_ID);
+		if(inputForServices != null)
+			for(Object inputForService : inputForServices)
+				record.addInputForService(serviceDao.loadBasicService(Integer.parseInt((String)inputForService)));
+
+		Collection<Object> processedByServices = doc.getFieldValues(FIELD_PROCESSED_BY_SERVICE_ID);
+		if(processedByServices != null)
+			for(Object processedByService : processedByServices)
+				record.addProcessedByService(serviceDao.loadBasicService(Integer.parseInt((String)processedByService)));
+		
+		Collection<Object> traits = doc.getFieldValues(FIELD_TRAIT);
+		if(traits != null)
+			for(Object trait : traits)
+				record.addTrait((String)trait);
+		
 		// Return the record we parsed from the document
 		return record;
-
 	} // end method getRecordFromDocument(Document)
 
 	@Override
@@ -1090,12 +1191,17 @@ public class DefaultRecordService extends RecordService
 		for(String trait : record.getTraits())
 			doc.addField(FIELD_TRAIT, trait);
 
-		for(Log warning : record.getWarnings())
-			doc.addField(FIELD_WARNING, Integer.toString(warning.getId()));
+		for(String warning : record.getWarnings())
+			doc.addField(FIELD_WARNING, warning);
 
-		for(Log error : record.getErrors())
-			doc.addField(FIELD_ERROR, Integer.toString(error.getId()));
+		for(String error : record.getErrors())
+			doc.addField(FIELD_ERROR, error);
 
+		for(String warningCode : record.getWarningCodes())
+			doc.addField(FIELD_WARNING_CODE, warningCode);
+
+		for(String errorCode : record.getErrorCodes())
+			doc.addField(FIELD_ERROR_CODE, errorCode);
 
 		StringBuffer all = new StringBuffer();
 		if (record.getFormat() != null) {
@@ -1145,7 +1251,7 @@ public class DefaultRecordService extends RecordService
 
 		// Set the fields on the record Object and return it
 		record.setId(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
-	//	record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
+	    //	record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
 		record.setDeleted(Boolean.parseBoolean((String)doc.getFieldValue(FIELD_DELETED)));
 
 		log.debug("Format id : "+doc.getFieldValue(FIELD_FORMAT_ID));
@@ -1159,13 +1265,55 @@ public class DefaultRecordService extends RecordService
 		record.setService(serviceDao.loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
 		record.setHarvest(harvestDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_HARVEST_ID))));
 
-
 		Collection<Object> sets = doc.getFieldValues(FIELD_SET_SPEC);
 		if(sets != null)
 			for(Object set : sets)
 				record.addSet(setDao.getBySetSpec((String)set));
 
+		Collection<Object> warningCodes = doc.getFieldValues(FIELD_WARNING_CODE);
+		if(warningCodes != null)
+			for(Object warningCode : warningCodes)
+				record.addWarningCode((String)warningCode);
 
+		Collection<Object> errorCodes = doc.getFieldValues(FIELD_ERROR_CODE);
+		if(errorCodes != null)
+			for(Object errorCode : errorCodes)
+				record.addErrorCode((String)errorCode);
+		
+		Collection<Object> warnings = doc.getFieldValues(FIELD_WARNING);
+		if(warnings != null)
+			for(Object warning : warnings)
+				record.addWarning((String)warning);
+
+		Collection<Object> errors = doc.getFieldValues(FIELD_ERROR);
+		if(errors != null)
+			for(Object error : errors)
+				record.addError((String)error);
+		
+		Collection<Object> uplinks = doc.getFieldValues(FIELD_UP_LINK);
+		if(uplinks != null)
+			for(Object uplink : uplinks)
+				record.addUpLink(loadBasicRecord(Long.parseLong((String)uplink)));
+		
+		Collection<Object> processedFroms = doc.getFieldValues(FIELD_PROCESSED_FROM);
+		if(processedFroms != null)
+			for(Object processedFrom : processedFroms)
+				record.addProcessedFrom(getById(Long.parseLong((String)processedFrom)));
+
+		Collection<Object> inputForServices = doc.getFieldValues(FIELD_INPUT_FOR_SERVICE_ID);
+		if(inputForServices != null)
+			for(Object inputForService : inputForServices)
+				record.addInputForService(serviceDao.loadBasicService(Integer.parseInt((String)inputForService)));
+
+		Collection<Object> processedByServices = doc.getFieldValues(FIELD_PROCESSED_BY_SERVICE_ID);
+		if(processedByServices != null)
+			for(Object processedByService : processedByServices)
+				record.addProcessedByService(serviceDao.loadBasicService(Integer.parseInt((String)processedByService)));
+		
+		Collection<Object> traits = doc.getFieldValues(FIELD_TRAIT);
+		if(traits != null)
+			for(Object trait : traits)
+				record.addTrait((String)trait);
 
 		// Return the record we parsed from the document
 		return record;
