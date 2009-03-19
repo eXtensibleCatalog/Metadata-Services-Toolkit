@@ -227,9 +227,10 @@ public abstract class ProviderDAO
 	 * Gets all providers in the database sorted by their names
 	 *
 	 * @param asc True to sort in ascending order, false to sort in descending order
+     * @param columnName determines the name of the coumn on which the rows should be sorted
 	 * @return A list containing all providers in the database sorted by their names
 	 */
-	public abstract List<Provider> getSortedByName(boolean asc);
+	public abstract List<Provider> getSorted(boolean asc,String columnName);
 
 	/**
 	 * Gets a provider by it's ID

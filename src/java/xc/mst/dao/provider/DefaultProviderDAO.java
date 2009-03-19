@@ -291,9 +291,9 @@ public class DefaultProviderDAO extends ProviderDAO
 	} // end method getAll()
 
 	@Override
-	public List<Provider> getSortedByName(boolean asc)
+	public List<Provider> getSorted(boolean asc,String columnName)
 	{
-		return (asc ? getSortedByNameAsc() : getSortedByNameDesc());
+		return (asc ? getSortedByNameAsc(columnName) : getSortedByNameDesc(columnName));
 	} // end method getSortedByName(boolean)
 
 	/**
@@ -301,8 +301,9 @@ public class DefaultProviderDAO extends ProviderDAO
 	 *
 	 * @return A list of all providers sorted in ascending order by their name
 	 */
-	private List<Provider> getSortedByNameAsc()
+	private List<Provider> getSortedByNameAsc(String columnName)
 	{
+        System.out.println("Inside DAO sort by asc order and the columnName is "+columnName);
 		synchronized(psGetSortedByNameAscLock)
 		{
 			if(log.isDebugEnabled())
@@ -317,8 +318,7 @@ public class DefaultProviderDAO extends ProviderDAO
 			try
 			{
 				// If the PreparedStatement to get all providers was not defined, create it
-				if(psGetSortedByNameAsc == null)
-				{
+				
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROVIDER_ID + ", " +
 				                                   COL_CREATED_AT + ", " +
@@ -356,15 +356,16 @@ public class DefaultProviderDAO extends ProviderDAO
 				                                   COL_LAST_LOG_RESET + ", " +
 				                                   COL_LOG_FILE_NAME + " " +
 	                                   "FROM " + PROVIDERS_TABLE_NAME + " " +
-	                                   "ORDER BY " + COL_NAME + " ASC";
+	                                   "ORDER BY " + columnName + " ASC";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get all providers sorted by name ascending\" PreparedStatement from the SQL " + selectSql);
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
+                    System.out.println("The Sql query is \n\n"+ selectSql);
 					psGetSortedByNameAsc = dbConnection.prepareStatement(selectSql);
-				} // end if(get all PreparedStatement not defined)
+				
 
 				// Get the result of the SELECT statement
 
@@ -430,9 +431,14 @@ public class DefaultProviderDAO extends ProviderDAO
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while getting the providers sorted by their name in ascending order.", e);
-
+              
 				return providers;
 			} // end catch(SQLException)
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                return providers;
+            }
 			finally
 			{
 				MySqlConnectionManager.closeResultSet(results);
@@ -445,8 +451,10 @@ public class DefaultProviderDAO extends ProviderDAO
 	 *
 	 * @return A list of all providers sorted in descending order by their name
 	 */
-	private List<Provider> getSortedByNameDesc()
+	private List<Provider> getSortedByNameDesc(String columnName)
 	{
+        System.out.println("Inside DAO sort by desc order and the columnName is "+columnName);
+        
 		synchronized(psGetSortedByNameDescLock)
 		{
 			if(log.isDebugEnabled())
@@ -460,9 +468,7 @@ public class DefaultProviderDAO extends ProviderDAO
 
 			try
 			{
-				// If the PreparedStatement to get all providers was not defined, create it
-				if(psGetSortedByNameDesc == null)
-				{
+				
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROVIDER_ID + ", " +
 				                                   COL_CREATED_AT + ", " +
@@ -500,19 +506,21 @@ public class DefaultProviderDAO extends ProviderDAO
 				                                   COL_LAST_LOG_RESET + ", " +
 				                                   COL_LOG_FILE_NAME + " " +
 	                                   "FROM " + PROVIDERS_TABLE_NAME + " " +
-	                                   "ORDER BY " + COL_NAME + " DESC";
+	                                   "ORDER BY " + columnName + " DESC";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get all providers sorted by name descending\" PreparedStatement from the SQL " + selectSql);
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
+                    System.out.println("The Sql query is \n\n"+ selectSql);
 					psGetSortedByNameDesc = dbConnection.prepareStatement(selectSql);
-				} // end if(get all PreparedStatement not defined)
+				
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
+
 				results = psGetSortedByNameDesc.executeQuery();
 
 				// For each result returned, add a Provider object to the list with the returned data
@@ -574,9 +582,14 @@ public class DefaultProviderDAO extends ProviderDAO
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while getting the providers sorted by their name in descending order.", e);
-
+                e.printStackTrace();
 				return providers;
 			} // end catch(SQLException)
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                return providers;
+            }
 			finally
 			{
 				MySqlConnectionManager.closeResultSet(results);
