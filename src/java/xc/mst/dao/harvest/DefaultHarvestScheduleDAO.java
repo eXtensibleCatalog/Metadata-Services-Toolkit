@@ -229,9 +229,9 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	} // end method getAll()
 
 	@Override
-	public List<HarvestSchedule> getSortedByName(boolean asc) 
+	public List<HarvestSchedule> getSorted(boolean asc,String columnSorted)
 	{
-		return(asc ? getSortedAsc() : getSortedDesc());
+		return(asc ? getSortedAsc(columnSorted) : getSortedDesc(columnSorted));
 	} // end method getSortedByName(boolean)
 
 	/**
@@ -239,7 +239,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	 * 
 	 * @return A list of all users in the database sorted in ascending order by their user name
 	 */
-	private List<HarvestSchedule> getSortedAsc() 
+	private List<HarvestSchedule> getSortedAsc(String columnSorted)
 	{
 		synchronized(psGetSortedAscLock)
 		{
@@ -254,9 +254,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			
 			try
 			{
-				// If the PreparedStatement to get all harvest schedules was not defined, create it
-				if(psGetSortedAsc == null)
-				{			
+							
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
                                                    COL_SCHEDULE_NAME + ", " +
@@ -269,15 +267,16 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                                                    COL_HOUR + ", " +
                                                    COL_NOTIFY_EMAIL + " " +
 	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME +
-	                                   "ORDER BY " + COL_SCHEDULE_NAME + " ASC";
+	                                   " ORDER BY " + columnSorted + " ASC";
 				
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get all harvest schedules\" PreparedStatement from the SQL " + selectSql);
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
+                    System.out.println("The SQL query for ASC Order is  \n\n"+selectSql);
 					psGetSortedAsc = dbConnection.prepareStatement(selectSql);
-				} // end if(get all PreparedStatement wasn't defined)
+				
 				
 				// Get the results of the SELECT statement			
 				
@@ -314,7 +313,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while getting the harvest schedules", e);
-				
+				e.printStackTrace();
 				return harvestSchedules;
 			} // end catch(SQLException)
 			finally
@@ -329,7 +328,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	 * 
 	 * @return A list of all users in the database sorted in descending order by their user name
 	 */
-	private List<HarvestSchedule> getSortedDesc() 
+	private List<HarvestSchedule> getSortedDesc(String columnSorted)
 	{
 		synchronized(psGetSortedDescLock)
 		{
@@ -344,9 +343,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			
 			try
 			{
-				// If the PreparedStatement to get all harvest schedules was not defined, create it
-				if(psGetSortedDesc == null)
-				{			
+						
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
                                                    COL_SCHEDULE_NAME + ", " +
@@ -359,15 +356,16 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                                                    COL_HOUR + ", " +
                                                    COL_NOTIFY_EMAIL + " " +
 	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME +
-	                                   "ORDER BY " + COL_SCHEDULE_NAME + " DESC";
+	                                   " ORDER BY " + columnSorted + " DESC";
 				
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get all harvest schedules\" PreparedStatement from the SQL " + selectSql);
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
+                     System.out.println("The SQL query for DESC Order is  \n\n"+selectSql);
 					psGetSortedDesc = dbConnection.prepareStatement(selectSql);
-				} // end if(get all PreparedStatement wasn't defined)
+				
 				
 				// Get the results of the SELECT statement			
 				
@@ -404,7 +402,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while getting the harvest schedules", e);
-				
+				e.printStackTrace();
 				return harvestSchedules;
 			} // end catch(SQLException)
 			finally

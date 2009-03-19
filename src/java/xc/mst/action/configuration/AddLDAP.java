@@ -35,7 +35,9 @@ public class AddLDAP extends ActionSupport
     private String port;
 
     private String userNameAttribute;
+
     private String startLocation;
+
     /**This is a temporary server object that is used to pre-fill JSP form fields */
     private Server server = new Server();
 

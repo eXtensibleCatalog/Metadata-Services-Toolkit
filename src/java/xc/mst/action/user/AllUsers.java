@@ -26,6 +26,9 @@ import xc.mst.manager.user.UserService;
  */
 public class AllUsers extends ActionSupport
 {
+    /** The column on which the rows are to be sorted */
+    private String columnSorted;
+
     /** boolean value which determines of the rows have to be sorted in ascending order */
     private boolean isAscendingOrder;
     
@@ -99,6 +102,25 @@ public class AllUsers extends ActionSupport
     {
         return this.isAscendingOrder;
     }
+
+    /**
+     * sets the name of the column on which the sorting should be performed
+     * @param columnSorted name of the column
+     */
+    public void setColumnSorted(String columnSorted)
+    {
+        System.out.println("Setting column sorted as "+columnSorted);
+        this.columnSorted = columnSorted;
+    }
+
+    /**
+     * returns the name of the column on which sorting should be performed
+     * @return column name
+     */
+    public String getColumnSorted()
+    {
+        return this.columnSorted;
+    }
     /**
      * Overrides default implementation to list all the users in the system.
      * @return {@link #SUCCESS}
@@ -109,7 +131,7 @@ public class AllUsers extends ActionSupport
         try
         {
             setGroupList(groupService.getAllGroups());
-            setUserList(userService.getAllUsersSortedByUserName(isAscendingOrder));
+            setUserList(userService.getAllUsersSorted(isAscendingOrder, columnSorted));
             return SUCCESS;
         }
         catch(Exception e)

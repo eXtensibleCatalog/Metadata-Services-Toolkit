@@ -67,11 +67,11 @@ public interface ScheduleService {
     public List<HarvestSchedule> getAllSchedules();
     
     /**
-	 * Gets all schedules in the database sorted by their names
-	 *
-	 * @param asc True to sort in ascending order, false to sort in descending order
-	 * @return A list containing all schedules in the database sorted by their names
-	 */
-	public abstract List<HarvestSchedule> getAllSchedulesSortedByName(boolean sort);
+     * returns a sorted list of all the schedules
+     * @param sort determines if the list is sorted in ascending or descending order
+     * @param columnSorted the column on which the rows are sorted.
+     * @return list of schedules
+     */
+	public abstract List<HarvestSchedule> getAllSchedulesSorted(boolean sort,String columnSorted);
 
 }

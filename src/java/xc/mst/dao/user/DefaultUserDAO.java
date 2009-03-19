@@ -231,17 +231,17 @@ public class DefaultUserDAO extends UserDAO
 	} // end method getAll()
 
 	@Override
-	public List<User> getSortedByUserName(boolean asc) 
+	public List<User> getSorted(boolean asc,String columnSorted)
 	{
-		return(asc ? getSortedAsc() : getSortedDesc());
+		return(asc ? getSortedAsc(columnSorted) : getSortedDesc(columnSorted));
 	} // end method getSortedByUserName(boolean)
 
 	/**
-	 * Gets all users in the database sorted in ascending order by their user name
-	 * 
-	 * @return A list of all users in the database sorted in ascending order by their user name
-	 */
-	private List<User> getSortedAsc() 
+     * returns a list of users sorted in the ascending order of the column specified
+     * @param columnSorted The column on which the list of users are sorted
+     * @return list of users
+     */
+	private List<User> getSortedAsc(String columnSorted)
 	{
 		synchronized(psGetSortedAscLock)
 		{
@@ -256,9 +256,7 @@ public class DefaultUserDAO extends UserDAO
 			
 			try
 			{
-				// If the PreparedStatement to get all users in ascending order was not defined, create it
-				if(psGetSortedAsc == null)
-				{			
+						
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
@@ -270,7 +268,7 @@ public class DefaultUserDAO extends UserDAO
 				                                   COL_ACCOUNT_CREATED + ", " +
 				                                   COL_FAILED_LOGIN_ATTEMPTS + " " +  
 	                                   "FROM " + USERS_TABLE_NAME + " " +
-	                                   "ORDER BY " + COL_USERNAME + " ASC";
+	                                   " ORDER BY " + columnSorted + " ASC";
 				
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get all users sorted in ascending order\" PreparedStatement from the SQL " + selectSql);
@@ -278,7 +276,7 @@ public class DefaultUserDAO extends UserDAO
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
 					psGetSortedAsc = dbConnection.prepareStatement(selectSql);
-				} // end if(get sorted asc PreparedStatement not defined)
+				
 			
 			
 				// Get the results of the SELECT statement			
@@ -329,11 +327,11 @@ public class DefaultUserDAO extends UserDAO
 	} // end method getSortedAsc()
 	
 	/**
-	 * Gets all users in the database sorted in descending order by their user name
-	 * 
-	 * @return A list of all users in the database sorted in descending order by their user name
-	 */
-	private List<User> getSortedDesc() 
+     * Returns a list of users in the descending order of the column specified
+     * @param columnSorted The column on which the list of users are sorted
+     * @return list of users
+     */
+	private List<User> getSortedDesc(String columnSorted)
 	{
 		synchronized(psGetSortedDescLock)
 		{
@@ -348,9 +346,7 @@ public class DefaultUserDAO extends UserDAO
 			
 			try
 			{
-				// If the PreparedStatement to get all users in descending order was not defined, create it
-				if(psGetSortedDesc == null)
-				{			
+						
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
@@ -362,7 +358,7 @@ public class DefaultUserDAO extends UserDAO
 				                                   COL_ACCOUNT_CREATED + ", " +
 				                                   COL_FAILED_LOGIN_ATTEMPTS + " " +  
 	                                   "FROM " + USERS_TABLE_NAME + " " +
-	                                   "ORDER BY " + COL_USERNAME + " DESC";
+	                                   " ORDER BY " + columnSorted + " DESC";
 				
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get all users sorted in descending order\" PreparedStatement from the SQL " + selectSql);
@@ -370,8 +366,7 @@ public class DefaultUserDAO extends UserDAO
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
 					psGetSortedDesc = dbConnection.prepareStatement(selectSql);
-				} // end if(get sorted desc PreparedStatement not defined)
-			
+				
 			
 				// Get the results of the SELECT statement			
 			

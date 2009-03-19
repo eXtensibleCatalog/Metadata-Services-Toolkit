@@ -99,7 +99,7 @@ public class DeleteGroup extends ActionSupport
             GroupPermissionUtilService GPUtilService = new DefaultGroupPermissionUtilService();            
             boolean flag = true;
 
-            List<User> users = userService.getAllUsersSortedByUserName(false);
+            List<User> users = userService.getAllUsersSorted(false,"username");
             Iterator userIter = users.iterator();
             while(userIter.hasNext())
             {

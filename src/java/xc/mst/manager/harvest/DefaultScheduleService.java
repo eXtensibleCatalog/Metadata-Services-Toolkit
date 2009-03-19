@@ -87,8 +87,8 @@ public class DefaultScheduleService implements ScheduleService {
 	 * @param asc True to sort in ascending order, false to sort in descending order
 	 * @return A list containing all schedules in the database sorted by their names
 	 */
-	public List<HarvestSchedule> getAllSchedulesSortedByName(boolean sort)
+	public List<HarvestSchedule> getAllSchedulesSorted(boolean sort,String columnSorted)
     {
-        return harvestScheduleDAO.getSortedByName(sort);
+        return harvestScheduleDAO.getSorted(sort,columnSorted);
     }
 }

@@ -95,12 +95,12 @@ public abstract class UserDAO
 	public abstract List<User> getAll();
 
 	/**
-	 * Gets all users in the database sorted by their usernames
-	 *
-	 * @param asc True to sort in ascending order, false to sort in descending order
-	 * @return A list containing all users in the database sorted by their usernames
-	 */
-	public abstract List<User> getSortedByUserName(boolean asc);
+     * returns a sorted list of all users
+     * @param asc determies if the rows are sorted in the ascending or descending order
+     * @param columnSorted the column on which the rows are sorted
+     * @return list of users
+     */
+	public abstract List<User> getSorted(boolean asc,String columnSorted);
 
 	/**
 	 * Gets a user by it's ID

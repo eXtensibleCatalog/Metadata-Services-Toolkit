@@ -341,12 +341,13 @@ public class DefaultUserService implements UserService{
     }
 
     /**
-    * returns list of users sorted by username
-    * @param sort determines whether username has to be sorted in ascending order or descending order
-    * @return list of users
-    */
-    public List<User> getAllUsersSortedByUserName(boolean sort)
+     * returns a sorted list of users
+     * @param sort determines whether the list of users is sorted in ascending or descending order
+     * @param columnSorted the column on which the rows of users are sorted
+     * @return list of users
+     */
+    public List<User> getAllUsersSorted(boolean sort,String columnSorted)
     {
-        return userDAO.getSortedByUserName(sort);
+        return userDAO.getSorted(sort, columnSorted);
     }
 }

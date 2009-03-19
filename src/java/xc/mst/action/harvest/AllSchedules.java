@@ -28,6 +28,9 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class AllSchedules extends ActionSupport
 {
+    /** determines the column by which the rows are to be sorted */
+    private String columnSorted;
+    
     /** Determines if rows are to be sorted in ascending or descending order */
     private boolean isAscendingOrder;
     
@@ -52,12 +55,25 @@ public class AllSchedules extends ActionSupport
      *
      * @return {@link #SUCCESS}
      */
+    @Override
     public String execute()
     {
-    	log.debug("In All schedules Execute() with class");
-    	schedules = scheduleService.getAllSchedules();
-
-    	return SUCCESS;
+        try
+        {
+            log.debug("In All schedules Execute() with class");
+            if(columnSorted==null)
+            {
+                columnSorted = "schedule_name";
+            }
+            schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, columnSorted);
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, columnSorted);
+            return SUCCESS;
+        }
     }
 
     /**
@@ -74,7 +90,7 @@ public class AllSchedules extends ActionSupport
 
 	    	try {
 	    		scheduleService.deleteSchedule(schedule);
-	    		schedules = scheduleService.getAllSchedules();
+	    		schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, columnSorted);
 	    	} catch (DataException e) {
 	    		log.debug("Deleting the schedule failed" + e.getMessage());
 	    		schedules = scheduleService.getAllSchedules();
@@ -118,4 +134,22 @@ public class AllSchedules extends ActionSupport
         return this.isAscendingOrder;
     }
 
+    /**
+     * sets the name of the column on which the sorting should be performed
+     * @param columnSorted name of the column
+     */
+    public void setColumnSorted(String columnSorted)
+    {
+        System.out.println("Setting column sorted as "+columnSorted);
+        this.columnSorted = columnSorted;
+    }
+
+    /**
+     * returns the name of the column on which sorting should be performed
+     * @return column name
+     */
+    public String getColumnSorted()
+    {
+        return this.columnSorted;
+    }
 }

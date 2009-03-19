@@ -63,7 +63,7 @@ public class DeleteUser extends ActionSupport
      */
     public List<User> getUserList()
     {
-        return userService.getAllUsersSortedByUserName(false);
+        return userService.getAllUsersSorted(false,"username");
     }
 
      /**

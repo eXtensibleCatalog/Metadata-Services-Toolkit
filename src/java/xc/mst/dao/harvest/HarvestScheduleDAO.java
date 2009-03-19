@@ -100,12 +100,12 @@ public abstract class HarvestScheduleDAO
 	public abstract List<HarvestSchedule> getAll();
 
 	/**
-	 * Gets all schedules in the database sorted by their names
-	 * 
-	 * @param asc True to sort in ascending order, false to sort in descending order
-	 * @return A list containing all schedules in the database sorted by their names
-	 */
-	public abstract List<HarvestSchedule> getSortedByName(boolean asc);
+     * returns a sorted list of all the harvest schedules
+     * @param asc boolean parameter determines if rows are to be sorted in ascending or descending order
+     * @param columnSorted the coulmn on which the rows are sorted
+     * @return list of schedules
+     */
+	public abstract List<HarvestSchedule> getSorted(boolean asc,String columnSorted);
 	
 	/**
 	 * Gets a harvest schedule by it's ID
