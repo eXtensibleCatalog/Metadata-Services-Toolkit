@@ -161,10 +161,10 @@
                                                     </c:forEach>
                                                     <c:choose>
                                                         <c:when test="${flag==true}">
-                                                             <option selected value="<c:out value="${n.id}"/>" ><c:out value="${n.setSpec}"/>
+                                                             <option selected value="<c:out value="${n.id}"/>" >${n.displayName}(${n.setSpec})
                                                         </c:when>
                                                          <c:otherwise>
-                                                             <option value="<c:out value="${n.id}"/>" ><c:out value="${n.setSpec}"/>
+                                                             <option value="<c:out value="${n.id}"/>" >${n.displayName}(${n.setSpec})
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
@@ -180,23 +180,12 @@
                                <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:10px;">
                                     You have the option to create a named set of output records <br>
                                     for this processing directive&nbsp;&nbsp;&nbsp;<br><br>
-                                    Output Set Name &nbsp;&nbsp;&nbsp; <input type="text" style="width:300px;height:30px;" name="outputSetName" value="${temporaryProcessingDirective.outputSet.name}" maxlength="50">
+                                    Output Set Name &nbsp;&nbsp;&nbsp; <input type="text" style="width:300px;height:30px;" name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50">
                                 </div>
                                  <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:50px;">
                                     Output Set Specification &nbsp;&nbsp;&nbsp;<input type="text" style="width:300px;height:30px;" name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50">
                                 </div>
 
-                                <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;">
-                                    You have the option to retain the sets selected on the left &nbsp;&nbsp;
-                                    <c:choose>
-                                        <c:when test="${temporaryProcessingDirective.maintainSourceSets==true}">
-                                                <input checked type="checkbox" name="maintainSourceSets" value="maintainSourceSets">
-                                        </c:when>
-                                        <c:otherwise>
-                                                <input type="checkbox" name="maintainSourceSets" value="maintainSourceSets">
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
                                 
                             </td>
                         </tr>

@@ -111,37 +111,27 @@
 
                                 </c:if>
 
-                                <td class="sortcolumn"><div style="margin-left:10px;margin-top:10px;height:17px;text-align:center"><c:out value="${n.id}" /></div></td>
+                                <td class="sortcolumn" align="left"><div style="margin-left:10px;margin-top:10px;height:17px;text-align:left"><c:out value="${n.id}" /></div></td>
 
 
 
                                     <c:if test="${bool=='true'}">
                                        
                                         <td>
-                                            <div align="left">
+                                            
                                                 <a style="color:black;" href="<c:out value="${url}" />">
-                                                    <ul>
-                                                        <li style="float:left;"><div><U>${x1.name}</U></div></li>
-                                                        <li style="float:left;"><div><img src="page-resources/img/greenarrow.jpg"></div></li>
-                                                        <li style="float:left;"><div><U>${n.service.name}</U></div></li>
-                                                    </ul>
-
+                                                   <U> ${x1.name} >>> ${n.service.name} </U>
                                                 </a>
-                                            </div>
+                                           
                                         </td>
                                     </c:if>
                                     <c:if test="${bool=='false'}">
                                         <td>
-                                            <div align="left">
+                                           <U>
                                                 <a style="color:black;" href="<c:out value="${url}" />">
-                                                    <ul>
-                                                        <li style="float:left;"><div><U>${x2.name}</U></div></li>
-                                                        <li style="float:left;"><div><img src="page-resources/img/greenarrow.jpg"></div></li>
-                                                        <li style="float:left;"><div><U>${n.service.name}</U></div></li>
-                                                    </ul>
-
+                                                    ${x2.name} >>> ${n.service.name}
                                                 </a>
-                                            </div>
+                                           </U>
                                         </td>
                                     </c:if>
 
