@@ -4,6 +4,7 @@ YAHOO.xc.mst.repository.MyObject = {
 
     delRepository : function(id)
     {
+        alert("inside del repository");
         var result;
         result = confirm('Are you sure you want to delete the repository ? ');
         if (result)
