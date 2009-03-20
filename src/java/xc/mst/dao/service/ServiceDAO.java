@@ -136,12 +136,12 @@ public abstract class ServiceDAO
 	public abstract ArrayList<Service> getAll();
 
 	/**
-	 * Gets all services in the database sorted by their names
-	 *
-	 * @param asc True to sort in ascending order, false to sort in descending order
-	 * @return A list containing all services in the database sorted by their names
-	 */
-	public abstract List<Service> getSortedByName(boolean asc);
+     * returns a sorted list of services
+     * @param asc determines whether the rows are sorted in ascending or descending order
+     * @param columnSorted the coulmn on which rows are sorted
+     * @return list of services
+     */
+	public abstract List<Service> getSorted(boolean asc,String columnSorted);
 	
 	/**
 	 * Gets the service from the database with the passed service ID

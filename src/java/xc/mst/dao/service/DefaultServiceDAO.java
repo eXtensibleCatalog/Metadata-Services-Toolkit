@@ -236,10 +236,16 @@ public class DefaultServiceDAO extends ServiceDAO
 		} // end synchronized
 	} // end method getAll()
 
+    /**
+     * returns a sorted list of services
+     * @param asc determines whether the rows are sorted in ascending or descending order
+     * @param columnSorted the coulmn on which rows are sorted
+     * @return list of services
+     */
 	@Override
-	public List<Service> getSortedByName(boolean asc) 
+	public List<Service> getSorted(boolean asc,String columnSorted)
 	{
-		return(asc ? getSortedAsc() : getSortedDesc());
+		return(asc ? getSortedAsc(columnSorted) : getSortedDesc(columnSorted));
 	} // end method getSortedByUserName(boolean)
 
 	/**
@@ -247,7 +253,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	 * 
 	 * @return A list of all services in the database sorted in ascending order by their name
 	 */
-	private List<Service> getSortedAsc() 
+	private List<Service> getSortedAsc(String columnSorted)
 	{
 		synchronized(psGetSortedAscLock)
 		{
@@ -262,9 +268,7 @@ public class DefaultServiceDAO extends ServiceDAO
 
 			try
 			{
-				// Create the PreparedStatment to get all services if it hasn't already been created
-				if(psGetSortedAsc == null)
-				{
+				
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 												   COL_SERVICE_NAME + ", " +
@@ -285,7 +289,7 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + " " +
 								       "FROM " + SERVICES_TABLE_NAME + " " +
-								       "ORDER BY " + COL_SERVICE_NAME + " ASC";
+								       "ORDER BY " + columnSorted + " ASC";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get all services\" PreparedStatement from the SQL " + selectSql);
@@ -293,7 +297,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
 					psGetSortedAsc = dbConnection.prepareStatement(selectSql);
-				} // end if(get all PreparedStatement not defined)
+				
 
 				// Get the result of the SELECT statement
 
@@ -359,7 +363,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	 * 
 	 * @return A list of all services in the database sorted in descending order by their name
 	 */
-	private List<Service> getSortedDesc() 
+	private List<Service> getSortedDesc(String columnSorted)
 	{
 		synchronized(psGetSortedDescLock)
 		{
@@ -374,9 +378,7 @@ public class DefaultServiceDAO extends ServiceDAO
 
 			try
 			{
-				// Create the PreparedStatment to get all services if it hasn't already been created
-				if(psGetSortedDesc == null)
-				{
+				
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 												   COL_SERVICE_NAME + ", " +
@@ -397,7 +399,7 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + " " +
 								       "FROM " + SERVICES_TABLE_NAME + " " +
-								       "ORDER BY " + COL_SERVICE_NAME + " DESC";
+								       "ORDER BY " + columnSorted + " DESC";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get all services\" PreparedStatement from the SQL " + selectSql);
@@ -405,7 +407,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
 					psGetSortedDesc = dbConnection.prepareStatement(selectSql);
-				} // end if(get all PreparedStatement not defined)
+				
 
 				// Get the result of the SELECT statement
 

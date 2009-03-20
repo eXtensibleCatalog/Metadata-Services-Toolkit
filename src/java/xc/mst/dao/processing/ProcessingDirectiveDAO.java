@@ -79,12 +79,12 @@ public abstract class ProcessingDirectiveDAO
 	public abstract List<ProcessingDirective> getAll();
 
 	/**
-	 * Gets all processing directives in the database sorted by their names
-	 * 
-	 * @param asc True to sort in ascending order, false to sort in descending order
-	 * @return A list containing all processing directives in the database sorted by their names
-	 */
-	public abstract List<ProcessingDirective> getSortedByName(boolean asc);
+     * returns a sorted list of processing directives
+     * @param asc determines whether the list of rows are to be sorted in ascending or descending order
+     * @param columnSorted the column on which the rows are to be sorted.
+     * @return list of processing directives
+     */
+	public abstract List<ProcessingDirective> getSorted(boolean asc,String columnSorted);
 	
 	/**
 	 * Gets the processing directive from the database with the passed processing directive ID.

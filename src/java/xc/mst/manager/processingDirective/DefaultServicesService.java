@@ -33,13 +33,14 @@ public class DefaultServicesService implements ServicesService
     }
 
     /**
-     * returns a list of soervices sorted by name
-     * @param sort boolean parameter that determines of the services are to be sorted in ascending/descending order
+     * returns a sorted list of services
+     * @param sort determines whether the list of services is sorted in ascending or descending order
+     * @param columnSorted column on which the rows are sorted
      * @return list of services
      */
-    public List<Service> getAllServicesSortedByName(boolean sort)
+    public List<Service> getAllServicesSorted(boolean sort,String columnSorted)
     {
-        return servicesDao.getSortedByName(sort);
+        return servicesDao.getSorted(sort, columnSorted);
     }
     /**
      * inserts a service into the MST

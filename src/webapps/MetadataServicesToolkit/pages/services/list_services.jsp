@@ -71,8 +71,8 @@
                             <thead>
                                 <tr>
                                     <td>View Log</td>
-                                    <td class="sortcolumn">Name</td>
-                                    <td>OAI-PMH Repository URL</td>
+                                    <td class="sortcolumn"><a href="listServices.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=service_name">Name</a></td>
+                                    <td><a href="listServices.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=port">OAI-PMH Repository URL</a></td>
                                     <td>Status</td>
                                 </tr>
                             </thead>

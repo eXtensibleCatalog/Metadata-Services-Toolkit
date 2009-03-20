@@ -68,13 +68,13 @@
                     <table width="100%">
                         <thead>
                             <tr>
-                                <td><a href="serviceLog.action?isAscendingOrder=${!isAscendingOrder}">Service</a></td>
-                                <td>#Records available for harvest</td>
-                                <td>#Records harvested</td>
-                                <td>#Warnings</td>
-                                <td>#Errors</td>
+                                <td><a href="serviceLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=service_name">Service</a></td>
+                                <td><a href="serviceLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=input_record_count">#Records available for harvest</a></td>
+                                <td><a href="serviceLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=output_record_count">#Records harvested</a></td>
+                                <td><a href="serviceLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=warnings">#Warnings</a></td>
+                                <td><a href="serviceLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=errors">#Errors</a></td>
                                 <td>Reset</td>
-                                <td>Last Reset Date</td>
+                                <td><a href="serviceLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_log_reset">Last Reset Date</a></td>
                             </tr>
                         </thead>
                         <tbody>

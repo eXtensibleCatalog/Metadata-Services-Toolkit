@@ -67,13 +67,13 @@
                     <table width="100%">
                         <thead>
                             <tr>
-                                <td><a href="harvestOutLog.action?isAscendingOrder=${!isAscendingOrder}">Service</a></td>
-                                <td>#Records available for harvest</td>
-                                <td>#Records harvested</td>
-                                <td>#Warnings</td>
-                                <td>#Errors</td>
+                                <td><a href="harvestOutLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=harvest_out_log_file_name">Service</a></td>
+                                <td><a href="harvestOutLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=harvest_out_records_available">#Records available for harvest</a></td>
+                                <td><a href="harvestOutLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=harvest_out_records_harvested">#Records harvested</a></td>
+                                <td><a href="harvestOutLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=harvest_out_warnings">#Warnings</a></td>
+                                <td><a href="harvestOutLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=harvest_out_errors">#Errors</a></td>
                                 <td>Reset</td>
-                                <td>Last Reset Date</td>
+                                <td><a href="harvestOutLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=harvest_out_last_log_reset">Last Reset Date</a></td>
                             </tr>
                         </thead>
                         <tbody>

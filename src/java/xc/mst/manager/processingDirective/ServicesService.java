@@ -63,5 +63,5 @@ public interface ServicesService
      * @param sort boolean parameter that determines of the services are to be sorted in ascending/descending order
      * @return list of services
      */
-    public List<Service> getAllServicesSortedByName(boolean sort);
+    public List<Service> getAllServicesSorted(boolean sort,String columnSorted);
 }

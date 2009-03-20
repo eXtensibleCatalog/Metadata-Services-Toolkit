@@ -29,6 +29,12 @@ import xc.mst.manager.processingDirective.ServicesService;
 
 public class ListServices extends ActionSupport
 {
+    /** Determines whether the rows are to be sorted in ascending or descending order*/
+    private boolean isAscendingOrder = true;
+
+    /** The coumn on which the rows are sorted*/
+    private String columnSorted;
+    
     /** The list of services that are part of the MST */
     private List<Service> ServicesList;
 
@@ -46,7 +52,7 @@ public class ListServices extends ActionSupport
         {
 
            ServicesService servService = new DefaultServicesService();
-           ServicesList = servService.getAllServices();
+           ServicesList = servService.getAllServicesSorted(isAscendingOrder, columnSorted);
            setServices(ServicesList);
 
            return SUCCESS;
@@ -85,5 +91,44 @@ public class ListServices extends ActionSupport
         Configuration mstConfiguration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
         String baseURL = mstConfiguration.getProperty("OaiRepoBaseUrl");
         return baseURL;
+    }
+
+     /**
+     * sets the boolean value which determines if the rows are to be sorted in ascending order
+     *
+     * @param isAscendingOrder
+     */
+    public void setIsAscendingOrder(boolean isAscendingOrder)
+    {
+        this.isAscendingOrder = isAscendingOrder;
+    }
+
+    /**
+     * sgets the boolean value which determines if the rows are to be sorted in ascending order
+     *
+     * @param isAscendingOrder
+     */
+    public boolean getIsAscendingOrder()
+    {
+        return this.isAscendingOrder;
+    }
+
+    /**
+     * sets the name of the column on which the sorting should be performed
+     * @param columnSorted name of the column
+     */
+    public void setColumnSorted(String columnSorted)
+    {
+        System.out.println("Setting column sorted as "+columnSorted);
+        this.columnSorted = columnSorted;
+    }
+
+    /**
+     * returns the name of the column on which sorting should be performed
+     * @return column name
+     */
+    public String getColumnSorted()
+    {
+        return this.columnSorted;
     }
 }

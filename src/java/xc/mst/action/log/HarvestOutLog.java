@@ -14,6 +14,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.manager.processingDirective.DefaultServicesService;
@@ -26,6 +27,9 @@ import xc.mst.manager.processingDirective.ServicesService;
  */
 public class HarvestOutLog extends ActionSupport
 {
+    /**The column on which the rows are to be sorted */
+    private String columnSorted;
+
     /** boolean parameter determines if the rows are to sorted in ascending or descending order */
     private boolean isAscendingOrder;
 
@@ -81,6 +85,24 @@ public class HarvestOutLog extends ActionSupport
         return this.isAscendingOrder;
     }
 
+     /**
+     * sets the name of the column on which the sorting should be performed
+     * @param columnSorted name of the column
+     */
+    public void setColumnSorted(String columnSorted)
+    {
+        System.out.println("Setting column sorted as "+columnSorted);
+        this.columnSorted = columnSorted;
+    }
+
+    /**
+     * returns the name of the column on which sorting should be performed
+     * @return column name
+     */
+    public String getColumnSorted()
+    {
+        return this.columnSorted;
+    }
 
      /**
      * Overrides default implementation to view the Service Logs Page.
@@ -91,8 +113,8 @@ public class HarvestOutLog extends ActionSupport
     {
         try
         {            
-            List<Service> servicesList = servicesService.getAllServicesSortedByName(isAscendingOrder);
-            setServiceList(servicesList);
+            List<Service> servicesList = servicesService.getAllServicesSorted(isAscendingOrder,columnSorted);
+            setServiceList(servicesList);          
             return SUCCESS;
 
         }

@@ -241,10 +241,16 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 		} // end synchronized
 	} // end method getAll()
 
+    /**
+     * returns a sorted list of processing directives
+     * @param asc determines whether the list of rows are to be sorted in ascending or descending order
+     * @param columnSorted the column on which the rows are to be sorted.
+     * @return list of processing directives
+     */
 	@Override
-	public List<ProcessingDirective> getSortedByName(boolean asc) 
+	public List<ProcessingDirective> getSorted(boolean asc,String columnSorted)
 	{
-		return(asc ? getSortedAsc() : getSortedDesc());
+		return(asc ? getSortedAsc(columnSorted) : getSortedDesc(columnSorted));
 	} // end method getSortedByName(boolean)
 
 	/**
@@ -252,7 +258,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	 * 
 	 * @return A list of all users in the database sorted in ascending order by their user name
 	 */
-	private List<ProcessingDirective> getSortedAsc() 
+	private List<ProcessingDirective> getSortedAsc(String columnSorted)
 	{
 		return getAll();
 	} // end method getSortedAsc()
@@ -262,7 +268,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	 * 
 	 * @return A list of all users in the database sorted in descending order by their user name
 	 */
-	private List<ProcessingDirective> getSortedDesc() 
+	private List<ProcessingDirective> getSortedDesc(String columnSorted)
 	{
 		return getAll();
 	} // end method getSortedDesc()
