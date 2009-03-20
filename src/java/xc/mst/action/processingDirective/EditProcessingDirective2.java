@@ -302,11 +302,19 @@ public class EditProcessingDirective2 extends ActionSupport
                 {
                      temporaryProcessingDirective.setMaintainSourceSets(false);
                 }
-                Set tempSet = new Set();
-                tempSet.setDisplayName(outputSetName);
-                tempSet.setSetSpec(outputSetSpec);
-                setService.insertSet(tempSet);
-                temporaryProcessingDirective.setOutputSet(tempSet);
+               Set setExists = setService.getSetBySetSpec(outputSetSpec);
+                if(setExists==null)
+                {
+                    Set tempSet = new Set();
+                    tempSet.setDisplayName(outputSetName);
+                    tempSet.setSetSpec(outputSetSpec);
+                    setService.insertSet(tempSet);
+                    temporaryProcessingDirective.setOutputSet(tempSet);
+                }
+                else
+                {
+                    temporaryProcessingDirective.setOutputSet(setExists);
+                }
                
                 String sourceType = (String)sessionMap.get("sourceType");
 
@@ -476,11 +484,19 @@ public class EditProcessingDirective2 extends ActionSupport
 
                 System.out.println("Setting the list of sets and sets size is "+tempSetList.size());
                 tempProcDir.setTriggeringSets(tempSetList);
-                Set tempSet = new Set();
-                tempSet.setDisplayName(outputSetName);
-                tempSet.setSetSpec(outputSetSpec);
-                setService.insertSet(tempSet);
-                tempProcDir.setOutputSet(tempSet);
+                Set setExists = setService.getSetBySetSpec(outputSetSpec);
+                if(setExists==null)
+                {
+                    Set tempSet = new Set();
+                    tempSet.setDisplayName(outputSetName);
+                    tempSet.setSetSpec(outputSetSpec);
+                    setService.insertSet(tempSet);
+                    tempProcDir.setOutputSet(tempSet);
+                }
+                else
+                {
+                    tempProcDir.setOutputSet(setExists);
+                }
                 sessionMap.put("temporaryProcessingDirective", tempProcDir);
                 return SUCCESS;
         }

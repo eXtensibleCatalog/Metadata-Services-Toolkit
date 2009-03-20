@@ -317,12 +317,19 @@ public class AddProcessingDirective2 extends ActionSupport
                 }
             }
 
-
-            Set tempSet = new Set();
-            tempSet.setDisplayName(outputSetName);
-            tempSet.setSetSpec(outputSetSpec);
-            setService.insertSet(tempSet);
-            tempProcDir.setOutputSet(tempSet);
+            Set setExists = setService.getSetBySetSpec(outputSetSpec);
+            if(setExists==null)
+            {
+                Set tempSet = new Set();
+                tempSet.setDisplayName(outputSetName);
+                tempSet.setSetSpec(outputSetSpec);
+                setService.insertSet(tempSet);
+                tempProcDir.setOutputSet(tempSet);
+            }
+            else
+            {
+                tempProcDir.setOutputSet(setExists);
+            }
           
             if(sourceType.equalsIgnoreCase("provider"))
             {
@@ -467,12 +474,20 @@ public class AddProcessingDirective2 extends ActionSupport
 
                 System.out.println("Setting the list of sets and sets size is "+tempSetList.size());
                 tempProcDir.setTriggeringSets(tempSetList);
-                Set tempSet = new Set();
-                tempSet.setDisplayName(outputSetName);
-                tempSet.setSetSpec(outputSetSpec);
-                setService.insertSet(tempSet);
-                tempProcDir.setOutputSet(tempSet);
-              
+
+                Set setExists = setService.getSetBySetSpec(outputSetSpec);
+                if(setExists==null)
+                {
+                    Set tempSet = new Set();
+                    tempSet.setDisplayName(outputSetName);
+                    tempSet.setSetSpec(outputSetSpec);
+                    setService.insertSet(tempSet);
+                    tempProcDir.setOutputSet(tempSet);
+                }
+                else
+                {
+                    tempProcDir.setOutputSet(setExists);
+                }
 
                 sessionMap.put("temporaryProcessingDirective", tempProcDir);
                 return SUCCESS;
