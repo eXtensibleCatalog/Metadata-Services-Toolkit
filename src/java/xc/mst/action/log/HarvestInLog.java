@@ -25,6 +25,9 @@ import xc.mst.manager.repository.ProviderService;
  */
 public class HarvestInLog extends ActionSupport
 {
+    /** determines the column name on which sorting should be performed */
+    private String columnSorted;
+
     /** determines if the rows are to be ordered in ascending or descending order */
     private boolean isAscendingOrder;
 
@@ -75,6 +78,24 @@ public class HarvestInLog extends ActionSupport
         return this.isAscendingOrder;
     }
 
+     /**
+     * sets the name of the column on which the sorting should be performed
+     * @param columnSorted name of the column
+     */
+    public void setColumnSorted(String columnSorted)
+    {
+        this.columnSorted = columnSorted;
+    }
+
+    /**
+     * returns the name of the column on which sorting should be performed
+     * @return column name
+     */
+    public String getColumnSorted()
+    {
+        return this.columnSorted;
+    }
+
     /**
      * Overrides default implementation to view the 'Harvest-In Logs' Page.
      * @return {@link #SUCCESS}
@@ -84,7 +105,7 @@ public class HarvestInLog extends ActionSupport
     {
         try
         {
-            setProviderList(providerService.getAllProvidersSortedByName(isAscendingOrder));
+            setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,columnSorted));
             return SUCCESS;
         }
         catch(Exception e)
