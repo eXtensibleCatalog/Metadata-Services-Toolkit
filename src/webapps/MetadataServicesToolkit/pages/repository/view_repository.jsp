@@ -75,25 +75,27 @@
    	        	<!-- First grid start -->
 		        <div class="yui-u first">
 
-			        <table class="formTable" >
+			        <table class="formTable" style="color:#313131;">
 			
 			            
 			            <tr>
-			                <td class="label" style="font-size:13px;">
+			                <td class="label" style="font-size:13px;color:#313131;">
                                 
                                     Repository name : ${provider.name} <br></td>
 			            </tr>
 			            <tr>
-                            <td class="label" style="font-size:13px;">
+                            <td class="label" style="font-size:13px;color:#313131;">
                                
                                    URL : ${provider.oaiProviderUrl}
                             </td>
 			            </tr>
                         <tr>
-                            <td class="label" style="margin-top:20px;font-size:14px;">Validation Results</td>
+                            <td class="label" style="margin-top:20px;font-size:14px;color:#313131">
+                                <br> Validation Results
+                            </td>
                         </tr>
 			            <tr>
-                            <td style="margin-top:15px;">
+                            <td style="margin-top:15px;color:#313131">
                                <ul style="list-style:none;">
                                     <li style="float:left;"><div style="width:150px;"><B>Formats</B> </div> </li>
                                     <li style="float:left;"><div>:</div></li>
@@ -112,7 +114,7 @@
 			            </tr>
 			            <tr>
                             <td>
-                                <ul style="list-style:none;">
+                                <ul style="list-style:none;color:#313131;">
                                     <li style="float:left;"><div style="width:150px;"><B>Sets Supported</B> </div> </li>
                                     <li style="float:left;"><div>:</div></li>
                                     <li style="float:left;">
@@ -185,9 +187,8 @@
 		
 		<!-- start second column -->
        	        <div class="yui-u">
-                    <B>Status</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-			                      
-                       <table width="220" border="1">
+                   
+                       <table width="220" border="1" style="color:#313131;">
                            <c:choose>
                                <c:when test="${provider.identify==true}">
                                     <tr>
