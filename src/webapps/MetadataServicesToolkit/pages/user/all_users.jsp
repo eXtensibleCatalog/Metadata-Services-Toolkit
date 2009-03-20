@@ -68,10 +68,10 @@
                     <table width="100%">
                         <thead>
                             <tr>
-                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}">User Name</a></td>
-                                <td>Account type</td>
-                                <td>Last Login</td>
-                                <td>Full Name</td>
+                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&column=userName">User Name</a></td>
+                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&column=accountType">Account type</a></td>
+                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&column=lastLogin">Last Login</a></td>
+                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&column=fullName">Full Name</a></td>
                                 <td>Delete</td>
                             </tr>
                         </thead>
@@ -86,7 +86,7 @@
                                               <c:set var="url" value="/MetadataServicesToolkit/viewEditLDAPUser.action?userId=${n.id}"/>
                                          </c:otherwise>
                                     </c:choose>
-                                    <td style="background-color:#edfaff;" class="sortcolumn"><a style="text-decoration:none;color:black;" href="${url}"><U>${n.username}</U></a></td>
+                                    <td class="sortcolumn"><a style="text-decoration:none;color:black;" href="${url}"><U>${n.username}</U></a></td>
                                     <td>
                                         <c:choose>
                                             <c:when test="${n.server.type==4}">
