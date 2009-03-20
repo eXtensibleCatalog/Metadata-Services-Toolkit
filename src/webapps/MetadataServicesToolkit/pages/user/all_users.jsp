@@ -68,10 +68,10 @@
                     <table width="100%">
                         <thead>
                             <tr>
-                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&column=userName">User Name</a></td>
-                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&column=accountType">Account type</a></td>
-                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&column=lastLogin">Last Login</a></td>
-                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&column=fullName">Full Name</a></td>
+                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=username">User Name</a></td>
+                                <td>Account type</td>
+                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_login">Last Login</a></td>
+                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=fullname">Full Name</a></td>
                                 <td>Delete</td>
                             </tr>
                         </thead>

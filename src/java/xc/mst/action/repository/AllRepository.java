@@ -36,7 +36,7 @@ public class AllRepository extends ActionSupport
 	private static final long serialVersionUID = 6270020684379187321L;
     
     /** boolean value which determines if the rows are to be sorted in ascending order*/
-    private boolean isAscendingOrder = false;
+    private boolean isAscendingOrder = true;
 
     /** determines the name of the column on which the sorting is to be done */
     private String columnSorted;

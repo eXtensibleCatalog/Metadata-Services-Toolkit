@@ -303,7 +303,7 @@ public class EditProcessingDirective2 extends ActionSupport
                      temporaryProcessingDirective.setMaintainSourceSets(false);
                 }
                Set setExists = setService.getSetBySetSpec(outputSetSpec);
-                if(setExists==null)
+               if((setExists==null)&&(outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
                 {
                     Set tempSet = new Set();
                     tempSet.setDisplayName(outputSetName);
@@ -485,7 +485,7 @@ public class EditProcessingDirective2 extends ActionSupport
                 System.out.println("Setting the list of sets and sets size is "+tempSetList.size());
                 tempProcDir.setTriggeringSets(tempSetList);
                 Set setExists = setService.getSetBySetSpec(outputSetSpec);
-                if(setExists==null)
+                if((setExists==null)&&(outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
                 {
                     Set tempSet = new Set();
                     tempSet.setDisplayName(outputSetName);

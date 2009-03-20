@@ -30,7 +30,7 @@ public class AllUsers extends ActionSupport
     private String columnSorted;
 
     /** boolean value which determines of the rows have to be sorted in ascending order */
-    private boolean isAscendingOrder;
+    private boolean isAscendingOrder=true;
     
     /** creates a service object for users  */
     private UserService userService = new DefaultUserService();

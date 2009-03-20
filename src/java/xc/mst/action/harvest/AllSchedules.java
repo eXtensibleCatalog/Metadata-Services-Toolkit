@@ -32,7 +32,7 @@ public class AllSchedules extends ActionSupport
     private String columnSorted;
     
     /** Determines if rows are to be sorted in ascending or descending order */
-    private boolean isAscendingOrder;
+    private boolean isAscendingOrder = true;
     
     /** Eclipse generated id */
 	private static final long serialVersionUID = 4699309117473144076L;

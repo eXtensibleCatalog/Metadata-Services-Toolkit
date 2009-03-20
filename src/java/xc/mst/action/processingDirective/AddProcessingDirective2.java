@@ -318,7 +318,7 @@ public class AddProcessingDirective2 extends ActionSupport
             }
 
             Set setExists = setService.getSetBySetSpec(outputSetSpec);
-            if(setExists==null)
+            if((setExists==null)&&(outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
             {
                 Set tempSet = new Set();
                 tempSet.setDisplayName(outputSetName);
@@ -476,7 +476,7 @@ public class AddProcessingDirective2 extends ActionSupport
                 tempProcDir.setTriggeringSets(tempSetList);
 
                 Set setExists = setService.getSetBySetSpec(outputSetSpec);
-                if(setExists==null)
+                if((setExists==null)&&(outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
                 {
                     Set tempSet = new Set();
                     tempSet.setDisplayName(outputSetName);

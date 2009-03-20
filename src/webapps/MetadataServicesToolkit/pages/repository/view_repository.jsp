@@ -292,7 +292,7 @@
                         <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.MyObject.editFunction(${provider.id});" type="button" name="edit">Edit</button>&nbsp;
                         <button class="xc_button" type="button" name="View Log">View Log</button>&nbsp;
                         <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.MyObject.reValidateFunction(${provider.id});" type="button" name="Revalidate">Revalidate</button>&nbsp;
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.MyObject.repository.delRepository(${provider.id});" name="delete">Delete</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.repository.MyObject.delRepository(${provider.id});" name="delete">Delete</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </div>
                   </li>
                   <li style="float:right;">
