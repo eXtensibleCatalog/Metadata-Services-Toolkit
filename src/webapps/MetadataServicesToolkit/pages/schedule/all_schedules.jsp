@@ -71,9 +71,9 @@
 			<table width="100%">
 				<thead>
 					<tr>
-                        <td><a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}">Schedule Name</a></td>
+                        <td><a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=schedule_name">Schedule Name</a></td>
 						<td>Repository Name</td>
-						<td>Recurrance</td>
+                        <td><a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=recurrence">Recurrance</a></td>
                         <td>Status</td>
 						<td>Delete Schedule</td>
 					</tr>
