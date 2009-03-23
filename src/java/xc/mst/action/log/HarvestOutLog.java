@@ -31,7 +31,7 @@ public class HarvestOutLog extends ActionSupport
     private String columnSorted;
 
     /** boolean parameter determines if the rows are to sorted in ascending or descending order */
-    private boolean isAscendingOrder;
+    private boolean isAscendingOrder=true;
 
     /**Creates a service object for Services */
     private ServicesService servicesService = new DefaultServicesService();

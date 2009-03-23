@@ -247,16 +247,19 @@ public class AddProcessingDirective2 extends ActionSupport
             ProcessingDirective tempProcDir = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
             String sourceType = (String)sessionMap.get("sourceType");
             List<Format> tempFormatList = null;
+            List<Set> tempSetList = null;
             if(sourceType.equalsIgnoreCase("provider"))
             {
                 tempFormatList = tempProcDir.getSourceProvider().getFormats();
+                tempSetList = tempProcDir.getSourceProvider().getSets();
             }
             else
             {
                 tempFormatList = tempProcDir.getSourceService().getOutputFormats();
+                tempSetList = setService.getAllSets();
             }
             setFormatList(tempFormatList);
-            setSetList(setService.getAllSets());
+            setSetList(tempSetList);
 
             setTemporaryProcessingDirective(tempProcDir);
             return SUCCESS;

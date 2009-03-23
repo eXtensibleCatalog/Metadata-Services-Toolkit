@@ -29,7 +29,7 @@ public class HarvestInLog extends ActionSupport
     private String columnSorted;
 
     /** determines if the rows are to be ordered in ascending or descending order */
-    private boolean isAscendingOrder;
+    private boolean isAscendingOrder=true;
 
     /**Creates a service object for providers */
     private ProviderService providerService = new DefaultProviderService();

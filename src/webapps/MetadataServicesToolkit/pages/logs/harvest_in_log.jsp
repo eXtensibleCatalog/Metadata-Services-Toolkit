@@ -69,12 +69,12 @@
                             <tr>
                                 <td></td>
                                 <td></td>
-                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}">Repositories</a></td>
-                                <td>#Records Harvested</td>
-                                <td>#Warnings</td>
-                                <td>#Errors</td>
+                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=name">Repositories</a></td>
+                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=records_added">#Records Harvested</a></td>
+                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=warnings">#Warnings</a></td>
+                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=errors">#Errors</a></td>
                                 <td>Reset</td>
-                                <td>Last Reset Date</td>
+                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_log_reset">Last Reset Date</a></td>
                             </tr>
                         </thead>
                         <tbody>

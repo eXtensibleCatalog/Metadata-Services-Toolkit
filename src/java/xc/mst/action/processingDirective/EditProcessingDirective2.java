@@ -259,17 +259,20 @@ public class EditProcessingDirective2 extends ActionSupport
             Map sessionMap =  ActionContext.getContext().getSession();
             ProcessingDirective tempProcDir = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
             String sourceType = (String)sessionMap.get("sourceType");
-            setSetList(setService.getAllSets());
             List<Format> tempFormatList = null;
+            List<Set> tempSetList = null;
             if(sourceType.equalsIgnoreCase("provider"))
             {
                 tempFormatList = tempProcDir.getSourceProvider().getFormats();
+                tempSetList = tempProcDir.getSourceProvider().getSets();
             }
             else
             {
                 tempFormatList = tempProcDir.getSourceService().getOutputFormats();
+                tempSetList = setService.getAllSets();
             }
             setFormatList(formatService.getAllFormats());
+            setSetList(tempSetList);
             setTemporaryProcessingDirective(tempProcDir);
             return SUCCESS;
         }
