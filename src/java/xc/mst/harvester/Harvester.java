@@ -21,6 +21,12 @@ import java.util.SimpleTimeZone;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.commons.httpclient.params.HttpConnectionParams;
+import org.apache.commons.httpclient.params.HttpParams;
 import org.apache.log4j.Logger;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
@@ -279,6 +285,11 @@ public class Harvester implements ErrorHandler
 	private int errorCount = 0;
 
 	/**
+	 * HttpClient used for making OAI requests
+	 */
+	private HttpClient client = null;
+	
+	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
 	 */
 	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
@@ -366,6 +377,9 @@ public class Harvester implements ErrorHandler
 	public Harvester(int timeOutMilliseconds, HarvestScheduleStep scheduleStep, Harvest currentHarvest)
 	{
 		this.timeOutMilliseconds = timeOutMilliseconds;
+		HttpClientParams params = new HttpClientParams();
+		params.setSoTimeout(timeOutMilliseconds);
+		client = new HttpClient(params, new MultiThreadedHttpConnectionManager());
 		this.currentHarvest = currentHarvest;
 		this.schedule = scheduleStep.getSchedule();
 		this.provider = schedule.getProvider();
@@ -1095,62 +1109,92 @@ public class Harvester implements ErrorHandler
 			log.debug("Sending the OAI request: " + request);
 
 		Document doc = null;
+		
+		GetMethod getOaiResponse = null;
+		
 		try
 		{
+			int statusCode = 0; // The status code in the HTTP response
+			
 			startOaiRequest = System.currentTimeMillis();
-			InputStream istm = TimedURLConnection.getInputStream(request, timeOutMilliseconds);
-			finishOaiRequest = System.currentTimeMillis();
-
-            log.info("Time taken to get a response from the server " + (finishOaiRequest-startOaiRequest));
-            oaiRepositoryTime += (finishOaiRequest-startOaiRequest);
-            log.info("Total time taken to get a response from the server " + oaiRepositoryTime);
-
-			DocumentBuilderFactory docfactory = DocumentBuilderFactory.newInstance();
-			docfactory.setCoalescing(true);
-			docfactory.setExpandEntityReferences(true);
-			docfactory.setIgnoringComments(true);
-			docfactory.setNamespaceAware(true);
-
-			// We must set validation false since jdk1.4 parser
-			// doesn't know about schemas.
-			docfactory.setValidating(false);
-
-			// Ignore whitespace doesn't work unless setValidating(true),
-			// according to javadocs.
-			docfactory.setIgnoringElementContentWhitespace(false);
-
-			DocumentBuilder docbuilder = docfactory.newDocumentBuilder();
-
-			xmlerrors = "";
-			xmlwarnings = "";
-			docbuilder.setErrorHandler(this);
-			doc = docbuilder.parse(istm);
-			istm.close();
-
-			if (xmlerrors.length() > 0 || xmlwarnings.length() > 0)
+			
+			synchronized(client)
 			{
-				String msg = "XML validation failed.\n";
+				// Instantiate a GET HTTP method to get the Voyager "first" page
+				getOaiResponse = new GetMethod(request);
+				
+				// Execute the get method to get the Voyager "first" page
+				statusCode = client.executeMethod(getOaiResponse);
+			}
+	        
+	        // If the get was successful (200 is the status code for success)
+	        if(statusCode == 200)
+	        {	        
+	        	InputStream istm = getOaiResponse.getResponseBodyAsStream();
+	        	finishOaiRequest = System.currentTimeMillis();
 
-				if (xmlerrors.length() > 0)
+	            log.info("Time taken to get a response from the server " + (finishOaiRequest-startOaiRequest));
+	            oaiRepositoryTime += (finishOaiRequest-startOaiRequest);
+	            log.info("Total time taken to get a response from the server " + oaiRepositoryTime);
+	
+				DocumentBuilderFactory docfactory = DocumentBuilderFactory.newInstance();
+				docfactory.setCoalescing(true);
+				docfactory.setExpandEntityReferences(true);
+				docfactory.setIgnoringComments(true);
+				docfactory.setNamespaceAware(true);
+	
+				// We must set validation false since jdk1.4 parser
+				// doesn't know about schemas.
+				docfactory.setValidating(false);
+	
+				// Ignore whitespace doesn't work unless setValidating(true),
+				// according to javadocs.
+				docfactory.setIgnoringElementContentWhitespace(false);
+	
+				DocumentBuilder docbuilder = docfactory.newDocumentBuilder();
+	
+				xmlerrors = "";
+				xmlwarnings = "";
+				docbuilder.setErrorHandler(this);
+				doc = docbuilder.parse(istm);
+				istm.close();
+	
+				if (xmlerrors.length() > 0 || xmlwarnings.length() > 0)
 				{
-					msg += "Errors:\n" + xmlerrors;
-					LogWriter.addError(schedule.getProvider().getLogFileName(), "The OAI provider's response had the following XML errors:\n" + xmlerrors);
-					errorCount++;
-				} // end if(error parsing the response)
-				if (xmlwarnings.length() > 0)
-				{
-					msg += "Warnings:\n" + xmlwarnings;
-					LogWriter.addWarning(schedule.getProvider().getLogFileName(), "The OAI provider's response had the following XML warnings:\n" + xmlwarnings);
-					warningCount++;
-				} // end if(warning parsing the response)
+					String msg = "XML validation failed.\n";
+	
+					if (xmlerrors.length() > 0)
+					{
+						msg += "Errors:\n" + xmlerrors;
+						LogWriter.addError(schedule.getProvider().getLogFileName(), "The OAI provider's response had the following XML errors:\n" + xmlerrors);
+						errorCount++;
+					} // end if(error parsing the response)
+					if (xmlwarnings.length() > 0)
+					{
+						msg += "Warnings:\n" + xmlwarnings;
+						LogWriter.addWarning(schedule.getProvider().getLogFileName(), "The OAI provider's response had the following XML warnings:\n" + xmlwarnings);
+						warningCount++;
+					} // end if(warning parsing the response)
+	
+					throw new Hexception(msg);
+				} // end if(problem parsing the responses)
+	        } // end if(status code indicates success)
+	        else
+	        {
+	        	String msg = "Error getting the HTML document, the HTTP status code was " + statusCode;
+	        	
+	        	log.error(msg);
+	        	
+	        	LogWriter.addError(schedule.getProvider().getLogFileName(), msg);
+				errorCount++;
+				
+				loggedHException = true;
+
+				sendReportEmail(msg);
 
 				throw new Hexception(msg);
-			} // end if(problem parsing the response)s
+	        }
 		} // end try(place the HTTP request)
-		catch (URLConnectionTimedOutException uctoe)
-		{
-			throw new Hexception(uctoe.getMessage());
-		} // end catch(URLConnectionTimedOutException)
 		catch (Exception exc)
 		{
 			log.error("Error getting the HTML document.", exc);

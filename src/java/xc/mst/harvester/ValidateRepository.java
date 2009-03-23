@@ -16,6 +16,10 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -125,6 +129,21 @@ public class ValidateRepository implements ErrorHandler
 	 */
 	private int deletedRecord = -1;
 
+	/**
+	 * HttpClient used for making OAI requests
+	 */
+	private HttpClient client = null;
+	
+	/**
+	 * Constructs the ValidateRepository Object
+	 */
+	public ValidateRepository()
+	{
+		HttpClientParams params = new HttpClientParams();
+		params.setSoTimeout(timeOutMilliseconds);
+		client = new HttpClient(params, new MultiThreadedHttpConnectionManager());
+	}
+	
 	/**
 	 * Validates the OAI provider with the passed provider ID.
 	 *
@@ -515,59 +534,85 @@ public class ValidateRepository implements ErrorHandler
 			log.debug("Sending the OAI request: " + request);
 
 		Document doc = null;
+		
+		GetMethod getOaiResponse = null;
+		
 		try
 		{
+			int statusCode = 0; // The status code in the HTTP response
+			
 			long startOaiRequest = System.currentTimeMillis();
-			InputStream istm = TimedURLConnection.getInputStream(request, timeOutMilliseconds);
-			long finishOaiRequest = System.currentTimeMillis();
 
-            log.info("Time taken to get a response from the server " + (finishOaiRequest-startOaiRequest));
-
-			DocumentBuilderFactory docfactory = DocumentBuilderFactory.newInstance();
-			docfactory.setCoalescing(true);
-			docfactory.setExpandEntityReferences(true);
-			docfactory.setIgnoringComments(true);
-			docfactory.setNamespaceAware(true);
-
-			// We must set validation false since jdk1.4 parser
-			// doesn't know about schemas.
-			docfactory.setValidating(false);
-
-			// Ignore whitespace doesn't work unless setValidating(true),
-			// according to javadocs.
-			docfactory.setIgnoringElementContentWhitespace(false);
-
-			DocumentBuilder docbuilder = docfactory.newDocumentBuilder();
-
-			xmlerrors = "";
-			xmlwarnings = "";
-			docbuilder.setErrorHandler(this);
-			doc = docbuilder.parse(istm);
-			istm.close();
-
-			if (xmlerrors.length() > 0 || xmlwarnings.length() > 0)
+			synchronized(client)
 			{
-				String msg = "XML validation failed.\n";
-
-				if (xmlerrors.length() > 0)
-				{
-					msg += "Errors:\n" + xmlerrors;
-					LogWriter.addError(provider.getLogFileName(), "The OAI provider's response had the following XML errors:\n" + xmlerrors);
-					provider.setErrors(provider.getErrors() + 1);
-				}
-				if (xmlwarnings.length() > 0)
-				{
-					msg += "Warnings:\n" + xmlwarnings;
-					LogWriter.addWarning(provider.getLogFileName(), "The OAI provider's response had the following XML warnings:\n" + xmlwarnings);
-					provider.setWarnings(provider.getWarnings() + 1);
-				}
-
-				throw new Hexception(msg);
+				// Instantiate a GET HTTP method to get the Voyager "first" page
+				getOaiResponse = new GetMethod(request);
+				
+				// Execute the get method to get the Voyager "first" page
+				statusCode = client.executeMethod(getOaiResponse);
 			}
-		}
-		catch (URLConnectionTimedOutException uctoe)
-		{
-			throw new Hexception(uctoe.getMessage());
+			
+			// If the get was successful (200 is the status code for success)
+	        if(statusCode == 200)
+	        {	        
+	        	InputStream istm = getOaiResponse.getResponseBodyAsStream();
+				long finishOaiRequest = System.currentTimeMillis();
+	
+	            log.info("Time taken to get a response from the server " + (finishOaiRequest-startOaiRequest));
+	
+				DocumentBuilderFactory docfactory = DocumentBuilderFactory.newInstance();
+				docfactory.setCoalescing(true);
+				docfactory.setExpandEntityReferences(true);
+				docfactory.setIgnoringComments(true);
+				docfactory.setNamespaceAware(true);
+	
+				// We must set validation false since jdk1.4 parser
+				// doesn't know about schemas.
+				docfactory.setValidating(false);
+	
+				// Ignore whitespace doesn't work unless setValidating(true),
+				// according to javadocs.
+				docfactory.setIgnoringElementContentWhitespace(false);
+	
+				DocumentBuilder docbuilder = docfactory.newDocumentBuilder();
+	
+				xmlerrors = "";
+				xmlwarnings = "";
+				docbuilder.setErrorHandler(this);
+				doc = docbuilder.parse(istm);
+				istm.close();
+	
+				if (xmlerrors.length() > 0 || xmlwarnings.length() > 0)
+				{
+					String msg = "XML validation failed.\n";
+	
+					if (xmlerrors.length() > 0)
+					{
+						msg += "Errors:\n" + xmlerrors;
+						LogWriter.addError(provider.getLogFileName(), "The OAI provider's response had the following XML errors:\n" + xmlerrors);
+						provider.setErrors(provider.getErrors() + 1);
+					}
+					if (xmlwarnings.length() > 0)
+					{
+						msg += "Warnings:\n" + xmlwarnings;
+						LogWriter.addWarning(provider.getLogFileName(), "The OAI provider's response had the following XML warnings:\n" + xmlwarnings);
+						provider.setWarnings(provider.getWarnings() + 1);
+					}
+	
+					throw new Hexception(msg);
+				}
+	        }
+	        else
+	        {
+	        	String msg = "Error getting the HTML document, the HTTP status code was " + statusCode;
+	        	
+	        	log.error(msg);
+	        	
+	        	LogWriter.addError(provider.getLogFileName(), msg);
+	        	provider.setErrors(provider.getErrors() + 1);
+				
+				throw new Hexception(msg);
+	        }
 		}
 		catch (Exception exc)
 		{
