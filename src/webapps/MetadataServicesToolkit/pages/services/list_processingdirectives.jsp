@@ -92,6 +92,31 @@
 
 
                             <c:forEach var="n" items="${processingDirectivesList}" varStatus="a">
+                                <c:set var="totalFormatsSize" value="${fn:length(n.triggeringFormats)}"/>
+                                <c:set var="formatList" value=""/>
+                                    <c:forEach var="m" items="${n.triggeringFormats}" varStatus="b">
+                                        <c:choose>
+                                            <c:when test="${b.count==1}">
+                                                <c:set var="formatList" value="${m.name},${formatList}"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="formatList" value="${formatList},${m.name}"/>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                <c:set var="totalSetsSize" value="${fn:length(n.triggeringSets)}"/>
+                                 <c:set var="setList" value=""/>
+                                    <c:forEach var="m" items="${n.triggeringSets}" varStatus="b">
+                                        <c:choose>
+                                            <c:when test="${b.count==1}">
+                                                <c:set var="setList" value="${m.setSpec},${setList}"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="setList" value="${setList},${m.setSpec}"/>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+
 
                               <tr>
                                 <c:set var="url" value='/MetadataServicesToolkit/viewEditProcessingDirectives.action?ProcessingDirectiveId=${n.id}' />
@@ -111,7 +136,7 @@
 
                                 </c:if>
 
-                                <td class="sortcolumn" align="left"><div style="margin-left:10px;margin-top:10px;height:17px;text-align:left"><c:out value="${n.id}" /></div></td>
+                                <td class="sortcolumn" align="left"><div style="margin-left:10px;margin-top:10px;height:17px;text-align:left;"><c:out value="${n.id}" /></div></td>
 
 
 
@@ -135,33 +160,23 @@
                                         </td>
                                     </c:if>
 
-                                <td>
+                                <td title="${formatList}">
                                     <c:set var="totalFormatsSize" value="${fn:length(n.triggeringFormats)}"/>
-                                    <div style="text-align:left">
+                                    <div style="text-align:left" id="formatsList">
                                         <c:forEach var="m" items="${n.triggeringFormats}" varStatus="b">
-                                            <c:choose>
-                                                <c:when test="${b.count < totalFormatsSize}">
-                                                    ${m.name},
-                                                </c:when>
-                                                <c:otherwise>
-                                                    ${m.name}
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <c:if test="${b.count==1}">
+                                                ${m.name}.....
+                                            </c:if>
                                         </c:forEach>
                                     </div>
                                 </td>
-                                <td>
-                                    <div style="text-align:left">
+                                <td title="${setList}">
+                                    <div style="text-align:left" id="setsList">
                                         <c:set var="totalSetsSize" value="${fn:length(n.triggeringSets)}"/>
                                         <c:forEach var="m" items="${n.triggeringSets}" varStatus="b">
-                                            <c:choose>
-                                                <c:when test="${b.count < totalSetsSize}">
-                                                    ${m.setSpec},
-                                                </c:when>
-                                                <c:otherwise>
-                                                    ${m.setSpec}
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <c:if test="${b.count==1}">
+                                                ${m.setSpec}.....
+                                            </c:if>
                                         </c:forEach>
                                     </div>
                                 </td>

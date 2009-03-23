@@ -16,7 +16,7 @@ public class DefaultServicesService implements ServicesService
 {
     /** DAO object for services in the MST */
     private ServiceDAO servicesDao;
-
+    
     public DefaultServicesService()
     {
         servicesDao = new DefaultServiceDAO();
