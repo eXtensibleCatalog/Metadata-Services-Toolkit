@@ -143,20 +143,21 @@
                                     <c:if test="${bool=='true'}">
                                        
                                         <td>
-                                            
+                                            <div align="left" style="margin-left:5px;">
                                                 <a style="color:black;" href="<c:out value="${url}" />">
                                                    <U> ${x1.name} >>> ${n.service.name} </U>
                                                 </a>
-                                           
+                                            </div>
                                         </td>
                                     </c:if>
                                     <c:if test="${bool=='false'}">
                                         <td>
-                                           <U>
-                                                <a style="color:black;" href="<c:out value="${url}" />">
-                                                    ${x2.name} >>> ${n.service.name}
-                                                </a>
-                                           </U>
+
+                                               <div align="left" style="margin-left:5px;">
+                                                    <a style="color:black;" href="<c:out value="${url}" />">
+                                                        <U> ${x2.name} >>> ${n.service.name} </U>
+                                                    </a>
+                                               </div>
                                         </td>
                                     </c:if>
 
