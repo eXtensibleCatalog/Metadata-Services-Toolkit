@@ -50,7 +50,7 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 	private void getServer()  {
 
 		try {
-			String url = "http://localhost:8085/solr/";
+			String url = "http://localhost:8080/solr/";
 			server = new CommonsHttpSolrServer( url );
 			log.debug("Solar Server::"+ server);
 		} catch (MalformedURLException me) {

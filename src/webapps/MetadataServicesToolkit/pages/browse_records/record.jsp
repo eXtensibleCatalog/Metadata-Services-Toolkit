@@ -52,15 +52,31 @@
             <c:import url="/inc/header.jsp"/>
             
             <c:import url="/inc/menu.jsp"/>
+
+            <c:url var="viewResults" value="browseRecords.action">
+		  		<c:param name="query" value="${query}"/>
+			    <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
+		  	    <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
+		  		<c:param name="rowStart" value="${rowStart}"/>
+		  		<c:param name="startPageNumber" value="${startPageNumber}"/>
+				<c:param name="currentPageNumber" value="${currentPageNumber}"/>
+	    	</c:url>            
+            <jsp:include page="/inc/breadcrumb.jsp"> 
+	          <jsp:param name="bread" value="Browse Records,<a href='${viewResults}'>Search Results</a>, View Record" />
+            </jsp:include>
             
  		</div>
 		<!--  end header -->
 		
 		<!-- body -->
 		<div id="bd">
-   			
-   			${recordXML}
-  
+   			<!-- <pre class="sourcecode">
+   				<textarea rows="80" cols="115" style= "background: #C0C0C0;">${recordXML}</textarea> 
+   			</pre>
+   
+			-->
+			<h2> </h2>
+			<textarea rows="80" cols="150" style= "background: #C0C0C0;">${recordXML}</textarea> 
 			
  		</div>
 		<!--  end body -->		

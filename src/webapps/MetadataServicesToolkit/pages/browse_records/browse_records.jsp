@@ -73,7 +73,28 @@
 					 	<div class="facetContainer">
 					 		<c:forEach var="facet" items="${result.facets}">
 						       <div class="facetTitle">
-							   	<p><strong>${facet.name}</strong>
+							   	<p><strong>
+							   	<c:if test="${facet.name == 'format_name'}">
+							   		Schema 
+							   	</c:if>
+								<c:if test="${facet.name == 'set_name'}">
+							   		Sets 
+							   	</c:if>							   	
+							   	<c:if test="${facet.name == 'provider_name'}">
+							   		Providers 
+							   	</c:if>
+							   	<c:if test="${facet.name == 'service_name'}">
+							   		Service 
+							   	</c:if>
+							   	<c:if test="${facet.name == 'warning'}">
+							   		Warning 
+							   	</c:if>
+							   	<c:if test="${facet.name == 'error'}">
+							   		Error 
+							   	</c:if>
+							   	
+							   	
+							   	</strong>
 							   		<c:forEach var="filter" items="${result.facetFilters}">
 								   		<c:if test="${facet.name == filter.name}">
 										  	 <c:url var="removeFacet" value="browseRecords.action">
@@ -92,15 +113,24 @@
 						       <div class="facetContent">
 								<p>
 								<c:forEach var="fcount" items="${facet.values}">
-						      			<c:url var="facetFilter" value="browseRecords.action">
-										  <c:param name="query" value="${query}"/>
-										  <c:param name="addFacetName" value="${facet.name}"/>
-										  <c:param name="addFacetValue" value="${fcount.name}"/>
-										  <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
-										  <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
-									 </c:url>
+									<c:set var="facetExist" value="false"/>
+									<c:forEach var="filter" items="${result.facetFilters}">
+										<c:if test="${fcount.name == filter.value}">
+											<c:set var="facetExist" value="true"/>
+										</c:if>
+									</c:forEach>
+									
+									<c:if test="${facetExist == false}">
+											<c:url var="facetFilter" value="browseRecords.action">
+												  <c:param name="query" value="${query}"/>
+												  <c:param name="addFacetName" value="${facet.name}"/>
+												  <c:param name="addFacetValue" value="${fcount.name}"/>
+												  <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
+												  <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
+											 </c:url>
 
-									<a href="${facetFilter}">${fcount.name} (${fcount.count})</a><br/>
+											<a href="${facetFilter}">${fcount.name} (${fcount.count})</a><br/>
+									</c:if>
 								</c:forEach> 
 								</p>
 
@@ -108,53 +138,11 @@
 						        </c:forEach>
 					   	</div>	
 					
-<!--				
-				<div class="facet_container">
-				    <div class="facet_search_selection">
-					  <h2>Selected Facets</h2>
-					  <c:forEach var="filter" items="${result.facetFilters}">
-					  	 <c:url var="removeFacet" value="browseRecords.action">
-							  <c:param name="query" value="${query}"/>
-							  <c:param name="removeFacetName" value="${filter.name}"/>
-							  <c:param name="removeFacetValue" value="${filter.value}"/>
-							  <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
-							  <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
-						  </c:url>
-					  	${filter.name}: ${filter.value} <a href="${removeFacet}">Remove</a>
-					  
-					  </c:forEach>
-				     </div>
-
-				     <div class="facets"> 
-
-					    <c:forEach var="facet" items="${result.facets}">
-						<c:if test="${facet.name == 'format_name'}">
-							<div class="facet_name">Format Name<br/> </div>
-						</c:if>
-						<c:if test="${facet.name == 'provider_name'}">
-							<div class="facet_name">Provider Name<br/> </div>
-						</c:if>
-						<c:forEach var="fcount" items="${facet.values}">
-						      <c:url var="facetFilter" value="browseRecords.action">
-								  <c:param name="query" value="${query}"/>
-								  <c:param name="addFacetName" value="${facet.name}"/>
-								  <c:param name="addFacetValue" value="${fcount.name}"/>
-								  <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
-								  <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
-							  </c:url>
-
-						<a href="${facetFilter}">${fcount.name} (${fcount.count})</a><br/>
-						</c:forEach>
-						<br/>
-					 </c:forEach>
-				    </div>
-				</div>
--->
 				
 					<div class="search_box_div">
 						<form name="browseRecordsForm" method="post" action="browseRecords.action">
 
-							<input type="text" id="search_text" name="searchText" value="${searchText}" size="40"/>
+							<input type="text" id="search_text" name="query" value="${query}" size="40"/>
 							<button class="xc_button" type="submit" name="save" >Search</button>
 						</form>	
 					</div>
@@ -186,6 +174,13 @@
 								<c:url var="viewRecord" value="viewRecord.action">
 									  <c:param name="recordId" value="${record.id}"/>
 									  <c:param name="recordXML" value="${record.oaiXml}"/>
+									  <c:param name="query" value="${query}"/>
+									  <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
+								  	  <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
+									  <c:param name="rowStart" value="${rowStart}"/>
+									  <c:param name="startPageNumber" value="${startPageNumber}"/>
+									  <c:param name="currentPageNumber" value="${currentPageNumber}"/>
+									  	  
 								  </c:url>
 								<a href="${viewRecord}">${record.provider.name} ${record.id}</a>
 								<br>

@@ -26,8 +26,6 @@ import xc.mst.constants.Constants;
 import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.DefaultBrowseRecordService;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 /**
  * Browse records
  * 
@@ -38,9 +36,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 
 	/** Generated Id */
 	private static final long serialVersionUID = -2599819216740526000L;
-	
-	/** Search text entered by user */
-	private String searchText;
 	
 	/** A reference to the logger for this class */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -69,44 +64,54 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	/** Facet values separated by | */
 	private String selectedFacetValues ="";
 	
-	/** Search query */
+	/** Search text entered by user */
 	private String query = "";
 	
+	/** Id of record */
 	private int recordId;
 	
+	/** Record XML */
 	private String recordXML;
 	
 	/** Response */
 	private HttpServletResponse servletResponse;
 	
+	/** The end row number to retrieve */ 
 	private int rowEnd;
 	
-
 	
 	/**
 	 * Search for records
 	 */
 	public String browse() {
-		log.debug("searchText::"+searchText);
 		log.debug("query::"+query);
 		
-		// Copy search text to query
-		if (searchText != null && searchText.length() > 0) {
-			query = searchText;
-		}
+		SolrQuery solrQuery = new SolrQuery();
+		
+		solrQuery.setQuery(query.replaceAll(":", "\\\\:"));
 	
+		StringTokenizer nameTokenizer = new StringTokenizer(selectedFacetNames, "|");
+		StringTokenizer valueTokenizer = new StringTokenizer(selectedFacetValues, "|");
+		
+		while (nameTokenizer.hasMoreTokens()) {
+	    	solrQuery.addFilterQuery(nameTokenizer.nextToken() + ":" + valueTokenizer.nextToken().replaceAll(":", "\\\\:"));
+		}
+	    
 		// Add selected facet to query
 	    if (addFacetName != null && addFacetName.length() > 0) {
-	    	query = query.concat(" AND " + addFacetName + ":" + addFacetValue);
-	    	
+	    	//query = query.concat(" AND " + addFacetName + ":" + addFacetValue);
+	    	solrQuery.addFilterQuery(addFacetName + ":" + addFacetValue.replaceAll(":", "\\\\:"));
 	    	// Add facet names and values to | separated list
 	    	selectedFacetNames = selectedFacetNames + "|" + addFacetName;
 	    	selectedFacetValues = selectedFacetValues + "|" + addFacetValue;
 	    }
+	    
+	    
 
 	    // Remove selected facet to query
 	    if (removeFacetName != null && removeFacetName.length() > 0) {
-	    	query = query.replaceAll(" AND " + removeFacetName + ":" + removeFacetValue, "");
+	    	// query = query.replaceAll(" AND " + removeFacetName + ":" + removeFacetValue, "");
+	    	solrQuery.removeFilterQuery(removeFacetName + ":" + removeFacetValue.replaceAll(":", "\\\\:"));
 	    }
 
 	    log.debug("query after adding/removing facet ::"+query);
@@ -164,38 +169,27 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	    log.debug("Final after remove selectedFacetValues:"+selectedFacetValues);
 	    
 	    // Query formation
-		SolrQuery solarQuery = new SolrQuery();
-		solarQuery.setQuery( query )
-	    	.setFacet(true)
-	    	.setFacetMinCount(1)
-	    	.setRows(25)
-	    	.setStart(0);
 		
-		if (!facetNamesList.contains("format_name")) {
-			solarQuery.addFacetField("format_name");
-		}
+		solrQuery.setFacet(true)
+	    		 .setFacetMinCount(1);
 		
-		if (!facetNamesList.contains("provider_name")) {
-			solarQuery.addFacetField("provider_name");
-		}
-		
-		if (!facetNamesList.contains("set_name")) {
-			solarQuery.addFacetField("set_name");
-		}
-		
-		if (!facetNamesList.contains("harvest_schedule_name")) {
-			solarQuery.addFacetField("harvest_schedule_name");
-		}
+		solrQuery.addFacetField("format_name");
+		solrQuery.addFacetField("provider_name");
+		solrQuery.addFacetField("set_name");
+		solrQuery.addFacetField("service_name");
+		solrQuery.addFacetField("warning");
+		solrQuery.addFacetField("error");
+
 	    
 		rowEnd = rowStart + numberOfResultsToShow;
 		
-		solarQuery.setStart(rowStart);
-		solarQuery.setRows(numberOfResultsToShow);
-	    result = recordSearch.search(solarQuery);   
+		solrQuery.setStart(rowStart);
+		solrQuery.setRows(numberOfResultsToShow);
+	    result = recordSearch.search(solrQuery);   
 	    
-	    log.debug("result::"+result.toString());
+	    log.debug("result::"+result);
 	    
-	    if(rowEnd > result.getTotalNumberOfResults())
+	    if((result != null) && (rowEnd > result.getTotalNumberOfResults()))
 		{
 			rowEnd = result.getTotalNumberOfResults();
 		}
@@ -213,19 +207,10 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	public String viewRecord() throws IOException {
 		
 		log.debug("records XML:"+recordXML);
-		servletResponse.getWriter().write(recordXML);
+		recordXML = recordXML.replaceAll("<", "&lt;");
+		recordXML = recordXML.replaceAll(">", "&gt;");
 		
 		return SUCCESS;
-	}
-
-
-	public String getSearchText() {
-		return searchText;
-	}
-
-
-	public void setSearchText(String searchText) {
-		this.searchText = searchText;
 	}
 
 	public BrowseRecordService getRecordSearch() {

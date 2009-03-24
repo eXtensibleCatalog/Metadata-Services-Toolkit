@@ -1146,8 +1146,6 @@ public class DefaultRecordService extends RecordService
 		doc.addField(FIELD_CREATED_AT, record.getCreatedAt());
 		doc.addField(FIELD_DELETED, Boolean.toString(record.getDeleted()));
 
-		log.debug("Format Id: " + record.getFormat().getId());
-		log.debug(Integer.toString(record.getFormat().getId()));
 		doc.addField(FIELD_FORMAT_ID, Integer.toString(record.getFormat().getId()));
 		doc.addField(FIELD_FORMAT_NAME, record.getFormat().getName());
 
@@ -1156,11 +1154,13 @@ public class DefaultRecordService extends RecordService
 		doc.addField(FIELD_PROVIDER_URL, (record.getProvider() == null ? "" : record.getProvider().getOaiProviderUrl()));
 
 		doc.addField(FIELD_HARVEST_ID, (record.getHarvest() == null ? "0" : Integer.toString(record.getHarvest().getId())));
-		doc.addField(FIELD_HARVEST_SCHEDULE_ID, (record.getHarvest() == null || record.getHarvest().getHarvestSchedule() == null ? "0" : Integer.toString(record.getHarvest().getHarvestSchedule().getId())));
-		doc.addField(FIELD_HARVEST_SCHEDULE_NAME, (record.getHarvest() == null || record.getHarvest().getHarvestSchedule() == null ? "" : record.getHarvest().getHarvestSchedule().getScheduleName()));
+//		doc.addField(FIELD_HARVEST_SCHEDULE_ID, (record.getHarvest() == null || record.getHarvest().getHarvestSchedule() == null ? "0" : Integer.toString(record.getHarvest().getHarvestSchedule().getId())));
+//		doc.addField(FIELD_HARVEST_SCHEDULE_NAME, (record.getHarvest() == null || record.getHarvest().getHarvestSchedule() == null ? "" : record.getHarvest().getHarvestSchedule().getScheduleName()));
 
 		doc.addField(FIELD_SERVICE_ID, (record.getService() == null ? "0" : Integer.toString(record.getService().getId())));
-		doc.addField(FIELD_SERVICE_NAME, (record.getService() == null ? "" : record.getService().getName()));
+		
+		if (record.getService() != null)
+			doc.addField(FIELD_SERVICE_NAME, record.getService().getName());
 
 		doc.addField(FIELD_OAI_IDENTIFIER, record.getOaiIdentifier());
 		doc.addField(FIELD_OAI_DATESTAMP, record.getOaiDatestamp());
@@ -1196,7 +1196,7 @@ public class DefaultRecordService extends RecordService
 
 		for(String error : record.getErrors())
 			doc.addField(FIELD_ERROR, error);
-
+		
 		for(String warningCode : record.getWarningCodes())
 			doc.addField(FIELD_WARNING_CODE, warningCode);
 
@@ -1212,29 +1212,32 @@ public class DefaultRecordService extends RecordService
 			all.append(record.getProvider().getName());
 			all.append(" ");
 		}
-//		for(Set set : record.getSets())
-//		{
-//			all.append(set.getSetSpec());
-//			all.append(" ");
-//			all.append(set.getDisplayName());
-//			all.append(" ");
-//		}
+		for(Set set : record.getSets())
+		{
+			all.append(set.getSetSpec());
+			all.append(" ");
+			all.append(set.getDisplayName());
+			all.append(" ");
+		}
 
 		if(record.getService() != null) {
 			all.append(record.getService().getName());
 			all.append(" ");
 		}
 
-
-		if(record.getHarvest() != null) {
-			all.append(record.getHarvest().getHarvestSchedule().getScheduleName());
+		for(String warning : record.getWarnings())
+		{
+			all.append(warning);
+			all.append(" ");
+		}
+		
+		for(String error : record.getErrors())
+		{
+			all.append(error);
 			all.append(" ");
 		}
 
-
-
 		doc.addField(FIELD_ALL, all.toString());
-		//doc.addField(FIELD_ALL, record.getFormat().getName());
 
 
 		return doc;
@@ -1254,7 +1257,6 @@ public class DefaultRecordService extends RecordService
 	    //	record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
 		record.setDeleted(Boolean.parseBoolean((String)doc.getFieldValue(FIELD_DELETED)));
 
-		log.debug("Format id : "+doc.getFieldValue(FIELD_FORMAT_ID));
 		record.setFormat(formatDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_FORMAT_ID))));
 		record.setOaiDatestamp((String)doc.getFieldValue(FIELD_OAI_DATESTAMP));
 		record.setOaiHeader((String)doc.getFieldValue(FIELD_OAI_HEADER));
@@ -1263,7 +1265,7 @@ public class DefaultRecordService extends RecordService
 		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
 		record.setProvider(providerDao.loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
 		record.setService(serviceDao.loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
-		record.setHarvest(harvestDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_HARVEST_ID))));
+//		record.setHarvest(harvestDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_HARVEST_ID))));
 
 		Collection<Object> sets = doc.getFieldValues(FIELD_SET_SPEC);
 		if(sets != null)
