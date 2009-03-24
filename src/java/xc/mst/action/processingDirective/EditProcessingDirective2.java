@@ -360,13 +360,20 @@ public class EditProcessingDirective2 extends ActionSupport
                     if(flag==1)
                     {
                        Set setExists = setService.getSetBySetSpec(outputSetSpec);
-                       if((setExists==null)&&(outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
+                       if(setExists==null)
                         {
-                            Set tempSet = new Set();
-                            tempSet.setDisplayName(outputSetName);
-                            tempSet.setSetSpec(outputSetSpec);
-                            setService.insertSet(tempSet);
-                            temporaryProcessingDirective.setOutputSet(tempSet);
+                            if((outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
+                            {
+                                Set tempSet = new Set();
+                                tempSet.setDisplayName(outputSetName);
+                                tempSet.setSetSpec(outputSetSpec);
+                                setService.insertSet(tempSet);
+                                temporaryProcessingDirective.setOutputSet(tempSet);
+                            }
+                            else
+                            {
+                                temporaryProcessingDirective.setOutputSet(setExists);
+                            }
                         }
                         else
                         {
@@ -446,13 +453,20 @@ public class EditProcessingDirective2 extends ActionSupport
                     if(flag==1)
                     {
                        Set setExists = setService.getSetBySetSpec(outputSetSpec);
-                       if((setExists==null)&&(outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
+                       if(setExists==null)
                         {
-                            Set tempSet = new Set();
-                            tempSet.setDisplayName(outputSetName);
-                            tempSet.setSetSpec(outputSetSpec);
-                            setService.insertSet(tempSet);
-                            temporaryProcessingDirective.setOutputSet(tempSet);
+                           if((outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
+                           {
+                                Set tempSet = new Set();
+                                tempSet.setDisplayName(outputSetName);
+                                tempSet.setSetSpec(outputSetSpec);
+                                setService.insertSet(tempSet);
+                                temporaryProcessingDirective.setOutputSet(tempSet);
+                           }
+                           else
+                           {
+                               temporaryProcessingDirective.setOutputSet(setExists);
+                           }
                         }
                         else
                         {
@@ -570,13 +584,20 @@ public class EditProcessingDirective2 extends ActionSupport
                 System.out.println("Setting the list of sets and sets size is "+tempSetList.size());
                 tempProcDir.setTriggeringSets(tempSetList);
                 Set setExists = setService.getSetBySetSpec(outputSetSpec);
-                if((setExists==null)&&(outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
+                if(setExists==null)
                 {
-                    Set tempSet = new Set();
-                    tempSet.setDisplayName(outputSetName);
-                    tempSet.setSetSpec(outputSetSpec);
-                    setService.insertSet(tempSet);
-                    tempProcDir.setOutputSet(tempSet);
+                    if((outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
+                    {
+                        Set tempSet = new Set();
+                        tempSet.setDisplayName(outputSetName);
+                        tempSet.setSetSpec(outputSetSpec);
+                        setService.insertSet(tempSet);
+                        tempProcDir.setOutputSet(tempSet);
+                    }
+                    else
+                    {
+                        tempProcDir.setOutputSet(setExists);
+                    }
                 }
                 else
                 {

@@ -28,8 +28,8 @@ YAHOO.xc.mst.user = {
 				return false;
 			}
 			
-			if (document.getElementById('password').value.length < 6 || document.getElementById('password').value.length > 10) {
-				alert('Password should be 6 to 10 characters long');
+			if (document.getElementById('password').value.length < 6 || document.getElementById('password').value.length > 20) {
+				alert('Password should be 6 to 20 characters long');
 				return false;
 			}
 					
@@ -70,7 +70,7 @@ YAHOO.xc.mst.user = {
                      {
                          if(pass==confpass)
                          {
-                             
+                             document.addLocalUser.action = "addLocalUser.action";
                              document.addLocalUser.submit();
                          }
                          else

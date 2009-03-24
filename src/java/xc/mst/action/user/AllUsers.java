@@ -27,7 +27,7 @@ import xc.mst.manager.user.UserService;
 public class AllUsers extends ActionSupport
 {
     /** The column on which the rows are to be sorted */
-    private String columnSorted;
+    private String columnSorted = "username";
 
     /** boolean value which determines of the rows have to be sorted in ascending order */
     private boolean isAscendingOrder=true;

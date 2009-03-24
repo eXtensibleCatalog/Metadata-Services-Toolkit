@@ -20,9 +20,22 @@ YAHOO.xc.mst.log = {
     {
         try
         {
-            alert("Entered the reset method");
+            
             document.getElementById("serviceLogFileName").value = serviceLogFileName;
             document.getElementById("serviceId").value = serviceId;
+            document.serviceReset.action = "serviceReset.action";
+            document.serviceReset.submit();
+        }
+        catch(e)
+        {
+            alert(e);
+        }
+    },
+    resetAll: function()
+    {
+        try
+        {
+            document.serviceReset.action = "serviceResetAll.action";
             document.serviceReset.submit();
         }
         catch(e)

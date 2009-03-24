@@ -134,7 +134,7 @@
 
             
 
-            <div align="left">
+            <div align="left" style="margin-top:10px;">
                  <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.Addcancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
                  <button class="xc_button" type="button" name="addlocaluser" onclick="javascript:YAHOO.xc.mst.user.AddValidate();">Add Local User</button>
             </div>

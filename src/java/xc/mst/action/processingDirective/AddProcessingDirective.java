@@ -187,6 +187,10 @@ public class AddProcessingDirective extends ActionSupport
                     setTemporaryProcessingDirective(tempProcDir);
                 }
             }
+            else
+            {
+                sessionMap.remove("temporaryProcessingDirective");
+            }
             return SUCCESS;
         }
         catch(Exception e)

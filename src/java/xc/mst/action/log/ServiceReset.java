@@ -13,6 +13,8 @@ package xc.mst.action.log;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
@@ -92,6 +94,38 @@ public class ServiceReset extends ActionSupport
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
 
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.debug(e);
+            e.printStackTrace();
+            this.addFieldError("serviceResetError", "Error : There was error resetting the log files");
+            return SUCCESS;
+        }
+    }
+
+    /**
+     * resets all the log files related to services
+     * @return {@link #SUCCESS}
+     */
+    public String resetAll()
+    {
+        try
+        {
+            List servicesList = servicesService.getAllServices();
+            Iterator servIter = servicesList.iterator();
+            while(servIter.hasNext())
+            {
+                Service tempService = (Service)servIter.next();
+                tempService.setServicesLastLogReset(new Date());
+                tempService.setServicesWarnings(0);
+                tempService.setServicesErrors(0);
+                servicesService.updateService(tempService);
+                String filename = tempService.getServicesLogFileName();
+                PrintWriter printWriter = new PrintWriter(filename);
+                printWriter.close();
+            }
             return SUCCESS;
         }
         catch(Exception e)

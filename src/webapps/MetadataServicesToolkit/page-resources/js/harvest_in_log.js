@@ -24,7 +24,7 @@ YAHOO.xc.mst.logs = {
             {
                 try
                 {
-                    alert("Entered the reset method");
+                    
                     document.getElementById("harvestInLogFileName").value = harvestInLogFileName;
                     document.getElementById("providerId").value = providerId;
                     document.harvestInReset.submit();

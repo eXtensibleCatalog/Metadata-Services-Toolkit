@@ -275,7 +275,10 @@ public class AddLDAPUser extends ActionSupport
             if(serverExists==false)
             {
                 this.addFieldError("addLDAPUserError","Error : NO LDAP Server has been configured");
-                return ERROR;
+                setGroupList(groupService.getAllGroups());
+                setTemporaryUser(user);
+                setSelectedGroups(groupsSelected);
+                return INPUT;
             }
             user.setServer(tempServer);
             user.setLastLogin(new Date());

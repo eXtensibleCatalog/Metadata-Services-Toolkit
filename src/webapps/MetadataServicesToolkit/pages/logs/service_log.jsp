@@ -64,6 +64,9 @@
 		<div id="bd">
         
              <div class="errorMessage"> <s:fielderror /> </div>
+                <div align="right" style="margin-bottom:10px;">
+                    <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.resetAll();" name="next">Reset All</button>
+                </div>
                 <div class="viewTable">
                     <table width="100%">
                         <thead>
@@ -91,7 +94,10 @@
                               </c:forEach>
                         </tbody>
                     </table>
-                    <form action="serviceReset.action" name="serviceReset" method="post">
+                     <div align="right" style="margin-bottom:10px;">
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.resetAll();" name="next">Reset All</button>
+                    </div>
+                    <form name="serviceReset" method="post">
                         <input type="hidden" name="serviceLogFileName" id="serviceLogFileName">
                         <input type="hidden" name="serviceId" id="serviceId">
                     </form>
