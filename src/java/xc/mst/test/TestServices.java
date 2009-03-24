@@ -16,7 +16,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.StringReader;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +29,6 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.xpath.XPath;
-import org.xml.sax.InputSource;
 
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
@@ -49,31 +47,6 @@ import xc.mst.utils.index.SolrIndexManager;
 
 public class TestServices
 {
-	private static File unprocessedRecordsDir = new File("C:\\serviceinput");
-	private static File processedRecordsDir = new File("C:\\serviceoutput");
-
-	private static int serviceId = 1;
-
-	/**
-	 * Manager for getting, inserting and updating records
-	 */
-	private static RecordService recordService = new DefaultRecordService();
-
-	/**
-	 * Data access object for getting and updating providers
-	 */
-	private static ProviderDAO providerDao = new DefaultProviderDAO();
-
-	/**
-	 * Data access object for getting formats
-	 */
-	private static FormatDAO formatDao = new DefaultFormatDAO();
-
-	/**
-	 * Data access object for getting and updating services
-	 */
-	private static ServiceDAO serviceDao = new DefaultServiceDAO();
-
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
 	 */
@@ -96,11 +69,16 @@ public class TestServices
 			System.exit(1);
 		}
 	}
+	
+	private static File unprocessedRecordsDir = new File("C:\\serviceinput");
+	private static File processedRecordsDir = new File("C:\\serviceoutput");
+
+	private static int serviceId = 1;
 
 	/**
 	 * Builds the XML Document based on the record's OAI XML
 	 */
-	private static SAXBuilder builder = new SAXBuilder();
+	private SAXBuilder builder = new SAXBuilder();
 
 	/**
 	 * Used to format timestamps for the results of the tests
@@ -109,6 +87,8 @@ public class TestServices
 
 	public static void main(String[] args) throws DataException, IOException, JDOMException
 	{
+		RecordService recordService = new DefaultRecordService();
+		
 		try
 		{
 			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
@@ -130,22 +110,6 @@ public class TestServices
 			{
 				if(record.getService() != null && record.getService().getId() == serviceId)
 					saveRecordToFile(processedRecordsDir, record);
-				
-				System.out.println("WARNING CODES:");
-				for(String wc : record.getWarningCodes())
-					System.out.println(wc);
-				
-				System.out.println("WARNINGS:");
-				for(String wc : record.getWarnings())
-					System.out.println(wc);
-				
-				System.out.println("ERROR CODES:");
-				for(String ec : record.getErrorCodes())
-					System.out.println(ec);
-				
-				System.out.println("ERRORS:");
-				for(String ec : record.getErrors())
-					System.out.println(ec);
 				
 				recordService.delete(record);
 			}
@@ -171,6 +135,11 @@ public class TestServices
 
 	public static void addUnprocessedRecordFromFiles(File inputDirectory) throws DataException, IOException
 	{
+		ProviderDAO providerDao = new DefaultProviderDAO();
+		FormatDAO formatDao = new DefaultFormatDAO();
+		ServiceDAO serviceDao = new DefaultServiceDAO();
+		RecordService recordService = new DefaultRecordService();
+		
 		File[] testRecords = inputDirectory.listFiles();
 
 		for(int counter = 0; counter < testRecords.length; counter++)
