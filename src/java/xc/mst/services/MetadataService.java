@@ -464,7 +464,7 @@ public abstract class MetadataService
 		{
 			// Get the list of record inputs for this service
 			RecordList records = recordService.getInputForService(service.getId());
-
+			
 			//DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 
 			// Iterate over the list of input records and process each.

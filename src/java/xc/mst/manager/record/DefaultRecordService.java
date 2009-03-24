@@ -105,6 +105,9 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get all records
 		SolrQuery query = new SolrQuery().setQuery(FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -192,6 +195,9 @@ public class DefaultRecordService extends RecordService
 
 		SolrQuery query = new SolrQuery().setQuery(queryString);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -222,6 +228,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_PROVIDER_ID + ":" + Integer.toString(providerId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -252,6 +261,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_SERVICE_ID + ":" +  Integer.toString(serviceId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -282,6 +294,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_HARVEST_ID + ":" + Integer.toString(harvestId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -312,6 +327,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_HARVEST_SCHEDULE_ID + ":" +  Integer.toString(harvestScheduleId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -343,6 +361,9 @@ public class DefaultRecordService extends RecordService
 				+ FIELD_SERVICE_ID + ":" + Integer.toString(serviceId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -373,6 +394,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -403,6 +427,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_PROVIDER_NAME + ":" + providerName + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -433,6 +460,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_PROVIDER_URL + ":" + providerUrl + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -463,6 +493,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_WARNING_CODE + ":" + warningCode + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -493,6 +526,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_ERROR_CODE + ":" + errorCode + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -523,6 +559,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_SET_NAME + ":" + setName + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -553,6 +592,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_SET_SPEC  + ":" + setSpec + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE +  ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -583,6 +625,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_FORMAT_NAME + ":" + formatName + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE  + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -613,6 +658,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = null;
 		docs = indexMgr.getDocumentList(query);
@@ -644,6 +692,9 @@ public class DefaultRecordService extends RecordService
 				+ FIELD_PROVIDER_ID + ":" + Integer.toString(providerId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = null;
 		docs = indexMgr.getDocumentList(query);
@@ -675,6 +726,9 @@ public class DefaultRecordService extends RecordService
 				+ FIELD_SERVICE_ID + ":" + Integer.toString(serviceId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = null;
 		docs = indexMgr.getDocumentList(query);
@@ -705,6 +759,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_PROCESSED_FROM + ":" + Long.toString(processedFromId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -735,6 +792,9 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_TRAIT + ":" + trait + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -806,6 +866,10 @@ public class DefaultRecordService extends RecordService
 			//queryBuffer.append(new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);
 
 		query.setQuery(queryBuffer.toString());
+		
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 
@@ -870,6 +934,10 @@ public class DefaultRecordService extends RecordService
 			//query.add((Query)new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);
 
 		query.setQuery(queryBuffer.toString());
+		
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);
 

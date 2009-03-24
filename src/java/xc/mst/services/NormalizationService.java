@@ -144,7 +144,6 @@ public class NormalizationService extends MetadataService
 	public NormalizationService()
 	{
 		log.info("Working directory is: " + System.getProperty("user.dir"));
-		System.out.println("Working directory is: " + System.getProperty("user.dir"));
 
 		// Initialize the XC format
 		marcxmlFormat = formatDao.getByName("marcxml");

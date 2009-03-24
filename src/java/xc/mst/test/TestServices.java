@@ -92,19 +92,15 @@ public class TestServices
 		try
 		{
 			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
-			Thread.sleep(1000);
-			// TODO removed IndexManager
-			//IndexManager.getInstance().maybeReOpen();
+			Thread.sleep(2000);
 			SolrIndexManager.getInstance().commitIndex();
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 			System.out.println(formatter.format(new Date()));
 			MetadataService.runService(serviceId, -1);
 			System.out.println(formatter.format(new Date()));
-			Thread.sleep(1000);
-			// TODO removed IndexManager
-			//IndexManager.getInstance().maybeReOpen();
+			Thread.sleep(2000);
 			SolrIndexManager.getInstance().commitIndex();
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 			RecordList records = recordService.getAll();
 			for(Record record: records)
 			{
@@ -150,11 +146,11 @@ public class TestServices
 
 			record.setOaiXml(readUnicodeFile(currentRecord));
 			record.setFormat(formatDao.getById(2));
-			record.setProvider(providerDao.getById(2));
 			record.setOaiIdentifierBase("oai:rochester");
 			record.setProvider(providerDao.getById(1));
 			record.addInputForService(serviceDao.getById(serviceId));
-			recordService.insert(record);
+			if(recordService.insert(record) == false)
+				System.out.println("FAIL! " + currentRecord.getAbsolutePath());
 		}
 	}
 
