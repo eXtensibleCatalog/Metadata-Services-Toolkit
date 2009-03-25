@@ -188,13 +188,20 @@
 								<br>
 								Provider: ${record.provider.name}
 								<br>
-								Harvest: 
+								<!-- Harvest: 
 								<c:if test="${record.harvest != null}">
 									${record.harvest.harvestSchedule.scheduleName}
 									<br>
 								</c:if>
+								-->
 								
+								<c:if test="${record.numberOfPredecessors > 0}">
+									${record.numberOfPredecessors}  Predecessor(s) &nbsp;&nbsp;&nbsp;
+								</c:if>
 								
+								<c:if test="${record.numberOfSuccessors > 0}">
+									${record.numberOfSuccessors} Successor(s)
+								</c:if>								
 							</div>
 						</div>
 

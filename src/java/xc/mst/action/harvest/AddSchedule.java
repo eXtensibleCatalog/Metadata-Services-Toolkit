@@ -11,6 +11,8 @@ package xc.mst.action.harvest;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -33,9 +35,6 @@ import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.repository.SetService;
 
 import com.opensymphony.xwork2.ActionSupport;
-import java.util.ArrayList;
-import java.util.Iterator;
-import xc.mst.bo.harvest.Harvest;
 
 
 
@@ -118,7 +117,9 @@ public class AddSchedule extends ActionSupport
 	/** Format service */
 	private FormatService formatService = new DefaultFormatService();
 
-
+	/** Error type */
+	private String errorType; 
+	
 	/**
      * Overriding default implementation to view add schedule.
      *
@@ -226,6 +227,7 @@ public class AddSchedule extends ActionSupport
 	    	schedule = scheduleService.getScheduleByName(scheduleName);
     	} else {
     		addFieldError("scheduleNameExist", "Schedule name already exists - " + scheduleName);
+    		errorType = "error";
     		repositories = providerService.getAllProviders();
     		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         	endDateDisplayFormat = format.format(schedule.getEndDate());
@@ -294,6 +296,7 @@ public class AddSchedule extends ActionSupport
 
     	} else {
     		addFieldError("scheduleNameExist", "Schedule name already exists - " + scheduleName);
+    		errorType = "error";
     		repositories = providerService.getAllProviders();
     		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         	endDateDisplayFormat = format.format(schedule.getEndDate());
@@ -382,6 +385,7 @@ public class AddSchedule extends ActionSupport
 	    	repositories = providerService.getAllProviders();
     	} else {
     		addFieldError("scheduleNotExist", "Schedule does not exists.");
+    		errorType = "error";
     		return INPUT;
     	}
     	return SUCCESS;
@@ -573,6 +577,14 @@ public class AddSchedule extends ActionSupport
 
 	public String getStartDateDisplayFormat() {
 		return startDateDisplayFormat;
+	}
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
 	}
 
 

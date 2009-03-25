@@ -80,14 +80,6 @@ strong
 }
 
 /* main class for error messages */
-.errorMessage
-{
-	font-size: 1em;
-	padding-top: 1em;
-    padding-bottom: .5em;
-	font-weight: bold;
-	color: red;
-}
 
 .informationMessage
 {

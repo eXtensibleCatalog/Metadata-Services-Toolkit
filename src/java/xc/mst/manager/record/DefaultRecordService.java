@@ -1369,7 +1369,9 @@ public class DefaultRecordService extends RecordService
 		if(processedFroms != null)
 			for(Object processedFrom : processedFroms)
 				record.addProcessedFrom(getById(Long.parseLong((String)processedFrom)));
-
+		
+		record.setSuccessors(getByProcessedFrom(record.getId()));
+	
 		Collection<Object> inputForServices = doc.getFieldValues(FIELD_INPUT_FOR_SERVICE_ID);
 		if(inputForServices != null)
 			for(Object inputForService : inputForServices)

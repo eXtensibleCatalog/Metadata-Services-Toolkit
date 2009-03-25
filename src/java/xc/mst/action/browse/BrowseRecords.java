@@ -118,45 +118,56 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	    log.debug("selectedFacetNames after Add ::"+selectedFacetNames);
 	    log.debug("selectedFacetValues after Add ::"+selectedFacetValues);
 	
-	    // Create facet names List
-	    StringTokenizer tokenizer = new StringTokenizer(selectedFacetNames, "|");
+	    // Create facet names and values List
+	    StringTokenizer facetNameTokenizer = new StringTokenizer(selectedFacetNames, "|");
 	    List<String> facetNamesList = new ArrayList<String>();
+	    
+	    StringTokenizer facetValueTokenizer = new StringTokenizer(selectedFacetValues, "|");
+	    List<String> facetValuesList = new ArrayList<String>();
+
 	    
 	    StringBuffer newSelectedFacetNames = new StringBuffer();
 	    StringBuffer newSelectedFacetValues = new StringBuffer();
-	    String myToken = "";
-	    while (tokenizer.hasMoreTokens()) {
-	    	myToken = tokenizer.nextToken();
+	    String myNameToken = "";
+	    String myValueToken = "";
+	    while (facetNameTokenizer.hasMoreTokens()) {
+	    	myNameToken = facetNameTokenizer.nextToken();
+	    	myValueToken = facetValueTokenizer.nextToken();
 	    	if (removeFacetName != null && removeFacetName.length() > 0) {
 	    		// Create facet names String separated by | 
-	    		if (!removeFacetName.equalsIgnoreCase(myToken)) {
+	    		if (!(removeFacetName.equalsIgnoreCase(myNameToken) &&  removeFacetValue.equalsIgnoreCase(myValueToken))) {
 		    		newSelectedFacetNames.append("|");
-		    		newSelectedFacetNames.append(myToken);
-		    		facetNamesList.add(myToken);
+		    		newSelectedFacetNames.append(myNameToken);
+		    		facetNamesList.add(myNameToken);
+		    		
+		    		newSelectedFacetValues.append("|");
+	    			newSelectedFacetValues.append(myValueToken);
+	    			facetValuesList.add(myValueToken);
 		    	}
 	    	} else {
-	    		facetNamesList.add(myToken);
+	    		facetNamesList.add(myNameToken);
+	    		facetValuesList.add(myValueToken);
 	    	}
 	    }
 	    
 	    log.debug("Final facetNamesList:"+facetNamesList);
 	    
-	    // Create facet values List
-	    tokenizer = new StringTokenizer(selectedFacetValues, "|");
-	    List<String> facetValuesList = new ArrayList<String>();
-	    while (tokenizer.hasMoreTokens()) {
-	    	myToken = tokenizer.nextToken();
-	    	if (removeFacetValue != null && removeFacetValue.length() > 0) {
-	    		if (!removeFacetValue.equalsIgnoreCase(myToken)) {
-	    	
-	    			newSelectedFacetValues.append("|");
-	    			newSelectedFacetValues.append(myToken);
-	    			facetValuesList.add(myToken);
-		    	}
-	    	} else {		    	
-	    		facetValuesList.add(myToken);
-	    	}
-	    }
+//	    // Create facet values List
+//	    StringTokenizer facetValueTokenizer = new StringTokenizer(selectedFacetValues, "|");
+//	    List<String> facetValuesList = new ArrayList<String>();
+//	    while (tokenizer.hasMoreTokens()) {
+//	    	myToken = tokenizer.nextToken();
+//	    	if (removeFacetValue != null && removeFacetValue.length() > 0) {
+//	    		if (!removeFacetValue.equalsIgnoreCase(myToken)) {
+//	    	
+//	    			newSelectedFacetValues.append("|");
+//	    			newSelectedFacetValues.append(myToken);
+//	    			facetValuesList.add(myToken);
+//		    	}
+//	    	} else {		    	
+//	    		facetValuesList.add(myToken);
+//	    	}
+//	    }
 	    
 	    log.debug("Final facetValuesList:"+facetValuesList);
 	    

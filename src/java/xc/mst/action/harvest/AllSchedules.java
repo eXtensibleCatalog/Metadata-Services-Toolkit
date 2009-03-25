@@ -48,6 +48,9 @@ public class AllSchedules extends ActionSupport
 
 	/** Schedule service */
 	private ScheduleService scheduleService = new DefaultScheduleService();
+	
+	/** Error type */
+	private String errorType; 
 
 
 	/**
@@ -70,7 +73,6 @@ public class AllSchedules extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, columnSorted);
             return SUCCESS;
         }
@@ -95,6 +97,7 @@ public class AllSchedules extends ActionSupport
 	    		log.debug("Deleting the schedule failed" + e.getMessage());
 	    		schedules = scheduleService.getAllSchedules();
 	    		addFieldError("scheduleDeleteFailed", "Problems with deleting the schedule :" + schedule.getScheduleName());
+	    		errorType = "error";
 	    		return INPUT;
 	    	}
 		}
@@ -152,4 +155,12 @@ public class AllSchedules extends ActionSupport
     {
         return this.columnSorted;
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }
