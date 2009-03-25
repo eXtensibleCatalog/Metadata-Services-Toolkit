@@ -41,6 +41,9 @@ public class HarvestOutLog extends ActionSupport
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    
+	/** Error type */
+	private String errorType; 
 
     public HarvestOutLog()
     {
@@ -122,8 +125,17 @@ public class HarvestOutLog extends ActionSupport
         {
             e.printStackTrace();
             log.debug(e);
-            this.addFieldError("harvestOutLogError", "Error : There was a problem in loading the Page");
+            this.addFieldError("harvestOutLogError", "There was a problem in loading the Page");
+            errorType = "error";
             return SUCCESS;
         }
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

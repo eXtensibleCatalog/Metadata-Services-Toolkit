@@ -39,6 +39,9 @@ public class HarvestInLog extends ActionSupport
 
     /** List of all providers **/
     private List<Provider> providerList;
+    
+	/** Error type */
+	private String errorType; 
 
     /**
      * sets the list of Providers
@@ -113,7 +116,16 @@ public class HarvestInLog extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("harvestInLogError", "Error : There was a problem loading the page");
+            errorType = "error";
             return SUCCESS;
         }
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

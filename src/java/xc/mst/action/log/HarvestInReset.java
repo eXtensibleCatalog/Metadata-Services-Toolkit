@@ -39,6 +39,9 @@ public class HarvestInReset extends ActionSupport
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    
+	/** Error type */
+	private String errorType; 
 
      /**
      * sets the Provider ID of the provider whose logs are to be reset
@@ -101,9 +104,18 @@ public class HarvestInReset extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("harvestInResetError", "Error : There was an error resetting the log files");
+            errorType = "error";
             return SUCCESS;
         }
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 
     /**
      * resets all the logs that are related to the providers
@@ -133,6 +145,7 @@ public class HarvestInReset extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("harvestInResetError", "Error : There was an error resetting the log files");
+            errorType = "error";
             return SUCCESS;
         }
     }

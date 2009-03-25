@@ -40,6 +40,9 @@ public class HarvestOutReset extends ActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+	/** Error type */
+	private String errorType; 
+	
      /**
      * sets the Servic ID of the Service whose Service Logs need to be reset
      * @param serviceId service ID
@@ -101,9 +104,19 @@ public class HarvestOutReset extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("harvestOutResetError", "Error : There was an error resetting the log files");
+            errorType = "error";
             return SUCCESS;
         }
     }
+
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 
     public String resetAll()
     {
@@ -129,6 +142,7 @@ public class HarvestOutReset extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("harvestOutResetError", "Error : There was an error resetting the log files");
+            errorType = "error";
             return SUCCESS;
         }
     }

@@ -79,6 +79,7 @@
 		<!-- body -->
 		<div id="bd">
    			
+   			<!-- Display of error message -->
    			<c:if test="${errorType != null}"> 
    				<div class="${errorType}"> 
    					<img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg"> 

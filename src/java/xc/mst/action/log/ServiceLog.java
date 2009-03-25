@@ -42,6 +42,9 @@ public class ServiceLog extends ActionSupport
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    
+	/** Error type */
+	private String errorType; 
 
     public ServiceLog()
     {
@@ -124,7 +127,16 @@ public class ServiceLog extends ActionSupport
             e.printStackTrace();
             log.debug(e);
             this.addFieldError("serviceLogError", "Error : There was a problem in loading the Page");
+            errorType = "error";
             return SUCCESS;
         }
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }
