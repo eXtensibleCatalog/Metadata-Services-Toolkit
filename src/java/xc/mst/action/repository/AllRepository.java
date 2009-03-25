@@ -39,7 +39,7 @@ public class AllRepository extends ActionSupport
     private boolean isAscendingOrder = true;
 
     /** determines the name of the column on which the sorting is to be done */
-    private String columnSorted;
+    private String columnSorted="name";
 
     /**
      * The list of Repositories that is returned

@@ -63,6 +63,9 @@
 		<div id="bd">
        
              <div class="errorMessage"> <s:fielderror /> </div>
+              <div align="right" style="margin-top:10px;margin-bottom:10px;">
+                <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.resetAll();" name="next">Reset All *</button>
+              </div>
                 <div class="viewTable">
                     <table width="100%">
                         <thead>
@@ -70,9 +73,9 @@
                                 <td></td>
                                 <td></td>
                                 <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=name">Repositories</a></td>
-                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=records_added">#Records Harvested</a></td>
-                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=warnings">#Warnings</a></td>
-                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=errors">#Errors</a></td>
+                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=records_added">Last Harvest End Time</a></td>
+                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=warnings">#Records Added</a></td>
+                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=errors">#Records Replaced</a></td>
                                 <td>Reset</td>
                                 <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_log_reset">Last Reset Date</a></td>
                             </tr>
@@ -83,19 +86,23 @@
 									  <c:param name="query" value="${n.name}"/>
 								 </c:url>                              	
                                   <tr>
-                                      <td><a onclick="javascript:YAHOO.xc.mst.logs.displayOAIRequest('${n.oaiProviderUrl}');"><U>OAI Request</U></a></td>
+                                      <td><a style="cursor:pointer;"onclick="javascript:YAHOO.xc.mst.logs.displayOAIRequest('${n.oaiProviderUrl}');"><U>OAI Request</U></a></td>
                                       <td><a style="text-decoration:none;color:black;" href="${browseRecordsAction}"><U>Browse Records</U></a></td>
                                       <td><a>${n.name}</a></td>
+                                      <td>${n.lastHarvestEndTime}</td>
                                       <td>${n.recordsAdded}</td>
-                                      <td>${n.warnings}</td>
-                                      <td>${n.errors}</td>
+                                      <td>${n.recordsReplaced}</td>
                                       <td><button class="xc_button" type="button" name="reset" onclick="javascript:YAHOO.xc.mst.logs.resetFunction('${n.logFileName}','${n.id}')">Reset</button></td>
                                       <td>${n.lastLogReset}</td>
                                   </tr>
                               </c:forEach>
                         </tbody>
                     </table>
-                    <form action="harvestInReset.action" name="harvestInReset" method="post">
+                    * Reset will reset the statistic to 0 and move the log file to the archives directory
+                     <div align="right" style="margin-top:10px;margin-bottom:10px;">
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.resetAll();" name="next">Reset All</button>
+                    </div>
+                    <form name="harvestInReset" method="post">
                         <input type="hidden" name="harvestInLogFileName" id="harvestInLogFileName">
                         <input type="hidden" name="providerId" id="providerId">
                     </form>

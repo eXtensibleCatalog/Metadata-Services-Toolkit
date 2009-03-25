@@ -108,11 +108,6 @@
                     </li>
                  </mst:checkUserPermission>
 
-       			<mst:checkUserPermission permission="Search Index">
-                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="">Search Index</a>
-                    </li>
-                 </mst:checkUserPermission>
-
 	        </ul>
 	     </div>
     </div>

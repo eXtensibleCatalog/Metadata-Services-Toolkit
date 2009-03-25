@@ -13,6 +13,8 @@ package xc.mst.action.log;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
@@ -92,6 +94,38 @@ public class HarvestInReset extends ActionSupport
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
 
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.debug(e);
+            e.printStackTrace();
+            this.addFieldError("harvestInResetError", "Error : There was an error resetting the log files");
+            return SUCCESS;
+        }
+    }
+
+    /**
+     * resets all the logs that are related to the providers
+     * @return {@link #SUCCESS}
+     */
+    public String resetAll()
+    {
+        try
+        {
+            List providerList = providerService.getAllProviders();
+            Iterator provIter = providerList.iterator();
+            while(provIter.hasNext())
+            {
+                Provider provider = (Provider)provIter.next();
+                provider.setErrors(0);
+                provider.setWarnings(0);
+                provider.setLastLogReset(new Date());
+                providerService.updateProvider(provider);
+                String filename = provider.getLogFileName();
+                PrintWriter printWriter = new PrintWriter(filename);
+                printWriter.close();
+            }
             return SUCCESS;
         }
         catch(Exception e)

@@ -74,7 +74,7 @@
                         <thead>
                             <tr>
                                 <td><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=name">Name</a></td>
-                                <td><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=oai_provider_url">Repository</a></td>
+                                <td><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=oai_provider_url">URL</a></td>
                                 <td>Status</td>
                                 <td><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_harvest_end_time">Last Harvested</a></td>
                             </tr>

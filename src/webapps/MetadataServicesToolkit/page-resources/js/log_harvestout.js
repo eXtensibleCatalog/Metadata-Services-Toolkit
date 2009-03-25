@@ -23,11 +23,24 @@ YAHOO.xc.mst.log = {
                     
                     document.getElementById("harvestOutLogFileName").value = harvestOutLogFileName;
                     document.getElementById("serviceId").value = serviceId;
+                    document.harvestOutReset.action = "harvestOutReset.action";
                     document.harvestOutReset.submit();
                 }
                 catch(e)
                 {
                     alert(e);
                 }
-            }
+            },
+resetAll: function()
+    {
+        try
+        {
+            document.harvestOutReset.action = "harvestOutResetAll.action";
+            document.harvestOutReset.submit();
+        }
+        catch(e)
+        {
+            alert(e);
+        }
+    }
 }

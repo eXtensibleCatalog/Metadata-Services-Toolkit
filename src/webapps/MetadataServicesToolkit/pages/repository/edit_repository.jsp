@@ -64,9 +64,9 @@
               
         <div style="margin-top:25px;margin-left:0px;font-family: verdana,sans-serif;font-size: 12px;">
 
-                OAI-PMH <B>Name</B> <br>
+                OAI-PMH <B>Repository Name</B> <br>
                     <input type="text" id="repositoryName" name="repositoryName" value="<s:property value="repositoryName"/>" style="height:25px;width:305px;" maxlength="255"><br><br>
-                 OAI-PMH <B>URL</B> <br>
+                 OAI-PMH <B>Repository URL</B> <br>
                      <input type="text" id="repositoryURL" name="repositoryURL" value="<s:property value="repositoryURL"/>" style="height:25px;width:470px;" maxlength="255">
                 
                  <div style="margin-top:20px;margin-left:0px;vertical-align:bottom;">

@@ -28,7 +28,7 @@ import xc.mst.manager.processingDirective.ServicesService;
 public class HarvestOutLog extends ActionSupport
 {
     /**The column on which the rows are to be sorted */
-    private String columnSorted;
+    private String columnSorted="service_name";
 
     /** boolean parameter determines if the rows are to sorted in ascending or descending order */
     private boolean isAscendingOrder=true;

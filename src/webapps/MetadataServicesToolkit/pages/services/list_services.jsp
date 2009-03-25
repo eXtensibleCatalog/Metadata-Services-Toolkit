@@ -70,24 +70,26 @@
                         <table width="100%">
                             <thead>
                                 <tr>
-                                    <td>View Log</td>
-                                    <td class="sortcolumn"><a href="listServices.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=service_name">Name</a></td>
-                                    <td><a href="listServices.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=port">OAI-PMH Repository URL</a></td>
+                                    <td class="sortcolumn"><a href="listServices.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=service_name">Service Name</a></td>
+                                    <td><a href="listServices.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=port">Associated Repository URL</a></td>
                                     <td>Status</td>
+                                    <td>View Log</td>
+                                    <td>Delete</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="n" items="${services}" varStatus="a">
                                     <tr>
-                                        <td>
-                                            <button class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
-                                            <button class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
-                                        </td>
                                         <td><c:out value="${n.name}"/></td>
                                         <c:set var="baseURL" value="${baseURL}"/>
                                         <c:set var = "url" value="${fn:replace(baseURL,'8080',n.port)}" />
                                         <td><c:out value="${url}"/></td>
                                         <td>Status should be here</td>
+                                        <td>
+                                            <button class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
+                                            <button class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
+                                        </td>
+                                        <td><button class="xc_button" type="button" name="delete">Delete</button></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

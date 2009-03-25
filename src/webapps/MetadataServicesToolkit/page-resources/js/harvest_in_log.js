@@ -27,11 +27,24 @@ YAHOO.xc.mst.logs = {
                     
                     document.getElementById("harvestInLogFileName").value = harvestInLogFileName;
                     document.getElementById("providerId").value = providerId;
+                    document.harvestInReset.action = "harvestInReset.action";
                     document.harvestInReset.submit();
                 }
                 catch(e)
                 {
                     alert(e);
                 }
-            }
+            },
+    resetAll: function()
+    {
+        try
+        {
+            document.harvestInReset.action = "harvestInResetAll.action";
+            document.harvestInReset.submit();
+        }
+        catch(e)
+        {
+            alert(e);
+        }
+    }
 }

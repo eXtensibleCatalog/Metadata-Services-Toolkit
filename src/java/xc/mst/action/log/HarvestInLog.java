@@ -26,7 +26,7 @@ import xc.mst.manager.repository.ProviderService;
 public class HarvestInLog extends ActionSupport
 {
     /** determines the column name on which sorting should be performed */
-    private String columnSorted;
+    private String columnSorted="name";
 
     /** determines if the rows are to be ordered in ascending or descending order */
     private boolean isAscendingOrder=true;

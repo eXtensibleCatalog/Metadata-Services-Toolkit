@@ -108,9 +108,11 @@
                                 <div style="margin-right:10px;">
                                     <c:choose>
                                         <c:when test="${sourceType=='provider'}">
+                                            <c:set var="sourceDisplay" value="${temporaryProcessingDirective.sourceProvider.name}"/>
                                             <B>${temporaryProcessingDirective.sourceProvider.name}</B>
                                         </c:when>
                                         <c:otherwise>
+                                            <c:set var="sourceDisplay" value="${temporaryProcessingDirective.sourceService.name}"/>
                                             <B>${temporaryProcessingDirective.sourceService.name}</B>
                                         </c:otherwise>
                                     </c:choose>
@@ -131,7 +133,9 @@
                
                 <form method="post" name="addProcessingDirective2">
 
-
+                <div style="margin-top:10px;margin-bottom:15px;font-family: verdana,sans-serif;font-size: 13px;">
+                    <B>Which records from ${sourceDisplay} should be processed ?</B>
+                </div>
 
                     <table align="center" cellpadding="0" cellspacing="0" border="0" width="60%">
 

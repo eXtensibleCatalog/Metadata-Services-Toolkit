@@ -13,6 +13,8 @@ package xc.mst.action.log;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
@@ -92,6 +94,34 @@ public class HarvestOutReset extends ActionSupport
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
 
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.debug(e);
+            e.printStackTrace();
+            this.addFieldError("harvestOutResetError", "Error : There was an error resetting the log files");
+            return SUCCESS;
+        }
+    }
+
+    public String resetAll()
+    {
+        try
+        {
+            List serviceList = servicesService.getAllServices();
+            Iterator harvIter = serviceList.iterator();
+            while(harvIter.hasNext())
+            {
+                Service tempService = (Service)harvIter.next();
+                tempService.setHarvestOutLastLogReset(new Date());
+                tempService.setHarvestOutWarnings(0);
+                tempService.setHarvestOutErrors(0);
+                servicesService.updateService(tempService);
+                String filename = tempService.getHarvestOutLogFileName();
+                PrintWriter printWriter = new PrintWriter(filename);
+                printWriter.close();
+            }
             return SUCCESS;
         }
         catch(Exception e)

@@ -97,7 +97,7 @@
                                     <c:forEach var="m" items="${n.triggeringFormats}" varStatus="b">
                                         <c:choose>
                                             <c:when test="${b.count==1}">
-                                                <c:set var="formatList" value="${m.name},${formatList}"/>
+                                                <c:set var="formatList" value="${m.name}"/>
                                             </c:when>
                                             <c:otherwise>
                                                 <c:set var="formatList" value="${formatList},${m.name}"/>
@@ -109,7 +109,7 @@
                                     <c:forEach var="m" items="${n.triggeringSets}" varStatus="b">
                                         <c:choose>
                                             <c:when test="${b.count==1}">
-                                                <c:set var="setList" value="${m.setSpec},${setList}"/>
+                                                <c:set var="setList" value="${m.setSpec}"/>
                                             </c:when>
                                             <c:otherwise>
                                                 <c:set var="setList" value="${setList},${m.setSpec}"/>

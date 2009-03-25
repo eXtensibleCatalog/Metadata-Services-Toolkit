@@ -65,7 +65,7 @@
         
              <div class="errorMessage"> <s:fielderror /> </div>
                 <div align="right" style="margin-bottom:10px;">
-                    <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.resetAll();" name="next">Reset All</button>
+                    <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.resetAll();" name="next">Reset All *</button>
                 </div>
                 <div class="viewTable">
                     <table width="100%">
@@ -83,7 +83,7 @@
                         <tbody>
                               <c:forEach var="n" items="${serviceList}" varStatus="a">
                                   <tr>
-                                      <td><a onclick="javascript:YAHOO.xc.mst.log.downloadFile('${n.id}')"><U>${n.name}</U></a></td>
+                                      <td><a style="cursor:pointer;" onclick="javascript:YAHOO.xc.mst.log.downloadFile('${n.id}')"><U>${n.name}</U></a></td>
                                       <td>${n.inputRecordCount}</td>
                                       <td>${n.outputRecordCount}</td>
                                       <td>${n.servicesWarnings}</td>
@@ -94,9 +94,11 @@
                               </c:forEach>
                         </tbody>
                     </table>
-                     <div align="right" style="margin-bottom:10px;">
+                    * Reset will reset the statistic to 0 and move the log file to the archives directory
+                     <div align="right" style="margin-top:10px;margin-bottom:10px;">
                         <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.resetAll();" name="next">Reset All</button>
                     </div>
+                    
                     <form name="serviceReset" method="post">
                         <input type="hidden" name="serviceLogFileName" id="serviceLogFileName">
                         <input type="hidden" name="serviceId" id="serviceId">

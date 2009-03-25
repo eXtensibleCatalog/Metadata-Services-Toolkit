@@ -29,7 +29,7 @@ import xc.mst.manager.processingDirective.ServicesService;
 public class ServiceLog extends ActionSupport
 {
     /**The coulmn on which the rows are to be sorted */
-    private String columnSorted;
+    private String columnSorted="service_name";
     
     /**Boolena parameter determines if the rows are to be sorted in ascending or descending order */
     private boolean isAscendingOrder=true;
