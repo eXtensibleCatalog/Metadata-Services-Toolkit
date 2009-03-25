@@ -88,7 +88,7 @@
 				</div>
    			 </c:if> 
    			 
-   			  <div id="error_div"></div>
+   			<div id="error_div"></div>
    			
    			<c:if test="${schedule != null}">
 	   			<form name="scheduleForm" method="post">

@@ -23,6 +23,7 @@
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK HREF="page-resources/css/bodylayout.css" REL="stylesheet" TYPE="text/css">
+        <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
 
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
