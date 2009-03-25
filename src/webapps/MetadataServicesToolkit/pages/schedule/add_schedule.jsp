@@ -56,6 +56,7 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/add_schedule.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
     </head>
     
     <body class="yui-skin-sam">
@@ -87,7 +88,7 @@
 				</div>
    			 </c:if> 
    			 
-   			  
+   			  <div id="error_div"></div>
    			
    			<c:if test="${schedule != null}">
 	   			<form name="scheduleForm" method="post">

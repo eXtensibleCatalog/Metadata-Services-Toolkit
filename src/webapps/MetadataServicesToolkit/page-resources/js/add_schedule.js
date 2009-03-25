@@ -15,11 +15,12 @@ YAHOO.xc.mst.schedule = {
 	{
 
 		if (document.scheduleForm.scheduleName.value=='') {
-			alert('Schedule Name is required.');
+			createErrorDiv('error','Schedule Name is required.');
 			return false;
 		}
 		if (document.scheduleForm.repositoryId.value=='0') {
-			alert('Please select a repository.');
+						
+			createErrorDiv('error','Please select a Repository');		
 			return false;
 		}
 
@@ -34,28 +35,28 @@ YAHOO.xc.mst.schedule = {
 		} 	
 
 		if (selectedRecurrence == '') {
-			alert('Recurrence for Schedule is required.');
+			createErrorDiv('error','Recurrence for Schedule is required.');
 			return false;
 		} else {
 			if (selectedRecurrence=='Daily') {
 				if (document.scheduleForm.dailyHour.value=='-1') {
-					alert('Time to harvest the repository is required.');
+					createErrorDiv('error','Time to harvest the repository is required.');
 					return false;
 				}
 			}
 			if (selectedRecurrence=='Hourly') {
 				if (document.scheduleForm.minute.value=='-1') {
-					alert('Minute to harvest the repository every hour is required.');
+					createErrorDiv('error','Minute to harvest the repository every hour is required.');
 					return false;
 				}
 			}
 			if (selectedRecurrence=='Weekly') {
 				if (document.scheduleForm.dayOfWeek.value=='0') {
-					alert('Select a Day of week to havest the repository.');
+					createErrorDiv('error','Select a Day of week to havest the repository.');
 					return false;
 				}
 				if (document.scheduleForm.hour.value=='-1') {
-					alert('Time to harvest the repository is required.');
+					createErrorDiv('error','Time to harvest the repository is required.');
 					return false;
 				}				
 			}			
@@ -66,11 +67,11 @@ YAHOO.xc.mst.schedule = {
 		var startDate = document.scheduleForm.startDate.value;
 		var endDate = document.scheduleForm.endDate.value;
 		if (startDate=='') {
-			alert('Start date is required.');
+			createErrorDiv('error','Start date is required.');
 			return false;
 		}
 		if (endDate=='') {
-			alert('End date is required.');
+			createErrorDiv('error','End date is required.');
 			return false;
 		}
 		
@@ -80,7 +81,7 @@ YAHOO.xc.mst.schedule = {
 		
 		
 		if (sDate > eDate) {
-			alert('End Date should be greater than Start date.');
+			createErrorDiv('error','End Date should be greater than Start date.');
 			return false;
 		}
 		

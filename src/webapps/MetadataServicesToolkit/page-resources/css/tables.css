@@ -234,7 +234,7 @@
 	font-family:Verdana, Arial, Helvetica, sans-serif;
 	height:30px;
 	float:left
-	
+
 }
 
 .error img {
@@ -248,6 +248,11 @@
 .errorMessage {
 	float:left;
 	margin-top:-10px;
+	
+}
+
+.jsErrorMessage {
+	padding:5px;
 	
 }
 
