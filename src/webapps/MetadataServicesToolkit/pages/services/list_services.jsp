@@ -59,13 +59,20 @@
                     <jsp:param name="bread" value="Services , List Services" />
 
                 </jsp:include>
-                <div class="errorMessage"> <s:fielderror /> </div>
+                
             </div>
             <!--  end header -->
 
             <!-- body -->
             <div id="bd">
-                   
+                <!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <s:fielderror cssClass="errorMessage"/>
+                    </div>
+                 </c:if>
+
                     <div class="viewTable">
                         <table width="100%">
                             <thead>

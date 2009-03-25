@@ -59,7 +59,13 @@
                     <jsp:param name="bread" value="Repository , <a style='color:#292929;' href='allRepository.action'><U>All Repositories</U></a> , View Repository : ${provider.name}" />
 
             </jsp:include>
-            <div class="errorMessage"> <s:fielderror /> </div>
+            <!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <s:fielderror cssClass="errorMessage"/>
+                    </div>
+                 </c:if> 
  		</div>
 		<!--  end header -->
 

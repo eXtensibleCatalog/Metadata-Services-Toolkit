@@ -57,7 +57,14 @@
    			
 			<div class="clear"></div>
    			<h2> Email New password </h2>
-			<div class="errorMessage"> <s:fielderror /> </div>
+
+             <!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <s:fielderror cssClass="errorMessage"/>
+                    </div>
+                 </c:if>
 
 			<c:if test="${!resetSuccess}">
 				<form name="forgotPasswordForm" action="resetPassword.action" method="post">

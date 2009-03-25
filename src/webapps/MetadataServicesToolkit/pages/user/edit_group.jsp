@@ -61,7 +61,13 @@
 		<!-- body -->
 		<div id="bd">
             
-            <div class="errorMessage"> <s:fielderror /> </div>
+            <!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <s:fielderror cssClass="errorMessage"/>
+                    </div>
+                 </c:if>
 
 
             <form action="editGroup.action?GroupId=<c:out value="${groupId}"/>" method="post" name="editGroup">

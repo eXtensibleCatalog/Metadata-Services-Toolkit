@@ -59,12 +59,21 @@
                     <jsp:param name="bread" value="Services , <a style='text-decoration:none;' href='listProcessingDirectives.action'><U>List Processing Directives</U></a> , Edit Processing Directives (Step 2)" />
 
                 </jsp:include>
-                <div class="errorMessage"> <s:fielderror /> </div>
+                
             </div>
             <!--  end header -->
 
             <!-- body -->
             <div id="bd">
+                
+               <!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <s:fielderror cssClass="errorMessage"/>
+                    </div>
+                 </c:if>
+
               <c:set var="sessionSourceType" scope="session" value="${sourceType}"/>
 
 

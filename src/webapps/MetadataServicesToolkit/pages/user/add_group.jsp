@@ -61,7 +61,14 @@
 		<!-- body -->
 		<div id="bd">
             
-            <div class="errorMessage"> <s:fielderror /> </div>
+             <!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <s:fielderror cssClass="errorMessage"/>
+                    </div>
+                 </c:if>
+
             <form action="addGroup.action" method="post" name="addGroup">
             <br><br>
                 <table>

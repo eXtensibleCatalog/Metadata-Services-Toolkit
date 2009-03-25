@@ -61,8 +61,13 @@
 		<!-- body -->
 		<div id="bd">
          
-         <div class="errorMessage"> <s:fielderror /> </div> <br>
-             <br>
+          <!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <s:fielderror cssClass="errorMessage"/>
+                    </div>
+                 </c:if>
             
             <br><br>
                 <form action="editLDAPUser.action?UserId=${temporaryUser.id}" method="post" name="editLDAPUser">

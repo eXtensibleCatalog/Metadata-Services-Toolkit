@@ -63,8 +63,15 @@
 
 		<!-- body -->
 		<div id="bd">
+
+         <!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <s:fielderror cssClass="errorMessage"/>
+                    </div>
+                 </c:if>
         
-        <div class="errorMessage"> <s:fielderror /> </div>
         <form action="/MetadataServicesToolkit/editLocalUser.action?UserId=${temporaryUser.id}" method="post" name="editLocalUser">
             <br>
              

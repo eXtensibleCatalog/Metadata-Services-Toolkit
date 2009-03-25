@@ -58,13 +58,22 @@
                     <jsp:param name="bread" value="Services , Add Processing Directives (Step 1)" />
 
                 </jsp:include>
+                
+                 <!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <s:fielderror cssClass="errorMessage"/>
+                    </div>
+                 </c:if>
             </div>
             <!--  end header -->
 
             <!-- body -->
             <div id="bd">
            
-                <div class="errorMessage"> <s:fielderror /> </div>
+
+
                 <div class="StepsStructure">
                     <ul style="list-style:none;">
                         <li style="float:left;"><div><img src="page-resources/img/3.4_step1_highlight.gif"></div></li>

@@ -62,7 +62,14 @@
 		<!-- body -->
 		<div id="bd">
        
-             <div class="errorMessage"> <s:fielderror /> </div>
+             <!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <s:fielderror cssClass="errorMessage"/>
+                    </div>
+                 </c:if>
+
               <div align="right" style="margin-top:10px;margin-bottom:10px;">
                 <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.resetAll();" name="next">Reset All *</button>
               </div>
