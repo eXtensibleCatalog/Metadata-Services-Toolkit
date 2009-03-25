@@ -75,6 +75,10 @@ public class AddLDAPUser extends ActionSupport
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 
+	/** Error type */
+	private String errorType; 
+	
+
 
     /**
      * sets list of all servers
@@ -236,6 +240,7 @@ public class AddLDAPUser extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("addLDAPUserError","Error : Page not displayed correctly");
+            errorType = "error";
             return SUCCESS;
         }
     }
@@ -275,6 +280,7 @@ public class AddLDAPUser extends ActionSupport
             if(serverExists==false)
             {
                 this.addFieldError("addLDAPUserError","Error : NO LDAP Server has been configured");
+                errorType = "error";
                 setGroupList(groupService.getAllGroups());
                 setTemporaryUser(user);
                 setSelectedGroups(groupsSelected);
@@ -291,6 +297,7 @@ public class AddLDAPUser extends ActionSupport
                 if(!similarUserName.getServer().getName().equalsIgnoreCase("Local"))
                 {
                     this.addFieldError("addLDAPUserError","Error : Username already exists");
+                    errorType = "error";
                     setGroupList(groupService.getAllGroups());
                     setTemporaryUser(user);
                     setSelectedGroups(groupsSelected);
@@ -302,6 +309,7 @@ public class AddLDAPUser extends ActionSupport
                 if(!similarEmail.getServer().getName().equalsIgnoreCase("Local"))
                 {
                     this.addFieldError("addLDAPUserError","Error : Email ID already exists");
+                    errorType = "error";
                     setGroupList(groupService.getAllGroups());
                     setTemporaryUser(user);
                     setSelectedGroups(groupsSelected);
@@ -323,7 +331,14 @@ public class AddLDAPUser extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("addLDAPUserError","Error : User not Added correctly");
+            errorType = "error";
             return ERROR;
         }
     }
+	public String getErrorType() {
+		return errorType;
+	}
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

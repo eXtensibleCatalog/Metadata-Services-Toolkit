@@ -71,6 +71,10 @@ public class EditLocalUser extends ActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+	/** Error type */
+	private String errorType; 
+	
+
     /**
      * sets the user name for the local user
      * @param userName user Name
@@ -233,6 +237,7 @@ public class EditLocalUser extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("editLocalUserError", "Error in displaying the user's details");
+            errorType = "error";
             return ERROR;
         }
     }
@@ -277,6 +282,7 @@ public class EditLocalUser extends ActionSupport
                     if(similarUserName.getServer().getName().equalsIgnoreCase("Local"))
                     {
                         this.addFieldError("editLocalUserError","Error : Username already exists");
+                        errorType = "error";
                         setGroupList(groupService.getAllGroups());
                         setTemporaryUser(user);
                         return INPUT;
@@ -290,6 +296,7 @@ public class EditLocalUser extends ActionSupport
                     if(similarEmail.getServer().getName().equalsIgnoreCase("Local"))
                     {
                         this.addFieldError("editLocalUserError","Error : Email ID already exists");
+                        errorType = "error";
                         setGroupList(groupService.getAllGroups());
                         setTemporaryUser(user);
                         return INPUT;
@@ -315,8 +322,17 @@ public class EditLocalUser extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("editLocalUserError","Error : User details not updated correctly");
+            errorType = "error";
             return ERROR;
         }
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 
 }

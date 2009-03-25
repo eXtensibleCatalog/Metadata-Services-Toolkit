@@ -34,6 +34,9 @@ public class DeleteLDAP extends ActionSupport
     /**Creates service object for Users */
     private UserService userService = new DefaultUserService();
 
+	/** Error type */
+	private String errorType; 
+	
     /**
      * returns a temporary server object which is used to display details in the JSP
      * @return server Object
@@ -95,6 +98,7 @@ public class DeleteLDAP extends ActionSupport
             else
             {
                 this.addFieldError("deleteLDAPError", "Error : The LDAP Server is associated with one or more users and cannot be deleted");
+                errorType = "error";
                 return INPUT;
             }
         }
@@ -102,8 +106,17 @@ public class DeleteLDAP extends ActionSupport
         {
             e.printStackTrace();
             this.addFieldError("deleteLDAPError", "Error : Error deleting LDAP Server");
+            errorType = "error";
             return INPUT;
         }
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 
 }

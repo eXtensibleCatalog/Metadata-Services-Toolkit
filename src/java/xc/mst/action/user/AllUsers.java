@@ -46,6 +46,10 @@ public class AllUsers extends ActionSupport
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    
+	/** Error type */
+	private String errorType; 
+	
 
     /**
      * returns the list of users
@@ -89,7 +93,6 @@ public class AllUsers extends ActionSupport
      */
     public void setIsAscendingOrder(boolean isAscendingOrder)
     {
-        System.out.println("Setting ascending order to "+isAscendingOrder);
         this.isAscendingOrder = isAscendingOrder;
     }
 
@@ -139,7 +142,16 @@ public class AllUsers extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("allUsersError", "Error in displaying the users List");
+            errorType = "error";
             return SUCCESS;
         }
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

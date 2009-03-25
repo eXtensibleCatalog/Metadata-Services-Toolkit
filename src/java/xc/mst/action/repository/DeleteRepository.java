@@ -38,6 +38,9 @@ public class DeleteRepository extends ActionSupport
 
     /** The ID of the repository to be deleted */
     private int repositoryId;
+    
+	/** Error type */
+	private String errorType; 
 
     /**
      * set the ID of the repository to be deleted
@@ -87,8 +90,17 @@ public class DeleteRepository extends ActionSupport
         {
             log.debug(e);
             this.addFieldError("viewRepositoryError", "Repository cannot be deleted");
+            errorType = "error";
             return INPUT;
         }
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 
 }

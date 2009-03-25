@@ -72,6 +72,10 @@ public class AddLocalUser extends ActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+	/** Error type */
+	private String errorType; 
+	
+
     /**
      * sets temporary user object
      * @param user temporary user object
@@ -231,6 +235,7 @@ public class AddLocalUser extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("addLocalUserError","Error : Groups List not displayed correctly");
+            errorType = "error";
             return ERROR;
         }
     }
@@ -262,6 +267,7 @@ public class AddLocalUser extends ActionSupport
                 if(similarUserName.getServer().getName().equalsIgnoreCase("Local"))
                 {
                     this.addFieldError("addLocalUserError","Error : Username already exists");
+                    errorType = "error";
                     setGroupList(groupService.getAllGroups());
                     setTemporaryUser(user);
                     setSelectedGroups(groupsSelected);
@@ -273,6 +279,7 @@ public class AddLocalUser extends ActionSupport
                 if(similarEmail.getServer().getName().equalsIgnoreCase("Local"))
                 {
                     this.addFieldError("addLocalUserError","Error : Email ID already exists");
+                    errorType = "error";
                     setGroupList(groupService.getAllGroups());
                     setTemporaryUser(user);
                     setSelectedGroups(groupsSelected);
@@ -294,8 +301,17 @@ public class AddLocalUser extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("addLocalUserError","Error : User not Added correctly");
+            errorType = "error";
             return ERROR;
         }
 
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

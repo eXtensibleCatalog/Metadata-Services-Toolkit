@@ -68,6 +68,9 @@ public class EditProcessingDirective extends ActionSupport
 
     /** creates a service object for processing directives */
     private ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
+    
+	/** Error type */
+	private String errorType; 
 
     /**
      * sets the ID of the processing directive to be edited
@@ -238,6 +241,7 @@ public class EditProcessingDirective extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("editProcessingDirectiveEror", "Error : Problem in displaying the Specfied Processing Directive");
+            errorType = "error";
             return INPUT;
         }
     }
@@ -287,8 +291,17 @@ public class EditProcessingDirective extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("editProcessingDirectiveError", "Error in Adding a Source");
+            errorType = "error";
             return INPUT;
         }
 
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

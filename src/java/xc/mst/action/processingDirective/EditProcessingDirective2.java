@@ -79,6 +79,10 @@ public class EditProcessingDirective2 extends ActionSupport
 
     /** The specifications of the output set*/
     private String outputSetSpec;
+    
+	/** Error type */
+	private String errorType; 
+	
     /**
      * sets the temporary processing directive
      *
@@ -281,6 +285,7 @@ public class EditProcessingDirective2 extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("editProcessingDirective2Error", "Error : Problem in editing the directive");
+            errorType = "error";
             return INPUT;
         }
     }
@@ -407,6 +412,7 @@ public class EditProcessingDirective2 extends ActionSupport
                             else
                             {
                                 this.addFieldError("listProcessingDirectivesError", "Updation unsuccessful : Output Source Set with set specification "+setExists.getSetSpec()+" already exists");
+                                errorType = "error";
                                 setFormatList(temporaryProcessingDirective.getSourceProvider().getFormats());
                                 setSetList(temporaryProcessingDirective.getSourceProvider().getSets());
                                 setTemporaryProcessingDirective(temporaryProcessingDirective);
@@ -418,6 +424,7 @@ public class EditProcessingDirective2 extends ActionSupport
                     else
                     {
                          this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Cannot insert Processing Directive with same Source:'"+temporaryProcessingDirective.getSourceProvider().getName()+"' and Service:'"+temporaryProcessingDirective.getService()+"' combination");
+                         errorType = "error";
                          setFormatList(temporaryProcessingDirective.getSourceProvider().getFormats());
                          setSetList(temporaryProcessingDirective.getSourceProvider().getSets());
                          setTemporaryProcessingDirective(temporaryProcessingDirective);
@@ -500,6 +507,7 @@ public class EditProcessingDirective2 extends ActionSupport
                             else
                             {
                                 this.addFieldError("listProcessingDirectivesError", "Updation unsuccessful : Output Source Set with set specification "+setExists.getSetSpec()+" already exists");
+                                errorType = "error";
                                 setFormatList(temporaryProcessingDirective.getSourceService().getOutputFormats());
                                 setSetList(setService.getAllSets());
                                 setTemporaryProcessingDirective(temporaryProcessingDirective);
@@ -511,6 +519,7 @@ public class EditProcessingDirective2 extends ActionSupport
                     else
                     {
                          this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Cannot insert Processing Directive with same Source:'"+temporaryProcessingDirective.getSourceService().getName()+"' and Service:'"+temporaryProcessingDirective.getService().getName()+"' combination");
+                         errorType = "error";
                          setFormatList(temporaryProcessingDirective.getSourceService().getOutputFormats());
                          setSetList(setService.getAllSets());
                          setTemporaryProcessingDirective(temporaryProcessingDirective);
@@ -528,6 +537,7 @@ public class EditProcessingDirective2 extends ActionSupport
                 log.debug(e);
                 e.printStackTrace();
                 this.addFieldError("editProcessingDirectives2Error", "Error : The edit was unsuccessful");
+                errorType = "error";
                 return ERROR;
            }
 
@@ -632,4 +642,12 @@ public class EditProcessingDirective2 extends ActionSupport
             return INPUT;
         }
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

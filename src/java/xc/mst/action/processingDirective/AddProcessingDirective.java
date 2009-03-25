@@ -56,6 +56,9 @@ public class AddProcessingDirective extends ActionSupport
 
     /** Temporary processing directive object that is used to display details on the JSP */
     private ProcessingDirective temporaryProcessingDirective;
+    
+	/** Error type */
+	private String errorType; 
 
     /**
      * sets the temporary processing directive object
@@ -198,6 +201,7 @@ public class AddProcessingDirective extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("addProcessingDirectiveError", "Add Processing Directive Page cannot be displayed");
+            errorType = "error";
             return INPUT;
         }
     }
@@ -241,9 +245,18 @@ public class AddProcessingDirective extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("addProcessingDirectiveError", "Error in Adding a Source");
+            errorType = "error";
             return INPUT;
         }
 
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 
 }

@@ -9,11 +9,14 @@
 
 package xc.mst.action.configuration;
 
-import com.opensymphony.xwork2.ActionSupport;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+
 import xc.mst.bo.user.Server;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.ServerService;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This class is used to add a new LDAP server to the system
@@ -22,7 +25,12 @@ import xc.mst.manager.user.ServerService;
  */
 public class AddLDAP extends ActionSupport
 {
-    /**Creates a service object for Servers */
+    /**
+	 * Eclipse generated id
+	 */
+	private static final long serialVersionUID = 531062895841167505L;
+
+	/**Creates a service object for Servers */
     private ServerService serverService = new DefaultServerService();
 
     /**The display name used for the LDAP server **/
@@ -43,6 +51,9 @@ public class AddLDAP extends ActionSupport
 
     /**Provides the status of the add Operation in the JSP page */
     private String message;
+    
+	/** Error type */
+	private String errorType; 
 
     /**sets the display name of the LDAP server **/
     public void setDisplayName(String displayName)
@@ -145,7 +156,8 @@ public class AddLDAP extends ActionSupport
         catch(Exception e)
         {
             e.printStackTrace();
-            this.addFieldError("addLDAPError", "Error : LDAP server could not be configured correctly");
+            this.addFieldError("addLDAPError", "LDAP server could not be configured correctly");
+            errorType = "error";
             return INPUT;
         }
     }
@@ -203,6 +215,7 @@ public class AddLDAP extends ActionSupport
         {
             e.printStackTrace();
             this.addFieldError("addLDAPError", "Error : LDAP server could not be configured correctly");
+            errorType = "error";
             return INPUT;
         }
     }
@@ -237,5 +250,13 @@ public class AddLDAP extends ActionSupport
      */
 	public void setServer(Server server) {
 		this.server = server;
+	}
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
 	}
 }

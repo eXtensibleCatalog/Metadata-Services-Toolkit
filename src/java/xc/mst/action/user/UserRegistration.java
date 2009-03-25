@@ -57,6 +57,10 @@ public class UserRegistration extends ActionSupport {
 	/** Name of server selected */
 	private String serverName;
 
+	/** Error type */
+	private String errorType; 
+	
+
 	/**
 	 * To register the user
 	 */
@@ -102,6 +106,7 @@ public class UserRegistration extends ActionSupport {
 						errorMessage.append("Email verification failed. Either the Email address doesnot exist or some problem with the mail server.\n");
 						errorMessage.append("So user registartion Failed. Please enter valid email address or try again later.");
 						addFieldError("emailError",  errorMessage.toString());
+						errorType = "error";
 						return INPUT;
 					}
 
@@ -120,16 +125,19 @@ public class UserRegistration extends ActionSupport {
 				} else {
 					servers =  serverService.getAll();
 					addFieldError("userEmailExist", "This email address already exist in the system.- " + newUser.getEmail().trim());
+					errorType = "error";
 					return INPUT;
 				}
 
 			} else {
 				servers =  serverService.getAll();
 				addFieldError("userNameExist", "User name already exist - " + newUser.getUsername().trim());
+				errorType = "error";
 				return INPUT;
 			}
 		} catch (Exception e) {
 			addFieldError("dataError", e.getMessage());
+			errorType = "error";
 			return INPUT;
 		}
 		return SUCCESS;
@@ -161,6 +169,14 @@ public class UserRegistration extends ActionSupport {
 
 	public void setServerName(String serverName) {
 		this.serverName = serverName;
+	}
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
 	}
 
 }

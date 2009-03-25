@@ -48,6 +48,9 @@ public class AddRepository extends ActionSupport implements UserAware
     /**The ID of the repository to be added */
     private int repositoryId;
 
+	/** Error type */
+	private String errorType; 
+	
     /**
      * sets the ID of the repository to be added
      * @param repositoryId repository ID
@@ -123,11 +126,13 @@ public class AddRepository extends ActionSupport implements UserAware
                 {
 
                    this.addFieldError("addRepositoryError", "Repository with name '"+repositoryName+"' already exists");
+                   errorType = "error";
                    return INPUT;
                 }
                 else if(repositorySameURL!=null)
                 {
                    this.addFieldError("addRepositoryError", "Repository with URL '"+repositoryURL+"' already exists");
+                   errorType = "error";
                    return INPUT;
                 }
                 else
@@ -156,11 +161,18 @@ public class AddRepository extends ActionSupport implements UserAware
                 log.debug(e);
                 e.printStackTrace();
                 this.addFieldError("addRepositoryError", "Error : There was a problem identified in the repository added");
-                System.out.println("The error Field has "+this.hasFieldErrors());
+                errorType = "error";
+                
                
             }
 
           setRepositoryId(pr.getId());
           return SUCCESS;
     }
+	public String getErrorType() {
+		return errorType;
+	}
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

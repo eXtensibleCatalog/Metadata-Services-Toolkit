@@ -54,6 +54,10 @@ public class EditGroup extends ActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+	/** Error type */
+	private String errorType; 
+	
+
     public EditGroup()
     {
         tabNames = new ArrayList();
@@ -215,6 +219,7 @@ public class EditGroup extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("editGroupError", "Error: Problem displaying group details");
+            errorType = "error";
             return INPUT;
         }
     }
@@ -256,6 +261,7 @@ public class EditGroup extends ActionSupport
                         }
                         setSelectedPermissions(selectedPermissions);
                         this.addFieldError("editGroupError", "Error : A group with the same name already exists");
+                        errorType = "error";
                         return INPUT;
                     }
                 }
@@ -276,8 +282,15 @@ public class EditGroup extends ActionSupport
         {
             log.debug(e);
             this.addFieldError("editGroupError", "Error: Group could not be edited properly");
+            errorType = "error";
             e.printStackTrace();
             return INPUT;
         }
     }
+	public String getErrorType() {
+		return errorType;
+	}
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

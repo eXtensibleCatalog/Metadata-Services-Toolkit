@@ -87,6 +87,9 @@ public class AddProcessingDirective2 extends ActionSupport
 
     /** creates a service object for all formats */
     private FormatService formatService = new DefaultFormatService();
+    
+	/** Error type */
+	private String errorType; 
 
     /**
      * sets the name of the output set
@@ -269,6 +272,7 @@ public class AddProcessingDirective2 extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("addProcessingDirectives2Error", "Error in loading page");
+            errorType = "error";
             return INPUT;
         }
     }
@@ -368,6 +372,7 @@ public class AddProcessingDirective2 extends ActionSupport
                     else
                     {
                          this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Output Source Set with set specification "+setExists.getSetSpec()+" already exists");
+                         errorType = "error";
                          setFormatList(tempProcDir.getSourceProvider().getFormats());
                          setSetList(tempProcDir.getSourceProvider().getSets());
                          setTemporaryProcessingDirective(tempProcDir);
@@ -378,6 +383,7 @@ public class AddProcessingDirective2 extends ActionSupport
                 else
                 {
                      this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Cannot insert Processing Directive with same Source:'"+tempProcDir.getSourceProvider().getName()+"' and Service:'"+tempProcDir.getService().getName()+"' combination");
+                     errorType = "error";
                      setFormatList(tempProcDir.getSourceProvider().getFormats());
                      setSetList(tempProcDir.getSourceProvider().getSets());
                      setTemporaryProcessingDirective(tempProcDir);
@@ -432,6 +438,7 @@ public class AddProcessingDirective2 extends ActionSupport
                     else
                     {
                          this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Output Source Set with set specification "+setExists.getSetSpec()+" already exists");
+                         errorType = "error";
                          setFormatList(tempProcDir.getSourceService().getOutputFormats());
                          setSetList(setService.getAllSets());
                          setTemporaryProcessingDirective(tempProcDir);
@@ -442,6 +449,7 @@ public class AddProcessingDirective2 extends ActionSupport
                 else
                 {
                      this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Cannot insert Processing Directive with same Source:'"+tempProcDir.getSourceService().getName()+"' and Service:'"+tempProcDir.getService().getName()+"' combination");
+                     errorType = "error";
                      setFormatList(tempProcDir.getSourceService().getOutputFormats());
                      setSetList(setService.getAllSets());
                      setTemporaryProcessingDirective(tempProcDir);
@@ -459,6 +467,7 @@ public class AddProcessingDirective2 extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful");
+            errorType = "error";
             return ERROR;
         }
     }
@@ -564,4 +573,12 @@ public class AddProcessingDirective2 extends ActionSupport
             return INPUT;
         }
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

@@ -35,6 +35,9 @@ public class AllGroups extends ActionSupport
     /** The list of groups that a user can belong to */
     private List<Group> groupList;
 
+	/** Error type */
+	private String errorType; 
+	
     /**
      * assigns the list of groups that a user can belong to
      * @param groupList list of groups
@@ -82,8 +85,17 @@ public class AllGroups extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("allGroupsError", "Error : Groups not displayed correctly");
+            errorType = "error";
             return SUCCESS;
         }
 
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

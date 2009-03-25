@@ -44,6 +44,9 @@ public class ViewRepository extends ActionSupport implements UserAware
 
       /**Boolean value that denotes success or failure */
       private String Identify;
+      
+	  	/** Error type */
+	  	private String errorType; 
 
       /**
        * returns the ID of the repository to be viewed
@@ -201,6 +204,7 @@ public class ViewRepository extends ActionSupport implements UserAware
               log.debug(e);
               e.printStackTrace();
               this.addFieldError("allRepositoryError", "Repository details cannot be displayed");
+              errorType = "error";
               return SUCCESS;
           }
 
@@ -218,15 +222,25 @@ public class ViewRepository extends ActionSupport implements UserAware
           {
                 ValidateRepository vr = new ValidateRepository();
                 vr.validate(getRepositoryId());
-                this.addFieldError("viewRepositoryError", "SUCCESSFUL REVALIDATION (The format for this alert should be changed as per the new design)");               
+                this.addFieldError("viewRepositoryError", "SUCCESSFUL REVALIDATION (The format for this alert should be changed as per the new design)");
+                errorType = "info";
                 return SUCCESS;
           }
           catch(Exception e)
           {
               log.debug(e);
               e.printStackTrace();
-              this.addFieldError("viewRepositoryError", "ERROR : Revalidation unsuccessful");
+              this.addFieldError("viewRepositoryError", "Revalidation unsuccessful");
+              errorType = "error";
               return SUCCESS;
           }
       }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

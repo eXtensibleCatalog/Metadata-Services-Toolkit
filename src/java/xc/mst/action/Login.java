@@ -72,6 +72,10 @@ public class Login extends ActionSupport implements ServletRequestAware {
 
 	/** A reference to the logger for this class */
 	private static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+	
+	/** Error type */
+	private String errorType; 
+	
 
     /**
      * Overriding default implementation to login the user.
@@ -142,11 +146,13 @@ public class Login extends ActionSupport implements ServletRequestAware {
 			} else {
 				servers = serverService.getAll();
 				addFieldError("loginError", "Invalid username / password. Please try again");
+				errorType = "error";
 				resultName = INPUT;
 			}
 		} else {
 			servers = serverService.getAll();
 			addFieldError("loginError", "Invalid username / password. Please try again");
+			errorType = "error";
 			resultName = INPUT;
 		}
 
@@ -226,6 +232,14 @@ public class Login extends ActionSupport implements ServletRequestAware {
 
 	public void setServerId(int serverId) {
 		this.serverId = serverId;
+	}
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
 	}
 
 }

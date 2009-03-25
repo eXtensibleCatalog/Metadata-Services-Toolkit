@@ -47,6 +47,10 @@ public class ForgotPassword extends ActionSupport {
 	/** Indicates whether the password reset is success or not. */
 	private boolean resetSuccess= false;
 
+	/** Error type */
+	private String errorType; 
+	
+
 	/**
 	 * Execute method
 	 *
@@ -62,6 +66,7 @@ public class ForgotPassword extends ActionSupport {
 		{
 			addFieldError("emailDoesnotExist",
 					"The Email id does not exist in the system : " + email);
+			errorType = "error";
 			return INPUT;
 		} else {
 			String newPassword = userService.createRandomPassword();
@@ -88,6 +93,14 @@ public class ForgotPassword extends ActionSupport {
 
 	public void setResetSuccess(boolean resetSuccess) {
 		this.resetSuccess = resetSuccess;
+	}
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
 	}
 
 

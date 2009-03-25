@@ -49,6 +49,9 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 	/** Email of user */
 	private String email;
 
+	/** Error type */
+	private String errorType; 
+	
 	/**
 	 * To view edit my account
 	 */
@@ -82,14 +85,17 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 					userService.updateUser(user);
 				} else {
 					addFieldError("emailExist", "Email already exist - " + email);
+					errorType = "error";
 					return INPUT;
 				}
 			} else {
 				addFieldError("userNameExist", "User name already exist - " + userName);
+				errorType = "error";
 				return INPUT;
 			}
 		} catch (Exception e) {
 			addFieldError("dataError", e.getMessage());
+			errorType = "error";
 			return INPUT;
 		}
 		return SUCCESS;
@@ -127,6 +133,14 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
 	}
 
 

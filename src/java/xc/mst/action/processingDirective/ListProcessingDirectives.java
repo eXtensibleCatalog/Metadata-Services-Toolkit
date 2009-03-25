@@ -34,6 +34,9 @@ public class ListProcessingDirectives extends ActionSupport
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    
+	/** Error type */
+	private String errorType; 
 
     /**
      * Overrides default implementation to list all directives
@@ -56,6 +59,7 @@ public class ListProcessingDirectives extends ActionSupport
             log.debug(e);
             e.printStackTrace();
             this.addFieldError("listProcessingDirectivesError", "The list of processing Directives could not displayed");
+            errorType = "error";
             return INPUT;
         }
     }
@@ -77,4 +81,12 @@ public class ListProcessingDirectives extends ActionSupport
     {
         return ProcessingDirectivesList;
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

@@ -49,6 +49,11 @@ public class AddGroup extends ActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+	/** Error type */
+	private String errorType; 
+	
+
+
     public AddGroup()
     {
         tabNames = new ArrayList();
@@ -178,7 +183,8 @@ public class AddGroup extends ActionSupport
         {
             log.debug(e);
             e.printStackTrace();
-            this.addFieldError("addGroupError", "Error: The Page could not be displayed correctly");
+            this.addFieldError("addGroupError", "The Page could not be displayed correctly");
+            errorType = "error";
             return INPUT;
         }
     }
@@ -212,7 +218,8 @@ public class AddGroup extends ActionSupport
                     }
                     setTabNames(tabNames);
                     setSelectedPermissions(permissionsSelected);
-                    this.addFieldError("addGroupError", "Error : A group with the same name already exists");
+                    this.addFieldError("addGroupError", "A group with the same name already exists");
+                    errorType = "error";
                     return INPUT;
                 }
             }
@@ -230,10 +237,19 @@ public class AddGroup extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            this.addFieldError("addGroupError", "Error: Group could not be added properly");
+            this.addFieldError("addGroupError", "Group could not be added properly");
+            errorType = "error";
             e.printStackTrace();
             return INPUT;
         }
 
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

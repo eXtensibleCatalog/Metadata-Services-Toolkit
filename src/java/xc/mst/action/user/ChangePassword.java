@@ -51,6 +51,9 @@ public class ChangePassword extends ActionSupport implements  UserAware, Servlet
 	/** User service */
 	private UserService userService = new DefaultUserService();
 
+	/** Error type */
+	private String errorType; 
+	
 
 	/**
 	 * Change password
@@ -69,6 +72,7 @@ public class ChangePassword extends ActionSupport implements  UserAware, Servlet
 		} else {
 			addFieldError("passwordDoesnotMatch",
 					"The old password does not match. Please enter the correct old password." );
+			errorType = "error";
 			return INPUT;
 
 		}
@@ -95,6 +99,14 @@ public class ChangePassword extends ActionSupport implements  UserAware, Servlet
 	 */
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
+	}
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
 	}
 
 }

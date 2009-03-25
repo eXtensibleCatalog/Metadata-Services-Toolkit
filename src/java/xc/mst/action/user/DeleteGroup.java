@@ -47,6 +47,10 @@ public class DeleteGroup extends ActionSupport
 
     private UserGroupUtilService UGUtilService = new DefaultUserGroupUtilService();
 
+	/** Error type */
+	private String errorType; 
+	
+
     /**
      * sets the group ID of the group to be deleted.
      * @param groupId group ID
@@ -131,6 +135,7 @@ public class DeleteGroup extends ActionSupport
             else
             {
                 this.addFieldError("allGroupsError", "Error : Users belong to group '"+tempGroup.getName()+"'. So the group cannot be deleted.");
+                errorType = "error";
                 return INPUT;
             }
 
@@ -140,8 +145,15 @@ public class DeleteGroup extends ActionSupport
         {
             e.printStackTrace();
             this.addFieldError("allGroupsError", "Error : Problem deleting Group");
+            errorType = "error";
             return INPUT;
         }
 
     }
+	public String getErrorType() {
+		return errorType;
+	}
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

@@ -39,6 +39,9 @@ public class DeleteUser extends ActionSupport
     /** creates service object for providers */
     private ProviderService providerService = new DefaultProviderService();
 
+	/** Error type */
+	private String errorType; 
+
     /**
      * sets the ID of the user to be deleted
      * @param userId user ID
@@ -98,6 +101,7 @@ public class DeleteUser extends ActionSupport
             else
             {
                 this.addFieldError("deleteUserError", "Error: The user '"+tempUser.getUsername()+"' is associated with a Repository and cannot be deleted");
+                errorType = "error";
                 return INPUT;
             }
             return SUCCESS;
@@ -106,8 +110,17 @@ public class DeleteUser extends ActionSupport
         {
             e.printStackTrace();
             this.addFieldError("deleteUserError", "Error: The user was not deleted");
+            errorType = "error";
             return INPUT;
         }
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 
 }

@@ -37,6 +37,9 @@ public class EditRepository extends ActionSupport
 
     /**The URL of the repository to be edited */
     private String repositoryURL;
+    
+	/** Error type */
+	private String errorType; 
 
     /**
      * sets the Repository Name to the specified value
@@ -154,6 +157,7 @@ public class EditRepository extends ActionSupport
                     {
 
                          this.addFieldError("editRepositoryError", "Repository with Name '"+repositoryName+"' already exists");
+                         errorType = "error";
                         
                          return INPUT;
                     }
@@ -164,6 +168,7 @@ public class EditRepository extends ActionSupport
                             if(repositorySameURL.getId()!=getRepositoryId())
                             {
                                 this.addFieldError("editRepositoryError", "Repository with URL '"+repositoryURL+"' already exists");
+                                errorType = "error";
                                
                                 return INPUT;
                             }
@@ -200,7 +205,7 @@ public class EditRepository extends ActionSupport
                     {
 
                          this.addFieldError("editRepositoryError", "Repository with URL '"+repositoryURL+"' already exists");
-                         
+                         errorType = "error";
                          return INPUT;
                     }
                     else
@@ -260,4 +265,12 @@ public class EditRepository extends ActionSupport
             return SUCCESS;
         }
     }
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

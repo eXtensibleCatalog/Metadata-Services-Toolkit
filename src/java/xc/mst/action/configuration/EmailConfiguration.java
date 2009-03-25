@@ -50,6 +50,9 @@ public class EmailConfiguration extends ActionSupport
     private String message;
 
     private EmailConfig emailConfig = new EmailConfig();
+    
+	/** Error type */
+	private String errorType; 
 
     /**
      * sets the URL address of the email server
@@ -192,6 +195,7 @@ public class EmailConfiguration extends ActionSupport
         {
             e.printStackTrace();
             this.addFieldError("viewEmailConfigError", "Error : Problem displaying the Email Configuration Page");
+            errorType = "error";
             return INPUT;
         }
     }
@@ -208,21 +212,19 @@ public class EmailConfiguration extends ActionSupport
             
             emailConfig.setEmailServerAddress(emailServerAddress);
             emailConfig.setEncryptedConnection(encryptedConnection);
-
-            System.out.println("The from address for the email is "+fromAddress);
             emailConfig.setFromAddress(fromAddress);
             emailConfig.setPassword(password);
-            System.out.println("Inside main change method, port number is "+port);
             emailConfig.setPortNumber(Integer.parseInt(port));
             emailConfig.setTimeout(Integer.parseInt(timeout));
             emailConfigService.setEmailConfiguration(emailConfig);
-            message = "Information Saved.";
+            message = "Email Configuration details saved.";
             return SUCCESS;
         }
         catch(Exception e)
         {
             e.printStackTrace();
             this.addFieldError("changeEmailConfigError", fromAddress);
+            errorType = "error";
             return INPUT;
         }
     }
@@ -241,5 +243,13 @@ public class EmailConfiguration extends ActionSupport
 
 	public void setEmailConfig(EmailConfig emailConfig) {
 		this.emailConfig = emailConfig;
+	}
+
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
 	}
 }
