@@ -29,6 +29,8 @@
 		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
 
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
@@ -68,7 +70,8 @@
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
                         <s:fielderror cssClass="errorMessage"/>
                     </div>
-                 </c:if> 
+                 </c:if>
+                <div id="error_div"></div>
 
              <div class="viewTable">
                     <table width="100%">

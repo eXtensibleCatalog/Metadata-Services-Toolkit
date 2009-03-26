@@ -28,6 +28,9 @@
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
 		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
@@ -62,7 +65,8 @@
 
 		<!-- body -->
 		<div id="bd">
-         
+
+
           <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div class="${errorType}">
@@ -70,8 +74,12 @@
                         <s:fielderror cssClass="errorMessage"/>
                     </div>
                  </c:if>
+                 <div id="error_div"></div>
 
+        
          <form method="post" name="addLocalUser" id="addLocalUser">
+
+          <br>
             <table>
 
                 <tr>
@@ -103,7 +111,7 @@
 
 
             </table>
-
+          
                <table>
                    <tr>
                        <td>Groups  &nbsp;&nbsp;
@@ -137,7 +145,7 @@
                    </tr>
               </table>
 
-
+      
             
 
             <div align="left" style="margin-top:10px;">
@@ -146,7 +154,7 @@
             </div>
 
 
-            </form>
+        </form>
      </div>
   </div>
 </body>

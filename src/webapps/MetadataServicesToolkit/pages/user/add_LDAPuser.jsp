@@ -27,6 +27,9 @@
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
 		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
@@ -67,10 +70,13 @@
                         <s:fielderror cssClass="errorMessage"/>
                     </div>
                  </c:if>
+                 <div id="error_div"></div>
 
-             <br>
-
+           
+             
                 <form action="addLDAPUser.action" method="post" name="addLDAPUser">
+
+                <br>
 
                    <table>
                        <tr>
@@ -93,10 +99,7 @@
                        
                   
                    </table>
-                    
-                     
-
-                       <br><br>
+              
 
                         <table>
                            <tr>
@@ -131,21 +134,22 @@
                            </tr>
                         </table>
 
+                
+
+
+                    <div align="left">
+                         <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
+
+
+                         <button class="xc_button" type="button" name="addLDAPuser" onclick="javascript:YAHOO.xc.mst.user.addLDAPUser();">Add LDAP User</button>
 
 
 
-                        <div align="left">
-                             <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
-                            
-                                 
-                             <button class="xc_button" type="button" name="addLDAPuser" onclick="javascript:YAHOO.xc.mst.user.addLDAPUser();">Add LDAP User</button>
-                                
-                                
-                            
-                             
-                        </div>
+
+                    </div>
 
                 </form>
+              
           </div>
       </div>
 </body>
