@@ -25,11 +25,11 @@
         <LINK HREF="page-resources/css/bodylayout.css" REL="stylesheet" TYPE="text/css">
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
 
+        <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
-
-
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/add_repository.js"></SCRIPT>
         <script type="javascript" src="http://yui.yahooapis.com/combo?2.5.2/build/yuiloader/yuiloader-beta-min.js"></script>
@@ -59,6 +59,8 @@
                     <jsp:param name="bread" value="Repository , Add Repository" />
 
             </jsp:include>
+
+            <div id="error_div"></div>
             <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div class="${errorType}">
