@@ -21,22 +21,21 @@
         
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/base-mst.css" rel="stylesheet" type="text/css" >
-        <LINK href="page-resources/yui/menu/assets/skins/sam/menu.css"  rel="stylesheet" type="text/css" >
-        
+        <LINK href="page-resources/yui/menu/assets/skins/sam/menu.css"  rel="stylesheet" type="text/css" >        
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
 		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
 
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container-min.js"></SCRIPT>    
-    	<SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>     
-        
+    	<SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>             
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
-        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/button/button-min.js"></script> 
-          
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/button/button-min.js"></script>           
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/all_schedules.js"></SCRIPT>
     </head>
@@ -70,7 +69,8 @@
 					<s:fielderror cssClass="errorMessage"/> 
 				</div>
    			 </c:if> 
-   			 
+   			 <div id="error_div"></div>
+             
 			<div class="viewTable">
 			<table width="100%">
 				<thead>
