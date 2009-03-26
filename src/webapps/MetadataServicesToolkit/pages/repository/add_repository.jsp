@@ -59,7 +59,8 @@
                     <jsp:param name="bread" value="Repository , Add Repository" />
 
             </jsp:include>
-
+            
+            
             
  		</div>
 		<!--  end header -->
@@ -67,8 +68,7 @@
 		<!-- body -->
 		<div id="bd">
 
-
-            <!-- Display of error message -->
+         <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div class="${errorType}">
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
