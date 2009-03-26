@@ -17,16 +17,16 @@ YAHOO.xc.mst.registeration = {
 	{
 
 		if (document.getElementById('user_full_name').value=='') {
-			alert('User Full Name is required.');
+			createErrorDiv("error",'User Full Name is required.');
 			return false;
 		}
 		if (document.getElementById('login_server').value== '0') {
-			alert('Please select login sever type.');
+		    createErrorDiv("error",'Please select login sever type.');
 			return false;
 		}						
 
 		if (document.getElementById('user_name').value=='') {
-			alert('User name is required.');
+		    createErrorDiv("error",'User name is required.');
 			return false;
 		}
 		
@@ -34,16 +34,16 @@ YAHOO.xc.mst.registeration = {
 
 		if (!document.getElementById('user_password').disabled) {
 			if (document.getElementById('user_password').value=='') {
-				alert('Password is required.');
+			    createErrorDiv("error",'Password is required.');
 				return false;
 			}
 			if (document.getElementById('user_password').value!=document.getElementById('user_password_confirmation').value) {
-				alert('Password does not match confirmation password.');
+			    createErrorDiv("error",'Password does not match confirmation password.');
 				return false;
 			}
 			
 			if (document.getElementById('user_password').value.length < 6 || document.getElementById('user_password').value.length > 20) {
-				alert('Password should be 6 to 10 characters long');
+			    createErrorDiv("error",'Password should be 6 to 10 characters long');
 				return false;
 			}
 					
@@ -56,7 +56,7 @@ YAHOO.xc.mst.registeration = {
 
 				}else{
 					if  (validChar.indexOf(document.getElementById('user_password').value[i]) < 0 ) {
-						alert('Invalid character in password. Only A-Z, a-z, 0-9 , *, @, (,), _,# are allowed.');
+						createErrorDiv("error",'Invalid character in password. Only A-Z, a-z, 0-9 , *, @, (,), _,# are allowed.');
 						return false;
 					}
 				}

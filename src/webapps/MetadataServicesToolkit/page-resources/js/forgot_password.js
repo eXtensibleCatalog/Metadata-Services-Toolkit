@@ -84,7 +84,7 @@ YAHOO.xc.mst.password =
 	    // handle form sbumission failure
 	    var handleFailure = function(o)
 	    {
-	        alert('Email submission failed ' + o.status);
+	        createErrorDiv("error",'Email submission failed ' + o.status);
 	    };
 
 	    // Instantiate the Dialog
@@ -112,14 +112,14 @@ YAHOO.xc.mst.password =
 	        var email = document.getElementById('forgotPasswordForm_email').value;
 		    if (email == "" || email == null) 
 		    {
-		        alert('Email Id must be entered');
+		        createErrorDiv("error",'Email Id must be entered');
 			    return false;
 		    } 
 		    else 
 		    {
 			    if (!urUtil.emailcheck(email)) 
 			    {
-				    alert('Invalid email address');
+				    createErrorDiv("error",'Invalid email address');
 				    return false;
 			    }
 			    return true;

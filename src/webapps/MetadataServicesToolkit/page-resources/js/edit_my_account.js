@@ -15,19 +15,19 @@ YAHOO.xc.mst.account = {
 	{
 
 		if (document.getElementById('user_full_name').value=='') {
-			alert('User Full Name is required.');
+			createErrorDiv("error",'User Full Name is required.');
 			return false;
 		}
 		if (document.getElementById('user_name').value=='') {
-			alert('User name is required.');
+			createErrorDiv("error",'User name is required.');
 			return false;
 		}
 		if (document.getElementById('user_email').value=='') {
-			alert('Email is required.');
+			createErrorDiv("error",'Email is required.');
 			return false;
 		} else {
 			if (!YAHOO.xc.mst.account.emailCheck(document.getElementById('user_email').value)) {
-				alert("Invalid E-mail ID");
+				createErrorDiv("error","Invalid E-mail ID");
 				return false;
 			}
 

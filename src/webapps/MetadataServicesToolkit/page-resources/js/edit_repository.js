@@ -21,12 +21,12 @@ EditValidator : function()
 
                    if(rname == "")
                        {
-                           alert("Repository Name cannot be empty");
+                           createErrorDiv("error","Repository Name cannot be empty");
                            //return false;
                        }
                    else if(rurl == "")
                        {
-                           alert("Repository Name cannot be empty");
+                           createErrorDiv("error","Repository Name cannot be empty");
                            //return false;
                        }
                    else
@@ -35,7 +35,7 @@ EditValidator : function()
                           
                            if(arr[1]==null)
                                {
-                                   alert("Repository Name cannot be empty");
+                                   createErrorDiv("error","Repository Name cannot be empty");
                                    //return false;
                                }
                            else
@@ -55,7 +55,6 @@ EditValidator : function()
         },
         cancel:function()
         {
-            alert("entering cancel method");
             try
             {
                 document.editRepositoryForm.action = 'allRepository.action';

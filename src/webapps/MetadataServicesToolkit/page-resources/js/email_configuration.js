@@ -23,7 +23,7 @@ YAHOO.xc.mst.configuration = {
          var port = document.getElementById("port").value;
          if((emailServerAddress=='')||(fromAddress=='')||(password=='')||(encryptedConnection=='')||(port==''))
          {
-            alert("Kindly fill in all the details before submitting the form");
+            createErrorDiv("error","Kindly fill in all the details before submitting the form");
          }
          else
          {

@@ -54,11 +54,11 @@ YAHOO.xc.mst.services = {
             {
                 if(sourceFlag==false)
                     {
-                        alert("Atleast one source has to be selected");
+                        createErrorDiv("error","Atleast one source has to be selected");
                     }
                 else
                     {
-                        alert("Atleast one service has to be selected");
+                        createErrorDiv("error","Atleast one service has to be selected");
                     }
             }
      }
