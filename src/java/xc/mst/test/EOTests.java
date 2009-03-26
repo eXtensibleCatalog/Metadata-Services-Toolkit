@@ -24,6 +24,7 @@ import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.harvester.HarvestRunner;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.scheduling.SchedulingException;
+import xc.mst.utils.LogWriter;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -66,18 +67,12 @@ public class EOTests
 	{
 		try
 		{
-			RecordList records = new DefaultRecordService().getByErrorCode("error code");
-			for(Record record : records)
-				System.out.println(record.getWarningCodes().get(0));
-			if(true) return;
-
-			// Construct the XC_Harvester object.  This will automatically run the harvester
-			System.out.println(formatter.format(System.currentTimeMillis()) + " Harvest starting.");
-			HarvestRunner harvester = new HarvestRunner(90);
-			harvester.runHarvest();
-			System.out.println(formatter.format(System.currentTimeMillis()) + " Harvest ending.");
-
-			if(true) return;
+			String file1 = "logs\\test1.txt";
+			String file2 = "logs\\test2.txt";
+			LogWriter.addInfo(file1, "test1.txt line 1");
+			LogWriter.addInfo(file2, "test2.txt line 1");
+			LogWriter.addInfo(file1, "test1.txt line 2");
+			LogWriter.addInfo(file2, "test2.txt line 2");
 		}
 		catch(Exception e)
 		{
@@ -85,7 +80,7 @@ public class EOTests
 		}
 		finally
 		{
-			SolrIndexManager.getInstance().commitIndex();
+			//SolrIndexManager.getInstance().commitIndex();
 		}
 	}
 }
