@@ -79,7 +79,9 @@
                  
         <form action="/MetadataServicesToolkit/addRepository.action" name="addRepositoryForm" method="post">
 
-        <div style="margin-top:25px;margin-left:0px;font-family: verdana,sans-serif;font-size: 12px;">
+	<div class="clear">&nbsp;</div>
+
+        <div style="margin-left:0px;font-family: verdana,sans-serif;font-size: 12px;">
 
                  OAI-PMH <B>Repository Name</B> <br>
                  <input type="text" id="repositoryName" name="repositoryName" value="${repositoryName}" style="height:25px;width:305px;" maxlength="255"> <br><br>

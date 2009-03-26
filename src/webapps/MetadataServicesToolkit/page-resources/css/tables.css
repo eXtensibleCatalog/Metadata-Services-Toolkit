@@ -6,7 +6,9 @@
   * website http://www.extensiblecatalog.org/. 
   *
   */
- 
+
+
+
  /* this is forms created using tables */
 .basicTable {
 	align: left;
@@ -276,3 +278,5 @@
 	padding-left: 5px;
 	
 }
+
+.clear { clear:both;}
