@@ -24,7 +24,7 @@ YAHOO.xc.mst.user = {
 
             if((groupName=='')||(groupDescription==''))
                 {
-                    alert("Kindly fill all the fields before submitting the form");
+                    createErrorDiv("error","Kindly fill all the fields before submitting the form");
                 }
 
             else
@@ -47,7 +47,7 @@ YAHOO.xc.mst.user = {
                      }
                   else
                       {
-                          alert('groups cannot be empty');
+                          createErrorDiv("error",'groups cannot be empty');
                       }
              }
 

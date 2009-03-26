@@ -22,13 +22,13 @@ AddValidator : function()
                    if(rname == "")
                        {
 
-                           alert("Repository Name cannot be empty");
+                           createErrorDiv("error","Repository Name cannot be empty");
                            //return false;
                        }
                    else if(rurl == "")
                        {
 
-                           alert("Repository URL cannot be empty");
+                           createErrorDiv("error","Repository URL cannot be empty");
                            //return false;
                        }
                    else
@@ -37,7 +37,7 @@ AddValidator : function()
 
                            if(arr[1]==null)
                                {
-                                   alert("Repository URL is invalid (Kindly ensure that protocol is specified eg:HTTP)");
+                                   createErrorDiv("error","Repository URL is invalid (Kindly ensure that protocol is specified eg:HTTP)");
                                    //return false;
                                }
                            else

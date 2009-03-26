@@ -15,25 +15,25 @@ YAHOO.xc.mst.changePassword = {
 	{
 
 		if (document.getElementById('old_password').value=='') {
-			alert('Old password is required.');
+			createErrorDiv("error",'Old password is required.');
 			return false;
 		}
 		if (document.getElementById('new_password').value=='') {
-			alert('New password is required.');
+			createErrorDiv("error",'New password is required.');
 			return false;
 		}
 		if (document.getElementById('new_password_confirm').value=='') {
-			alert('Re-enter new password.');
+			createErrorDiv("error",'Re-enter new password.');
 			return false;
 		}	
 		if (document.getElementById('new_password_confirm').value != document.getElementById('new_password').value) {
-			alert('New password and password confirmation does not match.');
+			createErrorDiv("error",'New password and password confirmation does not match.');
 			return false;
 		}
 
 		
 		if (document.getElementById('new_password').value.length < 6 || document.getElementById('new_password').value.length > 10) {
-			alert('Password should be 6 to 10 characters long');
+			createErrorDiv("error",'Password should be 6 to 10 characters long');
 			return false;
 		}
 				

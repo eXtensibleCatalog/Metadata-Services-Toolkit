@@ -24,12 +24,12 @@ YAHOO.xc.mst.user = {
 
 
 			if (document.getElementById('password').value!=document.getElementById('confpass').value) {
-				alert('Password does not match confirmation password.');
+				createErrorDiv("error",'Password does not match confirmation password.');
 				return false;
 			}
 			
 			if (document.getElementById('password').value.length < 6 || document.getElementById('password').value.length > 20) {
-				alert('Password should be 6 to 20 characters long');
+				createErrorDiv("error",'Password should be 6 to 20 characters long');
 				return false;
 			}
 					
@@ -42,7 +42,7 @@ YAHOO.xc.mst.user = {
 
 				}else{
 					if  (validChar.indexOf(document.getElementById('password').value[i]) < 0 ) {
-						alert('Invalid character in password. Only A-Z, a-z, 0-9 , *, @, (,), _,# are allowed.');
+					    createErrorDiv("error",'Invalid character in password. Only A-Z, a-z, 0-9 , *, @, (,), _,# are allowed.');
 						return false;
 					}
 				}
@@ -51,7 +51,7 @@ YAHOO.xc.mst.user = {
             
             if((email=='')||(pass=='')||(confpass=='')||(fullname==''))
                 {
-                    alert("Kindly fill all the fields before submitting the form");
+                    createErrorDiv("error","Kindly fill all the fields before submitting the form");
                 }
 
             else
@@ -75,12 +75,12 @@ YAHOO.xc.mst.user = {
                          }
                          else
                          {
-                             alert('passwords do not match');
+                             createErrorDiv("error",'passwords do not match');
                          }
                      }
                   else
                       {
-                          alert('groups cannot be empty');
+                          createErrorDiv("error",'groups cannot be empty');
                       }
              }
             

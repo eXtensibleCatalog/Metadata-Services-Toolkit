@@ -21,7 +21,7 @@ YAHOO.xc.mst.user = {
             var groupsSelected = document.getElementById("groupsSelected");
             if((email=='')||(fullname=='')||(username==''))
                 {
-                    alert("Kindly fill all the fields before submitting the form");
+                    createErrorDiv("error","Kindly fill all the fields before submitting the form");
                 }
             else
              {
@@ -41,7 +41,7 @@ YAHOO.xc.mst.user = {
                         }
                     else
                         {
-                            alert("Groups cannot be empty");
+                            createErrorDiv("error","Groups cannot be empty");
                         }
 
              }

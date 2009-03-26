@@ -51,7 +51,7 @@ YAHOO.xc.mst.configuration.MyObject = {
              var port = document.getElementById("port").value;
              if((displayName=='')||(serverURL=='')||(userNameAttribute=='')||(startLocation=='')||(port==''))
              {
-                alert("Kindly fill in all the details before submitting the form");
+                createErrorDiv("error","Kindly fill in all the details before submitting the form");
              }
              else
              {
@@ -61,7 +61,7 @@ YAHOO.xc.mst.configuration.MyObject = {
 
                  if(arr[1]==null)
                      {
-                         alert("Repository URL is invalid (Kindly ensure that protocol is specified eg:HTTP)");
+                         createErrorDiv("error","Repository URL is invalid (Kindly ensure that protocol is specified eg:HTTP)");
                          //return false;
                      }
                  else
@@ -89,7 +89,7 @@ YAHOO.xc.mst.configuration.MyObject = {
                         else
                             {
                                
-                                alert("Port Number should be an integer value");
+                                createErrorDiv("error","Port Number should be an integer value");
                             }
                      }
              }
