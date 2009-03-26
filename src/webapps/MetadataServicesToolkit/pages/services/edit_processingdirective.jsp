@@ -74,7 +74,7 @@
                  </c:if>
                  <div id="error_div"></div>
 
-                <div class="StepsStructure">
+                <div class="stepsStructure">
                     <ul style="list-style:none;">
                         <li style="float:left;"><div><img src="page-resources/img/3.4_step1_highlight.gif"></div></li>
                         <li style="margin-left:5px;float:left;"><div><img src="page-resources/img/3.4_step2_grey.gif"></div></li>

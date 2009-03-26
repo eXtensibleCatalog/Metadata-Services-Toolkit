@@ -97,7 +97,7 @@ public class DeleteLDAP extends ActionSupport
             }
             else
             {
-                this.addFieldError("deleteLDAPError", "Error : The LDAP Server is associated with one or more users and cannot be deleted");
+                this.addFieldError("deleteLDAPError", "The LDAP Server is associated with one or more users and cannot be deleted");
                 errorType = "error";
                 return INPUT;
             }

@@ -208,7 +208,8 @@ public class AddLDAP extends ActionSupport
                 serverService.updateServer(server);
             }
 
-            message = "Information Saved.";
+            message = "LDAP Server Information Saved.";
+            errorType = "info";
             return SUCCESS;
         }
         catch(Exception e)

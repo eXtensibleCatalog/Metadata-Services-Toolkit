@@ -218,6 +218,7 @@ public class EmailConfiguration extends ActionSupport
             emailConfig.setTimeout(Integer.parseInt(timeout));
             emailConfigService.setEmailConfiguration(emailConfig);
             message = "Email Configuration details saved.";
+            errorType = "info";
             return SUCCESS;
         }
         catch(Exception e)

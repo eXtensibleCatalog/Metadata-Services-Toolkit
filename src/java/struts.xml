@@ -129,9 +129,9 @@
             <result name="input">/pages/repository/all_repository.jsp</result>
         </action>
         
-        <action name="viewRepositoryValidate" class="xc.mst.action.repository.ViewRepository" method="ValidateRepository">
+        <action name="viewRepositoryValidate" class="xc.mst.action.repository.ViewRepository" method="validateRepository">
         	<interceptor-ref name="default"/>
-            <result name="success" type="redirect">viewRepository.action?RepositoryId=${repositoryId}</result>
+            <result name="success">/pages/repository/view_repository.jsp</result>
         </action>
         
         <action name="viewEditRepository" class="xc.mst.action.repository.EditRepository">

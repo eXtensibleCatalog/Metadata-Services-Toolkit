@@ -45,8 +45,11 @@ public class ViewRepository extends ActionSupport implements UserAware
       /**Boolean value that denotes success or failure */
       private String Identify;
       
-	  	/** Error type */
-	  	private String errorType; 
+	/** Error type */
+	private String errorType; 
+	
+	/** Error messgae */
+	private String message; 
 
       /**
        * returns the ID of the repository to be viewed
@@ -176,9 +179,6 @@ public class ViewRepository extends ActionSupport implements UserAware
           {
 
                 provider = new DefaultProviderService().getProviderById(repositoryId);
-                user = provider.getUser();
-                setUser(user);
-                setProvider(provider);
                 boolean boollistsets = provider.getListSets();
                 boolean boolidentify = provider.getIdentify();
                 boolean boollistformats = provider.getListFormats();
@@ -216,14 +216,15 @@ public class ViewRepository extends ActionSupport implements UserAware
        * 
        * @return returns the status of the operation and re-directs accordingly
        */
-      public String ValidateRepository()
+      public String validateRepository()
       {
           try
           {
                 ValidateRepository vr = new ValidateRepository();
                 vr.validate(getRepositoryId());
-                this.addFieldError("viewRepositoryError", "SUCCESSFUL REVALIDATION (The format for this alert should be changed as per the new design)");
+                message = "Repository revalidated!";
                 errorType = "info";
+                execute();
                 return SUCCESS;
           }
           catch(Exception e)
@@ -242,5 +243,9 @@ public class ViewRepository extends ActionSupport implements UserAware
 
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	public String getMessage() {
+		return message;
 	}
 }

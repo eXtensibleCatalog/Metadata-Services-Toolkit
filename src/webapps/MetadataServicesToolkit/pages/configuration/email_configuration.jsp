@@ -69,10 +69,15 @@
                 <c:if test="${errorType != null}">
                     <div class="${errorType}">
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
-                        <s:fielderror cssClass="errorMessage"/>
-                    </div>
+                        <c:if test="${errorType == 'error'}">
+                        	<s:fielderror cssClass="errorMessage"/>
+                       	</c:if>
+                        <c:if test="${errorType == 'info'}">
+                        	<div class="jsErrorMessage"> ${message}</div>
+                        </c:if>            
+                     </div>
                  </c:if>
-				<div class="informationMessage"> ${message} </div>
+
                 <form action="changeEmailConfig.action" method="post" name="emailConfig">
 
 

@@ -62,7 +62,19 @@
 
             </jsp:include>
 
-            
+            <div id="error_div"></div>
+            <!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <c:if test="${errorType == 'error'}">
+                        	<s:fielderror cssClass="errorMessage"/>
+                       	</c:if>
+                        <c:if test="${errorType == 'info'}">
+                        	<div class="jsErrorMessage"> ${message}</div>
+                        </c:if>
+                    </div>
+                 </c:if> 
  		</div>
 		<!--  end header -->
 
