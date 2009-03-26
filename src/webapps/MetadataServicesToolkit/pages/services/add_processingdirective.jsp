@@ -60,6 +60,14 @@
 
                 </jsp:include>
                 
+                
+                 
+            </div>
+            <!--  end header -->
+
+            <!-- body -->
+            <div id="bd">
+           
                  <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div class="${errorType}">
@@ -68,14 +76,6 @@
                     </div>
                  </c:if>
                  <div id="error_div"></div>
-                 
-            </div>
-            <!--  end header -->
-
-            <!-- body -->
-            <div id="bd">
-           
-
 
                 <div class="StepsStructure">
                     <ul style="list-style:none;">

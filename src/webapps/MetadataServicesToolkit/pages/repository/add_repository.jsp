@@ -60,20 +60,23 @@
 
             </jsp:include>
 
-            <div id="error_div"></div>
+            
+ 		</div>
+		<!--  end header -->
+         
+		<!-- body -->
+		<div id="bd">
+
+
             <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div class="${errorType}">
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
                         <s:fielderror cssClass="errorMessage"/>
                     </div>
-                 </c:if> 
- 		</div>
-		<!--  end header -->
-         
-		<!-- body -->
-		<div id="bd">
-       
+                 </c:if>
+                 <div id="error_div"></div>
+                 
         <form action="/MetadataServicesToolkit/addRepository.action" name="addRepositoryForm" method="post">
 
         <div style="margin-top:25px;margin-left:0px;font-family: verdana,sans-serif;font-size: 12px;">

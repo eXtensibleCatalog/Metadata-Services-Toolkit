@@ -62,23 +62,21 @@
 
             </jsp:include>
 
-            <div id="error_div"></div>
-            <!-- Display of error message -->
-                <c:if test="${errorType != null}">
-                    <div class="${errorType}">
-                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
-                        <s:fielderror cssClass="errorMessage"/>
-                    </div>
-                 </c:if> 
+            
  		</div>
 		<!--  end header -->
 
 		<!-- body -->
 		<div id="bd">
 
-       
-           
-             <br><br>
+            <!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <s:fielderror cssClass="errorMessage"/>
+                    </div>
+                 </c:if>
+                <div id="error_div"></div>
 			
 			<!-- start the grid -->
    	        <div class="yui-g">

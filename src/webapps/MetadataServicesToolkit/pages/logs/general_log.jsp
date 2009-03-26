@@ -63,14 +63,16 @@
 		<!-- body -->
 		<div id="bd">
 
-             <div id="error_div"></div>
+             
              <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div class="${errorType}">
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
                         <s:fielderror cssClass="errorMessage"/>
                     </div>
-                 </c:if> 
+                 </c:if>
+                <div id="error_div"></div>
+                
                 <div class="viewTable">
                     <table width="100%">
                         <thead>
