@@ -9,11 +9,17 @@
 
 package xc.mst.utils;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.PropertyConfigurator;
+
+import xc.mst.bo.log.Log;
+import xc.mst.dao.log.DefaultLogDAO;
+import xc.mst.dao.log.LogDAO;
 
 /**
  * Initialize log
@@ -40,6 +46,12 @@ public class InitializeLog  extends HttpServlet {
 	    if(file != null) {
 	      PropertyConfigurator.configure(prefix+file);
 	    }
+	    
+	    // Initialize the general MST logs
+	    LogDAO logDao = new DefaultLogDAO();
+	    List<Log> logs = logDao.getAll();
+	    for(Log log : logs)
+	    	LogWriter.addInfo(log.getLogFileLocation(), "Beginning logging for " + log.getLogFileName() + ".");
 	  }
 
 	  public void doGet(HttpServletRequest req, HttpServletResponse res) {

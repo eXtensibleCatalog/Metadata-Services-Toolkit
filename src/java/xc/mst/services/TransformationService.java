@@ -69,12 +69,31 @@ public class TransformationService extends MetadataService
 	private Format xcFormat = null;
 
 	/**
+	 * A list of warnings to add to the record currently being processed
+	 */
+	private List<String> warnings = new ArrayList<String>();
+	
+	/**
+	 * A list of warning codes to add to the record currently being processed
+	 */
+	private List<String> warningCodes = new ArrayList<String>();
+	
+	/**
+	 * A list of errors to add to the record currently being processed
+	 */
+	private List<String> errors = new ArrayList<String>();
+	
+	/**
+	 * A list of error codes to add to the record currently being processed
+	 */
+	private List<String> errorCodes = new ArrayList<String>();
+	
+	/**
 	 * This is used to ensure that subfields from the same source get mapped to the same FRBR Work element
 	 */
 	private int artificialLinkingId = 0;
 
 	// The following HashSets are used to prevent duplicate values from being added to the XC record
-
 
 	/**
 	 * Construct a TransformationService Object
@@ -150,18 +169,24 @@ public class TransformationService extends MetadataService
 			{
 				log.error("An error occurred while parsing the record's XML.", e);
 
-				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
+				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
 				warningCount++;
 
+				errorCodes.add("300");
+				errors.add("An XML parse error occurred while processing the record: " + e.getMessage());
+				
 				return results;
 			}
 			catch(JDOMException e)
 			{
 				log.error("An error occurred while parsing the record's XML.", e);
 
-				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
+				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
 				warningCount++;
 
+				errorCodes.add("300");
+				errors.add("An XML parse error occurred while processing the record: " + e.getMessage());
+				
 				return results;
 			}
 
@@ -368,9 +393,14 @@ public class TransformationService extends MetadataService
 		{
 			log.error("An error occurred while Transforming the record with ID " + record.getId(), e);
 
-			LogWriter.addError(service.getServicesLogFileName(), "An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
+			LogWriter.addError(service.getServicesLogFileName(), "An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
 			errorCount++;
 
+			if(log.isDebugEnabled())
+				log.debug("Adding warnings and errors to the record.");
+			
+			addWarningsAndErrorsToRecord(record, warnings, warningCodes, errors, errorCodes);
+			
 			return results;
 		}
 	}

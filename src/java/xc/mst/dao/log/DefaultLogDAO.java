@@ -97,7 +97,7 @@ public class DefaultLogDAO extends LogDAO
 	private static Object psDeleteLock = new Object();
 
 	@Override
-	public ArrayList<Log> getAll()
+	public List<Log> getAll()
 	{
 		synchronized(psGetAllLock)
 		{

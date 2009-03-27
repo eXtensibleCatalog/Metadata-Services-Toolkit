@@ -77,7 +77,7 @@ public abstract class LogDAO
 	 *
 	 * @return A list of Log Objects representing all logs in the database
 	 */
-	public abstract ArrayList<Log> getAll();
+	public abstract List<Log> getAll();
 
 	/**
 	 * Gets all logs in the database sorted by their file names

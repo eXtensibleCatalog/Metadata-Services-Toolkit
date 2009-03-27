@@ -458,8 +458,6 @@ public abstract class MetadataService
 			// Get the list of record inputs for this service
 			RecordList records = recordService.getInputForService(service.getId());
 			
-			//DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
-
 			// Iterate over the list of input records and process each.
 			// Then run the processing directives on the results of each and add
 			// the appropriate record inputs for services to be run on the records
@@ -497,9 +495,7 @@ public abstract class MetadataService
 			} // end loop over records to process
 
 			// Reopen the reader so it can see the changes made by running the service
-			// TODO removed IndexManager
 			SolrIndexManager.getInstance().commitIndex();
-//			IndexManager.getInstance().maybeReOpen();
 
 			// Get the results of any final processing the service needs to perform
 			finishProcessing();

@@ -12,6 +12,8 @@
 package xc.mst.manager.logs;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import xc.mst.bo.log.Log;
 import xc.mst.dao.DataException;
 
@@ -27,7 +29,7 @@ public interface LogService
 	 *
 	 * @return A list of Log Objects representing all logs in the database
 	 */
-	public ArrayList<Log> getAll();
+	public List<Log> getAll();
 
 	/**
 	 * Gets the log from the database with the passed log ID

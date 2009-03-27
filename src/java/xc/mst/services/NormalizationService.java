@@ -143,8 +143,6 @@ public class NormalizationService extends MetadataService
 	 */
 	public NormalizationService()
 	{
-		log.info("Working directory is: " + System.getProperty("user.dir"));
-
 		// Initialize the XC format
 		marcxmlFormat = formatDao.getByName("marcxml");
 
@@ -202,6 +200,8 @@ public class NormalizationService extends MetadataService
 
 				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
 				warningCount++;
+				errorCodes.add("300");
+				errors.add("An XML parse error occurred while processing the record: " + e.getMessage());
 
 				return results;
 			}
@@ -211,6 +211,8 @@ public class NormalizationService extends MetadataService
 
 				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
 				warningCount++;
+				errorCodes.add("300");
+				errors.add("An XML parse error occurred while processing the record: " + e.getMessage());
 
 				return results;
 			}
@@ -443,8 +445,13 @@ public class NormalizationService extends MetadataService
 		{
 			log.error("An error occurred while normalizing the record with ID " + record.getId(), e);
 
-			LogWriter.addError(service.getServicesLogFileName(), "An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
+			LogWriter.addError(service.getServicesLogFileName(), "An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
 			errorCount++;
+			
+			if(log.isDebugEnabled())
+				log.debug("Adding warnings and errors to the record.");
+			
+			addWarningsAndErrorsToRecord(record, warnings, warningCodes, errors, errorCodes);
 
 			return results;
 		}
@@ -1887,6 +1894,7 @@ public class NormalizationService extends MetadataService
 	    catch (IOException e)
 	    {
 	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_ENABLED_STEPS + " file.", e);
+	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_ENABLED_STEPS + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
 	    }
 
 		// Load the Voyager location name properties
@@ -1897,6 +1905,7 @@ public class NormalizationService extends MetadataService
 	    catch (IOException e)
 	    {
 	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_LOCATION_CODE_TO_LOCATION_TERM + " file.", e);
+	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LOCATION_CODE_TO_LOCATION_TERM + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
 	    }
 
 	    // Load the DCMI type properties for the leader 06
@@ -1907,6 +1916,7 @@ public class NormalizationService extends MetadataService
 	    catch (IOException e)
 	    {
 	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_LEADER06_DCMI_TYPE_MAPPING + " file.", e);
+	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LEADER06_DCMI_TYPE_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
 	    }
 
 	    // Load the properties file mapping the Leader 06 to the MARC vocabulary.
@@ -1917,6 +1927,7 @@ public class NormalizationService extends MetadataService
 	    catch (IOException e)
 	    {
 	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_LEADER06_MARC_VOCABULARY_MAPPING + " file.", e);
+	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LEADER06_MARC_VOCABULARY_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
 	    }
 
         // Load the properties file mapping the Leader 06 to the vocab term.
@@ -1927,6 +1938,7 @@ public class NormalizationService extends MetadataService
 	    catch (IOException e)
 	    {
 	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_LEADER06_FULL_TYPE_MAPPING + " file.", e);
+	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LEADER06_FULL_TYPE_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
 	    }
 
 	    // Load the properties file mapping the Leader 07 to the mode of issuance.
@@ -1937,6 +1949,7 @@ public class NormalizationService extends MetadataService
 	    catch (IOException e)
 	    {
 	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_LEADER07_MODE_OF_ISSUANCE_MAPPING + " file.", e);
+	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LEADER07_MODE_OF_ISSUANCE_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
 	    }
 
 	    // Load the properties file mapping the 007 offset 00 to the DCMI type.
@@ -1947,6 +1960,7 @@ public class NormalizationService extends MetadataService
 	    catch (IOException e)
 	    {
 	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_007_00_DCMI_TYPE_MAPPING + " file.", e);
+	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_007_00_DCMI_TYPE_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
 	    }
 
 		// Load the properties file mapping the 007 offset 00 to the type.
@@ -1957,6 +1971,7 @@ public class NormalizationService extends MetadataService
 	    catch (IOException e)
 	    {
 	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_007_00_007_FULL_TYPE_MAPPING+ " file.", e);
+	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_007_00_007_FULL_TYPE_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
 	    }
 
 	    // Load the properties file mapping the 007 offset 00 to the SMD type
@@ -1967,6 +1982,7 @@ public class NormalizationService extends MetadataService
 	    catch (IOException e)
 	    {
 	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_007_SMD_TYPE_MAPPING + " file.", e);
+	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_007_SMD_TYPE_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
 	    }
 
 	    // Load the properties file mapping language codes to languages
@@ -1977,6 +1993,7 @@ public class NormalizationService extends MetadataService
 	    catch (IOException e)
 	    {
 	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_LANGUAGE_CODE_TO_LANGUAGE + " file.", e);
+	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LANGUAGE_CODE_TO_LANGUAGE + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
 	    }
 
 		// Load the properties file mapping the 008 offset 22 to the audience.
@@ -1987,6 +2004,7 @@ public class NormalizationService extends MetadataService
 	    catch (IOException e)
 	    {
 	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_008_22_TO_AUDIENCE + " file.", e);
+	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_008_22_TO_AUDIENCE + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
 	    }
 	}
 }

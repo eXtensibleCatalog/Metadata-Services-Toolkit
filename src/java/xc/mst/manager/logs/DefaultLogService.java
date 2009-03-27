@@ -10,7 +10,8 @@
 
 package xc.mst.manager.logs;
 
-import java.util.ArrayList;
+import java.util.List;
+
 import xc.mst.bo.log.Log;
 import xc.mst.dao.DataException;
 import xc.mst.dao.log.DefaultLogDAO;
@@ -37,7 +38,7 @@ public class DefaultLogService implements LogService
 	 *
 	 * @return A list of Log Objects representing all logs in the database
 	 */
-	public ArrayList<Log> getAll()
+	public List<Log> getAll()
     {
         return logDao.getAll();
     }
