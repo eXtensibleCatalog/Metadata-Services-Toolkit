@@ -68,6 +68,11 @@ public abstract class LogDAO
 	public final static String COL_LOG_FILE_NAME = "log_file_name";
 
 	/**
+	 * The name of the log file location column
+	 */
+	public final static String COL_LOG_FILE_LOCATION = "log_file_location";
+	
+	/**
 	 * Gets all logs from the database
 	 *
 	 * @return A list of Log Objects representing all logs in the database
@@ -153,6 +158,9 @@ public abstract class LogDAO
 
 			if(logObj.getLogFileName() == null || logObj.getLogFileName().length() > 255)
 				errorMessage.append("The log file name is invalid. ");
+			
+			if(logObj.getLogFileLocation() == null || logObj.getLogFileLocation().length() > 512)
+				errorMessage.append("The log file location is invalid. ");
 		} // end if(we need to check the non-ID fields)
 
 		// Log the error and throw the exception if any fields are invalid

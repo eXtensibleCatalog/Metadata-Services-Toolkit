@@ -205,10 +205,87 @@ CREATE TABLE logs
   errors INT(11) NOT NULL DEFAULT 0,
   last_log_reset DATETIME,
   log_file_name VARCHAR(255) NOT NULL,
+  log_file_location VARCHAR(512) NOT NULL,
 
   PRIMARY KEY(log_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- -------------------------------------------------------------
+-- Insert the general logs
+-- -------------------------------------------------------------
+
+INSERT INTO logs(warnings,
+                 errors,
+                 log_file_name,
+                 log_file_location)
+VALUES (0,
+        0,
+        "Repository Management",
+        "logs/repositoryManagement.txt");
+
+INSERT INTO logs(warnings,
+                 errors,
+                 log_file_name,
+                 log_file_location)
+VALUES (0,
+        0,
+        "User Management",
+        "logs/userManagement.txt");
+
+INSERT INTO logs(warnings,
+                 errors,
+                 log_file_name,
+                 log_file_location)
+VALUES (0,
+        0,
+        "Authentication Server Management",
+        "logs/authServerManagement.txt");
+
+INSERT INTO logs(warnings,
+                 errors,
+                 log_file_name,
+                 log_file_location)
+VALUES (0,
+        0,
+        "MySQL",
+        "logs/mysql.txt");
+
+INSERT INTO logs(warnings,
+                 errors,
+                 log_file_name,
+                 log_file_location)
+VALUES (0,
+        0,
+        "Solr Index",
+        "logs/solr.txt");
+
+INSERT INTO logs(warnings,
+                 errors,
+                 log_file_name,
+                 log_file_location)
+VALUES (0,
+        0,
+        "Jobs Management",
+        "logs/jobs.txt");
+
+INSERT INTO logs(warnings,
+                 errors,
+                 log_file_name,
+                 log_file_location)
+VALUES (0,
+        0,
+        "Service Management",
+        "logs/serviceManagement.txt");
+
+INSERT INTO logs(warnings,
+                 errors,
+                 log_file_name,
+                 log_file_location)
+VALUES (0,
+        0,
+        "MST Configuration",
+        "logs/configuration.txt");
 
 -- -------------------------------------------------------------
 -- Table structure for sets

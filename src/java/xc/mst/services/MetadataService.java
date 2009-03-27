@@ -25,8 +25,6 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
-import xc.mst.dao.log.DefaultLogDAO;
-import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
 import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.provider.DefaultSetDAO;
@@ -55,11 +53,6 @@ import xc.mst.utils.index.SolrIndexManager;
  */
 public abstract class MetadataService
 {
-	/**
-	 * Data access object for adding log statements
-	 */
-	protected static LogDAO logDao = new DefaultLogDAO();
-
 	/**
 	 * Data access object for getting processing directives
 	 */

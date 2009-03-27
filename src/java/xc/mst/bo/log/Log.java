@@ -42,6 +42,11 @@ public class Log
 	 * The name of the log file
 	 */
 	private String logFileName = null;
+	
+	/**
+	 * The location of the log file
+	 */
+	private String logFileLocation = null;
 
 	/**
 	 * Gets the log's ID
@@ -142,4 +147,24 @@ public class Log
 	{
 		this.logFileName = logFileName;
 	} // end method setLogFileName(String)
+	
+	/**
+	 * Gets the location of the log file
+	 *
+	 * @return The location of the log file
+	 */
+	public String getLogFileLocation()
+	{
+		return logFileLocation;
+	} // end method getLogFileLocation()
+
+	/**
+	 * Sets the location of the log file
+	 *
+	 * @param logFileLocation The new location of the log file
+	 */
+	public void setLogFileLocation(String logFileLocation)
+	{
+		this.logFileLocation = logFileLocation;
+	} // end method setLogFileLocation(String)
 } // end class Log

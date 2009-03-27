@@ -120,7 +120,8 @@ public class DefaultLogDAO extends LogDAO
 												   COL_WARNINGS + ", " +
 				                                   COL_ERRORS + ", " +
 				                                   COL_LAST_LOG_RESET + ", " +
-				                                   COL_LOG_FILE_NAME + " " +
+				                                   COL_LOG_FILE_NAME + ", " +
+				                                   COL_LOG_FILE_LOCATION + " " +
 				                       "FROM " + LOGS_TABLE_NAME;
 
 					if(log.isDebugEnabled())
@@ -148,6 +149,7 @@ public class DefaultLogDAO extends LogDAO
 					logObj.setErrors(results.getInt(3));
 					logObj.setLastLogReset(results.getDate(4));
 					logObj.setLogFileName(results.getString(5));
+					logObj.setLogFileLocation(results.getString(6));
 
 					// Add the log to the list
 					logs.add(logObj);
@@ -205,7 +207,8 @@ public class DefaultLogDAO extends LogDAO
 												   COL_WARNINGS + ", " +
 				                                   COL_ERRORS + ", " +
 				                                   COL_LAST_LOG_RESET + ", " +
-				                                   COL_LOG_FILE_NAME + " " +
+				                                   COL_LOG_FILE_NAME + ", " +
+				                                   COL_LOG_FILE_LOCATION + " " +
 				                       "FROM " + LOGS_TABLE_NAME + " " +
 									   "ORDER BY " + COL_LOG_FILE_NAME + " ASC";
 
@@ -234,6 +237,7 @@ public class DefaultLogDAO extends LogDAO
 					logObj.setErrors(results.getInt(3));
 					logObj.setLastLogReset(results.getDate(4));
 					logObj.setLogFileName(results.getString(5));
+					logObj.setLogFileLocation(results.getString(6));
 
 					// Add the log to the list
 					logs.add(logObj);
@@ -285,7 +289,8 @@ public class DefaultLogDAO extends LogDAO
 												   COL_WARNINGS + ", " +
 				                                   COL_ERRORS + ", " +
 				                                   COL_LAST_LOG_RESET + ", " +
-				                                   COL_LOG_FILE_NAME + " " +
+				                                   COL_LOG_FILE_NAME + ", " +
+				                                   COL_LOG_FILE_LOCATION + " " +
 				                       "FROM " + LOGS_TABLE_NAME + " " +
 									   "ORDER BY " + COL_LOG_FILE_NAME + " DESC";
 
@@ -314,6 +319,7 @@ public class DefaultLogDAO extends LogDAO
 					logObj.setErrors(results.getInt(3));
 					logObj.setLastLogReset(results.getDate(4));
 					logObj.setLogFileName(results.getString(5));
+					logObj.setLogFileLocation(results.getString(6));
 
 					// Add the log to the list
 					logs.add(logObj);
@@ -358,7 +364,8 @@ public class DefaultLogDAO extends LogDAO
 					                               COL_WARNINGS + ", " +
 					                               COL_ERRORS + ", " +
 					                               COL_LAST_LOG_RESET + ", " +
-					                               COL_LOG_FILE_NAME + " " +
+					                               COL_LOG_FILE_NAME + ", " +
+				                                   COL_LOG_FILE_LOCATION + " " +
 	                                   "FROM " + LOGS_TABLE_NAME + " " +
 	                                   "WHERE " + COL_LOG_ID + "=?";
 
@@ -390,6 +397,7 @@ public class DefaultLogDAO extends LogDAO
 					logObj.setErrors(results.getInt(3));
 					logObj.setLastLogReset(results.getDate(4));
 					logObj.setLogFileName(results.getString(5));
+					logObj.setLogFileLocation(results.getString(6));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the log with ID " + id + " in the database.");
@@ -439,8 +447,9 @@ public class DefaultLogDAO extends LogDAO
 						String insertSql = "INSERT INTO " + LOGS_TABLE_NAME + " (" + COL_WARNINGS + ", " +
 		            	    													     COL_ERRORS + ", " +
 		            	    													     COL_LAST_LOG_RESET + ", " +
-		            	    													     COL_LOG_FILE_NAME + ") " +
-		            				       "VALUES (?, ?, ?, ?)";
+		            	    													     COL_LOG_FILE_NAME + ", " +
+		            	    													     COL_LOG_FILE_LOCATION + ") " +
+		            				       "VALUES (?, ?, ?, ?, ?)";
 
 						if(log.isDebugEnabled())
 							log.debug("Creating the \"insert log\" PreparedStatement from the SQL " + insertSql);
@@ -455,6 +464,7 @@ public class DefaultLogDAO extends LogDAO
 					psInsert.setInt(2, logObj.getErrors());
 					psInsert.setDate(3, logObj.getLastLogReset());
 					psInsert.setString(4, logObj.getLogFileName());
+					psInsert.setString(5, logObj.getLogFileLocation());
 
 					// Execute the insert statement and return the result
 					if(psInsert.executeUpdate() > 0)
@@ -503,7 +513,8 @@ public class DefaultLogDAO extends LogDAO
 					String updateSql = "UPDATE " + LOGS_TABLE_NAME + " SET " + COL_WARNINGS + "=?, " +
 				                                                               COL_ERRORS + "=?, " +
 				                                                               COL_LAST_LOG_RESET + "=?, " +
-				                                                               COL_LOG_FILE_NAME + "=? " +
+				                                                               COL_LOG_FILE_NAME + "=?, " +
+				                                                               COL_LOG_FILE_LOCATION + "=? " +
 	                                   "WHERE " + COL_LOG_ID + "=?";
 
 					if(log.isDebugEnabled())
@@ -519,7 +530,8 @@ public class DefaultLogDAO extends LogDAO
 				psUpdate.setInt(2, logObj.getErrors());
 				psUpdate.setDate(3, logObj.getLastLogReset());
 				psUpdate.setString(4, logObj.getLogFileName());
-				psUpdate.setInt(5, logObj.getId());
+				psUpdate.setString(5, logObj.getLogFileLocation());
+				psUpdate.setInt(6, logObj.getId());
 
 				// Execute the update statement and return the result
 				return psUpdate.executeUpdate() > 0;
