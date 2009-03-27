@@ -83,11 +83,11 @@
                     <table width="100%">
                         <thead>
                             <tr>
-                                <td>Logs</td>
-                                <td>#Warnings</td>
-                                <td>#Errors</td>
+                                <td><a href="generalLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=log_file_name">Logs</a></td>
+                                <td><a href="generalLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=warnings">#Warnings</a></td>
+                                <td><a href="generalLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=errors">#Errors</a></td>
                                 <td>Reset</td>
-                                <td>Last Validation Date</td>
+                                <td><a href="generalLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_log_reset">Last Reset Date</a></td>
                             </tr>
                         </thead>
                         <tbody>

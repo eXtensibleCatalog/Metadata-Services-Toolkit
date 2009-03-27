@@ -27,6 +27,12 @@ import xc.mst.manager.logs.LogService;
  */
 public class GeneralLog extends ActionSupport
 {
+    /** The column on which the rows are to be sorted */
+    private String columnSorted = "log_file_name";
+
+    /** Determines whether the rows are to be sorted in ascending or descending order */
+    private boolean isAscendingOrder = true;
+
     /**A List of Log Files **/
     private List<Log> logList;
 
@@ -89,4 +95,41 @@ public class GeneralLog extends ActionSupport
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
+    /**
+     * sets the boolean value which determines if the rows are to be sorted in ascending order
+     *
+     * @param isAscendingOrder
+     */
+    public void setIsAscendingOrder(boolean isAscendingOrder)
+    {
+        this.isAscendingOrder = isAscendingOrder;
+    }
+
+    /**
+     * sgets the boolean value which determines if the rows are to be sorted in ascending order
+     *
+     * @param isAscendingOrder
+     */
+    public boolean getIsAscendingOrder()
+    {
+        return this.isAscendingOrder;
+    }
+
+     /**
+     * sets the name of the column on which the sorting should be performed
+     * @param columnSorted name of the column
+     */
+    public void setColumnSorted(String columnSorted)
+    {
+        this.columnSorted = columnSorted;
+    }
+
+    /**
+     * returns the name of the column on which sorting should be performed
+     * @return column name
+     */
+    public String getColumnSorted()
+    {
+        return this.columnSorted;
+    }
 }

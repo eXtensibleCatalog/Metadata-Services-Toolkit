@@ -179,24 +179,7 @@ public class ViewRepository extends ActionSupport implements UserAware
           {
 
                 provider = new DefaultProviderService().getProviderById(repositoryId);
-                boolean boollistsets = provider.getListSets();
-                boolean boolidentify = provider.getIdentify();
-                boolean boollistformats = provider.getListFormats();
-                listSets = "Fail";
-                listFormats = "Fail";
-                Identify = "Fail";
-
-                if (boollistsets == true) {
-                    listSets = "Success";
-                }
-
-                if (boolidentify == true) {
-                    Identify = "Success";
-                }
-                if (boollistformats == true) {
-                    listFormats = "Success";
-                }
-
+               
                 return SUCCESS;
           }
           catch(Exception e)

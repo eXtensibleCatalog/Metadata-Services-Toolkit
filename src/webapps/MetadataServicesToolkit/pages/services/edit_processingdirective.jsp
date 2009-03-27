@@ -116,7 +116,7 @@
 
                                             </c:forEach>
                                             <br><br><br>
-                                        <B> Output Records from Services </B><br><br>
+                                        <B> INput Records to Services </B><br><br>
                                             <c:forEach var="n" items="${serviceList}" varStatus="a">
                                                 <c:choose>
                                                     <c:when test="${source==n.name}">
