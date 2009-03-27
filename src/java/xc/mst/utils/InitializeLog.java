@@ -32,7 +32,7 @@ public class InitializeLog  extends HttpServlet {
 	 * Initialize logging
 	 */
 	public void init() {
-		System.out.println("Initialize log");
+
 	    String prefix =  getServletContext().getRealPath("/");
 	    String file = getInitParameter("log4j-init-file");
 
