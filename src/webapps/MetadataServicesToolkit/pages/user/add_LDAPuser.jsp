@@ -72,7 +72,7 @@
                  </c:if>
                  <div id="error_div"></div>
 
-           
+                 <div class="clear">&nbsp;</div>
              
                 <form action="addLDAPUser.action" method="post" name="addLDAPUser">
 

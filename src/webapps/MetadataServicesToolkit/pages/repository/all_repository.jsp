@@ -77,6 +77,8 @@
                  </c:if>
                 <div id="error_div"></div>
                 
+                <div class="clear">&nbsp;</div>
+
                 <div class="viewTable">
                     <table width="100%">
                         <thead>

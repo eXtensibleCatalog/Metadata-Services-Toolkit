@@ -89,7 +89,8 @@
                     </div>
                  </c:if>
                 <div id="error_div"></div>
-			
+
+            <div class="clear">&nbsp;</div>
 			<!-- start the grid -->
    	        <div class="yui-g">
    	        	<!-- First grid start -->

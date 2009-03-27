@@ -10,6 +10,8 @@
 <%@page import="java.io.*" %>
 <%@page import="xc.mst.manager.processingDirective.*" %>
 <%@page import="xc.mst.manager.repository.*" %>
+<%@page import="xc.mst.manager.logs.*" %>
+<%@page import="xc.mst.bo.log.Log" %>
 <%@page import="xc.mst.bo.service.*" %>
 <%@page import="xc.mst.bo.provider.*" %>
 <%
@@ -31,13 +33,20 @@
             fullpath = service.getHarvestOutLogFileName();
             filename = service.getName()+"HarvestOutLog";
         }
-        else
+        else if(logType.equalsIgnoreCase("HarvestIn"))
         {
             ProviderService providerService = new DefaultProviderService();
             Provider provider = providerService.getProviderById(Integer.parseInt(id));
             fullpath = provider.getLogFileName();
             filename = provider.getName();
 
+        }
+        else
+        {
+            LogService logService = new DefaultLogService();
+            Log log = logService.getById(Integer.parseInt(id));
+            fullpath = log.getLogFileLocation();
+            filename = log.getLogFileName();
         }
 
         response.setContentType ("application/txt");

@@ -73,10 +73,12 @@
                     </div>
                  </c:if>
                 <div id="error_div"></div>
-                
+
+               <div class="clear">&nbsp;</div>
+
         <form action="/MetadataServicesToolkit/editRepository.action?RepositoryId=<s:property value="repositoryId"/>" name="editRepositoryForm" method="post">
               
-        <div style="margin-top:25px;margin-left:0px;font-family: verdana,sans-serif;font-size: 12px;">
+        <div style="margin-left:0px;font-family: verdana,sans-serif;font-size: 12px;">
 
                 OAI-PMH <B>Repository Name</B> <br>
                     <input type="text" id="repositoryName" name="repositoryName" value="<s:property value="repositoryName"/>" style="height:25px;width:305px;" maxlength="255"><br><br>

@@ -77,6 +77,10 @@
                         <s:fielderror cssClass="errorMessage"/>
                     </div>
                  </c:if>
+
+            <div id="error_div"></div>
+
+                <div class="clear">&nbsp;</div>
 			
 			<form name="loginForm" action="/MetadataServicesToolkit/login.action" method="post">
 				<table class="basicTable" align="left">

@@ -65,7 +65,7 @@
 		<!-- body -->
 		<div id="bd">
 
-             <div id="error_div"></div>
+             
              <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div class="${errorType}">
@@ -73,6 +73,9 @@
                         <s:fielderror cssClass="errorMessage"/>
                     </div>
                  </c:if>
+                 <div id="error_div"></div>
+
+                 <div class="clear">&nbsp;</div>
 
               <div align="right" style="margin-top:10px;margin-bottom:10px;">
                 <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.resetAll();" name="next">Reset All *</button>
@@ -99,7 +102,7 @@
                                   <tr>
                                       <td><a style="cursor:pointer;"onclick="javascript:YAHOO.xc.mst.logs.displayOAIRequest('${n.oaiProviderUrl}');"><U>OAI Request</U></a></td>
                                       <td><a style="text-decoration:none;color:black;" href="${browseRecordsAction}"><U>Browse Records</U></a></td>
-                                      <td><a>${n.name}</a></td>
+                                      <td><a style="cursor:pointer;" onclick="javascript:YAHOO.xc.mst.logs.downloadFile(${n.id});"><U>${n.name}</U></a></td>
                                       <td>${n.lastHarvestEndTime}</td>
                                       <td>${n.recordsAdded}</td>
                                       <td>${n.recordsReplaced}</td>

@@ -68,6 +68,8 @@
                     </div>
                  </c:if>
                  <div id="error_div"></div>
+                 <div class="clear">&nbsp;</div>
+
    			
    			<form name="myAccountForm" method="post">
    			

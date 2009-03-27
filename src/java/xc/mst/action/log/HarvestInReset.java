@@ -91,6 +91,8 @@ public class HarvestInReset extends ActionSupport
             Provider provider = providerService.getProviderById(Integer.parseInt(providerId));
             provider.setErrors(0);
             provider.setWarnings(0);
+            provider.setRecordsAdded(0);
+            provider.setRecordsReplaced(0);
             provider.setLastLogReset(new Date());
             providerService.updateProvider(provider);
             String filename = provider.getLogFileName();
@@ -132,6 +134,8 @@ public class HarvestInReset extends ActionSupport
                 Provider provider = (Provider)provIter.next();
                 provider.setErrors(0);
                 provider.setWarnings(0);
+                provider.setRecordsAdded(0);
+                provider.setRecordsReplaced(0);
                 provider.setLastLogReset(new Date());
                 providerService.updateProvider(provider);
                 String filename = provider.getLogFileName();

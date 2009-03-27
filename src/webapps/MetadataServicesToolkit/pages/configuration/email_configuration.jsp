@@ -77,6 +77,8 @@
                         </c:if>            
                      </div>
                  </c:if>
+                 <div id="error_div"></div>
+                 <div class="clear">&nbsp;</div>
 
                 <form action="changeEmailConfig.action" method="post" name="emailConfig">
 

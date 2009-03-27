@@ -65,7 +65,7 @@
 		<!-- body -->
 		<div id="bd">
 
-             <div id="error_div"></div>
+            
              <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div class="${errorType}">
@@ -73,6 +73,9 @@
                         <s:fielderror cssClass="errorMessage"/>
                     </div>
                  </c:if>
+                  <div id="error_div"></div>
+
+                <div class="clear">&nbsp;</div>
 
               <div align="right" style="margin-bottom:10px;">
                 <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.resetAll();" name="next">Reset All *</button>

@@ -76,6 +76,7 @@
                  </c:if>
                  <div id="error_div"></div>
 
+                 <div class="clear">&nbsp;</div>
         
          <form method="post" name="addLocalUser" id="addLocalUser">
 

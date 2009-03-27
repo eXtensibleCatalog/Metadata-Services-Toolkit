@@ -65,6 +65,9 @@
                         <s:fielderror cssClass="errorMessage"/>
                     </div>
                  </c:if>
+                 <div id="error_div"></div>
+
+                <div class="clear">&nbsp;</div>
 
 			<c:if test="${!resetSuccess}">
 				<form name="forgotPasswordForm" action="resetPassword.action" method="post">

@@ -73,6 +73,8 @@
                     </div>
                  </c:if>
                  <div id="error_div"></div>
+                 
+                 <div class="clear">&nbsp;</div>
 
                 <div class="stepsStructure">
                     <ul style="list-style:none;">

@@ -73,7 +73,8 @@
                  </c:if>
                  <div id="error_div"></div>
 
-
+                 <div class="clear">&nbsp;</div>
+                 
             <form action="editGroup.action?GroupId=<c:out value="${groupId}"/>" method="post" name="editGroup">
                 <br>
                     

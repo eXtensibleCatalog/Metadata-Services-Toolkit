@@ -36,7 +36,7 @@
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
-
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/general_log.js"></SCRIPT>
     </head>
 
     <body class="yui-skin-sam">
@@ -72,7 +72,13 @@
                     </div>
                  </c:if>
                 <div id="error_div"></div>
-                
+
+                <div class="clear">&nbsp;</div>
+
+                <div align="right" style="margin-top:10px;margin-bottom:10px;">
+                    <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.resetAll();" name="next">Reset All *</button>
+                </div>
+
                 <div class="viewTable">
                     <table width="100%">
                         <thead>
@@ -87,15 +93,22 @@
                         <tbody>
                               <c:forEach var="n" items="${logList}" varStatus="a">
                                   <tr>
-                                      <td style="background-color:#edfaff;">${n.logFileName}</td>
+                                      <td style="background-color:#edfaff;"><a onclick="javascript:YAHOO.xc.mst.logs.downloadFile(${n.id});">${n.logFileName}</a></td>
                                       <td>${n.warnings}</td>
                                       <td>${n.errors}</td>
-                                      <td><button class="xc_button" type="button" name="reset">Reset</button></td>
+                                      <td><button onclick="javascript:YAHOO.xc.mst.logs.resetFunction('${n.id}');" class="xc_button" type="button" name="reset">Reset</button></td>
                                       <td>${n.lastLogReset}</td>
                                   </tr>
                               </c:forEach>
                         </tbody>
                     </table>
+                    * Reset will reset the statistic to 0 and move the log file to the archives directory
+                     <div align="right" style="margin-top:10px;margin-bottom:10px;">
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.resetAll();" name="next">Reset All</button>
+                    </div>
+                     <form name="generalLogReset" method="post">
+                        <input type="hidden" name="logId" id="logId">
+                    </form>
 			</div>
 
 

@@ -75,7 +75,9 @@
                     </div>
                  </c:if>
                  <div id="error_div"></div>
-        
+
+                 <div class="clear">&nbsp;</div>
+
         <form action="/MetadataServicesToolkit/editLocalUser.action?UserId=${temporaryUser.id}" method="post" name="editLocalUser">
             <br>
              

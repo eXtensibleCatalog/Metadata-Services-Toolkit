@@ -73,6 +73,8 @@
                  </c:if>
                  <div id="error_div"></div>
 
+                 <div class="clear">&nbsp;</div>
+
             <form action="addGroup.action" method="post" name="addGroup">
             <br><br>
                 <table>
