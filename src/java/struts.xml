@@ -471,6 +471,14 @@
              <interceptor-ref name="default"/>
 			<result name="success">/pages/logs/general_log.jsp</result>
 		 </action>
+         <action name="generalLogReset" class="xc.mst.action.log.GeneralLogReset">
+            <interceptor-ref name="default"/>
+			<result name="success" type="redirect">generalLog.action</result>
+		 </action>
+          <action name="generalLogResetAll" class="xc.mst.action.log.GeneralLogReset" method="resetAll">
+            <interceptor-ref name="default"/>
+			<result name="success" type="redirect">generalLog.action</result>
+		 </action>
          <action name="serviceLog" class="xc.mst.action.log.ServiceLog">
              <interceptor-ref name="default"/>
 			<result name="success">/pages/logs/service_log.jsp</result>
