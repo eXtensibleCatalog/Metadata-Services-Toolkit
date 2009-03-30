@@ -89,4 +89,16 @@ public class DefaultLogService implements LogService
     {
         logDao.delete(log);
     }
+
+    /**
+	 * Gets a sorted list of all the general logs in the database
+	 *
+	 * @param asc True to sort in ascending order, false to sort in descending order
+     * @param columnName determines the name of the column on which the rows should be sorted
+	 * @return A list containing all general logs in the database
+	 */
+	public List<Log> getSorted(boolean asc,String columnName)
+    {
+        return logDao.getSorted(asc, columnName);
+    }
 }

@@ -80,12 +80,13 @@ public abstract class LogDAO
 	public abstract List<Log> getAll();
 
 	/**
-	 * Gets all logs in the database sorted by their file names
+	 * Gets a sorted list of all the general logs in the database 
 	 *
 	 * @param asc True to sort in ascending order, false to sort in descending order
-	 * @return A list containing all logs in the database sorted by their file names
+     * @param columnName determines the name of the column on which the rows should be sorted
+	 * @return A list containing all the general logs in the database sorted by their names
 	 */
-	public abstract List<Log> getSortedByFileName(boolean asc);
+	public abstract List<Log> getSorted(boolean asc,String columnName);
 	
 	/**
 	 * Gets the log from the database with the passed log ID

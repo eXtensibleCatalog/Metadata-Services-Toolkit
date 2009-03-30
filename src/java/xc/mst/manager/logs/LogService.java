@@ -65,4 +65,13 @@ public interface LogService
 	 * @throws DataException if the passed log was not valid for deleting
 	 */
 	public void delete(Log log) throws DataException;
+
+    /**
+	 * Gets a sorted list of all general logs in the database
+	 *
+	 * @param asc True to sort in ascending order, false to sort in descending order
+     * @param columnName determines the name of the column on which the rows should be sorted
+	 * @return A list containing all general logs in the database
+	 */
+	public abstract List<Log> getSorted(boolean asc,String columnName);
 }

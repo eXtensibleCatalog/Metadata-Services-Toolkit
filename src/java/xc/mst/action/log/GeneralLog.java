@@ -72,7 +72,7 @@ public class GeneralLog extends ActionSupport
 
             LogService logService = new DefaultLogService();
 
-            List<Log> fullList = logService.getAll();
+            List<Log> fullList = logService.getSorted(isAscendingOrder, columnSorted);
 
             setLogList(fullList);
 

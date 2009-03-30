@@ -52,6 +52,7 @@ public class GeneralLogReset extends ActionSupport
             log.setErrors(0);
             log.setLastLogReset(new Date());
             log.setWarnings(0);
+            logService.update(log);
             String filename = log.getLogFileLocation();
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
@@ -81,6 +82,7 @@ public class GeneralLogReset extends ActionSupport
                 log.setErrors(0);
                 log.setLastLogReset(new Date());
                 log.setWarnings(0);
+                logService.update(log);
                 String filename = log.getLogFileLocation();
                 PrintWriter printWriter = new PrintWriter(filename);
                 printWriter.close();

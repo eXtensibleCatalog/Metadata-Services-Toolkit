@@ -174,9 +174,9 @@ public class DefaultLogDAO extends LogDAO
 	} // end method getAll()
 
 	@Override
-	public List<Log> getSortedByFileName(boolean asc) 
+	public List<Log> getSorted(boolean asc,String columnSorted)
 	{
-		return(asc ? getSortedAsc() : getSortedDesc());
+		return(asc ? getSortedAsc(columnSorted) : getSortedDesc(columnSorted));
 	} // end method getSortedByUserName(boolean)
 
 	/**
@@ -184,7 +184,7 @@ public class DefaultLogDAO extends LogDAO
 	 * 
 	 * @return A list of all logs in the database sorted in ascending order by their file name
 	 */
-	private List<Log> getSortedAsc() 
+	private List<Log> getSortedAsc(String columnSorted)
 	{
 		synchronized(psGetSortedAscLock)
 		{
@@ -199,9 +199,7 @@ public class DefaultLogDAO extends LogDAO
 
 			try
 			{
-				// If the PreparedStatement to get all logs was not defined, create it
-				if(psGetSortedAsc == null)
-				{
+				
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_LOG_ID + ", " +
 												   COL_WARNINGS + ", " +
@@ -210,15 +208,16 @@ public class DefaultLogDAO extends LogDAO
 				                                   COL_LOG_FILE_NAME + ", " +
 				                                   COL_LOG_FILE_LOCATION + " " +
 				                       "FROM " + LOGS_TABLE_NAME + " " +
-									   "ORDER BY " + COL_LOG_FILE_NAME + " ASC";
+									   "ORDER BY " + columnSorted + " ASC";
 
+                    System.out.println("The SQL query is \n\n"+selectSql);
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get all logs\" PreparedStatement the SQL " + selectSql);
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
 					psGetSortedAsc = dbConnection.prepareStatement(selectSql);
-				} // end if(get all PreparedStatement not defined)
+				
 
 				// Get the result of the SELECT statement
 
@@ -251,7 +250,7 @@ public class DefaultLogDAO extends LogDAO
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while getting the logs.", e);
-
+                e.printStackTrace();
 				return logs;
 			} // end catch(SQLException)
 			finally
@@ -266,7 +265,7 @@ public class DefaultLogDAO extends LogDAO
 	 * 
 	 * @return A list of all logs in the database sorted in descending order by their file name
 	 */
-	private List<Log> getSortedDesc() 
+	private List<Log> getSortedDesc(String columnSorted)
 	{
 		synchronized(psGetSortedDescLock)
 		{
@@ -281,9 +280,7 @@ public class DefaultLogDAO extends LogDAO
 
 			try
 			{
-				// If the PreparedStatement to get all logs was not defined, create it
-				if(psGetSortedDesc == null)
-				{
+				
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_LOG_ID + ", " +
 												   COL_WARNINGS + ", " +
@@ -292,15 +289,16 @@ public class DefaultLogDAO extends LogDAO
 				                                   COL_LOG_FILE_NAME + ", " +
 				                                   COL_LOG_FILE_LOCATION + " " +
 				                       "FROM " + LOGS_TABLE_NAME + " " +
-									   "ORDER BY " + COL_LOG_FILE_NAME + " DESC";
-
+									   "ORDER BY " + columnSorted + " DESC";
+                    
+                    System.out.println("The SQL query is \n\n"+selectSql);
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get all logs\" PreparedStatement the SQL " + selectSql);
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
 					psGetSortedDesc = dbConnection.prepareStatement(selectSql);
-				} // end if(get all PreparedStatement not defined)
+				
 
 				// Get the result of the SELECT statement
 
@@ -333,7 +331,7 @@ public class DefaultLogDAO extends LogDAO
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while getting the logs.", e);
-
+                e.printStackTrace();
 				return logs;
 			} // end catch(SQLException)
 			finally
