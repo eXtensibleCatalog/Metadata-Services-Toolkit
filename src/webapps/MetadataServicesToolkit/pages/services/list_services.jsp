@@ -37,6 +37,7 @@
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/all_services.js"></SCRIPT>
      
     </head>
 
@@ -96,8 +97,8 @@
                                         <td><c:out value="${url}"/></td>
                                         <td>Status should be here</td>
                                         <td>
-                                            <button class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
-                                            <button class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
+                                            <button onclick="javascript:YAHOO.xc.mst.services.downloadFile('service','${n.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
+                                            <button onclick="javascript:YAHOO.xc.mst.services.downloadFile('harvestout','${n.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
                                         </td>
                                         <td><button class="xc_button" type="button" name="delete">Delete</button></td>
                                     </tr>

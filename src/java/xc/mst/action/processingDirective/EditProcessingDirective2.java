@@ -377,7 +377,7 @@ public class EditProcessingDirective2 extends ActionSupport
                             }
                             else
                             {
-                                temporaryProcessingDirective.setOutputSet(setExists);
+                                temporaryProcessingDirective.setOutputSet(setExists); //sets a null value as output set
                             }
                         }
                         else
@@ -427,6 +427,10 @@ public class EditProcessingDirective2 extends ActionSupport
                          errorType = "error";
                          setFormatList(temporaryProcessingDirective.getSourceProvider().getFormats());
                          setSetList(temporaryProcessingDirective.getSourceProvider().getSets());
+                         Set tempSet = new Set();
+                         tempSet.setDisplayName(outputSetName);
+                         tempSet.setSetSpec(outputSetSpec);
+                         temporaryProcessingDirective.setOutputSet(tempSet);
                          setTemporaryProcessingDirective(temporaryProcessingDirective);
                          return INPUT;
                     }
@@ -522,6 +526,10 @@ public class EditProcessingDirective2 extends ActionSupport
                          errorType = "error";
                          setFormatList(temporaryProcessingDirective.getSourceService().getOutputFormats());
                          setSetList(setService.getAllSets());
+                         Set tempSet = new Set();
+                         tempSet.setDisplayName(outputSetName);
+                         tempSet.setSetSpec(outputSetSpec);
+                         temporaryProcessingDirective.setOutputSet(tempSet);
                          setTemporaryProcessingDirective(temporaryProcessingDirective);
                          return INPUT;
                     }
@@ -601,7 +609,7 @@ public class EditProcessingDirective2 extends ActionSupport
                         Set tempSet = new Set();
                         tempSet.setDisplayName(outputSetName);
                         tempSet.setSetSpec(outputSetSpec);
-                        setService.insertSet(tempSet);
+                        //setService.insertSet(tempSet);
                         tempProcDir.setOutputSet(tempSet);
                     }
                     else

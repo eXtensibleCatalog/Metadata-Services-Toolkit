@@ -28,6 +28,9 @@ YAHOO.xc.mst.repository.MyObject = {
     removeErrorMessage : function(id)
     {
         window.location = "viewRepository.action?RepositoryId="+id;
+    },
+    downloadFile: function(type,id)
+    {
+        window.location = "pages/logs/downloadLogFile.jsp?logType="+type+"&id="+id;
     }
-
 }

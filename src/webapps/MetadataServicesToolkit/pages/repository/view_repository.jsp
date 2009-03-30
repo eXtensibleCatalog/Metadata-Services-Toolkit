@@ -81,15 +81,6 @@
 		<!-- body -->
 		<div id="bd">
 
-            <!-- Display of error message -->
-                <c:if test="${errorType != null}">
-                    <div class="${errorType}">
-                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
-                        <s:fielderror cssClass="errorMessage"/>
-                    </div>
-                 </c:if>
-                <div id="error_div"></div>
-
             <div class="clear">&nbsp;</div>
 			<!-- start the grid -->
    	        <div class="yui-g">
@@ -311,7 +302,7 @@
                   <li style="float:left;">
                       <div align="left" style="vertical-align:bottom;">
                         <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.MyObject.editFunction(${provider.id});" type="button" name="edit">Edit</button>&nbsp;
-                        <button class="xc_button" type="button" name="View Log">View Log</button>&nbsp;
+                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.MyObject.downloadFile('HarvestIn','${provider.id}');" type="button" name="View Log">View Log</button>&nbsp;
                         <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.MyObject.reValidateFunction(${provider.id});" type="button" name="Revalidate">Revalidate</button>&nbsp;
                         <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.repository.MyObject.delRepository(${provider.id});" name="delete">Delete</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </div>

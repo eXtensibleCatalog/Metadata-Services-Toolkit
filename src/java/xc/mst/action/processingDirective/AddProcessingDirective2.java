@@ -386,6 +386,10 @@ public class AddProcessingDirective2 extends ActionSupport
                      errorType = "error";
                      setFormatList(tempProcDir.getSourceProvider().getFormats());
                      setSetList(tempProcDir.getSourceProvider().getSets());
+                     Set tempSet = new Set();
+                     tempSet.setDisplayName(outputSetName);
+                     tempSet.setSetSpec(outputSetSpec);
+                     tempProcDir.setOutputSet(tempSet);
                      setTemporaryProcessingDirective(tempProcDir);
                      return INPUT;
                 }
@@ -452,6 +456,10 @@ public class AddProcessingDirective2 extends ActionSupport
                      errorType = "error";
                      setFormatList(tempProcDir.getSourceService().getOutputFormats());
                      setSetList(setService.getAllSets());
+                     Set tempSet = new Set();
+                     tempSet.setDisplayName(outputSetName);
+                     tempSet.setSetSpec(outputSetSpec);
+                     tempProcDir.setOutputSet(tempSet);
                      setTemporaryProcessingDirective(tempProcDir);
                      return INPUT;
                 }
@@ -531,7 +539,7 @@ public class AddProcessingDirective2 extends ActionSupport
                         Set tempSet = new Set();
                         tempSet.setDisplayName(outputSetName);
                         tempSet.setSetSpec(outputSetSpec);
-                        setService.insertSet(tempSet);
+                        //setService.insertSet(tempSet);
                         tempProcDir.setOutputSet(tempSet);
                     }
                     else
