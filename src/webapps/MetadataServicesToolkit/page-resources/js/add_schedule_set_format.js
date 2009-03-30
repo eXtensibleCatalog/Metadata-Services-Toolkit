@@ -33,11 +33,17 @@ YAHOO.xc.mst.schedule.add = {
 			return false;
 		}
 
+
 		if (document.addScheduleForm.selectedFormatIds.value=='') {
-			createErrorDiv('error','Format is required.');
+			createErrorDiv('error','Select a format.');
 			return false;
 		}
 		
+		if (document.addScheduleForm.selectedSetIds.value=='') {
+			createErrorDiv('error','Select a set.');
+			return false;
+		}
+				
 		document.addScheduleForm.action= basePath + 'saveSetFormatForScheduleAndExit.action';
 		document.addScheduleForm.submit();
 	

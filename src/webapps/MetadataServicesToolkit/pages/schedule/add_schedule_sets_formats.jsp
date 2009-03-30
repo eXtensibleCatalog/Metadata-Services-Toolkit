@@ -8,6 +8,7 @@
   -->
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 
 <!--  document type -->
 <c:import url="/inc/doctype-frag.jsp"/>

@@ -329,10 +329,14 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	schedule.removeAllSets();
 
     	if (selectedSetIds != null) {
-	    	for (int setId:selectedSetIds) {
-	    		Set set = setService.getSetById(setId);
-	    		schedule.addSet(set);
-	    	}
+    		if (selectedSetIds.length == 1 && selectedSetIds[0] ==0) {
+    			schedule.setSets(schedule.getProvider().getSets());
+    		} else {
+		    	for (int setId:selectedSetIds) {
+		    		Set set = setService.getSetById(setId);
+		    		schedule.addSet(set);
+		    	}
+    		}
     	}
 
     	if (selectedFormatIds != null) {
@@ -387,10 +391,14 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	schedule.removeAllSets();
 
     	if (selectedSetIds != null) {
-	    	for (int setId:selectedSetIds) {
-	    		Set set = setService.getSetById(setId);
-	    		schedule.addSet(set);
-	    	}
+    		if (selectedSetIds.length == 1 && selectedSetIds[0] ==0) {
+	    		schedule.setSets(schedule.getProvider().getSets());
+    		} else {
+		    	for (int setId:selectedSetIds) {
+		    		Set set = setService.getSetById(setId);
+		    		schedule.addSet(set);
+		    	}
+    		}
     	}
 
     	if (selectedFormatIds != null) {
