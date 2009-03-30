@@ -27,6 +27,8 @@ import xc.mst.dao.harvest.DefaultHarvestDAO;
 import xc.mst.dao.harvest.DefaultHarvestScheduleStepDAO;
 import xc.mst.dao.harvest.HarvestDAO;
 import xc.mst.dao.harvest.HarvestScheduleStepDAO;
+import xc.mst.dao.provider.DefaultProviderDAO;
+import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.utils.LogWriter;
 
 /**
@@ -48,6 +50,11 @@ public class HarvestRunner
 	  PropertyConfigurator.configure(configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION));
 	} // end static initializer
 
+	/**
+	 * Data access object for getting provider
+	 */
+	private static ProviderDAO providerDao = new DefaultProviderDAO();
+	
 	/**
 	 * Data access object for getting harvests
 	 */
@@ -189,6 +196,10 @@ public class HarvestRunner
 			// Set the current harvest's end time
 			currentHarvest.setEndTime(new Date());
 			harvestDao.update(currentHarvest);
+			
+			// Set the provider's last harvest time
+			provider.setLastHarvestEndTime(new Date());
+			providerDao.update(provider);
 
 			LogWriter.addInfo(harvestScheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvest of " + baseURL);
 		} // end try(run the harvest)

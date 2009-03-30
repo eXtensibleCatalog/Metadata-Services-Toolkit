@@ -222,7 +222,7 @@ INSERT INTO logs(warnings,
 VALUES (0,
         0,
         "Repository Management",
-        "logs/repositoryManagement.txt");
+        "logs/general/repositoryManagement.txt");
 
 INSERT INTO logs(warnings,
                  errors,
@@ -231,7 +231,7 @@ INSERT INTO logs(warnings,
 VALUES (0,
         0,
         "User Management",
-        "logs/userManagement.txt");
+        "logs/general/userManagement.txt");
 
 INSERT INTO logs(warnings,
                  errors,
@@ -240,7 +240,7 @@ INSERT INTO logs(warnings,
 VALUES (0,
         0,
         "Authentication Server Management",
-        "logs/authServerManagement.txt");
+        "logs/general/authServerManagement.txt");
 
 INSERT INTO logs(warnings,
                  errors,
@@ -249,7 +249,7 @@ INSERT INTO logs(warnings,
 VALUES (0,
         0,
         "MySQL",
-        "logs/mysql.txt");
+        "logs/general/mysql.txt");
 
 INSERT INTO logs(warnings,
                  errors,
@@ -258,7 +258,7 @@ INSERT INTO logs(warnings,
 VALUES (0,
         0,
         "Solr Index",
-        "logs/solr.txt");
+        "logs/general/solr.txt");
 
 INSERT INTO logs(warnings,
                  errors,
@@ -267,7 +267,7 @@ INSERT INTO logs(warnings,
 VALUES (0,
         0,
         "Jobs Management",
-        "logs/jobs.txt");
+        "logs/general/jobs.txt");
 
 INSERT INTO logs(warnings,
                  errors,
@@ -276,7 +276,7 @@ INSERT INTO logs(warnings,
 VALUES (0,
         0,
         "Service Management",
-        "logs/serviceManagement.txt");
+        "logs/general/serviceManagement.txt");
 
 INSERT INTO logs(warnings,
                  errors,
@@ -285,7 +285,7 @@ INSERT INTO logs(warnings,
 VALUES (0,
         0,
         "MST Configuration",
-        "logs/configuration.txt");
+        "logs/general/configuration.txt");
 
 -- -------------------------------------------------------------
 -- Table structure for sets
@@ -550,8 +550,8 @@ VALUES ('Normalization',
         'NormalizationServivce',
         false,
         8085,
-        'c:/logs/service/NormalizationServiceLog',
-        'c:/logs/harvestOut/NormalizationServiceLog');
+        'logs/service/NormalizationServiceLog.txt',
+        'logs/harvestOut/NormalizationServiceLog.txt');
 
 INSERT INTO services(service_name,
                      package_name,
@@ -565,8 +565,8 @@ VALUES ('Transformation',
         'TransformationServivce',
         false,
         8086,
-        'c:/logs/service/TransformationServiceLog',
-        'c:/logs/harvestOut/TransformationServiceLog');
+        'logs/service/TransformationServiceLog.txt',
+        'logs/harvestOut/TransformationServiceLog.txt');
 
 INSERT INTO services(service_name,
                      package_name,
@@ -580,8 +580,8 @@ VALUES ('Aggregation',
         'AggregationServivce',
         false,
         8087,
-        'c:/logs/service/AggregationServiceLog',
-        'c:/logs/harvestOut/NomalizationServiceLog');
+        'logs/service/AggregationServiceLog.txt',
+        'logs/harvestOut/NomalizationServiceLog.txt');
 
 -- -------------------------------------------------------------
 -- Insert rows mapping each service to the formats they can accept as input
