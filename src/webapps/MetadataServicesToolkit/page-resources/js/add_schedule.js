@@ -14,10 +14,6 @@ YAHOO.xc.mst.schedule = {
 	saveSchedule : function()
 	{
 
-		if (document.scheduleForm.scheduleName.value=='') {
-			createErrorDiv('error','Schedule Name is required.');
-			return false;
-		}
 		if (document.scheduleForm.repositoryId.value=='0') {
 						
 			createErrorDiv('error','Please select a Repository');		
@@ -38,6 +34,7 @@ YAHOO.xc.mst.schedule = {
 			createErrorDiv('error','Recurrence for Schedule is required.');
 			return false;
 		} else {
+		
 			if (selectedRecurrence=='Daily') {
 				if (document.scheduleForm.dailyHour.value=='-1') {
 					createErrorDiv('error','Time to harvest the repository is required.');
@@ -70,17 +67,14 @@ YAHOO.xc.mst.schedule = {
 			createErrorDiv('error','Start date is required.');
 			return false;
 		}
-		if (endDate=='') {
-			createErrorDiv('error','End date is required.');
-			return false;
-		}
+
 		
 		
 		var eDate = new Date(endDate);
 		var sDate = new Date(startDate);
 		
 		
-		if (sDate > eDate) {
+		if (eDate != '' && sDate > eDate) {
 			createErrorDiv('error','End Date should be greater than Start date.');
 			return false;
 		}

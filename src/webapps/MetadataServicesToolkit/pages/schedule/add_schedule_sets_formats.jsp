@@ -38,6 +38,7 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/add_schedule_set_format.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
     </head>
     
     <body class="yui-skin-sam">
@@ -47,81 +48,146 @@
 		<!-- page header - this uses the yahoo page styling -->
 		<div id="hd">
    
-            <!--  this is the header of the page -->
-            <c:import url="/inc/header.jsp"/>
-            
-            <!--  this is the header of the page -->
-            <c:import url="/inc/menu.jsp"/>
-            <jsp:include page="/inc/breadcrumb.jsp">
+		    <!--  this is the header of the page -->
+		    <c:import url="/inc/header.jsp"/>
 
-                    <jsp:param name="bread" value="Harvest , New Harvest:Step 2" />
+		    <!--  this is the header of the page -->
+		    <c:import url="/inc/menu.jsp"/>
+		    <jsp:include page="/inc/breadcrumb.jsp">
 
-            </jsp:include>
+			    <jsp:param name="bread" value="Harvest , New Harvest:Step 2" />
+
+		    </jsp:include>
  		</div>
 		<!--  end header -->
 		
 		<!-- body -->
 		<div id="bd">
-   			
-   			
+
+		<!-- Display of error message -->
+		<c:if test="${errorType != null}"> 
+			<div class="${errorType}"> 
+				<img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg"> 
+				<s:fielderror cssClass="errorMessage"/> 
+			</div>
+		 </c:if> 
+
+		<div id="error_div"></div>
+		<div id="clear">&nbsp;</div>		
+		   			
+		<div class="stepsStructure">
+		    <ul style="list-style:none;">
+			<li style="float:left;"><div><img src="page-resources/img/schedule_step1_grey.gif"></div></li>
+			<li style="margin-left:5px;float:left;"><div><img src="page-resources/img/schedule_step2_hghlight.gif"></div></li>
+		    </ul>
+		</div>
+		
+		<div class="greybody">
+			<div style="margin-left:110px;padding-bottom:10px;">
+			This schedule will harvest records from <b>${schedule.provider.name} </b>
+			<c:if test="${schedule.recurrence == 'Hourly'}">
+				Hourly at ${schedule.minute} minutes past the hour
+			</c:if>
+			<c:if test="${schedule.recurrence == 'Daily'}">
+				Daily at ${schedule.hour}:00
+			</c:if>
+			<c:if test="${schedule.recurrence == 'Weekly'}">
+				Weekly on 
+				<c:choose>
+				<c:when test="${schedule.dayOfWeek == 1}">
+				    Sunday
+				</c:when>
+				<c:when test="${schedule.dayOfWeek == 2}">
+				    Monday
+				</c:when>
+				<c:when test="${schedule.dayOfWeek == 3}">
+				    Tuesday
+				</c:when>
+				<c:when test="${schedule.dayOfWeek == 4}">
+				    Wednesday
+				</c:when>
+				<c:when test="${schedule.dayOfWeek == 5}">
+				    Thursday
+				</c:when>
+				<c:when test="${schedule.dayOfWeek == 6}">
+				    Friday
+				</c:when>
+				<c:when test="${schedule.dayOfWeek == 7}">
+				    Saturday
+				</c:when>				
+				</c:choose>
+ 				&nbsp;at ${schedule.hour}:00
+			</c:if>		
+			</div>
+		</div>
+		
+		
    			<form name="addScheduleForm" method="post">
    			
    			<input type="hidden" id="schedule_id" name="scheduleId" value="${schedule.id}"/>
    			
 			<table class="basicTable">
 			<tr>
-				<td> <img src="${pageContext.request.contextPath}/page-resources/img/sel_repo_schedule.JPG"></td>
-				<td> <img src="${pageContext.request.contextPath}/page-resources/img/sel_sets_formats.JPG"></td>
-			</tr>
-			<tr>
-				<td colspan="2" class="label"> Contact Email </td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<input type="text" name="notifyEmail" value="${schedule.notifyEmail}" size="40"/>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" class="label"> Choose Sets </td>
-			</tr>
-			<tr>
-				<td colspan="2"> <input type="checkbox" onClick="javascript:YAHOO.xc.mst.schedule.add.selectAll(document.addScheduleForm.selectedSetIds, this);" value="true" name="select_all"/>&nbsp;&nbsp;&nbsp;Select All </td>
-			</tr>
-			
-			<c:forEach var="set" items="${repository.sets}">
-			<tr>
-				<td colspan="2">
-					<input type="checkbox" name="selectedSetIds" value="${set.id}"
-					<c:forEach items="${schedule.sets}" var="scheduleSet">
-						<c:if test="${scheduleSet.id == set.id}">
-									checked
-						</c:if>
-					</c:forEach>
-					/>&nbsp;&nbsp;&nbsp; ${set.displayName}
-				</td>
-			</tr>
-			</c:forEach>
-			<tr>
-				<td colspan="2" class="label"> Choose Formats </td>
+				<td colspan="2" class="label"> Which records from ${schedule.provider.name} should be harvested?</td>
 			</tr>
 
-			<c:forEach var="format" items="${repository.formats}">
 			<tr>
-				<td colspan="2">
-					<input type="checkbox" name="selectedFormatIds" value="${format.id}"
-					<c:forEach items="${schedule.formats}" var="scheduleFormat">
-						<c:if test="${scheduleFormat.id == format.id}">
-									checked
-						</c:if>
-					</c:forEach>
-					/>&nbsp;&nbsp;&nbsp; ${format.name}
+				<td>
+					<b>Formats</b><br>
+					<select multiple name="selectedFormatIds" style="width:300px;" size="10">
+						<c:forEach var="format" items="${repository.formats}">
+							<option value="${format.id}"
+							
+							<c:forEach items="${schedule.formats}" var="scheduleFormat">
+								<c:if test="${scheduleFormat.id == format.id}">
+											selected
+								</c:if>
+							</c:forEach>
+							>${format.name} </option>
+						</c:forEach>
+					</select>
+					<br>
+					(CTRL click to select multiple formats)
+				</td>
+				
+				<td width="50%">
+					Rename this harvest schedule(optional)<br>
+					<input type="text" name="scheduleName" value="${schedule.scheduleName}" size="40"/> 
+					<br><br>
+					
+					Contact email:<br>
+					<input type="text" name="notifyEmail" value="${schedule.notifyEmail}" size="40"/><br>
+					(Email will be sent when error occurs with the harvest.Separate multiple email address with comma.)
+				
+				</td>
+
+			</tr>
+			<tr>
+				<td > 
+					<b>Sets</b> 
+					<br>
+					<select name="selectedSetIds" multiple style="width:300px;" size="10"> 
+						<option value="0">All Sets</option>
+						<c:forEach var="set" items="${repository.sets}">
+							<option value="${set.id}"
+							<c:forEach items="${schedule.sets}" var="scheduleSet">
+								<c:if test="${scheduleSet.id == set.id}">
+											selected
+								</c:if>
+							</c:forEach>
+							>${set.displayName}
+						</c:forEach>
+					</option>
+					<br>
+					(CTRL click to select multiple sets)
 				</td>
 			</tr>
-			</c:forEach>
+
 			<tr>
 				<td colspan="2" align="right">
-					<button class="xc_button" name="previous" onclick="javascript:YAHOO.xc.mst.schedule.add.gotoPreviousStep();">Previous</button> 
-					<button class="xc_button" name="next" onclick="javascript:YAHOO.xc.mst.schedule.add.saveAndExit();">Save & Exit</button>
+					<button class="xc_button" name="cancel" onclick="javascript:YAHOO.xc.mst.schedule.add.cancel();">Cancel</button>
+					<button class="xc_button" type="button" name="previous" onclick="javascript:YAHOO.xc.mst.schedule.add.gotoPreviousStep();">Back to Step 1</button> 
+					<button class="xc_button" type="button" name="next" onclick="javascript:YAHOO.xc.mst.schedule.add.saveAndExit();">Finish</button>
 				</td>
 			</tr>						
 		</table> 

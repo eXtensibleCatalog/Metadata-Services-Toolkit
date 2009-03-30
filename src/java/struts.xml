@@ -175,14 +175,14 @@
 		</action>
 
 		<!-- Action to add schedule and go to step 2 of add schedule -->
-		<action name="addScheduleAndNext" class="xc.mst.action.harvest.AddSchedule" method="addSchedule">
+		<action name="addScheduleAndNext" class="xc.mst.action.harvest.AddSchedule" method="addScheduleAndProvider">
         	<interceptor-ref name="crudStack"/>
 			<result name="success">/pages/schedule/add_schedule_sets_formats.jsp</result>
 			<result name="input">/pages/schedule/add_schedule.jsp</result>
 		</action>	
 		
 		<!-- Action to add sets and formats for schedule and go to all schedule page -->
-		<action name="saveSetFormatForScheduleAndExit" class="xc.mst.action.harvest.AddSchedule" method="addSetFormatForSchedule">
+		<action name="saveSetFormatForScheduleAndExit" class="xc.mst.action.harvest.AddSchedule" method="addSchedule">
         	<interceptor-ref name="crudStack"/>
 			<result name="success" type="redirect">allSchedules.action</result>
 			<result name="input">/pages/schedule/add_schedule_sets_formats.jsp</result>
@@ -191,7 +191,7 @@
 		<!-- Action to add sets and formats for schedule and go to add schedule step 1 -->
 		<action name="saveSetFormatForScheduleAndGoToPrevious" class="xc.mst.action.harvest.AddSchedule" method="addSetFormatForSchedule">
         	<interceptor-ref name="crudStack"/>
-			<result name="success" type="redirect">viewEditSchedule.action?scheduleId=${schedule.id}</result>
+			<result name="success">/pages/schedule/add_schedule.jsp</result>
 			<result name="input">/pages/schedule/add_schedule_sets_formats.jsp</result>
 		</action>
 		
@@ -209,12 +209,13 @@
 			<result name="input">/pages/schedule/add_schedule.jsp</result>
 		</action>
 
-		<!-- Action to update schedule and go to all schedule page -->
+		<!-- Action to update schedule and go to all schedule page 
 		<action name="updateScheduleAndExit" class="xc.mst.action.harvest.AddSchedule" method="updateSchedule">
         	<interceptor-ref name="editStack"/>
 			<result name="success" type="redirect">allSchedules.action</result>
 			<result name="input">/pages/schedule/add_schedule.jsp</result>
 		</action>
+		-->
 		
 		<!-- Action to delete schedule -->
 		<action name="deleteSchedule" class="xc.mst.action.harvest.AllSchedules" method="deleteSchedule">

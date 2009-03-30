@@ -18,8 +18,26 @@ YAHOO.xc.mst.schedule.add = {
 	
 	},
 	
+	cancel : function()
+	{
+		document.addScheduleForm.action= basePath + 'allSchedules.action';
+		document.addScheduleForm.submit();
+	
+	},	
+	
 	saveAndExit : function()
 	{
+	
+		if (document.addScheduleForm.scheduleName.value=='') {
+			createErrorDiv('error','Schedule Name is required.');
+			return false;
+		}
+
+		if (document.addScheduleForm.selectedFormatIds.value=='') {
+			createErrorDiv('error','Format is required.');
+			return false;
+		}
+		
 		document.addScheduleForm.action= basePath + 'saveSetFormatForScheduleAndExit.action';
 		document.addScheduleForm.submit();
 	

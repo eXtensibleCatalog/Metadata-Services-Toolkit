@@ -63,8 +63,8 @@
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">  
 
-		<!-- page header - this uses the yahoo page styling -->
-		<div id="hd">
+	<!-- page header - this uses the yahoo page styling -->
+	<div id="hd">
    
             <!--  this is the header of the page -->
             <c:import url="/inc/header.jsp"/>
@@ -74,219 +74,223 @@
             <jsp:include page="/inc/breadcrumb.jsp">
                     <jsp:param name="bread" value="Harvest , New Harvest:Step 1" />
             </jsp:include>
- 		</div>
-		<!--  end header -->
-		
-		<!-- body -->
-		<div id="bd">
-   			
-   			<!-- Display of error message -->
-   			<c:if test="${errorType != null}"> 
-   				<div class="${errorType}"> 
-   					<img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg"> 
-					<s:fielderror cssClass="errorMessage"/> 
-				</div>
-   			 </c:if> 
-   			 
-   			<div id="error_div"></div>
-            
-   			<div class="clear">&nbsp;</div>
+	</div>
+	<!--  end header -->
 
-   			<c:if test="${schedule != null}">
-	   			<form name="scheduleForm" method="post">
+	<!-- body -->
+	<div id="bd">
+   			
+		<!-- Display of error message -->
+		<c:if test="${errorType != null}"> 
+			<div class="${errorType}"> 
+				<img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg"> 
+				<s:fielderror cssClass="errorMessage"/> 
+			</div>
+		 </c:if> 
+
+		<div id="error_div"></div>
+		<div id="clear">&nbsp;</div>		
+		
+		<div class="stepsStructure">
+		    <ul style="list-style:none;">
+			<li style="float:left;"><div><img src="page-resources/img/schedule_step1_highlight.gif"></div></li>
+			<li style="margin-left:5px;float:left;"><div><img src="page-resources/img/schedule_step2_grey.gif"></div></li>
+		    </ul>
+		</div>
+                
+                
+		<c:if test="${schedule != null}">
+			<form name="scheduleForm" method="post">
+				<div class="greybody" style="padding-left:10px;">	   			
+
 	   			
 	   			<input type="hidden" id="schedule_id" name="scheduleId" value="${schedule.id}"/>
 	   			
-				<table class="basicTable">
-				<tr>
-					<td> <img src="${pageContext.request.contextPath}/page-resources/img/select_repo_schedule.JPG"></td>
-					<td> <img src="${pageContext.request.contextPath}/page-resources/img/select_sets_formats.JPG"></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="label"> Schedule Name </td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input type="text" name="scheduleName" value="${schedule.scheduleName}"/>
-					</td>
-				</tr>
 				
-				<tr>
-					<td colspan="2" class="label"> Select Repository</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<select id="schedule_repository" name="repositoryId" />
-					
-							<option value = "0"></option>
-							
-							<c:forEach items="${repositories}" var="repository">
-								<c:if test="${repository.identify}">
-									<option value = "${repository.id}"
-									<c:if test="${schedule.provider.id == repository.id}">
-										selected
-									</c:if>
-									> ${repository.name}</option>
-								</c:if>
-							</c:forEach>
-							<c:if test="${schedule.provider != null && !schedule.provider.identify}">
-								<option value = "${schedule.provider.id}" selected>${schedule.provider.name}</option>
-							</c:if>							
-	
-						</select>
-					
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" class="label"> Schedule </td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="radio" name="recurrence" value="Daily"
-						<c:if test="${schedule.recurrence == 'Daily'}">
-									checked
+				<b>This will allow you to harvest records from the service and schedule incremental updates</b>
+				<br><br>
+				
+				Which <b>Repository</b> do you want to Harvest?<br>
+				<select id="schedule_repository" name="repositoryId" style="width:250px;"/>
+
+					<option value = "0"></option>
+
+					<c:forEach items="${repositories}" var="repository">
+						<c:if test="${repository.identify}">
+							<option value = "${repository.id}"
+							<c:if test="${schedule.provider.id == repository.id}">
+								selected
+							</c:if>
+							> ${repository.name}</option>
 						</c:if>
-						> Daily        
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Run&nbsp;&nbsp;&nbsp; 
-						<select id="schedule_hour" name="dailyHour" />
-					
-							<option value = "-1"> Select </option>
-							
-							<c:forEach begin="1" end="24" step="1" var="time">
-								<option value = "${time -1}"
-								<c:if test="${schedule.recurrence == 'Daily' && schedule.hour == time-1}">
-									selected
-								</c:if>
-								> ${time}:00</option>
-							</c:forEach>
-						</select>				
-					&nbsp;&nbsp;&nbsp;each day </td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="radio" name="recurrence" value="Hourly"
-						<c:if test="${schedule.recurrence == 'Hourly'}">
-									checked
+					</c:forEach>
+					<c:if test="${schedule.provider != null && !schedule.provider.identify}">
+						<option value = "${schedule.provider.id}" selected>${schedule.provider.name}</option>
+					</c:if>							
+
+				</select>
+				<br><br>
+				
+				<b>How often do you want to harvest updated records?</b>
+				<br><br>
+				
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>
+				Schedule </b><br><br>
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="recurrence" value="Hourly"
+					<c:if test="${schedule.recurrence == 'Hourly'}">
+						checked
+					</c:if>
+					> Hourly
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Run at&nbsp;
+				
+				<select id="schedule_minute" name="minute" />
+					<option value = "-1"> Select </option>
+					<c:forEach begin="1" end="60" step="1" var="minute">
+						<option value = "${minute -1}"
+						<c:if test="${schedule.minute == minute-1}">
+							selected
 						</c:if>
-						> Hourly
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Run Every&nbsp;&nbsp;&nbsp;
-						<select id="schedule_minute" name="minute" />
-					
-							<option value = "-1"> Select </option>
-							
-							<c:forEach begin="1" end="60" step="1" var="minute">
-								<option value = "${minute -1}"
-								<c:if test="${schedule.minute == minute-1}">
-									selected
-								</c:if>
-								> ${minute}</option>
-							</c:forEach>
-						</select>				
-					&nbsp;&nbsp;&nbsp;minutes each hour </td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="radio" name="recurrence" value="Weekly"
-						<c:if test="${schedule.recurrence == 'Weekly'}">
-									checked
+						> ${minute}</option>
+					</c:forEach>
+				</select>				
+				&nbsp;&nbsp;minutes past the hour
+				
+				<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="recurrence" value="Daily"
+					<c:if test="${schedule.recurrence == 'Daily'}">
+								checked
+					</c:if>
+				> Daily        
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Run at&nbsp;
+				
+				<select id="schedule_hour" name="dailyHour" />
+				
+					<option value = "-1"> Select </option>
+
+					<c:forEach begin="1" end="24" step="1" var="time">
+						<option value = "${time -1}"
+						<c:if test="${schedule.recurrence == 'Daily' && schedule.hour == time-1}">
+							selected
 						</c:if>
-						> Weekly        
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Run Every&nbsp;&nbsp;&nbsp;
-						<select id="schedule_day" name="dayOfWeek" />
-							<option value = "0"> Select </option>
-							<option value = "1"
-								<c:if test="${schedule.dayOfWeek == 1}">
-									selected
-								</c:if>
-								> Sunday</option>
-							<option value = "2"
-								<c:if test="${schedule.dayOfWeek == 2}">
-									selected
-								</c:if>
-								> Monday</option>
-							<option value = "3"
-								<c:if test="${schedule.dayOfWeek == 3}">
-									selected
-								</c:if>
-								> Tuesday</option>
-							<option value = "4"
-								<c:if test="${schedule.dayOfWeek == 4}">
-									selected
-								</c:if>
-								> Wednesday</option>
-							<option value = "5"
-								<c:if test="${schedule.dayOfWeek == 5}">
-									selected
-								</c:if>
-								> Thursday</option>
-							<option value = "6"
-								<c:if test="${schedule.dayOfWeek == 6}">
-									selected
-								</c:if>
-								> Friday</option>
-							<option value = "7"
-								<c:if test="${schedule.dayOfWeek == 7}">
-									selected
-								</c:if>
-								> Saturday</option>
-							
-						</select>
-					at					
-						<select id="schedule_week_hour" name="hour" />
-							<option value = "-1"> Select </option>
-							<c:forEach begin="1" end="24" step="1" var="time">
-								<option value = "${time-1}"
-								<c:if test="${schedule.recurrence == 'Weekly' && schedule.hour == time-1}">
-									selected
-								</c:if>
-								> ${time}:00</option>
-							</c:forEach>
-						</select>				
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2"><Strong>Start Date  : </Strong>
-			          		<input type="text" id="schedule_start_date" name="startDate"  
+						> ${time}:00</option>
+					</c:forEach>
+				</select>
+								
+				&nbsp;&nbsp; each day</td>
+				
+				<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="recurrence" value="Weekly"
+				<c:if test="${schedule.recurrence == 'Weekly'}">
+					checked
+				</c:if>
+				> Weekly        
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Run Every&nbsp;
+				
+				<select id="schedule_day" name="dayOfWeek" />
+					<option value = "0"> Select </option>
+					<option value = "1"
+						<c:if test="${schedule.dayOfWeek == 1}">
+							selected
+						</c:if>
+						> Sunday</option>
+					<option value = "2"
+						<c:if test="${schedule.dayOfWeek == 2}">
+							selected
+						</c:if>
+						> Monday</option>
+					<option value = "3"
+						<c:if test="${schedule.dayOfWeek == 3}">
+							selected
+						</c:if>
+						> Tuesday</option>
+					<option value = "4"
+						<c:if test="${schedule.dayOfWeek == 4}">
+							selected
+						</c:if>
+						> Wednesday</option>
+					<option value = "5"
+						<c:if test="${schedule.dayOfWeek == 5}">
+							selected
+						</c:if>
+						> Thursday</option>
+					<option value = "6"
+						<c:if test="${schedule.dayOfWeek == 6}">
+							selected
+						</c:if>
+						> Friday</option>
+					<option value = "7"
+						<c:if test="${schedule.dayOfWeek == 7}">
+							selected
+						</c:if>
+						> Saturday</option>
+
+				</select>
+				at					
+				<select id="schedule_week_hour" name="hour" />
+					<option value = "-1"> Select </option>
+					<c:forEach begin="1" end="24" step="1" var="time">
+						<option value = "${time-1}"
+						<c:if test="${schedule.recurrence == 'Weekly' && schedule.hour == time-1}">
+							selected
+						</c:if>
+						> ${time}:00</option>
+					</c:forEach>
+				</select>
+				&nbsp;&nbsp;each week&nbsp;&nbsp;&nbsp;<br><br>
+				
+				<b>Start Date  : </b>
+	          		<input type="text" id="schedule_start_date" name="startDate"  
 			          		value="${startDateDisplayFormat}" 
 			          		size="10" maxlength ="10"/>
 						
-			    		<button type="button" id="show_start_date_calendar" title="Show Calendar"><img alt="Calendar" 
-						                       src="${pageContext.request.contextPath}/page-resources/img/calendar.gif"/></button>
-			    		
-			    		<div id="containerDialog">
-							<div cssClass="hd">Calendar</div>
-			
-							<div  cssClass="bd">
-								 <div id="cal1Container"></div> 
-							</div >
-						</div >				
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" > <Strong>End Date  : </Strong>
-			          	<input type="text" id="schedule_end_date" name="endDate"  
-			          		value="${endDateDisplayFormat}" 
-			          		size="10" maxlength ="10"/>
-						
-			    		<button type="button" id="show_end_date_calendar" title="Show Calendar"><img alt="Calendar" 
-						                       src="${pageContext.request.contextPath}/page-resources/img/calendar.gif"/></button>
-			    		
-			    		<div id="containerDialog2">
-							<div cssClass="hd">Calendar</div>
-			
-							<div  cssClass="bd">
-								 <div id="cal2Container"></div> 
-							</div >
-						</div >				
-					
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" align="right">
-						<button class="xc_button" name="cancel" onClick="Javascript:YAHOO.xc.mst.schedule.allSchedules();">Cancel</button> 
-						<button class="xc_button" type="button" name="next" onClick="Javascript:YAHOO.xc.mst.schedule.saveSchedule();">Save & Next</button>
-					</td>
-				</tr>						
-			</table> 
+		    		<button type="button" id="show_start_date_calendar" title="Show Calendar"><img alt="Calendar" 
+		                       src="${pageContext.request.contextPath}/page-resources/img/calendar.gif"/></button>
+		    		
+		    		<div id="containerDialog">
+					<div cssClass="hd">Calendar</div>
+
+						<div  cssClass="bd">
+							 <div id="cal1Container"></div> 
+						</div >
+				</div >	
+				<br>
+				Enter a future date for delayed start
+				<br><br>
+
+				<b>End Date  : </b>
+				<input type="text" id="schedule_end_date" name="endDate"  
+					value="${endDateDisplayFormat}" 
+					size="10" maxlength ="10"/>
+
+				<button type="button" id="show_end_date_calendar" title="Show Calendar"><img alt="Calendar" 
+							       src="${pageContext.request.contextPath}/page-resources/img/calendar.gif"/></button>
+
+				<div id="containerDialog2">
+					<div cssClass="hd">Calendar</div>
+
+					<div  cssClass="bd">
+						 <div id="cal2Container"></div> 
+					</div >
+				</div >	
+				<a href=""> clear</a>
+				
+				<br>
+				Leave blank for no end date
+				<br><br>
+				
+				</div>
+				<!-- end grey table -->
+				<br><br>
+				<div align="right">
+					<button class="xc_button" name="cancel" onClick="Javascript:YAHOO.xc.mst.schedule.allSchedules();">Cancel</button> 
+					<button class="xc_button" type="button" name="next" onClick="Javascript:YAHOO.xc.mst.schedule.saveSchedule();">Move to Step 2 </button>
+				</div>
 			</form>
 		</c:if>
+		
  		</div>
 		<!--  end body -->		
             
