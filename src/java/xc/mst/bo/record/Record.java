@@ -558,6 +558,36 @@ public class Record
 	} // end method removeProcessedFrom(Record)
 
 	/**
+	 * Gets the records which were processed from this record
+	 * 
+	 * @return A list of records which were processed from this record
+	 */
+	public List<Record> getSuccessors() 
+	{
+		return successors;
+	} // end method getSuccesors()
+
+	/**
+	 * Sets the records which were processed from this record
+	 * 
+	 * @param successors The new list of records which were processed from this record
+	 */
+	public void setSuccessors(List<Record> successors) 
+	{
+		this.successors = successors;
+	} // end method setSuccessors(List<Record>)
+
+	/**
+	 * Adds a record to the list of records which were processed from this record
+	 * 
+	 * @param successor The new record which was processed from this record
+	 */
+	public void addSuccessor(Record successor) 
+	{
+		this.successors.add(successor);
+	} // end method addSuccessor(Record successor)
+	
+	/**
 	 * Gets the services which the record is input for
 	 *
 	 * @return The services which the record is input for
@@ -972,20 +1002,24 @@ public class Record
 
 		return buffer.toString();
 	}
-
-	public List<Record> getSuccessors() {
-		return successors;
-	}
-
-	public void setSuccessors(List<Record> successors) {
-		this.successors = successors;
-	}
-
-	public int getNumberOfPredecessors() {
+	
+	/**
+	 * Returns the number of predecessors of the record
+	 * 
+	 * @return The number of predecessors the record has
+	 */
+	public int getNumberOfPredecessors() 
+	{
 		return processedFrom.size();
 	}
 
-	public int getNumberOfSuccessors() {
+	/**
+	 * Returns the number of successors of the record
+	 * 
+	 * @return The number of successors the record has
+	 */
+	public int getNumberOfSuccessors() 
+	{
 		return successors.size();
 	}
 

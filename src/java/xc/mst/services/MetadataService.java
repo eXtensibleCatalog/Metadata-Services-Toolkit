@@ -604,6 +604,17 @@ public abstract class MetadataService
 
 			if(!recordService.insert(record))
 				log.error("Failed to insert the new record with the OAI Identifier " + record.getOaiIdentifier() + ".");
+			else
+			{
+				for(Record predecessor : record.getProcessedFrom())
+				{
+					if(!predecessor.getSuccessors().contains(record))
+					{
+						predecessor.addSuccessor(record);
+						recordService.update(predecessor);
+					}
+				}
+			}
 		} // end try(insert the record)
 		catch (DataException e)
 		{
@@ -630,7 +641,18 @@ public abstract class MetadataService
 			// Update the record.  If the update was successful,
 			// run the processing directives against the updated record
 			if(recordService.update(newRecord))
+			{
 				checkProcessingDirectives(newRecord);
+				
+				for(Record predecessor : newRecord.getProcessedFrom())
+				{
+					if(!predecessor.getSuccessors().contains(newRecord))
+					{
+						predecessor.addSuccessor(newRecord);
+						recordService.update(predecessor);
+					}
+				}
+			}
 			else
 				log.error("The update failed for the record with ID " + newRecord.getId() + ".");
 		} // end try(update the record)

@@ -859,7 +859,7 @@ public class DefaultRecordService extends RecordService
 		if(useSet)
 			queryBuffer.append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId)).append(" ");
 		if(useMetadataPrefix)
-			queryBuffer.append(FIELD_FORMAT_ID).append(":").append(Integer.toString(formatId)).append(" ");
+			queryBuffer.append(FIELD_FORMAT_ID).append(":").append(Integer.toString(formatId));
 		// TODO
 		if(fromDate != null || untilDate != null)
 			//queryBuffer.append(new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);
@@ -922,12 +922,12 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get the Documents for unprocessed records
 		SolrQuery query = new SolrQuery();
 		StringBuffer queryBuffer = new StringBuffer();
-		queryBuffer.append(FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
-		queryBuffer.append(FIELD_SERVICE_ID + ":" + Integer.toString(serviceId));
+		queryBuffer.append(FIELD_INDEXED_OBJECT_TYPE).append(":").append(Record.indexedObjectType);
+		queryBuffer.append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId)).append(" ");
 		if(useSet)
-			queryBuffer.append(FIELD_SET_SPEC + ":" + Integer.toString(setId));
+			queryBuffer.append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId)).append(" ");
 		if(useMetadataPrefix)
-			queryBuffer.append(FIELD_FORMAT_ID + ":" + Integer.toString(formatId));
+			queryBuffer.append(FIELD_FORMAT_ID + ":").append(Integer.toString(formatId));
 		// TODO
 		if(fromDate != null || untilDate != null)
 			//query.add((Query)new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);
@@ -1115,7 +1115,6 @@ public class DefaultRecordService extends RecordService
 		record.setService(serviceDao.loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
 		record.setHarvest(harvestDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_HARVEST_ID))));
 
-
 		Collection<Object> sets = doc.getFieldValues(FIELD_SET_SPEC);
 		if(sets != null)
 			for(Object set : sets)
@@ -1149,8 +1148,13 @@ public class DefaultRecordService extends RecordService
 		Collection<Object> processedFroms = doc.getFieldValues(FIELD_PROCESSED_FROM);
 		if(processedFroms != null)
 			for(Object processedFrom : processedFroms)
-				record.addProcessedFrom(getById(Long.parseLong((String)processedFrom)));
+				record.addProcessedFrom(loadBasicRecord(Long.parseLong((String)processedFrom)));
 
+		Collection<Object> successors = doc.getFieldValues(FIELD_SUCCESSOR);
+		if(successors != null)
+			for(Object successor : successors)
+				record.addProcessedFrom(loadBasicRecord(Long.parseLong((String)successor)));
+		
 		Collection<Object> inputForServices = doc.getFieldValues(FIELD_INPUT_FOR_SERVICE_ID);
 		if(inputForServices != null)
 			for(Object inputForService : inputForServices)
@@ -1249,6 +1253,9 @@ public class DefaultRecordService extends RecordService
 		for(Record processedFrom : record.getProcessedFrom())
 			doc.addField(FIELD_PROCESSED_FROM, Long.toString(processedFrom.getId()));
 
+		for(Record successor : record.getSuccessors())
+			doc.addField(FIELD_SUCCESSOR, Long.toString(successor.getId()));
+		
 		for(Service inputForService : record.getInputForServices())
 			doc.addField(FIELD_INPUT_FOR_SERVICE_ID, Long.toString(inputForService.getId()));
 
@@ -1369,7 +1376,10 @@ public class DefaultRecordService extends RecordService
 			for(Object processedFrom : processedFroms)
 				record.addProcessedFrom(getById(Long.parseLong((String)processedFrom)));
 		
-		record.setSuccessors(getByProcessedFrom(record.getId()));
+		Collection<Object> successors = doc.getFieldValues(FIELD_SUCCESSOR);
+		if(successors != null)
+			for(Object successor : successors)
+				record.addProcessedFrom(loadBasicRecord(Long.parseLong((String)successor)));
 	
 		Collection<Object> inputForServices = doc.getFieldValues(FIELD_INPUT_FOR_SERVICE_ID);
 		if(inputForServices != null)

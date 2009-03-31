@@ -174,6 +174,11 @@ public abstract class RecordService
 	protected final static String FIELD_PROCESSED_FROM = "processed_from";
 
 	/**
+	 * The name of the successor field
+	 */
+	protected final static String FIELD_SUCCESSOR = "successor";
+	
+	/**
 	 * The name of the input for service IDs field
 	 */
 	protected final static String FIELD_INPUT_FOR_SERVICE_ID = "input_for_service_id";
