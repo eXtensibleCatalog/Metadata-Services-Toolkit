@@ -15,17 +15,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.MySqlConnectionManager;
+import xc.mst.dao.log.DefaultLogDAO;
+import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.user.DefaultUserDAO;
 import xc.mst.dao.user.UserDAO;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.index.SolrIndexManager;
+import xc.mst.utils.LogWriter;
 
 /**
  * MySQL implementation of the Data Access Object for the providers table
@@ -48,17 +53,27 @@ public class DefaultProviderDAO extends ProviderDAO
 	 * Data access object for getting users
 	 */
 	private UserDAO userDao = new DefaultUserDAO();
-
+	
 	/**
 	 * Data access object for managing formats for a provider
 	 */
 	private ProviderFormatUtilDAO providerFormatDao = new DefaultProviderFormatUtilDAO();
 
 	/**
+	 * Data access object for managing general logs
+	 */
+	private LogDAO logDao = new DefaultLogDAO();
+	
+	/**
 	 * Manager for getting, inserting and updating records
 	 */
 	private static RecordService recordService = new DefaultRecordService();
 
+	/**
+	 * The repository management log file name
+	 */
+	private static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_REPOSITORY_MANAGEMENT);
+	
 	/**
 	 * A PreparedStatement to get all providers in the database
 	 */
@@ -1157,15 +1172,37 @@ public class DefaultProviderDAO extends ProviderDAO
 				    for(Set set : provider.getSets())
 					    success = (set.getId() <= 0 ? setDao.insertForProvider(set, provider.getId()) : setDao.addToProvider(set, provider.getId())) && success;
 
+				    if(success)
+				    	LogWriter.addInfo(logObj.getLogFileLocation(), "Added a new repository with the URL " + provider.getOaiProviderUrl());
+				    else
+				    {
+				    	LogWriter.addWarning(logObj.getLogFileLocation(), "Added a new repository with the URL " + provider.getOaiProviderUrl() + ", but failed to mark which sets and formats it outputs");
+				    	
+				    	logObj.setWarnings(logObj.getWarnings() + 1);
+				    	logDao.update(logObj);
+				    }
+				    
 					return success;
 				} // end if(insert succeeded)
 				else
+				{
+					LogWriter.addError(logObj.getLogFileLocation(), "Failed to add a new repository with the URL " + provider.getOaiProviderUrl());
+					
+					logObj.setErrors(logObj.getErrors() + 1);
+			    	logDao.update(logObj);
+			    	
 					return false;
+				}
 			} // end try(insert the provider)
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while inserting a new provider", e);
+				
+				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while trying to add a new repository with the URL " + provider.getOaiProviderUrl());
 
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				return false;
 			} // end catch(SQLException)
 			finally
@@ -1291,15 +1328,37 @@ public class DefaultProviderDAO extends ProviderDAO
 				    for(Format format : provider.getFormats())
 				    	success = providerFormatDao.insert(provider.getId(), format.getId()) && success;
 
+				    if(success)
+				    	LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the repository with the URL " + provider.getOaiProviderUrl());
+				    else
+				    {
+				    	LogWriter.addWarning(logObj.getLogFileLocation(), "Updated the repository with the URL " + provider.getOaiProviderUrl() + ", but failed to update the sets and formats it outputs");
+				    
+				    	logObj.setWarnings(logObj.getWarnings() + 1);
+				    	logDao.update(logObj);
+				    }
+				    
 					return success;
 				} // end if(update successful)
 				else
+				{
+					LogWriter.addError(logObj.getLogFileLocation(), "Failed to update the repository with the URL " + provider.getOaiProviderUrl());
+					
+					logObj.setErrors(logObj.getErrors() + 1);
+			    	logDao.update(logObj);
+			    	
 					return false;
+				}
 			} // end try(update the provider)
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while updating the provider with ID " + provider.getId(), e);
 
+				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while trying to update the repository with the URL " + provider.getOaiProviderUrl());
+				
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				return false;
 			} // end catch(SQLException)
 		} // end synchronized
@@ -1346,25 +1405,36 @@ public class DefaultProviderDAO extends ProviderDAO
 				// as deleted, as well as all records processed from them.
 				if(success)
 				{
-					try
-					{
 					for(Set set : setDao.getSetsForProvider(provider.getId()))
 						success = setDao.removeFromProvider(set, provider.getId()) && success;
-
+	
 					for(Record record : recordService.getByProviderId(provider.getId()))
 						success = markAsDeleted(record) && success;
 
 					SolrIndexManager.getInstance().commitIndex();
-					}
-					catch(NullPointerException e) { log.error("YAY!!!", e); }
 				} // end if(delete succeeded)
 
+				if(success)
+			    	LogWriter.addInfo(logObj.getLogFileLocation(), "Deleted the repository with the URL " + provider.getOaiProviderUrl());
+			    else
+			    {
+			    	LogWriter.addWarning(logObj.getLogFileLocation(), "Deleted the repository with the URL " + provider.getOaiProviderUrl() + ", but failed to mark its sets and records as deleted");
+			    	
+			    	logObj.setWarnings(logObj.getWarnings() + 1);
+			    	logDao.update(logObj);
+			    }
+				
 			    return success;
 			} // end try(delete the provider)
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while deleting the provider with ID " + provider.getId(), e);
 
+				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while trying to delete the repository with the URL " + provider.getOaiProviderUrl());
+				
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				return false;
 			} // end catch(SQLException)
 		} // end synchronized

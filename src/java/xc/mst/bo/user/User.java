@@ -31,10 +31,15 @@ public class User
 	private String username = null;
 
 	/**
-	 * The user's full name
+	 * The user's first name
 	 */
-	private String fullName = null;
+	private String firstName = null;
 
+	/**
+	 * The user's last name
+	 */
+	private String lastName = null;
+	
 	/**
 	 * The user's password
 	 */
@@ -111,25 +116,45 @@ public class User
 	} // end method setUsername(String)
 
 	/**
-	 * Gets the user's full name
+	 * Gets the user's first name
 	 *
-	 * @return The user's full name
+	 * @return The user's first name
 	 */
-	public String getFullName()
+	public String getFirstName()
 	{
-		return fullName;
-	} // end method getFullName()
+		return firstName;
+	} // end method getFirstName()
 
 	/**
-	 * Sets the user's full name
+	 * Sets the user's first name
 	 *
-	 * @param fullname The user's new full name
+	 * @param firstName The user's new first name
 	 */
-	public void setFullName(String fullname)
+	public void setFirstName(String firstName)
 	{
-		this.fullName = fullname;
-	} // end method setFullName(String)
+		this.firstName = firstName;
+	} // end method setFirstName(String)
 
+	/**
+	 * Gets the user's last name
+	 *
+	 * @return The user's last name
+	 */
+	public String getLastName()
+	{
+		return lastName;
+	} // end method getLastName()
+
+	/**
+	 * Sets the user's last name
+	 *
+	 * @param lastName The user's new last name
+	 */
+	public void setLastName(String lastName)
+	{
+		this.lastName = lastName;
+	} // end method setLastName(String)
+	
 	/**
 	 * Gets the user's password
 	 *

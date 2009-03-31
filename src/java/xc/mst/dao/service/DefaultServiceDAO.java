@@ -15,12 +15,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.Service;
+import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.MySqlConnectionManager;
+import xc.mst.dao.log.DefaultLogDAO;
+import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.FormatDAO;
+import xc.mst.utils.LogWriter;
 
 public class DefaultServiceDAO extends ServiceDAO
 {
@@ -39,6 +44,16 @@ public class DefaultServiceDAO extends ServiceDAO
 	 */
 	private ServiceOutputFormatUtilDAO serviceOutputFormatDAO = new DefaultServiceOutputFormatUtilDAO();
 
+	/**
+	 * Data access object for managing general logs
+	 */
+	private LogDAO logDao = new DefaultLogDAO();
+
+	/**
+	 * The repository management log file name
+	 */
+	private static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SERVICE_MANAGEMENT);
+	
 	/**
 	 * A PreparedStatement to get all services in the database
 	 */
@@ -991,15 +1006,37 @@ public class DefaultServiceDAO extends ServiceDAO
 				    for(Format outputFormat : service.getOutputFormats())
 				    	success = serviceOutputFormatDAO.insert(service.getId(), outputFormat.getId()) && success;
 
+				    if(success)
+				    	LogWriter.addInfo(logObj.getLogFileLocation(), "Added a new service with the name " + service.getName());
+				    else
+				    {
+				    	LogWriter.addWarning(logObj.getLogFileLocation(), "Added a new service with the name " + service.getName() + ", but failed to mark which formats it inputs and outputs");
+				    	
+				    	logObj.setWarnings(logObj.getWarnings() + 1);
+				    	logDao.update(logObj);
+				    }
+				    
 					return success;
 				} // end if(insert succeeded)
 				else
+				{
+					LogWriter.addError(logObj.getLogFileLocation(), "Failed to add a new service with the name " + service.getName());
+					
+					logObj.setErrors(logObj.getErrors() + 1);
+			    	logDao.update(logObj);
+			    	
 					return false;
+				}
 			}
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while inserting a new service with the name " + service.getName(), e);
 
+				LogWriter.addError(logObj.getLogFileLocation(), "Failed to add a new service with the name " + service.getName());
+				
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				return false;
 			} // end catch(SQLException)
 			finally
@@ -1090,9 +1127,24 @@ public class DefaultServiceDAO extends ServiceDAO
 				    for(Format outputFormat : service.getOutputFormats())
 				    	success = serviceOutputFormatDAO.insert(service.getId(), outputFormat.getId()) && success;
 
+				    if(success)
+				    	LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the service with the name " + service.getName());
+				    else
+				    {
+				    	LogWriter.addWarning(logObj.getLogFileLocation(), "Updated the service with the name " + service.getName() + ", but failed to update the formats it inputs and outputs");
+				    
+				    	logObj.setWarnings(logObj.getWarnings() + 1);
+				    	logDao.update(logObj);
+				    }
+				    
 					return success;
 				} // end if(the update succeeded)
 
+				LogWriter.addError(logObj.getLogFileLocation(), "Failed to update the service with the name " + service.getName());
+				
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				// If we got here, the update failed
 				return false;
 			} // end try(update service)
@@ -1100,6 +1152,11 @@ public class DefaultServiceDAO extends ServiceDAO
 			{
 				log.error("A SQLException occurred while updating the service with ID " + service.getId(), e);
 
+				LogWriter.addError(logObj.getLogFileLocation(), "Failed to update the service with the name " + service.getName());
+				
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				return false;
 			} // end catch(SQLException)
 		} // end synchronized
@@ -1137,12 +1194,29 @@ public class DefaultServiceDAO extends ServiceDAO
 				psDelete.setInt(1, service.getId());
 
 				// Execute the delete statement and return the result
-				return psDelete.execute();
+				boolean success = psDelete.execute();
+				
+				if(success)
+					LogWriter.addInfo(logObj.getLogFileLocation(), "Deleted the service with the name " + service.getName());
+				else
+		    	{
+		    		LogWriter.addError(logObj.getLogFileLocation(), "Failed to delete the service with the name " + service.getName());
+				
+		    		logObj.setErrors(logObj.getErrors() + 1);
+		    		logDao.update(logObj);
+		    	}
+		    	
+				return success;
 			} // end try(delete the service)
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while deleting the service with ID " + service.getId(), e);
 
+				LogWriter.addError(logObj.getLogFileLocation(), "Failed to delete the service with the name " + service.getName());
+				
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				return false;
 			} // end catch(SQLException)
 		} // end synchronized

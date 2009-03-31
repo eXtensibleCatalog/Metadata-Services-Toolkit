@@ -255,7 +255,7 @@ public class EditLDAPUser extends ActionSupport
         {            
             User user = userService.getUserById(Integer.parseInt(userId));
             user.setEmail(email);
-            user.setFullName(fullName);
+            user.setFirstName(fullName);
             user.setGroups(null);
             user.setPassword(null);
             user.setAccountCreated(new Date());

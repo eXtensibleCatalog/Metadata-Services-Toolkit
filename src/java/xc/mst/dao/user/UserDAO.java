@@ -53,10 +53,15 @@ public abstract class UserDAO
 	public final static String COL_USERNAME = "username";
 
 	/**
-	 * The name of the username column
+	 * The name of the first name column
 	 */
-	public final static String COL_FULLNAME = "fullname";
+	public final static String COL_FIRST_NAME = "first_name";
 
+	/**
+	 * The name of the last name column
+	 */
+	public final static String COL_LAST_NAME = "last_name";
+	
 	/**
 	 * The name of the password column
 	 */
@@ -202,7 +207,7 @@ public abstract class UserDAO
 			if(user.getUsername() == null || user.getUsername().length() <= 0 || user.getUsername().length() > 255)
 				errorMessage.append("The username is invalid. ");
 
-			if(user.getFullName() != null && user.getFullName().length() > 255)
+			if(user.getFirstName() != null && user.getFirstName().length() > 255)
 				errorMessage.append("The fullname is invalid. ");
 
 			if(user.getPassword() != null && user.getPassword().length() > 63)

@@ -56,7 +56,7 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 	 * To view edit my account
 	 */
 	public String execute() throws DataException {
-		fullName =  user.getFullName();
+		fullName =  user.getFirstName();
 		userName = user.getUsername();
 		email = user.getEmail();
 
@@ -79,7 +79,7 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 				User userWithEmail = userService.getUserByEmail(email, user.getServer());
 				if (userWithEmail == null || userWithEmail.getId() == user.getId()) {
 					user.setUsername(userName);
-					user.setFullName(fullName);
+					user.setFirstName(fullName);
 					user.setEmail(email);
 
 					userService.updateUser(user);

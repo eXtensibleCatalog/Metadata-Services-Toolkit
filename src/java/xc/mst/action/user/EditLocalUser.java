@@ -257,7 +257,7 @@ public class EditLocalUser extends ActionSupport
             user.setServer(serverService.getServerByName("Local"));
             user.setEmail(email);
             user.setFailedLoginAttempts(0);
-            user.setFullName(fullName);
+            user.setFirstName(fullName);
 
             if (!user.getPassword().equals(password)) {
             	user.setPassword(userService.encryptPassword(password));

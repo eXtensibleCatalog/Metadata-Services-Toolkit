@@ -256,7 +256,7 @@ public class AddLDAPUser extends ActionSupport
             
             User user = new User();
             user.setEmail(email);
-            user.setFullName(fullName);
+            user.setFirstName(fullName);
             user.setGroups(null);
             user.setPassword(null);
             user.setAccountCreated(new Date());

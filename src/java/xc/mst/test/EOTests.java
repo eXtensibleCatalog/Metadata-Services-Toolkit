@@ -10,16 +10,24 @@
 package xc.mst.test;
 
 import java.text.DateFormat;
+import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
+import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.log.DefaultLogDAO;
+import xc.mst.dao.user.DefaultServerDAO;
+import xc.mst.dao.user.DefaultUserDAO;
+import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.harvester.HarvestRunner;
 import xc.mst.manager.record.DefaultRecordService;
@@ -67,12 +75,15 @@ public class EOTests
 	{
 		try
 		{
-			String file1 = "logs\\test1.txt";
-			String file2 = "logs\\test2.txt";
-			LogWriter.addInfo(file1, "test1.txt line 1");
-			LogWriter.addInfo(file2, "test2.txt line 1");
-			LogWriter.addInfo(file1, "test1.txt line 2");
-			LogWriter.addInfo(file2, "test2.txt line 2");
+			UserDAO userDao = new DefaultUserDAO();
+			
+			User user = userDao.getById(3);
+			user.setFirstName("Eric");
+			user.setLastName("Osisek");
+			
+			userDao.update(user);
+			
+			return;
 		}
 		catch(Exception e)
 		{

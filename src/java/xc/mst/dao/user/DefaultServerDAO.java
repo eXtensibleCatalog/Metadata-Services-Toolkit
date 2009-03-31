@@ -15,12 +15,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import xc.mst.bo.log.Log;
 import xc.mst.bo.user.Server;
+import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.MySqlConnectionManager;
+import xc.mst.dao.log.DefaultLogDAO;
+import xc.mst.dao.log.LogDAO;
+import xc.mst.utils.LogWriter;
 
 public class DefaultServerDAO extends ServerDAO
 {
+	/**
+	 * Data access object for managing general logs
+	 */
+	private LogDAO logDao = new DefaultLogDAO();
+
+	/**
+	 * The repository management log file name
+	 */
+	private static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_AUTHENTICATION_SERVER_MANAGEMENT);
+	
 	/**
 	 * A PreparedStatement to get all servers in the database
 	 */
@@ -415,15 +430,29 @@ public class DefaultServerDAO extends ServerDAO
 				    if (rs.next())
 				        server.setId(rs.getInt(1));
 
+				    LogWriter.addInfo(logObj.getLogFileLocation(), "Added a new authentication server with the name " + server.getName());
+				    
 					return true;
 				}
 				else
+				{
+					LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while adding a new authentication server with the name " + server.getName());
+					
+					logObj.setErrors(logObj.getErrors() + 1);
+			    	logDao.update(logObj);
+			    	
 					return false;
+				}
 			} // end try(insert the server)
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while inserting a new server with the URL " + server.getUrl(), e);
 
+				LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while adding a new authentication server with the name " + server.getName());
+				
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				return false;
 			} // end catch(SQLException)
 			finally
@@ -484,12 +513,28 @@ public class DefaultServerDAO extends ServerDAO
 				psUpdate.setInt(11, server.getId());
 
 				// Execute the update statement and return the result
-				return psUpdate.executeUpdate() > 0;
+				boolean success = psUpdate.executeUpdate() > 0;
+				
+				if(success)
+					LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the authentication server with the name " + server.getName());
+				else
+				{
+					LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while updating the authentication server with the name " + server.getName());
+					
+					logObj.setErrors(logObj.getErrors() + 1);
+			    	logDao.update(logObj);
+				}
+				return success;
 			} // end try
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while updating the server with ID " + server.getId(), e);
 
+				LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while updating the authentication server with the name " + server.getName());
+				
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				return false;
 			} // end catch(SQLException)
 		} // end synchronized
@@ -527,12 +572,29 @@ public class DefaultServerDAO extends ServerDAO
 				psDelete.setInt(1, server.getId());
 
 				// Execute the delete statement and return the result
-				return psDelete.execute();
+				boolean success = psDelete.execute();
+				
+				if(success)
+					LogWriter.addInfo(logObj.getLogFileLocation(), "Deleted the authentication server with the name " + server.getName());
+				else
+				{
+					LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while deleting the authentication server with the name " + server.getName());
+					
+					logObj.setErrors(logObj.getErrors() + 1);
+			    	logDao.update(logObj);
+				}
+				
+				return success;
 			} // end try
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while deleting the server with ID " + server.getId(), e);
 
+				LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while deleting the authentication server with the name " + server.getName());
+				
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				return false;
 			} // end catch(SQLException)
 		} // end synchronized

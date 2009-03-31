@@ -250,7 +250,7 @@ public class AddLocalUser extends ActionSupport
         {           
             User user = new User();
             user.setEmail(email);
-            user.setFullName(fullName);
+            user.setFirstName(fullName);
             user.setGroups(null);
             user.setPassword(password);
             user.setAccountCreated(new Date());

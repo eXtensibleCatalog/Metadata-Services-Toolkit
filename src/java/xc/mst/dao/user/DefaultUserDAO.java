@@ -15,11 +15,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import xc.mst.bo.log.Log;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
+import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.MySqlConnectionManager;
+import xc.mst.dao.log.DefaultLogDAO;
+import xc.mst.dao.log.LogDAO;
+import xc.mst.utils.LogWriter;
 
 /**
  * MySQL implementation of the Data Access Object for the users table
@@ -42,6 +47,16 @@ public class DefaultUserDAO extends UserDAO
 	 * Data access object to get groups for a user from the database
 	 */
 	private UserGroupUtilDAO userGroupDao = new DefaultUserGroupUtilDAO();
+	
+	/**
+	 * Data access object for managing general logs
+	 */
+	private LogDAO logDao = new DefaultLogDAO();
+
+	/**
+	 * The repository management log file name
+	 */
+	private static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_USER_MANAGEMENT);	
 	
 	/**
 	 * A PreparedStatement to get all users in the database
@@ -165,7 +180,8 @@ public class DefaultUserDAO extends UserDAO
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
-				                                   COL_FULLNAME + ", " +
+				                                   COL_FIRST_NAME + ", " +
+				                                   COL_LAST_NAME + ", " +
 				                                   COL_PASSWORD + ", " +
 				                                   COL_EMAIL + ", " +
 				                                   COL_SERVER_ID + ", " +
@@ -197,13 +213,14 @@ public class DefaultUserDAO extends UserDAO
 					// Set the fields on the user
 					user.setId(results.getInt(1));
 					user.setUsername(results.getString(2));
-					user.setFullName(results.getString(3));
-					user.setPassword(results.getString(4));
-					user.setEmail(results.getString(5));
-					user.setServer(serverDao.getById(results.getInt(6)));
-					user.setLastLogin(results.getDate(7));
-					user.setAccountCreated(results.getDate(8));
-					user.setFailedLoginAttempts(results.getInt(9));
+					user.setFirstName(results.getString(3));
+					user.setLastName(results.getString(4));
+					user.setPassword(results.getString(5));
+					user.setEmail(results.getString(6));
+					user.setServer(serverDao.getById(results.getInt(7)));
+					user.setLastLogin(results.getDate(8));
+					user.setAccountCreated(results.getDate(9));
+					user.setFailedLoginAttempts(results.getInt(10));
 					
 					// Get the groups for the user
 					for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
@@ -260,7 +277,8 @@ public class DefaultUserDAO extends UserDAO
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
-				                                   COL_FULLNAME + ", " +
+				                                   COL_FIRST_NAME + ", " +
+				                                   COL_LAST_NAME + ", " +
 				                                   COL_PASSWORD + ", " +
 				                                   COL_EMAIL + ", " +
 				                                   COL_SERVER_ID + ", " +
@@ -293,13 +311,14 @@ public class DefaultUserDAO extends UserDAO
 					// Set the fields on the user
 					user.setId(results.getInt(1));
 					user.setUsername(results.getString(2));
-					user.setFullName(results.getString(3));
-					user.setPassword(results.getString(4));
-					user.setEmail(results.getString(5));
-					user.setServer(serverDao.getById(results.getInt(6)));
-					user.setLastLogin(results.getDate(7));
-					user.setAccountCreated(results.getDate(8));
-					user.setFailedLoginAttempts(results.getInt(9));
+					user.setFirstName(results.getString(3));
+					user.setLastName(results.getString(4));
+					user.setPassword(results.getString(5));
+					user.setEmail(results.getString(6));
+					user.setServer(serverDao.getById(results.getInt(7)));
+					user.setLastLogin(results.getDate(8));
+					user.setAccountCreated(results.getDate(9));
+					user.setFailedLoginAttempts(results.getInt(10));
 					
 					// Get the groups for the user
 					for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
@@ -350,7 +369,8 @@ public class DefaultUserDAO extends UserDAO
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
-				                                   COL_FULLNAME + ", " +
+				                                   COL_FIRST_NAME + ", " +
+				                                   COL_LAST_NAME + ", " +
 				                                   COL_PASSWORD + ", " +
 				                                   COL_EMAIL + ", " +
 				                                   COL_SERVER_ID + ", " +
@@ -382,13 +402,14 @@ public class DefaultUserDAO extends UserDAO
 					// Set the fields on the user
 					user.setId(results.getInt(1));
 					user.setUsername(results.getString(2));
-					user.setFullName(results.getString(3));
-					user.setPassword(results.getString(4));
-					user.setEmail(results.getString(5));
-					user.setServer(serverDao.getById(results.getInt(6)));
-					user.setLastLogin(results.getDate(7));
-					user.setAccountCreated(results.getDate(8));
-					user.setFailedLoginAttempts(results.getInt(9));
+					user.setFirstName(results.getString(3));
+					user.setLastName(results.getString(4));
+					user.setPassword(results.getString(5));
+					user.setEmail(results.getString(6));
+					user.setServer(serverDao.getById(results.getInt(7)));
+					user.setLastLogin(results.getDate(8));
+					user.setAccountCreated(results.getDate(9));
+					user.setFailedLoginAttempts(results.getInt(10));
 					
 					// Get the groups for the user
 					for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
@@ -448,7 +469,8 @@ public class DefaultUserDAO extends UserDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
-				                                   COL_FULLNAME + ", " +
+				                                   COL_FIRST_NAME + ", " +
+				                                   COL_LAST_NAME + ", " +
 				                                   COL_PASSWORD + ", " +
 				                                   COL_EMAIL + ", " +
 				                                   COL_SERVER_ID + ", " +
@@ -483,13 +505,14 @@ public class DefaultUserDAO extends UserDAO
 					// Set the fields on the user
 					user.setId(results.getInt(1));
 					user.setUsername(results.getString(2));
-					user.setFullName(results.getString(3));
-					user.setPassword(results.getString(4));
-					user.setEmail(results.getString(5));
-					user.setServer(serverDao.getById(results.getInt(6)));
-					user.setLastLogin(results.getDate(7));
-					user.setAccountCreated(results.getDate(8));
-					user.setFailedLoginAttempts(results.getInt(9));
+					user.setFirstName(results.getString(3));
+					user.setLastName(results.getString(4));
+					user.setPassword(results.getString(5));
+					user.setEmail(results.getString(6));
+					user.setServer(serverDao.getById(results.getInt(7)));
+					user.setLastLogin(results.getDate(8));
+					user.setAccountCreated(results.getDate(9));
+					user.setFailedLoginAttempts(results.getInt(10));
 					
 					if(log.isDebugEnabled())
 						log.debug("Found the user with ID " + userId + " in the database.");
@@ -537,7 +560,8 @@ public class DefaultUserDAO extends UserDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
-				                                   COL_FULLNAME + ", " +
+				                                   COL_FIRST_NAME + ", " +
+				                                   COL_LAST_NAME + ", " +
 				                                   COL_PASSWORD + ", " +
 				                                   COL_EMAIL + ", " +
 				                                   COL_SERVER_ID + ", " +
@@ -572,13 +596,14 @@ public class DefaultUserDAO extends UserDAO
 					// Set the fields on the user
 					user.setId(results.getInt(1));
 					user.setUsername(results.getString(2));
-					user.setFullName(results.getString(3));
-					user.setPassword(results.getString(4));
-					user.setEmail(results.getString(5));
-					user.setServer(serverDao.getById(results.getInt(6)));
-					user.setLastLogin(results.getDate(7));
-					user.setAccountCreated(results.getDate(8));
-					user.setFailedLoginAttempts(results.getInt(9));
+					user.setFirstName(results.getString(3));
+					user.setLastName(results.getString(4));
+					user.setPassword(results.getString(5));
+					user.setEmail(results.getString(6));
+					user.setServer(serverDao.getById(results.getInt(7)));
+					user.setLastLogin(results.getDate(8));
+					user.setAccountCreated(results.getDate(9));
+					user.setFailedLoginAttempts(results.getInt(10));
 					
 					// Get the groups for the user
 					for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
@@ -630,7 +655,8 @@ public class DefaultUserDAO extends UserDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
-				                                   COL_FULLNAME + ", " +
+				                                   COL_FIRST_NAME + ", " +
+				                                   COL_LAST_NAME + ", " +
 				                                   COL_PASSWORD + ", " +
 				                                   COL_EMAIL + ", " +
 				                                   COL_SERVER_ID + ", " +
@@ -666,13 +692,14 @@ public class DefaultUserDAO extends UserDAO
 					// Set the fields on the user
 					user.setId(results.getInt(1));
 					user.setUsername(results.getString(2));
-					user.setFullName(results.getString(3));
-					user.setPassword(results.getString(4));
-					user.setEmail(results.getString(5));
-					user.setServer(serverDao.getById(results.getInt(6)));
-					user.setLastLogin(results.getDate(7));
-					user.setAccountCreated(results.getDate(8));
-					user.setFailedLoginAttempts(results.getInt(9));
+					user.setFirstName(results.getString(3));
+					user.setLastName(results.getString(4));
+					user.setPassword(results.getString(5));
+					user.setEmail(results.getString(6));
+					user.setServer(serverDao.getById(results.getInt(7)));
+					user.setLastLogin(results.getDate(8));
+					user.setAccountCreated(results.getDate(9));
+					user.setFailedLoginAttempts(results.getInt(10));
 					
 					// Get the groups for the user
 					for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
@@ -724,7 +751,8 @@ public class DefaultUserDAO extends UserDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
-				                                   COL_FULLNAME + ", " +
+				                                   COL_FIRST_NAME + ", " +
+				                                   COL_LAST_NAME + ", " +
 				                                   COL_PASSWORD + ", " +
 				                                   COL_EMAIL + ", " +
 				                                   COL_SERVER_ID + ", " +
@@ -760,13 +788,14 @@ public class DefaultUserDAO extends UserDAO
 					// Set the fields on the user
 					user.setId(results.getInt(1));
 					user.setUsername(results.getString(2));
-					user.setFullName(results.getString(3));
-					user.setPassword(results.getString(4));
-					user.setEmail(results.getString(5));
-					user.setServer(serverDao.getById(results.getInt(6)));
-					user.setLastLogin(results.getDate(7));
-					user.setAccountCreated(results.getDate(8));
-					user.setFailedLoginAttempts(results.getInt(9));
+					user.setFirstName(results.getString(3));
+					user.setLastName(results.getString(4));
+					user.setPassword(results.getString(5));
+					user.setEmail(results.getString(6));
+					user.setServer(serverDao.getById(results.getInt(7)));
+					user.setLastLogin(results.getDate(8));
+					user.setAccountCreated(results.getDate(9));
+					user.setFailedLoginAttempts(results.getInt(10));
 					
 					if(log.isDebugEnabled())
 						log.debug("Found the user with email " + email + " in the database.");
@@ -820,14 +849,15 @@ public class DefaultUserDAO extends UserDAO
 				{			
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + USERS_TABLE_NAME + " (" + COL_USERNAME + ", " +
-					                                                        COL_FULLNAME + ", " +
+					                                                        COL_FIRST_NAME + ", " +
+					                                                        COL_LAST_NAME + ", " +
 					                                                        COL_PASSWORD + ", " +
 					                                                        COL_EMAIL + ", " +
 					                                                        COL_SERVER_ID + ", " +
 					                                                        COL_LAST_LOGIN + ", " +
 					                                                        COL_ACCOUNT_CREATED + ", " +
 					                                                        COL_FAILED_LOGIN_ATTEMPTS + ") " +
-		                               "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		                               "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"insert user\" PreparedStatement from the SQL " + insertSql);
@@ -839,13 +869,14 @@ public class DefaultUserDAO extends UserDAO
 				
 				// Set the parameters on the insert statement
 				psInsert.setString(1, user.getUsername().trim());
-				psInsert.setString(2, user.getFullName().trim());
-				psInsert.setString(3, user.getPassword());
-				psInsert.setString(4, user.getEmail().trim());
-				psInsert.setInt(5, user.getServer().getId());
-				psInsert.setDate(6, user.getLastLogin());
-				psInsert.setDate(7, user.getAccountCreated());
-				psInsert.setInt(8, user.getFailedLoginAttempts());
+				psInsert.setString(2, user.getFirstName().trim());
+				psInsert.setString(3, user.getLastName().trim());
+				psInsert.setString(4, user.getPassword());
+				psInsert.setString(5, user.getEmail().trim());
+				psInsert.setInt(6, user.getServer().getId());
+				psInsert.setDate(7, user.getLastLogin());
+				psInsert.setDate(8, user.getAccountCreated());
+				psInsert.setInt(9, user.getFailedLoginAttempts());
 		                    
 				// Execute the insert statement and return the result
 				if(psInsert.executeUpdate() > 0)
@@ -860,22 +891,31 @@ public class DefaultUserDAO extends UserDAO
 					for(Group group : user.getGroups())
 						userGroupDao.insert(user.getId(), group.getId());
 					
+					LogWriter.addInfo(logObj.getLogFileLocation(), "Added a new user with the username " + user.getUsername());
+				    
 					return true;
 				} // end if(insert succeeded)
 				else
+				{
+					LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while adding a new user with the username " + user.getUsername());
+					
+					logObj.setErrors(logObj.getErrors() + 1);
+			    	logDao.update(logObj);
+			    	
 					return false;
+				}
 			} // end try
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while inserting a new user with username " + user.getUsername(), e);
 				
+				LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while adding a new user with the username " + user.getUsername());
+				
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				return false;
 			} // end catch(SQLException)
-            catch(Exception e)
-            {
-                log.error(e);
-                return false;
-            }
 			finally
 			{
 				MySqlConnectionManager.closeResultSet(rs);
@@ -901,7 +941,8 @@ public class DefaultUserDAO extends UserDAO
 				{
 					// SQL to update new row
 					String updateSql = "UPDATE " + USERS_TABLE_NAME + " SET " + COL_USERNAME + "=?, " +
-																		  COL_FULLNAME + "=?, " +
+																		  COL_FIRST_NAME + "=?, " +
+																		  COL_LAST_NAME + "=?, " +
 																		  COL_PASSWORD + "=?, " +
 																		  COL_EMAIL + "=?, " +
 																		  COL_SERVER_ID + "=?, " +
@@ -920,14 +961,15 @@ public class DefaultUserDAO extends UserDAO
 					
 				// Set the parameters on the update statement
 				psUpdate.setString(1, user.getUsername().trim());
-				psUpdate.setString(2, user.getFullName().trim());
-				psUpdate.setString(3, user.getPassword());
-				psUpdate.setString(4, user.getEmail().trim());
-				psUpdate.setInt(5, user.getServer().getId());
-				psUpdate.setDate(6, user.getLastLogin());
-				psUpdate.setDate(7, user.getAccountCreated());
-				psUpdate.setInt(8, user.getFailedLoginAttempts());
-				psUpdate.setInt(9,user.getId());
+				psUpdate.setString(2, user.getFirstName().trim());
+				psUpdate.setString(3, user.getLastName().trim());
+				psUpdate.setString(4, user.getPassword());
+				psUpdate.setString(5, user.getEmail().trim());
+				psUpdate.setInt(6, user.getServer().getId());
+				psUpdate.setDate(7, user.getLastLogin());
+				psUpdate.setDate(8, user.getAccountCreated());
+				psUpdate.setInt(9, user.getFailedLoginAttempts());
+				psUpdate.setInt(10,user.getId());
 				
 				// Execute the update statement and return the result
 				boolean success = psUpdate.executeUpdate() > 0;
@@ -939,12 +981,27 @@ public class DefaultUserDAO extends UserDAO
 				for(Group group : user.getGroups())
 					success = userGroupDao.insert(user.getId(), group.getId()) && success;
 				
+				if(success)
+					LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the user with the username " + user.getUsername());
+				else 
+				{
+					LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while updating the user with the username " + user.getUsername());
+					
+					logObj.setErrors(logObj.getErrors() + 1);
+			    	logDao.update(logObj);
+				}
+				
 				return success;
 			} // end try
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while updating the user with ID " + user.getId(), e);
 				
+				LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while updating the user with the username " + user.getUsername());
+				
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				return false;
 			} // end catch(SQLException
 		} // end synchronized
@@ -982,12 +1039,29 @@ public class DefaultUserDAO extends UserDAO
 				psDelete.setInt(1, user.getId());
 				
 				// Execute the delete statement and return the result
-				return psDelete.execute();
+				boolean success = psDelete.execute();
+				
+				if(success)
+					LogWriter.addInfo(logObj.getLogFileLocation(), "Deleted the user with the username " + user.getUsername());
+				else
+				{
+					LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while deleting the user with the username " + user.getUsername());
+				
+					logObj.setErrors(logObj.getErrors() + 1);
+			    	logDao.update(logObj);
+				}
+				
+				return success;
 			} // end try(delete the user)
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while deleting the user with ID " + user.getId(), e);
 				
+				LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while deleting the user with the username " + user.getUsername());
+				
+				logObj.setErrors(logObj.getErrors() + 1);
+		    	logDao.update(logObj);
+		    	
 				return false;
 			} // end catch(SQLException
 		} // end synchronized

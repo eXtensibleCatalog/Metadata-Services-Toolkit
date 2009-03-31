@@ -64,7 +64,50 @@ public class Constants
 	 * The name of the aggregation service
 	 */
 	public static final String AGGREGATION_SERVICE_NAME = "Aggregation";
+	
+	//******************************************************************
+	// General log file IDs
+	//******************************************************************
 
+	/**
+	 * ID of the repository management log file
+	 */
+	public static final int LOG_ID_REPOSITORY_MANAGEMENT = 1;
+	
+	/**
+	 * ID of the users management log file
+	 */
+	public static final int LOG_ID_USER_MANAGEMENT = 2;
+	
+	/**
+	 * ID of the authentication server management log file
+	 */
+	public static final int LOG_ID_AUTHENTICATION_SERVER_MANAGEMENT = 3;
+	
+	/**
+	 * ID of the MySQL log file
+	 */
+	public static final int LOG_ID_MYSQL = 4;
+	
+	/**
+	 * ID of the Solr Index log file
+	 */
+	public static final int LOG_ID_SOLR_INDEX = 5;
+	
+	/**
+	 * ID of the jobs management log file
+	 */
+	public static final int LOG_ID_JOBS_MANAGEMENT = 6;
+	
+	/**
+	 * ID of the service management log file
+	 */
+	public static final int LOG_ID_SERVICE_MANAGEMENT = 7;
+	
+	/**
+	 * ID of the MST Configuration log file
+	 */
+	public static final int LOG_ID_MST_CONFIGURATION = 8;
 	//*******************************************************************
 	// Configuration Parameters
 	//*******************************************************************
