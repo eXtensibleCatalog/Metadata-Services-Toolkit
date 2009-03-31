@@ -855,12 +855,11 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get the Documents for unprocessed records
 		SolrQuery query = new SolrQuery();
 		StringBuffer queryBuffer = new StringBuffer();
-		queryBuffer.append(FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType + " AND "
-				+ FIELD_SERVICE_ID + ":" + Integer.toString(serviceId));
+		queryBuffer.append(FIELD_INDEXED_OBJECT_TYPE).append(":").append(Record.indexedObjectType).append(" AND ").append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
 		if(useSet)
-			queryBuffer.append(FIELD_SET_SPEC + ":" + Integer.toString(setId));
+			queryBuffer.append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId)).append(" ");
 		if(useMetadataPrefix)
-			queryBuffer.append(FIELD_FORMAT_ID + ":" + Integer.toString(formatId));
+			queryBuffer.append(FIELD_FORMAT_ID).append(":").append(Integer.toString(formatId)).append(" ");
 		// TODO
 		if(fromDate != null || untilDate != null)
 			//queryBuffer.append(new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);

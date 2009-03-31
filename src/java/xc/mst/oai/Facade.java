@@ -288,21 +288,21 @@ public class Facade
 
 				bean.setXmlResponse(ErrorBuilder.badVerbError());
 			}
-			else if(verb.equals("Identify"))
+			else if(verb.equalsIgnoreCase("Identify"))
 				doIdentify();
-			else if(verb.equals("ListSets"))
+			else if(verb.equalsIgnoreCase("ListSets"))
 				doListSets();
-			else if(verb.equals("ListMetadataFormats"))
+			else if(verb.equalsIgnoreCase("ListMetadataFormats"))
 				doListMetadataFormats();
-			else if(verb.equals("ListIdentifiers"))
+			else if(verb.equalsIgnoreCase("ListIdentifiers"))
 				doListIdentifiers();
-			else if(verb.equals("ListRecords"))
+			else if(verb.equalsIgnoreCase("ListRecords"))
 				doListRecords();
-			else if(verb.equals("GetRecord"))
+			else if(verb.equalsIgnoreCase("GetRecord"))
 				doGetRecord();
 			else
 			{
-				LogWriter.addWarning(service.getHarvestOutLogFileName(), "The OAI request contained an invalid verb, verb was " + verb + ".");
+				LogWriter.addWarning(service.getHarvestOutLogFileName(), "The OAI request contained an invalid verb: " + verb + ".");
 				warningCount++;
 
 				bean.setXmlResponse(ErrorBuilder.badVerbError());
@@ -312,6 +312,9 @@ public class Facade
 		{
 			log.error("An exception occurred while executing the request.", e);
 			bean.setXmlResponse("");
+			
+			LogWriter.addError(service.getHarvestOutLogFileName(), "An unexpected error occurred while executing the " + verb + " request.");
+			errorCount++;
 		}
 		finally // Update the error and warning count for the service
 		{

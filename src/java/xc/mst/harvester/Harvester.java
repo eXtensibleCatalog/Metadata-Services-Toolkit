@@ -457,6 +457,13 @@ public class Harvester implements ErrorHandler
 			{
 				errorMsg = "The harvest could not be run because the MetadataFormat " + metadataPrefix + " is no longer supported by the OAI repository " + baseURL + ".";
 
+				LogWriter.addError(schedule.getProvider().getLogFileName(), errorMsg);
+				errorCount++;
+
+				loggedHException = true;
+
+				sendReportEmail(errorMsg);
+				
 				throw new Hexception(errorMsg);
 			} // end if(format no longer supported)
 
@@ -465,6 +472,13 @@ public class Harvester implements ErrorHandler
 			{
 				errorMsg = "The harvest could not be run because the Set " + setSpec + " is no longer supported by the OAI repository " + baseURL + ".";
 
+				LogWriter.addError(schedule.getProvider().getLogFileName(), errorMsg);
+				errorCount++;
+
+				loggedHException = true;
+
+				sendReportEmail(errorMsg);
+				
 				throw new Hexception(errorMsg);
 			} // end if(set no longer supported)
 		} // end try(validate the repository)
@@ -592,6 +606,9 @@ public class Harvester implements ErrorHandler
 					catch (Exception e)
 					{
 						log.warn("An error occurred when encoding the resumption token for use in a URL.", e);
+						
+						LogWriter.addWarning(schedule.getProvider().getLogFileName(), "An error occurred when trying to encode the resumption token returned by the provider as UTF-8.  The resumption token was: " + resumption);
+						warningCount++;
 					} // end catch(Exception)
 
 					request += "?verb=" + verb + "&resumptionToken=" + resumption;
@@ -600,7 +617,7 @@ public class Harvester implements ErrorHandler
 				if (log.isDebugEnabled())
 					log.debug(reqMessage);
 
-				LogWriter.addInfo(schedule.getProvider().getLogFileName(), reqMessage);
+				LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Sending the OAI request: " + request);
 
 				// Perform the harvest
 			    Document doc = getDoc(request);

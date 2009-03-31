@@ -42,7 +42,8 @@ public class UsersTest
             user.setAccountCreated(new Date(2009,1,1));
             user.setEmail("JohnDoe@gmail.com");
             user.setFailedLoginAttempts(0);
-            user.setFullName("John Doe");
+            user.setFirstName("John");
+            user.setLastName("Doe");
             user.setGroups(groupList);
             user.setLastLogin(new Date(2009,1,1));
             user.setPassword("JohnDoePassword");
@@ -55,7 +56,8 @@ public class UsersTest
             assert (anotherUser.getAccountCreated().compareTo(user.getAccountCreated())==0): "The Account created Dates should match";
             assert (anotherUser.getEmail().equalsIgnoreCase(user.getEmail())): "";
             assert (anotherUser.getFailedLoginAttempts()==0): "The number of failed Login attempts should be 0";
-            assert (anotherUser.getFullName().equalsIgnoreCase(user.getFullName())): "The Full Names of the users should match";
+            assert (anotherUser.getFirstName().equalsIgnoreCase(user.getFirstName())): "The First Names of the users should match";
+            assert (anotherUser.getLastName().equalsIgnoreCase(user.getLastName())): "The Last Names of the users should match";
             assert (anotherUser.getGroups().isEmpty()): "The group list should be empty";
             assert (anotherUser.getLastLogin().compareTo(user.getLastLogin())==0): "The Last Login dates should match";
             assert (anotherUser.getPassword().equalsIgnoreCase(user.getPassword())): "The passwords of both users should match";

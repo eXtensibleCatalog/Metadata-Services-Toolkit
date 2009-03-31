@@ -27,12 +27,16 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
+import xc.mst.bo.log.Log;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.log.DefaultLogDAO;
+import xc.mst.dao.log.LogDAO;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.utils.LogWriter;
 
 public class SolrIndexManager {
 
@@ -49,6 +53,16 @@ public class SolrIndexManager {
 	 */
 	private static SolrIndexManager instance = null;
 
+	/**
+	 * Data access object for managing general logs
+	 */
+	private static LogDAO logDao = new DefaultLogDAO();
+
+	/**
+	 * The repository management log file name
+	 */
+	private static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SOLR_INDEX);
+	
 	/**
 	 * Gets the singleton instance of the LuceneIndexManager
 	 */
@@ -72,12 +86,24 @@ public class SolrIndexManager {
 	public static SolrServer getSolrServerInstance() {
 
 		if (server == null) {
-			try {
-				String url = "http://localhost:8080/solr/";
+			String url = "http://localhost:8080/solr/";
+
+			try {				
 				server = new CommonsHttpSolrServer( url );
 				log.debug("Solar Server::"+ server);
+				LogWriter.addInfo(logObj.getLogFileLocation(), "The Solr index was successfully opened at " + url);
 			} catch (MalformedURLException me) {
 				log.debug(me);
+				
+				LogWriter.addError(logObj.getLogFileLocation(), "Failed to open the Solr index was successfully opened at " + url);
+				
+				logObj.setErrors(logObj.getErrors()+1);
+				try{
+					logDao.update(logObj);
+				}catch(DataException e){
+					log.error("DataExcepiton while updating the log's error count.");
+				}
+				
 				//throw new DataException(me.getMessage());
 
 			}
@@ -98,9 +124,29 @@ public class SolrIndexManager {
 			server.add(doc);
 		} catch (SolrServerException se) {
 			log.debug(se);
+			
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index: " + se.getMessage());
+			
+			logObj.setErrors(logObj.getErrors()+1);
+			try{
+				logDao.update(logObj);
+			}catch(DataException e){
+				log.error("DataExcepiton while updating the log's error count.");
+			}
+			
 			throw new DataException(se.getMessage());
 		} catch (IOException ioe) {
 			log.debug(ioe);
+			
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index: " + ioe.getMessage());
+			
+			logObj.setErrors(logObj.getErrors()+1);
+			try{
+				logDao.update(logObj);
+			}catch(DataException e){
+				log.error("DataExcepiton while updating the log's error count.");
+			}
+			
 			throw new DataException(ioe.getMessage());
 		}
 		log.debug("Add index to Solr - end");
@@ -118,11 +164,32 @@ public class SolrIndexManager {
 		log.debug("Commit index to Solr - begin");
 		try {
 			server.commit();
+			LogWriter.addInfo(logObj.getLogFileLocation(), "Commited changes to the Solr index");
 		} catch (SolrServerException se) {
 			log.debug(se);
+			
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index: " + se.getMessage());
+			
+			logObj.setErrors(logObj.getErrors()+1);
+			try{
+				logDao.update(logObj);
+			}catch(DataException e){
+				log.error("DataExcepiton while updating the log's error count.");
+			}
+			
 			throw new DataException(se.getMessage());
 		} catch (IOException ioe) {
 			log.debug(ioe);
+			
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index: " + ioe.getMessage());
+			
+			logObj.setErrors(logObj.getErrors()+1);
+			try{
+				logDao.update(logObj);
+			}catch(DataException e){
+				log.error("DataExcepiton while updating the log's error count.");
+			}
+			
 			throw new DataException(ioe.getMessage());
 		}
 		log.debug("Commit index to Solr - end");
@@ -145,6 +212,15 @@ public class SolrIndexManager {
 
 		} catch (SolrServerException e) {
 				log.debug(e);
+				
+				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while getting documents from the Solr index: " + e.getMessage());
+				
+				logObj.setErrors(logObj.getErrors()+1);
+				try{
+					logDao.update(logObj);
+				}catch(DataException e2){
+					log.error("DataExcepiton while updating the log's error count.");
+				}
 		}
 
 		return docs;
