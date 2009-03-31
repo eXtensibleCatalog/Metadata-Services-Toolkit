@@ -1,5 +1,5 @@
 -- Insert default admin user
-insert into users values(1,'admin','MST admin','0DPiKuNIrrVmD8IUCuw1hQxNqZc=','sranganathan@library.rochester.edu',1,'2008-10-20 00:00:00','2008-10-20 00:00:00',0);
+insert into users values(1,'admin','MST', 'admin','0DPiKuNIrrVmD8IUCuw1hQxNqZc=','sranganathan@library.rochester.edu',1,'2008-10-20 00:00:00','2008-10-20 00:00:00',0);
 
 -- Insert group for admin user
 insert into users_to_groups values(1,1,1);

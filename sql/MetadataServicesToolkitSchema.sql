@@ -40,7 +40,8 @@ CREATE TABLE users
 (
   user_id INT(11) NOT NULL AUTO_INCREMENT,
   username VARCHAR(255) NOT NULL,
-  fullname VARCHAR(255),
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
   password VARCHAR(63),
   email VARCHAR(255) NOT NULL,
   server_id INT(11) NOT NULL,
