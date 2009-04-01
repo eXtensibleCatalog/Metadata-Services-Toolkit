@@ -88,60 +88,99 @@
                             <tr>
                                 <td>
                                     <div id="Div1">
-                                        <ul style="list-style:none;" id="ul1">
-                                            <li style="float:left;"><div style="margin-top:-12px;"><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=RepositoryName">Name</a></div></li>
+                                                <c:if test="${columnSorted!='RepositoryName'}">
+                                                     <c:url var="repositorySortUrl" value="allRepository.action">
+                                                       <c:param name="isAscendingOrder" value="true"/>
+                                                       <c:param name="columnSorted" value="RepositoryName"/>
+                                                     </c:url>
+                                                      <a href="${repositorySortUrl}">Name</a>
+                                                 </c:if>
+                                                
+                                                 <c:if test="${columnSorted=='RepositoryName'}">
+                                                   <c:url var="repositorySortUrl" value="allRepository.action">
+                                                     <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                     <c:param name="columnSorted" value="RepositoryName"/>
+                                                   </c:url>
 
-                                                    <c:if test="${columnSorted=='RepositoryName'}">
-                                                        <c:choose>
-                                                            <c:when test="${isAscendingOrder==true}">
-                                                                 <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
+                                                   <a href="${repositorySortUrl}">Name</a>
 
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort_down.jpg"></div></li>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </c:if>
+                                                    <c:choose>
+                                                        <c:when test="${isAscendingOrder==true}">
+                                                            &nbsp;<img src="page-resources/img/triangle_sort.jpg">
 
-                                           
-                                        </ul>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                 </c:if>
+
+
+                                               
                                     </div>
 
                                 </td>
                                 <td>
                                      <div id="Div2">
-                                        <ul style="list-style:none;" id="ul2">
-                                            <li style="float:left;"><div style="margin-top:-12px;"><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=RepositoryURL">URL</a></div></li>
-                                                    <c:if test="${columnSorted=='RepositoryURL'}">
-                                                        <c:choose>
-                                                            <c:when test="${isAscendingOrder==true}">
-                                                                 <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
+                                          <c:if test="${columnSorted!='RepositoryURL'}">
+                                             <c:url var="repositorySortUrl" value="allRepository.action">
+                                               <c:param name="isAscendingOrder" value="true"/>
+                                               <c:param name="columnSorted" value="RepositoryURL"/>
+                                             </c:url>
+                                             <a href="${repositorySortUrl}">URL</a>
+                                         </c:if>
 
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort_down.jpg"></div></li>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </c:if>
-                                        </ul>
+                                        <c:if test="${columnSorted=='RepositoryURL'}">
+                                           <c:url var="repositorySortUrl" value="allRepository.action">
+                                             <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                             <c:param name="columnSorted" value="RepositoryURL"/>
+                                           </c:url>
+
+                                           <a href="${repositorySortUrl}">URL</a>
+                                            <c:choose>
+                                                <c:when test="${isAscendingOrder==true}">
+                                                    &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                                </c:when>
+                                                <c:otherwise>
+                                                    &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                </c:otherwise>
+                                            </c:choose>
+
+
+                                        </c:if>
                                     </div>
                                 </td>
                                 <td>Status</td>
                                 <td>
                                      <div id="Div3">
-                                        <ul style="list-style:none;" id="ul3">
-                                            <li style="float:left;"><div style="margin-top:-12px;"><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=LastHarvestEndTime">Last Harvested</a></div></li>
-                                                   <c:if test="${columnSorted=='LastHarvestEndTime'}">
-                                                        <c:choose>
-                                                            <c:when test="${isAscendingOrder==true}">
-                                                                 <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort_down.jpg"></div></li>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </c:if>
-                                        </ul>
+                                          <c:if test="${columnSorted!='LastHarvestEndTime'}">
+                                             <c:url var="repositorySortUrl" value="allRepository.action">
+                                               <c:param name="isAscendingOrder" value="true"/>
+                                               <c:param name="columnSorted" value="LastHarvestEndTime"/>
+                                             </c:url>
+                                             <a href="${repositorySortUrl}">Last Harvested</a>
+                                         </c:if>
+                                         
+                                        <c:if test="${columnSorted=='LastHarvestEndTime'}">
+                                           <c:url var="repositorySortUrl" value="allRepository.action">
+                                             <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                             <c:param name="columnSorted" value="LastHarvestEndTime"/>
+                                           </c:url>
+
+                                           <a href="${repositorySortUrl}">Last Harvested</a>
+                                            <c:choose>
+                                                <c:when test="${isAscendingOrder==true}">
+                                                    &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                                </c:when>
+                                                <c:otherwise>
+                                                    &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                </c:otherwise>
+                                            </c:choose>
+
+
+                                        </c:if>
                                     </div>
                                 </td>
                             </tr>

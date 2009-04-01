@@ -80,37 +80,35 @@
 
                         <td>
                             <div>
-                                <ul style="list-style:none;">
-                                    <li style="float:left;"><div style="margin-top:-12px;"><a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=schedule_name&columnNumber=1">Schedule Name</a></div></li>
-                                     <c:if test="${columnNumber==1}">
+                                <a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=ScheduleName">Schedule Name</a>
+                                     <c:if test="${columnSorted=='ScheduleName'}">
                                         <c:choose>
                                             <c:when test="${isAscendingOrder==true}">
-                                                 <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
+                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
                                             </c:when>
                                             <c:otherwise>
-                                                <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort_down.jpg"></div></li>
+                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
                                             </c:otherwise>
                                         </c:choose>
                                      </c:if>
-                                </ul>
+                               
                             </div>
                         </td>
 						<td>Repository Name</td>
                         <td>
                             <div>
-                                <ul style="list-style:none;">
-                                    <li style="float:left;"><div style="margin-top:-12px;"><a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=recurrence&columnNumber=2">Recurrance</a></div></li>
-                                     <c:if test="${columnNumber==2}">
+                                <a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=Recurrence">Recurrance</a>
+                                     <c:if test="${columnSorted=='Recurrence'}">
                                         <c:choose>
                                             <c:when test="${isAscendingOrder==true}">
-                                                 <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
+                                                 &nbsp;<img src="page-resources/img/triangle_sort.jpg">
                                             </c:when>
                                             <c:otherwise>
-                                                <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort_down.jpg"></div></li>
+                                                 &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
                                             </c:otherwise>
                                         </c:choose>
                                      </c:if>
-                                </ul>
+                             
                             </div>
 
                         </td>
@@ -121,17 +119,17 @@
 				<tbody>
 					<c:forEach var="schedule" items="${schedules}">
 					<tr>
-                            <c:set var="colorColumn" value="#ffffff"/>
-                            <c:if test="${columnNumber==1}">
-                                <c:set var="colorColumn" value="#edfaff"/>
+                            <c:set var="classColumn" value="plainColumn"/>
+                            <c:if test="${columnSorted=='ScheduleName'}">
+                                <c:set var="classColumn" value="sortColumn"/>
                             </c:if>
-						<td class="sortColumn" bgcolor="${colorColumn}"><a href="viewEditSchedule.action?scheduleId=${schedule.id}">${schedule.scheduleName}</a></td>
+						<td class="${classColumn}"><a href="viewEditSchedule.action?scheduleId=${schedule.id}">${schedule.scheduleName}</a></td>
 						<td> ${schedule.provider.name}</td>
-                            <c:set var="colorColumn" value="#ffffff"/>
-                            <c:if test="${columnNumber==2}">
-                                <c:set var="colorColumn" value="#edfaff"/>
+                            <c:set var="classColumn" value="plainColumn"/>
+                            <c:if test="${columnSorted=='Recurrence'}">
+                                <c:set var="classColumn" value="sortColumn"/>
                             </c:if>
-						<td bgcolor="${colorColumn}">
+						<td class="${classColumn}">
 							<c:if test="${schedule.recurrence == 'Daily'}">
 								${schedule.recurrence} Time ${schedule.hour+ 1}:00
 							</c:if>

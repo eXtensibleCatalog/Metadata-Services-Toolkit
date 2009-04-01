@@ -18,6 +18,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
+import xc.mst.dao.provider.DefaultProviderDAO;
+import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
 
@@ -55,23 +57,25 @@ public class AllRepository extends ActionSupport
     {
         try
         {
-            String DBColumnName = "";
+            
             ProviderService providerService = new DefaultProviderService();
+            ProviderDAO providerDao = new DefaultProviderDAO();
+
             if(columnSorted.equalsIgnoreCase("RepositoryName")||(columnSorted.equalsIgnoreCase("RepositoryURL"))||(columnSorted.equalsIgnoreCase("LastHarvestEndTime")))
             {
                 if(columnSorted.equalsIgnoreCase("RepositoryName"))
                 {
-                    DBColumnName = "name";
+                    Repositories = providerService.getAllProvidersSorted(isAscendingOrder,providerDao.COL_NAME);
                 }
                 else if(columnSorted.equalsIgnoreCase("RepositoryURL"))
                 {
-                    DBColumnName = "oai_provider_url";
+                    Repositories = providerService.getAllProvidersSorted(isAscendingOrder,providerDao.COL_OAI_PROVIDER_URL);
                 }
                 else
                 {
-                    DBColumnName = "last_harvest_end_time";
+                    Repositories = providerService.getAllProvidersSorted(isAscendingOrder,providerDao.COL_LAST_HARVEST_END_TIME);
                 }
-                Repositories = providerService.getAllProvidersSorted(isAscendingOrder,DBColumnName);
+               
                 setIsAscendingOrder(isAscendingOrder);
                 setColumnSorted(columnSorted);
                 return SUCCESS;
@@ -126,7 +130,6 @@ public class AllRepository extends ActionSupport
      */
     public void setColumnSorted(String columnSorted)
     {
-        System.out.println("Setting column sorted as "+columnSorted);
         this.columnSorted = columnSorted;
     }
 

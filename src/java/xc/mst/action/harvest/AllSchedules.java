@@ -20,6 +20,8 @@ import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
 
 import com.opensymphony.xwork2.ActionSupport;
+import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
+import xc.mst.dao.harvest.HarvestScheduleDAO;
 
 /**
  * Action to view all schedules
@@ -28,9 +30,9 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class AllSchedules extends ActionSupport
 {
-    private String columnNumber;
+    
     /** determines the column by which the rows are to be sorted */
-    private String columnSorted;
+    private String columnSorted = "ScheduleName";
     
     /** Determines if rows are to be sorted in ascending or descending order */
     private boolean isAscendingOrder = true;
@@ -50,6 +52,9 @@ public class AllSchedules extends ActionSupport
 	/** Schedule service */
 	private ScheduleService scheduleService = new DefaultScheduleService();
 	
+    /** Harvest schedule DAO */
+    private HarvestScheduleDAO scheduleDao = new DefaultHarvestScheduleDAO();
+
 	/** Error type */
 	private String errorType; 
 
@@ -65,16 +70,28 @@ public class AllSchedules extends ActionSupport
         try
         {
             log.debug("In All schedules Execute() with class");
-            if(columnSorted==null)
+            if((columnSorted.equalsIgnoreCase("ScheduleName"))||(columnSorted.equalsIgnoreCase("Recurrence")))
             {
-                columnSorted = "schedule_name";
+                if(columnSorted.equalsIgnoreCase("ScheduleName"))
+                {
+                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_SCHEDULE_NAME);
+                }
+                else
+                {
+                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_RECURRENCE);
+                }
+
             }
-            schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, columnSorted);
+            else
+            {
+                 this.addFieldError("allSchedulesError", "ERROR : The column "+columnSorted+" cannot be matched");
+                 schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, scheduleDao.COL_SCHEDULE_NAME);
+            }
             return SUCCESS;
         }
         catch(Exception e)
         {
-            schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, columnSorted);
+            schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, scheduleDao.COL_SCHEDULE_NAME);
             return SUCCESS;
         }
     }
@@ -89,14 +106,34 @@ public class AllSchedules extends ActionSupport
 
     	HarvestSchedule schedule = scheduleService.getScheduleById(scheduleId);
 
-		if (schedule != null ) {
+		if (schedule != null )
+        {
 
-	    	try {
+	    	try
+            {
 	    		scheduleService.deleteSchedule(schedule);
-	    		schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, columnSorted);
+	    		if((columnSorted.equalsIgnoreCase("ScheduleName"))||(columnSorted.equalsIgnoreCase("Recurrence")))
+                {
+                    if(columnSorted.equalsIgnoreCase("ScheduleName"))
+                    {
+                        schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_SCHEDULE_NAME);
+                    }
+                    else
+                    {
+                        schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_RECURRENCE);
+                    }
+
+                }
+                else
+                {
+                     this.addFieldError("allSchedulesError", "ERROR : The column "+columnSorted+" cannot be matched");
+                     schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, scheduleDao.COL_SCHEDULE_NAME);
+                }
                 setIsAscendingOrder(isAscendingOrder);
-                setColumnNumber(columnNumber);
-	    	} catch (DataException e) {
+              
+	    	} 
+            catch (DataException e)
+            {
 	    		log.debug("Deleting the schedule failed" + e.getMessage());
 	    		schedules = scheduleService.getAllSchedules();
 	    		addFieldError("scheduleDeleteFailed", "Problems with deleting the schedule :" + schedule.getScheduleName());
@@ -167,21 +204,5 @@ public class AllSchedules extends ActionSupport
 		this.errorType = errorType;
 	}
 
-     /**
-     * sets the number of the column to be sorted (used for sorting purpose only)
-     * @param columnNumber column number
-     */
-    public void setColumnNumber(String columnNumber)
-    {
-        this.columnNumber = columnNumber;
-    }
-
-    /**
-     * returns the number of the column to be sorted
-     * @return column number
-     */
-    public String getColumnNumber()
-    {
-        return this.columnNumber;
-    }
+    
 }
