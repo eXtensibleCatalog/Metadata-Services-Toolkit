@@ -44,7 +44,7 @@
         
     </head>
 
-    <body class="yui-skin-sam" onclick="javascript:YAHOO.xc.mst.repository.init(${columnNumber},${isAscendingOrder});">
+    <body class="yui-skin-sam">
 
         <%@ taglib prefix="s" uri="/struts-tags" %>
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
@@ -70,9 +70,7 @@
 
 		<!-- body -->
 		<div id="bd">
-            <input type="hidden" id="columnNumber" value="${columnNumber}">
-            <input type="hidden" id="isAscendingOrder" value="${isAscendingOrder}">
-
+           
             <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div class="${errorType}">
@@ -91,9 +89,9 @@
                                 <td>
                                     <div id="Div1">
                                         <ul style="list-style:none;" id="ul1">
-                                            <li style="float:left;"><div style="margin-top:-12px;"><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=name&columnNumber=1">Name</a></div></li>
+                                            <li style="float:left;"><div style="margin-top:-12px;"><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=RepositoryName">Name</a></div></li>
 
-                                                    <c:if test="${columnNumber==1}">
+                                                    <c:if test="${columnSorted=='RepositoryName'}">
                                                         <c:choose>
                                                             <c:when test="${isAscendingOrder==true}">
                                                                  <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
@@ -113,8 +111,8 @@
                                 <td>
                                      <div id="Div2">
                                         <ul style="list-style:none;" id="ul2">
-                                            <li style="float:left;"><div style="margin-top:-12px;"><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=oai_provider_url&columnNumber=2">URL</a></div></li>
-                                                    <c:if test="${columnNumber==2}">
+                                            <li style="float:left;"><div style="margin-top:-12px;"><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=RepositoryURL">URL</a></div></li>
+                                                    <c:if test="${columnSorted=='RepositoryURL'}">
                                                         <c:choose>
                                                             <c:when test="${isAscendingOrder==true}">
                                                                  <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
@@ -132,8 +130,8 @@
                                 <td>
                                      <div id="Div3">
                                         <ul style="list-style:none;" id="ul3">
-                                            <li style="float:left;"><div style="margin-top:-12px;"><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_harvest_end_time&columnNumber=3">Last Harvested</a></div></li>
-                                                   <c:if test="${columnNumber==3}">
+                                            <li style="float:left;"><div style="margin-top:-12px;"><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=LastHarvestEndTime">Last Harvested</a></div></li>
+                                                   <c:if test="${columnSorted=='LastHarvestEndTime'}">
                                                         <c:choose>
                                                             <c:when test="${isAscendingOrder==true}">
                                                                  <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
@@ -153,20 +151,20 @@
                                   <c:choose>
                                         <c:when test="${(n.identify==true)&&(n.listSets==true)&&(n.service==true)&&(n.listFormats==true)}">
                                              <tr>
-                                                <c:set var="colorColumn" value="#ffffff"/>
-                                                <c:if test="${columnNumber==1}">
-                                                     <c:set var="colorColumn" value="#edfaff"/>
+                                                <c:set var="classColumn" value="plainColumn"/>
+                                                <c:if test="${columnSorted=='RepositoryName'}">
+                                                     <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
-                                                <td class="sortcolumn" bgcolor="${colorColumn}">
+                                                <td class="${classColumn}">
                                                                                                       
                                                         <a style="color:black;text-decoration:none;" href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${n.id}" />"><U><c:out value="${n.name}" /></U></a>
                                                    
                                                 </td>
-                                                <c:set var="colorColumn" value="#ffffff"/>
-                                                <c:if test="${columnNumber==2}">
-                                                     <c:set var="colorColumn" value="#edfaff"/>
+                                                <c:set var="classColumn" value="plainColumn"/>
+                                                <c:if test="${columnSorted=='RepositoryURL'}">
+                                                     <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
-                                                <td bgcolor="${colorColumn}">
+                                                <td class="${classColumn}">
                                                      <c:out value="${n.oaiProviderUrl}" />                                                   
                                                 </td>
                                                 <td>
@@ -177,20 +175,20 @@
                                                 </td>
                                                 <c:choose>
                                                     <c:when test="${n.lastHarvestEndTime==null}">
-                                                         <c:set var="colorColumn" value="#ffffff"/>
-                                                           <c:if test="${columnNumber==3}">
-                                                                <c:set var="colorColumn" value="#edfaff"/>
+                                                         <c:set var="classColumn" value="plainColumn"/>
+                                                           <c:if test="${columnSorted=='LastHarvestEndTime'}">
+                                                                <c:set var="classColumn" value="sortColumn"/>
                                                            </c:if>
-                                                        <td bgcolor="${colorColumn}">
+                                                        <td class="${classColumn}">
                                                                Never                                                         
                                                         </td>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <c:set var="colorColumn" value="#ffffff"/>
-                                                        <c:if test="${columnNumber==3}">
-                                                             <c:set var="colorColumn" value="#edfaff"/>
+                                                        <c:set var="classColumn" value="plainColumn"/>
+                                                        <c:if test="${columnSorted=='LastHarvestEndTime'}">
+                                                             <c:set var="classColumn" value="sortColumn"/>
                                                         </c:if>
-                                                        <td bgcolor="${colorColumn}">
+                                                        <td class="${classColumn}">
                                                              ${n.lastHarvestEndTime}
                                                         </td>
                                                     </c:otherwise>
@@ -200,20 +198,20 @@
                                         </c:when>
                                         <c:otherwise>
                                             <tr bgcolor="#ffe7e3">
-                                                <c:set var="colorColumn" value="#ffffff"/>
-                                                <c:if test="${columnNumber==1}">
-                                                     <c:set var="colorColumn" value="#edfaff"/>
+                                                <c:set var="classColumn" value="plainColumn"/>
+                                                <c:if test="${columnSorted=='RepositoryName'}">
+                                                     <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
-                                                <td class="sortcolumn" bgcolor="${colorColumn}">
+                                                <td class ="${classColumn}">
 
                                                         <a style="color:black;text-decoration:none;" href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${n.id}" />"><U><c:out value="${n.name}" /></U></a>
 
                                                 </td>
-                                                <c:set var="colorColumn" value="#ffffff"/>
-                                                <c:if test="${columnNumber==2}">
-                                                     <c:set var="colorColumn" value="#edfaff"/>
+                                                <c:set var="classColumn" value="plainColumn"/>
+                                                <c:if test="${columnSorted=='RepositoryURL'}">
+                                                     <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
-                                                <td bgcolor="${colorColumn}">
+                                                <td class="${classColumn}">
                                                      <c:out value="${n.oaiProviderUrl}" />
                                                 </td>
                                                 <td>
@@ -224,20 +222,20 @@
                                                 </td>
                                                 <c:choose>
                                                     <c:when test="${n.lastHarvestEndTime==null}">
-                                                         <c:set var="colorColumn" value="#ffffff"/>
-                                                           <c:if test="${columnNumber==3}">
-                                                                <c:set var="colorColumn" value="#edfaff"/>
+                                                         <c:set var="classColumn" value="plainColumn"/>
+                                                           <c:if test="${columnSorted=='LastHarvestEndTime'}">
+                                                                <c:set var="classColumn" value="sortColumn"/>
                                                            </c:if>
-                                                        <td bgcolor="${colorColumn}">
+                                                        <td class="${classColumn}">
                                                                Never
                                                         </td>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <c:set var="colorColumn" value="#ffffff"/>
-                                                        <c:if test="${columnNumber==3}">
-                                                             <c:set var="colorColumn" value="#edfaff"/>
+                                                        <c:set var="classColumn" value="plainColumn"/>
+                                                        <c:if test="${columnSorted=='LastHarvestEndTime'}">
+                                                             <c:set var="classColumn" value="sortColumn"/>
                                                         </c:if>
-                                                        <td bgcolor="${colorColumn}">
+                                                        <td class="${classColumn}">
                                                              ${n.lastHarvestEndTime}
                                                         </td>
                                                     </c:otherwise>

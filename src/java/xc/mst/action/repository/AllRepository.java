@@ -28,7 +28,7 @@ import xc.mst.manager.repository.ProviderService;
  */
 public class AllRepository extends ActionSupport
 {
-    private String columnNumber;
+   
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
     /**
 	 * Eclipse generated id
@@ -39,7 +39,7 @@ public class AllRepository extends ActionSupport
     private boolean isAscendingOrder = true;
 
     /** determines the name of the column on which the sorting is to be done */
-    private String columnSorted="name";
+    private String columnSorted="RepositoryName";
 
     /**
      * The list of Repositories that is returned
@@ -55,16 +55,38 @@ public class AllRepository extends ActionSupport
     {
         try
         {
-           ProviderService providerService = new DefaultProviderService();
-           System.out.println("Inside execute, columnSorted is "+columnSorted);
-           Repositories = providerService.getAllProvidersSorted(isAscendingOrder,columnSorted);
-           setIsAscendingOrder(isAscendingOrder);
-           setColumnNumber(columnNumber);
-           return SUCCESS;
+            String DBColumnName = "";
+            ProviderService providerService = new DefaultProviderService();
+            if(columnSorted.equalsIgnoreCase("RepositoryName")||(columnSorted.equalsIgnoreCase("RepositoryURL"))||(columnSorted.equalsIgnoreCase("LastHarvestEndTime")))
+            {
+                if(columnSorted.equalsIgnoreCase("RepositoryName"))
+                {
+                    DBColumnName = "name";
+                }
+                else if(columnSorted.equalsIgnoreCase("RepositoryURL"))
+                {
+                    DBColumnName = "oai_provider_url";
+                }
+                else
+                {
+                    DBColumnName = "last_harvest_end_time";
+                }
+                Repositories = providerService.getAllProvidersSorted(isAscendingOrder,DBColumnName);
+                setIsAscendingOrder(isAscendingOrder);
+                setColumnSorted(columnSorted);
+                return SUCCESS;
+            }
+            else
+            {
+                this.addFieldError("allRepositoryError", "ERROR : The specified column does not exist");
+                return INPUT;
+            }
+           
         }
         catch(Exception e)
         {
            log.debug(e);
+           e.printStackTrace();
            return INPUT;
         }
     }
@@ -115,24 +137,6 @@ public class AllRepository extends ActionSupport
     public String getColumnSorted()
     {
         return this.columnSorted;
-    }
-
-    /**
-     * sets the number of the column to be sorted (used for sorting purpose only)
-     * @param columnNumber column number
-     */
-    public void setColumnNumber(String columnNumber)
-    {
-        this.columnNumber = columnNumber;
-    }
-
-    /**
-     * returns the number of the column to be sorted
-     * @return column number
-     */
-    public String getColumnNumber()
-    {
-        return this.columnNumber;
     }
 
 }

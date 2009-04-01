@@ -15,55 +15,9 @@ YAHOO.xc.mst.repository = {
         removeErrorMessage : function()
         {
             window.location = "allRepository.action";
-        },
-
-       
-        funcHandler : function()
-        {
-            try
-            {
-                var isAscendingOrder = document.getElementById("isAscendingOrder").value;
-                var columnNumber = document.getElementById("columnNumber").value;
-                var id = "";
-                var i=0;
-                for(i=1;i<3;i++)
-                    {
-                        if(i==columnNumber)
-                            {
-                                id = "Column" + i;
-                                document.getElementById(id).style.background = "#edfaff";
-                                if(isAscendingOrder==true)
-                                    {
-                                        id = "triangle_sort" + i;
-                                        document.getElementById(id).style.display = "block";
-                                        id = "triangle_sort_down" + i;
-                                        document.getElementById(id).style.display = "none";
-                                    }
-                                else
-                                    {
-                                        id = "triangle_sort_down" + i;
-                                        document.getElementById(id).style.display = "block";
-                                        id = "triangle_sort" + i;
-                                        document.getElementById(id).style.display = "none";
-                                    }
-
-                            }
-                        else
-                            {
-                                id = "Column" + i;
-                                document.getElementById(id).style.background = "#ffffff";
-                                id = "triangle_sort" + i;
-                                document.getElementById(id).style.display = "none";
-                                id = "triangle_sort_down" + i;
-                                document.getElementById(id).style.display = "none";
-                            }
-                    }
-            }
-            catch(err)
-            {
-                alert(err);
-            }
         }
+
+              
  }
 
  
