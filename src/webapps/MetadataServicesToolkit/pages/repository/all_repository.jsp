@@ -28,7 +28,9 @@
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
 		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
-
+            
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js" ></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/event/event-min.js" ></script>
         <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>    
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
@@ -37,11 +39,13 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/all_repositories.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
-      
+
+
         
     </head>
 
-    <body class="yui-skin-sam">
+    <body class="yui-skin-sam" onclick="javascript:YAHOO.xc.mst.repository.init(${columnNumber},${isAscendingOrder});">
+
         <%@ taglib prefix="s" uri="/struts-tags" %>
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">
@@ -66,7 +70,8 @@
 
 		<!-- body -->
 		<div id="bd">
-             
+            <input type="hidden" id="columnNumber" value="${columnNumber}">
+            <input type="hidden" id="isAscendingOrder" value="${isAscendingOrder}">
 
             <!-- Display of error message -->
                 <c:if test="${errorType != null}">
@@ -83,10 +88,64 @@
                     <table width="100%">
                         <thead>
                             <tr>
-                                <td><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=name">Name</a></td>
-                                <td><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=oai_provider_url">URL</a></td>
+                                <td>
+                                    <div id="Div1">
+                                        <ul style="list-style:none;" id="ul1">
+                                            <li style="float:left;"><div style="margin-top:-12px;"><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=name&columnNumber=1">Name</a></div></li>
+
+                                                    <c:if test="${columnNumber==1}">
+                                                        <c:choose>
+                                                            <c:when test="${isAscendingOrder==true}">
+                                                                 <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
+
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort_down.jpg"></div></li>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+
+                                           
+                                        </ul>
+                                    </div>
+
+                                </td>
+                                <td>
+                                     <div id="Div2">
+                                        <ul style="list-style:none;" id="ul2">
+                                            <li style="float:left;"><div style="margin-top:-12px;"><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=oai_provider_url&columnNumber=2">URL</a></div></li>
+                                                    <c:if test="${columnNumber==2}">
+                                                        <c:choose>
+                                                            <c:when test="${isAscendingOrder==true}">
+                                                                 <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
+
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort_down.jpg"></div></li>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                        </ul>
+                                    </div>
+                                </td>
                                 <td>Status</td>
-                                <td><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_harvest_end_time">Last Harvested</a></td>
+                                <td>
+                                     <div id="Div3">
+                                        <ul style="list-style:none;" id="ul3">
+                                            <li style="float:left;"><div style="margin-top:-12px;"><a href="allRepository.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_harvest_end_time&columnNumber=3">Last Harvested</a></div></li>
+                                                   <c:if test="${columnNumber==3}">
+                                                        <c:choose>
+                                                            <c:when test="${isAscendingOrder==true}">
+                                                                 <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort_down.jpg"></div></li>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                        </ul>
+                                    </div>
+                                </td>
                             </tr>
                         </thead>
                         <tbody>
@@ -94,8 +153,22 @@
                                   <c:choose>
                                         <c:when test="${(n.identify==true)&&(n.listSets==true)&&(n.service==true)&&(n.listFormats==true)}">
                                              <tr>
-                                                <td class="sortcolumn"><a style="color:black;text-decoration:none;" href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${n.id}" />"><U><c:out value="${n.name}" /></U></a></td>
-                                                <td><c:out value="${n.oaiProviderUrl}" /></td>
+                                                <c:set var="colorColumn" value="#ffffff"/>
+                                                <c:if test="${columnNumber==1}">
+                                                     <c:set var="colorColumn" value="#edfaff"/>
+                                                </c:if>
+                                                <td class="sortcolumn" bgcolor="${colorColumn}">
+                                                                                                      
+                                                        <a style="color:black;text-decoration:none;" href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${n.id}" />"><U><c:out value="${n.name}" /></U></a>
+                                                   
+                                                </td>
+                                                <c:set var="colorColumn" value="#ffffff"/>
+                                                <c:if test="${columnNumber==2}">
+                                                     <c:set var="colorColumn" value="#edfaff"/>
+                                                </c:if>
+                                                <td bgcolor="${colorColumn}">
+                                                     <c:out value="${n.oaiProviderUrl}" />                                                   
+                                                </td>
                                                 <td>
                                                     <ul style="list-style:none;">
                                                         <li style="float:left;margin-top:-10px;"><div><img src="page-resources/img/tick.jpg"></div></li>
@@ -104,10 +177,22 @@
                                                 </td>
                                                 <c:choose>
                                                     <c:when test="${n.lastHarvestEndTime==null}">
-                                                        <td>Never</td>
+                                                         <c:set var="colorColumn" value="#ffffff"/>
+                                                           <c:if test="${columnNumber==3}">
+                                                                <c:set var="colorColumn" value="#edfaff"/>
+                                                           </c:if>
+                                                        <td bgcolor="${colorColumn}">
+                                                               Never                                                         
+                                                        </td>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <td>${n.lastHarvestEndTime}</td>
+                                                        <c:set var="colorColumn" value="#ffffff"/>
+                                                        <c:if test="${columnNumber==3}">
+                                                             <c:set var="colorColumn" value="#edfaff"/>
+                                                        </c:if>
+                                                        <td bgcolor="${colorColumn}">
+                                                             ${n.lastHarvestEndTime}
+                                                        </td>
                                                     </c:otherwise>
                                                 </c:choose>
 
@@ -115,8 +200,22 @@
                                         </c:when>
                                         <c:otherwise>
                                             <tr bgcolor="#ffe7e3">
-                                                <td class="sortcolumn"><a style="color:black;text-decoration:none;" href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${n.id}" />"><U><c:out value="${n.name}" /></U></a></td>
-                                                <td><c:out value="${n.oaiProviderUrl}" /></td>
+                                                <c:set var="colorColumn" value="#ffffff"/>
+                                                <c:if test="${columnNumber==1}">
+                                                     <c:set var="colorColumn" value="#edfaff"/>
+                                                </c:if>
+                                                <td class="sortcolumn" bgcolor="${colorColumn}">
+
+                                                        <a style="color:black;text-decoration:none;" href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${n.id}" />"><U><c:out value="${n.name}" /></U></a>
+
+                                                </td>
+                                                <c:set var="colorColumn" value="#ffffff"/>
+                                                <c:if test="${columnNumber==2}">
+                                                     <c:set var="colorColumn" value="#edfaff"/>
+                                                </c:if>
+                                                <td bgcolor="${colorColumn}">
+                                                     <c:out value="${n.oaiProviderUrl}" />
+                                                </td>
                                                 <td>
                                                     <ul style="list-style:none;">
                                                         <li style="float:left;margin-top:-10px;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
@@ -125,10 +224,22 @@
                                                 </td>
                                                 <c:choose>
                                                     <c:when test="${n.lastHarvestEndTime==null}">
-                                                        <td>Never</td>
+                                                         <c:set var="colorColumn" value="#ffffff"/>
+                                                           <c:if test="${columnNumber==3}">
+                                                                <c:set var="colorColumn" value="#edfaff"/>
+                                                           </c:if>
+                                                        <td bgcolor="${colorColumn}">
+                                                               Never
+                                                        </td>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <td>${n.lastHarvestEndTime}</td>
+                                                        <c:set var="colorColumn" value="#ffffff"/>
+                                                        <c:if test="${columnNumber==3}">
+                                                             <c:set var="colorColumn" value="#edfaff"/>
+                                                        </c:if>
+                                                        <td bgcolor="${colorColumn}">
+                                                             ${n.lastHarvestEndTime}
+                                                        </td>
                                                     </c:otherwise>
                                                 </c:choose>
                                              </tr>

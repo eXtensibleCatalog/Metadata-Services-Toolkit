@@ -28,6 +28,7 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class AllSchedules extends ActionSupport
 {
+    private String columnNumber;
     /** determines the column by which the rows are to be sorted */
     private String columnSorted;
     
@@ -93,6 +94,8 @@ public class AllSchedules extends ActionSupport
 	    	try {
 	    		scheduleService.deleteSchedule(schedule);
 	    		schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, columnSorted);
+                setIsAscendingOrder(isAscendingOrder);
+                setColumnNumber(columnNumber);
 	    	} catch (DataException e) {
 	    		log.debug("Deleting the schedule failed" + e.getMessage());
 	    		schedules = scheduleService.getAllSchedules();
@@ -163,4 +166,22 @@ public class AllSchedules extends ActionSupport
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
+
+     /**
+     * sets the number of the column to be sorted (used for sorting purpose only)
+     * @param columnNumber column number
+     */
+    public void setColumnNumber(String columnNumber)
+    {
+        this.columnNumber = columnNumber;
+    }
+
+    /**
+     * returns the number of the column to be sorted
+     * @return column number
+     */
+    public String getColumnNumber()
+    {
+        return this.columnNumber;
+    }
 }

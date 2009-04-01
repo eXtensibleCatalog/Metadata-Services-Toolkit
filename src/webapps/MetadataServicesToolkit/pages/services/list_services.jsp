@@ -81,8 +81,44 @@
                         <table width="100%">
                             <thead>
                                 <tr>
-                                    <td class="sortcolumn"><a href="listServices.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=service_name">Service Name</a></td>
-                                    <td><a href="listServices.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=port">Associated Repository URL</a></td>
+                                    <td class="sortcolumn">
+                                        <div>
+                                            <ul style="list-style:none;">
+                                                <li style="float:left;"><div style="margin-top:-12px;"><a href="listServices.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=service_name&columnNumber=1">Service Name</a></div></li>
+                                                 <c:if test="${columnNumber==1}">
+                                                        <c:choose>
+                                                            <c:when test="${isAscendingOrder==true}">
+                                                                 <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
+
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort_down.jpg"></div></li>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                            </ul>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <ul style="list-style:none;">
+                                                <li style="float:left;"><div style="margin-top:-12px;"><a href="listServices.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=port&columnNumber=2">Associated Repository URL</a></div></li>
+                                                <c:if test="${columnNumber==2}">
+                                                        <c:choose>
+                                                            <c:when test="${isAscendingOrder==true}">
+                                                                 <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
+
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort_down.jpg"></div></li>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                            </ul>
+                                        </div>
+
+                                    </td>
                                     <td>Status</td>
                                     <td>View Log</td>
                                     <td>Delete</td>
@@ -91,10 +127,18 @@
                             <tbody>
                                 <c:forEach var="n" items="${services}" varStatus="a">
                                     <tr>
-                                        <td><c:out value="${n.name}"/></td>
+                                            <c:set var="colorColumn" value="#ffffff"/>
+                                            <c:if test="${columnNumber==1}">
+                                                <c:set var="colorColumn" value="#edfaff"/>
+                                            </c:if>
+                                        <td bgcolor="${colorColumn}"><c:out value="${n.name}"/></td>
                                         <c:set var="baseURL" value="${baseURL}"/>
                                         <c:set var = "url" value="${fn:replace(baseURL,'8080',n.port)}" />
-                                        <td><c:out value="${url}"/></td>
+                                            <c:set var="colorColumn" value="#ffffff"/>
+                                            <c:if test="${columnNumber==2}">
+                                                <c:set var="colorColumn" value="#edfaff"/>
+                                            </c:if>
+                                        <td bgcolor="${colorColumn}"><c:out value="${url}"/></td>
                                         <td>Status should be here</td>
                                         <td>
                                             <button onclick="javascript:YAHOO.xc.mst.services.downloadFile('service','${n.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;

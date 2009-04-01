@@ -77,9 +77,43 @@
 			<table width="100%">
 				<thead>
 					<tr>
-                        <td><a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=schedule_name">Schedule Name</a></td>
+
+                        <td>
+                            <div>
+                                <ul style="list-style:none;">
+                                    <li style="float:left;"><div style="margin-top:-12px;"><a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=schedule_name&columnNumber=1">Schedule Name</a></div></li>
+                                     <c:if test="${columnNumber==1}">
+                                        <c:choose>
+                                            <c:when test="${isAscendingOrder==true}">
+                                                 <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort_down.jpg"></div></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                     </c:if>
+                                </ul>
+                            </div>
+                        </td>
 						<td>Repository Name</td>
-                        <td><a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=recurrence">Recurrance</a></td>
+                        <td>
+                            <div>
+                                <ul style="list-style:none;">
+                                    <li style="float:left;"><div style="margin-top:-12px;"><a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=recurrence&columnNumber=2">Recurrance</a></div></li>
+                                     <c:if test="${columnNumber==2}">
+                                        <c:choose>
+                                            <c:when test="${isAscendingOrder==true}">
+                                                 <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort.jpg"></div></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li style="float:left;"><div style="margin-top:-6px;margin-left:5px;"><img src="page-resources/img/triangle_sort_down.jpg"></div></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                     </c:if>
+                                </ul>
+                            </div>
+
+                        </td>
                         <td>Status</td>
 						<td>Delete Schedule</td>
 					</tr>
@@ -87,9 +121,17 @@
 				<tbody>
 					<c:forEach var="schedule" items="${schedules}">
 					<tr>
-						<td class="sortColumn"><a href="viewEditSchedule.action?scheduleId=${schedule.id}">${schedule.scheduleName}</a></td>
+                            <c:set var="colorColumn" value="#ffffff"/>
+                            <c:if test="${columnNumber==1}">
+                                <c:set var="colorColumn" value="#edfaff"/>
+                            </c:if>
+						<td class="sortColumn" bgcolor="${colorColumn}"><a href="viewEditSchedule.action?scheduleId=${schedule.id}">${schedule.scheduleName}</a></td>
 						<td> ${schedule.provider.name}</td>
-						<td> 
+                            <c:set var="colorColumn" value="#ffffff"/>
+                            <c:if test="${columnNumber==2}">
+                                <c:set var="colorColumn" value="#edfaff"/>
+                            </c:if>
+						<td bgcolor="${colorColumn}">
 							<c:if test="${schedule.recurrence == 'Daily'}">
 								${schedule.recurrence} Time ${schedule.hour+ 1}:00
 							</c:if>

@@ -28,7 +28,7 @@ import xc.mst.manager.repository.ProviderService;
  */
 public class AllRepository extends ActionSupport
 {
-   
+    private String columnNumber;
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
     /**
 	 * Eclipse generated id
@@ -58,6 +58,8 @@ public class AllRepository extends ActionSupport
            ProviderService providerService = new DefaultProviderService();
            System.out.println("Inside execute, columnSorted is "+columnSorted);
            Repositories = providerService.getAllProvidersSorted(isAscendingOrder,columnSorted);
+           setIsAscendingOrder(isAscendingOrder);
+           setColumnNumber(columnNumber);
            return SUCCESS;
         }
         catch(Exception e)
@@ -113,6 +115,24 @@ public class AllRepository extends ActionSupport
     public String getColumnSorted()
     {
         return this.columnSorted;
+    }
+
+    /**
+     * sets the number of the column to be sorted (used for sorting purpose only)
+     * @param columnNumber column number
+     */
+    public void setColumnNumber(String columnNumber)
+    {
+        this.columnNumber = columnNumber;
+    }
+
+    /**
+     * returns the number of the column to be sorted
+     * @return column number
+     */
+    public String getColumnNumber()
+    {
+        return this.columnNumber;
     }
 
 }

@@ -29,6 +29,7 @@ import xc.mst.manager.processingDirective.ServicesService;
 
 public class ListServices extends ActionSupport
 {
+    private String columnNumber;
     /** Determines whether the rows are to be sorted in ascending or descending order*/
     private boolean isAscendingOrder = true;
 
@@ -54,7 +55,8 @@ public class ListServices extends ActionSupport
            ServicesService servService = new DefaultServicesService();
            ServicesList = servService.getAllServicesSorted(isAscendingOrder, columnSorted);
            setServices(ServicesList);
-
+           setIsAscendingOrder(isAscendingOrder);
+           setColumnNumber(columnNumber);
            return SUCCESS;
         }
         catch(Exception e)
@@ -130,5 +132,22 @@ public class ListServices extends ActionSupport
     public String getColumnSorted()
     {
         return this.columnSorted;
+    }
+     /**
+     * sets the number of the column to be sorted (used for sorting purpose only)
+     * @param columnNumber column number
+     */
+    public void setColumnNumber(String columnNumber)
+    {
+        this.columnNumber = columnNumber;
+    }
+
+    /**
+     * returns the number of the column to be sorted
+     * @return column number
+     */
+    public String getColumnNumber()
+    {
+        return this.columnNumber;
     }
 }
