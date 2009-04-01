@@ -165,10 +165,15 @@
 			</tr>
 			<tr>
 				<td > 
-					<b>Sets</b> 
+					<b>Sets </b> 
 					<br>
 					<select name="selectedSetIds" multiple style="width:300px;" size="10"> 
-						<option value="0">All Sets</option>
+						<option value="0" 
+							<c:if test="${schedule.sets == '[]' || schedule.sets == '[null]'}">
+								 selected
+							</c:if>
+						>All Sets</option>
+						
 						<c:forEach var="set" items="${repository.sets}">
 							<option value="${set.id}"
 							<c:forEach items="${schedule.sets}" var="scheduleSet">
@@ -185,7 +190,7 @@
 			</tr>
 
 			<tr>
-				<td colspan="2" align="left">
+				<td colspan="2" align="right">
 					<button class="xc_button" name="cancel" onclick="javascript:YAHOO.xc.mst.schedule.add.cancel();">Cancel</button>
 					<button class="xc_button" type="button" name="previous" onclick="javascript:YAHOO.xc.mst.schedule.add.gotoPreviousStep();">Back to Step 1</button> 
 					<button class="xc_button" type="button" name="next" onclick="javascript:YAHOO.xc.mst.schedule.add.saveAndExit();">Finish</button>

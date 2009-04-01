@@ -43,12 +43,25 @@
 
 		<!-- page header - this uses the yahoo page styling -->
 		<div id="hd">
-   
             <!--  this is the header of the page -->
             <c:import url="/inc/header.jsp"/>
-            
+              <div id="mainMenu" class="yuimenubar yuimenubarnav">
+                <div class="bd">
+                    <ul class="first-of-type">
+                        <span class="wrenchImg">&nbsp;</span>
+                    </ul>
+                </div>
+             </div>
+
             <!--  this is the header of the page -->
-            <c:import url="/inc/menu.jsp"/>  
+            <c:import url="/inc/menu.jsp"/>
+            <div style="height:10px;">
+
+            </div>
+            <jsp:include page="/inc/breadcrumb.jsp">
+                   <jsp:param name="bread" value="Forgot Password" />
+            </jsp:include>
+
  		</div>
 		<!--  end header -->
 		
@@ -56,7 +69,6 @@
 		<div id="bd">
    			
 			<div class="clear"></div>
-   			<h2> Email New password </h2>
 
              <!-- Display of error message -->
                 <c:if test="${errorType != null}">

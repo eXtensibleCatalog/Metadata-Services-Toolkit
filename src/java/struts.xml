@@ -92,7 +92,7 @@
 
         <action name="saveMyAccount" class="xc.mst.action.user.EditMyAccount" method="saveMyAccount">
         	<interceptor-ref name="default"/>
-			<result name="success" type="redirect">allRepository.action</result>
+			<result name="success">/pages/user/edit_my_account.jsp</result>
 			<result name="input">/pages/user/edit_my_account.jsp</result>
         </action>         
         

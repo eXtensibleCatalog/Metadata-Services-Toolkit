@@ -51,8 +51,11 @@ public class AddLocalUser extends ActionSupport
     /** The username of the user */
     private String userName;
 
-    /**The Full Name of the user which includes First Name and Last Name */
-    private String fullName;
+    /**The first Name of the user */
+    private String firstName;
+    
+    /**The Last Name of the user */
+    private String lastName;
 
     /**Comments that help the administrator recognise the new user */
     private String comments;
@@ -165,25 +168,7 @@ public class AddLocalUser extends ActionSupport
         return password;
     }
 
-    /**
-     * sets the Full Name of the user
-     * @param fullName user's full name
-     */
-    public void setFullName(String fullName)
-    {
-        this.fullName = fullName.trim();
-    }
-
-    /**
-     * returns the fullname of the user
-     * @return user's full name
-     */
-    public String getFullName()
-    {
-        return fullName;
-    }
-
-    /**
+     /**
      * sets the list of groups that the user has been assigned
      * @param selectedGroupList list of selected groups
      */
@@ -250,8 +235,8 @@ public class AddLocalUser extends ActionSupport
         {           
             User user = new User();
             user.setEmail(email);
-            user.setFirstName(fullName);
-            user.setGroups(null);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
             user.setPassword(password);
             user.setAccountCreated(new Date());
             user.setFailedLoginAttempts(0);
@@ -286,14 +271,14 @@ public class AddLocalUser extends ActionSupport
                     return INPUT;
                 }
             }
-            userService.insertUser(user);
+          
 
-            UserGroupUtilService UGUtilService = new DefaultUserGroupUtilService();
             for(int i=0;i<groupsSelected.length;i++)
             {
                 Group tempGroup = groupService.getGroupById(Integer.parseInt(groupsSelected[i]));
-                UGUtilService.insertUserGroup(user.getId(), tempGroup.getId());
+                user.addGroup(tempGroup);
             }
+            userService.insertUser(user);
             return SUCCESS;
         }
         catch(Exception e)
@@ -313,5 +298,21 @@ public class AddLocalUser extends ActionSupport
 
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName.trim();
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName.trim();
 	}
 }

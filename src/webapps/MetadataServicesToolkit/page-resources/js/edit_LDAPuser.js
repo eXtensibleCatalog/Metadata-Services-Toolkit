@@ -16,11 +16,11 @@ YAHOO.xc.mst.user = {
         {
            
             var email = document.getElementById("email").value;
-            var username = document.getElementById("userName").value;
-            var fullname = document.getElementById("fullName").value;
+            var firstname = document.getElementById("firstName").value;
+            var lastname = document.getElementById("lastName").value;
             var groupsSelected = document.getElementById("groupsSelected");
             
-            if((email=='')||(fullname=='')||(username==''))
+            if((email=='')||(firstname=='')||(lastname==''))
                 {
                     createErrorDiv("error","Kindly fill all the fields before submitting the form");
                 }

@@ -52,17 +52,17 @@ public class EditLocalUser extends ActionSupport
     /**List of all the groups in the system */
     private List<Group> groupList;
 
-    /**The username of the user */
-    private String userName;
-
-    /**The email ID of the user */
+     /**The email ID of the user */
     private String email;
 
     /** The password of the user */
     private String password;
 
-    /**The Full Name of the user which includes First Name and Last Name */
-    private String fullName;
+    /**The first Name of the user  */
+    private String firstName;
+
+    /**The last Name of the user  */
+    private String lastName;
 
     /**The groups that have been assigned to the new user */
     private String[] groupsSelected;
@@ -74,25 +74,6 @@ public class EditLocalUser extends ActionSupport
 	/** Error type */
 	private String errorType; 
 	
-
-    /**
-     * sets the user name for the local user
-     * @param userName user Name
-     */
-    public void setUserName(String userName)
-    {
-        this.userName = userName.trim();
-    }
-
-    /**
-     * returns the local name for the user
-     * @return user name
-     */
-    public String getUserName()
-    {
-        return this.userName;
-    }
-
      /**
      * sets the email ID of the user
      * @param email email ID
@@ -127,24 +108,6 @@ public class EditLocalUser extends ActionSupport
     public String getPassword()
     {
         return password;
-    }
-
-    /**
-     * sets the Full Name of the user
-     * @param fullName user's full name
-     */
-    public void setFullName(String fullName)
-    {
-        this.fullName = fullName.trim();
-    }
-
-    /**
-     * returns the fullname of the user
-     * @return user's full name
-     */
-    public String getFullName()
-    {
-        return fullName;
     }
 
     /**
@@ -253,42 +216,25 @@ public class EditLocalUser extends ActionSupport
            
             setGroupList(groupService.getAllGroups());
             User user = userService.getUserById(Integer.parseInt(userId));
-            user.setUsername(userName);
             user.setServer(serverService.getServerByName("Local"));
             user.setEmail(email);
             user.setFailedLoginAttempts(0);
-            user.setFirstName(fullName);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
 
-            if (!user.getPassword().equals(password)) {
+            if (password != null && password.length() > 0) {
             	user.setPassword(userService.encryptPassword(password));
-            } else {
-            	user.setPassword(password);
             }
 
-            List<Group> tempGrpList = new ArrayList();
+            user.removeAllGroups();
             for(int i=0;i<groupsSelected.length;i++)
             {
                 Group group = groupService.getGroupById(Integer.parseInt(groupsSelected[i]));
-                tempGrpList.add(group);
+                user.addGroup(group);
             }
-            user.setGroups(tempGrpList);
 
-            User similarUserName = userService.getUserByUserName(user.getUsername(), serverService.getServerByName("Local"));
+
             User similarEmail = userService.getUserByEmail(email, serverService.getServerByName("Local"));
-            if(similarUserName!=null)
-            {
-                if(similarUserName.getId()!=Integer.parseInt(userId))
-                {
-                    if(similarUserName.getServer().getName().equalsIgnoreCase("Local"))
-                    {
-                        this.addFieldError("editLocalUserError","Error : Username already exists");
-                        errorType = "error";
-                        setGroupList(groupService.getAllGroups());
-                        setTemporaryUser(user);
-                        return INPUT;
-                    }
-                }
-            }
             if(similarEmail!=null)
             {
                 if(similarEmail.getId()!=Integer.parseInt(userId))
@@ -306,15 +252,7 @@ public class EditLocalUser extends ActionSupport
 
             userService.updateUser(user);
 
-            UserGroupUtilService UGUtilService = new DefaultUserGroupUtilService();
-            UGUtilService.deleteGroupsForUserId(Integer.parseInt(userId));
-
-            for(int i=0;i<groupsSelected.length;i++)
-             {
-
-                 Group tempGroup = groupService.getGroupById(Integer.parseInt(groupsSelected[i]));
-                 UGUtilService.insertUserGroup(user.getId(), tempGroup.getId());
-             }
+           
             return SUCCESS;
         }
         catch(Exception e)
@@ -333,6 +271,22 @@ public class EditLocalUser extends ActionSupport
 
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName.trim();
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName.trim();
 	}
 
 }

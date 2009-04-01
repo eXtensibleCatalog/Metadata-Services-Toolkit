@@ -16,10 +16,15 @@ YAHOO.xc.mst.registeration = {
 	register : function()
 	{
 
-		if (document.getElementById('user_full_name').value=='') {
-			createErrorDiv("error",'User Full Name is required.');
+		if (document.getElementById('user_first_name').value=='') {
+			createErrorDiv("error",'User first Name is required.');
 			return false;
 		}
+
+		if (document.getElementById('user_last_name').value=='') {
+			createErrorDiv("error",'User last Name is required.');
+			return false;
+		}		
 		if (document.getElementById('login_server').value== '0') {
 		    createErrorDiv("error",'Please select login sever type.');
 			return false;
@@ -43,7 +48,7 @@ YAHOO.xc.mst.registeration = {
 			}
 			
 			if (document.getElementById('user_password').value.length < 6 || document.getElementById('user_password').value.length > 20) {
-			    createErrorDiv("error",'Password should be 6 to 10 characters long');
+			    createErrorDiv("error",'Password should be 6 to 20 characters long');
 				return false;
 			}
 					

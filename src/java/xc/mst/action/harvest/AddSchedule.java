@@ -330,7 +330,8 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 
     	if (selectedSetIds != null) {
     		if (selectedSetIds.length == 1 && selectedSetIds[0] ==0) {
-    			schedule.setSets(schedule.getProvider().getSets());
+    			// Remove all set and keep it empty. Removing because if any single set was added previously
+    			schedule.setSets(new ArrayList<Set>());
     		} else {
 		    	for (int setId:selectedSetIds) {
 		    		Set set = setService.getSetById(setId);
@@ -392,7 +393,8 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 
     	if (selectedSetIds != null) {
     		if (selectedSetIds.length == 1 && selectedSetIds[0] ==0) {
-	    		schedule.setSets(schedule.getProvider().getSets());
+    			// Remove all set and keep it empty. Removing because if any single set was added previously
+    			schedule.setSets(new ArrayList<Set>());
     		} else {
 		    	for (int setId:selectedSetIds) {
 		    		Set set = setService.getSetById(setId);

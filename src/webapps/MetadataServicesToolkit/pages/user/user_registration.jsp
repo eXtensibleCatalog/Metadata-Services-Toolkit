@@ -86,11 +86,17 @@
    			
 			<table class="basicTable" align="left">
 			<tr>
-				<td class="label" align="right"> Full Name </td>
+				<td class="label" align="right"> First Name </td>
 				<td>
-					<input type="text" id="user_full_name" name="newUser.fullName" value="${newUser.fullName}" maxlength="225"/>
+					<input type="text" id="user_first_name" name="newUser.firstName" value="${newUser.firstName}" maxlength="225"/>
 				</td>
 			</tr>
+			<tr>
+				<td class="label" align="right"> Last Name </td>
+				<td>
+					<input type="text" id="user_last_name" name="newUser.lastName" value="${newUser.lastName}" maxlength="225"/>
+				</td>
+			</tr>			
 			
 			<tr>
 				<td class="label" align="right"> Select Login Type</td>

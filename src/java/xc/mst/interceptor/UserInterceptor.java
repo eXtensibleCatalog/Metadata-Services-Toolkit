@@ -13,6 +13,8 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.StrutsStatics;
 
 import xc.mst.action.UserAware;
+import xc.mst.action.user.ChangePassword;
+import xc.mst.action.user.EditMyAccount;
 import xc.mst.bo.user.User;
 
 import com.opensymphony.xwork2.ActionInvocation;
@@ -52,7 +54,9 @@ public class UserInterceptor extends AbstractInterceptor implements StrutsStatic
 
 		// Check if user has any permissions assigned. If not show error message.
 		if (user != null && (user.getGroups() == null || user.getGroups().size() == 0)) {
-			return "no-permission";
+			if (!(action instanceof EditMyAccount) && !(action instanceof ChangePassword)) {
+				return "no-permission";
+			}
 		}
 
 		if (action instanceof UserAware) {

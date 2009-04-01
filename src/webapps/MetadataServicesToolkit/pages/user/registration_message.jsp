@@ -22,7 +22,8 @@
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/yui/assets/skins/sam/skin.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/base-mst.css" rel="stylesheet" type="text/css" >
-        <LINK href="page-resources/yui/menu/assets/skins/sam/menu.css"  rel="stylesheet" type="text/css" >       
+        <LINK href="page-resources/yui/menu/assets/skins/sam/menu.css"  rel="stylesheet" type="text/css" >  
+        <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
 		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
@@ -42,25 +43,45 @@
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">  
 
-		<!-- page header - this uses the yahoo page styling -->
-		<div id="hd">
-   
+	<!-- page header - this uses the yahoo page styling -->
+	<div id="hd">
             <!--  this is the header of the page -->
             <c:import url="/inc/header.jsp"/>
-            
- 		</div>
-		<!--  end header -->
-		
-		<!-- body -->
-		<div id="bd">
+              <div id="mainMenu" class="yuimenubar yuimenubarnav">
+                <div class="bd">
+                    <ul class="first-of-type">
+                        <span class="wrenchImg">&nbsp;</span>
+                    </ul>
+                </div>
+             </div>
 
-   			<h3> Congratulations! You have successfully registered with the system. An email is sent to you for verification. <br>
-   			Also an email is sent to the System admin to assign appropriate permissions for you to access the system.</h3>
-   			
-   			<a href="home.action">Home</a>
-   			
- 		</div>
-		<!--  end body -->		
+            <!--  this is the header of the page -->
+            <c:import url="/inc/menu.jsp"/>
+            <div style="height:10px;">
+
+            </div>
+            <jsp:include page="/inc/breadcrumb.jsp">
+
+                    <jsp:param name="bread" value="Registeration Success" />
+
+            </jsp:include>
+
+            
+	</div>
+	<!--  end header -->
+
+	<!-- body -->
+	<div id="bd">
+
+		<div class="clear">&nbsp;</div>
+		Congratulations! You have successfully registered with the system. An email is sent to you for verification. <br>
+		Also an email is sent to the System admin to assign appropriate permissions for you to access the system.
+
+		<div class="clear">&nbsp;</div>
+		<a href="home.action">Go to Home Page</a>
+
+	</div>
+	<!--  end body -->		
             
         </div>
         <!-- end doc -->

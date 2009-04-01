@@ -15,18 +15,24 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
+
 import org.apache.log4j.Logger;
+
 import sun.misc.BASE64Encoder;
+import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.user.DefaultUserDAO;
+import xc.mst.dao.user.DefaultUserGroupUtilDAO;
 import xc.mst.dao.user.UserDAO;
+import xc.mst.dao.user.UserGroupUtilDAO;
 import xc.mst.email.Emailer;
 
 /**
@@ -42,6 +48,10 @@ public class DefaultUserService implements UserService{
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 	private UserDAO userDAO = new DefaultUserDAO();
+	
+	private UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
+	
+	private GroupService groupService = new DefaultGroupService();
 
 	/**
 	 * Get User having the specified user id
@@ -349,5 +359,41 @@ public class DefaultUserService implements UserService{
     public List<User> getAllUsersSorted(boolean sort,String columnSorted)
     {
         return userDAO.getSorted(sort, columnSorted);
+    }
+
+    /**
+     * Returns a list of user that are associated with a group
+     * 
+     * @param group group to get the users
+     * @return list of user 
+     */
+    public List<User> getUsersForGroup(Group group)
+    {
+        return userGroupUtilDAO.getUsersForGroup(group.getId());
+    }
+
+    /**
+     * Sends email to all admins to give permission for a new user
+     *
+     * @param userName User name of new user
+     * @param comments Comments to get access to the system
+     */
+    public void sendEmailForUserPermission(String userName, String comments) {
+
+    	Emailer emailer = new Emailer();
+
+ 		// Email the admin to assign permissions for new user
+		StringBuffer adminMessageBody = new StringBuffer();
+		adminMessageBody.append("New account created in Metadata Services Toolkit with user name : " +userName);
+		adminMessageBody.append("\nComments from the user : " + comments);
+		adminMessageBody.append("\nPlease login into the system and assign appropriate permissions for the user.");
+		String adminSubject = "Assign permission to new User";
+		
+		List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR));
+		
+		for(User admin:admins) {
+			emailer.sendEmail(admin.getEmail(), adminSubject, adminMessageBody.toString());
+		}
+ 
     }
 }

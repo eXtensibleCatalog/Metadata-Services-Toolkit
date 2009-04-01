@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.MySqlConnectionManager;
 
@@ -87,8 +88,8 @@ public abstract class UserGroupUtilDAO
      * returns a list of all the users associated with a group
      *
      * @param groupId group ID
-     * @return Lis of users
+     * @return List of users
      */
-    public abstract List getUsersForGroup(int groupId);
+    public abstract List<User> getUsersForGroup(int groupId);
 } // end class UserGroupUtil
 

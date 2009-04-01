@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
@@ -114,14 +115,7 @@ public class UserRegistration extends ActionSupport {
 					userService.insertUser(newUser);
 
 					// Email the admin to assign permissions for new user
-					StringBuffer adminMessageBody = new StringBuffer();
-					adminMessageBody.append("New account created in Metadata Services Toolkit with user name : " + newUser.getUsername().trim());
-					adminMessageBody.append("\nComments from the user : " + comments);
-					adminMessageBody.append("\nPlease login into the system and assign appropriate permissions for the user.");
-					String adminSubject = "Assign permission to new User";
-
-					// TODO Change to get all admin of system and email to their ids
-					emailer.sendEmail(userService.getUserByUserName("admin", serverService.getServerByName("Local")).getEmail(), adminSubject, adminMessageBody.toString());
+					userService.sendEmailForUserPermission(newUser.getUsername().trim(), comments);
 				} else {
 					servers =  serverService.getAll();
 					addFieldError("userEmailExist", "This email address already exist in the system.- " + newUser.getEmail().trim());

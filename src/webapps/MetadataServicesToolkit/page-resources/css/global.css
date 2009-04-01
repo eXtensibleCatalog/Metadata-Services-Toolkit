@@ -160,6 +160,16 @@ ul.basicNav {
     cursor:pointer;
 }
 
+.xc_button_disabled
+{
+    margin-right: 2px;
+    border: 1px solid #B9C0C2;
+    height: 28px;
+    font-size: .9em;
+    font-weight: bold;
+    font-family: Verdana;
+}
+
 .xc_button_small
 {
 	margin-right: 2px;

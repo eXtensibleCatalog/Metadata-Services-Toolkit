@@ -30,6 +30,13 @@ public interface GroupService {
      * @return Group if exists otherwise null
      */
     public Group getGroupById(int groupId);
+    
+    /**
+     * Return the group with the specided Group name
+     * @param groupName Specifies the name of the group object to be returned
+     * @return Group if exists otherwise null
+     */
+    public Group getGroupByName(String groupName);
 
     /**
      * Inserts a group

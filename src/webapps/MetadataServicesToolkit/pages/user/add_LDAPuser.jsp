@@ -85,10 +85,16 @@
                        </tr>
                        
                        
-                       <tr>
-                           <td valign="top"><B>Full Name</B>  &nbsp;&nbsp;</td>
-                           <td><input type="text" id="fullName" name ="fullName" style="width:200px;height:25px;" value="${temporaryUser.fullName}" maxlength="255"><br><br></td>
-                       </tr>
+ 		                <tr>
+		                  <td valign="top">First Name  &nbsp;&nbsp;</td>
+		                  <td><input type="text" id="firstName" name ="firstName" style="width:200px;height:25px;" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
+		                </tr>
+		
+		                <tr>
+		                  <td valign="top">Last Name  &nbsp;&nbsp;</td>
+		                  <td><input type="text" id="lastName" name ="lastName" style="width:200px;height:25px;" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
+		                </tr>
+                       
                        
                        <tr>
                            <td valign="top"><B>Email</B>  &nbsp;&nbsp;</td>

@@ -14,14 +14,15 @@ YAHOO.xc.mst.account = {
 	save : function()
 	{
 
-		if (document.getElementById('user_full_name').value=='') {
-			createErrorDiv("error",'User Full Name is required.');
+		if (document.getElementById('user_first_name').value=='') {
+			createErrorDiv("error",'User first Name is required.');
 			return false;
 		}
-		if (document.getElementById('user_name').value=='') {
-			createErrorDiv("error",'User name is required.');
+
+		if (document.getElementById('user_last_name').value=='') {
+			createErrorDiv("error",'User last Name is required.');
 			return false;
-		}
+		}	
 		if (document.getElementById('user_email').value=='') {
 			createErrorDiv("error",'Email is required.');
 			return false;

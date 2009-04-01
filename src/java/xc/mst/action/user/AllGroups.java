@@ -10,17 +10,20 @@
 
 package xc.mst.action.user;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import xc.mst.bo.user.Group;
 import xc.mst.constants.Constants;
 import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.DefaultUserGroupUtilService;
+import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.GroupService;
-import xc.mst.manager.user.UserGroupUtilService;
+import xc.mst.manager.user.UserService;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This action method diplays all groups
@@ -66,7 +69,7 @@ public class AllGroups extends ActionSupport
         try
         {
             GroupService groupService = new DefaultGroupService();
-            UserGroupUtilService UGUtilService = new DefaultUserGroupUtilService();
+            UserService userService = new DefaultUserService();
             List<Group> tempList = groupService.getAllGroups();
             List<Group> finalList = new ArrayList();
 
@@ -74,7 +77,7 @@ public class AllGroups extends ActionSupport
             while(iter.hasNext())
             {
                 Group group = (Group)iter.next();
-                group.setMemberCount(UGUtilService.getUsersForGroupId(group.getId()).size());
+                group.setMemberCount(userService.getUsersForGroup(group).size());
                 finalList.add(group);
             }
             setGroupList(finalList);

@@ -41,9 +41,6 @@ public class AllUsers extends ActionSupport
     /**stores the list of users */
     private List<User> userList;
 
-    /**stores the list of groups in the system */
-    private List<Group> groupList;
-
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
     
@@ -70,23 +67,6 @@ public class AllUsers extends ActionSupport
     }
 
     /**
-     * returns the list of all groups in the system
-     * @return list of groups
-     */
-    public List<Group> getGroupList()
-    {
-        return groupList;
-    }
-
-    /**
-     * sets the list of all groups in the system
-     * @param groupList group list
-     */
-    public void setGroupList(List<Group> groupList)
-    {
-        this.groupList = groupList;
-    }
-     /**
      * sets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
@@ -112,7 +92,6 @@ public class AllUsers extends ActionSupport
      */
     public void setColumnSorted(String columnSorted)
     {
-        System.out.println("Setting column sorted as "+columnSorted);
         this.columnSorted = columnSorted;
     }
 
@@ -133,18 +112,16 @@ public class AllUsers extends ActionSupport
     {
         try
         {
-            setGroupList(groupService.getAllGroups());
             setUserList(userService.getAllUsersSorted(isAscendingOrder, columnSorted));
-            return SUCCESS;
         }
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("allUsersError", "Error in displaying the users List");
             errorType = "error";
-            return SUCCESS;
         }
+        return SUCCESS;
+
     }
 
 	public String getErrorType() {

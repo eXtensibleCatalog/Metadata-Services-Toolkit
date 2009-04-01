@@ -48,14 +48,14 @@ public class EditLDAPUser extends ActionSupport
     /**ID of the LDAP User to be edited */
     private String userId;
 
-    /**The username of the user */
-    private String userName;
-
      /**The email ID of the user */
     private String email;
 
-    /**The Full Name of the user which includes First Name and Last Name */
-    private String fullName;
+    /**The first Name of the user  */
+    private String firstName;
+
+    /**The last Name of the user  */
+    private String lastName;
 
     /**The groups that have been assigned to the new user */
     private String[] groupsSelected;
@@ -112,44 +112,7 @@ public class EditLDAPUser extends ActionSupport
         return email;
     }
 
-
-
     /**
-     * sets the Full Name of the user
-     * @param fullName user's full name
-     */
-    public void setFullName(String fullName)
-    {
-        this.fullName = fullName.trim();
-    }
-
-    /**
-     * returns the fullname of the user
-     * @return user's full name
-     */
-    public String getFullName()
-    {
-        return fullName;
-    }
-
-    /**
-     * sets the user name of the user to the specified value
-     * @param userName username
-     */
-    public void setUserName(String userName)
-    {
-        this.userName = userName.trim();
-    }
-
-    /**
-     * returns the username of the user
-     * @return username
-     */
-    public String getUserName()
-    {
-        return userName;
-    }
-     /**
      * sets the list of groups that the user has been assigned
      * @param selectedGroupList list of selected groups
      */
@@ -255,12 +218,11 @@ public class EditLDAPUser extends ActionSupport
         {            
             User user = userService.getUserById(Integer.parseInt(userId));
             user.setEmail(email);
-            user.setFirstName(fullName);
-            user.setGroups(null);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
             user.setPassword(null);
             user.setAccountCreated(new Date());
             user.setFailedLoginAttempts(0);
-            user.setUsername(userName);
 
             List<Server> serverList = serverService.getAll();
             boolean serverExists = false;
@@ -285,31 +247,14 @@ public class EditLDAPUser extends ActionSupport
             user.setServer(tempServer);
             user.setLastLogin(new Date());
 
-            List<Group> tempGrpList = new ArrayList();
+            user.removeAllGroups();
             for(int i=0;i<groupsSelected.length;i++)
             {
                 Group group = groupService.getGroupById(Integer.parseInt(groupsSelected[i]));
-                tempGrpList.add(group);
+                user.addGroup(group);
             }
-            user.setGroups(tempGrpList);
 
-            User similarUserName = userService.getUserByUserName(user.getUsername(), tempServer);
             User similarEmail = userService.getUserByEmail(email, tempServer);
-            if(similarUserName!=null)
-            {
-                if(similarUserName.getId()!=Integer.parseInt(userId))
-                {
-                    if(!similarUserName.getServer().getName().equalsIgnoreCase("Local"))
-                    {
-                        this.addFieldError("editLDAPUserError","Error : Username already exists");
-                        errorType = "error";
-                        setGroupList(groupService.getAllGroups());
-                        setTemporaryUser(user);
-                        setSelectedGroups(groupsSelected);
-                        return INPUT;
-                    }
-                }
-            }
             if(similarEmail!=null)
             {
                 if(similarEmail.getId()!=Integer.parseInt(userId))
@@ -327,15 +272,7 @@ public class EditLDAPUser extends ActionSupport
             }
             userService.updateUser(user);
 
-            UserGroupUtilService UGUtilService = new DefaultUserGroupUtilService();
-            UGUtilService.deleteGroupsForUserId(Integer.parseInt(userId));
 
-            for(int i=0;i<groupsSelected.length;i++)
-            {
-
-                Group tempGroup = groupService.getGroupById(Integer.parseInt(groupsSelected[i]));
-                UGUtilService.insertUserGroup(user.getId(), tempGroup.getId());
-            }
             return SUCCESS;
         }
         catch(Exception e)
@@ -354,5 +291,21 @@ public class EditLDAPUser extends ActionSupport
 
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName.trim();
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName.trim();
 	}
 }

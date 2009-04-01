@@ -64,4 +64,13 @@ public class DefaultGroupService implements GroupService {
     {
         return groupDao.getAll();
     }
+
+    /**
+     * Return the group with the specided Group name
+     * @param groupName Specifies the name of the group object to be returned
+     * @return Group if exists otherwise null
+     */
+    public Group getGroupByName(String groupName) {
+    	return groupDao.getByName(groupName);
+    }
 }

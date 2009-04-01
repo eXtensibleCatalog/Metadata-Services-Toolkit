@@ -11,6 +11,7 @@ package xc.mst.manager.user;
 
 import java.util.List;
 
+import xc.mst.bo.user.User;
 import xc.mst.dao.user.DefaultUserGroupUtilDAO;
 import xc.mst.dao.user.UserGroupUtilDAO;
 
@@ -60,13 +61,4 @@ public class DefaultUserGroupUtilService implements UserGroupUtilService{
         userGroupUtilDao.delete(userId,groupId);
     }
 
-     /**
-      * returns a list of user IDs that are associated with a group
-      * @param groupId group ID
-      * @return list of user IDs
-      */
-     public List getUsersForGroupId(int groupId)
-     {
-         return userGroupUtilDao.getUsersForGroup(groupId);
-     }
 }

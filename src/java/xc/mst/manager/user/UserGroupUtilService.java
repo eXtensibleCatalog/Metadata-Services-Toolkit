@@ -49,11 +49,5 @@ public interface UserGroupUtilService {
      */
     public void deleteUserGroup(int userId,int groupId);
 
-    /**
-     * returns a list of all the users associated with a group
-     *
-     * @param groupId group ID
-     * @return Lis of users
-     */
-    public abstract List getUsersForGroupId(int groupId);
+
 }

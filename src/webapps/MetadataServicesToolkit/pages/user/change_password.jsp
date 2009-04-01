@@ -44,20 +44,40 @@
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">  
 
-		<!-- page header - this uses the yahoo page styling -->
-		<div id="hd">
-   
-            <!--  this is the header of the page -->
-            <c:import url="/inc/header.jsp"/>
+	<!-- page header - this uses the yahoo page styling -->
+	<div id="hd">
+	     <c:if test="${user.groups == '[]'}">
+		    <c:import url="/inc/header.jsp"/>
+		      <div id="mainMenu" class="yuimenubar yuimenubarnav">
+			<div class="bd">
+			    <ul class="first-of-type">
+				<span class="wrenchImg">&nbsp;</span>
+			    </ul>
+			</div>
+		     </div>
+
+		    <div style="height:10px;">
+	            </div>
+	     
+	     </c:if>
+	    
+	    <c:if test="${user.groups != '[]'}">
+	     
+		    <!--  this is the header of the page -->
+		    <c:import url="/inc/header.jsp"/>
+
+		    <!--  this is the header of the page -->
+		    <c:import url="/inc/menu.jsp"/>
+	    </c:if>
+            <jsp:include page="/inc/breadcrumb.jsp">
+                    <jsp:param name="bread" value="Change Password" />
+            </jsp:include>
             
-            <c:import url="/inc/menu.jsp"/>
-            
- 		</div>
-		<!--  end header -->
+	</div>
+	<!--  end header -->
 		
 		<!-- body -->
 		<div id="bd">
-   			<h2>Change Password</h2>
    			
    			 <!-- Display of error message -->
                 <c:if test="${errorType != null}">

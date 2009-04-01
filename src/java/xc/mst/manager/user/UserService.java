@@ -11,6 +11,7 @@ package xc.mst.manager.user;
 
 import java.util.List;
 
+import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.dao.DataException;
@@ -135,4 +136,20 @@ public interface UserService {
      * @return True if authentication is success else false
      */
     public boolean  authenticateLDAPUser(User user, String password, Server server) throws Exception;
+
+    /**
+     * Returns a list of user that are associated with a group
+     * 
+     * @param group group to get the users
+     * @return list of user 
+     */
+    public List<User> getUsersForGroup(Group group);
+
+    /**
+     * Sends email to all admins to give permission for a new user
+     *
+     * @param userName User name of new user
+     * @param comments Comments to get access to the system
+     */
+    public void sendEmailForUserPermission(String userName, String comments) ;
 }

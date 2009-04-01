@@ -15,7 +15,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import xc.mst.bo.user.User;
 import xc.mst.dao.MySqlConnectionManager;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  * MySQL implementation of the utility class for manipulating the groups assigned to a user
@@ -283,7 +286,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
      * @param groupId group ID
      * @return Lis of users
      */
-    public List getUsersForGroup(int groupId)
+    public List<User> getUsersForGroup(int groupId)
     {
         synchronized(psGetUsersForGroupLock)
 		{
@@ -294,7 +297,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 			ResultSet results = null;
 
 			// The list of users for the group with the passed ID
-			List<Integer> userIds = new ArrayList<Integer>();
+			List<User> users = new ArrayList<User>();
 
 			try
 			{
@@ -322,20 +325,21 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 				// Execute the query
 				results = psGetUsersForGroup.executeQuery();
 
+				UserService userService = new DefaultUserService();
 				// For each result returned, add the group ID object to the list with the returned data
 				while(results.next())
-					userIds.add(new Integer(results.getInt(1)));
+					users.add(userService.getUserById(results.getInt(1)));
 
 				if(log.isDebugEnabled())
-					log.debug("Found " + userIds.size() + " user IDs that the group with group ID " + groupId + " contains.");
+					log.debug("Found " + users.size() + " user IDs that the group with group ID " + groupId + " contains.");
 
-				return userIds;
+				return users;
 			} // end try (get and return the group IDs which the user belongs to)
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while getting the users for the group with group ID " + groupId, e);
 
-				return userIds;
+				return users;
 			} // end catch(SQLException)
 			finally
 			{

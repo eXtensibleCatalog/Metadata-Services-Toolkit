@@ -18,19 +18,20 @@ YAHOO.xc.mst.user = {
             var email = document.getElementById("email").value;
             var pass = document.getElementById("password").value;
             var confpass = document.getElementById("confpass").value;
-            var fullname = document.getElementById("fullName").value;
+            var firstname = document.getElementById("firstName").value;
+            var lastname = document.getElementById("lastName").value;
 
             var groupsSelected = document.getElementById("groupsSelected");
 
-			if (document.getElementById('password').value.length < 11) 
+			if (document.getElementById('password').value.length > 0) 
 			{
 				if (document.getElementById('password').value!=document.getElementById('confpass').value) {
 					createErrorDiv("error",'Password does not match confirmation password.');
 					return false;
 				}
 				
-				if (document.getElementById('password').value.length < 6 || document.getElementById('password').value.length > 10) {
-				    createErrorDiv("error",'Password should be 6 to 10 characters long');
+				if (document.getElementById('password').value.length < 6 || document.getElementById('password').value.length > 20) {
+				    createErrorDiv("error",'Password should be 6 to 20 characters long');
 					return false;
 				}
 						
@@ -50,7 +51,7 @@ YAHOO.xc.mst.user = {
 				}
 			}
 			
-            if((email=='')||(pass=='')||(confpass=='')||(fullname==''))
+            if((email=='')||(firstname=='')||(lastname==''))
                 {
                     createErrorDiv("error","Kindly fill all the fields before submitting the form");
                 }
@@ -76,12 +77,12 @@ YAHOO.xc.mst.user = {
                          }
                          else
                          {
-                             createErrorDiv("error",'passwords do not match');
+                             createErrorDiv("error",'Passwords do not match');
                          }
                      }
                   else
                       {
-                          createErrorDiv("error",'groups cannot be empty');
+                          createErrorDiv("error",'Group is required.');
                       }
              }
             

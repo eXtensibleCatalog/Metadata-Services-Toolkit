@@ -10,21 +10,20 @@
 
 package xc.mst.action.user;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.User;
 import xc.mst.manager.user.DefaultGroupPermissionUtilService;
 import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.DefaultUserGroupUtilService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.GroupPermissionUtilService;
 import xc.mst.manager.user.GroupService;
-
-import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This action method deletes a group of users
@@ -44,8 +43,6 @@ public class DeleteGroup extends ActionSupport
 
     /**List of all groups */
     private List<Group> groupList;
-
-    private UserGroupUtilService UGUtilService = new DefaultUserGroupUtilService();
 
 	/** Error type */
 	private String errorType; 
@@ -83,7 +80,7 @@ public class DeleteGroup extends ActionSupport
         while(iter.hasNext())
         {
             Group group = (Group)iter.next();
-            group.setMemberCount(UGUtilService.getUsersForGroupId(group.getId()).size());
+            group.setMemberCount(userService.getUsersForGroup(group).size());
             finalList.add(group);
         }
         return finalList;

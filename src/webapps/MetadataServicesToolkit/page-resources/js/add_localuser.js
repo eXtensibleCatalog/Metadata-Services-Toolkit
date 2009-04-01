@@ -18,7 +18,8 @@ YAHOO.xc.mst.user = {
             var email = document.getElementById("email").value;
             var pass = document.getElementById("password").value;
             var confpass = document.getElementById("confpass").value;
-            var fullname = document.getElementById("fullName").value;
+            var firstname = document.getElementById("firstName").value;
+            var lastname = document.getElementById("lastName").value;
 
             var groupsSelected = document.getElementById("groupsSelected");
 
@@ -49,7 +50,7 @@ YAHOO.xc.mst.user = {
 			}
 
             
-            if((email=='')||(pass=='')||(confpass=='')||(fullname==''))
+            if((email=='')||(pass=='')||(confpass=='')||(firstname=='')||(lastname==''))
                 {
                     createErrorDiv("error","Kindly fill all the fields before submitting the form");
                 }
@@ -75,12 +76,12 @@ YAHOO.xc.mst.user = {
                          }
                          else
                          {
-                             createErrorDiv("error",'passwords do not match');
+                             createErrorDiv("error",'Passwords do not match');
                          }
                      }
                   else
                       {
-                          createErrorDiv("error",'groups cannot be empty');
+                          createErrorDiv("error",'Groups cannot be empty');
                       }
              }
             

@@ -44,29 +44,54 @@
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">  
 
-		<!-- page header - this uses the yahoo page styling -->
-		<div id="hd">
-   
-            <!--  this is the header of the page -->
-            <c:import url="/inc/header.jsp"/>
-            
-            <c:import url="/inc/menu.jsp"/>
-            
- 		</div>
-		<!--  end header -->
+	<!-- page header - this uses the yahoo page styling -->
+	<div id="hd">
+	     <c:if test="${user.groups == '[]'}">
+		    <c:import url="/inc/header.jsp"/>
+		      <div id="mainMenu" class="yuimenubar yuimenubarnav">
+			<div class="bd">
+			    <ul class="first-of-type">
+				<span class="wrenchImg">&nbsp;</span>
+			    </ul>
+			</div>
+		     </div>
+
+		    <div style="height:10px;">
+	            </div>
+	     
+	     </c:if>
+	    
+	    <c:if test="${user.groups != '[]'}">
+	     
+		    <!--  this is the header of the page -->
+		    <c:import url="/inc/header.jsp"/>
+
+		    <!--  this is the header of the page -->
+		    <c:import url="/inc/menu.jsp"/>
+	    </c:if>
+	    <jsp:include page="/inc/breadcrumb.jsp">
+		    <jsp:param name="bread" value="Edit My Account" />
+	    </jsp:include>
+
+	</div>
+	<!--  end header -->
 		
 		<!-- body -->
 		<div id="bd">
-   			<h2> Edit My Account</h2>
+ 			
    			
-   			
-   			 <!-- Display of error message -->
+	 <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div class="${errorType}">
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
-                        <s:fielderror cssClass="errorMessage"/>
+                        <c:if test="${errorType == 'error'}">
+                        	<s:fielderror cssClass="errorMessage"/>
+                       	</c:if>
+                        <c:if test="${errorType == 'info'}">
+                        	<div class="jsErrorMessage"> ${message}</div>
+                        </c:if>
                     </div>
-                 </c:if>
+                 </c:if> 
                  <div id="error_div"></div>
                  <div class="clear">&nbsp;</div>
 
@@ -75,11 +100,17 @@
    			
 				<table class="basicTable">
 				<tr>
-					<td class="label"> Full Name </td>
+					<td class="label"> First Name </td>
 					<td>
-						<input type="text"  id="user_full_name" name="fullName" value="${fullName}" size="35"/>
+						<input type="text"  id="user_first_name" name="firstName" value="${firstName}" size="35"/>
 					</td>
 				</tr>
+				<tr>
+					<td class="label"> Last Name </td>
+					<td>
+						<input type="text"  id="user_last_name" name="lastName" value="${lastName}" size="35"/>
+					</td>
+				</tr>				
 				
 				<tr>
 					<td class="label"> Login Type</td>
@@ -88,7 +119,7 @@
 				<tr>
 					<td class="label"> User Name </td>
 					<td>
-						<input type="text" id="user_name" name="userName" value="${userName}" size="35"/>
+						${user.username}
 					</td>
 				</tr>
 				<tr>

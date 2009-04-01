@@ -70,6 +70,14 @@ public abstract class GroupDAO
 	 * @return The group with the passed ID, or null if there was no group with that ID.
 	 */
 	public abstract Group getById(int groupId);
+	
+	/**
+	 * Gets a group by name
+	 *
+	 * @param groupName The name of the group to get
+	 * @return The group or null if there was no group with that name.
+	 */
+	public abstract Group getByName(String groupName);
 
 	/**
 	 * Gets a group by it's ID.  Does not set the list of permissions on the returned group.

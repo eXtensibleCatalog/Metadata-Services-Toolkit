@@ -82,7 +82,8 @@
                                 <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=username">User Name</a></td>
                                 <td>Account type</td>
                                 <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_login">Last Login</a></td>
-                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=fullname">Full Name</a></td>
+                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=first_name">First Name</a></td>
+                                <td><a href="allUsers.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_name">Last Name</a></td>
                                 <td>Delete</td>
                             </tr>
                         </thead>
@@ -109,23 +110,16 @@
                                         </c:choose>
                                     </td>
                                     <td>${n.accountCreated}</td>
-                                    <td>${n.fullName}</td>
+                                    <td>${n.firstName}</td>
+                                    <td>${n.lastName}</td>
                                     <td>
-                                        <c:set var="adminFlag" value="${false}"/>
-                                         <c:forEach var="k" items="${n.groups}" varStatus="c">
-                                             <c:if test="${k.id==1}">
-                                                 <c:set var="adminFlag" value="${true}"/>
-                                             </c:if>
-                                         </c:forEach>
-                                         <c:choose>
-                                             <c:when test="${adminFlag==true}">
-                                                 <button disabled class="xc_button" type="button" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.deleteUser(${n.id});">Delete</button>
-                                             </c:when>
-                                             <c:otherwise>
+                                        <c:if test="${n.username == 'admin'}">
+                                        	<button class="xc_button_disabled" disabled="true" type="submit" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.deleteUser(${n.id});">Delete</button>
+                                        </c:if>
+                                        <c:if test="${n.username != 'admin'}">
                                                  <button class="xc_button" type="button" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.deleteUser(${n.id});">Delete</button>
-                                             </c:otherwise>
-                                         </c:choose>
-
+                                        </c:if>
+                                            
                                     </td>
                                  </tr>
                             </c:forEach>

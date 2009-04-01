@@ -322,4 +322,12 @@ public class User
 		if(groups.contains(group))
 			groups.remove(group);
 	} // end method removeGroup
+	
+	/**
+	 * Removes all groups
+	 */
+	public void removeAllGroups()
+	{
+		groups.clear();
+	} // end method removeAllGroups()
 } // end class User

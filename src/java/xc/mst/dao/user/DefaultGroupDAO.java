@@ -17,6 +17,7 @@ import java.util.List;
 
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
+import xc.mst.bo.user.User;
 import xc.mst.dao.DataException;
 import xc.mst.dao.MySqlConnectionManager;
 
@@ -43,6 +44,11 @@ public class DefaultGroupDAO extends GroupDAO
 	private static PreparedStatement psGetById = null;
 
 	/**
+	 * A PreparedStatement to get a group from the database by its name
+	 */
+	private static PreparedStatement psGetByName = null;
+
+	/**
 	 * A PreparedStatement to insert a group into the database
 	 */
 	private static PreparedStatement psInsert = null;
@@ -67,6 +73,11 @@ public class DefaultGroupDAO extends GroupDAO
 	 */
 	private static Object psGetByIdLock = new Object();
 
+	/**
+	 * Lock to synchronize access to the get by name PreparedStatement
+	 */
+	private static Object psGetByNameLock = new Object();
+	
 	/**
 	 * Lock to synchronize access to the insert PreparedStatement
 	 */
@@ -170,6 +181,86 @@ public class DefaultGroupDAO extends GroupDAO
 		return group;
 	} // end method getById(int)
 
+	@Override
+	public Group getByName(String groupName)
+	{
+		synchronized(psGetByNameLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Getting the group with name " + groupName);
+			
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+			
+			try
+			{
+				// If the PreparedStatement to get a group by name was not defined, create it
+				if(psGetByName == null)
+				{			
+					// SQL to get the row
+					String selectSql = "SELECT " + COL_GROUP_ID + ", " +
+					                    COL_NAME + ", " +
+					                    COL_DESCRIPTION + " " +
+								        "FROM " + GROUPS_TABLE_NAME + " " +
+								        "WHERE " + COL_NAME + "=?";
+									
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get group by name\" PreparedSatement from the SQL " + selectSql);
+				
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetByName = dbConnection.prepareStatement(selectSql);
+				} // end if(get by name PreparedStatement not defined)
+						
+				// Set the parameters on the select statement
+				psGetByName.setString(1, groupName);
+			
+				// Get the result of the SELECT statement			
+			
+				// Execute the query
+				results = psGetByName.executeQuery();
+				
+				// If any results were returned
+				if(results.next())
+				{
+					// The Object which will contain data on the group
+					Group group = new Group();
+
+					// Set the fields on the group
+					group.setId(results.getInt(1));
+					group.setName(results.getString(2));
+					group.setDescription(results.getString(3));
+
+					if(log.isDebugEnabled())
+						log.debug("Found the group with name " + groupName + " in the database.");
+
+					// set up its permissions
+					group.setPermissions(permissionDao.getPermissionsForGroup(group.getId()));
+
+					// Return the page
+					return group;
+				} // end if(the group was found)
+				else // There were no rows in the database, the group could not be found
+				{
+					if(log.isDebugEnabled())
+						log.debug("The group with name " + groupName + " was not found in the database.");
+
+					return null;
+				} // end else
+			} // end try
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the group with name " + groupName, e);
+				
+				return null;
+			} // end catch(SQLException)
+			finally
+			{
+				MySqlConnectionManager.closeResultSet(results);
+			} // end finally (close ResultSet)
+		} // end synchronized
+	} // end method getGroupByName(int)
+	
 	@Override
 	public Group loadBasicGroup(int groupId)
 	{

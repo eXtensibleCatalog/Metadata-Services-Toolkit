@@ -40,24 +40,27 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 	/** User service */
 	private UserService userService =  new DefaultUserService();
 
-	/** Full name of user */
-	private String fullName;
+	/** First name of user */
+	private String firstName;
 
-	/** User of user */
-	private String userName;
-
+	/** Last name of user */
+	private String lastName;
+	
 	/** Email of user */
 	private String email;
 
 	/** Error type */
 	private String errorType; 
 	
+	/** Information message to user */
+	private String message;
+	
 	/**
 	 * To view edit my account
 	 */
 	public String execute() throws DataException {
-		fullName =  user.getFirstName();
-		userName = user.getUsername();
+		firstName =  user.getFirstName();
+		lastName =  user.getLastName();
 		email = user.getEmail();
 
 		return SUCCESS;
@@ -72,27 +75,21 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 
 		log.debug(EditMyAccount.class + ":" + "saveMyAccount()" );
 
-		User otherUser = userService.getUserByUserName(userName, user.getServer());
-
 		try {
-			if (otherUser == null || otherUser.getId() == user.getId()) {
 				User userWithEmail = userService.getUserByEmail(email, user.getServer());
 				if (userWithEmail == null || userWithEmail.getId() == user.getId()) {
-					user.setUsername(userName);
-					user.setFirstName(fullName);
+					user.setFirstName(firstName);
+					user.setLastName(lastName);
 					user.setEmail(email);
 
 					userService.updateUser(user);
+					errorType = "info";
+					message = "Account information saved.";
 				} else {
 					addFieldError("emailExist", "Email already exist - " + email);
 					errorType = "error";
 					return INPUT;
 				}
-			} else {
-				addFieldError("userNameExist", "User name already exist - " + userName);
-				errorType = "error";
-				return INPUT;
-			}
 		} catch (Exception e) {
 			addFieldError("dataError", e.getMessage());
 			errorType = "error";
@@ -111,22 +108,6 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 		this.user = user;
 	}
 
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -141,6 +122,26 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName.trim();
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName.trim();
+	}
+
+	public String getMessage() {
+		return message;
 	}
 
 

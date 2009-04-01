@@ -23,10 +23,10 @@
         <LINK href="page-resources/yui/assets/skins/sam/skin.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/base-mst.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/yui/menu/assets/skins/sam/menu.css"  rel="stylesheet" type="text/css" >
-       
+        <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
-		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
+	<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
@@ -46,20 +46,33 @@
 
 		<!-- page header - this uses the yahoo page styling -->
 		<div id="hd">
-   
-            <!--  this is the header of the page -->
-            <c:import url="/inc/header.jsp"/>
+		    <!--  this is the header of the page -->
+		    <c:import url="/inc/header.jsp"/>
+		      <div id="mainMenu" class="yuimenubar yuimenubarnav">
+			<div class="bd">
+			    <ul class="first-of-type">
+				<span class="wrenchImg">&nbsp;</span>
+			    </ul>
+			</div>
+		     </div>
+
+		    
+
+
             
  		</div>
 		<!--  end header -->
 		
 		<!-- body -->
 		<div id="bd">
-
-   			<h3>You do not have access to the menu. <br>
-   			Please contact the System admin to get access to the menu.</h3>
-   			
-   			<a href="home.action">Home</a>
+                    <div class="error">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/error.jpg">
+                        <div id class="jsErrorMessage">No access to menu until System admin grants permission.
+   			</div>
+                    </div>		
+			
+   			<div class="clear">&nbsp;</div>
+   			<a href="home.action">Go To Home Page</a>
    			
  		</div>
 		<!--  end body -->		

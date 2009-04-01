@@ -38,6 +38,9 @@ public class Group
 	 * A list of permissions belonging to the group
 	 */
 	private List<Permission> permissions = new ArrayList<Permission>();
+	
+	/** Default group name Administrator */
+	public static final String ADMINISTRATOR = "Administrator";
 
     /**
      * Number of members in the group
