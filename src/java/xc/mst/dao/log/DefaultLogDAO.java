@@ -12,6 +12,7 @@ package xc.mst.dao.log;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,16 +31,6 @@ public class DefaultLogDAO extends LogDAO
 	 * A PreparedStatement to get all logs in the database
 	 */
 	private static PreparedStatement psGetAll = null;
-
-	/**
-	 * A PreparedStatement to get all logs in the database sorted by their full name in ascending order
-	 */
-	private static PreparedStatement psGetSortedAsc = null;
-	
-	/**
-	 * A PreparedStatement to get all logs in the database sorted by their full name in descending order
-	 */
-	private static PreparedStatement psGetSortedDesc = null;
 	
 	/**
 	 * A PreparedStatement to get a log from the database by its ID
@@ -65,16 +56,6 @@ public class DefaultLogDAO extends LogDAO
 	 * A Lock to synchronize access to the PreparedStatement to get all logs in the database
 	 */
 	private static Object psGetAllLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get sorted in ascending order PreparedStatement
-	 */
-	private static Object psGetSortedAscLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get sorted in descending order PreparedStatement
-	 */
-	private static Object psGetSortedDescLock = new Object();
 	
 	/**
 	 * A Lock to synchronize access to the PreparedStatement to get a log from the database by its ID
@@ -176,170 +157,92 @@ public class DefaultLogDAO extends LogDAO
 	@Override
 	public List<Log> getSorted(boolean asc,String columnSorted)
 	{
-		return(asc ? getSortedAsc(columnSorted) : getSortedDesc(columnSorted));
+		if(log.isDebugEnabled())
+			log.debug("Getting all logs sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnSorted);
+
+		// Validate the column we're trying to sort on
+		if(!sortableColumns.contains(columnSorted))
+		{
+			log.error("An attempt was made to sort on the invalid column " + columnSorted);
+			return getAll();
+		} // end if(sort column invalid)
+		
+		// The ResultSet from the SQL query
+		ResultSet results = null;
+
+		// The Statement for getting the rows
+		Statement getSorted = null;
+		
+		// The list of all Logs
+		List<Log> logs = new ArrayList<Log>();
+
+		try
+		{
+			
+			// SQL to get the rows
+			String selectSql = "SELECT " + COL_LOG_ID + ", " +
+										   COL_WARNINGS + ", " +
+		                                   COL_ERRORS + ", " +
+		                                   COL_LAST_LOG_RESET + ", " +
+		                                   COL_LOG_FILE_NAME + ", " +
+		                                   COL_LOG_FILE_LOCATION + " " +
+		                       "FROM " + LOGS_TABLE_NAME + " " +
+                               "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
+
+			if(log.isDebugEnabled())
+				log.debug("Creating the \"get all logs sorted\" Statement the SQL " + selectSql);
+
+			// A statement to run the select SQL
+			getSorted = dbConnection.createStatement();
+			
+			// Get the results of the SELECT statement			
+			
+			// Execute the query
+			results = getSorted.executeQuery(selectSql);
+
+			// For each result returned, add a Log object to the list with the returned data
+			while(results.next())
+			{
+				// The Object which will contain data on the log
+				Log logObj = new Log();
+
+				// Set the fields on the log
+				logObj.setId(results.getInt(1));
+				logObj.setWarnings(results.getInt(2));
+				logObj.setErrors(results.getInt(3));
+				logObj.setLastLogReset(results.getDate(4));
+				logObj.setLogFileName(results.getString(5));
+				logObj.setLogFileLocation(results.getString(6));
+
+				// Add the log to the list
+				logs.add(logObj);
+			} // end loop over results
+
+			if(log.isDebugEnabled())
+				log.debug("Found " + logs.size() + " logs in the database.");
+
+			return logs;
+		} // end try(get results)
+		catch(SQLException e)
+		{
+			log.error("A SQLException occurred while getting the logs.", e);
+            
+			return logs;
+		} // end catch(SQLException)
+		finally
+		{
+			MySqlConnectionManager.closeResultSet(results);
+			
+			try
+			{
+				getSorted.close();
+			} // end try(close the Statement)
+			catch(SQLException e)
+			{
+				log.error("An error occurred while trying to close the \"get processing directives sorted\" Statement");
+			} // end catch(DataException)
+		} // end finally(close ResultSet)
 	} // end method getSortedByUserName(boolean)
-
-	/**
-	 * Gets all log in the database sorted in ascending order by their file name
-	 * 
-	 * @return A list of all logs in the database sorted in ascending order by their file name
-	 */
-	private List<Log> getSortedAsc(String columnSorted)
-	{
-		synchronized(psGetSortedAscLock)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Getting all logs");
-
-			// The ResultSet from the SQL query
-			ResultSet results = null;
-
-			// The list of all Logs
-			ArrayList<Log> logs = new ArrayList<Log>();
-
-			try
-			{
-				
-					// SQL to get the rows
-					String selectSql = "SELECT " + COL_LOG_ID + ", " +
-												   COL_WARNINGS + ", " +
-				                                   COL_ERRORS + ", " +
-				                                   COL_LAST_LOG_RESET + ", " +
-				                                   COL_LOG_FILE_NAME + ", " +
-				                                   COL_LOG_FILE_LOCATION + " " +
-				                       "FROM " + LOGS_TABLE_NAME + " " +
-									   "ORDER BY " + columnSorted + " ASC";
-
-                    System.out.println("The SQL query is \n\n"+selectSql);
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"get all logs\" PreparedStatement the SQL " + selectSql);
-
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-					psGetSortedAsc = dbConnection.prepareStatement(selectSql);
-				
-
-				// Get the result of the SELECT statement
-
-				// Execute the query
-				results = psGetSortedAsc.executeQuery();
-
-				// For each result returned, add a Log object to the list with the returned data
-				while(results.next())
-				{
-					// The Object which will contain data on the log
-					Log logObj = new Log();
-
-					// Set the fields on the log
-					logObj.setId(results.getInt(1));
-					logObj.setWarnings(results.getInt(2));
-					logObj.setErrors(results.getInt(3));
-					logObj.setLastLogReset(results.getDate(4));
-					logObj.setLogFileName(results.getString(5));
-					logObj.setLogFileLocation(results.getString(6));
-
-					// Add the log to the list
-					logs.add(logObj);
-				} // end loop over results
-
-				if(log.isDebugEnabled())
-					log.debug("Found " + logs.size() + " logs in the database.");
-
-				return logs;
-			} // end try(get results)
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while getting the logs.", e);
-                e.printStackTrace();
-				return logs;
-			} // end catch(SQLException)
-			finally
-			{
-				MySqlConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // synchronized
-	} // end method getSortedAsc()
-	
-	/**
-	 * Gets all logs in the database sorted in descending order by their file name
-	 * 
-	 * @return A list of all logs in the database sorted in descending order by their file name
-	 */
-	private List<Log> getSortedDesc(String columnSorted)
-	{
-		synchronized(psGetSortedDescLock)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Getting all logs");
-
-			// The ResultSet from the SQL query
-			ResultSet results = null;
-
-			// The list of all Logs
-			ArrayList<Log> logs = new ArrayList<Log>();
-
-			try
-			{
-				
-					// SQL to get the rows
-					String selectSql = "SELECT " + COL_LOG_ID + ", " +
-												   COL_WARNINGS + ", " +
-				                                   COL_ERRORS + ", " +
-				                                   COL_LAST_LOG_RESET + ", " +
-				                                   COL_LOG_FILE_NAME + ", " +
-				                                   COL_LOG_FILE_LOCATION + " " +
-				                       "FROM " + LOGS_TABLE_NAME + " " +
-									   "ORDER BY " + columnSorted + " DESC";
-                    
-                    System.out.println("The SQL query is \n\n"+selectSql);
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"get all logs\" PreparedStatement the SQL " + selectSql);
-
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-					psGetSortedDesc = dbConnection.prepareStatement(selectSql);
-				
-
-				// Get the result of the SELECT statement
-
-				// Execute the query
-				results = psGetSortedDesc.executeQuery();
-
-				// For each result returned, add a Log object to the list with the returned data
-				while(results.next())
-				{
-					// The Object which will contain data on the log
-					Log logObj = new Log();
-
-					// Set the fields on the log
-					logObj.setId(results.getInt(1));
-					logObj.setWarnings(results.getInt(2));
-					logObj.setErrors(results.getInt(3));
-					logObj.setLastLogReset(results.getDate(4));
-					logObj.setLogFileName(results.getString(5));
-					logObj.setLogFileLocation(results.getString(6));
-
-					// Add the log to the list
-					logs.add(logObj);
-				} // end loop over results
-
-				if(log.isDebugEnabled())
-					log.debug("Found " + logs.size() + " logs in the database.");
-
-				return logs;
-			} // end try(get results)
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while getting the logs.", e);
-                e.printStackTrace();
-				return logs;
-			} // end catch(SQLException)
-			finally
-			{
-				MySqlConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // synchronized
-	} // end method getSortedDesc()
 	
 	@Override
 	public Log getById(int id)

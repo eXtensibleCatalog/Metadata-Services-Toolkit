@@ -183,7 +183,6 @@ public class AllSchedules extends ActionSupport
      */
     public void setColumnSorted(String columnSorted)
     {
-        System.out.println("Setting column sorted as "+columnSorted);
         this.columnSorted = columnSorted;
     }
 

@@ -12,6 +12,7 @@ package xc.mst.dao.provider;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,18 +81,6 @@ public class DefaultProviderDAO extends ProviderDAO
 	private static PreparedStatement psGetAll = null;
 
 	/**
-	 * A PreparedStatement to get all providers in the database sorted
-	 * by their name in ascending order
-	 */
-	private static PreparedStatement psGetSortedByNameAsc = null;
-
-	/**
-	 * A PreparedStatement to get all providers in the database sorted
-	 * by their name in descending order
-	 */
-	private static PreparedStatement psGetSortedByNameDesc = null;
-
-	/**
 	 * A PreparedStatement to get a provider from the database by its ID
 	 */
 	private static PreparedStatement psGetById = null;
@@ -125,16 +114,6 @@ public class DefaultProviderDAO extends ProviderDAO
 	 * Lock to synchronize access to the get all PreparedStatement
 	 */
 	private static Object psGetAllLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get sorted by name in ascending orderPreparedStatement
-	 */
-	private static Object psGetSortedByNameAscLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get sorted by name in descending order PreparedStatement
-	 */
-	private static Object psGetSortedByNameDescLock = new Object();
 
 	/**
 	 * Lock to synchronize access to the get by ID PreparedStatement
@@ -306,312 +285,158 @@ public class DefaultProviderDAO extends ProviderDAO
 	} // end method getAll()
 
 	@Override
-	public List<Provider> getSorted(boolean asc,String columnName)
+	public List<Provider> getSorted(boolean asc, String columnName)
 	{
-		return (asc ? getSortedByNameAsc(columnName) : getSortedByNameDesc(columnName));
-	} // end method getSortedByName(boolean)
+		if(log.isDebugEnabled())
+			log.debug("Getting all providers sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnName);
 
-	/**
-	 * Gets all providers in the database sorted in ascending order by their name
-	 *
-	 * @return A list of all providers sorted in ascending order by their name
-	 */
-	private List<Provider> getSortedByNameAsc(String columnName)
-	{
-        System.out.println("Inside DAO sort by asc order and the columnName is "+columnName);
-		synchronized(psGetSortedByNameAscLock)
+		// Validate the column we're trying to sort on
+		if(!sortableColumns.contains(columnName))
 		{
+			log.error("An attempt was made to sort on the invalid column " + columnName);
+			return getAll();
+		} // end if(sort column invalid)
+		
+		// The ResultSet from the SQL query
+		ResultSet results = null;
+
+		// The Statement for getting the rows
+		Statement getSorted = null;
+		
+		// The list of all providers
+		List<Provider> providers = new ArrayList<Provider>();
+
+		try
+		{
+			// If the PreparedStatement to get all providers was not defined, create it
+			
+			// SQL to get the rows
+			String selectSql = "SELECT " + COL_PROVIDER_ID + ", " +
+		                                   COL_CREATED_AT + ", " +
+		                                   COL_UPDATED_AT + ", " +
+		                                   COL_NAME + ", " +
+		                                   COL_OAI_PROVIDER_URL + ", " +
+		                                   COL_USER_ID + ", " +
+		                                   COL_TITLE + ", " +
+		                                   COL_CREATOR + ", " +
+		                                   COL_SUBJECT + ", " +
+		                                   COL_DESCRIPTION + ", " +
+		                                   COL_PUBLISHER + ", " +
+		                                   COL_CONTRIBUTORS + ", " +
+		                                   COL_DATE + ", " +
+		                                   COL_TYPE + ", " +
+		                                   COL_FORMAT + ", " +
+		                                   COL_IDENTIFIER + ", " +
+		                                   COL_LANGUAGE + ", " +
+		                                   COL_RELATION + ", " +
+		                                   COL_COVERAGE + ", " +
+		                                   COL_RIGHTS + ", " +
+		                                   COL_SERVICE + ", " +
+		                                   COL_NEXT_LIST_SETS_LIST_FORMATS + ", " +
+		                                   COL_PROTOCOL_VERSION + ", " +
+		                                   COL_LAST_VALIDATION_DATE + ", " +
+		                                   COL_IDENTIFY + ", " +
+		                                   COL_LISTFORMATS + ", " +
+		                                   COL_LISTSETS + ", " +
+		                                   COL_WARNINGS + ", " +
+		                                   COL_ERRORS + ", " +
+		                                   COL_RECORDS_ADDED + ", " +
+		                                   COL_RECORDS_REPLACED + ", " +
+		                                   COL_LAST_OAI_REQUEST + ", " +
+		                                   COL_LAST_HARVEST_END_TIME + ", " +
+		                                   COL_LAST_LOG_RESET + ", " +
+		                                   COL_LOG_FILE_NAME + " " +
+                               "FROM " + PROVIDERS_TABLE_NAME + " " +
+                               "ORDER BY " + columnName + (asc ? " ASC" : " DESC");
+
 			if(log.isDebugEnabled())
-				log.debug("Getting all providers sorted by their name in ascending order.");
+				log.debug("Creating the \"get all providers sorted\" PreparedStatement from the SQL " + selectSql);
 
-			// The ResultSet from the SQL query
-			ResultSet results = null;
+			// A statement to run the select SQL
+			getSorted = dbConnection.createStatement();
+			
+			// Get the results of the SELECT statement			
+			
+			// Execute the query
+			results = getSorted.executeQuery(selectSql);
 
-			// The list of all providers
-			ArrayList<Provider> providers = new ArrayList<Provider>();
+			// For each result returned, add a Provider object to the list with the returned data
+			while(results.next())
+			{
+				// The Object which will contain data on the provider
+				Provider provider = new Provider();
 
+				// Set the fields on the provider
+				provider.setId(results.getInt(1));
+				provider.setCreatedAt(results.getDate(2));
+				provider.setUpdatedAt(results.getTimestamp(3));
+				provider.setName(results.getString(4));
+				provider.setOaiProviderUrl(results.getString(5));
+				provider.setUser(userDao.loadBasicUser(results.getInt(6)));
+				provider.setTitle(results.getString(7));
+				provider.setCreator(results.getString(8));
+				provider.setSubject(results.getString(9));
+				provider.setDescription(results.getString(10));
+				provider.setPublisher(results.getString(11));
+				provider.setContributors(results.getString(12));
+				provider.setDate(results.getDate(13));
+				provider.setType(results.getString(14));
+				provider.setFormat(results.getString(15));
+				provider.setIdentifier(results.getInt(16));
+				provider.setLanguage(results.getString(17));
+				provider.setRelation(results.getString(18));
+				provider.setCoverage(results.getString(19));
+				provider.setRights(results.getString(20));
+				provider.setService(results.getBoolean(21));
+				provider.setNextListSetsListFormats(results.getDate(22));
+				provider.setProtocolVersion(results.getString(23));
+				provider.setLastValidationDate(results.getDate(24));
+				provider.setIdentify(results.getBoolean(25));
+				provider.setListFormats(results.getBoolean(26));
+				provider.setListSets(results.getBoolean(27));
+				provider.setWarnings(results.getInt(28));
+				provider.setErrors(results.getInt(29));
+				provider.setRecordsAdded(results.getInt(30));
+				provider.setRecordsReplaced(results.getInt(31));
+				provider.setLastOaiRequest(results.getString(32));
+				provider.setLastHarvestEndTime(results.getDate(33));
+				provider.setLastLogReset(results.getDate(34));
+				provider.setLogFileName(results.getString(35));
+
+				provider.setSets(setDao.getSetsForProvider(provider.getId()));
+
+				provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
+
+				// Add the provider to the list
+				providers.add(provider);
+			} // end loop over results
+
+			if(log.isDebugEnabled())
+				log.debug("Found " + providers.size() + " providers in the database.");
+
+			return providers;
+		} // end try(get the providers)
+		catch(SQLException e)
+		{
+			log.error("A SQLException occurred while getting the providers sorted by their name in ascending order.", e);
+          
+			return providers;
+		} // end catch(SQLException)
+		finally
+		{
+			MySqlConnectionManager.closeResultSet(results);
+			
 			try
 			{
-				// If the PreparedStatement to get all providers was not defined, create it
-				
-					// SQL to get the rows
-					String selectSql = "SELECT " + COL_PROVIDER_ID + ", " +
-				                                   COL_CREATED_AT + ", " +
-				                                   COL_UPDATED_AT + ", " +
-				                                   COL_NAME + ", " +
-				                                   COL_OAI_PROVIDER_URL + ", " +
-				                                   COL_USER_ID + ", " +
-				                                   COL_TITLE + ", " +
-				                                   COL_CREATOR + ", " +
-				                                   COL_SUBJECT + ", " +
-				                                   COL_DESCRIPTION + ", " +
-				                                   COL_PUBLISHER + ", " +
-				                                   COL_CONTRIBUTORS + ", " +
-				                                   COL_DATE + ", " +
-				                                   COL_TYPE + ", " +
-				                                   COL_FORMAT + ", " +
-				                                   COL_IDENTIFIER + ", " +
-				                                   COL_LANGUAGE + ", " +
-				                                   COL_RELATION + ", " +
-				                                   COL_COVERAGE + ", " +
-				                                   COL_RIGHTS + ", " +
-				                                   COL_SERVICE + ", " +
-				                                   COL_NEXT_LIST_SETS_LIST_FORMATS + ", " +
-				                                   COL_PROTOCOL_VERSION + ", " +
-				                                   COL_LAST_VALIDATION_DATE + ", " +
-				                                   COL_IDENTIFY + ", " +
-				                                   COL_LISTFORMATS + ", " +
-				                                   COL_LISTSETS + ", " +
-				                                   COL_WARNINGS + ", " +
-				                                   COL_ERRORS + ", " +
-				                                   COL_RECORDS_ADDED + ", " +
-				                                   COL_RECORDS_REPLACED + ", " +
-				                                   COL_LAST_OAI_REQUEST + ", " +
-				                                   COL_LAST_HARVEST_END_TIME + ", " +
-				                                   COL_LAST_LOG_RESET + ", " +
-				                                   COL_LOG_FILE_NAME + " " +
-	                                   "FROM " + PROVIDERS_TABLE_NAME + " " +
-	                                   "ORDER BY " + columnName + " ASC";
-
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"get all providers sorted by name ascending\" PreparedStatement from the SQL " + selectSql);
-
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-                    System.out.println("The Sql query is \n\n"+ selectSql);
-					psGetSortedByNameAsc = dbConnection.prepareStatement(selectSql);
-				
-
-				// Get the result of the SELECT statement
-
-				// Execute the query
-				results = psGetSortedByNameAsc.executeQuery();
-
-				// For each result returned, add a Provider object to the list with the returned data
-				while(results.next())
-				{
-					// The Object which will contain data on the provider
-					Provider provider = new Provider();
-
-					// Set the fields on the provider
-					provider.setId(results.getInt(1));
-					provider.setCreatedAt(results.getDate(2));
-					provider.setUpdatedAt(results.getTimestamp(3));
-					provider.setName(results.getString(4));
-					provider.setOaiProviderUrl(results.getString(5));
-					provider.setUser(userDao.loadBasicUser(results.getInt(6)));
-					provider.setTitle(results.getString(7));
-					provider.setCreator(results.getString(8));
-					provider.setSubject(results.getString(9));
-					provider.setDescription(results.getString(10));
-					provider.setPublisher(results.getString(11));
-					provider.setContributors(results.getString(12));
-					provider.setDate(results.getDate(13));
-					provider.setType(results.getString(14));
-					provider.setFormat(results.getString(15));
-					provider.setIdentifier(results.getInt(16));
-					provider.setLanguage(results.getString(17));
-					provider.setRelation(results.getString(18));
-					provider.setCoverage(results.getString(19));
-					provider.setRights(results.getString(20));
-					provider.setService(results.getBoolean(21));
-					provider.setNextListSetsListFormats(results.getDate(22));
-					provider.setProtocolVersion(results.getString(23));
-					provider.setLastValidationDate(results.getDate(24));
-					provider.setIdentify(results.getBoolean(25));
-					provider.setListFormats(results.getBoolean(26));
-					provider.setListSets(results.getBoolean(27));
-					provider.setWarnings(results.getInt(28));
-					provider.setErrors(results.getInt(29));
-					provider.setRecordsAdded(results.getInt(30));
-					provider.setRecordsReplaced(results.getInt(31));
-					provider.setLastOaiRequest(results.getString(32));
-					provider.setLastHarvestEndTime(results.getDate(33));
-					provider.setLastLogReset(results.getDate(34));
-					provider.setLogFileName(results.getString(35));
-
-					provider.setSets(setDao.getSetsForProvider(provider.getId()));
-
-					provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
-
-					// Add the provider to the list
-					providers.add(provider);
-				} // end loop over results
-
-				if(log.isDebugEnabled())
-					log.debug("Found " + providers.size() + " providers in the database.");
-
-				return providers;
-			} // end try(get the providers)
+				getSorted.close();
+			} // end try(close the Statement)
 			catch(SQLException e)
 			{
-				log.error("A SQLException occurred while getting the providers sorted by their name in ascending order.", e);
-              
-				return providers;
-			} // end catch(SQLException)
-            catch(Exception e)
-            {
-                e.printStackTrace();
-                return providers;
-            }
-			finally
-			{
-				MySqlConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // end synchronized
-	} // end method getSortedByNameAsc()
-
-	/**
-	 * Gets all providers in the database sorted in descending order by their name
-	 *
-	 * @return A list of all providers sorted in descending order by their name
-	 */
-	private List<Provider> getSortedByNameDesc(String columnName)
-	{
-        System.out.println("Inside DAO sort by desc order and the columnName is "+columnName);
-        
-		synchronized(psGetSortedByNameDescLock)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Getting all providers sorted by their name in descending order.");
-
-			// The ResultSet from the SQL query
-			ResultSet results = null;
-
-			// The list of all providers
-			ArrayList<Provider> providers = new ArrayList<Provider>();
-
-			try
-			{
-				
-					// SQL to get the rows
-					String selectSql = "SELECT " + COL_PROVIDER_ID + ", " +
-				                                   COL_CREATED_AT + ", " +
-				                                   COL_UPDATED_AT + ", " +
-				                                   COL_NAME + ", " +
-				                                   COL_OAI_PROVIDER_URL + ", " +
-				                                   COL_USER_ID + ", " +
-				                                   COL_TITLE + ", " +
-				                                   COL_CREATOR + ", " +
-				                                   COL_SUBJECT + ", " +
-				                                   COL_DESCRIPTION + ", " +
-				                                   COL_PUBLISHER + ", " +
-				                                   COL_CONTRIBUTORS + ", " +
-				                                   COL_DATE + ", " +
-				                                   COL_TYPE + ", " +
-				                                   COL_FORMAT + ", " +
-				                                   COL_IDENTIFIER + ", " +
-				                                   COL_LANGUAGE + ", " +
-				                                   COL_RELATION + ", " +
-				                                   COL_COVERAGE + ", " +
-				                                   COL_RIGHTS + ", " +
-				                                   COL_SERVICE + ", " +
-				                                   COL_NEXT_LIST_SETS_LIST_FORMATS + ", " +
-				                                   COL_PROTOCOL_VERSION + ", " +
-				                                   COL_LAST_VALIDATION_DATE + ", " +
-				                                   COL_IDENTIFY + ", " +
-				                                   COL_LISTFORMATS + ", " +
-				                                   COL_LISTSETS + ", " +
-				                                   COL_WARNINGS + ", " +
-				                                   COL_ERRORS + ", " +
-				                                   COL_RECORDS_ADDED + ", " +
-				                                   COL_RECORDS_REPLACED + ", " +
-				                                   COL_LAST_OAI_REQUEST + ", " +
-				                                   COL_LAST_HARVEST_END_TIME + ", " +
-				                                   COL_LAST_LOG_RESET + ", " +
-				                                   COL_LOG_FILE_NAME + " " +
-	                                   "FROM " + PROVIDERS_TABLE_NAME + " " +
-	                                   "ORDER BY " + columnName + " DESC";
-
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"get all providers sorted by name descending\" PreparedStatement from the SQL " + selectSql);
-
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-                    System.out.println("The Sql query is \n\n"+ selectSql);
-					psGetSortedByNameDesc = dbConnection.prepareStatement(selectSql);
-				
-
-				// Get the result of the SELECT statement
-
-				// Execute the query
-
-				results = psGetSortedByNameDesc.executeQuery();
-
-				// For each result returned, add a Provider object to the list with the returned data
-				while(results.next())
-				{
-					// The Object which will contain data on the provider
-					Provider provider = new Provider();
-
-					// Set the fields on the provider
-					provider.setId(results.getInt(1));
-					provider.setCreatedAt(results.getDate(2));
-					provider.setUpdatedAt(results.getTimestamp(3));
-					provider.setName(results.getString(4));
-					provider.setOaiProviderUrl(results.getString(5));
-					provider.setUser(userDao.loadBasicUser(results.getInt(6)));
-					provider.setTitle(results.getString(7));
-					provider.setCreator(results.getString(8));
-					provider.setSubject(results.getString(9));
-					provider.setDescription(results.getString(10));
-					provider.setPublisher(results.getString(11));
-					provider.setContributors(results.getString(12));
-					provider.setDate(results.getDate(13));
-					provider.setType(results.getString(14));
-					provider.setFormat(results.getString(15));
-					provider.setIdentifier(results.getInt(16));
-					provider.setLanguage(results.getString(17));
-					provider.setRelation(results.getString(18));
-					provider.setCoverage(results.getString(19));
-					provider.setRights(results.getString(20));
-					provider.setService(results.getBoolean(21));
-					provider.setNextListSetsListFormats(results.getDate(22));
-					provider.setProtocolVersion(results.getString(23));
-					provider.setLastValidationDate(results.getDate(24));
-					provider.setIdentify(results.getBoolean(25));
-					provider.setListFormats(results.getBoolean(26));
-					provider.setListSets(results.getBoolean(27));
-					provider.setWarnings(results.getInt(28));
-					provider.setErrors(results.getInt(29));
-					provider.setRecordsAdded(results.getInt(30));
-					provider.setRecordsReplaced(results.getInt(31));
-					provider.setLastOaiRequest(results.getString(32));
-					provider.setLastHarvestEndTime(results.getDate(33));
-					provider.setLastLogReset(results.getDate(34));
-					provider.setLogFileName(results.getString(35));
-
-					provider.setSets(setDao.getSetsForProvider(provider.getId()));
-
-					provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
-
-					// Add the provider to the list
-					providers.add(provider);
-				} // end loop over results
-
-				if(log.isDebugEnabled())
-					log.debug("Found " + providers.size() + " providers in the database.");
-
-				return providers;
-			} // end try(get the providers)
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while getting the providers sorted by their name in descending order.", e);
-                e.printStackTrace();
-				return providers;
-			} // end catch(SQLException)
-            catch(Exception e)
-            {
-                e.printStackTrace();
-                return providers;
-            }
-			finally
-			{
-				MySqlConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // end synchronized
-	} // end method getSortedByNameDesc()
-
+				log.error("An error occurred while trying to close the \"get processing directives sorted\" Statement");
+			} // end catch(DataException)
+		} // end finally(close ResultSet)
+	} // end method getSorted(boolean, String)
+	
 	@Override
 	public Provider getById(int providerId)
 	{

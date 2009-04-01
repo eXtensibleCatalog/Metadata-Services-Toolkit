@@ -12,6 +12,7 @@ package xc.mst.dao.processing;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,16 +71,6 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	 * A PreparedStatement to get all processing directives in the database
 	 */
 	private static PreparedStatement psGetAll = null;
-
-	/**
-	 * A PreparedStatement to get all processing directives in the database sorted by their full name in ascending order
-	 */
-	private static PreparedStatement psGetSortedAsc = null;
-	
-	/**
-	 * A PreparedStatement to get all processing directives in the database sorted by their full name in descending order
-	 */
-	private static PreparedStatement psGetSortedDesc = null;
 	
 	/**
 	 * A PreparedStatement to get a processing directive from the database by its ID
@@ -115,16 +106,6 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	 * Lock to synchronize access to the get all PreparedStatement
 	 */
 	private static Object psGetAllLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get sorted in ascending order PreparedStatement
-	 */
-	private static Object psGetSortedAscLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get sorted in descending order PreparedStatement
-	 */
-	private static Object psGetSortedDescLock = new Object();
 	
 	/**
 	 * Lock to synchronize access to the get by ID PreparedStatement
@@ -211,14 +192,6 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 					processingDirective.setOutputSet(setDao.getById(results.getInt(5)));
 					processingDirective.setMaintainSourceSets(results.getBoolean(6));
 
-					// Setup the list of triggering format IDs
-					for(Integer formatId : inputFormatDao.getInputFormatsForProcessingDirective(processingDirective.getId()))
-						processingDirective.addTriggeringFormat(formatDao.getById(formatId));
-
-					// Setup the list of triggering set IDs
-					for(Integer setId : inputSetDao.getInputSetsForProcessingDirective(processingDirective.getId()))
-						processingDirective.addTriggeringSet(setDao.getById(setId));
-
 					// Add the processing directive to the list
 					processingDirectives.add(processingDirective);
 				} // end loop over results
@@ -250,28 +223,91 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	@Override
 	public List<ProcessingDirective> getSorted(boolean asc,String columnSorted)
 	{
-		return(asc ? getSortedAsc(columnSorted) : getSortedDesc(columnSorted));
-	} // end method getSortedByName(boolean)
+		if(log.isDebugEnabled())
+			log.debug("Getting all processing directives sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnSorted);
+		
+		// Validate the column we're trying to sort on
+		if(!sortableColumns.contains(columnSorted))
+		{
+			log.error("An attempt was made to sort on the invalid column " + columnSorted);
+			return getAll();
+		} // end if(sort column invalid)
+		
+		// The ResultSet from the SQL query
+		ResultSet results = null;
+		
+		// The Statement for getting the rows
+		Statement getSorted = null;
+		
+		// A list to hold the results of the query
+		List<ProcessingDirective> processingDirectives = new ArrayList<ProcessingDirective>();
+		
+		try
+		{				
+			// SQL to get the rows
+			String selectSql = "SELECT " + COL_PROCESSING_DIRECTIVE_ID + ", " +
+			                               COL_SOURCE_PROVIDER_ID + ", " +
+			                               COL_SOURCE_SERVICE_ID + ", " +
+			                               COL_SERVICE_ID + ", " +
+			                               COL_OUTPUT_SET_ID + ", " +
+			                               COL_MAINTAIN_SOURCE_SETS + " " +
+			                   "FROM " + PROCESSING_DIRECTIVE_TABLE_NAME + " " + 
+                               "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
+		
+			if(log.isDebugEnabled())
+				log.debug("Creating the \"get all processing directives sorted\" Statement from the SQL " + selectSql);
+		
+			// A statement to run the select SQL
+			getSorted = dbConnection.createStatement();
+			
+			// Get the results of the SELECT statement			
+			
+			// Execute the query
+			results = getSorted.executeQuery(selectSql);
+		
+			// If any results were returned
+			while(results.next())
+			{
+				// The Object which will contain data on the processing directive
+				ProcessingDirective processingDirective = new ProcessingDirective();
 
-	/**
-	 * Gets all users in the database sorted in ascending order by their user name
-	 * 
-	 * @return A list of all users in the database sorted in ascending order by their user name
-	 */
-	private List<ProcessingDirective> getSortedAsc(String columnSorted)
-	{
-		return getAll();
-	} // end method getSortedAsc()
-	
-	/**
-	 * Gets all users in the database sorted in descending order by their user name
-	 * 
-	 * @return A list of all users in the database sorted in descending order by their user name
-	 */
-	private List<ProcessingDirective> getSortedDesc(String columnSorted)
-	{
-		return getAll();
-	} // end method getSortedDesc()
+				// Set the fields on the processing directive
+				processingDirective.setId(results.getInt(1));
+				processingDirective.setSourceProvider(providerDao.getById(results.getInt(2)));
+				processingDirective.setSourceService(serviceDao.getById(results.getInt(3)));
+				processingDirective.setService(serviceDao.getById(results.getInt(4)));
+				processingDirective.setOutputSet(setDao.getById(results.getInt(5)));
+				processingDirective.setMaintainSourceSets(results.getBoolean(6));
+
+				// Add the processing directive to the list
+				processingDirectives.add(processingDirective);
+			} // end loop over results
+			
+			if(log.isDebugEnabled())
+				log.debug("Found " + processingDirectives.size() + " processing directives in the database.");
+			
+			return processingDirectives;
+		} // end try(get the processing directives)
+		catch(SQLException e)
+		{
+			log.error("A SQLException occurred while getting the processing directives", e);
+			
+			return processingDirectives;
+		} // end catch(SQLException)
+		finally
+		{
+			MySqlConnectionManager.closeResultSet(results);
+			
+			try
+			{
+				getSorted.close();
+			} // end try(close the Statement)
+			catch(SQLException e)
+			{
+				log.error("An error occurred while trying to close the \"get processing directives sorted\" Statement");
+			} // end catch(DataException)
+		} // end finally(close ResultSet)
+	} // end method getSortedByName(boolean)
 	
 	@Override
 	public ProcessingDirective getById(int processingDirectiveId)

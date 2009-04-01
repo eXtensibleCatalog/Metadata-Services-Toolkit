@@ -10,7 +10,9 @@
 package xc.mst.dao.processing;
 
 import java.sql.Connection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -72,6 +74,22 @@ public abstract class ProcessingDirectiveDAO
 	public final static String COL_MAINTAIN_SOURCE_SETS = "maintain_source_sets";
 
 	/**
+	 * A set of all columns which are valid for sorting
+	 */
+	protected static Set<String> sortableColumns = new HashSet<String>();
+	
+	// Initialize the list of sortable columns
+	static
+	{
+		sortableColumns.add(COL_PROCESSING_DIRECTIVE_ID);
+		sortableColumns.add(COL_SOURCE_PROVIDER_ID);
+		sortableColumns.add(COL_SOURCE_SERVICE_ID);
+		sortableColumns.add(COL_SERVICE_ID);
+		sortableColumns.add(COL_OUTPUT_SET_ID);
+		sortableColumns.add(COL_MAINTAIN_SOURCE_SETS);
+	} // end initialization of sortableColumns
+	
+	/**
 	 * Gets all processing directives from the database
 	 *
 	 * @return A list containing all processing directives in the database
@@ -79,12 +97,13 @@ public abstract class ProcessingDirectiveDAO
 	public abstract List<ProcessingDirective> getAll();
 
 	/**
-     * returns a sorted list of processing directives
-     * @param asc determines whether the list of rows are to be sorted in ascending or descending order
-     * @param columnSorted the column on which the rows are to be sorted.
-     * @return list of processing directives
+     * Returns a sorted list of processing directives
+     * 
+     * @param asc Determines whether the list of rows are to be sorted in ascending or descending order
+     * @param columnSorted The column on which the rows are to be sorted.
+     * @return A sorted list of processing directives
      */
-	public abstract List<ProcessingDirective> getSorted(boolean asc,String columnSorted);
+	public abstract List<ProcessingDirective> getSorted(boolean asc, String columnSorted);
 	
 	/**
 	 * Gets the processing directive from the database with the passed processing directive ID.

@@ -10,6 +10,7 @@
 package xc.mst.dao.harvest;
 
 import java.sql.Date;
+import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +19,6 @@ import java.util.List;
 
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.harvest.HarvestScheduleStep;
-import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
@@ -47,16 +47,6 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	 * A PreparedStatement to get all harvest schedules in the database
 	 */
 	private static PreparedStatement psGetAll = null;
-
-	/**
-	 * A PreparedStatement to get all harvest schedules in the database sorted by their full name in ascending order
-	 */
-	private static PreparedStatement psGetSortedAsc = null;
-	
-	/**
-	 * A PreparedStatement to get all harvest schedules in the database sorted by their full name in descending order
-	 */
-	private static PreparedStatement psGetSortedDesc = null;
 	
 	/**
 	 * A PreparedStatement to get a harvest schedule from the database by its ID
@@ -97,16 +87,6 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	 * Lock to synchronize access to the get all PreparedStatement
 	 */
 	private static Object psGetAllLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get sorted in ascending order PreparedStatement
-	 */
-	private static Object psGetSortedAscLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get sorted in descending order PreparedStatement
-	 */
-	private static Object psGetSortedDescLock = new Object();
 	
 	/**
 	 * Lock to synchronize access to the get by ID PreparedStatement
@@ -231,186 +211,100 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	@Override
 	public List<HarvestSchedule> getSorted(boolean asc,String columnSorted)
 	{
-		return(asc ? getSortedAsc(columnSorted) : getSortedDesc(columnSorted));
+		if(log.isDebugEnabled())
+			log.debug("Getting all harvest schedules sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnSorted);
+		
+		// Validate the column we're trying to sort on
+		if(!sortableColumns.contains(columnSorted))
+		{
+			log.error("An attempt was made to sort on the invalid column " + columnSorted);
+			return getAll();
+		} // end if(sort column invalid)
+		
+		// The ResultSet from the SQL query
+		ResultSet results = null;
+		
+		// The Statement for getting the rows
+		Statement getSorted = null;
+		
+		// A list to hold the results of the query
+		List<HarvestSchedule> harvestSchedules = new ArrayList<HarvestSchedule>();
+		
+		try
+		{				
+			// SQL to get the rows
+			String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
+                                           COL_SCHEDULE_NAME + ", " +
+                                           COL_RECURRENCE + ", " +
+                                           COL_PROVIDER_ID + ", " +
+                                           COL_START_DATE + ", " +
+                                           COL_END_DATE + ", " +
+                                           COL_MINUTE + ", " +
+                                           COL_DAY_OF_WEEK + ", " +
+                                           COL_HOUR + ", " +
+                                           COL_NOTIFY_EMAIL + " " +
+                               "FROM " + HARVEST_SCHEDULES_TABLE_NAME + " " + 
+                               "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
+		
+			if(log.isDebugEnabled())
+				log.debug("Creating the \"get all harvest schedules\" Statement from the SQL " + selectSql);
+		
+			// A prepared statement to run the select SQL
+			// This should sanitize the SQL and prevent SQL injection
+			getSorted = dbConnection.createStatement();
+			
+			// Get the results of the SELECT statement			
+			
+			// Execute the query
+			results = getSorted.executeQuery(selectSql);
+		
+			// If any results were returned
+			while(results.next())
+			{
+				// The Object which will contain data on the user
+				HarvestSchedule harvestSchedule = new HarvestSchedule();
+				
+				// Set the fields on the user
+				harvestSchedule.setId(results.getInt(1));
+				harvestSchedule.setScheduleName(results.getString(2));
+				harvestSchedule.setRecurrence(results.getString(3));
+				harvestSchedule.setProvider(providerDao.loadBasicProvider(results.getInt(4)));
+				harvestSchedule.setStartDate(results.getDate(5));
+				harvestSchedule.setEndDate(results.getDate(6));
+				harvestSchedule.setMinute(results.getInt(7));
+				harvestSchedule.setDayOfWeek(results.getInt(8));
+				harvestSchedule.setHour(results.getInt(9));
+				harvestSchedule.setNotifyEmail(results.getString(10));
+				
+				// Return the harvest schedule
+				harvestSchedules.add(harvestSchedule);
+			} // end loop over results
+			
+			if(log.isDebugEnabled())
+				log.debug("Found " + harvestSchedules.size() + " harvest schedules in the database.");
+			
+			return harvestSchedules;
+		} // end try(get the harvest schedules)
+		catch(SQLException e)
+		{
+			log.error("A SQLException occurred while getting the harvest schedules", e);
+			
+			return harvestSchedules;
+		} // end catch(SQLException)
+		finally
+		{
+			MySqlConnectionManager.closeResultSet(results);
+			
+			try
+			{
+				getSorted.close();
+			} // end try(close the Statement)
+			catch(SQLException e)
+			{
+				log.error("An error occurred while trying to close the \"get harvest schedules sorted ASC\" Statement");
+			} // end catch(DataException)
+		} // end finally(close ResultSet)
 	} // end method getSortedByName(boolean)
-
-	/**
-	 * Gets all users in the database sorted in ascending order by their user name
-	 * 
-	 * @return A list of all users in the database sorted in ascending order by their user name
-	 */
-	private List<HarvestSchedule> getSortedAsc(String columnSorted)
-	{
-		synchronized(psGetSortedAscLock)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Getting all harvest schedules");
-			
-			// The ResultSet from the SQL query
-			ResultSet results = null;
-			
-			// A list to hold the results of the query
-			ArrayList<HarvestSchedule> harvestSchedules = new ArrayList<HarvestSchedule>();
-			
-			try
-			{
-							
-					// SQL to get the rows
-					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
-                                                   COL_SCHEDULE_NAME + ", " +
-                                                   COL_RECURRENCE + ", " +
-                                                   COL_PROVIDER_ID + ", " +
-                                                   COL_START_DATE + ", " +
-                                                   COL_END_DATE + ", " +
-                                                   COL_MINUTE + ", " +
-                                                   COL_DAY_OF_WEEK + ", " +
-                                                   COL_HOUR + ", " +
-                                                   COL_NOTIFY_EMAIL + " " +
-	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME +
-	                                   " ORDER BY " + columnSorted + " ASC";
-				
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"get all harvest schedules\" PreparedStatement from the SQL " + selectSql);
-				
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-                    System.out.println("The SQL query for ASC Order is  \n\n"+selectSql);
-					psGetSortedAsc = dbConnection.prepareStatement(selectSql);
-				
-				
-				// Get the results of the SELECT statement			
-				
-				// Execute the query
-				results = psGetSortedAsc.executeQuery();
-			
-				// If any results were returned
-				while(results.next())
-				{
-					// The Object which will contain data on the user
-					HarvestSchedule harvestSchedule = new HarvestSchedule();
-					
-					// Set the fields on the user
-					harvestSchedule.setId(results.getInt(1));
-					harvestSchedule.setScheduleName(results.getString(2));
-					harvestSchedule.setRecurrence(results.getString(3));
-					harvestSchedule.setProvider(providerDao.loadBasicProvider(results.getInt(4)));
-					harvestSchedule.setStartDate(results.getDate(5));
-					harvestSchedule.setEndDate(results.getDate(6));
-					harvestSchedule.setMinute(results.getInt(7));
-					harvestSchedule.setDayOfWeek(results.getInt(8));
-					harvestSchedule.setHour(results.getInt(9));
-					harvestSchedule.setNotifyEmail(results.getString(10));
-					
-					// Return the harvest schedule
-					harvestSchedules.add(harvestSchedule);
-				} // end loop over results
-				
-				if(log.isDebugEnabled())
-					log.debug("Found " + harvestSchedules.size() + " harvest schedules in the database.");
-				
-				return harvestSchedules;
-			} // end try(get the harvest schedules)
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while getting the harvest schedules", e);
-				e.printStackTrace();
-				return harvestSchedules;
-			} // end catch(SQLException)
-			finally
-			{
-				MySqlConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // end synchronized
-	} // end method getSortedAsc()
-	
-	/**
-	 * Gets all users in the database sorted in descending order by their user name
-	 * 
-	 * @return A list of all users in the database sorted in descending order by their user name
-	 */
-	private List<HarvestSchedule> getSortedDesc(String columnSorted)
-	{
-		synchronized(psGetSortedDescLock)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Getting all harvest schedules");
-			
-			// The ResultSet from the SQL query
-			ResultSet results = null;
-			
-			// A list to hold the results of the query
-			ArrayList<HarvestSchedule> harvestSchedules = new ArrayList<HarvestSchedule>();
-			
-			try
-			{
-						
-					// SQL to get the rows
-					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
-                                                   COL_SCHEDULE_NAME + ", " +
-                                                   COL_RECURRENCE + ", " +
-                                                   COL_PROVIDER_ID + ", " +
-                                                   COL_START_DATE + ", " +
-                                                   COL_END_DATE + ", " +
-                                                   COL_MINUTE + ", " +
-                                                   COL_DAY_OF_WEEK + ", " +
-                                                   COL_HOUR + ", " +
-                                                   COL_NOTIFY_EMAIL + " " +
-	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME +
-	                                   " ORDER BY " + columnSorted + " DESC";
-				
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"get all harvest schedules\" PreparedStatement from the SQL " + selectSql);
-				
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-                     System.out.println("The SQL query for DESC Order is  \n\n"+selectSql);
-					psGetSortedDesc = dbConnection.prepareStatement(selectSql);
-				
-				
-				// Get the results of the SELECT statement			
-				
-				// Execute the query
-				results = psGetSortedDesc.executeQuery();
-			
-				// If any results were returned
-				while(results.next())
-				{
-					// The Object which will contain data on the user
-					HarvestSchedule harvestSchedule = new HarvestSchedule();
-					
-					// Set the fields on the user
-					harvestSchedule.setId(results.getInt(1));
-					harvestSchedule.setScheduleName(results.getString(2));
-					harvestSchedule.setRecurrence(results.getString(3));
-					harvestSchedule.setProvider(providerDao.loadBasicProvider(results.getInt(4)));
-					harvestSchedule.setStartDate(results.getDate(5));
-					harvestSchedule.setEndDate(results.getDate(6));
-					harvestSchedule.setMinute(results.getInt(7));
-					harvestSchedule.setDayOfWeek(results.getInt(8));
-					harvestSchedule.setHour(results.getInt(9));
-					harvestSchedule.setNotifyEmail(results.getString(10));
-					
-					// Return the harvest schedule
-					harvestSchedules.add(harvestSchedule);
-				} // end loop over results
-				
-				if(log.isDebugEnabled())
-					log.debug("Found " + harvestSchedules.size() + " harvest schedules in the database.");
-				
-				return harvestSchedules;
-			} // end try(get the harvest schedules)
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while getting the harvest schedules", e);
-				e.printStackTrace();
-				return harvestSchedules;
-			} // end catch(SQLException)
-			finally
-			{
-				MySqlConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // end synchronized
-	} // end method getSortedDesc()
 	
 	@Override
 	public HarvestSchedule getById(int harvestScheduleId) 

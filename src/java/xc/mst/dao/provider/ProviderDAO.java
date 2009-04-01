@@ -10,7 +10,9 @@
 package xc.mst.dao.provider;
 
 import java.sql.Connection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -215,6 +217,51 @@ public abstract class ProviderDAO
 	 * The name of the log file name column
 	 */
 	public final static String COL_LOG_FILE_NAME = "log_file_name";
+
+	/**
+	 * A set of all columns which are valid for sorting
+	 */
+	protected static Set<String> sortableColumns = new HashSet<String>();
+	
+	// Initialize the list of sortable columns
+	static
+	{	
+		sortableColumns.add(COL_PROVIDER_ID);
+		sortableColumns.add(COL_CREATED_AT);
+		sortableColumns.add(COL_UPDATED_AT);
+		sortableColumns.add(COL_NAME);
+		sortableColumns.add(COL_OAI_PROVIDER_URL);
+		sortableColumns.add(COL_USER_ID);
+		sortableColumns.add(COL_TITLE);
+		sortableColumns.add(COL_CREATOR);
+		sortableColumns.add(COL_SUBJECT);
+		sortableColumns.add(COL_DESCRIPTION);
+		sortableColumns.add(COL_PUBLISHER);
+		sortableColumns.add(COL_CONTRIBUTORS);
+		sortableColumns.add(COL_DATE);
+		sortableColumns.add(COL_TYPE);
+		sortableColumns.add(COL_FORMAT);
+		sortableColumns.add(COL_IDENTIFIER);
+		sortableColumns.add(COL_LANGUAGE);
+		sortableColumns.add(COL_RELATION);
+		sortableColumns.add(COL_COVERAGE);
+		sortableColumns.add(COL_RIGHTS);
+		sortableColumns.add(COL_SERVICE);
+		sortableColumns.add(COL_NEXT_LIST_SETS_LIST_FORMATS);
+		sortableColumns.add(COL_PROTOCOL_VERSION);
+		sortableColumns.add(COL_LAST_VALIDATION_DATE);
+		sortableColumns.add(COL_IDENTIFY);
+		sortableColumns.add(COL_LISTFORMATS);
+		sortableColumns.add(COL_LISTSETS);
+		sortableColumns.add(COL_WARNINGS);
+		sortableColumns.add(COL_ERRORS);
+		sortableColumns.add(COL_RECORDS_ADDED);
+		sortableColumns.add(COL_RECORDS_REPLACED);
+		sortableColumns.add(COL_LAST_OAI_REQUEST);
+		sortableColumns.add(COL_LAST_HARVEST_END_TIME);
+		sortableColumns.add(COL_LAST_LOG_RESET);
+		sortableColumns.add(COL_LOG_FILE_NAME);
+	} // end initialization of sortableColumns
 
 	/**
 	 * Gets all providers in the database

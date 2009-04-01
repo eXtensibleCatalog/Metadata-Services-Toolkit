@@ -10,12 +10,13 @@
 package xc.mst.dao.harvest;
 
 import java.sql.Connection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.harvest.HarvestSchedule;
-import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.MySqlConnectionManager;
@@ -93,6 +94,26 @@ public abstract class HarvestScheduleDAO
 	public final static String COL_NOTIFY_EMAIL = "notify_email";
 
 	/**
+	 * A set of all columns which are valid for sorting
+	 */
+	protected static Set<String> sortableColumns = new HashSet<String>();
+	
+	// Initialize the list of sortable columns
+	static
+	{
+		sortableColumns.add(COL_HARVEST_SCHEDULE_ID);
+		sortableColumns.add(COL_SCHEDULE_NAME);
+		sortableColumns.add(COL_RECURRENCE);
+		sortableColumns.add(COL_PROVIDER_ID);
+		sortableColumns.add(COL_START_DATE);
+		sortableColumns.add(COL_END_DATE);
+		sortableColumns.add(COL_MINUTE);
+		sortableColumns.add(COL_DAY_OF_WEEK);
+		sortableColumns.add(COL_HOUR);
+		sortableColumns.add(COL_NOTIFY_EMAIL);
+	} // end initialization of sortableColumns
+	
+	/**
 	 * Gets all harvest schedules in the database
 	 *
 	 * @return A list containing all harvest schedules in the database
@@ -100,12 +121,13 @@ public abstract class HarvestScheduleDAO
 	public abstract List<HarvestSchedule> getAll();
 
 	/**
-     * returns a sorted list of all the harvest schedules
-     * @param asc boolean parameter determines if rows are to be sorted in ascending or descending order
-     * @param columnSorted the coulmn on which the rows are sorted
-     * @return list of schedules
+     * Returns a sorted list of all the harvest schedules
+     * 
+     * @param asc Boolean parameter determines if rows are to be sorted in ascending or descending order
+     * @param columnSorted The column on which the rows are sorted
+     * @return A sorted list of schedules
      */
-	public abstract List<HarvestSchedule> getSorted(boolean asc,String columnSorted);
+	public abstract List<HarvestSchedule> getSorted(boolean asc, String columnSorted);
 	
 	/**
 	 * Gets a harvest schedule by it's ID

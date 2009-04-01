@@ -12,6 +12,7 @@ package xc.mst.dao.service;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,16 +61,6 @@ public class DefaultServiceDAO extends ServiceDAO
 	private static PreparedStatement psGetAll = null;
 	
 	/**
-	 * A PreparedStatement to get all services in the database sorted by their name in ascending order
-	 */
-	private static PreparedStatement psGetSortedAsc = null;
-	
-	/**
-	 * A PreparedStatement to get all services in the database sorted by their name in descending order
-	 */
-	private static PreparedStatement psGetSortedDesc = null;
-	
-	/**
 	 * A PreparedStatement to get a service from the database by its ID
 	 */
 	private static PreparedStatement psGetById = null;
@@ -103,16 +94,6 @@ public class DefaultServiceDAO extends ServiceDAO
 	 * Lock to synchronize access to the get all PreparedStatement
 	 */
 	private static Object psGetAllLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get sorted in ascending order PreparedStatement
-	 */
-	private static Object psGetSortedAscLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get sorted in descending order PreparedStatement
-	 */
-	private static Object psGetSortedDescLock = new Object();
 	
 	/**
 	 * Lock to synchronize access to the get by ID PreparedStatement
@@ -260,228 +241,122 @@ public class DefaultServiceDAO extends ServiceDAO
 	@Override
 	public List<Service> getSorted(boolean asc,String columnSorted)
 	{
-		return(asc ? getSortedAsc(columnSorted) : getSortedDesc(columnSorted));
-	} // end method getSortedByUserName(boolean)
+		if(log.isDebugEnabled())
+			log.debug("Getting all services sorted in " + (asc ? "ascending" : "descending") + " order by " + columnSorted);
 
-	/**
-	 * Gets all services in the database sorted in ascending order by their name
-	 * 
-	 * @return A list of all services in the database sorted in ascending order by their name
-	 */
-	private List<Service> getSortedAsc(String columnSorted)
-	{
-		synchronized(psGetSortedAscLock)
+		// Validate the column we're trying to sort on
+		if(!sortableColumns.contains(columnSorted))
 		{
-			if(log.isDebugEnabled())
-				log.debug("Getting all services");
+			log.error("An attempt was made to sort on the invalid column " + columnSorted);
+			return getAll();
+		} // end if(sort column invalid)
+		
+		// The ResultSet from the SQL query
+		ResultSet results = null;
 
-			// The ResultSet from the SQL query
-			ResultSet results = null;
+		// The Statement for getting the rows
+		Statement getSorted = null;
+		
+		// The list of all services
+		ArrayList<Service> services = new ArrayList<Service>();
 
-			// The list of all services
-			ArrayList<Service> services = new ArrayList<Service>();
-
-			try
-			{
-				
-					// SQL to get the rows
-					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
-												   COL_SERVICE_NAME + ", " +
-												   COL_PACKAGE_NAME + ", " +
-												   COL_CLASS_NAME + ", " +
-												   COL_IS_USER_DEFINED + ", " +
-												   COL_PORT + ", " +
-												   COL_WARNINGS + ", " +
-												   COL_ERRORS + ", " +
-												   COL_INPUT_RECORD_COUNT + ", " +
-												   COL_OUTPUT_RECORD_COUNT + ", " +
-												   COL_LAST_LOG_RESET + ", " +
-												   COL_LOG_FILE_NAME + ", " +
-												   COL_HARVEST_OUT_WARNINGS + ", " +
-												   COL_HARVEST_OUT_ERRORS + ", " +
-												   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
-												   COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
-												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
-												   COL_HARVEST_OUT_LOG_FILE_NAME + " " +
-								       "FROM " + SERVICES_TABLE_NAME + " " +
-								       "ORDER BY " + columnSorted + " ASC";
-
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"get all services\" PreparedStatement from the SQL " + selectSql);
-
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-					psGetSortedAsc = dbConnection.prepareStatement(selectSql);
-				
-
-				// Get the result of the SELECT statement
-
-				// Execute the query
-				results = psGetSortedAsc.executeQuery();
-
-				// For each result returned, add a Service object to the list with the returned data
-				while(results.next())
-				{
-					// The Object which will contain data on the service
-					Service service = new Service();
-
-					// Set the fields on the service
-					service.setId(results.getInt(1));
-					service.setName(results.getString(2));
-					service.setPackageName(results.getString(3));
-					service.setClassName(results.getString(4));
-					service.setIsUserDefined(results.getBoolean(5));
-					service.setPort(results.getInt(6));
-					service.setServicesWarnings(results.getInt(7));
-					service.setServicesErrors(results.getInt(8));
-					service.setInputRecordCount(results.getInt(9));
-					service.setOutputRecordCount(results.getInt(10));
-					service.setServicesLastLogReset(results.getDate(11));
-					service.setServicesLogFileName(results.getString(12));
-					service.setHarvestOutWarnings(results.getInt(13));
-					service.setHarvestOutErrors(results.getInt(14));
-					service.setHarvestOutRecordsAvailable(results.getLong(15));
-					service.setHarvestOutRecordsHarvested(results.getLong(16));
-					service.setHarvestOutLastLogReset(results.getDate(17));
-					service.setHarvestOutLogFileName(results.getString(18));
-
-					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
-						service.addInputFormat(formatDao.getById(inputFormatId));
-
-					for(Integer outputFormatId : serviceOutputFormatDAO.getOutputFormatsForService(service.getId()))
-						service.addOutputFormat(formatDao.getById(outputFormatId));
-
-					// Add the service to the list
-					services.add(service);
-				} // end loop over results
-
-				if(log.isDebugEnabled())
-					log.debug("Found " + services.size() + " services in the database.");
-
-				return services;
-			} // end try(get services)
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while getting the services.", e);
-
-				return services;
-			} // end catch(SQLException)
-			finally
-			{
-				MySqlConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // end synchronized
-	} // end method getSortedAsc()
+		try
+		{			
+			// SQL to get the rows
+			String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
+										   COL_SERVICE_NAME + ", " +
+										   COL_PACKAGE_NAME + ", " +
+										   COL_CLASS_NAME + ", " +
+										   COL_IS_USER_DEFINED + ", " +
+										   COL_PORT + ", " +
+										   COL_WARNINGS + ", " +
+										   COL_ERRORS + ", " +
+										   COL_INPUT_RECORD_COUNT + ", " +
+										   COL_OUTPUT_RECORD_COUNT + ", " +
+										   COL_LAST_LOG_RESET + ", " +
+										   COL_LOG_FILE_NAME + ", " +
+										   COL_HARVEST_OUT_WARNINGS + ", " +
+										   COL_HARVEST_OUT_ERRORS + ", " +
+										   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
+										   COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
+										   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
+										   COL_HARVEST_OUT_LOG_FILE_NAME + " " +
+						       "FROM " + SERVICES_TABLE_NAME + " " +
+						       "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
 	
-	/**
-	 * Gets all services in the database sorted in descending order by their name
-	 * 
-	 * @return A list of all services in the database sorted in descending order by their name
-	 */
-	private List<Service> getSortedDesc(String columnSorted)
-	{
-		synchronized(psGetSortedDescLock)
-		{
 			if(log.isDebugEnabled())
-				log.debug("Getting all services");
+				log.debug("Creating the \"get all services\" PreparedStatement from the SQL " + selectSql);
 
-			// The ResultSet from the SQL query
-			ResultSet results = null;
+			// A prepared statement to run the select SQL
+			// This should sanitize the SQL and prevent SQL injection
+			getSorted = dbConnection.createStatement();
+			
+			// Get the results of the SELECT statement			
+			
+			// Execute the query
+			results = getSorted.executeQuery(selectSql);
 
-			// The list of all services
-			ArrayList<Service> services = new ArrayList<Service>();
+			// For each result returned, add a Service object to the list with the returned data
+			while(results.next())
+			{
+				// The Object which will contain data on the service
+				Service service = new Service();
 
+				// Set the fields on the service
+				service.setId(results.getInt(1));
+				service.setName(results.getString(2));
+				service.setPackageName(results.getString(3));
+				service.setClassName(results.getString(4));
+				service.setIsUserDefined(results.getBoolean(5));
+				service.setPort(results.getInt(6));
+				service.setServicesWarnings(results.getInt(7));
+				service.setServicesErrors(results.getInt(8));
+				service.setInputRecordCount(results.getInt(9));
+				service.setOutputRecordCount(results.getInt(10));
+				service.setServicesLastLogReset(results.getDate(11));
+				service.setServicesLogFileName(results.getString(12));
+				service.setHarvestOutWarnings(results.getInt(13));
+				service.setHarvestOutErrors(results.getInt(14));
+				service.setHarvestOutRecordsAvailable(results.getLong(15));
+				service.setHarvestOutRecordsHarvested(results.getLong(16));
+				service.setHarvestOutLastLogReset(results.getDate(17));
+				service.setHarvestOutLogFileName(results.getString(18));
+
+				for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
+					service.addInputFormat(formatDao.getById(inputFormatId));
+
+				for(Integer outputFormatId : serviceOutputFormatDAO.getOutputFormatsForService(service.getId()))
+					service.addOutputFormat(formatDao.getById(outputFormatId));
+
+				// Add the service to the list
+				services.add(service);
+			} // end loop over results
+
+			if(log.isDebugEnabled())
+				log.debug("Found " + services.size() + " services in the database.");
+
+			return services;
+		} // end try(get services)
+		catch(SQLException e)
+		{
+			log.error("A SQLException occurred while getting the services.", e);
+
+			return services;
+		} // end catch(SQLException)
+		finally
+		{
+			MySqlConnectionManager.closeResultSet(results);
+			
 			try
 			{
-				
-					// SQL to get the rows
-					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
-												   COL_SERVICE_NAME + ", " +
-												   COL_PACKAGE_NAME + ", " +
-												   COL_CLASS_NAME + ", " +
-												   COL_IS_USER_DEFINED + ", " +
-												   COL_PORT + ", " +
-												   COL_WARNINGS + ", " +
-												   COL_ERRORS + ", " +
-												   COL_INPUT_RECORD_COUNT + ", " +
-												   COL_OUTPUT_RECORD_COUNT + ", " +
-												   COL_LAST_LOG_RESET + ", " +
-												   COL_LOG_FILE_NAME + ", " +
-												   COL_HARVEST_OUT_WARNINGS + ", " +
-												   COL_HARVEST_OUT_ERRORS + ", " +
-												   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
-												   COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
-												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
-												   COL_HARVEST_OUT_LOG_FILE_NAME + " " +
-								       "FROM " + SERVICES_TABLE_NAME + " " +
-								       "ORDER BY " + columnSorted + " DESC";
-
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"get all services\" PreparedStatement from the SQL " + selectSql);
-
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-					psGetSortedDesc = dbConnection.prepareStatement(selectSql);
-				
-
-				// Get the result of the SELECT statement
-
-				// Execute the query
-				results = psGetSortedDesc.executeQuery();
-
-				// For each result returned, add a Service object to the list with the returned data
-				while(results.next())
-				{
-					// The Object which will contain data on the service
-					Service service = new Service();
-
-					// Set the fields on the service
-					service.setId(results.getInt(1));
-					service.setName(results.getString(2));
-					service.setPackageName(results.getString(3));
-					service.setClassName(results.getString(4));
-					service.setIsUserDefined(results.getBoolean(5));
-					service.setPort(results.getInt(6));
-					service.setServicesWarnings(results.getInt(7));
-					service.setServicesErrors(results.getInt(8));
-					service.setInputRecordCount(results.getInt(9));
-					service.setOutputRecordCount(results.getInt(10));
-					service.setServicesLastLogReset(results.getDate(11));
-					service.setServicesLogFileName(results.getString(12));
-					service.setHarvestOutWarnings(results.getInt(13));
-					service.setHarvestOutErrors(results.getInt(14));
-					service.setHarvestOutRecordsAvailable(results.getLong(15));
-					service.setHarvestOutRecordsHarvested(results.getLong(16));
-					service.setHarvestOutLastLogReset(results.getDate(17));
-					service.setHarvestOutLogFileName(results.getString(18));
-
-					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
-						service.addInputFormat(formatDao.getById(inputFormatId));
-
-					for(Integer outputFormatId : serviceOutputFormatDAO.getOutputFormatsForService(service.getId()))
-						service.addOutputFormat(formatDao.getById(outputFormatId));
-
-					// Add the service to the list
-					services.add(service);
-				} // end loop over results
-
-				if(log.isDebugEnabled())
-					log.debug("Found " + services.size() + " services in the database.");
-
-				return services;
-			} // end try(get services)
+				getSorted.close();
+			} // end try(close the Statement)
 			catch(SQLException e)
 			{
-				log.error("A SQLException occurred while getting the services.", e);
-
-				return services;
-			} // end catch(SQLException)
-			finally
-			{
-				MySqlConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // end synchronized
-	} // end method getById(int)
+				log.error("An error occurred while trying to close the \"get processing directives sorted\" Statement");
+			} // end catch(DataException)
+		} // end finally(close ResultSet)
+	} // end method getSortedByUserName(boolean)
 	
 	@Override
 	public Service getById(int serviceId)

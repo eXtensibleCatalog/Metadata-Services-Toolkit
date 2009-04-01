@@ -10,7 +10,9 @@
 package xc.mst.dao.user;
 
 import java.sql.Connection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -93,6 +95,26 @@ public abstract class UserDAO
 	public final static String COL_FAILED_LOGIN_ATTEMPTS = "failed_login_attempts";
 
 	/**
+	 * A set of all columns which are valid for sorting
+	 */
+	protected static Set<String> sortableColumns = new HashSet<String>();
+	
+	// Initialize the list of sortable columns
+	static
+	{
+		sortableColumns.add(COL_USER_ID);
+		sortableColumns.add(COL_USERNAME);
+		sortableColumns.add(COL_FIRST_NAME);
+		sortableColumns.add(COL_LAST_NAME);
+		sortableColumns.add(COL_PASSWORD);
+		sortableColumns.add(COL_EMAIL);
+		sortableColumns.add(COL_SERVER_ID);
+		sortableColumns.add(COL_LAST_LOGIN);
+		sortableColumns.add(COL_ACCOUNT_CREATED);
+		sortableColumns.add(COL_FAILED_LOGIN_ATTEMPTS);
+	} // end initialization of sortableColumns
+
+	/**
 	 * Gets all users in the database
 	 *
 	 * @return A list containing all users in the database
@@ -100,12 +122,13 @@ public abstract class UserDAO
 	public abstract List<User> getAll();
 
 	/**
-     * returns a sorted list of all users
-     * @param asc determies if the rows are sorted in the ascending or descending order
-     * @param columnSorted the column on which the rows are sorted
-     * @return list of users
+     * Returns a sorted list of all users
+     * 
+     * @param asc Determines if the rows are sorted in the ascending or descending order
+     * @param columnSorted The column on which the rows are sorted
+     * @return A sorted list of users
      */
-	public abstract List<User> getSorted(boolean asc,String columnSorted);
+	public abstract List<User> getSorted(boolean asc, String columnSorted);
 
 	/**
 	 * Gets a user by it's ID

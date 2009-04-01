@@ -10,8 +10,9 @@
 package xc.mst.dao.log;
 
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -71,6 +72,22 @@ public abstract class LogDAO
 	 * The name of the log file location column
 	 */
 	public final static String COL_LOG_FILE_LOCATION = "log_file_location";
+
+	/**
+	 * A set of all columns which are valid for sorting
+	 */
+	protected static Set<String> sortableColumns = new HashSet<String>();
+	
+	// Initialize the list of sortable columns
+	static
+	{
+		sortableColumns.add(COL_LOG_ID);
+		sortableColumns.add(COL_WARNINGS);
+		sortableColumns.add(COL_ERRORS);
+		sortableColumns.add(COL_LAST_LOG_RESET);
+		sortableColumns.add(COL_LOG_FILE_NAME);
+		sortableColumns.add(COL_LOG_FILE_LOCATION);
+	} // end initialization of sortableColumns
 	
 	/**
 	 * Gets all logs from the database
@@ -83,10 +100,10 @@ public abstract class LogDAO
 	 * Gets a sorted list of all the general logs in the database 
 	 *
 	 * @param asc True to sort in ascending order, false to sort in descending order
-     * @param columnName determines the name of the column on which the rows should be sorted
-	 * @return A list containing all the general logs in the database sorted by their names
+     * @param columnName The name of the column on which the rows should be sorted
+	 * @return A sorted list containing all the general logs in the database
 	 */
-	public abstract List<Log> getSorted(boolean asc,String columnName);
+	public abstract List<Log> getSorted(boolean asc, String columnName);
 	
 	/**
 	 * Gets the log from the database with the passed log ID

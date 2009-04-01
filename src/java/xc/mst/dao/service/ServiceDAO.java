@@ -11,11 +11,12 @@ package xc.mst.dao.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import xc.mst.bo.log.Log;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
@@ -129,6 +130,34 @@ public abstract class ServiceDAO
 	public final static String COL_HARVEST_OUT_LOG_FILE_NAME = "harvest_out_log_file_name";
 
 	/**
+	 * A set of all columns which are valid for sorting
+	 */
+	protected static Set<String> sortableColumns = new HashSet<String>();
+	
+	// Initialize the list of sortable columns
+	static
+	{
+		sortableColumns.add(COL_SERVICE_ID);
+		sortableColumns.add(COL_SERVICE_NAME);
+		sortableColumns.add(COL_PACKAGE_NAME);
+		sortableColumns.add(COL_CLASS_NAME);
+		sortableColumns.add(COL_IS_USER_DEFINED);
+		sortableColumns.add(COL_PORT);
+		sortableColumns.add(COL_WARNINGS);
+		sortableColumns.add(COL_ERRORS);
+		sortableColumns.add(COL_INPUT_RECORD_COUNT);
+		sortableColumns.add(COL_OUTPUT_RECORD_COUNT);
+		sortableColumns.add(COL_LAST_LOG_RESET);
+		sortableColumns.add(COL_LOG_FILE_NAME);
+		sortableColumns.add(COL_HARVEST_OUT_WARNINGS);
+		sortableColumns.add(COL_HARVEST_OUT_ERRORS);
+		sortableColumns.add(COL_HARVEST_OUT_RECORDS_AVAILABLE);
+		sortableColumns.add(COL_HARVEST_OUT_RECORDS_HARVESTED);
+		sortableColumns.add(COL_HARVEST_OUT_LAST_LOG_RESET);
+		sortableColumns.add(COL_HARVEST_OUT_LOG_FILE_NAME);
+	} // end initialization of sortableColumns
+	
+	/**
 	 * Gets all services from the database
 	 *
 	 * @return A list containing all services in the database
@@ -136,10 +165,11 @@ public abstract class ServiceDAO
 	public abstract ArrayList<Service> getAll();
 
 	/**
-     * returns a sorted list of services
-     * @param asc determines whether the rows are sorted in ascending or descending order
-     * @param columnSorted the coulmn on which rows are sorted
-     * @return list of services
+     * Returns a sorted list of services
+     * 
+     * @param asc Determines whether the rows are sorted in ascending or descending order
+     * @param columnSorted The coulmn on which rows are sorted
+     * @return A sorted list of services
      */
 	public abstract List<Service> getSorted(boolean asc,String columnSorted);
 	

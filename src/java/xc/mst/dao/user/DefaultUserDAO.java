@@ -12,6 +12,7 @@ package xc.mst.dao.user;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,16 +65,6 @@ public class DefaultUserDAO extends UserDAO
 	private static PreparedStatement psGetAll = null;
 	
 	/**
-	 * A PreparedStatement to get all users in the database sorted by their full name in ascending order
-	 */
-	private static PreparedStatement psGetSortedAsc = null;
-	
-	/**
-	 * A PreparedStatement to get all users in the database sorted by their full name in descending order
-	 */
-	private static PreparedStatement psGetSortedDesc = null;
-	
-	/**
 	 * A PreparedStatement to get a user from the database by its ID
 	 */
 	private static PreparedStatement psGetById = null;
@@ -112,16 +103,6 @@ public class DefaultUserDAO extends UserDAO
 	 * Lock to synchronize access to the get all PreparedStatement
 	 */
 	private static Object psGetAllLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get sorted in ascending order PreparedStatement
-	 */
-	private static Object psGetSortedAscLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get sorted in descending order PreparedStatement
-	 */
-	private static Object psGetSortedDescLock = new Object();
 
 	/**
 	 * Lock to synchronize access to the get by ID PreparedStatement
@@ -250,191 +231,104 @@ public class DefaultUserDAO extends UserDAO
 	@Override
 	public List<User> getSorted(boolean asc,String columnSorted)
 	{
-		return(asc ? getSortedAsc(columnSorted) : getSortedDesc(columnSorted));
-	} // end method getSortedByUserName(boolean)
-
-	/**
-     * returns a list of users sorted in the ascending order of the column specified
-     * @param columnSorted The column on which the list of users are sorted
-     * @return list of users
-     */
-	private List<User> getSortedAsc(String columnSorted)
-	{
-		synchronized(psGetSortedAscLock)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Getting all users in ascending order sorted by their full name");
-		
-			// The ResultSet from the SQL query
-			ResultSet results = null;
-			
-			// A list to hold the results of the query
-			ArrayList<User> users = new ArrayList<User>();
-			
-			try
-			{
-						
-					// SQL to get the rows
-					String selectSql = "SELECT " + COL_USER_ID + ", " +
-				                                   COL_USERNAME + ", " +
-				                                   COL_FIRST_NAME + ", " +
-				                                   COL_LAST_NAME + ", " +
-				                                   COL_PASSWORD + ", " +
-				                                   COL_EMAIL + ", " +
-				                                   COL_SERVER_ID + ", " +
-				                                   COL_LAST_LOGIN + ", " +
-				                                   COL_ACCOUNT_CREATED + ", " +
-				                                   COL_FAILED_LOGIN_ATTEMPTS + " " +  
-	                                   "FROM " + USERS_TABLE_NAME + " " +
-	                                   " ORDER BY " + columnSorted + " ASC";
-				
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"get all users sorted in ascending order\" PreparedStatement from the SQL " + selectSql);
-				
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-					psGetSortedAsc = dbConnection.prepareStatement(selectSql);
-				
-			
-			
-				// Get the results of the SELECT statement			
-			
-				// Execute the query
-				results = psGetSortedAsc.executeQuery();
-			
-				// If any results were returned
-				while(results.next())
-				{
-					// The Object which will contain data on the user
-					User user = new User();
-					
-					// Set the fields on the user
-					user.setId(results.getInt(1));
-					user.setUsername(results.getString(2));
-					user.setFirstName(results.getString(3));
-					user.setLastName(results.getString(4));
-					user.setPassword(results.getString(5));
-					user.setEmail(results.getString(6));
-					user.setServer(serverDao.getById(results.getInt(7)));
-					user.setLastLogin(results.getDate(8));
-					user.setAccountCreated(results.getDate(9));
-					user.setFailedLoginAttempts(results.getInt(10));
-					
-					// Get the groups for the user
-					for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
-						user.addGroup(groupDao.getById(groupId));
-									
-					// Return the user
-					users.add(user);
-				} // end loop over results
-				
-				if(log.isDebugEnabled())
-					log.debug("Found " + users.size() + " users in the database.");
-				
-				return users;
-			} // end try
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while getting the users sorted in ascending order.", e);
-				return users;
-			} // end catch(SQLException)
-			finally
-			{
-				MySqlConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // end synchronized
-	} // end method getSortedAsc()
+		if(log.isDebugEnabled())
+			log.debug("Getting all users sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnSorted);
 	
-	/**
-     * Returns a list of users in the descending order of the column specified
-     * @param columnSorted The column on which the list of users are sorted
-     * @return list of users
-     */
-	private List<User> getSortedDesc(String columnSorted)
-	{
-		synchronized(psGetSortedDescLock)
+		// Validate the column we're trying to sort on
+		if(!sortableColumns.contains(columnSorted))
 		{
-			if(log.isDebugEnabled())
-				log.debug("Getting all users in descending order sorted by their full name");
+			log.error("An attempt was made to sort on the invalid column " + columnSorted);
+			return getAll();
+		} // end if(sort column invalid)
 		
-			// The ResultSet from the SQL query
-			ResultSet results = null;
+		// The ResultSet from the SQL query
+		ResultSet results = null;
+		
+		// The Statement for getting the rows
+		Statement getSorted = null;
+		
+		// A list to hold the results of the query
+		List<User> users = new ArrayList<User>();
+		
+		try
+		{
+					
+			// SQL to get the rows
+			String selectSql = "SELECT " + COL_USER_ID + ", " +
+		                                   COL_USERNAME + ", " +
+		                                   COL_FIRST_NAME + ", " +
+		                                   COL_LAST_NAME + ", " +
+		                                   COL_PASSWORD + ", " +
+		                                   COL_EMAIL + ", " +
+		                                   COL_SERVER_ID + ", " +
+		                                   COL_LAST_LOGIN + ", " +
+		                                   COL_ACCOUNT_CREATED + ", " +
+		                                   COL_FAILED_LOGIN_ATTEMPTS + " " +  
+                               "FROM " + USERS_TABLE_NAME + " " +
+                               "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
+		
+			if(log.isDebugEnabled())
+				log.debug("Creating the \"get all users sorted\" Statement from the SQL " + selectSql);
+		
+			// A statement to run the select SQL
+			getSorted = dbConnection.createStatement();
 			
-			// A list to hold the results of the query
-			ArrayList<User> users = new ArrayList<User>();
+			// Get the results of the SELECT statement			
+			
+			// Execute the query
+			results = getSorted.executeQuery(selectSql);
+		
+			// If any results were returned
+			while(results.next())
+			{
+				// The Object which will contain data on the user
+				User user = new User();
+				
+				// Set the fields on the user
+				user.setId(results.getInt(1));
+				user.setUsername(results.getString(2));
+				user.setFirstName(results.getString(3));
+				user.setLastName(results.getString(4));
+				user.setPassword(results.getString(5));
+				user.setEmail(results.getString(6));
+				user.setServer(serverDao.getById(results.getInt(7)));
+				user.setLastLogin(results.getDate(8));
+				user.setAccountCreated(results.getDate(9));
+				user.setFailedLoginAttempts(results.getInt(10));
+				
+				// Get the groups for the user
+				for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
+					user.addGroup(groupDao.getById(groupId));
+								
+				// Return the user
+				users.add(user);
+			} // end loop over results
+			
+			if(log.isDebugEnabled())
+				log.debug("Found " + users.size() + " users in the database.");
+			
+			return users;
+		} // end try
+		catch(SQLException e)
+		{
+			log.error("A SQLException occurred while getting the users sorted in ascending order.", e);
+			
+			return users;
+		} // end catch(SQLException)
+		finally
+		{
+			MySqlConnectionManager.closeResultSet(results);
 			
 			try
 			{
-						
-					// SQL to get the rows
-					String selectSql = "SELECT " + COL_USER_ID + ", " +
-				                                   COL_USERNAME + ", " +
-				                                   COL_FIRST_NAME + ", " +
-				                                   COL_LAST_NAME + ", " +
-				                                   COL_PASSWORD + ", " +
-				                                   COL_EMAIL + ", " +
-				                                   COL_SERVER_ID + ", " +
-				                                   COL_LAST_LOGIN + ", " +
-				                                   COL_ACCOUNT_CREATED + ", " +
-				                                   COL_FAILED_LOGIN_ATTEMPTS + " " +  
-	                                   "FROM " + USERS_TABLE_NAME + " " +
-	                                   " ORDER BY " + columnSorted + " DESC";
-				
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"get all users sorted in descending order\" PreparedStatement from the SQL " + selectSql);
-				
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-					psGetSortedDesc = dbConnection.prepareStatement(selectSql);
-				
-			
-				// Get the results of the SELECT statement			
-			
-				// Execute the query
-				results = psGetSortedDesc.executeQuery();
-			
-				// If any results were returned
-				while(results.next())
-				{
-					// The Object which will contain data on the user
-					User user = new User();
-					
-					// Set the fields on the user
-					user.setId(results.getInt(1));
-					user.setUsername(results.getString(2));
-					user.setFirstName(results.getString(3));
-					user.setLastName(results.getString(4));
-					user.setPassword(results.getString(5));
-					user.setEmail(results.getString(6));
-					user.setServer(serverDao.getById(results.getInt(7)));
-					user.setLastLogin(results.getDate(8));
-					user.setAccountCreated(results.getDate(9));
-					user.setFailedLoginAttempts(results.getInt(10));
-					
-					// Get the groups for the user
-					for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
-						user.addGroup(groupDao.getById(groupId));
-									
-					// Return the user
-					users.add(user);
-				} // end loop over results
-				
-				if(log.isDebugEnabled())
-					log.debug("Found " + users.size() + " users in the database.");
-				
-				return users;
-			} // end try
+				getSorted.close();
+			} // end try(close the Statement)
 			catch(SQLException e)
 			{
-				log.error("A SQLException occurred while getting the users sorted in descending order.", e);
-				return users;
-			} // end catch(SQLException)
-			finally
-			{
-				MySqlConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // end synchronized
-	} // end method getSortedDesc()
+				log.error("An error occurred while trying to close the \"get processing directives sorted\" Statement");
+			} // end catch(DataException)
+		} // end finally(close ResultSet)
+	} // end method getSorted(boolean, String)
 	
 	@Override
 	public User getById(int userId) 
