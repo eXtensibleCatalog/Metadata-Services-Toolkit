@@ -28,6 +28,7 @@ import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.user.DefaultServerDAO;
 import xc.mst.dao.user.DefaultUserDAO;
 import xc.mst.dao.user.UserDAO;
+import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.harvester.HarvestRunner;
 import xc.mst.manager.record.DefaultRecordService;
@@ -74,14 +75,17 @@ public class EOTests
 	public static void main(String[] args) throws DataException, SchedulingException
 	{
 		try
-		{
-			UserDAO userDao = new DefaultUserDAO();
-			
-			User user = userDao.getById(3);
-			user.setFirstName("Eric");
-			user.setLastName("Osisek");
-			
-			userDao.update(user);
+		{	
+			RecordList records = new DefaultRecordService().getAll();
+			for(Record record : records)
+			{
+				System.out.println("----");
+				System.out.println("Record ID: " + record.getId());
+				for(Record predecessor : record.getProcessedFrom())
+					System.out.println("Predecessor ID: " + predecessor.getId());
+				for(Record successor : record.getSuccessors())
+					System.out.println("Successor ID: " + successor.getId());
+			}
 			
 			return;
 		}
