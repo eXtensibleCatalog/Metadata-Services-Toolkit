@@ -86,9 +86,11 @@
 							   	<c:if test="${facet.name == 'service_name'}">
 							   		Service 
 							   	</c:if>
-							   	<c:if test="${facet.name == 'harvest_end_time'}">
+<!--							   	
+								<c:if test="${facet.name == 'harvest_end_time'}">
 							   		Harvest 
 							   	</c:if>
+-->							   	
 							   	<c:if test="${facet.name == 'warning'}">
 							   		Warning 
 							   	</c:if>

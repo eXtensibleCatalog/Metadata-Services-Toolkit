@@ -1229,9 +1229,9 @@ public class DefaultRecordService extends RecordService
 		doc.addField(FIELD_HARVEST_ID, (record.getHarvest() == null ? "0" : Integer.toString(record.getHarvest().getId())));
 //		doc.addField(FIELD_HARVEST_SCHEDULE_ID, (record.getHarvest() == null || record.getHarvest().getHarvestSchedule() == null ? "0" : Integer.toString(record.getHarvest().getHarvestSchedule().getId())));
 //		doc.addField(FIELD_HARVEST_SCHEDULE_NAME, (record.getHarvest() == null || record.getHarvest().getHarvestSchedule() == null ? "" : record.getHarvest().getHarvestSchedule().getScheduleName()));
-		if (record.getHarvest() != null && record.getProvider() != null) {
-			doc.addField(FIELD_HARVEST_END_TIME,record.getProvider().getName() + " " + record.getHarvest().getEndTime());
-		}
+//		if (record.getHarvest() != null && record.getProvider() != null) {
+//			doc.addField(FIELD_HARVEST_END_TIME,record.getProvider().getName() + " " + record.getHarvest().getEndTime());
+//		}
 		
 		
 		doc.addField(FIELD_SERVICE_ID, (record.getService() == null ? "0" : Integer.toString(record.getService().getId())));
@@ -1293,12 +1293,12 @@ public class DefaultRecordService extends RecordService
 			all.append(" ");
 		}
 		
-		if (record.getProvider() != null &&  record.getHarvest() != null) {
-			all.append(record.getProvider().getName());
-			all.append(" ");
-			all.append(record.getHarvest().getEndTime());
-			all.append(" ");
-		}
+//		if (record.getProvider() != null &&  record.getHarvest() != null) {
+//			all.append(record.getProvider().getName());
+//			all.append(" ");
+//			all.append(record.getHarvest().getEndTime());
+//			all.append(" ");
+//		}
 		
 		for(Set set : record.getSets())
 		{

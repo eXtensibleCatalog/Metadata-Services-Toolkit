@@ -206,8 +206,8 @@
 
  
    <field name="harvest_id" type="string" indexed="true" stored="true"/>
-   <field name="harvest_end_time" type="string" indexed="true" stored="true"/>
-<!--    <field name="harvest_schedule_id" type="string" indexed="true" stored="true"/>
+<!--   <field name="harvest_end_time" type="string" indexed="true" stored="true"/>
+    <field name="harvest_schedule_id" type="string" indexed="true" stored="true"/>
    <field name="harvest_schedule_name" type="string" indexed="true" stored="true"/>
 -->
 
