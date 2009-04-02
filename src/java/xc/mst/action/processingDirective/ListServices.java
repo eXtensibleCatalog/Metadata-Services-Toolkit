@@ -18,6 +18,7 @@ import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 
@@ -29,12 +30,12 @@ import xc.mst.manager.processingDirective.ServicesService;
 
 public class ListServices extends ActionSupport
 {
-    private String columnNumber;
+    
     /** Determines whether the rows are to be sorted in ascending or descending order*/
     private boolean isAscendingOrder = true;
 
     /** The coumn on which the rows are sorted*/
-    private String columnSorted;
+    private String columnSorted = "ServiceName";
     
     /** The list of services that are part of the MST */
     private List<Service> ServicesList;
@@ -53,11 +54,28 @@ public class ListServices extends ActionSupport
         {
 
            ServicesService servService = new DefaultServicesService();
-           ServicesList = servService.getAllServicesSorted(isAscendingOrder, columnSorted);
-           setServices(ServicesList);
-           setIsAscendingOrder(isAscendingOrder);
-           setColumnNumber(columnNumber);
-           return SUCCESS;
+           if(columnSorted.equalsIgnoreCase("ServiceName")||(columnSorted.equalsIgnoreCase("Port")))
+            {
+                if(columnSorted.equalsIgnoreCase("ServiceName"))
+                {
+                    ServicesList = servService.getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_SERVICE_NAME);
+                }
+                else
+                {
+                    ServicesList = servService.getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_PORT);
+                }
+                setServices(ServicesList);
+                setIsAscendingOrder(isAscendingOrder);
+                setColumnSorted(columnSorted);
+                return SUCCESS;
+            }
+            else
+            {
+                this.addFieldError("listServicesError", "ERROR : The specified column does not exist");
+                return INPUT;
+            }
+           
+           
         }
         catch(Exception e)
         {
@@ -121,7 +139,6 @@ public class ListServices extends ActionSupport
      */
     public void setColumnSorted(String columnSorted)
     {
-        System.out.println("Setting column sorted as "+columnSorted);
         this.columnSorted = columnSorted;
     }
 
@@ -133,21 +150,5 @@ public class ListServices extends ActionSupport
     {
         return this.columnSorted;
     }
-     /**
-     * sets the number of the column to be sorted (used for sorting purpose only)
-     * @param columnNumber column number
-     */
-    public void setColumnNumber(String columnNumber)
-    {
-        this.columnNumber = columnNumber;
-    }
-
-    /**
-     * returns the number of the column to be sorted
-     * @return column number
-     */
-    public String getColumnNumber()
-    {
-        return this.columnNumber;
-    }
+    
 }

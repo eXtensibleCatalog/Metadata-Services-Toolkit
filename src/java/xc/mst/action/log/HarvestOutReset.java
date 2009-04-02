@@ -96,7 +96,7 @@ public class HarvestOutReset extends ActionSupport
             String filename = harvestOutLogFileName;
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
-
+            System.out.println("Inside Harvest out Reset");
             return SUCCESS;
         }
         catch(Exception e)
