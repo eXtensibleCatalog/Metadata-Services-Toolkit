@@ -86,6 +86,9 @@
 							   	<c:if test="${facet.name == 'service_name'}">
 							   		Service 
 							   	</c:if>
+							   	<c:if test="${facet.name == 'harvest_end_time'}">
+							   		Harvest 
+							   	</c:if>
 							   	<c:if test="${facet.name == 'warning'}">
 							   		Warning 
 							   	</c:if>
@@ -133,6 +136,7 @@
 									</c:if>
 								</c:forEach> 
 								</p>
+								<br>
 
 						       </div>
 						        </c:forEach>
@@ -170,6 +174,10 @@
 						<c:if test="${rowCounter.count % 2 == 0}">
 							<div class="record_result_even_div">
 						</c:if>
+							<div class="record_number">
+								${rowStart + rowCounter.count}.
+							</div>
+						
 							<div class="record_text">
 								<c:url var="viewRecord" value="viewRecord.action">
 									  <c:param name="recordId" value="${record.id}"/>
@@ -188,20 +196,37 @@
 								<br>
 								Provider: ${record.provider.name}
 								<br>
-								<!-- Harvest: 
 								<c:if test="${record.harvest != null}">
-									${record.harvest.harvestSchedule.scheduleName}
+									Harvest: ${record.provider.name} ${record.harvest.endTime}
 									<br>
 								</c:if>
-								-->
-								
-								<c:if test="${record.numberOfPredecessors > 0}">
-									${record.numberOfPredecessors}  Predecessor(s) &nbsp;&nbsp;&nbsp;
-								</c:if>
-								
-								<c:if test="${record.numberOfSuccessors > 0}">
-									${record.numberOfSuccessors} Successor(s)
-								</c:if>								
+							   <c:url var="viewPredecessorRecord" value="browseRecords.action">
+									  <c:param name="query" value=""/>
+									  <c:param name="addFacetName" value="successor"/>
+									  <c:param name="addFacetValue" value="${record.id}"/>
+							   </c:url>
+							   <c:url var="viewSuccessorRecord" value="browseRecords.action">
+									  <c:param name="query" value=""/>
+									  <c:param name="addFacetName" value="processed_from"/>
+									  <c:param name="addFacetValue" value="${record.id}"/>
+							   </c:url>										
+							       <c:choose>
+								    <c:when test="${record.numberOfPredecessors > 0 && record.numberOfSuccessors > 0}">
+
+
+									<a href="${viewPredecessorRecord}">${record.numberOfPredecessors}  Predecessor</a> 
+									&nbsp;<img src="page-resources/img/white-book-both.jpg">&nbsp;
+									<a href="${viewSuccessorRecord}">${record.numberOfSuccessors} Successor</a>
+								    </c:when>
+								    <c:when test="${record.numberOfPredecessors > 0}">
+									<a href="${viewPredecessorRecord}">${record.numberOfPredecessors}  Predecessor</a> 
+								      &nbsp;<img src="page-resources/img/white-book-left.jpg">
+								    </c:when>
+													<c:when test="${record.numberOfSuccessors > 0}">
+									<a href="${viewSuccessorRecord}">${record.numberOfSuccessors}  Successor</a> 
+									&nbsp;<img src="page-resources/img/white-book-right.jpg">
+								    </c:when>                                    
+							      </c:choose>								
 							</div>
 						</div>
 

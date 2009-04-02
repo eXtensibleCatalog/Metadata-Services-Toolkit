@@ -87,9 +87,14 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		log.debug("query::"+query);
 		
 		SolrQuery solrQuery = new SolrQuery();
+
+		// If Query is empty retrieve all records
+		if ((query == null) || (query.equals(""))) {
+			solrQuery.setQuery("*:*");
+		}	else {
+			solrQuery.setQuery(query.replaceAll(":", "\\\\:"));
+		}
 		
-		solrQuery.setQuery(query.replaceAll(":", "\\\\:"));
-	
 		StringTokenizer nameTokenizer = new StringTokenizer(selectedFacetNames, "|");
 		StringTokenizer valueTokenizer = new StringTokenizer(selectedFacetValues, "|");
 		

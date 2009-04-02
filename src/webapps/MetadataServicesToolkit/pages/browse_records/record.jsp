@@ -74,7 +74,7 @@
    
 			-->
 			<h2> </h2>
-			<textarea rows="80" cols="150" style= "background: #C0C0C0;">${recordXML}</textarea> 
+			<textarea rows="80" cols="150" style= "background: #F1F1F1;">${recordXML}</textarea> 
 			
  		</div>
 		<!--  end body -->		
