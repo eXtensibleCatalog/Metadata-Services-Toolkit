@@ -198,10 +198,12 @@
 								<br>
 								Provider: ${record.provider.name}
 								<br>
+<!--							
 								<c:if test="${record.harvest != null}">
 									Harvest: ${record.provider.name} ${record.harvest.endTime}
 									<br>
 								</c:if>
+-->								
 							   <c:url var="viewPredecessorRecord" value="browseRecords.action">
 									  <c:param name="query" value=""/>
 									  <c:param name="addFacetName" value="successor"/>
@@ -212,23 +214,19 @@
 									  <c:param name="addFacetName" value="processed_from"/>
 									  <c:param name="addFacetValue" value="${record.id}"/>
 							   </c:url>										
-							       <c:choose>
-								    <c:when test="${record.numberOfPredecessors > 0 && record.numberOfSuccessors > 0}">
-
-
-									<a href="${viewPredecessorRecord}">${record.numberOfPredecessors}  Predecessor</a> 
-									&nbsp;<img src="page-resources/img/white-book-both.jpg">&nbsp;
-									<a href="${viewSuccessorRecord}">${record.numberOfSuccessors} Successor</a>
-								    </c:when>
-								    <c:when test="${record.numberOfPredecessors > 0}">
-									<a href="${viewPredecessorRecord}">${record.numberOfPredecessors}  Predecessor</a> 
-								      &nbsp;<img src="page-resources/img/white-book-left.jpg">
-								    </c:when>
-													<c:when test="${record.numberOfSuccessors > 0}">
-									<a href="${viewSuccessorRecord}">${record.numberOfSuccessors}  Successor</a> 
-									&nbsp;<img src="page-resources/img/white-book-right.jpg">
-								    </c:when>                                    
-							      </c:choose>								
+							       <c:if test="${record.numberOfPredecessors > 0 && record.numberOfSuccessors > 0}">
+										<a href="${viewPredecessorRecord}">${record.numberOfPredecessors} Predecessor</a> 
+										&nbsp;<img src="page-resources/img/white-book-both.jpg">&nbsp;
+										<a href="${viewSuccessorRecord}">${record.numberOfSuccessors} Successor</a>
+								    </c:if>
+								    <c:if test="${record.numberOfPredecessors > 0 && record.numberOfSuccessors < 1}">
+										<a href="${viewPredecessorRecord}">${record.numberOfPredecessors} Predecessor</a> 
+									      &nbsp;<img src="page-resources/img/white-book-left.jpg">
+								    </c:if>
+									<c:if test="${record.numberOfSuccessors > 0 && record.numberOfPredecessors < 1}">
+										<a href="${viewSuccessorRecord}">${record.numberOfSuccessors} Successor</a> 
+										&nbsp;<img src="page-resources/img/white-book-right.jpg">
+								    </c:if>                                    
 							</div>
 						</div>
 
