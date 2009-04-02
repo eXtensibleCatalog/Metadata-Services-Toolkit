@@ -810,8 +810,8 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                     							   COL_HOUR + ", " +
                     							   COL_NOTIFY_EMAIL + " " +
 	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME + " " +
-	                                   "WHERE (" + COL_START_DATE + " IS NULL OR " + COL_START_DATE + "<?) " +
-	                                   "AND (" + COL_END_DATE + " IS NULL OR " + COL_END_DATE + ">?) " +
+	                                   "WHERE (" + COL_START_DATE + " IS NULL OR " + COL_START_DATE + "<=?) " +
+	                                   "AND (" + COL_END_DATE + " IS NULL OR " + COL_END_DATE + ">=?) " +
 	                                   "AND " + "((0=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=?)" +
 	                                             "OR (0=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=-1)" +
 	                                             "OR " + COL_MINUTE + "=?)";
