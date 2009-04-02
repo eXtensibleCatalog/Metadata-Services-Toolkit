@@ -13,6 +13,7 @@ package xc.mst.action.processingDirective;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -23,12 +24,8 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.*;
 import xc.mst.constants.Constants;
-import xc.mst.manager.processingDirective.DefaultProcessingDirectiveInputFormatUtilService;
-import xc.mst.manager.processingDirective.DefaultProcessingDirectiveInputSetUtilService;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
 import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ProcessingDirectiveInputFormatUtilService;
-import xc.mst.manager.processingDirective.ProcessingDirectiveInputSetUtilService;
 import xc.mst.manager.processingDirective.ProcessingDirectiveService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.repository.DefaultFormatService;
@@ -249,16 +246,62 @@ public class AddProcessingDirective2 extends ActionSupport
             Map sessionMap = ActionContext.getContext().getSession();
             ProcessingDirective tempProcDir = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
             String sourceType = (String)sessionMap.get("sourceType");
-            List<Format> tempFormatList = null;
+            List<Format> tempFormatList = new ArrayList<Format>();
             List<Set> tempSetList = null;
             if(sourceType.equalsIgnoreCase("provider"))
             {
-                tempFormatList = tempProcDir.getSourceProvider().getFormats();
+                List tempList = tempProcDir.getSourceProvider().getFormats();
+                List compareList = tempProcDir.getService().getInputFormats();
+                Iterator tempIter = tempList.iterator();
+                while(tempIter.hasNext())
+                {
+                    boolean flags = false;
+                    Iterator compareIter = compareList.iterator();
+                    Format tempFormat = (Format)tempIter.next();
+                    System.out.println("The tempformat is "+tempFormat.getName());
+                    while(compareIter.hasNext())
+                    {
+                        Format compareFormat = (Format)compareIter.next();
+                        System.out.println("The compareformat is "+compareFormat.getName());
+                        if(compareFormat.getId()==tempFormat.getId())
+                        {
+                            flags = true;
+                            break;
+                        }
+                    }
+                    if(flags==true)
+                    {
+                        tempFormatList.add(tempFormat);
+                    }
+                }
                 tempSetList = tempProcDir.getSourceProvider().getSets();
             }
             else
             {
-                tempFormatList = tempProcDir.getSourceService().getOutputFormats();
+                List tempList = tempProcDir.getSourceService().getOutputFormats();
+                List compareList = tempProcDir.getService().getInputFormats();
+                Iterator tempIter = tempList.iterator();
+                while(tempIter.hasNext())
+                {
+                    boolean flags = false;
+                    Iterator compareIter = compareList.iterator();
+                    Format tempFormat = (Format)tempIter.next();
+                    System.out.println("The tempformat is "+tempFormat.getName());
+                    while(compareIter.hasNext())
+                    {
+                        Format compareFormat = (Format)compareIter.next();
+                        System.out.println("The compareFormat value is "+compareFormat.getName());
+                        if(compareFormat.getId()==tempFormat.getId())
+                        {
+                            flags = true;
+                            break;
+                        }
+                    }
+                    if(flags==true)
+                    {
+                        tempFormatList.add(tempFormat);
+                    }
+                }
                 tempSetList = setService.getAllSets();
             }
             setFormatList(tempFormatList);
