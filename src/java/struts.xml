@@ -153,7 +153,7 @@
         
         <action name="deleteRepository" class="xc.mst.action.repository.DeleteRepository">
         	<interceptor-ref name="default"/>
-            <result name="success" type="redirect">allRepository.action?isAscendingOrder=true&amp;columnSorted=name</result>
+            <result name="success" type="redirect">allRepository.action?isAscendingOrder=true&amp;columnSorted=RepositoryName</result>
             <result name="input">/pages/repository/view_repository.jsp</result>
         </action>
        
@@ -490,27 +490,27 @@
 		</action>
         <action name="serviceReset" class="xc.mst.action.log.ServiceReset">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">serviceLog.action?isAscendingOrder=true&amp;columnSorted=service_name</result>
+			<result name="success" type="redirect">serviceLog.action?isAscendingOrder=true&amp;columnSorted=ServiceName</result>
 		</action>
         <action name="serviceResetAll" class="xc.mst.action.log.ServiceReset" method="resetAll">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">serviceLog.action?isAscendingOrder=true&amp;columnSorted=service_name</result>
+			<result name="success" type="redirect">serviceLog.action?isAscendingOrder=true&amp;columnSorted=ServiceName</result>
 		</action>
         <action name="harvestOutReset" class="xc.mst.action.log.HarvestOutReset">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">harvestOutLog.action?isAscendingOrder=true&amp;columnSorted=service_name</result>
+			<result name="success" type="redirect">harvestOutLog.action?isAscendingOrder=true&amp;columnSorted=ServiceName</result>
 		</action>
         <action name="harvestOutResetAll" class="xc.mst.action.log.HarvestOutReset" method="resetAll">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">harvestOutLog.action?isAscendingOrder=true&amp;columnSorted=service_name</result>
+			<result name="success" type="redirect">harvestOutLog.action?isAscendingOrder=true&amp;columnSorted=ServiceName</result>
 		</action>
         <action name="harvestInReset" class="xc.mst.action.log.HarvestInReset">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">harvestInLog.action?isAscendingOrder=true&amp;columnSorted=name</result>
+			<result name="success" type="redirect">harvestInLog.action?isAscendingOrder=true&amp;columnSorted=RepositoryName</result>
 		</action>
         <action name="harvestInResetAll" class="xc.mst.action.log.HarvestInReset" method="resetAll">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">harvestInLog.action?isAscendingOrder=true&amp;columnSorted=name</result>
+			<result name="success" type="redirect">harvestInLog.action?isAscendingOrder=true&amp;columnSorted=RepositoryName</result>
 		</action>
         <action name="harvestInLog" class="xc.mst.action.log.HarvestInLog">
             <interceptor-ref name="default"/>
@@ -518,7 +518,7 @@
 		</action>
         <action name="downloadServiceLogFile" class="xc.mst.action.log.downloadServiceLogFile">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">serviceLog.action?isAscendingOrder=true&amp;columnSorted=service_name</result>
+			<result name="success" type="redirect">serviceLog.action?isAscendingOrder=true&amp;columnSorted=ServiceName</result>
 		</action>
 	</package>
 </struts>

@@ -280,3 +280,16 @@
 }
 
 .clear { clear:both;}
+
+.sortColumn
+ {
+     background-color : #edfaff;
+     font-family: verdana,sans-serif;
+     font-size: 12px;
+ }
+ .plainColumn
+ {
+     background-color : #ffffff;
+     font-family: verdana,sans-serif;
+     font-size: 12px;
+ }
