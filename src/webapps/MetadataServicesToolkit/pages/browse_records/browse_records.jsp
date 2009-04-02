@@ -224,8 +224,10 @@
 									      &nbsp;<img src="page-resources/img/white-book-left.jpg">
 								    </c:if>
 									<c:if test="${record.numberOfSuccessors > 0 && record.numberOfPredecessors < 1}">
-										<a href="${viewSuccessorRecord}">${record.numberOfSuccessors} Successor</a> 
-										&nbsp;<img src="page-resources/img/white-book-right.jpg">
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="page-resources/img/white-book-right.jpg">
+										&nbsp;<a href="${viewSuccessorRecord}">${record.numberOfSuccessors} Successor</a> 
+										
 								    </c:if>                                    
 							</div>
 						</div>
