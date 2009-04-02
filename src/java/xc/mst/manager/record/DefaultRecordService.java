@@ -860,12 +860,12 @@ public class DefaultRecordService extends RecordService
 			queryBuffer.append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId)).append(" ");
 		if(useMetadataPrefix)
 			queryBuffer.append(FIELD_FORMAT_ID).append(":").append(Integer.toString(formatId));
+		
 		// TODO
-		if(fromDate != null || untilDate != null)
+		//if(fromDate != null || untilDate != null)
 			//queryBuffer.append(new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);
 
 		query.setQuery(queryBuffer.toString());
-		
 		// Remove the limit on the number of results returned
 		query.setRows(Integer.MAX_VALUE);
 		
@@ -994,7 +994,8 @@ public class DefaultRecordService extends RecordService
 
 		try
 		{
-			record.setCreatedAt(DateTools.stringToDate((String)doc.getFieldValue(FIELD_CREATED_AT)));
+			if (doc.getFieldValue(FIELD_CREATED_AT) != null)
+				record.setCreatedAt(DateTools.stringToDate((String)doc.getFieldValue(FIELD_CREATED_AT)));
 			if(doc.getFieldValue(FIELD_UPDATED_AT) != null)
 				record.setUpdatedAt(DateTools.stringToDate((String)doc.getFieldValue(FIELD_UPDATED_AT)));
 		} // end try(parse created at and updated at dates
@@ -1224,10 +1225,15 @@ public class DefaultRecordService extends RecordService
 		doc.addField(FIELD_PROVIDER_NAME, (record.getProvider() == null ? "" : record.getProvider().getName()));
 		doc.addField(FIELD_PROVIDER_URL, (record.getProvider() == null ? "" : record.getProvider().getOaiProviderUrl()));
 
+		log.debug("Harvest id:"+record.getHarvest());
 		doc.addField(FIELD_HARVEST_ID, (record.getHarvest() == null ? "0" : Integer.toString(record.getHarvest().getId())));
 //		doc.addField(FIELD_HARVEST_SCHEDULE_ID, (record.getHarvest() == null || record.getHarvest().getHarvestSchedule() == null ? "0" : Integer.toString(record.getHarvest().getHarvestSchedule().getId())));
 //		doc.addField(FIELD_HARVEST_SCHEDULE_NAME, (record.getHarvest() == null || record.getHarvest().getHarvestSchedule() == null ? "" : record.getHarvest().getHarvestSchedule().getScheduleName()));
-
+		if (record.getHarvest() != null && record.getProvider() != null) {
+			doc.addField(FIELD_HARVEST_END_TIME,record.getProvider().getName() + " " + record.getHarvest().getEndTime());
+		}
+		
+		
 		doc.addField(FIELD_SERVICE_ID, (record.getService() == null ? "0" : Integer.toString(record.getService().getId())));
 		
 		if (record.getService() != null)
@@ -1286,6 +1292,14 @@ public class DefaultRecordService extends RecordService
 			all.append(record.getProvider().getName());
 			all.append(" ");
 		}
+		
+		if (record.getProvider() != null &&  record.getHarvest() != null) {
+			all.append(record.getProvider().getName());
+			all.append(" ");
+			all.append(record.getHarvest().getEndTime());
+			all.append(" ");
+		}
+		
 		for(Set set : record.getSets())
 		{
 			all.append(set.getSetSpec());
@@ -1310,6 +1324,8 @@ public class DefaultRecordService extends RecordService
 			all.append(error);
 			all.append(" ");
 		}
+		
+		
 
 		doc.addField(FIELD_ALL, all.toString());
 
@@ -1339,7 +1355,7 @@ public class DefaultRecordService extends RecordService
 		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
 		record.setProvider(providerDao.loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
 		record.setService(serviceDao.loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
-//		record.setHarvest(harvestDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_HARVEST_ID))));
+		record.setHarvest(harvestDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_HARVEST_ID))));
 
 		Collection<Object> sets = doc.getFieldValues(FIELD_SET_SPEC);
 		if(sets != null)

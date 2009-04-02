@@ -132,6 +132,11 @@ public abstract class RecordService
 	 * The name of the provider URL field
 	 */
 	protected final static String FIELD_PROVIDER_URL = "provider_url";
+	
+	/**
+	 * The name of the provider and harvest end date and time
+	 */
+	protected final static String FIELD_HARVEST_END_TIME = "harvest_end_time";
 
 	/**
 	 * The name of the format name field

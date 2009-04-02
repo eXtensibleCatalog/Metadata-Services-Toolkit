@@ -148,13 +148,22 @@
 }
 
 .search_div_pager {
-	float: right;
+	float: left;
 /*	background-color: #65696A; */
-	background-color: #E0F2FF;
+	background-color: #DBEAED;
+	border: 1px solid #A9A9A9;
     	text-align: center;
     	/* color: #E2E2E2; */
-    	padding: 5px;
+    	
 	width: 100%;
+}
+
+.rightBorderTd {
+	border-right: 1px solid #A9A9A9;
+}
+
+.leftBorderTd {
+	border-left: 1px solid #A9A9A9;
 }
 
 .record_result_odd_div {
@@ -166,7 +175,18 @@
 }
 
 .record_text {
-	padding:7px;
+	padding-top:3px;
+	padding-right:7px;
+	padding-left:3px;
+	float:left
+}
+
+.record_number {
+	padding-top:3px;
+	padding-right:7px;
+	padding-left:7px;
+	
+	float:left
 }
 
 .record_result_even_div {

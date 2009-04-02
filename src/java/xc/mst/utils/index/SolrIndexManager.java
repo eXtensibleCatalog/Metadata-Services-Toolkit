@@ -207,7 +207,6 @@ public class SolrIndexManager {
 		SolrDocumentList docs = null;
 		try {
 		    QueryResponse rsp = server.query( query );
-
 		    docs = rsp.getResults();
 
 		} catch (SolrServerException e) {
