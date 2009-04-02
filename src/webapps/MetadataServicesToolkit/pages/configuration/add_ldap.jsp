@@ -66,7 +66,8 @@
 
                 <!-- Display of error message -->
                 <c:if test="${errorType != null}">
-                    <div class="${errorType}">
+                    <div id="server_error_div">
+                    <div id="server_message_div" class="${errorType}">
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
                         <c:if test="${errorType == 'error'}">
                         	<s:fielderror cssClass="errorMessage"/>
@@ -74,6 +75,7 @@
                         <c:if test="${errorType == 'info'}">
                         	<div class="jsErrorMessage"> ${message}</div>
                         </c:if>
+                    </div>
                     </div>
                  </c:if> 
                  <div id="error_div"></div>
