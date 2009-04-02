@@ -14,10 +14,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
-import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 
+import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 
@@ -29,7 +29,7 @@ import xc.mst.manager.processingDirective.ServicesService;
 public class ServiceLog extends ActionSupport
 {
     /**The coulmn on which the rows are to be sorted */
-    private String columnSorted="service_name";
+    private String columnSorted="ServiceName";
     
     /**Boolena parameter determines if the rows are to be sorted in ascending or descending order */
     private boolean isAscendingOrder=true;
@@ -95,7 +95,7 @@ public class ServiceLog extends ActionSupport
      */
     public void setColumnSorted(String columnSorted)
     {
-        System.out.println("Setting column sorted as "+columnSorted);
+        
         this.columnSorted = columnSorted;
     }
 
@@ -116,9 +116,46 @@ public class ServiceLog extends ActionSupport
     public String execute()
     {
         try
-        {            
-            List<Service> servicesList = servicesService.getAllServicesSorted(isAscendingOrder,columnSorted);
-            setServiceList(servicesList);
+        {
+            List<Service> servicesList = new ArrayList<Service>();
+            if(columnSorted.equalsIgnoreCase("ServiceName")||(columnSorted.equalsIgnoreCase("InputRecords"))||(columnSorted.equalsIgnoreCase("OutputRecords"))||(columnSorted.equalsIgnoreCase("Warnings"))||(columnSorted.equalsIgnoreCase("Errors"))||(columnSorted.equalsIgnoreCase("LastLogReset")))
+            {
+                if(columnSorted.equalsIgnoreCase("ServiceName"))
+                {
+                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
+                }
+                else if(columnSorted.equalsIgnoreCase("Warnings"))
+                {
+                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_WARNINGS);
+                }
+                else if(columnSorted.equalsIgnoreCase("Errors"))
+                {
+                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_ERRORS);
+                }
+                else if(columnSorted.equalsIgnoreCase("InputRecords"))
+                {
+                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_INPUT_RECORD_COUNT);
+                }
+                else if(columnSorted.equalsIgnoreCase("OutputRecords"))
+                {
+                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_OUTPUT_RECORD_COUNT);
+                }
+                else
+                {
+                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_LAST_LOG_RESET);
+                }
+
+                setIsAscendingOrder(isAscendingOrder);
+                setColumnSorted(columnSorted);
+                setServiceList(servicesList);
+            }
+            else
+            {
+                System.out.println("The value of column Sorted is :"+columnSorted);
+                this.addFieldError("generalLogError", "ERROR : The specified column does not exist");
+                return INPUT;
+            }
+                       
             return SUCCESS;
 
         }

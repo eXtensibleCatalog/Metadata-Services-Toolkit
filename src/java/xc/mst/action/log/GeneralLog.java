@@ -15,6 +15,7 @@ import java.util.*;
 import org.apache.log4j.Logger;
 import xc.mst.bo.log.Log;
 import xc.mst.constants.Constants;
+import xc.mst.dao.log.LogDAO;
 import xc.mst.manager.logs.DefaultLogService;
 import xc.mst.manager.logs.LogService;
 
@@ -28,7 +29,7 @@ import xc.mst.manager.logs.LogService;
 public class GeneralLog extends ActionSupport
 {
     /** The column on which the rows are to be sorted */
-    private String columnSorted = "log_file_name";
+    private String columnSorted = "LogFileName";
 
     /** Determines whether the rows are to be sorted in ascending or descending order */
     private boolean isAscendingOrder = true;
@@ -71,12 +72,37 @@ public class GeneralLog extends ActionSupport
         {
 
             LogService logService = new DefaultLogService();
+            List<Log> fullList = new ArrayList<Log>();
 
-            List<Log> fullList = logService.getSorted(isAscendingOrder, columnSorted);
-
-            setLogList(fullList);
-
-            return SUCCESS;
+            if(columnSorted.equalsIgnoreCase("LogFileName")||(columnSorted.equalsIgnoreCase("Warnings"))||(columnSorted.equalsIgnoreCase("Errors"))||(columnSorted.equalsIgnoreCase("LastLogReset")))
+            {
+                if(columnSorted.equalsIgnoreCase("LogFileName"))
+                {
+                    fullList  = logService.getSorted(isAscendingOrder, LogDAO.COL_LOG_FILE_NAME);
+                }
+                else if(columnSorted.equalsIgnoreCase("Warnings"))
+                {
+                    fullList = logService.getSorted(isAscendingOrder, LogDAO.COL_WARNINGS);
+                }
+                else if(columnSorted.equalsIgnoreCase("Errors"))
+                {
+                    fullList = logService.getSorted(isAscendingOrder, LogDAO.COL_ERRORS);
+                }
+                else
+                {
+                    fullList = logService.getSorted(isAscendingOrder, LogDAO.COL_LAST_LOG_RESET);
+                }
+                setLogList(fullList);
+                setIsAscendingOrder(isAscendingOrder);
+                setColumnSorted(columnSorted);
+                return SUCCESS;
+            }
+            else
+            {
+                this.addFieldError("generalLogError", "ERROR : The specified column does not exist");
+                return INPUT;
+            }
+           
         }
         catch(Exception e)
         {

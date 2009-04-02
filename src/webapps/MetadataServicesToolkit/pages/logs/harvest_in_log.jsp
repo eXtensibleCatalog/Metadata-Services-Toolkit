@@ -86,12 +86,147 @@
                             <tr>
                                 <td></td>
                                 <td></td>
-                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=name">Repositories</a></td>
-                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=records_added">Last Harvest End Time</a></td>
-                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=warnings">#Records Added</a></td>
-                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=errors">#Records Replaced</a></td>
+                                <td>
+                                    <c:if test="${columnSorted!='RepositoryName'}">
+                                         <c:url var="logSortUrl" value="harvestInLog.action">
+                                           <c:param name="isAscendingOrder" value="true"/>
+                                           <c:param name="columnSorted" value="RepositoryName"/>
+                                         </c:url>
+                                          <a href="${logSortUrl}">Repositories</a>
+                                     </c:if>
+
+                                     <c:if test="${columnSorted=='RepositoryName'}">
+                                       <c:url var="logSortUrl" value="harvestInLog.action">
+                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                         <c:param name="columnSorted" value="RepositoryName"/>
+                                       </c:url>
+
+                                       <a href="${logSortUrl}">Repositories</a>
+
+                                        <c:choose>
+                                            <c:when test="${isAscendingOrder==true}">
+                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                            </c:otherwise>
+                                        </c:choose>
+                                     </c:if>
+                                </td>
+                                <td>
+                                    <c:if test="${columnSorted!='LastHarvestEndTime'}">
+                                         <c:url var="logSortUrl" value="harvestInLog.action">
+                                           <c:param name="isAscendingOrder" value="true"/>
+                                           <c:param name="columnSorted" value="LastHarvestEndTime"/>
+                                         </c:url>
+                                          <a href="${logSortUrl}">Last Harvest Date</a>
+                                     </c:if>
+
+                                     <c:if test="${columnSorted=='LastHarvestEndTime'}">
+                                       <c:url var="logSortUrl" value="harvestInLog.action">
+                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                         <c:param name="columnSorted" value="LastHarvestEndTime"/>
+                                       </c:url>
+
+                                       <a href="${logSortUrl}">Last Harvest Date</a>
+
+                                        <c:choose>
+                                            <c:when test="${isAscendingOrder==true}">
+                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                            </c:otherwise>
+                                        </c:choose>
+                                     </c:if>
+                                </td>
+                                <td>
+                                    <c:if test="${columnSorted!='RecordsAdded'}">
+                                         <c:url var="logSortUrl" value="harvestInLog.action">
+                                           <c:param name="isAscendingOrder" value="true"/>
+                                           <c:param name="columnSorted" value="RecordsAdded"/>
+                                         </c:url>
+                                          <a href="${logSortUrl}">#Records Added</a>
+                                     </c:if>
+
+                                     <c:if test="${columnSorted=='RecordsAdded'}">
+                                       <c:url var="logSortUrl" value="harvestInLog.action">
+                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                         <c:param name="columnSorted" value="RecordsAdded"/>
+                                       </c:url>
+
+                                       <a href="${logSortUrl}">#Records Added</a>
+
+                                        <c:choose>
+                                            <c:when test="${isAscendingOrder==true}">
+                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                            </c:otherwise>
+                                        </c:choose>
+                                     </c:if>
+                                </td>
+                                <td>
+                                    <c:if test="${columnSorted!='RecordsReplaced'}">
+                                         <c:url var="logSortUrl" value="harvestInLog.action">
+                                           <c:param name="isAscendingOrder" value="true"/>
+                                           <c:param name="columnSorted" value="RecordsReplaced"/>
+                                         </c:url>
+                                          <a href="${logSortUrl}">#Records Replaced</a>
+                                     </c:if>
+
+                                     <c:if test="${columnSorted=='RecordsReplaced'}">
+                                       <c:url var="logSortUrl" value="harvestInLog.action">
+                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                         <c:param name="columnSorted" value="RecordsReplaced"/>
+                                       </c:url>
+
+                                       <a href="${logSortUrl}">#Records Replaced</a>
+
+                                        <c:choose>
+                                            <c:when test="${isAscendingOrder==true}">
+                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                            </c:otherwise>
+                                        </c:choose>
+                                     </c:if>
+                                </td>
                                 <td>Reset</td>
-                                <td><a href="harvestInLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_log_reset">Last Reset Date</a></td>
+                                <td>
+                                    <c:if test="${columnSorted!='LastLogReset'}">
+                                         <c:url var="logSortUrl" value="harvestInLog.action">
+                                           <c:param name="isAscendingOrder" value="true"/>
+                                           <c:param name="columnSorted" value="LastLogReset"/>
+                                         </c:url>
+                                          <a href="${logSortUrl}">Last Reset</a>
+                                     </c:if>
+
+                                     <c:if test="${columnSorted=='LastLogReset'}">
+                                       <c:url var="logSortUrl" value="harvestInLog.action">
+                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                         <c:param name="columnSorted" value="LastLogReset"/>
+                                       </c:url>
+
+                                       <a href="${logSortUrl}">Last Reset</a>
+
+                                        <c:choose>
+                                            <c:when test="${isAscendingOrder==true}">
+                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                            </c:otherwise>
+                                        </c:choose>
+                                     </c:if>
+                                </td>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,12 +237,44 @@
                                   <tr>
                                       <td><a style="cursor:pointer;"onclick="javascript:YAHOO.xc.mst.logs.displayOAIRequest('${n.oaiProviderUrl}');"><U>OAI Request</U></a></td>
                                       <td><a style="text-decoration:none;color:black;" href="${browseRecordsAction}"><U>Browse Records</U></a></td>
-                                      <td><a style="cursor:pointer;" onclick="javascript:YAHOO.xc.mst.logs.downloadFile(${n.id});"><U>${n.name}</U></a></td>
-                                      <td>${n.lastHarvestEndTime}</td>
-                                      <td>${n.recordsAdded}</td>
-                                      <td>${n.recordsReplaced}</td>
-                                      <td><button class="xc_button" type="button" name="reset" onclick="javascript:YAHOO.xc.mst.logs.resetFunction('${n.logFileName}','${n.id}')">Reset</button></td>
-                                      <td>${n.lastLogReset}</td>
+                                           <c:set var="classColumn" value="plainColumn"/>
+                                           <c:if test="${columnSorted=='RepositoryName'}">
+                                               <c:set var="classColumn" value="sortColumn"/>
+                                           </c:if>
+                                      <td class="${classColumn}">
+                                          <a style="cursor:pointer;" onclick="javascript:YAHOO.xc.mst.logs.downloadFile(${n.id});"><U>${n.name}</U></a>
+                                      </td>
+                                           <c:set var="classColumn" value="plainColumn"/>
+                                           <c:if test="${columnSorted=='LastHarvestEndTime'}">
+                                               <c:set var="classColumn" value="sortColumn"/>
+                                           </c:if>
+                                      <td class="${classColumn}">
+                                          ${n.lastHarvestEndTime}
+                                      </td>
+                                           <c:set var="classColumn" value="plainColumn"/>
+                                           <c:if test="${columnSorted=='RecordsAdded'}">
+                                               <c:set var="classColumn" value="sortColumn"/>
+                                           </c:if>
+                                      <td class="classColumn">
+                                          ${n.recordsAdded}
+                                      </td>
+                                           <c:set var="classColumn" value="plainColumn"/>
+                                           <c:if test="${columnSorted=='RecordsReplaced'}">
+                                               <c:set var="classColumn" value="sortColumn"/>
+                                           </c:if>
+                                      <td class="${classColumn}">
+                                          ${n.recordsReplaced}
+                                      </td>
+                                      <td>
+                                          <button class="xc_button" type="button" name="reset" onclick="javascript:YAHOO.xc.mst.logs.resetFunction('${n.logFileName}','${n.id}')">Reset</button>
+                                      </td>
+                                           <c:set var="classColumn" value="plainColumn"/>
+                                           <c:if test="${columnSorted=='LastLogReset'}">
+                                               <c:set var="classColumn" value="sortColumn"/>
+                                           </c:if>
+                                      <td class="${classColumn}">
+                                          ${n.lastLogReset}
+                                      </td>
                                   </tr>
                               </c:forEach>
                         </tbody>

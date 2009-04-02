@@ -80,35 +80,64 @@
 
                         <td>
                             <div>
-                                <a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=ScheduleName">Schedule Name</a>
-                                     <c:if test="${columnSorted=='ScheduleName'}">
-                                        <c:choose>
-                                            <c:when test="${isAscendingOrder==true}">
-                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
-                                            </c:when>
-                                            <c:otherwise>
-                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                            </c:otherwise>
-                                        </c:choose>
-                                     </c:if>
+                                <c:if test="${columnSorted!='ScheduleName'}">
+                                     <c:url var="scheduleSortUrl" value="allSchedules.action">
+                                       <c:param name="isAscendingOrder" value="true"/>
+                                       <c:param name="columnSorted" value="ScheduleName"/>
+                                     </c:url>
+                                      <a href="${scheduleSortUrl}">Schedule nme</a>
+                                 </c:if>
+
+                                 <c:if test="${columnSorted=='ScheduleName'}">
+                                   <c:url var="scheduleSortUrl" value="allSchedules.action">
+                                     <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                     <c:param name="columnSorted" value="ScheduleName"/>
+                                   </c:url>
+
+                                   <a href="${scheduleSortUrl}">Schedule Name</a>
+
+                                    <c:choose>
+                                        <c:when test="${isAscendingOrder==true}">
+                                            &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                        </c:otherwise>
+                                    </c:choose>
+                                 </c:if>
                                
                             </div>
                         </td>
 						<td>Repository Name</td>
                         <td>
                             <div>
-                                <a href="allSchedules.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=Recurrence">Recurrance</a>
-                                     <c:if test="${columnSorted=='Recurrence'}">
-                                        <c:choose>
-                                            <c:when test="${isAscendingOrder==true}">
-                                                 &nbsp;<img src="page-resources/img/triangle_sort.jpg">
-                                            </c:when>
-                                            <c:otherwise>
-                                                 &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                            </c:otherwise>
-                                        </c:choose>
-                                     </c:if>
-                             
+                                 <c:if test="${columnSorted!='Recurrence'}">
+                                     <c:url var="scheduleSortUrl" value="allSchedules.action">
+                                       <c:param name="isAscendingOrder" value="true"/>
+                                       <c:param name="columnSorted" value="Recurrence"/>
+                                     </c:url>
+                                      <a href="${scheduleSortUrl}">Recurrence</a>
+                                 </c:if>
+
+                                 <c:if test="${columnSorted=='Recurrence'}">
+                                   <c:url var="scheduleSortUrl" value="allSchedules.action">
+                                     <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                     <c:param name="columnSorted" value="Recurrence"/>
+                                   </c:url>
+
+                                   <a href="${scheduleSortUrl}">Recurrence</a>
+
+                                    <c:choose>
+                                        <c:when test="${isAscendingOrder==true}">
+                                            &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                        </c:otherwise>
+                                    </c:choose>
+                                 </c:if>
                             </div>
 
                         </td>

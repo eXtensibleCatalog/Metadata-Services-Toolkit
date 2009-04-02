@@ -18,7 +18,6 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
-import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
@@ -59,21 +58,20 @@ public class AllRepository extends ActionSupport
         {
             
             ProviderService providerService = new DefaultProviderService();
-            ProviderDAO providerDao = new DefaultProviderDAO();
 
             if(columnSorted.equalsIgnoreCase("RepositoryName")||(columnSorted.equalsIgnoreCase("RepositoryURL"))||(columnSorted.equalsIgnoreCase("LastHarvestEndTime")))
             {
                 if(columnSorted.equalsIgnoreCase("RepositoryName"))
                 {
-                    Repositories = providerService.getAllProvidersSorted(isAscendingOrder,providerDao.COL_NAME);
+                    Repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME);
                 }
                 else if(columnSorted.equalsIgnoreCase("RepositoryURL"))
                 {
-                    Repositories = providerService.getAllProvidersSorted(isAscendingOrder,providerDao.COL_OAI_PROVIDER_URL);
+                    Repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_OAI_PROVIDER_URL);
                 }
                 else
                 {
-                    Repositories = providerService.getAllProvidersSorted(isAscendingOrder,providerDao.COL_LAST_HARVEST_END_TIME);
+                    Repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_HARVEST_END_TIME);
                 }
                
                 setIsAscendingOrder(isAscendingOrder);

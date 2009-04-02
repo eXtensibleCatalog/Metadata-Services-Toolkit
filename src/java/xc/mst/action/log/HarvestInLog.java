@@ -14,6 +14,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
+import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
 
@@ -26,7 +27,7 @@ import xc.mst.manager.repository.ProviderService;
 public class HarvestInLog extends ActionSupport
 {
     /** determines the column name on which sorting should be performed */
-    private String columnSorted="name";
+    private String columnSorted="RepositoryName";
 
     /** determines if the rows are to be ordered in ascending or descending order */
     private boolean isAscendingOrder=true;
@@ -108,7 +109,36 @@ public class HarvestInLog extends ActionSupport
     {
         try
         {
-            setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,columnSorted));
+            if(columnSorted.equalsIgnoreCase("RepositoryName")||(columnSorted.equalsIgnoreCase("LastHarvestEndTime"))||(columnSorted.equalsIgnoreCase("RecordsAdded"))||(columnSorted.equalsIgnoreCase("RecordsReplaced"))||(columnSorted.equalsIgnoreCase("LastLogReset")))
+            {
+                if(columnSorted.equalsIgnoreCase("RepositoryName"))
+                {
+                    setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME));
+                }
+                else if(columnSorted.equalsIgnoreCase("LastHarvestEndTime"))
+                {
+                    setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_HARVEST_END_TIME));
+                }
+                else if(columnSorted.equalsIgnoreCase("RecordsAdded"))
+                {
+                    setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_RECORDS_ADDED));
+                }
+                else if(columnSorted.equalsIgnoreCase("RecordsReplaced"))
+                {
+                    setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_RECORDS_REPLACED));
+                }
+                else
+                {
+                    setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_LOG_RESET));
+                }
+                setIsAscendingOrder(isAscendingOrder);
+                setColumnSorted(columnSorted);
+            }
+            else
+            {
+                this.addFieldError("generalLogError", "ERROR : The specified column does not exist");
+            }
+            
             return SUCCESS;
         }
         catch(Exception e)

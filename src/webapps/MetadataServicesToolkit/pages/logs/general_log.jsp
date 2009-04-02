@@ -83,21 +83,157 @@
                     <table width="100%">
                         <thead>
                             <tr>
-                                <td><a href="generalLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=log_file_name">Logs</a></td>
-                                <td><a href="generalLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=warnings">#Warnings</a></td>
-                                <td><a href="generalLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=errors">#Errors</a></td>
+                                <td>
+                                   <c:if test="${columnSorted!='LogFileName'}">
+                                         <c:url var="logSortUrl" value="generalLog.action">
+                                           <c:param name="isAscendingOrder" value="true"/>
+                                           <c:param name="columnSorted" value="LogFileName"/>
+                                         </c:url>
+                                          <a href="${logSortUrl}">Filename</a>
+                                     </c:if>
+
+                                     <c:if test="${columnSorted=='LogFileName'}">
+                                       <c:url var="logSortUrl" value="generalLog.action">
+                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                         <c:param name="columnSorted" value="LogFileName"/>
+                                       </c:url>
+
+                                       <a href="${logSortUrl}">Filename</a>
+
+                                        <c:choose>
+                                            <c:when test="${isAscendingOrder==true}">
+                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                            </c:otherwise>
+                                        </c:choose>
+                                     </c:if>
+                                </td>
+                                <td>
+                                    <c:if test="${columnSorted!='Warnings'}">
+                                         <c:url var="logSortUrl" value="generalLog.action">
+                                           <c:param name="isAscendingOrder" value="true"/>
+                                           <c:param name="columnSorted" value="Warnings"/>
+                                         </c:url>
+                                          <a href="${logSortUrl}">Warnings</a>
+                                     </c:if>
+
+                                     <c:if test="${columnSorted=='Warnings'}">
+                                       <c:url var="logSortUrl" value="generalLog.action">
+                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                         <c:param name="columnSorted" value="Warnings"/>
+                                       </c:url>
+
+                                       <a href="${logSortUrl}">Warnings</a>
+
+                                        <c:choose>
+                                            <c:when test="${isAscendingOrder==true}">
+                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                            </c:otherwise>
+                                        </c:choose>
+                                     </c:if>
+                                </td>
+                                <td>
+                                    <c:if test="${columnSorted!='Errors'}">
+                                         <c:url var="logSortUrl" value="generalLog.action">
+                                           <c:param name="isAscendingOrder" value="true"/>
+                                           <c:param name="columnSorted" value="Errors"/>
+                                         </c:url>
+                                          <a href="${logSortUrl}">Errors</a>
+                                     </c:if>
+
+                                     <c:if test="${columnSorted=='Errors'}">
+                                       <c:url var="logSortUrl" value="generalLog.action">
+                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                         <c:param name="columnSorted" value="Errors"/>
+                                       </c:url>
+
+                                       <a href="${logSortUrl}">Errors</a>
+
+                                        <c:choose>
+                                            <c:when test="${isAscendingOrder==true}">
+                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                            </c:otherwise>
+                                        </c:choose>
+                                     </c:if>
+                                </td>
+
                                 <td>Reset</td>
-                                <td><a href="generalLog.action?isAscendingOrder=${!isAscendingOrder}&columnSorted=last_log_reset">Last Reset Date</a></td>
+
+                                <td>
+                                     <c:if test="${columnSorted!='LastLogReset'}">
+                                         <c:url var="logSortUrl" value="generalLog.action">
+                                           <c:param name="isAscendingOrder" value="true"/>
+                                           <c:param name="columnSorted" value="LastLogReset"/>
+                                         </c:url>
+                                          <a href="${logSortUrl}">Last Reset Date</a>
+                                     </c:if>
+
+                                     <c:if test="${columnSorted=='LastLogReset'}">
+                                       <c:url var="logSortUrl" value="generalLog.action">
+                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                         <c:param name="columnSorted" value="LastLogReset"/>
+                                       </c:url>
+
+                                       <a href="${logSortUrl}">Last Reset Date</a>
+
+                                        <c:choose>
+                                            <c:when test="${isAscendingOrder==true}">
+                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                            </c:otherwise>
+                                        </c:choose>
+                                     </c:if>
+                                </td>
                             </tr>
                         </thead>
                         <tbody>
                               <c:forEach var="n" items="${logList}" varStatus="a">
                                   <tr>
-                                      <td style="background-color:#edfaff;"><a onclick="javascript:YAHOO.xc.mst.logs.downloadFile(${n.id});">${n.logFileName}</a></td>
-                                      <td>${n.warnings}</td>
-                                      <td>${n.errors}</td>
-                                      <td><button onclick="javascript:YAHOO.xc.mst.logs.resetFunction('${n.id}');" class="xc_button" type="button" name="reset">Reset</button></td>
-                                      <td>${n.lastLogReset}</td>
+                                           <c:set var="classColumn" value="plainColumn"/>
+                                           <c:if test="${columnSorted=='LogFileName'}">
+                                               <c:set var="classColumn" value="sortColumn"/>
+                                           </c:if>
+                                      <td class="${classColumn}">
+                                          <a onclick="javascript:YAHOO.xc.mst.logs.downloadFile(${n.id});">${n.logFileName}</a>
+                                      </td>
+                                            <c:set var="classColumn" value="plainColumn"/>
+                                            <c:if test="${columnSorted=='Warnings'}">
+                                                <c:set var="classColumn" value="sortColumn"/>
+                                            </c:if>
+                                      <td class="${classColumn}">
+                                          ${n.warnings}
+                                      </td>
+                                            <c:set var="classColumn" value="plainColumn"/>
+                                            <c:if test="${columnSorted=='Errors'}">
+                                                <c:set var="classColumn" value="sortColumn"/>
+                                            </c:if>
+                                      <td class="${classColumn}">
+                                          ${n.errors}
+                                      </td>
+                                      <td>
+                                          <button onclick="javascript:YAHOO.xc.mst.logs.resetFunction('${n.id}');" class="xc_button" type="button" name="reset">Reset</button>
+                                      </td>
+                                            <c:set var="classColumn" value="plainColumn"/>
+                                            <c:if test="${columnSorted=='LastLogReset'}">
+                                                <c:set var="classColumn" value="sortColumn"/>
+                                            </c:if>
+                                      <td class="${classColumn}">
+                                          ${n.lastLogReset}
+                                      </td>
                                   </tr>
                               </c:forEach>
                         </tbody>
