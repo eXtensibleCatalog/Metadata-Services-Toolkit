@@ -54,7 +54,7 @@
             <c:import url="/inc/menu.jsp"/>
              <jsp:include page="/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Logs > General" />
+                    <jsp:param name="bread" value="Logs , General" />
 
              </jsp:include>
  		</div>

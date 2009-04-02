@@ -14,6 +14,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
+import xc.mst.dao.harvest.HarvestScheduleDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;

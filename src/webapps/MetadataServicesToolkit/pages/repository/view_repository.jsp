@@ -168,7 +168,7 @@
                                 <ul style="list-style:none;">
                                     <li style="float:left;"><div style="width:150px;"><B>Created By</B> </div> </li>
                                     <li style="float:left;"><div>:</div></li>
-                                    <li style="float:left;"><div style="margin-left:15px;">${user.fullName}</div></li>
+                                    <li style="float:left;"><div style="margin-left:15px;">${user.firstName} ${user.lastName}</div></li>
                                 </ul>
                             </td>
 			               
