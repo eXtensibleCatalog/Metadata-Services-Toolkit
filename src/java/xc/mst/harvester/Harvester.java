@@ -898,6 +898,9 @@ public class Harvester implements ErrorHandler
 					setSpecElement = findSibling(setSpecElement, "setSpec");
 				} // end loop over setSpecs for the record
 
+				// Set the harvest which harvested the record
+				record.setHarvest(currentHarvest);
+				
 				// Check whether or not this record already exists in the database
 				Record oldRecord = recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId);
 
