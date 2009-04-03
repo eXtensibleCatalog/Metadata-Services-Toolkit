@@ -109,5 +109,13 @@
   <tag-class>xc.mst.tags.pager.MorePreviousTag</tag-class>
   <body-content>scriptless</body-content>
   </tag> 
-  
+
+  <function>
+    <name>lastHarvest</name>
+    <function-class>xc.mst.tags.HarvestUtil</function-class>
+    <function-signature>
+        java.lang.String latestHarvest(xc.mst.bo.harvest.HarvestSchedule)
+    </function-signature>
+  </function> 
+    
 </taglib>

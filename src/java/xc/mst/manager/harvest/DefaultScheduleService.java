@@ -11,9 +11,12 @@ package xc.mst.manager.harvest;
 
 import java.util.List;
 
+import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.dao.DataException;
+import xc.mst.dao.harvest.DefaultHarvestDAO;
 import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
+import xc.mst.dao.harvest.HarvestDAO;
 import xc.mst.dao.harvest.HarvestScheduleDAO;
 
 /**
@@ -25,6 +28,8 @@ import xc.mst.dao.harvest.HarvestScheduleDAO;
 public class DefaultScheduleService implements ScheduleService {
 
 	private HarvestScheduleDAO harvestScheduleDAO = new DefaultHarvestScheduleDAO();
+
+	private HarvestDAO harvestDAO = new DefaultHarvestDAO();
 
 
 	/**
@@ -91,4 +96,16 @@ public class DefaultScheduleService implements ScheduleService {
     {
         return harvestScheduleDAO.getSorted(sort,columnSorted);
     }
+
+    /**
+	 * Gets all harvest for schedule
+	 *
+	 * @param harvestSchedule Harvest schedule to get the harvest
+	 * @return A list containing all harvests
+	 */
+	public List<Harvest> getHarvestForSchedule(HarvestSchedule harvestSchedule)
+    {
+        return harvestDAO.getHarvestsForSchedule(harvestSchedule.getId());
+    }
+
 }

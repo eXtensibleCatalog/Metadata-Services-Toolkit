@@ -9,6 +9,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="mst" uri="mst-tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions"   prefix="fn" %>
 
 
 <!--  document type -->
@@ -194,7 +196,16 @@
 								Time ${schedule.hour + 1}:00
 							</c:if>
 						</td>
-                        <td>Status should be here</td>
+                        <td>
+                        	<c:set var="lastRun" value="${mst:lastHarvest(schedule)}"/>
+                        	<c:if test="${fn:startsWith(lastRun, 'Not')}">
+                        		${mst:lastHarvest(schedule)}
+                        	</c:if>
+                        	<c:if test="${fn:startsWith(lastRun, 'Success')}">
+                        		<li style="float:left;margin-top:-2px;"><div><img src="page-resources/img/tick.jpg"></div></li> ${mst:lastHarvest(schedule)}
+                        	</c:if>
+                        	
+                        </td>
 						<td> <button class="xc_button" id="showDeleteSchedule" type="button" name="delete" onClick="Javascript:YAHOO.mst.schedule.delete.deleteSchedule(${schedule.id}, '${schedule.scheduleName}');">Delete</button></td>
 					</tr>
 					</c:forEach>

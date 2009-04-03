@@ -380,7 +380,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					// Set the fields on the harvest
 					harvest.setId(results.getInt(1));
 					harvest.setStartTime(results.getTime(2));
-					harvest.setEndTime(results.getTime(3));
+					harvest.setEndTime(results.getTimestamp(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
 

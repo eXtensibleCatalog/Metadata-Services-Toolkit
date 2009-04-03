@@ -11,6 +11,7 @@ package xc.mst.manager.harvest;
 
 import java.util.List;
 
+import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.dao.DataException;
 
@@ -74,4 +75,11 @@ public interface ScheduleService {
      */
 	public abstract List<HarvestSchedule> getAllSchedulesSorted(boolean sort,String columnSorted);
 
+    /**
+	 * Gets all harvest for schedule
+	 *
+	 * @param harvestSchedule Harvest schedule to get the harvest
+	 * @return A list containing all harvests
+	 */
+	public List<Harvest> getHarvestForSchedule(HarvestSchedule harvestSchedule);
 }
