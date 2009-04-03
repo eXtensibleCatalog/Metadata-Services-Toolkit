@@ -20,6 +20,9 @@ import org.apache.log4j.PropertyConfigurator;
 import xc.mst.bo.log.Log;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
+import xc.mst.bo.service.Service;
+import xc.mst.dao.service.DefaultServiceDAO;
+import xc.mst.dao.service.ServiceDAO;
 
 /**
  * Initialize log
@@ -52,6 +55,16 @@ public class InitializeLog  extends HttpServlet {
 	    List<Log> logs = logDao.getAll();
 	    for(Log log : logs)
 	    	LogWriter.addInfo(log.getLogFileLocation(), "Beginning logging for " + log.getLogFileName() + ".");
+	    
+	    // Initialize the service logs
+	    // TODO: Move this to an insertService method.
+	    ServiceDAO serviceDao = new DefaultServiceDAO();
+	    List<Service> services = serviceDao.getAll();
+	    for(Service service : services)
+	    {
+	    	LogWriter.addInfo(service.getServicesLogFileName(), "Beginning logging for " + service.getName());
+	    	LogWriter.addInfo(service.getHarvestOutLogFileName(), "Beginning logging for " + service.getName() + "'s OAI repository");
+	    }
 	  }
 
 	  public void doGet(HttpServletRequest req, HttpServletResponse res) {

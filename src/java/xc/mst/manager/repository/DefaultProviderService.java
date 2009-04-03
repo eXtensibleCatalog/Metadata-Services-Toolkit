@@ -14,6 +14,7 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.dao.DataException;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.ProviderDAO;
+import xc.mst.utils.LogWriter;
 
 /**
  * Service class that is used to Add/Delete/Update a Provider/Repository
@@ -38,6 +39,7 @@ public class DefaultProviderService implements ProviderService{
 
     public void insertProvider(Provider provider) throws DataException{
         providerDao.insert(provider);
+        LogWriter.addInfo(provider.getLogFileName(), "Beginning logging for " + provider.getName());
     }
 
     public void deleteProvider(Provider provider) throws DataException{
