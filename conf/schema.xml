@@ -217,7 +217,7 @@
    <field name="oai_identifier" type="string" indexed="true" stored="true"/>
    <field name="oai_datestamp" type="string" indexed="true" stored="true"/>
    <field name="oai_header" type="string" indexed="true" stored="true"  />
-   <field name="oai_xml" type="string" indexed="true" stored="true" compressed="true"/>
+   <field name="oai_xml" type="text" indexed="true" stored="true" compressed="true"/>
 
    <field name="updated_at" type="string" indexed="true" stored="true"/>
    <field name="up_link" type="string" indexed="true" stored="true" multiValued="true"/>

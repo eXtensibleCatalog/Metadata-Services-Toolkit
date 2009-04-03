@@ -193,6 +193,7 @@
 
 			<tr>
 				<td colspan="2" align="right">
+				<hr size="1" style="color:#cfd2d4"><br>
 					<button class="xc_button" name="cancel" onclick="javascript:YAHOO.xc.mst.schedule.add.cancel();">Cancel</button>
 					<button class="xc_button" type="button" name="previous" onclick="javascript:YAHOO.xc.mst.schedule.add.gotoPreviousStep();">Back to Step 1</button> 
 					<button class="xc_button" type="button" name="next" onclick="javascript:YAHOO.xc.mst.schedule.add.saveAndExit();">Finish</button>

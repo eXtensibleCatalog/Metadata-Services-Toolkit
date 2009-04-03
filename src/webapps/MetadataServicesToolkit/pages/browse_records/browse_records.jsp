@@ -104,10 +104,12 @@
 								   		<c:if test="${facet.name == filter.name}">
 										  	 <c:url var="removeFacet" value="browseRecords.action">
 												  <c:param name="query" value="${query}"/>
+												  <c:param name="searchXML" value="${searchXML}"/>
 												  <c:param name="removeFacetName" value="${filter.name}"/>
 												  <c:param name="removeFacetValue" value="${filter.value}"/>
 												  <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
 												  <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
+												  
 											  </c:url>
 										  	: ${filter.value} (<a href="${removeFacet}">Remove</a>)
 								  		</c:if>
@@ -128,10 +130,12 @@
 									<c:if test="${facetExist == false}">
 											<c:url var="facetFilter" value="browseRecords.action">
 												  <c:param name="query" value="${query}"/>
+												  <c:param name="searchXML" value="${searchXML}"/>
 												  <c:param name="addFacetName" value="${facet.name}"/>
 												  <c:param name="addFacetValue" value="${fcount.name}"/>
 												  <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
 												  <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
+												  
 											 </c:url>
 
 											<a href="${facetFilter}">${fcount.name} (${fcount.count})</a><br/>
@@ -150,6 +154,10 @@
 
 							<input type="text" id="search_text" name="query" value="${query}" size="40"/>
 							<button class="xc_button" type="submit" name="save" >Search</button>
+							<br><input type="checkbox" id="search_xml" name="searchXML" value="true" 
+							<c:if test="${searchXML}">
+								checked
+							</c:if>/> Search Full XML content
 						</form>	
 					</div>
 					<div class="search_results_div">
@@ -183,13 +191,15 @@
 							<div class="record_text">
 								<c:url var="viewRecord" value="viewRecord.action">
 									  <c:param name="recordId" value="${record.id}"/>
-									  <c:param name="recordXML" value="${record.oaiXml}"/>
+									  <c:param name="providerName" value="${record.provider.name}"/>
 									  <c:param name="query" value="${query}"/>
+									  <c:param name="searchXML" value="${searchXML}"/>
 									  <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
 								  	  <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
 									  <c:param name="rowStart" value="${rowStart}"/>
 									  <c:param name="startPageNumber" value="${startPageNumber}"/>
 									  <c:param name="currentPageNumber" value="${currentPageNumber}"/>
+									  <c:param name="recordXML" value="${record.oaiXml}"/>
 									  	  
 								  </c:url>
 								<a href="${viewRecord}">${record.provider.name} ${record.id}</a>
@@ -208,11 +218,13 @@
 									  <c:param name="query" value=""/>
 									  <c:param name="addFacetName" value="successor"/>
 									  <c:param name="addFacetValue" value="${record.id}"/>
+									  <c:param name="searchXML" value="false"/>
 							   </c:url>
 							   <c:url var="viewSuccessorRecord" value="browseRecords.action">
 									  <c:param name="query" value=""/>
 									  <c:param name="addFacetName" value="processed_from"/>
 									  <c:param name="addFacetValue" value="${record.id}"/>
+									  <c:param name="searchXML" value="false"/>
 							   </c:url>										
 							       <c:if test="${record.numberOfPredecessors > 0 && record.numberOfSuccessors > 0}">
 										<a href="${viewPredecessorRecord}">${record.numberOfPredecessors} Predecessor</a> 

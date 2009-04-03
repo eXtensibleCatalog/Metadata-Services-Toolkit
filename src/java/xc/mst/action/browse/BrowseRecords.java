@@ -70,6 +70,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	/** Id of record */
 	private int recordId;
 	
+	/** Name of provider  */
+	private String providerName;
+	
 	/** Record XML */
 	private String recordXML;
 	
@@ -79,6 +82,14 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	/** The end row number to retrieve */ 
 	private int rowEnd;
 	
+	/** Denotes whether to search XML or not */ 
+	private boolean searchXML;
+	
+	
+	public String execute() {
+		searchXML = true;
+		return SUCCESS;
+	}
 	
 	/**
 	 * Search for records
@@ -92,7 +103,11 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		if ((query == null) || (query.equals(""))) {
 			solrQuery.setQuery("*:*");
 		}	else {
-			solrQuery.setQuery(query.replaceAll(":", "\\\\:"));
+			if (searchXML) {
+				solrQuery.setQuery(query + " OR " + "oai_xml:" + query.replaceAll(":", "\\\\:"));
+			} else {
+				solrQuery.setQuery(query.replaceAll(":", "\\\\:"));
+			}
 		}
 		
 		StringTokenizer nameTokenizer = new StringTokenizer(selectedFacetNames, "|");
@@ -357,5 +372,21 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	 */
 	public int getTotalHits() {
 		return result.getTotalNumberOfResults();
+	}
+
+	public boolean isSearchXML() {
+		return searchXML;
+	}
+
+	public void setSearchXML(boolean searchXML) {
+		this.searchXML = searchXML;
+	}
+
+	public String getProviderName() {
+		return providerName;
+	}
+
+	public void setProviderName(String providerName) {
+		this.providerName = providerName;
 	}
 }

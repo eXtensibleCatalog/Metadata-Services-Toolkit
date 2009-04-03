@@ -53,6 +53,7 @@
 
             <c:url var="viewResults" value="browseRecords.action">
 		  		<c:param name="query" value="${query}"/>
+		  		<c:param name="searchXML" value="${searchXML}"/>
 			    <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
 		  	    <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
 		  		<c:param name="rowStart" value="${rowStart}"/>
@@ -60,7 +61,7 @@
 				<c:param name="currentPageNumber" value="${currentPageNumber}"/>
 	    	</c:url>            
             <jsp:include page="/inc/breadcrumb.jsp"> 
-	          <jsp:param name="bread" value="Browse Records,<a href='${viewResults}'>Search Results</a>, View Record" />
+	          <jsp:param name="bread" value="Browse Records,<a href='${viewResults}'>Search Results</a>, View Record ${providerName} ${recordId}" />
             </jsp:include>
             
  		</div>

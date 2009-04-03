@@ -25,6 +25,7 @@
 			       <c:param name="startPageNumber" value="1"/>
 			       <c:param name="currentPageNumber" value="1"/>
 				   <c:param name="query" value="${query}"/>
+				   <c:param name="searchXML" value="${searchXML}"/>
 				   <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
 				   <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>	
 		      </c:url>										
@@ -39,6 +40,7 @@
 					<c:param name="startPageNumber" value="${prevousPageStartPageNumber}"/>
 					<c:param name="currentPageNumber" value="${currentPageNumber - 1}"/>
 					<c:param name="query" value="${query}"/>
+					<c:param name="searchXML" value="${searchXML}"/>
 					<c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
 					<c:param name="selectedFacetValues" value="${selectedFacetValues}"/>	
 			</c:url>
@@ -52,6 +54,7 @@
 						<c:param name="startPageNumber" value="${startPageNumberForPreviousSet}"/>
 						<c:param name="currentPageNumber" value="${startPageNumberForPreviousSet}"/>
 						<c:param name="query" value="${query}"/>
+						<c:param name="searchXML" value="${searchXML}"/>
 						<c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
 						<c:param name="selectedFacetValues" value="${selectedFacetValues}"/>	
 			      </c:url>										
@@ -69,6 +72,7 @@
 					 <c:param name="startPageNumber" value="${startPageNumber}"/>
 					 <c:param name="currentPageNumber" value="${pageNumber}"/>
 					 <c:param name="query" value="${query}"/>
+					 <c:param name="searchXML" value="${searchXML}"/>
 					 <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
 					 <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>	
 				 </c:url>		
@@ -91,6 +95,7 @@
 					<c:param name="startPageNumber" value="${startPageNumberForNextSet}"/>
 					<c:param name="currentPageNumber" value="${startPageNumberForNextSet}"/>	
 					<c:param name="query" value="${query}"/>
+					<c:param name="searchXML" value="${searchXML}"/>
 					<c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
 					<c:param name="selectedFacetValues" value="${selectedFacetValues}"/>	
 			    </c:url>	
@@ -104,6 +109,7 @@
 				<c:param name="startPageNumber" value="${nextPageStartPageNumber}"/>
 				<c:param name="currentPageNumber" value="${currentPageNumber + 1}"/>	
 				<c:param name="query" value="${query}"/>
+				<c:param name="searchXML" value="${searchXML}"/>
 				<c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
 				<c:param name="selectedFacetValues" value="${selectedFacetValues}"/>	
 			</c:url>	
@@ -119,6 +125,7 @@
 					<c:param name="startPageNumber" value="${startPageNumber}"/>
 					<c:param name="currentPageNumber" value="${currentPageNumber}"/>	
 					<c:param name="query" value="${query}"/>
+					<c:param name="searchXML" value="${searchXML}"/>
 					<c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
 					<c:param name="selectedFacetValues" value="${selectedFacetValues}"/>	
 			    </c:url>
