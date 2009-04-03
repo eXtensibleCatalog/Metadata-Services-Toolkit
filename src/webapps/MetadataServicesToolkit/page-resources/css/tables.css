@@ -222,6 +222,25 @@
     font-size: 1.3em;
 }
 
+.record_box {
+	margin-top:10px;
+	float: left;
+	background-color: #F1F1F1;
+	border: 1px solid #A9A9A9;
+    	text-align: left;
+	width: 100%;
+}
+
+.preWrap {
+	 white-space: pre-wrap; /* css-3 */
+	 white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+	 white-space: -pre-wrap; /* Opera 4-6 */
+	 white-space: -o-pre-wrap; /* Opera 7 */
+	 word-wrap: break-word; /* Internet Explorer 5.5+ */
+         padding:15px;
+ 
+}
+
 /* hack for IE 6 fix*/
 * html .facet_search_selection
 {

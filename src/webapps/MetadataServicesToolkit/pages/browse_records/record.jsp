@@ -69,14 +69,15 @@
 		
 		<!-- body -->
 		<div id="bd">
-   			<!-- <pre class="sourcecode">
-   				<textarea rows="80" cols="115" style= "background: #C0C0C0;">${recordXML}</textarea> 
-   			</pre>
-   
-			-->
+			<div class="record_box">
+				<pre class="preWrap">
+					${recordXML}
+				</pre>
+			</div>
+			<!-- 
 			<h2> </h2>
 			<textarea rows="80" cols="150" style= "background: #F1F1F1;">${recordXML}</textarea> 
-			
+			-->
  		</div>
 		<!--  end body -->		
             
