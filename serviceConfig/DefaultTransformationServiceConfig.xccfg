@@ -1,0 +1,23 @@
+Transformation Service # The name of the service
+TransformationService.jar # The .jar file containing the service
+xc.mst.services.TransformationService # The class within the .jar file that represents the service.  This class must extend xc.mst.services.MetadataService
+
+#-----------------------------------------
+INPUT FORMATS
+#-----------------------------------------
+name: marcxml # The name of the marcxml format, which the Transformation Service accepts as input
+schema location: http://128.151.244.132:8080/OAIToolkit/schema/MARC21slim_custom.xsd # The location of the marcxml schema
+namespace: http://www.loc.gov/MARC21/slim # The namespace of the marcxml schema
+
+#-----------------------------------------
+OUTPUT FORMATS
+#-----------------------------------------
+name: xc # The name of the xc format, which the Transformation Service can output
+schema location: http://www.extensiblecatalog.info/Elements # The location of the xc schema
+namespace: http://www.extensiblecatalog.info/Elements # The namespace of the xc schema
+
+#-----------------------------------------
+#-----------------------------------------
+SERVICE CONFIG
+#-----------------------------------------
+#-----------------------------------------
