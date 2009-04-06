@@ -1,6 +1,7 @@
 Transformation Service # The name of the service
 TransformationService.jar # The .jar file containing the service
 xc.mst.services.TransformationService # The class within the .jar file that represents the service.  This class must extend xc.mst.services.MetadataService
+8086 # The port on which the service's OAI repository should operate
 
 #-----------------------------------------
 INPUT FORMATS
@@ -15,6 +16,12 @@ OUTPUT FORMATS
 name: xc # The name of the xc format, which the Transformation Service can output
 schema location: http://www.extensiblecatalog.info/Elements # The location of the xc schema
 namespace: http://www.extensiblecatalog.info/Elements # The namespace of the xc schema
+
+#-----------------------------------------
+#-----------------------------------------
+ERROR MESSAGES
+#-----------------------------------------
+#-----------------------------------------
 
 #-----------------------------------------
 #-----------------------------------------

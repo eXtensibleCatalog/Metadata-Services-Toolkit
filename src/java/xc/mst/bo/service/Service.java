@@ -15,6 +15,11 @@ import java.util.List;
 
 import xc.mst.bo.provider.Format;
 
+/**
+ * Represents a service in the MST
+ *
+ * @author Eric Osisek
+ */
 public class Service
 {
 	/**
@@ -28,9 +33,9 @@ public class Service
 	private String serviceName = null;
 
 	/**
-	 * The service's package name
+	 * The service's service specific configuration parameters
 	 */
-	private String packageName = null;
+	private String serviceConfig = null;
 
 	/**
 	 * The service's class name
@@ -158,24 +163,24 @@ public class Service
 	} // end method setName(String)
 
 	/**
-	 * Gets the service's package name
+	 * Gets the service's service specific configuration parameters
 	 *
-	 * @return The service's package name
+	 * @return The service's service specific configuration parameters
 	 */
-	public String getPackageName()
+	public String getServiceConfig()
 	{
-		return packageName;
-	} // end method getPackageName()
+		return serviceConfig;
+	} // end method getServiceConfig()
 
 	/**
-	 * Sets the service's package name
+	 * Sets the service's service specific configuration parameters
 	 *
-	 * @param packageName The service's new package name
+	 * @param serviceConfig The service's new service specific configuration parameters
 	 */
-	public void setPackageName(String packageName)
+	public void setServiceConfig(String serviceConfig)
 	{
-		this.packageName = packageName;
-	} // end method setPackageName(String)
+		this.serviceConfig = serviceConfig;
+	} // end method setServiceConfig(String)
 
 	/**
 	 * Gets the service's class name

@@ -420,7 +420,7 @@ CREATE TABLE services
 (
   service_id INT(11) NOT NULL AUTO_INCREMENT,
   service_name VARCHAR(63),
-  package_name VARCHAR(63),
+  service_configuration TEXT,
   class_name VARCHAR(63),
   is_user_defined BOOL,
   port INT(11),
@@ -500,6 +500,25 @@ CREATE TABLE oai_identifier_for_services
 
 
 -- -------------------------------------------------------------
+-- Table structure for error_codes
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS error_codes;
+CREATE TABLE error_codes
+(
+  error_code_id INT(11) NOT NULL AUTO_INCREMENT,
+  error_code VARCHAR(63) NOT NULL,
+  error_description_file VARCHAR(511) NOT NULL,
+  service_id INT(11) NOT NULL,
+
+  PRIMARY KEY(error_code_id),
+
+  INDEX idx_error_codes_service_id(service_id),
+  FOREIGN KEY(service_id) REFERENCES services(service_id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- -------------------------------------------------------------
 -- Table structure for xc_id_for_frbr_elements
 -- -------------------------------------------------------------
 
@@ -515,112 +534,6 @@ CREATE TABLE xc_id_for_frbr_elements
   INDEX idx_xc_id_for_frbr_elements_element_id(element_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
--- -------------------------------------------------------------
--- Insert the metadata formats for marcxml and xc (XC schema.)
--- -------------------------------------------------------------
-
-INSERT INTO formats (name,
-                     namespace,
-                     schema_location) 
-VALUES ('marcxml', -- The value of the metadataPrefix parameter
-        'http://www.loc.gov/MARC21/slim',
-        'http://128.151.244.132:8080/OAIToolkit/schema/MARC21slim_custom.xsd');
-
-INSERT INTO formats (name,
-                     namespace,
-                     schema_location) 
-VALUES ('xc', -- The value of the metadataPrefix parameter
-        'http://www.extensiblecatalog.info/Elements',
-        'http://www.extensiblecatalog.info/Elements');
-
-
--- -------------------------------------------------------------
--- Insert the built-in services into the services table
--- -------------------------------------------------------------
-
-INSERT INTO services(service_name,
-                     package_name,
-                     class_name,
-                     is_user_defined,
-                     port,
-                     log_file_name,
-		     harvest_out_log_file_name)
-VALUES ('Normalization',
-        'services',
-        'NormalizationServivce',
-        false,
-        8085,
-        'logs/service/NormalizationServiceLog.txt',
-        'logs/harvestOut/NormalizationServiceLog.txt');
-
-INSERT INTO services(service_name,
-                     package_name,
-                     class_name,
-                     is_user_defined,
-                     port,
-                     log_file_name,
-		     harvest_out_log_file_name)
-VALUES ('Transformation',
-        'services',
-        'TransformationServivce',
-        false,
-        8086,
-        'logs/service/TransformationServiceLog.txt',
-        'logs/harvestOut/TransformationServiceLog.txt');
-
-INSERT INTO services(service_name,
-                     package_name,
-                     class_name,
-                     is_user_defined,
-                     port,
-                     log_file_name,
-		     harvest_out_log_file_name)
-VALUES ('Aggregation',
-        'services',
-        'AggregationServivce',
-        false,
-        8087,
-        'logs/service/AggregationServiceLog.txt',
-        'logs/harvestOut/NomalizationServiceLog.txt');
-
--- -------------------------------------------------------------
--- Insert rows mapping each service to the formats they can accept as input
--- -------------------------------------------------------------
-
-INSERT INTO services_to_input_formats(service_id, 
-                                      format_id) 
-VALUES (1,  -- Normalization Service
-        1); -- MARCXML format
-
-INSERT INTO services_to_input_formats(service_id, 
-                                      format_id) 
-VALUES (2,  -- Transformation Service
-        1); -- MARCXML format
-
-INSERT INTO services_to_input_formats(service_id, 
-                                      format_id) 
-VALUES (3,  -- Aggregation Service
-        2); -- XC Schema format
-
--- -------------------------------------------------------------
--- Insert rows mapping each service to the formats they can output
--- -------------------------------------------------------------
-
-INSERT INTO services_to_output_formats(service_id, 
-                                       format_id) 
-VALUES (1,  -- Normalization Service
-        1); -- MARCXML format
-
-INSERT INTO services_to_output_formats(service_id, 
-                                       format_id) 
-VALUES (2,  -- Transformation Service
-        2); -- XC schema format
-
-INSERT INTO services_to_output_formats(service_id, 
-                                       format_id) 
-VALUES (3,  -- Aggregation Service
-        2); -- XC schema format
 
 -- -------------------------------------------------------------
 -- Table structure for table 'processing_directives'

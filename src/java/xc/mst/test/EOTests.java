@@ -9,6 +9,7 @@
 
 package xc.mst.test;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,7 @@ import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.harvester.HarvestRunner;
+import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.scheduling.SchedulingException;
 import xc.mst.utils.LogWriter;
@@ -76,16 +78,8 @@ public class EOTests
 	{
 		try
 		{	
-			RecordList records = new DefaultRecordService().getAll();
-			for(Record record : records)
-			{
-				System.out.println("----");
-				System.out.println("Record ID: " + record.getId());
-				for(Record predecessor : record.getProcessedFrom())
-					System.out.println("Predecessor ID: " + predecessor.getId());
-				for(Record successor : record.getSuccessors())
-					System.out.println("Successor ID: " + successor.getId());
-			}
+			File file = new File("C:\\AllXcProjects\\MetadataServicesToolkit\\serviceConfig\\DefaultNormalizationServiceConfig.xccfg");
+			new DefaultServicesService().addNewService(file);
 			
 			return;
 		}

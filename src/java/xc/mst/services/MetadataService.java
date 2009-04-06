@@ -252,7 +252,7 @@ public abstract class MetadataService
 		else
 		{
 			// The name of the class for the service specified in the configuration file.
-			String targetClassName = service.getPackageName() + "." + service.getClassName();
+			String targetClassName = service.getServiceConfig() + "." + service.getClassName();
 
 			// Get the class for the service specified in the configuration file
 			try

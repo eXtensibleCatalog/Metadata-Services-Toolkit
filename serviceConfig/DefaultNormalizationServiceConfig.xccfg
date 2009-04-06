@@ -1,6 +1,7 @@
 Normalization Service # The name of the service
-NormalizationService.jar # The .jar file containing the service
+C:\AllXcProjects\MetadataServicesToolkit\services.jar # The .jar file containing the service
 xc.mst.services.NormalizationService # The class within the .jar file that represents the service.  This class must extend xc.mst.services.MetadataService
+8085
 
 #-----------------------------------------
 INPUT FORMATS
@@ -23,6 +24,41 @@ namespace: http://www.loc.gov/MARC21/slim # The namespace of the marcxml schema
 name: bar
 schema location: http://128.151.244.132:8080/bar
 namespace: http://www.loc.gov/MARC21/slim/bar
+
+#-----------------------------------------
+#-----------------------------------------
+ERROR MESSAGES
+#-----------------------------------------
+#-----------------------------------------
+error code: 100
+error description file: The record was not valid XML
+
+error code: 101
+error description file: The leader 06 value is obsolete according to the MARC format
+
+error code: 102
+error description file: The leader 06 value is invalid according to the MARC format
+
+error code: 103
+error description file: The leader 07 value is invalid according to the MARC format
+
+error code: 104
+error description file: The 007 offset 00 value is invalid according to the MARC format
+
+error code: 105
+error description file: The 008 offset 22 value is invalid according to the MARC format
+
+error code: 106
+error description file: One or more language codes in the record did not match any language codes defined in the Normalization Service's configuration
+
+error code: 107
+error description file: The 035 datafield was invalid according to the MARC format
+
+error code: 108
+error description file: The record was missing the 001 control field, which is required in all MARC records
+
+error code: 109
+error description file: The record contained a malformed ISBN number in the 020 datafield's $a subfield
 
 #-----------------------------------------
 #-----------------------------------------

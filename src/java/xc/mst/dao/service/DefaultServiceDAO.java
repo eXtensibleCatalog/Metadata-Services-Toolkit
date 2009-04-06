@@ -147,7 +147,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 												   COL_SERVICE_NAME + ", " +
-												   COL_PACKAGE_NAME + ", " +
+												   COL_SERVICE_CONFIG + ", " +
 												   COL_CLASS_NAME + ", " +
 												   COL_IS_USER_DEFINED + ", " +
 												   COL_PORT + ", " +
@@ -187,7 +187,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// Set the fields on the service
 					service.setId(results.getInt(1));
 					service.setName(results.getString(2));
-					service.setPackageName(results.getString(3));
+					service.setServiceConfig(results.getString(3));
 					service.setClassName(results.getString(4));
 					service.setIsUserDefined(results.getBoolean(5));
 					service.setPort(results.getInt(6));
@@ -265,7 +265,7 @@ public class DefaultServiceDAO extends ServiceDAO
 			// SQL to get the rows
 			String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 										   COL_SERVICE_NAME + ", " +
-										   COL_PACKAGE_NAME + ", " +
+										   COL_SERVICE_CONFIG + ", " +
 										   COL_CLASS_NAME + ", " +
 										   COL_IS_USER_DEFINED + ", " +
 										   COL_PORT + ", " +
@@ -305,7 +305,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				// Set the fields on the service
 				service.setId(results.getInt(1));
 				service.setName(results.getString(2));
-				service.setPackageName(results.getString(3));
+				service.setServiceConfig(results.getString(3));
 				service.setClassName(results.getString(4));
 				service.setIsUserDefined(results.getBoolean(5));
 				service.setPort(results.getInt(6));
@@ -377,7 +377,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
-				                                   COL_PACKAGE_NAME + ", " +
+				                                   COL_SERVICE_CONFIG + ", " +
 				                                   COL_CLASS_NAME + ", " +
 				                                   COL_IS_USER_DEFINED + ", " +
 				                                   COL_PORT + ", " +
@@ -421,7 +421,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// Set the fields on the service
 					service.setId(results.getInt(1));
 					service.setName(results.getString(2));
-					service.setPackageName(results.getString(3));
+					service.setServiceConfig(results.getString(3));
 					service.setClassName(results.getString(4));
 					service.setIsUserDefined(results.getBoolean(5));
 					service.setPort(results.getInt(6));
@@ -488,7 +488,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
-				                                   COL_PACKAGE_NAME + ", " +
+				                                   COL_SERVICE_CONFIG + ", " +
 				                                   COL_CLASS_NAME + ", " +
 				                                   COL_IS_USER_DEFINED + ", " +
 				                                   COL_PORT + ", " +
@@ -532,7 +532,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// Set the fields on the service
 					service.setId(results.getInt(1));
 					service.setName(results.getString(2));
-					service.setPackageName(results.getString(3));
+					service.setServiceConfig(results.getString(3));
 					service.setClassName(results.getString(4));
 					service.setIsUserDefined(results.getBoolean(5));
 					service.setPort(results.getInt(6));
@@ -593,7 +593,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
-				                                   COL_PACKAGE_NAME + ", " +
+				                                   COL_SERVICE_CONFIG + ", " +
 				                                   COL_CLASS_NAME + ", " +
 				                                   COL_IS_USER_DEFINED + ", " +
 				                                   COL_PORT + ", " +
@@ -637,7 +637,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// Set the fields on the service
 					service.setId(results.getInt(1));
 					service.setName(results.getString(2));
-					service.setPackageName(results.getString(3));
+					service.setServiceConfig(results.getString(3));
 					service.setClassName(results.getString(4));
 					service.setIsUserDefined(results.getBoolean(5));
 					service.setPort(results.getInt(6));
@@ -704,7 +704,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
-				                                   COL_PACKAGE_NAME + ", " +
+				                                   COL_SERVICE_CONFIG + ", " +
 				                                   COL_CLASS_NAME + ", " +
 				                                   COL_IS_USER_DEFINED + ", " +
 				                                   COL_PORT + ", " +
@@ -748,7 +748,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// Set the fields on the service
 					service.setId(results.getInt(1));
 					service.setName(results.getString(2));
-					service.setPackageName(results.getString(3));
+					service.setServiceConfig(results.getString(3));
 					service.setClassName(results.getString(4));
 					service.setIsUserDefined(results.getBoolean(5));
 					service.setPort(results.getInt(6));
@@ -817,22 +817,22 @@ public class DefaultServiceDAO extends ServiceDAO
 				{
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + SERVICES_TABLE_NAME + " (" + COL_SERVICE_NAME + ", " +
-	            	      													COL_PACKAGE_NAME + ", " +
-	            	      													COL_CLASS_NAME + ", " +
-	            	      													COL_IS_USER_DEFINED + ", " +
-	            	      													COL_PORT + ", " +
-	            	      													COL_WARNINGS + ", " +
-	            	      													COL_ERRORS + ", " +
-	            	      													COL_INPUT_RECORD_COUNT + ", " +
-	            	      													COL_OUTPUT_RECORD_COUNT + ", " +
-	            	      													COL_LAST_LOG_RESET + ", " +
-	            	      													COL_LOG_FILE_NAME + ", " +
-	            	      													COL_HARVEST_OUT_WARNINGS + ", " +
-	            	      													COL_HARVEST_OUT_ERRORS + ", " +
-	            	      													COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
-	            	      													COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
-	            	      													COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
-	            	      													COL_HARVEST_OUT_LOG_FILE_NAME + ") " +
+	            	      													         COL_SERVICE_CONFIG + ", " +
+	            	      													         COL_CLASS_NAME + ", " +
+	            	      													         COL_IS_USER_DEFINED + ", " +
+	            	      													         COL_PORT + ", " +
+	            	      													         COL_WARNINGS + ", " +
+	            	      													         COL_ERRORS + ", " +
+	            	      													         COL_INPUT_RECORD_COUNT + ", " +
+	            	      													         COL_OUTPUT_RECORD_COUNT + ", " +
+	            	      													         COL_LAST_LOG_RESET + ", " +
+	            	      													         COL_LOG_FILE_NAME + ", " +
+	            	      													         COL_HARVEST_OUT_WARNINGS + ", " +
+	            	      													         COL_HARVEST_OUT_ERRORS + ", " +
+	            	      													         COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
+	            	      													         COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
+	            	      													         COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
+	            	      													         COL_HARVEST_OUT_LOG_FILE_NAME + ") " +
 	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
@@ -845,7 +845,7 @@ public class DefaultServiceDAO extends ServiceDAO
 
 				// Set the parameters on the insert statement
 				psInsert.setString(1, service.getName());
-				psInsert.setString(2, service.getPackageName());
+				psInsert.setString(2, service.getServiceConfig());
 				psInsert.setString(3, service.getClassName());
 				psInsert.setBoolean(4, service.getIsUserDefined());
 				psInsert.setInt(5, service.getPort());
@@ -939,7 +939,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				{
 					// SQL to update new row
 					String updateSql = "UPDATE " + SERVICES_TABLE_NAME + " SET " + COL_SERVICE_NAME + "=?, " +
-				                                                          COL_PACKAGE_NAME + "=?, " +
+				                                                          COL_SERVICE_CONFIG + "=?, " +
 				                                                          COL_CLASS_NAME + "=?, " +
 				                                                          COL_IS_USER_DEFINED + "=?, " +
 				                                                          COL_PORT + "=?, " +
@@ -967,7 +967,7 @@ public class DefaultServiceDAO extends ServiceDAO
 
 				// Set the parameters on the update statement
 				psUpdate.setString(1, service.getName());
-				psUpdate.setString(2, service.getPackageName());
+				psUpdate.setString(2, service.getServiceConfig());
 				psUpdate.setString(3, service.getClassName());
 				psUpdate.setBoolean(4, service.getIsUserDefined());
 				psUpdate.setInt(5, service.getPort());

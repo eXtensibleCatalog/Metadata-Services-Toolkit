@@ -2,6 +2,8 @@
 
 package xc.mst.manager.processingDirective;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import xc.mst.bo.service.*;
 import xc.mst.dao.DataException;
@@ -19,6 +21,17 @@ public interface ServicesService
      */
     public List<Service> getAllServices();
 
+    /**
+     * Parses a configuration file with information on the service to add
+     * and adds the new service, loading any new .jar files if necessary.
+     * 
+     * @param configFile The configuration file defining the service to be added
+     * @throws DataException If an error occurred while interacting with the database
+     * @throws IOException If an error occurred while reading the configuration file
+     * @throws ConfigFileException If the configuration file was invalid
+     */
+    public void addNewService(File configFile) throws DataException, IOException, ConfigFileException;
+    
     /**
      * Adds a new Service
      * @param service The service to be added
