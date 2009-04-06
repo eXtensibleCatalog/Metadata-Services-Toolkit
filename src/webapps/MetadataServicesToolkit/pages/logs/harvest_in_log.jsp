@@ -8,6 +8,7 @@
   -->
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="mst" uri="mst-tags"%>
 
 <!--  document type -->
 <c:import url="/inc/doctype-frag.jsp"/>
@@ -237,7 +238,7 @@
 									  <c:param name="query" value="${n.name}"/>
 								 </c:url>                              	
                                   <tr>
-                                      <td><a style="cursor:pointer;"onclick="javascript:YAHOO.xc.mst.logs.displayOAIRequest('${n.oaiProviderUrl}');"><U>OAI Request</U></a></td>
+                                      <td><a style="cursor:pointer;"onclick="javascript:YAHOO.xc.mst.logs.displayOAIRequest('Complete OAI Reuqest should be displayed');"><U>OAI Request</U></a></td>
                                       <td><a style="text-decoration:none;color:black;" href="${browseRecordsAction}"><U>Browse Records</U></a></td>
                                            <c:set var="classColumn" value="plainColumn"/>
                                            <c:if test="${columnSorted=='RepositoryName'}">
@@ -274,9 +275,19 @@
                                            <c:if test="${columnSorted=='LastLogReset'}">
                                                <c:set var="classColumn" value="sortColumn"/>
                                            </c:if>
-                                      <td class="${classColumn}">
-                                          ${n.lastLogReset}
-                                      </td>
+                                      <c:choose>
+                                          <c:when test="${n.lastLogReset!=null}">
+                                                 <td class="${classColumn}">
+                                                    ${n.lastLogReset}
+                                                 </td>
+                                          </c:when>
+                                          <c:otherwise>
+                                                 <td class="${classColumn}">
+                                                    Never
+                                                 </td>
+                                          </c:otherwise>
+                                      </c:choose>
+                                     
                                   </tr>
                               </c:forEach>
                         </tbody>

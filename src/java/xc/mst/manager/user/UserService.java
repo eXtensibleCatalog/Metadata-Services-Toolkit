@@ -137,13 +137,14 @@ public interface UserService {
      */
     public boolean  authenticateLDAPUser(User user, String password, Server server) throws Exception;
 
-    /**
-     * Returns a list of user that are associated with a group
-     * 
-     * @param group group to get the users
-     * @return list of user 
-     */
-    public List<User> getUsersForGroup(Group group);
+   /**
+    * returns the list of users associated with a group
+    * @param groupId group Id
+    * @param sort determines if the rows are to be sorted in ascending or descending order
+    * @param columnSorted the column on which the rows are to be sorted
+    * @return sorted list of users
+    */
+    public List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted);
 
     /**
      * Sends email to all admins to give permission for a new user
@@ -152,4 +153,11 @@ public interface UserService {
      * @param comments Comments to get access to the system
      */
     public void sendEmailForUserPermission(String userName, String comments) ;
+
+     /**
+    * returns the list of users associated with a group
+    * @param groupId group ID
+    * @return sorted list of users
+    */
+    public abstract List<User> getUsersForGroup(int groupId);
 }

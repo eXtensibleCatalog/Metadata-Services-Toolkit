@@ -210,7 +210,7 @@
                                                <c:set var="classColumn" value="sortColumn"/>
                                            </c:if>
                                       <td class="${classColumn}">
-                                          <a onclick="javascript:YAHOO.xc.mst.logs.downloadFile(${n.id});">${n.logFileName}</a>
+                                          <a onclick="javascript:YAHOO.xc.mst.logs.downloadFile(${n.id});"><U>${n.logFileName}</U></a>
                                       </td>
                                             <c:set var="classColumn" value="plainColumn"/>
                                             <c:if test="${columnSorted=='Warnings'}">
@@ -233,9 +233,19 @@
                                             <c:if test="${columnSorted=='LastLogReset'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
-                                      <td class="${classColumn}">
-                                          ${n.lastLogReset}
-                                      </td>
+                                            <c:choose>
+                                                <c:when test="${n.lastLogReset!=null}">
+                                                    <td class="${classColumn}">
+                                                        ${n.lastLogReset}
+                                                    </td>
+                                               </c:when>
+                                               <c:otherwise>
+                                                    <td class="${classColumn}">
+                                                        Never
+                                                    </td>
+                                               </c:otherwise>
+                                            </c:choose>
+                                      
                                   </tr>
                               </c:forEach>
                         </tbody>

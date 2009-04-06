@@ -341,7 +341,7 @@
 		</action>
         <action name="addLocalUser" class="xc.mst.action.user.AddLocalUser" method="addLocalUser">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">allUsers.action?isAscendingOrder=true&amp;columnSorted=username</result>
+			<result name="success" type="redirect">allUsers.action?isAscendingOrder=true&amp;columnSorted=UserName</result>
 			<result name="input">/pages/user/add_localuser.jsp</result>
             <result name="error">/pages/user/add_localuser.jsp</result>
 		</action>
@@ -353,7 +353,7 @@
 		</action>
         <action name="editLocalUser" class="xc.mst.action.user.EditLocalUser" method="editLocalUser">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">allUsers.action?isAscendingOrder=true&amp;columnSorted=username</result>
+			<result name="success" type="redirect">allUsers.action?isAscendingOrder=true&amp;columnSorted=UserName</result>
 			<result name="input">/pages/user/edit_localuser.jsp</result>
             <result name="error">/pages/user/edit_localuser.jsp</result>
 		</action>
@@ -382,6 +382,18 @@
 			<result name="success">/pages/user/add_group.jsp</result>
 			<result name="input">/pages/user/all_groups.jsp</result>
 		</action>
+
+        <action name="showGroupMembers" class="xc.mst.action.user.ShowGroupMembers">
+             <interceptor-ref name="default"/>
+			<result name="success">/pages/user/showGroupMembers.jsp</result>
+			<result name="input">/pages/user/all_groups.jsp</result>
+		</action>
+        <action name="removeMember" class="xc.mst.action.user.RemoveMember">
+             <interceptor-ref name="default"/>
+			<result name="success" type="redirect">showGroupMembers.action?groupId=${groupId}&amp;isAscendingOrder=true&amp;columnSorted=UserName</result>
+			<result name="input">/pages/user/showGroupMembers.jsp</result>
+		</action>
+
          <action name="addGroup" class="xc.mst.action.user.AddGroup" method="addGroup">
              <interceptor-ref name="default"/>
 			<result name="success" type="redirect">allGroups.action</result>

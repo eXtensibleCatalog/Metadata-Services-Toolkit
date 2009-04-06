@@ -348,4 +348,65 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
         }
 
     }
+
+    public List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted)
+    {
+        synchronized(psGetUsersForGroupLock)
+		{
+            if(log.isDebugEnabled())
+				log.debug("Getting the users for the group with group ID " + groupId);
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			// The list of users for the group with the passed ID
+			List<User> users = new ArrayList<User>();
+            
+			try
+			{
+
+					// SQL to get the rows
+					String selectSql = "SELECT " + COL_USER_ID + " " +
+	                                   "FROM " + USERS_TO_GROUPS_TABLE_NAME + " " +
+	                                   "WHERE " + COL_GROUP_ID + "=?";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get users for group\" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetUsersForGroup = dbConnection.prepareStatement(selectSql);
+
+
+				// Set the parameters on the select statement
+				psGetUsersForGroup.setInt(1, groupId);
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = psGetUsersForGroup.executeQuery();
+
+				UserService userService = new DefaultUserService();
+				// For each result returned, add the group ID object to the list with the returned data
+				while(results.next())
+					users.add(userService.getUserById(results.getInt(1)));
+
+				if(log.isDebugEnabled())
+					log.debug("Found " + users.size() + " user IDs that the group with group ID " + groupId + " contains.");
+
+				return users;
+			} // end try (get and return the group IDs which the user belongs to)
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the users for the group with group ID " + groupId, e);
+
+				return users;
+			} // end catch(SQLException)
+			finally
+			{
+				MySqlConnectionManager.closeResultSet(results);
+			} // end finally
+        }
+
+    }
 } // end class DefaultUserGroupUtilDAO

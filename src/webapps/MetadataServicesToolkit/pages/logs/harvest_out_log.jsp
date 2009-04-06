@@ -302,9 +302,18 @@
                                              <c:if test="${columnSorted=='LastLogReset'}">
                                                <c:set var="classColumn" value="sortColumn"/>
                                              </c:if>
-                                      <td class="${classColumn}">
-                                          ${n.harvestOutLastLogReset}
-                                      </td>
+                                      <c:choose>
+                                          <c:when test="${n.harvestOutLastLogReset!=null}">
+                                                 <td class="${classColumn}">
+                                                    ${n.harvestOutLastLogReset}
+                                                 </td>
+                                          </c:when>
+                                          <c:otherwise>
+                                                 <td class="${classColumn}">
+                                                    Never
+                                                 </td>
+                                          </c:otherwise>
+                                      </c:choose>
                                   </tr>
                               </c:forEach>
                         </tbody>

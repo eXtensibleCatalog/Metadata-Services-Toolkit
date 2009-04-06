@@ -90,7 +90,7 @@
                              <c:forEach var="n" items="${groupList}" varStatus="a">
                                  <tr>
                                      <td class="sortcolumn"><a style="text-decoration:none;color:black;" href="/MetadataServicesToolkit/viewEditGroup.action?groupId=<c:out value="${n.id}"/>"><U>${n.name}</U></a></td>
-                                    <td>${n.memberCount}</td>
+                                    <td><a href="showGroupMembers.action?groupId=${n.id}&isAscendingOrder=true&columnSorted=UserName"><U>${n.memberCount}</U></a></td>
                                     <td>${n.description}</td>
                                     <c:choose>
                                         <c:when test="${n.id==1}">

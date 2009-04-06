@@ -91,5 +91,15 @@ public abstract class UserGroupUtilDAO
      * @return List of users
      */
     public abstract List<User> getUsersForGroup(int groupId);
+
+    /**
+     * returns list of all users associated with a group
+     * @param groupId group ID
+     * @param sort determines if the rows are to be sorted in ascending or descending order
+     * @param columnSorted the column on which the rows are to be sorted
+     * @return list of users
+     */
+    public abstract List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted);
+    
 } // end class UserGroupUtil
 

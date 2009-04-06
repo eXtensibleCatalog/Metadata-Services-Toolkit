@@ -28,5 +28,24 @@ YAHOO.xc.mst.user = {
      {
          alert(err);
      }
+ },
+ removeMember : function(userId,groupId)
+ {
+
+     try
+     {
+         var result;
+         result = confirm('Are you sure you want to remove the member from the group ?');
+		 if (result)
+         {
+			document.getElementById('userId').value = userId;
+            document.getElementById('groupId').value = groupId;
+			document.removeMember.submit();
+		 }
+     }
+     catch(err)
+     {
+         alert(err);
+     }
  }
 }

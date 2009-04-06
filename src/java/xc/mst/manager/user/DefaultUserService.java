@@ -367,9 +367,19 @@ public class DefaultUserService implements UserService{
      * @param group group to get the users
      * @return list of user 
      */
-    public List<User> getUsersForGroup(Group group)
+    public List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted)
     {
-        return userGroupUtilDAO.getUsersForGroup(group.getId());
+        return userGroupUtilDAO.getUsersForGroupSorted(groupId,sort,columnSorted);
+    }
+
+    /**
+     * returns a list of users associated with the group
+     * @param groupId group ID
+     * @return list of users
+     */
+    public List<User> getUsersForGroup(int groupId)
+    {
+        return userGroupUtilDAO.getUsersForGroup(groupId);
     }
 
     /**
@@ -389,7 +399,7 @@ public class DefaultUserService implements UserService{
 		adminMessageBody.append("\nPlease login into the system and assign appropriate permissions for the user.");
 		String adminSubject = "Assign permission to new User";
 		
-		List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR));
+		List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR).getId());
 		
 		for(User admin:admins) {
 			emailer.sendEmail(admin.getEmail(), adminSubject, adminMessageBody.toString());
