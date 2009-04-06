@@ -92,6 +92,8 @@ public class ServiceReset extends ActionSupport
             tempService.setServicesLastLogReset(new Date());
             tempService.setServicesWarnings(0);
             tempService.setServicesErrors(0);
+            tempService.setOutputRecordCount(0);
+            tempService.setInputRecordCount(0);
             servicesService.updateService(tempService);
             String filename = serviceLogFileName;
             PrintWriter printWriter = new PrintWriter(filename);
@@ -125,6 +127,8 @@ public class ServiceReset extends ActionSupport
                 tempService.setServicesLastLogReset(new Date());
                 tempService.setServicesWarnings(0);
                 tempService.setServicesErrors(0);
+                tempService.setOutputRecordCount(0);
+                tempService.setInputRecordCount(0);
                 servicesService.updateService(tempService);
                 String filename = tempService.getServicesLogFileName();
                 PrintWriter printWriter = new PrintWriter(filename);
