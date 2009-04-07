@@ -25,6 +25,8 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.log.DefaultLogDAO;
+import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
 import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.provider.DefaultSetDAO;
@@ -53,6 +55,11 @@ import xc.mst.utils.index.SolrIndexManager;
  */
 public abstract class MetadataService
 {
+	/**
+	 * Data access object for adding log statements
+	 */
+	protected static LogDAO logDao = new DefaultLogDAO();
+
 	/**
 	 * Data access object for getting processing directives
 	 */
@@ -129,6 +136,58 @@ public abstract class MetadataService
 	 * The logger object
 	 */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_PROCESSING);
+	
+	/**
+	 * The flag for indicating cancel service operation.
+	 */
+	private boolean isCanceled;
+	
+	/**
+	 * The flag for indicating service operation pause.
+	 */
+	private boolean isPaused;
+	
+	/**
+	 * Reference of the service currently running 
+	 */
+	private static MetadataService runningService;
+	
+	/**
+	 * Gets the reference of the service currently running 
+	 * @return
+	 */
+	public static MetadataService getRunningService() {
+		return runningService;
+	}
+
+	/**
+	 * Gets the cancel status of the service.
+	 */
+	public boolean isCanceled() {
+		return isCanceled;
+	}
+
+	/**
+	 * Gets the pause status of the service.
+	 */
+	public boolean isPaused() {
+		return isPaused;
+	}
+
+	/**
+	 * Sets the pause status of the service.
+	 */
+	public void setPaused(boolean isPaused) {
+		this.isPaused = isPaused;
+	}
+
+	/**
+	 * Sets the cancel status of the service.
+	 * @param isCanceled Flag indicating the cancel status of the service
+	 */
+	public void setCanceled(boolean isCanceled) {
+		this.isCanceled = isCanceled;
+	}
 
 	/**
 	 * Sets the service ID for this service
@@ -184,26 +243,26 @@ public abstract class MetadataService
 				log.info("Running the service: " + serviceName);
 
 			// The MetadataService to run
-			MetadataService serviceToRun = null;
+			runningService = null;
 
 			// Run the correct service based on the name
 			if(serviceName.equals(Constants.NORMALIZATION_SERVICE_NAME))
 			{
 				LogWriter.addInfo(service.getServicesLogFileName(), "Starting the Normalization Service");
 
-				serviceToRun = new NormalizationService();
+				runningService = new NormalizationService();
 			} // end if(service is the Normalization Service)
 			else if (serviceName.equals(Constants.TRANSFORMATION_SERVICE_NAME))
 			{
 				LogWriter.addInfo(service.getServicesLogFileName(), "Starting the Transformation Service");
 
-				serviceToRun = new TransformationService();
+				runningService = new TransformationService();
 			} // end if(service is the Transformation Service)
 			else if (serviceName.equals(Constants.AGGREGATION_SERVICE_NAME))
 			{
 				LogWriter.addInfo(service.getServicesLogFileName(), "Starting the Aggregation Service");
 
-				serviceToRun = new AggregationService();
+				runningService = new AggregationService();
 			} // end if(service is the Aggregation Service)
 			else
 			{
@@ -228,18 +287,18 @@ public abstract class MetadataService
 			} // end else(service not recognized)
 
 			// Run the service
-			if(serviceToRun != null)
+			if(runningService != null)
 			{
 				// Set the service's ID and name
-				serviceToRun.setServiceId(serviceId);
-				serviceToRun.setServiceName(service.getName());
+				runningService.setServiceId(serviceId);
+				runningService.setServiceName(service.getName());
 
 				// Create the list of ProcessingDirectives which could be run on records processed from this service
-				serviceToRun.setProcessingDirectives(processingDirectiveDao.getBySourceServiceId(serviceId));
+				runningService.setProcessingDirectives(processingDirectiveDao.getBySourceServiceId(serviceId));
 
-				boolean success = serviceToRun.processRecords(outputSetId);
+				boolean success = runningService.processRecords(outputSetId);
 
-				LogWriter.addInfo(service.getServicesLogFileName(), "The " + serviceName + " Service finished running.  " + serviceToRun.numProcessed + " records were processed.");
+				LogWriter.addInfo(service.getServicesLogFileName(), "The " + serviceName + " Service finished running.  " + runningService.numProcessed + " records were processed.");
 
 				return success;
 			} // end if(service found)
@@ -252,7 +311,7 @@ public abstract class MetadataService
 		else
 		{
 			// The name of the class for the service specified in the configuration file.
-			String targetClassName = service.getServiceConfig() + "." + service.getClassName();
+			String targetClassName = service.getPackageName() + "." + service.getClassName();
 
 			// Get the class for the service specified in the configuration file
 			try
@@ -458,6 +517,8 @@ public abstract class MetadataService
 			// Get the list of record inputs for this service
 			RecordList records = recordService.getInputForService(service.getId());
 			
+			//DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+
 			// Iterate over the list of input records and process each.
 			// Then run the processing directives on the results of each and add
 			// the appropriate record inputs for services to be run on the records
@@ -466,41 +527,65 @@ public abstract class MetadataService
 			// resulting from this service.
 			for(Record processMe : records)
 			{
-				// Get the results of processing the record
-				List<Record> results = processRecord(processMe);
-				
-				for(Record outgoingRecord : results)
+				// If the service is not canceled and not paused then continue 
+				if(!isCanceled && !isPaused)
 				{
-					// Mark the record as having been processed by this service
-					outgoingRecord.addProcessedByService(service);
-					if(outputSetId > 0)
-						outgoingRecord.addSet(setDao.getById(outputSetId));
-
-					// Check whether or not this record already exists in the database
-					Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
-
-					// If the current record is a new record, insert it
-					if(oldRecord == null)
-						insertNewRecord(outgoingRecord);
-					// Otherwise we've seen the record before.  Update it as appropriate
-					// If outgoingRecord's deleted flag is set to true, the record will
-					// be deleted.
-					else
-						updateExistingRecord(outgoingRecord, oldRecord);
-				} // end loop over processed records
-
-				for(Record result : results)
-					processMe.addSuccessor(result);
+					// Get the results of processing the record
+					List<Record> results = processRecord(processMe);
+	
+					for(Record outgoingRecord : results)
+					{
+						// Mark the record as having been processed by this service
+						outgoingRecord.addProcessedByService(service);
+						if(outputSetId > 0)
+							outgoingRecord.addSet(setDao.getById(outputSetId));
+	
+						// Check whether or not this record already exists in the database
+						Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
+	
+						// If the current record is a new record, insert it
+						if(oldRecord == null)
+							insertNewRecord(outgoingRecord);
+						// Otherwise we've seen the record before.  Update it as appropriate
+						// If outgoingRecord's deleted flag is set to true, the record will
+						// be deleted.
+						else
+							updateExistingRecord(outgoingRecord, oldRecord);
+					} // end loop over processed records
+	
+					numProcessed++;
+					if(numProcessed % 100000 == 0)
+						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + numProcessed + " records so far.");
+				}
+				else 
+					{
+						// If canceled the stop processing records
+						if(isCanceled)
+							{
+								LogWriter.addInfo(service.getServicesLogFileName(), "Cancelled Service " + serviceName);
+								LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + numProcessed + " records so far.");
+								break;
+							}
+						// If paused then wait
+						else if(isPaused)
+							{
+								LogWriter.addInfo(service.getServicesLogFileName(), "Paused Service " + serviceName);
+								while(isPaused && !isCanceled)
+									{
+										LogWriter.addInfo(service.getServicesLogFileName(), "Service Waiting to resume" );
+										Thread.sleep(3000);
+									}
+								
+							}
+						
+					}
 				
-				recordService.update(processMe);
-
-				numProcessed++;
-				if(numProcessed % 100000 == 0)
-					LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + numProcessed + " records so far.");
 			} // end loop over records to process
 
 			// Reopen the reader so it can see the changes made by running the service
+			// TODO removed IndexManager
 			SolrIndexManager.getInstance().commitIndex();
+//			IndexManager.getInstance().maybeReOpen();
 
 			// Get the results of any final processing the service needs to perform
 			finishProcessing();
