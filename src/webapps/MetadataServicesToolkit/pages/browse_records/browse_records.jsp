@@ -78,10 +78,10 @@
 							   		Schema 
 							   	</c:if>
 								<c:if test="${facet.name == 'set_name'}">
-							   		Sets 
+							   		Set 
 							   	</c:if>							   	
 							   	<c:if test="${facet.name == 'provider_name'}">
-							   		Providers 
+							   		Repository 
 							   	</c:if>
 							   	<c:if test="${facet.name == 'service_name'}">
 							   		Service 
@@ -160,6 +160,7 @@
 							</c:if>/> Search Full XML content
 						</form>	
 					</div>
+				<c:if test="${!initialLoad}">
 					<div class="search_results_div">
 						<c:if test="${result.totalNumberOfResults > 0}">
 						
@@ -227,18 +228,45 @@
 									  <c:param name="searchXML" value="false"/>
 							   </c:url>										
 							       <c:if test="${record.numberOfPredecessors > 0 && record.numberOfSuccessors > 0}">
-										<a href="${viewPredecessorRecord}">${record.numberOfPredecessors} Predecessor</a> 
+										<a href="${viewPredecessorRecord}">${record.numberOfPredecessors} 
+										<c:if test="${record.numberOfPredecessors == 1}">
+											Predecessor
+										</c:if>
+										<c:if test="${record.numberOfPredecessors > 1}">
+											Predecessors
+										</c:if></a> 
 										&nbsp;<img src="page-resources/img/white-book-both.jpg">&nbsp;
-										<a href="${viewSuccessorRecord}">${record.numberOfSuccessors} Successor</a>
+										<a href="${viewSuccessorRecord}">${record.numberOfSuccessors} 
+										<c:if test="${record.numberOfSuccessors == 1}">
+											Successor
+										</c:if>
+										<c:if test="${record.numberOfSuccessors > 1}">
+											Successors
+										</c:if> 
+										</a>
 								    </c:if>
 								    <c:if test="${record.numberOfPredecessors > 0 && record.numberOfSuccessors < 1}">
-										<a href="${viewPredecessorRecord}">${record.numberOfPredecessors} Predecessor</a> 
+										<a href="${viewPredecessorRecord}">${record.numberOfPredecessors} 
+										<c:if test="${record.numberOfPredecessors == 1}">
+											Predecessor
+										</c:if>
+										<c:if test="${record.numberOfPredecessors > 1}">
+											Predecessors
+										</c:if> 
+										</a> 
 									      &nbsp;<img src="page-resources/img/white-book-left.jpg">
 								    </c:if>
 									<c:if test="${record.numberOfSuccessors > 0 && record.numberOfPredecessors < 1}">
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<img src="page-resources/img/white-book-right.jpg">
-										&nbsp;<a href="${viewSuccessorRecord}">${record.numberOfSuccessors} Successor</a> 
+										&nbsp;<a href="${viewSuccessorRecord}">${record.numberOfSuccessors} 
+										<c:if test="${record.numberOfSuccessors == 1}">
+											Successor
+										</c:if>
+										<c:if test="${record.numberOfSuccessors > 1}">
+											Successors
+										</c:if> 
+										</a> 
 										
 								    </c:if>                                    
 							</div>
@@ -249,7 +277,7 @@
 
 
 				    </div>
-						    
+				</c:if>		    
 						    
 			</div>
 			

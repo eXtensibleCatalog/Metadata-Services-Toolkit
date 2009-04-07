@@ -84,10 +84,17 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	
 	/** Denotes whether to search XML or not */ 
 	private boolean searchXML;
+
+	/** Denotes whether its initial page load */
+	private boolean isInitialLoad;
 	
-	
+	/**
+     * Exceute method to load initial screen with just the facets
+     */
 	public String execute() {
 		searchXML = true;
+		isInitialLoad = true;
+		browse();
 		return SUCCESS;
 	}
 	
@@ -119,7 +126,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	    
 		// Add selected facet to query
 	    if (addFacetName != null && addFacetName.length() > 0) {
-	    	//query = query.concat(" AND " + addFacetName + ":" + addFacetValue);
 	    	solrQuery.addFilterQuery(addFacetName + ":" + addFacetValue.replaceAll(":", "\\\\:"));
 	    	// Add facet names and values to | separated list
 	    	selectedFacetNames = selectedFacetNames + "|" + addFacetName;
@@ -130,7 +136,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 
 	    // Remove selected facet to query
 	    if (removeFacetName != null && removeFacetName.length() > 0) {
-	    	// query = query.replaceAll(" AND " + removeFacetName + ":" + removeFacetValue, "");
 	    	solrQuery.removeFilterQuery(removeFacetName + ":" + removeFacetValue.replaceAll(":", "\\\\:"));
 	    }
 
@@ -171,24 +176,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	    }
 	    
 	    log.debug("Final facetNamesList:"+facetNamesList);
-	    
-//	    // Create facet values List
-//	    StringTokenizer facetValueTokenizer = new StringTokenizer(selectedFacetValues, "|");
-//	    List<String> facetValuesList = new ArrayList<String>();
-//	    while (tokenizer.hasMoreTokens()) {
-//	    	myToken = tokenizer.nextToken();
-//	    	if (removeFacetValue != null && removeFacetValue.length() > 0) {
-//	    		if (!removeFacetValue.equalsIgnoreCase(myToken)) {
-//	    	
-//	    			newSelectedFacetValues.append("|");
-//	    			newSelectedFacetValues.append(myToken);
-//	    			facetValuesList.add(myToken);
-//		    	}
-//	    	} else {		    	
-//	    		facetValuesList.add(myToken);
-//	    	}
-//	    }
-	    
 	    log.debug("Final facetValuesList:"+facetValuesList);
 	    
 	    if (removeFacetValue != null && removeFacetValue.length() > 0) {
@@ -211,7 +198,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 //		solrQuery.addFacetField("harvest_end_time");
 		solrQuery.addFacetField("warning");
 		solrQuery.addFacetField("error");
-
+		
 	    
 		rowEnd = rowStart + numberOfResultsToShow;
 		
@@ -236,6 +223,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		return SUCCESS;
 	}
 	
+	/**
+     * View record XML
+     */
 	public String viewRecord() throws IOException {
 		
 		log.debug("records XML:"+recordXML);
@@ -388,5 +378,13 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 
 	public void setProviderName(String providerName) {
 		this.providerName = providerName;
+	}
+
+	public boolean isInitialLoad() {
+		return isInitialLoad;
+	}
+
+	public void setInitialLoad(boolean isInitialLoad) {
+		this.isInitialLoad = isInitialLoad;
 	}
 }
