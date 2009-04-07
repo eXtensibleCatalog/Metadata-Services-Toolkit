@@ -12,7 +12,6 @@ package xc.mst.action.harvest;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -548,7 +547,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 	/**
 	 * Set format ids
 	 *
-	 * @param selectedFormatIds
+	 * @param selectedFormatIds Format ids selected
 	 */
 	public void setSelectedFormatIds(int[] selectedFormatIds) {
 		this.selectedFormatIds = selectedFormatIds;

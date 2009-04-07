@@ -95,7 +95,7 @@ public class DefaultServicesService implements ServicesService
         return servicesDao.getSorted(sort, columnSorted);
     }
     
-    @Override
+    
     public void addNewService(File configFile) throws DataException, IOException, ConfigFileException
     {
     	BufferedReader in = null; // Reads the file

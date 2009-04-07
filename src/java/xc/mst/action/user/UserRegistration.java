@@ -13,7 +13,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
@@ -80,15 +79,29 @@ public class UserRegistration extends ActionSupport {
 
 		log.debug(UserRegistration.class + ":" + "registerUser()" );
 		Server server = serverService.getServerByName(serverName);
+		newUser.setServer(server);
+		
+		// Check if user name already exist
 		User otherUser = userService.getUserByUserName(newUser.getUsername().trim(), server);
 
 		try {
 			if (otherUser == null) {
+				// Check if email id already exist
 				User otherUserWithSameEmail = userService.getUserByEmail(newUser.getEmail().trim(), server);
 
 				if (otherUserWithSameEmail == null) {
-
-					newUser.setServer(server);
+					
+					// Check if user entered password for LDAP server is valid.
+					if (!server.getName().equalsIgnoreCase("local")) {
+						if (!userService.authenticateLDAPUser(newUser, newUser.getPassword(), server)) {
+							addFieldError("authenticationError",  "Password did not match.");
+							errorType = "error";
+							return INPUT;
+						}
+						// LDAP user's password need not be stored.
+						newUser.setPassword(null);
+					}
+					
 
 					boolean emailSent = false;
 

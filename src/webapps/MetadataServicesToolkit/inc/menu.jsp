@@ -85,7 +85,6 @@
                             <ul>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allUsers.action" />" >Users</a></li>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddLocalUser.action" />" >Add Local User</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddLDAPUser.action" />" >Add LDAP User</a></li>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allGroups.action" />" >Groups</a></li>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddGroup.action" />" >Add Group</a></li>
                            </ul>

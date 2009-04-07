@@ -37,7 +37,7 @@ YAHOO.xc.mst.registeration = {
 		
 		
 
-		if (!document.getElementById('user_password').disabled) {
+		if (document.getElementById('login_server').value == 'local') {
 			if (document.getElementById('user_password').value=='') {
 			    createErrorDiv("error",'Password is required.');
 				return false;
@@ -68,6 +68,19 @@ YAHOO.xc.mst.registeration = {
 			}
 
 		}
+
+		if (!document.getElementById('login_server').value == 'local') {
+			if (document.getElementById('user_password').value=='') {
+			    createErrorDiv("error",'Password is required.');
+				return false;
+			}
+			if (document.getElementById('user_password').value!=document.getElementById('user_password_confirmation').value) {
+			    createErrorDiv("error",'Password does not match confirmation password.');
+				return false;
+			}
+
+		}
+
 		if (document.getElementById('user_email').value=='') {
 			alert('Email is required.');
 			return false;
@@ -127,30 +140,7 @@ YAHOO.xc.mst.registeration = {
 			 }
 	
 	 		 return true					
-	},
-	
-	/*
-	 * Show the form to enter the password
-	 */
-	determinePasswordBoxDisplay : function() 
-	{
-
-		if (document.getElementById("login_server").value == 'Local') {
-			document.getElementById("user_password").disabled = false;
-			document.getElementById("user_password_confirmation").disabled = false;
-		} else {
-			document.getElementById("user_password").disabled = 'true';
-			document.getElementById("user_password_confirmation").disabled = 'true';
-		} 
-	},
-
-	init : function()
-    	{
-		YAHOO.xc.mst.registeration.determinePasswordBoxDisplay();
 	}
-};
+}
 
 
-
-// initialize the code once the dom is ready
-YAHOO.util.Event.onDOMReady(YAHOO.xc.mst.registeration.init);
