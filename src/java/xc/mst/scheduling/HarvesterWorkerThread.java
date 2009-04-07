@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
 import xc.mst.harvester.HarvestRunner;
+import xc.mst.harvester.Harvester;
 
 /**
  * A Thread which runs a harvest
@@ -60,4 +61,30 @@ public class HarvesterWorkerThread extends WorkerThread
 			log.error("An error occurred while running the harvest schedule with ID " + harvestScheduleStepId, e);
 		} // end catch(Exception)
 	} // end method run()
+
+	/**
+	 * Cancels the running harvest service
+	 */
+	public void cancel() {
+		
+		Harvester.getRunningHarvester().kill();
+		log.debug("Cancelling the Harvest" );
+	}
+
+	/**
+	 * Pauses the execution of the currently running harvest service
+	 */
+	public void pause() {
+		Harvester.getRunningHarvester().setPaused(true);
+		log.debug("Pausing the Harvest" );
+	}
+
+
+	/**
+	 * Resumes the currently paused harvest service
+	 */
+	public void proceed() {
+		Harvester.getRunningHarvester().setPaused(false);
+		log.debug("Resuming the Harvest" );
+	}
 } // end class HarvestWorkerThread
