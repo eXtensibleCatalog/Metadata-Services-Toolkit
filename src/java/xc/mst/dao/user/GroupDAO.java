@@ -63,6 +63,12 @@ public abstract class GroupDAO
 	 */
 	public abstract List<Group> getAll();
 
+    /**
+     * returns a sorted list of all the groups in the system
+     * @return list of groups
+     */
+    public abstract List<Group> getAllSorted(boolean isAscendingOrder,String columnSorted);
+    
 	/**
 	 * Gets a group by it's ID
 	 *

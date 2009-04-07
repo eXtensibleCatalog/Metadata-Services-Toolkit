@@ -34,6 +34,7 @@ import xc.mst.manager.repository.ProviderService;
 public class AddRepository extends ActionSupport implements UserAware
 {
 
+    /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /** Represents the User who is logged in */
@@ -59,6 +60,11 @@ public class AddRepository extends ActionSupport implements UserAware
     {
         this.repositoryId = repositoryId;
     }
+
+    /**
+     * returns the ID of the repository to be added
+     * @return ID of the repository
+     */
     public int getRepositoryId()
     {
         return repositoryId;
@@ -169,9 +175,18 @@ public class AddRepository extends ActionSupport implements UserAware
           setRepositoryId(pr.getId());
           return SUCCESS;
     }
+	 /**
+     * returns error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
+
+    /**
+     * sets error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

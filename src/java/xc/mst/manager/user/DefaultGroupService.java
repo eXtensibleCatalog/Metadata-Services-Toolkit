@@ -23,6 +23,7 @@ import xc.mst.dao.user.GroupDAO;
  */
 public class DefaultGroupService implements GroupService {
 
+    /** Group DAO Object */
     private GroupDAO groupDao = new DefaultGroupDAO();
 
     /**
@@ -60,9 +61,24 @@ public class DefaultGroupService implements GroupService {
         groupDao.update(group);
     }
 
+    /**
+     * returns a list of all groups
+     * @return list of groups
+     */
     public List<Group> getAllGroups()
     {
         return groupDao.getAll();
+    }
+
+    /**
+     * returns a sorted list of all the groups
+     * @param isAscendingOrder determines if the rows are to be sorted in ascending or descending order
+     * @param columnSorted the column on which the rows are to be sorted
+     * @return list of groups
+     */
+    public List<Group> getAllGroupsSorted(boolean isAscendingOrder,String columnSorted)
+    {
+        return groupDao.getAllSorted(isAscendingOrder, columnSorted);
     }
 
     /**
@@ -73,4 +89,6 @@ public class DefaultGroupService implements GroupService {
     public Group getGroupByName(String groupName) {
     	return groupDao.getByName(groupName);
     }
+
+   
 }

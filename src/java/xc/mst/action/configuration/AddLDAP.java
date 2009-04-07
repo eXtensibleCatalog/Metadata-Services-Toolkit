@@ -17,6 +17,8 @@ import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.ServerService;
 
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.log4j.Logger;
+import xc.mst.constants.Constants;
 
 /**
  * This class is used to add a new LDAP server to the system
@@ -29,6 +31,9 @@ public class AddLDAP extends ActionSupport
 	 * Eclipse generated id
 	 */
 	private static final long serialVersionUID = 531062895841167505L;
+
+    /** A reference to the logger for this class */
+	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 	/**Creates a service object for Servers */
     private ServerService serverService = new DefaultServerService();
@@ -215,6 +220,7 @@ public class AddLDAP extends ActionSupport
         catch(Exception e)
         {
             e.printStackTrace();
+            log.debug(e);
             this.addFieldError("addLDAPError", "Error : LDAP server could not be configured correctly");
             errorType = "error";
             return INPUT;

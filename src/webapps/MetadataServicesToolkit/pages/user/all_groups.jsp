@@ -80,18 +80,81 @@
                     <table width="100%">
                         <thead>
                             <tr>
-                                <td>Group Name</td>
+                                <td>
+                                    
+                                        <c:if test="${columnSorted!='GroupName'}">
+                                             <c:url var="groupSortUrl" value="allGroups.action">
+                                               <c:param name="isAscendingOrder" value="true"/>
+                                               <c:param name="columnSorted" value="GroupName"/>
+                                             </c:url>
+                                              <a href="${groupSortUrl}">Group Name</a>
+                                         </c:if>
+
+                                         <c:if test="${columnSorted=='GroupName'}">
+                                               <c:url var="groupSortUrl" value="allGroups.action">
+                                                 <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                 <c:param name="columnSorted" value="GroupName"/>
+                                               </c:url>
+
+                                               <a href="${groupSortUrl}">Group Name</a>
+
+                                                <c:choose>
+                                                    <c:when test="${isAscendingOrder==true}">
+                                                        &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                          </c:if>
+                                </td>
                                 <td>Members</td>
-                                <td>Description</td>
+                                <td>
+                                        <c:if test="${columnSorted!='GroupDescription'}">
+                                             <c:url var="groupSortUrl" value="allGroups.action">
+                                               <c:param name="isAscendingOrder" value="true"/>
+                                               <c:param name="columnSorted" value="GroupDescription"/>
+                                             </c:url>
+                                              <a href="${groupSortUrl}">Group Description</a>
+                                         </c:if>
+
+                                         <c:if test="${columnSorted=='GroupDescription'}">
+                                               <c:url var="groupSortUrl" value="allGroups.action">
+                                                 <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                 <c:param name="columnSorted" value="GroupDescription"/>
+                                               </c:url>
+
+                                               <a href="${groupSortUrl}">Group Decription</a>
+
+                                                <c:choose>
+                                                    <c:when test="${isAscendingOrder==true}">
+                                                        &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                          </c:if>
+                                </td>
                                 <td>Delete</td>
                             </tr>
                         </thead>
                         <tbody>
                              <c:forEach var="n" items="${groupList}" varStatus="a">
                                  <tr>
-                                     <td class="sortcolumn"><a style="text-decoration:none;color:black;" href="/MetadataServicesToolkit/viewEditGroup.action?groupId=<c:out value="${n.id}"/>"><U>${n.name}</U></a></td>
+                                            <c:set var="classColumn" value="plainColumn"/>
+                                            <c:if test="${columnSorted=='GroupName'}">
+                                                <c:set var="classColumn" value="sortColumn"/>
+                                            </c:if>
+                                    <td class="${classColumn}"><a style="text-decoration:none;color:black;" href="/MetadataServicesToolkit/viewEditGroup.action?groupId=<c:out value="${n.id}"/>"><U>${n.name}</U></a></td>
                                     <td><a href="showGroupMembers.action?groupId=${n.id}&isAscendingOrder=true&columnSorted=UserName"><U>${n.memberCount}</U></a></td>
-                                    <td>${n.description}</td>
+                                            <c:set var="classColumn" value="plainColumn"/>
+                                            <c:if test="${columnSorted=='GroupDescription'}">
+                                                <c:set var="classColumn" value="sortColumn"/>
+                                            </c:if>
+                                    <td class="${classColumn}">${n.description}</td>
                                     <c:choose>
                                         <c:when test="${n.id==1}">
                                             <td><button disabled class="xc_button" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.user.deleteGroup(${n.id});">Delete</button></td>

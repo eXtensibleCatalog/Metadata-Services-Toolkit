@@ -11,7 +11,9 @@
 package xc.mst.action.configuration;
 
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.log4j.Logger;
 import xc.mst.bo.emailconfig.EmailConfig;
+import xc.mst.constants.Constants;
 import xc.mst.manager.configuration.DefaultEmailConfigService;
 import xc.mst.manager.configuration.EmailConfigService;
 
@@ -22,6 +24,10 @@ import xc.mst.manager.configuration.EmailConfigService;
  */
 public class EmailConfiguration extends ActionSupport
 {
+
+    /** A reference to the logger for this class */
+	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+
     /**Creates a service Object for Email Configuration */
     private EmailConfigService emailConfigService = new DefaultEmailConfigService();
 
@@ -194,6 +200,7 @@ public class EmailConfiguration extends ActionSupport
         catch(Exception e)
         {
             e.printStackTrace();
+            log.debug(e);
             this.addFieldError("viewEmailConfigError", "Error : Problem displaying the Email Configuration Page");
             errorType = "error";
             return INPUT;
@@ -230,26 +237,50 @@ public class EmailConfiguration extends ActionSupport
         }
     }
 
+    /**
+     * returns the information message
+     * @return information message
+     */
 	public String getMessage() {
 		return message;
 	}
 
+    /**
+     * sets the information message which describes whether the email server was added correctly or not
+     * @param message information message
+     */
 	public void setMessage(String message) {
 		this.message = message;
 	}
 
+    /**
+     * returns the temporary email config object
+     * @return email config object
+     */
 	public EmailConfig getEmailConfig() {
 		return emailConfig;
 	}
 
+    /**
+     * sets the email config object which is used to populate JSP fields
+     * @param emailConfig email config object
+     */
 	public void setEmailConfig(EmailConfig emailConfig) {
 		this.emailConfig = emailConfig;
 	}
 
+    /**
+     * returns the error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets the error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

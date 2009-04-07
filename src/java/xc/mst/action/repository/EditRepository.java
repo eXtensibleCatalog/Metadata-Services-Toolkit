@@ -27,6 +27,7 @@ import xc.mst.manager.repository.ProviderService;
 
 public class EditRepository extends ActionSupport
 {
+    /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**The ID of the repository to be edited */
@@ -266,10 +267,18 @@ public class EditRepository extends ActionSupport
         }
     }
 
+	/**
+     * returns error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

@@ -366,9 +366,9 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 			{
 
 					// SQL to get the rows
-					String selectSql = "SELECT " + COL_USER_ID + " " +
-	                                   "FROM " + USERS_TO_GROUPS_TABLE_NAME + " " +
-	                                   "WHERE " + COL_GROUP_ID + "=?";
+					String selectSql = "SELECT " + USERS_TABLE_NAME + "." + COL_USER_ID + ", " + USERS_TABLE_NAME + "." +COL_USERNAME + ", " + USERS_TABLE_NAME + "." + COL_FIRST_NAME + ", " + USERS_TABLE_NAME + "." + COL_LAST_NAME + " " +
+	                                   "FROM " + USERS_TO_GROUPS_TABLE_NAME + ", " + USERS_TABLE_NAME + " " +
+	                                   "WHERE " + USERS_TABLE_NAME + "." + COL_USER_ID + "=" + USERS_TO_GROUPS_TABLE_NAME + "." + COL_USER_ID + " AND " + USERS_TO_GROUPS_TABLE_NAME + "."+ COL_GROUP_ID + "=?" + " ORDER BY " + USERS_TABLE_NAME + "." + columnSorted + (sort ? " ASC" : " DESC");
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get users for group\" PreparedStatement from the SQL " + selectSql);

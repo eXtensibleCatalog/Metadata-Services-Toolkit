@@ -167,6 +167,78 @@ public class DefaultGroupDAO extends GroupDAO
 		} // end synchronized
 	} // end method getAll()
 
+    @Override
+    public List<Group> getAllSorted(boolean isAscendingOrder,String columnSorted)
+	{
+		synchronized(psGetAllLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Getting all groups");
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			// A list to hold the results of the query
+			ArrayList<Group> groups = new ArrayList<Group>();
+
+			try
+			{
+				
+					// SQL to get the rows
+					String selectSql = "SELECT " + COL_GROUP_ID + ", " +
+					                               COL_NAME + ", " +
+				                                   COL_DESCRIPTION + " " +
+	                                   "FROM " + GROUPS_TABLE_NAME + " " + " ORDER BY " + columnSorted + (isAscendingOrder ? " ASC" : " DESC");
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get all groups\" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetAll = dbConnection.prepareStatement(selectSql);
+				
+
+				// Get the results of the SELECT statement
+
+				// Execute the query
+				results = psGetAll.executeQuery();
+
+				// If any results were returned
+				while(results.next())
+				{
+					// The Object which will contain data on the group
+					Group group = new Group();
+
+					// Set the fields on the group
+					group.setId(results.getInt(1));
+					group.setName(results.getString(2));
+					group.setDescription(results.getString(3));
+
+					// Set the correct permissions on the group
+					group.setPermissions(permissionDao.getPermissionsForGroup(group.getId()));
+
+					// Return the group
+					groups.add(group);
+				} // end loop over results
+
+				if(log.isDebugEnabled())
+					log.debug("Found " + groups.size() + " groups in the database.");
+
+				return groups;
+			} // end try
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the groups", e);
+
+				return groups;
+			} // end catch(SQLException)
+			finally
+			{
+				MySqlConnectionManager.closeResultSet(results);
+			} // end finally (close ResultSet)
+		} // end synchronized
+	} // end method getAllSorted()
+
 	@Override
 	public Group getById(int groupId)
 	{

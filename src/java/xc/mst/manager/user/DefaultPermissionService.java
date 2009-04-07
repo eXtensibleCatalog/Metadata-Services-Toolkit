@@ -13,15 +13,17 @@ package xc.mst.manager.user;
 
 import java.util.List;
 import xc.mst.bo.user.Permission;
+import xc.mst.dao.user.DefaultPermissionDAO;
 import xc.mst.dao.user.PermissionDAO;
 
 /**
+ * Service class that provides implementation for methods which interact with permissions
  *
- * @author tejaswih
+ * @author Tejaswi Haramurali
  */
 public class DefaultPermissionService implements PermissionService
 {
-    private PermissionDAO permissionDao;
+    private PermissionDAO permissionDao = new DefaultPermissionDAO();
     /**
 	 * Gets the permissions belonging to a group.
 	 *
@@ -31,5 +33,15 @@ public class DefaultPermissionService implements PermissionService
 	public List<Permission> getPermissionsForGroup(int groupId)
     {
         return permissionDao.getPermissionsForGroup(groupId);
+    }
+
+     /**
+     * returns a permission by its ID
+     * @param permissionId permission ID
+     * @return
+     */
+    public Permission getPermissionById(int permissionId)
+    {
+        return permissionDao.getPermissionById(permissionId);
     }
 }

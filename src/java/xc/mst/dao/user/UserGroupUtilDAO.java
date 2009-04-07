@@ -40,6 +40,11 @@ public abstract class UserGroupUtilDAO
 	 */
 	public final static String USERS_TO_GROUPS_TABLE_NAME = "users_to_groups";
 
+    /**
+	 * The name of the users database table
+	 */
+	public final static String USERS_TABLE_NAME = "users";
+
 	/**
 	 * The name of the user ID column
 	 */
@@ -49,6 +54,21 @@ public abstract class UserGroupUtilDAO
 	 * The name of the group ID column
 	 */
 	public final static String COL_GROUP_ID = "group_id";
+
+    /**
+	 * The name of the username column
+	 */
+	public final static String COL_USERNAME = "username";
+
+	/**
+	 * The name of the first name column
+	 */
+	public final static String COL_FIRST_NAME = "first_name";
+
+	/**
+	 * The name of the last name column
+	 */
+	public final static String COL_LAST_NAME = "last_name";
 
 	/**
 	 * Inserts a row in the database assigning a user to a group.

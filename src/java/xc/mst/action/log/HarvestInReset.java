@@ -111,10 +111,18 @@ public class HarvestInReset extends ActionSupport
         }
     }
 
+    /**
+     * returns error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
-
+    
+    /**
+     * sets the error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
@@ -127,7 +135,7 @@ public class HarvestInReset extends ActionSupport
     {
         try
         {
-            List providerList = providerService.getAllProviders();
+            List<Provider> providerList = providerService.getAllProviders();
             Iterator provIter = providerList.iterator();
             while(provIter.hasNext())
             {

@@ -111,20 +111,31 @@ public class HarvestOutReset extends ActionSupport
         }
     }
 
-
+    /**
+     * returns the error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets the error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
 
+    /**
+     * Resets all the harvest-out log files relating to services
+     * @return {@link #SUCCESS}
+     */
     public String resetAll()
     {
         try
         {
-            List serviceList = servicesService.getAllServices();
+            List<Service> serviceList = servicesService.getAllServices();
             Iterator harvIter = serviceList.iterator();
             while(harvIter.hasNext())
             {

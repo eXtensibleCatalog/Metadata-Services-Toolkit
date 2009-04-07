@@ -94,7 +94,6 @@ public class HarvestOutLog extends ActionSupport
      */
     public void setColumnSorted(String columnSorted)
     {
-        System.out.println("Setting column sorted as "+columnSorted);
         this.columnSorted = columnSorted;
     }
 
@@ -152,7 +151,6 @@ public class HarvestOutLog extends ActionSupport
             }
             else
             {
-                System.out.println("The value of column Sorted is :"+columnSorted);
                 this.addFieldError("generalLogError", "ERROR : The specified column does not exist");
                 return INPUT;
             }
@@ -168,10 +166,18 @@ public class HarvestOutLog extends ActionSupport
         }
     }
 
+    /**
+     * returns the error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets the error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

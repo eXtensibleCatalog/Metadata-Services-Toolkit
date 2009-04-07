@@ -150,6 +150,13 @@ public class Group
 	} // end method removePermission
 
     /**
+     * removes all the permissions associated with a group
+     */
+    public void removeAllPermissions()
+    {
+        permissions.clear();
+    }
+    /**
      * sets the count for the number of members in a group
      *
      * @param memberCount member count

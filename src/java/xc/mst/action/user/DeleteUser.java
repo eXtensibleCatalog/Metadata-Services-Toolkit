@@ -12,10 +12,10 @@ package xc.mst.action.user;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
-import xc.mst.manager.harvest.DefaultScheduleService;
-import xc.mst.manager.harvest.ScheduleService;
+import xc.mst.constants.Constants;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.user.DefaultUserGroupUtilService;
@@ -40,7 +40,10 @@ public class DeleteUser extends ActionSupport
     private ProviderService providerService = new DefaultProviderService();
 
 	/** Error type */
-	private String errorType; 
+	private String errorType;
+
+    /** A reference to the logger for this class */
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**
      * sets the ID of the user to be deleted
@@ -109,16 +112,25 @@ public class DeleteUser extends ActionSupport
         catch(Exception e)
         {
             e.printStackTrace();
+            log.debug(e);
             this.addFieldError("deleteUserError", "Error: The user was not deleted");
             errorType = "error";
             return INPUT;
         }
     }
 
+	/**
+     * returns error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

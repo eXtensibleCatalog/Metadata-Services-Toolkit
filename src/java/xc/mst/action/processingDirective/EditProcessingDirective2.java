@@ -267,8 +267,8 @@ public class EditProcessingDirective2 extends ActionSupport
             List<Set> tempSetList = null;
             if(sourceType.equalsIgnoreCase("provider"))
             {
-                List tempList = tempProcDir.getSourceProvider().getFormats();
-                List compareList = tempProcDir.getService().getInputFormats();
+                List<Format> tempList = tempProcDir.getSourceProvider().getFormats();
+                List<Format> compareList = tempProcDir.getService().getInputFormats();
                 Iterator tempIter = tempList.iterator();
                 while(tempIter.hasNext())
                 {
@@ -295,8 +295,8 @@ public class EditProcessingDirective2 extends ActionSupport
             }
             else
             {
-                List tempList = tempProcDir.getSourceService().getOutputFormats();
-                List compareList = tempProcDir.getService().getInputFormats();
+                List<Format> tempList = tempProcDir.getSourceService().getOutputFormats();
+                List<Format> compareList = tempProcDir.getService().getInputFormats();
                 Iterator tempIter = tempList.iterator();
                 while(tempIter.hasNext())
                 {
@@ -428,7 +428,7 @@ public class EditProcessingDirective2 extends ActionSupport
                         }
                         else
                         {
-                            List PDList = PDService.getAllProcessingDirectives();
+                            List<ProcessingDirective> PDList = PDService.getAllProcessingDirectives();
                             boolean outputSetFlag = false;
                             Iterator procDirIter = PDList.iterator();
                             while(procDirIter.hasNext())
@@ -527,7 +527,7 @@ public class EditProcessingDirective2 extends ActionSupport
                         }
                         else
                         {
-                            List PDList = PDService.getAllProcessingDirectives();
+                            List<ProcessingDirective> PDList = PDService.getAllProcessingDirectives();
                             boolean outputSetFlag = false;
                             Iterator procDirIter = PDList.iterator();
                             while(procDirIter.hasNext())
@@ -673,6 +673,7 @@ public class EditProcessingDirective2 extends ActionSupport
         catch(Exception e)
         {
             e.printStackTrace();
+            log.debug(e);
             return INPUT;
         }
     }
@@ -697,10 +698,18 @@ public class EditProcessingDirective2 extends ActionSupport
         }
     }
 
+	 /**
+     * returns error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

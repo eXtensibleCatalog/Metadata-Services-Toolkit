@@ -20,4 +20,11 @@ public interface PermissionService
 	 * @return A list of permissions belonging to the group
 	 */
 	public abstract List<Permission> getPermissionsForGroup(int groupId);
+
+    /**
+     * returns a permission by its ID
+     * @param permissionId permission ID
+     * @return
+     */
+    public abstract Permission getPermissionById(int permissionId);
 }

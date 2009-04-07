@@ -15,10 +15,10 @@ import java.util.*;
 import org.apache.log4j.Logger;
 import xc.mst.bo.user.Group;
 import xc.mst.constants.Constants;
-import xc.mst.manager.user.DefaultGroupPermissionUtilService;
 import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.GroupPermissionUtilService;
+import xc.mst.manager.user.DefaultPermissionService;
 import xc.mst.manager.user.GroupService;
+import xc.mst.manager.user.PermissionService;
 
 
 /**
@@ -198,11 +198,13 @@ public class AddGroup extends ActionSupport
         try
         {
             GroupService groupService = new DefaultGroupService();
+            PermissionService permissionService = new DefaultPermissionService();
+
             Group group = new Group();
             group.setName(getGroupName());
             group.setDescription(getGroupDescription());
 
-            List tempGrpList = groupService.getAllGroups();
+            List<Group> tempGrpList = groupService.getAllGroups();
             Iterator iter = tempGrpList.iterator();
 
             while(iter.hasNext())
@@ -223,15 +225,15 @@ public class AddGroup extends ActionSupport
                     return INPUT;
                 }
             }
-            groupService.insertGroup(group);
-
-            GroupPermissionUtilService GPUtilService = new DefaultGroupPermissionUtilService();
+            
 
             for(int i=0;i<permissionsSelected.length;i++)
             {
                 int permissionId = Integer.parseInt(permissionsSelected[i]);
-                GPUtilService.insertGroupPermission(group.getId(), permissionId);
+                group.addPermission(permissionService.getPermissionById(permissionId));
             }
+
+            groupService.insertGroup(group);
             return SUCCESS;
         }
         catch(Exception e)
@@ -245,10 +247,18 @@ public class AddGroup extends ActionSupport
 
     }
 
+	/**
+     * returns error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

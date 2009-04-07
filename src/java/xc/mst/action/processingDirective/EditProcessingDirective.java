@@ -43,16 +43,16 @@ public class EditProcessingDirective extends ActionSupport
     String source;
 
     /** The complete list of processing directives in the system */
-    List processingDirectivesList;
+    List<ProcessingDirective> processingDirectivesList;
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**List of all providers */
-    List providerList;
+    List<Provider> providerList;
 
     /**List of all services */
-    List serviceList;
+    List<Service> serviceList;
 
     /** specifies the type of source i.e whther it is a provider or a service */
     String sourceType;
@@ -297,10 +297,18 @@ public class EditProcessingDirective extends ActionSupport
 
     }
 
+    /**
+     * returns error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

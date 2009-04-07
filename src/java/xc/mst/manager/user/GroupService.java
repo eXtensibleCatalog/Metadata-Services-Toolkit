@@ -60,4 +60,14 @@ public interface GroupService {
      * @return list of groups
      */
     public List<Group> getAllGroups();
+
+   /**
+    * returns a sorted list of all the groups
+    * @param isAscendingOrder determines whether the list of groups is to be sorted in ascending or descending order
+    * @param columnSorted The column on which the rows are sorted
+    * @return list of groups
+    */
+    public List<Group> getAllGroupsSorted(boolean isAscendingOrder,String columnSorted);
+
+    
 }

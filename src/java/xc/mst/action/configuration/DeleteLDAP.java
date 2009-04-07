@@ -13,8 +13,10 @@ package xc.mst.action.configuration;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
+import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
@@ -28,6 +30,9 @@ import xc.mst.manager.user.UserService;
  */
 public class DeleteLDAP extends ActionSupport
 {
+    /** A reference to the logger for this class */
+	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+
     /**Creates a service for Servers*/
     private ServerService serverService = new DefaultServerService();
 
@@ -105,6 +110,7 @@ public class DeleteLDAP extends ActionSupport
         catch(Exception e)
         {
             e.printStackTrace();
+            log.debug(e);
             this.addFieldError("deleteLDAPError", "Error : Error deleting LDAP Server");
             errorType = "error";
             return INPUT;

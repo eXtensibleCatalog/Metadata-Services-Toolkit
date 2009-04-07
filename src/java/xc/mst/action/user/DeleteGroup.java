@@ -13,17 +13,15 @@ package xc.mst.action.user;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.User;
-import xc.mst.manager.user.DefaultGroupPermissionUtilService;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.GroupPermissionUtilService;
 import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.UserService;
-
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.log4j.Logger;
+import xc.mst.constants.Constants;
 
 /**
  * This action method deletes a group of users
@@ -46,7 +44,9 @@ public class DeleteGroup extends ActionSupport
 
 	/** Error type */
 	private String errorType; 
-	
+
+    /** A reference to the logger for this class */
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**
      * sets the group ID of the group to be deleted.
@@ -97,7 +97,7 @@ public class DeleteGroup extends ActionSupport
         {
                         
             Group tempGroup = groupService.getGroupById(groupId);
-            GroupPermissionUtilService GPUtilService = new DefaultGroupPermissionUtilService();            
+                    
             boolean flag = true;
 
             List<User> users = userService.getAllUsersSorted(false,"username");
@@ -126,7 +126,7 @@ public class DeleteGroup extends ActionSupport
             }
             if(flag==true)
             {
-                GPUtilService.deletePermissionsForGroup(groupId);
+                tempGroup.removeAllPermissions();
                 groupService.deleteGroup(tempGroup);
             }
             else
@@ -141,6 +141,7 @@ public class DeleteGroup extends ActionSupport
         catch(Exception e)
         {
             e.printStackTrace();
+            log.debug(e);
             this.addFieldError("allGroupsError", "Error : Problem deleting Group");
             errorType = "error";
             return INPUT;

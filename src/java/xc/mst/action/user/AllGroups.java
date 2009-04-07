@@ -24,6 +24,7 @@ import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.UserService;
 
 import com.opensymphony.xwork2.ActionSupport;
+import xc.mst.dao.user.GroupDAO;
 
 /**
  * This action method diplays all groups
@@ -32,6 +33,12 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class AllGroups extends ActionSupport
 {
+    /** determines whether the columns are to be sorted in ascending or descending order  */
+    private boolean isAscendingOrder = true;
+
+    /** determines the column on which the rows are to be sorted */
+    private String columnSorted = "GroupName";
+
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
@@ -59,6 +66,44 @@ public class AllGroups extends ActionSupport
         return groupList;
     }
 
+    /**
+     * sets the boolean value which determines if the rows are to be sorted in ascending order
+     *
+     * @param isAscendingOrder
+     */
+    public void setIsAscendingOrder(boolean isAscendingOrder)
+    {
+        this.isAscendingOrder = isAscendingOrder;
+    }
+
+    /**
+     * sgets the boolean value which determines if the rows are to be sorted in ascending order
+     *
+     * @param isAscendingOrder
+     */
+    public boolean getIsAscendingOrder()
+    {
+        return this.isAscendingOrder;
+    }
+
+    /**
+     * sets the name of the column on which the sorting should be performed
+     * @param columnSorted name of the column
+     */
+    public void setColumnSorted(String columnSorted)
+    {
+        this.columnSorted = columnSorted;
+    }
+
+    /**
+     * returns the name of the column on which sorting should be performed
+     * @return column name
+     */
+    public String getColumnSorted()
+    {
+        return this.columnSorted;
+    }
+    
      /**
      * Overrides default implementation to view the all groups page.
      * @return {@link #SUCCESS}
@@ -70,18 +115,40 @@ public class AllGroups extends ActionSupport
         {
             GroupService groupService = new DefaultGroupService();
             UserService userService = new DefaultUserService();
-            List<Group> tempList = groupService.getAllGroups();
-            List<Group> finalList = new ArrayList();
+            List<Group> tempList = new ArrayList<Group>();
 
-            Iterator iter = tempList.iterator();
-            while(iter.hasNext())
+            if(columnSorted.equalsIgnoreCase("GroupName")||(columnSorted.equalsIgnoreCase("GroupDescription")))
             {
-                Group group = (Group)iter.next();
-                group.setMemberCount(userService.getUsersForGroup(group.getId()).size());
-                finalList.add(group);
+                if(columnSorted.equalsIgnoreCase("GroupName"))
+                {
+                     tempList = groupService.getAllGroupsSorted(isAscendingOrder, GroupDAO.COL_NAME);
+                }
+                else
+                {
+                     tempList = groupService.getAllGroupsSorted(isAscendingOrder, GroupDAO.COL_DESCRIPTION);
+                }
+               
+                List<Group> finalList = new ArrayList();
+
+                Iterator iter = tempList.iterator();
+                while(iter.hasNext())
+                {
+                    Group group = (Group)iter.next();
+                    group.setMemberCount(userService.getUsersForGroup(group.getId()).size());
+                    finalList.add(group);
+                }
+                setGroupList(finalList);
+                setIsAscendingOrder(isAscendingOrder);
+                System.out.println("The ASC order value is "+isAscendingOrder);
+                setColumnSorted(columnSorted);
+                return SUCCESS;
             }
-            setGroupList(finalList);
-            return SUCCESS;
+            else
+            {
+                this.addFieldError("allGroupsError", "Error : The specified column name does not exist");
+                errorType = "error";
+                return SUCCESS;
+            }
         }
         catch(Exception e)
         {
@@ -94,11 +161,22 @@ public class AllGroups extends ActionSupport
 
     }
 
+	/**
+     * returns error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
+
+
+     
 }

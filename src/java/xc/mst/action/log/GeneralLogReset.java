@@ -3,7 +3,9 @@ package xc.mst.action.log;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.PrintWriter;
 import java.util.*;
+import org.apache.log4j.Logger;
 import xc.mst.bo.log.Log;
+import xc.mst.constants.Constants;
 import xc.mst.manager.logs.DefaultLogService;
 import xc.mst.manager.logs.LogService;
 
@@ -14,6 +16,9 @@ import xc.mst.manager.logs.LogService;
  */
 public class GeneralLogReset extends ActionSupport
 {
+    /** A reference to the logger for this class */
+	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+
     /**The ID of the general Log file */
     private String logId;
 
@@ -48,12 +53,12 @@ public class GeneralLogReset extends ActionSupport
         try
         {
             int id = Integer.parseInt(logId);
-            Log log = logService.getById(id);
-            log.setErrors(0);
-            log.setLastLogReset(new Date());
-            log.setWarnings(0);
-            logService.update(log);
-            String filename = log.getLogFileLocation();
+            Log logs = logService.getById(id);
+            logs.setErrors(0);
+            logs.setLastLogReset(new Date());
+            logs.setWarnings(0);
+            logService.update(logs);
+            String filename = logs.getLogFileLocation();
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
             return SUCCESS;
@@ -61,6 +66,7 @@ public class GeneralLogReset extends ActionSupport
         catch(Exception e)
         {
             e.printStackTrace();
+            log.debug(e);
             this.addFieldError("generalLogReset", "There was an error reseting the details of the log");
             return SUCCESS;
         }
@@ -74,16 +80,16 @@ public class GeneralLogReset extends ActionSupport
     {
         try
         {
-            List logList = logService.getAll();
+            List<Log> logList = logService.getAll();
             Iterator logIter = logList.iterator();
             while(logIter.hasNext())
             {
-                Log log = (Log)logIter.next();
-                log.setErrors(0);
-                log.setLastLogReset(new Date());
-                log.setWarnings(0);
-                logService.update(log);
-                String filename = log.getLogFileLocation();
+                Log logs = (Log)logIter.next();
+                logs.setErrors(0);
+                logs.setLastLogReset(new Date());
+                logs.setWarnings(0);
+                logService.update(logs);
+                String filename = logs.getLogFileLocation();
                 PrintWriter printWriter = new PrintWriter(filename);
                 printWriter.close();
             }
@@ -92,6 +98,7 @@ public class GeneralLogReset extends ActionSupport
         catch(Exception e)
         {
             e.printStackTrace();
+            log.debug(e);
             this.addFieldError("generalLogResetAll", "ERROR : There was a problem resetting all the general log files");
             return SUCCESS;
         }

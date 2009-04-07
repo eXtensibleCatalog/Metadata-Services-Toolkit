@@ -63,4 +63,11 @@ public abstract class PermissionDAO
 	 * @return A list of permissions belonging to the group
 	 */
 	public abstract List<Permission> getPermissionsForGroup(int groupId);
+
+    /**
+     * returns a permission object based on the ID passed
+     * @param permissionId permission ID
+     * @return
+     */
+    public abstract Permission getPermissionById(int permissionId);
 } // end class PermissionDAO

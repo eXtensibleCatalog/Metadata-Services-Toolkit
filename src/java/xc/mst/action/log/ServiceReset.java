@@ -119,7 +119,7 @@ public class ServiceReset extends ActionSupport
     {
         try
         {
-            List servicesList = servicesService.getAllServices();
+            List<Service> servicesList = servicesService.getAllServices();
             Iterator servIter = servicesList.iterator();
             while(servIter.hasNext())
             {
@@ -146,10 +146,18 @@ public class ServiceReset extends ActionSupport
         }
     }
 
+    /**
+     * returns the error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets the error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

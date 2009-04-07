@@ -265,26 +265,50 @@ public class EditLocalUser extends ActionSupport
         }
     }
 
+	/**
+     * returns error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
 
+    /**
+     * returns the first name of the user
+     * @return first name
+     */
 	public String getFirstName() {
 		return firstName;
 	}
 
+    /**
+     * sets the first name of the user
+     * @param firstName first name
+     */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName.trim();
 	}
 
+    /**
+     * returns the last name of the user
+     * @return last name
+     */
 	public String getLastName() {
 		return lastName;
 	}
 
+    /**
+     * sets the last name of the user
+     * @param lastName last name
+     */
 	public void setLastName(String lastName) {
 		this.lastName = lastName.trim();
 	}

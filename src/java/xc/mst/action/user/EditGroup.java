@@ -18,10 +18,10 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
 import xc.mst.constants.Constants;
-import xc.mst.manager.user.DefaultGroupPermissionUtilService;
 import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.GroupPermissionUtilService;
+import xc.mst.manager.user.DefaultPermissionService;
 import xc.mst.manager.user.GroupService;
+import xc.mst.manager.user.PermissionService;
 
 /**
  * This action method is used to edit the details of a group of users
@@ -55,7 +55,13 @@ public class EditGroup extends ActionSupport
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 	/** Error type */
-	private String errorType; 
+	private String errorType;
+
+    /** Group Service object which interacts with group objects */
+    private GroupService groupService = new DefaultGroupService();
+
+    /**Permission Service object with provides methods to interact with permissions */
+    private PermissionService permissionService = new DefaultPermissionService();
 	
 
     public EditGroup()
@@ -196,7 +202,7 @@ public class EditGroup extends ActionSupport
     {
         try
         {
-            GroupService groupService = new DefaultGroupService();
+            
             Group group = groupService.getGroupById(groupId);
             setTemporaryGroup(group);
             Iterator tempIter = group.getPermissions().iterator();
@@ -232,7 +238,6 @@ public class EditGroup extends ActionSupport
     {
         try
         {
-            GroupService groupService = new DefaultGroupService();
             Group group = groupService.getGroupById(getGroupId());
             group.setDescription(getGroupDescription());
             group.setName(getGroupName());
@@ -267,15 +272,16 @@ public class EditGroup extends ActionSupport
                 }
             }
 
-            groupService.updateGroup(group);
+            
 
-            GroupPermissionUtilService GPUtilService = new DefaultGroupPermissionUtilService();
-            GPUtilService.deletePermissionsForGroup(groupId);
+            group.removeAllPermissions();
             for(int i=0;i<permissionsSelected.length;i++)
             {
                 int permissionId = Integer.parseInt(permissionsSelected[i]);
-                GPUtilService.insertGroupPermission(getGroupId(), permissionId);
+                group.addPermission(permissionService.getPermissionById(permissionId));
             }
+
+            groupService.updateGroup(group);
             return SUCCESS;
         }
         catch(Exception e)
@@ -287,9 +293,19 @@ public class EditGroup extends ActionSupport
             return INPUT;
         }
     }
+    
+	/**
+     * returns error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
+
+    /**
+     * sets error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

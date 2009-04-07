@@ -46,10 +46,20 @@ public class DefaultPermissionDAO extends PermissionDAO
 	 */
 	private static PreparedStatement psGetPermissionsForGroup = null;
 
+    /**
+	 * Prepared statement to get the permission for a given ID
+	 */
+	private static PreparedStatement psGetPermissionById = null;
+
 	/**
 	 * Lock to prevent concurrent access of the prepared statement to get all permissions for a group
 	 */
 	private static Object psGetPermissionsForGroupLock = new Object();
+
+    /**
+	 * Lock to prevent concurrent access of the prepared statement to get permission for a given ID
+	 */
+    private static Object psGetPermissionByIdLock = new Object();
 
 	@Override
 	public List<Permission> getPermissionsForGroup(int groupId)
@@ -126,4 +136,83 @@ public class DefaultPermissionDAO extends PermissionDAO
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method getPermissionsForGroup(int)
+
+
+
+    @Override
+	public Permission getPermissionById(int permissionId)
+	{
+		synchronized(psGetPermissionByIdLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Getting the permission with ID " + permissionId);
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			try
+			{
+				// If the PreparedStatement to get a permission by ID doesn't exist, create it
+				if(psGetPermissionById == null)
+				{
+					// SQL to get the row
+					String selectSql = "SELECT " + COL_TOP_LEVEL_TAB_ID + ", " +
+				                                   COL_TAB_NAME + " " + COL_TAB_ORDER + " " +
+				                       "FROM " + TOP_LEVEL_TABS_TABLE_NAME + " " +
+
+				                       "WHERE " + COL_TOP_LEVEL_TAB_ID + "=?";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get the permission for an ID\" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetPermissionById = dbConnection.prepareStatement(selectSql);
+				} // end if (PreparedStatement to get permission for an ID is null)
+
+				// Set the parameters on the update statement
+				psGetPermissionById.setInt(1, permissionId);
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = psGetPermissionsForGroup.executeQuery();
+
+                // The current Permission
+			    Permission permission = new Permission();
+
+
+				if(results.next())
+				{
+
+					// Set the fields on the permission
+					permission.setTabId(results.getInt(1));
+					permission.setTabName(results.getString(2));
+
+
+				}
+
+				if(log.isDebugEnabled())
+					log.debug("Found the permission for the ID " + permissionId + ".");
+
+				return permission;
+			} // end try (get and return the permission for the ID)
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the permission for the ID " + permissionId, e);
+                e.printStackTrace();
+				return null;
+			} // end catch(SQLException)
+            catch(Exception e)
+            {
+                log.error("An Error was Logged : "+e);
+                e.printStackTrace();
+                return null;
+            }
+			finally
+			{
+				MySqlConnectionManager.closeResultSet(results);
+			} // end finally (close ResultSet)
+		} // end synchronized
+	} // end method getPermissionById(int)
 } // end class DefaultPermissionDAO

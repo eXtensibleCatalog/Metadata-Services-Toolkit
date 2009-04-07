@@ -396,7 +396,7 @@
 
          <action name="addGroup" class="xc.mst.action.user.AddGroup" method="addGroup">
              <interceptor-ref name="default"/>
-			<result name="success" type="redirect">allGroups.action</result>
+			<result name="success" type="redirect">allGroups.action?isAscendingOrder=true&amp;columnSorted=GroupName</result>
 			<result name="input">/pages/user/add_group.jsp</result>
 		</action>
         <action name="viewEditGroup" class="xc.mst.action.user.EditGroup">
@@ -406,17 +406,17 @@
 		</action>
         <action name="editGroup" class="xc.mst.action.user.EditGroup" method="editGroup">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">allGroups.action</result>
+			<result name="success" type="redirect">allGroups.action?isAscendingOrder=true&amp;columnSorted=GroupName</result>
 			<result name="input">/pages/user/edit_group.jsp?GroupId=${groupId}</result>
 		</action>
          <action name="deleteUser" class="xc.mst.action.user.DeleteUser">
              <interceptor-ref name="default"/>
-			<result name="success" type="redirect">allUsers.action?isAscendingOrder=true&amp;columnSorted=username</result>
+			<result name="success" type="redirect">allUsers.action?isAscendingOrder=true&amp;columnSorted=UserName</result>
 			<result name="input">/pages/user/all_users.jsp</result>
 		</action>
 		<action name="deleteGroup" class="xc.mst.action.user.DeleteGroup">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">allGroups.action</result>
+			<result name="success" type="redirect">allGroups.action?isAscendingOrder=true&amp;columnSorted=GroupName</result>
 			<result name="input">/pages/user/all_groups.jsp</result>
 		</action>
         

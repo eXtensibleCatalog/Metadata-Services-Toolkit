@@ -25,6 +25,7 @@ import xc.mst.manager.repository.DefaultProviderService;
  */
 public class ViewRepository extends ActionSupport implements UserAware
 {
+      /** A reference to the logger for this class */
       static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
       /** The ID of the repository to be viewed */
@@ -220,14 +221,26 @@ public class ViewRepository extends ActionSupport implements UserAware
           }
       }
 
+	/**
+     * returns error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
 
+    /**
+     * returns the information message which describes the status of the revalidation operation
+     * @return information message
+     */
 	public String getMessage() {
 		return message;
 	}

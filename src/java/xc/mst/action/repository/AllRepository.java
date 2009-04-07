@@ -30,7 +30,9 @@ import xc.mst.manager.repository.ProviderService;
 public class AllRepository extends ActionSupport
 {
    
+   /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    
     /**
 	 * Eclipse generated id
 	 */
