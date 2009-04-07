@@ -233,265 +233,190 @@ public abstract class MetadataService
 		// Get the service
 		Service service = serviceDao.getById(serviceId);
 
-		// If the service is not user defined, run the correct built in service.
-		if(!service.getIsUserDefined())
+		// The name of the class for the service specified in the configuration file.
+		String targetClassName = service.getClassName();
+
+		// Get the class for the service specified in the configuration file
+		try
 		{
-			// Check the service name to determine which built in service to run
-			String serviceName = service.getName();
+			if(log.isDebugEnabled())
+				log.debug("Trying to get the MetadataService class named " + targetClassName);
 
-			if(log.isInfoEnabled())
-				log.info("Running the service: " + serviceName);
+			// Get the class specified in the configuration file
+			Class<?> serviceClass = Class.forName(targetClassName);
 
+			if(log.isDebugEnabled())
+				log.debug("Found the MetadataService class named " + targetClassName + ", getting its constructor.");
 			// The MetadataService to run
 			runningService = null;
 
-			// Run the correct service based on the name
-			if(serviceName.equals(Constants.NORMALIZATION_SERVICE_NAME))
+			// Get the service's processRecords method
+			Constructor<?> serviceConstructor = serviceClass.getConstructor(new Class[] {});
+
+			if(log.isDebugEnabled())
+				log.debug("Found the MetadataService class's constructor, invoking it.");
+
+			// Construct the MetadataService Object
+			runningService = (MetadataService)serviceConstructor.newInstance(new Object[] {});
+
+			// Set the service's ID and name
+			runningService.setServiceId(serviceId);
+			runningService.setServiceName(service.getName());
+			
+			// Load the service's configuration
+			runningService.loadConfiguration(service.getServiceConfig());
+
+			// Create the list of ProcessingDirectives which could be run on records processed from this service
+			runningService.setProcessingDirectives(processingDirectiveDao.getBySourceServiceId(serviceId));
+
+			if(log.isDebugEnabled())
+				log.debug("Constructed the MetadataService Object, running its processRecords() method.");
+
+			LogWriter.addInfo(service.getServicesLogFileName(), "Starting the " + service.getName() + " Service.");
+
+			// Run the service's processRecords method
+			boolean success = runningService.processRecords(outputSetId);
+
+			LogWriter.addInfo(service.getServicesLogFileName(), "The " + service.getName() + " Service finished running.  " + runningService.numProcessed + " records were processed.");
+
+			return success;
+		} // end try(run the service through reflection)
+		catch(ClassNotFoundException e)
+		{
+			log.error("Could not find class " + targetClassName, e);
+
+			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + " could not be found.");
+
+			// Increase the warning and error counts as appropriate, then update the provider
+			service.setServicesErrors(service.getServicesErrors() + 1);
+
+			try
 			{
-				LogWriter.addInfo(service.getServicesLogFileName(), "Starting the Normalization Service");
-
-				runningService = new NormalizationService();
-			} // end if(service is the Normalization Service)
-			else if (serviceName.equals(Constants.TRANSFORMATION_SERVICE_NAME))
+				serviceDao.update(service);
+			}
+			catch (DataException e2)
 			{
-				LogWriter.addInfo(service.getServicesLogFileName(), "Starting the Transformation Service");
-
-				runningService = new TransformationService();
-			} // end if(service is the Transformation Service)
-			else if (serviceName.equals(Constants.AGGREGATION_SERVICE_NAME))
-			{
-				LogWriter.addInfo(service.getServicesLogFileName(), "Starting the Aggregation Service");
-
-				runningService = new AggregationService();
-			} // end if(service is the Aggregation Service)
-			else
-			{
-				LogWriter.addWarning(service.getServicesLogFileName(), "Unrecognized built-in service name: " + serviceName);
-
-				// Load the provider again in case it was updated during the harvest
-				service = serviceDao.getById(service.getId());
-
-				// Increase the warning and error counts as appropriate, then update the provider
-				service.setServicesWarnings(service.getServicesWarnings() + 1);
-
-				try
-				{
-					serviceDao.update(service);
-				}
-				catch (DataException e)
-				{
-					log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e);
-				}
-
-				log.warn("Unrecognized built-in service name: " + serviceName);
-			} // end else(service not recognized)
-
-			// Run the service
-			if(runningService != null)
-			{
-				// Set the service's ID and name
-				runningService.setServiceId(serviceId);
-				runningService.setServiceName(service.getName());
-
-				// Create the list of ProcessingDirectives which could be run on records processed from this service
-				runningService.setProcessingDirectives(processingDirectiveDao.getBySourceServiceId(serviceId));
-
-				boolean success = runningService.processRecords(outputSetId);
-
-				LogWriter.addInfo(service.getServicesLogFileName(), "The " + serviceName + " Service finished running.  " + runningService.numProcessed + " records were processed.");
-
-				return success;
-			} // end if(service found)
-
+				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
+			}
+			
 			// Return false if we did not recognize the service name
 			return false;
 		} // end if(service is not user defined)
-
-		// Otherwise the service is user defined, so run the service using reflection
-		else
+		catch(NoClassDefFoundError e)
 		{
-			// The name of the class for the service specified in the configuration file.
-			String targetClassName = service.getPackageName() + "." + service.getClassName();
+			log.error("Could not find class " + targetClassName, e);
 
-			// Get the class for the service specified in the configuration file
+			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + " could not be found.");
+
+			// Load the provider again in case it was updated during the harvest
+			service = serviceDao.getById(service.getId());
+
+			// Increase the warning and error counts as appropriate, then update the provider
+			service.setServicesErrors(service.getServicesErrors() + 1);
+
 			try
 			{
-				if(log.isDebugEnabled())
-					log.debug("Trying to get the MetadataService class named " + targetClassName);
-
-				// Get the class specified in the configuration file
-				Class<?> serviceClass = Class.forName(targetClassName);
-
-				if(log.isDebugEnabled())
-					log.debug("Found the MetadataService class named " + targetClassName + ", getting its constructor.");
-
-				// Get the service's processRecords method
-				Constructor<?> serviceConstructor = serviceClass.getConstructor(new Class[] {});
-
-				if(log.isDebugEnabled())
-					log.debug("Found the MetadataService class's constructor, invoking it.");
-
-				// Construct the MetadataService Object
-				MetadataService serviceToRun = (MetadataService)serviceConstructor.newInstance(new Object[] {});
-
-				// Set the service's ID and name
-				serviceToRun.setServiceId(serviceId);
-				serviceToRun.setServiceName(service.getName());
-
-				// Create the list of ProcessingDirectives which could be run on records processed from this service
-				serviceToRun.setProcessingDirectives(processingDirectiveDao.getBySourceServiceId(serviceId));
-
-				if(log.isDebugEnabled())
-					log.debug("Constructed the MetadataService Object, running its processRecords() method.");
-
-				LogWriter.addInfo(service.getServicesLogFileName(), "Starting the " + service.getName() + " Service.");
-
-				// Run the service's processRecords method
-				boolean success = serviceToRun.processRecords(outputSetId);
-
-				LogWriter.addInfo(service.getServicesLogFileName(), "The " + service.getName() + " Service finished running.  " + serviceToRun.numProcessed + " records were processed.");
-
-				return success;
-			} // end try(run the service through reflection)
-			catch(ClassNotFoundException e)
+				serviceDao.update(service);
+			}
+			catch (DataException e2)
 			{
-				log.error("Could not find class " + targetClassName, e);
+				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
+			}
 
-				LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + " could not be found.");
+			return false;
+		} // end catch(NoClassDefFoundError)
+		catch(NoSuchMethodException e)
+		{
+			log.error("Could not find the service's processRecords method.", e);
 
-				// Load the provider again in case it was updated during the harvest
-				service = serviceDao.getById(service.getId());
+			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + "'s processRecords method could not be found.");
 
-				// Increase the warning and error counts as appropriate, then update the provider
-				service.setServicesErrors(service.getServicesErrors() + 1);
+			// Load the provider again in case it was updated during the harvest
+			service = serviceDao.getById(service.getId());
 
-				try
-				{
-					serviceDao.update(service);
-				}
-				catch (DataException e2)
-				{
-					log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
-				}
+			// Increase the warning and error counts as appropriate, then update the provider
+			service.setServicesErrors(service.getServicesErrors() + 1);
 
-				return false;
-			} // end catch(ClassNotFoundException)
-			catch(NoClassDefFoundError e)
+			try
 			{
-				log.error("Could not find class " + targetClassName, e);
-
-				LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + " could not be found.");
-
-				// Load the provider again in case it was updated during the harvest
-				service = serviceDao.getById(service.getId());
-
-				// Increase the warning and error counts as appropriate, then update the provider
-				service.setServicesErrors(service.getServicesErrors() + 1);
-
-				try
-				{
-					serviceDao.update(service);
-				}
-				catch (DataException e2)
-				{
-					log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
-				}
-
-				return false;
-			} // end catch(NoClassDefFoundError)
-			catch(NoSuchMethodException e)
+				serviceDao.update(service);
+			}
+			catch (DataException e2)
 			{
-				log.error("Could not find the service's processRecords method.", e);
+				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
+			}
 
-				LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + "'s processRecords method could not be found.");
+			return false;
+		} // end catch(NoSuchMethodException)
+		catch(InvocationTargetException e)
+		{
+			log.error("InvocationTargetException occurred while invoking the service's processRecords method.", e);
 
-				// Load the provider again in case it was updated during the harvest
-				service = serviceDao.getById(service.getId());
+			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + "'s processRecords method could not be invoked.");
 
-				// Increase the warning and error counts as appropriate, then update the provider
-				service.setServicesErrors(service.getServicesErrors() + 1);
+			// Load the provider again in case it was updated during the harvest
+			service = serviceDao.getById(service.getId());
 
-				try
-				{
-					serviceDao.update(service);
-				}
-				catch (DataException e2)
-				{
-					log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
-				}
+			// Increase the warning and error counts as appropriate, then update the provider
+			service.setServicesErrors(service.getServicesErrors() + 1);
 
-				return false;
-			} // end catch(NoSuchMethodException)
-			catch(InvocationTargetException e)
+			try
 			{
-				log.error("InvocationTargetException occurred while invoking the service's processRecords method.", e);
-
-				LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + "'s processRecords method could not be invoked.");
-
-				// Load the provider again in case it was updated during the harvest
-				service = serviceDao.getById(service.getId());
-
-				// Increase the warning and error counts as appropriate, then update the provider
-				service.setServicesErrors(service.getServicesErrors() + 1);
-
-				try
-				{
-					serviceDao.update(service);
-				}
-				catch (DataException e2)
-				{
-					log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
-				}
-
-				return false;
-			} // end catch(InvocationTargetException)
-			catch(IllegalAccessException e)
+				serviceDao.update(service);
+			}
+			catch (DataException e2)
 			{
-				log.error("IllegalAccessException occurred while invoking the service's processRecords method.", e);
+				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
+			}
 
-				LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + "'s processRecords method could not be accessed.");
+			return false;
+		} // end catch(InvocationTargetException)
+		catch(IllegalAccessException e)
+		{
+			log.error("IllegalAccessException occurred while invoking the service's processRecords method.", e);
 
-				// Load the provider again in case it was updated during the harvest
-				service = serviceDao.getById(service.getId());
+			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + "'s processRecords method could not be accessed.");
 
-				// Increase the warning and error counts as appropriate, then update the provider
-				service.setServicesErrors(service.getServicesErrors() + 1);
+			// Load the provider again in case it was updated during the harvest
+			service = serviceDao.getById(service.getId());
 
-				try
-				{
-					serviceDao.update(service);
-				}
-				catch (DataException e2)
-				{
-					log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
-				}
+			// Increase the warning and error counts as appropriate, then update the provider
+			service.setServicesErrors(service.getServicesErrors() + 1);
 
-				return false;
-			} // end catch(IllegalAccessException)
-			catch(Exception e)
+			try
 			{
-				log.error("Exception occurred while invoking the service's processRecords method.", e);
+				serviceDao.update(service);
+			}
+			catch (DataException e2)
+			{
+				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
+			}
 
-				LogWriter.addError(service.getServicesLogFileName(), "An internal error occurred while trying to start the " + service.getName() + " Service.");
+			return false;
+		} // end catch(IllegalAccessException)
+		catch(Exception e)
+		{
+			log.error("Exception occurred while invoking the service's processRecords method.", e);
 
-				// Load the provider again in case it was updated during the harvest
-				service = serviceDao.getById(service.getId());
+			LogWriter.addError(service.getServicesLogFileName(), "An internal error occurred while trying to start the " + service.getName() + " Service.");
 
-				// Increase the warning and error counts as appropriate, then update the provider
-				service.setServicesErrors(service.getServicesErrors() + 1);
+			// Load the provider again in case it was updated during the harvest
+			service = serviceDao.getById(service.getId());
 
-				try
-				{
-					serviceDao.update(service);
-				}
-				catch (DataException e2)
-				{
-					log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
-				}
+			// Increase the warning and error counts as appropriate, then update the provider
+			service.setServicesErrors(service.getServicesErrors() + 1);
 
-				return false;
-			} // end catch(Exception)
-		} // end else(the service is user defined)
+			try
+			{
+				serviceDao.update(service);
+			}
+			catch (DataException e2)
+			{
+				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
+			}
+
+			return false;
+		} // end catch(Exception)
 	} // end method runService(int, int)
 
 	/**
@@ -792,12 +717,17 @@ public abstract class MetadataService
 	protected abstract List<Record> processRecord(Record record);
 
 	/**
+	 * This method gets called to give the service the service specific configuration
+	 * which was defined for it in its configuration file.
+	 *
+	 * @param config The service specific configuration defined in the service's configuration file
+	 */
+	protected abstract void loadConfiguration(String config);
+	
+	/**
 	 * This method gets called after all new records are processed.  If the service
 	 * needs to do any additional processing after it processed all the input records,
 	 * it should be done in this method.
-	 *
-	 * @return A list of outgoing records that should be added, modified, or deleted
-	 *         as a result of any final processing
 	 */
 	protected abstract void finishProcessing();
 }
