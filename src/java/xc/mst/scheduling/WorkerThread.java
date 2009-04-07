@@ -17,4 +17,10 @@ package xc.mst.scheduling;
 public abstract class WorkerThread extends Thread
 {
 	public abstract void run();
+	
+	public abstract void cancel();
+	
+	public abstract void pause();
+	
+	public abstract void proceed();
 } // end class WorkerThread
