@@ -258,7 +258,11 @@
 	         <fileset dir="${webapp.dir}">
 		         <exclude name="WEB-INF/**"/>
 	         </fileset>
-	         <classes dir="${targetdir}/classes"/>
+	         <classes dir="${targetdir}/classes">
+         		<exclude name="xc/mst/services/AggregationService.class"/>
+	         	<exclude name="xc/mst/services/NormalizationService.class"/>
+         		<exclude name="xc/mst/services/TransformationService.class"/>
+	         </classes>
 
 	         <lib dir="${webapp.lib.dir}">
 		        <exclude name="testng-4.4.1-jdk15.jar"/>
