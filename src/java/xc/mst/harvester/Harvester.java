@@ -25,8 +25,6 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.httpclient.params.HttpConnectionParams;
-import org.apache.commons.httpclient.params.HttpParams;
 import org.apache.log4j.Logger;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
@@ -196,6 +194,11 @@ public class Harvester implements ErrorHandler
 	 * True if this Harvester has received the kill command
 	 */
 	private boolean killed = false;
+	
+	/**
+	 * True if this Harvester has received the pause command
+	 */
+	private boolean isPaused = false;
 
 	/**
 	 * How long the Harvester should wait for a response from the OAI server before giving up and throwing an error
@@ -212,6 +215,11 @@ public class Harvester implements ErrorHandler
      */
 	private Harvest currentHarvest = null;
 
+	/**
+	 * Reference to the current running harvester
+	 */
+	private static Harvester runningHarvester; 
+	
 	/**
 	 * The provider being harvested
 	 */
@@ -320,25 +328,25 @@ public class Harvester implements ErrorHandler
 		LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Starting harvest of " + baseURL);
 
 		// Create a Harvester and use it to run the harvest
-		Harvester hvst = new Harvester(timeOutMilliseconds, scheduleStep, currentHarvest);
+		runningHarvester = new Harvester(timeOutMilliseconds, scheduleStep, currentHarvest);
 
 		try
 		{
-			hvst.doHarvest(baseURL, metadataPrefix, setSpec, from, until, harvestAll, harvestAllIfNoDeletedRecord);
+			runningHarvester.doHarvest(baseURL, metadataPrefix, setSpec, from, until, harvestAll, harvestAllIfNoDeletedRecord);
 
-			log.info("Records harvested " + hvst.recordsFound + ", failed inserts " + hvst.failedInserts);
+			log.info("Records harvested " + runningHarvester.recordsFound + ", failed inserts " + runningHarvester.failedInserts);
 
-			LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL + ", " + hvst.recordsFound + " new records were returned by the OAI provider.");
+			LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL + ", " + runningHarvester.recordsFound + " new records were returned by the OAI provider.");
 
 			// Report the number of records which could not be added to the index due to an error
-			if(hvst.failedInserts > 0)
+			if(runningHarvester.failedInserts > 0)
 			{
-				LogWriter.addWarning(scheduleStep.getSchedule().getProvider().getLogFileName(), hvst.failedInserts + " records were not able to be added or updated in the index.");
-				hvst.warningCount++;
+				LogWriter.addWarning(scheduleStep.getSchedule().getProvider().getLogFileName(), runningHarvester.failedInserts + " records were not able to be added or updated in the index.");
+				runningHarvester.warningCount++;
 			}
 
 			// Send an Email report on the results of the harvest
-			hvst.sendReportEmail(null);
+			runningHarvester.sendReportEmail(null);
 		}
 		finally // Update the error and warning count for the provider
 		{
@@ -346,10 +354,10 @@ public class Harvester implements ErrorHandler
 			Provider provider = providerDao.getById(scheduleStep.getSchedule().getProvider().getId());
 
 			// Increase the warning and error counts as appropriate, then update the provider
-			provider.setWarnings(provider.getWarnings() + hvst.warningCount);
-			provider.setErrors(provider.getErrors() + hvst.errorCount);
-			provider.setRecordsAdded(provider.getRecordsAdded() + hvst.addedCount);
-			provider.setRecordsReplaced(provider.getRecordsReplaced() + hvst.updatedCount);
+			provider.setWarnings(provider.getWarnings() + runningHarvester.warningCount);
+			provider.setErrors(provider.getErrors() + runningHarvester.errorCount);
+			provider.setRecordsAdded(provider.getRecordsAdded() + runningHarvester.addedCount);
+			provider.setRecordsReplaced(provider.getRecordsReplaced() + runningHarvester.updatedCount);
 
 			try
 			{
@@ -562,7 +570,31 @@ public class Harvester implements ErrorHandler
 					sendReportEmail("Harvest of " + baseURL + " has been manually terminated.");
 
 					throw new Hexception("Harvest received kill signal");
-				} // end if(harvester was killed)
+				}// end if(harvester was killed)
+				
+				// If the harvester is paused then wait until it resumes or is killed
+				else if(isPaused)
+				{
+					// Wait until it resumes or is killed
+					while(isPaused && !killed)
+					{
+						LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " is waiting to resume.");
+						Thread.sleep(3000);
+						if(killed)
+						{
+							LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been manually terminated.");
+
+							loggedHException = true;
+
+							sendReportEmail("Harvest of " + baseURL + " has been manually terminated.");
+
+							throw new Hexception("Harvest received kill signal");
+
+						}
+						
+					}
+				
+				}
 
 				request = baseURL;
 				String reqMessage;
@@ -795,6 +827,31 @@ public class Harvester implements ErrorHandler
 			if (killed)
 				throw new Hexception("Harvest received kill signal");
 
+			else if(isPaused)
+			{
+				while(isPaused && !killed)
+					try {
+						
+						Thread.sleep(3000);
+						
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+					if(killed)
+					{
+						LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been manually terminated.");
+
+						loggedHException = true;
+
+						sendReportEmail("Harvest of " + baseURL + " has been manually terminated.");
+
+						throw new Hexception("Harvest received kill signal");
+
+					}
+
+			}
+			
             Node metadataNode = null;
 
             // If the schedule is null set the provider_id to 1,
@@ -1485,4 +1542,28 @@ public class Harvester implements ErrorHandler
 	{
 		xmlwarnings += exc;
 	} // end method warning(SAXParseException)
+	
+	/**
+	 * Gets the reference to the current running harvester
+	 * @return The reference to the current running harvester
+	 */
+	public static Harvester getRunningHarvester() {
+		return runningHarvester;
+	}
+
+	/**
+	 * Gets the pause status of the harvester.
+	 */
+	public boolean isPaused() {
+		return isPaused;
+	}
+
+	/**
+	 * Sets the pause status of the harvester.
+	 */
+	public void setPaused(boolean isPaused) {
+		this.isPaused = isPaused;
+	}
+
+
 } // end class Harvester
