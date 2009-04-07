@@ -74,4 +74,32 @@ public class ServiceWorkerThread extends WorkerThread
 			log.error("An error occurred while running the service with ID " + serviceId, e);
 		} // end catch(Exception)
 	} // end method run()
+
+	/**
+	 * Cancels the currently running service
+	 */
+	public void cancel() {
+		
+		log.info("Canceling service with id:" + serviceId);
+		MetadataService.getRunningService().setCanceled(true);
+	}
+
+	/**
+	 * Pauses the currently running service
+	 */
+	public void pause() {
+		log.info("Pausing service with id:" + serviceId);
+		MetadataService.getRunningService().setPaused(true);
+		
+	}
+
+	/**
+	 * Resumes the currently paused service
+	 */
+	public void proceed() {
+		
+		log.info("Resuming service with id:" + serviceId);
+		MetadataService.getRunningService().setPaused(false);
+		
+	}
 } // end class ServiceWorkerThread
