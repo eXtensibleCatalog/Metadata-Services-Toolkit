@@ -172,6 +172,7 @@ public class DefaultServicesService implements ServicesService
 	    	// Populate the service BO
     		Service service = new Service();
     		service.setName(name);
+    		service.setServiceJar(jar);
     		service.setClassName(className);
     		service.setHarvestOutLogFileName("logs/harvestOut/" + name + ".txt");
     		service.setServicesLogFileName("logs/service/" + name + ".txt");
@@ -195,7 +196,7 @@ public class DefaultServicesService implements ServicesService
     			line = consumeCommentsAndWhitespace(in);
     			if(line.startsWith("name:"))
     			{
-    				String formatName = (line.contains("#") ? line.substring(4, line.indexOf("#") - 4) : line.substring(4)).trim();
+    				String formatName = (line.contains("#") ? line.substring(5, line.indexOf("#")) : line.substring(5)).trim();
     			
     				// Get the format's schema
     				line = consumeCommentsAndWhitespace(in);
@@ -205,7 +206,7 @@ public class DefaultServicesService implements ServicesService
         				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected format schema location.");
     				}
     				
-    				String schemaLoc = (line.contains("#") ? line.substring(15, line.indexOf("#") - 15) : line.substring(15)).trim();
+    				String schemaLoc = (line.contains("#") ? line.substring(16, line.indexOf("#")) : line.substring(16)).trim();
     				
     				// Get the format's namespace
     				line = consumeCommentsAndWhitespace(in);
@@ -215,7 +216,7 @@ public class DefaultServicesService implements ServicesService
         				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected format namespace.");
     				}
     				
-    				String namespace = (line.contains("#") ? line.substring(9, line.indexOf("#") - 9) : line.substring(9)).trim();
+    				String namespace = (line.contains("#") ? line.substring(10, line.indexOf("#")) : line.substring(10)).trim();
     				
     				// Get the format from the database
     				Format format = formatDao.getByName(formatName);
@@ -263,7 +264,7 @@ public class DefaultServicesService implements ServicesService
     			line = consumeCommentsAndWhitespace(in);
     			if(line.startsWith("name:"))
     			{
-    				String formatName = (line.contains("#") ? line.substring(4, line.indexOf("#") - 4) : line.substring(4)).trim();
+    				String formatName = (line.contains("#") ? line.substring(5, line.indexOf("#")) : line.substring(5)).trim();
     			
     				// Get the format's schema
     				line = consumeCommentsAndWhitespace(in);
@@ -273,7 +274,7 @@ public class DefaultServicesService implements ServicesService
         				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected format schema location.");
     				}
     				
-    				String schemaLoc = (line.contains("#") ? line.substring(15, line.indexOf("#") - 15) : line.substring(15)).trim();
+    				String schemaLoc = (line.contains("#") ? line.substring(16, line.indexOf("#")) : line.substring(16)).trim();
     				
     				// Get the format's namespace
     				line = consumeCommentsAndWhitespace(in);
@@ -283,7 +284,7 @@ public class DefaultServicesService implements ServicesService
         				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected format namespace.");
     				}
     				
-    				String namespace = (line.contains("#") ? line.substring(9, line.indexOf("#") - 9) : line.substring(9)).trim();
+    				String namespace = (line.contains("#") ? line.substring(10, line.indexOf("#")) : line.substring(10)).trim();
     				
     				// Get the format from the database
     				Format format = formatDao.getByName(formatName);
@@ -334,7 +335,7 @@ public class DefaultServicesService implements ServicesService
     			line = consumeCommentsAndWhitespace(in);
     			if(line.startsWith("error code:"))
     			{
-    				String errorCodeStr = (line.contains("#") ? line.substring(10, line.indexOf("#") - 10) : line.substring(10)).trim();
+    				String errorCodeStr = (line.contains("#") ? line.substring(11, line.indexOf("#")) : line.substring(11)).trim();
     			
     				// Get the format's schema
     				line = consumeCommentsAndWhitespace(in);
@@ -344,7 +345,7 @@ public class DefaultServicesService implements ServicesService
         				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected error description file.");
     				}
     				
-    				String errorDescriptionFile = (line.contains("#") ? line.substring(21, line.indexOf("#") - 21) : line.substring(21)).trim();
+    				String errorDescriptionFile = (line.contains("#") ? line.substring(23, line.indexOf("#")) : line.substring(23)).trim();
     				
     				ErrorCode errorCode = new ErrorCode();
     				errorCode.setErrorCode(errorCodeStr);
@@ -366,11 +367,11 @@ public class DefaultServicesService implements ServicesService
     		StringBuffer buffer = new StringBuffer();
     		
     		// While there are unread lines in the file
-    		line = consumeCommentsAndWhitespace(in);
-    		while(line != null)
+    		line = in.readLine();
+    		while(in.ready())
     		{
-    			line = consumeCommentsAndWhitespace(in); // A line from the configuration file
-    			buffer.append(line);
+    			line = in.readLine(); // A line from the configuration file
+    			buffer.append(line).append("\n");
     		}
     		
     		// Set the configuration on the service

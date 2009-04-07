@@ -419,10 +419,10 @@ DROP TABLE IF EXISTS services;
 CREATE TABLE services
 (
   service_id INT(11) NOT NULL AUTO_INCREMENT,
-  service_name VARCHAR(63),
+  service_name VARCHAR(63) NOT NULL,
+  service_jar VARCHAR(255) NOT NULL,
   service_configuration TEXT,
   class_name VARCHAR(63),
-  is_user_defined BOOL,
   port INT(11),
   warnings INT(11) NOT NULL DEFAULT 0,
   errors INT(11) NOT NULL DEFAULT 0,

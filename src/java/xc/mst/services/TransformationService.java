@@ -14,6 +14,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 import org.jdom.Attribute;
 import org.jdom.Document;
@@ -5432,5 +5433,10 @@ public class TransformationService extends MetadataService
 
 		// If we got here and didn't return anything, there is no Attribute defined for the presented tag and value
 		return transformInto;
+	}
+	
+	@Override
+	protected void loadConfiguration(String configuration)
+	{	
 	}
 }

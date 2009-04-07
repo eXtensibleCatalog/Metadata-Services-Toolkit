@@ -147,9 +147,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 												   COL_SERVICE_NAME + ", " +
+												   COL_SERVICE_JAR + ", " +
 												   COL_SERVICE_CONFIG + ", " +
 												   COL_CLASS_NAME + ", " +
-												   COL_IS_USER_DEFINED + ", " +
 												   COL_PORT + ", " +
 												   COL_WARNINGS + ", " +
 												   COL_ERRORS + ", " +
@@ -187,9 +187,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					// Set the fields on the service
 					service.setId(results.getInt(1));
 					service.setName(results.getString(2));
-					service.setServiceConfig(results.getString(3));
-					service.setClassName(results.getString(4));
-					service.setIsUserDefined(results.getBoolean(5));
+					service.setServiceJar(results.getString(3));
+					service.setServiceConfig(results.getString(4));
+					service.setClassName(results.getString(5));
 					service.setPort(results.getInt(6));
 					service.setServicesWarnings(results.getInt(7));
 					service.setServicesErrors(results.getInt(8));
@@ -265,9 +265,9 @@ public class DefaultServiceDAO extends ServiceDAO
 			// SQL to get the rows
 			String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 										   COL_SERVICE_NAME + ", " +
+										   COL_SERVICE_JAR + ", " +
 										   COL_SERVICE_CONFIG + ", " +
 										   COL_CLASS_NAME + ", " +
-										   COL_IS_USER_DEFINED + ", " +
 										   COL_PORT + ", " +
 										   COL_WARNINGS + ", " +
 										   COL_ERRORS + ", " +
@@ -305,9 +305,9 @@ public class DefaultServiceDAO extends ServiceDAO
 				// Set the fields on the service
 				service.setId(results.getInt(1));
 				service.setName(results.getString(2));
-				service.setServiceConfig(results.getString(3));
-				service.setClassName(results.getString(4));
-				service.setIsUserDefined(results.getBoolean(5));
+				service.setServiceJar(results.getString(3));
+				service.setServiceConfig(results.getString(4));
+				service.setClassName(results.getString(5));
 				service.setPort(results.getInt(6));
 				service.setServicesWarnings(results.getInt(7));
 				service.setServicesErrors(results.getInt(8));
@@ -377,9 +377,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
+				                                   COL_SERVICE_JAR + ", " +
 				                                   COL_SERVICE_CONFIG + ", " +
 				                                   COL_CLASS_NAME + ", " +
-				                                   COL_IS_USER_DEFINED + ", " +
 				                                   COL_PORT + ", " +
 												   COL_WARNINGS + ", " +
 												   COL_ERRORS+ ", " +
@@ -421,9 +421,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					// Set the fields on the service
 					service.setId(results.getInt(1));
 					service.setName(results.getString(2));
-					service.setServiceConfig(results.getString(3));
-					service.setClassName(results.getString(4));
-					service.setIsUserDefined(results.getBoolean(5));
+					service.setServiceJar(results.getString(3));
+					service.setServiceConfig(results.getString(4));
+					service.setClassName(results.getString(5));
 					service.setPort(results.getInt(6));
 					service.setServicesWarnings(results.getInt(7));
 					service.setServicesErrors(results.getInt(8));
@@ -488,9 +488,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
+				                                   COL_SERVICE_JAR + ", " +
 				                                   COL_SERVICE_CONFIG + ", " +
 				                                   COL_CLASS_NAME + ", " +
-				                                   COL_IS_USER_DEFINED + ", " +
 				                                   COL_PORT + ", " +
 												   COL_WARNINGS + ", " +
 												   COL_ERRORS+ ", " +
@@ -532,9 +532,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					// Set the fields on the service
 					service.setId(results.getInt(1));
 					service.setName(results.getString(2));
-					service.setServiceConfig(results.getString(3));
-					service.setClassName(results.getString(4));
-					service.setIsUserDefined(results.getBoolean(5));
+					service.setServiceJar(results.getString(3));
+					service.setServiceConfig(results.getString(4));
+					service.setClassName(results.getString(5));
 					service.setPort(results.getInt(6));
 					service.setServicesWarnings(results.getInt(7));
 					service.setServicesErrors(results.getInt(8));
@@ -593,9 +593,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
+				                                   COL_SERVICE_JAR + ", " +
 				                                   COL_SERVICE_CONFIG + ", " +
 				                                   COL_CLASS_NAME + ", " +
-				                                   COL_IS_USER_DEFINED + ", " +
 				                                   COL_PORT + ", " +
 												   COL_WARNINGS + ", " +
 												   COL_ERRORS+ ", " +
@@ -637,9 +637,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					// Set the fields on the service
 					service.setId(results.getInt(1));
 					service.setName(results.getString(2));
-					service.setServiceConfig(results.getString(3));
-					service.setClassName(results.getString(4));
-					service.setIsUserDefined(results.getBoolean(5));
+					service.setServiceJar(results.getString(3));
+					service.setServiceConfig(results.getString(4));
+					service.setClassName(results.getString(5));
 					service.setPort(results.getInt(6));
 					service.setServicesWarnings(results.getInt(7));
 					service.setServicesErrors(results.getInt(8));
@@ -704,9 +704,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
+				                                   COL_SERVICE_JAR + ", " +
 				                                   COL_SERVICE_CONFIG + ", " +
 				                                   COL_CLASS_NAME + ", " +
-				                                   COL_IS_USER_DEFINED + ", " +
 				                                   COL_PORT + ", " +
 												   COL_WARNINGS + ", " +
 												   COL_ERRORS+ ", " +
@@ -748,9 +748,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					// Set the fields on the service
 					service.setId(results.getInt(1));
 					service.setName(results.getString(2));
-					service.setServiceConfig(results.getString(3));
-					service.setClassName(results.getString(4));
-					service.setIsUserDefined(results.getBoolean(5));
+					service.setServiceJar(results.getString(3));
+					service.setServiceConfig(results.getString(4));
+					service.setClassName(results.getString(5));
 					service.setPort(results.getInt(6));
 					service.setServicesWarnings(results.getInt(7));
 					service.setServicesErrors(results.getInt(8));
@@ -817,9 +817,9 @@ public class DefaultServiceDAO extends ServiceDAO
 				{
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + SERVICES_TABLE_NAME + " (" + COL_SERVICE_NAME + ", " +
+					                                                                 COL_SERVICE_JAR + ", " +
 	            	      													         COL_SERVICE_CONFIG + ", " +
 	            	      													         COL_CLASS_NAME + ", " +
-	            	      													         COL_IS_USER_DEFINED + ", " +
 	            	      													         COL_PORT + ", " +
 	            	      													         COL_WARNINGS + ", " +
 	            	      													         COL_ERRORS + ", " +
@@ -845,9 +845,9 @@ public class DefaultServiceDAO extends ServiceDAO
 
 				// Set the parameters on the insert statement
 				psInsert.setString(1, service.getName());
-				psInsert.setString(2, service.getServiceConfig());
-				psInsert.setString(3, service.getClassName());
-				psInsert.setBoolean(4, service.getIsUserDefined());
+				psInsert.setString(2, service.getServiceJar());
+				psInsert.setString(3, service.getServiceConfig());
+				psInsert.setString(4, service.getClassName());
 				psInsert.setInt(5, service.getPort());
 				psInsert.setInt(6, service.getServicesWarnings());
 				psInsert.setInt(7, service.getServicesErrors());
@@ -882,7 +882,12 @@ public class DefaultServiceDAO extends ServiceDAO
 				    	success = serviceOutputFormatDAO.insert(service.getId(), outputFormat.getId()) && success;
 
 				    if(success)
+				    {
 				    	LogWriter.addInfo(logObj.getLogFileLocation(), "Added a new service with the name " + service.getName());
+				    	
+				    	LogWriter.addInfo(service.getServicesLogFileName(), "Beginning logging for " + service.getName());
+				    	LogWriter.addInfo(service.getHarvestOutLogFileName(), "Beginning logging for " + service.getName() + "'s OAI repository");
+				    }
 				    else
 				    {
 				    	LogWriter.addWarning(logObj.getLogFileLocation(), "Added a new service with the name " + service.getName() + ", but failed to mark which formats it inputs and outputs");
@@ -939,9 +944,9 @@ public class DefaultServiceDAO extends ServiceDAO
 				{
 					// SQL to update new row
 					String updateSql = "UPDATE " + SERVICES_TABLE_NAME + " SET " + COL_SERVICE_NAME + "=?, " +
+					                                                      COL_SERVICE_JAR + "=?, " +
 				                                                          COL_SERVICE_CONFIG + "=?, " +
 				                                                          COL_CLASS_NAME + "=?, " +
-				                                                          COL_IS_USER_DEFINED + "=?, " +
 				                                                          COL_PORT + "=?, " +
 				                                                          COL_WARNINGS + "=?, " +
 				                                                          COL_ERRORS + "=?, " +
@@ -967,9 +972,9 @@ public class DefaultServiceDAO extends ServiceDAO
 
 				// Set the parameters on the update statement
 				psUpdate.setString(1, service.getName());
-				psUpdate.setString(2, service.getServiceConfig());
-				psUpdate.setString(3, service.getClassName());
-				psUpdate.setBoolean(4, service.getIsUserDefined());
+				psUpdate.setString(2, service.getServiceJar());
+				psUpdate.setString(3, service.getServiceConfig());
+				psUpdate.setString(4, service.getClassName());
 				psUpdate.setInt(5, service.getPort());
 				psUpdate.setInt(6, service.getServicesWarnings());
 				psUpdate.setInt(7, service.getServicesErrors());

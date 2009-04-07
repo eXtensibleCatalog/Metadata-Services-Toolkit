@@ -1,5 +1,5 @@
 Normalization Service # The name of the service
-C:\AllXcProjects\MetadataServicesToolkit\services.jar # The .jar file containing the service
+serviceJars/NormalizationService.jar # The .jar file containing the service
 xc.mst.services.NormalizationService # The class within the .jar file that represents the service.  This class must extend xc.mst.services.MetadataService
 8085
 
@@ -9,9 +9,6 @@ INPUT FORMATS
 name: marcxml # The name of the marcxml format, which the Normalization Service accepts as input
 schema location: http://128.151.244.132:8080/OAIToolkit/schema/MARC21slim_custom.xsd # The location of the marcxml schema
 namespace: http://www.loc.gov/MARC21/slim # The namespace of the marcxml schema
-name: foo # Dummy schema for testing
-schema location: http://128.151.244.132:8080/foo
-namespace: http://www.loc.gov/MARC21/slim/foo
 
 #-----------------------------------------
 OUTPUT FORMATS
@@ -20,45 +17,40 @@ name: marcxml # The name of the marcxml format, which the Normalization Service 
 schema location: http://128.151.244.132:8080/OAIToolkit/schema/MARC21slim_custom.xsd # The location of the marcxml schema
 namespace: http://www.loc.gov/MARC21/slim # The namespace of the marcxml schema
 
-# Dummy schema for testing
-name: bar
-schema location: http://128.151.244.132:8080/bar
-namespace: http://www.loc.gov/MARC21/slim/bar
-
 #-----------------------------------------
 #-----------------------------------------
 ERROR MESSAGES
 #-----------------------------------------
 #-----------------------------------------
 error code: 100
-error description file: The record was not valid XML
+error description file: errors/normalization/100.html
 
 error code: 101
-error description file: The leader 06 value is obsolete according to the MARC format
+error description file: errors/normalization/101.html
 
 error code: 102
-error description file: The leader 06 value is invalid according to the MARC format
+error description file: errors/normalization/102.html
 
 error code: 103
-error description file: The leader 07 value is invalid according to the MARC format
+error description file: errors/normalization/103.html
 
 error code: 104
-error description file: The 007 offset 00 value is invalid according to the MARC format
+error description file: errors/normalization/104.html
 
 error code: 105
-error description file: The 008 offset 22 value is invalid according to the MARC format
+error description file: errors/normalization/105.html
 
 error code: 106
-error description file: One or more language codes in the record did not match any language codes defined in the Normalization Service's configuration
+error description file: errors/normalization/106.html
 
 error code: 107
-error description file: The 035 datafield was invalid according to the MARC format
+error description file: errors/normalization/107.html
 
 error code: 108
-error description file: The record was missing the 001 control field, which is required in all MARC records
+error description file: errors/normalization/108.html
 
 error code: 109
-error description file: The record contained a malformed ISBN number in the 020 datafield's $a subfield
+error description file: errors/normalization/109.html
 
 #-----------------------------------------
 #-----------------------------------------

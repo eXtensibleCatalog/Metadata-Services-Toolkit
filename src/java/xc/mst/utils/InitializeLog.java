@@ -9,6 +9,10 @@
 
 package xc.mst.utils;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.List;
 
 import javax.servlet.http.HttpServlet;
@@ -17,12 +21,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.PropertyConfigurator;
 
+import com.sun.org.apache.xerces.internal.util.URI.MalformedURIException;
+
 import xc.mst.bo.log.Log;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.bo.service.Service;
+import xc.mst.constants.Constants;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.manager.processingDirective.ConfigFileException;
+import xc.mst.services.MetadataService;
 
 /**
  * Initialize log
@@ -56,14 +65,32 @@ public class InitializeLog  extends HttpServlet {
 	    for(Log log : logs)
 	    	LogWriter.addInfo(log.getLogFileLocation(), "Beginning logging for " + log.getLogFileName() + ".");
 	    
-	    // Initialize the service logs
-	    // TODO: Move this to an insertService method.
+	    // Load the services
+	    String servicesLogFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 	    ServiceDAO serviceDao = new DefaultServiceDAO();
 	    List<Service> services = serviceDao.getAll();
 	    for(Service service : services)
 	    {
-	    	LogWriter.addInfo(service.getServicesLogFileName(), "Beginning logging for " + service.getName());
-	    	LogWriter.addInfo(service.getHarvestOutLogFileName(), "Beginning logging for " + service.getName() + "'s OAI repository");
+	    	// The .jar file we need to load the service from
+    		File jarFile = new File(service.getServiceJar());
+	    	
+    		// The class loader for the MetadataService class
+    		ClassLoader serviceLoader = MetadataService.class.getClassLoader();
+    		
+    		try 
+    		{
+    			// Load the class from the .jar file
+    			URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);
+				loader.loadClass(service.getClassName());
+			} 
+    		catch (ClassNotFoundException e) 
+    		{
+    			LogWriter.addError(servicesLogFileName, "Error loading service: The class " + service.getClassName() + " could not be found in the .jar file " + service.getServiceJar());
+			}
+    		catch (MalformedURLException e) 
+    		{
+    			LogWriter.addError(servicesLogFileName, "Error loading service: " + service.getName());
+			}
 	    }
 	  }
 

@@ -50,6 +50,11 @@ public abstract class ServiceDAO
 	public final static String COL_SERVICE_NAME = "service_name";
 
 	/**
+	 * The name of the service_jar column
+	 */
+	public final static String COL_SERVICE_JAR = "service_jar";
+	
+	/**
 	 * The name of the service_configuration column
 	 */
 	public final static String COL_SERVICE_CONFIG = "service_configuration";
@@ -58,11 +63,6 @@ public abstract class ServiceDAO
 	 * The name of the class_name column
 	 */
 	public final static String COL_CLASS_NAME = "class_name";
-
-	/**
-	 * The name of the is_user_defined column
-	 */
-	public final static String COL_IS_USER_DEFINED = "is_user_defined";
 
 	/**
 	 * The name of the port column
@@ -139,9 +139,9 @@ public abstract class ServiceDAO
 	{
 		sortableColumns.add(COL_SERVICE_ID);
 		sortableColumns.add(COL_SERVICE_NAME);
+		sortableColumns.add(COL_SERVICE_JAR);
 		sortableColumns.add(COL_SERVICE_CONFIG);
 		sortableColumns.add(COL_CLASS_NAME);
-		sortableColumns.add(COL_IS_USER_DEFINED);
 		sortableColumns.add(COL_PORT);
 		sortableColumns.add(COL_WARNINGS);
 		sortableColumns.add(COL_ERRORS);
@@ -264,9 +264,9 @@ public abstract class ServiceDAO
 			if(service.getName() == null || service.getName().length() <= 0 || service.getName().length() > 63)
 				errorMessage.append("The service name is invalid. ");
 
-			if(service.getServiceConfig() == null || service.getServiceConfig().length() <= 0)
-				errorMessage.append("The service configuration is invalid. ");
-
+			if(service.getServiceJar() == null || service.getServiceJar().length() <= 0 || service.getServiceJar().length() > 255)
+				errorMessage.append("The service jar is invalid. ");
+			
 			if(service.getClassName() == null || service.getClassName().length() <= 0 || service.getClassName().length() > 63)
 				errorMessage.append("The class name is invalid. ");
 

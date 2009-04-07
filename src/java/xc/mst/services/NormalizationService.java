@@ -162,8 +162,6 @@ public class NormalizationService extends MetadataService
 				log.error("An error occurred inserting the marcxml Format into the database.", e);
 			}
 		}
-
-		loadPropertiesFiles();
 	}
 
 	@Override
@@ -1880,131 +1878,57 @@ public class NormalizationService extends MetadataService
 		return (languageLower != null && languageLower.length() == 3 && !languageLower.contains("|")&& !languageLower.equals("mul") && !languageLower.equals("n/a") && !languageLower.equals("xxx") && !languageLower.equals("und"));
 	}
 
-	/**
-	 * Loads the properties files which may be used by the Normalization Service
-	 */
-	private void loadPropertiesFiles()
-	{
+	@Override
+	protected void loadConfiguration(String configuration)
+	{	
+		String[] configurationLines = configuration.split("\n");
+	
+		// The Properties file we're currently populating
+		Properties current = null;
+		
 		// Load the properties file with information on which normalization steps are enabled.
 	    enabledSteps = new Properties();
-	    try
-	    {
-	        enabledSteps.load(new FileInputStream(NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_ENABLED_STEPS));
-	    }
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_ENABLED_STEPS + " file.", e);
-	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_ENABLED_STEPS + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
-	    }
 
-		// Load the Voyager location name properties
-		try
+	    for(String line : configurationLines)
 	    {
-	        voyagerLocationNameProperties.load(new FileInputStream(NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LOCATION_CODE_TO_LOCATION_TERM));
-	    }
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_LOCATION_CODE_TO_LOCATION_TERM + " file.", e);
-	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LOCATION_CODE_TO_LOCATION_TERM + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
-	    }
-
-	    // Load the DCMI type properties for the leader 06
-	    try
-	    {
-	        dcmiType06Properties.load(new FileInputStream(NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LEADER06_DCMI_TYPE_MAPPING));
-	    }
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_LEADER06_DCMI_TYPE_MAPPING + " file.", e);
-	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LEADER06_DCMI_TYPE_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
-	    }
-
-	    // Load the properties file mapping the Leader 06 to the MARC vocabulary.
-	    try
-	    {
-	        leader06MarcVocabProperties.load(new FileInputStream(NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LEADER06_MARC_VOCABULARY_MAPPING));
-	    }
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_LEADER06_MARC_VOCABULARY_MAPPING + " file.", e);
-	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LEADER06_MARC_VOCABULARY_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
-	    }
-
-        // Load the properties file mapping the Leader 06 to the vocab term.
-	    try
-	    {
-	        vocab06Properties.load(new FileInputStream(NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LEADER06_FULL_TYPE_MAPPING));
-	    }
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_LEADER06_FULL_TYPE_MAPPING + " file.", e);
-	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LEADER06_FULL_TYPE_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
-	    }
-
-	    // Load the properties file mapping the Leader 07 to the mode of issuance.
-	    try
-	    {
-	        modeOfIssuanceProperties.load(new FileInputStream(NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LEADER07_MODE_OF_ISSUANCE_MAPPING));
-	    }
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_LEADER07_MODE_OF_ISSUANCE_MAPPING + " file.", e);
-	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LEADER07_MODE_OF_ISSUANCE_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
-	    }
-
-	    // Load the properties file mapping the 007 offset 00 to the DCMI type.
-	    try
-	    {
-	        dcmiType0007Properties.load(new FileInputStream(NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_007_00_DCMI_TYPE_MAPPING));
-	    }
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_007_00_DCMI_TYPE_MAPPING + " file.", e);
-	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_007_00_DCMI_TYPE_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
-	    }
-
-		// Load the properties file mapping the 007 offset 00 to the type.
-	    try
-	    {
-	        vocab007Properties.load(new FileInputStream(NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_007_00_007_FULL_TYPE_MAPPING));
-	    }
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_007_00_007_FULL_TYPE_MAPPING+ " file.", e);
-	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_007_00_007_FULL_TYPE_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
-	    }
-
-	    // Load the properties file mapping the 007 offset 00 to the SMD type
-	    try
-	    {
-	        smdType007Properties.load(new FileInputStream(NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_007_SMD_TYPE_MAPPING));
-	    }
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_007_SMD_TYPE_MAPPING + " file.", e);
-	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_007_SMD_TYPE_MAPPING + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
-	    }
-
-	    // Load the properties file mapping language codes to languages
-	    try
-	    {
-	        languageTermProperties.load(new FileInputStream(NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LANGUAGE_CODE_TO_LANGUAGE));
-	    }
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_LANGUAGE_CODE_TO_LANGUAGE + " file.", e);
-	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_LANGUAGE_CODE_TO_LANGUAGE + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
-	    }
-
-		// Load the properties file mapping the 008 offset 22 to the audience.
-	    try
-	    {
-	        audienceFrom008Properties.load(new FileInputStream(NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_008_22_TO_AUDIENCE));
-	    }
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + NormalizationServiceConstants.PROPERTIES_008_22_TO_AUDIENCE + " file.", e);
-	    	LogWriter.addError(service.getServicesLogFileName(), "Could not load the " + NormalizationServiceConstants.CONFIG_DIRECTORY + "\\" + NormalizationServiceConstants.PROPERTIES_008_22_TO_AUDIENCE + " file.  Relative file paths were searched for starting from " + System.getProperty("user.dir") + ".");
+    		line = line.trim();
+    		
+	    	// Skip comments and blank lines
+	    	if(line.startsWith("#") || line.length() == 0)
+	    		continue;
+	    	// If the line contains a property, add it to the current Properties Object
+	    	else if(line.contains("="))
+	    	{
+	    		String key = line.substring(0, line.indexOf('=')).trim();
+	    		String value = (line.contains("#") ? line.substring(line.indexOf('=')+1, line.indexOf('#')) : line.substring(line.indexOf('=')+1)).trim();
+	    		current.setProperty(key, value);
+	    	}
+	    	// Otherwise check whether the line contains a valid properties heading
+	    	else
+	    	{
+	    		if(line.equals("LOCATION CODE TO LOCATION"))
+	    			current = voyagerLocationNameProperties;
+	    		else if(line.equals("LEADER 06 TO DCMI TYPE"))
+	    			current = dcmiType06Properties;
+	    		else if(line.equals("LEADER 06 TO MARC VOCAB"))
+	    			current = leader06MarcVocabProperties;
+	    		else if(line.equals("LEADER 06 TO FULL TYPE"))
+	    			current = vocab06Properties;
+	    		else if(line.equals("LEADER 07 TO MODE OF ISSUANCE"))
+	    			current = modeOfIssuanceProperties;
+	    		else if(line.equals("FIELD 007 OFFSET 00 TO DCMI TYPE"))
+	    			current = dcmiType0007Properties;
+	    		else if(line.equals("FIELD 007 OFFSET 00 TO FULL TYPE"))
+	    			current = vocab007Properties;
+	    		else if(line.equals("FIELD 007 OFFSET 00 TO SMD TYPE"))
+	    			current = smdType007Properties;
+	    		else if(line.equals("LANGUAGE CODE TO LANGUAGE"))
+	    			current = languageTermProperties;
+	    		else if(line.equals("FIELD 008 OFFSET 22 TO AUDIENCE"))
+	    			current = audienceFrom008Properties;
+	    		else if(line.equals("ENABLED STEPS"))
+	    			current = enabledSteps;
+	    	}
 	    }
 	}
 }

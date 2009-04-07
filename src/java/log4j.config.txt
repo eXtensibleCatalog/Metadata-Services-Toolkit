@@ -13,7 +13,7 @@ log4j.logger.harvestOut=DEBUG, harvestOut
 
 # Setup the Harvest In appender
 log4j.appender.harvestIn=org.apache.log4j.RollingFileAppender
-log4j.appender.harvestIn.File=C:/logs_dev/MST_HarvestIn_log.txt
+log4j.appender.harvestIn.File=logs/MST_HarvestIn_log.txt
 log4j.appender.harvestIn.MaxFileSize=25MB
 log4j.appender.processing.Threshold=DEBUG
 log4j.appender.harvestIn.MaxBackupIndex=4
@@ -22,7 +22,7 @@ log4j.appender.harvestIn.layout.ConversionPattern=%d{DATE} %5p [%t] - %m%n
 
 # Setup the Validation appender
 log4j.appender.validation=org.apache.log4j.RollingFileAppender
-log4j.appender.validation.File=C:/logs_dev/MST_Validation_log.txt
+log4j.appender.validation.File=logs/MST_Validation_log.txt
 log4j.appender.validation.MaxFileSize=25MB
 log4j.appender.validation.Threshold=DEBUG
 log4j.appender.validation.MaxBackupIndex=4
@@ -31,7 +31,7 @@ log4j.appender.validation.layout.ConversionPattern=%d{DATE} %5p [%t] - %m%n
 
 # Setup the Processing appender
 log4j.appender.processing=org.apache.log4j.RollingFileAppender
-log4j.appender.processing.File=C:/logs_dev/MST_Processing_log.txt
+log4j.appender.processing.File=logs/MST_Processing_log.txt
 log4j.appender.processing.MaxFileSize=25MB
 log4j.appender.processing.Threshold=DEBUG
 log4j.appender.processing.MaxBackupIndex=4
@@ -40,7 +40,7 @@ log4j.appender.processing.layout.ConversionPattern=%d{DATE} %5p [%t] - %m%n
 
 # Setup the Harvest Out appender
 log4j.appender.harvestOut=org.apache.log4j.RollingFileAppender
-log4j.appender.harvestOut.File=C:/logs_dev/MST_HarvestOut_log.txt
+log4j.appender.harvestOut.File=logs/MST_HarvestOut_log.txt
 log4j.appender.harvestOut.MaxFileSize=25MB
 log4j.appender.harvestOut.Threshold=DEBUG
 log4j.appender.harvestOut.MaxBackupIndex=4
@@ -52,7 +52,7 @@ log4j.rootLogger=DEBUG, file
 
 # Setup the appender named "file" to write to the file log.txt
 log4j.appender.file=org.apache.log4j.RollingFileAppender
-log4j.appender.file.File=C:/logs_dev/MST_General_log.txt
+log4j.appender.file.File=logs/MST_General_log.txt
 
 # At most store 1 backup (older) log files 100MB each.
 # Backup log files will be stored as log.txt.1 - log.txt.10

@@ -15,12 +15,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DataException;
 import xc.mst.dao.MySqlConnectionManager;
-import xc.mst.utils.LogWriter;
 
 public class DefaultErrorCodeDAO extends ErrorCodeDAO 
 {
@@ -416,7 +414,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + ERROR_CODES_TABLE_NAME + " (" + COL_ERROR_CODE + ", " +
 	            	      													            COL_ERROR_DESCRIPTION_FILE + ", " +
-	            	      													            COL_SERVICE_ID + " " +
+	            	      													            COL_SERVICE_ID + ") " +
 	            				       "VALUES (?, ?, ?)";
 
 					if(log.isDebugEnabled())
@@ -444,9 +442,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 					return true;
 				} // end if(insert succeeded)
 				else
-				{
 					return false;
-				}
 			}
 			catch(SQLException e)
 			{

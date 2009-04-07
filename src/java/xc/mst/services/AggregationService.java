@@ -1005,4 +1005,37 @@ public class AggregationService extends MetadataService
 	    	log.error("Could not load the " + AggregationServiceConstants.PROPERTIES_MERGE_MANIFESTATION + " file.", e);
 	    } // end catch(IOException)
 	} // end method loadPropertiesFiles()
+	
+	@Override
+	protected void loadConfiguration(String configuration)
+	{	
+		String[] configurationLines = configuration.split("\n");
+	
+		// The Properties file we're currently populating
+		Properties current = null;
+
+	    for(String line : configurationLines)
+	    {
+    		line = line.trim();
+    		
+	    	// Skip comments and blank lines
+	    	if(line.startsWith("#") || line.length() == 0)
+	    		continue;
+	    	// If the line contains a property, add it to the current Properties Object
+	    	else if(line.contains("="))
+	    	{
+	    		String key = line.substring(0, line.indexOf('=')).trim();
+	    		String value = (line.contains("#") ? line.substring(line.indexOf('=')+1, line.indexOf('#')) : line.substring(line.indexOf('=')+1)).trim();
+	    		current.setProperty(key, value);
+	    	}
+	    	// Otherwise check whether the line contains a valid properties heading
+	    	else
+	    	{
+	    		if(line.equals("WORK MERGE FIELDS"))
+	    			current = workMerge;
+	    		else if(line.equals("MANIFESTATION MERGE FIELDS"))
+	    			current = manifestationMerge;
+	    	}
+	    }
+	}
 } // end class AggregationService

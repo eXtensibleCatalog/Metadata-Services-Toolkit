@@ -33,6 +33,11 @@ public class Service
 	private String serviceName = null;
 
 	/**
+	 * The service's jar
+	 */
+	private String serviceJar = null;
+	
+	/**
 	 * The service's service specific configuration parameters
 	 */
 	private String serviceConfig = null;
@@ -41,11 +46,6 @@ public class Service
 	 * The service's class name
 	 */
 	private String className = null;
-
-	/**
-	 * The whether or not the service is user defined
-	 */
-	private boolean isUserDefined = true;
 
 	/**
 	 * The port on which the service's OAI repository should be accessed
@@ -163,6 +163,26 @@ public class Service
 	} // end method setName(String)
 
 	/**
+	 * Gets the service's jar file
+	 *
+	 * @return The service's jar file
+	 */
+	public String getServiceJar()
+	{
+		return serviceJar;
+	} // end method getServiceJar()
+
+	/**
+	 * Sets the service's jar file
+	 *
+	 * @param serviceJar The service's new jar file
+	 */
+	public void setServiceJar(String serviceJar)
+	{
+		this.serviceJar = serviceJar;
+	} // end method setServiceJar(String)
+	
+	/**
 	 * Gets the service's service specific configuration parameters
 	 *
 	 * @return The service's service specific configuration parameters
@@ -201,26 +221,6 @@ public class Service
 	{
 		this.className = className;
 	} // end method setClassName(String)
-
-	/**
-	 * Checks whether or not the service is user-defined
-	 *
-	 * @return True if the service is user-defined, false otherwise
-	 */
-	public boolean getIsUserDefined()
-	{
-		return isUserDefined;
-	} // end method getIsUserDefined()
-
-	/**
-	 * Sets whether or not the service is user-defined
-	 *
-	 * @param isUserDefined True if the service should be marked as user-defined, false otherwise
-	 */
-	public void setIsUserDefined(boolean isUserDefined)
-	{
-		this.isUserDefined = isUserDefined;
-	} // end method setIsUserDefined(boolean)
 
 	/**
 	 * Gets the port on which the service's OAI repository should be accessed
