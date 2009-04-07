@@ -51,34 +51,21 @@ public class Scheduler extends Thread
 	HarvestScheduleDAO harvestScheduleDao = new DefaultHarvestScheduleDAO();
 
 	/**
-	 * A queue of WorkerThreads that are waiting to run harvests
+	 * A queue of WorkerThreads that are waiting to run harvests/services
 	 */
-	private static Queue<WorkerThread> waitingHarvestJobs = new LinkedList<WorkerThread>();
+	private static Queue<WorkerThread> waitingJobs = new LinkedList<WorkerThread>();
 
 	/**
-	 * A queue of WorkerThreads that are currently running harvests
+	 * The WorkerThread that is currently running harvests/services
 	 */
-	private static ArrayList<WorkerThread> runningHarvestJobs = new ArrayList<WorkerThread>();
+	private static WorkerThread runningJob;
 
 	/**
-	 * A queue of WorkerThreads that are waiting to run services
+	 * Gets the currently running job
 	 */
-	private static Queue<WorkerThread> waitingServiceJobs = new LinkedList<WorkerThread>();
-
-	/**
-	 * A queue of WorkerThreads that are currently running services
-	 */
-	private static ArrayList<WorkerThread> runningServiceJobs = new ArrayList<WorkerThread>();
-
-	/**
-	 * The maximum number of concurrently running harvest Threads
-	 */
-	private int maxRunningHarvestJobs = 0;
-
-	/**
-	 * The maximum number of concurrently running service Threads
-	 */
-	private int maxRunningServiceJobs = 0;
+	public static WorkerThread getRunningJob() {
+		return runningJob;
+	}
 
 	/**
 	 * Whether or not the scheduler has been killed
@@ -120,32 +107,6 @@ public class Scheduler extends Thread
 	 */
 	public void run()
 	{
-		String maxRunningHarvestJobsStr = configuration.getProperty(Constants.CONFIG_MAX_RUNNING_HARVEST_JOBS);
-		String maxRunningServiceJobsStr = configuration.getProperty(Constants.CONFIG_MAX_RUNNING_SERVICE_JOBS);
-
-		try
-		{
-			maxRunningHarvestJobs = (maxRunningHarvestJobsStr == null ? 1 : Integer.parseInt(maxRunningHarvestJobsStr));
-		} // end try(set the maximum number of concurrent harvests)
-		catch(NumberFormatException e)
-		{
-			log.error("Invalid max running harvest jobs configuration parameter, expected integer, found " + maxRunningHarvestJobsStr +
-					  ".  Setting the maximum number of concurrently running harvest jobs to 1.");
-
-			maxRunningHarvestJobs = 1;
-		} // end catch(NumberFormatException)
-
-		try
-		{
-			maxRunningServiceJobs = (maxRunningServiceJobsStr == null ? 1 : Integer.parseInt(maxRunningServiceJobsStr));
-		} // end try(set the maximum number of concurrent services)
-		catch(NumberFormatException e)
-		{
-			log.error("Invalid max running service jobs configuration parameter, expected integer, found " + maxRunningServiceJobsStr +
-					  ".  Setting the maximum number of concurrently running service jobs to 1.");
-
-			maxRunningServiceJobs = 1;
-		} // end catch(NumberFormatException)
 
 		while(!killed)
 		{
@@ -178,55 +139,31 @@ public class Scheduler extends Thread
 				} // end loop over the schedule's steps
 			} // end loop over schedules to be run
 
-			// A list of completed harvest jobs
-			ArrayList<WorkerThread> finishedHarvestJobs = new ArrayList<WorkerThread>();
-
-			// Remove all completed harvest jobs from the list of running jobs
-			for(WorkerThread worker : runningHarvestJobs)
-				if(!worker.isAlive())
-					finishedHarvestJobs.add(worker);
-
-			runningHarvestJobs.removeAll(finishedHarvestJobs);
-
-			// A list of completed service jobs
-			ArrayList<WorkerThread> finishedServiceJobs = new ArrayList<WorkerThread>();
-
-			// Remove all completed service jobs from the list of running jobs
-			for(WorkerThread worker : runningServiceJobs)
-				if(!worker.isAlive())
-					finishedServiceJobs.add(worker);
-
-			runningServiceJobs.removeAll(finishedServiceJobs);
-
-			// If the number of running harvest jobs is less than the maximum, start the next job
-			for(int counter = maxRunningHarvestJobs - runningHarvestJobs.size(); counter > 0; counter--)
+		
+			if(runningJob == null)
 			{
-				WorkerThread jobToStart = waitingHarvestJobs.poll();
-
-				// If there was a harvest job in the waiting queue, start it.  Otherwise break from the loop
-				if(jobToStart != null)
-				{
-					jobToStart.start();
-					runningHarvestJobs.add(jobToStart);
-				} // end if(there were no jobs in the harvest job queue)
-				else
-					break;
-			} // end loop iterating available slots for running harvests
-
-			// If the number of running service jobs is less than the maximum, start the next job
-			for(int counter = maxRunningServiceJobs - runningServiceJobs.size(); counter > 0; counter--)
-			{
-				WorkerThread jobToStart = waitingServiceJobs.poll();
-
-				// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
-				if(jobToStart != null)
-				{
-					jobToStart.start();
-					runningServiceJobs.add(jobToStart);
-				} // end if(the service job queue was empty)
-				else
-					break;
-			} // end loop iterating available slots for running services
+				WorkerThread jobToStart = waitingJobs.poll();
+				
+					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
+					if(jobToStart != null)
+					{
+						jobToStart.start();
+						runningJob = jobToStart;
+					} // end if(the service job queue was empty)
+				
+			}
+			else {
+				if(!runningJob.isAlive()){
+					WorkerThread jobToStart = waitingJobs.poll();
+					
+					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
+					if(jobToStart != null)
+					{
+						jobToStart.start();
+						runningJob = jobToStart;
+					} // end if(the service job queue was empty)
+				}
+			}
 
 			// Sleep until the next hour begins
 			try
@@ -251,7 +188,7 @@ public class Scheduler extends Thread
 	 */
 	public static void scheduleThread(HarvesterWorkerThread scheduleMe)
 	{
-		waitingHarvestJobs.add(scheduleMe);
+		waitingJobs.add(scheduleMe);
 	} // end method scheduleThread(HarvesterWorkerThread)
 
 	/**
@@ -261,7 +198,7 @@ public class Scheduler extends Thread
 	 */
 	public static void scheduleThread(ServiceWorkerThread scheduleMe)
 	{
-		waitingServiceJobs.add(scheduleMe);
+		waitingJobs.add(scheduleMe);
 	} // end method scheduleThread(ServiceWorkerThread)
 
 	/**
@@ -271,4 +208,30 @@ public class Scheduler extends Thread
 	{
 		killed = true;
 	} // end method kill()
+	
+	/**
+	 * Cancels the currently running service / harvest
+	 */
+	public static void cancelRunningJob(){
+		
+		runningJob.cancel();
+	}
+	
+	/**
+	 * Pauses the currently running service / harvest
+	 */
+	public static void pauseRunningJob(){
+		
+		runningJob.pause();
+	}
+
+	/**
+	 * Resumes the currently running service / harvest
+	 */
+	public static void resumePausedJob(){
+		
+		runningJob.proceed();
+	}
+
+	
 } // end class Scheduler
