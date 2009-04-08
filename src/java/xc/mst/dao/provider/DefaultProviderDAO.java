@@ -1238,10 +1238,6 @@ public class DefaultProviderDAO extends ProviderDAO
 	
 					for(Record record : recordService.getByProviderId(provider.getId()))
 						success = markAsDeleted(record) && success;
-
-					ProcessingDirectiveDAO pdDao = new DefaultProcessingDirectiveDAO();
-					for(ProcessingDirective pd : pdDao.getBySourceProviderId(provider.getId()))
-						pdDao.delete(pd);
 					
 					SolrIndexManager.getInstance().commitIndex();
 				} // end if(delete succeeded)
