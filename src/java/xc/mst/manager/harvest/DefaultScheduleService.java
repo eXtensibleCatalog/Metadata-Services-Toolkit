@@ -13,6 +13,7 @@ import java.util.List;
 
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
+import xc.mst.bo.provider.Provider;
 import xc.mst.dao.DataException;
 import xc.mst.dao.harvest.DefaultHarvestDAO;
 import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
@@ -108,4 +109,26 @@ public class DefaultScheduleService implements ScheduleService {
         return harvestDAO.getHarvestsForSchedule(harvestSchedule.getId());
     }
 
+    /**
+	 * Gets harvest schedule for a provider
+	 *
+	 * @param provider Provider to get the harvest schedule
+	 * @return Harvest schedule found
+	 */
+	public HarvestSchedule getScheduleForProvider(Provider provider)
+    {
+        return harvestScheduleDAO.getHarvestScheduleForProvider(provider.getId());
+    }
+
+    /**
+	 * Gets harvests for a  schedule 
+	 *
+	 * @param harvestSchedule harvest schedule to get the harvests
+	 * @return List of Harvest found
+	 */
+	public List<Harvest> getHarvestsForSchedule(HarvestSchedule harvestSchedule)
+    {
+        return harvestDAO.getHarvestsForSchedule(harvestSchedule.getId());
+    }
+	
 }

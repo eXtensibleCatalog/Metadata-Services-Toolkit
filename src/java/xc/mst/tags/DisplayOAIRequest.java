@@ -11,12 +11,11 @@ package xc.mst.tags;
 
 import java.util.Iterator;
 import java.util.List;
+
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Provider;
-import xc.mst.manager.harvest.DefaultHarvestService;
 import xc.mst.manager.harvest.DefaultScheduleService;
-import xc.mst.manager.harvest.HarvestService;
 import xc.mst.manager.harvest.ScheduleService;
 
 /**
@@ -32,7 +31,6 @@ public class DisplayOAIRequest
         try
         {
             ScheduleService scheduleService = new DefaultScheduleService();
-            HarvestService harvestService = new DefaultHarvestService();
             List allHarvestSchedules = scheduleService.getAllSchedules();
             Iterator harvestIter = allHarvestSchedules.iterator();
             while(harvestIter.hasNext())
@@ -40,7 +38,7 @@ public class DisplayOAIRequest
                 HarvestSchedule schedule = (HarvestSchedule)harvestIter.next();
                 if(schedule.getProvider().getId()==provider.getId())
                 {
-                    List harvestList = harvestService.getHarvestsForSchedule(schedule.getId());
+                    List harvestList = scheduleService.getHarvestsForSchedule(schedule);
                     if(harvestList.size()!=0)
                     {
                         Iterator iter = harvestList.iterator();

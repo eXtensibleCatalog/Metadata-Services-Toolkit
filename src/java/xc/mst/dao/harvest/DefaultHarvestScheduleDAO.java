@@ -693,14 +693,14 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	} // end method loadBasicHarvestSchedule(int)
 
 	@Override
-	public List<HarvestSchedule> getHarvestSchedulesForProvider(int providerId)
+	public HarvestSchedule getHarvestScheduleForProvider(int providerId)
 	{
 		synchronized(psGetByProviderIdLock)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Getting the harvest schedules with provider ID " + providerId);
 
-			List<HarvestSchedule> harvestSchedules = new ArrayList<HarvestSchedule>();
+			HarvestSchedule harvestSchedule = null;
 
 			// The ResultSet from the SQL query
 			ResultSet results = null;
@@ -741,10 +741,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				results = psGetByProviderId.executeQuery();
 
 				// If any results were returned
-				while(results.next())
+				if (results.next())
 				{
 					// The Object which will contain data on the harvest schedule
-					HarvestSchedule harvestSchedule = new HarvestSchedule();
+					harvestSchedule = new HarvestSchedule();
 
 					// Set the fields on the harvest schedule
 					harvestSchedule.setId(results.getInt(1));
@@ -757,20 +757,25 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
 
-					// add the harvest schedule to the list of results
-					harvestSchedules.add(harvestSchedule);
-				} // end loop over results
+					if(log.isDebugEnabled())
+						log.debug("Found harvest schedule with provider ID " + providerId + ".");
+
+				} else {
+					if(log.isDebugEnabled())
+						log.debug("Harvest schedule with provider ID " + providerId + " was not found.");
+
+				} // end loop over results}
 
 				if(log.isDebugEnabled())
-					log.debug("Found " + harvestSchedules.size() + " harvest schedules with provider ID " + providerId + ".");
+					log.debug("Found harvest schedule with provider ID " + providerId + ".");
 
-				return harvestSchedules;
+				return harvestSchedule;
 			} // end try(get the schedules)
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while getting the harvest schedules with provider ID " + providerId, e);
 
-				return harvestSchedules;
+				return harvestSchedule;
 			} // end catch(SQLException)
 			finally
 			{

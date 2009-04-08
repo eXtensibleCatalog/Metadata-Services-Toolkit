@@ -13,6 +13,7 @@ import java.util.List;
 
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
+import xc.mst.bo.provider.Provider;
 import xc.mst.dao.DataException;
 
 /**
@@ -82,4 +83,20 @@ public interface ScheduleService {
 	 * @return A list containing all harvests
 	 */
 	public List<Harvest> getHarvestForSchedule(HarvestSchedule harvestSchedule);
+
+	 /**
+	 * Gets harvest schedule for a provider
+	 *
+	 * @param provider Provider to get the harvest schedule
+	 * @return Harvest schedule found
+	 */
+	public HarvestSchedule getScheduleForProvider(Provider provider);
+
+    /**
+	 * Gets harvests for a  schedule 
+	 *
+	 * @param harvestSchedule harvest schedule to get the harvests
+	 * @return List of Harvest found
+	 */
+	public List<Harvest> getHarvestsForSchedule(HarvestSchedule harvestSchedule);
 }

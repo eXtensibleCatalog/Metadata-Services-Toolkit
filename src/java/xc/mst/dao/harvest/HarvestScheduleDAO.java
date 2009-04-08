@@ -167,7 +167,7 @@ public abstract class HarvestScheduleDAO
 	 * @param providerId The ID of the provider whose schedules we should get
 	 * @return A list all harvest schedules which harvest the provider with the passed ID
 	 */
-	public abstract List<HarvestSchedule> getHarvestSchedulesForProvider(int providerId);
+	public abstract HarvestSchedule getHarvestScheduleForProvider(int providerId);
 
 	/**
 	 * Gets all harvest schedules from the database which should be run at the time specified
