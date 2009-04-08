@@ -47,12 +47,13 @@ public class HarvestOutLog extends ActionSupport
 
     public HarvestOutLog()
     {
-        serviceList = new ArrayList();
+        serviceList = new ArrayList<Service>();
     }
 
     /**
-     * sets the list of all services
-     * @param serviceList list of services
+     * Sets the list of all services
+     * 
+     * @param serviceList list of all services
      */
     public void setServiceList(List<Service> serviceList)
     {
@@ -60,8 +61,9 @@ public class HarvestOutLog extends ActionSupport
     }
 
     /**
-     * returns the list of all services
-     * @return list of services
+     * Returns the list of all services
+     *
+     * @return list of all services
      */
     public List<Service> getServiceList()
     {
@@ -69,7 +71,7 @@ public class HarvestOutLog extends ActionSupport
     }
 
      /**
-     * sets the boolean value which determines if the rows are to be sorted in ascending order
+     * Sets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -79,9 +81,9 @@ public class HarvestOutLog extends ActionSupport
     }
 
     /**
-     * sgets the boolean value which determines if the rows are to be sorted in ascending order
+     * Gets the boolean value which determines if the rows are to be sorted in ascending order
      *
-     * @param isAscendingOrder
+     * return
      */
     public boolean getIsAscendingOrder()
     {
@@ -89,8 +91,9 @@ public class HarvestOutLog extends ActionSupport
     }
 
      /**
-     * sets the name of the column on which the sorting should be performed
-     * @param columnSorted name of the column
+     * Sets the name of the column on which the sorting should be performed
+      *
+     * @param columnSorted column name
      */
     public void setColumnSorted(String columnSorted)
     {
@@ -98,7 +101,8 @@ public class HarvestOutLog extends ActionSupport
     }
 
     /**
-     * returns the name of the column on which sorting should be performed
+     * Returns the name of the column on which sorting should be performed
+     *
      * @return column name
      */
     public String getColumnSorted()
@@ -108,6 +112,7 @@ public class HarvestOutLog extends ActionSupport
 
      /**
      * Overrides default implementation to view the Service Logs Page.
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -115,7 +120,7 @@ public class HarvestOutLog extends ActionSupport
     {
         try
         {
-            List<Service> servicesList = new ArrayList();
+            List<Service> servicesList = new ArrayList<Service>();
             if(columnSorted.equalsIgnoreCase("ServiceName")||(columnSorted.equalsIgnoreCase("RecordsAvailable"))||(columnSorted.equalsIgnoreCase("RecordsHarvested"))||(columnSorted.equalsIgnoreCase("Warnings"))||(columnSorted.equalsIgnoreCase("Errors"))||(columnSorted.equalsIgnoreCase("LastLogReset")))
             {
                 if(columnSorted.equalsIgnoreCase("ServiceName"))
@@ -167,7 +172,8 @@ public class HarvestOutLog extends ActionSupport
     }
 
     /**
-     * returns the error type
+     * Returns the error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -175,7 +181,8 @@ public class HarvestOutLog extends ActionSupport
 	}
 
     /**
-     * sets the error type
+     * Sets the error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

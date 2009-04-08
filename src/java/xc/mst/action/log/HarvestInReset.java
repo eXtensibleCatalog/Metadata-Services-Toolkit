@@ -44,7 +44,8 @@ public class HarvestInReset extends ActionSupport
 	private String errorType; 
 
      /**
-     * sets the Provider ID of the provider whose logs are to be reset
+     * Sets the Provider ID of the provider whose logs are to be reset
+      *
      * @param providerId provider ID
      */
     public void setProviderId(String providerId)
@@ -53,8 +54,9 @@ public class HarvestInReset extends ActionSupport
     }
 
     /**
-     * returns the Provider ID of the provider whose logs are reset
-     * @return Provider ID
+     * Returns the Provider ID of the provider whose logs are reset
+     *
+     * @return ID of the provider
      */
     public String getProviderId()
     {
@@ -62,8 +64,9 @@ public class HarvestInReset extends ActionSupport
     }
 
     /**
-     * sets the name of the log file for the Provider
-     * @param harvestInLogFileName log file name
+     * Sets the name of the log file for the Provider
+     *
+     * @param harvestInLogFileName filename for the log
      */
     public void setHarvestInLogFileName(String harvestInLogFileName)
     {
@@ -71,8 +74,9 @@ public class HarvestInReset extends ActionSupport
     }
 
     /**
-     * returns the name of the Log file for the Provider
-     * @return log file name
+     * Returns the name of the Log file for the Provider
+     *
+     * @return filename for the log
      */
     public String getHarvestInLogFileName()
     {
@@ -81,6 +85,7 @@ public class HarvestInReset extends ActionSupport
 
     /**
      * Overrides default implementation to reset the 'Harvest-In Logs' for a service.
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -112,7 +117,8 @@ public class HarvestInReset extends ActionSupport
     }
 
     /**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -120,7 +126,8 @@ public class HarvestInReset extends ActionSupport
 	}
     
     /**
-     * sets the error type
+     * Sets the error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {
@@ -128,7 +135,8 @@ public class HarvestInReset extends ActionSupport
 	}
 
     /**
-     * resets all the logs that are related to the providers
+     * Resets all the logs that are related to the providers
+     *
      * @return {@link #SUCCESS}
      */
     public String resetAll()
@@ -136,7 +144,7 @@ public class HarvestInReset extends ActionSupport
         try
         {
             List<Provider> providerList = providerService.getAllProviders();
-            Iterator provIter = providerList.iterator();
+            Iterator<Provider> provIter = providerList.iterator();
             while(provIter.hasNext())
             {
                 Provider provider = (Provider)provIter.next();

@@ -73,7 +73,8 @@ public class EditProcessingDirective extends ActionSupport
 	private String errorType; 
 
     /**
-     * sets the ID of the processing directive to be edited
+     * Sets the ID of the processing directive to be edited
+     *
      * @param processingDirectiveId ID of the processing directive
      */
     public void setProcessingDirectiveId(String processingDirectiveId)
@@ -83,7 +84,8 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns the ID of the processing directive to be edited
+     * Returns the ID of the processing directive to be edited
+     *
      * @return ID of the processing directive
      */
     public int getProcessingDirectiveId()
@@ -93,7 +95,8 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * sets the source type
+     * Sets the source type
+     *
      * @param sourceType source type
      */
     public void setSourceType(String sourceType)
@@ -102,15 +105,18 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns the type of the source
+     * Returns the type of the source
+     *
      * @return source type
      */
     public String getSourceType()
     {
         return this.sourceType;
     }
+
     /**
-     * sets the source for a processing directive
+     * Sets the source for a processing directive
+     *
      * @param Source source
      */
     public void setSource(String Source)
@@ -119,7 +125,8 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns the source for a processing directive
+     * Returns the source for a processing directive
+     *
      * @return source
      */
     public String getSource()
@@ -128,7 +135,8 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * sets the service that is associated with the processing directive
+     * Sets the service that is associated with the processing directive
+     *
      * @param service service object
      */
     public void setService(String service)
@@ -137,7 +145,8 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns the service that is associated with the processing directive
+     * Returns the service that is associated with the processing directive
+     *
      * @return service object
      */
     public String getService()
@@ -146,7 +155,7 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * sets temporary processing directive
+     * Sets temporary processing directive
      *
      * @param temporaryProcessingDirective
      */
@@ -156,7 +165,7 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns processing directive
+     * Returns processing directive
      *
      * @return processing directive object
      */
@@ -166,7 +175,7 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * sets the list of all providers
+     * Sets the list of all providers
      *
      * @param providerList
      */
@@ -176,7 +185,8 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns the list of all providers
+     * Returns the list of all providers
+     *
      * @return provider list
      */
     public List<Provider> getProviderList()
@@ -185,7 +195,8 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * sets the list of services
+     * Sets the list of services
+     *
      * @param serviceList
      */
     public void setServiceList(List<Service> serviceList)
@@ -194,7 +205,8 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns the list of services
+     * Returns the list of services
+     *
      * @return list of services
      */
     public List<Service> getServiceList()
@@ -204,6 +216,7 @@ public class EditProcessingDirective extends ActionSupport
 
     /**
      * Overrides default implementation to view the edit processing directives (step 1) page.
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -218,7 +231,6 @@ public class EditProcessingDirective extends ActionSupport
                 temporaryProcessingDirective = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
             }
             Service tempService = temporaryProcessingDirective.getSourceService();
-            Provider tempProvider = temporaryProcessingDirective.getSourceProvider();
 
             if(tempService!=null)
             {
@@ -248,6 +260,7 @@ public class EditProcessingDirective extends ActionSupport
 
      /**
      * Step 1 in editing a Processing directive
+     *
      * @return {@link #SUCCESS}
      */
     public String editProcessingDirectives()
@@ -298,7 +311,8 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -306,7 +320,8 @@ public class EditProcessingDirective extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     * 
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

@@ -45,7 +45,8 @@ public class HarvestInLog extends ActionSupport
 	private String errorType; 
 
     /**
-     * sets the list of Providers
+     * Sets the list of Providers
+     *
      * @param providerList list of providers
      */
     public void setProviderList(List<Provider> providerList)
@@ -54,7 +55,8 @@ public class HarvestInLog extends ActionSupport
     }
 
     /**
-     * returns the list of providers
+     * Returns the list of providers
+     *
      * @return list of providers
      */
     public List<Provider> getProviderList()
@@ -63,7 +65,7 @@ public class HarvestInLog extends ActionSupport
     }
 
      /**
-     * sets the boolean value which determines if the rows are to be sorted in ascending order
+     * Sets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -73,9 +75,9 @@ public class HarvestInLog extends ActionSupport
     }
 
     /**
-     * sgets the boolean value which determines if the rows are to be sorted in ascending order
+     * Gets the boolean value which determines if the rows are to be sorted in ascending order
      *
-     * @param isAscendingOrder
+     * return
      */
     public boolean getIsAscendingOrder()
     {
@@ -83,8 +85,9 @@ public class HarvestInLog extends ActionSupport
     }
 
      /**
-     * sets the name of the column on which the sorting should be performed
-     * @param columnSorted name of the column
+     * Sets the name of the column on which the sorting should be performed
+      *
+     * @param columnSorted column name
      */
     public void setColumnSorted(String columnSorted)
     {
@@ -92,7 +95,8 @@ public class HarvestInLog extends ActionSupport
     }
 
     /**
-     * returns the name of the column on which sorting should be performed
+     * Returns the name of the column on which sorting should be performed
+     *
      * @return column name
      */
     public String getColumnSorted()
@@ -102,6 +106,7 @@ public class HarvestInLog extends ActionSupport
 
     /**
      * Overrides default implementation to view the 'Harvest-In Logs' Page.
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -152,7 +157,8 @@ public class HarvestInLog extends ActionSupport
     }
 
     /**
-     * returns the error type
+     * Returns the error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -160,7 +166,8 @@ public class HarvestInLog extends ActionSupport
 	}
 
     /**
-     * sets the error type
+     * Sets the error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

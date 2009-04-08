@@ -22,6 +22,7 @@ import xc.mst.dao.emailconfig.EmailConfigDAO;
  */
 public class DefaultEmailConfigService implements EmailConfigService
 {
+    /** The email config DAO object */
     private EmailConfigDAO emailConfigDao;
 
     public DefaultEmailConfigService()

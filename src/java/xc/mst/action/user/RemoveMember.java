@@ -35,7 +35,8 @@ public class RemoveMember extends ActionSupport
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**
-     * sets the group ID
+     * Sets the group ID
+     *
      * @param groupId group ID
      */
     public void setGroupId(String groupId)
@@ -44,7 +45,8 @@ public class RemoveMember extends ActionSupport
     }
 
     /**
-     * returns the ID of the group
+     * Returns the ID of the group
+     *
      * @return group ID
      */
     public String getGroupId()
@@ -53,7 +55,8 @@ public class RemoveMember extends ActionSupport
     }
 
     /**
-     * sets the user ID
+     * Sets the user ID
+     *
      * @param userId user ID
      */
     public void setUserId(String userId)
@@ -62,7 +65,8 @@ public class RemoveMember extends ActionSupport
     }
 
     /**
-     * returns the ID of the user
+     * Returns the ID of the user
+     *
      * @return user ID
      */
     public String getUserId()
@@ -72,6 +76,7 @@ public class RemoveMember extends ActionSupport
 
      /**
      * Overrides default implementation to remove a user-group association.
+      * 
      * @return {@link #SUCCESS}
      */
     @Override

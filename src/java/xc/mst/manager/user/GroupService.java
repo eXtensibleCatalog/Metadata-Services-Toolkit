@@ -26,6 +26,7 @@ public interface GroupService {
 
     /**
      * Return the group with the specided Group Id
+     *
      * @param groupId Specifies the ID of the group object to be returned
      * @return Group if exists otherwise null
      */
@@ -33,6 +34,7 @@ public interface GroupService {
     
     /**
      * Return the group with the specided Group name
+     *
      * @param groupName Specifies the name of the group object to be returned
      * @return Group if exists otherwise null
      */
@@ -40,29 +42,35 @@ public interface GroupService {
 
     /**
      * Inserts a group
+     *
      * @param group Group object to inserted
      */
     public void insertGroup(Group group) throws DataException;
 
     /**
      * Deletes a group
+     *
      * @param group Group object to deleted
      */
     public void deleteGroup(Group group) throws DataException;
 
     /**
-     * updates the details pertaining to a group
+     * Updates the details pertaining to a group
+     *
      * @param group Group object to updated
      */
     public void updateGroup(Group group) throws DataException;
+
     /**
-     * returns a list of all the groups the user can be a member of
+     * Returns a list of all the groups the user can be a member of
+     *
      * @return list of groups
      */
     public List<Group> getAllGroups();
 
    /**
-    * returns a sorted list of all the groups
+    * Returns a sorted list of all the groups
+    * 
     * @param isAscendingOrder determines whether the list of groups is to be sorted in ascending or descending order
     * @param columnSorted The column on which the rows are sorted
     * @return list of groups

@@ -51,6 +51,7 @@ public class AllRepository extends ActionSupport
 
     /**
      * Overrides default implementation to view all the repositories.
+     * 
      * @return {@link #SUCCESS}
      */
     @Override
@@ -97,6 +98,7 @@ public class AllRepository extends ActionSupport
 
     /**
      * Gets all the Repositories in a List
+     *
      * @return List of Repositories
      */
     public List<Provider> getRepositories()
@@ -105,7 +107,7 @@ public class AllRepository extends ActionSupport
     }
 
     /**
-     * sets the boolean value which determines if the rows are to be sorted in ascending order
+     * Sets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -115,7 +117,7 @@ public class AllRepository extends ActionSupport
     }
 
     /**
-     * sgets the boolean value which determines if the rows are to be sorted in ascending order
+     * Gets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -125,7 +127,8 @@ public class AllRepository extends ActionSupport
     }
 
     /**
-     * sets the name of the column on which the sorting should be performed
+     * Sets the name of the column on which the sorting should be performed
+     *
      * @param columnSorted name of the column
      */
     public void setColumnSorted(String columnSorted)
@@ -134,7 +137,8 @@ public class AllRepository extends ActionSupport
     }
 
     /**
-     * returns the name of the column on which sorting should be performed
+     * Returns the name of the column on which sorting should be performed
+     *
      * @return column name
      */
     public String getColumnSorted()

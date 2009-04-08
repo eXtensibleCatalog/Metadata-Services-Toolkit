@@ -40,6 +40,7 @@ public class ListProcessingDirectives extends ActionSupport
 
     /**
      * Overrides default implementation to list all directives
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -65,7 +66,8 @@ public class ListProcessingDirectives extends ActionSupport
     }
 
     /**
-     * sets the list of processing directives enabled by the user
+     * Sets the list of processing directives enabled by the user
+     *
      * @param ProcessingDirectivesList list of processing directives
      */
     public void setProcessingDirectives(List<ProcessingDirective> ProcessingDirectivesList)
@@ -74,7 +76,8 @@ public class ListProcessingDirectives extends ActionSupport
     }
 
     /**
-     * returns the list of processing directives enabled by the user
+     * Returns the list of processing directives enabled by the user
+     *
      * @return list of processing directives
      */
     public List<ProcessingDirective> getProcessingDirectives()
@@ -83,7 +86,8 @@ public class ListProcessingDirectives extends ActionSupport
     }
 
 	 /**
-     * returns error type
+     * Returns error type
+      *
      * @return error type
      */
 	public String getErrorType() {
@@ -91,7 +95,8 @@ public class ListProcessingDirectives extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     * 
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

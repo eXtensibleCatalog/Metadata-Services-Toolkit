@@ -23,7 +23,9 @@ import xc.mst.dao.user.PermissionDAO;
  */
 public class DefaultPermissionService implements PermissionService
 {
+    /** DAO Object for permissions (top level tabs) */
     private PermissionDAO permissionDao = new DefaultPermissionDAO();
+    
     /**
 	 * Gets the permissions belonging to a group.
 	 *

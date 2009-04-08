@@ -60,7 +60,8 @@ public class AddGroup extends ActionSupport
     }
 
     /**
-     * sets the group name to the specified value.
+     * Sets the group name to the specified value.
+     *
      * @param groupName The name of the group
      */
     public void setGroupName(String groupName)
@@ -69,7 +70,8 @@ public class AddGroup extends ActionSupport
     }
 
     /**
-     * returns the name of the group
+     * Returns the name of the group
+     *
      * @return group Name
      */
     public String getGroupName()
@@ -78,7 +80,8 @@ public class AddGroup extends ActionSupport
     }
 
     /**
-     * sets the description of the group
+     * Sets the description of the group
+     *
      * @param groupDescription group description
      */
     public void setGroupDescription(String groupDescription)
@@ -87,7 +90,8 @@ public class AddGroup extends ActionSupport
     }
 
     /**
-     * returns the description of the group
+     * Returns the description of the group
+     *
      * @return group description
      */
     public String getGroupDescription()
@@ -96,7 +100,8 @@ public class AddGroup extends ActionSupport
     }
 
     /**
-     * sets the permissions that have been allotted to this group
+     * Sets the permissions that have been allotted to this group
+     *
      * @param permissionsSelected permissions selected
      */
     public void setPermissionsSelected(String[] permissionsSelected)
@@ -105,7 +110,8 @@ public class AddGroup extends ActionSupport
     }
 
     /**
-     * returns the permissions that have been allotted to the group
+     * Returns the permissions that have been allotted to the group
+     *
      * @return permissions list
      */
     public String[] getPermissionsSelected()
@@ -114,7 +120,8 @@ public class AddGroup extends ActionSupport
     }
 
     /**
-     * sets a temporary group object that is used to pre-fill fields in a JSP form
+     * Sets a temporary group object that is used to pre-fill fields in a JSP form
+     *
      * @param group group Object
      */
     public void setTemporaryGroup(Group group)
@@ -122,39 +129,48 @@ public class AddGroup extends ActionSupport
         this.temporaryGroup = group;
     }
     /**
-     * returns the temporary group object
+     * Returns the temporary group object
+     *
      * @return group object
      */
     public Group getTemporaryGroup()
     {
         return temporaryGroup;
     }
+
     /**
      * The list of permissions that have already been selected by the user
+     *
      * @param selectedPermissions List of selected permissions
      */
     public void setSelectedPermissions(String[] selectedPermissions)
     {
         this.selectedPermissions = selectedPermissions;
     }
+
     /**
-     * returns the list of selected permissions
+     * Returns the list of selected permissions
+     *
      * @return List of permissions
      */
     public String[] getSelectedPermissions()
     {
         return selectedPermissions;
     }
+
     /**
-     * sets the List of all tab names in the system.
+     * Sets the List of all tab names in the system.
+     *
      * @param tabNames tab names
      */
     public void setTabNames(List tabNames)
     {
         this.tabNames = tabNames;
     }
+
     /**
-     * returns a list of all the tab names in the system
+     * Returns a list of all the tab names in the system
+     *
      * @return list of tab names
      */
     public List getTabNames()
@@ -164,6 +180,7 @@ public class AddGroup extends ActionSupport
 
      /**
      * Overrides default implementation to view the add group page.
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -191,6 +208,7 @@ public class AddGroup extends ActionSupport
 
     /**
      * Method that actually adds a group to the system
+     *
      * @return {@link #SUCCESS}
      */
     public String addGroup()
@@ -205,7 +223,7 @@ public class AddGroup extends ActionSupport
             group.setDescription(getGroupDescription());
 
             List<Group> tempGrpList = groupService.getAllGroups();
-            Iterator iter = tempGrpList.iterator();
+            Iterator<Group> iter = tempGrpList.iterator();
 
             while(iter.hasNext())
             {
@@ -248,7 +266,8 @@ public class AddGroup extends ActionSupport
     }
 
 	/**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -256,7 +275,8 @@ public class AddGroup extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     * 
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

@@ -11,20 +11,17 @@
 package xc.mst.action.user;
 
 import com.opensymphony.xwork2.ActionSupport;
-import java.util.ArrayList;
+
 import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.bo.user.Group;
-import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserGroupUtilService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.ServerService;
-import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
 
 /**
@@ -75,7 +72,8 @@ public class EditLocalUser extends ActionSupport
 	private String errorType; 
 	
      /**
-     * sets the email ID of the user
+     * Sets the email ID of the user
+      *
      * @param email email ID
      */
     public void setEmail(String email)
@@ -84,7 +82,8 @@ public class EditLocalUser extends ActionSupport
     }
 
     /**
-     * returns the email ID of the user
+     * Returns the email ID of the user
+     *
      * @return email ID
      */
     public String getEmail()
@@ -93,7 +92,8 @@ public class EditLocalUser extends ActionSupport
     }
 
     /**
-     * sets the password of the user
+     * Sets the password of the user
+     *
      * @param password The password to be assigned
      */
     public void setPassword(String password)
@@ -102,7 +102,8 @@ public class EditLocalUser extends ActionSupport
     }
 
     /**
-     * returns the password of the user
+     * Returns the password of the user
+     *
      * @return user's password
      */
     public String getPassword()
@@ -111,7 +112,8 @@ public class EditLocalUser extends ActionSupport
     }
 
     /**
-     * sets the list of groups that the new user has been assigned
+     * Sets the list of groups that the new user has been assigned
+     *
      * @param selectedGroupList list of selected groups
      */
     public void setGroupsSelected(String[] groupsSelected)
@@ -120,7 +122,8 @@ public class EditLocalUser extends ActionSupport
     }
 
     /**
-     * returns the list of groups that have been assigned to the user
+     * Returns the list of groups that have been assigned to the user
+     *
      * @return list of selected groups
      */
     public String[] getGroupsSelected()
@@ -129,7 +132,8 @@ public class EditLocalUser extends ActionSupport
     }
 
     /**
-     * sets the user whose details are to be edited
+     * Sets the user whose details are to be edited
+     *
      * @param user user object
      */
     public void setTemporaryUser(User user)
@@ -138,7 +142,8 @@ public class EditLocalUser extends ActionSupport
     }
 
     /**
-     * returns the user whose details are to be edited.
+     * Returns the user whose details are to be edited.
+     *
      * @return user object
      */
     public User getTemporaryUser()
@@ -147,7 +152,8 @@ public class EditLocalUser extends ActionSupport
     }
 
     /**
-     * sets the ID of the user whose details are to be edited.
+     * Sets the ID of the user whose details are to be edited.
+     *
      * @param userId user ID
      */
     public void setUserId(String userId)
@@ -156,15 +162,18 @@ public class EditLocalUser extends ActionSupport
     }
 
     /**
-     * returns the ID of the user whose details are to be edited.
+     * Returns the ID of the user whose details are to be edited.
+     *
      * @return user ID
      */
     public String getUserId()
     {
         return userId;
     }
+
     /**
-     * assigns the list of groups that a user can belong to
+     * Assigns the list of groups that a user can belong to
+     *
      * @param groupList list of groups
      */
     public void setGroupList(List<Group> groupList)
@@ -173,7 +182,8 @@ public class EditLocalUser extends ActionSupport
     }
 
     /**
-     * returns a list of groups that a user can belong to
+     * Returns a list of groups that a user can belong to
+     *
      * @return list of groups
      */
     public List<Group> getGroupList()
@@ -183,6 +193,7 @@ public class EditLocalUser extends ActionSupport
 
     /**
      * Overrides default implementation to view the edit local user page.
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -207,6 +218,7 @@ public class EditLocalUser extends ActionSupport
 
     /**
      * The action method that actually does the task of editing the details of a local user
+     *
      * @return returns status of the edit operation
      */
     public String editLocalUser()
@@ -266,7 +278,8 @@ public class EditLocalUser extends ActionSupport
     }
 
 	/**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -274,7 +287,8 @@ public class EditLocalUser extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {
@@ -282,7 +296,8 @@ public class EditLocalUser extends ActionSupport
 	}
 
     /**
-     * returns the first name of the user
+     * Returns the first name of the user
+     *
      * @return first name
      */
 	public String getFirstName() {
@@ -290,7 +305,8 @@ public class EditLocalUser extends ActionSupport
 	}
 
     /**
-     * sets the first name of the user
+     * Sets the first name of the user
+     *
      * @param firstName first name
      */
 	public void setFirstName(String firstName) {
@@ -298,7 +314,8 @@ public class EditLocalUser extends ActionSupport
 	}
 
     /**
-     * returns the last name of the user
+     * Returns the last name of the user
+     *
      * @return last name
      */
 	public String getLastName() {
@@ -306,7 +323,8 @@ public class EditLocalUser extends ActionSupport
 	}
 
     /**
-     * sets the last name of the user
+     * Sets the last name of the user
+     * 
      * @param lastName last name
      */
 	public void setLastName(String lastName) {

@@ -50,7 +50,8 @@ public class ShowGroupMembers extends ActionSupport
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**
-     * sets the group ID
+     * Sets the group ID
+     *
      * @param groupId group ID
      */
     public void setGroupId(String groupId)
@@ -59,7 +60,8 @@ public class ShowGroupMembers extends ActionSupport
     }
 
     /**
-     * returns the group ID
+     * Returns the group ID
+     *
      * @return group ID
      */
     public String getGroupId()
@@ -68,7 +70,8 @@ public class ShowGroupMembers extends ActionSupport
     }
 
     /**
-     * sets the members of the group
+     * Sets the members of the group
+     *
      * @param membershipList list of users
      */
     public void setMembershipList(List<User> membershipList)
@@ -77,7 +80,8 @@ public class ShowGroupMembers extends ActionSupport
     }
 
     /**
-     * returns a list of users who are members of the group
+     * Returns a list of users who are members of the group
+     *
      * @return user list
      */
     public List<User> getMembershipList()
@@ -86,7 +90,7 @@ public class ShowGroupMembers extends ActionSupport
     }
 
     /**
-     * sets the boolean value which determines if the rows are to be sorted in ascending order
+     * Sets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -96,7 +100,7 @@ public class ShowGroupMembers extends ActionSupport
     }
 
     /**
-     * sgets the boolean value which determines if the rows are to be sorted in ascending order
+     * Gets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -106,7 +110,8 @@ public class ShowGroupMembers extends ActionSupport
     }
 
     /**
-     * sets the name of the column on which the sorting should be performed
+     * Sets the name of the column on which the sorting should be performed
+     *
      * @param columnSorted name of the column
      */
     public void setColumnSorted(String columnSorted)
@@ -115,7 +120,8 @@ public class ShowGroupMembers extends ActionSupport
     }
 
     /**
-     * returns the name of the column on which sorting should be performed
+     * Returns the name of the column on which sorting should be performed
+     *
      * @return column name
      */
     public String getColumnSorted()
@@ -125,6 +131,7 @@ public class ShowGroupMembers extends ActionSupport
 
      /**
      * Overrides default implementation to view the page which displays all the members of a group.
+      * 
      * @return {@link #SUCCESS}
      */
     @Override

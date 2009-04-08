@@ -69,8 +69,10 @@ public class EditGroup extends ActionSupport
         tabNames = new ArrayList();
         selectedPermissions = new ArrayList();
     }
+
    /**
-     * sets the group name to the specified value.
+     * Sets the group name to the specified value.
+    *
      * @param groupName The name of the group
      */
     public void setGroupName(String groupName)
@@ -79,7 +81,8 @@ public class EditGroup extends ActionSupport
     }
 
     /**
-     * returns the name of the group
+     * Returns the name of the group
+     *
      * @return group Name
      */
     public String getGroupName()
@@ -88,7 +91,8 @@ public class EditGroup extends ActionSupport
     }
 
     /**
-     * sets the description of the group
+     * Sets the description of the group
+     *
      * @param groupDescription group description
      */
     public void setGroupDescription(String groupDescription)
@@ -97,7 +101,8 @@ public class EditGroup extends ActionSupport
     }
 
     /**
-     * returns the description of the group
+     * Returns the description of the group
+     *
      * @return group description
      */
     public String getGroupDescription()
@@ -106,7 +111,8 @@ public class EditGroup extends ActionSupport
     }
 
     /**
-     * sets the permissions that have been allotted to this group
+     * Sets the permissions that have been allotted to this group
+     *
      * @param permissionsSelected permissions selected
      */
     public void setPermissionsSelected(String[] permissionsSelected)
@@ -115,7 +121,8 @@ public class EditGroup extends ActionSupport
     }
 
     /**
-     * returns the permissions that have been allotted to the group
+     * Returns the permissions that have been allotted to the group
+     *
      * @return permissions list
      */
     public String[] getPermissionsSelected()
@@ -124,15 +131,18 @@ public class EditGroup extends ActionSupport
     }
 
     /**
-     * sets a temporary group object that is used to pre-fill fields in a JSP form
+     * Sets a temporary group object that is used to pre-fill fields in a JSP form
+     *
      * @param group group Object
      */
     public void setTemporaryGroup(Group group)
     {
         this.temporaryGroup = group;
     }
+
     /**
-     * returns the temporary group object
+     * Returns the temporary group object
+     *
      * @return group object
      */
     public Group getTemporaryGroup()
@@ -141,7 +151,8 @@ public class EditGroup extends ActionSupport
     }
 
     /**
-     * sets the list of permissions that have already been selected by the user
+     * Sets the list of permissions that have already been selected by the user
+     *
      * @param selectedPermissions selected permissions
      */
     public void setSelectedPermissions(List<Permission> selectedPermissions)
@@ -150,7 +161,8 @@ public class EditGroup extends ActionSupport
     }
 
     /**
-     * returns a list of selected permissions
+     * Returns a list of selected permissions
+     *
      * @return selected permissions List
      */
     public List getSelectedPermissions()
@@ -159,7 +171,8 @@ public class EditGroup extends ActionSupport
     }
 
     /**
-     * sets the ID of the group whose details are to be edited
+     * Sets the ID of the group whose details are to be edited
+     *
      * @param groupId group ID
      */
     public void setGroupId(int groupId)
@@ -168,7 +181,8 @@ public class EditGroup extends ActionSupport
     }
 
     /**
-     * returns the ID of the group whose details are to be edited
+     * Returns the ID of the group whose details are to be edited
+     *
      * @return group ID
      */
     public int getGroupId()
@@ -177,15 +191,18 @@ public class EditGroup extends ActionSupport
     }
 
    /**
-     * sets the List of all tab names in the system.
+     * Sets the List of all tab names in the system.
+    *
      * @param tabNames tab names
      */
     public void setTabNames(List tabNames)
     {
         this.tabNames = tabNames;
     }
+
     /**
-     * returns a list of all the tab names in the system
+     * Returns a list of all the tab names in the system
+     *
      * @return list of tab names
      */
     public List getTabNames()
@@ -195,6 +212,7 @@ public class EditGroup extends ActionSupport
 
      /**
      * Overrides default implementation to view the edit group page.
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -205,7 +223,7 @@ public class EditGroup extends ActionSupport
             
             Group group = groupService.getGroupById(groupId);
             setTemporaryGroup(group);
-            Iterator tempIter = group.getPermissions().iterator();
+            Iterator<Permission> tempIter = group.getPermissions().iterator();
             while(tempIter.hasNext())
             {
                 Permission permission = (Permission)tempIter.next();
@@ -232,6 +250,7 @@ public class EditGroup extends ActionSupport
 
     /**
      * Method that actually edits the details of the group
+     *
      * @return {@link #SUCCESS}
      */
     public String editGroup()
@@ -244,7 +263,7 @@ public class EditGroup extends ActionSupport
 
 
             List tempGrpList = groupService.getAllGroups();
-            Iterator iter = tempGrpList.iterator();
+            Iterator<Group> iter = tempGrpList.iterator();
 
             while(iter.hasNext())
             {
@@ -295,7 +314,8 @@ public class EditGroup extends ActionSupport
     }
     
 	/**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -303,7 +323,8 @@ public class EditGroup extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     * 
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

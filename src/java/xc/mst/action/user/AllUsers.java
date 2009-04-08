@@ -35,9 +35,6 @@ public class AllUsers extends ActionSupport
     /** creates a service object for users  */
     private UserService userService = new DefaultUserService();
 
-    /** creates a service object for groups */
-    private GroupService groupService = new DefaultGroupService();
-
     /**stores the list of users */
     private List<User> userList;
 
@@ -49,7 +46,8 @@ public class AllUsers extends ActionSupport
 	
 
     /**
-     * returns the list of users
+     * Returns the list of users
+     *
      * @return user list
      */
     public List<User> getUserList()
@@ -58,7 +56,8 @@ public class AllUsers extends ActionSupport
     }
 
     /**
-     * sets the list of users
+     * Sets the list of users
+     *
      * @param userList user list
      */
     public void setUserList(List<User> userList)
@@ -67,7 +66,7 @@ public class AllUsers extends ActionSupport
     }
 
     /**
-     * sets the boolean value which determines if the rows are to be sorted in ascending order
+     * Sets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -77,7 +76,7 @@ public class AllUsers extends ActionSupport
     }
 
     /**
-     * sgets the boolean value which determines if the rows are to be sorted in ascending order
+     * Gets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -87,7 +86,8 @@ public class AllUsers extends ActionSupport
     }
 
     /**
-     * sets the name of the column on which the sorting should be performed
+     * Sets the name of the column on which the sorting should be performed
+     *
      * @param columnSorted name of the column
      */
     public void setColumnSorted(String columnSorted)
@@ -96,15 +96,18 @@ public class AllUsers extends ActionSupport
     }
 
     /**
-     * returns the name of the column on which sorting should be performed
+     * Returns the name of the column on which sorting should be performed
+     *
      * @return column name
      */
     public String getColumnSorted()
     {
         return this.columnSorted;
     }
+
     /**
      * Overrides default implementation to list all the users in the system.
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -150,7 +153,8 @@ public class AllUsers extends ActionSupport
     }
 
 	/**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -158,7 +162,8 @@ public class AllUsers extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     * 
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

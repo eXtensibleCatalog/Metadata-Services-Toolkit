@@ -49,7 +49,8 @@ public class AllGroups extends ActionSupport
 	private String errorType; 
 	
     /**
-     * assigns the list of groups that a user can belong to
+     * Assigns the list of groups that a user can belong to
+     *
      * @param groupList list of groups
      */
     public void setGroupList(List<Group> groupList)
@@ -58,7 +59,8 @@ public class AllGroups extends ActionSupport
     }
 
     /**
-     * returns a list of groups that a user can belong to
+     * Returns a list of groups that a user can belong to
+     *
      * @return list of groups
      */
     public List<Group> getGroupList()
@@ -67,7 +69,7 @@ public class AllGroups extends ActionSupport
     }
 
     /**
-     * sets the boolean value which determines if the rows are to be sorted in ascending order
+     * Sets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -77,7 +79,7 @@ public class AllGroups extends ActionSupport
     }
 
     /**
-     * sgets the boolean value which determines if the rows are to be sorted in ascending order
+     * Gets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -87,7 +89,8 @@ public class AllGroups extends ActionSupport
     }
 
     /**
-     * sets the name of the column on which the sorting should be performed
+     * Sets the name of the column on which the sorting should be performed
+     *
      * @param columnSorted name of the column
      */
     public void setColumnSorted(String columnSorted)
@@ -96,7 +99,8 @@ public class AllGroups extends ActionSupport
     }
 
     /**
-     * returns the name of the column on which sorting should be performed
+     * Returns the name of the column on which sorting should be performed
+     *
      * @return column name
      */
     public String getColumnSorted()
@@ -106,6 +110,7 @@ public class AllGroups extends ActionSupport
     
      /**
      * Overrides default implementation to view the all groups page.
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -162,7 +167,8 @@ public class AllGroups extends ActionSupport
     }
 
 	/**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -170,7 +176,8 @@ public class AllGroups extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     * 
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

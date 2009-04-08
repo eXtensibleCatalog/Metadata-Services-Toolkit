@@ -53,7 +53,8 @@ public class ViewRepository extends ActionSupport implements UserAware
 	private String message; 
 
       /**
-       * returns the ID of the repository to be viewed
+       * Returns the ID of the repository to be viewed
+       *
        * @return The ID of the repository
        */
       public int getRepositoryId()
@@ -62,7 +63,8 @@ public class ViewRepository extends ActionSupport implements UserAware
       }
 
       /**
-       * sets the ID of the Repository to be viewed
+       * Sets the ID of the Repository to be viewed
+       *
        * @param repoId The ID of the repository to be viewed
        */
       public void setRepositoryId(String repoId)
@@ -77,7 +79,8 @@ public class ViewRepository extends ActionSupport implements UserAware
       }
 
       /**
-       * sets the User who is currently logged in
+       * Sets the User who is currently logged in
+       *
        * @param user The User who is currently logged in
        */
       public void setUser(User user)
@@ -86,7 +89,8 @@ public class ViewRepository extends ActionSupport implements UserAware
       }
 
       /**
-       * gets the User who is currently logged in
+       * Gets the User who is currently logged in
+       *
        * @return returns the User object
        */
       public User getUser()
@@ -95,7 +99,8 @@ public class ViewRepository extends ActionSupport implements UserAware
       }
 
       /**
-       * sets the Repository Object to be viewed
+       * Sets the Repository Object to be viewed
+       *
        * @param provider The Repository object
        */
       public void setProvider(Provider provider)
@@ -105,6 +110,7 @@ public class ViewRepository extends ActionSupport implements UserAware
 
       /**
        * Returns the repository object to be viewed
+       *
        * @return retuns the repository object
        */
       public Provider getProvider()
@@ -114,6 +120,7 @@ public class ViewRepository extends ActionSupport implements UserAware
 
       /**
        * A boolean value that is associated with success/failure of Validation of a repository
+       *
        * @param listSets
        */
       public void setListSets(String listSets)
@@ -123,7 +130,7 @@ public class ViewRepository extends ActionSupport implements UserAware
 
 
       /**
-       * return list sets boolean value
+       * Return list sets boolean value
        *
        * @return listSets boolean value
        */
@@ -134,6 +141,7 @@ public class ViewRepository extends ActionSupport implements UserAware
 
        /**
        * A boolean value that is associated with success/failure of Validation of a repository
+        *
        * @param listSets
        */
       public void setListFormats(String listFormats)
@@ -142,7 +150,8 @@ public class ViewRepository extends ActionSupport implements UserAware
       }
 
       /**
-       * returns the boolean value for listFormats
+       * Returns the boolean value for listFormats
+       *
        * @return listFormats boolean value
        */
       public String getListFormats()
@@ -152,6 +161,7 @@ public class ViewRepository extends ActionSupport implements UserAware
 
        /**
        * A boolean value that is associated with success/failure of Validation of a repository
+        *
        * @param listSets
        */
       public void setIdentify(String Identify)
@@ -160,7 +170,8 @@ public class ViewRepository extends ActionSupport implements UserAware
       }
 
       /**
-       * returns the boolean value for identify
+       * Returns the boolean value for identify
+       *
        * @return identify boolean value
        */
       public String getIdentify()
@@ -171,6 +182,7 @@ public class ViewRepository extends ActionSupport implements UserAware
 
      /**
      * Overrides default implementation to view the details of a repository.
+      *
      * @return {@link #SUCCESS}
      */
       @Override
@@ -222,7 +234,8 @@ public class ViewRepository extends ActionSupport implements UserAware
       }
 
 	/**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -230,7 +243,8 @@ public class ViewRepository extends ActionSupport implements UserAware
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {
@@ -238,7 +252,8 @@ public class ViewRepository extends ActionSupport implements UserAware
 	}
 
     /**
-     * returns the information message which describes the status of the revalidation operation
+     * Returns the information message which describes the status of the revalidation operation
+     * 
      * @return information message
      */
 	public String getMessage() {

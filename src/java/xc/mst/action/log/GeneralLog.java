@@ -44,7 +44,8 @@ public class GeneralLog extends ActionSupport
 	private String errorType; 
 	
     /**
-     * sets the list of log files
+     * Sets the list of log files
+     *
      * @param logList list of log files
      */
     public void setLogList(List<Log> logList)
@@ -53,7 +54,8 @@ public class GeneralLog extends ActionSupport
     }
 
     /**
-     * returns the list of logs files
+     * Returns the list of logs files
+     *
      * @return list of log files
      */
     public List<Log> getLogList()
@@ -115,7 +117,8 @@ public class GeneralLog extends ActionSupport
     }
 
     /**
-     * returns the error type
+     * Returns the error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -124,11 +127,13 @@ public class GeneralLog extends ActionSupport
     
     /**
      * sets the error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
+
     /**
      * sets the boolean value which determines if the rows are to be sorted in ascending order
      *
@@ -140,9 +145,9 @@ public class GeneralLog extends ActionSupport
     }
 
     /**
-     * sgets the boolean value which determines if the rows are to be sorted in ascending order
+     * returns the boolean value which determines if the rows are to be sorted in ascending order
      *
-     * @param isAscendingOrder
+     * @return
      */
     public boolean getIsAscendingOrder()
     {
@@ -151,7 +156,8 @@ public class GeneralLog extends ActionSupport
 
      /**
      * sets the name of the column on which the sorting should be performed
-     * @param columnSorted name of the column
+      *
+     * @param columnSorted 
      */
     public void setColumnSorted(String columnSorted)
     {
@@ -160,7 +166,8 @@ public class GeneralLog extends ActionSupport
 
     /**
      * returns the name of the column on which sorting should be performed
-     * @return column name
+     * 
+     * @return 
      */
     public String getColumnSorted()
     {

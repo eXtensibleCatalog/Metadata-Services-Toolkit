@@ -23,39 +23,83 @@ import xc.mst.utils.LogWriter;
  */
 public class DefaultProviderService implements ProviderService{
 
+    /** The provider DAO object */
     ProviderDAO providerDao = new DefaultProviderDAO();
 
+    /**
+     * Returns a provider by its name
+     *
+     * @param providerName provider name
+     * @return provider object
+     */
     public Provider getProviderByName(String providerName){
        return providerDao.getByName(providerName);
     }
 
+    /**
+     * Returns a provider by its ID
+     *
+     * @param providerId provider ID
+     * @return provider object
+     */
     public Provider getProviderById(int providerId){
        return providerDao.getById(providerId);
     }
 
+    /**
+     * Returns a provider by its URL
+     *
+     * @param providerUrl provider URL
+     * @return provider object
+     */
     public Provider getProviderByURL(String providerUrl) {
         return providerDao.getByURL(providerUrl);
     }
 
+    /**
+     * Inserts a provider into the database
+     *
+     * @param provider provider object
+     * @throws xc.mst.dao.DataException
+     */
     public void insertProvider(Provider provider) throws DataException{
         providerDao.insert(provider);
         LogWriter.addInfo(provider.getLogFileName(), "Beginning logging for " + provider.getName());
     }
 
+    /**
+     * Deletes provider form the database
+     *
+     * @param provider provider object
+     * @throws xc.mst.dao.DataException
+     */
     public void deleteProvider(Provider provider) throws DataException{
         providerDao.delete(provider);
     }
 
+    /**
+     * Updates the details of a provider
+     *
+     * @param provider provider object
+     * @throws xc.mst.dao.DataException
+     */
     public void updateProvider(Provider provider) throws DataException{
         providerDao.update(provider);
     }
+
+    /**
+     * Returns a list of all the providers
+     *
+     * @return provider list
+     */
     public List<Provider> getAllProviders()
     {
         return providerDao.getAll();
     }
 
     /**
-   * returns a list of all providers sorted
+   * Returns a list of all providers sorted
+   *
    * @param sort determines if the rows are to be sorted in ascending or descending order
    * @param columnSorted column on which the sorting is done
    * @return list of providers

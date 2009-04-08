@@ -28,8 +28,10 @@ import xc.mst.dao.harvest.HarvestScheduleDAO;
  */
 public class DefaultScheduleService implements ScheduleService {
 
+    /** DAO object for harvest schedules*/
 	private HarvestScheduleDAO harvestScheduleDAO = new DefaultHarvestScheduleDAO();
 
+    /** DAO object for harvests */
 	private HarvestDAO harvestDAO = new DefaultHarvestDAO();
 
 

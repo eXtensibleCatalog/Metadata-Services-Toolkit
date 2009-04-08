@@ -61,8 +61,9 @@ public class AddProcessingDirective extends ActionSupport
 	private String errorType; 
 
     /**
-     * sets the temporary processing directive object
-     * @param temporaryProcessingDirective temporary processing directive object
+     * Sets the temporary processing directive object
+     *
+     * @param temporaryProcessingDirective processing directive object
      */
     public void setTemporaryProcessingDirective(ProcessingDirective temporaryProcessingDirective)
     {
@@ -70,8 +71,9 @@ public class AddProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns the temporary processing directive object which is used to display details in the JSP
-     * @return temporary Processing Directive Object
+     * Returns the temporary processing directive object which is used to display details in the JSP
+     *
+     * @return processing directive object
      */
     public ProcessingDirective getTemporaryProcessingDirective()
     {
@@ -79,8 +81,9 @@ public class AddProcessingDirective extends ActionSupport
     }
 
     /**
-     * sets the list of all providers
-     * @param providerList provider list
+     * Sets the list of all providers
+     *
+     * @param providerList list of all providers
      */
     public void setProviderList(List<Provider> providerList)
     {
@@ -88,8 +91,9 @@ public class AddProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns the list of all providers
-     * @return provider list
+     * Returns the list of all providers
+     *
+     * @return list of all providers
      */
     public List<Provider> getProviderList()
     {
@@ -97,8 +101,9 @@ public class AddProcessingDirective extends ActionSupport
     }
 
     /**
-     * sets the list of all services
-     * @param serviceList services List
+     * Sets the list of all services
+     *
+     * @param serviceList list of all services
      */
     public void setServiceList(List<Service> serviceList)
     {
@@ -106,8 +111,9 @@ public class AddProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns the list of all services
-     * @return services list
+     * Returns the list of all services
+     *
+     * @return list of all services
      */
     public List<Service> getServiceList()
     {
@@ -115,7 +121,8 @@ public class AddProcessingDirective extends ActionSupport
     }
 
     /**
-     * sets the value of refresh session
+     * Sets the value of refresh session
+     *
      * @param refreshSession
      */
     public void setRefreshSession(String refreshSession)
@@ -124,8 +131,9 @@ public class AddProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns the value of refresh session
-     * @return refreshSession value
+     * Returns the value of refresh session
+     *
+     * @return
      */
     public String getRefreshSession()
     {
@@ -133,8 +141,9 @@ public class AddProcessingDirective extends ActionSupport
     }
 
     /**
-     * sets the source for a particular processing directive (Can be either a service or a provider)
-     * @param Source source for the processing directive
+     * Sets the source for a particular processing directive (Can be either a service or a provider)
+     *
+     * @param Source source
      */
     public void setSource(String Source)
     {
@@ -142,8 +151,9 @@ public class AddProcessingDirective extends ActionSupport
     }
 
     /**
-     * gets the source that is associated with a processing directive
-     * @return returns source
+     * Gets the source that is associated with a processing directive
+     *
+     * @return source
      */
     public String getSource()
     {
@@ -151,7 +161,8 @@ public class AddProcessingDirective extends ActionSupport
     }
 
     /**
-     * sets the service associated with the processing directive
+     * Sets the service associated with the processing directive
+     *
      * @param service service object
      */
     public void setService(String service)
@@ -160,7 +171,8 @@ public class AddProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns the service associated with the processing directive
+     * Returns the service associated with the processing directive
+     *
      * @return service object
      */
     public String getService()
@@ -171,6 +183,7 @@ public class AddProcessingDirective extends ActionSupport
 
      /**
      * Overrides default implementation to view the add processing directives page.
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -208,6 +221,7 @@ public class AddProcessingDirective extends ActionSupport
 
     /**
      * Step 1 in adding a new Processing directive
+     *
      * @return {@link #SUCCESS}
      */
     public String addProcessingDirectives()
@@ -252,7 +266,8 @@ public class AddProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -260,7 +275,8 @@ public class AddProcessingDirective extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

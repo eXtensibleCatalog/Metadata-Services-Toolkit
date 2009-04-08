@@ -46,9 +46,6 @@ public class EditProcessingDirective2 extends ActionSupport
     /** creates service object for formats  */
     private FormatService formatService = new DefaultFormatService();
 
-    /** creates service object for services  */
-    private ServicesService servicesService = new DefaultServicesService();
-
     /** creates service object for Processing Directives  */
     private ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
 
@@ -84,7 +81,7 @@ public class EditProcessingDirective2 extends ActionSupport
 	private String errorType; 
 	
     /**
-     * sets the temporary processing directive
+     * Sets the temporary processing directive
      *
      * @param temporaryProcessingDirective
      */
@@ -94,7 +91,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * returns temporary processing directive
+     * Returns temporary processing directive
+     *
      * @return processing directive object
      */
     public ProcessingDirective getTemporaryProcessingDirective()
@@ -103,7 +101,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * sets the list of sets that the user has selected
+     * Sets the list of sets that the user has selected
+     *
      * @param setsSelected list of sets
      */
     public void setSetsSelected(String[] setsSelected)
@@ -112,7 +111,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * returns the list of sets selected by the user
+     * Returns the list of sets selected by the user
+     *
      * @return list of sets
      */
     public String[] getSetsSelected()
@@ -121,7 +121,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * sets the list of formats selected by the user
+     * Sets the list of formats selected by the user
+     *
      * @param formatsSelected list of formats
      */
     public void setFormatsSelected(String[] formatsSelected)
@@ -130,7 +131,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * returns the list of formats selected by the user
+     * Returns the list of formats selected by the user
+     *
      * @return list of formats
      */
     public String[] getFormatsSelected()
@@ -140,7 +142,8 @@ public class EditProcessingDirective2 extends ActionSupport
 
 
     /**
-     * sets the ID of the processing directive to be edited
+     * Sets the ID of the processing directive to be edited
+     *
      * @param processingDirectiveId ID of the processing directive
      */
     public void setProcessingDirectiveId(String processingDirectiveId)
@@ -150,7 +153,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * returns the ID of the processing directive to be edited
+     * Returns the ID of the processing directive to be edited
+     *
      * @return ID of the processing directive
      */
     public int getProcessingDirectiveId()
@@ -160,7 +164,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
      /**
-     * sets the list of all sets that are relevant to that Provider/Service
+     * Sets the list of all sets that are relevant to that Provider/Service
+      *
      * @param setList list of sets
      */
     public void setSetList(List<Set> setList)
@@ -169,7 +174,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * gets the list of all sets that are relevant to that Provider/Service
+     * Gets the list of all sets that are relevant to that Provider/Service
+     *
      * @return list of sets
      */
     public List<Set> getSetList()
@@ -178,7 +184,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * sets the list of all formats that are relevant to that Provider/Service
+     * Sets the list of all formats that are relevant to that Provider/Service
+     *
      * @param formatList list of formats
      */
     public void setFormatList(List<Format> formatList)
@@ -187,7 +194,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * gets the list of all formats that are relevant to that Provider/Service
+     * Gets the list of all formats that are relevant to that Provider/Service
+     *
      * @return list of formats
      */
     public List<Format> getFormatList()
@@ -197,7 +205,8 @@ public class EditProcessingDirective2 extends ActionSupport
 
 
      /**
-     * sets the boolean value representing the user's choice to maintain sets
+     * Sets the boolean value representing the user's choice to maintain sets
+      *
      * @param maintainSets
      */
     public void setMaintainSourceSets(String[] maintainSourceSets)
@@ -207,7 +216,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * returns the boolean value representing the user's choice to maintain sets
+     * Returns the boolean value representing the user's choice to maintain sets
+     *
      * @return
      */
     public String[] getMaintainSourceSets()
@@ -216,7 +226,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * sets the name of the output set
+     * Sets the name of the output set
+     *
      * @param outputSetName output set
      */
     public void setOutputSetName(String outputSetName)
@@ -225,7 +236,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * returns value of the output set
+     * Returns value of the output set
+     *
      * @return output set
      */
     public String getOutputSetName()
@@ -234,7 +246,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * sets the specifications of the output set
+     * Sets the specifications of the output set
+     *
      * @param outputSetSpec output set
      */
     public void setOutputSetSpec(String outputSetSpec)
@@ -243,7 +256,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * returns specifications of the output set
+     * Returns specifications of the output set
+     *
      * @return output set
      */
     public String getOutputSetSpec()
@@ -253,6 +267,7 @@ public class EditProcessingDirective2 extends ActionSupport
 
      /**
      * Overrides default implementation to view the edit processing directives (step 2) page.
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -269,11 +284,11 @@ public class EditProcessingDirective2 extends ActionSupport
             {
                 List<Format> tempList = tempProcDir.getSourceProvider().getFormats();
                 List<Format> compareList = tempProcDir.getService().getInputFormats();
-                Iterator tempIter = tempList.iterator();
+                Iterator<Format> tempIter = tempList.iterator();
                 while(tempIter.hasNext())
                 {
                     boolean flags = false;
-                    Iterator compareIter = compareList.iterator();
+                    Iterator<Format> compareIter = compareList.iterator();
                     Format tempFormat = (Format)tempIter.next();
                     System.out.println("The tempformat is "+tempFormat.getName());
                     while(compareIter.hasNext())
@@ -297,11 +312,11 @@ public class EditProcessingDirective2 extends ActionSupport
             {
                 List<Format> tempList = tempProcDir.getSourceService().getOutputFormats();
                 List<Format> compareList = tempProcDir.getService().getInputFormats();
-                Iterator tempIter = tempList.iterator();
+                Iterator<Format> tempIter = tempList.iterator();
                 while(tempIter.hasNext())
                 {
                     boolean flags = false;
-                    Iterator compareIter = compareList.iterator();
+                    Iterator<Format> compareIter = compareList.iterator();
                     Format tempFormat = (Format)tempIter.next();
                     System.out.println("The tempformat is "+tempFormat.getName());
                     while(compareIter.hasNext())
@@ -338,6 +353,7 @@ public class EditProcessingDirective2 extends ActionSupport
 
      /**
      * Step 2 in editing new processing directive
+      *
      * @return {@link #SUCCESS}
      */
     public String editProcessingDirectives2()
@@ -390,7 +406,7 @@ public class EditProcessingDirective2 extends ActionSupport
                     List<ProcessingDirective> procDirList = PDService.getBySourceProviderId(temporaryProcessingDirective.getSourceProvider().getId());
                     if(!procDirList.isEmpty())
                     {
-                        Iterator iter = procDirList.iterator();
+                        Iterator<ProcessingDirective> iter = procDirList.iterator();
                         while(iter.hasNext())
                         {
                             ProcessingDirective tempProcDir = (ProcessingDirective)iter.next();
@@ -430,7 +446,7 @@ public class EditProcessingDirective2 extends ActionSupport
                         {
                             List<ProcessingDirective> PDList = PDService.getAllProcessingDirectives();
                             boolean outputSetFlag = false;
-                            Iterator procDirIter = PDList.iterator();
+                            Iterator<ProcessingDirective> procDirIter = PDList.iterator();
                             while(procDirIter.hasNext())
                             {
                                 ProcessingDirective processingDirective = (ProcessingDirective)procDirIter.next();
@@ -490,7 +506,7 @@ public class EditProcessingDirective2 extends ActionSupport
                     List<ProcessingDirective> procDirList = PDService.getBySourceServiceId(temporaryProcessingDirective.getSourceService().getId());
                     if(!procDirList.isEmpty())
                     {
-                        Iterator iter = procDirList.iterator();
+                        Iterator<ProcessingDirective> iter = procDirList.iterator();
                         while(iter.hasNext())
                         {
                             ProcessingDirective tempProcDir = (ProcessingDirective)iter.next();
@@ -529,7 +545,7 @@ public class EditProcessingDirective2 extends ActionSupport
                         {
                             List<ProcessingDirective> PDList = PDService.getAllProcessingDirectives();
                             boolean outputSetFlag = false;
-                            Iterator procDirIter = PDList.iterator();
+                            Iterator<ProcessingDirective> procDirIter = PDList.iterator();
                             while(procDirIter.hasNext())
                             {
                                 ProcessingDirective processingDirective = (ProcessingDirective)procDirIter.next();
@@ -598,7 +614,7 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
     /**
-     * returns to the previous step in the edit Processing Directive process
+     * Returns to the previous step in the edit Processing Directive process
      * 
      * @return status of the operation
      */
@@ -622,8 +638,8 @@ public class EditProcessingDirective2 extends ActionSupport
 
                 String[] SetIdList = setsSelected;
                 String[] FormatIdList = formatsSelected;
-                List<Format> tempFormatList = new ArrayList();
-                List<Set> tempSetList = new ArrayList();
+                List<Format> tempFormatList = new ArrayList<Format>();
+                List<Set> tempSetList = new ArrayList<Set>();
 
                 if(FormatIdList!=null)
                 {
@@ -634,7 +650,7 @@ public class EditProcessingDirective2 extends ActionSupport
                     }
                 }
 
-                System.out.println("Setting the list of formats and format size is "+tempFormatList.size());
+                
                 tempProcDir.setTriggeringFormats(tempFormatList);
                 if(SetIdList!=null)
                 {
@@ -645,7 +661,7 @@ public class EditProcessingDirective2 extends ActionSupport
                     }
                 }
 
-                System.out.println("Setting the list of sets and sets size is "+tempSetList.size());
+               
                 tempProcDir.setTriggeringSets(tempSetList);
                 Set setExists = setService.getSetBySetSpec(outputSetSpec);
                 if(setExists==null)
@@ -699,7 +715,8 @@ public class EditProcessingDirective2 extends ActionSupport
     }
 
 	 /**
-     * returns error type
+     * Returns error type
+      *
      * @return error type
      */
 	public String getErrorType() {
@@ -707,7 +724,8 @@ public class EditProcessingDirective2 extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     * 
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

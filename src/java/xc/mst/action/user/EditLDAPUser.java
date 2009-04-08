@@ -11,7 +11,6 @@
 package xc.mst.action.user;
 
 import com.opensymphony.xwork2.ActionSupport;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -22,11 +21,9 @@ import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserGroupUtilService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.ServerService;
-import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
 
 /**
@@ -77,7 +74,8 @@ public class EditLDAPUser extends ActionSupport
 	
 
     /**
-     * assigns the list of groups that a user can belong to
+     * Assigns the list of groups that a user can belong to
+     *
      * @param groupList list of groups
      */
     public void setGroupList(List<Group> groupList)
@@ -86,7 +84,8 @@ public class EditLDAPUser extends ActionSupport
     }
 
     /**
-     * returns a list of groups that a user can belong to
+     * Returns a list of groups that a user can belong to
+     *
      * @return list of groups
      */
     public List<Group> getGroupList()
@@ -95,7 +94,8 @@ public class EditLDAPUser extends ActionSupport
     }
 
     /**
-     * sets the email ID of the user
+     * Sets the email ID of the user
+     *
      * @param email email ID
      */
     public void setEmail(String email)
@@ -104,7 +104,8 @@ public class EditLDAPUser extends ActionSupport
     }
 
     /**
-     * returns the email ID of the user
+     * Returns the email ID of the user
+     *
      * @return email ID
      */
     public String getEmail()
@@ -113,7 +114,8 @@ public class EditLDAPUser extends ActionSupport
     }
 
     /**
-     * sets the list of groups that the user has been assigned
+     * Sets the list of groups that the user has been assigned
+     *
      * @param selectedGroupList list of selected groups
      */
     public void setGroupsSelected(String[] groupsSelected)
@@ -122,7 +124,8 @@ public class EditLDAPUser extends ActionSupport
     }
 
     /**
-     * returns the list of groups that have been assigned to the user
+     * Returns the list of groups that have been assigned to the user
+     *
      * @return list of selected groups
      */
     public String[] getGroupsSelected()
@@ -131,7 +134,8 @@ public class EditLDAPUser extends ActionSupport
     }
 
     /**
-     * sets the list of groups that the user has been assigned (used to pre-fill JSP form fields)
+     * Sets the list of groups that the user has been assigned (used to pre-fill JSP form fields)
+     *
      * @param selectedGroupList list of selected groups
      */
     public void setSelectedGroups(String[] selectedGroups)
@@ -140,7 +144,8 @@ public class EditLDAPUser extends ActionSupport
     }
 
     /**
-     * returns the list of groups that have been assigned to the user (used to pre-fill JSP form fields)
+     * Returns the list of groups that have been assigned to the user (used to pre-fill JSP form fields)
+     *
      * @return list of selected groups
      */
     public String[] getSelectedGroups()
@@ -149,15 +154,17 @@ public class EditLDAPUser extends ActionSupport
     }
 
     /**
-     * sets the temporary user object which is used to populate JSP fields
+     * Sets the temporary user object which is used to populate JSP fields
+     *
      * @param user temporary user object
      */
     public void setTemporaryUser(User user)
     {
         this.temporaryUser = user;
     }
+
     /**
-     * returns the temporary user object
+     * Returns the temporary user object
      * @return user object
      */
     public User getTemporaryUser()
@@ -165,10 +172,8 @@ public class EditLDAPUser extends ActionSupport
         return temporaryUser;
     }
 
-
-
     /**
-     * sets the user ID of the user whose details should be edited
+     * Sets the user ID of the user whose details should be edited
      * @param userId user ID
      */
     public void setUserId(String userId)
@@ -177,15 +182,17 @@ public class EditLDAPUser extends ActionSupport
     }
 
     /**
-     * returns user ID of the user whose details are to be edited
+     * Returns user ID of the user whose details are to be edited
      * @return user ID
      */
     public String getUserId()
     {
         return userId;
     }
+
      /**
      * Overrides default implementation to view the 'add NCIP user' page.
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -210,6 +217,7 @@ public class EditLDAPUser extends ActionSupport
 
     /**
      * Method that edits the details of the LDAP user
+     *
      * @return {@link #SUCCESS}
      */
     public String editLDAPUser()
@@ -227,7 +235,7 @@ public class EditLDAPUser extends ActionSupport
             List<Server> serverList = serverService.getAll();
             boolean serverExists = false;
             Server tempServer = null;
-            Iterator iter = serverList.iterator();
+            Iterator<Server> iter = serverList.iterator();
             while(iter.hasNext())
             {
                 tempServer = (Server)iter.next();
@@ -286,7 +294,8 @@ public class EditLDAPUser extends ActionSupport
     }
 
 	/**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -294,7 +303,8 @@ public class EditLDAPUser extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {
@@ -302,7 +312,8 @@ public class EditLDAPUser extends ActionSupport
 	}
 
     /**
-     * returns the first name of the user
+     * Returns the first name of the user
+     *
      * @return first name
      */
 	public String getFirstName() {
@@ -310,7 +321,8 @@ public class EditLDAPUser extends ActionSupport
 	}
 
     /**
-     * sets the first name of the user
+     * Sets the first name of the user
+     *
      * @param firstName first name
      */
 	public void setFirstName(String firstName) {
@@ -318,7 +330,8 @@ public class EditLDAPUser extends ActionSupport
 	}
 
     /**
-     * returns the last name of the user
+     * Returns the last name of the user
+     *
      * @return last name
      */
 	public String getLastName() {
@@ -326,7 +339,8 @@ public class EditLDAPUser extends ActionSupport
 	}
 
     /**
-     * sets the last name of the user
+     * Sets the last name of the user
+     * 
      * @param lastName last name
      */
 	public void setLastName(String lastName) {

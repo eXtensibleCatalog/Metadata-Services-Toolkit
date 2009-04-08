@@ -39,9 +39,6 @@ public class DeleteGroup extends ActionSupport
     /** creates a service object for users */
     private UserService userService = new DefaultUserService();
 
-    /**List of all groups */
-    private List<Group> groupList;
-
 	/** Error type */
 	private String errorType; 
 
@@ -49,15 +46,18 @@ public class DeleteGroup extends ActionSupport
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**
-     * sets the group ID of the group to be deleted.
+     * Sets the group ID of the group to be deleted.
+     *
      * @param groupId group ID
      */
     public void setGroupId(int groupId)
     {
         this.groupId = groupId;
     }
+
     /**
-     * returns group ID of the group to be deleted
+     * Returns group ID of the group to be deleted
+     *
      * @return group ID
      */
     public int getGroupId()
@@ -66,17 +66,17 @@ public class DeleteGroup extends ActionSupport
     }
 
     /**
-     * returns list of all groups
+     * Returns list of all groups
+     *
      * @return list of groups
      */
     public List<Group> getGroupList()
     {
 
-
         List<Group> tempList = groupService.getAllGroups();
-        List<Group> finalList = new ArrayList();
+        List<Group> finalList = new ArrayList<Group>();
 
-        Iterator iter = tempList.iterator();
+        Iterator<Group> iter = tempList.iterator();
         while(iter.hasNext())
         {
             Group group = (Group)iter.next();
@@ -88,6 +88,7 @@ public class DeleteGroup extends ActionSupport
 
     /**
      * Overrides default implementation to delete a user.
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -101,14 +102,14 @@ public class DeleteGroup extends ActionSupport
             boolean flag = true;
 
             List<User> users = userService.getAllUsersSorted(false,"username");
-            Iterator userIter = users.iterator();
+            Iterator<User> userIter = users.iterator();
             while(userIter.hasNext())
             {
                 User user = (User)userIter.next();
                 if(!user.getGroups().isEmpty())
                 {
                     List<Group> groupList = user.getGroups();
-                    Iterator iter = groupList.iterator();
+                    Iterator<Group> iter = groupList.iterator();
                     while(iter.hasNext())
                     {
                         Group group = (Group)iter.next();
@@ -148,9 +149,21 @@ public class DeleteGroup extends ActionSupport
         }
 
     }
+
+    /**
+     * returns the error type
+     *
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
+
+    /**
+     * sets error type
+     *
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

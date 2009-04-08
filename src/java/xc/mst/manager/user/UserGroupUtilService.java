@@ -10,7 +10,6 @@
 package xc.mst.manager.user;
 
 import java.util.List;
-import xc.mst.bo.user.User;
 
 /*
  * This interface is used for associating a user with a list of groups.

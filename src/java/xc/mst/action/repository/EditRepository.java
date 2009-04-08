@@ -43,7 +43,8 @@ public class EditRepository extends ActionSupport
 	private String errorType; 
 
     /**
-     * sets the Repository Name to the specified value
+     * Sets the Repository Name to the specified value
+     *
      * @param repoName The name to be assigned to the repository
      */
     public void setRepositoryName(String repoName)
@@ -54,6 +55,7 @@ public class EditRepository extends ActionSupport
 
     /**
      * Gets the name of the repository
+     *
      * @return returns the name of the repository
      */
     public String getRepositoryName()
@@ -62,7 +64,8 @@ public class EditRepository extends ActionSupport
     }
 
     /**
-     * sets the URL of the repository to the specified value
+     * Sets the URL of the repository to the specified value
+     *
      * @param repoURL The URL value to be assigned to the repository
      */
     public void setRepositoryURL(String repoURL)
@@ -73,6 +76,7 @@ public class EditRepository extends ActionSupport
 
     /**
      * Gets the URL of the repository
+     *
      * @return returns URL of the repository
      */
     public String getRepositoryURL()
@@ -81,7 +85,8 @@ public class EditRepository extends ActionSupport
     }
 
     /**
-     * sets the ID of the repository to be edited
+     * Sets the ID of the repository to be edited
+     *
      * @param RepoId The ID of the repository to be edited
      */
     public void setRepositoryId(String RepoId)
@@ -90,7 +95,8 @@ public class EditRepository extends ActionSupport
     }
 
     /**
-     * gets the ID of the repository to be edited
+     * Gets the ID of the repository to be edited
+     *
      * @return returns the ID of the repository to be edited
      */
     public int getRepositoryId()
@@ -100,6 +106,7 @@ public class EditRepository extends ActionSupport
 
    /**
      * Overrides default implementation to edit the details of a repository.
+    *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -123,6 +130,7 @@ public class EditRepository extends ActionSupport
 
     /**
      * This method is used to edit repository information
+     *
      * @return returns the status of the edit operation
      */
     public String editRepository()
@@ -268,7 +276,8 @@ public class EditRepository extends ActionSupport
     }
 
 	/**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -276,7 +285,8 @@ public class EditRepository extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     * 
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

@@ -22,16 +22,17 @@ import xc.mst.bo.processing.ProcessingDirective;
 public interface ProcessingDirectiveService {
 
     /**
-     * returns a processing directive based on the ID of the source provider
+     * Returns a processing directive based on the ID of the source provider
+     *
      * @return processing directive
      */
-    public List getBySourceProviderId(int providerId);
+    public List<ProcessingDirective> getBySourceProviderId(int providerId);
 
     /**
      * returns a processing directive based on the ID of the source service
      * @return processing directive
      */
-    public List getBySourceServiceId(int serviceId);
+    public List<ProcessingDirective> getBySourceServiceId(int serviceId);
 
     /**
      * Returns a processing directive based on the ID
@@ -44,7 +45,7 @@ public interface ProcessingDirectiveService {
      * returns list of processing directives
      * @return list of processing directives
      */
-    public List getAllProcessingDirectives();
+    public List<ProcessingDirective> getAllProcessingDirectives();
 
     /**
      * Inserts a new Processing Directive

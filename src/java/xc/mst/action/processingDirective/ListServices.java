@@ -45,6 +45,7 @@ public class ListServices extends ActionSupport
 
     /**
      * Overrides default implementation to list all services
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -85,7 +86,8 @@ public class ListServices extends ActionSupport
     }
 
     /**
-     * sets the List of services that are part of the MST
+     * Sets the List of services that are part of the MST
+     *
      * @param ServicesList list of services
      */
     public void setServices(List<Service> ServicesList)
@@ -94,7 +96,8 @@ public class ListServices extends ActionSupport
     }
 
     /**
-     * returns the list of services that are part of the MST
+     * Returns the list of services that are part of the MST
+     *
      * @return list of services
      */
     public List<Service> getServices()
@@ -104,6 +107,7 @@ public class ListServices extends ActionSupport
 
     /**
      * Retrieves the base URL for a particular service
+     *
      * @return retruns the URL value
      */
     public String getBaseURL()
@@ -114,7 +118,7 @@ public class ListServices extends ActionSupport
     }
 
      /**
-     * sets the boolean value which determines if the rows are to be sorted in ascending order
+     * Sets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -124,7 +128,7 @@ public class ListServices extends ActionSupport
     }
 
     /**
-     * sgets the boolean value which determines if the rows are to be sorted in ascending order
+     * Gets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -134,7 +138,8 @@ public class ListServices extends ActionSupport
     }
 
     /**
-     * sets the name of the column on which the sorting should be performed
+     * Sets the name of the column on which the sorting should be performed
+     *
      * @param columnSorted name of the column
      */
     public void setColumnSorted(String columnSorted)
@@ -143,7 +148,8 @@ public class ListServices extends ActionSupport
     }
 
     /**
-     * returns the name of the column on which sorting should be performed
+     * Returns the name of the column on which sorting should be performed
+     * 
      * @return column name
      */
     public String getColumnSorted()

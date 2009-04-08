@@ -11,7 +11,6 @@
 
 package xc.mst.manager.logs;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.log.Log;

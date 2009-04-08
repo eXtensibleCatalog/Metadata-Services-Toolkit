@@ -28,6 +28,7 @@ public class DefaultGroupService implements GroupService {
 
     /**
      * Returns a group object based on the group ID
+     *
      * @param groupId the ID of the group to be returned
      * @return group object
      */
@@ -37,6 +38,7 @@ public class DefaultGroupService implements GroupService {
 
     /**
      * Inserts a group
+     *
      * @param group The group to be inserted
      */
     public void insertGroup(Group group) throws DataException{
@@ -46,6 +48,7 @@ public class DefaultGroupService implements GroupService {
 
     /**
      * Deletes a group
+     *
      * @param group The group to be deleted
      */
     public void deleteGroup(Group group) throws DataException{
@@ -55,6 +58,7 @@ public class DefaultGroupService implements GroupService {
 
     /**
      * Updates the details relating to a group.
+     *
      * @param group The group whose details are to be updates.
      */
     public void updateGroup(Group group) throws DataException{
@@ -62,7 +66,8 @@ public class DefaultGroupService implements GroupService {
     }
 
     /**
-     * returns a list of all groups
+     * Returns a list of all groups
+     *
      * @return list of groups
      */
     public List<Group> getAllGroups()
@@ -71,7 +76,8 @@ public class DefaultGroupService implements GroupService {
     }
 
     /**
-     * returns a sorted list of all the groups
+     * Returns a sorted list of all the groups
+     *
      * @param isAscendingOrder determines if the rows are to be sorted in ascending or descending order
      * @param columnSorted the column on which the rows are to be sorted
      * @return list of groups
@@ -83,6 +89,7 @@ public class DefaultGroupService implements GroupService {
 
     /**
      * Return the group with the specided Group name
+     * 
      * @param groupName Specifies the name of the group object to be returned
      * @return Group if exists otherwise null
      */

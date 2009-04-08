@@ -34,7 +34,8 @@ public class DeleteProcessingDirective extends ActionSupport
 	private String errorType; 
 
     /**
-     * sets the Processing directive ID
+     * Sets the Processing directive ID
+     *
      * @param processingDirectiveId Processing Directive ID
      */
     public void setProcessingDirectiveId(int processingDirectiveId)
@@ -44,7 +45,8 @@ public class DeleteProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns the ID of the processing directive
+     * Returns the ID of the processing directive
+     *
      * @return processing directive ID
      */
     public int getProcessingDirectiveId()
@@ -75,7 +77,8 @@ public class DeleteProcessingDirective extends ActionSupport
     }
 
     /**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -83,7 +86,8 @@ public class DeleteProcessingDirective extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     * 
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

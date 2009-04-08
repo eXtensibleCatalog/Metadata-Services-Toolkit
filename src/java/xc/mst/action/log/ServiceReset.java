@@ -44,7 +44,8 @@ public class ServiceReset extends ActionSupport
 	private String errorType; 
 
     /**
-     * sets the Servic ID of the Service whose Service Logs need to be reset
+     * Sets the Service ID of the Service whose Service Logs need to be reset
+     *
      * @param serviceId service ID
      */
     public void setServiceId(String serviceId)
@@ -53,16 +54,19 @@ public class ServiceReset extends ActionSupport
     }
 
     /**
-     * returns the Service ID of the Service whose Service Logs need to be reset
+     * Returns the Service ID of the Service whose Service Logs need to be reset
+     *
      * @return service ID
      */
     public String getServiceId()
     {
         return this.serviceId;
     }
+
     /**
-     * sets the name of the service
-     * @param serviceName service name
+     * Sets the name of the service
+     *
+     * @param serviceName log file name
      */
     public void setServiceLogFileName(String serviceLogFileName)
     {
@@ -70,8 +74,9 @@ public class ServiceReset extends ActionSupport
     }
 
     /**
-     * returns the name of the Log file for the Service
-     * @return service name
+     * Returns the name of the Log file for the Service
+     *
+     * @return log file name
      */
     public String getServiceLogFileName()
     {
@@ -80,6 +85,7 @@ public class ServiceReset extends ActionSupport
 
     /**
      * Overrides default implementation to reset the 'Service Logs' for a service.
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -112,7 +118,8 @@ public class ServiceReset extends ActionSupport
     }
 
     /**
-     * resets all the log files related to services
+     * Resets all the log files related to services
+     *
      * @return {@link #SUCCESS}
      */
     public String resetAll()
@@ -120,7 +127,7 @@ public class ServiceReset extends ActionSupport
         try
         {
             List<Service> servicesList = servicesService.getAllServices();
-            Iterator servIter = servicesList.iterator();
+            Iterator<Service> servIter = servicesList.iterator();
             while(servIter.hasNext())
             {
                 Service tempService = (Service)servIter.next();
@@ -147,7 +154,8 @@ public class ServiceReset extends ActionSupport
     }
 
     /**
-     * returns the error type
+     * Returns the error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -155,7 +163,8 @@ public class ServiceReset extends ActionSupport
 	}
 
     /**
-     * sets the error type
+     * Sets the error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

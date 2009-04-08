@@ -46,7 +46,8 @@ public class DeleteUser extends ActionSupport
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**
-     * sets the ID of the user to be deleted
+     * Sets the ID of the user to be deleted
+     *
      * @param userId user ID
      */
     public void setUserId(int userId)
@@ -55,7 +56,8 @@ public class DeleteUser extends ActionSupport
     }
 
     /**
-     * returns the ID of the user to be deleted
+     * Returns the ID of the user to be deleted
+     *
      * @return user ID
      */
     public int getUserId()
@@ -64,7 +66,8 @@ public class DeleteUser extends ActionSupport
     }
 
     /**
-     * returns list of users
+     * Returns list of users
+     *
      * @return
      */
     public List<User> getUserList()
@@ -74,6 +77,7 @@ public class DeleteUser extends ActionSupport
 
      /**
      * Overrides default implementation to delete a user from the system.
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -84,7 +88,7 @@ public class DeleteUser extends ActionSupport
 
             User tempUser = userService.getUserById(userId);
             List<Provider> providerList = providerService.getAllProviders();
-            Iterator iter = providerList.iterator();
+            Iterator<Provider> iter = providerList.iterator();
             boolean deleteFlag = true;
             while(iter.hasNext())
             {
@@ -120,7 +124,8 @@ public class DeleteUser extends ActionSupport
     }
 
 	/**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -128,7 +133,8 @@ public class DeleteUser extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     * 
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

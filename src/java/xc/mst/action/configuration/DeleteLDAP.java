@@ -44,13 +44,14 @@ public class DeleteLDAP extends ActionSupport
 	
     /**
      * returns a temporary server object which is used to display details in the JSP
-     * @return server Object
+     *
+     * @return temporary server object
      * @throws xc.mst.dao.DataException
      */
     public Server getTemporaryServer() throws DataException
     {
         List<Server> serverList = serverService.getAll();
-        Iterator iter = serverList.iterator();
+        Iterator<Server> iter = serverList.iterator();
         Server finalServer = null;
         while(iter.hasNext())
         {
@@ -75,9 +76,9 @@ public class DeleteLDAP extends ActionSupport
         {
 
             List<Server> serverlist = serverService.getAll();
-            Iterator serverIter = serverlist.iterator();
+            Iterator<Server> serverIter = serverlist.iterator();
             List<User> userList = userService.getAllUsersSorted(false,"username");
-            Iterator userIter = userList.iterator();
+            Iterator<User> userIter = userList.iterator();
             boolean deleteFlag = true;
             while(userIter.hasNext())
             {
@@ -117,10 +118,18 @@ public class DeleteLDAP extends ActionSupport
         }
     }
 
+    /**
+     * returns error type
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets error type
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

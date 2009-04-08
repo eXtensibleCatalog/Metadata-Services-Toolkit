@@ -44,7 +44,8 @@ public class HarvestOutReset extends ActionSupport
 	private String errorType; 
 	
      /**
-     * sets the Servic ID of the Service whose Service Logs need to be reset
+     * Sets the Service ID of the Service whose Service Logs need to be reset
+     *
      * @param serviceId service ID
      */
     public void setServiceId(String serviceId)
@@ -53,7 +54,8 @@ public class HarvestOutReset extends ActionSupport
     }
 
     /**
-     * returns the Service ID of the Service whose Service Logs need to be reset
+     * Returns the Service ID of the Service whose Service Logs need to be reset
+     *
      * @return service ID
      */
     public String getServiceId()
@@ -62,8 +64,9 @@ public class HarvestOutReset extends ActionSupport
     }
 
     /**
-     * sets the name of the log file for the service
-     * @param serviceName service name
+     * Sets the name of the log file for the service
+     *
+     * @param serviceName  name of the log file
      */
     public void setHarvestOutLogFileName(String harvestOutLogFileName)
     {
@@ -71,8 +74,9 @@ public class HarvestOutReset extends ActionSupport
     }
 
     /**
-     * returns the name of the Log file for the Service
-     * @return service name
+     * Returns the name of the Log file for the Service
+     *
+     * @return name of the log file
      */
     public String getHarvestOutLogFileName()
     {
@@ -81,6 +85,7 @@ public class HarvestOutReset extends ActionSupport
 
     /**
      * Overrides default implementation to reset the 'Harvest-Out Logs' for a service.
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -112,7 +117,8 @@ public class HarvestOutReset extends ActionSupport
     }
 
     /**
-     * returns the error type
+     * Returns the error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -120,7 +126,8 @@ public class HarvestOutReset extends ActionSupport
 	}
 
     /**
-     * sets the error type
+     * Sets the error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {
@@ -129,6 +136,7 @@ public class HarvestOutReset extends ActionSupport
 
     /**
      * Resets all the harvest-out log files relating to services
+     *
      * @return {@link #SUCCESS}
      */
     public String resetAll()
@@ -136,7 +144,7 @@ public class HarvestOutReset extends ActionSupport
         try
         {
             List<Service> serviceList = servicesService.getAllServices();
-            Iterator harvIter = serviceList.iterator();
+            Iterator<Service> harvIter = serviceList.iterator();
             while(harvIter.hasNext())
             {
                 

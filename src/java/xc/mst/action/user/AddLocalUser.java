@@ -21,10 +21,8 @@ import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserGroupUtilService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.GroupService;
-import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -80,7 +78,8 @@ public class AddLocalUser extends ActionSupport
 	
 
     /**
-     * sets temporary user object
+     * Sets temporary user object
+     *
      * @param user temporary user object
      */
     public void setTemporaryUser(User user)
@@ -89,7 +88,8 @@ public class AddLocalUser extends ActionSupport
     }
 
     /**
-     * returns temporary user object
+     * Returns temporary user object
+     *
      * @return temporary user
      */
     public User getTemporaryUser()
@@ -98,7 +98,8 @@ public class AddLocalUser extends ActionSupport
     }
 
     /**
-     * sets the user name for the local user
+     * Sets the user name for the local user
+     *
      * @param userName user Name
      */
     public void setUserName(String userName)
@@ -107,15 +108,18 @@ public class AddLocalUser extends ActionSupport
     }
 
     /**
-     * returns the local name for the user
+     * Returns the local name for the user
+     *
      * @return user name
      */
     public String getUserName()
     {
         return this.userName;
     }
+
     /**
-     * assigns the list of groups that a user can belong to
+     * Assigns the list of groups that a user can belong to
+     *
      * @param groupList list of groups
      */
     public void setGroupList(List<Group> groupList)
@@ -124,7 +128,8 @@ public class AddLocalUser extends ActionSupport
     }
 
     /**
-     * returns a list of groups that a user can belong to
+     * Returns a list of groups that a user can belong to
+     *
      * @return list of groups
      */
     public List<Group> getGroupList()
@@ -133,7 +138,8 @@ public class AddLocalUser extends ActionSupport
     }
 
     /**
-     * sets the email ID of the user
+     * Sets the email ID of the user
+     *
      * @param email email ID
      */
     public void setEmail(String email)
@@ -142,7 +148,8 @@ public class AddLocalUser extends ActionSupport
     }
 
     /**
-     * returns the email ID of the user
+     * Returns the email ID of the user
+     *
      * @return email ID
      */
     public String getEmail()
@@ -151,7 +158,8 @@ public class AddLocalUser extends ActionSupport
     }
 
     /**
-     * sets the password of the user
+     * Sets the password of the user
+     *
      * @param password The password to be assigned
      */
     public void setPassword(String password)
@@ -160,7 +168,8 @@ public class AddLocalUser extends ActionSupport
     }
 
     /**
-     * returns the password of the user
+     * Returns the password of the user
+     *
      * @return user's password
      */
     public String getPassword()
@@ -169,7 +178,8 @@ public class AddLocalUser extends ActionSupport
     }
 
      /**
-     * sets the list of groups that the user has been assigned
+     * Sets the list of groups that the user has been assigned
+      *
      * @param selectedGroupList list of selected groups
      */
     public void setGroupsSelected(String[] groupsSelected)
@@ -178,7 +188,8 @@ public class AddLocalUser extends ActionSupport
     }
 
     /**
-     * returns the list of groups that have been assigned to the user
+     * Returns the list of groups that have been assigned to the user
+     *
      * @return list of selected groups
      */
     public String[] getGroupsSelected()
@@ -187,7 +198,8 @@ public class AddLocalUser extends ActionSupport
     }
 
     /**
-     * sets the list of groups that the user has been assigned (used to pre-fill JSP form fields)
+     * Sets the list of groups that the user has been assigned (used to pre-fill JSP form fields)
+     *
      * @param selectedGroupList list of selected groups
      */
     public void setSelectedGroups(String[] selectedGroups)
@@ -196,15 +208,18 @@ public class AddLocalUser extends ActionSupport
     }
 
     /**
-     * returns the list of groups that have been assigned to the user (used to pre-fill JSP form fields)
+     * Returns the list of groups that have been assigned to the user (used to pre-fill JSP form fields)
+     *
      * @return list of selected groups
      */
     public String[] getSelectedGroups()
     {
         return selectedGroups;
     }
+
      /**
      * Overrides default implementation to view the add local user page.
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -227,6 +242,7 @@ public class AddLocalUser extends ActionSupport
 
     /**
      * The action method that actually does the task of adding a new local user to the system
+     *
      * @return returns status of the add operation
      */
     public String addLocalUser()
@@ -293,7 +309,8 @@ public class AddLocalUser extends ActionSupport
     }
 
 	/**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -301,7 +318,8 @@ public class AddLocalUser extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {
@@ -309,7 +327,8 @@ public class AddLocalUser extends ActionSupport
 	}
 
     /**
-     * returns the first name of the user
+     * Returns the first name of the user
+     *
      * @return first name
      */
 	public String getFirstName() {
@@ -317,7 +336,8 @@ public class AddLocalUser extends ActionSupport
 	}
 
     /**
-     * sets the first name of the user
+     * Sets the first name of the user
+     *
      * @param firstName first name
      */
 	public void setFirstName(String firstName) {
@@ -325,7 +345,8 @@ public class AddLocalUser extends ActionSupport
 	}
 
     /**
-     * returns the last name of the user
+     * Returns the last name of the user
+     *
      * @return last name
      */
 	public String getLastName() {
@@ -333,7 +354,8 @@ public class AddLocalUser extends ActionSupport
 	}
 
     /**
-     * sets the last name of the user
+     * Sets the last name of the user
+     *
      * @param lastName last name
      */
 	public void setLastName(String lastName) {

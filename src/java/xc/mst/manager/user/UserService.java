@@ -10,8 +10,6 @@
 package xc.mst.manager.user;
 
 import java.util.List;
-
-import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.dao.DataException;

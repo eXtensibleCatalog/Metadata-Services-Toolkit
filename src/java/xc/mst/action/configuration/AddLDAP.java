@@ -72,13 +72,13 @@ public class AddLDAP extends ActionSupport
         return this.displayName;
     }
 
-    /**sets the URL of the server to the specified value */
+    /** sets the URL of the server to the specified value */
     public void setServerURL(String serverURL)
     {
         this.serverURL = serverURL.trim();
     }
 
-    /**returns the server URL */
+    /** returns the server URL */
     public String getServerURL()
     {
         return this.serverURL;
@@ -98,7 +98,8 @@ public class AddLDAP extends ActionSupport
 
     /**
      * Sets the user name attribute
-     * @param userNameAttribute user name attribute
+     *
+     * @param userNameAttribute username attribute
      */
     public void setUserNameAttribute(String userNameAttribute)
     {
@@ -107,7 +108,8 @@ public class AddLDAP extends ActionSupport
 
     /**
      * returns the user name attribute
-     * @return user name attribute
+     *
+     * @return username attribute
      */
     public String getUserNameAttribute()
     {
@@ -116,6 +118,7 @@ public class AddLDAP extends ActionSupport
 
     /**
      * sets the start location
+     *
      * @param startLocation start location
      */
     public void setStartLocation(String startLocation)
@@ -125,7 +128,8 @@ public class AddLDAP extends ActionSupport
 
     /**
      * returns the start location
-     * @return
+     *
+     * @return start location
      */
     public String getStartLocation()
     {
@@ -144,7 +148,7 @@ public class AddLDAP extends ActionSupport
         {
                 
                 List<Server> serverList = serverService.getAll();
-                Iterator iter = serverList.iterator();
+                Iterator<Server> iter = serverList.iterator();
 
                 while(iter.hasNext())
                    {
@@ -178,7 +182,7 @@ public class AddLDAP extends ActionSupport
             boolean serverExists = false;
          
             List<Server> serverList = serverService.getAll();
-            Iterator iter = serverList.iterator();
+            Iterator<Server> iter = serverList.iterator();
 
             while(iter.hasNext())
             {
@@ -229,7 +233,8 @@ public class AddLDAP extends ActionSupport
 
     /**
      * returns the status of the add operation
-     * @return message status
+     *
+     * @return information message
      */
 	public String getMessage() {
 		return message;
@@ -237,7 +242,8 @@ public class AddLDAP extends ActionSupport
 
     /**
      * sets the status of the add operation
-     * @param message message status
+     *
+     * @param message information message
      */
 	public void setMessage(String message) {
 		this.message = message;
@@ -245,6 +251,7 @@ public class AddLDAP extends ActionSupport
 
     /**
      * returns the temporary server object that is used to display details on the JSP
+     *
      * @return server object
      */
 	public Server getServer() {
@@ -253,16 +260,27 @@ public class AddLDAP extends ActionSupport
 
     /**
      * sets the temporary server object which is used to display details on the JSP
-     * @param server server Object
+     *
+     * @param server object
      */
 	public void setServer(Server server) {
 		this.server = server;
 	}
 
+    /**
+     * returns error type
+     *
+     * @return error type
+     */
 	public String getErrorType() {
 		return errorType;
 	}
 
+    /**
+     * sets error type
+     *
+     * @param errorType error type
+     */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}

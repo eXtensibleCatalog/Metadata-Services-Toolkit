@@ -61,8 +61,9 @@ public class EmailConfiguration extends ActionSupport
 	private String errorType; 
 
     /**
-     * sets the URL address of the email server
-     * @param emailServerAddress Server Address
+     * Sets the URL address of the email server
+     *
+     * @param emailServerAddress email server address
      */
     public void setEmailServerAddress(String emailServerAddress)
     {
@@ -70,8 +71,9 @@ public class EmailConfiguration extends ActionSupport
     }
 
     /**
-     * gets the URL address of the server
-     * @return URL address of the server
+     * Gets the URL address of the server
+     *
+     * @return email server address
      */
     public String getEmailServerAddress()
     {
@@ -79,7 +81,8 @@ public class EmailConfiguration extends ActionSupport
     }
 
     /**
-     * sets the from address
+     * Sets the from address
+     *
      * @param fromAddress from address
      */
     public void setFromAddress(String fromAddress)
@@ -89,6 +92,7 @@ public class EmailConfiguration extends ActionSupport
 
     /**
      * returns the from address
+     *
      * @return from address
      */
     public String getFromAddress()
@@ -97,16 +101,19 @@ public class EmailConfiguration extends ActionSupport
     }
 
     /**
-     * sets the port of the email server
-     * @param port port number of the email server
+     * Sets the port of the email server
+     *
+     * @param port port number
      */
     public void setPort(String port)
     {
         
         this.port = port;
     }
+
     /**
      * returns the port number of the email server
+     *
      * @return port number
      */
     public String getPort()
@@ -114,49 +121,59 @@ public class EmailConfiguration extends ActionSupport
        
         return port;
     }
+
     /**
      * sets the password
+     *
      * @param password
      */
     public void setPassword(String password)
     {
         this.password = password;
     }
+
     /**
      * returns the password
+     *
      * @return password
      */
     public String getPassword()
     {
         return password;
     }
+
     /**
-     * sets the timeout period
+     * Sets the timeout period
+     *
      * @param timeout
      */
     public void setTimeout(String timeout)
     {
         this.timeout = timeout;
     }
+
     /**
      * returns the timeout period
-     * @return
+     * @return timeout period
      */
     public String getTimeout()
     {
         return timeout;
     }
+
     /**
-     * sets the type of encrypted connection. 'None' is also an option
-     * @param encryptedConnection The value of the encrypted connection
+     * Sets the type of encrypted connection. 'None' is also an option
+     * @param encryptedConnection
      */
     public void setEncryptedConnection(String encryptedConnection)
     {
         this.encryptedConnection = encryptedConnection;
     }
+
     /**
      * returns the encrypted connection
-     * @return encrypted connection value
+     *
+     * @return encrypted connection
      */
     public String getEncryptedConnection()
     {
@@ -164,16 +181,19 @@ public class EmailConfiguration extends ActionSupport
     }
 
     /**
-     * sets the temporary email config object
-     * @param emailConfig temporary email config object
+     * Sets the temporary email config object
+     *
+     * @param emailConfig 
      */
     public void setTemporaryEmailConfig(EmailConfig emailConfig)
     {
         this.temporaryEmailConfig = emailConfig;
     }
+
     /**
      * returns the temporary email config object
-     * @return temporary email config object
+     *
+     * @return temporary email configuration object
      */
     public EmailConfig getTemporaryEmailConfig()
     {
@@ -209,6 +229,7 @@ public class EmailConfiguration extends ActionSupport
 
     /**
      * Method that changes the details of the email server
+     *
      * @return {@link #SUCCESS}
      */
     public String changeEmailConfig()
@@ -239,6 +260,7 @@ public class EmailConfiguration extends ActionSupport
 
     /**
      * returns the information message
+     *
      * @return information message
      */
 	public String getMessage() {
@@ -246,8 +268,9 @@ public class EmailConfiguration extends ActionSupport
 	}
 
     /**
-     * sets the information message which describes whether the email server was added correctly or not
-     * @param message information message
+     * Sets the information message which describes whether the email server was added correctly or not
+     *
+     * @param message 
      */
 	public void setMessage(String message) {
 		this.message = message;
@@ -255,15 +278,17 @@ public class EmailConfiguration extends ActionSupport
 
     /**
      * returns the temporary email config object
-     * @return email config object
+     *
+     * @return temporary email configuration object
      */
 	public EmailConfig getEmailConfig() {
 		return emailConfig;
 	}
 
     /**
-     * sets the email config object which is used to populate JSP fields
-     * @param emailConfig email config object
+     * Sets the email config object which is used to populate JSP fields
+     *
+     * @param emailConfig 
      */
 	public void setEmailConfig(EmailConfig emailConfig) {
 		this.emailConfig = emailConfig;
@@ -271,6 +296,7 @@ public class EmailConfiguration extends ActionSupport
 
     /**
      * returns the error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -278,8 +304,9 @@ public class EmailConfiguration extends ActionSupport
 	}
 
     /**
-     * sets the error type
-     * @param errorType error type
+     * Sets the error type
+     * 
+     * @param errorType 
      */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;

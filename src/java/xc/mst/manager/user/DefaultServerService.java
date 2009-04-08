@@ -25,6 +25,7 @@ import xc.mst.dao.user.ServerDAO;
  */
 public class DefaultServerService implements ServerService {
 
+    /** DAO object for servers */
     private ServerDAO serverDao = new DefaultServerDAO();
 
     /**
@@ -39,6 +40,7 @@ public class DefaultServerService implements ServerService {
 
     /**
      * Return a server object based on the server Name
+     *
      * @param serverName The name of the server to be returned
      * @return server object
      */
@@ -49,6 +51,7 @@ public class DefaultServerService implements ServerService {
 
     /**
      * Inserts a server object
+     *
      * @param server The server object to be inserted
      */
     public void insertServer(Server server) throws DataException {
@@ -58,6 +61,7 @@ public class DefaultServerService implements ServerService {
 
     /**
      * Deletes a server
+     *
      * @param server The server object to be deleted
      */
     public void deleteServer(Server server) throws DataException{
@@ -66,6 +70,7 @@ public class DefaultServerService implements ServerService {
 
     /**
      * Updates the details of a server
+     * 
      * @param server The server whose details should be updated
      */
     public void updateServer(Server server) throws DataException{

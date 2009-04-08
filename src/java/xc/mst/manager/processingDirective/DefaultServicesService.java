@@ -75,7 +75,7 @@ public class DefaultServicesService implements ServicesService
     }
 
     /**
-     * returns a list of all services
+     * Returns a list of all services
      *
      * @return List of Services
      */
@@ -85,7 +85,8 @@ public class DefaultServicesService implements ServicesService
     }
 
     /**
-     * returns a sorted list of services
+     * Returns a sorted list of services
+     *
      * @param sort determines whether the list of services is sorted in ascending or descending order
      * @param columnSorted column on which the rows are sorted
      * @return list of services
@@ -95,7 +96,14 @@ public class DefaultServicesService implements ServicesService
         return servicesDao.getSorted(sort, columnSorted);
     }
     
-    
+    /**
+     * Adds a new Service whose configuration details are present in the file
+     *
+     * @param configFile
+     * @throws xc.mst.dao.DataException
+     * @throws java.io.IOException
+     * @throws xc.mst.manager.processingDirective.ConfigFileException
+     */
     public void addNewService(File configFile) throws DataException, IOException, ConfigFileException
     {
     	BufferedReader in = null; // Reads the file
@@ -387,7 +395,8 @@ public class DefaultServicesService implements ServicesService
     }
     
     /**
-     * inserts a service into the MST
+     * Inserts a service into the MST
+     *
      * @param service service object
      * @throws xc.mst.dao.DataException
      */
@@ -397,7 +406,8 @@ public class DefaultServicesService implements ServicesService
     }
 
     /**
-     * deletes a service from the MST
+     * Deletes a service from the MST
+     *
      * @param service service object
      * @throws xc.mst.dao.DataException
      */
@@ -407,7 +417,8 @@ public class DefaultServicesService implements ServicesService
     }
 
     /**
-     * updates the details related to a service
+     * Updates the details related to a service
+     *
      * @param service service object
      * @throws xc.mst.dao.DataException
      */
@@ -417,7 +428,8 @@ public class DefaultServicesService implements ServicesService
     }
 
     /**
-     * returns a service by ID
+     * Returns a service by ID
+     *
      * @param serviceId service ID
      * @return Service object
      */
@@ -427,7 +439,8 @@ public class DefaultServicesService implements ServicesService
     }
 
     /**
-     * returns a service by name
+     * Returns a service by name
+     *
      * @param serviceName name of the service
      * @return service object
      */
@@ -437,7 +450,8 @@ public class DefaultServicesService implements ServicesService
     }
 
     /**
-     * returns service by port number
+     * Returns service by port number
+     * 
      * @param servicePort service port
      * @return service object
      */

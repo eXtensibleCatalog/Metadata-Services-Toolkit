@@ -53,7 +53,8 @@ public class AddRepository extends ActionSupport implements UserAware
 	private String errorType; 
 	
     /**
-     * sets the ID of the repository to be added
+     * Sets the ID of the repository to be added
+     *
      * @param repositoryId repository ID
      */
     public void setRepositoryId(int repositoryId)
@@ -62,7 +63,8 @@ public class AddRepository extends ActionSupport implements UserAware
     }
 
     /**
-     * returns the ID of the repository to be added
+     * Returns the ID of the repository to be added
+     *
      * @return ID of the repository
      */
     public int getRepositoryId()
@@ -70,7 +72,8 @@ public class AddRepository extends ActionSupport implements UserAware
         return repositoryId;
     }
     /**
-     * sets the Repository Name to the specified value
+     * Sets the Repository Name to the specified value
+     *
      * @param repoName The name to be assigned to the repository
      */
     public void setRepositoryName(String repoName)
@@ -80,6 +83,7 @@ public class AddRepository extends ActionSupport implements UserAware
 
     /**
      * Gets the name of the repository
+     *
      * @return returns the name of the repository
      */
     public String getRepositoryName()
@@ -88,7 +92,8 @@ public class AddRepository extends ActionSupport implements UserAware
     }
 
     /**
-     * sets the URL of the repository to the specified value
+     * Sets the URL of the repository to the specified value
+     *
      * @param repoURL The URL value to be assigned to the repository
      */
     public void setRepositoryURL(String repoURL)
@@ -98,6 +103,7 @@ public class AddRepository extends ActionSupport implements UserAware
 
     /**
      * Gets the URL of the repository
+     *
      * @return returns URL of the repository
      */
     public String getRepositoryURL()
@@ -107,6 +113,7 @@ public class AddRepository extends ActionSupport implements UserAware
 
     /**
      * This method is used to set a user
+     *
      * @param user The user object to be set
      */
     public void setUser(User user)
@@ -117,6 +124,7 @@ public class AddRepository extends ActionSupport implements UserAware
 
     /**
      * The method is used to add a repository
+     *
      * @return returns the status of the add operation
      */
     public String addRepository()
@@ -143,8 +151,6 @@ public class AddRepository extends ActionSupport implements UserAware
                 }
                 else
                 {
-
-                    java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
 
                     pr.setName(getRepositoryName());
                     pr.setCreatedAt(new Date());

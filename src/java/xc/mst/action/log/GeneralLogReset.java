@@ -26,8 +26,9 @@ public class GeneralLogReset extends ActionSupport
     private LogService logService = new DefaultLogService();
 
     /**
-     * sets the log ID
-     * @param logId log ID
+     * Sets the log ID
+     *
+     * @param logId ID of the log
      */
     public void setLogId(String logId)
     {
@@ -35,7 +36,8 @@ public class GeneralLogReset extends ActionSupport
     }
 
     /**
-     * returns the log ID
+     * Returns the log ID
+     *
      * @return log ID
      */
     public String getLogId()
@@ -44,7 +46,8 @@ public class GeneralLogReset extends ActionSupport
     }
 
     /**
-     * resets the general log file corresponding to the given log ID
+     * Resets the general log file corresponding to the given log ID
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -73,7 +76,8 @@ public class GeneralLogReset extends ActionSupport
     }
 
     /**
-     * resets all the general log files
+     * Resets all the general log files
+     *
      * @return {@link #SUCCESS}
      */
     public String resetAll()
@@ -81,7 +85,7 @@ public class GeneralLogReset extends ActionSupport
         try
         {
             List<Log> logList = logService.getAll();
-            Iterator logIter = logList.iterator();
+            Iterator<Log> logIter = logList.iterator();
             while(logIter.hasNext())
             {
                 Log logs = (Log)logIter.next();
