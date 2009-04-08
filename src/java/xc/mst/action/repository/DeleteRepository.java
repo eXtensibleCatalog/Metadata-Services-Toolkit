@@ -11,18 +11,8 @@
 package xc.mst.action.repository;
 
 import com.opensymphony.xwork2.ActionSupport;
-import java.util.Iterator;
-import java.util.List;
 import org.apache.log4j.Logger;
-import xc.mst.bo.processing.ProcessingDirective;
-import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
-import xc.mst.manager.processingDirective.DefaultProcessingDirectiveInputFormatUtilService;
-import xc.mst.manager.processingDirective.DefaultProcessingDirectiveInputSetUtilService;
-import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
-import xc.mst.manager.processingDirective.ProcessingDirectiveInputFormatUtilService;
-import xc.mst.manager.processingDirective.ProcessingDirectiveInputSetUtilService;
-import xc.mst.manager.processingDirective.ProcessingDirectiveService;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
 
@@ -44,7 +34,8 @@ public class DeleteRepository extends ActionSupport
 	private String errorType; 
 
     /**
-     * set the ID of the repository to be deleted
+     * Set the ID of the repository to be deleted
+     *
      * @param repoId The ID of the repository to be deleted
      */
     public void setRepositoryId(String repoId)
@@ -53,7 +44,8 @@ public class DeleteRepository extends ActionSupport
     }
 
     /**
-     * gets the ID of the repository to be deleted
+     * Gets the ID of the repository to be deleted
+     *
      * @return The ID of the repository to be deleted
      */
     public int getRepositoryId()
@@ -63,6 +55,7 @@ public class DeleteRepository extends ActionSupport
 
     /**
      * Overrides default implementation to delete a repository.
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -71,20 +64,7 @@ public class DeleteRepository extends ActionSupport
         try
         {
             ProviderService providerService = new DefaultProviderService();
-            ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
-            ProcessingDirectiveInputFormatUtilService PDIFService = new DefaultProcessingDirectiveInputFormatUtilService();
-            ProcessingDirectiveInputSetUtilService PDISService = new DefaultProcessingDirectiveInputSetUtilService();
-            Provider provider = providerService.getProviderById(repositoryId);
-            List<ProcessingDirective> processingDirectivesList = PDService.getBySourceProviderId(repositoryId);
-            Iterator iter = processingDirectivesList.iterator();
-            while(iter.hasNext())
-            {
-                ProcessingDirective processingDirective = (ProcessingDirective)iter.next();
-                PDIFService.deleteInputFormatsForProcessingDirective(processingDirective.getId());
-                PDISService.deleteInputSetsForProcessingDirective(processingDirective.getId());
-                PDService.deleteProcessingDirective(processingDirective);
-            }
-            providerService.deleteProvider(provider);
+            providerService.deleteProvider(providerService.getProviderById(repositoryId));
             return SUCCESS;
         }
         catch(Exception e)
@@ -97,7 +77,8 @@ public class DeleteRepository extends ActionSupport
     }
 
 	/**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -105,7 +86,8 @@ public class DeleteRepository extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     * 
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {
