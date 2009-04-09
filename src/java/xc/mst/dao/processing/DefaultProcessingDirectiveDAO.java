@@ -817,6 +817,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// If the PreparedStatement to delete a service to output format was not defined, create it
 				if(psDelete == null)
 				{
+					// Delete processing directive input set and format.(delete the reference first before deleting the processing directive)
+					inputFormatDao.deleteInputFormatsForProcessingDirective(processingDirective.getId());
+					inputSetDao.deleteInputSetsForProcessingDirective(processingDirective.getId());
+					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM " + PROCESSING_DIRECTIVE_TABLE_NAME + " " +
 									   "WHERE " + COL_PROCESSING_DIRECTIVE_ID + " = ? ";

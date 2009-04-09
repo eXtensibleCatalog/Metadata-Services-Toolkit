@@ -10,10 +10,17 @@
 package xc.mst.manager.repository;
 
 import java.util.List;
+
+import xc.mst.bo.harvest.HarvestSchedule;
+import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
 import xc.mst.dao.DataException;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.ProviderDAO;
+import xc.mst.manager.harvest.DefaultScheduleService;
+import xc.mst.manager.harvest.ScheduleService;
+import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
+import xc.mst.manager.processingDirective.ProcessingDirectiveService;
 import xc.mst.utils.LogWriter;
 
 /**
@@ -74,6 +81,20 @@ public class DefaultProviderService implements ProviderService{
      * @throws xc.mst.dao.DataException
      */
     public void deleteProvider(Provider provider) throws DataException{
+    	
+    	// Delete schedule for this repository
+    	ScheduleService scheduleService = new DefaultScheduleService();
+    	HarvestSchedule harvestSchedule = scheduleService.getScheduleForProvider(provider);
+    	scheduleService.deleteSchedule(harvestSchedule);
+    	
+    	// Delete processing directive for this repository
+    	ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();
+    	List<ProcessingDirective> directives =  processingDirectiveService.getBySourceProviderId(provider.getId());
+    	for (ProcessingDirective directive:directives) {
+    		processingDirectiveService.deleteProcessingDirective(directive);
+    	}
+    	
+    	// Delete provider
         providerDao.delete(provider);
     }
 

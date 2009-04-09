@@ -324,12 +324,19 @@
 	          <div class="hd">Delete Repository</div>
 		      <div class="bd">
 		          <form id="deleteRepository" name="deleteRepository" method="POST" 
-		              action="confirmDeleteRepository.action">
+		              action="deleteRepository.action">
 		              
 		              <input type="hidden" name="repositoryId" value="${provider.id}"/>
-		              <div id="deleteRepositoryError" cssClass="errorMessage"></div>
+		              
 			          <p>Are you sure you wish to delete the repository?</p>
 		          </form>
+		      </div>
+	      </div>
+
+	      <div id="deleteRepositoryOkDialog" class="hidden">
+	          <div class="hd">Delete Repository</div>
+		      <div class="bd">
+			          <div id="deleteRepositoryError" cssClass="errorMessage"></div>
 		      </div>
 	      </div>
 
