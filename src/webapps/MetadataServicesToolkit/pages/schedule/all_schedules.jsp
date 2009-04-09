@@ -22,6 +22,7 @@
         <c:import url="/inc/meta-frag.jsp"/>
         
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
+        <LINK href="page-resources/yui/assets/skins/sam/skin.css"  rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/base-mst.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/yui/menu/assets/skins/sam/menu.css"  rel="stylesheet" type="text/css" >        
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
@@ -215,9 +216,20 @@
  
  		</div>
 		<!--  end body -->
-		<form name="deleteScheduleForm" method="post" action= 'deleteSchedule.action'>
-			<input type="hidden" id="schedule_id" name="scheduleId"/>
-		</form>	      
+
+	      <div id="deleteScheduleDialog" class="hidden">
+	          <div class="hd">Delete Schedule</div>
+		      <div class="bd">
+		          <form id="deleteSchedule" name="deleteSchedule" method="POST" 
+		              action="deleteSchedule.action">
+		              
+		              <input type="hidden" id="schedule_id" name="scheduleId"/>
+		              
+			          <p>Are you sure you wish to delete the Schedule?</p>
+		          </form>
+		      </div>
+	      </div>
+
         </div>
         <!-- end doc -->
     </body>

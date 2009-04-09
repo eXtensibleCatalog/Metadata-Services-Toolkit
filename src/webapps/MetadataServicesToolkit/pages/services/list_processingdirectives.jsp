@@ -21,6 +21,7 @@
         <c:import url="/inc/meta-frag.jsp"/>
 
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
+        <LINK href="page-resources/yui/assets/skins/sam/skin.css"  rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/base-mst.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/yui/menu/assets/skins/sam/menu.css"  rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
@@ -33,9 +34,11 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
-        <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
-        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/list_processingdirectives.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container-min.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/button/button-min.js"></script>           
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/list_processingdirectives.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
        
     </head>
@@ -196,7 +199,7 @@
                                         </c:forEach>
                                     </div>
                                 </td>
-                                <td><button class="xc_button" type="button" name="deleteService" onclick="javascript:YAHOO.xc.mst.services.deleteProcessingDirective(${n.id});">Delete</button></td>
+                                <td><button class="xc_button" type="button" name="deleteService" onclick="javascript:YAHOO.xc.mst.directives.delete.deleteProcessingDirective(${n.id});">Delete</button></td>
 
                                </tr>
                            </c:forEach>
@@ -204,9 +207,21 @@
                     </tbody>
                  </table>
                 </div>
-                <form name="deleteProcessingDirective" method="post" action= "deleteProcessingDirective.action">
-                    <input type="hidden" id="processingDirectiveId" name="processingDirectiveId"/>
-                </form>
+
+
+		      <div id="deleteProcessingDirectiveDialog" class="hidden">
+		          <div class="hd">Delete Processing Directive</div>
+			      <div class="bd">
+			          <form id="deleteProcessingDirective" name="deleteProcessingDirective" method="POST" 
+			              action="deleteProcessingDirective.action">
+			              
+			              <input type="hidden" id="processingDirective_id" name="processingDirectiveId"/>
+			              
+				          <p>Are you sure you wish to delete the Processing directive?</p>
+			          </form>
+			      </div>
+		      </div>
+
            </div>
         </div>
 

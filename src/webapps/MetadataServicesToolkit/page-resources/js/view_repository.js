@@ -102,8 +102,8 @@ YAHOO.xc.mst.repository = {
 	        { width : "400px",
 			  visible : false, 
 			  modal : true,
-			  buttons : [ { text:'Yes', handler:handleSubmit, isDefault:true },
-						  { text:'No', handler:handleCancel } ]
+			  buttons : [ { text:'Yes', handler:handleSubmit },
+						  { text:'No', handler:handleCancel, isDefault:true } ]
 			} );
 		
 			

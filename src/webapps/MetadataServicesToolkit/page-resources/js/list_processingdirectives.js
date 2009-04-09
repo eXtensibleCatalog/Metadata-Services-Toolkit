@@ -7,26 +7,76 @@
   *
   */
   
-YAHOO.namespace("xc.mst.services");
+YAHOO.namespace("xc.mst.directives.delete");
 
-YAHOO.xc.mst.services = {
+YAHOO.xc.mst.directives.delete = {
 
- deleteProcessingDirective : function(procDirId)
- {
-
-     try
-     {
-         var result;
-         result = confirm('Are you sure you want to delete the Processing Directive ?');
-		 if (result)
-         {
-			document.getElementById('processingDirectiveId').value= procDirId;
+	/**
+	 * Delete Processing Directive
+	 *
+	 */
+	deleteProcessingDirective : function(procDirId)
+	{	
+	
+		document.getElementById('processingDirective_id').value= procDirId;
+		YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.showDialog();
+	
+	},
+	
+	/**
+	 *  Dialog to confirm Processing Directive delete
+	 */
+	createDeleteProcessingDirectiveDialog : function()
+	{
+		// Define various event handlers for Dialog
+		var handleSubmit = function() {
 			document.deleteProcessingDirective.submit();
-		 }
-     }
-     catch(err)
-     {
-         alert(err);
-     }
- }
+		    YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.hide();
+		};
+		
+			
+		// handle a cancel of deleting user dialog
+		var handleCancel = function() {
+		    YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.hide();
+		};
+		
+		// Instantiate the Dialog
+		// make it modal - 
+		// it should not start out as visible - it should not be shown until 
+		// new user button is clicked.
+		YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog = new YAHOO.widget.Dialog('deleteProcessingDirectiveDialog', 
+	        { width : "400px",
+			  visible : false, 
+			  modal : true,
+			  buttons : [ { text:'Yes', handler:handleSubmit },
+						  { text:'No', handler:handleCancel, isDefault:true } ]
+			} );
+		
+			
+       // Show the dialog
+       YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.showDialog = function()
+       {
+           YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.show();
+           YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.center();
+       }
+
+
+		// Render the Dialog
+		YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.render();
+
+
+
+	},
+
+	/** 
+	 * initialize the page 
+	 */ 
+	init : function() 
+	{
+	    YAHOO.xc.mst.directives.delete.createDeleteProcessingDirectiveDialog();
+	}
+
 }
+
+// initialize the code once the dom is ready
+YAHOO.util.Event.onDOMReady(YAHOO.xc.mst.directives.delete.init);

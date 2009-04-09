@@ -18,12 +18,68 @@ YAHOO.mst.schedule.delete = {
 	 */
 	deleteSchedule : function(scheduleId, scheduleName)
 	{	
-		var result;
-		result = confirm('Are you sure you want to delete the Schedule - ' + scheduleName + ' ?');
-		if (result) {
-			document.getElementById('schedule_id').value= scheduleId;
-			document.deleteScheduleForm.submit();
-		}		
+		document.getElementById('schedule_id').value= scheduleId;
+		YAHOO.mst.schedule.delete.deleteScheduleDialog.showDialog();
 		    
+	},
+	
+	/**
+	 *  Dialog to confirm schedule delete
+	 */
+	createDeleteScheduleDialog : function()
+	{
+		// Define various event handlers for Dialog
+		var handleSubmit = function() {
+			document.deleteSchedule.submit();
+		    YAHOO.mst.schedule.delete.deleteScheduleDialog.hide();
+		};
+		
+			
+		// handle a cancel of deleting user dialog
+		var handleCancel = function() {
+		    YAHOO.mst.schedule.delete.deleteScheduleDialog.hide();
+		};
+		
+		// Instantiate the Dialog
+		// make it modal - 
+		// it should not start out as visible - it should not be shown until 
+		// new user button is clicked.
+		YAHOO.mst.schedule.delete.deleteScheduleDialog = new YAHOO.widget.Dialog('deleteScheduleDialog', 
+	        { width : "400px",
+			  visible : false, 
+			  modal : true,
+			  buttons : [ { text:'Yes', handler:handleSubmit },
+						  { text:'No', handler:handleCancel, isDefault:true } ]
+			} );
+		
+			
+	       // Show the dialog
+	       YAHOO.mst.schedule.delete.deleteScheduleDialog.showDialog = function()
+	       {
+	           YAHOO.mst.schedule.delete.deleteScheduleDialog.show();
+	           YAHOO.mst.schedule.delete.deleteScheduleDialog.center();
+	       }
+
+
+		// Render the Dialog
+		YAHOO.mst.schedule.delete.deleteScheduleDialog.render();
+
+	       // listener for showing the dialog when clicked.
+		YAHOO.util.Event.addListener("confirmDeleteSchedule", "click", 
+		    YAHOO.mst.schedule.delete.deleteScheduleDialog.showDialog, 
+		    YAHOO.mst.schedule.delete.deleteScheduleDialog, true);
+
+	},
+
+	/** 
+	 * initialize the page 
+	 */ 
+	init : function() 
+	{
+	    YAHOO.mst.schedule.delete.createDeleteScheduleDialog();
 	}
-} 
+
+}
+
+// initialize the code once the dom is ready
+YAHOO.util.Event.onDOMReady(YAHOO.mst.schedule.delete.init);
