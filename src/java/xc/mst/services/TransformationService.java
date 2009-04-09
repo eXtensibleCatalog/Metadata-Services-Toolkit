@@ -14,7 +14,6 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
 
 import org.jdom.Attribute;
 import org.jdom.Document;
@@ -28,9 +27,6 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
-import xc.mst.dao.DataException;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.FormatDAO;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MarcXmlRecord;
 import xc.mst.utils.XCRecord;
@@ -43,11 +39,6 @@ import xc.mst.utils.XCRecord;
  */
 public class TransformationService extends MetadataService
 {
-	/**
-	 * Data access object for getting formats
-	 */
-	private static FormatDAO formatDao = new DefaultFormatDAO();
-
 	/**
 	 * Builds the XML Document based on the record's OAI XML
 	 */
@@ -102,24 +93,7 @@ public class TransformationService extends MetadataService
 	public TransformationService()
 	{
 		// Initialize the XC format
-		xcFormat = formatDao.getByName("xc");
-
-		// Create the XC format if it doesn't already exist
-		if(xcFormat == null)
-		{
-			xcFormat = new Format();
-			xcFormat.setName("xc");
-			xcFormat.setNamespace("http://www.extensiblecatalog.info/Elements");
-			xcFormat.setSchemaLocation("http://www.extensiblecatalog.info/Elements");
-			try
-			{
-				formatDao.insert(xcFormat);
-			}
-			catch(DataException e)
-			{
-				log.error("An error occurred inserting the XC Format into the database.", e);
-			}
-		}
+		xcFormat = getFormatByName("xc");
 
 		// Initialize the list of roles
 		roles.put("aut", "author");
@@ -345,7 +319,7 @@ public class TransformationService extends MetadataService
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to update them
 			// instead of inserting a new Record
-			List<Record> existingRecords = recordService.getByProcessedFrom(record.getId());
+			List<Record> existingRecords = getByProcessedFrom(record.getId());
 
 			String newRecordContent = transformedRecord.getXcRecordXmlNoSplit();
 
@@ -376,7 +350,7 @@ public class TransformationService extends MetadataService
 				xcRecord.addProcessedFrom(record);
 				xcRecord.setOaiIdentifierBase("TransformationService");
 				xcRecord.setFormat(xcFormat);
-				xcRecord.setOaiIdentifier(serviceName + ":" + oaiIdDao.getNextOaiIdForService(service.getId()));
+				xcRecord.setOaiIdentifier(serviceName + ":" + getNextOaiId());
 
 				// Set the identifier, datestamp, and header to null so they get computed when we insert the transformed record
 				xcRecord.setOaiDatestamp(null);

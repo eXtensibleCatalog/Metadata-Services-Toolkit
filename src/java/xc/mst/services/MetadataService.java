@@ -10,8 +10,6 @@
 package xc.mst.services;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -23,6 +21,7 @@ import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.processing.ProcessingDirective;
+import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
@@ -32,7 +31,9 @@ import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
 import xc.mst.dao.processing.ProcessingDirectiveDAO;
+import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultSetDAO;
+import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.SetDAO;
 import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
@@ -61,37 +62,42 @@ public abstract class MetadataService
 	/**
 	 * Data access object for adding log statements
 	 */
-	protected static LogDAO logDao = new DefaultLogDAO();
+	private static LogDAO logDao = new DefaultLogDAO();
 
 	/**
 	 * Data access object for getting processing directives
 	 */
-	protected static ProcessingDirectiveDAO processingDirectiveDao = new DefaultProcessingDirectiveDAO();
+	private static ProcessingDirectiveDAO processingDirectiveDao = new DefaultProcessingDirectiveDAO();
 
 	/**
 	 * Data access object for getting services
 	 */
-	protected static ServiceDAO serviceDao = new DefaultServiceDAO();
+	private static ServiceDAO serviceDao = new DefaultServiceDAO();
 
 	/**
 	 * Data access object for getting sets
 	 */
-	protected static SetDAO setDao = new DefaultSetDAO();
+	private static SetDAO setDao = new DefaultSetDAO();
+
+	/**
+	 * Data access object for getting formats
+	 */
+	private static FormatDAO formatDao = new DefaultFormatDAO();
 
 	/**
 	 * Data access object for getting OAI IDs
 	 */
-	protected static OaiIdentifierForServiceDAO oaiIdDao = new DefaultOaiIdentiferForServiceDAO();
+	private static OaiIdentifierForServiceDAO oaiIdDao = new DefaultOaiIdentiferForServiceDAO();
 
 	/**
 	 * Data access object for getting FRBR level IDs
 	 */
-	protected static XcIdentifierForFrbrElementDAO frbrLevelIdDao = new DefaultXcIdentifierForFrbrElementDAO();
+	private static XcIdentifierForFrbrElementDAO frbrLevelIdDao = new DefaultXcIdentifierForFrbrElementDAO();
 
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	protected static RecordService recordService = new DefaultRecordService();
+	private static RecordService recordService = new DefaultRecordService();
 
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
@@ -735,6 +741,80 @@ public abstract class MetadataService
 		} // end loop over matched processing directives
 	} // end method checkProcessingDirectives(Record)
 
+	/**
+	 * Gets a Format by name.  Subclasses of MetadataService can call this method to
+	 * get a Format from the database.
+	 * 
+	 * @param name The name of the target Format
+	 * @return The Format with the passed name
+	 */
+	protected Format getFormatByName(String name)
+	{
+		return formatDao.getByName(name);
+	}
+	
+	/**
+	 * Gets all records that are successors of the record with the passed ID
+	 * 
+	 * @param recordId The record whose successors we're getting
+	 * @return A list of records that are successors of the record with the passed ID
+	 */
+	protected RecordList getByProcessedFrom(long recordId)
+	{
+		return recordService.getByProcessedFrom(recordId);
+	}
+	
+	/**
+	 * Gets the next OAI identifier for the service
+	 * 
+	 * @return The next OAI identifier for the service
+	 */
+	protected long getNextOaiId()
+	{
+		return oaiIdDao.getNextOaiIdForService(service.getId());
+	}
+	
+	/**
+	 * Gets the set from the database with the passed setSpec
+	 * 
+	 * @param setSpec The setSpec of the target set
+	 * @return The set with the passed setSpec
+	 */
+	protected Set getSet(String setSpec)
+	{
+		return setDao.getBySetSpec(setSpec);
+	}
+	
+	/**
+	 * Adds a new set to the database
+	 * 
+	 * @param setSpec The setSpec of the new set
+	 * @param setName The display name of the new set
+	 * @param setDescription A description of the new set
+	 * @throws DataException If an error occurred while adding the set
+	 */
+	protected void addSet(String setSpec, String setName, String setDescription) throws DataException 
+	{
+		Set set = new Set();
+		set.setSetSpec(setSpec);
+		set.setDescription(setDescription);
+		set.setDisplayName(setName);
+		set.setIsRecordSet(true);
+		set.setIsProviderSet(false);
+		setDao.insert(set);
+	}
+	
+	/**
+	 * Gets the record for this service which has the passed OAI identifier
+	 * 
+	 * @param oaiId The OAI identifier of the target record
+	 * @return The record with the passed OAI identifier, or null if no records matched the identifier
+	 */
+	protected Record getByOaiId(String oaiId)
+	{
+		return recordService.getByOaiIdentifierAndService(oaiId, service.getId());
+	}
+	
 	/**
 	 * This method processes a single record.
 	 *

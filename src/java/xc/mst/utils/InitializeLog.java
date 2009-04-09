@@ -85,20 +85,7 @@ public class InitializeLog  extends HttpServlet {
     			
     			// Load the class from the .jar file
     			URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);
-				Class clazz = loader.loadClass(className);
-				
-				try {
-					MetadataService nservice = (MetadataService)clazz.newInstance();
-				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				// If this throws an exception the class was not loaded successfully.
-				Class<?> serviceClass = Class.forName(className, true, serviceLoader);
+				loader.loadClass(className);
 			} 
     		catch (ClassNotFoundException e) 
     		{

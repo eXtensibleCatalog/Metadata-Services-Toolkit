@@ -36,8 +36,6 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
 import xc.mst.constants.AggregationServiceConstants;
 import xc.mst.dao.DataException;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.FormatDAO;
 import xc.mst.manager.record.DefaultExpressionService;
 import xc.mst.manager.record.DefaultHoldingsService;
 import xc.mst.manager.record.DefaultItemService;
@@ -87,11 +85,6 @@ public class AggregationService extends MetadataService
 	 * Manager for getting, inserting and updating item
 	 */
 	private static ItemService itemService = new DefaultItemService();
-
-	/**
-	 * Data access object for getting formats
-	 */
-	private static FormatDAO formatDao = new DefaultFormatDAO();
 
 	/**
 	 * The Properties file with information on which fields necessitate merging work elements
@@ -148,7 +141,7 @@ public class AggregationService extends MetadataService
 	/**
 	 * The format ID of the XC schema format
 	 */
-	private final static Format xcSchemaFormat = formatDao.getByName("xc");
+	private final Format xcSchemaFormat = getFormatByName("xc");
 
 	/**
 	 * Builds the XML Document based on the XC record's XML
@@ -183,7 +176,7 @@ public class AggregationService extends MetadataService
 				continue;
 
 			// Check whether or not this record already exists in the database
-			Record oldRecord = recordService.getByOaiIdentifierAndService(finalRecord.getOaiIdentifier(), service.getId());
+			Record oldRecord = getByOaiId(finalRecord.getOaiIdentifier());
 
 			// If the current record is a new record, insert it
 			if(oldRecord == null)
@@ -867,7 +860,7 @@ public class AggregationService extends MetadataService
 		record.setFormat(xcSchemaFormat);
 		record.setOaiIdentifierBase("AggrepationService");
 
-		record.setOaiIdentifierUniqueId(oaiIdDao.getNextOaiIdForService(service.getId()));
+		record.setOaiIdentifierUniqueId(getNextOaiId());
 
 		// Set the datestamp, and header to null so they get computed when we insert the normalized record
 		record.setOaiDatestamp(null);

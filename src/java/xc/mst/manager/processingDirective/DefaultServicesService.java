@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.provider.Format;
@@ -734,6 +735,33 @@ public class DefaultServicesService implements ServicesService
      */
     public void deleteService(Service service) throws DataException
     {
+    	// Delete the records processed by the service and send the deleted
+    	// records to subsequent services so they know about the delete
+		RecordList records = recordService.getByServiceId(service.getId());
+		
+		// A list of services which must be run after this one
+		List<Service> affectedServices = new ArrayList<Service>();
+		
+		for(Record record : records)
+		{
+			record.setDeleted(true);
+			for(Service nextService : record.getProcessedByServices())
+			{
+				record.addInputForService(nextService);
+				affectedServices.add(nextService);
+				recordService.update(record);
+			}
+		}
+		SolrIndexManager.getInstance().commitIndex();
+		
+		// Schedule subsequent services to process that the record was deleted
+		for(Service nextSerivce : affectedServices)
+		{
+			ServiceWorkerThread serviceThread = new ServiceWorkerThread();
+			serviceThread.setServiceId(nextSerivce.getId());
+			Scheduler.scheduleThread(serviceThread);
+		}
+		
         servicesDao.delete(service);
     }
 

@@ -28,11 +28,9 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.constants.NormalizationServiceConstants;
-import xc.mst.dao.DataException;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.FormatDAO;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MarcXmlManagerForNormalizationService;
+import xc.mst.utils.index.RecordList;
 
 /**
  * A Metadata Service which for each unprocessed marcxml record creates a new
@@ -42,11 +40,6 @@ import xc.mst.utils.MarcXmlManagerForNormalizationService;
  */
 public class NormalizationService extends MetadataService
 {
-	/**
-	 * Data access object for getting formats
-	 */
-	private static FormatDAO formatDao = new DefaultFormatDAO();
-
 	/**
 	 * Builds the XML Document based on the record's OAI XML
 	 */
@@ -143,24 +136,7 @@ public class NormalizationService extends MetadataService
 	public NormalizationService()
 	{
 		// Initialize the XC format
-		marcxmlFormat = formatDao.getByName("marcxml");
-
-		// Create the XC format if it doesn't already exists
-		if(marcxmlFormat == null)
-		{
-			marcxmlFormat = new Format();
-			marcxmlFormat.setName("marcxml");
-			marcxmlFormat.setNamespace("http://www.loc.gov/MARC21/slim");
-			marcxmlFormat.setSchemaLocation("http://128.151.244.132:8080/OAIToolkit/schema/MARC21slim_custom.xsd");
-			try
-			{
-				formatDao.insert(marcxmlFormat);
-			}
-			catch(DataException e)
-			{
-				log.error("An error occurred inserting the marcxml Format into the database.", e);
-			}
-		}
+		marcxmlFormat = getFormatByName("marcxml");
 	}
 
 	@Override
@@ -219,7 +195,7 @@ public class NormalizationService extends MetadataService
 
 			// Get the Leader 06.  This will allow us to determine the record's type, and we'll put it in the correct set for that type
 			char leader06 = normalizedXml.getLeader().charAt(6);
-
+			
 			// Run these steps only if the record is a bibliographic record
 			if("acdefgijkmoprt".contains(""+leader06))
 			{
@@ -331,7 +307,7 @@ public class NormalizationService extends MetadataService
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to update them
 			// instead of inserting a new Record
-			List<Record> existingRecords = recordService.getByProcessedFrom(record.getId());
+			RecordList existingRecords = getByProcessedFrom(record.getId());
 
 			// If there was already a processed record for the record we just processed, update it
 			if(existingRecords.size() > 0)
@@ -363,79 +339,60 @@ public class NormalizationService extends MetadataService
 				normalizedRecord.addProcessedFrom(record);
 				normalizedRecord.setOaiIdentifierBase("NormalizationService");
 				normalizedRecord.setFormat(marcxmlFormat);
-				normalizedRecord.setOaiIdentifier(serviceName + ":" + oaiIdDao.getNextOaiIdForService(service.getId()));
+				normalizedRecord.setOaiIdentifier(serviceName + ":" + getNextOaiId());
 
 				// Set the datestamp, and header to null so they get computed when we insert the normalized record
 				normalizedRecord.setOaiDatestamp(null);
 				normalizedRecord.setOaiHeader(null);
 
 				// Insert the normalized record
-				try
+
+				// The setSpec and set Description of the "type" set we should add the normalized record to
+				String setSpec = null;
+				String setDescription = null;
+				String setName = null;
+
+				// Setup the setSpec and description based on the leader 06
+				if("acdefgijkmoprt".contains(""+leader06))
 				{
-					// The setSpec and set Description of the "type" set we should add the normalized record to
-					String setSpec = null;
-					String setDescription = null;
-					String setName = null;
-
-					// Setup the setSpec and description based on the leader 06
-					if("acdefgijkmoprt".contains(""+leader06))
-					{
-						setSpec = "MARCXMLbibliographic";
-						setName = "MARCXML Bibliographic Records";
-						setDescription = "A set of all MARCXML Bibliographic records in the repository.";
-					}
-					else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y')
-					{
-						setSpec = "MARCXMLholding";
-						setName = "MARCXML Holding Records";
-						setDescription = "A set of all MARCXML Holding records in the repository.";
-					}
-					else if(leader06 == 'z')
-					{
-						setSpec = "MARCXMLauthority";
-						setName = "MARCXML Authority Records";
-						setDescription = "A set of all MARCXML Authority records in the repository.";
-					}
-
-					if(setSpec != null)
-					{
-						// Get the set for the provider
-						Set recordTypeSet = setDao.getBySetSpec(setSpec);
-
-						// If there was no set for the provider, create one
-						if(recordTypeSet == null)
-						{
-							if(log.isInfoEnabled())
-								log.info("Adding the set " + setSpec + ".");
-
-							recordTypeSet = new Set();
-							recordTypeSet.setSetSpec(setSpec);
-							recordTypeSet.setDisplayName(setName);
-							recordTypeSet.setDescription(setDescription);
-							recordTypeSet.setIsProviderSet(false);
-							recordTypeSet.setIsRecordSet(true);
-							setDao.insert(recordTypeSet);
-						}
-
-						// Add the provider set to the record
-						normalizedRecord.addSet(recordTypeSet);
-					}
-
-					// Add the record to the list of records resulting from processing the
-					// incoming record
-					results.add(normalizedRecord);
-
-					if(log.isInfoEnabled())
-						log.info("Created normalized record from unnormalized record with ID " + record.getId());
-
-					return results;
+					setSpec = "MARCXMLbibliographic";
+					setName = "MARCXML Bibliographic Records";
+					setDescription = "A set of all MARCXML Bibliographic records in the repository.";
 				}
-				catch(DataException e)
+				else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y')
 				{
-					log.error("An error occurred writing the modified record to the Lucene index.", e);
-
-					return results;
+					setSpec = "MARCXMLholding";
+					setName = "MARCXML Holding Records";
+					setDescription = "A set of all MARCXML Holding records in the repository.";
 				}
+				else if(leader06 == 'z')
+				{
+					setSpec = "MARCXMLauthority";
+					setName = "MARCXML Authority Records";
+					setDescription = "A set of all MARCXML Authority records in the repository.";
+				}
+
+				if(setSpec != null)
+				{
+					// Get the set for the provider
+					Set recordTypeSet = getSet(setSpec);
+					
+					// Add the set if it doesn't already exist
+					if(recordTypeSet == null)
+						addSet(setSpec, setName, setDescription);
+					
+					// Add the set to the record
+					normalizedRecord.addSet(recordTypeSet);
+				}
+
+				// Add the record to the list of records resulting from processing the
+				// incoming record
+				results.add(normalizedRecord);
+
+				if(log.isInfoEnabled())
+					log.info("Created normalized record from unnormalized record with ID " + record.getId());
+
+				return results;
 			}
 		}
 		catch(Exception e)
