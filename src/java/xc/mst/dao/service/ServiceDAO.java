@@ -130,6 +130,11 @@ public abstract class ServiceDAO
 	public final static String COL_HARVEST_OUT_LOG_FILE_NAME = "harvest_out_log_file_name";
 
 	/**
+	 * The name of the xccfg file name column
+	 */
+	public final static String COL_XCCFG_FILE_NAME = "xccfg_file_name";
+	
+	/**
 	 * A set of all columns which are valid for sorting
 	 */
 	protected static Set<String> sortableColumns = new HashSet<String>();
@@ -155,6 +160,7 @@ public abstract class ServiceDAO
 		sortableColumns.add(COL_HARVEST_OUT_RECORDS_HARVESTED);
 		sortableColumns.add(COL_HARVEST_OUT_LAST_LOG_RESET);
 		sortableColumns.add(COL_HARVEST_OUT_LOG_FILE_NAME);
+		sortableColumns.add(COL_XCCFG_FILE_NAME);
 	} // end initialization of sortableColumns
 	
 	/**
@@ -278,6 +284,9 @@ public abstract class ServiceDAO
 
 			if(service.getHarvestOutLogFileName() == null || service.getHarvestOutLogFileName().length() <= 0 || service.getHarvestOutLogFileName().length() > 255)
 				errorMessage.append("The harvest out log file name is invalid. ");
+			
+			if(service.getXccfgFileName() == null || service.getXccfgFileName().length() <= 0 || service.getXccfgFileName().length() > 255)
+				errorMessage.append("The xccfg file name is invalid. ");
 		} // end if(we should validate the non-ID fields)
 
 		// Log the error and throw the exception if any fields are invalid

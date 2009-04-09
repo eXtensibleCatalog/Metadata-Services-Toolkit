@@ -121,6 +121,11 @@ public class Service
 	 * The name of the harvest out log file for this service
 	 */
 	private String harvestOutLogFileName = null;
+	
+	/**
+	 * The name of the .xccfg file defining the service
+	 */
+	private String xccfgFileName = null;
 
 	/**
 	 * Gets the service's ID
@@ -566,6 +571,26 @@ public class Service
 	{
 		this.harvestOutLogFileName = harvestOutLogFileName;
 	} // end method setHarvestOutLogFileName(String)
+
+	/**
+	 * Gets the name of the .xccfg file defining the service
+	 * 
+	 * @return The name of the .xccfg file defining the service
+	 */
+	public String getXccfgFileName() 
+	{
+		return xccfgFileName;
+	}
+
+	/**
+	 * Sets the name of the .xccfg file defining the service
+	 * 
+	 * @param xccfgFileName The new name of the .xccfg file defining the service
+	 */
+	public void setXccfgFileName(String xccfgFileName) 
+	{
+		this.xccfgFileName = xccfgFileName;
+	}
 
 	@Override
 	public boolean equals(Object o)
