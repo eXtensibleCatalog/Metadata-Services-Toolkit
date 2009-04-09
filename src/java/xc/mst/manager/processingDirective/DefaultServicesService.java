@@ -197,6 +197,7 @@ public class DefaultServicesService implements ServicesService
     		service.setHarvestOutLogFileName("logs/harvestOut/" + name + ".txt");
     		service.setServicesLogFileName("logs/service/" + name + ".txt");
     		service.setPort(port);
+    		service.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
     		service.setXccfgFileName(configFile.getAbsolutePath());
     		
     		// Consume whitespace and comment lines in the configuration file
