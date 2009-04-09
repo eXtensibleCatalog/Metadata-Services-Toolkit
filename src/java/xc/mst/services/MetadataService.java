@@ -9,8 +9,11 @@
 
 package xc.mst.services;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -243,21 +246,20 @@ public abstract class MetadataService
 				log.debug("Trying to get the MetadataService class named " + targetClassName);
 
 			// Get the class specified in the configuration file
-			Class<?> serviceClass = Class.forName(targetClassName);
+			// The class loader for the MetadataService class
+    		ClassLoader serviceLoader = MetadataService.class.getClassLoader();
+    		
+			// Load the class from the .jar file
+    		// TODO: Don't reload the class file each time.  Instead, load it into 
+    		//       Tomcat once when the MST is started or the service is added/updated.
+    		//       This requires more research into Tomcat's class loaders
+			URLClassLoader loader = new URLClassLoader(new URL[] { new File(service.getServiceJar()).toURI().toURL() }, serviceLoader);
+			Class<?> clazz = loader.loadClass(targetClassName);
+			
+			runningService = (MetadataService)clazz.newInstance();
 
 			if(log.isDebugEnabled())
 				log.debug("Found the MetadataService class named " + targetClassName + ", getting its constructor.");
-			// The MetadataService to run
-			runningService = null;
-
-			// Get the service's processRecords method
-			Constructor<?> serviceConstructor = serviceClass.getConstructor(new Class[] {});
-
-			if(log.isDebugEnabled())
-				log.debug("Found the MetadataService class's constructor, invoking it.");
-
-			// Construct the MetadataService Object
-			runningService = (MetadataService)serviceConstructor.newInstance(new Object[] {});
 
 			// Set the service's ID and name
 			runningService.setServiceId(serviceId);
@@ -325,52 +327,6 @@ public abstract class MetadataService
 
 			return false;
 		} // end catch(NoClassDefFoundError)
-		catch(NoSuchMethodException e)
-		{
-			log.error("Could not find the service's processRecords method.", e);
-
-			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + "'s processRecords method could not be found.");
-
-			// Load the provider again in case it was updated during the harvest
-			service = serviceDao.getById(service.getId());
-
-			// Increase the warning and error counts as appropriate, then update the provider
-			service.setServicesErrors(service.getServicesErrors() + 1);
-
-			try
-			{
-				serviceDao.update(service);
-			}
-			catch (DataException e2)
-			{
-				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
-			}
-
-			return false;
-		} // end catch(NoSuchMethodException)
-		catch(InvocationTargetException e)
-		{
-			log.error("InvocationTargetException occurred while invoking the service's processRecords method.", e);
-
-			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + "'s processRecords method could not be invoked.");
-
-			// Load the provider again in case it was updated during the harvest
-			service = serviceDao.getById(service.getId());
-
-			// Increase the warning and error counts as appropriate, then update the provider
-			service.setServicesErrors(service.getServicesErrors() + 1);
-
-			try
-			{
-				serviceDao.update(service);
-			}
-			catch (DataException e2)
-			{
-				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
-			}
-
-			return false;
-		} // end catch(InvocationTargetException)
 		catch(IllegalAccessException e)
 		{
 			log.error("IllegalAccessException occurred while invoking the service's processRecords method.", e);
@@ -508,9 +464,7 @@ public abstract class MetadataService
 			} // end loop over records to process
 
 			// Reopen the reader so it can see the changes made by running the service
-			// TODO removed IndexManager
 			SolrIndexManager.getInstance().commitIndex();
-//			IndexManager.getInstance().maybeReOpen();
 
 			// Get the results of any final processing the service needs to perform
 			finishProcessing();

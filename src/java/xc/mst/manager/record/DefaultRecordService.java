@@ -655,7 +655,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the record with the correct identifier
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier + " AND "
+		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(":", "\\\\:") + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
 		// Remove the limit on the number of results returned
@@ -688,7 +688,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the record with the requested OAI identifier and provider ID
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier + " AND "
+		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(":", "\\\\:") + " AND "
 				+ FIELD_PROVIDER_ID + ":" + Integer.toString(providerId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
@@ -722,7 +722,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the record with the requested OAI identifier and service ID
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier + " AND "
+		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(":", "\\\\:") + " AND "
 				+ FIELD_SERVICE_ID + ":" + Integer.toString(serviceId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
@@ -789,7 +789,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested trait
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_TRAIT + ":" + trait + " AND "
+		query.setQuery(FIELD_TRAIT + ":" + trait.replaceAll(":", "\\\\:") + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
 		// Remove the limit on the number of results returned

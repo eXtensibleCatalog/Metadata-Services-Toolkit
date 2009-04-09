@@ -69,19 +69,36 @@ public class InitializeLog  extends HttpServlet {
 	    String servicesLogFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 	    ServiceDAO serviceDao = new DefaultServiceDAO();
 	    List<Service> services = serviceDao.getAll();
+    	
+		
 	    for(Service service : services)
 	    {
+	    	String jar = service.getServiceJar();
+			String className = service.getClassName();
+			
 	    	// The .jar file we need to load the service from
-    		File jarFile = new File(service.getServiceJar());
-	    	
-    		// The class loader for the MetadataService class
-    		ClassLoader serviceLoader = MetadataService.class.getClassLoader();
-    		
+    		File jarFile = new File(jar);
     		try 
     		{
+    			// The class loader for the MetadataService class
+    			ClassLoader serviceLoader = MetadataService.class.getClassLoader();
+    			
     			// Load the class from the .jar file
     			URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);
-				loader.loadClass(service.getClassName());
+				Class clazz = loader.loadClass(className);
+				
+				try {
+					MetadataService nservice = (MetadataService)clazz.newInstance();
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				// If this throws an exception the class was not loaded successfully.
+				Class<?> serviceClass = Class.forName(className, true, serviceLoader);
 			} 
     		catch (ClassNotFoundException e) 
     		{
@@ -92,6 +109,8 @@ public class InitializeLog  extends HttpServlet {
     			LogWriter.addError(servicesLogFileName, "Error loading service: " + service.getName());
 			}
 	    }
+	    
+	    LogWriter.addInfo(servicesLogFileName, "Loaded services");
 	  }
 
 	  public void doGet(HttpServletRequest req, HttpServletResponse res) {

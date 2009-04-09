@@ -79,11 +79,11 @@ public class EOTests
 	{
 		try
 		{	
-			MetadataService.runService(1, 0);
-			if(true) return;
+			//MetadataService.runService(1, 0);
+			//if(true) return;
 			
-			File file = new File("C:\\AllXcProjects\\MetadataServicesToolkit\\serviceConfig\\DefaultNormalizationServiceConfig.xccfg");
-			new DefaultServicesService().addNewService(file);
+			//File file = new File("C:\\AllXcProjects\\MetadataServicesToolkit\\serviceConfig\\DefaultNormalizationServiceConfig.xccfg");
+			//new DefaultServicesService().addNewService(file);
 			
 			return;
 		}
