@@ -85,7 +85,9 @@ public class DefaultProviderService implements ProviderService{
     	// Delete schedule for this repository
     	ScheduleService scheduleService = new DefaultScheduleService();
     	HarvestSchedule harvestSchedule = scheduleService.getScheduleForProvider(provider);
-    	scheduleService.deleteSchedule(harvestSchedule);
+    	if (harvestSchedule != null) {
+    		scheduleService.deleteSchedule(harvestSchedule);
+    	}
     	
     	// Delete processing directive for this repository
     	ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();

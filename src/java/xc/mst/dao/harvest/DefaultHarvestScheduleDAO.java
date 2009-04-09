@@ -757,8 +757,9 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
 
-					if(log.isDebugEnabled())
+					if(log.isDebugEnabled()) {
 						log.debug("Found harvest schedule with provider ID " + providerId + ".");
+					}
 
 				} else {
 					if(log.isDebugEnabled())
@@ -766,8 +767,6 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 				} // end loop over results}
 
-				if(log.isDebugEnabled())
-					log.debug("Found harvest schedule with provider ID " + providerId + ".");
 
 				return harvestSchedule;
 			} // end try(get the schedules)
