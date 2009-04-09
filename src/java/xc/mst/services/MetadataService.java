@@ -275,17 +275,27 @@ public abstract class MetadataService
 				log.debug("Constructed the MetadataService Object, running its processRecords() method.");
 
 			LogWriter.addInfo(service.getServicesLogFileName(), "Starting the " + service.getName() + " Service.");
-
+			
+			// Update database with status of service
+			runningService.persistStatus(Constants.STATUS_SERVICE_RUNNING);
+			
 			// Run the service's processRecords method
 			boolean success = runningService.processRecords(outputSetId);
 
 			LogWriter.addInfo(service.getServicesLogFileName(), "The " + service.getName() + " Service finished running.  " + runningService.numProcessed + " records were processed.");
 
+			// Update database with status of service
+			if(!runningService.isCanceled)
+			runningService.persistStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
+			
+			
 			return success;
 		} // end try(run the service through reflection)
 		catch(ClassNotFoundException e)
 		{
 			log.error("Could not find class " + targetClassName, e);
+			
+			
 
 			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + " could not be found.");
 
@@ -299,6 +309,14 @@ public abstract class MetadataService
 			catch (DataException e2)
 			{
 				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
+			}
+			
+			// Update database with status of service
+			try {
+				runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
+			} catch (DataException e1) {
+				e1.printStackTrace();
+				log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e1);
 			}
 			
 			// Return false if we did not recognize the service name
@@ -324,6 +342,14 @@ public abstract class MetadataService
 			{
 				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
 			}
+			
+			// Update database with status of service
+			try {
+				runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
+			} catch (DataException e1) {
+				e1.printStackTrace();
+				log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e1);
+			}
 
 			return false;
 		} // end catch(NoClassDefFoundError)
@@ -347,6 +373,15 @@ public abstract class MetadataService
 			{
 				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
 			}
+			
+			// Update database with status of service
+			try {
+				runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
+			} catch (DataException e1) {
+				e1.printStackTrace();
+				log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e1);
+			}
+
 
 			return false;
 		} // end catch(IllegalAccessException)
@@ -370,6 +405,15 @@ public abstract class MetadataService
 			{
 				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
 			}
+			
+			// Update database with status of service
+			try {
+				runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
+			} catch (DataException e1) {
+				e1.printStackTrace();
+				log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e1);
+			}
+
 
 			return false;
 		} // end catch(Exception)
@@ -445,18 +489,40 @@ public abstract class MetadataService
 							{
 								LogWriter.addInfo(service.getServicesLogFileName(), "Cancelled Service " + serviceName);
 								LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + numProcessed + " records so far.");
+								// Update database with status of service
+								persistStatus(Constants.STATUS_SERVICE_CANCELED);
 								break;
 							}
 						// If paused then wait
 						else if(isPaused)
 							{
 								LogWriter.addInfo(service.getServicesLogFileName(), "Paused Service " + serviceName);
+								// Update database with status of service
+								persistStatus(Constants.STATUS_SERVICE_PAUSED);
+								
 								while(isPaused && !isCanceled)
 									{
 										LogWriter.addInfo(service.getServicesLogFileName(), "Service Waiting to resume" );
 										Thread.sleep(3000);
 									}
-								
+								// If the service is canceled after it is paused, then exit 
+								if(isCanceled)
+								{
+									LogWriter.addInfo(service.getServicesLogFileName(), " Cancelled Service " + serviceName);
+									// Update database with status of service
+									persistStatus(Constants.STATUS_SERVICE_CANCELED);
+									break;
+
+								}
+								// If the service is resumed after it is paused, then continue
+								else
+								{
+									LogWriter.addInfo(service.getServicesLogFileName(), "Resumed Service " + serviceName);
+									// Update database with status of service
+									persistStatus(Constants.STATUS_SERVICE_RUNNING);
+									
+								}
+									
 							}
 						
 					}
@@ -491,7 +557,15 @@ public abstract class MetadataService
 		catch(Exception e)
 		{
 			log.error("An error occurred while running the service with ID " + service.getId() + ".", e);
-
+			
+			// Update database with status of service
+			try {
+				persistStatus(Constants.STATUS_SERVICE_ERROR);
+			} catch (DataException e1) {
+				e1.printStackTrace();
+				log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e1);
+			}
+			
 			return false;
 		} // end catch(Exception)
 		finally // Update the error and warning count for the service
@@ -684,4 +758,23 @@ public abstract class MetadataService
 	 * it should be done in this method.
 	 */
 	protected abstract void finishProcessing();
+	
+	/**
+	 * Logs the status of the service to the database
+	 * @throws DataException 
+	 */
+	protected void persistStatus(String status) throws DataException{
+		
+		service.setStatus(status);
+		serviceDao.update(service);
+	}
+	
+	/**
+	 * Gets the status of the service to the database
+	 */
+	protected String getCurrentStatus(){
+		return service.getStatus();
+	}
+	
+	
 }
