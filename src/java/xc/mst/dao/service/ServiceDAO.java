@@ -128,7 +128,13 @@ public abstract class ServiceDAO
 	 * The name of the log file name column
 	 */
 	public final static String COL_HARVEST_OUT_LOG_FILE_NAME = "harvest_out_log_file_name";
+	
+	/**
+	 * The current status of the service.
+	 */
 
+	public final static String COL_STATUS = "status";
+	
 	/**
 	 * The name of the xccfg file name column
 	 */
@@ -160,6 +166,7 @@ public abstract class ServiceDAO
 		sortableColumns.add(COL_HARVEST_OUT_RECORDS_HARVESTED);
 		sortableColumns.add(COL_HARVEST_OUT_LAST_LOG_RESET);
 		sortableColumns.add(COL_HARVEST_OUT_LOG_FILE_NAME);
+		sortableColumns.add(COL_STATUS);
 		sortableColumns.add(COL_XCCFG_FILE_NAME);
 	} // end initialization of sortableColumns
 	
