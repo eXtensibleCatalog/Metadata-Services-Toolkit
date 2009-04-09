@@ -151,10 +151,15 @@
              <result name="input" >/pages/repository/edit_repository.jsp</result>
         </action>
         
-        <action name="deleteRepository" class="xc.mst.action.repository.DeleteRepository">
+        <action name="confirmDeleteRepository" class="xc.mst.action.repository.DeleteRepository">
+        	<interceptor-ref name="default"/>
+            <result name="success">/pages/repository/repository_delete_confirmation.jsp</result>
+            <result name="input">/pages/repository/view_repository.jsp</result>
+        </action>
+
+        <action name="deleteRepository" class="xc.mst.action.repository.DeleteRepository" method="deleteRepository">
         	<interceptor-ref name="default"/>
             <result name="success" type="redirect">allRepository.action?isAscendingOrder=true&amp;columnSorted=RepositoryName</result>
-            <result name="input">/pages/repository/view_repository.jsp</result>
         </action>
        
         

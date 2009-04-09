@@ -30,7 +30,12 @@ import com.opensymphony.xwork2.ActionSupport;
 public class DeleteRepository extends ActionSupport
 {
         
-    /** A reference to the logger for this class */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4498437059514909755L;
+
+	/** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /** The ID of the repository to be deleted */
@@ -48,6 +53,8 @@ public class DeleteRepository extends ActionSupport
     /** Schedule service */
     private ScheduleService scheduleService = new DefaultScheduleService();
 
+    /** Determines whether repository is deleted */
+	private boolean deleted;
     
     /**
      * set the ID of the repository to be deleted
@@ -85,6 +92,7 @@ public class DeleteRepository extends ActionSupport
             // Delete provider if not yet harvested.
             if (provider.getLastHarvestEndTime() != null) {
                 message = "Repository has harvested data and cannot be deleted";
+                deleted = false;
             }
 
             //            List<ProcessingDirective> processingDirectivesList = PDService.getBySourceProviderId(repositoryId);
@@ -148,6 +156,10 @@ public class DeleteRepository extends ActionSupport
 
 	public String getMessage() {
 		return message;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
 	}
 
 }

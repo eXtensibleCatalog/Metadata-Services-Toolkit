@@ -18,6 +18,7 @@
 <c:import url="/inc/meta-frag.jsp"/>
 
 <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
+<LINK href="page-resources/yui/assets/skins/sam/skin.css"  rel="stylesheet" type="text/css" >
 <LINK href="page-resources/css/base-mst.css" rel="stylesheet" type="text/css" >
 <LINK href="page-resources/yui/menu/assets/skins/sam/menu.css"  rel="stylesheet" type="text/css" >
 <LINK HREF="page-resources/css/bodylayout.css" REL="stylesheet" TYPE="text/css">
@@ -303,20 +304,36 @@
               <ul style="list-style:none;">
                   <li style="float:left;">
                       <div align="left" style="vertical-align:bottom;">
-                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.MyObject.editFunction(${provider.id});" type="button" name="edit">Edit</button>&nbsp;
-                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.MyObject.downloadFile('HarvestIn','${provider.id}');" type="button" name="View Log">View Log</button>&nbsp;
-                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.MyObject.reValidateFunction(${provider.id});" type="button" name="Revalidate">Revalidate</button>&nbsp;
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.repository.MyObject.delRepository(${provider.id});" name="delete">Delete</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.editFunction(${provider.id});" type="button" name="edit">Edit</button>&nbsp;
+                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.downloadFile('HarvestIn','${provider.id}');" type="button" name="View Log">View Log</button>&nbsp;
+                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.reValidateFunction(${provider.id});" type="button" name="Revalidate">Revalidate</button>&nbsp;
+                        <button class="xc_button" id="confirmDeleteRepository" type="button"  name="delete">Delete</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </div>
                   </li>
                   <li style="float:right;">
                       <div align="right" style="vertical-align:bottom;">
-                          <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.repository.MyObject.doneFunction();" name="done">Done</button>
+                          <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.repository.doneFunction();" name="done">Done</button>
                       </div>
                   </li>
               
               </ul>
         </div>
+
+
+	      <div id="deleteRepositoryDialog" class="hidden">
+	          <div class="hd">Delete Repository</div>
+		      <div class="bd">
+		          <form id="deleteRepository" name="deleteRepository" method="POST" 
+		              action="confirmDeleteRepository.action">
+		              
+		              <input type="hidden" name="repositoryId" value="${provider.id}"/>
+		              <div id="deleteRepositoryError" cssClass="errorMessage"></div>
+			          <p>Are you sure you wish to delete the repository?</p>
+		          </form>
+		      </div>
+	      </div>
+
+
        </div>
 </body>
 </html>
