@@ -157,7 +157,7 @@
                                             <c:if test="${columnSorted=='ServiceName'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
-                                        <td class="${classColumn}"><c:out value="${n.name}"/></td>
+                                        <td class="${classColumn}"><a href="viewEditService.action?serviceId=${n.id}"><U><c:out value="${n.name}"/></U></a></td>
                                         <c:set var="baseURL" value="${baseURL}"/>
                                         <c:set var = "url" value="${fn:replace(baseURL,'8080',n.port)}" />
                                             <c:set var="classColumn" value="plainColumn"/>
@@ -170,11 +170,14 @@
                                             <button onclick="javascript:YAHOO.xc.mst.services.downloadFile('service','${n.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
                                             <button onclick="javascript:YAHOO.xc.mst.services.downloadFile('harvestout','${n.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
                                         </td>
-                                        <td><button class="xc_button" type="button" name="delete">Delete</button></td>
+                                        <td><button class="xc_button" onclick="javascript:YAHOO.xc.mst.services.deleteService(${n.id})" type="button" name="delete">Delete</button></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
                         </table>
+                        <form name="deleteService" method="post">
+                            <input type="hidden" name="serviceId" id="serviceId">
+                        </form>
                     </div>
 
             </div>

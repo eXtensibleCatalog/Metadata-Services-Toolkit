@@ -14,5 +14,17 @@ YAHOO.xc.mst.services = {
  downloadFile: function(type,id)
             {
                 window.location = "pages/logs/downloadLogFile.jsp?logType="+type+"&id="+id;
+            },
+ deleteService : function(serviceId)
+            {
+                var result;
+                result = confirm('Are you sure you want to delete the Service ?');
+                if (result)
+                {
+                    document.getElementById("serviceId").value = serviceId;
+                    document.deleteService.action = "deleteService.action";
+                    document.deleteService.submit();
+                }
+                
             }
 }

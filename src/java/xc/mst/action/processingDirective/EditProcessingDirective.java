@@ -10,13 +10,12 @@
 
 package xc.mst.action.processingDirective;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import xc.mst.bo.processing.ProcessingDirective;
-import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.*;
 import xc.mst.constants.Constants;
@@ -29,9 +28,10 @@ import xc.mst.manager.repository.ProviderService;
 
 /**
  * The first step in editing a processing directive
+ *
  * @author Tejaswi Haramurali
  */
-public class EditProcessingDirective extends ActionSupport
+public class EditProcessingDirective extends ActionSupport implements ServletRequestAware
 {
     /** Temporary Processing Directive object which is used to display details on the JSP */
     private ProcessingDirective temporaryProcessingDirective;
@@ -44,6 +44,9 @@ public class EditProcessingDirective extends ActionSupport
 
     /** The complete list of processing directives in the system */
     List<ProcessingDirective> processingDirectivesList;
+
+    /** Request */
+    private HttpServletRequest request;
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -215,6 +218,15 @@ public class EditProcessingDirective extends ActionSupport
     }
 
     /**
+	 * Set the servlet request.
+	 *
+	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
+	 */
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+    /**
      * Overrides default implementation to view the edit processing directives (step 1) page.
      *
      * @return {@link #SUCCESS}
@@ -224,11 +236,11 @@ public class EditProcessingDirective extends ActionSupport
     {
         try
         {
-            Map sessionMap =  ActionContext.getContext().getSession();
+            
             temporaryProcessingDirective = PDService.getByProcessingDirectiveId(processingDirectiveId);
             if(temporaryProcessingDirective==null)
             {
-                temporaryProcessingDirective = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
+                temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
             }
             Service tempService = temporaryProcessingDirective.getSourceService();
 
@@ -267,8 +279,7 @@ public class EditProcessingDirective extends ActionSupport
     {
         try
         {
-            Map sessionMap =  ActionContext.getContext().getSession();
-            temporaryProcessingDirective = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
+            temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
 
             if(temporaryProcessingDirective==null)
             {
@@ -279,7 +290,7 @@ public class EditProcessingDirective extends ActionSupport
             
             if(tempProvider!=null)
             {
-                sessionMap.put("sourceType", "provider");
+                request.getSession().setAttribute("sourceType","provider");
                 System.out.println("(Inside editprocdir method) temprovider is being set");
                 temporaryProcessingDirective.setSourceProvider(tempProvider);
                 temporaryProcessingDirective.setSourceService(null);
@@ -287,16 +298,16 @@ public class EditProcessingDirective extends ActionSupport
             }
             else
             {
-                sessionMap.put("sourceType", "service");
+                request.getSession().setAttribute("sourceType","service");
                 System.out.println("(Inside editprocdir method) tempservice is being set");
                 temporaryProcessingDirective.setSourceService(tempService);
                 temporaryProcessingDirective.setSourceProvider(null);
 
             }
-            sessionMap.put("service", getService());
+            request.getSession().setAttribute("service",getService());
             temporaryProcessingDirective.setService(servService.getServiceById(Integer.parseInt(getService())));
 
-            sessionMap.put("temporaryProcessingDirective", temporaryProcessingDirective);
+            request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
             return SUCCESS;
         }
         catch(Exception e)

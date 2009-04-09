@@ -9,7 +9,7 @@
 
 <html>
     <head>
-        <title>New Service</title>
+        <title>Edit Service</title>
         <c:import url="/inc/meta-frag.jsp"/>
 
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
@@ -28,7 +28,7 @@
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
-
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/edit_service.js"></SCRIPT>
     </head>
 
 
@@ -45,6 +45,11 @@
 
                 <!--  this is the header of the page -->
                 <c:import url="/inc/menu.jsp"/>
+                <jsp:include page="/inc/breadcrumb.jsp">
+
+                    <jsp:param name="bread" value="Services ,<a href='listServices.action'> All Services </a> ,Edit Service" />
+
+                </jsp:include>
             </div>
             <!--  end header -->
 
@@ -63,29 +68,40 @@
                 <div id="error_div"></div>
 
                  <div class="clear">&nbsp;</div>
-                 
-                <table>
 
-                    <tr>
-                      <td valign="top">Service Name &nbsp;&nbsp;</td>
-                      <td><input type="text" id="serviceName" name ="serviceName" style="width:200px;height:25px;" maxlength="255"><br><br></td>
-                    </tr>
+                <table>
 
                     <tr>
                       <td valign="top">Configuration File  &nbsp;&nbsp;</td>
                       <td>
-                          <input type="text" id="configurationFile" name ="configurationFile" style="width:200px;height:25px;" maxlength="255"> &nbsp;&nbsp;&nbsp;&nbsp;
-                          <input class="xc_button" type="file" name="browse">
+                          <select id="fileLocation" name ="fileLocation">
+                              <c:forEach var="n" items="${serviceFileList}" varStatus="a">
+                                  <c:choose>
+                                      <c:when test="${n==temporaryService.xccfgFileName}">
+                                          <option selected id="${n}" value="${n}">${n}
+                                      </c:when>
+                                      <c:otherwise>
+                                          <option id="${n}" value="${n}">${n}
+                                      </c:otherwise>
+                                  </c:choose>
+                                  
+                              </c:forEach>
+                          </select>
+
                           <br><br>
                       </td>
                     </tr>
                     <tr>
                         <td>
-                            <button class="xc_button_small" type="button" name="cancel">Cancel</button>&nbsp;&nbsp;
-                            <button class="xc_button" type="button" name="addService">Save</button>
+                            <button class="xc_button_small" onclick="javascript:YAHOO.xc.mst.services.cancel();" type="button" name="cancel">Cancel</button>&nbsp;&nbsp;
+                            <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.services.editService(${temporaryService.id});" name="editService">Save</button>
                         </td>
                     </tr>
                 </table>
+                <form name="editService" method="post">
+                    <input type="hidden" name="selectedLocation" id="selectedLocation">
+                    <input type="hidden" name="serviceId" id="serviceId">
+                </form>
             </div>
         </div>
  </body>

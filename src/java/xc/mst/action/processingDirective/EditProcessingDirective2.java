@@ -17,14 +17,14 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
-import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ProcessingDirectiveService;
-import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.repository.DefaultFormatService;
 import xc.mst.manager.repository.DefaultSetService;
 import xc.mst.manager.repository.FormatService;
@@ -35,7 +35,7 @@ import xc.mst.manager.repository.SetService;
  *
  * @author Tejaswi Haramurali
  */
-public class EditProcessingDirective2 extends ActionSupport
+public class EditProcessingDirective2 extends ActionSupport implements ServletRequestAware
 {
     /** Temporary Processing Directive Object that is used to display details on the JSP */
     ProcessingDirective temporaryProcessingDirective;
@@ -79,7 +79,19 @@ public class EditProcessingDirective2 extends ActionSupport
     
 	/** Error type */
 	private String errorType; 
-	
+
+    /** Request */
+    private HttpServletRequest request;
+
+    /**
+	 * Set the servlet request.
+	 *
+	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
+	 */
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
     /**
      * Sets the temporary processing directive
      *
@@ -275,9 +287,9 @@ public class EditProcessingDirective2 extends ActionSupport
     {
         try
         {
-            Map sessionMap =  ActionContext.getContext().getSession();
-            ProcessingDirective tempProcDir = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
-            String sourceType = (String)sessionMap.get("sourceType");
+            
+            ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
+            String sourceType = (String)request.getSession().getAttribute("sourceType");
             List<Format> tempFormatList = new ArrayList<Format>();
             List<Set> tempSetList = null;
             if(sourceType.equalsIgnoreCase("provider"))
@@ -290,11 +302,11 @@ public class EditProcessingDirective2 extends ActionSupport
                     boolean flags = false;
                     Iterator<Format> compareIter = compareList.iterator();
                     Format tempFormat = (Format)tempIter.next();
-                    System.out.println("The tempformat is "+tempFormat.getName());
+        
                     while(compareIter.hasNext())
                     {
                         Format compareFormat = (Format)compareIter.next();
-                        System.out.println("The compareFormat value is "+compareFormat.getName());
+                       
                         if(compareFormat.getId()==tempFormat.getId())
                         {
                             flags = true;
@@ -318,11 +330,11 @@ public class EditProcessingDirective2 extends ActionSupport
                     boolean flags = false;
                     Iterator<Format> compareIter = compareList.iterator();
                     Format tempFormat = (Format)tempIter.next();
-                    System.out.println("The tempformat is "+tempFormat.getName());
+                   
                     while(compareIter.hasNext())
                     {
                         Format compareFormat = (Format)compareIter.next();
-                        System.out.println("The compareFormat value is "+compareFormat.getName());
+                        
                         if(compareFormat.getId()==tempFormat.getId())
                         {
                             flags = true;
@@ -361,8 +373,8 @@ public class EditProcessingDirective2 extends ActionSupport
 
          try
            {
-                Map sessionMap =  ActionContext.getContext().getSession();
-                temporaryProcessingDirective = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
+                
+                temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
 
                 if(getMaintainSourceSets()!=null)
                 {
@@ -374,7 +386,7 @@ public class EditProcessingDirective2 extends ActionSupport
                 }
                
                
-                String sourceType = (String)sessionMap.get("sourceType");
+                String sourceType = (String)request.getSession().getAttribute("sourceType");
 
                 String[] SetIdList = getSetsSelected();
                 String[] FormatIdList = getFormatsSelected();
@@ -423,7 +435,7 @@ public class EditProcessingDirective2 extends ActionSupport
                     }
                     temporaryProcessingDirective.setTriggeringFormats(tempFormatList);
                     temporaryProcessingDirective.setTriggeringSets(tempSetList);
-                    sessionMap.put("temporaryProcessingDirective", temporaryProcessingDirective);
+                    request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
                     if(flag==1)
                     {
                        Set setExists = setService.getSetBySetSpec(outputSetSpec);
@@ -522,7 +534,7 @@ public class EditProcessingDirective2 extends ActionSupport
                     }
                     temporaryProcessingDirective.setTriggeringFormats(tempFormatList);
                     temporaryProcessingDirective.setTriggeringSets(tempSetList);
-                    sessionMap.put("temporaryProcessingDirective", temporaryProcessingDirective);
+                    request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
                     if(flag==1)
                     {
                        Set setExists = setService.getSetBySetSpec(outputSetSpec);
@@ -599,7 +611,7 @@ public class EditProcessingDirective2 extends ActionSupport
 
                 }
 
-                sessionMap.put("temporaryProcessingDirective", null);
+                request.getSession().setAttribute("temporaryProcessingDirective",null);
                 return SUCCESS;
            }
            catch(Exception e)
@@ -622,8 +634,8 @@ public class EditProcessingDirective2 extends ActionSupport
     {
          try
         {
-            Map sessionMap = ActionContext.getContext().getSession();
-            ProcessingDirective tempProcDir = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
+           
+            ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
 
             if(maintainSourceSets==null)
                 {
@@ -683,7 +695,7 @@ public class EditProcessingDirective2 extends ActionSupport
                 {
                     tempProcDir.setOutputSet(setExists);
                 }
-                sessionMap.put("temporaryProcessingDirective", tempProcDir);
+                request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
                 return SUCCESS;
         }
         catch(Exception e)
@@ -702,9 +714,8 @@ public class EditProcessingDirective2 extends ActionSupport
     public String editPDCancel()
     {
         try
-        {
-            Map sessionMap = ActionContext.getContext().getSession();
-            sessionMap.put("temporaryProcessingDirective", null);
+        {            
+            request.getSession().setAttribute("temporaryProcessingDirective",null);
             return SUCCESS;
         }
         catch(Exception e)

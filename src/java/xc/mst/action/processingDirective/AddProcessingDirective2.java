@@ -10,13 +10,13 @@
 
 package xc.mst.action.processingDirective;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
@@ -39,7 +39,7 @@ import xc.mst.manager.repository.SetService;
  *
  * @author Tejaswi Haramurali
  */
-public class AddProcessingDirective2 extends ActionSupport
+public class AddProcessingDirective2 extends ActionSupport implements ServletRequestAware
 {
     /** Ceates service object for processing directives*/
     private ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
@@ -65,6 +65,8 @@ public class AddProcessingDirective2 extends ActionSupport
     /** The formats that have been selected by the user in the previous page */
     private String[] formatsSelected;
 
+    /** Request */
+    private HttpServletRequest request;
 
     /** indicates whether the user has chosen to maintain sets */
     private String[] maintainSourceSets;
@@ -86,6 +88,15 @@ public class AddProcessingDirective2 extends ActionSupport
     
 	/** Error type */
 	private String errorType; 
+
+    /**
+	 * Set the servlet request.
+	 *
+	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
+	 */
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+	}
 
     /**
      * Sets the name of the output set
@@ -259,9 +270,8 @@ public class AddProcessingDirective2 extends ActionSupport
     {
         try
         {
-            Map sessionMap = ActionContext.getContext().getSession();
-            ProcessingDirective tempProcDir = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
-            String sourceType = (String)sessionMap.get("sourceType");
+            ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
+            String sourceType = (String)request.getSession().getAttribute("sourceType");
             List<Format> tempFormatList = new ArrayList<Format>();
             List<Set> tempSetList = null;
             if(sourceType.equalsIgnoreCase("provider"))
@@ -347,10 +357,8 @@ public class AddProcessingDirective2 extends ActionSupport
     {
         try
         {
-                    
-            Map sessionMap = ActionContext.getContext().getSession();
-            ProcessingDirective tempProcDir = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
-            String sourceType = (String)sessionMap.get("sourceType");
+            ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
+            String sourceType = (String)request.getSession().getAttribute("sourceType");
 
             if(maintainSourceSets==null)
             {
@@ -410,7 +418,7 @@ public class AddProcessingDirective2 extends ActionSupport
 
                 tempProcDir.setTriggeringFormats(tempFormatList);
                 tempProcDir.setTriggeringSets(tempSetList);
-                sessionMap.put("temporaryProcessingDirective", tempProcDir);
+                request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
                 if(flag==1)
                 {
                     Set setExists = setService.getSetBySetSpec(outputSetSpec);
@@ -479,7 +487,7 @@ public class AddProcessingDirective2 extends ActionSupport
 
                 tempProcDir.setTriggeringFormats(tempFormatList);
                 tempProcDir.setTriggeringSets(tempSetList);
-                sessionMap.put("temporaryProcessingDirective", tempProcDir);
+                request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
 
                 if(flag==1)
                 {
@@ -527,7 +535,7 @@ public class AddProcessingDirective2 extends ActionSupport
 
             }
 
-            sessionMap.put("temporaryProcessingDirective", null);
+            request.getSession().setAttribute("temporaryProcessingDirective",null);
             return SUCCESS;
         }
         catch(Exception e)
@@ -549,8 +557,7 @@ public class AddProcessingDirective2 extends ActionSupport
     {
          try
         {
-            Map sessionMap = ActionContext.getContext().getSession();
-            ProcessingDirective tempProcDir = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
+            ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
 
             if(maintainSourceSets==null)
                 {
@@ -577,7 +584,7 @@ public class AddProcessingDirective2 extends ActionSupport
                     }
                 }
 
-                System.out.println("Setting the list of formats and format size is "+tempFormatList.size());
+                
                 tempProcDir.setTriggeringFormats(tempFormatList);
                 if(SetIdList!=null)
                 {
@@ -588,7 +595,7 @@ public class AddProcessingDirective2 extends ActionSupport
                     }
                 }
 
-                System.out.println("Setting the list of sets and sets size is "+tempSetList.size());
+                
                 tempProcDir.setTriggeringSets(tempSetList);
 
                 Set setExists = setService.getSetBySetSpec(outputSetSpec);
@@ -612,7 +619,7 @@ public class AddProcessingDirective2 extends ActionSupport
                     tempProcDir.setOutputSet(setExists);
                 }
 
-                sessionMap.put("temporaryProcessingDirective", tempProcDir);
+                request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
                 return SUCCESS;
         }
         catch(Exception e)
@@ -631,8 +638,7 @@ public class AddProcessingDirective2 extends ActionSupport
     {
         try
         {
-            Map sessionMap = ActionContext.getContext().getSession();
-            sessionMap.put("temporaryProcessingDirective", null);
+            request.getSession().setAttribute("temporaryProcessingDirective",null);
             return SUCCESS;
         }
         catch(Exception e)

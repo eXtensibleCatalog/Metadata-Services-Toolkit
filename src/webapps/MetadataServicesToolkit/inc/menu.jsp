@@ -49,6 +49,7 @@
                        <div class="bd">
                             <ul>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/listServices.action" />" >List Services</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddService.action" />" >Add Service</a></li>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/listProcessingDirectives.action" />" >List Processing Directives</a></li>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddProcessingDirectives.action?refreshSession=yes" />" >Add Processing Directives</a></li>
                            </ul>

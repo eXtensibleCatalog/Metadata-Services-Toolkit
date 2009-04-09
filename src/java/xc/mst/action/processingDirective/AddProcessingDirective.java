@@ -10,10 +10,11 @@
 
 package xc.mst.action.processingDirective;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.*;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.*;
@@ -28,7 +29,7 @@ import xc.mst.manager.repository.ProviderService;
  *
  * @author Tejaswi Haramurali
  */
-public class AddProcessingDirective extends ActionSupport
+public class AddProcessingDirective extends ActionSupport implements ServletRequestAware
 {
     /**This String value denotes whether the Processing Directive session variable needs to be reset */
     private String refreshSession;
@@ -58,7 +59,19 @@ public class AddProcessingDirective extends ActionSupport
     private ProcessingDirective temporaryProcessingDirective;
     
 	/** Error type */
-	private String errorType; 
+	private String errorType;
+
+    /** Request */
+    private HttpServletRequest request;
+
+    /**
+	 * Set the servlet request.
+	 *
+	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
+	 */
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+	}
 
     /**
      * Sets the temporary processing directive object
@@ -191,12 +204,12 @@ public class AddProcessingDirective extends ActionSupport
     {
         try
         {
-            Map sessionMap =  ActionContext.getContext().getSession();
             setProviderList(provService.getAllProviders());
             setServiceList(servService.getAllServices());
             if(refreshSession==null)
             {
-                ProcessingDirective tempProcDir = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
+
+                ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
 
                 if(tempProcDir!=null)
                 {
@@ -205,7 +218,7 @@ public class AddProcessingDirective extends ActionSupport
             }
             else
             {
-                sessionMap.remove("temporaryProcessingDirective");
+                request.getSession().removeAttribute("temporaryProcessingDirective");
             }
             return SUCCESS;
         }
@@ -228,9 +241,7 @@ public class AddProcessingDirective extends ActionSupport
     {
         try
         {
-            Map sessionMap =  ActionContext.getContext().getSession();
-
-            temporaryProcessingDirective = (ProcessingDirective)sessionMap.get("temporaryProcessingDirective");
+            temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
             if(temporaryProcessingDirective==null)
             {
                 temporaryProcessingDirective = new ProcessingDirective();
@@ -242,16 +253,16 @@ public class AddProcessingDirective extends ActionSupport
             {
                  temporaryProcessingDirective.setSourceProvider(tempProvider);
                  temporaryProcessingDirective.setSourceService(null);
-                 sessionMap.put("sourceType", "provider");
+                 request.getSession().setAttribute("sourceType", "provider");
             }
             else
             {
                  temporaryProcessingDirective.setSourceService(tempService);
                  temporaryProcessingDirective.setSourceProvider(null);
-                 sessionMap.put("sourceType", "service");
+                 request.getSession().setAttribute("sourceType", "service");;
             }
             temporaryProcessingDirective.setService(servService.getServiceById(Integer.parseInt(service)));
-            sessionMap.put("temporaryProcessingDirective", temporaryProcessingDirective);
+            request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
             return SUCCESS;
         }
         catch(Exception e)
