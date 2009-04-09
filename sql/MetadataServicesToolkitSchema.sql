@@ -436,6 +436,7 @@ CREATE TABLE services
   harvest_out_records_harvested BIGINT(11) NOT NULL DEFAULT 0,
   harvest_out_last_log_reset DATETIME,
   harvest_out_log_file_name VARCHAR(255) NOT NULL,
+  status VARCHAR(20),
   xccfg_file_name VARCHAR(255) NOT NULL,
 
   PRIMARY KEY(service_id)
