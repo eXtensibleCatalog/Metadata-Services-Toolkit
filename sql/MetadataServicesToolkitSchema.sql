@@ -701,11 +701,12 @@ delete from groups_to_top_level_tabs;
 insert into top_level_tabs values(1,'Repositories',1);
 insert into top_level_tabs values(2,'Harvest',2);
 insert into top_level_tabs values(3,'Services',3);
-insert into top_level_tabs values(4,'Browse Records',4);
-insert into top_level_tabs values(5,'Logs',5);
-insert into top_level_tabs values(6,'Users/Groups',6);
-insert into top_level_tabs values(7,'Configuration',7);
-insert into top_level_tabs values(8,'Search Index',8);
+insert into top_level_tabs values(4,'Processing Rules',4);
+insert into top_level_tabs values(5,'Browse Records',5);
+insert into top_level_tabs values(6,'Logs',6);
+insert into top_level_tabs values(7,'Users/Groups',7);
+insert into top_level_tabs values(8,'Configuration',8);
+
 
 insert into groups values(1,'Administrator','Administrator');
 insert into groups values(2,'Librarian','Librarian');
