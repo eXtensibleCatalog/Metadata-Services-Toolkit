@@ -30,22 +30,47 @@ YAHOO.xc.mst.services = {
      {
          var sourceFlag = false;
          var serviceFlag = false;
-         alert("The number of sources was found to be "+document.addProcessingDirective.source);
-         alert("The number of sources was found to be "+document.addProcessingDirective.service);
-         for(i=0;i<document.addProcessingDirective.source.length;i++)
+         var serviceArraySize = 1;
+         var sourceArraySize = 1;
+         alert(document.addProcessingDirective.source.checked);
+         if(typeof(document.addProcessingDirective.source.length)!='undefined')
              {
-                 if(document.addProcessingDirective.source[i].checked)
-                     {
-                         sourceFlag = true;
-                     }
+                 sourceArraySize = document.addProcessingDirective.source.length;
+                 for(i=0;i<sourceArraySize;i++)
+                 {
+                     if(document.addProcessingDirective.source[i].checked)
+                         {
+                             sourceFlag = true;
+                         }
+                 }
              }
-         for(i=0;i<document.addProcessingDirective.service.length;i++)
+         else
              {
-                 if(document.addProcessingDirective.service[i].checked)
+                if(document.addProcessingDirective.source.checked)
+                    {
+                        sourceFlag = true;
+                    }
+             }
+         if(typeof(document.addProcessingDirective.service.length)!='undefined')
+             {
+                 serviceArraySize = document.addProcessingDirective.service.length;
+                 for(i=0;i<serviceArraySize;i++)
+                 {
+                     if(document.addProcessingDirective.service[i].checked)
+                         {
+                             serviceFlag = true;
+                         }
+                 }
+             }
+         else
+             {
+                 if(document.addProcessingDirective.service.checked)
                      {
                          serviceFlag = true;
                      }
              }
+         
+         
 
 
             if((sourceFlag==true)&&(serviceFlag==true))
