@@ -50,6 +50,17 @@
                             <ul>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/listServices.action" />" >List Services</a></li>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddService.action" />" >Add Service</a></li>
+                           </ul>
+                        </div>
+                    </div>
+                    </li>
+                 </mst:checkUserPermission>
+
+                 <mst:checkUserPermission permission="Processing Rules">
+                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="<c:url value="/listProcessingDirectives.action"/>">Processing Rules</a>
+                   <div id="Processing Rules" class="yuimenu">
+                       <div class="bd">
+                            <ul>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/listProcessingDirectives.action" />" >List Processing Directives</a></li>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddProcessingDirectives.action?refreshSession=yes" />" >Add Processing Directives</a></li>
                            </ul>

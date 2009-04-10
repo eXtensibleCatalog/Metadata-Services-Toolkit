@@ -26,42 +26,45 @@ YAHOO.xc.mst.services = {
  },
  addProcessingDirective : function()
  {
-       
-     var sourceFlag = false;
-     var serviceFlag = false;
-     for(i=0;i<document.addProcessingDirective.source.length;i++)
-         {
-             if(document.addProcessingDirective.source[i].checked)
-                 {
-                     sourceFlag = true;
-                 }
-         }
-     for(i=0;i<document.addProcessingDirective.service.length;i++)
-         {
-             if(document.addProcessingDirective.service[i].checked)
-                 {
-                     serviceFlag = true;
-                 }
-         }
-    
      try
      {
-        if((sourceFlag==true)&&(serviceFlag==true))
-            {
-                document.addProcessingDirective.submit();
-            }
-        else
-            {
-                if(sourceFlag==false)
-                    {
-                        createErrorDiv("error","Atleast one source has to be selected");
-                    }
-                else
-                    {
-                        createErrorDiv("error","Atleast one service has to be selected");
-                    }
-            }
+         var sourceFlag = false;
+         var serviceFlag = false;
+         alert("The number of sources was found to be "+document.addProcessingDirective.source);
+         alert("The number of sources was found to be "+document.addProcessingDirective.service);
+         for(i=0;i<document.addProcessingDirective.source.length;i++)
+             {
+                 if(document.addProcessingDirective.source[i].checked)
+                     {
+                         sourceFlag = true;
+                     }
+             }
+         for(i=0;i<document.addProcessingDirective.service.length;i++)
+             {
+                 if(document.addProcessingDirective.service[i].checked)
+                     {
+                         serviceFlag = true;
+                     }
+             }
+
+
+            if((sourceFlag==true)&&(serviceFlag==true))
+                {
+                    document.addProcessingDirective.submit();
+                }
+            else
+                {
+                    if(sourceFlag==false)
+                        {
+                            createErrorDiv("error","Atleast one source has to be selected");
+                        }
+                    else
+                        {
+                            createErrorDiv("error","Atleast one service has to be selected");
+                        }
+                }
      }
+     
      catch(err)
      {
          alert(err);

@@ -21,17 +21,26 @@ import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 
 /**
- * Edits the detais of a service
+ * Edits the details of a service
  *
  * @author Tejaswi Haramurali
  */
 public class EditService extends ActionSupport
 {
-    ServicesService servicesService = new DefaultServicesService();
-    List<String> serviceFileList;
-    String selectedLocation;
-    String serviceId;
-    Service temporaryService;
+    /** Service object to interact with the services in the MST */
+    private ServicesService servicesService = new DefaultServicesService();
+
+    /** List of XCCFG config files which were present in the directory (location of this directory can be obtained from the manual/documentation) */
+    private List<String> serviceFileList;
+
+    /** The XCCFG file selected by the user */
+    private String selectedLocation;
+
+    /** The ID of the service whose details are being edited */
+    private String serviceId;
+
+    /** The temporary service object which is used to populate data in the JSP page*/
+    private Service temporaryService;
 
     public EditService()
     {
@@ -41,46 +50,91 @@ public class EditService extends ActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+    /**
+     * Sets the temporary service object
+     *
+     * @param temporaryService service object
+     */
     public void setTemporaryService(Service temporaryService)
     {
         this.temporaryService = temporaryService;
     }
 
+    /**
+     * Returns the temporary Service object
+     *
+     * @return service object
+     */
     public Service getTemporaryService()
     {
         return this.temporaryService;
     }
 
+    /**
+     * Sets the service ID of the service whose details are to be edited
+     *
+     * @param serviceId service ID
+     */
     public void setServiceId(String serviceId)
     {
         this.serviceId = serviceId;
     }
 
+    /**
+     * Returns the ID of the service whose details are to be edited
+     *
+     * @return service ID
+     */
     public String getServiceId()
     {
         return this.serviceId;
     }
 
+    /**
+     * Returns the list of XCCFG config files at the hard-coded location (location can be found in documentation/manual)
+     *
+     * @return list of config files
+     */
     public List<String> getServiceFileList()
     {
         return this.serviceFileList;
     }
 
+    /**
+     * Sets the list of XCCFG config files which were found at the hard-coded location (location can be found in documentation/manual)
+     *
+     * @param serviceFileList list of config files
+     */
     public void setServiceFileList(List<String> serviceFileList)
     {
         this.serviceFileList = serviceFileList;
     }
 
+    /**
+     * The XCCFG file that is selected by the user
+     *
+     * @param selectedLocation config file
+     */
     public void setSelectedLocation(String selectedLocation)
     {
         this.selectedLocation = selectedLocation;
     }
 
+    /**
+     * Returns the XCCFG file selected by the user
+     *
+     * @return config file
+     */
     public String getSelectedLocation()
     {
         return this.selectedLocation;
     }
 
+     /**
+     * Overrides default implementation to view the edit service page.
+     *
+     * @return {@link #SUCCESS}
+     */
     @Override
     public String execute()
     {
@@ -109,6 +163,11 @@ public class EditService extends ActionSupport
         }
     }
 
+    /**
+     * The method that does the actual task of editing the details of a service
+     *
+     * @return {@link #SUCCESS}
+     */
     public String editService()
     {
         try
