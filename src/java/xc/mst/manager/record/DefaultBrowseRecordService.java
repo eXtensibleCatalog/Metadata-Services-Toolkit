@@ -9,7 +9,6 @@
 
 package xc.mst.manager.record;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +17,6 @@ import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
@@ -41,25 +39,6 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 	 */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Solr server */
-	private SolrServer server;
-
-	/**
-	 * Get server instance
-	 */
-	private void getServer()  {
-
-		try {
-			String url = "http://localhost:8085/solr/";
-			server = new CommonsHttpSolrServer( url );
-			log.debug("Solar Server::"+ server);
-		} catch (MalformedURLException me) {
-			log.debug(me);
-			//throw new DataException(me.getMessage());
-
-		}
-	}
-
 	/**
 	 * Method to search the index for records
      *
@@ -68,7 +47,7 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 	 */
 	public SolrBrowseResult search(SolrQuery query) {
 
-		getServer();
+		SolrServer server = MSTSolrServer.getServer();
 		SolrBrowseResult result = null;
 
 		try {

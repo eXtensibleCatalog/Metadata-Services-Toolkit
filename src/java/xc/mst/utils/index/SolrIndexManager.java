@@ -11,13 +11,11 @@
 package xc.mst.utils.index;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
@@ -27,8 +25,15 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
+import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.utils.LogWriter;
 
+/**
+ * Solr Index manager
+ * 
+ * @author Sharmila Ranganathan
+ *
+ */
 public class SolrIndexManager {
 
 	/**
@@ -59,51 +64,21 @@ public class SolrIndexManager {
 	 */
 	public static SolrIndexManager getInstance()
 	{
-		if(instance != null)
+		if(instance != null) {
 			return instance;
+		}
 
-		if(log.isDebugEnabled())
+		if(log.isDebugEnabled()) {
 			log.debug("Initializing the LuceneIndexManager instance.");
-		getSolrServerInstance();
+		}
+		
+		server = MSTSolrServer.getServer();
 		instance = new SolrIndexManager();
 		return instance;
 	}
 
 	/**
-	 * Get Solr server instance
-	 *
-	 * @return
-	 */
-	public static SolrServer getSolrServerInstance() {
-
-		if (server == null) {
-			String url = "http://localhost:8080/solr/";
-
-			try {				
-				server = new CommonsHttpSolrServer( url );
-				log.debug("Solar Server::"+ server);
-				LogWriter.addInfo(logObj.getLogFileLocation(), "The Solr index was successfully opened at " + url);
-			} catch (MalformedURLException me) {
-				log.debug(me);
-				
-				LogWriter.addError(logObj.getLogFileLocation(), "Failed to open the Solr index was successfully opened at " + url);
-				
-				logObj.setErrors(logObj.getErrors()+1);
-				try{
-					logDao.update(logObj);
-				}catch(DataException e){
-					log.error("DataExcepiton while updating the log's error count.");
-				}
-				
-				//throw new DataException(me.getMessage());
-
-			}
-		}
-		return server;
-	}
-
-	/**
-	 * Adds a document to the Lucene index
+	 * Adds a document to the solr index
 	 *
 	 * @param doc The document to add
 	 * @return true on success, false on failure
@@ -145,7 +120,7 @@ public class SolrIndexManager {
 	}
 
 	/**
-	 * Adds a document to the Lucene index
+	 * Adds a document to the solr index
 	 *
 	 * @param doc The document to add
 	 * @return true on success, false on failure
@@ -188,7 +163,7 @@ public class SolrIndexManager {
 	}
 
 	/**
-	 * Method to get search rsult documentss
+	 * Method to get search result documents
      *
 	 * @param query Query to perform the search
 	 * @return Search results

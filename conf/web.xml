@@ -8,10 +8,7 @@
     <servlet-class>xc.mst.oai.OaiRepository</servlet-class>
   </servlet>
 
-   
-
-
-
+  
     <servlet-mapping>
     <servlet-name>MetadataServices</servlet-name>
     <url-pattern>/oaiRepository</url-pattern>
@@ -35,6 +32,14 @@
 
     <load-on-startup>1</load-on-startup>
   </servlet>
+  
+   <servlet>
+    <servlet-name>createSolrServer</servlet-name>
+    <servlet-class>xc.mst.action.browse.SolrServerInitializationServlet</servlet-class>
+
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
 
     <filter>
         <filter-name>struts2</filter-name>
