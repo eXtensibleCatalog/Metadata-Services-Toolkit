@@ -3,9 +3,8 @@
   <variables>
   </variables>
   <category name="general">
-    <property name="LoggerConfigFileLocation" value="C:\Documents and Settings\tejaswih\My Documents\NetBeansProjects\MetadataServicesToolkit\src\java\log4j.config.txt" />
-
-    <property name="LuceneIndexerRAMBufferMB" value="1024" />
+     <property name="LoggerConfigFileLocation" value="C:\Documents and Settings\tejaswih\My Documents\NetBeansProjects\MetadataServicesToolkit\src\java\log4j.config.txt" />
+     <property name="LuceneIndexerRAMBufferMB" value="1024" />
 
     <property name="OrganizationCode" value="NRU" />
 

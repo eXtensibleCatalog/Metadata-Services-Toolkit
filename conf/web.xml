@@ -37,6 +37,11 @@
     <servlet-name>createSolrServer</servlet-name>
     <servlet-class>xc.mst.action.browse.SolrServerInitializationServlet</servlet-class>
 
+    <init-param>
+      <param-name>port</param-name>
+      <param-value>8080</param-value>
+    </init-param>
+    
     <load-on-startup>1</load-on-startup>
   </servlet>
   

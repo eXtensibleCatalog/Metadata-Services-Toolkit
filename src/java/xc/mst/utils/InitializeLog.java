@@ -21,16 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.PropertyConfigurator;
 
-import com.sun.org.apache.xerces.internal.util.URI.MalformedURIException;
-
 import xc.mst.bo.log.Log;
-import xc.mst.dao.log.DefaultLogDAO;
-import xc.mst.dao.log.LogDAO;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.log.DefaultLogDAO;
+import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
-import xc.mst.manager.processingDirective.ConfigFileException;
 import xc.mst.services.MetadataService;
 
 /**

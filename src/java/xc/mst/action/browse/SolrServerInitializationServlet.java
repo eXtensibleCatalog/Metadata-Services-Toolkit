@@ -12,30 +12,24 @@ package xc.mst.action.browse;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServlet;
 
 import org.apache.log4j.Logger;
-import org.apache.struts2.interceptor.ServletRequestAware;
 
 import xc.mst.constants.Constants;
 import xc.mst.manager.record.MSTSolrServer;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * A simple servlet that initializes the solr server
  *
  * @author Sharmila Ranganathan
  */
-public class SolrServerInitializationServlet extends ActionSupport implements ServletRequestAware
+public class SolrServerInitializationServlet extends HttpServlet
 {
 	/**
 	 * Serial Id
 	 */
 	private static final long serialVersionUID = 7716796826345895487L;
-
-	/** Request */
-	private HttpServletRequest request;
 
 	/** A reference to the logger which writes to the General log file */
 	private static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -46,32 +40,24 @@ public class SolrServerInitializationServlet extends ActionSupport implements Se
 	 * @throws ServletException if an error occurred
 	 * @throws IOException if an error occurred
 	 */
-	public String execute() throws ServletException, IOException
-	{
+	public void init() {
+	
 		if(log.isDebugEnabled()) {
 			log.debug("In execute, initialize SolrServer");
 		}	
 		
 		// Get the port on which the request is coming in.  This port
 		// is used to create SolrServer
-		int port = request.getLocalPort();
-		
+		String port =  getInitParameter("port");
 		MSTSolrServer.getInstance(port);
 
 		if(log.isDebugEnabled()) {
 			log.debug("In execute, SolrServer instance : " + MSTSolrServer.getServer());
 		}
-		
-	    return SUCCESS;
+	    
 	}
 
-	public HttpServletRequest getServletRequest() {
-		return request;
-	}
 
-	public void setServletRequest(HttpServletRequest servletRequest) {
-		this.request = servletRequest;
-	}
 
 
 }

@@ -69,7 +69,7 @@ public class SolrIndexManager {
 		}
 
 		if(log.isDebugEnabled()) {
-			log.debug("Initializing the LuceneIndexManager instance.");
+			log.debug("Initializing the SolrIndexManager instance.");
 		}
 		
 		server = MSTSolrServer.getServer();

@@ -62,7 +62,7 @@ public class MSTSolrServer {
 	/**
 	 * Gets the singleton instance of the LuceneIndexManager
 	 */
-	public static MSTSolrServer getInstance(int port)
+	public static MSTSolrServer getInstance(String port)
 	{
 		if(instance != null) {
 			return instance;
@@ -81,7 +81,7 @@ public class MSTSolrServer {
 	 *
 	 * @return
 	 */
-	private static SolrServer createSolrServer(int port) {
+	private static SolrServer createSolrServer(String port) {
 
 		if (server == null) {
 			String url = "http://localhost:" + port + "/solr/";
