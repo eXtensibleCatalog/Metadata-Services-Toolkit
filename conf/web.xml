@@ -30,7 +30,7 @@
     <servlet-name>startScheduler</servlet-name>
     <servlet-class>xc.mst.scheduling.SchedulerThreadServlet</servlet-class>
 
-    <load-on-startup>1</load-on-startup>
+    <load-on-startup>3</load-on-startup>
   </servlet>
   
    <servlet>
@@ -42,7 +42,7 @@
       <param-value>8080</param-value>
     </init-param>
     
-    <load-on-startup>1</load-on-startup>
+    <load-on-startup>2</load-on-startup>
   </servlet>
   
 

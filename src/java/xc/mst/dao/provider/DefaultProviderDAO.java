@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.log.Log;
-import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
@@ -27,14 +26,13 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
-import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
-import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.user.DefaultUserDAO;
 import xc.mst.dao.user.UserDAO;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.utils.index.SolrIndexManager;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.index.RecordList;
+import xc.mst.utils.index.SolrIndexManager;
 
 /**
  * MySQL implementation of the Data Access Object for the providers table

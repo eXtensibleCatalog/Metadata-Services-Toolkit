@@ -59,6 +59,11 @@ public class SolrIndexManager {
 	 */
 	private static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SOLR_INDEX);
 	
+	/*
+	 * Private default constructor
+	 */
+	private SolrIndexManager() {}
+	
 	/**
 	 * Gets the singleton instance of the LuceneIndexManager
 	 */
@@ -176,7 +181,7 @@ public class SolrIndexManager {
 		    docs = rsp.getResults();
 
 		} catch (SolrServerException e) {
-				log.debug(e);
+				log.debug(e, e.fillInStackTrace());
 				
 				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while getting documents from the Solr index: " + e.getMessage());
 				

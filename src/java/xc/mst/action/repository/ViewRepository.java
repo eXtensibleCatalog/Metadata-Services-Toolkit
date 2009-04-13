@@ -9,14 +9,16 @@
 
 package xc.mst.action.repository;
 
-import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
+
 import xc.mst.action.UserAware;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.repository.DefaultProviderService;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This method is used to View the properties of a Repository in the system
@@ -25,26 +27,29 @@ import xc.mst.manager.repository.DefaultProviderService;
  */
 public class ViewRepository extends ActionSupport implements UserAware
 {
-      /** A reference to the logger for this class */
-      static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    /** Serial id	 */
+	private static final long serialVersionUID = -6162901340410964175L;
 
-      /** The ID of the repository to be viewed */
-      private int repositoryId;
-
-      /**The User who is logged in */
-      private User user;
-
-      /**The repository to be viewed */
-      private Provider provider;
-
-      /**Boolean value that denotes success or failure */
-      private String listSets;
-
-      /**Boolean value that denotes success or failure */
-      private String listFormats;
-
-      /**Boolean value that denotes success or failure */
-      private String Identify;
+	/** A reference to the logger for this class */
+	  static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+	
+	  /** The ID of the repository to be viewed */
+	  private int repositoryId;
+	
+	  /**The User who is logged in */
+	  private User user;
+	
+	  /**The repository to be viewed */
+	  private Provider provider;
+	
+	  /**Boolean value that denotes success or failure */
+	  private String listSets;
+	
+	  /**Boolean value that denotes success or failure */
+	  private String listFormats;
+	
+	  /**Boolean value that denotes success or failure */
+	  private String Identify;
       
 	/** Error type */
 	private String errorType; 

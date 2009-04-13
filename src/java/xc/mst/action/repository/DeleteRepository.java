@@ -71,7 +71,7 @@ public class DeleteRepository extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.debug(e, e.fillInStackTrace());
             this.addFieldError("viewRepositoryError", "Repository cannot be deleted");
             errorType = "error";
             return INPUT;
