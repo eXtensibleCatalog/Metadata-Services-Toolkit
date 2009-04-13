@@ -168,7 +168,7 @@
 								${schedule.recurrence} Time ${schedule.hour+ 1}:00
 							</c:if>
 							<c:if test="${schedule.recurrence == 'Hourly'}">
-								${schedule.recurrence} Every ${schedule.minute+ 1} minutes
+								${schedule.recurrence} Every ${schedule.minute} minutes
 							</c:if>
 							<c:if test="${schedule.recurrence == 'Weekly'}">
 								${schedule.recurrence} 

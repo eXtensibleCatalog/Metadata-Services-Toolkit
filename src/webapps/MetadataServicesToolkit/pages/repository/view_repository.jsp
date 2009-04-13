@@ -336,7 +336,14 @@
 	      <div id="deleteRepositoryOkDialog" class="hidden">
 	          <div class="hd">Delete Repository</div>
 		      <div class="bd">
+		          <form name="deleteRepositoryRecords" method="POST" 
+		              action="deleteRepositoryRecords.action">
+		      		  
+		      		  <input type="hidden" name="repositoryId" value="${provider.id}"/>
 			          <div id="deleteRepositoryError" cssClass="errorMessage"></div>
+			          Deleting the repository will result in deletion of related Harvest Schedule, Processing rules and the records harvested. </br>
+			          Are you sure you want to delete the repository?
+		          </form>			          
 		      </div>
 	      </div>
 

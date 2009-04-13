@@ -61,12 +61,36 @@ public class DeleteRepository extends ActionSupport
             
             // Delete provider only if it is not harvested.
             if (provider.getLastHarvestEndTime() != null) {
-                message = "Repository has harvested data and cannot be deleted.";
+                message = "Repository has harvested data.";
                 deleted = false;
             } else {
     	    	providerService.deleteProvider(provider);
             	deleted = true;
             }
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.debug(e, e.fillInStackTrace());
+            this.addFieldError("viewRepositoryError", "Repository cannot be deleted");
+            errorType = "error";
+            return INPUT;
+        }
+    }
+    
+    /**
+     * Delete repository and its harvested records
+     * 
+     */
+    public String deleteRepositoryAndRecords()
+    {
+        try
+        {
+            log.debug("DeleteRepository:deleteRepositoryAndRecords():Repository Id to be deleted : " + repositoryId);
+            Provider provider = providerService.getProviderById(repositoryId);
+            
+            // Delete provider
+   	    	providerService.deleteProvider(provider);
             return SUCCESS;
         }
         catch(Exception e)

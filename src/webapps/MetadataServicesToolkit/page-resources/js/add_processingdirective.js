@@ -32,7 +32,6 @@ YAHOO.xc.mst.services = {
          var serviceFlag = false;
          var serviceArraySize = 1;
          var sourceArraySize = 1;
-         alert(document.addProcessingDirective.source.checked);
          if(typeof(document.addProcessingDirective.source.length)!='undefined')
              {
                  sourceArraySize = document.addProcessingDirective.source.length;

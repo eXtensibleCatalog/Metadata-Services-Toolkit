@@ -31,7 +31,6 @@ import xc.mst.dao.user.UserDAO;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
-import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
 /**

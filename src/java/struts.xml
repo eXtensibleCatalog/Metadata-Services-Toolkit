@@ -157,7 +157,11 @@
             <result name="input">/pages/repository/view_repository.jsp</result>
         </action>
 
-       
+        <action name="deleteRepositoryRecords" class="xc.mst.action.repository.DeleteRepository" method="deleteRepositoryAndRecords">
+        	<interceptor-ref name="editStack"/>
+            <result name="success" type="redirect">allRepository.action</result>
+            <result name="input">/pages/repository/view_repository.jsp</result>
+        </action>
         
         <!--  ************************************ -->
         <!--  Schedule  actions                    -->
