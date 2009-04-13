@@ -27,41 +27,70 @@ YAHOO.xc.mst.services = {
  editProcessingDirective : function()
  {
 
-     var sourceFlag = false;
-     var serviceFlag = false;
-     for(i=0;i<document.editProcessingDirective.source.length;i++)
-         {
-             if(document.editProcessingDirective.source[i].checked)
-                 {
-                     sourceFlag = true;
-                 }
-         }
-     for(i=0;i<document.editProcessingDirective.service.length;i++)
-         {
-             if(document.editProcessingDirective.service[i].checked)
-                 {
-                     serviceFlag = true;
-                 }
-         }
-
-     try
+    try
      {
-        if((sourceFlag==true)&&(serviceFlag==true))
-            {
-                document.editProcessingDirective.submit();
-            }
-        else
-            {
-                if(sourceFlag==false)
+         var sourceFlag = false;
+         var serviceFlag = false;
+         var serviceArraySize = 1;
+         var sourceArraySize = 1;
+         alert(document.editProcessingDirective.source.checked);
+         if(typeof(document.editProcessingDirective.source.length)!='undefined')
+             {
+                 sourceArraySize = document.editProcessingDirective.source.length;
+                 for(i=0;i<sourceArraySize;i++)
+                 {
+                     if(document.editProcessingDirective.source[i].checked)
+                         {
+                             sourceFlag = true;
+                         }
+                 }
+             }
+         else
+             {
+                if(document.editProcessingDirective.source.checked)
                     {
-                        createErrorDiv("error","Atleast one source has to be selected");
+                        sourceFlag = true;
                     }
-                else
-                    {
-                        createErrorDiv("error","Atleast one service has to be selected");
-                    }
-            }
+             }
+         if(typeof(document.editProcessingDirective.service.length)!='undefined')
+             {
+                 serviceArraySize = document.editProcessingDirective.service.length;
+                 for(i=0;i<serviceArraySize;i++)
+                 {
+                     if(document.editProcessingDirective.service[i].checked)
+                         {
+                             serviceFlag = true;
+                         }
+                 }
+             }
+         else
+             {
+                 if(document.editProcessingDirective.service.checked)
+                     {
+                         serviceFlag = true;
+                     }
+             }
+
+
+
+
+            if((sourceFlag==true)&&(serviceFlag==true))
+                {
+                    document.editProcessingDirective.submit();
+                }
+            else
+                {
+                    if(sourceFlag==false)
+                        {
+                            createErrorDiv("error","Atleast one source has to be selected");
+                        }
+                    else
+                        {
+                            createErrorDiv("error","Atleast one service has to be selected");
+                        }
+                }
      }
+
      catch(err)
      {
          alert(err);
