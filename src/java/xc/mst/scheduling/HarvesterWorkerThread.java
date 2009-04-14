@@ -87,4 +87,13 @@ public class HarvesterWorkerThread extends WorkerThread
 		Harvester.getRunningHarvester().setPaused(false);
 		log.debug("Resuming the Harvest" );
 	}
+
+	/**
+	 * Gets the name for the job
+	 */
+	public String getJobName() {
+	
+		return "Harvesting: " + Harvester.getRunningHarvester().getProvider().getName();
+	}
+
 } // end class HarvestWorkerThread
