@@ -102,4 +102,12 @@ public class ServiceWorkerThread extends WorkerThread
 		MetadataService.getRunningService().setPaused(false);
 		
 	}
+
+	/**
+	 * Gets the name for the job
+	 */
+	public String getJobName() {
+	
+		return "Running Service: "+ MetadataService.getRunningService().getServiceName();
+	}
 } // end class ServiceWorkerThread
