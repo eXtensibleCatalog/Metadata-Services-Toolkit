@@ -1634,4 +1634,13 @@ public class Harvester implements ErrorHandler
 		
 	}
 	
+	
+	/**
+	 * Gets the provider of the harvest
+	 */
+	public Provider getProvider() {
+		return provider;
+	}
+
+	
 } // end class Harvester
