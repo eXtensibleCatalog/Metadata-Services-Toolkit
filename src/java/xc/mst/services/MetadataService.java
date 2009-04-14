@@ -219,6 +219,16 @@ public abstract class MetadataService
 	} // end method setServiceName(int)
 
 	/**
+	 * Gets the name for this service
+	 *
+	 * @return This service's name
+	 */
+	public String getServiceName()
+	{
+		return serviceName;
+	} // end method getServiceName()
+
+	/**
 	 * Sets the list of processing directives for this service
 	 *
 	 * @param processingDirectives The list of processing directives which should be run on records processed by this service
