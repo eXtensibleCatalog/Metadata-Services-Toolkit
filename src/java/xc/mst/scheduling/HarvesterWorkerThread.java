@@ -60,6 +60,9 @@ public class HarvesterWorkerThread extends WorkerThread
 		{
 			log.error("An error occurred while running the harvest schedule with ID " + harvestScheduleStepId, e);
 		} // end catch(Exception)
+		finally{
+			Scheduler.setJobCompletion();
+		}
 	} // end method run()
 
 	/**

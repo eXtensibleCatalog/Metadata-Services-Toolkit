@@ -232,5 +232,11 @@ public class Scheduler extends Thread
 		runningJob.proceed();
 	}
 
+	/**
+	 * Sets the currentJob reference to null after completion of the job.
+	 */
+	public static void setJobCompletion(){
+		runningJob = null;
+	}
 	
 } // end class Scheduler

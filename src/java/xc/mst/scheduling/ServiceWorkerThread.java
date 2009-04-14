@@ -73,6 +73,9 @@ public class ServiceWorkerThread extends WorkerThread
 		{
 			log.error("An error occurred while running the service with ID " + serviceId, e);
 		} // end catch(Exception)
+		finally{
+			Scheduler.setJobCompletion();
+		}
 	} // end method run()
 
 	/**
