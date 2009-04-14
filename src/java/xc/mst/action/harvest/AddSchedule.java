@@ -154,82 +154,89 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
      */
     public String addScheduleAndProvider() throws DataException {
 
-    	log.debug("AddSchedule::addScheduleAndProvider():: scheduleName=" + scheduleName);
+        try
+        {
+            log.debug("AddSchedule::addScheduleAndProvider():: scheduleName=" + scheduleName);
 
-    	schedule = (HarvestSchedule) request.getSession().getAttribute("schedule");
-    	
-    	repository = providerService.getProviderById(repositoryId);
+            schedule = (HarvestSchedule) request.getSession().getAttribute("schedule");
 
-    	schedule.setProvider(repository);
-    	if (scheduleName == null)
-    	{
-    		scheduleName = repository.getName() + " " + recurrence;
-    	}
-    	schedule.setScheduleName(scheduleName);
-    	
-    	schedule.setRecurrence(recurrence);
+            repository = providerService.getProviderById(repositoryId);
 
-    	if (recurrence != null) {
-			if (recurrence.equalsIgnoreCase("Daily")) {
-				schedule.setHour(dailyHour);
-				// Reset other values
-				schedule.setMinute(-1);
-				schedule.setDayOfWeek(0);
-			}
+            schedule.setProvider(repository);
+            if (scheduleName == null)
+            {
+                scheduleName = repository.getName() + " " + recurrence;
+            }
+            schedule.setScheduleName(scheduleName);
 
-			if (recurrence.equalsIgnoreCase("Hourly")) {
-				schedule.setMinute(minute);
+            schedule.setRecurrence(recurrence);
 
-				// Reset other values
-				schedule.setDayOfWeek(0);
-				schedule.setHour(-1);
+            if (recurrence != null) {
+                if (recurrence.equalsIgnoreCase("Daily")) {
+                    schedule.setHour(dailyHour);
+                    // Reset other values
+                    schedule.setMinute(-1);
+                    schedule.setDayOfWeek(0);
+                }
 
-			}
+                if (recurrence.equalsIgnoreCase("Hourly")) {
+                    schedule.setMinute(minute);
 
-			if (recurrence.equalsIgnoreCase("Weekly")) {
-				schedule.setDayOfWeek(dayOfWeek);
-				schedule.setHour(hour);
+                    // Reset other values
+                    schedule.setDayOfWeek(0);
+                    schedule.setHour(-1);
 
-				//Reset other values
-				schedule.setMinute(-1);
-			}
-    	}
+                }
 
-    	schedule.setStartDate(startDate);
-    	schedule.setEndDate(endDate);
+                if (recurrence.equalsIgnoreCase("Weekly")) {
+                    schedule.setDayOfWeek(dayOfWeek);
+                    schedule.setHour(hour);
 
-    	// Check if schedule exist for this provider
-    	HarvestSchedule otherSchedule = null;
-    	List<HarvestSchedule> schedules = scheduleService.getAllSchedules();
-    	for(HarvestSchedule harvestSchedule:schedules) {
-    		if (harvestSchedule.getProvider().getId() == repositoryId) {
-    			otherSchedule = harvestSchedule;
-    			break;
-    		}
-    	}
-    	
-    	if (otherSchedule == null || (otherSchedule.getId() == scheduleId)) {
-	    	// Add schedule to session
-    		request.getSession().setAttribute("schedule", schedule);
+                    //Reset other values
+                    schedule.setMinute(-1);
+                }
+            }
 
-        	try {
-    	    	ValidateRepository validateRepository = new ValidateRepository();
-    	        validateRepository.validate(repositoryId);
-        	} catch (Hexception he) {
-        		log.debug(he);
-        	}
+            schedule.setStartDate(startDate);
+            schedule.setEndDate(endDate);
 
-    	} else {
-    		addFieldError("providerExist", "Harvest schedule for repository - " + repository.getName() + " already exists. There can only be one schedule for a repository. ");
-    		errorType = "error";
-    		repositories = providerService.getAllProviders();
-    		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-    		if (schedule.getEndDate() != null) {
-    			endDateDisplayFormat = format.format(schedule.getEndDate());
-    		}
-        	startDateDisplayFormat = format.format(schedule.getStartDate());
-    		return INPUT;
-    	}
+            // Check if schedule exist for this provider
+            HarvestSchedule otherSchedule = null;
+            List<HarvestSchedule> schedules = scheduleService.getAllSchedules();
+            for(HarvestSchedule harvestSchedule:schedules) {
+                if (harvestSchedule.getProvider().getId() == repositoryId) {
+                    otherSchedule = harvestSchedule;
+                    break;
+                }
+            }
+
+            if (otherSchedule == null || (otherSchedule.getId() == scheduleId)) {
+                // Add schedule to session
+                request.getSession().setAttribute("schedule", schedule);
+
+                try {
+                    ValidateRepository validateRepository = new ValidateRepository();
+                    validateRepository.validate(repositoryId);
+                } catch (Hexception he) {
+                    log.debug(he);
+                }
+
+            } else {
+                addFieldError("providerExist", "Harvest schedule for repository - " + repository.getName() + " already exists. There can only be one schedule for a repository. ");
+                errorType = "error";
+                repositories = providerService.getAllProviders();
+                SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+                if (schedule.getEndDate() != null) {
+                    endDateDisplayFormat = format.format(schedule.getEndDate());
+                }
+                startDateDisplayFormat = format.format(schedule.getStartDate());
+                return INPUT;
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     	return SUCCESS;
 
     }

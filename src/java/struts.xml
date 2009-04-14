@@ -15,10 +15,15 @@
                
     	<interceptors>
              <interceptor name="user" class="xc.mst.interceptor.UserInterceptor"/>
+             <interceptor name="harvest" class="xc.mst.interceptor.HarvestStatusInterceptor"/>
 
              <interceptor-stack name="default">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="user"/>
+             </interceptor-stack>
+
+             <interceptor-stack name="harvestStack">
+                <interceptor-ref name="harvest"/>
              </interceptor-stack>
         
              <interceptor-stack name="editStack">
@@ -235,6 +240,7 @@
         <!--  ************************************ -->
         <action name="listServices" class="xc.mst.action.processingDirective.ListServices">
         	<interceptor-ref name="default"/>
+            <interceptor-ref name="harvestStack"/>
 			<result name="success">/pages/services/list_services.jsp</result>
 			<result name="input">/pages/services/list_services.jsp</result>
 		</action>
@@ -262,7 +268,22 @@
 			<result name="success" type="redirect">listServices.action</result>
             <result name="input">/pages/services/edit_service.jsp</result>
 		</action>
-		
+
+        <action name="serviceAbort" class="xc.mst.action.processingDirective.ServiceInteract">
+        	<interceptor-ref name="default"/>
+			<result name="success">/pages/services/header.jsp</result>
+		</action>
+
+        <action name="servicePause" class="xc.mst.action.processingDirective.ServiceInteract" method="pauseJob">
+        	<interceptor-ref name="default"/>
+			<result name="success">/pages/services/header.jsp</result>
+		</action>
+
+        <action name="serviceResume" class="xc.mst.action.processingDirective.ServiceInteract" method="resumeJob">
+        	<interceptor-ref name="default"/>
+			<result name="success">/pages/services/header.jsp</result>
+		</action>
+
          <action name="listProcessingDirectives" class="xc.mst.action.processingDirective.ListProcessingDirectives">
          	<interceptor-ref name="default"/>
 			<result name="success">/pages/services/list_processingdirectives.jsp</result>
