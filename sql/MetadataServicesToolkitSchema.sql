@@ -137,6 +137,7 @@ CREATE TABLE harvest_schedules
   day_of_week INT(11),
   hour INT(11),
   notify_email VARCHAR(127),
+  status VARCHAR(20),
 
   PRIMARY KEY (harvest_schedule_id),
 
