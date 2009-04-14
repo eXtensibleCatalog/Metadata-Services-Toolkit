@@ -43,9 +43,12 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.harvest.DefaultHarvestDAO;
+import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestDAO;
+import xc.mst.dao.harvest.HarvestScheduleDAO;
 import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
 import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
@@ -119,7 +122,12 @@ public class Harvester implements ErrorHandler
 	 * Data access object for updating harvests
 	 */
 	private static HarvestDAO harvestDao = new DefaultHarvestDAO();
-
+	
+	/**
+	 * Data access object for updating schedules
+	 */
+	private static HarvestScheduleDAO harvestScheduleDao = new DefaultHarvestScheduleDAO();
+		
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
@@ -332,10 +340,14 @@ public class Harvester implements ErrorHandler
 
 		try
 		{
+			// Update the status of the harvest schedule
+			runningHarvester.persistStatus(Constants.STATUS_SERVICE_RUNNING);
+
 			runningHarvester.doHarvest(baseURL, metadataPrefix, setSpec, from, until, harvestAll, harvestAllIfNoDeletedRecord);
 
 			log.info("Records harvested " + runningHarvester.recordsFound + ", failed inserts " + runningHarvester.failedInserts);
-
+			
+			
 			LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL + ", " + runningHarvester.recordsFound + " new records were returned by the OAI provider.");
 
 			// Report the number of records which could not be added to the index due to an error
@@ -347,6 +359,9 @@ public class Harvester implements ErrorHandler
 
 			// Send an Email report on the results of the harvest
 			runningHarvester.sendReportEmail(null);
+		} catch (DataException e) {
+			
+			log.error("Unable to update the harvest status", e);
 		}
 		finally // Update the error and warning count for the provider
 		{
@@ -359,6 +374,7 @@ public class Harvester implements ErrorHandler
 			provider.setRecordsAdded(provider.getRecordsAdded() + runningHarvester.addedCount);
 			provider.setRecordsReplaced(provider.getRecordsReplaced() + runningHarvester.updatedCount);
 
+		
 			try
 			{
 				providerDao.update(provider);
@@ -561,41 +577,8 @@ public class Harvester implements ErrorHandler
 			do
 			{
 				// Abort the harvest if the harvester was killed
-				if (killed)
-				{
-					LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been manually terminated.");
-
-					loggedHException = true;
-
-					sendReportEmail("Harvest of " + baseURL + " has been manually terminated.");
-
-					throw new Hexception("Harvest received kill signal");
-				}// end if(harvester was killed)
+				checkSignal(baseURL);
 				
-				// If the harvester is paused then wait until it resumes or is killed
-				else if(isPaused)
-				{
-					// Wait until it resumes or is killed
-					while(isPaused && !killed)
-					{
-						LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " is waiting to resume.");
-						Thread.sleep(3000);
-						if(killed)
-						{
-							LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been manually terminated.");
-
-							loggedHException = true;
-
-							sendReportEmail("Harvest of " + baseURL + " has been manually terminated.");
-
-							throw new Hexception("Harvest received kill signal");
-
-						}
-						
-					}
-				
-				}
-
 				request = baseURL;
 				String reqMessage;
 
@@ -656,6 +639,12 @@ public class Harvester implements ErrorHandler
 
                 resumption = extractRecords(metadataPrefix, doc, baseURL);
 			} while(resumption != null); // Repeat as long as we get a resumption token
+			
+			// Update the status of the harvest schedule
+			if(!runningHarvester.killed)
+			persistStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
+
+			
 		} // end try(run the harvest)
 		catch (Hexception he)
 		{
@@ -670,6 +659,18 @@ public class Harvester implements ErrorHandler
 				sendReportEmail("An internal error occurred while executing the harvest.");
 			} // end if(we didn't already log the error)
 
+			try{
+				
+				if(killed)
+					persistStatus(Constants.STATUS_SERVICE_CANCELED);
+				else
+					persistStatus(Constants.STATUS_SERVICE_ERROR);
+
+			}
+			catch (DataException e) {
+				log.error("An OAIErrorExeption occurred while harvesting " , e);
+			}
+
 			// Throw the Exception so the calling code knows something went wrong
 			throw new Hexception(he.getMessage() + "\n, request was " + request);
 		} // end catch(Hexception)
@@ -683,6 +684,14 @@ public class Harvester implements ErrorHandler
 
 			sendReportEmail("The OAI provider returned the following error: " + oaie.getOAIErrorCode() + "," + oaie.getOAIErrorMessage());
 
+			// Update the status of the harvest schedule
+			try {
+				persistStatus(Constants.STATUS_SERVICE_ERROR);
+			} catch (DataException e) {
+				log.error("An OAIErrorExeption occurred while harvesting " , e);
+			}
+
+			
 			// Throw the Exception so the calling code knows something went wrong
 			throw new OAIErrorException(oaie.getOAIErrorCode(), oaie.getOAIErrorMessage());
 		} // end catch(OAIErrorException)
@@ -693,9 +702,18 @@ public class Harvester implements ErrorHandler
 			LogWriter.addError(schedule.getProvider().getLogFileName(), "An internal error occurred while executing the harvest: " + e.getMessage());
 			errorCount++;
 
+			// Update the status of the harvest schedule
+			try {
+				persistStatus(Constants.STATUS_SERVICE_ERROR);
+			} catch (DataException e1) {
+				log.error("An OAIErrorExeption occurred while harvesting " , e);
+			}
+
+			
 			// Throw the error so the calling code knows something went wrong
 			throw
             	new Hexception("Internal harvester error: " + e);
+			
 		} // end catch(Throwable)
 		finally
 		{
@@ -824,33 +842,8 @@ public class Harvester implements ErrorHandler
 		// Loop over all records in the OAI response
 		while (recordElement != null)
 		{
-			if (killed)
-				throw new Hexception("Harvest received kill signal");
-
-			else if(isPaused)
-			{
-				while(isPaused && !killed)
-					try {
-						
-						Thread.sleep(3000);
-						
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					
-					if(killed)
-					{
-						LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been manually terminated.");
-
-						loggedHException = true;
-
-						sendReportEmail("Harvest of " + baseURL + " has been manually terminated.");
-
-						throw new Hexception("Harvest received kill signal");
-
-					}
-
-			}
+			// Check to see if the service was paused or canceled 
+			checkSignal(baseURL);
 			
             Node metadataNode = null;
 
@@ -916,6 +909,10 @@ public class Harvester implements ErrorHandler
 				// Loop over the record's sets and add each to the record BO
 				while (setSpecElement != null)
 				{
+					
+					// Check to see if the service was paused or canceled 
+					checkSignal(baseURL);
+
 					String setSpec = provider.getName().replace(' ', '-') + ":" + getContent(setSpecElement);
 
 					// Split the set into its components
@@ -1565,5 +1562,76 @@ public class Harvester implements ErrorHandler
 		this.isPaused = isPaused;
 	}
 
+	/**
+	 * Logs the status of the harvest to the database
+	 * @throws DataException 
+	 */
+	protected void persistStatus(String status) throws DataException{
+		
+		schedule.setStatus(status);
+		harvestScheduleDao.update(schedule);
+	}
+	
+	/**
+	 * Checks if the service is paused or canceled. If cancelled 
+	 * , the processing of records is stopped or else if paused, 
+	 * then waits until it receives a resume or cancel signal  
+	 */
+	private void checkSignal(String baseURL) throws Hexception
+	{
 
+		try
+		{
+			if (killed)
+			{
+				LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been manually terminated.");
+				
+				loggedHException = true;
+
+				// Update the status of the harvest schedule
+				persistStatus(Constants.STATUS_SERVICE_CANCELED);
+
+				sendReportEmail("Harvest of " + baseURL + " has been manually terminated.");
+				
+				throw new Hexception("Harvest received kill signal");
+				
+			}
+			else if(isPaused)
+			{
+				
+				// Update the status of the harvest schedule
+					persistStatus(Constants.STATUS_SERVICE_PAUSED);
+	
+				while(isPaused && !killed)
+					try {
+						
+						Thread.sleep(3000);
+						
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+					if(killed)
+					{
+						LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been manually terminated.");
+	
+						loggedHException = true;
+	
+						// Update the status of the harvest schedule
+						persistStatus(Constants.STATUS_SERVICE_CANCELED);
+	
+						sendReportEmail("Harvest of " + baseURL + " has been manually terminated.");
+						
+						throw new Hexception("Harvest received kill signal");
+	
+					}
+			}
+			}
+			catch(DataException e)
+			{
+				log.error("An OAIErrorExeption occurred while harvesting " , e);
+			}
+		
+	}
+	
 } // end class Harvester
