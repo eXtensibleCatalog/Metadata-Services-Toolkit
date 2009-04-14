@@ -143,7 +143,7 @@ public class DefaultRecordService extends RecordService
 		docs = indexMgr.getDocumentList(query);
 
 		// Return null if we couldn't find the record with the correct ID
-		if(docs == null)
+		if(docs == null || docs.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the record with ID " + id + ".");
@@ -173,7 +173,7 @@ public class DefaultRecordService extends RecordService
 		docs = indexMgr.getDocumentList(query);
 
 		// Return null if we couldn't find the record with the correct ID
-		if(docs == null)
+		if(docs == null || docs.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the record with ID " + id + ".");
@@ -666,7 +666,7 @@ public class DefaultRecordService extends RecordService
 		docs = indexMgr.getDocumentList(query);
 
 		// Return null if we couldn't find the record
-		if(docs == null)
+		if(docs == null || docs.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the record with the OAI identifier " + identifier + ".");
@@ -700,7 +700,7 @@ public class DefaultRecordService extends RecordService
 		docs = indexMgr.getDocumentList(query);
 
 		// Return null if we couldn't find the record
-		if(docs == null)
+		if(docs == null || docs.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the record with the OAI identifier " + identifier  + " and provider ID " + providerId + ".");
@@ -734,7 +734,7 @@ public class DefaultRecordService extends RecordService
 		docs = indexMgr.getDocumentList(query);
 
 		// Return null if we couldn't find the record
-		if(docs == null)
+		if(docs == null || docs.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the record with the OAI identifier " + identifier  + " and service ID " + serviceId + ".");
