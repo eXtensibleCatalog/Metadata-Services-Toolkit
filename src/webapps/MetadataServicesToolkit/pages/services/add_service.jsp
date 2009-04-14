@@ -86,7 +86,7 @@
                     <tr>
                         <td>
                             <button class="xc_button_small" onclick="javascript:cancel();" type="button" name="cancel">Cancel</button>&nbsp;&nbsp;
-                            <button class="xc_button" type="button" onclick="javascript:addService();" name="addService">Save</button>
+                            <button class="xc_button" type="button" onclick="javascript:serviceAd();" name="addService">Save</button>
                         </td>
                     </tr>
                 </table>
