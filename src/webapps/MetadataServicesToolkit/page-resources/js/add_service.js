@@ -13,9 +13,17 @@ YAHOO.xc.mst.services = {
 
  addService: function()
             {
-                document.getElementById("selectedLocation").value = document.getElementById("fileLocation").value;
-                document.addService.action = "addService.action";
-                document.addService.submit();
+                try
+                {
+                    document.getElementById("selectedLocation").value = document.getElementById("fileLocation").value;
+                    document.addService.action = "addService.action";
+                    document.addService.submit();
+                }
+                catch(err)
+                {
+                    alert(err);
+                }
+                
             },
  cancel : function()
     {

@@ -78,3 +78,16 @@
     margin-top:5px;
     margin-bottom:10px;
 }
+.serviceStatus
+{
+    height : 35px;
+    width : 450px;
+    background-color : #daf2da;
+    border-style : solid;
+    border-width : 1px;
+    border-color :#a9a9a9;
+    padding-left: 40px;
+    margin-top: 20px;
+    float:right;
+    
+}

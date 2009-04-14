@@ -10,7 +10,14 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8"%>
 
 <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css" >
+<SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/service_status.js"></SCRIPT>
  <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+ <%@ taglib prefix="mst" uri="mst-tags"%>
+
+<div class="serviceStatus">
+   Process Description &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+   <mst:currentProcessStatus/>
+</div>
 
 <div id="header">
 <ul style="list-style:none;">
@@ -43,3 +50,4 @@
     </li>
 </ul>
 </div>
+<meta http-equiv="refresh" content="20">
