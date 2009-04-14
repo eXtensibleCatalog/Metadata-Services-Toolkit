@@ -15,15 +15,10 @@
                
     	<interceptors>
              <interceptor name="user" class="xc.mst.interceptor.UserInterceptor"/>
-             <interceptor name="harvest" class="xc.mst.interceptor.HarvestStatusInterceptor"/>
 
              <interceptor-stack name="default">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="user"/>
-             </interceptor-stack>
-
-             <interceptor-stack name="harvestStack">
-                <interceptor-ref name="harvest"/>
              </interceptor-stack>
         
              <interceptor-stack name="editStack">
@@ -240,7 +235,6 @@
         <!--  ************************************ -->
         <action name="listServices" class="xc.mst.action.processingDirective.ListServices">
         	<interceptor-ref name="default"/>
-            <interceptor-ref name="harvestStack"/>
 			<result name="success">/pages/services/list_services.jsp</result>
 			<result name="input">/pages/services/list_services.jsp</result>
 		</action>

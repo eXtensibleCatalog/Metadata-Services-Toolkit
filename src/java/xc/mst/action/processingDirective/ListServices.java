@@ -16,7 +16,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
-import xc.mst.action.HarvestStatusAware;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.service.ServiceDAO;
@@ -29,11 +28,9 @@ import xc.mst.manager.processingDirective.ServicesService;
  * @author Tejaswi Haramurali
  */
 
-public class ListServices extends ActionSupport implements HarvestStatusAware
+public class ListServices extends ActionSupport 
 {
-    /** Refers to the current process that is being run by the MST */
-    private String currentProcess;
-    
+       
     /** Determines whether the rows are to be sorted in ascending or descending order*/
     private boolean isAscendingOrder = true;
 
@@ -160,9 +157,5 @@ public class ListServices extends ActionSupport implements HarvestStatusAware
         return this.columnSorted;
     }
 
-    public void setCurrentProcess(String currentProcess)
-    {
-        this.currentProcess = currentProcess;
-    }
     
 }
