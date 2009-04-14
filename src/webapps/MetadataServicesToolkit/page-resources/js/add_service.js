@@ -7,11 +7,7 @@
   *
   */
 
-YAHOO.namespace("xc.mst.services");
-
-YAHOO.xc.mst.services = {
-
- addService: function()
+ function serviceAdd()
             {
                 try
                 {
@@ -24,10 +20,10 @@ YAHOO.xc.mst.services = {
                     alert(err);
                 }
                 
-            },
- cancel : function()
+            }
+
+ function cancel()
     {
         document.addService.action = "listServices.action";
         document.addService.submit();
     }
-}
