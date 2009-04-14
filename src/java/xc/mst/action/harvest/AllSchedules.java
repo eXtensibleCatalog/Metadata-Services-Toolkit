@@ -91,7 +91,6 @@ public class AllSchedules extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, scheduleDao.COL_SCHEDULE_NAME);
             return SUCCESS;
         }

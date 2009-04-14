@@ -154,8 +154,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
      */
     public String addScheduleAndProvider() throws DataException {
 
-        try
-        {
+        
             log.debug("AddSchedule::addScheduleAndProvider():: scheduleName=" + scheduleName);
 
             schedule = (HarvestSchedule) request.getSession().getAttribute("schedule");
@@ -232,11 +231,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
                 startDateDisplayFormat = format.format(schedule.getStartDate());
                 return INPUT;
             }
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
+        
     	return SUCCESS;
 
     }
