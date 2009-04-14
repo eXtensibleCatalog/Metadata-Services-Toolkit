@@ -23,4 +23,6 @@ public abstract class WorkerThread extends Thread
 	public abstract void pause();
 	
 	public abstract void proceed();
+	
+	public abstract String getJobName();
 } // end class WorkerThread
