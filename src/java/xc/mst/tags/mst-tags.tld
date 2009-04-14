@@ -24,6 +24,15 @@
       <rtexprvalue>true</rtexprvalue>
     </attribute>
   </tag>
+
+  <tag>
+    <name>currentProcessStatus</name>
+    <tag-class>xc.mst.tags.CurrentProcessStatus</tag-class>
+    <body-content>scriptless</body-content>
+    <info>
+		This is a tag used to obtain the name of the current process being run in the MST
+    </info>
+  </tag>
  
   <!-- Pager tag -->
   <tag>
