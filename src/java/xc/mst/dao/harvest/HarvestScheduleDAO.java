@@ -98,6 +98,11 @@ public abstract class HarvestScheduleDAO
 	 */
 	protected static Set<String> sortableColumns = new HashSet<String>();
 	
+	/**
+	 * The current status of the harvest.
+	 */
+	public final static String COL_STATUS = "status";
+	
 	// Initialize the list of sortable columns
 	static
 	{
@@ -111,6 +116,7 @@ public abstract class HarvestScheduleDAO
 		sortableColumns.add(COL_DAY_OF_WEEK);
 		sortableColumns.add(COL_HOUR);
 		sortableColumns.add(COL_NOTIFY_EMAIL);
+		sortableColumns.add(COL_STATUS);
 	} // end initialization of sortableColumns
 	
 	/**
