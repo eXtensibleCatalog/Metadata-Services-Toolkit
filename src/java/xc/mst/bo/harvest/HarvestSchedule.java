@@ -73,6 +73,12 @@ public class HarvestSchedule
 	 * The email address to be notified of the results of running the schedule
 	 */
 	private String notifyEmail = null;
+	
+	/**
+	 * The current status of the harvest.
+	 */
+	private String status = null;
+	
 
 	/**
 	 * A list of sets to be harvested by the schedule
@@ -289,6 +295,22 @@ public class HarvestSchedule
 		this.notifyEmail = notifyEmail;
 	} // end method setNotifyEmail(String)
 
+	/**
+	 * Gets the current status of the harvest.
+	 * @return The current status of the harvest.
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * Sets the current status of the harvest.
+	 * @param status The status of the harvest.
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	/**
 	 * Gets the sets to be harvested by the schedule
 	 *
