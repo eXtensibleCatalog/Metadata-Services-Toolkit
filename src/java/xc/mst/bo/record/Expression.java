@@ -103,7 +103,6 @@ public class Expression extends Record
 		expression.setTraits(record.getTraits());
 		expression.setUpdatedAt(record.getUpdatedAt());
 		expression.setUpLinks(record.getUpLinks());
-		expression.setWarnings(record.getWarnings());
 
 		return expression;
 	} // end method buildExpressionFromRecord(Record)

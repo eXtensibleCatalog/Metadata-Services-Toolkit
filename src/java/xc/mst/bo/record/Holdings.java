@@ -232,7 +232,6 @@ public class Holdings extends Record
 		holdings.setTraits(record.getTraits());
 		holdings.setUpdatedAt(record.getUpdatedAt());
 		holdings.setUpLinks(record.getUpLinks());
-		holdings.setWarnings(record.getWarnings());
 
 		return holdings;
 	} // end method buildHoldingsFromRecord(Record)

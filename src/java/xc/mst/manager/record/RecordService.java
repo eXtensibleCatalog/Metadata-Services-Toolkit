@@ -199,24 +199,9 @@ public abstract class RecordService
 	protected final static String FIELD_TRAIT = "trait";
 
 	/**
-	 * The name of the warnings field
-	 */
-	protected final static String FIELD_WARNING = "warning";
-
-	/**
 	 * The name of the errors field
 	 */
 	protected final static String FIELD_ERROR = "error";
-
-	/**
-	 * The name of the warning codes field
-	 */
-	protected final static String FIELD_WARNING_CODE = "warning_code";
-
-	/**
-	 * The name of the error codes field
-	 */
-	protected final static String FIELD_ERROR_CODE = "error_code";
 	
 	/**
 	 * All default search fields
@@ -272,6 +257,14 @@ public abstract class RecordService
 	public abstract RecordList getByServiceId(int serviceId);
 
 	/**
+	 * Gets all records from the index with the passed processing service ID
+	 *
+	 * @param serviceId The service ID of the service that processed records to retrieve
+	 * @return A list of all records in the index with the passed processing service ID
+	 */
+	public abstract RecordList getByProcessingServiceId(int serviceId);
+	
+	/**
 	 * Gets all records from the index with the passed harvest ID
 	 *
 	 * @param harvestId The harvest ID of the records to retrieve
@@ -295,22 +288,6 @@ public abstract class RecordService
 	 * @return A list all records in the index with the passed format ID
 	 */
 	public abstract RecordList getByFormatIdAndServiceId(int formatId, int serviceId);
-
-	/**
-	 * Gets all records from the index with the passed warning code
-	 *
-	 * @param warningCode the warning code to query on
-	 * @return A list all records in the index with the passed warning code
-	 */
-	public abstract RecordList getByWarningCode(String warningCode);
-	
-	/**
-	 * Gets all records from the index with the passed error code
-	 *
-	 * @param errorCode the error code to query on
-	 * @return A list all records in the index with the passed error code
-	 */
-	public abstract RecordList getByErrorCode(String errorCode);
 	
 	/**
 	 * Gets all records from the index contained in the set with the passed name

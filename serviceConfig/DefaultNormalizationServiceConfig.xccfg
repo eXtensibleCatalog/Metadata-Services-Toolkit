@@ -23,34 +23,34 @@ ERROR MESSAGES
 #-----------------------------------------
 #-----------------------------------------
 error code: 100
-error description file: errors/normalization/100.html
+error description file: serviceErrors/normalization/100.html
 
 error code: 101
-error description file: errors/normalization/101.html
+error description file: serviceErrors/normalization/101.html
 
 error code: 102
-error description file: errors/normalization/102.html
+error description file: serviceEerrors/normalization/102.html
 
 error code: 103
-error description file: errors/normalization/103.html
+error description file: serviceErrors/normalization/103.html
 
 error code: 104
-error description file: errors/normalization/104.html
+error description file: serviceErrors/normalization/104.html
 
 error code: 105
-error description file: errors/normalization/105.html
+error description file: serviceErrors/normalization/105.html
 
 error code: 106
-error description file: errors/normalization/106.html
+error description file: serviceErrors/normalization/106.html
 
 error code: 107
-error description file: errors/normalization/107.html
+error description file: serviceErrors/normalization/107.html
 
 error code: 108
-error description file: errors/normalization/108.html
+error description file: serviceErrors/normalization/108.html
 
 error code: 109
-error description file: errors/normalization/109.html
+error description file: serviceErrors/normalization/109.html
 
 #-----------------------------------------
 #-----------------------------------------

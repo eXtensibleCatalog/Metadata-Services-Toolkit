@@ -169,7 +169,6 @@ public class Manifestation extends Record
 		manifestation.setTraits(record.getTraits());
 		manifestation.setUpdatedAt(record.getUpdatedAt());
 		manifestation.setUpLinks(record.getUpLinks());
-		manifestation.setWarnings(record.getWarnings());
 
 		return manifestation;
 	} // end method buildManifestationFromRecord(Record)

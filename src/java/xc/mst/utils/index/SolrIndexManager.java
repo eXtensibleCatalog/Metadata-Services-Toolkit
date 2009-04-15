@@ -180,7 +180,7 @@ public class SolrIndexManager {
 		    docs = rsp.getResults();
 
 		} catch (SolrServerException e) {
-				log.debug(e, e.fillInStackTrace());
+				log.error("An error occurred while getting documents from the Solr index", e);
 				
 				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while getting documents from the Solr index: " + e.getMessage());
 				

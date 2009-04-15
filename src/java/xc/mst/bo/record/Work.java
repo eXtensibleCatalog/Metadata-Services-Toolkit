@@ -174,7 +174,6 @@ public class Work extends Record
 		work.setTraits(record.getTraits());
 		work.setUpdatedAt(record.getUpdatedAt());
 		work.setUpLinks(record.getUpLinks());
-		work.setWarnings(record.getWarnings());
 
 		return work;
 	} // end method buildWorkFromRecord(Record)

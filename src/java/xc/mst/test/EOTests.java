@@ -34,6 +34,7 @@ import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.harvester.HarvestRunner;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.record.DefaultRecordService;
+import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.scheduling.SchedulingException;
 import xc.mst.services.MetadataService;
 import xc.mst.utils.LogWriter;
@@ -79,8 +80,9 @@ public class EOTests
 	{
 		try
 		{	
-			//MetadataService.runService(1, 0);
-			//if(true) return;
+			MSTSolrServer.getInstance("8080");
+			MetadataService.runService(2, 0);
+			if(true) return;
 			
 			//File file = new File("C:\\AllXcProjects\\MetadataServicesToolkit\\serviceConfig\\DefaultNormalizationServiceConfig.xccfg");
 			//new DefaultServicesService().addNewService(file);

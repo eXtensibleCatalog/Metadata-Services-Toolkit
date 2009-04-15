@@ -284,6 +284,39 @@ public class DefaultRecordService extends RecordService
 	} // end method getByServiceId(int)
 
 	@Override
+	public RecordList getByProcessingServiceId(int serviceId)
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting all records with processing service ID " + serviceId);
+
+		// Create a query to get the Documents with the requested service ID
+		SolrQuery query = new SolrQuery();
+		query.setQuery(FIELD_PROCESSED_BY_SERVICE_ID + ":" +  Integer.toString(serviceId) + " AND "
+				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+
+		// Remove the limit on the number of results returned
+		query.setRows(Integer.MAX_VALUE);
+		
+		// Get the result of the query
+		SolrDocumentList docs = indexMgr.getDocumentList(query);
+
+		// Return the empty list if we couldn't find the records
+		if(docs== null)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Could not find the any records with processing service ID " + serviceId + ".");
+
+			return new RecordList(null);
+		} // end if(no results found)
+
+		if(log.isDebugEnabled())
+			log.debug("Parcing the " + docs.size() + " records with processing service ID " + serviceId + " from the Lucene Documents they were stored in.");
+
+		// Return the list of results
+		return new RecordList(docs);
+	} // end method getByProcessingServiceId(int)
+	
+	@Override
 	public RecordList getByHarvestId(int harvestId)
 	{
 		if(log.isDebugEnabled())
@@ -481,72 +514,6 @@ public class DefaultRecordService extends RecordService
 		// Return the list of results
 		return new RecordList(docs);
 	} // end method getByProviderUrl(String)
-
-	@Override
-	public RecordList getByWarningCode(String warningCode)
-	{
-		if(log.isDebugEnabled())
-			log.debug("Getting all records from the set with the warning code " + warningCode);
-
-		// Create a query to get the Documents with the requested warning code
-		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_WARNING_CODE + ":" + warningCode + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
-
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records from the set with the warning code " + warningCode + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records from the set with warning code " + warningCode + " from the Lucene Documents they were stored in.");
-
-		// Return the list of results
-		return new RecordList(docs);
-	} // end method getByWarningCode(String)
-	
-	@Override
-	public RecordList getByErrorCode(String errorCode)
-	{
-		if(log.isDebugEnabled())
-			log.debug("Getting all records from the set with the error code " + errorCode);
-
-		// Create a query to get the Documents with the requested error code
-		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_ERROR_CODE + ":" + errorCode + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
-
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records from the set with the error code " + errorCode + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records from the set with error code " + errorCode + " from the Lucene Documents they were stored in.");
-
-		// Return the list of results
-		return new RecordList(docs);
-	} // end method getByErrorCode(String)
 	
 	@Override
 	public RecordList getBySetName(String setName)
@@ -1121,21 +1088,6 @@ public class DefaultRecordService extends RecordService
 			for(Object set : sets)
 				record.addSet(setDao.getBySetSpec((String)set));
 
-		Collection<Object> warningCodes = doc.getFieldValues(FIELD_WARNING_CODE);
-		if(warningCodes != null)
-			for(Object warningCode : warningCodes)
-				record.addWarningCode((String)warningCode);
-
-		Collection<Object> errorCodes = doc.getFieldValues(FIELD_ERROR_CODE);
-		if(errorCodes != null)
-			for(Object errorCode : errorCodes)
-				record.addErrorCode((String)errorCode);
-		
-		Collection<Object> warnings = doc.getFieldValues(FIELD_WARNING);
-		if(warnings != null)
-			for(Object warning : warnings)
-				record.addWarning((String)warning);
-
 		Collection<Object> errors = doc.getFieldValues(FIELD_ERROR);
 		if(errors != null)
 			for(Object error : errors)
@@ -1271,17 +1223,8 @@ public class DefaultRecordService extends RecordService
 		for(String trait : record.getTraits())
 			doc.addField(FIELD_TRAIT, trait);
 
-		for(String warning : record.getWarnings())
-			doc.addField(FIELD_WARNING, warning);
-
 		for(String error : record.getErrors())
 			doc.addField(FIELD_ERROR, error);
-		
-		for(String warningCode : record.getWarningCodes())
-			doc.addField(FIELD_WARNING_CODE, warningCode);
-
-		for(String errorCode : record.getErrorCodes())
-			doc.addField(FIELD_ERROR_CODE, errorCode);
 
 		StringBuffer all = new StringBuffer();
 		if (record.getFormat() != null) {
@@ -1310,12 +1253,6 @@ public class DefaultRecordService extends RecordService
 
 		if(record.getService() != null) {
 			all.append(record.getService().getName());
-			all.append(" ");
-		}
-
-		for(String warning : record.getWarnings())
-		{
-			all.append(warning);
 			all.append(" ");
 		}
 		
@@ -1361,21 +1298,6 @@ public class DefaultRecordService extends RecordService
 		if(sets != null)
 			for(Object set : sets)
 				record.addSet(setDao.getBySetSpec((String)set));
-
-		Collection<Object> warningCodes = doc.getFieldValues(FIELD_WARNING_CODE);
-		if(warningCodes != null)
-			for(Object warningCode : warningCodes)
-				record.addWarningCode((String)warningCode);
-
-		Collection<Object> errorCodes = doc.getFieldValues(FIELD_ERROR_CODE);
-		if(errorCodes != null)
-			for(Object errorCode : errorCodes)
-				record.addErrorCode((String)errorCode);
-		
-		Collection<Object> warnings = doc.getFieldValues(FIELD_WARNING);
-		if(warnings != null)
-			for(Object warning : warnings)
-				record.addWarning((String)warning);
 
 		Collection<Object> errors = doc.getFieldValues(FIELD_ERROR);
 		if(errors != null)

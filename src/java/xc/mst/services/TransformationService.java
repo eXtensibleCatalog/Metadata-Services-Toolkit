@@ -59,26 +59,11 @@ public class TransformationService extends MetadataService
 	 * The output format (XC schema) for records processed from this service
 	 */
 	private Format xcFormat = null;
-
-	/**
-	 * A list of warnings to add to the record currently being processed
-	 */
-	private List<String> warnings = new ArrayList<String>();
-	
-	/**
-	 * A list of warning codes to add to the record currently being processed
-	 */
-	private List<String> warningCodes = new ArrayList<String>();
 	
 	/**
 	 * A list of errors to add to the record currently being processed
 	 */
 	private List<String> errors = new ArrayList<String>();
-	
-	/**
-	 * A list of error codes to add to the record currently being processed
-	 */
-	private List<String> errorCodes = new ArrayList<String>();
 	
 	/**
 	 * This is used to ensure that subfields from the same source get mapped to the same FRBR Work element
@@ -147,8 +132,7 @@ public class TransformationService extends MetadataService
 				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
 				warningCount++;
 
-				errorCodes.add("300");
-				errors.add("An XML parse error occurred while processing the record: " + e.getMessage());
+				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
 				
 				return results;
 			}
@@ -159,8 +143,7 @@ public class TransformationService extends MetadataService
 				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
 				warningCount++;
 
-				errorCodes.add("300");
-				errors.add("An XML parse error occurred while processing the record: " + e.getMessage());
+				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
 				
 				return results;
 			}
@@ -174,6 +157,8 @@ public class TransformationService extends MetadataService
 			// Get the Leader 06.  This will allow us to determine the record's type
 			// (bib or holding) and we'll process it appropriately
 			char leader06 = originalRecord.getLeader().charAt(6);
+
+			transformedRecord = processFieldBasic(originalRecord, transformedRecord, "999", 'a', "xcNormServiceVersion", XCRecord.XC_NAMESPACE, new Attribute("type", "XC"), FrbrLevel.MANIFESTATION);
 
 			// If the record is a bib record according to the leader06
 			if("acdefgijkmoprt".contains(""+leader06))
@@ -374,7 +359,7 @@ public class TransformationService extends MetadataService
 			if(log.isDebugEnabled())
 				log.debug("Adding warnings and errors to the record.");
 			
-			addWarningsAndErrorsToRecord(record, warnings, warningCodes, errors, errorCodes);
+			addErrorsToRecord(record, errors);
 			
 			return results;
 		}

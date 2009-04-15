@@ -390,7 +390,6 @@ public class DefaultServicesService implements ServicesService
     		StringBuffer buffer = new StringBuffer();
     		
     		// While there are unread lines in the file
-    		line = in.readLine();
     		while(in.ready())
     		{
     			line = in.readLine(); // A line from the configuration file
@@ -664,12 +663,20 @@ public class DefaultServicesService implements ServicesService
     				
     				String errorDescriptionFile = (line.contains("#") ? line.substring(23, line.indexOf("#")) : line.substring(23)).trim();
     				
-    				ErrorCode errorCode = new ErrorCode();
-    				errorCode.setErrorCode(errorCodeStr);
-    				errorCode.setErrorDescriptionFile(errorDescriptionFile);
-    				errorCode.setService(service);
-    				
-    				errorCodeDao.insert(errorCode);
+    				ErrorCode errorCode = errorCodeDao.getByErrorCodeAndService(errorCodeStr, service);
+    				if(errorCode == null)
+    				{
+    					errorCode = new ErrorCode();
+    					errorCode.setErrorCode(errorCodeStr);
+    					errorCode.setErrorDescriptionFile(errorDescriptionFile);
+    					errorCode.setService(service);
+    					errorCodeDao.insert(errorCode);
+    				}
+    				else
+    				{
+    					errorCode.setErrorDescriptionFile(errorDescriptionFile);
+    					errorCodeDao.update(errorCode);
+    				}
     			}
     			else if(!line.equals(FILE_SERVICE_SPECIFIC))
     			{
@@ -696,12 +703,25 @@ public class DefaultServicesService implements ServicesService
     		servicesDao.update(service);
     		
     		// Reprocess the records processed by the service
-    		RecordList records = recordService.getByServiceId(service.getId());
+    		RecordList records = recordService.getByProcessingServiceId(service.getId());
     		for(Record record : records)
     		{
     			record.addInputForService(service);
     			recordService.update(record);
     		}
+    		
+    		// Mark the records output by the old service as deleted
+    		records = recordService.getByServiceId(service.getId());
+    		for(Record record : records)
+    		{
+    			record.setDeleted(true);
+    			
+    			for(Service processingService : record.getProcessedByServices())
+    				record.addInputForService(processingService);
+    			
+    			recordService.update(record);
+    		}
+    		
     		SolrIndexManager.getInstance().commitIndex();
     		ServiceWorkerThread serviceThread = new ServiceWorkerThread();
 			serviceThread.setServiceId(service.getId());

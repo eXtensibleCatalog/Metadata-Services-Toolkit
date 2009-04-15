@@ -111,24 +111,9 @@ public class NormalizationService extends MetadataService
 	private Format marcxmlFormat = null;
 	
 	/**
-	 * A list of warnings to add to the record currently being processed
-	 */
-	private List<String> warnings = new ArrayList<String>();
-	
-	/**
-	 * A list of warning codes to add to the record currently being processed
-	 */
-	private List<String> warningCodes = new ArrayList<String>();
-	
-	/**
 	 * A list of errors to add to the record currently being processed
 	 */
 	private List<String> errors = new ArrayList<String>();
-	
-	/**
-	 * A list of error codes to add to the record currently being processed
-	 */
-	private List<String> errorCodes = new ArrayList<String>();
 
     /**
 	 * Construct a NormalizationService Object
@@ -142,11 +127,8 @@ public class NormalizationService extends MetadataService
 	@Override
 	protected List<Record> processRecord(Record record)
 	{
-		// Empty the lists of warnings and errors because we're beginning to process a new record
-		warnings.clear();
-		warningCodes.clear();
+		// Empty the lists of errors because we're beginning to process a new record
 		errors.clear();
-		errorCodes.clear();
 		
 		// The list of records resulting from processing the incoming record
 		ArrayList<Record> results = new ArrayList<Record>();
@@ -172,9 +154,8 @@ public class NormalizationService extends MetadataService
 				log.error("An error occurred while parsing the record's XML.", e);
 
 				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
-				warningCount++;
-				errorCodes.add("300");
-				errors.add("An XML parse error occurred while processing the record: " + e.getMessage());
+				errorCount++;
+				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
 
 				return results;
 			}
@@ -183,9 +164,8 @@ public class NormalizationService extends MetadataService
 				log.error("An error occurred while parsing the record's XML.\n" + record.getOaiXml(), e);
 
 				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
-				warningCount++;
-				errorCodes.add("300");
-				errors.add("An XML parse error occurred while processing the record: " + e.getMessage());
+				errorCount++;
+				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
 
 				return results;
 			}
@@ -195,6 +175,8 @@ public class NormalizationService extends MetadataService
 
 			// Get the Leader 06.  This will allow us to determine the record's type, and we'll put it in the correct set for that type
 			char leader06 = normalizedXml.getLeader().charAt(6);
+			
+			//normalizedXml.addMarcXmlField("999", "Version 1");
 			
 			// Run these steps only if the record is a bibliographic record
 			if("acdefgijkmoprt".contains(""+leader06))
@@ -297,9 +279,9 @@ public class NormalizationService extends MetadataService
 				normalizedXml = voyagerLocationName(normalizedXml);
 
 			if(log.isDebugEnabled())
-				log.debug("Adding warnings and errors to the record.");
+				log.debug("Adding errors to the record.");
 			
-			addWarningsAndErrorsToRecord(record, warnings, warningCodes, errors, errorCodes);
+			addErrorsToRecord(record, errors);
 			
 			if(log.isDebugEnabled())
 				log.debug("Creating the normalized record.");
@@ -403,9 +385,9 @@ public class NormalizationService extends MetadataService
 			errorCount++;
 			
 			if(log.isDebugEnabled())
-				log.debug("Adding warnings and errors to the record.");
+				log.debug("Adding errors to the record.");
 			
-			addWarningsAndErrorsToRecord(record, warnings, warningCodes, errors, errorCodes);
+			addErrorsToRecord(record, errors);
 
 			return results;
 		}
@@ -522,15 +504,9 @@ public class NormalizationService extends MetadataService
 				log.debug("Cannot find a MARC vocabulary mapping for the leader 06 value of " + leader06 + ".");
 			
 			if(leader06 == 'b' || leader06 == 'h' || leader06 == 'm')
-			{
-				warningCodes.add("100");
-				warnings.add("Obsolete leader 06 value: " + leader06);
-			}
-			else
-			{
-				errorCodes.add("100");
-				errors.add("Invalid leader 06 value: " + leader06);
-			}
+				errors.add(service.getId() + "-101: Obsolete leader 06 value: " + leader06);
+			else if(leader06 != ' ')
+				errors.add(service.getId() + "-102: Invalid leader 06 value: " + leader06);
 		}
 		else
 		{
@@ -630,8 +606,7 @@ public class NormalizationService extends MetadataService
 			if(log.isDebugEnabled())
 				log.debug("Cannot find a mode of issuance mapping for the leader 07 value of " + leader07 + ", returning the unmodified MARCXML.");
 
-			errorCodes.add("101");
-			errors.add("Invalid leader 07 value: " + leader07);
+			errors.add(service.getId() + "-103: Invalid leader 07 value: " + leader07);
 			
 			return marcXml;
 		}
@@ -668,10 +643,7 @@ public class NormalizationService extends MetadataService
 				log.debug("The record was missing either an 001 or an 003 control field, so we do not have to move the old marc organization code into a new 035 field.");
 
 			if(control001 == null)
-			{
-				errorCodes.add("200");
-				errors.add("Control Field 001 was missing.");
-			}
+				errors.add(service.getId() + "-108: Control Field 001 was missing.");
 			
 			return marcXml;
 		}
@@ -758,8 +730,7 @@ public class NormalizationService extends MetadataService
 			if(log.isDebugEnabled())
 				log.debug("Cannot find an 007 Vocab mapping for the 007 offset 00 value of " + field007offset00 + ", returning the unmodified MARCXML.");
 
-			errorCodes.add("102");
-			errors.add("Invalid value in Control Field 007 offset 00: " + field007offset00);
+			errors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00);
 			
 			return marcXml;
 		}
@@ -924,10 +895,7 @@ public class NormalizationService extends MetadataService
 				languages.add(langFrom008);
 			}
 			else
-			{
-				errorCodes.add("103");
-				errors.add("Invalid language code in Control Field 008 offset 35-38: " + langFrom008);
-			}
+				errors.add(service.getId() + "-110: Invalid language code in Control Field 008 offset 35-38: " + langFrom008);
 		}
 
 		// The 041 $a and $d fields
@@ -953,10 +921,7 @@ public class NormalizationService extends MetadataService
 						languages.add(language);
 					}
 					else
-					{
-						errorCodes.add("103");
-						errors.add("Invalid language code in 041 $a: " + language);
-					}
+						errors.add(service.getId() + "-110: Invalid language code in 041 $a: " + language);
 				}
 			}
 		}
@@ -980,10 +945,7 @@ public class NormalizationService extends MetadataService
 						languages.add(language);
 					}
 					else
-					{
-						errorCodes.add("103");
-						errors.add("Invalid language code in 041 $d: " + language);
-					}
+						errors.add(service.getId() + "-110: Invalid language code in 041 $d: " + language);
 				}
 			}
 		}
@@ -1022,8 +984,7 @@ public class NormalizationService extends MetadataService
 				if(log.isDebugEnabled())
 					log.debug("Cannot find a lanuage term mapping for the language code " + languageCode + ".");
 
-				warningCodes.add("200");
-				warnings.add("Unrecognized language code: " + languageCode);
+				errors.add(service.getId() + "-106: Unrecognized language code: " + languageCode);
 				
 				continue;
 			}
@@ -1076,10 +1037,7 @@ public class NormalizationService extends MetadataService
 				return marcXml;
 			}
 			else if(field008offset22 != '|' && field008offset22 != '#')
-			{
-				errorCodes.add("104");
-				errors.add("Invalid value in Control Field 008 offset 22: " + field008offset22);
-			}
+				errors.add(service.getId() + "-105: Invalid value in Control Field 008 offset 22: " + field008offset22);
 
 			if(log.isDebugEnabled())
 				log.debug("Found the audience " + audience + " for the 008 offset 22 value of " + field008offset22 + ".");
@@ -1176,10 +1134,7 @@ public class NormalizationService extends MetadataService
 			String cleanIsbn = (endIndex >= 0 ? field020a.substring(0, endIndex) : field020a);
 
 			if(endIndex >= 0)
-			{
-				warningCodes.add("300");
-				warnings.add("Malformed ISBN in 020 $a: " + field020a + ".  This was fixed by the Normalization Service.");
-			}
+				errors.add(service.getId() + "-109: Malformed ISBN in 020 $a: " + field020a + ".  This was fixed by the Normalization Service.");
 			
 			if(log.isDebugEnabled())
 				log.debug("Adding the cleaned up ISBN number " + cleanIsbn + " to the normalized record.");
@@ -1265,10 +1220,7 @@ public class NormalizationService extends MetadataService
 				if(subfield.getAttribute("code").getValue().equals("a"))
 					aSubfield = subfield;
 				else
-				{
-					errorCodes.add("105");
-					errors.add("Invalid 035 Data Field (035s cannot contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
-				}
+					errors.add(service.getId() + "-107: Invalid 035 Data Field (035s cannot contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
 
 				// Initialize the bSubfield if we found the $b
 				if(subfield.getAttribute("code").getValue().equals("b"))

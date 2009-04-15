@@ -980,7 +980,7 @@ public class Harvester implements ErrorHandler
 
             recordsFound++;
             if(recordsFound % 100000 == 0)
-            	LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Inserted " + recordsFound + " records so far.");
+            	LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Found " + recordsFound + " records so far.");
 
             // If the record contained a resumption token, store that resumption token
 			if (recordElement != null && recordElement.getNodeName().equals("resumptionToken"))
@@ -1158,7 +1158,7 @@ public class Harvester implements ErrorHandler
 			body.append("The harvest failed for the following reason: ").append(problem).append("\n\n");
 
 		// Report on the number of records inserted successfully and the number of failed inserts
-		body.append(recordsFound).append(" Records were successfully harvested.\n");
+		body.append(addedCount+updatedCount).append(" Records were successfully harvested.\n");
 		body.append(failedInserts).append(" Records were not able to harvested.\n\n");
 
 		// Show the log information for warnings and errors

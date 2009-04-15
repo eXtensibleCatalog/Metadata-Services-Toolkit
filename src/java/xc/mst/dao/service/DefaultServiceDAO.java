@@ -994,8 +994,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				                                                          COL_HARVEST_OUT_RECORDS_HARVESTED + "=?, " +
 				                                                          COL_HARVEST_OUT_LAST_LOG_RESET + "=?, " +
 				                                                          COL_HARVEST_OUT_LOG_FILE_NAME + "=?, " +
-				                                                          COL_STATUS + "=? " +
-				                                                          COL_HARVEST_OUT_LOG_FILE_NAME + "=?, " +
+				                                                          COL_STATUS + "=?, " +
 				                                                          COL_XCCFG_FILE_NAME + "=? " +
 	                                   "WHERE " + COL_SERVICE_ID + "=?";
 
@@ -1025,8 +1024,8 @@ public class DefaultServiceDAO extends ServiceDAO
 				psUpdate.setLong(15, service.getHarvestOutRecordsHarvested());
 				psUpdate.setDate(16, service.getHarvestOutLastLogReset());
 				psUpdate.setString(17, service.getHarvestOutLogFileName());
-				psUpdate.setString(18, service.getXccfgFileName());
-				psUpdate.setString(19, service.getStatus());
+				psUpdate.setString(18, service.getStatus());
+				psUpdate.setString(19, service.getXccfgFileName());
 				psUpdate.setInt(20, service.getId());
 				
 

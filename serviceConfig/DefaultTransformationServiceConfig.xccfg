@@ -22,6 +22,8 @@ namespace: http://www.extensiblecatalog.info/Elements # The namespace of the xc 
 ERROR MESSAGES
 #-----------------------------------------
 #-----------------------------------------
+error code: 100
+error description file: serviceErrors/normalization/100.html
 
 #-----------------------------------------
 #-----------------------------------------

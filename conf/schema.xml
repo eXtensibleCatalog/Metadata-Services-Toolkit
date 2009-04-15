@@ -228,13 +228,10 @@
    <field name="processed_from" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="successor" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="input_for_service_id" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="processed_by_service_id" type="string" indexed="true" stored="true"/>
+   <field name="processed_by_service_id" type="string" indexed="true" stored="true" multiValued="true"/>
 
    <field name="trait" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="warning" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="error" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="warning_code" type="string" indexed="false" stored="true" multiValued="true"/>
-   <field name="error_code" type="string" indexed="false" stored="true" multiValued="true"/>
 
    <field name="all" type="text" indexed="true" stored="false" multiValued="true"/>
 

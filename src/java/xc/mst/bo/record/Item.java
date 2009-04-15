@@ -169,7 +169,6 @@ public class Item extends Record
 		item.setTraits(record.getTraits());
 		item.setUpdatedAt(record.getUpdatedAt());
 		item.setUpLinks(record.getUpLinks());
-		item.setWarnings(record.getWarnings());
 
 		return item;
 	} // end method buildItemFromRecord(Record)
