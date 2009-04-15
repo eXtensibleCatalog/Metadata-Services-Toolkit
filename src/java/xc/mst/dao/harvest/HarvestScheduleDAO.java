@@ -241,7 +241,7 @@ public abstract class HarvestScheduleDAO
 			if(log.isDebugEnabled())
 				log.debug("Checking the non-ID fields");
 
-			if(schedule.getMinute() == 0 || schedule.getMinute() > 59)
+			if(schedule.getMinute() == 0 || schedule.getMinute() > 60)
 				errorMessage.append("The minute is invalid. " );
 
 			if(schedule.getDayOfWeek() > 6)

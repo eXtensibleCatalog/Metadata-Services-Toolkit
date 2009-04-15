@@ -150,7 +150,7 @@
 				
 				<select id="schedule_minute" name="minute" />
 					<option value = "-1"> Select </option>
-					<c:forEach begin="1" end="59" step="1" var="minute">
+					<c:forEach begin="1" end="60" step="1" var="minute">
 						<option value = "${minute}"
 						<c:if test="${schedule.minute == minute}">
 							selected

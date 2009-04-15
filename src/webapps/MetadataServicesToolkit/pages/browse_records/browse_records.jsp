@@ -148,8 +148,13 @@
 						        </c:forEach>
 					   	</div>	
 					
-				
+					</div>
+					<!-- facet_search_results  -->
+
 					<div class="search_box_div">
+						<c:if test="${!initialLoad}">
+							You Searched for : "${query}"
+						</c:if>
 						<form name="browseRecordsForm" method="post" action="browseRecords.action">
 
 							<input type="text" id="search_text" name="query" value="${query}" size="40"/>
@@ -160,6 +165,10 @@
 							</c:if>/> Search Full XML content
 						</form>	
 					</div>
+
+			<div class="facet_line"/>
+
+
 				<c:if test="${!initialLoad}">
 					<div class="search_results_div">
 						<c:if test="${result.totalNumberOfResults > 0}">
@@ -214,7 +223,14 @@
 									Harvest: ${record.provider.name} ${record.harvest.endTime}
 									<br>
 								</c:if>
--->								
+-->								<div class="redError">
+								<c:if test="${record.errors != '[]'}">
+									Error:
+									<c:forEach var="error" items="${record.errors}" varStatus="status"><c:if test="${status.count > 1}">, </c:if>${error}</c:forEach>
+									<br>
+								</c:if>
+								</div>
+
 							   <c:url var="viewPredecessorRecord" value="browseRecords.action">
 									  <c:param name="query" value=""/>
 									  <c:param name="addFacetName" value="successor"/>
@@ -279,7 +295,7 @@
 				    </div>
 				</c:if>		    
 						    
-			</div>
+
 			
  		</div>
 		<!--  end body -->		

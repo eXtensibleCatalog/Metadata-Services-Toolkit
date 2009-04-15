@@ -33,7 +33,6 @@ YAHOO.xc.mst.services = {
          var serviceFlag = false;
          var serviceArraySize = 1;
          var sourceArraySize = 1;
-         alert(document.editProcessingDirective.source.checked);
          if(typeof(document.editProcessingDirective.source.length)!='undefined')
              {
                  sourceArraySize = document.editProcessingDirective.source.length;
@@ -70,9 +69,6 @@ YAHOO.xc.mst.services = {
                          serviceFlag = true;
                      }
              }
-
-
-
 
             if((sourceFlag==true)&&(serviceFlag==true))
                 {

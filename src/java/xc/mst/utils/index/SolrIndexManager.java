@@ -140,11 +140,10 @@ public class SolrIndexManager {
 			log.debug(se);
 			
 			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index: " + se.getMessage());
-			
 			logObj.setErrors(logObj.getErrors()+1);
-			try{
+			try {
 				logDao.update(logObj);
-			}catch(DataException e){
+			} catch(DataException e){
 				log.error("DataExcepiton while updating the log's error count.");
 			}
 			
@@ -194,6 +193,5 @@ public class SolrIndexManager {
 		}
 
 		return docs;
-
 	}
 }
