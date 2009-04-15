@@ -85,8 +85,8 @@
                     </ul>
                 </div>
                 <div align="right" style="margin-bottom:10px;">
-                    <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.services.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                    <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.services.editProcessingDirective();" name="next">Continue to Step 2</button>
+                    <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
+                    <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editProcessingDirective();" name="next">Continue to Step 2</button>
                 </div>
 
                     <form action="/MetadataServicesToolkit/editProcessingDirectives.action?ProcessingDirectiveId=${processingDirectiveId}" method="post" name="editProcessingDirective">
@@ -160,8 +160,8 @@
                     </div>
 
                     <div align="right" style="margin-top:10px;">
-                        <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.services.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.services.editProcessingDirective();" name="next">Continue to Step 2</button>
+                        <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editProcessingDirective();" name="next">Continue to Step 2</button>
                     </div>
                     </form>
              </div>

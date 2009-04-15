@@ -7,13 +7,13 @@
   *
   */
 
-YAHOO.namespace("xc.mst.services");
+YAHOO.namespace("xc.mst.serviceStatusBar");
 
-YAHOO.xc.mst.services = {
+YAHOO.xc.mst.serviceStatusBar = {
 
  alterStatus: function(changedStatus)
             {
-                alert("Entered alter status AJAX call");
+                
                   var http_request = false;
 
                   if (window.XMLHttpRequest)
@@ -52,7 +52,34 @@ YAHOO.xc.mst.services = {
         {
             if(http_request.readyState==4)
             {
-              alert("The abort/pause/resume was successful");
+              var response = http_request.responseText;
+              var findResume = response.search("MSTServiceResumed");
+              var findPause = response.search("MSTServicePaused");
+              var findAbort = response.search("MSTServiceAborted");
+              if(findResume!=-1)
+                  {
+                       
+                        document.getElementById("pauseButton").style.display = "inline";
+                        document.getElementById("resumeButton").style.display = "none";
+                        document.getElementById("abortButton").style.display = "inline";
+                  }
+              if(findPause!=-1)
+                  {
+                        
+                        document.getElementById("pauseButton").style.display = "none";
+                        document.getElementById("resumeButton").style.display = "inline";
+                        document.getElementById("abortButton").style.display = "inline";
+                  }
+              if(findAbort!=-1)
+                  {
+                       
+                        document.getElementById("pauseButton").style.display = "inline";
+                        document.getElementById("resumeButton").style.display = "none";
+                        document.getElementById("abortButton").style.display = "inline";
+                        document.getElementById("pauseButton").disabled = true;
+                        document.getElementById("abortButton").disabled = true;
+                        document.getElementById("currentProcess").innerHTML = "";
+                  }
             }
 
         }
@@ -66,7 +93,6 @@ YAHOO.xc.mst.services = {
             }
         else
             {
-                alert("Aborting process");
                 http_request.open("GET","serviceAbort.action",true)
             }
 
@@ -75,4 +101,4 @@ YAHOO.xc.mst.services = {
 
     }
 
-}
+ }
