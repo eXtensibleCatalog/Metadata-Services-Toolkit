@@ -7,11 +7,11 @@
   *
   */
   
-YAHOO.namespace("xc.mst.services");
+YAHOO.namespace("xc.mst.processingDirective");
 
-YAHOO.xc.mst.services = {
+YAHOO.xc.mst.processingDirective = {
 
- cancel : function()
+cancel : function()
  {
     
      try

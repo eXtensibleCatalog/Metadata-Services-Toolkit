@@ -6,10 +6,10 @@
   * website http://www.extensiblecatalog.org/. 
   *
   */
-  
-YAHOO.namespace("xc.mst.services");
 
-YAHOO.xc.mst.services = {
+YAHOO.namespace("xc.mst.processingDirective");
+
+YAHOO.xc.mst.processingDirective = {
 
 cancel : function()
  {
@@ -23,11 +23,13 @@ cancel : function()
          alert(err);
      }
  },
- goBack : function()
+
+goBack : function()
  {
      document.addProcessingDirective2.action= 'addPDGoBack.action';
      document.addProcessingDirective2.submit();
  },
+
  addDirective : function()
  {
      try
@@ -41,7 +43,8 @@ cancel : function()
      {
          alert(err);
      }
- }, 
+ },
+
  selectAll : function(field, currentField)
  {
     
@@ -62,7 +65,7 @@ cancel : function()
 
  }
  
- 
-
 }
+
+
 
