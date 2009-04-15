@@ -265,17 +265,17 @@
 
         <action name="serviceAbort" class="xc.mst.action.processingDirective.ServiceInteract">
         	<interceptor-ref name="default"/>
-			<result name="success">/pages/services/header.jsp</result>
+			<result name="success">inc/refreshPageOnce.jsp?serviceStatus=aborted</result>
 		</action>
 
         <action name="servicePause" class="xc.mst.action.processingDirective.ServiceInteract" method="pauseJob">
         	<interceptor-ref name="default"/>
-			<result name="success">/pages/services/header.jsp</result>
+			<result name="success">inc/refreshPageOnce.jsp?serviceStatus=paused</result>
 		</action>
 
         <action name="serviceResume" class="xc.mst.action.processingDirective.ServiceInteract" method="resumeJob">
         	<interceptor-ref name="default"/>
-			<result name="success">/pages/services/header.jsp</result>
+			<result name="success">inc/refreshPageOnce.jsp?serviceStatus=resumed</result>
 		</action>
 
          <action name="listProcessingDirectives" class="xc.mst.action.processingDirective.ListProcessingDirectives">
