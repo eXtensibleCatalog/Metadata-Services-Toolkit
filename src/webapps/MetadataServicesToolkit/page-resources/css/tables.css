@@ -144,8 +144,15 @@
 
 .search_box_div {
 	margin-top: 20px;
-	margin-right:200px;
+	margin-right:250px;
 	float: right;
+	
+}
+
+.searched_for {
+	margin-top: 20px;
+	float: right;
+	width:63%;
 	
 }
 
@@ -204,13 +211,14 @@
 	background-color: #F8F8F8;
 	padding:5px;
 }
-.facet_container {
+
+/* .facet_container {
 	float: left;
 	margin-right: 12px;
 	width: 220px;
     border: 1px solid;
 }
-
+*/
 .facet_search_selection {
 	background-color: #e3e3e3;
     width: 200px;

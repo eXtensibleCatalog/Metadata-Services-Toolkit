@@ -21,10 +21,13 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import xc.mst.bo.record.FacetFilter;
+import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.constants.Constants;
 import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.DefaultBrowseRecordService;
+import xc.mst.manager.record.DefaultRecordService;
+import xc.mst.manager.record.RecordService;
 
 /**
  * Browse records
@@ -87,6 +90,13 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 
 	/** Denotes whether its initial page load */
 	private boolean isInitialLoad;
+	
+	/** Record for which successor are queried and displayed */
+	private Record successorRecord;
+	
+	/** Record for which predecessor are queried and displayed */
+	private Record predecessorRecord;
+	
 	
 	/**
      * Exceute method to load initial screen with just the facets
@@ -216,10 +226,21 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	    // Add facet name and value list to SolrBrowseResult(result) object for display in UI
 	    if (result != null) {
 		    for(int i = 0; i < facetNamesList.size(); i++) {
+			    // Get successor/predecessor of the record to display its information
+		    	if (facetNamesList.get(i).equalsIgnoreCase("successor")) {
+		    		RecordService recordService = new DefaultRecordService();
+		    		successorRecord = recordService.getById(Long.parseLong(facetValuesList.get(i)));
+		    	}
+		    	if (facetNamesList.get(i).equalsIgnoreCase("predecessor")) {
+		    		RecordService recordService = new DefaultRecordService();
+		    		predecessorRecord = recordService.getById(Long.parseLong(facetValuesList.get(i)));
+		    	}
+
 		    	result.addFacetFilter(new FacetFilter(facetNamesList.get(i), facetValuesList.get(i)));
 		    }
 	    }
 		
+
 		return SUCCESS;
 	}
 	
@@ -386,5 +407,13 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 
 	public void setInitialLoad(boolean isInitialLoad) {
 		this.isInitialLoad = isInitialLoad;
+	}
+
+	public Record getSuccessorRecord() {
+		return successorRecord;
+	}
+
+	public Record getPredecessorRecord() {
+		return predecessorRecord;
 	}
 }

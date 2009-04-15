@@ -149,12 +149,132 @@
 					   	</div>	
 					
 					</div>
-					<!-- facet_search_results  -->
+					<!-- facet_search_results  end -->
 
-					<div class="search_box_div">
-						<c:if test="${!initialLoad}">
-							You Searched for : "${query}"
+					<div >	
+						<!-- Display of filters -->
+						<c:if test="${query != ''}">
+							<p class="searched_for">You Searched for : "${query}"<c:if test="${result.facetFilters != '[]'}">, </c:if>
+							
+<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema</c:if><c:if test="${filter.name == 'set_name'}">Set</c:if><c:if test="${filter.name == 'provider_name'}">Repository</c:if><c:if test="${filter.name == 'service_name'}">Service</c:if><!--<c:if test="${filter.name == 'harvest_end_time'}">Harvest</c:if>--><c:if test="${filter.name == 'warning'}">Warning</c:if><c:if test="${filter.name == 'error'}">Error</c:if>:${filter.value}</c:forEach>							
+							</p>
 						</c:if>
+						
+						<!-- Display of filters In case of predecessor  - begin-->
+						<c:if test="${predecessorRecord != null}">
+							<p class="searched_for">You Searched for : All Precedessors of:
+									${predecessorRecord.provider.name} ${predecessorRecord.id}
+									<br>
+									Schema: ${predecessorRecord.format.name}
+									<br>
+									Provider: ${predecessorRecord.provider.name}	
+							       <c:if test="${predecessorRecord.numberOfPredecessors > 0 && predecessorRecord.numberOfSuccessors > 0}">
+										${predecessorRecord.numberOfPredecessors} 
+										<c:if test="${predecessorRecord.numberOfPredecessors == 1}">
+											Predecessor
+										</c:if>
+										<c:if test="${predecessorRecord.numberOfPredecessors > 1}">
+											Predecessors
+										</c:if></a> 
+										&nbsp;<img src="page-resources/img/white-book-both.jpg">&nbsp;
+										<a href="${viewSuccessorRecord}">${predecessorRecord.numberOfSuccessors} 
+										<c:if test="${predecessorRecord.numberOfSuccessors == 1}">
+											Successor
+										</c:if>
+										<c:if test="${predecessorRecord.numberOfSuccessors > 1}">
+											Successors
+										</c:if> 
+										</a>
+								    </c:if>
+								    <c:if test="${predecessorRecord.numberOfPredecessors > 0 && predecessorRecord.numberOfSuccessors < 1}">
+										${predecessorRecord.numberOfPredecessors} 
+										<c:if test="${predecessorRecord.numberOfPredecessors == 1}">
+											Predecessor
+										</c:if>
+										<c:if test="${predecessorRecord.numberOfPredecessors > 1}">
+											Predecessors
+										</c:if> 
+										</a> 
+									      &nbsp;<img src="page-resources/img/white-book-left.jpg">
+								    </c:if>
+									<c:if test="${predecessorRecord.numberOfSuccessors > 0 && predecessorRecord.numberOfPredecessors < 1}">
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="page-resources/img/white-book-right.jpg">
+										&nbsp;<a href="${viewSuccessorRecord}">${predecessorRecord.numberOfSuccessors} 
+										<c:if test="${predecessorRecord.numberOfSuccessors == 1}">
+											Successor
+										</c:if>
+										<c:if test="${predecessorRecord.numberOfSuccessors > 1}">
+											Successors
+										</c:if> 
+										</a> 
+										
+								    </c:if>                                    
+							<br>								
+							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema</c:if><c:if test="${filter.name == 'set_name'}">Set</c:if><c:if test="${filter.name == 'provider_name'}">Repository</c:if><c:if test="${filter.name == 'service_name'}">Service</c:if><!--<c:if test="${filter.name == 'harvest_end_time'}">Harvest</c:if>--><c:if test="${filter.name == 'warning'}">Warning</c:if><c:if test="${filter.name == 'error'}">Error</c:if>:${filter.value}</c:forEach>							
+							</p>
+						</c:if>
+						<!-- Display of filters In case of predecessor - end -->
+
+						<!-- Display of filters In case of successor - begin -->
+						<c:if test="${successorRecord != null}">
+							<p class="searched_for">You Searched for : All Precedessors of:
+									${successorRecord.provider.name} ${successorRecord.id}
+									<br>
+									Schema: ${successorRecord.format.name}
+									<br>
+									Provider: ${successorRecord.provider.name}	
+							       <c:if test="${successorRecord.numberOfPredecessors > 0 && successorRecord.numberOfSuccessors > 0}">
+										${successorRecord.numberOfPredecessors} 
+										<c:if test="${successorRecord.numberOfPredecessors == 1}">
+											Predecessor
+										</c:if>
+										<c:if test="${successorRecord.numberOfPredecessors > 1}">
+											Predecessors
+										</c:if></a> 
+										&nbsp;<img src="page-resources/img/white-book-both.jpg">&nbsp;
+										<a href="${viewSuccessorRecord}">${successorRecord.numberOfSuccessors} 
+										<c:if test="${successorRecord.numberOfSuccessors == 1}">
+											Successor
+										</c:if>
+										<c:if test="${successorRecord.numberOfSuccessors > 1}">
+											Successors
+										</c:if> 
+										</a>
+								    </c:if>
+								    <c:if test="${successorRecord.numberOfPredecessors > 0 && successorRecord.numberOfSuccessors < 1}">
+										${successorRecord.numberOfPredecessors} 
+										<c:if test="${successorRecord.numberOfPredecessors == 1}">
+											Predecessor
+										</c:if>
+										<c:if test="${successorRecord.numberOfPredecessors > 1}">
+											Predecessors
+										</c:if> 
+										</a> 
+									      &nbsp;<img src="page-resources/img/white-book-left.jpg">
+								    </c:if>
+									<c:if test="${successorRecord.numberOfSuccessors > 0 && successorRecord.numberOfPredecessors < 1}">
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="page-resources/img/white-book-right.jpg">
+										&nbsp;<a href="${viewSuccessorRecord}">${successorRecord.numberOfSuccessors} 
+										<c:if test="${successorRecord.numberOfSuccessors == 1}">
+											Successor
+										</c:if>
+										<c:if test="${successorRecord.numberOfSuccessors > 1}">
+											Successors
+										</c:if> 
+										</a> 
+										
+								    </c:if>                                    
+							<br>								
+							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema</c:if><c:if test="${filter.name == 'set_name'}">Set</c:if><c:if test="${filter.name == 'provider_name'}">Repository</c:if><c:if test="${filter.name == 'service_name'}">Service</c:if><!--<c:if test="${filter.name == 'harvest_end_time'}">Harvest</c:if>--><c:if test="${filter.name == 'warning'}">Warning</c:if><c:if test="${filter.name == 'error'}">Error</c:if>:${filter.value}</c:forEach>							
+							</p>
+						</c:if>	
+						<!-- Display of filters In case of successor - end -->					
+					</div>
+					
+					<!-- Display of Search text box - begin -->
+					<div class="search_box_div">
 						<form name="browseRecordsForm" method="post" action="browseRecords.action">
 
 							<input type="text" id="search_text" name="query" value="${query}" size="40"/>
@@ -165,10 +285,11 @@
 							</c:if>/> Search Full XML content
 						</form>	
 					</div>
-
-			<div class="facet_line"/>
-
-
+					<!-- Display of Search text box - end -->
+					
+				<div class="facet_line"/>
+			
+				<!-- Display of Search results -->
 				<c:if test="${!initialLoad}">
 					<div class="search_results_div">
 						<c:if test="${result.totalNumberOfResults > 0}">
