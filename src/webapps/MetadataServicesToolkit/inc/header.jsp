@@ -54,4 +54,4 @@
     </li>
 </ul>
 </div>
-<meta http-equiv="refresh" content="180">
+<meta http-equiv="refresh" content="2">
