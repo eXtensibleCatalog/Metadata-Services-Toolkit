@@ -61,8 +61,8 @@
                    <div id="Processing Rules" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/listProcessingDirectives.action" />" >List Processing Directives</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddProcessingDirectives.action?refreshSession=yes" />" >Add Processing Directives</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/listProcessingDirectives.action" />" >List Processing Rules</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddProcessingDirectives.action?refreshSession=yes" />" >Add Processing Rules</a></li>
                            </ul>
                         </div>
                     </div>

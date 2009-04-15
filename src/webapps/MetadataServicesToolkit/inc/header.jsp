@@ -14,10 +14,14 @@
  <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
  <%@ taglib prefix="mst" uri="mst-tags"%>
 
-<div class="serviceStatus">
-   Process Description &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-   <mst:currentProcessStatus/>
-</div>
+<c:if test="${user!=null}">
+    <mst:checkUserPermission permission="Services">
+        <div class="serviceStatus">
+            Process Description &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            <mst:currentProcessStatus/>
+        </div>
+    </mst:checkUserPermission>
+</c:if>
 
 <div id="header">
 <ul style="list-style:none;">
@@ -50,4 +54,4 @@
     </li>
 </ul>
 </div>
-<meta http-equiv="refresh" content="20">
+<meta http-equiv="refresh" content="180">
