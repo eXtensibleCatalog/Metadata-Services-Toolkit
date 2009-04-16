@@ -106,9 +106,13 @@ public class TransformationService extends MetadataService
 	@Override
 	protected List<Record> processRecord(Record record)
 	{
+		// If the record was deleted, don't process it
+		if(record.getDeleted())
+			return new ArrayList<Record>();
+		
 		if(log.isInfoEnabled())
 			log.info("Transforming record with ID " + record.getId() + ".");
-
+		
 		// A list of records resulting from processing the incoming record
 		ArrayList<Record> results = new ArrayList<Record>();
 
@@ -157,9 +161,7 @@ public class TransformationService extends MetadataService
 			// Get the Leader 06.  This will allow us to determine the record's type
 			// (bib or holding) and we'll process it appropriately
 			char leader06 = originalRecord.getLeader().charAt(6);
-
-			transformedRecord = processFieldBasic(originalRecord, transformedRecord, "999", 'a', "xcNormServiceVersion", XCRecord.XC_NAMESPACE, new Attribute("type", "XC"), FrbrLevel.MANIFESTATION);
-
+			
 			// If the record is a bib record according to the leader06
 			if("acdefgijkmoprt".contains(""+leader06))
 			{
@@ -316,14 +318,17 @@ public class TransformationService extends MetadataService
 
 				// Get the record which was processed from the record we just processed
 				// (there should only be one)
-				Record oldNormalizedRecord = existingRecords.get(0);
+				Record oldTransformedRecord = existingRecords.get(0);
 
 				// Set the XML to the new normalized XML
-				oldNormalizedRecord.setOaiXml(newRecordContent);
+				oldTransformedRecord.setOaiXml(newRecordContent);
 
+				// Set the record as not being deleted
+				oldTransformedRecord.setDeleted(false);
+				
 				// Add the normalized record after modifications were made to it to
 				// the list of modified records.
-				results.add(oldNormalizedRecord);
+				results.add(oldTransformedRecord);
 
 				return results;
 			}
@@ -341,6 +346,9 @@ public class TransformationService extends MetadataService
 				xcRecord.setOaiDatestamp(null);
 				xcRecord.setOaiHeader(null);
 
+				// Set the record as not being deleted
+				xcRecord.setDeleted(false);
+				
 				if(log.isInfoEnabled())
 					log.info("Created XC record with ID " + xcRecord.getId() + " from unprocessed record with ID " + record.getId());
 

@@ -471,6 +471,18 @@ public abstract class MetadataService
 				// If the service is not canceled and not paused then continue 
 				if(!isCanceled && !isPaused)
 				{
+					// If the record was deleted, delete and reprocess all records that were processed from it
+					if(processMe.getDeleted())
+					{
+						List<Record> successors = getByProcessedFrom(processMe.getId());
+						
+						for(Record successor : successors)
+						{
+							successor.setDeleted(true);
+							reprocessRecord(successor);
+						}
+					}
+					
 					// Get the results of processing the record
 					List<Record> results = processRecord(processMe);
 	
@@ -749,6 +761,24 @@ public abstract class MetadataService
 		} // end loop over matched processing directives
 	} // end method checkProcessingDirectives(Record)
 
+	/**
+	 * Reprocesses the passed record by all records that had processed it in the past
+	 * 
+	 * @param record The record to reprocess
+	 */
+	protected void reprocessRecord(Record record)
+	{
+		for(Service processingService : record.getProcessedByServices())
+		{
+			record.addInputForService(processingService);
+
+			Integer serviceId = processingService.getId();
+			
+			if(!servicesToRun.containsKey(serviceId))
+				servicesToRun.put(serviceId, 0);
+		}
+	}
+	
 	/**
 	 * Gets a Format by name.  Subclasses of MetadataService can call this method to
 	 * get a Format from the database.

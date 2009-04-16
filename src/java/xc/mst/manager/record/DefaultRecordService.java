@@ -1174,8 +1174,11 @@ public class DefaultRecordService extends RecordService
 		doc.addField(FIELD_FORMAT_NAME, record.getFormat().getName());
 
 		doc.addField(FIELD_PROVIDER_ID, (record.getProvider() == null ? "0" : Integer.toString(record.getProvider().getId())));
-		doc.addField(FIELD_PROVIDER_NAME, (record.getProvider() == null ? "" : record.getProvider().getName()));
-		doc.addField(FIELD_PROVIDER_URL, (record.getProvider() == null ? "" : record.getProvider().getOaiProviderUrl()));
+		if(record.getProvider() != null)
+		{
+			doc.addField(FIELD_PROVIDER_NAME, (record.getProvider().getName() == null ? "" : record.getProvider().getName()));
+			doc.addField(FIELD_PROVIDER_URL, (record.getProvider().getOaiProviderUrl() == null ? "" : record.getProvider().getOaiProviderUrl()));
+		}
 
 		log.debug("Harvest id:"+record.getHarvest());
 		doc.addField(FIELD_HARVEST_ID, (record.getHarvest() == null ? "0" : Integer.toString(record.getHarvest().getId())));

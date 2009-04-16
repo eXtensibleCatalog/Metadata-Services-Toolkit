@@ -411,6 +411,12 @@ public class DefaultServicesService implements ServicesService
     @Override
     public void updateService(File configFile, Service service) throws DataException, IOException, ConfigFileException
     {
+    	// Reload the service and confirm that it's not currently running.
+    	// Throw an error if it is
+    	service = servicesDao.getById(service.getId());
+    	if(service.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) || service.getStatus().equals(Constants.STATUS_SERVICE_PAUSED))
+    		throw new DataException("Cannot update a service while it is running.");
+    	
     	BufferedReader in = null; // Reads the file
     	try 
     	{
@@ -710,6 +716,8 @@ public class DefaultServicesService implements ServicesService
     			recordService.update(record);
     		}
     		
+    		List<Service> servicesToRun = new ArrayList<Service>();
+    		
     		// Mark the records output by the old service as deleted
     		records = recordService.getByServiceId(service.getId());
     		for(Record record : records)
@@ -717,16 +725,28 @@ public class DefaultServicesService implements ServicesService
     			record.setDeleted(true);
     			
     			for(Service processingService : record.getProcessedByServices())
+    			{
     				record.addInputForService(processingService);
+    				if(!servicesToRun.contains(processingService))
+    					servicesToRun.add(processingService);
+    				
+    			}
     			
     			recordService.update(record);
     		}
     		
+    		if(!servicesToRun.contains(service))
+    			servicesToRun.add(service);
+    		
     		SolrIndexManager.getInstance().commitIndex();
-    		ServiceWorkerThread serviceThread = new ServiceWorkerThread();
-			serviceThread.setServiceId(service.getId());
-			// TODO: set the output set
-			Scheduler.scheduleThread(serviceThread);
+    		
+    		for(Service runMe : servicesToRun)
+    		{
+    			ServiceWorkerThread serviceThread = new ServiceWorkerThread();
+    			serviceThread.setServiceId(runMe.getId());
+    			// TODO: set the output set
+    			Scheduler.scheduleThread(serviceThread);
+    		}
     	} 
     	finally
     	{
@@ -755,6 +775,12 @@ public class DefaultServicesService implements ServicesService
      */
     public void deleteService(Service service) throws DataException
     {
+    	// Reload the service and confirm that it's not currently running.
+    	// Throw an error if it is
+    	service = servicesDao.getById(service.getId());
+    	if(service.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) || service.getStatus().equals(Constants.STATUS_SERVICE_PAUSED))
+    		throw new DataException("Cannot update a service while it is running.");
+    	
     	// Delete the records processed by the service and send the deleted
     	// records to subsequent services so they know about the delete
 		RecordList records = recordService.getByServiceId(service.getId());
@@ -769,8 +795,8 @@ public class DefaultServicesService implements ServicesService
 			{
 				record.addInputForService(nextService);
 				affectedServices.add(nextService);
-				recordService.update(record);
 			}
+			recordService.update(record);
 		}
 		SolrIndexManager.getInstance().commitIndex();
 		

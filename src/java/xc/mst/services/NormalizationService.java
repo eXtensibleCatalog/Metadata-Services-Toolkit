@@ -127,12 +127,16 @@ public class NormalizationService extends MetadataService
 	@Override
 	protected List<Record> processRecord(Record record)
 	{
+		// If the record was deleted, don't process it
+		if(record.getDeleted())
+			return new ArrayList<Record>();
+		
 		// Empty the lists of errors because we're beginning to process a new record
 		errors.clear();
 		
 		// The list of records resulting from processing the incoming record
 		ArrayList<Record> results = new ArrayList<Record>();
-
+		
 		try
 		{
 			if(log.isInfoEnabled())
@@ -175,8 +179,6 @@ public class NormalizationService extends MetadataService
 
 			// Get the Leader 06.  This will allow us to determine the record's type, and we'll put it in the correct set for that type
 			char leader06 = normalizedXml.getLeader().charAt(6);
-			
-			//normalizedXml.addMarcXmlField("999", "Version 1");
 			
 			// Run these steps only if the record is a bibliographic record
 			if("acdefgijkmoprt".contains(""+leader06))
@@ -304,13 +306,18 @@ public class NormalizationService extends MetadataService
 				// Set the XML to the new normalized XML
 				oldNormalizedRecord.setOaiXml((new XMLOutputter()).outputString(normalizedXml.getModifiedMarcXml()));
 
+				// Mark the record as not being deleted
+				oldNormalizedRecord.setDeleted(false);
+				
 				// Add the normalized record after modifications were made to it to
 				// the list of modified records.
 				results.add(oldNormalizedRecord);
 
 				return results;
 			}
-			else // We need to create a new normalized record since we haven't normalized an older version of the original record
+			// We need to create a new normalized record since we haven't normalized an older version of the original record
+			// Do this only if the record we're processing is not deleted
+			else
 			{
 				if(log.isInfoEnabled())
 					log.info("Inserting the record since it was not processed from an older version of the record we just processed.");
@@ -327,6 +334,9 @@ public class NormalizationService extends MetadataService
 				normalizedRecord.setOaiDatestamp(null);
 				normalizedRecord.setOaiHeader(null);
 
+				// Mark the record as not being deleted
+				normalizedRecord.setDeleted(false);
+				
 				// Insert the normalized record
 
 				// The setSpec and set Description of the "type" set we should add the normalized record to
