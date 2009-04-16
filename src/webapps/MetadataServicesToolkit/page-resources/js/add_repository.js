@@ -11,8 +11,9 @@ YAHOO.namespace("xc.mst.repository");
 
 YAHOO.xc.mst.repository = {
 
-AddValidator : function()
+addValidator : function()
          {
+
              try
              {
                    var returnvalue = false;
@@ -23,13 +24,11 @@ AddValidator : function()
                        {
 
                            createErrorDiv("error","Repository Name cannot be empty");
-                           //return false;
                        }
                    else if(rurl == "")
                        {
 
                            createErrorDiv("error","Repository URL cannot be empty");
-                           //return false;
                        }
                    else
                        {
@@ -38,14 +37,17 @@ AddValidator : function()
                            if(arr[1]==null)
                                {
                                    createErrorDiv("error","Repository URL is invalid (Kindly ensure that protocol is specified eg:HTTP)");
-                                   //return false;
                                }
                            else
                                {
-                                   document.addRepositoryForm.submit();
+                                   
+				     document.getElementById('processing_bar').style.visibility = "visible";
+				     setTimeout("YAHOO.xc.mst.repository.submitForm()", 3000);
+				     
                                }
-                           //return true;
+                           
                        }
+
              }
 
 
@@ -55,6 +57,12 @@ AddValidator : function()
              }
 
         },
+        
+        submitForm : function() {
+	    document.addRepositoryForm.submit();
+	    return true;
+        },
+        
         cancel:function()
         {
             document.addRepositoryForm.action = 'allRepository.action';
@@ -63,5 +71,17 @@ AddValidator : function()
         removeErrorMessage : function()
         {
             window.location = "viewAddRepository.action";            
-        }
+        },
+
+	/** 
+	 * initialize the page 
+	 */ 
+	init : function() 
+	{
+	    document.getElementById('processing_bar').style.visibility = "hidden";
+	}
+
 }
+
+// initialize the code once the dom is ready
+YAHOO.util.Event.onDOMReady(YAHOO.xc.mst.repository.init);

@@ -986,81 +986,6 @@ public class DefaultRecordService extends RecordService
 	@Override
 	public Record getRecordFromDocument(SolrDocument doc)
 	{
-//		// Create a Record object to store the result
-//		Record record = new Record();
-//
-//		// The OAI identifier
-//		String oaiId = doc.get(FIELD_OAI_IDENTIFIER);
-//
-//		// Set the fields on the record Object and return it
-//		record.setId(Long.parseLong(doc.get(FIELD_RECORD_ID)));
-//		record.setFrbrLevelId(Long.parseLong(doc.get(FIELD_FRBR_LEVEL_ID)));
-//		record.setDeleted(Boolean.parseBoolean(doc.get(FIELD_DELETED)));
-//		record.setFormat(formatDao.getById(Integer.parseInt(doc.get(FIELD_FORMAT_ID))));
-//		record.setOaiDatestamp(doc.get(FIELD_OAI_DATESTAMP));
-//		record.setOaiHeader(doc.get(FIELD_OAI_HEADER));
-//		record.setOaiIdentifierBase(oaiId.substring(0, oaiId.lastIndexOf(":")));
-//		record.setOaiIdentifier(oaiId);
-//		record.setOaiXml(doc.get(FIELD_OAI_XML));
-//		record.setProvider(providerDao.loadBasicProvider(Integer.parseInt(doc.get(FIELD_PROVIDER_ID))));
-//		record.setService(serviceDao.loadBasicService(Integer.parseInt(doc.get(FIELD_SERVICE_ID))));
-//		record.setHarvest(harvestDao.getById(Integer.parseInt(doc.get(FIELD_HARVEST_ID))));
-//
-//		try
-//		{
-//			record.setCreatedAt(DateTools.stringToDate(doc.get(FIELD_CREATED_AT)));
-//			if(doc.get(FIELD_UPDATED_AT) != null)
-//				record.setUpdatedAt(DateTools.stringToDate(doc.get(FIELD_UPDATED_AT)));
-//		} // end try(parse created at and updated at dates
-//		catch (java.text.ParseException e)
-//		{
-//			log.error("An error occurred parsing the created at and updated at dates from the Lucene document.", e);
-//		} // end catch(ParseException)
-//
-//		String[] upLinks = doc.getValues(FIELD_UP_LINK);
-//		if(upLinks != null)
-//			for(int counter = 0; counter < upLinks.length; counter++)
-//				record.addUpLink(loadBasicRecord(Long.parseLong(upLinks[counter])));
-//
-//		String[] sets = doc.getValues(FIELD_SET_SPEC);
-//		if(sets != null)
-//			for(int counter = 0; counter < sets.length; counter++)
-//				record.addSet(setDao.getBySetSpec(sets[counter]));
-//
-//		String[] processedFrom = doc.getValues(FIELD_PROCESSED_FROM);
-//		if(processedFrom != null)
-//			for(int counter = 0; counter < processedFrom.length; counter++)
-//				record.addProcessedFrom(getById(Long.parseLong(processedFrom[counter])));
-//
-//		String[] serviceInput = doc.getValues(FIELD_INPUT_FOR_SERVICE_ID);
-//		if(serviceInput != null)
-//			for(int counter = 0; counter < serviceInput.length; counter++)
-//				record.addInputForService(serviceDao.loadBasicService(Integer.parseInt(serviceInput[counter])));
-//
-//		String[] processedByServices = doc.getValues(FIELD_PROCESSED_BY_SERVICE_ID);
-//		if(processedByServices != null)
-//			for(int counter = 0; counter < processedByServices.length; counter++)
-//				record.addProcessedByService(serviceDao.loadBasicService(Integer.parseInt(processedByServices[counter])));
-//
-//		String[] traits = doc.getValues(FIELD_TRAIT);
-//		if(traits != null)
-//			for(int counter = 0; counter < traits.length; counter++)
-//				record.addTrait(traits[counter]);
-//
-//		String[] warnings = doc.getValues(FIELD_WARNING);
-//		if(warnings != null)
-//			for(int counter = 0; counter < warnings.length; counter++)
-//				record.addWarning(logDao.getById(Integer.parseInt(warnings[counter])));
-//
-//		String[] errors = doc.getValues(FIELD_ERROR);
-//		if(errors != null)
-//			for(int counter = 0; counter < errors.length; counter++)
-//				record.addError(logDao.getById(Integer.parseInt(errors[counter])));
-//
-//		// Return the record we parsed from the document
-//		return record;
-
-
 
 		log.debug("getRecordFromSolrDocument::"+doc);
 		// Create a Record object to store the result
@@ -1182,17 +1107,22 @@ public class DefaultRecordService extends RecordService
 
 		log.debug("Harvest id:"+record.getHarvest());
 		doc.addField(FIELD_HARVEST_ID, (record.getHarvest() == null ? "0" : Integer.toString(record.getHarvest().getId())));
+		if (record.getHarvest() != null) {
+			doc.addField(FIELD_HARVEST_SCHEDULE_NAME, record.getHarvest().getHarvestSchedule().getScheduleName());
+		}
+
 //		doc.addField(FIELD_HARVEST_SCHEDULE_ID, (record.getHarvest() == null || record.getHarvest().getHarvestSchedule() == null ? "0" : Integer.toString(record.getHarvest().getHarvestSchedule().getId())));
-//		doc.addField(FIELD_HARVEST_SCHEDULE_NAME, (record.getHarvest() == null || record.getHarvest().getHarvestSchedule() == null ? "" : record.getHarvest().getHarvestSchedule().getScheduleName()));
 //		if (record.getHarvest() != null && record.getProvider() != null) {
 //			doc.addField(FIELD_HARVEST_END_TIME,record.getProvider().getName() + " " + record.getHarvest().getEndTime());
 //		}
 		
 		
 		doc.addField(FIELD_SERVICE_ID, (record.getService() == null ? "0" : Integer.toString(record.getService().getId())));
+
 		
-		if (record.getService() != null)
+		if (record.getService() != null) {
 			doc.addField(FIELD_SERVICE_NAME, record.getService().getName());
+		}
 
 		doc.addField(FIELD_OAI_IDENTIFIER, record.getOaiIdentifier());
 		doc.addField(FIELD_OAI_DATESTAMP, record.getOaiDatestamp());
@@ -1265,8 +1195,6 @@ public class DefaultRecordService extends RecordService
 			all.append(" ");
 		}
 		
-		
-
 		doc.addField(FIELD_ALL, all.toString());
 
 

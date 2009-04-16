@@ -49,9 +49,13 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 
 		SolrServer server = MSTSolrServer.getServer();
 		SolrBrowseResult result = null;
-
 		try {
-		    QueryResponse rsp = server.query( query );
+			// Discard deleted records
+			query.addFilterQuery("deleted:false");
+
+			log.debug("Querying Solr server with query:" + query);
+			
+			QueryResponse rsp = server.query( query );
 
 		    // Load the records in the SolrBrowseResilt object
 		    SolrDocumentList docs = rsp.getResults();
@@ -67,12 +71,11 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 
 		    // Load the facets in the SolrBrowseResilt object
 		    List<FacetField> facets = rsp.getFacetFields();
-
 		    result = new SolrBrowseResult(records, facets);
 		    result.setTotalNumberOfResults((int)docs.getNumFound());
 
 		} catch (SolrServerException e) {
-				log.debug(e);
+				log.error(" Exception occured when executing Solr Search.", e);
 		}
 
 		return result;

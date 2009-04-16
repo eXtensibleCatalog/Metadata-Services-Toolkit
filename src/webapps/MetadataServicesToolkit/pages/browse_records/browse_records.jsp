@@ -66,8 +66,6 @@
 		<!-- body -->
 		<div id="bd">
    			
-   			
-   			
 				<div class="facet_search_results">
 					
 					 	<div class="facetContainer">

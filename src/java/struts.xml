@@ -469,14 +469,17 @@
         <!--  ************************************ -->
         
         <action name="viewBrowseRecords" class="xc.mst.action.browse.BrowseRecords">
+        	<interceptor-ref name="default"/>
 			<result name="success">/pages/browse_records/browse_records.jsp</result>
 		</action>
 		
         <action name="browseRecords" class="xc.mst.action.browse.BrowseRecords" method="browse">
+        	<interceptor-ref name="default"/>
 			<result name="success">/pages/browse_records/browse_records.jsp</result>
 		</action>
 		
 		<action name="viewRecord" class="xc.mst.action.browse.BrowseRecords" method="viewRecord">
+		 	<interceptor-ref name="default"/>
 			<result name="success">/pages/browse_records/record.jsp</result>
 		</action>
 		

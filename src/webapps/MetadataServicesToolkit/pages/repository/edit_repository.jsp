@@ -94,6 +94,8 @@
                  </div>
         </div>
         </form>
+        <br><br>
+        <div id="processing_bar"><img src="${pageContext.request.contextPath}/page-resources/img/processing.gif"> <b>Updating and validating the repository. Please wait.</b></div>
         </div>
         </div>
 </body>

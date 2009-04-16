@@ -22,12 +22,10 @@ EditValidator : function()
                    if(rname == "")
                        {
                            createErrorDiv("error","Repository Name cannot be empty");
-                           //return false;
                        }
                    else if(rurl == "")
                        {
                            createErrorDiv("error","Repository Name cannot be empty");
-                           //return false;
                        }
                    else
                        {
@@ -36,13 +34,15 @@ EditValidator : function()
                            if(arr[1]==null)
                                {
                                    createErrorDiv("error","Repository Name cannot be empty");
-                                   //return false;
                                }
                            else
                                {
-                                   document.editRepositoryForm.submit();
+                                   
+                                   document.getElementById('processing_bar').style.visibility = "visible";
+                                   setTimeout("YAHOO.xc.mst.repository.submitForm()", 3000);
+                                   
                                }
-                           //return true;
+                           
                        }
              }
 
@@ -53,6 +53,12 @@ EditValidator : function()
              }
 
         },
+        
+        submitForm : function() {
+	    document.editRepositoryForm.submit();
+	    return true;
+        },
+        
         cancel:function()
         {
             try
@@ -68,5 +74,17 @@ EditValidator : function()
         removeErrorMessage : function(repositoryId)
         {
             window.location = "viewEditRepository.action?RepositoryId="+repositoryId;
-        }
+        },
+        
+	/** 
+	 * initialize the page 
+	 */ 
+	init : function() 
+	{
+	    document.getElementById('processing_bar').style.visibility = "hidden";
+	}
+
 }
+
+// initialize the code once the dom is ready
+YAHOO.util.Event.onDOMReady(YAHOO.xc.mst.repository.init);
