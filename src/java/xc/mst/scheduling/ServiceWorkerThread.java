@@ -111,6 +111,6 @@ public class ServiceWorkerThread extends WorkerThread
 	 */
 	public String getJobName() {
 	
-		return "Running Service: "+ MetadataService.getRunningService().getServiceName();
+		return MetadataService.getRunningService().getServiceName();
 	}
 } // end class ServiceWorkerThread

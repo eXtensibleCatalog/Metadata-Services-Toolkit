@@ -96,7 +96,7 @@ public class HarvesterWorkerThread extends WorkerThread
 	 */
 	public String getJobName() {
 	
-		return "Harvesting: " + Harvester.getRunningHarvester().getProvider().getName();
+		return Harvester.getRunningHarvester().getProvider().getName();
 	}
 
 } // end class HarvestWorkerThread
