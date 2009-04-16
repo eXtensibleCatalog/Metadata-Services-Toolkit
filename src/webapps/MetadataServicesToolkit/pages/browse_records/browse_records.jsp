@@ -160,12 +160,19 @@
 						
 						<!-- Display of filters In case of predecessor  - begin-->
 						<c:if test="${predecessorRecord != null}">
-							<p class="searched_for">You Searched for : All Precedessors of:
-									${predecessorRecord.provider.name} ${predecessorRecord.id}
+							<p class="searched_for">You Searched for :All Successor of:
+									<c:if test="${predecessorRecord.provider != null}">${predecessorRecord.provider.name}</c:if> 
+								<c:if test="${predecessorRecord.service != null}">${predecessorRecord.service.name}</c:if> ${predecessorRecord.id}
 									<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									Schema: ${predecessorRecord.format.name}
-									<br>
-									Provider: ${predecessorRecord.provider.name}	
+									
+									<c:if test="${predecessorRecord.provider != null}">
+										<br>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										Provider:${predecessorRecord.provider.name}
+									</c:if>	
+							       <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							       <c:if test="${predecessorRecord.numberOfPredecessors > 0 && predecessorRecord.numberOfSuccessors > 0}">
 										${predecessorRecord.numberOfPredecessors} 
 										<c:if test="${predecessorRecord.numberOfPredecessors == 1}">
@@ -209,7 +216,7 @@
 										
 								    </c:if>                                    
 							<br>								
-							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema</c:if><c:if test="${filter.name == 'set_name'}">Set</c:if><c:if test="${filter.name == 'provider_name'}">Repository</c:if><c:if test="${filter.name == 'service_name'}">Service</c:if><!--<c:if test="${filter.name == 'harvest_end_time'}">Harvest</c:if>--><c:if test="${filter.name == 'warning'}">Warning</c:if><c:if test="${filter.name == 'error'}">Error</c:if>:${filter.value}</c:forEach>							
+							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema:${filter.value}</c:if><c:if test="${filter.name == 'set_name'}">Set:${filter.value}</c:if><c:if test="${filter.name == 'provider_name'}">Repository:${filter.value}</c:if><c:if test="${filter.name == 'service_name'}">Service:${filter.value}</c:if><c:if test="${filter.name == 'error'}">Error:${filter.value}</c:if></c:forEach>							
 							</p>
 						</c:if>
 						<!-- Display of filters In case of predecessor - end -->
@@ -217,11 +224,18 @@
 						<!-- Display of filters In case of successor - begin -->
 						<c:if test="${successorRecord != null}">
 							<p class="searched_for">You Searched for : All Precedessors of:
-									${successorRecord.provider.name} ${successorRecord.id}
+									<c:if test="${successorRecord.provider != null}">${successorRecord.provider.name}</c:if> 
+								<c:if test="${successorRecord.service != null}">${successorRecord.service.name}</c:if> ${successorRecord.id}
 									<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									Schema: ${successorRecord.format.name}
-									<br>
-									Provider: ${successorRecord.provider.name}	
+									
+									<c:if test="${successorRecord.provider != null}">
+										<br>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										Provider:${successorRecord.provider.name}
+									</c:if>	
+							       <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							       <c:if test="${successorRecord.numberOfPredecessors > 0 && successorRecord.numberOfSuccessors > 0}">
 										${successorRecord.numberOfPredecessors} 
 										<c:if test="${successorRecord.numberOfPredecessors == 1}">
@@ -265,7 +279,7 @@
 										
 								    </c:if>                                    
 							<br>								
-							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema</c:if><c:if test="${filter.name == 'set_name'}">Set</c:if><c:if test="${filter.name == 'provider_name'}">Repository</c:if><c:if test="${filter.name == 'service_name'}">Service</c:if><!--<c:if test="${filter.name == 'harvest_end_time'}">Harvest</c:if>--><c:if test="${filter.name == 'warning'}">Warning</c:if><c:if test="${filter.name == 'error'}">Error</c:if>:${filter.value}</c:forEach>							
+							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema:${filter.value}</c:if><c:if test="${filter.name == 'set_name'}">Set:${filter.value}</c:if><c:if test="${filter.name == 'provider_name'}">Repository:${filter.value}</c:if><c:if test="${filter.name == 'service_name'}">Service:${filter.value}</c:if><c:if test="${filter.name == 'error'}">Error:${filter.value}</c:if></c:forEach>							
 							</p>
 						</c:if>	
 						<!-- Display of filters In case of successor - end -->					
@@ -331,7 +345,9 @@
 									  <c:param name="recordXML" value="${record.oaiXml}"/>
 									  	  
 								  </c:url>
-								<a href="${viewRecord}">${record.provider.name} ${record.id}</a>
+								<a href="${viewRecord}"><c:if test="${record.provider != null}">${record.provider.name}</c:if> 
+								<c:if test="${record.service != null}">${record.service.name}</c:if>
+								${record.id}</a>
 								<br>
 								Schema: ${record.format.name}
 								<br>
