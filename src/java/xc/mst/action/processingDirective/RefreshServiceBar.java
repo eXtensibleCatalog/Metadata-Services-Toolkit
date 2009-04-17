@@ -63,8 +63,16 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
             System.out.println("Entering the refresh bar action method");
             if(Scheduler.getRunningJob()!=null)
             {
-                currentProcess = Scheduler.getRunningJob().getJobName();
-                setCurrentProcess(currentProcess);
+                if(Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase("CANCELED"))
+                {
+                    currentProcess = "Aborting " + Scheduler.getRunningJob().getJobName() + "...";
+                    setCurrentProcess(currentProcess);
+                }
+                else
+                {
+                    currentProcess = Scheduler.getRunningJob().getJobName();
+                    setCurrentProcess(currentProcess);
+                }
             }
             displayType = (String)request.getSession().getAttribute("serviceBarDisplay");
             setDisplayType(displayType);
