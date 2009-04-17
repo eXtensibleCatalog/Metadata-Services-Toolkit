@@ -488,6 +488,9 @@ public abstract class MetadataService
 	
 					for(Record outgoingRecord : results)
 					{
+						// Mark the output record as a successor of the input record
+						processMe.addSuccessor(outgoingRecord);
+						
 						// Mark the record as not coming from a provider
 						outgoingRecord.setProvider(null);
 						
@@ -507,6 +510,11 @@ public abstract class MetadataService
 							updateExistingRecord(outgoingRecord, oldRecord);
 					} // end loop over processed records
 	
+					// Mark the record as having been processed by this service
+					processMe.addProcessedByService(service);
+					processMe.removeInputForService(service);
+					recordService.update(processMe);
+					
 					numProcessed++;
 					if(numProcessed % 100000 == 0)
 						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + numProcessed + " records so far.");
@@ -555,11 +563,6 @@ public abstract class MetadataService
 							}
 						
 					}
-				
-				// Mark the record as having been processed by this service
-				processMe.addProcessedByService(service);
-				processMe.removeInputForService(service);
-				recordService.update(processMe);
 			} // end loop over records to process
 
 			// Reopen the reader so it can see the changes made by running the service
