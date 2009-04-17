@@ -99,4 +99,12 @@ public class HarvesterWorkerThread extends WorkerThread
 		return Harvester.getRunningHarvester().getProvider().getName();
 	}
 
+	/**
+	 * Gets the status of the job
+	 */
+	public String getJobStatus() {
+		
+		return Harvester.getRunningHarvester().getHarvesterStatus();
+	}
+
 } // end class HarvestWorkerThread

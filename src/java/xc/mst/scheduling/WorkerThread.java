@@ -25,4 +25,6 @@ public abstract class WorkerThread extends Thread
 	public abstract void proceed();
 	
 	public abstract String getJobName();
+	
+	public abstract String getJobStatus();
 } // end class WorkerThread
