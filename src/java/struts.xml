@@ -278,6 +278,12 @@
 			<result name="success">inc/refreshPageOnce.jsp?serviceStatus=resumed</result>
 		</action>
 
+        <action name="refreshServiceBar" class="xc.mst.action.processingDirective.RefreshServiceBar">
+         	<interceptor-ref name="default"/>
+			<result name="success">inc/service_bar.jsp</result>
+			<result name="input">inc/error.jsp</result>
+		</action>
+
          <action name="listProcessingDirectives" class="xc.mst.action.processingDirective.ListProcessingDirectives">
          	<interceptor-ref name="default"/>
 			<result name="success">/pages/services/list_processingdirectives.jsp</result>
