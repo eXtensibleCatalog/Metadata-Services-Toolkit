@@ -894,5 +894,18 @@ public abstract class MetadataService
 		return service.getStatus();
 	}
 	
-	
+	/**
+	 * Gets the status of the job
+	 */
+	public String getServiceStatus(){
+		
+		if(isCanceled)
+			return Constants.STATUS_SERVICE_CANCELED;
+		else if(isPaused)
+			return Constants.STATUS_SERVICE_PAUSED;
+		else if(runningService!= null)
+			return Constants.STATUS_SERVICE_RUNNING;
+		else
+			return Constants.STATUS_SERVICE_NOT_RUNNING;
+	}
 }
