@@ -16,9 +16,8 @@
 
 <c:if test="${user!=null}">
     <mst:checkUserPermission permission="Services">
-        <div class="serviceStatus">
-            Process Description &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-            <mst:currentProcessStatus/>
+        <div class="serviceStatus" id="serviceBar">
+            
         </div>
     </mst:checkUserPermission>
 </c:if>
@@ -54,4 +53,3 @@
     </li>
 </ul>
 </div>
-<meta http-equiv="refresh" content="200">

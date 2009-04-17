@@ -91,7 +91,7 @@
                                            <c:param name="isAscendingOrder" value="true"/>
                                            <c:param name="columnSorted" value="LogFileName"/>
                                          </c:url>
-                                          <a href="${logSortUrl}">Filename</a>
+                                          <a href="${logSortUrl}">Log Type</a>
                                      </c:if>
 
                                      <c:if test="${columnSorted=='LogFileName'}">
@@ -100,7 +100,7 @@
                                          <c:param name="columnSorted" value="LogFileName"/>
                                        </c:url>
 
-                                       <a href="${logSortUrl}">Filename</a>
+                                       <a href="${logSortUrl}">Log Type</a>
 
                                         <c:choose>
                                             <c:when test="${isAscendingOrder==true}">

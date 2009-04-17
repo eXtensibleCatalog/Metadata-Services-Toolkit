@@ -9,7 +9,7 @@
   
 YAHOO.namespace("xc.mst.directives.delete");
 
-YAHOO.xc.mst.directives.delete = {
+YAHOO.xc.mst.directives.deleteDirective = {
 
 	/**
 	 * Delete Processing Directive
@@ -19,7 +19,7 @@ YAHOO.xc.mst.directives.delete = {
 	{	
 	
 		document.getElementById('processingDirective_id').value= procDirId;
-		YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.showDialog();
+		YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirectiveDialog.showDialog();
 	
 	},
 	
@@ -31,20 +31,20 @@ YAHOO.xc.mst.directives.delete = {
 		// Define various event handlers for Dialog
 		var handleSubmit = function() {
 			document.deleteProcessingDirective.submit();
-		    YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.hide();
+		    YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirectiveDialog.hide();
 		};
 		
 			
 		// handle a cancel of deleting user dialog
 		var handleCancel = function() {
-		    YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.hide();
+		    YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirectiveDialog.hide();
 		};
 		
 		// Instantiate the Dialog
 		// make it modal - 
 		// it should not start out as visible - it should not be shown until 
 		// new user button is clicked.
-		YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog = new YAHOO.widget.Dialog('deleteProcessingDirectiveDialog', 
+		YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirectiveDialog = new YAHOO.widget.Dialog('deleteProcessingDirectiveDialog',
 	        { width : "400px",
 			  visible : false, 
 			  modal : true,
@@ -54,15 +54,15 @@ YAHOO.xc.mst.directives.delete = {
 		
 			
        // Show the dialog
-       YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.showDialog = function()
+       YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirectiveDialog.showDialog = function()
        {
-           YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.show();
-           YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.center();
+           YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirectiveDialog.show();
+           YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirectiveDialog.center();
        }
 
 
 		// Render the Dialog
-		YAHOO.xc.mst.directives.delete.deleteProcessingDirectiveDialog.render();
+		YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirectiveDialog.render();
 
 
 
@@ -73,10 +73,10 @@ YAHOO.xc.mst.directives.delete = {
 	 */ 
 	init : function() 
 	{
-	    YAHOO.xc.mst.directives.delete.createDeleteProcessingDirectiveDialog();
+	    YAHOO.xc.mst.directives.deleteDirective.createDeleteProcessingDirectiveDialog();
 	}
 
 }
 
 // initialize the code once the dom is ready
-YAHOO.util.Event.onDOMReady(YAHOO.xc.mst.directives.delete.init);
+YAHOO.util.Event.onDOMReady(YAHOO.xc.mst.directives.deleteDirective.init);

@@ -199,7 +199,7 @@
                                         </c:forEach>
                                     </div>
                                 </td>
-                                <td><button class="xc_button" type="button" name="deleteService" onclick="javascript:YAHOO.xc.mst.directives.delete.deleteProcessingDirective(${n.id});">Delete</button></td>
+                                <td><button class="xc_button" type="button" name="deleteService" onclick="javascript:YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirective(${n.id});">Delete</button></td>
 
                                </tr>
                            </c:forEach>

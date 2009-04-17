@@ -11,9 +11,9 @@ YAHOO.namespace("xc.mst.serviceStatusBar");
 
 YAHOO.xc.mst.serviceStatusBar = {
 
- alterStatus: function(changedStatus)
+alterStatus : function(changedStatus)
             {
-                
+
                   var http_request = false;
 
                   if (window.XMLHttpRequest)
@@ -58,21 +58,21 @@ YAHOO.xc.mst.serviceStatusBar = {
               var findAbort = response.search("MSTServiceAborted");
               if(findResume!=-1)
                   {
-                       
+
                         document.getElementById("pauseButton").style.display = "inline";
                         document.getElementById("resumeButton").style.display = "none";
                         document.getElementById("abortButton").style.display = "inline";
                   }
               if(findPause!=-1)
                   {
-                        
+
                         document.getElementById("pauseButton").style.display = "none";
                         document.getElementById("resumeButton").style.display = "inline";
                         document.getElementById("abortButton").style.display = "inline";
                   }
               if(findAbort!=-1)
                   {
-                       
+
                         document.getElementById("pauseButton").style.display = "inline";
                         document.getElementById("resumeButton").style.display = "none";
                         document.getElementById("abortButton").style.display = "inline";
@@ -99,6 +99,74 @@ YAHOO.xc.mst.serviceStatusBar = {
         http_request.send(null);
 
 
-    }
+    },
+refreshServiceBar : function()
+    {
+        try
+        {
+            var http_request = false;
+		if (window.XMLHttpRequest)
+                  { // Mozilla, Safari,...
+                     http_request = new XMLHttpRequest();
+                     if (http_request.overrideMimeType) {
+                        // set type accordingly to anticipated content type
+                        //http_request.overrideMimeType('text/xml');
+                        http_request.overrideMimeType('text/html');
+                     }
+                  }
+                  else if (window.ActiveXObject)
+                  { // IE
+                     try
+                     {
+                        http_request = new ActiveXObject("Msxml2.XMLHTTP");
+                     }
+                     catch (e)
+                     {
+                        try
+                        {
+                           http_request = new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                        catch (e)
+                        {
+
+                        }
+                     }
+                  }
+                  if (!http_request)
+                  {
+                     alert('Cannot create XMLHTTP instance');
+                  }
+
+            
+            http_request.onreadystatechange=function()
+            {
+                if(http_request.readyState==4)
+                {                    
+                    document.getElementById("serviceBar").innerHTML = http_request.responseText;
+                }
+                else
+                {
+                    document.getElementById("serviceBar").innerHTML = "ERROR : Please try later";
+                }
+            }
+            
+            http_request.open("GET","refreshServiceBar.action",true);           
+            http_request.send(null);
+            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',10000);
+        }
+        catch(e)
+        {
+            alert(e.description);
+        }
+
+    },
+	init : function()
+	{
+	    YAHOO.xc.mst.serviceStatusBar.refreshServiceBar();
+	}
 
  }
+
+
+// initialize the code once the dom is ready
+YAHOO.util.Event.onDOMReady(YAHOO.xc.mst.serviceStatusBar.init);
