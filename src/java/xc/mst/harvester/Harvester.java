@@ -1642,5 +1642,20 @@ public class Harvester implements ErrorHandler
 		return provider;
 	}
 
+	/**
+	 * Gets the status of the job
+	 */
+	public String getHarvesterStatus(){
+		
+		if(killed)
+			return Constants.STATUS_SERVICE_CANCELED;
+		else if(isPaused)
+			return Constants.STATUS_SERVICE_PAUSED;
+		else if(runningHarvester!= null)
+			return Constants.STATUS_SERVICE_RUNNING;
+		else
+			return Constants.STATUS_SERVICE_NOT_RUNNING;
+	}
+	
 	
 } // end class Harvester
