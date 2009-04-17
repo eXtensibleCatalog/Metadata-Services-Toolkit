@@ -154,7 +154,8 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                                                    COL_DAY_OF_WEEK + ", " +
                                                    COL_HOUR + ", " +
                                                    COL_NOTIFY_EMAIL + ", " +
-                                                   COL_STATUS + " " +
+                                                   COL_STATUS + ", " +
+                                                   COL_REQUEST + " " +
 	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME;
 
 					if(log.isDebugEnabled())
@@ -188,6 +189,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
 					harvestSchedule.setStatus(results.getString(11));
+					harvestSchedule.setRequest(results.getString(12));
 
 					// Return the harvest schedule
 					harvestSchedules.add(harvestSchedule);
@@ -246,7 +248,8 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                                            COL_DAY_OF_WEEK + ", " +
                                            COL_HOUR + ", " +
                                            COL_NOTIFY_EMAIL + ", " +
-                                           COL_STATUS + " " +
+                                           COL_STATUS + ", " +
+                                           COL_REQUEST + " " +
                                "FROM " + HARVEST_SCHEDULES_TABLE_NAME + " " + 
                                "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
 		
@@ -280,6 +283,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				harvestSchedule.setHour(results.getInt(9));
 				harvestSchedule.setNotifyEmail(results.getString(10));
 				harvestSchedule.setStatus(results.getString(11));
+				harvestSchedule.setRequest(results.getString(12));
 				
 				// Return the harvest schedule
 				harvestSchedules.add(harvestSchedule);
@@ -338,7 +342,8 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                                                    COL_DAY_OF_WEEK + ", " +
                                                    COL_HOUR + ", " +
                                                    COL_NOTIFY_EMAIL + ", " +
-                                                   COL_STATUS + " " +
+                                                   COL_STATUS + ", " +
+                                                   COL_REQUEST + " " +
 	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_HARVEST_SCHEDULE_ID + "=?";
 
@@ -376,6 +381,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
 					harvestSchedule.setStatus(results.getString(11));
+					harvestSchedule.setRequest(results.getString(12));
 					harvestSchedule.setSteps(harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()));
 
 					// Get the sets and formats for the schedule based on its steps
@@ -439,7 +445,8 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                                                    COL_DAY_OF_WEEK + ", " +
                                                    COL_HOUR + ", " +
                                                    COL_NOTIFY_EMAIL + ", " +
-                                                   COL_STATUS + " " +
+                                                   COL_STATUS + ", " +
+                                                   COL_REQUEST + " " +
 	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_HARVEST_SCHEDULE_ID + "=?";
 
@@ -477,6 +484,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
 					harvestSchedule.setStatus(results.getString(11));
+					harvestSchedule.setRequest(results.getString(12));
 
 					// Get the sets and formats for the schedule based on its steps
 					for(HarvestScheduleStep step : harvestSchedule.getSteps())
@@ -539,7 +547,8 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                                                    COL_DAY_OF_WEEK + ", " +
                                                    COL_HOUR + ", " +
                                                    COL_NOTIFY_EMAIL + ", " +
-                                                   COL_STATUS + " " +
+                                                   COL_STATUS + ", " +
+                                                   COL_REQUEST + " " +
 	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_SCHEDULE_NAME + "=?";
 
@@ -577,6 +586,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
 					harvestSchedule.setStatus(results.getString(11));
+					harvestSchedule.setRequest(results.getString(12));
 					harvestSchedule.setSteps(harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()));
 
 					// Get the sets and formats for the schedule based on its steps
@@ -640,7 +650,8 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                                                    COL_DAY_OF_WEEK + ", " +
                                                    COL_HOUR + ", " +
                                                    COL_NOTIFY_EMAIL + ", " +
-                                                   COL_STATUS + " " +
+                                                   COL_STATUS + ", " +
+                                                   COL_REQUEST + " " +
 	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_HARVEST_SCHEDULE_ID + "=?";
 
@@ -677,6 +688,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
 					harvestSchedule.setStatus(results.getString(11));
+					harvestSchedule.setRequest(results.getString(12));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the harvest schedule with ID " + harvestScheduleId + " in the database.");
@@ -734,7 +746,8 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                     							   COL_DAY_OF_WEEK + ", " +
                     							   COL_HOUR + ", " +
                     							   COL_NOTIFY_EMAIL + ", " +
-                    							   COL_STATUS + " " +
+                    							   COL_STATUS + ", " +
+                                                   COL_REQUEST + " " +
 	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_PROVIDER_ID + "=?";
 
@@ -771,6 +784,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
 					harvestSchedule.setStatus(results.getString(11));
+					harvestSchedule.setRequest(results.getString(12));
 
 					if(log.isDebugEnabled()) {
 						log.debug("Found harvest schedule with provider ID " + providerId + ".");
@@ -828,7 +842,8 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                     							   COL_DAY_OF_WEEK + ", " +
                     							   COL_HOUR + ", " +
                     							   COL_NOTIFY_EMAIL + ", " +
-                    							   COL_STATUS + " " +
+                    							   COL_STATUS + ", " +
+                                                   COL_REQUEST + " " +
 	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME + " " +
 	                                   "WHERE (" + COL_START_DATE + " IS NULL OR " + COL_START_DATE + "<=?) " +
 	                                   "AND (" + COL_END_DATE + " IS NULL OR " + COL_END_DATE + ">=?) " +
@@ -878,6 +893,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
 					harvestSchedule.setStatus(results.getString(11));
+					harvestSchedule.setRequest(results.getString(12));
 					harvestSchedule.setSteps(harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()));
 
 					// Get the sets and formats for the schedule based on its steps
@@ -943,8 +959,9 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				                                                            COL_DAY_OF_WEEK + ", " +
 				                                                            COL_HOUR + ", " +
 				                                                            COL_NOTIFY_EMAIL + ", " +
-				                                                            COL_STATUS + ") " +
-	                                   "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				                                                            COL_STATUS + ", " +
+				                                                            COL_REQUEST + ") " +
+	                                   "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"insert harvest schedule\" PreparedStatement from the SQL " + insertSql);
@@ -966,6 +983,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				psInsert.setInt(8, harvestSchedule.getHour());
 				psInsert.setString(9, harvestSchedule.getNotifyEmail());
 				psInsert.setString(10, Constants.STATUS_SERVICE_NOT_RUNNING);
+				psInsert.setString(11, harvestSchedule.getRequest());
 
 				// Execute the insert statement and return the result
 				if(psInsert.executeUpdate() > 0)
@@ -1055,7 +1073,8 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                                                                           COL_DAY_OF_WEEK + "=?, " +
                                                                           COL_HOUR + "=?, " +
 				                                                          COL_NOTIFY_EMAIL + "=?, " +
-				                                                          COL_STATUS + "=? " +
+				                                                          COL_STATUS + "=?, " +
+				                                                          COL_REQUEST + "=? " +
 	                                   "WHERE " + COL_HARVEST_SCHEDULE_ID + "=?";
 
 					if(log.isDebugEnabled())
@@ -1077,7 +1096,8 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				psUpdate.setInt(8, harvestSchedule.getHour());
 				psUpdate.setString(9, harvestSchedule.getNotifyEmail());
 				psUpdate.setString(10, harvestSchedule.getStatus());
-				psUpdate.setInt(11, harvestSchedule.getId());
+				psUpdate.setString(11, harvestSchedule.getRequest());
+				psUpdate.setInt(12, harvestSchedule.getId());
 
 				// Execute the update statement and return the result
 				boolean success = psUpdate.executeUpdate() > 0;

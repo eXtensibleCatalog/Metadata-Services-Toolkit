@@ -103,6 +103,11 @@ public abstract class HarvestScheduleDAO
 	 */
 	public final static String COL_STATUS = "status";
 	
+	/**
+	 * The current request of the harvest.
+	 */
+	public final static String COL_REQUEST = "request";
+	
 	// Initialize the list of sortable columns
 	static
 	{
@@ -117,6 +122,7 @@ public abstract class HarvestScheduleDAO
 		sortableColumns.add(COL_HOUR);
 		sortableColumns.add(COL_NOTIFY_EMAIL);
 		sortableColumns.add(COL_STATUS);
+		sortableColumns.add(COL_REQUEST);
 	} // end initialization of sortableColumns
 	
 	/**

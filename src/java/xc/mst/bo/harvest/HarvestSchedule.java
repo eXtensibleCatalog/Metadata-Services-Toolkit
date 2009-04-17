@@ -79,6 +79,10 @@ public class HarvestSchedule
 	 */
 	private String status = null;
 	
+	/**
+	 * The OAI requests placed when the harvest schedule was run
+	 */
+	private String request = null;
 
 	/**
 	 * A list of sets to be harvested by the schedule
@@ -310,6 +314,26 @@ public class HarvestSchedule
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	/**
+	 * Gets the harvest schedule's request
+	 *
+	 * @return The harvest schedule's request
+	 */
+	public String getRequest()
+	{
+		return request;
+	} // end method getRequest()
+
+	/**
+	 * Sets the harvest schedule's request
+	 *
+	 * @param request The harvest schedule's new request
+	 */
+	public void setRequest(String request)
+	{
+		this.request = request;
+	} // end method setRequest(String)
 	
 	/**
 	 * Gets the sets to be harvested by the schedule

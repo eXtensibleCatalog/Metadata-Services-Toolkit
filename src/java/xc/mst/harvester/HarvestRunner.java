@@ -23,9 +23,12 @@ import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.harvest.HarvestScheduleStep;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
 import xc.mst.dao.harvest.DefaultHarvestDAO;
+import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.DefaultHarvestScheduleStepDAO;
 import xc.mst.dao.harvest.HarvestDAO;
+import xc.mst.dao.harvest.HarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestScheduleStepDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.ProviderDAO;
@@ -60,6 +63,11 @@ public class HarvestRunner
 	 */
 	private static HarvestDAO harvestDao = new DefaultHarvestDAO();
 
+	/**
+	 * Data access object for getting harvest schedules
+	 */
+	private static HarvestScheduleDAO harvestScheduleDao = new DefaultHarvestScheduleDAO();
+	
 	/**
 	 * Data access object for getting harvest schedule steps
 	 */
@@ -120,9 +128,9 @@ public class HarvestRunner
 	private String baseURL = null;
 
 	/**
-	 * The harvest schedule step to run
+	 * The harvest schedule to run
 	 */
-	private HarvestScheduleStep harvestScheduleStep = null;
+	private HarvestSchedule harvestSchedule = null;
 
 	/**
 	 * The harvest that is currently being run
@@ -130,43 +138,70 @@ public class HarvestRunner
 	private Harvest currentHarvest = null;
 
 	/**
+	 * The request run by the harvester
+	 */
+	private String request = null;
+	
+	/**
 	 * Constructs an XC_Harvester to run the passed harvest schedule step
 	 *
-	 * @param harvestScheduleStepId The ID of the harvest schedule step to run
+	 * @param harvestScheduleId The ID of the harvest schedule to run
 	 * @throws OAIErrorException If the OAI provider being harvested returned an OAI error
 	 * @throws Hexception If a serious error occurred which prevented the harvest from being completed
 	 */
-	public HarvestRunner(int harvestScheduleStepId) throws OAIErrorException, Hexception
+	public HarvestRunner(int harvestScheduleId) throws OAIErrorException, Hexception
 	{
 		// Set the parameters for the harvest based on the harvest schedule step ID
-		harvestScheduleStep = harvestScheduleStepDao.getById(harvestScheduleStepId);
-		HarvestSchedule harvestSchedule = harvestScheduleStep.getSchedule();
+		harvestSchedule = harvestScheduleDao.getById(harvestScheduleId);
 		provider = harvestSchedule.getProvider();
 		baseURL = provider.getOaiProviderUrl();
-	    metadataPrefix = harvestScheduleStep.getFormat().getName();
-
-		// If there was a set, set up the setSpec
-		if(harvestScheduleStep.getSet() != null)
-			setSpec = harvestScheduleStep.getSet().getSetSpec();
-
-		// Set the from field to the time when we last harvested the provider
-		from = harvestScheduleStep.getLastRan();
-
-		// Harvest all records if the from parameter was not provided
-		if(from != null)
-			harvestAll = false;
-
-		if(log.isInfoEnabled())
-			log.info("Got the base URL from the provider table");
 	} // end constructor(int)
 
+	public void runHarvest()
+	{
+		StringBuilder requests = new StringBuilder();
+		
+		for(HarvestScheduleStep step : harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()))
+		{
+			runHarvestStep(step);
+			
+			if(requests.length() == 0)
+				requests.append(request);
+			else
+				requests.append("\n").append(request);
+		}
+		
+		harvestSchedule.setRequest(requests.toString());
+		try
+		{
+			harvestScheduleDao.update(harvestSchedule);
+		}
+		catch(DataException e)
+		{
+			log.error("An error occurred while updating the harvest schedule's request field.", e);
+		}
+	}
+	
 	/**
 	 * Runs the harvest
 	 */
-	public void runHarvest()
+	private void runHarvestStep(HarvestScheduleStep harvestScheduleStep)
 	{
 		try
-		{
+		{	
+			metadataPrefix = harvestScheduleStep.getFormat().getName();
+
+			// If there was a set, set up the setSpec
+			if(harvestScheduleStep.getSet() != null)
+				setSpec = harvestScheduleStep.getSet().getSetSpec();
+
+			// Set the from field to the time when we last harvested the provider
+			from = harvestScheduleStep.getLastRan();
+
+			// Harvest all records if the from parameter was not provided
+			if(from != null)
+				harvestAll = false;
+			
 			// The time when we started the harvest
 			Date startTime = new Date();
 
@@ -189,6 +224,10 @@ public class HarvestRunner
 					 harvestScheduleStep,
 					 currentHarvest);
 
+			// Set the request used to run the harvest
+			currentHarvest = harvestDao.getById(currentHarvest.getId());
+			request = currentHarvest.getRequest();
+			
 			// Set the harvest schedule step's last run date to the time when we started the harvest.
 			harvestScheduleStep.setLastRan(startTime);
 			harvestScheduleStepDao.update(harvestScheduleStep, harvestScheduleStep.getSchedule().getId());
@@ -208,6 +247,16 @@ public class HarvestRunner
 			log.error("An error occurred while harvesting " + baseURL, e);
 		} // end catch(Exception)
 	} // end method runHarvest()
+	
+	/**
+	 * Gets the request used to start the harvest
+	 * 
+	 * @return The OAI request used to start the harvest
+	 */
+	public String getRequest()
+	{
+		return request;
+	}
 } // end class HarvestRunner
 
 

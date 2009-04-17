@@ -30,16 +30,16 @@ public class HarvesterWorkerThread extends WorkerThread
 	/**
 	 * The ID of the harvest schedule to run
 	 */
-	private int harvestScheduleStepId = -1;
+	private int harvestScheduleId = -1;
 
 	/**
 	 * Sets the ID of the harvest schedule step to be run
 	 *
 	 * @param newId The ID of the harvest schedule step to be run
 	 */
-	public void setHarvestScheduleStepId(int newId)
+	public void setHarvestScheduleId(int newId)
 	{
-		harvestScheduleStepId = newId;
+		harvestScheduleId = newId;
 	} // end method setHarvestScheduleStepId(int)
 
 	/**
@@ -50,15 +50,15 @@ public class HarvesterWorkerThread extends WorkerThread
 		try
 		{
 			if(log.isDebugEnabled())
-				log.debug("Invoking the harvester on harvest schedule with ID " + harvestScheduleStepId + ".");
+				log.debug("Invoking the harvester on harvest schedule with ID " + harvestScheduleId + ".");
 
 			// Construct the XC_Harvester object.  This will automatically run the harvester
-			HarvestRunner harvester = new HarvestRunner(harvestScheduleStepId);
+			HarvestRunner harvester = new HarvestRunner(harvestScheduleId);
 			harvester.runHarvest();
 		} // end try(run the harvest)
 		catch(Exception e)
 		{
-			log.error("An error occurred while running the harvest schedule with ID " + harvestScheduleStepId, e);
+			log.error("An error occurred while running the harvest schedule with ID " + harvestScheduleId, e);
 		} // end catch(Exception)
 		finally{
 			Scheduler.setJobCompletion();
