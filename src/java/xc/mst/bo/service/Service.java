@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Set;
 
 /**
  * Represents a service in the MST
@@ -57,6 +58,11 @@ public class Service
 	 */
 	private List<Format> inputFormats = new ArrayList<Format>();
 
+	/**
+	 * A list of sets which the service outputs
+	 */
+	private List<Set> outputSets = new ArrayList<Set>();
+	
 	/**
 	 * A list of formats which the service outputs
 	 */
@@ -294,6 +300,48 @@ public class Service
 			inputFormats.remove(format);
 	} // end method removeInputFormat(Format)
 
+	/**
+	 * Gets the sets the service outputs
+	 *
+	 * @return The provider's output sets
+	 */
+	public List<Set> getOutputSets()
+	{
+		return outputSets;
+	} // end method getOutputSets()
+
+	/**
+	 * Sets the sets the service outputs
+	 *
+	 * @param sets A list of sets the service outputs
+	 */
+	public void setOutputSets(List<Set> outputSets)
+	{
+		this.outputSets = outputSets;
+	} // end method setOutputSets(List<Set>)
+
+	/**
+	 * Adds a set to the list of sets the service outputs
+	 *
+	 * @param set The set to add to the list of sets the service outputs
+	 */
+	public void addOutputSet(Set set)
+	{
+		if(!outputSets.contains(set))
+			outputSets.add(set);
+	} // end method addOutputSet(Set)
+
+	/**
+	 * Removes a set from the list of sets the service outputs
+	 *
+	 * @param set The set to remove from the list of sets the service outputs
+	 */
+	public void removeOutputSet(Set set)
+	{
+		if(outputSets.contains(set))
+			outputSets.remove(set);
+	} // end method removeOutputSet(Set)
+	
 	/**
 	 * Gets the formats the service outputs
 	 *

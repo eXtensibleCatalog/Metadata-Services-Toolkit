@@ -20,6 +20,8 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
 import xc.mst.dao.processing.ProcessingDirectiveDAO;
+import xc.mst.dao.service.DefaultServiceDAO;
+import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.scheduling.Scheduler;
@@ -42,6 +44,9 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
     /** DAO for processing directives */
     private ProcessingDirectiveDAO processingDirectiveDao = new DefaultProcessingDirectiveDAO();
 
+    /** DAO for services */
+    private ServiceDAO serviceDao = new DefaultServiceDAO();
+    
     /**
 	 * Manager for getting, inserting and updating records
 	 */
@@ -63,6 +68,16 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
     public void insertProcessingDirective(ProcessingDirective processingDirective) {
         try {
 			processingDirectiveDao.insert(processingDirective);
+			
+			// If the processing directive has an output set that is not
+			// already in the target service, we need to add it as an input set
+			// to that service
+			if(processingDirective.getOutputSet() != null)
+			{
+				processingDirective.getService().addOutputSet(processingDirective.getOutputSet());
+				serviceDao.update(processingDirective.getService());
+			}
+			
 			runProcessingDirective(processingDirective);
 		} catch (DataException e) {
 			log.error("Data Exception", e);
@@ -88,6 +103,16 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
     public void updateProcessingDirective(ProcessingDirective processingDirective) {
         try {
 			processingDirectiveDao.update(processingDirective);
+			
+			// If the processing directive has an output set that is not
+			// already in the target service, we need to add it as an input set
+			// to that service
+			if(processingDirective.getOutputSet() != null)
+			{
+				processingDirective.getService().addOutputSet(processingDirective.getOutputSet());
+				serviceDao.update(processingDirective.getService());
+			}
+			
 			runProcessingDirective(processingDirective);
 		} catch (DataException e) {
 			log.error("Data Exception", e);

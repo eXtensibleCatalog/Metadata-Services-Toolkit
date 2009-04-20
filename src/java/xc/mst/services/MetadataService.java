@@ -494,6 +494,10 @@ public abstract class MetadataService
 						// Mark the record as not coming from a provider
 						outgoingRecord.setProvider(null);
 						
+						// Add all sets the outgoing record belongs to to the service's list of output sets
+						for(Set outputSet : outgoingRecord.getSets())
+							service.addOutputSet(outputSet);
+						
 						if(outputSetId > 0)
 							outgoingRecord.addSet(setDao.getById(outputSetId));
 	

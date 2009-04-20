@@ -484,6 +484,24 @@ CREATE TABLE services_to_output_formats
   FOREIGN KEY (format_id) REFERENCES formats(format_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- -------------------------------------------------------------
+-- Table structure for table 'services_to_output_sets'
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS services_to_output_sets;
+CREATE TABLE services_to_output_sets
+(
+  service_to_output_set_id INT(11) NOT NULL AUTO_INCREMENT,
+  service_id INT(11) NOT NULL,
+  set_id INT(11) NOT NULL,
+
+  PRIMARY KEY(service_to_output_set_id),
+
+  INDEX idx_services_to_output_sets_service_id(service_id),
+  FOREIGN KEY (service_id) REFERENCES services(service_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  INDEX idx_services_to_output_sets_set_id(set_id),
+  FOREIGN KEY (set_id) REFERENCES sets(set_id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -------------------------------------------------------------
 -- Table structure for oai_identifier_for_services

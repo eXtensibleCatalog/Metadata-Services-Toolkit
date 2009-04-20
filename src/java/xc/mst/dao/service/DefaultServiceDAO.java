@@ -25,7 +25,9 @@ import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
+import xc.mst.dao.provider.DefaultSetDAO;
 import xc.mst.dao.provider.FormatDAO;
+import xc.mst.dao.provider.SetDAO;
 import xc.mst.utils.LogWriter;
 
 public class DefaultServiceDAO extends ServiceDAO
@@ -36,10 +38,20 @@ public class DefaultServiceDAO extends ServiceDAO
 	private FormatDAO formatDao = new DefaultFormatDAO();
 
 	/**
+	 * Data access object for getting sets
+	 */
+	private SetDAO setDao = new DefaultSetDAO();
+	
+	/**
 	 * Data access object for getting input formats for a service
 	 */
 	private ServiceInputFormatUtilDAO serviceInputFormatDAO = new DefaultServiceInputFormatUtilDAO();
 
+	/**
+	 * Data access object for getting input sets for a service
+	 */
+	private ServiceOutputSetUtilDAO serviceInputSetDAO = new DefaultServiceOutputSetUtilDAO();
+	
 	/**
 	 * Data access object for getting output formats for a service
 	 */
@@ -212,6 +224,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 						service.addInputFormat(formatDao.getById(inputFormatId));
 
+					for(Integer inputSetId : serviceInputSetDAO.getOutputSetsForService(service.getId()))
+						service.addOutputSet(setDao.getById(inputSetId));
+					
 					for(Integer outputFormatId : serviceOutputFormatDAO.getOutputFormatsForService(service.getId()))
 						service.addOutputFormat(formatDao.getById(outputFormatId));
 
@@ -335,6 +350,9 @@ public class DefaultServiceDAO extends ServiceDAO
 				for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 					service.addInputFormat(formatDao.getById(inputFormatId));
 
+				for(Integer inputSetId : serviceInputSetDAO.getOutputSetsForService(service.getId()))
+					service.addOutputSet(setDao.getById(inputSetId));
+
 				for(Integer outputFormatId : serviceOutputFormatDAO.getOutputFormatsForService(service.getId()))
 					service.addOutputFormat(formatDao.getById(outputFormatId));
 
@@ -455,6 +473,9 @@ public class DefaultServiceDAO extends ServiceDAO
 
 					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 						service.addInputFormat(formatDao.getById(inputFormatId));
+
+					for(Integer inputSetId : serviceInputSetDAO.getOutputSetsForService(service.getId()))
+						service.addOutputSet(setDao.getById(inputSetId));
 
 					for(Integer outputFormatId : serviceOutputFormatDAO.getOutputFormatsForService(service.getId()))
 						service.addOutputFormat(formatDao.getById(outputFormatId));
@@ -682,6 +703,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 						service.addInputFormat(formatDao.getById(inputFormatId));
 
+					for(Integer inputSetId : serviceInputSetDAO.getOutputSetsForService(service.getId()))
+						service.addOutputSet(setDao.getById(inputSetId));
+
 					for(Integer outputFormatId : serviceOutputFormatDAO.getOutputFormatsForService(service.getId()))
 						service.addOutputFormat(formatDao.getById(outputFormatId));
 
@@ -798,6 +822,9 @@ public class DefaultServiceDAO extends ServiceDAO
 					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 						service.addInputFormat(formatDao.getById(inputFormatId));
 
+					for(Integer inputSetId : serviceInputSetDAO.getOutputSetsForService(service.getId()))
+						service.addOutputSet(setDao.getById(inputSetId));
+
 					for(Integer outputFormatId : serviceOutputFormatDAO.getOutputFormatsForService(service.getId()))
 						service.addOutputFormat(formatDao.getById(outputFormatId));
 
@@ -911,6 +938,10 @@ public class DefaultServiceDAO extends ServiceDAO
 				    for(Format inputFormat : service.getInputFormats())
 				    	success = serviceInputFormatDAO.insert(service.getId(), inputFormat.getId()) && success;
 
+				    // Insert the input set assignments
+				    for(xc.mst.bo.provider.Set inputSet : service.getOutputSets())
+				    	success = serviceInputSetDAO.insert(service.getId(), inputSet.getId()) && success;
+				    
 				    // Insert the output format assignments
 				    for(Format outputFormat : service.getOutputFormats())
 				    	success = serviceOutputFormatDAO.insert(service.getId(), outputFormat.getId()) && success;
@@ -1036,6 +1067,7 @@ public class DefaultServiceDAO extends ServiceDAO
 
 					// Delete the old input and output format assignments for the service
 					serviceInputFormatDAO.deleteInputFormatsForService(service.getId());
+					serviceInputSetDAO.deleteOutputSetsForService(service.getId());
 					serviceOutputFormatDAO.deleteOutputFormatsForService(service.getId());
 
 					// Insert the input format assignments
@@ -1046,6 +1078,10 @@ public class DefaultServiceDAO extends ServiceDAO
 				    for(Format outputFormat : service.getOutputFormats())
 				    	success = serviceOutputFormatDAO.insert(service.getId(), outputFormat.getId()) && success;
 
+				    // Insert the input set assignments
+				    for(xc.mst.bo.provider.Set inputSet : service.getOutputSets())
+				    	success = serviceInputSetDAO.insert(service.getId(), inputSet.getId()) && success;
+				    
 				    if(success)
 				    	LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the service with the name " + service.getName());
 				    else
