@@ -134,7 +134,15 @@ public class DefaultServicesService implements ServicesService
     			LogWriter.addError(logFileName, "Error adding a new service: The first line of the service configuration file must be the service's name.");
     			throw new ConfigFileException("The first line of the service configuration file must be the service's name.");
     		}
-    			
+    		
+    		// Verify that the name is unique
+    		Service oldService = servicesDao.getByServiceName(name);
+    		if(oldService != null)
+    		{
+    			LogWriter.addError(logFileName, "Error adding a new service: The service's name was not unique.");
+    			throw new ConfigFileException("Cannot add a service named " + name + " because a service with that name already exists.");
+    		}
+    		
     		// The .jar file containing the service, which must appear in the secord line of the configuration file
     		String jar = in.readLine();
     		jar = (jar.indexOf('#') >= 0 ? jar.substring(0, jar.indexOf('#')).trim() : jar.trim());
@@ -432,7 +440,15 @@ public class DefaultServicesService implements ServicesService
     			LogWriter.addError(logFileName, "Error adding a new service: The first line of the service configuration file must be the service's name.");
     			throw new ConfigFileException("The first line of the service configuration file must be the service's name.");
     		}
-    			
+    		
+    		// Verify that the name is unique
+    		Service oldService = servicesDao.getByServiceName(name);
+    		if(!service.getName().equals(name) && oldService != null)
+    		{
+    			LogWriter.addError(logFileName, "Error updating service: The service's name was not unique.");
+    			throw new ConfigFileException("Cannot update the service and change the name to " + name + " because a service with that name already exists.");
+    		}
+    		
     		// The .jar file containing the service, which must appear in the secord line of the configuration file
     		String jar = in.readLine();
     		jar = (jar.indexOf('#') >= 0 ? jar.substring(0, jar.indexOf('#')).trim() : jar.trim());
