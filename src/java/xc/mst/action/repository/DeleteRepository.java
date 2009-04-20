@@ -50,8 +50,10 @@ public class DeleteRepository extends ActionSupport
 
     /**
      * Overrides default implementation to delete a repository.
+     *
      * @return {@link #SUCCESS}
      */
+    @Override
     public String execute()
     {
         try

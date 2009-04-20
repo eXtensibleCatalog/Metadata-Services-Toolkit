@@ -11,10 +11,58 @@ YAHOO.namespace("xc.mst.logs");
 
 YAHOO.xc.mst.logs = {
 
-    displayOAIRequest : function(url)
+    displayOAIRequest : function(providerId)
     {
-        alert("The OAI Request URL is "+url);
-    },
+         var http_request = false;
+            if (window.XMLHttpRequest)
+                  { // Mozilla, Safari,...
+                     http_request = new XMLHttpRequest();
+                     if (http_request.overrideMimeType) {
+                        // set type accordingly to anticipated content type
+                        //http_request.overrideMimeType('text/xml');
+                        http_request.overrideMimeType('text/html');
+                     }
+                  }
+                  else if (window.ActiveXObject)
+                  { // IE
+                     try
+                     {
+                        http_request = new ActiveXObject("Msxml2.XMLHTTP");
+                     }
+                     catch (e)
+                     {
+                        try
+                        {
+                           http_request = new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                        catch (e)
+                        {
+
+                        }
+                     }
+                  }
+                  if (!http_request)
+                  {
+                     alert('Cannot create XMLHTTP instance');
+                  }
+
+
+            http_request.onreadystatechange=function()
+            {
+                if(http_request.readyState==4)
+                {
+                    alert(http_request.responseText);
+                }
+                else
+                {
+                    
+                }
+            }
+
+            http_request.open("GET","displayOAIRequest.action?providerId="+providerId,true);
+            http_request.send(null);
+        },
+
     downloadFile: function(providerId)
             {
                 window.location = "pages/logs/downloadLogFile.jsp?logType=HarvestIn&id="+providerId;

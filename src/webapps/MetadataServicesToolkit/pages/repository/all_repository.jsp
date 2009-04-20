@@ -238,7 +238,7 @@
                                              </tr>
                                         </c:when>
                                         <c:otherwise>
-                                            <tr bgcolor="#ffe7e3">
+                                            <tr class="errorColumn">
                                                 <c:set var="classColumn" value="plainColumn"/>
                                                 <c:if test="${columnSorted=='RepositoryName'}">
                                                      <c:set var="classColumn" value="sortColumn"/>

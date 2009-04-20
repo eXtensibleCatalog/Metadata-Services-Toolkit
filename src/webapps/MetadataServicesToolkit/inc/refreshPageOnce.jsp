@@ -5,13 +5,23 @@
 <c:set var="pause" value="paused"/>
 <c:set var="resume" value="resumed"/>
 
+
 <c:if test="${paramVal eq abort}">
+    <c:if test="${displayText!=null}">
+            Ended <br>
+    </c:if>
     MSTServiceAborted
 </c:if>
 <c:if test="${paramVal eq pause}">
+    <c:if test="${displayText!=null}">
+            Ended <br>
+    </c:if>
     MSTServicePaused
 </c:if>
 <c:if test="${paramVal eq resume}">
+    <c:if test="${displayText!=null}">
+            Ended <br>
+    </c:if>
     MSTServiceResumed
 </c:if>
 

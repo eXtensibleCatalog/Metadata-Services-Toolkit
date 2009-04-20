@@ -342,6 +342,12 @@
      font-family: verdana,sans-serif;
      font-size: 12px;
  }
+ .errorColumn
+ {
+     background-color : #ffe7e3;
+     font-family: verdana,sans-serif;
+     font-size: 12px;
+ }
  .plainColumn
  {
      background-color : #ffffff;

@@ -23,19 +23,56 @@ import xc.mst.scheduling.Scheduler;
  */
 public class ServiceInteract extends ActionSupport implements ServletRequestAware
 {
+    /** Request object */
     HttpServletRequest request;
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+    /** This is the display text that displays the status of the process */
+    private String displayText;
+
+    /**
+     * Sets the text to be displayed in the JSP
+     *
+     * @param displayText display text
+     */
+    public void setDisplayText(String displayText)
+    {
+        this.displayText = displayText;
+    }
+
+    /**
+     * Returns the text to be displayed in the JSP
+     *
+     * @return display text
+     */
+    public String getDisplaytext()
+    {
+        return this.displayText;
+    }
+
+    /**
+     * Overrides default implementation for methods to interact with the services.
+     *
+     * @return {@link #SUCCESS}
+     */
     @Override
     public String execute()
     {
         try
         {
-            Scheduler.cancelRunningJob(); 
-            request.getSession().setAttribute("serviceBarDisplay", null);
-            System.out.println("The process was aborted");
+            if(Scheduler.getRunningJob()!=null)
+            {
+                Scheduler.cancelRunningJob();
+                request.getSession().setAttribute("serviceBarDisplay", "abort");
+            }
+            else
+            {
+                setDisplayText("Already_ended");
+                request.getSession().setAttribute("serviceBarDisplay", "abort");
+            }
+            
         }
         catch(Exception e)
         {
@@ -46,13 +83,27 @@ public class ServiceInteract extends ActionSupport implements ServletRequestAwar
         return SUCCESS;
     }
 
+    /**
+     * Method for pausing a service
+     *
+     * @return {@link #SUCCESS}
+     */
     public String pauseJob()
     {
         try
         {
-            Scheduler.pauseRunningJob();
-            request.getSession().setAttribute("serviceBarDisplay", "resume");
-            System.out.println("The process is paused");
+            if(Scheduler.getRunningJob()!=null)
+            {
+                Scheduler.pauseRunningJob();
+                request.getSession().setAttribute("serviceBarDisplay", "resume");
+            }
+            else
+            {
+                setDisplayText("Already_ended");
+                request.getSession().setAttribute("serviceBarDisplay", "abort");
+            }
+           
+            
         }
         catch(Exception e)
         {
@@ -63,13 +114,26 @@ public class ServiceInteract extends ActionSupport implements ServletRequestAwar
         return SUCCESS;
     }
 
+    /**
+     * Method which resumes a service
+     *
+     * @return {@link #SUCCESS}
+     */
     public String resumeJob()
     {
         try
         {
-            Scheduler.resumePausedJob();
-            request.getSession().setAttribute("serviceBarDisplay", "pause");
-            System.out.println("The process is resumed");
+            if(Scheduler.getRunningJob()!=null)
+            {
+                Scheduler.resumePausedJob();
+                request.getSession().setAttribute("serviceBarDisplay", "pause");
+            }
+            else
+            {
+                setDisplayText("Already_ended");
+                request.getSession().setAttribute("serviceBarDisplay", "abort");
+            }
+           
         }
         catch(Exception e)
         {

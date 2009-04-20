@@ -56,29 +56,61 @@ alterStatus : function(changedStatus)
               var findResume = response.search("MSTServiceResumed");
               var findPause = response.search("MSTServicePaused");
               var findAbort = response.search("MSTServiceAborted");
+              var findEnded = response.search("Ended");
               if(findResume!=-1)
                   {
-
-                        document.getElementById("pauseButton").style.display = "inline";
-                        document.getElementById("resumeButton").style.display = "none";
-                        document.getElementById("abortButton").style.display = "inline";
+                        if(findEnded==-1)
+                            {
+                                document.getElementById("pauseButton").style.display = "inline";
+                                document.getElementById("resumeButton").style.display = "none";
+                                document.getElementById("abortButton").style.display = "inline";
+                            }
+                        else
+                            {
+                                document.getElementById("pauseButton").style.display = "inline";
+                                document.getElementById("pauseButton").disabled = true;
+                                document.getElementById("resumeButton").style.display = "none";
+                                document.getElementById("abortButton").style.display = "inline";
+                                document.getElementById("abortButton").disabled = true;
+                                document.getElementById("currentProcess").innerHTML = "Process has already ended";
+                            }
+                        
                   }
               if(findPause!=-1)
                   {
-
-                        document.getElementById("pauseButton").style.display = "none";
-                        document.getElementById("resumeButton").style.display = "inline";
-                        document.getElementById("abortButton").style.display = "inline";
+                        if(findEnded==-1)
+                            {
+                                document.getElementById("pauseButton").style.display = "none";
+                                document.getElementById("resumeButton").style.display = "inline";
+                                document.getElementById("abortButton").style.display = "inline";
+                            }
+                        else
+                            {
+                                document.getElementById("pauseButton").style.display = "inline";
+                                document.getElementById("pauseButton").disabled = true;
+                                document.getElementById("resumeButton").style.display = "none";
+                                document.getElementById("abortButton").style.display = "inline";
+                                document.getElementById("abortButton").disabled = true;
+                                document.getElementById("currentProcess").innerHTML = "Process has already ended";
+                            }
+                        
                   }
               if(findAbort!=-1)
                   {
-
+                        if(findEnded!=-1)
+                            {
+                                document.getElementById("currentProcess").innerHTML = "Process has already ended";
+                            }
+                        else
+                            {
+                                document.getElementById("currentProcess").innerHTML = "";
+                            }
                         document.getElementById("pauseButton").style.display = "inline";
                         document.getElementById("resumeButton").style.display = "none";
                         document.getElementById("abortButton").style.display = "inline";
                         document.getElementById("pauseButton").disabled = true;
                         document.getElementById("abortButton").disabled = true;
-                        document.getElementById("currentProcess").innerHTML = "";
+                        
                   }
             }
 
@@ -141,8 +173,15 @@ refreshServiceBar : function()
             http_request.onreadystatechange=function()
             {
                 if(http_request.readyState==4)
-                {                    
-                    document.getElementById("serviceBar").innerHTML = http_request.responseText;
+                {
+                    if(document.getElementById("serviceBar").innerHTML.toString() == http_request.responseText.toString())
+                        {
+                            alert("HTML content is the same");
+                        }
+                    else
+                        {
+                            document.getElementById("serviceBar").innerHTML = http_request.responseText;
+                        }
                 }
                 else
                 {
@@ -152,7 +191,7 @@ refreshServiceBar : function()
             
             http_request.open("GET","refreshServiceBar.action",true);           
             http_request.send(null);
-            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',10000);
+            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',300000);
         }
         catch(e)
         {

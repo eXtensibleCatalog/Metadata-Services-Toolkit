@@ -6,24 +6,31 @@ Process Description &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
 </c:if>
 
 <c:set var="varPause" value="pause"/>
+<c:set var="varResume" value="resume"/>
+<c:set var="varAbort" value="abort"/>
 
 <c:choose>
     <c:when test="${currentProcess!=null}">
         <c:choose>
             <c:when test="${displayType!=null}">
-                 <c:choose>
-                    <c:when test="${displayType eq varPause}">
+                 
+                    <c:if test="${displayType eq varPause}">
                          <button style="display:none;vertical-align:bottom;" id='resumeButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("resume");' name='Resume'>Resume</button> &nbsp;&nbsp;&nbsp;
                          <button id='pauseButton' style='vertical-align:bottom;' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("pause");' name='Pause'>Pause</button> &nbsp;&nbsp;&nbsp;
                          <button id='abortButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("abort");' name='Abort'>Abort</button>");
 
-                    </c:when>
-                    <c:otherwise>
+                    </c:if>
+                    <c:if test="${displayType eq varResume}">
                           <button id='resumeButton' style='vertical-align:bottom;' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("resume");' name='Resume'>Resume</button> &nbsp;&nbsp;&nbsp;
                           <button style="display:none;vertical-align:bottom;" id='pauseButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("pause");' name='Pause'>Pause</button> &nbsp;&nbsp;&nbsp;
                           <button id='abortButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("abort");' name='Abort'>Abort</button>
-                    </c:otherwise>
-                </c:choose>
+                    </c:if>
+                    <c:if test="${displayType eq varAbort}">
+                          <button id='resumeButton' style='display:none;vertical-align:bottom;' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("resume");' name='Resume'>Resume</button> &nbsp;&nbsp;&nbsp;
+                          <button disabled style="vertical-align:bottom;" id='pauseButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("pause");' name='Pause'>Pause</button> &nbsp;&nbsp;&nbsp;
+                          <button disabled id='abortButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("abort");' name='Abort'>Abort</button>
+                    </c:if>
+               
             </c:when>
             <c:otherwise>
                 <button style="display:none;vertical-align:bottom;" id='resumeButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("resume");' name='Resume'>Resume</button> &nbsp;&nbsp;&nbsp;

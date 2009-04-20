@@ -23,22 +23,40 @@ import xc.mst.manager.processingDirective.ServicesService;
  */
 public class DeleteService extends ActionSupport
 {
+    /** The ID of the service to be deleted */
     String serviceId;
+
+    /** The service object for services */
     private ServicesService servicesService = new DefaultServicesService();
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+    /**
+     * sets the ID of the service to be deleted
+     *
+     * @param serviceId service ID
+     */
     public void setServiceId(String serviceId)
     {
         this.serviceId = serviceId;
     }
-
+    
+    /**
+     * returns the ID of the service to be deleted
+     *
+     * @return service ID
+     */
     public String getServiceId()
     {
         return this.serviceId;
     }
 
+    /**
+     * Overrides default implementation to delete a service.
+     *
+     * @return {@link #SUCCESS}
+     */
     @Override
     public String execute()
     {

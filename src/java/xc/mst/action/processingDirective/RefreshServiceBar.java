@@ -35,26 +35,51 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
     /** Determines how the HTML should be displayed in the view page for this action */
     private String displayType;
 
+    /**
+     * Sets the name of the surrent process being executed
+     *
+     * @param currentProcess name of the process
+     */
     public void setCurrentProcess(String currentProcess)
     {
         this.currentProcess = currentProcess;
     }
 
+    /**
+     * returns the current process being executed by the MST
+     *
+     * @return current process
+     */
     public String getCurrentProcess()
     {
         return this.currentProcess;
     }
 
+    /**
+     * Sets the type of display depending on the buttons to be displayed in the JSP
+     *
+     * @param displayType display type
+     */
     public void setDisplayType(String displayType)
     {
         this.displayType = displayType;
     }
 
+    /**
+     * Returns the type of display depending on the buttons to be displayed in the JSP
+     *
+     * @return display type
+     */
     public String getDisplayType()
     {
         return this.displayType;
     }
 
+    /**
+     * Overrides default implementation to refresh the contents of the service status bar.
+     *
+     * @return {@link #SUCCESS}
+     */
     @Override
     public String execute()
     {
@@ -72,6 +97,10 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
                     currentProcess = Scheduler.getRunningJob().getJobName();
                     setCurrentProcess(currentProcess);
                 }
+            }
+            else
+            {
+                request.getSession().setAttribute("serviceBarDisplay", null);
             }
             displayType = (String)request.getSession().getAttribute("serviceBarDisplay");
             setDisplayType(displayType);

@@ -126,6 +126,7 @@ public class AddService extends ActionSupport
             String location = "serviceConfig/" + getSelectedLocation();
             File file = new File(location);
             System.out.println("The path is "+location);
+
             servicesService.addNewService(file);
             return SUCCESS;
         }
@@ -140,6 +141,11 @@ public class AddService extends ActionSupport
 
 }
 
+/**
+ * This class is used to filter out files which dont have the required .xccf extension
+ *
+ * @author Tejaswi Haramurali
+ */
 class XCCGFileFilter implements FileFilter
 {
     public boolean accept(File file)

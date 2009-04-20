@@ -284,11 +284,11 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
                     boolean flags = false;
                     Iterator<Format> compareIter = compareList.iterator();
                     Format tempFormat = (Format)tempIter.next();
-                    System.out.println("The tempformat is "+tempFormat.getName());
+                   
                     while(compareIter.hasNext())
                     {
                         Format compareFormat = (Format)compareIter.next();
-                        System.out.println("The compareformat is "+compareFormat.getName());
+                        
                         if(compareFormat.getId()==tempFormat.getId())
                         {
                             flags = true;
@@ -312,11 +312,11 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
                     boolean flags = false;
                     Iterator<Format> compareIter = compareList.iterator();
                     Format tempFormat = (Format)tempIter.next();
-                    System.out.println("The tempformat is "+tempFormat.getName());
+                    
                     while(compareIter.hasNext())
                     {
                         Format compareFormat = (Format)compareIter.next();
-                        System.out.println("The compareFormat value is "+compareFormat.getName());
+                        
                         if(compareFormat.getId()==tempFormat.getId())
                         {
                             flags = true;
@@ -328,7 +328,7 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
                         tempFormatList.add(tempFormat);
                     }
                 }
-                tempSetList = setService.getAllSets();
+                tempSetList = tempProcDir.getSourceService().getOutputSets();
             }
             setFormatList(tempFormatList);
             setSetList(tempSetList);

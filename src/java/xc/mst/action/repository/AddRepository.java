@@ -14,9 +14,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 import org.apache.log4j.Logger;
-
 import xc.mst.action.UserAware;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
@@ -181,8 +179,10 @@ public class AddRepository extends ActionSupport implements UserAware
           setRepositoryId(pr.getId());
           return SUCCESS;
     }
+
 	 /**
-     * returns error type
+     * Returns error type
+      *
      * @return error type
      */
 	public String getErrorType() {
@@ -190,7 +190,8 @@ public class AddRepository extends ActionSupport implements UserAware
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

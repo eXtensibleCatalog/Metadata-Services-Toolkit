@@ -117,12 +117,5 @@
         java.lang.String latestHarvest(xc.mst.bo.harvest.HarvestSchedule)
     </function-signature>
   </function> 
-  <function>
-    <name>displayOAIRequest</name>
-    <function-class>xc.mst.tags.DisplayOAIRequest</function-class>
-    <function-signature>
-        java.lang.String displayOAIRequest(xc.mst.bo.provider.Provider)
-    </function-signature>
-  </function>
     
 </taglib>

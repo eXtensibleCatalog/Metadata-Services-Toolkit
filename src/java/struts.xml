@@ -585,5 +585,9 @@
             <interceptor-ref name="default"/>
 			<result name="success" type="redirect">serviceLog.action?isAscendingOrder=true&amp;columnSorted=ServiceName</result>
 		</action>
+        <action name="displayOAIRequest" class="xc.mst.action.log.DisplayOAIRequest">
+            <interceptor-ref name="default"/>
+			<result name="success">/pages/logs/display_oai_request.jsp</result>
+		</action>
 	</package>
 </struts>

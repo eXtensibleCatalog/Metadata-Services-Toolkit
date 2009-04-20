@@ -238,7 +238,7 @@
 									  <c:param name="query" value="${n.name}"/>
 								 </c:url>                              	
                                   <tr>
-                                      <td><a style="cursor:pointer;"onclick="javascript:YAHOO.xc.mst.logs.displayOAIRequest('Complete OAI Reuqest should be displayed');"><U>OAI Request</U></a></td>
+                                      <td><a style="cursor:pointer;"onclick="javascript:YAHOO.xc.mst.logs.displayOAIRequest(${n.id});"><U>OAI Request</U></a></td>
                                       <td><a style="text-decoration:none;color:black;" href="${browseRecordsAction}"><U>Browse Records</U></a></td>
                                            <c:set var="classColumn" value="plainColumn"/>
                                            <c:if test="${columnSorted=='RepositoryName'}">

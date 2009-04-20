@@ -56,6 +56,7 @@ public class DeleteProcessingDirective extends ActionSupport
 
     /**
      * Overrides default implementation to delete a processing directive.
+     *
      * @return {@link #SUCCESS}
      */
     @Override
