@@ -60,7 +60,6 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
     {
         try
         {
-            System.out.println("Entering the refresh bar action method");
             if(Scheduler.getRunningJob()!=null)
             {
                 if(Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase("CANCELED"))
@@ -76,7 +75,6 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
             }
             displayType = (String)request.getSession().getAttribute("serviceBarDisplay");
             setDisplayType(displayType);
-            System.out.println("Returning from the refresh bar action method");
             return SUCCESS;
         }
         catch(Exception e)
