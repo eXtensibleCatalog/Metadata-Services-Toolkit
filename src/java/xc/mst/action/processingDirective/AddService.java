@@ -27,13 +27,16 @@ import xc.mst.manager.processingDirective.ServicesService;
 public class AddService extends ActionSupport
 {
     /** Service object to ineract with the services in the MST */
-    ServicesService servicesService = new DefaultServicesService();
+    private ServicesService servicesService = new DefaultServicesService();
+
+    /** Denotes the type of error */
+    private String errorType;
 
     /** List of XCCFG files */
-    List<String> serviceFileList;
+    private List<String> serviceFileList;
 
     /** The XCCFG file that is selected by the user */
-    String selectedLocation;
+    private String selectedLocation;
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -123,19 +126,38 @@ public class AddService extends ActionSupport
         {
             String location = "serviceConfig/" + getSelectedLocation();
             File file = new File(location);
-
             servicesService.addNewService(file);
             return SUCCESS;
         }
         catch(Exception e)
         {
             log.debug(e);
-            this.addFieldError("addServiceError", "ERROR : The service could not be added correctly");
+            errorType = "error";
+            this.addFieldError("addServiceError", "ERROR : "+e.getMessage());
             return INPUT;
         }
     }
 
+    /**
+     * Returns error type
+     *
+     * @return error type
+     */
+	public String getErrorType() {
+		return errorType;
+	}
+
+    /**
+     * Sets error type
+     *
+     * @param errorType error type
+     */
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }
+
+
 
 /**
  * This class is used to filter out files which dont have the required .xccf extension

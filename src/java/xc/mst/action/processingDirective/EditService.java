@@ -30,6 +30,9 @@ public class EditService extends ActionSupport
     /** Service object to interact with the services in the MST */
     private ServicesService servicesService = new DefaultServicesService();
 
+    /** Denotes the type of error */
+    private String errorType;
+
     /** List of XCCFG config files which were present in the directory (location of this directory can be obtained from the manual/documentation) */
     private List<String> serviceFileList;
 
@@ -91,6 +94,24 @@ public class EditService extends ActionSupport
     }
 
     /**
+     * Returns error type
+     *
+     * @return error type
+     */
+	public String getErrorType() {
+		return errorType;
+	}
+
+    /**
+     * Sets error type
+     *
+     * @param errorType error type
+     */
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
+
+    /**
      * Returns the list of XCCFG config files at the hard-coded location (location can be found in documentation/manual)
      *
      * @return list of config files
@@ -143,6 +164,7 @@ public class EditService extends ActionSupport
             temporaryService = servicesService.getServiceById(Integer.parseInt(getServiceId()));
             setTemporaryService(temporaryService);
             File dir = new File("serviceConfig");
+            
             FileFilter fileFilter =  new XCCGFileFilter();
 
             File[] fileList = dir.listFiles(fileFilter);
@@ -178,7 +200,8 @@ public class EditService extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            this.addFieldError("editServiceError", "ERROR : The service could not be edited correctly");
+            errorType = "error";
+            this.addFieldError("editServiceError", "ERROR : "+e.getMessage());
             return INPUT;
         }
     }

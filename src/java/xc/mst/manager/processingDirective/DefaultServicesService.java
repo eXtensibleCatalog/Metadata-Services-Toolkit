@@ -446,7 +446,7 @@ public class DefaultServicesService implements ServicesService
     		if(!service.getName().equals(name) && oldService != null)
     		{
     			LogWriter.addError(logFileName, "Error updating service: The service's name was not unique.");
-    			throw new ConfigFileException("Cannot update the service and change the name to " + name + " because a service with that name already exists.");
+    			throw new ConfigFileException("Cannot update the service " + name + " because a service with that name already exists.");
     		}
     		
     		// The .jar file containing the service, which must appear in the secord line of the configuration file
