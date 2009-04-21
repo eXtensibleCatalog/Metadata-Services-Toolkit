@@ -758,3 +758,13 @@ insert into groups_to_top_level_tabs values(20,5,4);
 INSERT INTO servers (server_id, url, name, type, port, username_attribute, start_location, institution, forgot_password_url, forgot_password_label, show_forgot_password_link)
 VALUES (NULL, 'Local', 'Local', '4', '0', 'Local', 'Local', 'University of Rochester', 'Local', 'Local', '0');
 
+
+
+-- Insert default admin user
+insert into users values(1,'admin','MST', 'admin','0DPiKuNIrrVmD8IUCuw1hQxNqZc=','sranganathan@library.rochester.edu',1,'2008-10-20 00:00:00','2008-10-20 00:00:00',0);
+
+-- Insert group for admin user
+insert into users_to_groups values(1,1,1);
+
+-- insert Email configuration values
+insert into emailconfig (email_config_id, server_address, port_number, from_address, password) values(1,"mail.rochester.edu",25, 'xcsupport@library.rochester.edu', 'Migration1');

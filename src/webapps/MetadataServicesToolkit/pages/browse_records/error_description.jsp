@@ -61,10 +61,7 @@
 				<c:param name="currentPageNumber" value="${currentPageNumber}"/>
 	    	</c:url>            
             <jsp:include page="/inc/breadcrumb.jsp"> 
-	          <jsp:param name="bread" value="Browse Records,<a href='${viewResults}'>Search Results</a>, View Record 
-	           		<c:if test='${record.provider != null}'>${record.provider.name}</c:if> 
-					<c:if test='${record.service != null}'>${record.service.name}</c:if>
-					${record.id}" />
+	          <jsp:param name="bread" value="Browse Records,<a href='${viewResults}'>Search Results</a>, Error Information" />
             </jsp:include>
             
  		</div>
@@ -72,73 +69,16 @@
 		
 		<!-- body -->
 		<div id="bd">
-		
-		<div class="record_metadata">
-			Schema:  ${record.format.name}<br>
-			<c:if test="${record.provider != null}">Repository:  ${record.provider.name}</c:if> 
-			<c:if test="${record.service != null}">Service:  ${record.service.name}</c:if><br> 
-			Harvest:  <br>
-			<c:url var="viewPredecessorRecord" value="browseRecords.action">
-				  <c:param name="query" value=""/>
-				  <c:param name="addFacetName" value="successor"/>
-				  <c:param name="addFacetValue" value="${record.id}"/>
-				  <c:param name="searchXML" value="false"/>
-			   </c:url>
-			   <c:url var="viewSuccessorRecord" value="browseRecords.action">
-					  <c:param name="query" value=""/>
-					  <c:param name="addFacetName" value="processed_from"/>
-					  <c:param name="addFacetValue" value="${record.id}"/>
-					  <c:param name="searchXML" value="false"/>
-			   </c:url>										
-	       		<c:if test="${record.numberOfPredecessors > 0 && record.numberOfSuccessors > 0}">
-				<a href="${viewPredecessorRecord}">${record.numberOfPredecessors} 
-				<c:if test="${record.numberOfPredecessors == 1}">
-					Predecessor
-				</c:if>
-				<c:if test="${record.numberOfPredecessors > 1}">
-					Predecessors
-				</c:if></a> 
-				&nbsp;<img src="page-resources/img/white-book-both.jpg">&nbsp;
-				<a href="${viewSuccessorRecord}">${record.numberOfSuccessors} 
-				<c:if test="${record.numberOfSuccessors == 1}">
-					Successor
-				</c:if>
-				<c:if test="${record.numberOfSuccessors > 1}">
-					Successors
-				</c:if> 
-				</a>
-			    </c:if>
-			    <c:if test="${record.numberOfPredecessors > 0 && record.numberOfSuccessors < 1}">
-					<a href="${viewPredecessorRecord}">${record.numberOfPredecessors} 
-					<c:if test="${record.numberOfPredecessors == 1}">
-						Predecessor
-					</c:if>
-					<c:if test="${record.numberOfPredecessors > 1}">
-						Predecessors
-					</c:if> 
-					</a> 
-				      &nbsp;<img src="page-resources/img/white-book-left.jpg">
-			    </c:if>
-			<c:if test="${record.numberOfSuccessors > 0 && record.numberOfPredecessors < 1}">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<img src="page-resources/img/white-book-right.jpg">
-				&nbsp;<a href="${viewSuccessorRecord}">${record.numberOfSuccessors} 
-				<c:if test="${record.numberOfSuccessors == 1}">
-					Successor
-				</c:if>
-				<c:if test="${record.numberOfSuccessors > 1}">
-					Successors
-				</c:if> 
-				</a> 
-				
-			    </c:if>  
-		   </div>
-		   
 			<div class="record_box">
-				<pre class="preWrap">
-					${recordXML}
-				</pre>
+			<p>
+				<br>
+					<strong>${error}</strong>
+				<br><br>
+					${errorDescription}
+				<br>
+			</p>
 			</div>
+			
  		</div>
 		<!--  end body -->		
             

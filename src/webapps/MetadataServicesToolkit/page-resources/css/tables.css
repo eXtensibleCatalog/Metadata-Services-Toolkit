@@ -257,6 +257,20 @@
  
 }
 
+.record_box p {
+	padding:10px;
+}
+
+ 
+.record_metadata 
+ {
+     padding-left:20px;
+     padding-top:15px;
+     font-family: verdana,sans-serif;
+     font-size: 12px;
+ }
+ 
+ 
 /* hack for IE 6 fix*/
 * html .facet_search_selection
 {

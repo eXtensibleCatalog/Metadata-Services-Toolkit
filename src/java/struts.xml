@@ -489,6 +489,12 @@
 			<result name="success">/pages/browse_records/record.jsp</result>
 		</action>
 		
+		
+		<action name="viewErrorDescription" class="xc.mst.action.browse.BrowseRecords" method="viewErrorDescription">
+		 	<interceptor-ref name="default"/>
+			<result name="success">/pages/browse_records/error_description.jsp</result>
+		</action>		
+		
 		 <!--  ************************************ -->
         <!--  OAI repository servlet  actions          -->
         <!--  ************************************ -->

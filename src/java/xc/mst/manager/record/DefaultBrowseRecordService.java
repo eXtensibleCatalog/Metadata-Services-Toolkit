@@ -24,7 +24,11 @@ import org.apache.solr.common.SolrDocumentList;
 
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SolrBrowseResult;
+import xc.mst.bo.service.ErrorCode;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.service.DefaultErrorCodeDAO;
+import xc.mst.dao.service.ErrorCodeDAO;
 
 /**
  * Browse for results using solr
@@ -38,6 +42,9 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 	 * A reference to the logger for this class
 	 */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+	
+	/** Error code DAO */
+	private ErrorCodeDAO errorCodeDAO = new DefaultErrorCodeDAO(); 
 
 	/**
 	 * Method to search the index for records
@@ -82,4 +89,16 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 
 	}
 
+	/**
+	 * Get error description for this code and service
+	 * 
+	 * @param errorCode Error code
+	 * @param service Service which generated the error
+	 * @return Error if found
+	 */
+	public ErrorCode getError(String errorCode, Service service) {
+		
+		return errorCodeDAO.getByErrorCodeAndService(errorCode, service);
+		
+	}
 }

@@ -47,8 +47,8 @@
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">  
 
-		<!-- page header - this uses the yahoo page styling -->
-		<div id="hd">
+	<!-- page header - this uses the yahoo page styling -->
+	<div id="hd">
    
             <!--  this is the header of the page -->
             <c:import url="/inc/header.jsp"/>
@@ -136,7 +136,22 @@
 												  
 											 </c:url>
 
-											<a href="${facetFilter}">${fcount.name} (${fcount.count})</a><br/>
+											<a href="${facetFilter}">${fcount.name} (${fcount.count})</a>
+											<c:if test="${facet.name == 'error'}">
+												<c:url var="viewError" value="viewErrorDescription.action">
+													  <c:param name="error" value="${fcount.name}"/>
+													  <c:param name="query" value="${query}"/>
+													  <c:param name="searchXML" value="${searchXML}"/>
+													  <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
+													  <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
+													  <c:param name="rowStart" value="${rowStart}"/>
+													  <c:param name="startPageNumber" value="${startPageNumber}"/>
+													  <c:param name="currentPageNumber" value="${currentPageNumber}"/>
+												  </c:url>
+										   		<a href="${viewError}">i</a>
+										   	</c:if>											
+											
+											<br/>
 									</c:if>
 								</c:forEach> 
 								</p>
@@ -153,28 +168,37 @@
 						<!-- Display of filters -->
 						<c:if test="${query != ''}">
 							<p class="searched_for">You Searched for : "${query}"<c:if test="${result.facetFilters != '[]'}">, </c:if>
-							
-<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema</c:if><c:if test="${filter.name == 'set_name'}">Set</c:if><c:if test="${filter.name == 'provider_name'}">Repository</c:if><c:if test="${filter.name == 'service_name'}">Service</c:if><!--<c:if test="${filter.name == 'harvest_end_time'}">Harvest</c:if>--><c:if test="${filter.name == 'warning'}">Warning</c:if><c:if test="${filter.name == 'error'}">Error</c:if>:${filter.value}</c:forEach>							
+							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema</c:if><c:if test="${filter.name == 'set_name'}">Set</c:if><c:if test="${filter.name == 'provider_name'}">Repository</c:if><c:if test="${filter.name == 'service_name'}">Service</c:if><!--<c:if test="${filter.name == 'harvest_end_time'}">Harvest</c:if>--><c:if test="${filter.name == 'warning'}">Warning</c:if><c:if test="${filter.name == 'error'}">Error</c:if>:${filter.value}</c:forEach>							
 							</p>
 						</c:if>
 						
 						<!-- Display of filters In case of predecessor  - begin-->
 						<c:if test="${predecessorRecord != null}">
-							<p class="searched_for">You Searched for :All Successor of:
+
+							   <c:url var="viewPredecessorRecord" value="browseRecords.action">
+									  <c:param name="query" value=""/>
+									  <c:param name="addFacetName" value="successor"/>
+									  <c:param name="addFacetValue" value="${predecessorRecord.id}"/>
+									  <c:param name="searchXML" value="false"/>
+							   </c:url>
+	
+							   
+							<p class="searched_for">You Searched for :<strong>All Successor of:</strong><br>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<c:if test="${predecessorRecord.provider != null}">${predecessorRecord.provider.name}</c:if> 
 								<c:if test="${predecessorRecord.service != null}">${predecessorRecord.service.name}</c:if> ${predecessorRecord.id}
 									<br>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									Schema: ${predecessorRecord.format.name}
 									
 									<c:if test="${predecessorRecord.provider != null}">
 										<br>
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										Provider:${predecessorRecord.provider.name}
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										Repository:${predecessorRecord.provider.name}
 									</c:if>	
 							       <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							       <c:if test="${predecessorRecord.numberOfPredecessors > 0 && predecessorRecord.numberOfSuccessors > 0}">
-										${predecessorRecord.numberOfPredecessors} 
+										<a href="${viewPredecessorRecord}">${predecessorRecord.numberOfPredecessors}
 										<c:if test="${predecessorRecord.numberOfPredecessors == 1}">
 											Predecessor
 										</c:if>
@@ -182,17 +206,17 @@
 											Predecessors
 										</c:if></a> 
 										&nbsp;<img src="page-resources/img/white-book-both.jpg">&nbsp;
-										<a href="${viewSuccessorRecord}">${predecessorRecord.numberOfSuccessors} 
+										${predecessorRecord.numberOfSuccessors} 
 										<c:if test="${predecessorRecord.numberOfSuccessors == 1}">
 											Successor
 										</c:if>
 										<c:if test="${predecessorRecord.numberOfSuccessors > 1}">
 											Successors
 										</c:if> 
-										</a>
+										
 								    </c:if>
 								    <c:if test="${predecessorRecord.numberOfPredecessors > 0 && predecessorRecord.numberOfSuccessors < 1}">
-										${predecessorRecord.numberOfPredecessors} 
+										<a href="${viewPredecessorRecord}">${predecessorRecord.numberOfPredecessors} 
 										<c:if test="${predecessorRecord.numberOfPredecessors == 1}">
 											Predecessor
 										</c:if>
@@ -205,27 +229,35 @@
 									<c:if test="${predecessorRecord.numberOfSuccessors > 0 && predecessorRecord.numberOfPredecessors < 1}">
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<img src="page-resources/img/white-book-right.jpg">
-										&nbsp;<a href="${viewSuccessorRecord}">${predecessorRecord.numberOfSuccessors} 
+										&nbsp;${predecessorRecord.numberOfSuccessors} 
 										<c:if test="${predecessorRecord.numberOfSuccessors == 1}">
 											Successor
 										</c:if>
 										<c:if test="${predecessorRecord.numberOfSuccessors > 1}">
 											Successors
 										</c:if> 
-										</a> 
+										
 										
 								    </c:if>                                    
 							<br>								
-							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema:${filter.value}</c:if><c:if test="${filter.name == 'set_name'}">Set:${filter.value}</c:if><c:if test="${filter.name == 'provider_name'}">Repository:${filter.value}</c:if><c:if test="${filter.name == 'service_name'}">Service:${filter.value}</c:if><c:if test="${filter.name == 'error'}">Error:${filter.value}</c:if></c:forEach>							
+							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 2}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema:${filter.value}</c:if><c:if test="${filter.name == 'set_name'}">Set:${filter.value}</c:if><c:if test="${filter.name == 'provider_name'}">Repository:${filter.value}</c:if><c:if test="${filter.name == 'service_name'}">Service:${filter.value}</c:if><c:if test="${filter.name == 'error'}">Error:${filter.value}</c:if></c:forEach>							
 							</p>
 						</c:if>
 						<!-- Display of filters In case of predecessor - end -->
 
 						<!-- Display of filters In case of successor - begin -->
 						<c:if test="${successorRecord != null}">
-							<p class="searched_for">You Searched for : All Precedessors of:
+							   <c:url var="viewSuccessorRecord" value="browseRecords.action">
+									  <c:param name="query" value=""/>
+									  <c:param name="addFacetName" value="processed_from"/>
+									  <c:param name="addFacetValue" value="${successorRecord.id}"/>
+									  <c:param name="searchXML" value="false"/>
+							   </c:url>						
+							<p class="searched_for">You Searched for : <strong>All Precedessors of:</strong><br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<c:if test="${successorRecord.provider != null}">${successorRecord.provider.name}</c:if> 
-								<c:if test="${successorRecord.service != null}">${successorRecord.service.name}</c:if> ${successorRecord.id}
+								<c:if test="${successorRecord.service != null}">
+									${successorRecord.service.name}</c:if> ${successorRecord.id}
 									<br>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									Schema: ${successorRecord.format.name}
@@ -233,7 +265,7 @@
 									<c:if test="${successorRecord.provider != null}">
 										<br>
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										Provider:${successorRecord.provider.name}
+										Repository:${successorRecord.provider.name}
 									</c:if>	
 							       <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							       <c:if test="${successorRecord.numberOfPredecessors > 0 && successorRecord.numberOfSuccessors > 0}">
@@ -243,7 +275,7 @@
 										</c:if>
 										<c:if test="${successorRecord.numberOfPredecessors > 1}">
 											Predecessors
-										</c:if></a> 
+										</c:if>
 										&nbsp;<img src="page-resources/img/white-book-both.jpg">&nbsp;
 										<a href="${viewSuccessorRecord}">${successorRecord.numberOfSuccessors} 
 										<c:if test="${successorRecord.numberOfSuccessors == 1}">
@@ -262,7 +294,7 @@
 										<c:if test="${successorRecord.numberOfPredecessors > 1}">
 											Predecessors
 										</c:if> 
-										</a> 
+										
 									      &nbsp;<img src="page-resources/img/white-book-left.jpg">
 								    </c:if>
 									<c:if test="${successorRecord.numberOfSuccessors > 0 && successorRecord.numberOfPredecessors < 1}">
@@ -279,7 +311,7 @@
 										
 								    </c:if>                                    
 							<br>								
-							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema:${filter.value}</c:if><c:if test="${filter.name == 'set_name'}">Set:${filter.value}</c:if><c:if test="${filter.name == 'provider_name'}">Repository:${filter.value}</c:if><c:if test="${filter.name == 'service_name'}">Service:${filter.value}</c:if><c:if test="${filter.name == 'error'}">Error:${filter.value}</c:if></c:forEach>							
+							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 2}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema:${filter.value}</c:if><c:if test="${filter.name == 'set_name'}">Set:${filter.value}</c:if><c:if test="${filter.name == 'provider_name'}">Repository:${filter.value}</c:if><c:if test="${filter.name == 'service_name'}">Service:${filter.value}</c:if><c:if test="${filter.name == 'error'}">Error:${filter.value}</c:if></c:forEach>							
 							</p>
 						</c:if>	
 						<!-- Display of filters In case of successor - end -->					
@@ -334,7 +366,6 @@
 							<div class="record_text">
 								<c:url var="viewRecord" value="viewRecord.action">
 									  <c:param name="recordId" value="${record.id}"/>
-									  <c:param name="providerName" value="${record.provider.name}"/>
 									  <c:param name="query" value="${query}"/>
 									  <c:param name="searchXML" value="${searchXML}"/>
 									  <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
@@ -342,8 +373,6 @@
 									  <c:param name="rowStart" value="${rowStart}"/>
 									  <c:param name="startPageNumber" value="${startPageNumber}"/>
 									  <c:param name="currentPageNumber" value="${currentPageNumber}"/>
-									  <c:param name="recordXML" value="${record.oaiXml}"/>
-									  	  
 								  </c:url>
 								<a href="${viewRecord}"><c:if test="${record.provider != null}">${record.provider.name}</c:if> 
 								<c:if test="${record.service != null}">${record.service.name}</c:if>
@@ -351,7 +380,7 @@
 								<br>
 								Schema: ${record.format.name}
 								<br>
-								Provider: ${record.provider.name}
+								Repository: ${record.provider.name}
 								<br>
 <!--							
 								<c:if test="${record.harvest != null}">

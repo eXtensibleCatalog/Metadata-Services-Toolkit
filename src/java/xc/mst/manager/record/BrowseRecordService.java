@@ -12,6 +12,8 @@ package xc.mst.manager.record;
 import org.apache.solr.client.solrj.SolrQuery;
 
 import xc.mst.bo.record.SolrBrowseResult;
+import xc.mst.bo.service.ErrorCode;
+import xc.mst.bo.service.Service;
 
 /**
  * Browse for records
@@ -28,5 +30,14 @@ public interface BrowseRecordService {
 	 * @return Search results
 	 */
 	public SolrBrowseResult search(SolrQuery query);
+	
+	/**
+	 * Get error description for this code and service
+	 * 
+	 * @param errorCode Error code
+	 * @param service Service which generated the error
+	 * @return Error if found
+	 */
+	public ErrorCode getError(String errorCode, Service service); 
 
 }

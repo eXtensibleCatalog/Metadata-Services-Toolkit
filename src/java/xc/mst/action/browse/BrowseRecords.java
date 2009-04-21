@@ -9,7 +9,12 @@
 
 package xc.mst.action.browse;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -23,7 +28,11 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import xc.mst.bo.record.FacetFilter;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SolrBrowseResult;
+import xc.mst.bo.service.ErrorCode;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.manager.processingDirective.DefaultServicesService;
+import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.DefaultBrowseRecordService;
 import xc.mst.manager.record.DefaultRecordService;
@@ -44,7 +53,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 	
 	/** Service to search record */
-	private BrowseRecordService recordSearch = new DefaultBrowseRecordService();
+	private BrowseRecordService browseRecordService = new DefaultBrowseRecordService();
 	
 	/** Browse result */
 	private SolrBrowseResult result;
@@ -73,9 +82,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	/** Id of record */
 	private int recordId;
 	
-	/** Name of provider  */
-	private String providerName;
-	
 	/** Record XML */
 	private String recordXML;
 	
@@ -97,6 +103,14 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	/** Record for which predecessor are queried and displayed */
 	private Record predecessorRecord;
 	
+	/** Error to display its information */
+	private String error;
+	
+	/** Error description */
+	private String errorDescription;
+	
+	/** Record to be viewed */
+	private Record record;
 	
 	/**
      * Exceute method to load initial screen with just the facets
@@ -202,9 +216,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	    		 .setFacetMinCount(1);
 		
 		solrQuery.addFacetField("provider_name");
+		solrQuery.addFacetField("service_name");
 		solrQuery.addFacetField("format_name");
 		solrQuery.addFacetField("set_name");
-		solrQuery.addFacetField("service_name");
 //		solrQuery.addFacetField("harvest_end_time");
 		solrQuery.addFacetField("error");
 		
@@ -213,7 +227,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		
 		solrQuery.setStart(rowStart);
 		solrQuery.setRows(numberOfResultsToShow);
-	    result = recordSearch.search(solrQuery);   
+	    result = browseRecordService.search(solrQuery);   
 	    
 	    log.debug("result::"+result);
 	    
@@ -230,7 +244,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		    		RecordService recordService = new DefaultRecordService();
 		    		successorRecord = recordService.getById(Long.parseLong(facetValuesList.get(i)));
 		    	}
-		    	if (facetNamesList.get(i).equalsIgnoreCase("predecessor")) {
+		    	if (facetNamesList.get(i).equalsIgnoreCase("processed_from")) {
 		    		RecordService recordService = new DefaultRecordService();
 		    		predecessorRecord = recordService.getById(Long.parseLong(facetValuesList.get(i)));
 		    	}
@@ -248,22 +262,49 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
      */
 	public String viewRecord() throws IOException {
 		
-		log.debug("records XML:"+recordXML);
+		RecordService recordService = new DefaultRecordService();
+		record = recordService.getById(recordId);
+		recordXML = record.getOaiXml();
 		recordXML = recordXML.replaceAll("<", "&lt;");
 		recordXML = recordXML.replaceAll(">", "&gt;");
 		
 		return SUCCESS;
 	}
 
-	public BrowseRecordService getRecordSearch() {
-		return recordSearch;
+	/**
+     * View error description
+     */
+	public String viewErrorDescription() throws IOException {
+		
+		log.debug("viewErrorDescription: error: " + error);
+
+		ServicesService servicesService = new DefaultServicesService();
+		int indexOfHypen = error.indexOf("-");
+		Service service = servicesService.getServiceById(Integer.parseInt(error.substring(0, indexOfHypen)));
+		
+		// Get service id
+		String errorCode = error.substring(indexOfHypen + 1, error.indexOf(":"));
+		ErrorCode error = browseRecordService.getError(errorCode, service);
+
+		// Get error code
+		FileInputStream fis = new FileInputStream(error.getErrorDescriptionFile());
+		BufferedInputStream bis = new BufferedInputStream(fis);
+		DataInputStream dis = new DataInputStream(bis);
+  
+		BufferedReader br = new BufferedReader(new InputStreamReader(dis));
+		StringBuffer buffer = new StringBuffer();
+		String strLine;
+		
+		//Read File Line By Line
+		while ((strLine = br.readLine()) != null)   {
+			buffer.append(strLine);
+		} 
+	      
+	    errorDescription = buffer.toString();
+		
+	    return SUCCESS;
 	}
-
-
-	public void setRecordSearch(BrowseRecordService recordSearch) {
-		this.recordSearch = recordSearch;
-	}
-
+	
 	public SolrBrowseResult getResult() {
 		return result;
 	}
@@ -355,10 +396,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		return recordXML;
 	}
 
-	public void setRecordXML(String recordXML) {
-		this.recordXML = recordXML;
-	}
-
 	public HttpServletResponse getServletResponse() {
 		return servletResponse;
 	}
@@ -392,14 +429,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		this.searchXML = searchXML;
 	}
 
-	public String getProviderName() {
-		return providerName;
-	}
-
-	public void setProviderName(String providerName) {
-		this.providerName = providerName;
-	}
-
 	public boolean isInitialLoad() {
 		return isInitialLoad;
 	}
@@ -414,5 +443,25 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 
 	public Record getPredecessorRecord() {
 		return predecessorRecord;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+
+	public String getErrorDescription() {
+		return errorDescription;
+	}
+
+	public void setErrorDescription(String errorDescription) {
+		this.errorDescription = errorDescription;
+	}
+
+	public Record getRecord() {
+		return record;
 	}
 }
