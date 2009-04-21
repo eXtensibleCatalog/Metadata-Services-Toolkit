@@ -109,7 +109,6 @@ public class GeneralLog extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("generalLogError", "ERROR : There was a problem loading ");
             errorType = "error";
             return SUCCESS;

@@ -144,7 +144,6 @@ public class AllGroups extends ActionSupport
                 }
                 setGroupList(finalList);
                 setIsAscendingOrder(isAscendingOrder);
-                System.out.println("The ASC order value is "+isAscendingOrder);
                 setColumnSorted(columnSorted);
                 return SUCCESS;
             }
@@ -158,7 +157,6 @@ public class AllGroups extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("allGroupsError", "Error : Groups not displayed correctly");
             errorType = "error";
             return SUCCESS;

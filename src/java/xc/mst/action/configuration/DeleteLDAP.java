@@ -110,7 +110,6 @@ public class DeleteLDAP extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             log.debug(e);
             this.addFieldError("deleteLDAPError", "Error : Error deleting LDAP Server");
             errorType = "error";

@@ -219,7 +219,6 @@ public class EmailConfiguration extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             log.debug(e);
             this.addFieldError("viewEmailConfigError", "Error : Problem displaying the Email Configuration Page");
             errorType = "error";
@@ -251,7 +250,6 @@ public class EmailConfiguration extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             this.addFieldError("changeEmailConfigError", fromAddress);
             errorType = "error";
             return INPUT;

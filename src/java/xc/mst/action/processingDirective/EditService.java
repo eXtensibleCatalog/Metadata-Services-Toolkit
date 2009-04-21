@@ -143,7 +143,6 @@ public class EditService extends ActionSupport
             temporaryService = servicesService.getServiceById(Integer.parseInt(getServiceId()));
             setTemporaryService(temporaryService);
             File dir = new File("serviceConfig");
-            System.out.println("The number of files in that location is "+dir.list().length);
             FileFilter fileFilter =  new XCCGFileFilter();
 
             File[] fileList = dir.listFiles(fileFilter);
@@ -156,7 +155,6 @@ public class EditService extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             log.debug(e);
             this.addFieldError("viewEditServiceError", "ERROR : The page could not be loaded correctly");
             return INPUT;
@@ -174,13 +172,11 @@ public class EditService extends ActionSupport
         {
             String location = "serviceConfig/" + getSelectedLocation();
             File file = new File(location);
-            System.out.println("The path is "+location);
             servicesService.updateService(file, servicesService.getServiceById(Integer.parseInt(serviceId)));
             return SUCCESS;
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             log.debug(e);
             this.addFieldError("editServiceError", "ERROR : The service could not be edited correctly");
             return INPUT;

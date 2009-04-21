@@ -200,15 +200,9 @@ public class DefaultPermissionDAO extends PermissionDAO
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while getting the permission for the ID " + permissionId, e);
-                e.printStackTrace();
+
 				return null;
 			} // end catch(SQLException)
-            catch(Exception e)
-            {
-                log.error("An Error was Logged : "+e);
-                e.printStackTrace();
-                return null;
-            }
 			finally
 			{
 				MySqlConnectionManager.closeResultSet(results);

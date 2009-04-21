@@ -1849,4 +1849,10 @@ public class NormalizationService extends MetadataService
 	    	}
 	    }
 	}
+	
+	@Override
+	protected void validateService() throws ServiceValidationException 
+	{
+		// TODO: Implement		
+	}
 }

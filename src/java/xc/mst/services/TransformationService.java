@@ -5406,4 +5406,10 @@ public class TransformationService extends MetadataService
 	protected void loadConfiguration(String configuration)
 	{	
 	}
+	
+	@Override
+	protected void validateService() throws ServiceValidationException 
+	{
+		// TODO: Implement		
+	}
 }

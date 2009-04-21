@@ -270,7 +270,6 @@ public class EditRepository extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             return SUCCESS;
         }
     }

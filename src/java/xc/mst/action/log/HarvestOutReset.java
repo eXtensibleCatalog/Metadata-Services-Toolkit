@@ -103,13 +103,11 @@ public class HarvestOutReset extends ActionSupport
             String filename = harvestOutLogFileName;
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
-            System.out.println("Inside Harvest out Reset");
             return SUCCESS;
         }
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("harvestOutResetError", "Error : There was an error resetting the log files");
             errorType = "error";
             return SUCCESS;
@@ -165,7 +163,6 @@ public class HarvestOutReset extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("harvestOutResetError", "Error : There was an error resetting the log files");
             errorType = "error";
             return SUCCESS;

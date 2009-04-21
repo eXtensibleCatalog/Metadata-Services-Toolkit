@@ -43,7 +43,7 @@ import xc.mst.dao.service.ServiceDAO;
 import xc.mst.utils.index.RecordList;
 
 /**
- * Lucene implementation of the service class to query, add, update and
+ * Solr implementation of the service class to query, add, update and
  * delete records from an index.
  *
  * @author Eric Osisek

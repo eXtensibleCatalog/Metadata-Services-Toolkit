@@ -225,7 +225,6 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("addProcessingDirectiveError", "Add Processing Directive Page cannot be displayed");
             errorType = "error";
             return INPUT;
@@ -268,7 +267,6 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("addProcessingDirectiveError", "Error in Adding a Source");
             errorType = "error";
             return INPUT;

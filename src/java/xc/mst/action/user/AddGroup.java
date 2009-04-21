@@ -199,7 +199,6 @@ public class AddGroup extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("addGroupError", "The Page could not be displayed correctly");
             errorType = "error";
             return INPUT;
@@ -259,7 +258,6 @@ public class AddGroup extends ActionSupport
             log.debug(e);
             this.addFieldError("addGroupError", "Group could not be added properly");
             errorType = "error";
-            e.printStackTrace();
             return INPUT;
         }
 

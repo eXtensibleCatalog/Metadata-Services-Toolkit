@@ -110,7 +110,6 @@ public class ServiceReset extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("serviceResetError", "Error : There was error resetting the log files");
             errorType = "error";
             return SUCCESS;
@@ -146,7 +145,6 @@ public class ServiceReset extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("serviceResetError", "Error : There was error resetting the log files");
             errorType = "error";
             return SUCCESS;

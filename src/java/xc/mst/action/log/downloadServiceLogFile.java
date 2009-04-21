@@ -93,7 +93,6 @@ public class downloadServiceLogFile extends ActionSupport
         }
        catch(Exception e)
        {
-           e.printStackTrace();
        }
 
         return SUCCESS;

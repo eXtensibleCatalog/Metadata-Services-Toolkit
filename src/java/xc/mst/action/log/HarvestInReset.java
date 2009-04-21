@@ -109,7 +109,6 @@ public class HarvestInReset extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("harvestInResetError", "Error : There was an error resetting the log files");
             errorType = "error";
             return SUCCESS;
@@ -163,7 +162,6 @@ public class HarvestInReset extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("harvestInResetError", "Error : There was an error resetting the log files");
             errorType = "error";
             return SUCCESS;

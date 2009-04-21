@@ -241,7 +241,6 @@ public class EditGroup extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("editGroupError", "Error: Problem displaying group details");
             errorType = "error";
             return INPUT;
@@ -308,7 +307,6 @@ public class EditGroup extends ActionSupport
             log.debug(e);
             this.addFieldError("editGroupError", "Error: Group could not be edited properly");
             errorType = "error";
-            e.printStackTrace();
             return INPUT;
         }
     }

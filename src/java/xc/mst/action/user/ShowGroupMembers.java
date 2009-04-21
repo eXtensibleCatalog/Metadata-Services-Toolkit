@@ -159,8 +159,6 @@ public class ShowGroupMembers extends ActionSupport
                    
                     setMembershipList(membershipList);
                     setGroupId(this.groupId);
-                    System.out.println("Setting group ID to "+groupId);
-                    System.out.println("Returning success");
                     return SUCCESS;
                 }
                 else
@@ -178,7 +176,6 @@ public class ShowGroupMembers extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             log.debug(e);
             this.addFieldError("showGroupMembersError", "ERROR : There was a problem displaying the page");
             return INPUT;

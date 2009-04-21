@@ -115,7 +115,6 @@ public class DeleteUser extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             log.debug(e);
             this.addFieldError("deleteUserError", "Error: The user was not deleted");
             errorType = "error";

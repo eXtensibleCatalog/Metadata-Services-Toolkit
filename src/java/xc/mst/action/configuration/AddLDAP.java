@@ -164,7 +164,6 @@ public class AddLDAP extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             this.addFieldError("addLDAPError", "LDAP server could not be configured correctly");
             errorType = "error";
             return INPUT;
@@ -223,7 +222,6 @@ public class AddLDAP extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             log.debug(e);
             this.addFieldError("addLDAPError", "Error : LDAP server could not be configured correctly");
             errorType = "error";

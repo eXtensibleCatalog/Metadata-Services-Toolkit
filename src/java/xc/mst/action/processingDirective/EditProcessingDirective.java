@@ -263,7 +263,6 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("editProcessingDirectiveEror", "Error : Problem in displaying the Specfied Processing Directive");
             errorType = "error";
             return INPUT;
@@ -291,7 +290,6 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
             if(tempProvider!=null)
             {
                 request.getSession().setAttribute("sourceType","provider");
-                System.out.println("(Inside editprocdir method) temprovider is being set");
                 temporaryProcessingDirective.setSourceProvider(tempProvider);
                 temporaryProcessingDirective.setSourceService(null);
 
@@ -299,7 +297,6 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
             else
             {
                 request.getSession().setAttribute("sourceType","service");
-                System.out.println("(Inside editprocdir method) tempservice is being set");
                 temporaryProcessingDirective.setSourceService(tempService);
                 temporaryProcessingDirective.setSourceProvider(null);
 
@@ -313,7 +310,6 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("editProcessingDirectiveError", "Error in Adding a Source");
             errorType = "error";
             return INPUT;

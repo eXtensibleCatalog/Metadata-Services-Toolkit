@@ -208,7 +208,6 @@ public class EditLDAPUser extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("addLDAPUserError","Error : Page not displayed correctly");
             errorType = "error";
             return SUCCESS;
@@ -286,7 +285,6 @@ public class EditLDAPUser extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("editLDAPUserError","Error : User not Added correctly");
             errorType = "error";
             return ERROR;

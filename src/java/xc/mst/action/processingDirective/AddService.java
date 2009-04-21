@@ -94,7 +94,6 @@ public class AddService extends ActionSupport
         try
         {
             File dir = new File("serviceConfig");
-            System.out.println("The number of files in that location is "+dir.list().length);
             FileFilter fileFilter =  new XCCGFileFilter();
 
             File[] fileList = dir.listFiles(fileFilter);
@@ -107,7 +106,6 @@ public class AddService extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             log.debug(e);
             this.addFieldError("viewAddServiceError", "ERROR : The page could not be loaded correctly");
             return INPUT;
@@ -125,14 +123,12 @@ public class AddService extends ActionSupport
         {
             String location = "serviceConfig/" + getSelectedLocation();
             File file = new File(location);
-            System.out.println("The path is "+location);
 
             servicesService.addNewService(file);
             return SUCCESS;
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             log.debug(e);
             this.addFieldError("addServiceError", "ERROR : The service could not be added correctly");
             return INPUT;

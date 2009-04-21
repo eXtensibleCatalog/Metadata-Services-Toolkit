@@ -1031,4 +1031,10 @@ public class AggregationService extends MetadataService
 	    	}
 	    }
 	}
+
+	@Override
+	protected void validateService() throws ServiceValidationException 
+	{
+		// TODO: Implement		
+	}
 } // end class AggregationService

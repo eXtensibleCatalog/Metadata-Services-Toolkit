@@ -91,7 +91,6 @@ public class AllRepository extends ActionSupport
         catch(Exception e)
         {
            log.debug(e);
-           e.printStackTrace();
            return INPUT;
         }
     }

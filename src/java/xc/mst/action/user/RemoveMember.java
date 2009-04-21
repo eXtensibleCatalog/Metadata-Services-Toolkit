@@ -94,7 +94,6 @@ public class RemoveMember extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             log.debug(e);
             this.addFieldError("removeMemberError", "ERROR : There was a problem removing the member from the group");
             return INPUT;

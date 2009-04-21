@@ -284,11 +284,9 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
                     boolean flags = false;
                     Iterator<Format> compareIter = compareList.iterator();
                     Format tempFormat = (Format)tempIter.next();
-                   
                     while(compareIter.hasNext())
                     {
                         Format compareFormat = (Format)compareIter.next();
-                        
                         if(compareFormat.getId()==tempFormat.getId())
                         {
                             flags = true;
@@ -312,11 +310,9 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
                     boolean flags = false;
                     Iterator<Format> compareIter = compareList.iterator();
                     Format tempFormat = (Format)tempIter.next();
-                    
                     while(compareIter.hasNext())
                     {
                         Format compareFormat = (Format)compareIter.next();
-                        
                         if(compareFormat.getId()==tempFormat.getId())
                         {
                             flags = true;
@@ -339,7 +335,6 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("addProcessingDirectives2Error", "Error in loading page");
             errorType = "error";
             return INPUT;
@@ -541,7 +536,6 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful");
             errorType = "error";
             return ERROR;
@@ -624,7 +618,6 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             return INPUT;
         }
     }
@@ -643,7 +636,6 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             return INPUT;
         }
     }

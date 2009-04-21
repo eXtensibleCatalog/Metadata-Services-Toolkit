@@ -356,7 +356,6 @@ public class EditProcessingDirective2 extends ActionSupport implements ServletRe
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("editProcessingDirective2Error", "Error : Problem in editing the directive");
             errorType = "error";
             return INPUT;
@@ -617,7 +616,6 @@ public class EditProcessingDirective2 extends ActionSupport implements ServletRe
            catch(Exception e)
            {
                 log.debug(e);
-                e.printStackTrace();
                 this.addFieldError("editProcessingDirectives2Error", "Error : The edit was unsuccessful");
                 errorType = "error";
                 return ERROR;
@@ -700,7 +698,6 @@ public class EditProcessingDirective2 extends ActionSupport implements ServletRe
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             log.debug(e);
             return INPUT;
         }
@@ -720,7 +717,6 @@ public class EditProcessingDirective2 extends ActionSupport implements ServletRe
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             return INPUT;
         }
     }

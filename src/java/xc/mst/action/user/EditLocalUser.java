@@ -209,7 +209,6 @@ public class EditLocalUser extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("editLocalUserError", "Error in displaying the user's details");
             errorType = "error";
             return ERROR;
@@ -270,7 +269,6 @@ public class EditLocalUser extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("editLocalUserError","Error : User details not updated correctly");
             errorType = "error";
             return ERROR;

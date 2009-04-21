@@ -69,7 +69,6 @@ public class DeleteService extends ActionSupport
         catch(Exception e)
         {
             log.debug(e);
-            e.printStackTrace();
             this.addFieldError("deleteServiceError", "ERROR : There was an error deleting the service");
             return SUCCESS;
         }
