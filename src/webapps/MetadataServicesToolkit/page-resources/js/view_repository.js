@@ -13,28 +13,59 @@ YAHOO.xc.mst.repository = {
         }
 
     },
+    
     doneFunction:function()
     {
         window.location = "allRepository.action";
     },
+    
     reValidateFunction : function(id)
     {
+	// Instantiate the Dialog
+	// make it modal - 
+	// it should not start out as visible - it should not be shown until 
+	// new repository button is clicked.
+	YAHOO.xc.mst.repository.processingDialog = new YAHOO.widget.Dialog('processingDialog', 
+	{ width : "400px",
+		  visible : false, 
+		  modal : true,
+
+		} );
+
+
+	// Show the dialog
+       YAHOO.xc.mst.repository.processingDialog.showDialog = function()
+       {
+	   YAHOO.xc.mst.repository.processingDialog.show();
+	   YAHOO.xc.mst.repository.processingDialog.center();
+       },
+
+
+	// Render the Dialog
+	YAHOO.xc.mst.repository.processingDialog.render();
+
+
+	YAHOO.xc.mst.repository.processingDialog.showDialog();
+    
         window.location = "viewRepositoryValidate.action?RepositoryId="+id;
     },
+    
     editFunction : function(id)
     {
         window.location = "viewEditRepository.action?RepositoryId="+id;
     },
+    
     removeErrorMessage : function(id)
     {
         window.location = "viewRepository.action?RepositoryId="+id;
     },
+    
     downloadFile: function(type,id)
     {
         window.location = "pages/logs/downloadLogFile.jsp?logType="+type+"&id="+id;
     },
     
-	
+
 	/**
 	 *  Dialog to confirm repository delete
 	 */

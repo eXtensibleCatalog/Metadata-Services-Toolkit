@@ -13,8 +13,6 @@ YAHOO.xc.mst.repository = {
 
 EditValidator : function()
          {
-             try
-             {
                    var returnvalue = false;
                    var rname = document.getElementById("repositoryName").value;
                    var rurl = document.getElementById("repositoryURL").value;
@@ -38,19 +36,41 @@ EditValidator : function()
                            else
                                {
                                    
-                                   document.getElementById('processing_bar').style.visibility = "visible";
-                                   setTimeout("YAHOO.xc.mst.repository.submitForm()", 3000);
+					/**
+					 *  Dialog to show processing
+					 */
+				     
+					// Instantiate the Dialog
+					// make it modal - 
+					// it should not start out as visible - it should not be shown until 
+					// new repository button is clicked.
+					YAHOO.xc.mst.repository.processingDialog = new YAHOO.widget.Dialog('processingDialog', 
+					{ width : "400px",
+						  visible : false, 
+						  modal : true,
+
+						} );
+
+
+					     // Show the dialog
+				       YAHOO.xc.mst.repository.processingDialog.showDialog = function()
+				       {
+					   YAHOO.xc.mst.repository.processingDialog.show();
+					   YAHOO.xc.mst.repository.processingDialog.center();
+				       },
+
+
+
+					// Render the Dialog
+					YAHOO.xc.mst.repository.processingDialog.render();
+
+
+					YAHOO.xc.mst.repository.processingDialog.showDialog();
+                                   	setTimeout("YAHOO.xc.mst.repository.submitForm()", 2000);
                                    
                                }
                            
                        }
-             }
-
-
-             catch(err)
-             {
-                 alert(err);
-             }
 
         },
         
@@ -74,17 +94,6 @@ EditValidator : function()
         removeErrorMessage : function(repositoryId)
         {
             window.location = "viewEditRepository.action?RepositoryId="+repositoryId;
-        },
+        }
         
-	/** 
-	 * initialize the page 
-	 */ 
-	init : function() 
-	{
-	    document.getElementById('processing_bar').style.visibility = "hidden";
-	}
-
 }
-
-// initialize the code once the dom is ready
-YAHOO.util.Event.onDOMReady(YAHOO.xc.mst.repository.init);

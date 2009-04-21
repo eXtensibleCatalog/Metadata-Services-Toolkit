@@ -31,8 +31,6 @@
 <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
-<SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
-<SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container-min.js"></SCRIPT>    
 <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>     
 <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
@@ -347,6 +345,14 @@
 		      </div>
 	      </div>
 
+	      <div id="processingDialog" class="hidden">
+	          <div class="hd">Re-validating repository</div>
+		      <div class="bd">
+		      	
+				 <strong>Validating the repository. Please wait.</strong>&nbsp;&nbsp;<img src="${pageContext.request.contextPath}/page-resources/img/processing.gif">
+				 <div class="clear">&nbsp;</div>
+		      </div>
+	      </div>
 
        </div>
 </body>

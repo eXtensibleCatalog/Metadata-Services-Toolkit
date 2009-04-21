@@ -18,6 +18,7 @@
         <c:import url="/inc/meta-frag.jsp"/>
 
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
+        <LINK href="page-resources/yui/assets/skins/sam/skin.css"  rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/base-mst.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/yui/menu/assets/skins/sam/menu.css"  rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
@@ -30,10 +31,12 @@
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container-min.js"></SCRIPT>    
+	<SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>     
+
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/add_repository.js"></SCRIPT>
-        <script type="javascript" src="http://yui.yahooapis.com/combo?2.5.2/build/yuiloader/yuiloader-beta-min.js"></script>
-        <script type="text/javascript" src="page-resources/js/alert.js"></script>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/button/button-min.js"></script> 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
        
     </head>
@@ -92,13 +95,23 @@
                 
                  <div style="margin-top:20px;margin-left:0px;vertical-align:bottom;">
                    <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.repository.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                   <button class="xc_button" type="button" name="add" onclick="javascript:YAHOO.xc.mst.repository.addValidator();">Save</button>
+                   <button class="xc_button" type="button" id="add_repository" name="add" onclick="javascript:YAHOO.xc.mst.repository.addValidator();">Save</button>
                  </div>
         </div>
         <br><br>
-        <div id="processing_bar"><img src="${pageContext.request.contextPath}/page-resources/img/processing.gif"> <strong>Adding and validating the repository. Please wait.</strong></div>
+        
         </form>
         </div>
+
+	      <div id="processingDialog" class="hidden">
+	          <div class="hd">Adding Repository</div>
+		      <div class="bd">
+		      	
+				 <strong>Adding and validating the repository. Please wait.</strong>&nbsp;&nbsp;<img src="${pageContext.request.contextPath}/page-resources/img/processing.gif">
+				 <div class="clear">&nbsp;</div>
+		      </div>
+	      </div>
+
         </div>
     </body>
     </html>
