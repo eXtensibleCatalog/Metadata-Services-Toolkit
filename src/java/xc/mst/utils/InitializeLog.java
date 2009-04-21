@@ -82,7 +82,9 @@ public class InitializeLog  extends HttpServlet {
     			
     			// Load the class from the .jar file
     			URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);
-				loader.loadClass(className);
+				Class<?> clazz = loader.loadClass(className);
+				MetadataService mService = (MetadataService)clazz.newInstance();
+				mService.checkService(Constants.STATUS_SERVICE_NOT_RUNNING);
 			} 
     		catch (ClassNotFoundException e) 
     		{
@@ -90,6 +92,14 @@ public class InitializeLog  extends HttpServlet {
 			}
     		catch (MalformedURLException e) 
     		{
+    			LogWriter.addError(servicesLogFileName, "Error loading service: " + service.getName());
+			} 
+    		catch (InstantiationException e) 
+			{
+    			LogWriter.addError(servicesLogFileName, "Error loading service: " + service.getName());
+			} 
+    		catch (IllegalAccessException e) 
+			{
     			LogWriter.addError(servicesLogFileName, "Error loading service: " + service.getName());
 			}
 	    }

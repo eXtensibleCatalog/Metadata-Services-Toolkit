@@ -5403,13 +5403,12 @@ public class TransformationService extends MetadataService
 	}
 	
 	@Override
-	protected void loadConfiguration(String configuration)
+	public void loadConfiguration(String configuration)
 	{	
 	}
 	
 	@Override
 	protected void validateService() throws ServiceValidationException 
-	{
-		// TODO: Implement		
+	{		
 	}
 }

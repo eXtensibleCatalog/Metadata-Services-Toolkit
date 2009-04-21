@@ -47,12 +47,6 @@ public class HarvestRunner
 	 */
 	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
 
-	// Set the location of the logger's configuration file
-	static
-	{
-	  PropertyConfigurator.configure(configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION));
-	} // end static initializer
-
 	/**
 	 * Data access object for getting provider
 	 */

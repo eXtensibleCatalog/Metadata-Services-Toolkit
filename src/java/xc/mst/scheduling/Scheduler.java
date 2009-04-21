@@ -76,13 +76,9 @@ public class Scheduler extends Thread
 		// Load the configuration file
 		configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
 
-		// Configure the log file location as the value found in the configuration file.
+		// Abort if we could not find the configuration file.
 		String logConfigFileLocation = configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
-		if(logConfigFileLocation != null)
-			PropertyConfigurator.configure(logConfigFileLocation);
-
-		// Abort if we could not find the configuration file
-		else
+		if(logConfigFileLocation == null)
 		{
 			System.err.println("The configuration file was invalid or did not exist.");
 			System.exit(1);

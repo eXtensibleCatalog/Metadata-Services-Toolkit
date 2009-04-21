@@ -292,8 +292,13 @@ public abstract class MetadataService
 
 			LogWriter.addInfo(service.getServicesLogFileName(), "Starting the " + service.getName() + " Service.");
 			
-			// Update database with status of service
-			runningService.persistStatus(Constants.STATUS_SERVICE_RUNNING);
+			if(log.isDebugEnabled())
+				log.debug("Validating the Metadata Service with ID " + serviceId + ".");
+
+			runningService.checkService(Constants.STATUS_SERVICE_RUNNING);
+			
+			if(log.isDebugEnabled())
+				log.debug("Running the Metadata Service with ID " + serviceId + ".");
 			
 			// Run the service's processRecords method
 			boolean success = runningService.processRecords(outputSetId);
@@ -302,8 +307,7 @@ public abstract class MetadataService
 
 			// Update database with status of service
 			if(!runningService.isCanceled)
-			runningService.persistStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
-			
+				runningService.persistStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
 			
 			return success;
 		} // end try(run the service through reflection)
@@ -328,11 +332,7 @@ public abstract class MetadataService
 			}
 			
 			// Update database with status of service
-			try {
-				runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
-			} catch (DataException e1) {
-				log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e1);
-			}
+			runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
 			
 			// Return false if we did not recognize the service name
 			return false;
@@ -359,11 +359,7 @@ public abstract class MetadataService
 			}
 			
 			// Update database with status of service
-			try {
-				runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
-			} catch (DataException e1) {
-				log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e1);
-			}
+			runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
 
 			return false;
 		} // end catch(NoClassDefFoundError)
@@ -389,12 +385,7 @@ public abstract class MetadataService
 			}
 			
 			// Update database with status of service
-			try {
-				runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
-			} catch (DataException e1) {
-				log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e1);
-			}
-
+			runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
 
 			return false;
 		} // end catch(IllegalAccessException)
@@ -420,12 +411,7 @@ public abstract class MetadataService
 			}
 			
 			// Update database with status of service
-			try {
-				runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
-			} catch (DataException e1) {
-				log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e1);
-			}
-
+			runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
 
 			return false;
 		} // end catch(Exception)
@@ -595,11 +581,7 @@ public abstract class MetadataService
 			log.error("An error occurred while running the service with ID " + service.getId() + ".", e);
 			
 			// Update database with status of service
-			try {
-				persistStatus(Constants.STATUS_SERVICE_ERROR);
-			} catch (DataException e1) {
-				log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e1);
-			}
+			persistStatus(Constants.STATUS_SERVICE_ERROR);
 			
 			return false;
 		} // end catch(Exception)
@@ -865,10 +847,76 @@ public abstract class MetadataService
 	 * @param statusForSuccess The status of the service if it is runnable
 	 * @return True iff the service is runnable
 	 */
-	private boolean checkService(String statusForSuccess)
+	public boolean checkService(String statusForSuccess)
 	{
-		// TODO: implement
-		return false;
+		// Check that we can access the Solr index
+		try
+		{
+			RecordList test = recordService.getInputForService(service.getId());
+			if(test == null)
+			{
+				LogWriter.addError(service.getServicesLogFileName(), "Cannot run the service because we cannot access the Solr index.");
+				service.setServicesErrors(service.getServicesErrors()+1);
+				
+				try
+				{
+					serviceDao.update(service);
+				}
+				catch(DataException e)
+				{
+					log.error("An error occurred while updating the service's error count.", e);
+				}
+				
+				persistStatus(Constants.STATUS_SERVICE_ERROR);
+				
+				return false;
+			}
+		}
+		catch(Exception e)
+		{
+			LogWriter.addError(service.getServicesLogFileName(), "Cannot run the service because we cannot access the Solr index.");
+			service.setServicesErrors(service.getServicesErrors()+1);
+			
+			try
+			{
+				serviceDao.update(service);
+			}
+			catch(DataException e1)
+			{
+				log.error("An error occurred while updating the service's error count.", e1);
+			}
+
+			persistStatus(Constants.STATUS_SERVICE_ERROR);
+			
+			return false;
+		}
+		
+		try
+		{
+			validateService();
+		}
+		catch(ServiceValidationException e)
+		{
+			LogWriter.addError(service.getServicesLogFileName(), "Cannot run the service for the following reason: " + e.getMessage() + ".");
+			service.setServicesErrors(service.getServicesErrors()+1);
+			
+			try
+			{
+				serviceDao.update(service);
+			}
+			catch(DataException e1)
+			{
+				log.error("An error occurred while updating the service's error count.", e1);
+			}
+
+			persistStatus(Constants.STATUS_SERVICE_ERROR);
+			
+			return false;
+		}
+		
+		persistStatus(statusForSuccess);
+		
+		return true;
 	}
 	
 	/**
@@ -893,7 +941,7 @@ public abstract class MetadataService
 	 *
 	 * @param config The service specific configuration defined in the service's configuration file
 	 */
-	protected abstract void loadConfiguration(String config);
+	public abstract void loadConfiguration(String config);
 	
 	/**
 	 * This method gets called after all new records are processed.  If the service
@@ -906,10 +954,17 @@ public abstract class MetadataService
 	 * Logs the status of the service to the database
 	 * @throws DataException 
 	 */
-	protected void persistStatus(String status) throws DataException{
-		
-		service.setStatus(status);
-		serviceDao.update(service);
+	protected void persistStatus(String status)
+	{
+		try
+		{
+			service.setStatus(status);
+			serviceDao.update(service);
+		}
+		catch(DataException e)
+		{
+			log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e);
+		}
 	}
 	
 	/**

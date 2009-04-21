@@ -122,6 +122,8 @@ public class DefaultServicesService implements ServicesService
     	BufferedReader in = null; // Reads the file
     	try 
     	{
+    		MetadataService mService = null; // An instance of the service we're adding
+    		
     		String logFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
     		
     		in = new BufferedReader(new FileReader(configFile));
@@ -190,11 +192,22 @@ public class DefaultServicesService implements ServicesService
     		URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);
     		try 
     		{
-				loader.loadClass(className);
+				Class<?> clazz = loader.loadClass(className);
+				mService = (MetadataService)clazz.newInstance();
 			} 
     		catch (ClassNotFoundException e) 
     		{
     			LogWriter.addError(logFileName, "Error adding a new service: The class " + className + " could not be found in the .jar file " + jar);
+				throw new ConfigFileException("The class " + className + " could not be found in the .jar file " + jar);
+			} 
+    		catch (InstantiationException e) 
+			{
+    			LogWriter.addError(logFileName, "Error adding a new service: The class " + className + " could not be found in the .jar file " + jar);
+				throw new ConfigFileException("The class " + className + " could not be found in the .jar file " + jar);
+			} 
+			catch (IllegalAccessException e) 
+			{
+				LogWriter.addError(logFileName, "Error adding a new service: The class " + className + " could not be found in the .jar file " + jar);
 				throw new ConfigFileException("The class " + className + " could not be found in the .jar file " + jar);
 			}
     		
@@ -407,6 +420,9 @@ public class DefaultServicesService implements ServicesService
     		// Set the configuration on the service
     		service.setServiceConfig(buffer.toString());
     		servicesDao.update(service);
+    		
+    		mService.loadConfiguration(service.getServiceConfig());
+    		mService.checkService(Constants.STATUS_SERVICE_NOT_RUNNING);
     	} 
     	finally
     	{
@@ -428,6 +444,8 @@ public class DefaultServicesService implements ServicesService
     	BufferedReader in = null; // Reads the file
     	try 
     	{
+    		MetadataService mService = null; // An instance of the service we're adding
+    		
     		String logFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
     		
     		in = new BufferedReader(new FileReader(configFile));
@@ -496,11 +514,22 @@ public class DefaultServicesService implements ServicesService
     		URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);
     		try 
     		{
-				loader.loadClass(className);
+				Class<?> clazz = loader.loadClass(className);
+				mService = (MetadataService)clazz.newInstance();
 			} 
     		catch (ClassNotFoundException e) 
     		{
     			LogWriter.addError(logFileName, "Error adding a new service: The class " + className + " could not be found in the .jar file " + jar);
+				throw new ConfigFileException("The class " + className + " could not be found in the .jar file " + jar);
+			} 
+    		catch (InstantiationException e) 
+			{
+    			LogWriter.addError(logFileName, "Error adding a new service: The class " + className + " could not be found in the .jar file " + jar);
+				throw new ConfigFileException("The class " + className + " could not be found in the .jar file " + jar);
+			} 
+			catch (IllegalAccessException e) 
+			{
+				LogWriter.addError(logFileName, "Error adding a new service: The class " + className + " could not be found in the .jar file " + jar);
 				throw new ConfigFileException("The class " + className + " could not be found in the .jar file " + jar);
 			}
     		
@@ -723,6 +752,9 @@ public class DefaultServicesService implements ServicesService
     		// Set the configuration on the service
     		service.setServiceConfig(buffer.toString());
     		servicesDao.update(service);
+    		
+    		mService.loadConfiguration(service.getServiceConfig());
+    		mService.checkService(Constants.STATUS_SERVICE_NOT_RUNNING);
     		
     		// Reprocess the records processed by the service
     		RecordList records = recordService.getByProcessingServiceId(service.getId());

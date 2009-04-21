@@ -53,57 +53,57 @@ public class NormalizationService extends MetadataService
 	/**
 	 * The Properties file with information on which Normalization steps to run
 	 */
-	private Properties enabledSteps = new Properties();
+	private Properties enabledSteps = null;
 
 	/**
 	 * The Properties file with the voyager location name mappings
 	 */
-    private Properties voyagerLocationNameProperties = new Properties();
+    private Properties voyagerLocationNameProperties = null;
 
     /**
      * The Properties file with the DCMI type information for the leader 06
      */
-    private Properties dcmiType06Properties = new Properties();
+    private Properties dcmiType06Properties = null;
 
     /**
      * The Properties file with the MARC Vocabulary information for the leader 06
      */
-    private Properties leader06MarcVocabProperties = new Properties();
+    private Properties leader06MarcVocabProperties = null;
 
     /**
      * The Properties file with the vocab information for the leader 06
      */
-    private Properties vocab06Properties = new Properties();
+    private Properties vocab06Properties = null;
 
     /**
      * The Properties file with the mode of issuance information in it
      */
-    private Properties modeOfIssuanceProperties = new Properties();
+    private Properties modeOfIssuanceProperties = null;
 
     /**
      * The Properties file with the DCMI type information for the 00 offset 07
      */
-    private Properties dcmiType0007Properties = new Properties();
+    private Properties dcmiType0007Properties = null;
 
     /**
      * The Properties file with the vocab information for the 007 offset 00
      */
-    private Properties vocab007Properties = new Properties();
+    private Properties vocab007Properties = null;
 
     /**
      * The Properties file with the smd type information for the 007 offset 00
      */
-    private Properties smdType007Properties = new Properties();
+    private Properties smdType007Properties = null;
 
     /**
      * The Properties file with the language term information
      */
-    private Properties languageTermProperties = new Properties();
+    private Properties languageTermProperties = null;
 
     /**
      * The Properties file with the audience information for the 008 offset 22
      */
-    private Properties audienceFrom008Properties = new Properties();
+    private Properties audienceFrom008Properties = null;
 
     /**
 	 * The output format (marcxml) for records processed from this service
@@ -1797,16 +1797,13 @@ public class NormalizationService extends MetadataService
 	}
 
 	@Override
-	protected void loadConfiguration(String configuration)
+	public void loadConfiguration(String configuration)
 	{	
 		String[] configurationLines = configuration.split("\n");
 	
 		// The Properties file we're currently populating
 		Properties current = null;
 		
-		// Load the properties file with information on which normalization steps are enabled.
-	    enabledSteps = new Properties();
-
 	    for(String line : configurationLines)
 	    {
     		line = line.trim();
@@ -1825,27 +1822,71 @@ public class NormalizationService extends MetadataService
 	    	else
 	    	{
 	    		if(line.equals("LOCATION CODE TO LOCATION"))
+	    		{
+	    			if(voyagerLocationNameProperties == null)
+	    				voyagerLocationNameProperties = new Properties();
 	    			current = voyagerLocationNameProperties;
+	    		}
 	    		else if(line.equals("LEADER 06 TO DCMI TYPE"))
+	    		{
+	    			if(dcmiType06Properties == null)
+	    				dcmiType06Properties = new Properties();
 	    			current = dcmiType06Properties;
+	    		}
 	    		else if(line.equals("LEADER 06 TO MARC VOCAB"))
+	    		{
+	    			if(leader06MarcVocabProperties == null)
+	    				leader06MarcVocabProperties = new Properties();
 	    			current = leader06MarcVocabProperties;
+	    		}
 	    		else if(line.equals("LEADER 06 TO FULL TYPE"))
+	    		{
+	    			if(vocab06Properties == null)
+	    				vocab06Properties = new Properties();
 	    			current = vocab06Properties;
+	    		}
 	    		else if(line.equals("LEADER 07 TO MODE OF ISSUANCE"))
+	    		{
+	    			if(modeOfIssuanceProperties == null)
+	    				modeOfIssuanceProperties = new Properties();
 	    			current = modeOfIssuanceProperties;
+	    		}
 	    		else if(line.equals("FIELD 007 OFFSET 00 TO DCMI TYPE"))
+	    		{
+	    			if(dcmiType0007Properties == null)
+	    				dcmiType0007Properties = new Properties();
 	    			current = dcmiType0007Properties;
+	    		}
 	    		else if(line.equals("FIELD 007 OFFSET 00 TO FULL TYPE"))
+	    		{
+	    			if(vocab007Properties == null)
+	    				vocab007Properties = new Properties();
 	    			current = vocab007Properties;
+	    		}
 	    		else if(line.equals("FIELD 007 OFFSET 00 TO SMD TYPE"))
+	    		{
+	    			if(smdType007Properties == null)
+	    				smdType007Properties = new Properties();
 	    			current = smdType007Properties;
+	    		}
 	    		else if(line.equals("LANGUAGE CODE TO LANGUAGE"))
+	    		{
+	    			if(languageTermProperties == null)
+	    				languageTermProperties = new Properties();
 	    			current = languageTermProperties;
+	    		}
 	    		else if(line.equals("FIELD 008 OFFSET 22 TO AUDIENCE"))
+	    		{
+	    			if(audienceFrom008Properties == null)
+	    				audienceFrom008Properties = new Properties();
 	    			current = audienceFrom008Properties;
+	    		}
 	    		else if(line.equals("ENABLED STEPS"))
+	    		{
+	    			if(enabledSteps == null)
+	    				enabledSteps = new Properties();
 	    			current = enabledSteps;
+	    		}
 	    	}
 	    }
 	}
@@ -1853,6 +1894,27 @@ public class NormalizationService extends MetadataService
 	@Override
 	protected void validateService() throws ServiceValidationException 
 	{
-		// TODO: Implement		
+		if(voyagerLocationNameProperties == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: LOCATION CODE TO LOCATION");
+		else if(dcmiType06Properties == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: LEADER 06 TO DCMI TYPE");
+		else if(leader06MarcVocabProperties == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: LEADER 06 TO MARC VOCAB");
+		else if(vocab06Properties == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: LEADER 06 TO FULL TYPE");
+		else if(modeOfIssuanceProperties == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: LEADER 07 TO MODE OF ISSUANCE");
+		else if(dcmiType0007Properties == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 007 OFFSET 00 TO DCMI TYPE");
+		else if(vocab007Properties == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 007 OFFSET 00 TO FULL TYPE");
+		else if(smdType007Properties == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 007 OFFSET 00 TO SMD TYPE");
+		else if(languageTermProperties == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: LANGUAGE CODE TO LANGUAGE");
+		else if(audienceFrom008Properties == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 008 OFFSET 22 TO AUDIENCE");
+		else if(enabledSteps == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: ENABLED STEPS");
 	}
 }

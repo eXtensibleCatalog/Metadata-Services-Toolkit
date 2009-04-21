@@ -89,12 +89,12 @@ public class AggregationService extends MetadataService
 	/**
 	 * The Properties file with information on which fields necessitate merging work elements
 	 */
-	private Properties workMerge = new Properties();
+	private Properties workMerge = null;
 
 	/**
 	 * The Properties file with information on which fields necessitate merging manifestation elements
 	 */
-	private Properties manifestationMerge = new Properties();
+	private Properties manifestationMerge = null;
 
 	/**
 	 * The namespace for XML Schema Instance
@@ -1000,7 +1000,7 @@ public class AggregationService extends MetadataService
 	} // end method loadPropertiesFiles()
 	
 	@Override
-	protected void loadConfiguration(String configuration)
+	public void loadConfiguration(String configuration)
 	{	
 		String[] configurationLines = configuration.split("\n");
 	
@@ -1025,9 +1025,17 @@ public class AggregationService extends MetadataService
 	    	else
 	    	{
 	    		if(line.equals("WORK MERGE FIELDS"))
+	    		{
+	    			if(workMerge == null)
+	    				workMerge = new Properties();
 	    			current = workMerge;
+	    		}
 	    		else if(line.equals("MANIFESTATION MERGE FIELDS"))
+	    		{
+	    			if(manifestationMerge == null)
+	    				manifestationMerge = new Properties();
 	    			current = manifestationMerge;
+	    		}
 	    	}
 	    }
 	}
@@ -1035,6 +1043,9 @@ public class AggregationService extends MetadataService
 	@Override
 	protected void validateService() throws ServiceValidationException 
 	{
-		// TODO: Implement		
+		if(workMerge == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: WORK MERGE FIELDS");
+		else if(manifestationMerge == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: MANIFESTATION MERGE FIELDS");		
 	}
 } // end class AggregationService
