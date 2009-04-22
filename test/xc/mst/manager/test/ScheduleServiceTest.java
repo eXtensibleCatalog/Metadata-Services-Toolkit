@@ -21,6 +21,7 @@ import xc.mst.bo.user.User;
 import xc.mst.dao.DataException;
 import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
+import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.repository.DefaultFormatService;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.DefaultSetService;
@@ -59,7 +60,7 @@ public class ScheduleServiceTest {
 	 */
 	public void addScheduleTest() throws DataException
 	{
-
+		
 		try
         {
 			ServerService serverService = new DefaultServerService();

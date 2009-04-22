@@ -155,7 +155,6 @@ public class AddRepository extends ActionSupport implements UserAware
                     pr.setUpdatedAt( new Timestamp(new Date().getTime()));
                     pr.setLastValidationDate(new Date());
                     pr.setOaiProviderUrl(getRepositoryURL());
-                    pr.setLogFileName("logs/harvestIn/"+getRepositoryName()+".txt");
 
                     pr.setUser(user);
 

@@ -141,7 +141,7 @@
 	<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
 
 	<!-- run the tests -->
-	<target name="run-tests" description="run examples with java">
+	<target name="run-tests" description="run examples with java" depends="testCompile">
 
 		<echo message="testng-run " />
         
@@ -187,7 +187,7 @@
 	     You must first tell your web-browser to look
 	     at your webapps directory viewBrowseRecords -->
 
-    <target name="prepareWebApp" depends="compile,testCompile">
+    <target name="prepareWebApp" depends="compile">
 
         <!-- Remove the old classes -->
         <delete dir="${webapp.classes.dir}" />

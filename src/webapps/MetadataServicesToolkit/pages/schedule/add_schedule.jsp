@@ -173,8 +173,8 @@
 					<option value = "-1"> Select </option>
 
 					<c:forEach begin="1" end="24" step="1" var="time">
-						<option value = "${time -1}"
-						<c:if test="${schedule.recurrence == 'Daily' && schedule.hour == time-1}">
+						<option value = "${time}"
+						<c:if test="${schedule.recurrence == 'Daily' && schedule.hour == time}">
 							selected
 						</c:if>
 						> ${time}:00</option>
@@ -234,8 +234,8 @@
 				<select id="schedule_week_hour" name="hour" />
 					<option value = "-1"> Select </option>
 					<c:forEach begin="1" end="24" step="1" var="time">
-						<option value = "${time-1}"
-						<c:if test="${schedule.recurrence == 'Weekly' && schedule.hour == time-1}">
+						<option value = "${time}"
+						<c:if test="${schedule.recurrence == 'Weekly' && schedule.hour == time}">
 							selected
 						</c:if>
 						> ${time}:00</option>

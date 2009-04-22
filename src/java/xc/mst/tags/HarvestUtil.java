@@ -10,6 +10,7 @@
 package xc.mst.tags;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import xc.mst.bo.harvest.Harvest;
@@ -52,10 +53,11 @@ public class HarvestUtil {
 				}
 				
 			}
-			
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd 'at' hh:mm");
+
 			String output = "Not yet harvested";
 			if (latestRun != null) {
-				output = "Success last run completed " + (latestRun.getYear()+1900) +  "-" +  (latestRun.getMonth()+1) + "-" + latestRun.getDate() + " at " + (latestRun.getHours() + 1) +  ":" + (latestRun.getMinutes() + 1);
+				output = "Success last run completed " + format.format(latestRun);
 			}
 			
 			return output;

@@ -70,6 +70,7 @@ public class DefaultProviderService implements ProviderService{
      * @throws xc.mst.dao.DataException
      */
     public void insertProvider(Provider provider) throws DataException{
+    	provider.setLogFileName("logs/harvestIn/"+provider.getName()+".txt");
         providerDao.insert(provider);
         LogWriter.addInfo(provider.getLogFileName(), "Beginning logging for " + provider.getName());
     }
@@ -107,6 +108,7 @@ public class DefaultProviderService implements ProviderService{
      * @throws xc.mst.dao.DataException
      */
     public void updateProvider(Provider provider) throws DataException{
+    	provider.setLogFileName("logs/harvestIn/"+provider.getName());
         providerDao.update(provider);
     }
 

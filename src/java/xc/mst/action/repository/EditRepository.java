@@ -140,7 +140,7 @@ public class EditRepository extends ActionSupport
             ProviderService providerService = new DefaultProviderService();
             Provider provider = providerService.getProviderById(repositoryId);
             provider.setName(getRepositoryName());
-            provider.setLogFileName("logs/harvestIn/"+getRepositoryName());
+            
             boolean urlChanged = false;
             if(provider.getOaiProviderUrl().equalsIgnoreCase(repositoryURL))
             {

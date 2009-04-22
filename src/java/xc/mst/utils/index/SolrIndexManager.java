@@ -12,12 +12,10 @@ package xc.mst.utils.index;
 
 import java.io.IOException;
 
-import java.net.MalformedURLException;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
@@ -85,39 +83,6 @@ public class SolrIndexManager {
 	}
 
 	/**
-	 * Adds a document to the solr index
-	 *
-	 * @return
-	 */
-	/*public static SolrServer getSolrServerInstance() {
-
-		if (server == null) {
-			String url = "http://localhost:8085/solr/";
-
-			try {				
-				server = new CommonsHttpSolrServer( url );
-				log.debug("Solar Server::"+ server);
-				LogWriter.addInfo(logObj.getLogFileLocation(), "The Solr index was successfully opened at " + url);
-			} catch (MalformedURLException me) {
-				log.debug(me);
-				
-				LogWriter.addError(logObj.getLogFileLocation(), "Failed to open the Solr index was successfully opened at " + url);
-				
-				logObj.setErrors(logObj.getErrors()+1);
-				try{
-					logDao.update(logObj);
-				}catch(DataException e){
-					log.error("DataExcepiton while updating the log's error count.");
-				}
-				
-				//throw new DataException(me.getMessage());
-
-			}
-		}
-		return server;
-	}*/
-
-	/**
 	 * Adds a document to the Lucene index
 	 *
 	 * @param doc The document to add
@@ -126,10 +91,17 @@ public class SolrIndexManager {
 	public boolean addDoc(SolrInputDocument doc) throws DataException
 	{
 		log.debug("Add index to Solr - begin");
+		
+		// Check if solr server is null
+		if (server == null) {
+			log.error("Solr server is null");
+			return false;
+		}
+		
 		try {
 			server.add(doc);
 		} catch (SolrServerException se) {
-			log.debug(se);
+			log.error("Solr server exception occured when adding document to the index.", se);
 			
 			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index: " + se.getMessage());
 			
@@ -168,11 +140,17 @@ public class SolrIndexManager {
 	public boolean commitIndex() throws DataException
 	{
 		log.debug("Commit index to Solr - begin");
+
+		// Check if solr server is null
+		if (server == null) {
+			log.error("Solr server is null");
+			return false;
+		}
 		try {
 			server.commit();
 			LogWriter.addInfo(logObj.getLogFileLocation(), "Commited changes to the Solr index");
 		} catch (SolrServerException se) {
-			log.debug(se);
+			log.error("Solr server exception occured when commiting to the index.", se);
 			
 			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index: " + se.getMessage());
 			logObj.setErrors(logObj.getErrors()+1);
@@ -210,7 +188,15 @@ public class SolrIndexManager {
 	public SolrDocumentList getDocumentList(SolrQuery query) {
 
 		SolrDocumentList docs = null;
+		
+		// Check if solr server is null
+		if (server == null) {
+			log.error("Solr server is null");
+			return docs;
+		}
+		
 		try {
+
 		    QueryResponse rsp = server.query( query );
 		    docs = rsp.getResults();
 

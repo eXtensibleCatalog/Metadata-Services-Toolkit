@@ -91,7 +91,7 @@ public class MSTSolrServer {
 				log.debug("Solar Server::"+ server);
 				LogWriter.addInfo(logObj.getLogFileLocation(), "The Solr server instance was successfully created at " + url);
 			} catch (MalformedURLException me) {
-				log.debug(me);
+				log.error("Failure to create server instance. Solr Server is not created.", me);
 				
 				LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance at " + url);
 				

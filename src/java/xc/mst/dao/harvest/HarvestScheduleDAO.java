@@ -250,10 +250,10 @@ public abstract class HarvestScheduleDAO
 			if(schedule.getMinute() == 0 || schedule.getMinute() > 60)
 				errorMessage.append("The minute is invalid. " );
 
-			if(schedule.getDayOfWeek() > 6)
+			if(schedule.getDayOfWeek() > 7)
 				errorMessage.append("The day_of_week is invalid. ");
 
-			if(schedule.getHour() > 23)
+			if(schedule.getHour() > 24)
 				errorMessage.append("The hour is invalid. ");
 
 			if(schedule.getProvider() == null)
