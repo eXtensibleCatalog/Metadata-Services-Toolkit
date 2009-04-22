@@ -32,9 +32,9 @@
     	<SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>     
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/button/button-min.js"></script> 
-          
+
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
-        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/forgot_password.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/login.js"></SCRIPT>
     </head>
     
     <body class="yui-skin-sam">
@@ -90,13 +90,13 @@
 					<tr>
 						<td class="label"> Login server : </td>
 						<td class="input"> 
-							<select name="serverId">
+							<select name="serverName" onChange="javascript:YAHOO.xc.mst.login.displayForgotPasswordURL(this);">
 								<c:forEach var="server" items="${servers}">
-									<c:if test="${server.id == serverId}">
-										<option value="${server.id}" selected>${server.name}</option>
+									<c:if test="${server.name == serverName}">
+										<option value="${server.name}" selected>${server.name}</option>
 									</c:if>
-									<c:if test="${server.id != serverId}">
-										<option value="${server.id}">${server.name}</option>
+									<c:if test="${server.name != serverName}">
+										<option value="${server.name}">${server.name}</option>
 									</c:if>
 								</c:forEach>
 							</select>
@@ -114,8 +114,29 @@
 						<td colspan="2" align="center"> <button type="submit" class="xc_button" name="submit">&nbsp;&nbsp;Login&nbsp;&nbsp;</button> </td>
 					</tr>
 					<tr>
-						<td colspan="2" align="center"> <a href="viewUserRegisteration.action">New User Registeration</a>&nbsp;&nbsp;&nbsp;&nbsp;     | 
-						&nbsp;&nbsp;&nbsp;&nbsp;<a href="viewForgotPassword.action">Forgot Password</a>   </td>
+						<td colspan="2" align="center"> <a href="viewUserRegisteration.action">New User Registeration</a>&nbsp;&nbsp;&nbsp;&nbsp;  
+						<span id="forgot_password_url">
+							&nbsp;
+						</span>						
+						<div id="forgot_password_local">
+							   | 
+							&nbsp;&nbsp;&nbsp;&nbsp;<a href="viewForgotPassword.action">Forgot Password</a>   
+						</div>
+						
+						<div id="forgot_password_ldap">
+							<c:forEach var="server" items="${servers}">
+								<c:if test="${server.name != 'Local'}">
+									<c:if test="${server.showForgotPasswordLink == 'true'}">
+										| &nbsp;&nbsp;&nbsp;&nbsp;<a href="${server.forgotPasswordUrl}">Forgot Password</a>   
+									</c:if>
+								
+								</c:if>
+							</c:forEach>
+</div>
+						
+						
+						</td>
+						
 					</tr>
 				</table>
 			</form>

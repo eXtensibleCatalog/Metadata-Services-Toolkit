@@ -55,14 +55,19 @@ YAHOO.xc.mst.configuration.MyObject = {
              }
              else
              {
-                
+             
+                if (document.getElementById("showForgotPasswordLink").checked) {
+                	 if (document.getElementById("forgotPasswordUrl").value == '') {
+                	 	createErrorDiv("error","Forgot password URL is required.");
+                	 	return false;
+                	 }
+                }
                  var arr = serverURL.split("://");
                 
 
                  if(arr[1]==null)
                      {
                          createErrorDiv("error","Repository URL is invalid (Kindly ensure that protocol is specified eg:HTTP)");
-                         //return false;
                      }
                  else
                      {

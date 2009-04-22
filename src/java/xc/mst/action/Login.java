@@ -68,7 +68,7 @@ public class Login extends ActionSupport implements ServletRequestAware {
     private List<Server> servers;
 
     /** Server selected */
-    private int serverId;
+    private String serverName;
 
 	/** A reference to the logger for this class */
 	private static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -95,7 +95,7 @@ public class Login extends ActionSupport implements ServletRequestAware {
      */
 	public String login() throws Exception {
 
-		Server server = serverService.getServerById(serverId);
+		Server server = serverService.getServerByName(serverName);
         user = userService.getUserByUserName(userName, server);
 
 		boolean result = false;
@@ -226,12 +226,12 @@ public class Login extends ActionSupport implements ServletRequestAware {
 		return servers;
 	}
 
-	public int getServerId() {
-		return serverId;
+	public String getServerName() {
+		return serverName;
 	}
 
-	public void setServerId(int serverId) {
-		this.serverId = serverId;
+	public void setServerName(String serverName) {
+		this.serverName = serverName;
 	}
 
 	public String getErrorType() {

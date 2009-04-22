@@ -110,6 +110,24 @@
                             <td><input type="text" id="startLocation" name ="startLocation" style="width:200px;height:25px;" value="${server.startLocation}" maxlength="255"></td>
                         </tr>
 
+                        <tr>
+                            <td valign="top"> <B>Show Forgot Password URL ${server.showForgotPasswordLink}</B> &nbsp;&nbsp;</td>
+                            <td><input type="radio" id="showForgotPasswordLink" name ="showForgotPasswordLink" style="width:10px;height:30px;" value="true"
+                            <c:if test="${server.showForgotPasswordLink == 'true'}">
+                            	checked
+                            </c:if> > Yes
+                            <input type="radio" id="showForgotPasswordLink" name ="showForgotPasswordLink" style="width:10px;height:30px;" value="false"
+                            <c:if test="${server.showForgotPasswordLink == 'false'}">
+                            	checked
+                            </c:if> > No
+                            </td>
+                        </tr>
+                                                
+                        <tr>
+                            <td valign="top"> <B>Forgot password URL</B> &nbsp;&nbsp;</td>
+                            <td><input type="text" id="forgotPasswordUrl" name ="forgotPasswordUrl" style="width:200px;height:25px;" value="${server.forgotPasswordUrl}" maxlength="255"></td>
+                        </tr>                                                
+
 
                    </table>
                    <br><br><br><br>

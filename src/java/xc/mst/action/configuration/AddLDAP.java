@@ -59,6 +59,12 @@ public class AddLDAP extends ActionSupport
     
 	/** Error type */
 	private String errorType; 
+	
+	/** Indicates whether to show forgot password URL */
+	private boolean showForgotPasswordLink;
+	
+	/** URL to forward the user to get forgot password */
+	private String forgotPasswordUrl;
 
     /**sets the display name of the LDAP server **/
     public void setDisplayName(String displayName)
@@ -203,6 +209,12 @@ public class AddLDAP extends ActionSupport
                 server.setType(1);
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
+                server.setShowForgotPasswordLink(showForgotPasswordLink);
+                if (showForgotPasswordLink) {
+                	server.setForgotPasswordUrl(forgotPasswordUrl);
+                } else {
+                	server.setForgotPasswordUrl(null);
+                }
                 serverService.insertServer(server);
             }
             else
@@ -213,6 +225,13 @@ public class AddLDAP extends ActionSupport
                 server.setType(1);
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
+                server.setShowForgotPasswordLink(showForgotPasswordLink);
+                if (showForgotPasswordLink) {
+                	server.setForgotPasswordUrl(forgotPasswordUrl);
+	            } else {
+	            	server.setForgotPasswordUrl(null);
+	            }
+                
                 serverService.updateServer(server);
             }
 
@@ -281,5 +300,21 @@ public class AddLDAP extends ActionSupport
      */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	public boolean isShowForgotPasswordLink() {
+		return showForgotPasswordLink;
+	}
+
+	public void setShowForgotPasswordLink(boolean showForgotPasswordLink) {
+		this.showForgotPasswordLink = showForgotPasswordLink;
+	}
+
+	public String getForgotPasswordUrl() {
+		return forgotPasswordUrl;
+	}
+
+	public void setForgotPasswordUrl(String forgotPasswordUrl) {
+		this.forgotPasswordUrl = forgotPasswordUrl;
 	}
 }
