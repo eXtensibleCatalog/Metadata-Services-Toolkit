@@ -89,7 +89,7 @@ public class SolrIndexManager {
 	 *
 	 * @return
 	 */
-	public static SolrServer getSolrServerInstance() {
+	/*public static SolrServer getSolrServerInstance() {
 
 		if (server == null) {
 			String url = "http://localhost:8085/solr/";
@@ -115,7 +115,7 @@ public class SolrIndexManager {
 			}
 		}
 		return server;
-	}
+	}*/
 
 	/**
 	 * Adds a document to the Lucene index

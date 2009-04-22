@@ -229,16 +229,7 @@ public class AggregationService extends MetadataService
 	 */
 	private List<Record> processWorks(XcRecordSplitter splitter)
 	{
-//		try
-//		{
-			// TODO removed IndexManager
-			// We need to reopen the index to get the most recent data from it
-			//IndexManager.getInstance().maybeReOpen();
-//		} // end try
-//		catch(IOException e)
-//		{
-//			log.error("An IOException occurred while reopening the index.  This may result in records not being matched when they should.", e);
-//		} // end catch
+		refreshIndex();
 
 		// A list of new or updated records resulting form processing the passed record
 		List<Record> results = new ArrayList<Record>();
@@ -308,16 +299,7 @@ public class AggregationService extends MetadataService
 	 */
 	private List<Record> processManifestations(XcRecordSplitter splitter)
 	{
-//		try
-//		{
-			// TODO removed IndexManager
-			// We need to reopen the index to get the most recent data from it
-			// IndexManager.getInstance().maybeReOpen();
-//		} // end try
-//		catch(IOException e)
-//		{
-//			log.error("An IOException occurred while reopening the index.  This may result in records not being matched when they should.", e);
-//		} // end catch
+		refreshIndex();
 
 		// A list of new or updated records resulting form processing the passed record
 		List<Record> results = new ArrayList<Record>();
@@ -380,16 +362,7 @@ public class AggregationService extends MetadataService
 	 */
 	private List<Record> processHoldings(XcRecordSplitter splitter)
 	{
-//		try
-//		{
-			// We need to reopen the index to get the most recent data from it
-			// TODO removed IndexManager
-			// IndexManager.getInstance().maybeReOpen();
-//		} // end try
-//		catch(IOException e)
-//		{
-//			log.error("An IOException occurred while reopening the index.  This may result in records not being matched when they should.", e);
-//		} // end catch
+		refreshIndex();
 
 		// A list of new or updated records resulting form processing the passed record
 		List<Record> results = new ArrayList<Record>();
@@ -433,16 +406,7 @@ public class AggregationService extends MetadataService
 	 */
 	private List<Record> processItems(XcRecordSplitter splitter)
 	{
-//		try
-//		{
-			// We need to reopen the index to get the most recent data from it
-			// TODO removed IndexManager
-			// IndexManager.getInstance().maybeReOpen();
-//		} // end try
-//		catch(IOException e)
-//		{
-//			log.error("An IOException occurred while reopening the index.  This may result in records not being matched when they should.", e);
-//		} // end catch
+		refreshIndex();
 
 		// A list of new or updated records resulting form processing the passed record
 		List<Record> results = new ArrayList<Record>();

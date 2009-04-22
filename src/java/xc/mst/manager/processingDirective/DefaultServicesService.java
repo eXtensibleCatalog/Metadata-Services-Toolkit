@@ -10,6 +10,8 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.*;
@@ -39,6 +41,11 @@ import xc.mst.utils.index.SolrIndexManager;
  */
 public class DefaultServicesService implements ServicesService
 {
+	/**
+	 * The logger object
+	 */
+	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+	
     /** DAO object for services in the MST */
     private ServiceDAO servicesDao;
     
@@ -421,9 +428,27 @@ public class DefaultServicesService implements ServicesService
     		service.setServiceConfig(buffer.toString());
     		servicesDao.update(service);
     		
-    		mService.loadConfiguration(service.getServiceConfig());
-    		mService.checkService(Constants.STATUS_SERVICE_NOT_RUNNING);
-    	} 
+    		MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING);
+    	}    	
+    	catch(DataException e)
+    	{
+    		log.error("DataException while adding a service: ", e);
+    		throw e;
+    	}
+    	catch(IOException e)
+    	{
+    		log.error("IOException while adding a service: ", e);
+    		throw e;
+    	}
+    	catch(ConfigFileException e)
+    	{
+    		log.error("ConfigFileException while adding a service: ", e);
+    		throw e;
+    	}
+    	catch(Exception e)
+    	{
+    		log.error("Exception while adding a service: ", e);
+    	}
     	finally
     	{
     		// Close the configuration file
@@ -753,8 +778,7 @@ public class DefaultServicesService implements ServicesService
     		service.setServiceConfig(buffer.toString());
     		servicesDao.update(service);
     		
-    		mService.loadConfiguration(service.getServiceConfig());
-    		mService.checkService(Constants.STATUS_SERVICE_NOT_RUNNING);
+    		MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING);
     		
     		// Reprocess the records processed by the service
     		RecordList records = recordService.getByProcessingServiceId(service.getId());

@@ -61,50 +61,6 @@ public class InitializeLog  extends HttpServlet {
 	    List<Log> logs = logDao.getAll();
 	    for(Log log : logs)
 	    	LogWriter.addInfo(log.getLogFileLocation(), "Beginning logging for " + log.getLogFileName() + ".");
-	    
-	    // Load the services
-	    String servicesLogFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
-	    ServiceDAO serviceDao = new DefaultServiceDAO();
-	    List<Service> services = serviceDao.getAll();
-    	
-		
-	    for(Service service : services)
-	    {
-	    	String jar = service.getServiceJar();
-			String className = service.getClassName();
-			
-	    	// The .jar file we need to load the service from
-    		File jarFile = new File(jar);
-    		try 
-    		{
-    			// The class loader for the MetadataService class
-    			ClassLoader serviceLoader = MetadataService.class.getClassLoader();
-    			
-    			// Load the class from the .jar file
-    			URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);
-				Class<?> clazz = loader.loadClass(className);
-				MetadataService mService = (MetadataService)clazz.newInstance();
-				mService.checkService(Constants.STATUS_SERVICE_NOT_RUNNING);
-			} 
-    		catch (ClassNotFoundException e) 
-    		{
-    			LogWriter.addError(servicesLogFileName, "Error loading service: The class " + service.getClassName() + " could not be found in the .jar file " + service.getServiceJar());
-			}
-    		catch (MalformedURLException e) 
-    		{
-    			LogWriter.addError(servicesLogFileName, "Error loading service: " + service.getName());
-			} 
-    		catch (InstantiationException e) 
-			{
-    			LogWriter.addError(servicesLogFileName, "Error loading service: " + service.getName());
-			} 
-    		catch (IllegalAccessException e) 
-			{
-    			LogWriter.addError(servicesLogFileName, "Error loading service: " + service.getName());
-			}
-	    }
-	    
-	    LogWriter.addInfo(servicesLogFileName, "Loaded services");
 	  }
 
 	  public void doGet(HttpServletRequest req, HttpServletResponse res) {

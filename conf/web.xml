@@ -30,7 +30,7 @@
     <servlet-name>startScheduler</servlet-name>
     <servlet-class>xc.mst.scheduling.SchedulerThreadServlet</servlet-class>
 
-    <load-on-startup>3</load-on-startup>
+    <load-on-startup>4</load-on-startup>
   </servlet>
   
    <servlet>
@@ -45,6 +45,17 @@
     <load-on-startup>2</load-on-startup>
   </servlet>
   
+   <servlet>
+    <servlet-name>initServices</servlet-name>
+    <servlet-class>xc.mst.utils.InitializeServices</servlet-class>
+
+    <init-param>
+      <param-name>port</param-name>
+      <param-value>8080</param-value>
+    </init-param>
+    
+    <load-on-startup>3</load-on-startup>
+  </servlet>
 
     <filter>
         <filter-name>struts2</filter-name>
