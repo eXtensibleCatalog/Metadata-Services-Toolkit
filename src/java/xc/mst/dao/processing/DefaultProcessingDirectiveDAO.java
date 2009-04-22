@@ -192,6 +192,14 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 					processingDirective.setOutputSet(setDao.getById(results.getInt(5)));
 					processingDirective.setMaintainSourceSets(results.getBoolean(6));
 
+					// Setup the list of triggering format IDs
+					for(Integer formatId : inputFormatDao.getInputFormatsForProcessingDirective(processingDirective.getId()))
+						processingDirective.addTriggeringFormat(formatDao.getById(formatId));
+
+					// Setup the list of triggering set IDs
+					for(Integer setId : inputSetDao.getInputSetsForProcessingDirective(processingDirective.getId()))
+						processingDirective.addTriggeringSet(setDao.getById(setId));
+					
 					// Add the processing directive to the list
 					processingDirectives.add(processingDirective);
 				} // end loop over results
@@ -279,6 +287,14 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				processingDirective.setOutputSet(setDao.getById(results.getInt(5)));
 				processingDirective.setMaintainSourceSets(results.getBoolean(6));
 
+				// Setup the list of triggering format IDs
+				for(Integer formatId : inputFormatDao.getInputFormatsForProcessingDirective(processingDirective.getId()))
+					processingDirective.addTriggeringFormat(formatDao.getById(formatId));
+
+				// Setup the list of triggering set IDs
+				for(Integer setId : inputSetDao.getInputSetsForProcessingDirective(processingDirective.getId()))
+					processingDirective.addTriggeringSet(setDao.getById(setId));
+				
 				// Add the processing directive to the list
 				processingDirectives.add(processingDirective);
 			} // end loop over results
