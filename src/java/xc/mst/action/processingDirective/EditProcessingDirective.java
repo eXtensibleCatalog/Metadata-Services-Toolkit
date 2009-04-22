@@ -58,10 +58,10 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
     List<Service> serviceList;
 
     /** specifies the type of source i.e whther it is a provider or a service */
-    String sourceType;
+    private String sourceType;
 
     /** Ther service associated with the processing directive */
-    String service;
+    private String service;
 
     /**Creates a service object for processing directives */
     private ServicesService servService = new DefaultServicesService();

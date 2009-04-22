@@ -16,7 +16,7 @@ import xc.mst.bo.user.Server;
 import xc.mst.dao.DataException;
 
 /**
- *Service class which interacts with server objects
+ * Service class which interacts with server objects
  *
  * @author Tejaswi Haramurali
  */

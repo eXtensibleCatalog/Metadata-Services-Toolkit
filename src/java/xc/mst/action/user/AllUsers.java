@@ -14,9 +14,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.user.UserDAO;
-import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.UserService;
 
 /**

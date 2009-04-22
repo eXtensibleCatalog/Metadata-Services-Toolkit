@@ -28,16 +28,16 @@ import xc.mst.manager.processingDirective.ServicesService;
  */
 public class ServiceLog extends ActionSupport
 {
-    /**The coulmn on which the rows are to be sorted */
+    /** The coulmn on which the rows are to be sorted */
     private String columnSorted="ServiceName";
     
-    /**Boolena parameter determines if the rows are to be sorted in ascending or descending order */
+    /** Boolena parameter determines if the rows are to be sorted in ascending or descending order */
     private boolean isAscendingOrder=true;
 
     /** Creates a service object for Services */
     private ServicesService servicesService = new DefaultServicesService();
 
-    /**Sets the list of all services */
+    /** Sets the list of all services */
     private List<Service> serviceList;
 
     /** A reference to the logger for this class */

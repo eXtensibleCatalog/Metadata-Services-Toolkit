@@ -56,7 +56,8 @@ public class DisplayOAIRequest extends ActionSupport
 
     /**
      * Sets the ID of the provider whose OAI PMH request
-     * @param providerId
+     *
+     * @param providerId provider ID
      */
     public void setProviderId(String providerId)
     {

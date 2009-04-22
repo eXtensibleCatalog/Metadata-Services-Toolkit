@@ -276,8 +276,8 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
             List<Set> tempSetList = null;
             if(sourceType.equalsIgnoreCase("provider"))
             {
-                List tempList = tempProcDir.getSourceProvider().getFormats();
-                List compareList = tempProcDir.getService().getInputFormats();
+                List<Format> tempList = tempProcDir.getSourceProvider().getFormats();
+                List<Format> compareList = tempProcDir.getService().getInputFormats();
                 Iterator<Format> tempIter = tempList.iterator();
                 while(tempIter.hasNext())
                 {
@@ -302,8 +302,8 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
             }
             else
             {
-                List tempList = tempProcDir.getSourceService().getOutputFormats();
-                List compareList = tempProcDir.getService().getInputFormats();
+                List<Format> tempList = tempProcDir.getSourceService().getOutputFormats();
+                List<Format> compareList = tempProcDir.getService().getInputFormats();
                 Iterator<Format> tempIter = tempList.iterator();
                 while(tempIter.hasNext())
                 {
@@ -543,7 +543,7 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
     }
 
     /**
-     * returns to the previous step in the add processing directive operation
+     * Returns to the previous step in the add processing directive operation
      * 
      * @return
      */
@@ -618,12 +618,13 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
         }
         catch(Exception e)
         {
+            log.debug(e);
             return INPUT;
         }
     }
 
     /**
-     * cancels the add processing directive operation and returns to the list of processing directives
+     * Cancels the add processing directive operation and returns to the list of processing directives
      *
      * @return
      */
@@ -636,12 +637,14 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
         }
         catch(Exception e)
         {
+            log.debug(e);
             return INPUT;
         }
     }
 
     /**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -649,7 +652,8 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     *
      * @param errorType
      */
 	public void setErrorType(String errorType) {

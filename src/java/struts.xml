@@ -587,10 +587,6 @@
             <interceptor-ref name="default"/>
 			<result name="success">/pages/logs/harvest_in_log.jsp</result>
 		</action>
-        <action name="downloadServiceLogFile" class="xc.mst.action.log.downloadServiceLogFile">
-            <interceptor-ref name="default"/>
-			<result name="success" type="redirect">serviceLog.action?isAscendingOrder=true&amp;columnSorted=ServiceName</result>
-		</action>
         <action name="displayOAIRequest" class="xc.mst.action.log.DisplayOAIRequest">
             <interceptor-ref name="default"/>
 			<result name="success">/pages/logs/display_oai_request.jsp</result>

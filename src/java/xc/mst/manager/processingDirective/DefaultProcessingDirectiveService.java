@@ -53,7 +53,8 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
 	protected static RecordService recordService = new DefaultRecordService();
 
     /**
-     * returns a procesisng directive  with the given ID
+     * Returns a procesisng directive  with the given ID
+     *
      * @param processingDirectiveId Processing Directive ID
      * @return processing directive object
      */
@@ -62,7 +63,8 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
     }
 
     /**
-     * insert a new processing directive
+     * Insert a new processing directive
+     *
      * @param processingDirective Processing Directive
      */
     public void insertProcessingDirective(ProcessingDirective processingDirective) {
@@ -85,7 +87,8 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
     }
 
     /**
-     * deletes a processing directive
+     * Deletes a processing directive
+     *
      * @param processingDirective processing directive object
      */
     public void deleteProcessingDirective(ProcessingDirective processingDirective) {
@@ -97,7 +100,8 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
     }
 
     /**
-     * updates the details of a procesisng directive
+     * Updates the details of a procesisng directive
+     *
      * @param processingDirective processing directive object
      */
     public void updateProcessingDirective(ProcessingDirective processingDirective) {
@@ -120,7 +124,8 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
     }
 
     /**
-     * returns a list of all processing directives
+     * Returns a list of all processing directives
+     *
      * @return list of processing directives
      */
     public List<ProcessingDirective> getAllProcessingDirectives()
@@ -129,7 +134,8 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
     }
 
     /**
-     * returns a processing directives associated with a provider
+     * Returns a processing directives associated with a provider
+     *
      * @param providerId provider ID
      * @return list of processing directives
      */
@@ -139,7 +145,8 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
     }
 
     /**
-     * returns a list of processing directives associated with a service
+     * Returns a list of processing directives associated with a service
+     *
      * @param serviceId service ID
      * @return list of processing directives
      */

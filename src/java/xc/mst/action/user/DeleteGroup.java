@@ -150,7 +150,7 @@ public class DeleteGroup extends ActionSupport
     }
 
     /**
-     * returns the error type
+     * Returns the error type
      *
      * @return error type
      */
@@ -159,7 +159,7 @@ public class DeleteGroup extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
      *
      * @param errorType error type
      */

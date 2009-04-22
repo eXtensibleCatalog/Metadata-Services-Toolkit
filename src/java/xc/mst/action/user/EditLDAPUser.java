@@ -165,6 +165,7 @@ public class EditLDAPUser extends ActionSupport
 
     /**
      * Returns the temporary user object
+     *
      * @return user object
      */
     public User getTemporaryUser()
@@ -174,6 +175,7 @@ public class EditLDAPUser extends ActionSupport
 
     /**
      * Sets the user ID of the user whose details should be edited
+     *
      * @param userId user ID
      */
     public void setUserId(String userId)
@@ -183,6 +185,7 @@ public class EditLDAPUser extends ActionSupport
 
     /**
      * Returns user ID of the user whose details are to be edited
+     * 
      * @return user ID
      */
     public String getUserId()

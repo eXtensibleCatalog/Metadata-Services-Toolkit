@@ -26,7 +26,7 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-    /** Sevlter request object */
+    /** Servlet request object */
     private HttpServletRequest request;
 
     /** The current process being executed by the MST */
@@ -46,7 +46,7 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
     }
 
     /**
-     * returns the current process being executed by the MST
+     * Returns the current process being executed by the MST
      *
      * @return current process
      */

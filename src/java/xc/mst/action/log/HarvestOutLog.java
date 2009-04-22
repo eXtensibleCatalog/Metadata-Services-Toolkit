@@ -33,10 +33,10 @@ public class HarvestOutLog extends ActionSupport
     /** boolean parameter determines if the rows are to sorted in ascending or descending order */
     private boolean isAscendingOrder=true;
 
-    /**Creates a service object for Services */
+    /** Creates a service object for Services */
     private ServicesService servicesService = new DefaultServicesService();
 
-    /**Sets the list of all services */
+    /** Sets the list of all services */
     private List<Service> serviceList;
 
     /** A reference to the logger for this class */

@@ -165,7 +165,7 @@ public class EditGroup extends ActionSupport
      *
      * @return selected permissions List
      */
-    public List getSelectedPermissions()
+    public List<Permission> getSelectedPermissions()
     {
         return this.selectedPermissions;
     }
@@ -261,7 +261,7 @@ public class EditGroup extends ActionSupport
             group.setName(getGroupName());
 
 
-            List tempGrpList = groupService.getAllGroups();
+            List<Group> tempGrpList = groupService.getAllGroups();
             Iterator<Group> iter = tempGrpList.iterator();
 
             while(iter.hasNext())

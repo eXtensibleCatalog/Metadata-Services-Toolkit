@@ -43,7 +43,7 @@ public class DeleteLDAP extends ActionSupport
 	private String errorType; 
 	
     /**
-     * returns a temporary server object which is used to display details in the JSP
+     * Returns a temporary server object which is used to display details in the JSP
      *
      * @return temporary server object
      * @throws xc.mst.dao.DataException
@@ -118,7 +118,8 @@ public class DeleteLDAP extends ActionSupport
     }
 
     /**
-     * returns error type
+     * Returns error type
+     *
      * @return error type
      */
 	public String getErrorType() {
@@ -126,7 +127,8 @@ public class DeleteLDAP extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
+     *
      * @param errorType error type
      */
 	public void setErrorType(String errorType) {

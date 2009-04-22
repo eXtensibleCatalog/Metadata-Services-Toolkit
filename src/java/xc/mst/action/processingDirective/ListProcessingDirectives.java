@@ -30,7 +30,7 @@ public class ListProcessingDirectives extends ActionSupport
     private ProcessingDirectiveService proDirService = new DefaultProcessingDirectiveService();
 
     /** The list of processing directives that have been set up by the user */
-    private List<ProcessingDirective> ProcessingDirectivesList;
+    private List<ProcessingDirective> processingDirectivesList;
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -49,8 +49,8 @@ public class ListProcessingDirectives extends ActionSupport
         try
         {
                      
-           ProcessingDirectivesList = proDirService.getAllProcessingDirectives();
-           setProcessingDirectives(ProcessingDirectivesList);
+           processingDirectivesList = proDirService.getAllProcessingDirectives();
+           setProcessingDirectives(processingDirectivesList);
            HttpServletRequest request = ServletActionContext.getRequest();
            request.setAttribute("processingDirectivesList", getProcessingDirectives());
            return SUCCESS;
@@ -69,9 +69,9 @@ public class ListProcessingDirectives extends ActionSupport
      *
      * @param ProcessingDirectivesList list of processing directives
      */
-    public void setProcessingDirectives(List<ProcessingDirective> ProcessingDirectivesList)
+    public void setProcessingDirectives(List<ProcessingDirective> processingDirectivesList)
     {
-        this.ProcessingDirectivesList = ProcessingDirectivesList;
+        this.processingDirectivesList = processingDirectivesList;
     }
 
     /**
@@ -81,7 +81,7 @@ public class ListProcessingDirectives extends ActionSupport
      */
     public List<ProcessingDirective> getProcessingDirectives()
     {
-        return ProcessingDirectivesList;
+        return processingDirectivesList;
     }
 
 	 /**

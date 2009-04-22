@@ -65,6 +65,7 @@ public class GeneralLog extends ActionSupport
 
     /**
      * Overrides default implementation to view the General Logs Page.
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -125,7 +126,7 @@ public class GeneralLog extends ActionSupport
 	}
     
     /**
-     * sets the error type
+     * Sets the error type
      *
      * @param errorType error type
      */
@@ -134,7 +135,7 @@ public class GeneralLog extends ActionSupport
 	}
 
     /**
-     * sets the boolean value which determines if the rows are to be sorted in ascending order
+     * Sets the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @param isAscendingOrder
      */
@@ -144,7 +145,7 @@ public class GeneralLog extends ActionSupport
     }
 
     /**
-     * returns the boolean value which determines if the rows are to be sorted in ascending order
+     * Returns the boolean value which determines if the rows are to be sorted in ascending order
      *
      * @return
      */
@@ -154,7 +155,7 @@ public class GeneralLog extends ActionSupport
     }
 
      /**
-     * sets the name of the column on which the sorting should be performed
+     * Sets the name of the column on which the sorting should be performed
       *
      * @param columnSorted 
      */
@@ -164,7 +165,7 @@ public class GeneralLog extends ActionSupport
     }
 
     /**
-     * returns the name of the column on which sorting should be performed
+     * Returns the name of the column on which sorting should be performed
      * 
      * @return 
      */

@@ -47,8 +47,10 @@ public class AddLDAP extends ActionSupport
     /**The port number on the LDAP server **/
     private String port;
 
+    /** The user name attribute */
     private String userNameAttribute;
 
+    /** Start Location */
     private String startLocation;
 
     /**This is a temporary server object that is used to pre-fill JSP form fields */
@@ -66,37 +68,59 @@ public class AddLDAP extends ActionSupport
 	/** URL to forward the user to get forgot password */
 	private String forgotPasswordUrl;
 
-    /**sets the display name of the LDAP server **/
+    /**
+     * Sets the display name of the LDAP server
+     * @param displayName display name of server
+     */
     public void setDisplayName(String displayName)
     {
         this.displayName = displayName.trim();
     }
 
-    /**returns the display name of the LDAP server */
+    /**
+     * Returns the display name of the LDAP server
+     * @return display name
+     */
     public String getDisplayName()
     {
         return this.displayName;
     }
 
-    /** sets the URL of the server to the specified value */
+    /**
+     * Sets the URL of the server to the specified value
+     *
+     * @param serverURL URL of the server
+     */
     public void setServerURL(String serverURL)
     {
         this.serverURL = serverURL.trim();
     }
 
-    /** returns the server URL */
+    /**
+     * Returns the server URL
+     *
+     * @return URL of the server
+     */
     public String getServerURL()
     {
         return this.serverURL;
     }
 
-    /** sets the port number of the LDAP server to the specified value */
+    /**
+     * Sets the port number of the LDAP server to the specified value
+     *
+     * @param port port number
+     */
     public void setPort(String port)
     {
         this.port = port;
     }
 
-    /**returns the port number of the LDAP server */
+    /**
+     * Returns the port number of the LDAP server
+     *
+     * @return port number
+     */
     public String getPort()
     {
         return port;
@@ -113,7 +137,7 @@ public class AddLDAP extends ActionSupport
     }
 
     /**
-     * returns the user name attribute
+     * Returns the user name attribute
      *
      * @return username attribute
      */
@@ -123,7 +147,7 @@ public class AddLDAP extends ActionSupport
     }
 
     /**
-     * sets the start location
+     * Sets the start location
      *
      * @param startLocation start location
      */
@@ -133,7 +157,7 @@ public class AddLDAP extends ActionSupport
     }
 
     /**
-     * returns the start location
+     * Returns the start location
      *
      * @return start location
      */
@@ -145,6 +169,7 @@ public class AddLDAP extends ActionSupport
 
      /**
      * Overrides default implementation to add an LDAP server.
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -178,6 +203,7 @@ public class AddLDAP extends ActionSupport
 
     /**
      * The method that does the actual task of adding a new LDAP server.
+     *
      * @return {@link #SUCCESS}
      */
     public String addLDAP()
@@ -209,13 +235,17 @@ public class AddLDAP extends ActionSupport
                 server.setType(1);
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
-                server.setShowForgotPasswordLink(showForgotPasswordLink);
-                if (showForgotPasswordLink) {
-                	server.setForgotPasswordUrl(forgotPasswordUrl);
-                } else {
-                	server.setForgotPasswordUrl(null);
+                if(displayName.equalsIgnoreCase("local"))
+                {
+                    this.addFieldError("addLDAPError", "ERROR : Cannot add a server with name 'Local'. Kindly use a different name");
+                    errorType = "error";
+                    return SUCCESS;
                 }
-                serverService.insertServer(server);
+                else
+                {
+                    serverService.insertServer(server);
+                }
+               
             }
             else
             {
@@ -225,14 +255,16 @@ public class AddLDAP extends ActionSupport
                 server.setType(1);
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
-                server.setShowForgotPasswordLink(showForgotPasswordLink);
-                if (showForgotPasswordLink) {
-                	server.setForgotPasswordUrl(forgotPasswordUrl);
-	            } else {
-	            	server.setForgotPasswordUrl(null);
-	            }
-                
-                serverService.updateServer(server);
+                if(displayName.equalsIgnoreCase("local"))
+                {
+                    this.addFieldError("addLDAPError", "ERROR : Cannot update a server with name 'Local'. Kindly use a different name");
+                    errorType = "error";
+                    return SUCCESS;
+                }
+                else
+                {
+                    serverService.updateServer(server);
+                }
             }
 
             message = "LDAP Server Information Saved.";
@@ -249,7 +281,7 @@ public class AddLDAP extends ActionSupport
     }
 
     /**
-     * returns the status of the add operation
+     * Returns the status of the add operation
      *
      * @return information message
      */
@@ -258,7 +290,7 @@ public class AddLDAP extends ActionSupport
 	}
 
     /**
-     * sets the status of the add operation
+     * Sets the status of the add operation
      *
      * @param message information message
      */
@@ -267,7 +299,7 @@ public class AddLDAP extends ActionSupport
 	}
 
     /**
-     * returns the temporary server object that is used to display details on the JSP
+     * Returns the temporary server object that is used to display details on the JSP
      *
      * @return server object
      */
@@ -276,7 +308,7 @@ public class AddLDAP extends ActionSupport
 	}
 
     /**
-     * sets the temporary server object which is used to display details on the JSP
+     * Sets the temporary server object which is used to display details on the JSP
      *
      * @param server object
      */
@@ -285,7 +317,7 @@ public class AddLDAP extends ActionSupport
 	}
 
     /**
-     * returns error type
+     * Returns error type
      *
      * @return error type
      */
@@ -294,7 +326,7 @@ public class AddLDAP extends ActionSupport
 	}
 
     /**
-     * sets error type
+     * Sets error type
      *
      * @param errorType error type
      */

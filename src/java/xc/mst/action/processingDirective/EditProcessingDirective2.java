@@ -11,9 +11,7 @@
 package xc.mst.action.processingDirective;
 
 import java.util.List;
-import java.util.Map;
 import org.apache.log4j.Logger;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -177,7 +175,7 @@ public class EditProcessingDirective2 extends ActionSupport implements ServletRe
 
      /**
      * Sets the list of all sets that are relevant to that Provider/Service
-      *
+     *
      * @param setList list of sets
      */
     public void setSetList(List<Set> setList)

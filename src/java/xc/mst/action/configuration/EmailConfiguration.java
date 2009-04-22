@@ -28,7 +28,7 @@ public class EmailConfiguration extends ActionSupport
     /** A reference to the logger for this class */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-    /**Creates a service Object for Email Configuration */
+    /** Creates a service Object for Email Configuration */
     private EmailConfigService emailConfigService = new DefaultEmailConfigService();
 
     /** The temporary emailConfig object that is used to populate JSP page fields **/
@@ -91,7 +91,7 @@ public class EmailConfiguration extends ActionSupport
     }
 
     /**
-     * returns the from address
+     * Returns the from address
      *
      * @return from address
      */
@@ -112,7 +112,7 @@ public class EmailConfiguration extends ActionSupport
     }
 
     /**
-     * returns the port number of the email server
+     * Returns the port number of the email server
      *
      * @return port number
      */
@@ -123,7 +123,7 @@ public class EmailConfiguration extends ActionSupport
     }
 
     /**
-     * sets the password
+     * Sets the password
      *
      * @param password
      */
@@ -133,7 +133,7 @@ public class EmailConfiguration extends ActionSupport
     }
 
     /**
-     * returns the password
+     * Returns the password
      *
      * @return password
      */
@@ -153,7 +153,8 @@ public class EmailConfiguration extends ActionSupport
     }
 
     /**
-     * returns the timeout period
+     * Returns the timeout period
+     *
      * @return timeout period
      */
     public String getTimeout()
@@ -163,6 +164,7 @@ public class EmailConfiguration extends ActionSupport
 
     /**
      * Sets the type of encrypted connection. 'None' is also an option
+     *
      * @param encryptedConnection
      */
     public void setEncryptedConnection(String encryptedConnection)
@@ -171,7 +173,7 @@ public class EmailConfiguration extends ActionSupport
     }
 
     /**
-     * returns the encrypted connection
+     * Returns the encrypted connection
      *
      * @return encrypted connection
      */
@@ -191,7 +193,7 @@ public class EmailConfiguration extends ActionSupport
     }
 
     /**
-     * returns the temporary email config object
+     * Returns the temporary email config object
      *
      * @return temporary email configuration object
      */
@@ -202,6 +204,7 @@ public class EmailConfiguration extends ActionSupport
 
      /**
      * Overrides default implementation to view the email server configuration page.
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -257,7 +260,7 @@ public class EmailConfiguration extends ActionSupport
     }
 
     /**
-     * returns the information message
+     * Returns the information message
      *
      * @return information message
      */
@@ -275,7 +278,7 @@ public class EmailConfiguration extends ActionSupport
 	}
 
     /**
-     * returns the temporary email config object
+     * Returns the temporary email config object
      *
      * @return temporary email configuration object
      */
@@ -293,7 +296,7 @@ public class EmailConfiguration extends ActionSupport
 	}
 
     /**
-     * returns the error type
+     * Returns the error type
      *
      * @return error type
      */

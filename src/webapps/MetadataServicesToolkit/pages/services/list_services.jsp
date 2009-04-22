@@ -165,7 +165,7 @@
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
                                         <td class="${classColumn}"><c:out value="${url}"/></td>
-                                        <td>Status should be here</td>
+                                        <td>${n.status}</td>
                                         <td>
                                             <button onclick="javascript:YAHOO.xc.mst.services.downloadFile('service','${n.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
                                             <button onclick="javascript:YAHOO.xc.mst.services.downloadFile('harvestout','${n.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>

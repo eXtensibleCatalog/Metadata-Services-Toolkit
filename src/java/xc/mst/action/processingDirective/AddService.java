@@ -15,6 +15,7 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
@@ -40,7 +41,7 @@ public class AddService extends ActionSupport
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-    
+
     public AddService()
     {
         serviceFileList = new ArrayList<String>();

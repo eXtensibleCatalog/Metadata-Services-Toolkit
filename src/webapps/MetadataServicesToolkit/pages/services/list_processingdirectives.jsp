@@ -110,7 +110,9 @@
 
 
                             <c:forEach var="n" items="${processingDirectivesList}" varStatus="a">
+
                                 <c:set var="totalFormatsSize" value="${fn:length(n.triggeringFormats)}"/>
+                                
                                 <c:set var="formatList" value=""/>
                                     <c:forEach var="m" items="${n.triggeringFormats}" varStatus="b">
                                         <c:choose>
@@ -123,6 +125,7 @@
                                         </c:choose>
                                     </c:forEach>
                                 <c:set var="totalSetsSize" value="${fn:length(n.triggeringSets)}"/>
+                                 
                                  <c:set var="setList" value=""/>
                                     <c:forEach var="m" items="${n.triggeringSets}" varStatus="b">
                                         <c:choose>

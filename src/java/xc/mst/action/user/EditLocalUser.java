@@ -11,7 +11,6 @@
 package xc.mst.action.user;
 
 import com.opensymphony.xwork2.ActionSupport;
-
 import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.bo.user.Group;

@@ -29,38 +29,44 @@ public interface ProcessingDirectiveService {
     public List<ProcessingDirective> getBySourceProviderId(int providerId);
 
     /**
-     * returns a processing directive based on the ID of the source service
+     * Returns a processing directive based on the ID of the source service
+     *
      * @return processing directive
      */
     public List<ProcessingDirective> getBySourceServiceId(int serviceId);
 
     /**
      * Returns a processing directive based on the ID
+     *
      * @param processingDirectiveId The ID based on which the processing Directive object is retrieved
      * @return
      */
     public ProcessingDirective getByProcessingDirectiveId(int processingDirectiveId);
 
     /**
-     * returns list of processing directives
+     * Returns list of processing directives
+     *
      * @return list of processing directives
      */
     public List<ProcessingDirective> getAllProcessingDirectives();
 
     /**
      * Inserts a new Processing Directive
+     *
      * @param processingDirective The processing Directive Object to be inserted
      */
     public void insertProcessingDirective(ProcessingDirective processingDirective);
 
     /**
      * Deletes a processing directive
+     *
      * @param processingDirective The processingDirective Object to be deleted
      */
     public void deleteProcessingDirective(ProcessingDirective processingDirective);
 
     /**
      * Updates a processing directive
+     * 
      * @param processingDirective The processing directive to be updated
      */
     public void updateProcessingDirective(ProcessingDirective processingDirective);

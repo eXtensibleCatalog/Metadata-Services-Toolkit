@@ -155,7 +155,6 @@ public class Login extends ActionSupport implements ServletRequestAware {
 			errorType = "error";
 			resultName = INPUT;
 		}
-
 		return resultName;
 	}
 

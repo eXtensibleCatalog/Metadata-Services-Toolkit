@@ -107,41 +107,7 @@
                                 <br> Validation Results
                             </td>
                         </tr>
-			            <tr>
-                            <td style="margin-top:15px;color:#313131">
-                               <ul style="list-style:none;">
-                                    <li style="float:left;"><div style="width:150px;"><B>Formats</B> </div> </li>
-                                    <li style="float:left;"><div>:</div></li>
-                                    <li style="float:left;">
-                                        <div style="margin-left:15px;">
-                                            <c:forEach var="format" items="${provider.formats}">
-                                                ${format.name} <br>
-                                            </c:forEach>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </td>
-			               
-			                
-                           
-			            </tr>
-			            <tr>
-                            <td>
-                                <ul style="list-style:none;color:#313131;">
-                                    <li style="float:left;"><div style="width:150px;"><B>Sets Supported</B> </div> </li>
-                                    <li style="float:left;"><div>:</div></li>
-                                    <li style="float:left;">
-                                        <div style="margin-left:15px;">
-                                            <c:forEach var="set" items="${provider.sets}">
-                                                ${set.setSpec} <br>
-                                            </c:forEach>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </td>
-			        
-			                
-			            </tr>
+			            
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
@@ -191,6 +157,41 @@
                                 </ul>
                             </td>
 			                
+			            </tr>
+                        <tr>
+                            <td style="margin-top:15px;color:#313131">
+                               <ul style="list-style:none;">
+                                    <li style="float:left;"><div style="width:150px;"><B>Formats</B> </div> </li>
+                                    <li style="float:left;"><div>:</div></li>
+                                    <li style="float:left;">
+                                        <div style="margin-left:15px;">
+                                            <c:forEach var="format" items="${provider.formats}">
+                                                ${format.name} <br>
+                                            </c:forEach>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </td>
+
+
+
+			            </tr>
+			            <tr>
+                            <td>
+                                <ul style="list-style:none;color:#313131;">
+                                    <li style="float:left;"><div style="width:150px;"><B>Sets Supported</B> </div> </li>
+                                    <li style="float:left;"><div>:</div></li>
+                                    <li style="float:left;">
+                                        <div style="margin-left:15px;">
+                                            <c:forEach var="set" items="${provider.sets}">
+                                                ${set.setSpec} <br>
+                                            </c:forEach>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </td>
+
+
 			            </tr>
 			       </table>
 			           
@@ -339,7 +340,7 @@
 		      		  
 		      		  <input type="hidden" name="repositoryId" value="${provider.id}"/>
 			          <div id="deleteRepositoryError" cssClass="errorMessage"></div>
-			          Deleting the repository will result in deletion of related Harvest Schedule, Processing rules and the records harvested. </br>
+			          Deleting the repository will result in deletion of related Harvest Schedule, Processing rules and the records harvested. <br>
 			          Are you sure you want to delete the repository?
 		          </form>			          
 		      </div>

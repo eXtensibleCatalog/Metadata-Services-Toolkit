@@ -20,7 +20,7 @@ import xc.mst.manager.repository.ProviderService;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- *This class is used to delete a repository from the database
+ * This class is used to delete a repository from the database
  *
  * @author Tejaswi Haramurali
  */

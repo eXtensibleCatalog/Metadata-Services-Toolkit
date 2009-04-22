@@ -24,6 +24,7 @@ import xc.mst.dao.provider.SetDAO;
  */
 public class DefaultSetService implements SetService {
 
+    /** Set DAP object */
 	private SetDAO setDAO = new DefaultSetDAO();
 
 	/**
@@ -65,7 +66,8 @@ public class DefaultSetService implements SetService {
     }
 
     /**
-     * returns a Set object based on a setSpec value provided
+     * Returns a Set object based on a setSpec value provided
+     * 
      * @param setSpec The set specification value
      * @return Set Object
      */

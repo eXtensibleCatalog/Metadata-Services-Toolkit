@@ -17,7 +17,8 @@ import xc.mst.dao.DataException;
 public interface ServicesService
 {
     /**
-     * returns a list of all the services
+     * Returns a list of all the services
+     *
      * @return returns the list containing all the services
      */
     public List<Service> getAllServices();
@@ -47,24 +48,28 @@ public interface ServicesService
 
 	/**
      * Adds a new Service
+     *
      * @param service The service to be added
      */
     public void insertService(Service service) throws DataException;
     
     /**
      * deletes a service
+     *
      * @param service The service to be deleted
      */
     public void deleteService(Service service) throws DataException;
 
     /**
      * Updates the details of a Service
+     *
      * @param service The service to be updated.
      */
     public void updateService(Service service) throws DataException;
 
     /**
      * Retrieves a service object based on the ID passed to it
+     *
      * @param serviceId The Id based on which a service object is retrieved.
      * @return
      */
@@ -72,6 +77,7 @@ public interface ServicesService
 
     /**
      * Retrieves a service object based on the name of the service
+     *
      * @param serviceName The name of the service
      * @return
      */
@@ -79,6 +85,7 @@ public interface ServicesService
 
     /**
      * Retrieves a service object based on the port number
+     *
      * @param port The port number of the service
      * @return
      */
@@ -86,6 +93,7 @@ public interface ServicesService
 
     /**
      * returns a list of soervices sorted by name
+     * 
      * @param sort boolean parameter that determines of the services are to be sorted in ascending/descending order
      * @return list of services
      */

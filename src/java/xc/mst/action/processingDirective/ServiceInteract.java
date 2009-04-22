@@ -24,7 +24,7 @@ import xc.mst.scheduling.Scheduler;
 public class ServiceInteract extends ActionSupport implements ServletRequestAware
 {
     /** Request object */
-    HttpServletRequest request;
+    private HttpServletRequest request;
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);

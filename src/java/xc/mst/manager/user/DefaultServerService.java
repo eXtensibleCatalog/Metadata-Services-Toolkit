@@ -30,6 +30,7 @@ public class DefaultServerService implements ServerService {
 
     /**
      * Return a server object based on the server ID
+     *
      * @param serverId The ID of the server to be returned
      * @return
      */

@@ -10,14 +10,12 @@
 package xc.mst.action.repository;
 
 import org.apache.log4j.Logger;
-
 import xc.mst.action.UserAware;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.repository.DefaultProviderService;
-
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -42,13 +40,13 @@ public class ViewRepository extends ActionSupport implements UserAware
 	  /**The repository to be viewed */
 	  private Provider provider;
 	
-	  /**Boolean value that denotes success or failure */
+	  /** Boolean value that denotes success or failure */
 	  private String listSets;
 	
-	  /**Boolean value that denotes success or failure */
+	  /** Boolean value that denotes success or failure */
 	  private String listFormats;
 	
-	  /**Boolean value that denotes success or failure */
+	  /** Boolean value that denotes success or failure */
 	  private String Identify;
       
 	/** Error type */

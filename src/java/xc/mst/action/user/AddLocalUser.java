@@ -12,9 +12,7 @@ package xc.mst.action.user;
 
 import java.util.Date;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
@@ -24,7 +22,6 @@ import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.UserService;
-
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -54,9 +51,6 @@ public class AddLocalUser extends ActionSupport
     
     /**The Last Name of the user */
     private String lastName;
-
-    /**Comments that help the administrator recognise the new user */
-    private String comments;
 
     /**The groups that have been assigned to the new user */
     private String[] groupsSelected;

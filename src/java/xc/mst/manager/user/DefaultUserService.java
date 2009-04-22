@@ -15,14 +15,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
-
 import org.apache.log4j.Logger;
-
 import sun.misc.BASE64Encoder;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
@@ -47,10 +44,13 @@ public class DefaultUserService implements UserService{
 	/** A reference to the logger for this class */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+    /** User DAO object */
 	private UserDAO userDAO = new DefaultUserDAO();
-	
+
+    /** User-Group Util Dao object */
 	private UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
-	
+
+    /** Group DAO Object */
 	private GroupService groupService = new DefaultGroupService();
 
 	/**
@@ -84,6 +84,7 @@ public class DefaultUserService implements UserService{
 
     /**
      * Insert User
+     *
      * @param user
      */
     public void insertUser(User user) throws Exception {
@@ -102,6 +103,7 @@ public class DefaultUserService implements UserService{
 
      /**
      * Update User
+      *
      * @param user
      */
     public void updateUser(User user) throws Exception{
@@ -109,7 +111,8 @@ public class DefaultUserService implements UserService{
     }
 
     /**
-     * creates a new temporary password for the User
+     * Creates a new temporary password for the User
+     *
      * @return returns the newly generated temporary password
      */
      public String createRandomPassword()
@@ -136,6 +139,7 @@ public class DefaultUserService implements UserService{
 
      /**
       * This method is used for encryption of plaintext Passwords
+      *
       * @param plaintext
       * @return
       * @throws java.lang.Exception
@@ -351,7 +355,8 @@ public class DefaultUserService implements UserService{
     }
 
     /**
-     * returns a sorted list of users
+     * Returns a sorted list of users
+     *
      * @param sort determines whether the list of users is sorted in ascending or descending order
      * @param columnSorted the column on which the rows of users are sorted
      * @return list of users
@@ -373,7 +378,8 @@ public class DefaultUserService implements UserService{
     }
 
     /**
-     * returns a list of users associated with the group
+     * Returns a list of users associated with the group
+     * 
      * @param groupId group ID
      * @return list of users
      */

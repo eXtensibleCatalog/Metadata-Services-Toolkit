@@ -31,11 +31,13 @@ public interface SetService {
 	public Set getSetById(int setId);
 
     /**
-     * returns a Set object based on the value of the setSpec supplied.
+     * Returns a Set object based on the value of the setSpec supplied.
+     *
      * @param setSpec The set Specification value
      * @return Set object
      */
     public Set getSetBySetSpec(String setSpec);
+    
 	/**
 	 * Delete Set
 	 *

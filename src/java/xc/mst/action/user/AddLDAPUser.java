@@ -53,9 +53,6 @@ public class AddLDAPUser extends ActionSupport
     /**The Last Name of the user */
     private String lastName;
 
-    /**Comments that help the administrator recognise the new user */
-    private String comments;
-
     /**The groups that have been assigned to the new user */
     private String[] groupsSelected;
 
@@ -223,7 +220,7 @@ public class AddLDAPUser extends ActionSupport
 
      /**
      * Overrides default implementation to view the 'add NCIP user' page.
-      *
+     *
      * @return {@link #SUCCESS}
      */
     @Override
