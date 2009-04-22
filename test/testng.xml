@@ -4,7 +4,7 @@
 
 	<test name="MST Service Testing">
 		<classes>
-		    <class name="ScheduleServiceTest"/>            
+		    <class name="xc.mst.manager.test.ScheduleServiceTest"/>            
 		</classes>
 	</test>
 </suite>
