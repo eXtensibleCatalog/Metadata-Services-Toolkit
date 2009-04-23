@@ -1108,7 +1108,7 @@ public class DefaultRecordService extends RecordService
 		log.debug("Harvest id:"+record.getHarvest());
 		doc.addField(FIELD_HARVEST_ID, (record.getHarvest() == null ? "0" : Integer.toString(record.getHarvest().getId())));
 		if (record.getHarvest() != null) {
-			doc.addField(FIELD_HARVEST_SCHEDULE_NAME, record.getHarvest().getHarvestSchedule().getScheduleName());
+			doc.addField(FIELD_HARVEST_SCHEDULE_NAME, record.getHarvest().getHarvestScheduleName());
 		}
 
 //		doc.addField(FIELD_HARVEST_SCHEDULE_ID, (record.getHarvest() == null || record.getHarvest().getHarvestSchedule() == null ? "0" : Integer.toString(record.getHarvest().getHarvestSchedule().getId())));

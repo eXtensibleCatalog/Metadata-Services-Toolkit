@@ -187,12 +187,9 @@ CREATE TABLE harvests
   end_time TIMESTAMP,
   request TEXT,
   result LONGTEXT,
-  harvest_schedule_id INT(11) NOT NULL,
+  harvest_schedule_name VARCHAR(127) NOT NULL,
 
-  PRIMARY KEY (harvest_id),
-
-  INDEX idx_harvests_harvest_schedule_id (harvest_schedule_id),
-  FOREIGN KEY (harvest_schedule_id) REFERENCES harvest_schedules(harvest_schedule_id) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (harvest_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

@@ -113,7 +113,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 				                                   COL_END_TIME + ", " +
 				                                   COL_REQUEST + ", " +
 				                                   COL_RESULT + ", " +
-				                                   COL_HARVEST_SCHEDULE_ID + " " +
+				                                   COL_HARVEST_SCHEDULE_NAME + " " +
 	                                   "FROM " + HARVESTS_TABLE_NAME;
 
 					if(log.isDebugEnabled())
@@ -141,7 +141,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTime(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestSchedule(harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(6)));
+					harvest.setHarvestScheduleName(results.getString(6));
 
 					// Add the harvest to the list
 					harvests.add(harvest);
@@ -187,7 +187,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 	                                               COL_END_TIME + ", " +
 	                                               COL_REQUEST + ", " +
 	                                               COL_RESULT + ", " +
-	                                               COL_HARVEST_SCHEDULE_ID + " " +
+	                                               COL_HARVEST_SCHEDULE_NAME + " " +
 	                                   "FROM " + HARVESTS_TABLE_NAME + " " +
  				                       "WHERE " + COL_HARVEST_ID + "=?";
 
@@ -219,7 +219,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTime(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestSchedule(harvestScheduleDao.getById(results.getInt(6)));
+					harvest.setHarvestScheduleName(results.getString(6));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the harvest with ID " + harvestId + " in the database.");
@@ -268,7 +268,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 	                                               COL_END_TIME + ", " +
 	                                               COL_REQUEST + ", " +
 	                                               COL_RESULT + ", " +
-	                                               COL_HARVEST_SCHEDULE_ID + " " +
+	                                               COL_HARVEST_SCHEDULE_NAME + " " +
 	                                   "FROM " + HARVESTS_TABLE_NAME + " " +
 				                       "WHERE " + COL_HARVEST_ID + "=?";
 
@@ -351,9 +351,9 @@ public class DefaultHarvestDAO extends HarvestDAO
 				                                   COL_END_TIME + ", " +
 				                                   COL_REQUEST + ", " +
 				                                   COL_RESULT + ", " +
-				                                   COL_HARVEST_SCHEDULE_ID + " " +
+				                                   COL_HARVEST_SCHEDULE_NAME + " " +
 	                                   "FROM " + HARVESTS_TABLE_NAME + " " +
-	                                   "WHERE " + COL_HARVEST_SCHEDULE_ID + "=?";
+	                                   "WHERE " + COL_HARVEST_SCHEDULE_NAME + "=?";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get harvest by harvest schedule ID\" PreparedStatement from the SQL " + selectSql);
@@ -412,11 +412,6 @@ public class DefaultHarvestDAO extends HarvestDAO
 		// Check that the non-ID fields on the harvest are valid
 		validateFields(harvest, false, true);
 
-		// Insert the harvest schedule if it hasn't already been inserted
-		if(harvest.getHarvestSchedule().getId() <= 0)
-			if(!harvestScheduleDao.insert(harvest.getHarvestSchedule()))
-				return false;
-
 		synchronized(psInsertLock)
 		{
 			if(log.isDebugEnabled())
@@ -435,7 +430,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 		            	    													COL_END_TIME + ", " +
 		            	    													COL_REQUEST + ", " +
 		            	    													COL_RESULT + ", " +
-		            	    													COL_HARVEST_SCHEDULE_ID + ") " +
+		            	    													COL_HARVEST_SCHEDULE_NAME + ") " +
 		            				       "VALUES (?, ?, ?, ?, ?)";
 
 						if(log.isDebugEnabled())
@@ -451,7 +446,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					psInsert.setTimestamp(2, harvest.getEndTime());
 					psInsert.setString(3, harvest.getRequest());
 					psInsert.setString(4, harvest.getResult());
-					psInsert.setInt(5, harvest.getHarvestSchedule().getId());
+					psInsert.setString(5, harvest.getHarvestScheduleName());
 
 					// Execute the insert statement and return the result
 					if(psInsert.executeUpdate() > 0)
@@ -486,11 +481,6 @@ public class DefaultHarvestDAO extends HarvestDAO
 		// Check that the fields on the harvest are valid
 		validateFields(harvest, true, true);
 
-		// Insert the harvest schedule if it hasn't already been inserted
-		if(harvest.getHarvestSchedule().getId() <= 0)
-			if(!harvestScheduleDao.insert(harvest.getHarvestSchedule()))
-				return false;
-
 		synchronized(psUpdateLock)
 		{
 			if(log.isDebugEnabled())
@@ -506,7 +496,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 				                                                          COL_END_TIME + "=?, " +
 				                                                          COL_REQUEST + "=?, " +
 				                                                          COL_RESULT + "=?, " +
-				                                                          COL_HARVEST_SCHEDULE_ID + "=? " +
+				                                                          COL_HARVEST_SCHEDULE_NAME + "=? " +
 	                                   "WHERE " + COL_HARVEST_ID + "=?";
 
 					if(log.isDebugEnabled())
@@ -522,7 +512,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 				psUpdate.setTimestamp(2, harvest.getEndTime());
 				psUpdate.setString(3, harvest.getRequest());
 				psUpdate.setString(4, harvest.getResult());
-				psUpdate.setInt(5, harvest.getHarvestSchedule().getId());
+				psUpdate.setString(5, harvest.getHarvestScheduleName());
 				psUpdate.setInt(6, harvest.getId());
 
 				// Execute the update statement and return the result

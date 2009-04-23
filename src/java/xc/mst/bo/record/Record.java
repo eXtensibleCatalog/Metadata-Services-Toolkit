@@ -851,7 +851,7 @@ public class Record
 		buffer.append(" sets=" + sets);
 		buffer.append(" frbrLevelId=" + frbrLevelId);
 		if (harvest != null) {
-			buffer.append(" ScheduleName=" + harvest.getHarvestSchedule().getScheduleName());
+			buffer.append(" ScheduleName=" + harvest.getHarvestScheduleName());
 		}
 		buffer.append(" oaiDatestamp=" + oaiDatestamp);
 		buffer.append(" oaiHeader=" + oaiHeader);

@@ -202,7 +202,7 @@ public class HarvestRunner
 			// Setup the harvest we're currently running
 			currentHarvest = new Harvest();
 			currentHarvest.setStartTime(startTime);
-			currentHarvest.setHarvestSchedule(harvestScheduleStep.getSchedule());
+			currentHarvest.setHarvestScheduleName(harvestScheduleStep.getSchedule().getScheduleName());
 			harvestDao.insert(currentHarvest);
 
 			// Run the harvest
