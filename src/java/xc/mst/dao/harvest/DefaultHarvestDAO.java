@@ -215,8 +215,8 @@ public class DefaultHarvestDAO extends HarvestDAO
 
 					// Set the fields on the harvest
 					harvest.setId(results.getInt(1));
-					harvest.setStartTime(results.getTime(2));
-					harvest.setEndTime(results.getTime(3));
+					harvest.setStartTime(results.getTimestamp(2));
+					harvest.setEndTime(results.getTimestamp(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
 					harvest.setHarvestScheduleName(results.getString(6));
@@ -327,12 +327,12 @@ public class DefaultHarvestDAO extends HarvestDAO
 	} // end method loadBasicHarvest(int)
 
 	@Override
-	public List<Harvest> getHarvestsForSchedule(int harvestScheduleId)
+	public List<Harvest> getHarvestsForSchedule(String harvestScheduleName)
 	{
 		synchronized(psGetByHarvestScheduleIdLock)
 		{
 			if(log.isDebugEnabled())
-				log.debug("Getting all harvests with harvest schedule ID " + harvestScheduleId);
+				log.debug("Getting all harvests with harvest schedule ID " + harvestScheduleName);
 
 			// The ResultSet from the SQL query
 			ResultSet results = null;
@@ -364,7 +364,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 				} // end if(get by harvest schedule ID PreparedStatement not defined)
 
 				// Set the parameters on the PreparedStatement
-				psGetByHarvestScheduleId.setInt(1, harvestScheduleId);
+				psGetByHarvestScheduleId.setString(1, harvestScheduleName);
 
 				// Get the result of the SELECT statement
 
@@ -389,13 +389,13 @@ public class DefaultHarvestDAO extends HarvestDAO
 				} // end loop over results
 
 				if(log.isDebugEnabled())
-					log.debug("Found " + harvests.size() + " harvests with harvest schedule ID " + harvestScheduleId);
+					log.debug("Found " + harvests.size() + " harvests with harvest schedule ID " + harvestScheduleName);
 
 				return harvests;
 			} // end try(get results)
 			catch(SQLException e)
 			{
-				log.error("A SQLException occurred while getting the harvests with harvest schedule ID " + harvestScheduleId, e);
+				log.error("A SQLException occurred while getting the harvests with harvest schedule ID " + harvestScheduleName, e);
 
 				return harvests;
 			} // end catch(SQLException)

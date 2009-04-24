@@ -100,7 +100,7 @@ public abstract class HarvestDAO
 	 * @param harvestScheduleId The ID of the harvest schedule whose harvests we should get
 	 * @return A list all harvests which were run by the harvest schedule with the passed ID
 	 */
-	public abstract List<Harvest> getHarvestsForSchedule(int harvestScheduleId);
+	public abstract List<Harvest> getHarvestsForSchedule(String harvestScheduleName);
 
 	/**
 	 * Inserts a harvest into the database

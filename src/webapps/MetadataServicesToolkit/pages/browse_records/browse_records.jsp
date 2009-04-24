@@ -84,13 +84,8 @@
 							   	<c:if test="${facet.name == 'service_name'}">
 							   		Service 
 							   	</c:if>
-<!--							   	
-								<c:if test="${facet.name == 'harvest_end_time'}">
+								<c:if test="${facet.name == 'harvest_start_time'}">
 							   		Harvest 
-							   	</c:if>
--->							   	
-							   	<c:if test="${facet.name == 'warning'}">
-							   		Warning 
 							   	</c:if>
 							   	<c:if test="${facet.name == 'error'}">
 							   		Error 
@@ -148,7 +143,7 @@
 													  <c:param name="startPageNumber" value="${startPageNumber}"/>
 													  <c:param name="currentPageNumber" value="${currentPageNumber}"/>
 												  </c:url>
-										   		<a href="${viewError}">i</a>
+										   		<a href="${viewError}">info</a>
 										   	</c:if>											
 											
 											<br/>
@@ -168,7 +163,7 @@
 						<!-- Display of filters -->
 						<c:if test="${query != ''}">
 							<p class="searched_for">You Searched for : "${query}"<c:if test="${result.facetFilters != '[]'}">, </c:if>
-							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema</c:if><c:if test="${filter.name == 'set_name'}">Set</c:if><c:if test="${filter.name == 'provider_name'}">Repository</c:if><c:if test="${filter.name == 'service_name'}">Service</c:if><!--<c:if test="${filter.name == 'harvest_end_time'}">Harvest</c:if>--><c:if test="${filter.name == 'warning'}">Warning</c:if><c:if test="${filter.name == 'error'}">Error</c:if>:${filter.value}</c:forEach>							
+							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema</c:if><c:if test="${filter.name == 'set_name'}">Set</c:if><c:if test="${filter.name == 'provider_name'}">Repository</c:if><c:if test="${filter.name == 'service_name'}">Service</c:if><c:if test="${filter.name == 'harvest_start_time'}">Harvest</c:if><c:if test="${filter.name == 'error'}">Error</c:if>:${filter.value}</c:forEach>							
 							</p>
 						</c:if>
 						
@@ -240,7 +235,7 @@
 										
 								    </c:if>                                    
 							<br>								
-							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 2}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema:${filter.value}</c:if><c:if test="${filter.name == 'set_name'}">Set:${filter.value}</c:if><c:if test="${filter.name == 'provider_name'}">Repository:${filter.value}</c:if><c:if test="${filter.name == 'service_name'}">Service:${filter.value}</c:if><c:if test="${filter.name == 'error'}">Error:${filter.value}</c:if></c:forEach>							
+							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 2}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema:${filter.value}</c:if><c:if test="${filter.name == 'set_name'}">Set:${filter.value}</c:if><c:if test="${filter.name == 'provider_name'}">Repository:${filter.value}</c:if><c:if test="${filter.name == 'service_name'}">Service:${filter.value}</c:if><c:if test="${filter.name == 'harvest_start_time'}">Harvest:${filter.value}</c:if><c:if test="${filter.name == 'error'}">Error:${filter.value}</c:if></c:forEach>							
 							</p>
 						</c:if>
 						<!-- Display of filters In case of predecessor - end -->
@@ -311,7 +306,7 @@
 										
 								    </c:if>                                    
 							<br>								
-							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 2}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema:${filter.value}</c:if><c:if test="${filter.name == 'set_name'}">Set:${filter.value}</c:if><c:if test="${filter.name == 'provider_name'}">Repository:${filter.value}</c:if><c:if test="${filter.name == 'service_name'}">Service:${filter.value}</c:if><c:if test="${filter.name == 'error'}">Error:${filter.value}</c:if></c:forEach>							
+							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 2}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema:${filter.value}</c:if><c:if test="${filter.name == 'set_name'}">Set:${filter.value}</c:if><c:if test="${filter.name == 'provider_name'}">Repository:${filter.value}</c:if><c:if test="${filter.name == 'service_name'}">Service:${filter.value}</c:if><c:if test="${filter.name == 'harvest_start_time'}">Harvet:${filter.value}</c:if><c:if test="${filter.name == 'error'}">Error:${filter.value}</c:if></c:forEach>							
 							</p>
 						</c:if>	
 						<!-- Display of filters In case of successor - end -->					
@@ -382,12 +377,11 @@
 								<br>
 								Repository: ${record.provider.name}
 								<br>
-<!--							
 								<c:if test="${record.harvest != null}">
-									Harvest: ${record.provider.name} ${record.harvest.endTime}
+									Harvest: ${record.harvest.harvestScheduleName} 
 									<br>
 								</c:if>
--->								<div class="redError">
+								<div class="redError">
 								<c:if test="${record.errors != '[]'}">
 									Error:
 									<c:forEach var="error" items="${record.errors}" varStatus="status"><c:if test="${status.count > 1}">, </c:if>${error}</c:forEach>

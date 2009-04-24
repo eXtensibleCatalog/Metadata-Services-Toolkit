@@ -101,17 +101,6 @@ public class DefaultScheduleService implements ScheduleService {
     }
 
     /**
-	 * Gets all harvest for schedule
-	 *
-	 * @param harvestSchedule Harvest schedule to get the harvest
-	 * @return A list containing all harvests
-	 */
-	public List<Harvest> getHarvestForSchedule(HarvestSchedule harvestSchedule)
-    {
-        return harvestDAO.getHarvestsForSchedule(harvestSchedule.getId());
-    }
-
-    /**
 	 * Gets harvest schedule for a provider
 	 *
 	 * @param provider Provider to get the harvest schedule
@@ -130,7 +119,7 @@ public class DefaultScheduleService implements ScheduleService {
 	 */
 	public List<Harvest> getHarvestsForSchedule(HarvestSchedule harvestSchedule)
     {
-        return harvestDAO.getHarvestsForSchedule(harvestSchedule.getId());
+        return harvestDAO.getHarvestsForSchedule(harvestSchedule.getScheduleName());
     }
 	
 }

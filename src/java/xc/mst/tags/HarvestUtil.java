@@ -38,8 +38,7 @@ public class HarvestUtil {
 		{
 			ScheduleService scheduleService = new DefaultScheduleService();
 			
-			List<Harvest> harvests = scheduleService.getHarvestForSchedule(harvestSchedule); 
-			
+			List<Harvest> harvests = scheduleService.getHarvestsForSchedule(harvestSchedule); 
 			Timestamp latestRun = null;
 			for(Harvest harvest:harvests) {
 				latestRun = harvest.getEndTime();

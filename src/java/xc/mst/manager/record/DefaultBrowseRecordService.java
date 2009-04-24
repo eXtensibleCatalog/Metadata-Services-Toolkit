@@ -73,7 +73,7 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 
 		    while(iteration.hasNext()) {
 
-		    	records.add(recordService.getRecordFromSolrDocument(iteration.next()));
+		    	records.add(recordService.getRecordFromDocument(iteration.next()));
 		    }
 
 		    // Load the facets in the SolrBrowseResilt object

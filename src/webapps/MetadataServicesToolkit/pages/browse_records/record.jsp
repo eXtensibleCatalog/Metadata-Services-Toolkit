@@ -74,10 +74,18 @@
 		<div id="bd">
 		
 		<div class="record_metadata">
+			<c:if test="${record.provider != null}">Repository:  ${record.provider.name}<br>Repository URL:  ${record.provider.oaiProviderUrl}<br></c:if>
+			<c:if test="${record.service != null}">Service:  ${record.service.serviceName}<br></c:if> 
+			<c:if test="${record.harvest != null}">Harvest:  ${record.harvest.harvestScheduleName}<br></c:if>
 			Schema:  ${record.format.name}<br>
-			<c:if test="${record.provider != null}">Repository:  ${record.provider.name}</c:if> 
-			<c:if test="${record.service != null}">Service:  ${record.service.name}</c:if><br> 
-			Harvest:  <br>
+			Sets:
+			<c:forEach var="set" items="${record.sets}" varStatus="status"><c:if test="${status.count > 1}">,&nbsp;</c:if>${set.displayName}</c:forEach>
+			<br>
+			<c:if test="${record.createdAt != null}">Created at: ${record.createdAt}<br></c:if>
+			<c:if test="${record.updatedAt != null}">Updated at: ${record.updatedAt}<br></c:if>
+			OAI datestamp: ${record.oaiDatestamp}<br>
+			OAI identifier: ${record.oaiIdentifier}<br>
+			OAI header: ${record.oaiHeader}<br>
 			<c:url var="viewPredecessorRecord" value="browseRecords.action">
 				  <c:param name="query" value=""/>
 				  <c:param name="addFacetName" value="successor"/>

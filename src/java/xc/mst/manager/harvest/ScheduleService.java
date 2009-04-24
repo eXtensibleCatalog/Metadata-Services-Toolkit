@@ -76,14 +76,6 @@ public interface ScheduleService {
      */
 	public abstract List<HarvestSchedule> getAllSchedulesSorted(boolean sort,String columnSorted);
 
-    /**
-	 * Gets all harvest for schedule
-	 *
-	 * @param harvestSchedule Harvest schedule to get the harvest
-	 * @return A list containing all harvests
-	 */
-	public List<Harvest> getHarvestForSchedule(HarvestSchedule harvestSchedule);
-
 	 /**
 	 * Gets harvest schedule for a provider
 	 *

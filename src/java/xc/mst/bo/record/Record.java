@@ -49,7 +49,6 @@ public class Record
 	/**
 	 * The time when the record was created
 	 */
-	@Field
 	private Date createdAt = null;
 
 	/**

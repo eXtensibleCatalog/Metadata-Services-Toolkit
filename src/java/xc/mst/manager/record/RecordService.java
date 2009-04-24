@@ -133,10 +133,10 @@ public abstract class RecordService
 	 */
 	protected final static String FIELD_PROVIDER_URL = "provider_url";
 	
-//	/**
-//	 * The name of the provider and harvest end date and time
-//	 */
-//	protected final static String FIELD_HARVEST_END_TIME = "harvest_end_time";
+	/**
+	 * The name of the provider/service and harvest start date and time
+	 */
+	protected final static String FIELD_HARVEST_START_TIME = "harvest_start_time";
 
 	/**
 	 * The name of the format name field
@@ -522,14 +522,6 @@ public abstract class RecordService
 	 * @return A reference to the Document after its fields have been set
 	 */
 	protected abstract SolrInputDocument setFieldsOnDocument(Record record, SolrInputDocument doc, boolean generateNewId);
-
-	/**
-	 * Parses a Record from the fields in a Solr Document from the index.
-	 *
-	 * @param doc The Solr document containing information on the Record.
-	 * @return The record which was contained in the passed Document.
-	 */
-	public abstract Record getRecordFromSolrDocument(SolrDocument doc);
 
 	/**
 	 * Validates the fields on the passed Record Object
