@@ -239,7 +239,7 @@
                                         </c:when>
                                         <c:otherwise>
                                             <tr class="errorColumn">
-                                                <c:set var="classColumn" value="plainColumn"/>
+                                                <c:set var="classColumn" value="errorColumn"/>
                                                 <c:if test="${columnSorted=='RepositoryName'}">
                                                      <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
@@ -248,7 +248,7 @@
                                                         <a style="color:black;text-decoration:none;" href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${n.id}" />"><U><c:out value="${n.name}" /></U></a>
 
                                                 </td>
-                                                <c:set var="classColumn" value="plainColumn"/>
+                                                <c:set var="classColumn" value="errorColumn"/>
                                                 <c:if test="${columnSorted=='RepositoryURL'}">
                                                      <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
@@ -263,7 +263,7 @@
                                                 </td>
                                                 <c:choose>
                                                     <c:when test="${n.lastHarvestEndTime==null}">
-                                                         <c:set var="classColumn" value="plainColumn"/>
+                                                         <c:set var="classColumn" value="v"/>
                                                            <c:if test="${columnSorted=='LastHarvestEndTime'}">
                                                                 <c:set var="classColumn" value="sortColumn"/>
                                                            </c:if>
@@ -272,7 +272,7 @@
                                                         </td>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <c:set var="classColumn" value="plainColumn"/>
+                                                        <c:set var="classColumn" value="errorColumn"/>
                                                         <c:if test="${columnSorted=='LastHarvestEndTime'}">
                                                              <c:set var="classColumn" value="sortColumn"/>
                                                         </c:if>

@@ -49,6 +49,7 @@
         <global-results>
         	 <result name="no-permission">/pages/no_permission_assigned.jsp</result>
         	 <result name="user-login" type="redirect">home.action</result>
+        	 <result name="user-initial-page" type="redirect">${forwardLink}</result>
         </global-results>        
        
         <!--  ************************************ -->

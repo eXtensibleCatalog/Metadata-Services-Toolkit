@@ -87,6 +87,49 @@ public class Login extends ActionSupport implements ServletRequestAware {
 
     	servers = serverService.getAll();
 
+    	// Get the user object in session
+		User sessionUser = (User) request.getSession().getAttribute("user");
+		
+		log.debug("User in session: " + sessionUser);
+
+		// If user exist in session then forward to page for which user has permission
+		if (sessionUser != null) {
+            List<Group> userGroups = sessionUser.getGroups();
+            if (userGroups.size() == 0) {
+            	return "no-permission";
+            }
+            
+            Iterator<Group> groupIter = userGroups.iterator();
+            Group tempGroup = (Group)groupIter.next();
+            List<Permission> tempPermissions = tempGroup.getPermissions();
+            Iterator<Permission> permissionsIter = tempPermissions.iterator();
+            Permission tempPermission = (Permission)permissionsIter.next();
+            switch(tempPermission.getTabId())
+            {
+                case 1 : setForwardLink("allRepository.action");
+                         break;
+                case 2 : setForwardLink("allSchedules.action");
+                         break;
+                case 3:  setForwardLink("listServices.action");
+                         break;
+                case 4 : setForwardLink("browseRecords.action");
+                         break;
+                case 5 : setForwardLink("serviceLog.action");
+                         break;
+                case 6 : setForwardLink("allUsers.action");
+                         break;
+                case 7 : setForwardLink("emailConfig.action");
+                         break;
+                case 8 : setForwardLink("searchIndex.action");
+                         break;
+                default: setForwardLink("logout.action");
+                         break;
+            }
+            log.debug("User exist in session. User forwarded to : " + forwardLink);
+
+            return "user-initial-page";
+		}
+		
     	return SUCCESS;
     }
 
@@ -95,6 +138,7 @@ public class Login extends ActionSupport implements ServletRequestAware {
      */
 	public String login() throws Exception {
 
+		log.debug("Trying to login username :" + userName);
 		Server server = serverService.getServerByName(serverName);
         user = userService.getUserByUserName(userName, server);
 
@@ -112,11 +156,11 @@ public class Login extends ActionSupport implements ServletRequestAware {
 			if (result) {
 				// Place the user object in session
 				request.getSession().setAttribute("user", completeUserData);
-                List<Group> groupList = user.getGroups();
-                if (groupList.size() == 0) {
+                List<Group> userGroups = user.getGroups();
+                if (userGroups.size() == 0) {
                 	return "no-permission";
                 }
-                Iterator<Group> groupIter = groupList.iterator();
+                Iterator<Group> groupIter = userGroups.iterator();
                 Group tempGroup = (Group)groupIter.next();
                 List<Permission> tempPermissions = tempGroup.getPermissions();
                 Iterator<Permission> permissionsIter = tempPermissions.iterator();
