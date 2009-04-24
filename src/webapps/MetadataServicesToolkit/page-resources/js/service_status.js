@@ -106,8 +106,10 @@ alterStatus : function(changedStatus)
                                 document.getElementById("currentProcess").innerHTML = "";
                             }
                         document.getElementById("pauseButton").style.display = "inline";
+                        document.getElementById("pauseButton").className = "xc_button_disabled";
                         document.getElementById("resumeButton").style.display = "none";
                         document.getElementById("abortButton").style.display = "inline";
+                        document.getElementById("abortButton").className = "xc_button_disabled";
                         document.getElementById("pauseButton").disabled = true;
                         document.getElementById("abortButton").disabled = true;
                         
@@ -191,7 +193,7 @@ refreshServiceBar : function()
             
             http_request.open("GET","refreshServiceBar.action",true);           
             http_request.send(null);
-            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',300000);
+            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',2000);
         }
         catch(e)
         {

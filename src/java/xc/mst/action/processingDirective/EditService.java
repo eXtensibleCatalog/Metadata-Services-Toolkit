@@ -202,6 +202,15 @@ public class EditService extends ActionSupport
             log.debug(e);
             errorType = "error";
             this.addFieldError("editServiceError", "ERROR : "+e.getMessage());
+            File dir = new File("serviceConfig");
+            FileFilter fileFilter =  new XCCGFileFilter();
+
+            File[] fileList = dir.listFiles(fileFilter);
+            for(int i=0;i<fileList.length;i++)
+            {
+                serviceFileList.add(fileList[i].getName());
+            }
+            setServiceFileList(serviceFileList);
             return INPUT;
         }
     }

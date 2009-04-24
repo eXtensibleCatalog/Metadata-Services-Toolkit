@@ -48,6 +48,10 @@ public class ProviderServiceTest
             provider.setOaiProviderUrl("http://oaitoolkit.com");
             provider.setCreatedAt(new Date(new java.util.Date().getTime()));
             provider.setUser(user);
+            provider.setErrors(0);
+            provider.setWarnings(0);
+            provider.setLastLogReset(new Date());
+            provider.setLogFileName("logFileName");
             providerService.insertProvider(provider);
 
             Provider anotherProvider = providerService.getProviderById(provider.getId());
@@ -56,7 +60,10 @@ public class ProviderServiceTest
             assert provider.getOaiProviderUrl().equals(anotherProvider.getOaiProviderUrl()) : "Name should be http://oaitoolkit.com";
             assert provider.getDescription().equals(anotherProvider.getDescription()) : "Description should be description";
             assert provider.getUser().getUsername().equals(anotherProvider.getUser().getUsername()) : "Name should be admin";
-
+            assert provider.getErrors()==anotherProvider.getErrors();
+            assert provider.getWarnings()==anotherProvider.getWarnings();
+            assert provider.getLastLogReset()==anotherProvider.getLastLogReset();
+            assert provider.getLogFileName().equalsIgnoreCase(anotherProvider.getLogFileName());
             providerService.deleteProvider(provider);
         }
         catch(Exception e)

@@ -20,7 +20,7 @@ Process Description : &nbsp;&nbsp;
                     <c:if test="${displayType eq varPause}">
                          <button style="display:none;vertical-align:bottom;" id='resumeButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("resume");' name='Resume'>Resume</button> &nbsp;&nbsp;&nbsp;
                          <button id='pauseButton' style='vertical-align:bottom;' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("pause");' name='Pause'>Pause</button> &nbsp;&nbsp;&nbsp;
-                         <button id='abortButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("abort");' name='Abort'>Abort</button>");
+                         <button id='abortButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.alterStatus("abort");' name='Abort'>Abort</button>
 
                     </c:if>
                     <c:if test="${displayType eq varResume}">
