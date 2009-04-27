@@ -362,7 +362,14 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
                     }
                     else
                     {
-                        tempSetList = setService.getAllSets();
+                        if(sourceType.equalsIgnoreCase("provider"))
+                        {
+                            tempSetList = tempProcDir.getSourceProvider().getSets();
+                        }
+                        else
+                        {
+                            tempSetList = tempProcDir.getSourceService().getOutputSets();
+                        }
                         break;
                     }
                 }

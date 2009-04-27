@@ -410,7 +410,14 @@ public class EditProcessingDirective2 extends ActionSupport implements ServletRe
                         }
                          else
                         {
-                            tempSetList = setService.getAllSets();
+                            if(sourceType.equalsIgnoreCase("provider"))
+                            {
+                                tempSetList = temporaryProcessingDirective.getSourceProvider().getSets();
+                            }
+                            else
+                            {
+                                tempSetList = temporaryProcessingDirective.getSourceService().getOutputSets();
+                            }
                             break;
                         }
                     }
