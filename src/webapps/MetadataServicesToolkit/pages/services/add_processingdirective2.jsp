@@ -167,6 +167,11 @@
                                          <div style="font-family: verdana,sans-serif;font-size: 11px;">
                                             <B>Sets</B> <br>
                                             <select multiple size="10" style="width:300px;" id="setsSelected" name="setsSelected">
+                                                <option value="0"
+                                                    <c:if test="${temporaryProcessingDirective.triggeringSets == '[]' || temporaryProcessingDirective.triggeringSets == '[null]'}">
+                                                         selected
+                                                    </c:if>
+                                                >All Sets</option>
                                                 <c:forEach var="n" items="${setList}" varStatus="a">
                                                     <c:set var="flag" value="${false}"/>
                                                       <c:forEach var="m" items="${temporaryProcessingDirective.triggeringSets}" varStatus="a1">

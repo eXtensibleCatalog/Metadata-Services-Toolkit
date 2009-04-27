@@ -343,8 +343,11 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
             {
                 for(int i=0;i<FormatIdList.length;i++)
                 {
-                   Format format = formatService.getFormatById(Integer.parseInt(FormatIdList[i]));
-                   tempFormatList.add(format);
+
+                       Format format = formatService.getFormatById(Integer.parseInt(FormatIdList[i]));
+                       tempFormatList.add(format);
+
+
                 }
             }
 
@@ -352,8 +355,16 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
             {
                 for(int i=0;i<SetIdList.length;i++)
                 {
-                   Set set = setService.getSetById(Integer.parseInt(SetIdList[i]));
-                   tempSetList.add(set);
+                    if(Integer.parseInt(SetIdList[i])!=0)
+                    {
+                        Set set = setService.getSetById(Integer.parseInt(SetIdList[i]));
+                        tempSetList.add(set);
+                    }
+                    else
+                    {
+                        tempSetList = setService.getAllSets();
+                        break;
+                    }
                 }
             }
 

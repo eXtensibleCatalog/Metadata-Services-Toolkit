@@ -403,8 +403,16 @@ public class EditProcessingDirective2 extends ActionSupport implements ServletRe
                 {
                     for(int i=0;i<SetIdList.length;i++)
                     {
-                       Set set = setService.getSetById(Integer.parseInt(SetIdList[i]));
-                       tempSetList.add(set);
+                        if(Integer.parseInt(SetIdList[i])!=0)
+                        {
+                           Set set = setService.getSetById(Integer.parseInt(SetIdList[i]));
+                           tempSetList.add(set);
+                        }
+                         else
+                        {
+                            tempSetList = setService.getAllSets();
+                            break;
+                        }
                     }
                 }
 
