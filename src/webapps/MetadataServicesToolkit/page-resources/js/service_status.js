@@ -11,189 +11,116 @@ YAHOO.namespace("xc.mst.serviceStatusBar");
 
 YAHOO.xc.mst.serviceStatusBar = {
 
-alterStatus : function(changedStatus)
+yuiAlterStatus : function(changedStatus)
+{
+    var url = "";
+    
+    if(changedStatus=='pause')
             {
-
-                  var http_request = false;
-
-                  if (window.XMLHttpRequest)
-                  { // Mozilla, Safari,...
-                     http_request = new XMLHttpRequest();
-                     if (http_request.overrideMimeType) {
-                        // set type accordingly to anticipated content type
-                        //http_request.overrideMimeType('text/xml');
-                        http_request.overrideMimeType('text/html');
-                     }
-                  }
-                  else if (window.ActiveXObject)
-                  { // IE
-                     try
-                     {
-                        http_request = new ActiveXObject("Msxml2.XMLHTTP");
-                     }
-                     catch (e)
-                     {
-                        try
-                        {
-                           http_request = new ActiveXObject("Microsoft.XMLHTTP");
-                        }
-                        catch (e)
-                        {
-
-                        }
-                     }
-                  }
-                  if (!http_request)
-                  {
-                     alert('Cannot create XMLHTTP instance');
-                  }
-
-        http_request.onreadystatechange=function()
-        {
-            if(http_request.readyState==4)
-            {
-              var response = http_request.responseText;
-              var findResume = response.search("MSTServiceResumed");
-              var findPause = response.search("MSTServicePaused");
-              var findAbort = response.search("MSTServiceAborted");
-              var findEnded = response.search("Ended");
-              if(findResume!=-1)
-                  {
-                        if(findEnded==-1)
-                            {
-                                document.getElementById("pauseButton").style.display = "inline";
-                                document.getElementById("resumeButton").style.display = "none";
-                                document.getElementById("abortButton").style.display = "inline";
-                            }
-                        else
-                            {
-                                document.getElementById("pauseButton").style.display = "inline";
-                                document.getElementById("pauseButton").disabled = true;
-                                document.getElementById("resumeButton").style.display = "none";
-                                document.getElementById("abortButton").style.display = "inline";
-                                document.getElementById("abortButton").disabled = true;
-                                document.getElementById("currentProcess").innerHTML = "Process has already ended";
-                            }
-                        
-                  }
-              if(findPause!=-1)
-                  {
-                        if(findEnded==-1)
-                            {
-                                document.getElementById("pauseButton").style.display = "none";
-                                document.getElementById("resumeButton").style.display = "inline";
-                                document.getElementById("abortButton").style.display = "inline";
-                            }
-                        else
-                            {
-                                document.getElementById("pauseButton").style.display = "inline";
-                                document.getElementById("pauseButton").disabled = true;
-                                document.getElementById("resumeButton").style.display = "none";
-                                document.getElementById("abortButton").style.display = "inline";
-                                document.getElementById("abortButton").disabled = true;
-                                document.getElementById("currentProcess").innerHTML = "Process has already ended";
-                            }
-                        
-                  }
-              if(findAbort!=-1)
-                  {
-                        if(findEnded!=-1)
-                            {
-                                document.getElementById("currentProcess").innerHTML = "Process has already ended";
-                            }
-                        else
-                            {
-                                document.getElementById("currentProcess").innerHTML = "";
-                            }
-                        document.getElementById("pauseButton").style.display = "inline";
-                        document.getElementById("pauseButton").className = "xc_button_disabled";
-                        document.getElementById("resumeButton").style.display = "none";
-                        document.getElementById("abortButton").style.display = "inline";
-                        document.getElementById("abortButton").className = "xc_button_disabled";
-                        document.getElementById("pauseButton").disabled = true;
-                        document.getElementById("abortButton").disabled = true;
-                        
-                  }
-            }
-
-        }
-        if(changedStatus=='pause')
-            {
-                http_request.open("GET","servicePause.action",true);
+                url = "servicePause.action";
             }
         else if(changedStatus=='resume')
             {
-                http_request.open("GET","serviceResume.action",true);
+                url = "serviceResume.action";
             }
         else
             {
-                http_request.open("GET","serviceAbort.action",true)
+                url = "serviceAbort.action";
             }
+    YAHOO.util.Connect.asyncRequest('GET', url, {
+            success: function (o)
+            {
+                  
+                  var response = o.responseText;
+                  var findResume = response.search("MSTServiceResumed");
+                  var findPause = response.search("MSTServicePaused");
+                  var findAbort = response.search("MSTServiceAborted");
+                  var findEnded = response.search("Ended");
+                  if(findResume!=-1)
+                      {
+                            if(findEnded==-1)
+                                {
+                                    document.getElementById("pauseButton").style.display = "inline";
+                                    document.getElementById("resumeButton").style.display = "none";
+                                    document.getElementById("abortButton").style.display = "inline";
+                                }
+                            else
+                                {
+                                    document.getElementById("pauseButton").style.display = "inline";
+                                    document.getElementById("pauseButton").disabled = true;
+                                    document.getElementById("resumeButton").style.display = "none";
+                                    document.getElementById("abortButton").style.display = "inline";
+                                    document.getElementById("abortButton").disabled = true;
+                                    document.getElementById("currentProcess").innerHTML = "Process has already ended";
+                                }
 
-        http_request.send(null);
+                      }
+                  if(findPause!=-1)
+                      {
+                            if(findEnded==-1)
+                                {
+                                    document.getElementById("pauseButton").style.display = "none";
+                                    document.getElementById("resumeButton").style.display = "inline";
+                                    document.getElementById("abortButton").style.display = "inline";
+                                }
+                            else
+                                {
+                                    document.getElementById("pauseButton").style.display = "inline";
+                                    document.getElementById("pauseButton").disabled = true;
+                                    document.getElementById("resumeButton").style.display = "none";
+                                    document.getElementById("abortButton").style.display = "inline";
+                                    document.getElementById("abortButton").disabled = true;
+                                    document.getElementById("currentProcess").innerHTML = "Process has already ended";
+                                }
 
+                      }
+                  if(findAbort!=-1)
+                      {
+                            if(findEnded!=-1)
+                                {
+                                    document.getElementById("currentProcess").innerHTML = "Process has already ended";
+                                }
+                            else
+                                {
+                                    document.getElementById("currentProcess").innerHTML = "";
+                                }
+                            document.getElementById("pauseButton").style.display = "inline";
+                            document.getElementById("pauseButton").className = "xc_button_disabled";
+                            document.getElementById("resumeButton").style.display = "none";
+                            document.getElementById("abortButton").style.display = "inline";
+                            document.getElementById("abortButton").className = "xc_button_disabled";
+                            document.getElementById("pauseButton").disabled = true;
+                            document.getElementById("abortButton").disabled = true;
 
-    },
+                      }
+            }
+        });
+
+},
+
 refreshServiceBar : function()
     {
         try
         {
-            var http_request = false;
-		if (window.XMLHttpRequest)
-                  { // Mozilla, Safari,...
-                     http_request = new XMLHttpRequest();
-                     if (http_request.overrideMimeType) {
-                        // set type accordingly to anticipated content type
-                        //http_request.overrideMimeType('text/xml');
-                        http_request.overrideMimeType('text/html');
-                     }
-                  }
-                  else if (window.ActiveXObject)
-                  { // IE
-                     try
-                     {
-                        http_request = new ActiveXObject("Msxml2.XMLHTTP");
-                     }
-                     catch (e)
-                     {
-                        try
-                        {
-                           http_request = new ActiveXObject("Microsoft.XMLHTTP");
-                        }
-                        catch (e)
-                        {
-
-                        }
-                     }
-                  }
-                  if (!http_request)
-                  {
-                     alert('Cannot create XMLHTTP instance');
-                  }
-
-            
-            http_request.onreadystatechange=function()
+           
+            var url = "refreshServiceBar.action";
+            YAHOO.util.Connect.asyncRequest('GET', url, {
+            success: function (o)
             {
-                if(http_request.readyState==4)
+                
+                var findError = o.responseText.search("No User Found");
+                if(findError==-1)
                 {
-                    if(document.getElementById("serviceBar").innerHTML.toString() == http_request.responseText.toString())
-                        {
-                            alert("HTML content is the same");
-                        }
-                    else
-                        {
-                            document.getElementById("serviceBar").innerHTML = http_request.responseText;
-                        }
+                    document.getElementById("serviceBar").innerHTML = o.responseText;
                 }
                 else
                 {
-                    document.getElementById("serviceBar").innerHTML = "ERROR : Please try later";
+                    document.getElementById("serviceBar").style.display = "none";
                 }
             }
-            
-            http_request.open("GET","refreshServiceBar.action",true);           
-            http_request.send(null);
-            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',2000);
+            });
+
+            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',20000);
         }
         catch(e)
         {
