@@ -283,6 +283,40 @@ public class DefaultRecordService extends RecordService
 	} // end method getByServiceId(int)
 
 	@Override
+	public long getNumberOfRecordsByServiceId(int serviceId)
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting all records with service ID " + serviceId);
+
+		long numberOfRecords = 0;
+		
+		// Create a query to get the Documents with the requested service ID
+		SolrQuery query = new SolrQuery();
+		query.setQuery(FIELD_SERVICE_ID + ":" +  Integer.toString(serviceId) + " AND "
+				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		
+		// Get the result of the query
+		SolrDocumentList docs = indexMgr.getDocumentList(query);
+
+		// Return the empty list if we couldn't find the records
+		if(docs== null)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Could not find the any records with service ID " + serviceId + ".");
+
+			return numberOfRecords;
+		} // end if(no results found)
+
+		numberOfRecords = docs.getNumFound();
+		
+		if(log.isDebugEnabled())
+			log.debug("Number of records found:" + numberOfRecords);
+
+		// Return the list of results
+		return numberOfRecords;
+	} // end method getByServiceId(long)
+	
+	@Override
 	public RecordList getByProcessingServiceId(int serviceId)
 	{
 		if(log.isDebugEnabled())

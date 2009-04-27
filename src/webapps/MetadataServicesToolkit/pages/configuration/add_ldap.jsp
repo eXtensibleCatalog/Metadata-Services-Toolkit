@@ -84,7 +84,6 @@
                 <form action="addLDAP.action" method="post" name="addLDAP">
 
                    <table>
-
                         <tr>
                             <td valign="top"> <B>Display Name</B>  &nbsp;&nbsp;</td>
                             <td><input type="text" id="displayName" name ="displayName" style="width:200px;height:25px;" value="${server.name}" maxlength="255"><br><br></td>
@@ -111,7 +110,7 @@
                         </tr>
 
                         <tr>
-                            <td valign="top"> <B>Show Forgot Password URL ${server.showForgotPasswordLink}</B> &nbsp;&nbsp;</td>
+                            <td valign="top"> <B>Show Forgot Password URL </B> &nbsp;&nbsp;</td>
                             <td><input type="radio" id="showForgotPasswordLink" name ="showForgotPasswordLink" style="width:10px;height:30px;" value="true"
                             <c:if test="${server.showForgotPasswordLink == 'true'}">
                             	checked

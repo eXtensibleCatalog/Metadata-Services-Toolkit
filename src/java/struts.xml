@@ -239,20 +239,29 @@
 			<result name="success">/pages/services/list_services.jsp</result>
 			<result name="input">/pages/services/list_services.jsp</result>
 		</action>
+		
         <action name="viewAddService" class="xc.mst.action.processingDirective.AddService">
         	<interceptor-ref name="default"/>
 			<result name="success">/pages/services/add_service.jsp</result>
 		</action>
+        
         <action name="addService" class="xc.mst.action.processingDirective.AddService" method="addService">
         	<interceptor-ref name="default"/>
 			<result name="success" type="redirect">listServices.action</result>
             <result name="input">/pages/services/add_service.jsp</result>
 		</action>
-
+        
         <action name="deleteService" class="xc.mst.action.processingDirective.DeleteService">
-        	<interceptor-ref name="default"/>
-			<result name="success" type="redirect">listServices.action</result>
-		</action>
+        	<interceptor-ref name="editStack"/>
+            <result name="success">/pages/services/service_delete_confirmation.jsp</result>
+            <result name="input">listServices.action</result>
+        </action>
+
+        <action name="deleteServiceRecords" class="xc.mst.action.processingDirective.DeleteService" method="deleteServiceAndRecords">
+        	<interceptor-ref name="editStack"/>
+            <result name="success" type="redirect">listServices.action</result>
+        </action>
+
 
         <action name="viewEditService" class="xc.mst.action.processingDirective.EditService">
         	<interceptor-ref name="default"/>

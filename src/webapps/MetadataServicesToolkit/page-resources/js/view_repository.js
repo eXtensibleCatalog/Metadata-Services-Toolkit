@@ -29,31 +29,31 @@ YAHOO.xc.mst.repository = {
     
     reValidateFunction : function(id)
     {
-	// Instantiate the Dialog
-	// make it modal - 
-	// it should not start out as visible - it should not be shown until 
-	// new repository button is clicked.
-	YAHOO.xc.mst.repository.processingDialog = new YAHOO.widget.Dialog('processingDialog', 
-	{ width : "400px",
-		  visible : false, 
-		  modal : true,
-
-		} );
-
-
-	// Show the dialog
-       YAHOO.xc.mst.repository.processingDialog.showDialog = function()
-       {
-	   YAHOO.xc.mst.repository.processingDialog.show();
-	   YAHOO.xc.mst.repository.processingDialog.center();
-       },
-
-
-	// Render the Dialog
-	YAHOO.xc.mst.repository.processingDialog.render();
+		// Instantiate the Dialog
+		// make it modal - 
+		// it should not start out as visible - it should not be shown until 
+		// new repository button is clicked.
+		YAHOO.xc.mst.repository.processingDialog = new YAHOO.widget.Dialog('processingDialog', 
+		{ width : "400px",
+			  visible : false, 
+			  modal : true,
+	
+			} );
+	
+	
+		// Show the dialog
+	       YAHOO.xc.mst.repository.processingDialog.showDialog = function()
+	       {
+		   YAHOO.xc.mst.repository.processingDialog.show();
+		   YAHOO.xc.mst.repository.processingDialog.center();
+	       },
 
 
-	YAHOO.xc.mst.repository.processingDialog.showDialog();
+		// Render the Dialog
+		YAHOO.xc.mst.repository.processingDialog.render();
+
+
+		YAHOO.xc.mst.repository.processingDialog.showDialog();
     
         window.location = "viewRepositoryValidate.action?RepositoryId="+id;
     },

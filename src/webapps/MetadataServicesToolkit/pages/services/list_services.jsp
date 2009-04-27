@@ -22,6 +22,7 @@
         <c:import url="/inc/meta-frag.jsp"/>
 
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
+        <LINK href="page-resources/yui/assets/skins/sam/skin.css"  rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/base-mst.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/yui/menu/assets/skins/sam/menu.css"  rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
@@ -35,10 +36,12 @@
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
+	<SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container-min.js"></SCRIPT>    
+	<SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>     
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/button/button-min.js"></script>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/all_services.js"></SCRIPT>
-     
     </head>
 
 
@@ -181,6 +184,35 @@
                     </div>
 
             </div>
+
+	      <div id="deleteServiceDialog" class="hidden">
+	          <div class="hd">Delete Service</div>
+		      <div class="bd">
+		          <form id="deleteService" name="deleteService" method="POST" 
+		              action="deleteService.action">
+		              
+		              <input type="hidden" name="serviceId" id="service_id"/>
+		              
+			          <p>Are you sure you wish to delete the service?</p>
+		          </form>
+		      </div>
+	      </div>
+
+	      <div id="deleteServiceOkDialog" class="hidden">
+	          <div class="hd">Delete Service</div>
+		      <div class="bd">
+		          <form name="deleteServiceRecords" method="POST" 
+		              action="deleteServiceRecords.action">
+		      		  
+		      		  <input type="hidden" name="serviceId" id="service_delete_id"/>
+			          <div id="deleteServiceError" cssClass="errorMessage"></div>
+			          Deleting the service will result in deletion of Processing rules that uses this service and the records harvested. <br>
+			          Are you sure you want to delete the service?
+		          </form>			          
+		      </div>
+	      </div>
+
+
         </div>
 </body>
 </html>

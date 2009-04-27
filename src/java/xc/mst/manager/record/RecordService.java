@@ -257,6 +257,14 @@ public abstract class RecordService
 	public abstract RecordList getByServiceId(int serviceId);
 
 	/**
+	 * Gets number of records from the index with the passed service ID
+	 *
+	 * @param serviceId The service ID of the records to retrieve
+	 * @return Number of records in the index with the passed provider ID
+	 */
+	public abstract long getNumberOfRecordsByServiceId(int serviceId);
+	
+	/**
 	 * Gets all records from the index with the passed processing service ID
 	 *
 	 * @param serviceId The service ID of the service that processed records to retrieve
