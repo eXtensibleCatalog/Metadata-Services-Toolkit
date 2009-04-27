@@ -15,6 +15,27 @@
     clear: both;
 }
 
+
+.header_logo {
+	
+    	width: 100%;
+	margin-top:10px;
+	font-size:15px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	float:left;
+}
+
+.header_logo img {
+	float:left;
+	
+}
+
+.headerMessage {
+	float:right;
+	margin-top:10px;
+	
+}
+
 #header .x4 {
 	padding-left: 0px;
     padding-right : 23px;

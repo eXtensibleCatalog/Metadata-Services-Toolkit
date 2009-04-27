@@ -120,7 +120,7 @@ refreshServiceBar : function()
             }
             });
 
-            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',20000);
+            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',2000);
         }
         catch(e)
         {

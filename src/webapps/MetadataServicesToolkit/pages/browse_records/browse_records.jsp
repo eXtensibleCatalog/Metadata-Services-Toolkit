@@ -143,7 +143,7 @@
 													  <c:param name="startPageNumber" value="${startPageNumber}"/>
 													  <c:param name="currentPageNumber" value="${currentPageNumber}"/>
 												  </c:url>
-										   		<a href="${viewError}">info</a>
+										   		&nbsp;&nbsp;&nbsp;<a href="${viewError}">[info]</a>
 										   	</c:if>											
 											
 											<br/>
@@ -375,8 +375,14 @@
 								<br>
 								Schema: ${record.format.name}
 								<br>
-								Repository: ${record.provider.name}
-								<br>
+								<c:if test="${record.provider != null}">
+									Repository: ${record.provider.name}
+									<br>
+								</c:if>
+								<c:if test="${record.service != null}">
+									Service: ${record.service.name}
+									<br>
+								</c:if>
 								<c:if test="${record.harvest != null}">
 									Harvest: ${record.harvest.harvestScheduleName} 
 									<br>
