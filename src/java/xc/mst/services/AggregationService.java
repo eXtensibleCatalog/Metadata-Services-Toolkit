@@ -158,7 +158,6 @@ public class AggregationService extends MetadataService
 	 */
 	public AggregationService()
 	{
-		loadPropertiesFiles();
 	} // end constructor
 
 	@Override
@@ -936,32 +935,6 @@ public class AggregationService extends MetadataService
 		// Return the modified XC record
 		return xcRecord;
 	} // end method addFrbrComponantToXcRecord(Element, String)
-
-	/**
-	 * Loads the properties files which may be used by the Normalization Service
-	 */
-	private void loadPropertiesFiles()
-	{
-		// Load the properties file with information on which work fields to merge on.
-	    try
-	    {
-	    	workMerge.load(new FileInputStream(AggregationServiceConstants.CONFIG_DIRECTORY + "\\" + AggregationServiceConstants.PROPERTIES_MERGE_WORK));
-	    } // end try
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + AggregationServiceConstants.PROPERTIES_MERGE_WORK + " file.", e);
-	    } // end catch(IOException)
-
-	    // Load the properties file with information on which manifestation fields to merge on.
-	    try
-	    {
-	    	manifestationMerge.load(new FileInputStream(AggregationServiceConstants.CONFIG_DIRECTORY + "\\" + AggregationServiceConstants.PROPERTIES_MERGE_MANIFESTATION));
-	    } // end try
-	    catch (IOException e)
-	    {
-	    	log.error("Could not load the " + AggregationServiceConstants.PROPERTIES_MERGE_MANIFESTATION + " file.", e);
-	    } // end catch(IOException)
-	} // end method loadPropertiesFiles()
 	
 	@Override
 	public void loadConfiguration(String configuration)

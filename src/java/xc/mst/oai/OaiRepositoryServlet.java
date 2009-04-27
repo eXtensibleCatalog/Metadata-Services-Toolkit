@@ -123,8 +123,10 @@ public class OaiRepositoryServlet extends ActionSupport implements ServletReques
 
 		oaiXMLOutput = oaiResponseElement.toString();
 
+		response.setContentType("text/xml; charset=UTF-8");
+		
 		// Write the response
-	response.getWriter().write(oaiResponseElement.toString());
+		response.getWriter().write(oaiResponseElement.toString());
 
 	    return SUCCESS;
 	}

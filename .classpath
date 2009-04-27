@@ -24,7 +24,6 @@
 	<classpathentry kind="lib" path="lib/lucene-core-2.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/lukeall-0.9.1.jar"/>
 	<classpathentry kind="lib" path="lib/mail.jar"/>
-	<classpathentry kind="lib" path="lib/MST.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="lib" path="lib/ognl-2.6.11.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api.jar"/>

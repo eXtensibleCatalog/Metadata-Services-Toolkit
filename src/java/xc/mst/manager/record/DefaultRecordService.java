@@ -823,9 +823,9 @@ public class DefaultRecordService extends RecordService
 		StringBuffer queryBuffer = new StringBuffer();
 		queryBuffer.append(FIELD_INDEXED_OBJECT_TYPE).append(":").append(Record.indexedObjectType).append(" AND ").append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
 		if(useSet)
-			queryBuffer.append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId)).append(" ");
+			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId));
 		if(useMetadataPrefix)
-			queryBuffer.append(FIELD_FORMAT_ID).append(":").append(Integer.toString(formatId));
+			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID).append(":").append(Integer.toString(formatId));
 		
 		// TODO
 		//if(fromDate != null || untilDate != null)
@@ -889,13 +889,13 @@ public class DefaultRecordService extends RecordService
 		SolrQuery query = new SolrQuery();
 		StringBuffer queryBuffer = new StringBuffer();
 		queryBuffer.append(FIELD_INDEXED_OBJECT_TYPE).append(":").append(Record.indexedObjectType);
-		queryBuffer.append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId)).append(" ");
+		queryBuffer.append(" AND ").append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
 		if(useSet)
-			queryBuffer.append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId)).append(" ");
+			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId));
 		if(useMetadataPrefix)
-			queryBuffer.append(FIELD_FORMAT_ID + ":").append(Integer.toString(formatId));
+			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID + ":").append(Integer.toString(formatId));
 		// TODO
-		if(fromDate != null || untilDate != null)
+		//if(fromDate != null || untilDate != null)
 			//query.add((Query)new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);
 
 		query.setQuery(queryBuffer.toString());

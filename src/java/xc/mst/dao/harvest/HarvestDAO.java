@@ -72,9 +72,14 @@ public abstract class HarvestDAO
 	public final static String COL_HARVEST_SCHEDULE_NAME = "harvest_schedule_name";
 
 	/**
-	 * Gets all harvest s in the database
+	 * The name of the provider ID column
+	 */
+	public final static String COL_PROVIDER_ID = "provider_id";
+	 
+	/**
+	 * Gets all harvests in the database
 	 *
-	 * @return A list containing all harvest s in the database
+	 * @return A list containing all harvests in the database
 	 */
 	public abstract List<Harvest> getAll();
 

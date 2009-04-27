@@ -11,6 +11,8 @@ package xc.mst.bo.harvest;
 
 import java.sql.Timestamp;
 
+import xc.mst.bo.provider.Provider;
+
 /**
  * Represents a harvest
  *
@@ -47,6 +49,11 @@ public class Harvest
 	 * The name of the harvest schedule that ran the harvest
 	 */
 	private String harvestScheduleName = null;
+	
+	/**
+	 * The provider that was harvested
+	 */
+	private Provider provider = null;
 
 	/**
 	 * Gets the harvest's ID
@@ -167,4 +174,24 @@ public class Harvest
 	{
 		this.harvestScheduleName = harvestScheduleName;
 	} // end method setHarvestScheduleName(String)
+	
+	/**
+	 * Gets the provider that was harvested
+	 *
+	 * @return The provider that was harvested
+	 */
+	public Provider getProvider()
+	{
+		return provider;
+	} // end method getProvider()
+
+	/**
+	 * Sets the provider that was harvested
+	 *
+	 * @param provider The new provider that was harvested
+	 */
+	public void setProvider(Provider provider)
+	{
+		this.provider = provider;
+	} // end method setProvider(Provider)
 } // end class Harvest

@@ -1032,7 +1032,7 @@ public abstract class MetadataService
 	 */
 	protected boolean checkService(String statusForSuccess)
 	{
-		// Check that we can access the Solr index
+		/*// Check that we can access the Solr index
 		try
 		{
 			RecordList test = recordService.getInputForService(service.getId());
@@ -1072,7 +1072,7 @@ public abstract class MetadataService
 			persistStatus(Constants.STATUS_SERVICE_ERROR);
 			
 			return false;
-		}
+		}*/
 		
 		try
 		{

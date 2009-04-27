@@ -276,54 +276,24 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
             List<Set> tempSetList = null;
             if(sourceType.equalsIgnoreCase("provider"))
             {
-                List<Format> tempList = tempProcDir.getSourceProvider().getFormats();
-                List<Format> compareList = tempProcDir.getService().getInputFormats();
-                Iterator<Format> tempIter = tempList.iterator();
-                while(tempIter.hasNext())
-                {
-                    boolean flags = false;
-                    Iterator<Format> compareIter = compareList.iterator();
-                    Format tempFormat = (Format)tempIter.next();
-                    while(compareIter.hasNext())
-                    {
-                        Format compareFormat = (Format)compareIter.next();
-                        if(compareFormat.getId()==tempFormat.getId())
-                        {
-                            flags = true;
-                            break;
-                        }
-                    }
-                    if(flags==true)
-                    {
+            	// Loop over the formats the source provider can produce
+            	// If the service can accept it as input, add it to the list
+            	// of Formats the user can select
+            	for(Format tempFormat : tempProcDir.getSourceProvider().getFormats())
+            		if(tempProcDir.getService().getInputFormats().contains(tempFormat))
                         tempFormatList.add(tempFormat);
-                    }
-                }
+            	
                 tempSetList = tempProcDir.getSourceProvider().getSets();
             }
             else
             {
-                List<Format> tempList = tempProcDir.getSourceService().getOutputFormats();
-                List<Format> compareList = tempProcDir.getService().getInputFormats();
-                Iterator<Format> tempIter = tempList.iterator();
-                while(tempIter.hasNext())
-                {
-                    boolean flags = false;
-                    Iterator<Format> compareIter = compareList.iterator();
-                    Format tempFormat = (Format)tempIter.next();
-                    while(compareIter.hasNext())
-                    {
-                        Format compareFormat = (Format)compareIter.next();
-                        if(compareFormat.getId()==tempFormat.getId())
-                        {
-                            flags = true;
-                            break;
-                        }
-                    }
-                    if(flags==true)
-                    {
+            	// Loop over the formats the source service can produce
+            	// If the service can accept it as input, add it to the list
+            	// of Formats the user can select
+            	for(Format tempFormat : tempProcDir.getSourceService().getOutputFormats())
+            		if(tempProcDir.getService().getInputFormats().contains(tempFormat))
                         tempFormatList.add(tempFormat);
-                    }
-                }
+            	
                 tempSetList = tempProcDir.getSourceService().getOutputSets();
             }
             setFormatList(tempFormatList);

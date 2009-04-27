@@ -1236,6 +1236,10 @@ public class DefaultProviderDAO extends ProviderDAO
 					for(Record record : recordService.getByProviderId(provider.getId()))
 						success = markAsDeleted(record) && success;
 					
+					for(Set set : setDao.getAll())
+						if(recordService.getBySetSpec(set.getSetSpec()).size() == 0)
+							setDao.delete(set);
+					
 					SolrIndexManager.getInstance().commitIndex();
 				} // end if(delete succeeded)
 
