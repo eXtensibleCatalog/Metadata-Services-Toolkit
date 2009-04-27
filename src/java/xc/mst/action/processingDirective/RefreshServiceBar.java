@@ -13,6 +13,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
+import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.scheduling.Scheduler;
 
@@ -83,34 +84,44 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
     @Override
     public String execute()
     {
-        try
+        User user = (User)request.getSession().getAttribute("user");
+        if(user!=null)
         {
-            if(Scheduler.getRunningJob()!=null)
+            try
             {
-                if(Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase("CANCELED"))
+
+                if(Scheduler.getRunningJob()!=null)
                 {
-                    currentProcess = "Aborting " + Scheduler.getRunningJob().getJobName() + "...";
-                    setCurrentProcess(currentProcess);
+                    if(Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase("CANCELED"))
+                    {
+                        currentProcess = "Aborting " + Scheduler.getRunningJob().getJobName() + "...";
+                        setCurrentProcess(currentProcess);
+                    }
+                    else
+                    {
+                        currentProcess = Scheduler.getRunningJob().getJobName();
+                        setCurrentProcess(currentProcess);
+                    }
                 }
                 else
                 {
-                    currentProcess = Scheduler.getRunningJob().getJobName();
-                    setCurrentProcess(currentProcess);
+                    request.getSession().setAttribute("serviceBarDisplay", null);
                 }
+                displayType = (String)request.getSession().getAttribute("serviceBarDisplay");
+                setDisplayType(displayType);
+                return SUCCESS;
             }
-            else
+            catch(Exception e)
             {
-                request.getSession().setAttribute("serviceBarDisplay", null);
+                log.debug(e);
+                this.addFieldError("refreshServiceBar", "ERROR : The status of the services running in the MST , could not be displayed correctly");
+                return INPUT;
             }
-            displayType = (String)request.getSession().getAttribute("serviceBarDisplay");
-            setDisplayType(displayType);
-            return SUCCESS;
         }
-        catch(Exception e)
+        else
         {
-            log.debug(e);
-            this.addFieldError("refreshServiceBar", "ERROR : The status of the services running in the MST , could not be displayed correctly");
-            return INPUT;
+            System.out.println("No user found");
+            return "No User Found";
         }
 
     }

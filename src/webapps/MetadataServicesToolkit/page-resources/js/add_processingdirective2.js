@@ -34,8 +34,49 @@ goBack : function()
  {
      try
      {
-          document.addProcessingDirective2.action= 'addProcessingDirectives2.action';
-          document.addProcessingDirective2.submit();
+         var choice = true;
+         if((document.getElementById("setsSelected")==null)||(document.getElementById("formatsSelected")==null))
+             {
+                    if((document.getElementById("setsSelected")==null)&&(document.getElementById("formatsSelected")==null))
+                        {
+                            createErrorDiv('error','Processing Rule cannot be created as neither sets or formats are available');
+                            choice = false;
+                        }
+                    else if(document.getElementById("setsSelected")==null)
+                        {
+                            if (document.addProcessingDirective2.formatsSelected.value=='') {
+                                createErrorDiv('error','Select a format.');
+                                choice = false;
+                            }
+
+                        }
+                    else if(document.getElementById("formatsSelected")==null)
+                        {
+                             if (document.addProcessingDirective2.setsSelected.value=='') {
+                                createErrorDiv('error','Select a set.');
+                                choice = false;
+                            }
+                        }
+                                       
+             }
+         else
+             {
+                 if((document.addProcessingDirective2.setsSelected.value=='')&&(document.addProcessingDirective2.formatsSelected.value==''))
+                     {
+
+                          createErrorDiv('error','Both sets and formats cannot be left unselected. Either sets or formats have to selected');
+                          choice = false;
+
+                     }
+                   
+             }
+
+         if(choice==true)
+             {
+                  document.addProcessingDirective2.action= 'addProcessingDirectives2.action';
+                  document.addProcessingDirective2.submit();
+             }
+
             
        
      }

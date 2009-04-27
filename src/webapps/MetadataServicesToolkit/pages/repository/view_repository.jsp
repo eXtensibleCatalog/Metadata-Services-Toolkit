@@ -111,7 +111,7 @@
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div style="width:150px;"><B>Protocols Supported </B></div> </li>
+                                    <li style="float:left;"><div style="width:150px;"><B>OAI Versions Supported </B></div> </li>
                                     <li style="float:left;"><div>:</div></li>
                                     <li style="float:left;"><div style="margin-left:15px;">${provider.protocolVersion} </div></li>
                                 </ul>
