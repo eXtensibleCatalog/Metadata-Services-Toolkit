@@ -235,6 +235,12 @@ public class AddLDAP extends ActionSupport
                 server.setType(1);
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
+                server.setShowForgotPasswordLink(showForgotPasswordLink);
+                if (showForgotPasswordLink) {
+                	server.setForgotPasswordUrl(forgotPasswordUrl);
+                } else {
+                	server.setForgotPasswordUrl(null);
+                }
                 if(displayName.equalsIgnoreCase("local"))
                 {
                     this.addFieldError("addLDAPError", "ERROR : Cannot add a server with name 'Local'. Kindly use a different name");
@@ -255,6 +261,12 @@ public class AddLDAP extends ActionSupport
                 server.setType(1);
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
+                server.setShowForgotPasswordLink(showForgotPasswordLink);
+                if (showForgotPasswordLink) {
+                	server.setForgotPasswordUrl(forgotPasswordUrl);
+	            } else {
+	            	server.setForgotPasswordUrl(null);
+	            }
                 if(displayName.equalsIgnoreCase("local"))
                 {
                     this.addFieldError("addLDAPError", "ERROR : Cannot update a server with name 'Local'. Kindly use a different name");

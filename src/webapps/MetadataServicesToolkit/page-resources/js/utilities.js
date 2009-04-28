@@ -15,16 +15,18 @@ function createErrorDiv(errorType, errorMessage) {
 
 
 		var serverErrorDiv = document.getElementById('server_error_div');
-		
+
 		/* Remove server error message div if its existing */
-		var existingServerErrorMessageDiv = document.getElementById('server_message_div');
-		if (existingServerErrorMessageDiv != null) {
-			serverErrorDiv.removeChild(existingServerErrorMessageDiv);
-		
+		if (serverErrorDiv != null) {
+			var existingServerErrorMessageDiv = document.getElementById('server_message_div');
+			if (existingServerErrorMessageDiv != null) {
+				serverErrorDiv.removeChild(existingServerErrorMessageDiv);
+
+			}
 		}
 
 		var errorDiv = document.getElementById('error_div');
-		
+
 		/* Remove client error div if its existing */
 		var existingErrorMessageDiv = document.getElementById('message_div');
 		if (existingErrorMessageDiv != null) {

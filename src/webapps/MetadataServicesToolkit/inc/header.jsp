@@ -27,7 +27,7 @@
 <div id="header">
  
                
-	<div id="server_message_div" class="header_logo">
+	<div class="header_logo">
                         <img  src="/MetadataServicesToolkit/page-resources/img/Logo.jpg">
                           <c:if test="${user!=null}">
                        		<ul>
