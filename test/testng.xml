@@ -4,8 +4,14 @@
 
 	<test name="MST Service Testing">
 		<classes>
-		    <class name="xc.mst.manager.test.ScheduleServiceTest"/>            
-		    <class name="xc.mst.manager.test.ProviderServiceTest"/>
+                    <class name="xc.mst.manager.test.ProviderServiceTest"/>
+		    <class name="xc.mst.manager.test.ScheduleServiceTest"/>
+                    <class name="xc.mst.manager.test.ServerTest"/>
+		    <class name="xc.mst.manager.test.GroupsTest"/>
+                    <class name="xc.mst.manager.test.UsersTest"/>
+                    <class name="xc.mst.manager.test.ProcessingDirectivesTest"/>
+                    <class name="xc.mst.manager.test.GeneralLogsTest"/>
+                    <class name="xc.mst.manager.test.ServiceTest"/>
 		</classes>
 	</test>
 </suite>
