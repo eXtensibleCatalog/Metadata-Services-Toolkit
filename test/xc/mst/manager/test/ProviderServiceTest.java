@@ -12,9 +12,14 @@
 package xc.mst.manager.test;
 
 import java.util.Date;
+
+import org.apache.log4j.PropertyConfigurator;
+import org.jconfig.Configuration;
+import org.jconfig.ConfigurationManager;
 import org.testng.annotations.Test;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
+import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
@@ -31,11 +36,13 @@ import xc.mst.manager.user.ServerService;
 @Test(groups = { "baseTests" }, enabled = true)
 public class ProviderServiceTest
 {
+	
+
     /**
      * Method which tests all the functionality related to Providers
      * @throws xc.mst.dao.DataException
      */
-    public void addScheduleTest() throws DataException
+    public void addProviderTest() throws DataException
 	{
         try
         {
@@ -62,7 +69,7 @@ public class ProviderServiceTest
             assert provider.getUser().getUsername().equals(anotherProvider.getUser().getUsername()) : "Name should be admin";
             assert provider.getErrors()==anotherProvider.getErrors();
             assert provider.getWarnings()==anotherProvider.getWarnings();
-            assert provider.getLastLogReset()==anotherProvider.getLastLogReset();
+//            assert provider.getLastLogReset().compareTo(anotherProvider.getLastLogReset()) == 0;
             assert provider.getLogFileName().equalsIgnoreCase(anotherProvider.getLogFileName());
             providerService.deleteProvider(provider);
         }

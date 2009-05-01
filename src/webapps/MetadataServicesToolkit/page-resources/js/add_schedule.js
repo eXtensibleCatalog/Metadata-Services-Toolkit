@@ -36,13 +36,13 @@ YAHOO.xc.mst.schedule = {
 		} else {
 		
 			if (selectedRecurrence=='Daily') {
-				if (document.scheduleForm.dailyHour.value=='-1') {
+				if (document.scheduleForm.dailyHour.value=='0') {
 					createErrorDiv('error','Time to harvest the repository is required.');
 					return false;
 				}
 			}
 			if (selectedRecurrence=='Hourly') {
-				if (document.scheduleForm.minute.value=='-1') {
+				if (document.scheduleForm.minute.value=='0') {
 					createErrorDiv('error','Minute to harvest the repository every hour is required.');
 					return false;
 				}
@@ -52,7 +52,7 @@ YAHOO.xc.mst.schedule = {
 					createErrorDiv('error','Select a Day of week to havest the repository.');
 					return false;
 				}
-				if (document.scheduleForm.hour.value=='-1') {
+				if (document.scheduleForm.hour.value=='0') {
 					createErrorDiv('error','Time to harvest the repository is required.');
 					return false;
 				}				

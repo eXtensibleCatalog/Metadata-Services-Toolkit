@@ -145,12 +145,12 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		StringTokenizer valueTokenizer = new StringTokenizer(selectedFacetValues, "|");
 		
 		while (nameTokenizer.hasMoreTokens()) {
-	    	solrQuery.addFilterQuery(nameTokenizer.nextToken() + ":" + valueTokenizer.nextToken().replaceAll(":", "\\\\:"));
+	    	solrQuery.addFilterQuery(nameTokenizer.nextToken() + ":\"" + valueTokenizer.nextToken().replaceAll(":", "\\\\:") + "\"");
 		}
 	    
 		// Add selected facet to query
 	    if (addFacetName != null && addFacetName.length() > 0) {
-	    	solrQuery.addFilterQuery(addFacetName + ":" + addFacetValue.replaceAll(":", "\\\\:"));
+	    	solrQuery.addFilterQuery(addFacetName + ":\"" + addFacetValue.replaceAll(":", "\\\\:") + "\"");
 	    	// Add facet names and values to | separated list
 	    	selectedFacetNames = selectedFacetNames + "|" + addFacetName;
 	    	selectedFacetValues = selectedFacetValues + "|" + addFacetValue;
@@ -158,9 +158,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	    
 	    
 
-	    // Remove selected facet to query
+	    // Remove selected facet from query
 	    if (removeFacetName != null && removeFacetName.length() > 0) {
-	    	solrQuery.removeFilterQuery(removeFacetName + ":" + removeFacetValue.replaceAll(":", "\\\\:"));
+	    	solrQuery.removeFilterQuery(removeFacetName + ":\"" + removeFacetValue.replaceAll(":", "\\\\:") + "\"");
 	    }
 
 	    log.debug("query after adding/removing facet ::"+query);

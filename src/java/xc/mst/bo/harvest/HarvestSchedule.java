@@ -57,17 +57,17 @@ public class HarvestSchedule
 	/**
 	 * The number of minutes after the hour when this harvest schedule should be run
 	 */
-	private int minute = -1;
+	private int minute = 0;
 
 	/**
 	 * The day of the week when this harvest schedule should be run
 	 */
-	private int dayOfWeek = -1;
+	private int dayOfWeek = 0;
 
 	/**
-	 * The hour (0 - 23) when this harvest schedule should be run
+	 * The hour (1 - 24) when this harvest schedule should be run
 	 */
-	private int hour = -1;
+	private int hour = 0;
 
 	/**
 	 * The email address to be notified of the results of running the schedule

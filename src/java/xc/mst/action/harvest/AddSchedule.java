@@ -173,7 +173,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 			if (recurrence.equalsIgnoreCase("Daily")) {
 				schedule.setHour(dailyHour);
 				// Reset other values
-				schedule.setMinute(-1);
+				schedule.setMinute(0);
 				schedule.setDayOfWeek(0);
 			}
 
@@ -182,7 +182,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 
 				// Reset other values
 				schedule.setDayOfWeek(0);
-				schedule.setHour(-1);
+				schedule.setHour(0);
 
 			}
 
@@ -191,7 +191,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 				schedule.setHour(hour);
 
 				//Reset other values
-				schedule.setMinute(-1);
+				schedule.setMinute(0);
 			}
     	}
 
@@ -256,7 +256,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 			if (recurrence.equalsIgnoreCase("Daily")) {
 				schedule.setHour(dailyHour);
 				// Reset other values
-				schedule.setMinute(-1);
+				schedule.setMinute(0);
 				schedule.setDayOfWeek(0);
 			}
 
@@ -265,7 +265,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 
 				// Reset other values
 				schedule.setDayOfWeek(0);
-				schedule.setHour(-1);
+				schedule.setHour(0);
 
 			}
 
@@ -274,7 +274,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 				schedule.setHour(hour);
 
 				//Reset other values
-				schedule.setMinute(-1);
+				schedule.setMinute(0);
 			}
     	}
 

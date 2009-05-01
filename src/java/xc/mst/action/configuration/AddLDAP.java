@@ -228,7 +228,6 @@ public class AddLDAP extends ActionSupport
             }
             if(serverExists==false)
             {
-                              
                 server.setName(getDisplayName());
                 server.setUrl(getServerURL());
                 server.setPort(Integer.parseInt(getPort()));

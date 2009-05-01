@@ -848,11 +848,11 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	                                   "WHERE (" + COL_START_DATE + " IS NULL OR " + COL_START_DATE + "<=?) " +
 	                                   "AND (" + COL_END_DATE + " IS NULL OR " + COL_END_DATE + ">=?) " +
 	                                   "AND " + "((0=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=?)" +
-	                                             "OR (0=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=-1)" +
+	                                             "OR (0=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=0)" +
 	                                             "OR " + COL_MINUTE + "=?)";
 
 					if(log.isDebugEnabled())
-						log.debug("Createing the PreparedStatement to get a harvest schedule by its time the SQL " + selectSql);
+						log.debug("Creating the PreparedStatement to get a harvest schedule by its time the SQL " + selectSql);
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection

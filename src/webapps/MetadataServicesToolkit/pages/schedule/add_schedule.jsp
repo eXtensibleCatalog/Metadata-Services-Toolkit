@@ -149,7 +149,7 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Run at&nbsp;
 				
 				<select id="schedule_minute" name="minute" />
-					<option value = "-1"> Select </option>
+					<option value = "0"> Select </option>
 					<c:forEach begin="1" end="60" step="1" var="minute">
 						<option value = "${minute}"
 						<c:if test="${schedule.minute == minute}">
@@ -170,7 +170,7 @@
 				
 				<select id="schedule_hour" name="dailyHour" />
 				
-					<option value = "-1"> Select </option>
+					<option value = "0"> Select </option>
 
 					<c:forEach begin="1" end="24" step="1" var="time">
 						<option value = "${time}"
@@ -232,7 +232,7 @@
 				</select>
 				at					
 				<select id="schedule_week_hour" name="hour" />
-					<option value = "-1"> Select </option>
+					<option value = "0"> Select </option>
 					<c:forEach begin="1" end="24" step="1" var="time">
 						<option value = "${time}"
 						<c:if test="${schedule.recurrence == 'Weekly' && schedule.hour == time}">
