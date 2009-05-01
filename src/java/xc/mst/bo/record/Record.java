@@ -364,7 +364,7 @@ public class Record
 	 */
 	public void setOaiIdentifier(String oaiIdentifier)
 	{
-		this.oaiIdentifier = oaiIdentifier;
+		this.oaiIdentifier = oaiIdentifier.replaceAll(" ", "_");
 	} // end method setOaiIdentifier(String)
 
 	/**
@@ -384,7 +384,7 @@ public class Record
 	 */
 	public void setOaiIdentifierBase(String oaiIdentifierBase)
 	{
-		this.oaiIdentifierBase = oaiIdentifierBase;
+		this.oaiIdentifierBase = oaiIdentifierBase.replaceAll(" ", "_");
 	} // end method setOaiIdentiferBase(String)
 
 	/**
