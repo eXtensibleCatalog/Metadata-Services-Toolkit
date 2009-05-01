@@ -49,6 +49,7 @@
         <global-results>
         	 <result name="no-permission">/pages/no_permission_assigned.jsp</result>
         	 <result name="user-login" type="redirect">home.action</result>
+        	 <result name="user-initial-page" type="redirect">${forwardLink}</result>
         </global-results>        
        
         <!--  ************************************ -->
@@ -92,7 +93,7 @@
 
         <action name="saveMyAccount" class="xc.mst.action.user.EditMyAccount" method="saveMyAccount">
         	<interceptor-ref name="default"/>
-			<result name="success" type="redirect">allRepository.action</result>
+			<result name="success">/pages/user/edit_my_account.jsp</result>
 			<result name="input">/pages/user/edit_my_account.jsp</result>
         </action>         
         
@@ -129,9 +130,9 @@
             <result name="input">/pages/repository/all_repository.jsp</result>
         </action>
         
-        <action name="viewRepositoryValidate" class="xc.mst.action.repository.ViewRepository" method="ValidateRepository">
+        <action name="viewRepositoryValidate" class="xc.mst.action.repository.ViewRepository" method="validateRepository">
         	<interceptor-ref name="default"/>
-            <result name="success" type="redirect">viewRepository.action?RepositoryId=${repositoryId}</result>
+            <result name="success">/pages/repository/view_repository.jsp</result>
         </action>
         
         <action name="viewEditRepository" class="xc.mst.action.repository.EditRepository">
@@ -152,11 +153,16 @@
         </action>
         
         <action name="deleteRepository" class="xc.mst.action.repository.DeleteRepository">
-        	<interceptor-ref name="default"/>
+        	<interceptor-ref name="editStack"/>
+            <result name="success">/pages/repository/repository_delete_confirmation.jsp</result>
+            <result name="input">/pages/repository/view_repository.jsp</result>
+        </action>
+
+        <action name="deleteRepositoryRecords" class="xc.mst.action.repository.DeleteRepository" method="deleteRepositoryAndRecords">
+        	<interceptor-ref name="editStack"/>
             <result name="success" type="redirect">allRepository.action</result>
             <result name="input">/pages/repository/view_repository.jsp</result>
         </action>
-       
         
         <!--  ************************************ -->
         <!--  Schedule  actions                    -->
@@ -175,14 +181,14 @@
 		</action>
 
 		<!-- Action to add schedule and go to step 2 of add schedule -->
-		<action name="addScheduleAndNext" class="xc.mst.action.harvest.AddSchedule" method="addSchedule">
+		<action name="addScheduleAndNext" class="xc.mst.action.harvest.AddSchedule" method="addScheduleAndProvider">
         	<interceptor-ref name="crudStack"/>
 			<result name="success">/pages/schedule/add_schedule_sets_formats.jsp</result>
 			<result name="input">/pages/schedule/add_schedule.jsp</result>
 		</action>	
 		
 		<!-- Action to add sets and formats for schedule and go to all schedule page -->
-		<action name="saveSetFormatForScheduleAndExit" class="xc.mst.action.harvest.AddSchedule" method="addSetFormatForSchedule">
+		<action name="saveSetFormatForScheduleAndExit" class="xc.mst.action.harvest.AddSchedule" method="addSchedule">
         	<interceptor-ref name="crudStack"/>
 			<result name="success" type="redirect">allSchedules.action</result>
 			<result name="input">/pages/schedule/add_schedule_sets_formats.jsp</result>
@@ -191,7 +197,7 @@
 		<!-- Action to add sets and formats for schedule and go to add schedule step 1 -->
 		<action name="saveSetFormatForScheduleAndGoToPrevious" class="xc.mst.action.harvest.AddSchedule" method="addSetFormatForSchedule">
         	<interceptor-ref name="crudStack"/>
-			<result name="success" type="redirect">viewEditSchedule.action?scheduleId=${schedule.id}</result>
+			<result name="success">/pages/schedule/add_schedule.jsp</result>
 			<result name="input">/pages/schedule/add_schedule_sets_formats.jsp</result>
 		</action>
 		
@@ -209,12 +215,13 @@
 			<result name="input">/pages/schedule/add_schedule.jsp</result>
 		</action>
 
-		<!-- Action to update schedule and go to all schedule page -->
+		<!-- Action to update schedule and go to all schedule page 
 		<action name="updateScheduleAndExit" class="xc.mst.action.harvest.AddSchedule" method="updateSchedule">
         	<interceptor-ref name="editStack"/>
 			<result name="success" type="redirect">allSchedules.action</result>
 			<result name="input">/pages/schedule/add_schedule.jsp</result>
 		</action>
+		-->
 		
 		<!-- Action to delete schedule -->
 		<action name="deleteSchedule" class="xc.mst.action.harvest.AllSchedules" method="deleteSchedule">
@@ -233,6 +240,60 @@
 			<result name="input">/pages/services/list_services.jsp</result>
 		</action>
 		
+        <action name="viewAddService" class="xc.mst.action.processingDirective.AddService">
+        	<interceptor-ref name="default"/>
+			<result name="success">/pages/services/add_service.jsp</result>
+		</action>
+        
+        <action name="addService" class="xc.mst.action.processingDirective.AddService" method="addService">
+        	<interceptor-ref name="default"/>
+			<result name="success" type="redirect">listServices.action</result>
+            <result name="input">/pages/services/add_service.jsp</result>
+		</action>
+        
+        <action name="deleteService" class="xc.mst.action.processingDirective.DeleteService">
+        	<interceptor-ref name="editStack"/>
+            <result name="success">/pages/services/service_delete_confirmation.jsp</result>
+            <result name="input">listServices.action</result>
+        </action>
+
+        <action name="deleteServiceRecords" class="xc.mst.action.processingDirective.DeleteService" method="deleteServiceAndRecords">
+        	<interceptor-ref name="editStack"/>
+            <result name="success" type="redirect">listServices.action</result>
+        </action>
+
+
+        <action name="viewEditService" class="xc.mst.action.processingDirective.EditService">
+        	<interceptor-ref name="default"/>
+			<result name="success">/pages/services/edit_service.jsp</result>
+		</action>
+        <action name="editService" class="xc.mst.action.processingDirective.EditService" method="editService">
+        	<interceptor-ref name="default"/>
+			<result name="success" type="redirect">listServices.action</result>
+            <result name="input">/pages/services/edit_service.jsp</result>
+		</action>
+
+        <action name="serviceAbort" class="xc.mst.action.processingDirective.ServiceInteract">
+        	<interceptor-ref name="default"/>
+			<result name="success">inc/refreshPageOnce.jsp?serviceStatus=aborted</result>
+		</action>
+
+        <action name="servicePause" class="xc.mst.action.processingDirective.ServiceInteract" method="pauseJob">
+        	<interceptor-ref name="default"/>
+			<result name="success">inc/refreshPageOnce.jsp?serviceStatus=paused</result>
+		</action>
+
+        <action name="serviceResume" class="xc.mst.action.processingDirective.ServiceInteract" method="resumeJob">
+        	<interceptor-ref name="default"/>
+			<result name="success">inc/refreshPageOnce.jsp?serviceStatus=resumed</result>
+		</action>
+
+        <action name="refreshServiceBar" class="xc.mst.action.processingDirective.RefreshServiceBar">
+         	<interceptor-ref name="default"/>
+			<result name="success">inc/service_bar.jsp</result>
+			<result name="input">inc/error.jsp</result>
+		</action>
+
          <action name="listProcessingDirectives" class="xc.mst.action.processingDirective.ListProcessingDirectives">
          	<interceptor-ref name="default"/>
 			<result name="success">/pages/services/list_processingdirectives.jsp</result>
@@ -340,7 +401,7 @@
 		</action>
         <action name="addLocalUser" class="xc.mst.action.user.AddLocalUser" method="addLocalUser">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">allUsers.action</result>
+			<result name="success" type="redirect">allUsers.action?isAscendingOrder=true&amp;columnSorted=UserName</result>
 			<result name="input">/pages/user/add_localuser.jsp</result>
             <result name="error">/pages/user/add_localuser.jsp</result>
 		</action>
@@ -352,7 +413,7 @@
 		</action>
         <action name="editLocalUser" class="xc.mst.action.user.EditLocalUser" method="editLocalUser">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">allUsers.action</result>
+			<result name="success" type="redirect">allUsers.action?isAscendingOrder=true&amp;columnSorted=UserName</result>
 			<result name="input">/pages/user/edit_localuser.jsp</result>
             <result name="error">/pages/user/edit_localuser.jsp</result>
 		</action>
@@ -381,9 +442,21 @@
 			<result name="success">/pages/user/add_group.jsp</result>
 			<result name="input">/pages/user/all_groups.jsp</result>
 		</action>
+
+        <action name="showGroupMembers" class="xc.mst.action.user.ShowGroupMembers">
+             <interceptor-ref name="default"/>
+			<result name="success">/pages/user/showGroupMembers.jsp</result>
+			<result name="input">/pages/user/all_groups.jsp</result>
+		</action>
+        <action name="removeMember" class="xc.mst.action.user.RemoveMember">
+             <interceptor-ref name="default"/>
+			<result name="success" type="redirect">showGroupMembers.action?groupId=${groupId}&amp;isAscendingOrder=true&amp;columnSorted=UserName</result>
+			<result name="input">/pages/user/showGroupMembers.jsp</result>
+		</action>
+
          <action name="addGroup" class="xc.mst.action.user.AddGroup" method="addGroup">
              <interceptor-ref name="default"/>
-			<result name="success" type="redirect">allGroups.action</result>
+			<result name="success" type="redirect">allGroups.action?isAscendingOrder=true&amp;columnSorted=GroupName</result>
 			<result name="input">/pages/user/add_group.jsp</result>
 		</action>
         <action name="viewEditGroup" class="xc.mst.action.user.EditGroup">
@@ -393,17 +466,17 @@
 		</action>
         <action name="editGroup" class="xc.mst.action.user.EditGroup" method="editGroup">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">allGroups.action</result>
+			<result name="success" type="redirect">allGroups.action?isAscendingOrder=true&amp;columnSorted=GroupName</result>
 			<result name="input">/pages/user/edit_group.jsp?GroupId=${groupId}</result>
 		</action>
          <action name="deleteUser" class="xc.mst.action.user.DeleteUser">
              <interceptor-ref name="default"/>
-			<result name="success" type="redirect">allUsers.action</result>
+			<result name="success" type="redirect">allUsers.action?isAscendingOrder=true&amp;columnSorted=UserName</result>
 			<result name="input">/pages/user/all_users.jsp</result>
 		</action>
 		<action name="deleteGroup" class="xc.mst.action.user.DeleteGroup">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">allGroups.action</result>
+			<result name="success" type="redirect">allGroups.action?isAscendingOrder=true&amp;columnSorted=GroupName</result>
 			<result name="input">/pages/user/all_groups.jsp</result>
 		</action>
         
@@ -412,16 +485,25 @@
         <!--  ************************************ -->
         
         <action name="viewBrowseRecords" class="xc.mst.action.browse.BrowseRecords">
+        	<interceptor-ref name="default"/>
 			<result name="success">/pages/browse_records/browse_records.jsp</result>
 		</action>
 		
         <action name="browseRecords" class="xc.mst.action.browse.BrowseRecords" method="browse">
+        	<interceptor-ref name="default"/>
 			<result name="success">/pages/browse_records/browse_records.jsp</result>
 		</action>
 		
 		<action name="viewRecord" class="xc.mst.action.browse.BrowseRecords" method="viewRecord">
+		 	<interceptor-ref name="default"/>
 			<result name="success">/pages/browse_records/record.jsp</result>
 		</action>
+		
+		
+		<action name="viewErrorDescription" class="xc.mst.action.browse.BrowseRecords" method="viewErrorDescription">
+		 	<interceptor-ref name="default"/>
+			<result name="success">/pages/browse_records/error_description.jsp</result>
+		</action>		
 		
 		 <!--  ************************************ -->
         <!--  OAI repository servlet  actions          -->
@@ -471,6 +553,14 @@
              <interceptor-ref name="default"/>
 			<result name="success">/pages/logs/general_log.jsp</result>
 		 </action>
+         <action name="generalLogReset" class="xc.mst.action.log.GeneralLogReset">
+            <interceptor-ref name="default"/>
+			<result name="success" type="redirect">generalLog.action</result>
+		 </action>
+          <action name="generalLogResetAll" class="xc.mst.action.log.GeneralLogReset" method="resetAll">
+            <interceptor-ref name="default"/>
+			<result name="success" type="redirect">generalLog.action</result>
+		 </action>
          <action name="serviceLog" class="xc.mst.action.log.ServiceLog">
              <interceptor-ref name="default"/>
 			<result name="success">/pages/logs/service_log.jsp</result>
@@ -481,23 +571,35 @@
 		</action>
         <action name="serviceReset" class="xc.mst.action.log.ServiceReset">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">serviceLog.action</result>
+			<result name="success" type="redirect">serviceLog.action?isAscendingOrder=true&amp;columnSorted=ServiceName</result>
+		</action>
+        <action name="serviceResetAll" class="xc.mst.action.log.ServiceReset" method="resetAll">
+            <interceptor-ref name="default"/>
+			<result name="success" type="redirect">serviceLog.action?isAscendingOrder=true&amp;columnSorted=ServiceName</result>
 		</action>
         <action name="harvestOutReset" class="xc.mst.action.log.HarvestOutReset">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">harvestOutLog.action</result>
+			<result name="success" type="redirect">harvestOutLog.action?isAscendingOrder=true&amp;columnSorted=ServiceName</result>
+		</action>
+        <action name="harvestOutResetAll" class="xc.mst.action.log.HarvestOutReset" method="resetAll">
+            <interceptor-ref name="default"/>
+			<result name="success" type="redirect">harvestOutLog.action?isAscendingOrder=true&amp;columnSorted=ServiceName</result>
 		</action>
         <action name="harvestInReset" class="xc.mst.action.log.HarvestInReset">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">harvestInLog.action</result>
+			<result name="success" type="redirect">harvestInLog.action?isAscendingOrder=true&amp;columnSorted=RepositoryName</result>
+		</action>
+        <action name="harvestInResetAll" class="xc.mst.action.log.HarvestInReset" method="resetAll">
+            <interceptor-ref name="default"/>
+			<result name="success" type="redirect">harvestInLog.action?isAscendingOrder=true&amp;columnSorted=RepositoryName</result>
 		</action>
         <action name="harvestInLog" class="xc.mst.action.log.HarvestInLog">
             <interceptor-ref name="default"/>
 			<result name="success">/pages/logs/harvest_in_log.jsp</result>
 		</action>
-        <action name="downloadServiceLogFile" class="xc.mst.action.log.downloadServiceLogFile">
+        <action name="displayOAIRequest" class="xc.mst.action.log.DisplayOAIRequest">
             <interceptor-ref name="default"/>
-			<result name="success" type="redirect">serviceLog.action</result>
+			<result name="success">/pages/logs/display_oai_request.jsp</result>
 		</action>
 	</package>
 </struts>

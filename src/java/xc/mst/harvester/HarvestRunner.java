@@ -168,7 +168,7 @@ public class HarvestRunner
 		harvestSchedule.setRequest(requests.toString());
 		try
 		{
-			harvestScheduleDao.update(harvestSchedule);
+			harvestScheduleDao.update(harvestSchedule, false);
 		}
 		catch(DataException e)
 		{

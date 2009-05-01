@@ -205,10 +205,11 @@ public abstract class HarvestScheduleDAO
 	 * Updates a harvestSchedule in the database
 	 *
 	 * @param harvestSchedule The harvest schedule to update
+	 * @param updateSteps True to update the steps on the schedule, false to maintain them
 	 * @return True on success, false on failure
 	 * @throws DataException if the passed harvest schedule was not valid for updating
 	 */
-	public abstract boolean update(HarvestSchedule harvestSchedule) throws DataException;
+	public abstract boolean update(HarvestSchedule harvestSchedule, boolean updateSteps) throws DataException;
 
 	/**
 	 * Deletes a harvest schedule from the database

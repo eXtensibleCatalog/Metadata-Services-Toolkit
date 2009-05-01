@@ -1043,7 +1043,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	} // end method insert(HarvestSchedule)
 
 	@Override
-	public boolean update(HarvestSchedule harvestSchedule) throws DataException
+	public boolean update(HarvestSchedule harvestSchedule, boolean updateSteps) throws DataException
 	{
 		// Check that the fields on the harvest schedule are valid
 		validateFields(harvestSchedule, true, true);
@@ -1102,36 +1102,39 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				// Execute the update statement and return the result
 				boolean success = psUpdate.executeUpdate() > 0;
 
-				// Delete all steps from before we updated the schedule
-				harvestScheduleStepDao.deleteStepsForSchedule(harvestSchedule.getId());
-
-				// A step in the schedule we just inserted
-			    HarvestScheduleStep step = new HarvestScheduleStep();
-
-			    // If there are no sets, insert a step for each format to be harvested
-			    if(harvestSchedule.getSets().size() <= 0)
-			    {
-			    	for(Format format : harvestSchedule.getFormats())
-			    	{
-			    		step.setFormat(format);
-			    		success = harvestScheduleStepDao.insert(step, harvestSchedule.getId()) && success;
-			    	} // end loop over formats
-			    } // end if(the schedule had no sets)
-
-			    // Otherwise insert a step for each format/set pair
-			    else
-			    {
-			    	for(Format format : harvestSchedule.getFormats())
-			    	{
-			    		step.setFormat(format);
-
-			    		for(Set set : harvestSchedule.getSets())
-			    		{
-			    			step.setSet(set);
-			    			success = harvestScheduleStepDao.insert(step, harvestSchedule.getId()) && success;
-			    		}
-			    	} // end loop over formats
-			    } // end else (the schedule had steps)
+				if(updateSteps)
+				{
+					// Delete all steps from before we updated the schedule
+					harvestScheduleStepDao.deleteStepsForSchedule(harvestSchedule.getId());
+	
+					// A step in the schedule we just inserted
+				    HarvestScheduleStep step = new HarvestScheduleStep();
+	
+				    // If there are no sets, insert a step for each format to be harvested
+				    if(harvestSchedule.getSets().size() <= 0)
+				    {
+				    	for(Format format : harvestSchedule.getFormats())
+				    	{
+				    		step.setFormat(format);
+				    		success = harvestScheduleStepDao.insert(step, harvestSchedule.getId()) && success;
+				    	} // end loop over formats
+				    } // end if(the schedule had no sets)
+	
+				    // Otherwise insert a step for each format/set pair
+				    else
+				    {
+				    	for(Format format : harvestSchedule.getFormats())
+				    	{
+				    		step.setFormat(format);
+	
+				    		for(Set set : harvestSchedule.getSets())
+				    		{
+				    			step.setSet(set);
+				    			success = harvestScheduleStepDao.insert(step, harvestSchedule.getId()) && success;
+				    		}
+				    	} // end loop over formats
+				    } // end else (the schedule had steps)
+				} // end if(we should update the steps)
 
 				return success;
 			} // end try(update schedule)

@@ -1569,7 +1569,7 @@ public class Harvester implements ErrorHandler
 	protected void persistStatus(String status) throws DataException{
 		
 		schedule.setStatus(status);
-		harvestScheduleDao.update(schedule);
+		harvestScheduleDao.update(schedule, false);
 	}
 	
 	/**

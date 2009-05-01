@@ -68,7 +68,7 @@ public class DefaultScheduleService implements ScheduleService {
      * @param schedule schedule whose details should be updated in the database
      */
     public void updateSchedule(HarvestSchedule harvestSchedule) throws DataException {
-    	harvestScheduleDAO.update(harvestSchedule);
+    	harvestScheduleDAO.update(harvestSchedule, true);
     }
 
     /**
