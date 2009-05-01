@@ -57,7 +57,7 @@ public class ServerTest
             assert(anotherServer.getType()==1): "Server type should be 1";
             assert(anotherServer.getUrl().equalsIgnoreCase(server.getUrl())): "The URLs dont match";
             assert(anotherServer.getUserNameAttribute().equalsIgnoreCase(server.getUserNameAttribute())): "The username Attributes dont match";
-
+            
             serverService.deleteServer(server);
 
         }

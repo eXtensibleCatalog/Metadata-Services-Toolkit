@@ -53,7 +53,6 @@ public class ProcessingDirectivesTest
             PDService.insertProcessingDirective(processingDirective);
 
             ProcessingDirective anotherDirective = PDService.getByProcessingDirectiveId(processingDirective.getId());
-            assert (anotherDirective.getMaintainSourceSets()==false): "Maintain Source sets is false";
             assert (anotherDirective.getOutputSet()==null): "The output set is should be null";
             assert (anotherDirective.getService().getId()==1): "The service ID should be 1";
             assert (anotherDirective.getSourceService().getId()==1): "The Source Service ID should be 1";

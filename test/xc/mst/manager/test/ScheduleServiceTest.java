@@ -43,27 +43,27 @@ import xc.mst.manager.user.UserService;
 @Test(groups = { "baseTests" }, enabled = true)
 public class ScheduleServiceTest {
 
-	ProviderService providerService = new DefaultProviderService();
+ ProviderService providerService = new DefaultProviderService();
 
-	ScheduleService scheduleService = new DefaultScheduleService();
+ ScheduleService scheduleService = new DefaultScheduleService();
 
-	FormatService formatService = new DefaultFormatService();
+ FormatService formatService = new DefaultFormatService();
 
-	SetService setService = new DefaultSetService();
+ SetService setService = new DefaultSetService();
 
-	UserService userService = new DefaultUserService();
+ UserService userService = new DefaultUserService();
 
-	/**
-	 * Test creating schedule
-	 *
-	 * @throws DataException
-	 */
-	public void addScheduleTest() throws DataException
-	{
-		
-		try
+ /**
+  * Test creating schedule
+  *
+  * @throws DataException
+  */
+ public void addScheduleTest() throws DataException
+ {
+
+  try
         {
-			ServerService serverService = new DefaultServerService();
+   ServerService serverService = new DefaultServerService();
             User user = new DefaultUserService().getUserByUserName("admin", serverService.getServerByName("Local"));
 
             Provider provider = new Provider();
@@ -126,6 +126,6 @@ public class ScheduleServiceTest {
         {
             e.printStackTrace();
         }
-	}
+ }
 
 }

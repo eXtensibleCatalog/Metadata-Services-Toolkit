@@ -36,17 +36,17 @@ import xc.mst.manager.user.ServerService;
 @Test(groups = { "baseTests" }, enabled = true)
 public class ProviderServiceTest
 {
-	
+
 
     /**
      * Method which tests all the functionality related to Providers
      * @throws xc.mst.dao.DataException
      */
     public void addProviderTest() throws DataException
-	{
+                {
         try
         {
-        	ServerService serverService = new DefaultServerService();
+                ServerService serverService = new DefaultServerService();
             User user = new DefaultUserService().getUserByUserName("admin", serverService.getServerByName("Local"));
             ProviderService providerService = new DefaultProviderService();
             Provider provider = new Provider();
@@ -69,7 +69,7 @@ public class ProviderServiceTest
             assert provider.getUser().getUsername().equals(anotherProvider.getUser().getUsername()) : "Name should be admin";
             assert provider.getErrors()==anotherProvider.getErrors();
             assert provider.getWarnings()==anotherProvider.getWarnings();
-//            assert provider.getLastLogReset().compareTo(anotherProvider.getLastLogReset()) == 0;
+          //  assert provider.getLastLogReset().compareTo(anotherProvider.getLastLogReset()) == 0;
             assert provider.getLogFileName().equalsIgnoreCase(anotherProvider.getLogFileName());
             providerService.deleteProvider(provider);
         }
