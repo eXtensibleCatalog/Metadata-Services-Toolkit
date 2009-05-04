@@ -76,7 +76,7 @@ public class ServiceInteract extends ActionSupport implements ServletRequestAwar
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("serviceAbortError", "ERROR : The process could not be aborted ");            
         }
         return SUCCESS;
@@ -106,7 +106,7 @@ public class ServiceInteract extends ActionSupport implements ServletRequestAwar
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("servicePauseError", "ERROR : There was an error pausing the specified service");            
         }
         return SUCCESS;
@@ -135,7 +135,7 @@ public class ServiceInteract extends ActionSupport implements ServletRequestAwar
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("serviceResumeError", "ERROR : There was an error resuming the specified service");
         }
         return SUCCESS;

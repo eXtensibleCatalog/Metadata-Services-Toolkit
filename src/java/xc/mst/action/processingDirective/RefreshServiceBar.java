@@ -113,14 +113,13 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
             }
             catch(Exception e)
             {
-                log.debug(e);
+                log.error(e);
                 this.addFieldError("refreshServiceBar", "ERROR : The status of the services running in the MST , could not be displayed correctly");
                 return INPUT;
             }
         }
         else
         {
-            System.out.println("No user found");
             return "No User Found";
         }
 

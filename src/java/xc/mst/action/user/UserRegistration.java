@@ -64,6 +64,7 @@ public class UserRegistration extends ActionSupport {
 	/**
 	 * To register the user
 	 */
+    @Override
 	public String execute() throws DataException {
 		servers =  serverService.getAll();
 

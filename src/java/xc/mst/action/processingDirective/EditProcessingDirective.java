@@ -40,10 +40,7 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
     private int processingDirectiveId;
 
     /** The source that is associated with a procesisng directive*/
-    String source;
-
-    /** The complete list of processing directives in the system */
-    List<ProcessingDirective> processingDirectivesList;
+    private String source;
 
     /** Request */
     private HttpServletRequest request;
@@ -52,10 +49,10 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**List of all providers */
-    List<Provider> providerList;
+    private List<Provider> providerList;
 
     /**List of all services */
-    List<Service> serviceList;
+    private List<Service> serviceList;
 
     /** specifies the type of source i.e whther it is a provider or a service */
     private String sourceType;
@@ -262,7 +259,7 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("editProcessingDirectiveEror", "Error : Problem in displaying the Specfied Processing Directive");
             errorType = "error";
             return INPUT;
@@ -309,7 +306,7 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("editProcessingDirectiveError", "Error in Adding a Source");
             errorType = "error";
             return INPUT;

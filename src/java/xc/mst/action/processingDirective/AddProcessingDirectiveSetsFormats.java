@@ -39,7 +39,7 @@ import xc.mst.manager.repository.SetService;
  *
  * @author Tejaswi Haramurali
  */
-public class AddProcessingDirective2 extends ActionSupport implements ServletRequestAware
+public class AddProcessingDirectiveSetsFormats extends ActionSupport implements ServletRequestAware
 {
     /** Ceates service object for processing directives*/
     private ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
@@ -304,7 +304,7 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("addProcessingDirectives2Error", "Error in loading page");
             errorType = "error";
             return INPUT;
@@ -318,7 +318,7 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
      *
      * @return {@link #SUCCESS}
      */
-    public String addProcessingDirectives2()
+    public String addProcessingDirectivesSetsFormats()
     {
         try
         {
@@ -523,7 +523,7 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful");
             errorType = "error";
             return ERROR;
@@ -606,7 +606,7 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             return INPUT;
         }
     }
@@ -625,7 +625,7 @@ public class AddProcessingDirective2 extends ActionSupport implements ServletReq
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             return INPUT;
         }
     }

@@ -167,7 +167,7 @@ public class AddRepository extends ActionSupport implements UserAware
             }
             catch(Exception e)
             {
-                log.debug(e);
+                log.error(e);
                 this.addFieldError("addRepositoryError", "Error : There was a problem identified in the repository added");
                 errorType = "error";
                 

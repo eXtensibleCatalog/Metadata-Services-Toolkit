@@ -58,6 +58,7 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 	/**
 	 * To view edit my account
 	 */
+    @Override
 	public String execute() throws DataException {
 		firstName =  user.getFirstName();
 		lastName =  user.getLastName();

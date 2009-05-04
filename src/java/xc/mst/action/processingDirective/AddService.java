@@ -15,7 +15,6 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
-import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
@@ -110,7 +109,7 @@ public class AddService extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("viewAddServiceError", "ERROR : The page could not be loaded correctly");
             return INPUT;
         }
@@ -132,7 +131,7 @@ public class AddService extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             errorType = "error";
             this.addFieldError("addServiceError", "ERROR : "+e.getMessage());
             File dir = new File("serviceConfig");

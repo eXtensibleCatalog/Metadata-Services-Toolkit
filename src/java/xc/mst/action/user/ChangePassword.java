@@ -10,16 +10,13 @@
 package xc.mst.action.user;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
-
 import xc.mst.action.UserAware;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserService;
-
 import com.opensymphony.xwork2.ActionSupport;
 
 /**

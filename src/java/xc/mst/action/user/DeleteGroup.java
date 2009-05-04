@@ -141,7 +141,7 @@ public class DeleteGroup extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("allGroupsError", "Error : Problem deleting Group");
             errorType = "error";
             return INPUT;

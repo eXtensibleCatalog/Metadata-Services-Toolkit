@@ -70,7 +70,7 @@ public class DeleteProcessingDirective extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("listServicesError", "Delete Unsuccessful");
             errorType = "error";
             return SUCCESS;

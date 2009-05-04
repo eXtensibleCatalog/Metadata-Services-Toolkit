@@ -224,7 +224,7 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("addProcessingDirectiveError", "Add Processing Directive Page cannot be displayed");
             errorType = "error";
             return INPUT;
@@ -258,7 +258,7 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
             {
                  temporaryProcessingDirective.setSourceService(tempService);
                  temporaryProcessingDirective.setSourceProvider(null);
-                 request.getSession().setAttribute("sourceType", "service");;
+                 request.getSession().setAttribute("sourceType", "service");
             }
             temporaryProcessingDirective.setService(servService.getServiceById(Integer.parseInt(service)));
             request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
@@ -266,7 +266,7 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("addProcessingDirectiveError", "Error in Adding a Source");
             errorType = "error";
             return INPUT;

@@ -79,7 +79,7 @@ public class ListServices extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             return INPUT;
         }
     }

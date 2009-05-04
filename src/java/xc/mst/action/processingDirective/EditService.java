@@ -177,7 +177,7 @@ public class EditService extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("viewEditServiceError", "ERROR : The page could not be loaded correctly");
             return INPUT;
         }
@@ -199,7 +199,7 @@ public class EditService extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             errorType = "error";
             this.addFieldError("editServiceError", "ERROR : "+e.getMessage());
             File dir = new File("serviceConfig");

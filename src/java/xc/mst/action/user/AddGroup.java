@@ -44,7 +44,7 @@ public class AddGroup extends ActionSupport
     private String[] selectedPermissions;
 
     /** The list of all the tab names */
-    List tabNames;
+    private List tabNames;
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -198,7 +198,7 @@ public class AddGroup extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("addGroupError", "The Page could not be displayed correctly");
             errorType = "error";
             return INPUT;
@@ -255,7 +255,7 @@ public class AddGroup extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("addGroupError", "Group could not be added properly");
             errorType = "error";
             return INPUT;

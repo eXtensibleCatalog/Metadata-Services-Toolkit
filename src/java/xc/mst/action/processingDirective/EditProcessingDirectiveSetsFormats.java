@@ -33,10 +33,10 @@ import xc.mst.manager.repository.SetService;
  *
  * @author Tejaswi Haramurali
  */
-public class EditProcessingDirective2 extends ActionSupport implements ServletRequestAware
+public class EditProcessingDirectiveSetsFormats extends ActionSupport implements ServletRequestAware
 {
     /** Temporary Processing Directive Object that is used to display details on the JSP */
-    ProcessingDirective temporaryProcessingDirective;
+    private ProcessingDirective temporaryProcessingDirective;
 
     /** creates service object for sets  */
     private SetService setService = new DefaultSetService();
@@ -353,7 +353,7 @@ public class EditProcessingDirective2 extends ActionSupport implements ServletRe
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("editProcessingDirective2Error", "Error : Problem in editing the directive");
             errorType = "error";
             return INPUT;
@@ -365,7 +365,7 @@ public class EditProcessingDirective2 extends ActionSupport implements ServletRe
       *
      * @return {@link #SUCCESS}
      */
-    public String editProcessingDirectives2()
+    public String editProcessingDirectivesSetsFormats()
     {
 
          try
@@ -628,7 +628,7 @@ public class EditProcessingDirective2 extends ActionSupport implements ServletRe
            }
            catch(Exception e)
            {
-                log.debug(e);
+                log.error(e);
                 this.addFieldError("editProcessingDirectives2Error", "Error : The edit was unsuccessful");
                 errorType = "error";
                 return ERROR;
@@ -711,7 +711,7 @@ public class EditProcessingDirective2 extends ActionSupport implements ServletRe
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             return INPUT;
         }
     }
@@ -730,6 +730,7 @@ public class EditProcessingDirective2 extends ActionSupport implements ServletRe
         }
         catch(Exception e)
         {
+            log.error(e);
             return INPUT;
         }
     }

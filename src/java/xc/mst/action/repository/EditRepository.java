@@ -122,7 +122,7 @@ public class EditRepository extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             return INPUT;
         }
 
@@ -269,7 +269,7 @@ public class EditRepository extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             return SUCCESS;
         }
     }
