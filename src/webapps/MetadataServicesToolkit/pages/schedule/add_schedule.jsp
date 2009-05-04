@@ -113,7 +113,7 @@
 				<br><br>
 				
 				Which <b>Repository</b> do you want to Harvest?<br>
-				<select id="schedule_repository" name="repositoryId" style="width:250px;"/>
+				<select id="schedule_repository" name="repositoryId" style="width:250px;">
 
 					<option value = "0"></option>
 
@@ -148,7 +148,7 @@
 					> Hourly
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Run at&nbsp;
 				
-				<select id="schedule_minute" name="minute" />
+				<select id="schedule_minute" name="minute" >
 					<option value = "0"> Select </option>
 					<c:forEach begin="1" end="60" step="1" var="minute">
 						<option value = "${minute}"
