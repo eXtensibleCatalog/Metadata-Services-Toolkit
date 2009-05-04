@@ -305,12 +305,12 @@
 			<result name="success">/pages/services/add_processingdirective.jsp</result>
 			<result name="input">/pages/services/add_processingdirective.jsp</result>
 		</action>
-        <action name="addPDGoBack" class="xc.mst.action.processingDirective.AddProcessingDirective2" method="addPDGoBack">
+        <action name="addPDGoBack" class="xc.mst.action.processingDirective.AddProcessingDirectiveSetsFormats" method="addPDGoBack">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">viewAddProcessingDirectives.action</result>
 			<result name="input">/pages/services/add_processingdirective2.jsp</result>
 		</action>
-        <action name="addPDCancel" class="xc.mst.action.processingDirective.AddProcessingDirective2" method="addPDCancel">
+        <action name="addPDCancel" class="xc.mst.action.processingDirective.AddProcessingDirectiveSetsFormats" method="addPDCancel">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">listProcessingDirectives.action</result>
 			<result name="input">/pages/services/add_processingdirective2.jsp</result>
@@ -318,17 +318,17 @@
 		
          <action name="addProcessingDirectives" class="xc.mst.action.processingDirective.AddProcessingDirective" method="addProcessingDirectives">
 			<interceptor-ref name="default"/>
-			<result name="success" type="redirect">viewAddProcessingDirectives2.action</result>
+			<result name="success" type="redirect">viewAddProcessingDirectivesSetsFormats.action</result>
 			<result name="input">/pages/services/add_processingdirective.jsp</result>
 		</action>
 		
-        <action name="viewAddProcessingDirectives2" class="xc.mst.action.processingDirective.AddProcessingDirective2">
+        <action name="viewAddProcessingDirectivesSetsFormats" class="xc.mst.action.processingDirective.AddProcessingDirectiveSetsFormats">
 			<interceptor-ref name="default"/>
 			<result name="success">/pages/services/add_processingdirective2.jsp</result>
 			<result name="input">/pages/services/add_processingdirective2.jsp</result>
 		</action>
 		
-         <action name="addProcessingDirectives2" class="xc.mst.action.processingDirective.AddProcessingDirective2" method="addProcessingDirectives2">
+         <action name="addProcessingDirectivesSetsFormats" class="xc.mst.action.processingDirective.AddProcessingDirectiveSetsFormats" method="addProcessingDirectivesSetsFormats">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">listProcessingDirectives.action</result>
             <result name="input">/pages/services/add_processingdirective2.jsp</result>
@@ -343,28 +343,28 @@
 		
         <action name="editProcessingDirectives" class="xc.mst.action.processingDirective.EditProcessingDirective" method="editProcessingDirectives">
 			<interceptor-ref name="default"/>
-			<result name="success" type="redirect">viewEditProcessingDirectives2.action?ProcessingDirectiveId=${processingDirectiveId}</result>
+			<result name="success" type="redirect">viewEditProcessingDirectivesSetsFormats.action?ProcessingDirectiveId=${processingDirectiveId}</result>
 			<result name="input">/pages/services/edit_processingdirective.jsp</result>
 		</action>
 		
-        <action name="viewEditProcessingDirectives2" class="xc.mst.action.processingDirective.EditProcessingDirective2">
+        <action name="viewEditProcessingDirectivesSetsFormats" class="xc.mst.action.processingDirective.EditProcessingDirectiveSetsFormats">
 			<interceptor-ref name="default"/>
 			<result name="success">/pages/services/edit_processingdirective2.jsp</result>
 			<result name="input">/pages/services/edit_processingdirective2.jsp</result>
 		</action>
 		
-        <action name="editProcessingDirectives2" class="xc.mst.action.processingDirective.EditProcessingDirective2" method="editProcessingDirectives2">
+        <action name="editProcessingDirectivesSetsFormats" class="xc.mst.action.processingDirective.EditProcessingDirectiveSetsFormats" method="editProcessingDirectivesSetsFormats">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">listProcessingDirectives.action</result>
 			<result name="input">/pages/services/edit_processingdirective2.jsp</result>
             <result name="error">/pages/services/edit_processingdirective2.jsp</result>
 		</action>
-        <action name="editPDGoBack" class="xc.mst.action.processingDirective.EditProcessingDirective2" method="editPDGoBack">
+        <action name="editPDGoBack" class="xc.mst.action.processingDirective.EditProcessingDirectiveSetsFormats" method="editPDGoBack">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">viewEditProcessingDirectives.action</result>
 			<result name="input">/pages/services/edit_processingdirective2.jsp</result>
 		</action>
-        <action name="editPDCancel" class="xc.mst.action.processingDirective.EditProcessingDirective2" method="editPDCancel">
+        <action name="editPDCancel" class="xc.mst.action.processingDirective.EditProcessingDirectiveSetsFormats" method="editPDCancel">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">listProcessingDirectives.action</result>
 			<result name="input">/pages/services/edit_processingdirective2.jsp</result>

@@ -11,11 +11,9 @@ package xc.mst.action.configuration;
 
 import java.util.Iterator;
 import java.util.List;
-
 import xc.mst.bo.user.Server;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.ServerService;
-
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
 import xc.mst.constants.Constants;
@@ -195,6 +193,7 @@ public class AddLDAP extends ActionSupport
         }
         catch(Exception e)
         {
+            log.error(e);
             this.addFieldError("addLDAPError", "LDAP server could not be configured correctly");
             errorType = "error";
             return INPUT;
@@ -284,7 +283,7 @@ public class AddLDAP extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("addLDAPError", "Error : LDAP server could not be configured correctly");
             errorType = "error";
             return INPUT;

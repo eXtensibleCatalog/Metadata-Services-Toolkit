@@ -214,15 +214,11 @@ public class EmailConfiguration extends ActionSupport
         {
             
             emailConfig = emailConfigService.getEmailConfiguration();
-//            if(emailConfig!=null)
-//            {
-//                setTemporaryEmailConfig(emailConfig);
-//            }
             return SUCCESS;
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("viewEmailConfigError", "Error : Problem displaying the Email Configuration Page");
             errorType = "error";
             return INPUT;
@@ -237,9 +233,7 @@ public class EmailConfiguration extends ActionSupport
     public String changeEmailConfig()
     {
         try
-        {
-
-            
+        {            
             emailConfig.setEmailServerAddress(emailServerAddress);
             emailConfig.setEncryptedConnection(encryptedConnection);
             emailConfig.setFromAddress(fromAddress);
@@ -253,6 +247,7 @@ public class EmailConfiguration extends ActionSupport
         }
         catch(Exception e)
         {
+            log.error(e);
             this.addFieldError("changeEmailConfigError", fromAddress);
             errorType = "error";
             return INPUT;
