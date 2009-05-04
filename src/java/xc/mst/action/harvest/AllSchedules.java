@@ -70,17 +70,24 @@ public class AllSchedules extends ActionSupport
         try
         {
             log.debug("In All schedules Execute() with class");
-            if((columnSorted.equalsIgnoreCase("ScheduleName"))||(columnSorted.equalsIgnoreCase("Recurrence")))
+            if((columnSorted.equalsIgnoreCase("ScheduleName"))||(columnSorted.equalsIgnoreCase("Recurrence"))||(columnSorted.equalsIgnoreCase("Status")))
             {
                 if(columnSorted.equalsIgnoreCase("ScheduleName"))
                 {
                     schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_SCHEDULE_NAME);
                 }
-                else
+                else if(columnSorted.equalsIgnoreCase("Recurrence"))
                 {
                     schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_RECURRENCE);
                 }
-
+                else if(columnSorted.equalsIgnoreCase("Status"))
+                {
+                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_STATUS);
+                }
+                else
+                {
+                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,"ProviderName");
+                }
             }
             else
             {
@@ -91,6 +98,7 @@ public class AllSchedules extends ActionSupport
         }
         catch(Exception e)
         {
+            log.debug(e);
             schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, scheduleDao.COL_SCHEDULE_NAME);
             return SUCCESS;
         }

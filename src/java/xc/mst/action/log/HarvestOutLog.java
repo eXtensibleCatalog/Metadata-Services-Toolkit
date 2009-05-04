@@ -163,7 +163,7 @@ public class HarvestOutLog extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("harvestOutLogError", "There was a problem in loading the Page");
             errorType = "error";
             return SUCCESS;

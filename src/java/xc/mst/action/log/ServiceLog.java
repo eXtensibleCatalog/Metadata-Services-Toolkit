@@ -16,7 +16,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
-
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
@@ -165,7 +164,7 @@ public class ServiceLog extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("serviceLogError", "Error : There was a problem in loading the Page");
             errorType = "error";
             return SUCCESS;

@@ -100,7 +100,7 @@ public class GeneralLogReset extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("generalLogResetAll", "ERROR : There was a problem resetting all the general log files");
             return SUCCESS;
         }

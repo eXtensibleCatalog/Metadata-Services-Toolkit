@@ -148,7 +148,7 @@ public class HarvestInLog extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error(e);
             this.addFieldError("harvestInLogError", "Error : There was a problem loading the page");
             errorType = "error";
             return SUCCESS;

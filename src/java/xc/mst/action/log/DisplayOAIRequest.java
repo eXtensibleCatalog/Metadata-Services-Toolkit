@@ -100,8 +100,7 @@ public class DisplayOAIRequest extends ActionSupport
         }
         catch(Exception e)
         {
-            e.printStackTrace();
-            log.debug(e);
+            log.error(e);
         }
         return SUCCESS;
     }
