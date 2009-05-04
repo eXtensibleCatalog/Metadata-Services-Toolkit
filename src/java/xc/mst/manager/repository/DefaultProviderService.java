@@ -10,7 +10,6 @@
 package xc.mst.manager.repository;
 
 import java.util.List;
-
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;

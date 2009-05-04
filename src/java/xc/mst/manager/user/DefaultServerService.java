@@ -11,7 +11,6 @@ package xc.mst.manager.user;
 
 
 import java.util.List;
-
 import xc.mst.bo.user.Server;
 import xc.mst.dao.DataException;
 import xc.mst.dao.user.DefaultServerDAO;

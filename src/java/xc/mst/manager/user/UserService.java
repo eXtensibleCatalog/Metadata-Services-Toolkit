@@ -53,6 +53,7 @@ public interface UserService {
 
      /**
      * This method is used to create a new temporary password
+      *
      * @return The temporary password that is generated
      */
     public String createRandomPassword();
@@ -108,7 +109,8 @@ public interface UserService {
     public User getUserByEmail(String email, Server server) ;
 
     /**
-     * returns a sorted list of users
+     * Returns a sorted list of users
+     *
      * @param sort determines whether the list of users is sorted in ascending or descending order
      * @param columnSorted the column on which the rows of users are sorted
      * @return list of users
@@ -136,7 +138,8 @@ public interface UserService {
     public boolean  authenticateLDAPUser(User user, String password, Server server) throws Exception;
 
    /**
-    * returns the list of users associated with a group
+    * Returns the list of users associated with a group
+    *
     * @param groupId group Id
     * @param sort determines if the rows are to be sorted in ascending or descending order
     * @param columnSorted the column on which the rows are to be sorted
@@ -153,7 +156,8 @@ public interface UserService {
     public void sendEmailForUserPermission(String userName, String comments) ;
 
      /**
-    * returns the list of users associated with a group
+    * Returns the list of users associated with a group
+      * 
     * @param groupId group ID
     * @return sorted list of users
     */

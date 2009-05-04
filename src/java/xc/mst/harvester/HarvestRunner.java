@@ -12,7 +12,6 @@ package xc.mst.harvester;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 

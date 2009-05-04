@@ -10,8 +10,6 @@
 package xc.mst.manager.user;
 
 import java.util.List;
-
-import xc.mst.bo.user.User;
 import xc.mst.dao.user.DefaultUserGroupUtilDAO;
 import xc.mst.dao.user.UserGroupUtilDAO;
 
