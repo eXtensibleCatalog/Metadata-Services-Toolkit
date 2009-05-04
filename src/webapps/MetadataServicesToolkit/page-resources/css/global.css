@@ -17,6 +17,15 @@
 	width : 100%;
 	clear: both;
 }
+a:link
+{
+COLOR: #000000;
+}
+a:visited
+{
+COLOR: #000000;
+}
+
 
 #header_logo
 {

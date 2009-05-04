@@ -73,7 +73,7 @@ goBack : function()
 
          if(choice==true)
              {
-                  document.addProcessingDirective2.action= 'addProcessingDirectives2.action';
+                  document.addProcessingDirective2.action= 'addProcessingDirectivesSetsFormats.action';
                   document.addProcessingDirective2.submit();
              }
 

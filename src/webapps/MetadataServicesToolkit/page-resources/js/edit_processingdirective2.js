@@ -49,7 +49,7 @@ YAHOO.xc.mst.processingDirective = {
  },
  editProcessingDirective : function(id)
  {
-     document.editProcessingDirective2.action= 'editProcessingDirectives2.action';
+     document.editProcessingDirective2.action= 'editProcessingDirectivesSetsFormats.action';
      document.getElementById("processingDirectiveId").value = id;
      document.editProcessingDirective2.submit();
  }
