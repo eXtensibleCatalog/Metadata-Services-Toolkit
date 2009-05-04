@@ -32,7 +32,7 @@ public class MySqlConnectionManager
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit.
 	 */
 	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
-
+    
 	/**
 	 * A reference to the logger for this class
 	 */
@@ -54,7 +54,23 @@ public class MySqlConnectionManager
 
 		// If there is an open connection, return it,
 		// otherwise open a new connection and return the new one
-		return (dbConnection != null ? dbConnection : openDbConnection());
+        if(dbConnection!=null)
+        {
+            
+            return dbConnection;
+        }
+        else
+        {
+            
+            Connection connObject = openDbConnection();
+            if(connObject==null)
+            {
+                
+            }
+            return connObject;
+        }
+		//return (dbConnection != null ? dbConnection : openDbConnection());
+
 		/*try
 		{
 			return ((dbConnection != null && dbConnection.isValid(10)) ? dbConnection : openDbConnection());
@@ -78,6 +94,8 @@ public class MySqlConnectionManager
 	        Class.forName("com.mysql.jdbc.Driver");
 
 	        // Get the URL, username and password to log into the database from the configuration file
+
+            configuration.getProperties().list(System.out);
 	        String url = configuration.getProperty(Constants.CONFIG_DATABASE_URL);
 	        String username = configuration.getProperty(Constants.CONFIG_DATABASE_USERNAME);
 	        String password = configuration.getProperty(Constants.CONFIG_DATABASE_PASSWORD);
@@ -92,21 +110,27 @@ public class MySqlConnectionManager
 	    catch (ClassNotFoundException e) // Could not find the database driver
 	    {
 	        log.warn("Could not find the MySQL database driver.");
-
+            e.printStackTrace();
 	        return null;
 	    } // end catch(ClassNotFoundException)
 	    catch (SQLException e) // Could not connect to the database
 	    {
 	    	log.warn("Could not connect to the database specified in the configuration file.", e);
-
+            e.printStackTrace();
 	        return null;
 	    } // end catch(SQLException)
 	    catch(UnsatisfiedLinkError e) // Something was wrong with the URL
 	    {
 	    	log.warn("Could not connect to the database specified in the configuration file.", e);
-
+            e.printStackTrace();
 	        return null;
 	    } // end catch(UnsatisfiedLinkError)
+        catch(Exception e) //any other error
+        {
+            e.printStackTrace();
+            log.debug(e);
+            return null;
+        }
 	} // end method openDbConnection()
 
 	/**

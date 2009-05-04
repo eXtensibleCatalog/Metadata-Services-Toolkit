@@ -234,85 +234,168 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 		
 		// A list to hold the results of the query
 		List<HarvestSchedule> harvestSchedules = new ArrayList<HarvestSchedule>();
-		
-		try
-		{				
-			// SQL to get the rows
-			String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
-                                           COL_SCHEDULE_NAME + ", " +
-                                           COL_RECURRENCE + ", " +
-                                           COL_PROVIDER_ID + ", " +
-                                           COL_START_DATE + ", " +
-                                           COL_END_DATE + ", " +
-                                           COL_MINUTE + ", " +
-                                           COL_DAY_OF_WEEK + ", " +
-                                           COL_HOUR + ", " +
-                                           COL_NOTIFY_EMAIL + ", " +
-                                           COL_STATUS + ", " +
-                                           COL_REQUEST + " " +
-                               "FROM " + HARVEST_SCHEDULES_TABLE_NAME + " " + 
-                               "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
-		
-			if(log.isDebugEnabled())
-				log.debug("Creating the \"get all harvest schedules\" Statement from the SQL " + selectSql);
-		
-			// A prepared statement to run the select SQL
-			// This should sanitize the SQL and prevent SQL injection
-			getSorted = dbConnection.createStatement();
-			
-			// Get the results of the SELECT statement			
-			
-			// Execute the query
-			results = getSorted.executeQuery(selectSql);
-		
-			// If any results were returned
-			while(results.next())
-			{
-				// The Object which will contain data on the user
-				HarvestSchedule harvestSchedule = new HarvestSchedule();
-				
-				// Set the fields on the user
-				harvestSchedule.setId(results.getInt(1));
-				harvestSchedule.setScheduleName(results.getString(2));
-				harvestSchedule.setRecurrence(results.getString(3));
-				harvestSchedule.setProvider(providerDao.loadBasicProvider(results.getInt(4)));
-				harvestSchedule.setStartDate(results.getDate(5));
-				harvestSchedule.setEndDate(results.getDate(6));
-				harvestSchedule.setMinute(results.getInt(7));
-				harvestSchedule.setDayOfWeek(results.getInt(8));
-				harvestSchedule.setHour(results.getInt(9));
-				harvestSchedule.setNotifyEmail(results.getString(10));
-				harvestSchedule.setStatus(results.getString(11));
-				harvestSchedule.setRequest(results.getString(12));
-				
-				// Return the harvest schedule
-				harvestSchedules.add(harvestSchedule);
-			} // end loop over results
-			
-			if(log.isDebugEnabled())
-				log.debug("Found " + harvestSchedules.size() + " harvest schedules in the database.");
-			
-			return harvestSchedules;
-		} // end try(get the harvest schedules)
-		catch(SQLException e)
-		{
-			log.error("A SQLException occurred while getting the harvest schedules", e);
-			
-			return harvestSchedules;
-		} // end catch(SQLException)
-		finally
-		{
-			MySqlConnectionManager.closeResultSet(results);
-			
-			try
-			{
-				getSorted.close();
-			} // end try(close the Statement)
-			catch(SQLException e)
-			{
-				log.error("An error occurred while trying to close the \"get harvest schedules sorted ASC\" Statement");
-			} // end catch(DataException)
-		} // end finally(close ResultSet)
+		if(!columnSorted.equalsIgnoreCase("ProviderName"))
+        {
+            try
+            {
+                // SQL to get the rows
+                String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
+                                               COL_SCHEDULE_NAME + ", " +
+                                               COL_RECURRENCE + ", " +
+                                               COL_PROVIDER_ID + ", " +
+                                               COL_START_DATE + ", " +
+                                               COL_END_DATE + ", " +
+                                               COL_MINUTE + ", " +
+                                               COL_DAY_OF_WEEK + ", " +
+                                               COL_HOUR + ", " +
+                                               COL_NOTIFY_EMAIL + ", " +
+                                               COL_STATUS + ", " +
+                                               COL_REQUEST + " " +
+                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME + " " +
+                                   "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
+
+                if(log.isDebugEnabled())
+                    log.debug("Creating the \"get all harvest schedules\" Statement from the SQL " + selectSql);
+
+                // A prepared statement to run the select SQL
+                // This should sanitize the SQL and prevent SQL injection
+                getSorted = dbConnection.createStatement();
+
+                // Get the results of the SELECT statement
+
+                // Execute the query
+                results = getSorted.executeQuery(selectSql);
+
+                // If any results were returned
+                while(results.next())
+                {
+                    // The Object which will contain data on the user
+                    HarvestSchedule harvestSchedule = new HarvestSchedule();
+
+                    // Set the fields on the user
+                    harvestSchedule.setId(results.getInt(1));
+                    harvestSchedule.setScheduleName(results.getString(2));
+                    harvestSchedule.setRecurrence(results.getString(3));
+                    harvestSchedule.setProvider(providerDao.loadBasicProvider(results.getInt(4)));
+                    harvestSchedule.setStartDate(results.getDate(5));
+                    harvestSchedule.setEndDate(results.getDate(6));
+                    harvestSchedule.setMinute(results.getInt(7));
+                    harvestSchedule.setDayOfWeek(results.getInt(8));
+                    harvestSchedule.setHour(results.getInt(9));
+                    harvestSchedule.setNotifyEmail(results.getString(10));
+                    harvestSchedule.setStatus(results.getString(11));
+                    harvestSchedule.setRequest(results.getString(12));
+
+                    // Return the harvest schedule
+                    harvestSchedules.add(harvestSchedule);
+                } // end loop over results
+
+                if(log.isDebugEnabled())
+                    log.debug("Found " + harvestSchedules.size() + " harvest schedules in the database.");
+
+                return harvestSchedules;
+            } // end try(get the harvest schedules)
+            catch(SQLException e)
+            {
+                log.error("A SQLException occurred while getting the harvest schedules", e);
+
+                return harvestSchedules;
+            } // end catch(SQLException)
+            finally
+            {
+                MySqlConnectionManager.closeResultSet(results);
+
+                try
+                {
+                    getSorted.close();
+                } // end try(close the Statement)
+                catch(SQLException e)
+                {
+                    log.error("An error occurred while trying to close the \"get harvest schedules sorted ASC\" Statement");
+                } // end catch(DataException)
+            } // end finally(close ResultSet)
+        }
+        else
+        {
+             try
+            {
+                // SQL to get the rows
+                String selectSql = "SELECT " + HARVEST_SCHEDULES_TABLE_NAME + "."+COL_HARVEST_SCHEDULE_ID + ", " +
+                                               HARVEST_SCHEDULES_TABLE_NAME + "."+ COL_SCHEDULE_NAME + ", " +
+                                               HARVEST_SCHEDULES_TABLE_NAME+"."+COL_RECURRENCE + ", " +
+                                               PROVIDERS_TABLE_NAME + "." +COL_PROVIDER_NAME + ", " +
+                                               HARVEST_SCHEDULES_TABLE_NAME + "."+ COL_START_DATE + ", " +
+                                               HARVEST_SCHEDULES_TABLE_NAME + "." + COL_END_DATE + ", " +
+                                               HARVEST_SCHEDULES_TABLE_NAME + "." +COL_MINUTE + ", " +
+                                               HARVEST_SCHEDULES_TABLE_NAME + "." + COL_DAY_OF_WEEK + ", " +
+                                               HARVEST_SCHEDULES_TABLE_NAME + "."+COL_HOUR + ", " +
+                                               HARVEST_SCHEDULES_TABLE_NAME + "." +COL_NOTIFY_EMAIL + ", " +
+                                               HARVEST_SCHEDULES_TABLE_NAME + "." +COL_STATUS + ", " +
+                                               HARVEST_SCHEDULES_TABLE_NAME + "."+COL_REQUEST + " " +
+                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME + "," + PROVIDERS_TABLE_NAME + " ON" + " " +PROVIDERS_TABLE_NAME + "." +COL_PROVIDER_NAME +
+                                   "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
+
+                if(log.isDebugEnabled())
+                    log.debug("Creating the \"get all harvest schedules\" Statement from the SQL " + selectSql);
+
+                // A prepared statement to run the select SQL
+                // This should sanitize the SQL and prevent SQL injection
+                getSorted = dbConnection.createStatement();
+
+                // Get the results of the SELECT statement
+
+                // Execute the query
+                results = getSorted.executeQuery(selectSql);
+
+                // If any results were returned
+                while(results.next())
+                {
+                    // The Object which will contain data on the user
+                    HarvestSchedule harvestSchedule = new HarvestSchedule();
+
+                    // Set the fields on the user
+                    harvestSchedule.setId(results.getInt(1));
+                    harvestSchedule.setScheduleName(results.getString(2));
+                    harvestSchedule.setRecurrence(results.getString(3));
+                    harvestSchedule.setProvider(providerDao.getByName(results.getString(4)));
+                    harvestSchedule.setStartDate(results.getDate(5));
+                    harvestSchedule.setEndDate(results.getDate(6));
+                    harvestSchedule.setMinute(results.getInt(7));
+                    harvestSchedule.setDayOfWeek(results.getInt(8));
+                    harvestSchedule.setHour(results.getInt(9));
+                    harvestSchedule.setNotifyEmail(results.getString(10));
+                    harvestSchedule.setStatus(results.getString(11));
+                    harvestSchedule.setRequest(results.getString(12));
+
+                    // Return the harvest schedule
+                    harvestSchedules.add(harvestSchedule);
+                } // end loop over results
+
+                if(log.isDebugEnabled())
+                    log.debug("Found " + harvestSchedules.size() + " harvest schedules in the database.");
+
+                return harvestSchedules;
+            } // end try(get the harvest schedules)
+            catch(SQLException e)
+            {
+                log.error("A SQLException occurred while getting the harvest schedules", e);
+
+                return harvestSchedules;
+            } // end catch(SQLException)
+            finally
+            {
+                MySqlConnectionManager.closeResultSet(results);
+
+                try
+                {
+                    getSorted.close();
+                } // end try(close the Statement)
+                catch(SQLException e)
+                {
+                    log.error("An error occurred while trying to close the \"get harvest schedules sorted ASC\" Statement");
+                } // end catch(DataException)
+            } // end finally(close ResultSet)
+        }
 	} // end method getSortedByName(boolean)
 	
 	@Override

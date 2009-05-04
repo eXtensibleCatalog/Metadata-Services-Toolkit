@@ -43,6 +43,11 @@ public abstract class HarvestScheduleDAO
 	 */
 	public final static String HARVEST_SCHEDULES_TABLE_NAME = "harvest_schedules";
 
+    /**
+     * The name of the providers table
+     */
+    public final static String PROVIDERS_TABLE_NAME = "providers";
+
 	/**
 	 * The name of the harvest schedule ID column
 	 */
@@ -62,6 +67,11 @@ public abstract class HarvestScheduleDAO
 	 * The name of the provider ID column
 	 */
 	public final static String COL_PROVIDER_ID = "provider_id";
+
+     /**
+	 * The name of the provider name column
+	 */
+	public final static String COL_PROVIDER_NAME = "name";
 
 	/**
 	 * The name of the start date column
