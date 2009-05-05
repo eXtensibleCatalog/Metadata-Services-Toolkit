@@ -102,15 +102,15 @@ public class GeneralLog extends ActionSupport
             }
             else
             {
-                this.addFieldError("generalLogError", "ERROR : The specified column does not exist");
+                this.addFieldError("generalLogError", "The specified column does not exist");
                 return INPUT;
             }
            
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("generalLogError", "ERROR : There was a problem loading ");
+            log.error("There was a problem loading the general logs page",e);
+            this.addFieldError("generalLogError", "There was a problem loading the general logs page");
             errorType = "error";
             return SUCCESS;
         }

@@ -155,7 +155,7 @@ public class ServiceLog extends ActionSupport
             }
             else
             {
-                this.addFieldError("generalLogError", "ERROR : The specified column does not exist");
+                this.addFieldError("generalLogError", "The specified column does not exist");
                 return INPUT;
             }
                        
@@ -164,8 +164,8 @@ public class ServiceLog extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("serviceLogError", "Error : There was a problem in loading the Page");
+            log.error("There was a problem in loading the Service Logs Page",e);
+            this.addFieldError("serviceLogError", "There was a problem in loading the Service Logs Page");
             errorType = "error";
             return SUCCESS;
         }

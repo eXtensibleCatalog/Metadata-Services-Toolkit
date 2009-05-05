@@ -100,7 +100,7 @@ public class DisplayOAIRequest extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("Unable to Display the request String",e);
         }
         return SUCCESS;
     }

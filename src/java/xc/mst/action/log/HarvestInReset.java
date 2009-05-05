@@ -108,8 +108,8 @@ public class HarvestInReset extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("harvestInResetError", "Error : There was an error resetting the log files");
+            log.error("There was an error resetting the Harvest-In log files",e);
+            this.addFieldError("harvestInResetError", "There was an error resetting the Harvest-In log files");
             errorType = "error";
             return SUCCESS;
         }
@@ -161,8 +161,8 @@ public class HarvestInReset extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("harvestInResetError", "Error : There was an error resetting the log files");
+            log.error("There was an error resetting the Harvest-In log files",e);
+            this.addFieldError("harvestInResetError", "There was an error resetting the Harvest-In log files");
             errorType = "error";
             return SUCCESS;
         }

@@ -156,15 +156,15 @@ public class HarvestOutLog extends ActionSupport
             }
             else
             {
-                this.addFieldError("generalLogError", "ERROR : The specified column does not exist");
+                this.addFieldError("generalLogError", "The specified column does not exist");
                 return INPUT;
             }
             
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("harvestOutLogError", "There was a problem in loading the Page");
+            log.error("There was a problem in loading the Harvest-Out logs Page",e);
+            this.addFieldError("harvestOutLogError", "There was a problem in loading the Harvest-Out logs Page");
             errorType = "error";
             return SUCCESS;
         }

@@ -68,7 +68,7 @@ public class GeneralLogReset extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error("There was an error reseting the details of the log",e);
             this.addFieldError("generalLogReset", "There was an error reseting the details of the log");
             return SUCCESS;
         }
@@ -100,8 +100,8 @@ public class GeneralLogReset extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("generalLogResetAll", "ERROR : There was a problem resetting all the general log files");
+            log.error("There was a problem resetting all the general log files",e);
+            this.addFieldError("generalLogResetAll", "There was a problem resetting all the general log files");
             return SUCCESS;
         }
     }

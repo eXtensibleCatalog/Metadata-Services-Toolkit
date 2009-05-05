@@ -109,8 +109,8 @@ public class ServiceReset extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("serviceResetError", "Error : There was error resetting the log files");
+            log.error("There was error resetting the Service log files",e);
+            this.addFieldError("serviceResetError", "There was error resetting the Service log files");
             errorType = "error";
             return SUCCESS;
         }
@@ -144,8 +144,8 @@ public class ServiceReset extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("serviceResetError", "Error : There was error resetting the log files");
+            log.error("There was error resetting the Service log files",e);
+            this.addFieldError("serviceResetError", "There was error resetting the Service log files");
             errorType = "error";
             return SUCCESS;
         }
