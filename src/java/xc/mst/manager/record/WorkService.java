@@ -97,9 +97,10 @@ public abstract class WorkService
 	/**
 	 * Gets a list of Works that have not been processed
 	 *
+	 * @param serviceId The ID of the service whose unprocessed works to get
 	 * @return A list of Works that have not been processed
 	 */
-	public abstract WorkList getUnprocessedWorks();
+	public abstract WorkList getUnprocessedWorks(int serviceId);
 
 	/**
 	 * Inserts a work into the index

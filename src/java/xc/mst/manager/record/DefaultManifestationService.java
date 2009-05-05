@@ -64,7 +64,7 @@ public class DefaultManifestationService extends ManifestationService
 	@Override
 	public ManifestationList getByXcRecordId(String xcRecordId)
 	{
-		String trait = Manifestation.TRAIT_RECORD_ID + ":" + xcRecordId;
+		String trait = (Manifestation.TRAIT_RECORD_ID + ":" + xcRecordId).replaceAll(":", "\\\\:");
 
 		if(log.isDebugEnabled())
 			log.debug("Getting all manifestations with trait " + trait);
@@ -102,7 +102,7 @@ public class DefaultManifestationService extends ManifestationService
 		// Create a query to get the Documents with the requested requested up link
 		SolrQuery query = new SolrQuery();
 		query.setQuery(DefaultRecordService.FIELD_UP_LINK + ":" + Long.toString(expression.getId()) + " AND "
-				+ RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Holdings.indexedObjectType );
+				+ RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Manifestation.indexedObjectType );
 
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);

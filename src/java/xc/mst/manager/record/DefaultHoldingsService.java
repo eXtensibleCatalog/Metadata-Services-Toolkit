@@ -92,14 +92,14 @@ public class DefaultHoldingsService extends HoldingsService
 	@Override
 	public HoldingsList getByManifestationHeld(String manifestationHeld)
 	{
-		String trait = Holdings.TRAIT_MANIFESTATION_HELD + ":" + manifestationHeld;
+		String trait = (Holdings.TRAIT_MANIFESTATION_HELD + ":" + manifestationHeld).replaceAll(":", "\\\\:");
 
 		if(log.isDebugEnabled())
 			log.debug("Getting all holdings with trait " + trait);
 
 		// Create a query to get the Documents with the requested trait
 		SolrQuery query = new SolrQuery();
-		query.add(DefaultRecordService.FIELD_TRAIT + ":" + trait + " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + Holdings.indexedObjectType);
+		query.setQuery(DefaultRecordService.FIELD_TRAIT + ":" + trait + " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Holdings.indexedObjectType);
 
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);

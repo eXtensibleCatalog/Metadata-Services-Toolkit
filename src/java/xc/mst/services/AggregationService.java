@@ -164,7 +164,7 @@ public class AggregationService extends MetadataService
 	protected void finishProcessing()
 	{
 		// Get the list of all unprocessed Manifestations
-		WorkList works = workService.getUnprocessedWorks();
+		WorkList works = workService.getUnprocessedWorks(service.getId());
 
 		// For each Manifestation, build the record from the linked components.
 		for(Work work : works)

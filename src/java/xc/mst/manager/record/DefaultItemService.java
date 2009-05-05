@@ -62,7 +62,7 @@ public class DefaultItemService extends ItemService
 	@Override
 	public ItemList getByHoldingsExemplified(String holdingsExemplified)
 	{
-		String trait = Item.TRAIT_HOLDINGS_EXEMPLIFIED + ":" + holdingsExemplified;
+		String trait = (Item.TRAIT_HOLDINGS_EXEMPLIFIED + ":" + holdingsExemplified).replaceAll(":", "\\\\:");
 
 		if(log.isDebugEnabled())
 			log.debug("Getting all items with trait " + trait);
@@ -99,7 +99,7 @@ public class DefaultItemService extends ItemService
 		// Create a query to get the Documents with the requested requested up link
 		SolrQuery query = new SolrQuery();
 		query.setQuery(DefaultRecordService.FIELD_UP_LINK + ":" + Long.toString(holdings.getId())
-					+ " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + Holdings.indexedObjectType);
+					+ " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + Item.indexedObjectType);
 
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);

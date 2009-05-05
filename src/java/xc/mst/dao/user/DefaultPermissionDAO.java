@@ -42,6 +42,11 @@ public class DefaultPermissionDAO extends PermissionDAO
 	private final static Connection dbConnection = MySqlConnectionManager.getDbConnection();
 
 	/**
+	 * Prepared statement to get all possible permissions
+	 */
+	private static PreparedStatement psGetAll = null;
+	
+	/**
 	 * Prepared statement to get the permissions for a group
 	 */
 	private static PreparedStatement psGetPermissionsForGroup = null;
@@ -52,6 +57,11 @@ public class DefaultPermissionDAO extends PermissionDAO
 	private static PreparedStatement psGetPermissionById = null;
 
 	/**
+	 * Lock to prevent concurrent access of the prepared statement to get all possible permissions.
+	 */
+	private static Object psGetAllLock = new Object();
+	
+	/**
 	 * Lock to prevent concurrent access of the prepared statement to get all permissions for a group
 	 */
 	private static Object psGetPermissionsForGroupLock = new Object();
@@ -61,6 +71,75 @@ public class DefaultPermissionDAO extends PermissionDAO
 	 */
     private static Object psGetPermissionByIdLock = new Object();
 
+    @Override
+	public List<Permission> getAll()
+	{
+		synchronized(psGetAllLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Getting all permissions.");
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			try
+			{
+				// If the PreparedStatement to get a groups to Top Level Tab by ID wasn't defined, create it
+				if(psGetAll == null)
+				{
+					// SQL to get the row
+					String selectSql = "SELECT " + COL_TOP_LEVEL_TAB_ID + ", " +
+				                                   COL_TAB_NAME + " " +
+				                       "FROM " + TOP_LEVEL_TABS_TABLE_NAME;
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get all permissions\" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetAll = dbConnection.prepareStatement(selectSql);
+				} // end if (PreparedStatement to get permissions for a group is null)
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = psGetAll.executeQuery();
+
+				// A list of the permissions found in the database
+				List<Permission> permissions = new ArrayList<Permission>();
+
+				// Loop over the results
+				while(results.next())
+				{
+					// The current Permission
+					Permission permission = new Permission();
+
+					// Set the fields on the permission
+					permission.setTabId(results.getInt(1));
+					permission.setTabName(results.getString(2));
+
+					// Add the permission to the list of returned permissions
+					permissions.add(permission);
+				} // end loop over permissions returned
+
+				if(log.isDebugEnabled())
+					log.debug("Found " + permissions.size() + " permissions.");
+
+				return permissions;
+			} // end try (get and return the permissions for the group)
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting all possible permissions", e);
+
+				return null;
+			} // end catch(SQLException)
+			finally
+			{
+				MySqlConnectionManager.closeResultSet(results);
+			} // end finally (close ResultSet)
+		} // end synchronized
+	} // end method getAll()
+    
 	@Override
 	public List<Permission> getPermissionsForGroup(int groupId)
 	{
@@ -159,7 +238,6 @@ public class DefaultPermissionDAO extends PermissionDAO
 					String selectSql = "SELECT " + COL_TOP_LEVEL_TAB_ID + ", " +
 				                                   COL_TAB_NAME + " " + COL_TAB_ORDER + " " +
 				                       "FROM " + TOP_LEVEL_TABS_TABLE_NAME + " " +
-
 				                       "WHERE " + COL_TOP_LEVEL_TAB_ID + "=?";
 
 					if(log.isDebugEnabled())

@@ -69,7 +69,7 @@ public class DefaultExpressionService extends ExpressionService
 
 		// Create a query to get the Documents with the requested requested up link
 		SolrQuery query = new SolrQuery();
-		query.setQuery(DefaultRecordService.FIELD_UP_LINK + ":" + Long.toString(work.getId()) + " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Holdings.indexedObjectType);
+		query.setQuery(DefaultRecordService.FIELD_UP_LINK + ":" + Long.toString(work.getId()) + " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Expression.indexedObjectType);
 
 		// Get the result of the query
 		SolrDocumentList docs = indexMgr.getDocumentList(query);

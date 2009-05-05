@@ -233,7 +233,7 @@
 
    <field name="all" type="text" indexed="true" stored="false" multiValued="true"/>
 
-
+   <field name="processed" type="string" indexed="true" stored="true"/>
    
  </fields>
 

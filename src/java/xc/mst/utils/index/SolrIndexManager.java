@@ -109,7 +109,7 @@ public class SolrIndexManager {
 			try{
 				logDao.update(logObj);
 			}catch(DataException e){
-				log.error("DataExcepiton while updating the log's error count.");
+				log.error("DataExcepiton while updating the log's error count.", e);
 			}
 			
 			throw new DataException(se.getMessage());
@@ -122,7 +122,7 @@ public class SolrIndexManager {
 			try{
 				logDao.update(logObj);
 			}catch(DataException e){
-				log.error("DataExcepiton while updating the log's error count.");
+				log.error("DataExcepiton while updating the log's error count.", e);
 			}
 			
 			throw new DataException(ioe.getMessage());
@@ -131,6 +131,45 @@ public class SolrIndexManager {
 		return true;
 	}
 
+	public boolean deleteByQuery(String query)
+	{
+		try 
+		{
+			server.deleteByQuery(query);
+			return true;
+		} 
+		catch (SolrServerException se) 
+		{
+			log.error("Solr server exception occured when adding document to the index.", se);
+			
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index: " + se.getMessage());
+			
+			logObj.setErrors(logObj.getErrors()+1);
+			try{
+				logDao.update(logObj);
+			}catch(DataException e){
+				log.error("DataExcepiton while updating the log's error count.", e);
+			}
+			
+			return false;
+		} 
+		catch (IOException ioe) 
+		{
+			log.error("IO exception occured when adding document to the index.", ioe);
+			
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index: " + ioe.getMessage());
+			
+			logObj.setErrors(logObj.getErrors()+1);
+			try{
+				logDao.update(logObj);
+			}catch(DataException e){
+				log.error("DataExcepiton while updating the log's error count.", e);
+			}
+			
+			return false;
+		}
+	}
+	
 	/**
 	 * Adds a document to the solr index
 	 *

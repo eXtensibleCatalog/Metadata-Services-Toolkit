@@ -57,6 +57,13 @@ public abstract class PermissionDAO
 	public final static String COL_TAB_ORDER = "tab_order";
 
 	/**
+	 * Gets all possible permissions.
+	 *
+	 * @return A list of all possible permissions
+	 */
+	public abstract List<Permission> getAll();
+	
+	/**
 	 * Gets the permissions belonging to a group.
 	 *
 	 * @param groupId The ID of the group to get permissions for

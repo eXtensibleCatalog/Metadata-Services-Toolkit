@@ -92,14 +92,14 @@ public class DefaultWorkService extends WorkService
 	} // end method getByIdentifierForTheWork(String)
 
 	@Override
-	public WorkList getUnprocessedWorks()
+	public WorkList getUnprocessedWorks(int serviceId)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all unprocessed works.");
 
 		// Create a query to get the Documents with the requested trait
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_PROCESSED + ":" + Boolean.toString(false) + " AND "
+		query.setQuery(FIELD_PROCESSED + ":false AND "
 				+ RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Work.indexedObjectType);
 
 		// Get the result of the query

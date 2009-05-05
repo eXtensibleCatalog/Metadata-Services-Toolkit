@@ -35,10 +35,10 @@ import java.util.regex.Pattern;
 public class MarcXmlCollectionToFiles
 {
 	// The file containing the marc:collection
-	private final String INPUT_FILE = "C:\\Documents and Settings\\EricO\\Desktop\\Downloaded Documents\\MetadataServiceTestRecords\\mfhds_w_NRU.xml";
+	private final String INPUT_FILE = "C:\\marcxmlUnsplit\\bibs_w_NRU.xml";
 
 	// The directory to which the marcxml records should be written
-	private final String OUTPUT_DIR = "C:\\MetadataServicesToolkit\\MetadataServicesToolkit\\temp";
+	private final String OUTPUT_DIR = "C:\\marcxmlSplit";
 
 	// The delimeter we use to mark where one marc:record ends and another begins
 	private final String SPLIT_DELIMETER = "~SPLITSPLITSPLIT~";

@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.xpath.XPath;
+import org.xml.sax.InputSource;
 
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
@@ -40,6 +42,7 @@ import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.record.DefaultRecordService;
+import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 import xc.mst.utils.index.RecordList;
@@ -68,17 +71,19 @@ public class TestServices
 			System.err.println("The configuration file was invalid or did not exist.");
 			System.exit(1);
 		}
+		
+		MSTSolrServer.getInstance("8080");
 	}
 	
-	private static File unprocessedRecordsDir = new File("C:\\serviceinput");
-	private static File processedRecordsDir = new File("C:\\serviceoutput");
+	private static File unprocessedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggInput");
+	private static File processedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggOutput");
 
-	private static int serviceId = 1;
+	private static int serviceId = 4;
 
 	/**
 	 * Builds the XML Document based on the record's OAI XML
 	 */
-	private SAXBuilder builder = new SAXBuilder();
+	private static SAXBuilder builder = new SAXBuilder();
 
 	/**
 	 * Used to format timestamps for the results of the tests

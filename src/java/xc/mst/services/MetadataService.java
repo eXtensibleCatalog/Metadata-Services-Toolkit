@@ -740,6 +740,9 @@ public abstract class MetadataService
 			// Get the results of any final processing the service needs to perform
 			finishProcessing();
 
+			// Reopen the reader so it can see the changes made by running the service
+			SolrIndexManager.getInstance().commitIndex();
+			
 			// Start the MetadataServices triggered by processing directives
 			// matched on records resulting from the service we just finished running
 			for(Integer serviceToRun : servicesToRun.keySet())

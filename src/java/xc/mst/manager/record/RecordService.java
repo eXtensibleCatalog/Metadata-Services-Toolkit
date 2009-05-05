@@ -18,7 +18,12 @@ import org.apache.lucene.queryParser.ParseException;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
 
+import xc.mst.bo.record.Expression;
+import xc.mst.bo.record.Holdings;
+import xc.mst.bo.record.Item;
+import xc.mst.bo.record.Manifestation;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.harvest.DefaultHarvestRecordUtilDAO;
@@ -443,7 +448,18 @@ public abstract class RecordService
 		doc.addField(FIELD_INDEXED_OBJECT_TYPE, record.getIndexedObjectType());
 
 		// Set up the fields for the specific type of indexed object
-		doc = setFieldsOnDocument(record, doc, true);
+		if(record instanceof Work)
+			doc = new DefaultWorkService().setFieldsOnDocument((Work)record, doc, true);
+		else if(record instanceof Expression)
+			doc = new DefaultExpressionService().setFieldsOnDocument((Expression)record, doc, true);
+		else if(record instanceof Manifestation)
+			doc = new DefaultManifestationService().setFieldsOnDocument((Manifestation)record, doc, true);
+		else if(record instanceof Holdings)
+			doc = new DefaultHoldingsService().setFieldsOnDocument((Holdings)record, doc, true);
+		else if(record instanceof Item)
+			doc = new DefaultItemService().setFieldsOnDocument((Item)record, doc, true);
+		else
+			doc = setFieldsOnDocument(record, doc, true);
 
 		return indexMgr.addDoc(doc);
 	} // end method insert(Record)
@@ -491,10 +507,11 @@ public abstract class RecordService
 		if(log.isDebugEnabled())
 			log.debug("Deleting the record with ID " + record.getId());
 
-		// TODO delete implementation
+		String deleteQuery = FIELD_RECORD_ID + ":" + Long.toString(record.getId()) + "  AND "
+		                     + FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType;
+		
 		// Delete all records with the matching record ID
-		boolean result = false;
-		// boolean result = indexMgr.deleteDoc(FIELD_RECORD_ID, Long.toString(record.getId()));
+		boolean result = indexMgr.deleteByQuery(deleteQuery);
 
 		// If the delete was successful, also delete rows in the MySQL tables which reference it
 		if(result)
