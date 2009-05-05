@@ -193,7 +193,7 @@ public class AddLDAP extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("LDAP server could not be configured correctly",e);
             this.addFieldError("addLDAPError", "LDAP server could not be configured correctly");
             errorType = "error";
             return INPUT;
@@ -241,7 +241,7 @@ public class AddLDAP extends ActionSupport
                 }
                 if(displayName.equalsIgnoreCase("local"))
                 {
-                    this.addFieldError("addLDAPError", "ERROR : Cannot add a server with name 'Local'. Kindly use a different name");
+                    this.addFieldError("addLDAPError", "Cannot add a server with name 'Local'. Kindly use a different name");
                     errorType = "error";
                     return SUCCESS;
                 }
@@ -267,7 +267,7 @@ public class AddLDAP extends ActionSupport
 	            }
                 if(displayName.equalsIgnoreCase("local"))
                 {
-                    this.addFieldError("addLDAPError", "ERROR : Cannot update a server with name 'Local'. Kindly use a different name");
+                    this.addFieldError("addLDAPError", "Cannot update a server with name 'Local'. Kindly use a different name");
                     errorType = "error";
                     return SUCCESS;
                 }
@@ -283,8 +283,8 @@ public class AddLDAP extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("addLDAPError", "Error : LDAP server could not be configured correctly");
+            log.error("LDAP server could not be configured correctly",e);
+            this.addFieldError("addLDAPError", "LDAP server could not be configured correctly");
             errorType = "error";
             return INPUT;
         }
