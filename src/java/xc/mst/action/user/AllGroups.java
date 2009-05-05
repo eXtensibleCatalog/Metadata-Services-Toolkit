@@ -154,8 +154,8 @@ public class AllGroups extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("allGroupsError", "Error : Groups not displayed correctly");
+            log.error("Groups not displayed correctly",e);
+            this.addFieldError("allGroupsError", "Groups not displayed correctly");
             errorType = "error";
             return SUCCESS;
         }

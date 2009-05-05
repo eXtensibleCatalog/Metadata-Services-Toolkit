@@ -198,8 +198,8 @@ public class AddGroup extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("addGroupError", "The Page could not be displayed correctly");
+            log.error("The Add group Page could not be displayed correctly",e);
+            this.addFieldError("addGroupError", "The Add group Page could not be displayed correctly");
             errorType = "error";
             return INPUT;
         }
@@ -255,7 +255,7 @@ public class AddGroup extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("Group could not be added properly",e);
             this.addFieldError("addGroupError", "Group could not be added properly");
             errorType = "error";
             return INPUT;

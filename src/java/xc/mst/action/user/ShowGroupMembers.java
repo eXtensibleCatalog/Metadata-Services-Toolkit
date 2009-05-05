@@ -163,21 +163,21 @@ public class ShowGroupMembers extends ActionSupport
                 }
                 else
                 {
-                    this.addFieldError("showGroupsMembersError", "ERROR : The column "+columnSorted+" does not exist");
+                    this.addFieldError("showGroupsMembersError", "The column "+columnSorted+" does not exist");
                     return INPUT;
                 }
             }
             else
             {
                 
-                this.addFieldError("showGroupsMembersError", "ERROR : There is no group with the group ID specified");
+                this.addFieldError("showGroupsMembersError", "There is no group with the group ID specified");
                 return INPUT;
             }
         }
         catch(Exception e)
         {
-            log.debug(e);
-            this.addFieldError("showGroupMembersError", "ERROR : There was a problem displaying the page");
+            log.debug("There was a problem displaying members of the group",e);
+            this.addFieldError("showGroupMembersError", "There was a problem displaying the page");
             return INPUT;
         }
     }

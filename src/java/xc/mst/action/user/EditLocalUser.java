@@ -207,7 +207,7 @@ public class EditLocalUser extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.debug("Error in displaying the user's details",e);
             this.addFieldError("editLocalUserError", "Error in displaying the user's details");
             errorType = "error";
             return ERROR;
@@ -251,7 +251,7 @@ public class EditLocalUser extends ActionSupport
                 {
                     if(similarEmail.getServer().getName().equalsIgnoreCase("Local"))
                     {
-                        this.addFieldError("editLocalUserError","Error : Email ID already exists");
+                        this.addFieldError("editLocalUserError","Email ID already exists");
                         errorType = "error";
                         setGroupList(groupService.getAllGroups());
                         setTemporaryUser(user);
@@ -267,8 +267,8 @@ public class EditLocalUser extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
-            this.addFieldError("editLocalUserError","Error : User details not updated correctly");
+            log.debug("User details not updated correctly",e);
+            this.addFieldError("editLocalUserError","User details not updated correctly");
             errorType = "error";
             return ERROR;
         }

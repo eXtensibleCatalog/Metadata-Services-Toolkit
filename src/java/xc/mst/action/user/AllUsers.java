@@ -142,7 +142,7 @@ public class AllUsers extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("Error in displaying the users List",e);
             this.addFieldError("allUsersError", "Error in displaying the users List");
             errorType = "error";
         }

@@ -132,7 +132,7 @@ public class DeleteGroup extends ActionSupport
             }
             else
             {
-                this.addFieldError("allGroupsError", "Error : Users belong to group '"+tempGroup.getName()+"'. So the group cannot be deleted.");
+                this.addFieldError("allGroupsError", "Users belong to group '"+tempGroup.getName()+"'. So the group cannot be deleted.");
                 errorType = "error";
                 return INPUT;
             }
@@ -141,8 +141,8 @@ public class DeleteGroup extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("allGroupsError", "Error : Problem deleting Group");
+            log.error("Problem deleting Group",e);
+            this.addFieldError("allGroupsError", "Problem deleting Group");
             errorType = "error";
             return INPUT;
         }

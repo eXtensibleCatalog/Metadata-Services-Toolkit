@@ -107,7 +107,7 @@ public class DeleteUser extends ActionSupport
             }
             else
             {
-                this.addFieldError("deleteUserError", "Error: The user '"+tempUser.getUsername()+"' is associated with a Repository and cannot be deleted");
+                this.addFieldError("deleteUserError", "The user '"+tempUser.getUsername()+"' is associated with a Repository and cannot be deleted");
                 errorType = "error";
                 return INPUT;
             }
@@ -115,8 +115,8 @@ public class DeleteUser extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
-            this.addFieldError("deleteUserError", "Error: The user was not deleted");
+            log.debug("The user was not deleted",e);
+            this.addFieldError("deleteUserError", "The user was not deleted");
             errorType = "error";
             return INPUT;
         }

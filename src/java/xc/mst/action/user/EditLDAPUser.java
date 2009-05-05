@@ -210,8 +210,8 @@ public class EditLDAPUser extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
-            this.addFieldError("addLDAPUserError","Error : Page not displayed correctly");
+            log.debug("Edit LDAP User Page not displayed correctly",e);
+            this.addFieldError("addLDAPUserError","Page not displayed correctly");
             errorType = "error";
             return SUCCESS;
         }
@@ -287,8 +287,8 @@ public class EditLDAPUser extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
-            this.addFieldError("editLDAPUserError","Error : User not Added correctly");
+            log.debug("User not Added correctly",e);
+            this.addFieldError("editLDAPUserError","User not Added correctly");
             errorType = "error";
             return ERROR;
         }

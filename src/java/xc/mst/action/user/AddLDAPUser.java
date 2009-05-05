@@ -233,8 +233,8 @@ public class AddLDAPUser extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("addLDAPUserError","Error : Page not displayed correctly");
+            log.error("Add LDAP User Page could not be displayed correctly",e);
+            this.addFieldError("addLDAPUserError","Add LDAP User Page could not be displayed correctly");
             errorType = "error";
             return SUCCESS;
         }
@@ -324,8 +324,8 @@ public class AddLDAPUser extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("addLDAPUserError","Error : User not Added correctly");
+            log.error("User not Added correctly",e);
+            this.addFieldError("addLDAPUserError","User not Added correctly");
             errorType = "error";
             return ERROR;
         }

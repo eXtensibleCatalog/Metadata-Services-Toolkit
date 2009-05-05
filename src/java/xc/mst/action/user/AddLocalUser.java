@@ -226,8 +226,8 @@ public class AddLocalUser extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("addLocalUserError","Error : Groups List not displayed correctly");
+            log.error("Groups List not displayed correctly",e);
+            this.addFieldError("addLocalUserError","Groups List not displayed correctly");
             errorType = "error";
             return ERROR;
         }
@@ -292,8 +292,8 @@ public class AddLocalUser extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("addLocalUserError","Error : User not Added correctly");
+            log.error("User not Added correctly",e);
+            this.addFieldError("addLocalUserError","User not Added correctly");
             errorType = "error";
             return ERROR;
         }
