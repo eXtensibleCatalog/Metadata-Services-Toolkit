@@ -200,7 +200,7 @@ public class ViewRepository extends ActionSupport implements UserAware
           }
           catch(Exception e)
           {
-              log.error(e);
+              log.error("Repository details cannot be displayed",e);
               this.addFieldError("allRepositoryError", "Repository details cannot be displayed");
               errorType = "error";
               return SUCCESS;
@@ -227,7 +227,7 @@ public class ViewRepository extends ActionSupport implements UserAware
           }
           catch(Exception e)
           {
-              log.error(e);
+              log.error("Repository revalidation was unsuccessful",e);
               this.addFieldError("viewRepositoryError", "Revalidation unsuccessful");
               errorType = "error";
               return SUCCESS;

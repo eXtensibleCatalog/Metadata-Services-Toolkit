@@ -259,8 +259,8 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("editProcessingDirectiveEror", "Error : Problem in displaying the Specfied Processing Directive");
+            log.error("Problem in displaying the Specified Processing Directive",e);
+            this.addFieldError("editProcessingDirectiveEror", "Problem in displaying the Specified Processing Directive");
             errorType = "error";
             return INPUT;
         }
@@ -306,8 +306,8 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("editProcessingDirectiveError", "Error in Adding a Source");
+            log.error("Error in Editing the Source",e);
+            this.addFieldError("editProcessingDirectiveError", "Error in Editing the Source");
             errorType = "error";
             return INPUT;
         }

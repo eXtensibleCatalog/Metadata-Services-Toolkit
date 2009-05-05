@@ -122,7 +122,7 @@ public class EditRepository extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("The edit repository page could not be displayed",e);
             return INPUT;
         }
 
@@ -269,7 +269,7 @@ public class EditRepository extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("The Repository details could not be edited",e);
             return SUCCESS;
         }
     }

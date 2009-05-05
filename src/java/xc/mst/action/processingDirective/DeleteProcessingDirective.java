@@ -70,8 +70,8 @@ public class DeleteProcessingDirective extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("listServicesError", "Delete Unsuccessful");
+            log.error("Deletion of processing rule Unsuccessful",e);
+            this.addFieldError("listServicesError", "Deletion of processing rule Unsuccessful");
             errorType = "error";
             return SUCCESS;
         }

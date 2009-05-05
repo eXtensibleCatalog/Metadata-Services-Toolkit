@@ -304,8 +304,8 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("addProcessingDirectives2Error", "Error in loading page");
+            log.error("Error in loading Step 2 of Add Processing Rules page",e);
+            this.addFieldError("addProcessingDirectivesSetsFormatsError", "Error in loading Step 2 of Add Processing Rules page");
             errorType = "error";
             return INPUT;
         }
@@ -523,8 +523,8 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful");
+            log.error("Insertion of Processing Rule unsuccessful",e);
+            this.addFieldError("listProcessingDirectivesError", "Insertion of Processing Rule unsuccessful");
             errorType = "error";
             return ERROR;
         }
@@ -606,7 +606,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("There was a problem in redirecting to Add Processing Rule(Step 1)",e);
             return INPUT;
         }
     }
@@ -625,7 +625,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("There was a problem redirecting to 'All Processing Rules' page",e);
             return INPUT;
         }
     }

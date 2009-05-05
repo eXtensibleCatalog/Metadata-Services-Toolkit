@@ -109,8 +109,8 @@ public class AddService extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("viewAddServiceError", "ERROR : The page could not be loaded correctly");
+            log.error("The Add Service page could not be loaded correctly",e);
+            this.addFieldError("viewAddServiceError", "The Add Service page could not be loaded correctly");
             return INPUT;
         }
     }
@@ -131,9 +131,9 @@ public class AddService extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("Error in adding a new Service",e);
             errorType = "error";
-            this.addFieldError("addServiceError", "ERROR : "+e.getMessage());
+            this.addFieldError("addServiceError",e.getMessage());
             File dir = new File("serviceConfig");
             FileFilter fileFilter =  new XCCGFileFilter();
 

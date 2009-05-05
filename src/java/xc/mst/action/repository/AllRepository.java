@@ -80,14 +80,14 @@ public class AllRepository extends ActionSupport
             }
             else
             {
-                this.addFieldError("allRepositoryError", "ERROR : The specified column does not exist");
+                this.addFieldError("allRepositoryError", "The specified column does not exist");
                 return INPUT;
             }
            
         }
         catch(Exception e)
         {
-           log.error(e);
+           log.error("The list of repositories could not be displayed",e);
            return INPUT;
         }
     }

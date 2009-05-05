@@ -57,7 +57,7 @@ public class ListProcessingDirectives extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("The list of processing Directives could not displayed",e);
             this.addFieldError("listProcessingDirectivesError", "The list of processing Directives could not displayed");
             errorType = "error";
             return INPUT;

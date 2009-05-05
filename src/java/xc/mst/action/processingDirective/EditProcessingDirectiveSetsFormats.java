@@ -353,8 +353,8 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("editProcessingDirective2Error", "Error : Problem in editing the directive");
+            log.error("Problem in editing the processing rule",e);
+            this.addFieldError("editProcessingDirectiveSetsFormatsError", "Problem in editing the processing rule");
             errorType = "error";
             return INPUT;
         }
@@ -628,8 +628,8 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
            }
            catch(Exception e)
            {
-                log.error(e);
-                this.addFieldError("editProcessingDirectives2Error", "Error : The edit was unsuccessful");
+                log.error("The edit of the processing rule was unsuccessful",e);
+                this.addFieldError("editProcessingDirectives2Error", "The edit of the processing rule was unsuccessful");
                 errorType = "error";
                 return ERROR;
            }
@@ -711,7 +711,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("There was a problem in redirecting to Edit Processing Rule(Step 1)",e);
             return INPUT;
         }
     }
@@ -730,7 +730,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("There was a problem redirecting to 'All Processing Rules' page",e);
             return INPUT;
         }
     }

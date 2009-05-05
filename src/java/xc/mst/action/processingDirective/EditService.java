@@ -177,8 +177,8 @@ public class EditService extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
-            this.addFieldError("viewEditServiceError", "ERROR : The page could not be loaded correctly");
+            log.error("The edit-service page could not be loaded correctly",e);
+            this.addFieldError("viewEditServiceError", "The edit-service page could not be loaded correctly");
             return INPUT;
         }
     }
@@ -199,9 +199,9 @@ public class EditService extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("Error editing the service",e);
             errorType = "error";
-            this.addFieldError("editServiceError", "ERROR : "+e.getMessage());
+            this.addFieldError("editServiceError",e.getMessage());
             File dir = new File("serviceConfig");
             FileFilter fileFilter =  new XCCGFileFilter();
 

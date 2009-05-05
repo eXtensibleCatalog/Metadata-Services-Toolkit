@@ -113,8 +113,8 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
             }
             catch(Exception e)
             {
-                log.error(e);
-                this.addFieldError("refreshServiceBar", "ERROR : The status of the services running in the MST , could not be displayed correctly");
+                log.error("The status of the services running in the MST , could not be displayed correctly",e);
+                this.addFieldError("refreshServiceBar", "The status of the services running in the MST , could not be displayed correctly");
                 return INPUT;
             }
         }

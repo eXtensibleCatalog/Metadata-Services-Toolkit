@@ -71,7 +71,7 @@ public class ListServices extends ActionSupport
             }
             else
             {
-                this.addFieldError("listServicesError", "ERROR : The specified column does not exist");
+                this.addFieldError("listServicesError", "The specified column does not exist");
                 return INPUT;
             }
            
@@ -79,7 +79,7 @@ public class ListServices extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error(e);
+            log.error("The list of services could not be displayed",e);
             return INPUT;
         }
     }
