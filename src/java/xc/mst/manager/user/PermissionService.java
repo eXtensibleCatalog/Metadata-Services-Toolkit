@@ -34,4 +34,11 @@ public interface PermissionService
      * @return
      */
     public Permission getPermissionById(int permissionId);
+
+    /**
+     * returns a list of all permissions
+     *
+     * @return list of permissions
+     */
+    public List getAllPermissions();
 }

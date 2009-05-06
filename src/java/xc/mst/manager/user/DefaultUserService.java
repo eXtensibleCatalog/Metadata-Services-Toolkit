@@ -389,6 +389,27 @@ public class DefaultUserService implements UserService{
     }
 
     /**
+     * Retrieves the number of users in a group
+     *
+     * @param groupId group ID
+     * @return member count
+     */
+    public int getUserCountForGroup(int groupId)
+    {
+        return userGroupUtilDAO.getUserCountForGroup(groupId);
+    }
+
+    /**
+     * returns the number of LDAP users in the system
+     *
+     * @return number of LDAP users
+     */
+    public int getLDAPUserCount()
+    {
+        return userDAO.getLDAPUserCount();
+    }
+
+    /**
      * Sends email to all admins to give permission for a new user
      *
      * @param userName User name of new user

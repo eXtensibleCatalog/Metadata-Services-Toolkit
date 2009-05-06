@@ -50,14 +50,13 @@ public class AddGroup extends ActionSupport
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 	/** Error type */
-	private String errorType; 
-	
+	private String errorType;
 
+    /**Group Service object */
+    private GroupService groupService = new DefaultGroupService();
 
-    public AddGroup()
-    {
-        tabNames = new ArrayList();
-    }
+    /** Permission Service object */
+    private PermissionService permissionService = new DefaultPermissionService();
 
     /**
      * Sets the group name to the specified value.
@@ -188,12 +187,7 @@ public class AddGroup extends ActionSupport
     {
         try
         {
-            String[] tabs = {"Repositories","Harvest","Services","Browse Records","Logs","Users/Groups","Configuration","Search Index"};
-            for(int i=0;i<tabs.length;i++)
-            {
-                tabNames.add(tabs[i]);
-            }
-            setTabNames(tabNames);
+            setTabNames(permissionService.getAllPermissions());
             return SUCCESS;
         }
         catch(Exception e)
@@ -214,33 +208,21 @@ public class AddGroup extends ActionSupport
     {
         try
         {
-            GroupService groupService = new DefaultGroupService();
-            PermissionService permissionService = new DefaultPermissionService();
-
+            
             Group group = new Group();
-            group.setName(getGroupName());
-            group.setDescription(getGroupDescription());
-
-            List<Group> tempGrpList = groupService.getAllGroups();
-            Iterator<Group> iter = tempGrpList.iterator();
-
-            while(iter.hasNext())
+            group.setName(groupName);
+            group.setDescription(groupDescription);
+            
+            Group tempGroup = groupService.getGroupByName(groupName);
+            if(tempGroup!=null)
             {
-                Group tempGroup = (Group)iter.next();
-                if(tempGroup.getName().equalsIgnoreCase(groupName))
-                {
-                    setTemporaryGroup(group);
-                    String[] tabs = {"Repositories","Harvest","Services","Browse Records","Logs","Users/Groups","Configuration","Search Index"};
-                    for(int i=0;i<tabs.length;i++)
-                    {
-                        tabNames.add(tabs[i]);
-                    }
-                    setTabNames(tabNames);
-                    setSelectedPermissions(permissionsSelected);
-                    this.addFieldError("addGroupError", "A group with the same name already exists");
-                    errorType = "error";
-                    return INPUT;
-                }
+                
+                setTemporaryGroup(group);
+                setTabNames(permissionService.getAllPermissions());
+                this.addFieldError("addGroupError", "A group with the same name already exists");
+                errorType = "error";
+                return INPUT;
+                
             }
             
 

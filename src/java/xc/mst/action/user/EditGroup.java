@@ -229,13 +229,8 @@ public class EditGroup extends ActionSupport
                 Permission permission = (Permission)tempIter.next();
                 selectedPermissions.add(permission.getTabId());
             }
-            setSelectedPermissions(selectedPermissions);
-            String[] tabs = {"Repositories","Harvest","Services","Browse Records","Logs","Users/Groups","Configuration","Search Index"};
-            for(int i=0;i<tabs.length;i++)
-            {
-                tabNames.add(tabs[i]);
-            }
-            setTabNames(tabNames);
+           
+            setTabNames(permissionService.getAllPermissions());
             return SUCCESS;
         }
         catch(Exception e)
@@ -260,24 +255,17 @@ public class EditGroup extends ActionSupport
             group.setDescription(getGroupDescription());
             group.setName(getGroupName());
 
+            Group tempGroup = groupService.getGroupByName(groupName);
 
-            List<Group> tempGrpList = groupService.getAllGroups();
-            Iterator<Group> iter = tempGrpList.iterator();
-
-            while(iter.hasNext())
+           
+            if(tempGroup.getId()!=groupId)
             {
-                Group tempGroup = (Group)iter.next();
                 if(tempGroup.getName().equalsIgnoreCase(groupName))
                 {
-                    if(tempGroup.getId()!=groupId)
-                    {
+                   
                         setTemporaryGroup(group);
-                        String[] tabs = {"Repositories","Harvest","Services","Browse Records","Logs","Users/Groups","Configuration","Search Index"};
-                        for(int i=0;i<tabs.length;i++)
-                        {
-                            tabNames.add(tabs[i]);
-                        }
-                        setTabNames(tabNames);
+                       
+                        setTabNames(permissionService.getAllPermissions());
                         for(int i=0;i<permissionsSelected.length;i++)
                         {
                             selectedPermissions.add(permissionsSelected[i]);
@@ -286,7 +274,7 @@ public class EditGroup extends ActionSupport
                         this.addFieldError("editGroupError", "Error : A group with the same name already exists");
                         errorType = "error";
                         return INPUT;
-                    }
+                    
                 }
             }
 

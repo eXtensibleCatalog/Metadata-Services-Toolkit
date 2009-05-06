@@ -46,4 +46,14 @@ public class DefaultPermissionService implements PermissionService
     {
         return permissionDao.getPermissionById(permissionId);
     }
+
+    /**
+     * Returns a list of all permissions in the system
+     *
+     * @return list of permissions
+     */
+    public List getAllPermissions()
+    {
+        return permissionDao.getAll();
+    }
 }

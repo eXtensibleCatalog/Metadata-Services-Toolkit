@@ -162,4 +162,19 @@ public interface UserService {
     * @return sorted list of users
     */
     public abstract List<User> getUsersForGroup(int groupId);
+
+    /**
+     * Retrieves the number of users in a group
+     *
+     * @param groupId group ID
+     * @return member count
+     */
+    public abstract int getUserCountForGroup(int groupId);
+
+    /**
+     * returns the number of LDAP users in the system
+     *
+     * @return number of LDAP users
+     */
+    public abstract int getLDAPUserCount();
 }

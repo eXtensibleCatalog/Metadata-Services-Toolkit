@@ -171,6 +171,13 @@ public abstract class UserDAO
 	 * @return The user with the passed name and server, or null if there was no user with that name.
 	 */
 	public abstract User getUserByUserName(String userName, Server server);
+    
+    /**
+     * returns the number of LDAP users in the system
+     * 
+     * @return number of LDAP users
+     */
+    public abstract int getLDAPUserCount();
 
 	/**
 	 * Inserts a user into the database

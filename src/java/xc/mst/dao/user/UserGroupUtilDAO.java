@@ -113,6 +113,14 @@ public abstract class UserGroupUtilDAO
     public abstract List<User> getUsersForGroup(int groupId);
 
     /**
+     * Returns the number of users who are members of the groups
+     *
+     * @param groupId ID of the group
+     * @return member count
+     */
+    public abstract int getUserCountForGroup(int groupId);
+
+    /**
      * returns list of all users associated with a group
      * @param groupId group ID
      * @param sort determines if the rows are to be sorted in ascending or descending order

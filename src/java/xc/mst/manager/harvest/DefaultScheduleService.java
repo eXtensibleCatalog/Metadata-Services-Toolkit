@@ -10,7 +10,6 @@
 package xc.mst.manager.harvest;
 
 import java.util.List;
-
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Provider;

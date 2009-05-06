@@ -119,13 +119,13 @@ public class DeleteGroup extends ActionSupport
                         }
                     }
                 }
-                if(flag==false)
+                if(!flag)
                 {
                     break;
                 }
 
             }
-            if(flag==true)
+            if(flag)
             {
                 tempGroup.removeAllPermissions();
                 groupService.deleteGroup(tempGroup);

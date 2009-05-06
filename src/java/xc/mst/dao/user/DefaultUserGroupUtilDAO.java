@@ -349,6 +349,74 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
     }
 
+    /**
+     * Returns the number of users who are members of the groups
+     *
+     * @param groupId ID of the group
+     * @return member count
+     */
+    public int getUserCountForGroup(int groupId)
+    {
+         synchronized(psGetUsersForGroupLock)
+		{
+            if(log.isDebugEnabled())
+				log.debug("Getting the users for the group with group ID " + groupId);
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			// The list of users for the group with the passed ID
+			List<User> users = new ArrayList<User>();
+
+			try
+			{
+				// If the PreparedStatement to get users by group ID wasn't defined, create it
+				if(psGetUsersForGroup == null)
+				{
+					// SQL to get the rows
+					String selectSql = "SELECT COUNT(" + COL_USER_ID + ") " +
+	                                   "FROM " + USERS_TO_GROUPS_TABLE_NAME + " " +
+	                                   "WHERE " + COL_GROUP_ID + "=?";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get users for group\" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetUsersForGroup = dbConnection.prepareStatement(selectSql);
+				}
+
+				// Set the parameters on the select statement
+				psGetUsersForGroup.setInt(1, groupId);
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = psGetUsersForGroup.executeQuery();
+                
+				// Return the result
+				if(results.next())
+					return results.getInt(1);
+
+				if(log.isDebugEnabled())
+					log.debug("Did not find count of " + " user IDs that the group with group ID " + groupId + " contains.");
+
+				return 0;
+
+			} // end try (get and return the group IDs which the user belongs to)
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the users for the group with group ID " + groupId, e);
+
+				return 0;
+			} // end catch(SQLException)
+			finally
+			{
+				MySqlConnectionManager.closeResultSet(results);
+			} // end finally
+        }
+    }
+
     public List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted)
     {
         synchronized(psGetUsersForGroupLock)

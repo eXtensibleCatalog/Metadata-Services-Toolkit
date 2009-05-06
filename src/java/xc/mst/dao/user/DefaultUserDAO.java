@@ -98,7 +98,12 @@ public class DefaultUserDAO extends UserDAO
 	 * A PreparedStatement to delete a user from the database
 	 */
 	private static PreparedStatement psDelete = null;
-	
+
+    /**
+	 * A PreparedStatement to get count of LDAP users in the system
+	 */
+	private static PreparedStatement psLDAPUserCount = null;
+
 	/**
 	 * Lock to synchronize access to the get all PreparedStatement
 	 */
@@ -113,6 +118,11 @@ public class DefaultUserDAO extends UserDAO
 	 * Lock to synchronize access to the get by user name PreparedStatement
 	 */
 	private static Object psGetByUserNameLock = new Object();
+
+    /**
+	 * Lock to synchronize access to the LDAP user count PreparedStatement
+	 */
+	private static Object psLDAPUserCountLock = new Object();
 	
 	/**
 	 * Lock to synchronize access to the get by user name PreparedStatement
@@ -228,6 +238,67 @@ public class DefaultUserDAO extends UserDAO
 		} // end synchronized
 	} // end method getAll()
 
+    /**
+     * returns the number of LDAP users in the system
+     *
+     * @return number of LDAP users
+     */
+    public int getLDAPUserCount()
+    {
+        synchronized(psLDAPUserCountLock)
+		{
+            if(log.isDebugEnabled())
+				log.debug("Getting the count for all LDAP members ");
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			try
+			{
+				// If the PreparedStatement to get users by group ID wasn't defined, create it
+				if(psLDAPUserCount == null)
+				{
+					// SQL to get the rows
+					String selectSql = "SELECT COUNT(" + COL_USER_ID + ") " +
+	                                   "FROM " + USERS_TABLE_NAME + " " +
+	                                   "WHERE " + COL_SERVER_ID + "<> 1";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"LDAP user count\" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psLDAPUserCount = dbConnection.prepareStatement(selectSql);
+				}
+
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = psLDAPUserCount.executeQuery();
+
+				// Return the result
+				if(results.next())
+					return results.getInt(1);
+
+				if(log.isDebugEnabled())
+					log.debug("Did not find count of " + " number of LDAP users in the system.");
+
+				return 0;
+
+			} // end try (get and return the group IDs which the user belongs to)
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the number of LDAP users in the system", e);
+
+				return 0;
+			} // end catch(SQLException)
+			finally
+			{
+				MySqlConnectionManager.closeResultSet(results);
+			} // end finally
+        }
+    }
 	@Override
 	public List<User> getSorted(boolean asc,String columnSorted)
 	{

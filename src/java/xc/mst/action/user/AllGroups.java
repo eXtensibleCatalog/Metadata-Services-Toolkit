@@ -137,7 +137,7 @@ public class AllGroups extends ActionSupport
                 while(iter.hasNext())
                 {
                     Group group = (Group)iter.next();
-                    group.setMemberCount(userService.getUsersForGroup(group.getId()).size());
+                    group.setMemberCount(userService.getUserCountForGroup(group.getId()));
                     finalList.add(group);
                 }
                 setGroupList(finalList);
