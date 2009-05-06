@@ -36,6 +36,9 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
     /** Determines how the HTML should be displayed in the view page for this action */
     private String displayType;
 
+    /** The user who is logged in */
+    private User user;
+
     /**
      * Sets the name of the surrent process being executed
      *
@@ -77,6 +80,26 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
     }
 
     /**
+     * Sets the User object
+     *
+     * @param user user object
+     */
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
+
+    /**
+     * Returns the user object
+     *
+     * @return user object
+     */
+    public User getUser()
+    {
+        return this.user;
+    }
+
+    /**
      * Overrides default implementation to refresh the contents of the service status bar.
      *
      * @return {@link #SUCCESS}
@@ -84,9 +107,6 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
     @Override
     public String execute()
     {
-        User user = (User)request.getSession().getAttribute("user");
-        if(user!=null)
-        {
             try
             {
 
@@ -117,11 +137,7 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
                 this.addFieldError("refreshServiceBar", "The status of the services running in the MST , could not be displayed correctly");
                 return INPUT;
             }
-        }
-        else
-        {
-            return "No User Found";
-        }
+        
 
     }
 

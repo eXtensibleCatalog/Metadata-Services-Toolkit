@@ -38,7 +38,7 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
     private ServicesService servService = new DefaultServicesService();
 
     /** Creates a service object for Providers */
-    private ProviderService provService = new DefaultProviderService();
+    private ProviderService providerService = new DefaultProviderService();
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -204,7 +204,7 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
     {
         try
         {
-            setProviderList(provService.getAllProviders());
+            setProviderList(providerService.getAllProviders());
             setServiceList(servService.getAllServices());
             if(refreshSession==null)
             {
@@ -246,7 +246,7 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
                 temporaryProcessingDirective = new ProcessingDirective();
             }
 
-            Provider tempProvider = provService.getProviderByName(source);
+            Provider tempProvider = providerService.getProviderByName(source);
             Service tempService = servService.getServiceByName(source);
             if(tempProvider!=null)
             {

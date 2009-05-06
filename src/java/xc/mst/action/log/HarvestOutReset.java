@@ -35,7 +35,7 @@ public class HarvestOutReset extends ActionSupport
     private String harvestOutLogFileName;
 
     /**ID of the service to be reset */
-    private String serviceId;
+    private int serviceId;
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -48,7 +48,7 @@ public class HarvestOutReset extends ActionSupport
      *
      * @param serviceId service ID
      */
-    public void setServiceId(String serviceId)
+    public void setServiceId(int serviceId)
     {
         this.serviceId = serviceId;
     }
@@ -58,7 +58,7 @@ public class HarvestOutReset extends ActionSupport
      *
      * @return service ID
      */
-    public String getServiceId()
+    public int getServiceId()
     {
         return this.serviceId;
     }
@@ -93,7 +93,7 @@ public class HarvestOutReset extends ActionSupport
     {
         try
         {
-            Service tempService = servicesService.getServiceById(Integer.parseInt(serviceId));
+            Service tempService = servicesService.getServiceById(serviceId);
             tempService.setHarvestOutLastLogReset(new Date());
             tempService.setHarvestOutWarnings(0);
             tempService.setHarvestOutErrors(0);

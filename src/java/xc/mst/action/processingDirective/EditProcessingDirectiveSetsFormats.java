@@ -641,7 +641,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
      * 
      * @return status of the operation
      */
-    public String editPDGoBack()
+    public String editProcessingDirectiveGoBack()
     {
          try
         {
@@ -721,7 +721,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
      *
      * @return status of the return operation
      */
-    public String editPDCancel()
+    public String editProcessingDirectiveCancel()
     {
         try
         {            

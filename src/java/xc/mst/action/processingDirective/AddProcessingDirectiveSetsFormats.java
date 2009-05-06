@@ -535,7 +535,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
      * 
      * @return
      */
-    public String addPDGoBack()
+    public String addProcessingDirectiveGoBack()
     {
          try
         {
@@ -616,7 +616,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
      *
      * @return
      */
-    public String addPDCancel()
+    public String addProcessingDirectiveCancel()
     {
         try
         {

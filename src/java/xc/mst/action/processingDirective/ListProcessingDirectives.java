@@ -30,7 +30,7 @@ public class ListProcessingDirectives extends ActionSupport
     private ProcessingDirectiveService proDirService = new DefaultProcessingDirectiveService();
 
     /** The list of processing directives that have been set up by the user */
-    private List<ProcessingDirective> processingDirectivesList;
+    private List<ProcessingDirective> processingDirectives;
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -49,10 +49,10 @@ public class ListProcessingDirectives extends ActionSupport
         try
         {
                      
-           processingDirectivesList = proDirService.getAllProcessingDirectives();
-           setProcessingDirectives(processingDirectivesList);
-           HttpServletRequest request = ServletActionContext.getRequest();
-           request.setAttribute("processingDirectivesList", getProcessingDirectives());
+           processingDirectives = proDirService.getAllProcessingDirectives();
+           setProcessingDirectives(processingDirectives);
+           //HttpServletRequest request = ServletActionContext.getRequest();
+           //request.setAttribute("processingDirectivesList", getProcessingDirectives());
            return SUCCESS;
         }
         catch(Exception e)
@@ -69,9 +69,9 @@ public class ListProcessingDirectives extends ActionSupport
      *
      * @param ProcessingDirectivesList list of processing directives
      */
-    public void setProcessingDirectives(List<ProcessingDirective> processingDirectivesList)
+    public void setProcessingDirectives(List<ProcessingDirective> processingDirectives)
     {
-        this.processingDirectivesList = processingDirectivesList;
+        this.processingDirectives = processingDirectives;
     }
 
     /**
@@ -81,7 +81,7 @@ public class ListProcessingDirectives extends ActionSupport
      */
     public List<ProcessingDirective> getProcessingDirectives()
     {
-        return processingDirectivesList;
+        return processingDirectives;
     }
 
 	 /**

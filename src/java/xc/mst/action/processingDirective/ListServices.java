@@ -104,18 +104,6 @@ public class ListServices extends ActionSupport
         return ServicesList;
     }
 
-    /**
-     * Retrieves the base URL for a particular service
-     *
-     * @return retruns the URL value
-     */
-    public String getBaseURL()
-    {
-        Configuration mstConfiguration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
-        String baseURL = mstConfiguration.getProperty("OaiRepoBaseUrl");
-        return baseURL;
-    }
-
      /**
      * Sets the boolean value which determines if the rows are to be sorted in ascending order
      *

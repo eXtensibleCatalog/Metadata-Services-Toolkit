@@ -77,18 +77,8 @@ public class DeleteLDAP extends ActionSupport
 
             List<Server> serverlist = serverService.getAll();
             Iterator<Server> serverIter = serverlist.iterator();
-            List<User> userList = userService.getAllUsersSorted(false,"username");
-            Iterator<User> userIter = userList.iterator();
-            boolean deleteFlag = true;
-            while(userIter.hasNext())
-            {
-                User user = (User)userIter.next();
-                if(user.getServer().getType()!=Server.ServerType.LOCAL)
-                {
-                    deleteFlag = false;
-                }
-            }
-            if(deleteFlag==true)
+            
+            if(userService.getLDAPUserCount()==0)
             {
                 while(serverIter.hasNext())
                 {

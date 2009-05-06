@@ -37,18 +37,13 @@ public class ServiceLog extends ActionSupport
     private ServicesService servicesService = new DefaultServicesService();
 
     /** Sets the list of all services */
-    private List<Service> serviceList;
+    private List<Service> services = new ArrayList<Service>();
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
     
 	/** Error type */
 	private String errorType; 
-
-    public ServiceLog()
-    {
-        serviceList = new ArrayList<Service>();
-    }
 
     /**
      * Sets the list of all services
@@ -57,7 +52,7 @@ public class ServiceLog extends ActionSupport
      */
     public void setServiceList(List<Service> serviceList)
     {
-        this.serviceList = serviceList;
+        this.services = serviceList;
     }
 
     /**
@@ -67,7 +62,7 @@ public class ServiceLog extends ActionSupport
      */
     public List<Service> getServiceList()
     {
-        return serviceList;
+        return services;
     }
 
      /**
@@ -121,37 +116,37 @@ public class ServiceLog extends ActionSupport
     {
         try
         {
-            List<Service> servicesList = new ArrayList<Service>();
+            
             if(columnSorted.equalsIgnoreCase("ServiceName")||(columnSorted.equalsIgnoreCase("InputRecords"))||(columnSorted.equalsIgnoreCase("OutputRecords"))||(columnSorted.equalsIgnoreCase("Warnings"))||(columnSorted.equalsIgnoreCase("Errors"))||(columnSorted.equalsIgnoreCase("LastLogReset")))
             {
                 if(columnSorted.equalsIgnoreCase("ServiceName"))
                 {
-                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
+                    services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
                 }
                 else if(columnSorted.equalsIgnoreCase("Warnings"))
                 {
-                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_WARNINGS);
+                    services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_WARNINGS);
                 }
                 else if(columnSorted.equalsIgnoreCase("Errors"))
                 {
-                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_ERRORS);
+                    services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_ERRORS);
                 }
                 else if(columnSorted.equalsIgnoreCase("InputRecords"))
                 {
-                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_INPUT_RECORD_COUNT);
+                    services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_INPUT_RECORD_COUNT);
                 }
                 else if(columnSorted.equalsIgnoreCase("OutputRecords"))
                 {
-                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_OUTPUT_RECORD_COUNT);
+                    services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_OUTPUT_RECORD_COUNT);
                 }
                 else
                 {
-                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_LAST_LOG_RESET);
+                    services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_LAST_LOG_RESET);
                 }
 
                 setIsAscendingOrder(isAscendingOrder);
                 setColumnSorted(columnSorted);
-                setServiceList(servicesList);
+                setServiceList(services);
             }
             else
             {
