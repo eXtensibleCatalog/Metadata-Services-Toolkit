@@ -11,9 +11,8 @@ YAHOO.namespace("xc.mst.repository");
 
 YAHOO.xc.mst.repository = {
 
-EditValidator : function()
+editValidator : function()
          {
-                   var returnvalue = false;
                    var rname = document.getElementById("repositoryName").value;
                    var rurl = document.getElementById("repositoryURL").value;
 
@@ -23,7 +22,7 @@ EditValidator : function()
                        }
                    else if(rurl == "")
                        {
-                           createErrorDiv("error","Repository Name cannot be empty");
+                           createErrorDiv("error","Repository URL cannot be empty");
                        }
                    else
                        {

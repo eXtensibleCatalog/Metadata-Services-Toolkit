@@ -15,8 +15,8 @@ YAHOO.xc.mst.processingDirective = {
  {
      try
      {
-        document.editProcessingDirective2.action= 'editPDCancel.action';
-		document.editProcessingDirective2.submit();
+        document.editProcessingDirectiveSetsFormats.action= 'editPDCancel.action';
+		document.editProcessingDirectiveSetsFormats.submit();
      }
      catch(err)
      {
@@ -25,8 +25,8 @@ YAHOO.xc.mst.processingDirective = {
  },
  goBack : function()
  {
-     document.editProcessingDirective2.action= 'editPDGoBack.action';
-     document.editProcessingDirective2.submit();
+     document.editProcessingDirectiveSetsFormats.action= 'editPDGoBack.action';
+     document.editProcessingDirectiveSetsFormats.submit();
  },
  selectAll : function(field, currentField)
  {
@@ -49,8 +49,8 @@ YAHOO.xc.mst.processingDirective = {
  },
  editProcessingDirective : function(id)
  {
-     document.editProcessingDirective2.action= 'editProcessingDirectivesSetsFormats.action';
+     document.editProcessingDirectiveSetsFormats.action= 'editProcessingDirectivesSetsFormats.action';
      document.getElementById("processingDirectiveId").value = id;
-     document.editProcessingDirective2.submit();
+     document.editProcessingDirectiveSetsFormats.submit();
  }
 }

@@ -10,7 +10,7 @@
 YAHOO.namespace("xc.mst.user");
 
 YAHOO.xc.mst.user = {
-    EditValidate : function()
+    editValidate : function()
     {
         try
         {
@@ -53,7 +53,18 @@ YAHOO.xc.mst.user = {
 			
             if((email=='')||(firstname=='')||(lastname==''))
                 {
-                    createErrorDiv("error","Kindly fill all the fields before submitting the form");
+                    if(email=='')
+                        {
+                            createErrorDiv("error","Email is a required field");
+                        }
+                    else if(firstname=='')
+                        {
+                            createErrorDiv("error","First name is a required field");
+                        }
+                    else
+                        {
+                            createErrorDiv("error","Last name is a required field");
+                        }
                 }
 
             else
@@ -93,7 +104,7 @@ YAHOO.xc.mst.user = {
             alert(err);
         }
     },
-    Editcancel : function()
+    editcancel : function()
     {
         document.editLocalUser.action = "allUsers.action";
         document.editLocalUser.submit();

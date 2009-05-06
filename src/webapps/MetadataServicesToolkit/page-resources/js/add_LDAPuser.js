@@ -22,7 +22,22 @@ YAHOO.xc.mst.user = {
             var groupsSelected = document.getElementById("groupsSelected");
             if((email=='')||(firstname=='')||(lastname=='')||(username==''))
                 {
-                    createErrorDiv("error","Kindly fill all the fields before submitting the form");
+                    if(email=='')
+                        {
+                            createErrorDiv("error","Email is a required Field");
+                        }
+                    else if(firstname=='')
+                        {
+                            createErrorDiv("error","First Name is a required Field");
+                        }
+                    else if(lastname=='')
+                        {
+                            createErrorDiv("error","Last Name is a required Field");
+                        }
+                    else
+                        {
+                            createErrorDiv("error","Username is a required Field");
+                        }
                 }
             else
              {

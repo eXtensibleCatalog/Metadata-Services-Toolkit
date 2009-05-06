@@ -13,7 +13,7 @@ YAHOO.xc.mst.repository = {
 
 addValidator : function()
          {
-		   var returnvalue = false;
+		  
                    var rname = document.getElementById("repositoryName").value;
                    var rurl = document.getElementById("repositoryURL").value;
 

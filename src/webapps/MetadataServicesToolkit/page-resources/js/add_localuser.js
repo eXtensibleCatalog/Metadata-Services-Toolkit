@@ -10,7 +10,7 @@
 YAHOO.namespace("xc.mst.user");
 
 YAHOO.xc.mst.user = {
-    AddValidate : function()
+    addValidate : function()
     {
         try
         {
@@ -52,7 +52,26 @@ YAHOO.xc.mst.user = {
             
             if((email=='')||(pass=='')||(confpass=='')||(firstname=='')||(lastname==''))
                 {
-                    createErrorDiv("error","Kindly fill all the fields before submitting the form");
+                    if(email=='')
+                        {
+                            createErrorDiv("error","Email is a required field");
+                        }
+                    else if(pass=='')
+                        {
+                            createErrorDiv("error","Password is a required field");
+                        }
+                    else if(confpass=='')
+                        {
+                            createErrorDiv("error","Confirm Password is a required field");
+                        }
+                    else if(firstname=='')
+                        {
+                            createErrorDiv("error","First Name is a required field");
+                        }
+                    else
+                        {
+                            createErrorDiv("error","Last Name is a required field");
+                        }
                 }
 
             else
@@ -91,7 +110,7 @@ YAHOO.xc.mst.user = {
             alert(err);
         }
     },
-    Addcancel : function()
+    addcancel : function()
     {
         document.addLocalUser.action = "allUsers.action";
         document.addLocalUser.submit();

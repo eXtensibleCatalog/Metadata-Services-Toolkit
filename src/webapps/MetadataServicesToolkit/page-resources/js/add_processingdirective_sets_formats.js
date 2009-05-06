@@ -15,8 +15,8 @@ cancel : function()
  {
      try
      {
-        document.addProcessingDirective2.action= 'addPDCancel.action';
-		document.addProcessingDirective2.submit();
+        document.addProcessingDirectiveSetsFormats.action= 'addPDCancel.action';
+		document.addProcessingDirectiveSetsFormats.submit();
      }
      catch(err)
      {
@@ -26,8 +26,8 @@ cancel : function()
 
 goBack : function()
  {
-     document.addProcessingDirective2.action= 'addPDGoBack.action';
-     document.addProcessingDirective2.submit();
+     document.addProcessingDirectiveSetsFormats.action= 'addPDGoBack.action';
+     document.addProcessingDirectiveSetsFormats.submit();
  },
 
  addDirective : function()
@@ -44,7 +44,7 @@ goBack : function()
                         }
                     else if(document.getElementById("setsSelected")==null)
                         {
-                            if (document.addProcessingDirective2.formatsSelected.value=='') {
+                            if (document.addProcessingDirectiveSetsFormats.formatsSelected.value=='') {
                                 createErrorDiv('error','Select a format.');
                                 choice = false;
                             }
@@ -52,7 +52,7 @@ goBack : function()
                         }
                     else if(document.getElementById("formatsSelected")==null)
                         {
-                             if (document.addProcessingDirective2.setsSelected.value=='') {
+                             if (document.addProcessingDirectiveSetsFormats.setsSelected.value=='') {
                                 createErrorDiv('error','Select a set.');
                                 choice = false;
                             }
@@ -61,7 +61,7 @@ goBack : function()
              }
          else
              {
-                 if((document.addProcessingDirective2.setsSelected.value=='')&&(document.addProcessingDirective2.formatsSelected.value==''))
+                 if((document.addProcessingDirectiveSetsFormats.setsSelected.value=='')&&(document.addProcessingDirectiveSetsFormats.formatsSelected.value==''))
                      {
 
                           createErrorDiv('error','Both sets and formats cannot be left unselected. Either sets or formats have to selected');
@@ -73,8 +73,8 @@ goBack : function()
 
          if(choice==true)
              {
-                  document.addProcessingDirective2.action= 'addProcessingDirectivesSetsFormats.action';
-                  document.addProcessingDirective2.submit();
+                  document.addProcessingDirectiveSetsFormats.action= 'addProcessingDirectivesSetsFormats.action';
+                  document.addProcessingDirectiveSetsFormats.submit();
              }
 
             

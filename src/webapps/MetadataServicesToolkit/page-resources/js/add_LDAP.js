@@ -51,7 +51,27 @@ YAHOO.xc.mst.configuration.MyObject = {
              var port = document.getElementById("port").value;
              if((displayName=='')||(serverURL=='')||(userNameAttribute=='')||(startLocation=='')||(port==''))
              {
-                createErrorDiv("error","Kindly fill in all the details before submitting the form");
+                if(displayName=='')
+                    {
+                         createErrorDiv("error","Display name is a required field");
+                    }
+                else if(serverURL=='')
+                    {
+                        createErrorDiv("error","Server URL is a required field");
+                    }
+                else if(userNameAttribute=='')
+                    {
+                        createErrorDiv("error","UserName Attribute is a required field");
+                    }
+                else if(startLocation=='')
+                    {
+                        createErrorDiv("error","Start Location is a required field");
+                    }
+                else
+                    {
+                        createErrorDiv("error","Port is a required field");
+                    }
+               
              }
              else
              {
@@ -110,7 +130,7 @@ YAHOO.xc.mst.configuration.MyObject = {
         document.addLDAP.action = "allLDAP.action";
         document.addLDAP.submit();
     },
-    deleteLDAP : function(serverId)
+    deleteLDAP : function()
      {
 
          try

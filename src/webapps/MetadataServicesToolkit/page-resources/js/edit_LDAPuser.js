@@ -22,7 +22,18 @@ YAHOO.xc.mst.user = {
             
             if((email=='')||(firstname=='')||(lastname==''))
                 {
-                    createErrorDiv("error","Kindly fill all the fields before submitting the form");
+                    if(email=='')
+                        {
+                            createErrorDiv("error","Email is a required field");
+                        }
+                    else if(firstname=='')
+                        {
+                            createErrorDiv("error","First name is a required field");
+                        }
+                    else
+                        {
+                            createErrorDiv("error","Last name is a required field");
+                        }
                 }
             else
              {

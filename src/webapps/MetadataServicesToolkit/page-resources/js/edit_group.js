@@ -24,7 +24,14 @@ YAHOO.xc.mst.user = {
 
             if((groupName=='')||(groupDescription==''))
                 {
-                    createErrorDiv("error","Kindly fill all the fields before submitting the form");
+                    if(groupName=='')
+                        {
+                            createErrorDiv("error","Group name is a required field");
+                        }
+                    else
+                        {
+                            createErrorDiv("error","Group Description is a required field");
+                        }
                 }
 
             else

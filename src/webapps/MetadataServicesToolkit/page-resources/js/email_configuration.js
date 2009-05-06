@@ -23,7 +23,27 @@ YAHOO.xc.mst.configuration = {
          var port = document.getElementById("port").value;
          if((emailServerAddress=='')||(fromAddress=='')||(password=='')||(encryptedConnection=='')||(port==''))
          {
-            createErrorDiv("error","Kindly fill in all the details before submitting the form");
+             if(emailServerAddress=='')
+                 {
+                     createErrorDiv("error","Email Server Address is a required field");
+                 }
+             else if(fromAddress=='')
+                 {
+                     createErrorDiv("error","From Address is a required field");
+                 }
+             else if(password=='')
+                 {
+                     createErrorDiv("error","Password is a required field");
+                 }
+             else if(encryptedConnection=='')
+                 {
+                     createErrorDiv("error","Encrypted Connection is a required field");
+                 }
+             else
+                 {
+                     createErrorDiv("error","Port is a required field");
+                 }
+            
          }
          else
          {
