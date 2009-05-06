@@ -109,7 +109,7 @@
                         <tbody>
 
 
-                            <c:forEach var="n" items="${processingDirectivesList}" varStatus="a">
+                            <c:forEach var="n" items="${processingDirectives}" varStatus="a">
 
                                 <c:set var="totalFormatsSize" value="${fn:length(n.triggeringFormats)}"/>
                                 

@@ -95,7 +95,7 @@
                 
                  <div style="margin-top:20px;margin-left:0px;vertical-align:bottom;">
                    <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.repository.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                   <button class="xc_button" type="button" name="edit" onclick="javascript:YAHOO.xc.mst.repository.EditValidator()">Save</button>
+                   <button class="xc_button" type="button" name="edit" onclick="javascript:YAHOO.xc.mst.repository.editValidator()">Save</button>
 
                  </div>
         </div>

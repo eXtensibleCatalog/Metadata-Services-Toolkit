@@ -15,10 +15,9 @@
 
 <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 
-
 <html>
     <head>
-        <title>Add processing Directive</title>
+        <title>Edit Processing Directive</title>
         <c:import url="/inc/meta-frag.jsp"/>
 
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
@@ -37,14 +36,14 @@
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
-        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/add_processingdirective2.js"></SCRIPT>
-      
-
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/edit_processingdirective_sets_formats.js"></SCRIPT>
+        
     </head>
 
 
  <body class="yui-skin-sam">
 
+        
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">
 
@@ -58,7 +57,7 @@
                 <c:import url="/inc/menu.jsp"/>
                 <jsp:include page="/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Services , Add Processing Directives (Step 2)" />
+                    <jsp:param name="bread" value="Services , <a style='text-decoration:none;' href='listProcessingDirectives.action'><U>List Processing Directives</U></a> , Edit Processing Directives (Step 2)" />
 
                 </jsp:include>
                 
@@ -67,8 +66,9 @@
 
             <!-- body -->
             <div id="bd">
-                 <!-- Display of error message -->
-                <c:if test="${errorType != null}">
+                
+               <!-- Display of error message -->
+                 <c:if test="${errorType != null}">
                     <div id="server_error_div">
                     <div id="server_message_div" class="${errorType}">
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
@@ -77,11 +77,11 @@
                     </div>
                  </c:if>
                  <div id="error_div"></div>
-
-                 <div class="clear">&nbsp;</div>
                  
-                <c:set var="sourceType" scope="session" value="${sourceType}"/>
-                
+                 <div class="clear">&nbsp;</div>
+
+              <c:set var="sessionSourceType" scope="session" value="${sourceType}"/>
+
 
                 <div class="stepsStructure">
                     <ul style="list-style:none;">
@@ -115,11 +115,11 @@
                                 </div>
                             </td>
                             <td>
-                                
+
                             </td>
                         </tr>
                         <tr>
-                            <td> 
+                            <td>
                                 <div style="margin-right:10px;">
                                     <c:choose>
                                         <c:when test="${sourceType=='provider'}">
@@ -136,24 +136,28 @@
 
                             </td>
                             <td width="5%"></td>
-                            <td>
+                            <td> 
                                 <div style="margin-left:15px;">
-                                     <B>${temporaryProcessingDirective.service.name}</B>
+                                    <B>${temporaryProcessingDirective.service.name}</B>
                                 </div>
 
                             </td>
                         </tr>
                     </table>
                  </div>
-               
-                <form method="post" name="addProcessingDirective2">
+              
+           <form method="post" name="editProcessingDirectiveSetsFormats">
 
-                <div style="margin-top:10px;margin-bottom:15px;font-family: verdana,sans-serif;font-size: 13px;">
-                    <B>Which records from ${sourceDisplay} should be processed ?</B>
-                </div>
+                    <div style="margin-top:10px;margin-bottom:15px;font-family: verdana,sans-serif;font-size: 13px;">
+                        <B>Which records from ${sourceDisplay} should be processed ?</B>
+                    </div>
+
+                    <input type="hidden" name="processingDirectiveId" id="processingDirectiveId">
 
                     <table align="center" cellpadding="0" cellspacing="0" border="0" width="60%">
 
+
+                        
                         <tr>
                             <td>
                                 <c:choose>
@@ -166,7 +170,7 @@
                                      <c:otherwise>
                                          <div style="font-family: verdana,sans-serif;font-size: 11px;">
                                             <B>Sets</B> <br>
-                                            <select multiple size="10" style="width:300px;" id="setsSelected" name="setsSelected">
+                                            <select style="width:300px;" multiple size="10" id="setsSelected" name="setsSelected">
                                                 <option value="0"
                                                     <c:if test="${temporaryProcessingDirective.triggeringSets == '[]' || temporaryProcessingDirective.triggeringSets == '[null]'}">
                                                          selected
@@ -184,22 +188,23 @@
                                                     </c:forEach>
                                                     <c:choose>
                                                         <c:when test="${flag==true}">
-                                                             <option selected value="${n.id}">${n.displayName}(${n.setSpec})
+                                                             <option selected value="<c:out value="${n.id}"/>" >${n.displayName}(${n.setSpec})
                                                         </c:when>
                                                          <c:otherwise>
-                                                             <option value="${n.id}">${n.displayName}(${n.setSpec})
+                                                             <option value="<c:out value="${n.id}"/>" >${n.displayName}(${n.setSpec})
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
                                             </select>
-                                            
+                                           
                                          </div>
                                      </c:otherwise>
                                  </c:choose>
                             </td>
+                      
                             <td>
-                                
-                                <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:10px;">
+
+                               <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:10px;">
                                     You have the option to create a named set of output records <br>
                                     for this processing directive&nbsp;&nbsp;&nbsp;<br><br>
                                     Output Set Name &nbsp;&nbsp;&nbsp; <input type="text" style="width:300px;height:30px;" name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50">
@@ -208,8 +213,7 @@
                                     Output Set Specification &nbsp;&nbsp;&nbsp;<input type="text" style="width:300px;height:30px;" name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50">
                                 </div>
 
-                               
-
+                                
                             </td>
                         </tr>
                         <tr>
@@ -219,7 +223,7 @@
                                         (CTRL click to select multiple sets)
                                     </div>
                                 </c:if>
-                               
+
                             </td>
                         </tr>
                         <tr>
@@ -227,14 +231,14 @@
                                 <c:choose>
                                     <c:when test="${empty formatList}">
                                          <div style="width:300px;font-family: verdana,sans-serif;font-size: 11px;">
-                                           <B> Formats </B><br><br>
+                                            <B>Formats</B> <br><br>
                                                 <I>No Formats to display</I>
                                          </div>
                                     </c:when>
                                     <c:otherwise>
                                         <div style="font-family: verdana,sans-serif;font-size: 11px;">
-                                            <B>Formats</B><br>
-                                            <select multiple size="10" style="width:300px;" id="formatsSelected" name="formatsSelected">
+                                            <B>Formats</B> <br>
+                                           <select style="width:300px;" multiple size="10" id="formatsSelected" name="formatsSelected">
                                                <c:forEach var="n" items="${formatList}" varStatus="a">
                                                     <c:set var="flag" value="${false}"/>
                                                       <c:forEach var="m" items="${temporaryProcessingDirective.triggeringFormats}" varStatus="a1">
@@ -246,14 +250,15 @@
                                                     </c:forEach>
                                                     <c:choose>
                                                         <c:when test="${flag == true}">
-                                                             <option selected value="${n.id}">${n.name}
+                                                             <option selected value="<c:out value="${n.id}"/>" ><c:out value="${n.name}"/> <br>
                                                         </c:when>
                                                          <c:otherwise>
-                                                              <option value="${n.id}">${n.name}
+                                                             <option value="<c:out value="${n.id}"/>" ><c:out value="${n.name}"/> <br>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
-                                            </select>
+                                           </select>
+
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
@@ -266,28 +271,25 @@
                                         (CTRL click to select multiple formats)
                                     </div>
                                 </c:if>
+
                             </td>
                         </tr>
                         
                         <tr>
                             <td colspan="2">
                                 
-                                <br>
-                                <br>
                                 <hr size="1" style="color:#cfd2d4"><br>
                                 <div align="right">
-                                  <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirectivecancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
+                                  <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
                                   <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.goBack();" name="goBack">Back to Step 1</button> &nbsp;&nbsp;&nbsp;
-                                  <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirective();" name="addDirective">Finish</button>
+                                  <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editProcessingDirective();"name="editDirective">Finish</button>
                                 </div>
                             </td>
                         </tr>
                     </table>
 
-                   
                 </form>
-
-             </div>
-           </div>
-        </body>
+            </div>
+       </div>
+</body>
 </html>

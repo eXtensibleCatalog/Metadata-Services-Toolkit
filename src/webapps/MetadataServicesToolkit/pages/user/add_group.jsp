@@ -109,10 +109,10 @@
                                       </c:forEach>
                                        <c:choose>
                                             <c:when test="${flag==true}">
-                                                <Option SELECTED ID="<c:out value="${a.count}" />" value="<c:out value="${a.count}" />"><c:out value="${n}" />
+                                                <Option SELECTED ID="<c:out value="${a.count}" />" value="<c:out value="${a.count}" />"><c:out value="${n.tabName}" />
                                             </c:when>
                                             <c:otherwise>
-                                                <Option ID="<c:out value="${a.count}" />" value="<c:out value="${a.count}" />"><c:out value="${n}" />
+                                                <Option ID="<c:out value="${a.count}" />" value="<c:out value="${a.count}" />"><c:out value="${n.tabName}" />
                                             </c:otherwise>
                                        </c:choose>
                                   </c:forEach>
