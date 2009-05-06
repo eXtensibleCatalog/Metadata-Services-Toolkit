@@ -266,7 +266,7 @@ public class AddLDAPUser extends ActionSupport
             while(iter.hasNext())
             {
                 tempServer = (Server)iter.next();
-                if(tempServer.getType()!=4)
+                if(tempServer.getType()!=Server.ServerType.LOCAL)
                 {
                     serverExists = true;
                     break;

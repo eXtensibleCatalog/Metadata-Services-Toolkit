@@ -49,7 +49,7 @@ public class Server
 	/**
 	 * The server's type
 	 */
-	private int type = -1;
+	private ServerType type = ServerType.UNDEFINED;
 
 	/**
 	 * The server's institution
@@ -72,19 +72,9 @@ public class Server
 	private boolean showForgotPasswordLink = false;
 
 	/**
-	 * Constant signifying an LDAP server is being used for authentication
+	 * Enumeration for the different types of servers the MST handles
 	 */
-	public static final int TYPE_LDAP = 1;
-
-	/**
-	 * Constant signifying an NCIP server is being used for authentication
-	 */
-	public static final int TYPE_NCIP = 2;
-
-	/**
-	 * Constant signifying authentication against the local server
-	 */
-	public static final int TYPE_LOCAL = 4;
+	public enum ServerType { UNDEFINED, LDAP, NCIP, LOCAL }
 
 	/**
 	 * Gets the server's ID
@@ -211,7 +201,7 @@ public class Server
 	 *
 	 * @return The server's type
 	 */
-	public int getType()
+	public ServerType getType()
 	{
 		return type;
 	} // end method getType()
@@ -221,10 +211,10 @@ public class Server
 	 *
 	 * @param type The server's new type.  The passed value should be one of the TYPE constants.
 	 */
-	public void setType(int type)
+	public void setType(ServerType type)
 	{
 		this.type = type;
-	} // end method setType(int)
+	} // end method setType(ServerType)
 
 	/**
 	 * Gets the server's institution

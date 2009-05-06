@@ -628,6 +628,18 @@ public class MarcXmlManagerForNormalizationService
 	public ArrayList<String> getField852subfieldBs() { return field852subfieldBs; }
 
 	/**
+	 * The value of the 945 $l value
+	 */
+	private ArrayList<String> field945subfieldLs = new ArrayList<String>();
+
+	/**
+	 * Gets the 945 $l value
+	 *
+	 * @return the MARC XML's 945 $l value
+	 */
+	public ArrayList<String> getField945subfieldLs() { return field945subfieldLs; }
+	
+	/**
 	 * A list of the original 035 fields for the MARC XML
 	 */
 	private ArrayList<Element> original035fields = new ArrayList<Element>();
@@ -1012,6 +1024,16 @@ public class MarcXmlManagerForNormalizationService
 				// Add the 852 $b subfields
 				field852subfieldBs.addAll(subfields);
 			} // end if (852 found)
+			
+			// If the current field is 945, get its subfields
+			else if(tag.equals("945"))
+			{
+				// Get the $b subfields
+				List<String> subfields = getSubfieldValuesOfField(field, 'l');
+
+				// Add the 945 $l subfields
+				field945subfieldLs.addAll(subfields);
+			} // end if (945 found)
 		} // end loop over data fields
 	} // end method initializeMarcDataFields
 
@@ -1127,8 +1149,8 @@ public class MarcXmlManagerForNormalizationService
 				// The indicators should be the same as on the original field
 				newField = new Element("datafield", marcNamespace);
 				newField.setAttribute("tag", copyToTag);
-				newField.setAttribute("ind1", field.getAttributeValue("ind1"));
-				newField.setAttribute("ind2", field.getAttributeValue("ind2"));
+				newField.setAttribute("ind1", "0");
+				newField.setAttribute("ind2", "0");
 
 				// Loop over the field's subfields and copy over the requested ones
 				List<Element> subfields = field.getChildren("subfield", marcNamespace);

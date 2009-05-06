@@ -22,12 +22,14 @@ import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.user.DefaultServerDAO;
 import xc.mst.dao.user.DefaultUserDAO;
+import xc.mst.dao.user.ServerDAO;
 import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
@@ -80,6 +82,32 @@ public class EOTests
 	{
 		try
 		{	
+			ServerDAO dao = new DefaultServerDAO();
+			Server server = new Server();
+			server.setUrl("test");
+			server.setForgotPasswordLabel("fpl");
+			server.setForgotPasswordUrl("fpu");
+			server.setInstitution("inst");
+			server.setName("name");
+			server.setPort(123);
+			server.setShowForgotPasswordLink(false);
+			server.setStartLocation("sl");
+			server.setUserNameAttribute("una");
+			server.setType(Server.ServerType.LDAP);
+			dao.insert(server);
+			
+			int serverId = server.getId();
+			server = null;
+			server = dao.getById(serverId);
+			
+			server.setType(Server.ServerType.NCIP);
+			dao.update(server);
+			
+			serverId = server.getId();
+			server = null;
+			server = dao.getById(serverId);
+			if(true) return;
+			
 			MSTSolrServer.getInstance("8080");
 			MetadataService.runService(2, 0);
 			if(true) return;

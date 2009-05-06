@@ -182,7 +182,7 @@ public class AddLDAP extends ActionSupport
                 while(iter.hasNext())
                    {
                        Server tempServer = (Server)iter.next();
-                       if(tempServer.getType()!=4)
+                       if(tempServer.getType()!=Server.ServerType.LOCAL)
                        {
                            setServer(tempServer);
                            break;
@@ -217,7 +217,7 @@ public class AddLDAP extends ActionSupport
             while(iter.hasNext())
             {
                 Server tempServer = (Server)iter.next();
-                if(tempServer.getType()!=4)
+                if(tempServer.getType()!=Server.ServerType.LOCAL)
                 {
                     serverExists = true;
                     setServer(tempServer);
@@ -230,7 +230,7 @@ public class AddLDAP extends ActionSupport
                 server.setName(getDisplayName());
                 server.setUrl(getServerURL());
                 server.setPort(Integer.parseInt(getPort()));
-                server.setType(1);
+                server.setType(Server.ServerType.LDAP);
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
                 server.setShowForgotPasswordLink(showForgotPasswordLink);
@@ -256,7 +256,7 @@ public class AddLDAP extends ActionSupport
                 server.setName(getDisplayName());
                 server.setUrl(getServerURL());
                 server.setPort(Integer.parseInt(getPort()));
-                server.setType(1);
+                server.setType(Server.ServerType.LDAP);
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
                 server.setShowForgotPasswordLink(showForgotPasswordLink);

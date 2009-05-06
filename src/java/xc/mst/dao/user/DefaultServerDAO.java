@@ -152,7 +152,16 @@ public class DefaultServerDAO extends ServerDAO
 					server.setId(results.getInt(1));
 					server.setUrl(results.getString(2));
 					server.setName(results.getString(3));
-					server.setType(results.getInt(4));
+
+					try 
+					{
+						server.setType(Server.ServerType.class.getEnumConstants()[results.getInt(4)]);
+					} 
+					catch ( ArrayIndexOutOfBoundsException e ) 
+					{
+						server.setType(Server.ServerType.UNDEFINED);
+					}
+					
 					server.setPort(results.getInt(5));
 					server.setUserNameAttribute(results.getString(6));
 					server.setStartLocation(results.getString(7));
@@ -240,7 +249,16 @@ public class DefaultServerDAO extends ServerDAO
 					server.setId(results.getInt(1));
 					server.setUrl(results.getString(2));
 					server.setName(results.getString(3));
-					server.setType(results.getInt(4));
+
+					try 
+					{
+						server.setType(Server.ServerType.class.getEnumConstants()[results.getInt(4)]);
+					} 
+					catch ( ArrayIndexOutOfBoundsException e ) 
+					{
+						server.setType(Server.ServerType.UNDEFINED);
+					}
+					
 					server.setPort(results.getInt(5));
 					server.setUserNameAttribute(results.getString(6));
 					server.setStartLocation(results.getString(7));
@@ -333,7 +351,16 @@ public class DefaultServerDAO extends ServerDAO
 					server.setId(results.getInt(1));
 					server.setUrl(results.getString(2));
 					server.setName(results.getString(3));
-					server.setType(results.getInt(4));
+					
+					try 
+					{
+						server.setType(Server.ServerType.class.getEnumConstants()[results.getInt(4)]);
+					} 
+					catch ( ArrayIndexOutOfBoundsException e ) 
+					{
+						server.setType(Server.ServerType.UNDEFINED);
+					}
+
 					server.setPort(results.getInt(5));
 					server.setUserNameAttribute(results.getString(6));
 					server.setStartLocation(results.getString(7));
@@ -412,7 +439,7 @@ public class DefaultServerDAO extends ServerDAO
 				// Set the parameters on the insert statement
 				psInsert.setString(1, server.getUrl());
 				psInsert.setString(2, server.getName());
-				psInsert.setInt(3, server.getType());
+				psInsert.setInt(3, server.getType().ordinal());
 				psInsert.setInt(4, server.getPort());
 				psInsert.setString(5, server.getUserNameAttribute());
 				psInsert.setString(6, server.getStartLocation());
@@ -502,7 +529,7 @@ public class DefaultServerDAO extends ServerDAO
 				// Set the parameters on the update statement
 				psUpdate.setString(1, server.getUrl());
 				psUpdate.setString(2, server.getName());
-				psUpdate.setInt(3, server.getType());
+				psUpdate.setInt(3, server.getType().ordinal());
 				psUpdate.setInt(4, server.getPort());
 				psUpdate.setString(5, server.getUserNameAttribute());
 				psUpdate.setString(6, server.getStartLocation());

@@ -222,6 +222,11 @@ public class NormalizationServiceConstants
 	public static final String CONFIG_ENABLED_VOYAGER_LOCATION_NAME = "VoyagerLocationName";
 
 	/**
+	 * Parameter for looking up the whether or not the IIILocationName normalization step is enabled.
+	 */
+	public static final String CONFIG_ENABLED_III_LOCATION_NAME = "IIILocationName";
+	
+	/**
 	 * Parameter for looking up the whether or not the SeperateName normalization step is enabled.
 	 */
 	public static final String CONFIG_ENABLED_SEPERATE_NAME = "SeperateName";

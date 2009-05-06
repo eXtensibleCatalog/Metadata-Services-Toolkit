@@ -58,7 +58,7 @@ public class NormalizationService extends MetadataService
 	/**
 	 * The Properties file with the voyager location name mappings
 	 */
-    private Properties voyagerLocationNameProperties = null;
+    private Properties locationNameProperties = null;
 
     /**
      * The Properties file with the DCMI type information for the leader 06
@@ -280,6 +280,9 @@ public class NormalizationService extends MetadataService
 			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_VOYAGER_LOCATION_NAME, "0").equals("1"))
 				normalizedXml = voyagerLocationName(normalizedXml);
 
+			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_III_LOCATION_NAME, "0").equals("1"))
+				normalizedXml = IIILocationName(normalizedXml);
+			
 			if(log.isDebugEnabled())
 				log.debug("Adding errors to the record.");
 			
@@ -1717,9 +1720,9 @@ public class NormalizationService extends MetadataService
 		// Pull the location mapping from the configuration file based on the 852 $l value.
 	    for(String field852subfieldB : field852subfieldBs)
 	    {
-			String location = voyagerLocationNameProperties.getProperty(field852subfieldB.replace(' ', '_'), null);
+			String location = locationNameProperties.getProperty(field852subfieldB.replace(' ', '_'), null);
 
-			// If there was no mapping for the provided leader 06, we can't create the field.  In this case return the unmodified MARCXML
+			// If there was no mapping for the provided 852 $b, we can't create the field.  In this case return the unmodified MARCXML
 			if(location == null)
 			{
 				if(log.isDebugEnabled())
@@ -1738,6 +1741,44 @@ public class NormalizationService extends MetadataService
 		return marcXml;
 	}
 
+	/**
+	 * Replaces the location code in 945 $l with the name of the location it represents.
+	 *
+	 * @param marcXml The original MARCXML record
+	 * @return The MARCXML record after performing this normalization step.
+	 */
+	private MarcXmlManagerForNormalizationService IIILocationName(MarcXmlManagerForNormalizationService marcXml)
+	{
+		if(log.isInfoEnabled())
+			log.info("Entering IIILocationName normalization step.");
+
+		// The 945 $l value
+		ArrayList<String> field945subfieldLs = marcXml.getField945subfieldLs();
+
+		// Pull the location mapping from the configuration file based on the 852 $l value.
+	    for(String field945subfieldL : field945subfieldLs)
+	    {
+			String location = locationNameProperties.getProperty(field945subfieldL.replace(' ', '_'), null);
+
+			// If there was no mapping for the provided 945 $l, we can't create the field.  In this case return the unmodified MARCXML
+			if(location == null)
+			{
+				if(log.isDebugEnabled())
+					log.debug("Cannot find a location mapping for the 945 $l value of " + field945subfieldL + ", returning the unmodified MARCXML.");
+
+				return marcXml;
+			}
+
+			if(log.isDebugEnabled())
+				log.debug("Found the location " + location + " for the 945 $l value of " + field945subfieldL + ".");
+
+			// Set the 945 $l value to the location we found for the location code.
+			marcXml.setMarcXmlSubfield("945", "l", location, field945subfieldL);
+	    }
+
+		return marcXml;
+	}
+	
 	/**
 	 * Copies relevant fields from the 651 datafield into 9xx fields.
 	 *
@@ -1823,9 +1864,9 @@ public class NormalizationService extends MetadataService
 	    	{
 	    		if(line.equals("LOCATION CODE TO LOCATION"))
 	    		{
-	    			if(voyagerLocationNameProperties == null)
-	    				voyagerLocationNameProperties = new Properties();
-	    			current = voyagerLocationNameProperties;
+	    			if(locationNameProperties == null)
+	    				locationNameProperties = new Properties();
+	    			current = locationNameProperties;
 	    		}
 	    		else if(line.equals("LEADER 06 TO DCMI TYPE"))
 	    		{
@@ -1894,7 +1935,7 @@ public class NormalizationService extends MetadataService
 	@Override
 	protected void validateService() throws ServiceValidationException 
 	{
-		if(voyagerLocationNameProperties == null)
+		if(locationNameProperties == null)
 			throw new ServiceValidationException("Service configuration file is missing the required section: LOCATION CODE TO LOCATION");
 		else if(dcmiType06Properties == null)
 			throw new ServiceValidationException("Service configuration file is missing the required section: LEADER 06 TO DCMI TYPE");

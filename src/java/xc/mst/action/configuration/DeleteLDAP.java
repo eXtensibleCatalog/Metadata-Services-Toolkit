@@ -56,7 +56,7 @@ public class DeleteLDAP extends ActionSupport
         while(iter.hasNext())
         {
             Server tempServer = (Server)iter.next();
-            if(tempServer.getType()!=4)
+            if(tempServer.getType()!=Server.ServerType.LOCAL)
             {
                 finalServer = tempServer;
                 break;
@@ -83,7 +83,7 @@ public class DeleteLDAP extends ActionSupport
             while(userIter.hasNext())
             {
                 User user = (User)userIter.next();
-                if(user.getServer().getType()!=4)
+                if(user.getServer().getType()!=Server.ServerType.LOCAL)
                 {
                     deleteFlag = false;
                 }
@@ -93,7 +93,7 @@ public class DeleteLDAP extends ActionSupport
                 while(serverIter.hasNext())
                 {
                     Server server = (Server)serverIter.next();
-                    if(server.getType()!=4)
+                    if(server.getType()!=Server.ServerType.LOCAL)
                     {
                         serverService.deleteServer(server);
                     }
