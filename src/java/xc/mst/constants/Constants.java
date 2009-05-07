@@ -328,4 +328,19 @@ public class Constants
 	public static final String STATUS_SERVICE_ERROR = "ERROR";
 	
 	public static final String STATUS_SERVICE_CANCELED = "CANCELED";
+
+	
+	//*******************************************************************
+	// XC Element Name Constants
+	//*******************************************************************
+	
+	public static final String ELEMENT_TITLE_OF_THE_WORK = "titleOfWork";
+
+	public static final String ELEMENT_CREATOR = "creator";
+
+	public static final String ELEMENT_TITLE_OF_THE_EXPRESSION = "titleOfExpression";
+
+	public static final String ELEMENT_IDENTIFIER_FOR_THE_WORK = "identifierOfTheWork";
+	
+	
 }
