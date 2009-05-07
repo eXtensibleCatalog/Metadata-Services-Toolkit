@@ -96,6 +96,17 @@ public class XCRecord
 	private HashSet<Element> holdingsElements = new HashSet<Element>();
 
 	/**
+	 * A list of expression elements for this XC record
+	 */
+	private HashSet<Element> additionalExpressionElements = new HashSet<Element>();
+
+	/**
+	 * A list of work elements for this XC record
+	 */
+	private HashSet<Element> additionalWorkElements = new HashSet<Element>();
+
+	
+	/**
 	 * Used to ensure that duplicates are not added to the XC record
 	 */
 	private HashSet<String> addedElements = new HashSet<String>();
@@ -230,6 +241,10 @@ public class XCRecord
 		for(String key : linkingFieldToWorkElement.keySet())
 			xcRootElement.addContent("\t").addContent(linkingFieldToWorkElement.get(key).addContent("\n\t")).addContent("\n");
 
+		// Add the extra work elements
+		for(Element workElement : additionalWorkElements)
+			xcRootElement.addContent(workElement.addContent("\n\t")).addContent("\n\t");
+
 		xcRootElement.addContent("\t")
 		             .addContent(xcExpressionElement)
 		             .addContent("\n\t")
@@ -239,6 +254,10 @@ public class XCRecord
 		// Add the holdings elements
 		for(Element holdingsElement : holdingsElements)
 			xcRootElement.addContent("\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n\t");
+
+		// Add the extra expression elements
+		for(Element expressionElement : additionalExpressionElements)
+			xcRootElement.addContent(expressionElement.addContent("\n\t")).addContent("\n\t");
 
 		xcRootElement.addContent(xcItemElement)
 		             .addContent("\n");
@@ -373,6 +392,61 @@ public class XCRecord
 		holdingsElements.add(holdingsElement);
 	}
 
+	/**
+	 * Adds a holdings element to the XC record
+	 *
+	 * @param holdingsElementContent The element to add
+	 */
+	public void addAdditionalExpressionElement(String titleOfExpression)
+	{
+		Element additionalExpressionElement = (Element)xcExpressionElement.clone();
+		Element titleOfExpressionElement = additionalExpressionElement.getChild("titleOfTheExpression", XC_NAMESPACE);
+		
+		if(titleOfExpressionElement != null)
+			titleOfExpressionElement.setText(titleOfExpression);
+		else
+		{
+			titleOfExpressionElement  = new Element(Constants.ELEMENT_TITLE_OF_THE_EXPRESSION, XC_NAMESPACE);
+			titleOfExpressionElement.setText(titleOfExpression);
+		}
+		
+		additionalExpressionElement.addContent("\n\t\t");
+		additionalExpressionElement.addContent(titleOfExpressionElement.detach());
+		additionalExpressionElements.add(additionalExpressionElement);
+	
+	}
+	
+	/**
+	 * Adds a work element to the XC record
+	 *
+	 * @param workElementContent The element to add
+	 */
+	public void addAdditionalWorkElement(String titleOfTheWork, Element creatorElement)
+	{
+		Element additionalWorkElement = (Element)xcWorkElement.clone();
+		
+		
+		Element titleOfWorkEmelent = additionalWorkElement.getChild(Constants.ELEMENT_TITLE_OF_THE_WORK, RDVOCAB_NAMESPACE);
+		if(titleOfWorkEmelent != null)
+			titleOfWorkEmelent.setText(titleOfTheWork);
+		else
+			{
+				titleOfWorkEmelent  = new Element(Constants.ELEMENT_TITLE_OF_THE_WORK, RDVOCAB_NAMESPACE);
+				titleOfWorkEmelent.setText(titleOfTheWork);
+			}
+		
+		additionalWorkElement.addContent("\n\t\t");
+		additionalWorkElement.addContent(titleOfWorkEmelent.detach());
+		if(creatorElement!=null)
+		{
+			additionalWorkElement.addContent("\n\t\t");
+			additionalWorkElement.addContent(creatorElement.detach());
+		}
+		
+		additionalWorkElements.add(additionalWorkElement);
+	}
+	
+	
 	/**
 	 * Adds an element to the XC record to a non-default work level element based on a specific linking field
 	 *
