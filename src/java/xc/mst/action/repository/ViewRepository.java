@@ -17,6 +17,7 @@ import xc.mst.constants.Constants;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.repository.DefaultProviderService;
 import com.opensymphony.xwork2.ActionSupport;
+import xc.mst.manager.repository.ProviderService;
 
 /**
  * This method is used to View the properties of a Repository in the system
@@ -53,7 +54,10 @@ public class ViewRepository extends ActionSupport implements UserAware
 	private String errorType; 
 	
 	/** Error messgae */
-	private String message; 
+	private String message;
+
+    /** Provider Service object **/
+    ProviderService providerService = new DefaultProviderService();
 
       /**
        * Returns the ID of the repository to be viewed
@@ -193,9 +197,7 @@ public class ViewRepository extends ActionSupport implements UserAware
       {
           try
           {
-
-                provider = new DefaultProviderService().getProviderById(repositoryId);
-               
+                provider = new DefaultProviderService().getProviderById(repositoryId);    
                 return SUCCESS;
           }
           catch(Exception e)
@@ -230,6 +232,7 @@ public class ViewRepository extends ActionSupport implements UserAware
               log.error("Repository revalidation was unsuccessful",e);
               this.addFieldError("viewRepositoryError", "Revalidation unsuccessful");
               errorType = "error";
+              setProvider(providerService.getProviderById(repositoryId));
               return SUCCESS;
           }
       }
