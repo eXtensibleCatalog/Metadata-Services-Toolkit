@@ -28,6 +28,7 @@
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
 		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+        <LINK href="page-resources/css/common1.css" rel="stylesheet" type="text/css" >
 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
@@ -84,7 +85,7 @@
                     <table>
                         <tr>
                             <td valign="top">Group Name  &nbsp;&nbsp;</td>
-                            <td><input type="text" id="groupName" name ="groupName" style="width:200px;height:25px;" value="${temporaryGroup.name}" maxlength="255"><br><br></td>
+                            <td><input type="text" id="groupName" name ="groupName" class="textBoxClass" value="${temporaryGroup.name}" maxlength="255"><br><br></td>
                         </tr>
                        
                         <tr>

@@ -15,7 +15,7 @@ YAHOO.xc.mst.processingDirective = {
  {
      try
      {
-        document.editProcessingDirectiveSetsFormats.action= 'editPDCancel.action';
+        document.editProcessingDirectiveSetsFormats.action= 'editProcessingDirectiveCancel.action';
 		document.editProcessingDirectiveSetsFormats.submit();
      }
      catch(err)
@@ -25,7 +25,7 @@ YAHOO.xc.mst.processingDirective = {
  },
  goBack : function()
  {
-     document.editProcessingDirectiveSetsFormats.action= 'editPDGoBack.action';
+     document.editProcessingDirectiveSetsFormats.action= 'editProcessingDirectiveGoBack.action';
      document.editProcessingDirectiveSetsFormats.submit();
  },
  selectAll : function(field, currentField)

@@ -27,6 +27,7 @@
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
 		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+        <LINK href="page-resources/css/common1.css" rel="stylesheet" type="text/css" >
 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
@@ -83,24 +84,24 @@
                    <table>
                        <tr>
                            <td valign="top"><B>Username</B>  &nbsp;&nbsp;</td>
-                           <td><input type="text" id="userName" name ="userName" style="width:200px;height:25px;" value="${temporaryUser.username}" maxlength="255"><br><br></td>
+                           <td><input type="text" id="userName" name ="userName" class="textBoxClass" value="${temporaryUser.username}" maxlength="255"><br><br></td>
                        </tr>
                        
                        
  		                <tr>
 		                  <td valign="top">First Name  &nbsp;&nbsp;</td>
-		                  <td><input type="text" id="firstName" name ="firstName" style="width:200px;height:25px;" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
+		                  <td><input type="text" id="firstName" name ="firstName" class="textBoxClass" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
 		                </tr>
 		
 		                <tr>
 		                  <td valign="top">Last Name  &nbsp;&nbsp;</td>
-		                  <td><input type="text" id="lastName" name ="lastName" style="width:200px;height:25px;" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
+		                  <td><input type="text" id="lastName" name ="lastName" class="textBoxClass" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
 		                </tr>
                        
                        
                        <tr>
                            <td valign="top"><B>Email</B>  &nbsp;&nbsp;</td>
-                           <td><input type="text" id="email" name ="email" style="width:200px;height:25px;" value="${temporaryUser.email}" maxlength="255"><br><br></td>
+                           <td><input type="text" id="email" name ="email" class="textBoxClass" value="${temporaryUser.email}" maxlength="255"><br><br></td>
                        </tr>
                        
                        

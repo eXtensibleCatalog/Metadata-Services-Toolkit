@@ -15,7 +15,7 @@ cancel : function()
  {
      try
      {
-        document.addProcessingDirectiveSetsFormats.action= 'addPDCancel.action';
+        document.addProcessingDirectiveSetsFormats.action= 'addProcessingDirectiveCancel.action';
 		document.addProcessingDirectiveSetsFormats.submit();
      }
      catch(err)
@@ -26,7 +26,7 @@ cancel : function()
 
 goBack : function()
  {
-     document.addProcessingDirectiveSetsFormats.action= 'addPDGoBack.action';
+     document.addProcessingDirectiveSetsFormats.action= 'addProcessingDirectiveGoBack.action';
      document.addProcessingDirectiveSetsFormats.submit();
  },
 

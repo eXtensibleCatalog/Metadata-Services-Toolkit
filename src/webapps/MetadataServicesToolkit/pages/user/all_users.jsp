@@ -214,16 +214,9 @@
                                                 <c:if test="${columnSorted=='UserName'}">
                                                     <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
-                                    <td class="${classColumn}"><a style="text-decoration:none;color:black;" href="${url}"><U>${n.username}</U></a></td>
+                                    <td class="${classColumn}"><a href="${url}"><U>${n.username}</U></a></td>
                                     <td>
-                                        <c:choose>
-                                            <c:when test="${n.server.type==4}">
-                                                Local
-                                            </c:when>
-                                            <c:otherwise>
-                                                LDAP
-                                            </c:otherwise>
-                                        </c:choose>
+                                        ${n.server.type}
                                     </td>
                                                 <c:set var="classColumn" value="plainColumn"/>
                                                 <c:if test="${columnSorted=='LastLogin'}">

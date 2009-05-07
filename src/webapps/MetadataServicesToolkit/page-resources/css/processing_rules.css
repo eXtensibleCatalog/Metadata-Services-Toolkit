@@ -11,10 +11,14 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-listBox
+.listBox
 {
-    width:300px;
     font-family: verdana,sans-serif;
     font-size: 11px;
 }
 
+.textBox1
+{
+    width : 300px;
+    height : 30px;
+}
