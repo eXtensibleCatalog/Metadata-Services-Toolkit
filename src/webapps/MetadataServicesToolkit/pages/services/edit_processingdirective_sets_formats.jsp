@@ -14,7 +14,7 @@
 <c:import url="/inc/doctype-frag.jsp"/>
 
 <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-
+<LINK href="page-resources/css/processing_rules.css" rel="stylesheet" type="text/css" >
 <html>
     <head>
         <title>Edit Processing Directive</title>
@@ -162,15 +162,15 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${empty setList}">
-                                         <div style="width:300px;font-family: verdana,sans-serif;font-size: 11px;">
+                                         <div class="listBox">
                                             <B>Sets</B> <br><br>
                                             <I>No Sets to display</I><br><br>
                                          </div>
                                     </c:when>
                                      <c:otherwise>
-                                         <div style="font-family: verdana,sans-serif;font-size: 11px;">
+                                         <div class="listBox">
                                             <B>Sets</B> <br>
-                                            <select style="width:300px;" multiple size="10" id="setsSelected" name="setsSelected">
+                                            <select multiple size="10" id="setsSelected" name="setsSelected">
                                                 <option value="0"
                                                     <c:if test="${temporaryProcessingDirective.triggeringSets == '[]' || temporaryProcessingDirective.triggeringSets == '[null]'}">
                                                          selected
@@ -230,15 +230,15 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${empty formatList}">
-                                         <div style="width:300px;font-family: verdana,sans-serif;font-size: 11px;">
+                                         <div class="listBox">
                                             <B>Formats</B> <br><br>
                                                 <I>No Formats to display</I>
                                          </div>
                                     </c:when>
                                     <c:otherwise>
-                                        <div style="font-family: verdana,sans-serif;font-size: 11px;">
+                                        <div class="listBox">
                                             <B>Formats</B> <br>
-                                           <select style="width:300px;" multiple size="10" id="formatsSelected" name="formatsSelected">
+                                           <select multiple size="10" id="formatsSelected" name="formatsSelected">
                                                <c:forEach var="n" items="${formatList}" varStatus="a">
                                                     <c:set var="flag" value="${false}"/>
                                                       <c:forEach var="m" items="${temporaryProcessingDirective.triggeringFormats}" varStatus="a1">

@@ -28,6 +28,7 @@
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
 		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+        <LINK href="page-resources/css/configuration.css" rel="stylesheet" type="text/css" >
 
         <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
@@ -91,22 +92,22 @@
 
                         <tr>
                             <td>&nbsp;Outgoing Mail Server(SMTP):  &nbsp;&nbsp;</td>
-                            <td><input type="text" id="emailServerAddress" name ="emailServerAddress" style="width:200px;height:25px;" value="${emailConfig.emailServerAddress}" maxlength="255"><br><br></td>
+                            <td><input type="text" id="emailServerAddress" name ="emailServerAddress" class="textBoxClass" value="${emailConfig.emailServerAddress}" maxlength="255"><br><br></td>
                         </tr>
 
                        <tr>
                            <td>From Address &nbsp;&nbsp;</td>
-                           <td><input type="text" id="fromAddress" name ="fromAddress" style="width:200px;height:25px;" value="${emailConfig.fromAddress}" maxlength="255"><br><br></td>
+                           <td><input type="text" id="fromAddress" name ="fromAddress" class="textBoxClass" value="${emailConfig.fromAddress}" maxlength="255"><br><br></td>
                        </tr>
 
                        <tr>
                            <td>Password &nbsp;&nbsp;</td>
-                           <td><input type="text" id="password" name ="password" style="width:200px;height:25px;" value="${emailConfig.password}" maxlength="255"><br><br></td>
+                           <td><input type="text" id="password" name ="password" class="textBoxClass" value="${emailConfig.password}" maxlength="255"><br><br></td>
                        </tr>
 
                        <tr>
                            <td> Port Number &nbsp;&nbsp;</td>
-                           <td><input type="text" id="port" name ="port" style="width:200px;height:25px;" value="${emailConfig.portNumber}" maxlength="255"></td>
+                           <td><input type="text" id="port" name ="port" class="textBoxClass" value="${emailConfig.portNumber}" maxlength="255"></td>
                        </tr>
 
                        <tr>
@@ -124,7 +125,7 @@
 
                         <tr>
                             <td> Timeout &nbsp;&nbsp;</td>
-                            <td> <input type="text" id="timeout" name ="timeout" style="width:200px;height:25px;" value="${emailConfig.timeout}" maxlength="255"><br><br></td>
+                            <td> <input type="text" id="timeout" name ="timeout" class="textBoxClass" value="${emailConfig.timeout}" maxlength="255"><br><br></td>
                         </tr>
 
                        

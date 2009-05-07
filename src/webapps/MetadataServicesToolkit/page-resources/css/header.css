@@ -46,6 +46,11 @@
 	width: 100%;
 	clear: both;
 }
+#header .a
+{
+    text-decoration:none;
+    color:black;
+}
 #header .x5 {
     padding-left: 15px;
 	padding-top: 20px;

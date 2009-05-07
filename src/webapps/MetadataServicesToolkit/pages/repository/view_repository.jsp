@@ -88,22 +88,22 @@
    	        	<!-- First grid start -->
 		        <div class="yui-u first">
 
-			        <table class="formTable" style="color:#313131;">
+			        <table class="formTable">
 			
 			            
 			            <tr>
-			                <td class="label" style="font-size:13px;color:#313131;">
+			                <td class="label" style="font-size:13px;">
                                 
                                     Repository name : ${provider.name} <br></td>
 			            </tr>
 			            <tr>
-                            <td class="label" style="font-size:13px;color:#313131;">
+                            <td class="label" style="font-size:13px;">
                                
                                    URL : ${provider.oaiProviderUrl}
                             </td>
 			            </tr>
                         <tr>
-                            <td class="label" style="margin-top:20px;font-size:14px;color:#313131">
+                            <td class="label" style="margin-top:20px;font-size:14px;">
                                 <br> Validation Results
                             </td>
                         </tr>
@@ -159,7 +159,7 @@
 			                
 			            </tr>
                         <tr>
-                            <td style="margin-top:15px;color:#313131">
+                            <td style="margin-top:15px;">
                                <ul style="list-style:none;">
                                     <li style="float:left;"><div style="width:150px;"><B>Formats</B> </div> </li>
                                     <li style="float:left;"><div>:</div></li>
@@ -178,7 +178,7 @@
 			            </tr>
 			            <tr>
                             <td>
-                                <ul style="list-style:none;color:#313131;">
+                                <ul style="list-style:none;">
                                     <li style="float:left;"><div style="width:150px;"><B>Sets Supported</B> </div> </li>
                                     <li style="float:left;"><div>:</div></li>
                                     <li style="float:left;">

@@ -13,7 +13,6 @@
 
 <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 
-
 <html>
     <head>
         <title>Configure LDAP Server</title>
@@ -27,7 +26,8 @@
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
 		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
-        
+        <LINK href="page-resources/css/configuration.css" rel="stylesheet" type="text/css" >
+            
         <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
@@ -86,27 +86,27 @@
                    <table>
                         <tr>
                             <td valign="top"> <B>Display Name</B>  &nbsp;&nbsp;</td>
-                            <td><input type="text" id="displayName" name ="displayName" style="width:200px;height:25px;" value="${server.name}" maxlength="255"><br><br></td>
+                            <td><input type="text" id="displayName" name ="displayName" class="textBoxClass" value="${server.name}" maxlength="255"><br><br></td>
                         </tr>
 
                         <tr>
                             <td valign="top"><B>Server URL</B> &nbsp;&nbsp;</td>
-                            <td><input type="text" id="serverURL" name ="serverURL" style="width:200px;height:25px;" value="${server.url}" maxlength="255"><br><br></td>
+                            <td><input type="text" id="serverURL" name ="serverURL" class="textBoxClass" value="${server.url}" maxlength="255"><br><br></td>
                         </tr>
                                       
                         <tr>
                             <td valign="top"> <B>Port</B> &nbsp;&nbsp;</td>
-                            <td><input type="text" id="port" name ="port" style="width:200px;height:25px;" value="${server.port}" maxlength="255"><br><br></td>
+                            <td><input type="text" id="port" name ="port" class="textBoxClass" value="${server.port}" maxlength="255"><br><br></td>
                         </tr>
 
                         <tr>
                             <td valign="top"><B>Username Fieldname</B> &nbsp;&nbsp;</td>
-                            <td><input type="text" id="userNameAttribute" name ="userNameAttribute" style="width:200px;height:25px;" value="${server.userNameAttribute}" maxlength="255"><br><br></td>
+                            <td><input type="text" id="userNameAttribute" name ="userNameAttribute" class="textBoxClass" value="${server.userNameAttribute}" maxlength="255"><br><br></td>
                         </tr>
 
                         <tr>
                             <td valign="top"> <B>LDAP start</B> &nbsp;&nbsp;</td>
-                            <td><input type="text" id="startLocation" name ="startLocation" style="width:200px;height:25px;" value="${server.startLocation}" maxlength="255"></td>
+                            <td><input type="text" id="startLocation" name ="startLocation" class="textBoxClass" value="${server.startLocation}" maxlength="255"></td>
                         </tr>
 
                         <tr>
@@ -124,7 +124,7 @@
                                                 
                         <tr>
                             <td valign="top"> <B>Forgot password URL</B> &nbsp;&nbsp;</td>
-                            <td><input type="text" id="forgotPasswordUrl" name ="forgotPasswordUrl" style="width:200px;height:25px;" value="${server.forgotPasswordUrl}" maxlength="255"></td>
+                            <td><input type="text" id="forgotPasswordUrl" name ="forgotPasswordUrl" class="textBoxClass" value="${server.forgotPasswordUrl}" maxlength="255"></td>
                         </tr>                                                
 
 

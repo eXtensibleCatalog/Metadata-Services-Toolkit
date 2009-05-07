@@ -1,6 +1,6 @@
 /* 
-    Document   : configuration
-    Created on : May 5, 2009, 10:21:20 AM
+    Document   : processing_rules
+    Created on : May 7, 2009, 10:01:25 AM
     Author     : tejaswih
     Description:
         Purpose of the stylesheet follows.
@@ -11,8 +11,10 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-textBoxClass
+listBox
 {
-    width:200px;
-    height:25px;
+    width:300px;
+    font-family: verdana,sans-serif;
+    font-size: 11px;
 }
+
