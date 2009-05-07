@@ -100,7 +100,7 @@ public class DeleteService extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e, e.fillInStackTrace());
+            log.error("Exception occured while deleting Service.", e);
             this.addFieldError("viewRepositoryError", "Service cannot be deleted");
             errorType = "error";
             return INPUT;

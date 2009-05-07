@@ -63,7 +63,7 @@ public class ScheduleServiceTest {
 
   try
         {
-   ServerService serverService = new DefaultServerService();
+	  	    ServerService serverService = new DefaultServerService();
             User user = new DefaultUserService().getUserByUserName("admin", serverService.getServerByName("Local"));
 
             Provider provider = new Provider();

@@ -144,6 +144,7 @@ public class UserRegistration extends ActionSupport {
 				return INPUT;
 			}
 		} catch (Exception e) {
+      		log.error("Exception occured while saving user registeration information", e);
 			addFieldError("dataError", e.getMessage());
 			errorType = "error";
 			return INPUT;

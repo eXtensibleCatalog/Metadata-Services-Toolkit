@@ -56,11 +56,11 @@ public class ChangePassword extends ActionSupport implements  UserAware, Servlet
 	 * Change password
 	 */
 	public String changePassword() throws Exception {
-		log.debug(ChangePassword.class + ":changePassword():user.getPassword() : " + user.getPassword());
-		log.debug(ChangePassword.class + ":changePassword(): old Password : " + oldPassword);
-		log.debug(ChangePassword.class + ":changePassword(): encrypted old getPassword()" + userService.encryptPassword(oldPassword));
-		log.debug(ChangePassword.class + ":changePassword():newPassword: " + newPassword);
-		log.debug(ChangePassword.class + ":changePassword(): encrypted newPassword: " + userService.encryptPassword(newPassword));
+		
+		if (log.isDebugEnabled()){
+			log.debug("Change password for user with user name:" + user.getUsername());
+		}
+		
 		if (user.getPassword().equals(userService.encryptPassword(oldPassword)))
 		{
 			user.setPassword(userService.encryptPassword(newPassword));

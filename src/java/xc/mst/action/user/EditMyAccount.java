@@ -92,6 +92,7 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 					return INPUT;
 				}
 		} catch (Exception e) {
+			log.error("Exception occured while saving user account information", e);
 			addFieldError("dataError", e.getMessage());
 			errorType = "error";
 			return INPUT;
