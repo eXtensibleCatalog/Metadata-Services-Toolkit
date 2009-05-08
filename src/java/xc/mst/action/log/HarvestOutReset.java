@@ -42,7 +42,75 @@ public class HarvestOutReset extends ActionSupport
 
 	/** Error type */
 	private String errorType; 
-	
+
+    /**
+     * Overrides default implementation to reset the 'Harvest-Out Logs' for a service.
+     *
+     * @return {@link #SUCCESS}
+     */
+    @Override
+    public String execute()
+    {
+        try
+        {
+            Service tempService = servicesService.getServiceById(serviceId);
+            tempService.setHarvestOutLastLogReset(new Date());
+            tempService.setHarvestOutWarnings(0);
+            tempService.setHarvestOutErrors(0);
+            tempService.setHarvestOutRecordsAvailable(0);
+            tempService.setHarvestOutRecordsHarvested(0);
+            servicesService.updateService(tempService);
+            String filename = harvestOutLogFileName;
+            PrintWriter printWriter = new PrintWriter(filename);
+            printWriter.close();
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.error("There was an error resetting the Harvest-Out log files",e);
+            this.addFieldError("harvestOutResetError", "There was an error resetting the Harvest-Out log files");
+            errorType = "error";
+            return SUCCESS;
+        }
+    }
+
+    /**
+     * Resets all the harvest-out log files relating to services
+     *
+     * @return {@link #SUCCESS}
+     */
+    public String resetAll()
+    {
+        try
+        {
+            List<Service> serviceList = servicesService.getAllServices();
+            Iterator<Service> harvIter = serviceList.iterator();
+            while(harvIter.hasNext())
+            {
+                
+                Service tempService = (Service)harvIter.next();
+                tempService.setHarvestOutLastLogReset(new Date());
+                tempService.setHarvestOutWarnings(0);
+                tempService.setHarvestOutErrors(0);
+                tempService.setHarvestOutRecordsAvailable(0);
+                tempService.setHarvestOutRecordsHarvested(0);
+                servicesService.updateService(tempService);
+                String filename = tempService.getHarvestOutLogFileName();
+                PrintWriter printWriter = new PrintWriter(filename);
+                printWriter.close();
+            }
+           
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.error("There was an error resetting the Harvest-Out log files",e);
+            this.addFieldError("harvestOutResetError", "There was an error resetting the Harvest-Out log files");
+            errorType = "error";
+            return SUCCESS;
+        }
+    }
+
      /**
      * Sets the Service ID of the Service whose Service Logs need to be reset
      *
@@ -84,37 +152,6 @@ public class HarvestOutReset extends ActionSupport
     }
 
     /**
-     * Overrides default implementation to reset the 'Harvest-Out Logs' for a service.
-     *
-     * @return {@link #SUCCESS}
-     */
-    @Override
-    public String execute()
-    {
-        try
-        {
-            Service tempService = servicesService.getServiceById(serviceId);
-            tempService.setHarvestOutLastLogReset(new Date());
-            tempService.setHarvestOutWarnings(0);
-            tempService.setHarvestOutErrors(0);
-            tempService.setHarvestOutRecordsAvailable(0);
-            tempService.setHarvestOutRecordsHarvested(0);
-            servicesService.updateService(tempService);
-            String filename = harvestOutLogFileName;
-            PrintWriter printWriter = new PrintWriter(filename);
-            printWriter.close();
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("There was an error resetting the Harvest-Out log files",e);
-            this.addFieldError("harvestOutResetError", "There was an error resetting the Harvest-Out log files");
-            errorType = "error";
-            return SUCCESS;
-        }
-    }
-
-    /**
      * Returns the error type
      *
      * @return error type
@@ -131,41 +168,4 @@ public class HarvestOutReset extends ActionSupport
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
-
-    /**
-     * Resets all the harvest-out log files relating to services
-     *
-     * @return {@link #SUCCESS}
-     */
-    public String resetAll()
-    {
-        try
-        {
-            List<Service> serviceList = servicesService.getAllServices();
-            Iterator<Service> harvIter = serviceList.iterator();
-            while(harvIter.hasNext())
-            {
-                
-                Service tempService = (Service)harvIter.next();
-                tempService.setHarvestOutLastLogReset(new Date());
-                tempService.setHarvestOutWarnings(0);
-                tempService.setHarvestOutErrors(0);
-                tempService.setHarvestOutRecordsAvailable(0);
-                tempService.setHarvestOutRecordsHarvested(0);
-                servicesService.updateService(tempService);
-                String filename = tempService.getHarvestOutLogFileName();
-                PrintWriter printWriter = new PrintWriter(filename);
-                printWriter.close();
-            }
-           
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("There was an error resetting the Harvest-Out log files",e);
-            this.addFieldError("harvestOutResetError", "There was an error resetting the Harvest-Out log files");
-            errorType = "error";
-            return SUCCESS;
-        }
-    }
 }

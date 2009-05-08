@@ -58,7 +58,93 @@ public class AddGroup extends ActionSupport
     /** Permission Service object */
     private PermissionService permissionService = new DefaultPermissionService();
 
+     /**
+     * Overrides default implementation to view the add group page.
+      *
+     * @return {@link #SUCCESS}
+     */
+    @Override
+    public String execute()
+    {
+        try
+        {
+            setTabNames(permissionService.getAllPermissions());
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.error("The Add group Page could not be displayed correctly",e);
+            this.addFieldError("addGroupError", "The Add group Page could not be displayed correctly");
+            errorType = "error";
+            return INPUT;
+        }
+    }
+
     /**
+     * Method that actually adds a group to the system
+     *
+     * @return {@link #SUCCESS}
+     */
+    public String addGroup()
+    {
+        try
+        {
+            
+            Group group = new Group();
+            group.setName(groupName);
+            group.setDescription(groupDescription);
+            
+            Group tempGroup = groupService.getGroupByName(groupName);
+            if(tempGroup!=null)
+            {
+                
+                setTemporaryGroup(group);
+                setTabNames(permissionService.getAllPermissions());
+                this.addFieldError("addGroupError", "A group with the same name already exists");
+                errorType = "error";
+                return INPUT;
+                
+            }
+            
+
+            for(int i=0;i<permissionsSelected.length;i++)
+            {
+                int permissionId = Integer.parseInt(permissionsSelected[i]);
+                group.addPermission(permissionService.getPermissionById(permissionId));
+            }
+
+            groupService.insertGroup(group);
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.error("Group could not be added properly",e);
+            this.addFieldError("addGroupError", "Group could not be added properly");
+            errorType = "error";
+            return INPUT;
+        }
+
+    }
+
+	/**
+     * Returns error type
+     *
+     * @return error type
+     */
+	public String getErrorType() {
+		return errorType;
+	}
+
+    /**
+     * Sets error type
+     * 
+     * @param errorType error type
+     */
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
+
+       /**
      * Sets the group name to the specified value.
      *
      * @param groupName The name of the group
@@ -176,90 +262,4 @@ public class AddGroup extends ActionSupport
     {
         return tabNames;
     }
-
-     /**
-     * Overrides default implementation to view the add group page.
-      *
-     * @return {@link #SUCCESS}
-     */
-    @Override
-    public String execute()
-    {
-        try
-        {
-            setTabNames(permissionService.getAllPermissions());
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("The Add group Page could not be displayed correctly",e);
-            this.addFieldError("addGroupError", "The Add group Page could not be displayed correctly");
-            errorType = "error";
-            return INPUT;
-        }
-    }
-
-    /**
-     * Method that actually adds a group to the system
-     *
-     * @return {@link #SUCCESS}
-     */
-    public String addGroup()
-    {
-        try
-        {
-            
-            Group group = new Group();
-            group.setName(groupName);
-            group.setDescription(groupDescription);
-            
-            Group tempGroup = groupService.getGroupByName(groupName);
-            if(tempGroup!=null)
-            {
-                
-                setTemporaryGroup(group);
-                setTabNames(permissionService.getAllPermissions());
-                this.addFieldError("addGroupError", "A group with the same name already exists");
-                errorType = "error";
-                return INPUT;
-                
-            }
-            
-
-            for(int i=0;i<permissionsSelected.length;i++)
-            {
-                int permissionId = Integer.parseInt(permissionsSelected[i]);
-                group.addPermission(permissionService.getPermissionById(permissionId));
-            }
-
-            groupService.insertGroup(group);
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("Group could not be added properly",e);
-            this.addFieldError("addGroupError", "Group could not be added properly");
-            errorType = "error";
-            return INPUT;
-        }
-
-    }
-
-	/**
-     * Returns error type
-     *
-     * @return error type
-     */
-	public String getErrorType() {
-		return errorType;
-	}
-
-    /**
-     * Sets error type
-     * 
-     * @param errorType error type
-     */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
 }

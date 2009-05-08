@@ -50,16 +50,95 @@ public class ViewRepository extends ActionSupport implements UserAware
 	  /** Boolean value that denotes success or failure */
 	  private String Identify;
       
-	/** Error type */
-	private String errorType; 
+      /** Error type */
+	  private String errorType;
 	
-	/** Error messgae */
-	private String message;
+	  /** Error messgae */
+	  private String message;
 
-    /** Provider Service object **/
-    ProviderService providerService = new DefaultProviderService();
+      /** Provider Service object **/
+      private ProviderService providerService = new DefaultProviderService();
+
+     
+
+     /**
+     * Overrides default implementation to view the details of a repository.
+      *
+     * @return {@link #SUCCESS}
+     */
+      @Override
+      public String execute()
+      {
+          try
+          {
+                provider = new DefaultProviderService().getProviderById(repositoryId);    
+                return SUCCESS;
+          }
+          catch(Exception e)
+          {
+              log.error("Repository details cannot be displayed",e);
+              this.addFieldError("allRepositoryError", "Repository details cannot be displayed");
+              errorType = "error";
+              return SUCCESS;
+          }
+
+
+      }
 
       /**
+       * This method validates a Repository/Provider
+       * 
+       * @return returns the status of the operation and re-directs accordingly
+       */
+      public String validateRepository()
+      {
+          try
+          {
+                ValidateRepository vr = new ValidateRepository();
+                vr.validate(getRepositoryId());
+                message = "Repository revalidated!";
+                errorType = "info";
+                execute();
+                return SUCCESS;
+          }
+          catch(Exception e)
+          {
+              log.error("Repository revalidation was unsuccessful",e);
+              this.addFieldError("viewRepositoryError", "Revalidation unsuccessful");
+              errorType = "error";
+              setProvider(providerService.getProviderById(repositoryId));
+              return SUCCESS;
+          }
+      }
+
+	/**
+     * Returns error type
+     *
+     * @return error type
+     */
+	public String getErrorType() {
+		return errorType;
+	}
+
+    /**
+     * Sets error type
+     *
+     * @param errorType error type
+     */
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
+
+    /**
+     * Returns the information message which describes the status of the revalidation operation
+     * 
+     * @return information message
+     */
+	public String getMessage() {
+		return message;
+	}
+
+     /**
        * Returns the ID of the repository to be viewed
        *
        * @return The ID of the repository
@@ -78,11 +157,6 @@ public class ViewRepository extends ActionSupport implements UserAware
       {
 
           this.repositoryId = Integer.parseInt(repoId);
-      }
-
-      public ViewRepository()
-      {
-          repositoryId = 0;
       }
 
       /**
@@ -186,81 +260,4 @@ public class ViewRepository extends ActionSupport implements UserAware
           return Identify;
       }
      
-
-     /**
-     * Overrides default implementation to view the details of a repository.
-      *
-     * @return {@link #SUCCESS}
-     */
-      @Override
-      public String execute()
-      {
-          try
-          {
-                provider = new DefaultProviderService().getProviderById(repositoryId);    
-                return SUCCESS;
-          }
-          catch(Exception e)
-          {
-              log.error("Repository details cannot be displayed",e);
-              this.addFieldError("allRepositoryError", "Repository details cannot be displayed");
-              errorType = "error";
-              return SUCCESS;
-          }
-
-
-      }
-
-      /**
-       * This method validates a Repository/Provider
-       * 
-       * @return returns the status of the operation and re-directs accordingly
-       */
-      public String validateRepository()
-      {
-          try
-          {
-                ValidateRepository vr = new ValidateRepository();
-                vr.validate(getRepositoryId());
-                message = "Repository revalidated!";
-                errorType = "info";
-                execute();
-                return SUCCESS;
-          }
-          catch(Exception e)
-          {
-              log.error("Repository revalidation was unsuccessful",e);
-              this.addFieldError("viewRepositoryError", "Revalidation unsuccessful");
-              errorType = "error";
-              setProvider(providerService.getProviderById(repositoryId));
-              return SUCCESS;
-          }
-      }
-
-	/**
-     * Returns error type
-     *
-     * @return error type
-     */
-	public String getErrorType() {
-		return errorType;
-	}
-
-    /**
-     * Sets error type
-     *
-     * @param errorType error type
-     */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
-
-    /**
-     * Returns the information message which describes the status of the revalidation operation
-     * 
-     * @return information message
-     */
-	public String getMessage() {
-		return message;
-	}
 }

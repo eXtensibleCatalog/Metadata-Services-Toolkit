@@ -26,26 +26,6 @@ public class GeneralLogReset extends ActionSupport
     private LogService logService = new DefaultLogService();
 
     /**
-     * Sets the log ID
-     *
-     * @param logId ID of the log
-     */
-    public void setLogId(int logId)
-    {
-        this.logId = logId;
-    }
-
-    /**
-     * Returns the log ID
-     *
-     * @return log ID
-     */
-    public int getLogId()
-    {
-        return this.logId;
-    }
-
-    /**
      * Resets the general log file corresponding to the given log ID
      *
      * @return {@link #SUCCESS}
@@ -103,5 +83,25 @@ public class GeneralLogReset extends ActionSupport
             this.addFieldError("generalLogResetAll", "There was a problem resetting all the general log files");
             return SUCCESS;
         }
+    }
+
+     /**
+     * Sets the log ID
+     *
+     * @param logId ID of the log
+     */
+    public void setLogId(int logId)
+    {
+        this.logId = logId;
+    }
+
+    /**
+     * Returns the log ID
+     *
+     * @return log ID
+     */
+    public int getLogId()
+    {
+        return this.logId;
     }
 }

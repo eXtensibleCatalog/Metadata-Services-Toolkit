@@ -70,147 +70,6 @@ public class AddLocalUser extends ActionSupport
 	/** Error type */
 	private String errorType; 
 	
-
-    /**
-     * Sets temporary user object
-     *
-     * @param user temporary user object
-     */
-    public void setTemporaryUser(User user)
-    {
-        this.temporaryUser = user;
-    }
-
-    /**
-     * Returns temporary user object
-     *
-     * @return temporary user
-     */
-    public User getTemporaryUser()
-    {
-        return temporaryUser;
-    }
-
-    /**
-     * Sets the user name for the local user
-     *
-     * @param userName user Name
-     */
-    public void setUserName(String userName)
-    {
-        this.userName = userName.trim();
-    }
-
-    /**
-     * Returns the local name for the user
-     *
-     * @return user name
-     */
-    public String getUserName()
-    {
-        return this.userName;
-    }
-
-    /**
-     * Assigns the list of groups that a user can belong to
-     *
-     * @param groupList list of groups
-     */
-    public void setGroupList(List<Group> groupList)
-    {
-        this.groupList = groupList;
-    }
-
-    /**
-     * Returns a list of groups that a user can belong to
-     *
-     * @return list of groups
-     */
-    public List<Group> getGroupList()
-    {
-        return groupList;
-    }
-
-    /**
-     * Sets the email ID of the user
-     *
-     * @param email email ID
-     */
-    public void setEmail(String email)
-    {
-        this.email = email.trim();
-    }
-
-    /**
-     * Returns the email ID of the user
-     *
-     * @return email ID
-     */
-    public String getEmail()
-    {
-        return email;
-    }
-
-    /**
-     * Sets the password of the user
-     *
-     * @param password The password to be assigned
-     */
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    /**
-     * Returns the password of the user
-     *
-     * @return user's password
-     */
-    public String getPassword()
-    {
-        return password;
-    }
-
-     /**
-     * Sets the list of groups that the user has been assigned
-      *
-     * @param selectedGroupList list of selected groups
-     */
-    public void setGroupsSelected(String[] groupsSelected)
-    {
-        this.groupsSelected = groupsSelected;
-    }
-
-    /**
-     * Returns the list of groups that have been assigned to the user
-     *
-     * @return list of selected groups
-     */
-    public String[] getGroupsSelected()
-    {
-        return groupsSelected;
-    }
-
-    /**
-     * Sets the list of groups that the user has been assigned (used to pre-fill JSP form fields)
-     *
-     * @param selectedGroupList list of selected groups
-     */
-    public void setSelectedGroups(String[] selectedGroups)
-    {
-        this.selectedGroups = selectedGroups;
-    }
-
-    /**
-     * Returns the list of groups that have been assigned to the user (used to pre-fill JSP form fields)
-     *
-     * @return list of selected groups
-     */
-    public String[] getSelectedGroups()
-    {
-        return selectedGroups;
-    }
-
      /**
      * Overrides default implementation to view the add local user page.
       *
@@ -353,4 +212,145 @@ public class AddLocalUser extends ActionSupport
 	public void setLastName(String lastName) {
 		this.lastName = lastName.trim();
 	}
+
+     /**
+     * Sets temporary user object
+     *
+     * @param user temporary user object
+     */
+    public void setTemporaryUser(User user)
+    {
+        this.temporaryUser = user;
+    }
+
+    /**
+     * Returns temporary user object
+     *
+     * @return temporary user
+     */
+    public User getTemporaryUser()
+    {
+        return temporaryUser;
+    }
+
+    /**
+     * Sets the user name for the local user
+     *
+     * @param userName user Name
+     */
+    public void setUserName(String userName)
+    {
+        this.userName = userName.trim();
+    }
+
+    /**
+     * Returns the local name for the user
+     *
+     * @return user name
+     */
+    public String getUserName()
+    {
+        return this.userName;
+    }
+
+    /**
+     * Assigns the list of groups that a user can belong to
+     *
+     * @param groupList list of groups
+     */
+    public void setGroupList(List<Group> groupList)
+    {
+        this.groupList = groupList;
+    }
+
+    /**
+     * Returns a list of groups that a user can belong to
+     *
+     * @return list of groups
+     */
+    public List<Group> getGroupList()
+    {
+        return groupList;
+    }
+
+    /**
+     * Sets the email ID of the user
+     *
+     * @param email email ID
+     */
+    public void setEmail(String email)
+    {
+        this.email = email.trim();
+    }
+
+    /**
+     * Returns the email ID of the user
+     *
+     * @return email ID
+     */
+    public String getEmail()
+    {
+        return email;
+    }
+
+    /**
+     * Sets the password of the user
+     *
+     * @param password The password to be assigned
+     */
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    /**
+     * Returns the password of the user
+     *
+     * @return user's password
+     */
+    public String getPassword()
+    {
+        return password;
+    }
+
+     /**
+     * Sets the list of groups that the user has been assigned
+      *
+     * @param selectedGroupList list of selected groups
+     */
+    public void setGroupsSelected(String[] groupsSelected)
+    {
+        this.groupsSelected = groupsSelected;
+    }
+
+    /**
+     * Returns the list of groups that have been assigned to the user
+     *
+     * @return list of selected groups
+     */
+    public String[] getGroupsSelected()
+    {
+        return groupsSelected;
+    }
+
+    /**
+     * Sets the list of groups that the user has been assigned (used to pre-fill JSP form fields)
+     *
+     * @param selectedGroupList list of selected groups
+     */
+    public void setSelectedGroups(String[] selectedGroups)
+    {
+        this.selectedGroups = selectedGroups;
+    }
+
+    /**
+     * Returns the list of groups that have been assigned to the user (used to pre-fill JSP form fields)
+     *
+     * @return list of selected groups
+     */
+    public String[] getSelectedGroups()
+    {
+        return selectedGroups;
+    }
+
 }

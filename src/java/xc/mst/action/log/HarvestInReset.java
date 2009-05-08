@@ -43,6 +43,93 @@ public class HarvestInReset extends ActionSupport
 	/** Error type */
 	private String errorType; 
 
+    /**
+     * Overrides default implementation to reset the 'Harvest-In Logs' for a service.
+     *
+     * @return {@link #SUCCESS}
+     */
+    @Override
+    public String execute()
+    {
+        try
+        {
+            Provider provider = providerService.getProviderById(providerId);
+            provider.setErrors(0);
+            provider.setWarnings(0);
+            provider.setRecordsAdded(0);
+            provider.setRecordsReplaced(0);
+            provider.setLastLogReset(new Date());
+            providerService.updateProvider(provider);
+            String filename = provider.getLogFileName();
+            PrintWriter printWriter = new PrintWriter(filename);
+            printWriter.close();
+
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.error("There was an error resetting the Harvest-In log files",e);
+            this.addFieldError("harvestInResetError", "There was an error resetting the Harvest-In log files");
+            errorType = "error";
+            return SUCCESS;
+        }
+    }
+
+   
+
+    /**
+     * Resets all the logs that are related to the providers
+     *
+     * @return {@link #SUCCESS}
+     */
+    public String resetAll()
+    {
+        try
+        {
+            List<Provider> providerList = providerService.getAllProviders();
+            Iterator<Provider> provIter = providerList.iterator();
+            while(provIter.hasNext())
+            {
+                Provider provider = (Provider)provIter.next();
+                provider.setErrors(0);
+                provider.setWarnings(0);
+                provider.setRecordsAdded(0);
+                provider.setRecordsReplaced(0);
+                provider.setLastLogReset(new Date());
+                providerService.updateProvider(provider);
+                String filename = provider.getLogFileName();
+                PrintWriter printWriter = new PrintWriter(filename);
+                printWriter.close();
+            }
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.error("There was an error resetting the Harvest-In log files",e);
+            this.addFieldError("harvestInResetError", "There was an error resetting the Harvest-In log files");
+            errorType = "error";
+            return SUCCESS;
+        }
+    }
+
+     /**
+     * Returns error type
+     *
+     * @return error type
+     */
+	public String getErrorType() {
+		return errorType;
+	}
+
+    /**
+     * Sets the error type
+     *
+     * @param errorType error type
+     */
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
+
      /**
      * Sets the Provider ID of the provider whose logs are to be reset
       *
@@ -81,90 +168,5 @@ public class HarvestInReset extends ActionSupport
     public String getHarvestInLogFileName()
     {
         return this.harvestInLogFileName;
-    }
-
-    /**
-     * Overrides default implementation to reset the 'Harvest-In Logs' for a service.
-     *
-     * @return {@link #SUCCESS}
-     */
-    @Override
-    public String execute()
-    {
-        try
-        {
-            Provider provider = providerService.getProviderById(providerId);
-            provider.setErrors(0);
-            provider.setWarnings(0);
-            provider.setRecordsAdded(0);
-            provider.setRecordsReplaced(0);
-            provider.setLastLogReset(new Date());
-            providerService.updateProvider(provider);
-            String filename = provider.getLogFileName();
-            PrintWriter printWriter = new PrintWriter(filename);
-            printWriter.close();
-
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("There was an error resetting the Harvest-In log files",e);
-            this.addFieldError("harvestInResetError", "There was an error resetting the Harvest-In log files");
-            errorType = "error";
-            return SUCCESS;
-        }
-    }
-
-    /**
-     * Returns error type
-     *
-     * @return error type
-     */
-	public String getErrorType() {
-		return errorType;
-	}
-    
-    /**
-     * Sets the error type
-     *
-     * @param errorType error type
-     */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
-
-    /**
-     * Resets all the logs that are related to the providers
-     *
-     * @return {@link #SUCCESS}
-     */
-    public String resetAll()
-    {
-        try
-        {
-            List<Provider> providerList = providerService.getAllProviders();
-            Iterator<Provider> provIter = providerList.iterator();
-            while(provIter.hasNext())
-            {
-                Provider provider = (Provider)provIter.next();
-                provider.setErrors(0);
-                provider.setWarnings(0);
-                provider.setRecordsAdded(0);
-                provider.setRecordsReplaced(0);
-                provider.setLastLogReset(new Date());
-                providerService.updateProvider(provider);
-                String filename = provider.getLogFileName();
-                PrintWriter printWriter = new PrintWriter(filename);
-                printWriter.close();
-            }
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("There was an error resetting the Harvest-In log files",e);
-            this.addFieldError("harvestInResetError", "There was an error resetting the Harvest-In log files");
-            errorType = "error";
-            return SUCCESS;
-        }
     }
 }

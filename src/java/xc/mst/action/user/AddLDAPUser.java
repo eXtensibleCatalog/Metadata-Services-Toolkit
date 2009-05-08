@@ -71,152 +71,8 @@ public class AddLDAPUser extends ActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-
 	/** Error type */
 	private String errorType; 
-	
-
-
-    /**
-     * Sets list of all servers
-     *
-     * @param serversList server list
-     */
-    public void setServersList(List<Server> serversList)
-    {
-        this.serversList = serversList;
-    }
-
-    /**
-     * Returns the list of all servers
-     *
-     * @return server list
-     */
-    public List<Server> getServersList()
-    {
-        return serversList;
-    }
-
-    /**
-     * Assigns the list of groups that a user can belong to
-     *
-     * @param groupList list of groups
-     */
-    public void setGroupList(List<Group> groupList)
-    {
-        this.groupList = groupList;
-    }
-
-    /**
-     * Returns a list of groups that a user can belong to
-     *
-     * @return list of groups
-     */
-    public List<Group> getGroupList()
-    {
-        return groupList;
-    }
-
-    /**
-     * Sets the email ID of the user
-     *
-     * @param email email ID
-     */
-    public void setEmail(String email)
-    {
-        this.email = email.trim();
-    }
-
-    /**
-     * Returns the email ID of the user
-     *
-     * @return email ID
-     */
-    public String getEmail()
-    {
-        return email;
-    }
-
-   /**
-     * Sets the username of the LDAP user
-    *
-     * @param userName user name
-     */
-    public void setUserName(String userName)
-    {
-        this.userName = userName.trim();
-    }
-
-    /**
-     * Returns the user name of the user
-     *
-     * @return user Name
-     */
-    public String getUserName()
-    {
-        return userName;
-    }
-
-     /**
-     * Sets the list of groups that the user has been assigned
-      *
-     * @param selectedGroupList list of selected groups
-     */
-    public void setGroupsSelected(String[] groupsSelected)
-    {
-        this.groupsSelected = groupsSelected;
-    }
-
-    /**
-     * Returns the list of groups that have been assigned to the user
-     *
-     * @return list of selected groups
-     */
-    public String[] getGroupsSelected()
-    {
-        return groupsSelected;
-    }
-
-    /**
-     * Sets the list of groups that the user has been assigned (used to pre-fill JSP form fields)
-     *
-     * @param selectedGroupList list of selected groups
-     */
-    public void setSelectedGroups(String[] selectedGroups)
-    {
-        this.selectedGroups = selectedGroups;
-    }
-
-    /**
-     * Returns the list of groups that have been assigned to the user (used to pre-fill JSP form fields)
-     *
-     * @return list of selected groups
-     */
-    public String[] getSelectedGroups()
-    {
-        return selectedGroups;
-    }
-
-    /**
-     * Sets the temporary user object which is used to populate JSP form fields
-     *
-     * @param user LDAP user object
-     */
-    public void setTemporaryUser(User user)
-    {
-        this.temporaryUser = user;
-    }
-
-    /**
-     * Returns the temporary user object
-     *
-     * @return user object
-     */
-    public User getTemporaryUser()
-    {
-        return temporaryUser;
-    }
-
 
      /**
      * Overrides default implementation to view the 'add NCIP user' page.
@@ -384,4 +240,145 @@ public class AddLDAPUser extends ActionSupport
 	public void setLastName(String lastName) {
 		this.lastName = lastName.trim();
 	}
+
+     /**
+     * Sets list of all servers
+     *
+     * @param serversList server list
+     */
+    public void setServersList(List<Server> serversList)
+    {
+        this.serversList = serversList;
+    }
+
+    /**
+     * Returns the list of all servers
+     *
+     * @return server list
+     */
+    public List<Server> getServersList()
+    {
+        return serversList;
+    }
+
+    /**
+     * Assigns the list of groups that a user can belong to
+     *
+     * @param groupList list of groups
+     */
+    public void setGroupList(List<Group> groupList)
+    {
+        this.groupList = groupList;
+    }
+
+    /**
+     * Returns a list of groups that a user can belong to
+     *
+     * @return list of groups
+     */
+    public List<Group> getGroupList()
+    {
+        return groupList;
+    }
+
+    /**
+     * Sets the email ID of the user
+     *
+     * @param email email ID
+     */
+    public void setEmail(String email)
+    {
+        this.email = email.trim();
+    }
+
+    /**
+     * Returns the email ID of the user
+     *
+     * @return email ID
+     */
+    public String getEmail()
+    {
+        return email;
+    }
+
+   /**
+     * Sets the username of the LDAP user
+    *
+     * @param userName user name
+     */
+    public void setUserName(String userName)
+    {
+        this.userName = userName.trim();
+    }
+
+    /**
+     * Returns the user name of the user
+     *
+     * @return user Name
+     */
+    public String getUserName()
+    {
+        return userName;
+    }
+
+     /**
+     * Sets the list of groups that the user has been assigned
+      *
+     * @param selectedGroupList list of selected groups
+     */
+    public void setGroupsSelected(String[] groupsSelected)
+    {
+        this.groupsSelected = groupsSelected;
+    }
+
+    /**
+     * Returns the list of groups that have been assigned to the user
+     *
+     * @return list of selected groups
+     */
+    public String[] getGroupsSelected()
+    {
+        return groupsSelected;
+    }
+
+    /**
+     * Sets the list of groups that the user has been assigned (used to pre-fill JSP form fields)
+     *
+     * @param selectedGroupList list of selected groups
+     */
+    public void setSelectedGroups(String[] selectedGroups)
+    {
+        this.selectedGroups = selectedGroups;
+    }
+
+    /**
+     * Returns the list of groups that have been assigned to the user (used to pre-fill JSP form fields)
+     *
+     * @return list of selected groups
+     */
+    public String[] getSelectedGroups()
+    {
+        return selectedGroups;
+    }
+
+    /**
+     * Sets the temporary user object which is used to populate JSP form fields
+     *
+     * @param user LDAP user object
+     */
+    public void setTemporaryUser(User user)
+    {
+        this.temporaryUser = user;
+    }
+
+    /**
+     * Returns the temporary user object
+     *
+     * @return user object
+     */
+    public User getTemporaryUser()
+    {
+        return temporaryUser;
+    }
+
 }

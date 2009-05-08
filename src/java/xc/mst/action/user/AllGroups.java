@@ -46,66 +46,6 @@ public class AllGroups extends ActionSupport
 	/** Error type */
 	private String errorType; 
 	
-    /**
-     * Assigns the list of groups that a user can belong to
-     *
-     * @param groupList list of groups
-     */
-    public void setGroupList(List<Group> groupList)
-    {
-        this.groupList = groupList;
-    }
-
-    /**
-     * Returns a list of groups that a user can belong to
-     *
-     * @return list of groups
-     */
-    public List<Group> getGroupList()
-    {
-        return groupList;
-    }
-
-    /**
-     * Sets the boolean value which determines if the rows are to be sorted in ascending order
-     *
-     * @param isAscendingOrder
-     */
-    public void setIsAscendingOrder(boolean isAscendingOrder)
-    {
-        this.isAscendingOrder = isAscendingOrder;
-    }
-
-    /**
-     * Gets the boolean value which determines if the rows are to be sorted in ascending order
-     *
-     * @param isAscendingOrder
-     */
-    public boolean getIsAscendingOrder()
-    {
-        return this.isAscendingOrder;
-    }
-
-    /**
-     * Sets the name of the column on which the sorting should be performed
-     *
-     * @param columnSorted name of the column
-     */
-    public void setColumnSorted(String columnSorted)
-    {
-        this.columnSorted = columnSorted;
-    }
-
-    /**
-     * Returns the name of the column on which sorting should be performed
-     *
-     * @return column name
-     */
-    public String getColumnSorted()
-    {
-        return this.columnSorted;
-    }
-    
      /**
      * Overrides default implementation to view the all groups page.
       *
@@ -180,6 +120,65 @@ public class AllGroups extends ActionSupport
 		this.errorType = errorType;
 	}
 
+    /**
+     * Assigns the list of groups that a user can belong to
+     *
+     * @param groupList list of groups
+     */
+    public void setGroupList(List<Group> groupList)
+    {
+        this.groupList = groupList;
+    }
 
+    /**
+     * Returns a list of groups that a user can belong to
+     *
+     * @return list of groups
+     */
+    public List<Group> getGroupList()
+    {
+        return groupList;
+    }
+
+    /**
+     * Sets the boolean value which determines if the rows are to be sorted in ascending order
+     *
+     * @param isAscendingOrder
+     */
+    public void setIsAscendingOrder(boolean isAscendingOrder)
+    {
+        this.isAscendingOrder = isAscendingOrder;
+    }
+
+    /**
+     * Gets the boolean value which determines if the rows are to be sorted in ascending order
+     *
+     * @param isAscendingOrder
+     */
+    public boolean getIsAscendingOrder()
+    {
+        return this.isAscendingOrder;
+    }
+
+    /**
+     * Sets the name of the column on which the sorting should be performed
+     *
+     * @param columnSorted name of the column
+     */
+    public void setColumnSorted(String columnSorted)
+    {
+        this.columnSorted = columnSorted;
+    }
+
+    /**
+     * Returns the name of the column on which sorting should be performed
+     *
+     * @return column name
+     */
+    public String getColumnSorted()
+    {
+        return this.columnSorted;
+    }
+    
      
 }

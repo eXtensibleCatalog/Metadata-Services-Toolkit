@@ -46,10 +46,10 @@ public class EditGroup extends ActionSupport
     private Group temporaryGroup;
 
     /** A List that is used to store permissions that have been selected by the user*/
-    private List selectedPermissions;
+    private List selectedPermissions = new ArrayList();
 
     /** The list of all the tab names */
-    private List tabNames;
+    private List tabNames = new ArrayList();
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -62,15 +62,115 @@ public class EditGroup extends ActionSupport
 
     /**Permission Service object with provides methods to interact with permissions */
     private PermissionService permissionService = new DefaultPermissionService();
-	
 
-    public EditGroup()
+     /**
+     * Overrides default implementation to view the edit group page.
+      *
+     * @return {@link #SUCCESS}
+     */
+    @Override
+    public String execute()
     {
-        tabNames = new ArrayList();
-        selectedPermissions = new ArrayList();
+        try
+        {
+            
+            Group group = groupService.getGroupById(groupId);
+            setTemporaryGroup(group);
+            Iterator<Permission> tempIter = group.getPermissions().iterator();
+            while(tempIter.hasNext())
+            {
+                Permission permission = (Permission)tempIter.next();
+                selectedPermissions.add(permission.getTabId());
+            }
+           
+            setTabNames(permissionService.getAllPermissions());
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.debug("Problem displaying group details",e);
+            this.addFieldError("editGroupError", "Problem displaying group details");
+            errorType = "error";
+            return INPUT;
+        }
     }
 
-   /**
+    /**
+     * Method that actually edits the details of the group
+     *
+     * @return {@link #SUCCESS}
+     */
+    public String editGroup()
+    {
+        try
+        {
+            Group group = groupService.getGroupById(getGroupId());
+            group.setDescription(getGroupDescription());
+            group.setName(getGroupName());
+
+            Group tempGroup = groupService.getGroupByName(groupName);
+
+           
+            if(tempGroup.getId()!=groupId)
+            {
+                if(tempGroup.getName().equalsIgnoreCase(groupName))
+                {
+                   
+                        setTemporaryGroup(group);
+                       
+                        setTabNames(permissionService.getAllPermissions());
+                        for(int i=0;i<permissionsSelected.length;i++)
+                        {
+                            selectedPermissions.add(permissionsSelected[i]);
+                        }
+                        setSelectedPermissions(selectedPermissions);
+                        this.addFieldError("editGroupError", "Error : A group with the same name already exists");
+                        errorType = "error";
+                        return INPUT;
+                    
+                }
+            }
+
+            
+
+            group.removeAllPermissions();
+            for(int i=0;i<permissionsSelected.length;i++)
+            {
+                int permissionId = Integer.parseInt(permissionsSelected[i]);
+                group.addPermission(permissionService.getPermissionById(permissionId));
+            }
+
+            groupService.updateGroup(group);
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.debug("Group could not be edited properly",e);
+            this.addFieldError("editGroupError", "Group could not be edited properly");
+            errorType = "error";
+            return INPUT;
+        }
+    }
+    
+	/**
+     * Returns error type
+     *
+     * @return error type
+     */
+	public String getErrorType() {
+		return errorType;
+	}
+
+    /**
+     * Sets error type
+     * 
+     * @param errorType error type
+     */
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
+
+     /**
      * Sets the group name to the specified value.
     *
      * @param groupName The name of the group
@@ -210,110 +310,4 @@ public class EditGroup extends ActionSupport
         return tabNames;
     }
 
-     /**
-     * Overrides default implementation to view the edit group page.
-      *
-     * @return {@link #SUCCESS}
-     */
-    @Override
-    public String execute()
-    {
-        try
-        {
-            
-            Group group = groupService.getGroupById(groupId);
-            setTemporaryGroup(group);
-            Iterator<Permission> tempIter = group.getPermissions().iterator();
-            while(tempIter.hasNext())
-            {
-                Permission permission = (Permission)tempIter.next();
-                selectedPermissions.add(permission.getTabId());
-            }
-           
-            setTabNames(permissionService.getAllPermissions());
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.debug("Problem displaying group details",e);
-            this.addFieldError("editGroupError", "Problem displaying group details");
-            errorType = "error";
-            return INPUT;
-        }
-    }
-
-    /**
-     * Method that actually edits the details of the group
-     *
-     * @return {@link #SUCCESS}
-     */
-    public String editGroup()
-    {
-        try
-        {
-            Group group = groupService.getGroupById(getGroupId());
-            group.setDescription(getGroupDescription());
-            group.setName(getGroupName());
-
-            Group tempGroup = groupService.getGroupByName(groupName);
-
-           
-            if(tempGroup.getId()!=groupId)
-            {
-                if(tempGroup.getName().equalsIgnoreCase(groupName))
-                {
-                   
-                        setTemporaryGroup(group);
-                       
-                        setTabNames(permissionService.getAllPermissions());
-                        for(int i=0;i<permissionsSelected.length;i++)
-                        {
-                            selectedPermissions.add(permissionsSelected[i]);
-                        }
-                        setSelectedPermissions(selectedPermissions);
-                        this.addFieldError("editGroupError", "Error : A group with the same name already exists");
-                        errorType = "error";
-                        return INPUT;
-                    
-                }
-            }
-
-            
-
-            group.removeAllPermissions();
-            for(int i=0;i<permissionsSelected.length;i++)
-            {
-                int permissionId = Integer.parseInt(permissionsSelected[i]);
-                group.addPermission(permissionService.getPermissionById(permissionId));
-            }
-
-            groupService.updateGroup(group);
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.debug("Group could not be edited properly",e);
-            this.addFieldError("editGroupError", "Group could not be edited properly");
-            errorType = "error";
-            return INPUT;
-        }
-    }
-    
-	/**
-     * Returns error type
-     *
-     * @return error type
-     */
-	public String getErrorType() {
-		return errorType;
-	}
-
-    /**
-     * Sets error type
-     * 
-     * @param errorType error type
-     */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
 }

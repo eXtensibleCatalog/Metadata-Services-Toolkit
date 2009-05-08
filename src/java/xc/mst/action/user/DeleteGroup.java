@@ -46,47 +46,6 @@ public class DeleteGroup extends ActionSupport
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**
-     * Sets the group ID of the group to be deleted.
-     *
-     * @param groupId group ID
-     */
-    public void setGroupId(int groupId)
-    {
-        this.groupId = groupId;
-    }
-
-    /**
-     * Returns group ID of the group to be deleted
-     *
-     * @return group ID
-     */
-    public int getGroupId()
-    {
-        return groupId;
-    }
-
-    /**
-     * Returns list of all groups
-     *
-     * @return list of groups
-     */
-    public List<Group> getGroupList()
-    {
-
-        List<Group> tempList = groupService.getAllGroups();
-        List<Group> finalList = new ArrayList<Group>();
-
-        Iterator<Group> iter = tempList.iterator();
-        while(iter.hasNext())
-        {
-            Group group = (Group)iter.next();
-            group.setMemberCount(userService.getUsersForGroup(group.getId()).size());
-            finalList.add(group);
-        }
-        return finalList;
-    }
-
-    /**
      * Overrides default implementation to delete a user.
      *
      * @return {@link #SUCCESS}
@@ -166,4 +125,46 @@ public class DeleteGroup extends ActionSupport
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
+
+     /**
+     * Sets the group ID of the group to be deleted.
+     *
+     * @param groupId group ID
+     */
+    public void setGroupId(int groupId)
+    {
+        this.groupId = groupId;
+    }
+
+    /**
+     * Returns group ID of the group to be deleted
+     *
+     * @return group ID
+     */
+    public int getGroupId()
+    {
+        return groupId;
+    }
+
+    /**
+     * Returns list of all groups
+     *
+     * @return list of groups
+     */
+    public List<Group> getGroupList()
+    {
+
+        List<Group> tempList = groupService.getAllGroups();
+        List<Group> finalList = new ArrayList<Group>();
+
+        Iterator<Group> iter = tempList.iterator();
+        while(iter.hasNext())
+        {
+            Group group = (Group)iter.next();
+            group.setMemberCount(userService.getUsersForGroup(group.getId()).size());
+            finalList.add(group);
+        }
+        return finalList;
+    }
+
 }

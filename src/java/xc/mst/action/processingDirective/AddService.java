@@ -33,7 +33,7 @@ public class AddService extends ActionSupport
     private String errorType;
 
     /** List of XCCFG files */
-    private List<String> serviceFileList;
+    private List<String> serviceFiles = new ArrayList<String>();
 
     /** The XCCFG file that is selected by the user */
     private String selectedLocation;
@@ -41,19 +41,14 @@ public class AddService extends ActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-    public AddService()
-    {
-        serviceFileList = new ArrayList<String>();
-    }
-
     /**
      * Returns the list of XCCFG config files at the hard-coded location (location can be found in documentation/manual)
      *
      * @return list of config files
      */
-    public List<String> getServiceFileList()
+    public List<String> getServiceFiles()
     {
-        return this.serviceFileList;
+        return this.serviceFiles;
     }
 
     /**
@@ -61,9 +56,9 @@ public class AddService extends ActionSupport
      *
      * @param serviceFileList list of config files
      */
-    public void setServiceFileList(List<String> serviceFileList)
+    public void setServiceFiles(List<String> serviceFiles)
     {
-        this.serviceFileList = serviceFileList;
+        this.serviceFiles = serviceFiles;
     }
 
     /**
@@ -102,9 +97,9 @@ public class AddService extends ActionSupport
             File[] fileList = dir.listFiles(fileFilter);
             for(int i=0;i<fileList.length;i++)
             {
-                serviceFileList.add(fileList[i].getName());
+                serviceFiles.add(fileList[i].getName());
             }
-            setServiceFileList(serviceFileList);
+            setServiceFiles(serviceFiles);
             return SUCCESS;
         }
         catch(Exception e)
@@ -140,9 +135,9 @@ public class AddService extends ActionSupport
             File[] fileList = dir.listFiles(fileFilter);
             for(int i=0;i<fileList.length;i++)
             {
-                serviceFileList.add(fileList[i].getName());
+                serviceFiles.add(fileList[i].getName());
             }
-            setServiceFileList(serviceFileList);
+            setServiceFiles(serviceFiles);
             return INPUT;
         }
     }

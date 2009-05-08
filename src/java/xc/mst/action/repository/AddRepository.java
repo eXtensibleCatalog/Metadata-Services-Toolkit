@@ -49,76 +49,6 @@ public class AddRepository extends ActionSupport implements UserAware
 
 	/** Error type */
 	private String errorType; 
-	
-    /**
-     * Sets the ID of the repository to be added
-     *
-     * @param repositoryId repository ID
-     */
-    public void setRepositoryId(int repositoryId)
-    {
-        this.repositoryId = repositoryId;
-    }
-
-    /**
-     * Returns the ID of the repository to be added
-     *
-     * @return ID of the repository
-     */
-    public int getRepositoryId()
-    {
-        return repositoryId;
-    }
-    /**
-     * Sets the Repository Name to the specified value
-     *
-     * @param repoName The name to be assigned to the repository
-     */
-    public void setRepositoryName(String repoName)
-    {
-        repositoryName = repoName.trim();
-    }
-
-    /**
-     * Gets the name of the repository
-     *
-     * @return returns the name of the repository
-     */
-    public String getRepositoryName()
-    {
-        return repositoryName;
-    }
-
-    /**
-     * Sets the URL of the repository to the specified value
-     *
-     * @param repoURL The URL value to be assigned to the repository
-     */
-    public void setRepositoryURL(String repoURL)
-    {
-        repositoryURL = repoURL.trim();
-    }
-
-    /**
-     * Gets the URL of the repository
-     *
-     * @return returns URL of the repository
-     */
-    public String getRepositoryURL()
-    {
-        return repositoryURL;
-    }
-
-    /**
-     * This method is used to set a user
-     *
-     * @param user The user object to be set
-     */
-    public void setUser(User user)
-    {
-        this.user = user;
-    }
-    
 
     /**
      * The method is used to add a repository
@@ -195,4 +125,74 @@ public class AddRepository extends ActionSupport implements UserAware
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
+
+     /**
+     * Sets the ID of the repository to be added
+     *
+     * @param repositoryId repository ID
+     */
+    public void setRepositoryId(int repositoryId)
+    {
+        this.repositoryId = repositoryId;
+    }
+
+    /**
+     * Returns the ID of the repository to be added
+     *
+     * @return ID of the repository
+     */
+    public int getRepositoryId()
+    {
+        return repositoryId;
+    }
+    /**
+     * Sets the Repository Name to the specified value
+     *
+     * @param repoName The name to be assigned to the repository
+     */
+    public void setRepositoryName(String repoName)
+    {
+        repositoryName = repoName.trim();
+    }
+
+    /**
+     * Gets the name of the repository
+     *
+     * @return returns the name of the repository
+     */
+    public String getRepositoryName()
+    {
+        return repositoryName;
+    }
+
+    /**
+     * Sets the URL of the repository to the specified value
+     *
+     * @param repoURL The URL value to be assigned to the repository
+     */
+    public void setRepositoryURL(String repoURL)
+    {
+        repositoryURL = repoURL.trim();
+    }
+
+    /**
+     * Gets the URL of the repository
+     *
+     * @return returns URL of the repository
+     */
+    public String getRepositoryURL()
+    {
+        return repositoryURL;
+    }
+
+    /**
+     * This method is used to set a user
+     *
+     * @param user The user object to be set
+     */
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
+    
 }

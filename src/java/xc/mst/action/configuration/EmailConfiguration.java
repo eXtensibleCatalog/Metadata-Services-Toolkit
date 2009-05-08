@@ -60,6 +60,60 @@ public class EmailConfiguration extends ActionSupport
 	/** Error type */
 	private String errorType; 
 
+    
+
+     /**
+     * Overrides default implementation to view the email server configuration page.
+      *
+     * @return {@link #SUCCESS}
+     */
+    @Override
+    public String execute()
+    {
+        try
+        {
+            
+            emailConfig = emailConfigService.getEmailConfiguration();
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.error(e);
+            this.addFieldError("viewEmailConfigError", "Problem displaying the Email Configuration Page");
+            errorType = "error";
+            return INPUT;
+        }
+    }
+
+    /**
+     * Method that changes the details of the email server
+     *
+     * @return {@link #SUCCESS}
+     */
+    public String changeEmailConfig()
+    {
+        try
+        {            
+            emailConfig.setEmailServerAddress(emailServerAddress);
+            emailConfig.setEncryptedConnection(encryptedConnection);
+            emailConfig.setFromAddress(fromAddress);
+            emailConfig.setPassword(password);
+            emailConfig.setPortNumber(Integer.parseInt(port));
+            emailConfig.setTimeout(Integer.parseInt(timeout));
+            emailConfigService.setEmailConfiguration(emailConfig);
+            message = "Email Configuration details saved.";
+            errorType = "info";
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.error("Unable to change Email Configuration",e);
+            this.addFieldError("changeEmailConfigError", fromAddress);
+            errorType = "error";
+            return INPUT;
+        }
+    }
+
     /**
      * Sets the URL address of the email server
      *
@@ -107,7 +161,7 @@ public class EmailConfiguration extends ActionSupport
      */
     public void setPort(String port)
     {
-        
+
         this.port = port;
     }
 
@@ -118,7 +172,7 @@ public class EmailConfiguration extends ActionSupport
      */
     public String getPort()
     {
-       
+
         return port;
     }
 
@@ -185,7 +239,7 @@ public class EmailConfiguration extends ActionSupport
     /**
      * Sets the temporary email config object
      *
-     * @param emailConfig 
+     * @param emailConfig
      */
     public void setTemporaryEmailConfig(EmailConfig emailConfig)
     {
@@ -200,58 +254,6 @@ public class EmailConfiguration extends ActionSupport
     public EmailConfig getTemporaryEmailConfig()
     {
         return temporaryEmailConfig;
-    }
-
-     /**
-     * Overrides default implementation to view the email server configuration page.
-      *
-     * @return {@link #SUCCESS}
-     */
-    @Override
-    public String execute()
-    {
-        try
-        {
-            
-            emailConfig = emailConfigService.getEmailConfiguration();
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error(e);
-            this.addFieldError("viewEmailConfigError", "Problem displaying the Email Configuration Page");
-            errorType = "error";
-            return INPUT;
-        }
-    }
-
-    /**
-     * Method that changes the details of the email server
-     *
-     * @return {@link #SUCCESS}
-     */
-    public String changeEmailConfig()
-    {
-        try
-        {            
-            emailConfig.setEmailServerAddress(emailServerAddress);
-            emailConfig.setEncryptedConnection(encryptedConnection);
-            emailConfig.setFromAddress(fromAddress);
-            emailConfig.setPassword(password);
-            emailConfig.setPortNumber(Integer.parseInt(port));
-            emailConfig.setTimeout(Integer.parseInt(timeout));
-            emailConfigService.setEmailConfiguration(emailConfig);
-            message = "Email Configuration details saved.";
-            errorType = "info";
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("Unable to change Email Configuration",e);
-            this.addFieldError("changeEmailConfigError", fromAddress);
-            errorType = "error";
-            return INPUT;
-        }
     }
 
     /**

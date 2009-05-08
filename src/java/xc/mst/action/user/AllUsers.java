@@ -39,70 +39,6 @@ public class AllUsers extends ActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
     
-	/** Error type */
-	private String errorType; 
-	
-
-    /**
-     * Returns the list of users
-     *
-     * @return user list
-     */
-    public List<User> getUserList()
-    {
-        return userList;
-    }
-
-    /**
-     * Sets the list of users
-     *
-     * @param userList user list
-     */
-    public void setUserList(List<User> userList)
-    {
-        this.userList = userList;
-    }
-
-    /**
-     * Sets the boolean value which determines if the rows are to be sorted in ascending order
-     *
-     * @param isAscendingOrder
-     */
-    public void setIsAscendingOrder(boolean isAscendingOrder)
-    {
-        this.isAscendingOrder = isAscendingOrder;
-    }
-
-    /**
-     * Gets the boolean value which determines if the rows are to be sorted in ascending order
-     *
-     * @param isAscendingOrder
-     */
-    public boolean getIsAscendingOrder()
-    {
-        return this.isAscendingOrder;
-    }
-
-    /**
-     * Sets the name of the column on which the sorting should be performed
-     *
-     * @param columnSorted name of the column
-     */
-    public void setColumnSorted(String columnSorted)
-    {
-        this.columnSorted = columnSorted;
-    }
-
-    /**
-     * Returns the name of the column on which sorting should be performed
-     *
-     * @return column name
-     */
-    public String getColumnSorted()
-    {
-        return this.columnSorted;
-    }
-
     /**
      * Overrides default implementation to list all the users in the system.
      *
@@ -168,5 +104,67 @@ public class AllUsers extends ActionSupport
 		this.errorType = errorType;
 	}
 
-   
+    /** Error type */
+	private String errorType;
+
+    /**
+     * Returns the list of users
+     *
+     * @return user list
+     */
+    public List<User> getUserList()
+    {
+        return userList;
+    }
+
+    /**
+     * Sets the list of users
+     *
+     * @param userList user list
+     */
+    public void setUserList(List<User> userList)
+    {
+        this.userList = userList;
+    }
+
+    /**
+     * Sets the boolean value which determines if the rows are to be sorted in ascending order
+     *
+     * @param isAscendingOrder
+     */
+    public void setIsAscendingOrder(boolean isAscendingOrder)
+    {
+        this.isAscendingOrder = isAscendingOrder;
+    }
+
+    /**
+     * Gets the boolean value which determines if the rows are to be sorted in ascending order
+     *
+     * @param isAscendingOrder
+     */
+    public boolean getIsAscendingOrder()
+    {
+        return this.isAscendingOrder;
+    }
+
+    /**
+     * Sets the name of the column on which the sorting should be performed
+     *
+     * @param columnSorted name of the column
+     */
+    public void setColumnSorted(String columnSorted)
+    {
+        this.columnSorted = columnSorted;
+    }
+
+    /**
+     * Returns the name of the column on which sorting should be performed
+     *
+     * @return column name
+     */
+    public String getColumnSorted()
+    {
+        return this.columnSorted;
+    }
+
 }

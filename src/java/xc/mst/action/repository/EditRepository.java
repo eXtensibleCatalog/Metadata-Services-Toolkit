@@ -42,68 +42,6 @@ public class EditRepository extends ActionSupport
 	/** Error type */
 	private String errorType; 
 
-    /**
-     * Sets the Repository Name to the specified value
-     *
-     * @param repoName The name to be assigned to the repository
-     */
-    public void setRepositoryName(String repoName)
-    {
-
-        repositoryName = repoName.trim();
-    }
-
-    /**
-     * Gets the name of the repository
-     *
-     * @return returns the name of the repository
-     */
-    public String getRepositoryName()
-    {
-        return repositoryName;
-    }
-
-    /**
-     * Sets the URL of the repository to the specified value
-     *
-     * @param repoURL The URL value to be assigned to the repository
-     */
-    public void setRepositoryURL(String repoURL)
-    {
-
-        repositoryURL = repoURL.trim();
-    }
-
-    /**
-     * Gets the URL of the repository
-     *
-     * @return returns URL of the repository
-     */
-    public String getRepositoryURL()
-    {
-        return repositoryURL;
-    }
-
-    /**
-     * Sets the ID of the repository to be edited
-     *
-     * @param RepoId The ID of the repository to be edited
-     */
-    public void setRepositoryId(String RepoId)
-    {
-        repositoryId = Integer.parseInt(RepoId);
-    }
-
-    /**
-     * Gets the ID of the repository to be edited
-     *
-     * @return returns the ID of the repository to be edited
-     */
-    public int getRepositoryId()
-    {
-        return repositoryId;
-    }
-
    /**
      * Overrides default implementation to edit the details of a repository.
     *
@@ -291,4 +229,66 @@ public class EditRepository extends ActionSupport
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
+
+    /**
+     * Sets the Repository Name to the specified value
+     *
+     * @param repoName The name to be assigned to the repository
+     */
+    public void setRepositoryName(String repoName)
+    {
+
+        repositoryName = repoName.trim();
+    }
+
+    /**
+     * Gets the name of the repository
+     *
+     * @return returns the name of the repository
+     */
+    public String getRepositoryName()
+    {
+        return repositoryName;
+    }
+
+    /**
+     * Sets the URL of the repository to the specified value
+     *
+     * @param repoURL The URL value to be assigned to the repository
+     */
+    public void setRepositoryURL(String repoURL)
+    {
+
+        repositoryURL = repoURL.trim();
+    }
+
+    /**
+     * Gets the URL of the repository
+     *
+     * @return returns URL of the repository
+     */
+    public String getRepositoryURL()
+    {
+        return repositoryURL;
+    }
+
+    /**
+     * Sets the ID of the repository to be edited
+     *
+     * @param RepoId The ID of the repository to be edited
+     */
+    public void setRepositoryId(String RepoId)
+    {
+        repositoryId = Integer.parseInt(RepoId);
+    }
+
+    /**
+     * Gets the ID of the repository to be edited
+     *
+     * @return returns the ID of the repository to be edited
+     */
+    public int getRepositoryId()
+    {
+        return repositoryId;
+    }
 }

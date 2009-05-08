@@ -33,26 +33,6 @@ public class ServiceInteract extends ActionSupport implements ServletRequestAwar
     private String displayText;
 
     /**
-     * Sets the text to be displayed in the JSP
-     *
-     * @param displayText display text
-     */
-    public void setDisplayText(String displayText)
-    {
-        this.displayText = displayText;
-    }
-
-    /**
-     * Returns the text to be displayed in the JSP
-     *
-     * @return display text
-     */
-    public String getDisplaytext()
-    {
-        return this.displayText;
-    }
-
-    /**
      * Overrides default implementation for methods to interact with the services.
      *
      * @return {@link #SUCCESS}
@@ -149,4 +129,24 @@ public class ServiceInteract extends ActionSupport implements ServletRequestAwar
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
 	}
+
+     /**
+     * Sets the text to be displayed in the JSP
+     *
+     * @param displayText display text
+     */
+    public void setDisplayText(String displayText)
+    {
+        this.displayText = displayText;
+    }
+
+    /**
+     * Returns the text to be displayed in the JSP
+     *
+     * @return display text
+     */
+    public String getDisplaytext()
+    {
+        return this.displayText;
+    }
 }

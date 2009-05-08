@@ -64,7 +64,89 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
     /** Request */
     private HttpServletRequest request;
 
+   
+
+     /**
+     * Overrides default implementation to view the add processing directives page.
+      *
+     * @return {@link #SUCCESS}
+     */
+    @Override
+    public String execute()
+    {
+        try
+        {
+            setProviderList(providerService.getAllProviders());
+            setServiceList(servService.getAllServices());
+            if(refreshSession==null)
+            {
+
+                ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
+
+                if(tempProcDir!=null)
+                {
+                    setTemporaryProcessingDirective(tempProcDir);
+                }
+            }
+            else
+            {
+                request.getSession().removeAttribute("temporaryProcessingDirective");
+            }
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.error("Add Processing Directive Page cannot be displayed",e);
+            this.addFieldError("addProcessingDirectiveError", "Add Processing Directive Page cannot be displayed");
+            errorType = "error";
+            return INPUT;
+        }
+    }
+
     /**
+     * Step 1 in adding a new Processing directive
+     *
+     * @return {@link #SUCCESS}
+     */
+    public String addProcessingDirectives()
+    {
+        try
+        {
+            temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
+            if(temporaryProcessingDirective==null)
+            {
+                temporaryProcessingDirective = new ProcessingDirective();
+            }
+
+            Provider tempProvider = providerService.getProviderByName(source);
+            Service tempService = servService.getServiceByName(source);
+            if(tempProvider!=null)
+            {
+                 temporaryProcessingDirective.setSourceProvider(tempProvider);
+                 temporaryProcessingDirective.setSourceService(null);
+                 request.getSession().setAttribute("sourceType", "provider");
+            }
+            else
+            {
+                 temporaryProcessingDirective.setSourceService(tempService);
+                 temporaryProcessingDirective.setSourceProvider(null);
+                 request.getSession().setAttribute("sourceType", "service");
+            }
+            temporaryProcessingDirective.setService(servService.getServiceById(Integer.parseInt(service)));
+            request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.error("Error in Adding a Source",e);
+            this.addFieldError("addProcessingDirectiveError", "Error in Adding a Source");
+            errorType = "error";
+            return INPUT;
+        }
+
+    }
+
+     /**
 	 * Set the servlet request.
 	 *
 	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
@@ -191,87 +273,6 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
     public String getService()
     {
         return this.service;
-    }
-
-
-     /**
-     * Overrides default implementation to view the add processing directives page.
-      *
-     * @return {@link #SUCCESS}
-     */
-    @Override
-    public String execute()
-    {
-        try
-        {
-            setProviderList(providerService.getAllProviders());
-            setServiceList(servService.getAllServices());
-            if(refreshSession==null)
-            {
-
-                ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
-
-                if(tempProcDir!=null)
-                {
-                    setTemporaryProcessingDirective(tempProcDir);
-                }
-            }
-            else
-            {
-                request.getSession().removeAttribute("temporaryProcessingDirective");
-            }
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("Add Processing Directive Page cannot be displayed",e);
-            this.addFieldError("addProcessingDirectiveError", "Add Processing Directive Page cannot be displayed");
-            errorType = "error";
-            return INPUT;
-        }
-    }
-
-    /**
-     * Step 1 in adding a new Processing directive
-     *
-     * @return {@link #SUCCESS}
-     */
-    public String addProcessingDirectives()
-    {
-        try
-        {
-            temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
-            if(temporaryProcessingDirective==null)
-            {
-                temporaryProcessingDirective = new ProcessingDirective();
-            }
-
-            Provider tempProvider = providerService.getProviderByName(source);
-            Service tempService = servService.getServiceByName(source);
-            if(tempProvider!=null)
-            {
-                 temporaryProcessingDirective.setSourceProvider(tempProvider);
-                 temporaryProcessingDirective.setSourceService(null);
-                 request.getSession().setAttribute("sourceType", "provider");
-            }
-            else
-            {
-                 temporaryProcessingDirective.setSourceService(tempService);
-                 temporaryProcessingDirective.setSourceProvider(null);
-                 request.getSession().setAttribute("sourceType", "service");
-            }
-            temporaryProcessingDirective.setService(servService.getServiceById(Integer.parseInt(service)));
-            request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("Error in Adding a Source",e);
-            this.addFieldError("addProcessingDirectiveError", "Error in Adding a Source");
-            errorType = "error";
-            return INPUT;
-        }
-
     }
 
     /**

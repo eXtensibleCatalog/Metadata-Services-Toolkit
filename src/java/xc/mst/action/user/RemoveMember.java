@@ -34,7 +34,33 @@ public class RemoveMember extends ActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-    /**
+     /**
+     * Overrides default implementation to remove a user-group association.
+      * 
+     * @return {@link #SUCCESS}
+     */
+    @Override
+    public String execute()
+    {
+        try
+        {
+            UserService userService = new DefaultUserService();
+            GroupService groupService = new DefaultGroupService();
+            User user = userService.getUserById(userId);
+            user.removeGroup(groupService.getGroupById(groupId));
+            userService.updateUser(user);
+            setGroupId(groupId);
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.debug("There was a problem removing the member from the group",e);
+            this.addFieldError("removeMemberError", "There was a problem removing the member from the group");
+            return INPUT;
+        }
+    }
+
+     /**
      * Sets the group ID
      *
      * @param groupId group ID
@@ -72,31 +98,5 @@ public class RemoveMember extends ActionSupport
     public int getUserId()
     {
         return this.userId;
-    }
-
-     /**
-     * Overrides default implementation to remove a user-group association.
-      * 
-     * @return {@link #SUCCESS}
-     */
-    @Override
-    public String execute()
-    {
-        try
-        {
-            UserService userService = new DefaultUserService();
-            GroupService groupService = new DefaultGroupService();
-            User user = userService.getUserById(userId);
-            user.removeGroup(groupService.getGroupById(groupId));
-            userService.updateUser(user);
-            setGroupId(groupId);
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.debug("There was a problem removing the member from the group",e);
-            this.addFieldError("removeMemberError", "There was a problem removing the member from the group");
-            return INPUT;
-        }
     }
 }

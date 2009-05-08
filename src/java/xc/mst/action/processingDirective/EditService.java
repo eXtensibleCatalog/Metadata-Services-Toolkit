@@ -34,7 +34,7 @@ public class EditService extends ActionSupport
     private String errorType;
 
     /** List of XCCFG config files which were present in the directory (location of this directory can be obtained from the manual/documentation) */
-    private List<String> serviceFileList;
+    private List<String> serviceFiles = new ArrayList<String>();
 
     /** The XCCFG file selected by the user */
     private String selectedLocation;
@@ -45,15 +45,74 @@ public class EditService extends ActionSupport
     /** The temporary service object which is used to populate data in the JSP page*/
     private Service temporaryService;
 
-    public EditService()
-    {
-        serviceFileList = new ArrayList<String>();
-    }
-
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+     /**
+     * Overrides default implementation to view the edit service page.
+     *
+     * @return {@link #SUCCESS}
+     */
+    @Override
+    public String execute()
+    {
+        try
+        {
+            temporaryService = servicesService.getServiceById(serviceId);
+            setTemporaryService(temporaryService);
+            File dir = new File("serviceConfig");
+            
+            FileFilter fileFilter =  new XCCGFileFilter();
+
+            File[] fileList = dir.listFiles(fileFilter);
+            for(int i=0;i<fileList.length;i++)
+            {
+                serviceFiles.add(fileList[i].getName());
+            }
+            setServiceFiles(serviceFiles);
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.error("The edit-service page could not be loaded correctly",e);
+            this.addFieldError("viewEditServiceError", "The edit-service page could not be loaded correctly");
+            return INPUT;
+        }
+    }
+
     /**
+     * The method that does the actual task of editing the details of a service
+     *
+     * @return {@link #SUCCESS}
+     */
+    public String editService()
+    {
+        try
+        {
+            String location = "serviceConfig/" + getSelectedLocation();
+            File file = new File(location);
+            servicesService.updateService(file, servicesService.getServiceById(serviceId));
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.error("Error editing the service",e);
+            errorType = "error";
+            this.addFieldError("editServiceError",e.getMessage());
+            File dir = new File("serviceConfig");
+            FileFilter fileFilter =  new XCCGFileFilter();
+
+            File[] fileList = dir.listFiles(fileFilter);
+            for(int i=0;i<fileList.length;i++)
+            {
+                serviceFiles.add(fileList[i].getName());
+            }
+            setServiceFiles(serviceFiles);
+            return INPUT;
+        }
+    }
+
+     /**
      * Sets the temporary service object
      *
      * @param temporaryService service object
@@ -116,9 +175,9 @@ public class EditService extends ActionSupport
      *
      * @return list of config files
      */
-    public List<String> getServiceFileList()
+    public List<String> getServiceFiles()
     {
-        return this.serviceFileList;
+        return this.serviceFiles;
     }
 
     /**
@@ -126,9 +185,9 @@ public class EditService extends ActionSupport
      *
      * @param serviceFileList list of config files
      */
-    public void setServiceFileList(List<String> serviceFileList)
+    public void setServiceFiles(List<String> serviceFiles)
     {
-        this.serviceFileList = serviceFileList;
+        this.serviceFiles = serviceFiles;
     }
 
     /**
@@ -149,70 +208,6 @@ public class EditService extends ActionSupport
     public String getSelectedLocation()
     {
         return this.selectedLocation;
-    }
-
-     /**
-     * Overrides default implementation to view the edit service page.
-     *
-     * @return {@link #SUCCESS}
-     */
-    @Override
-    public String execute()
-    {
-        try
-        {
-            temporaryService = servicesService.getServiceById(serviceId);
-            setTemporaryService(temporaryService);
-            File dir = new File("serviceConfig");
-            
-            FileFilter fileFilter =  new XCCGFileFilter();
-
-            File[] fileList = dir.listFiles(fileFilter);
-            for(int i=0;i<fileList.length;i++)
-            {
-                serviceFileList.add(fileList[i].getName());
-            }
-            setServiceFileList(serviceFileList);
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("The edit-service page could not be loaded correctly",e);
-            this.addFieldError("viewEditServiceError", "The edit-service page could not be loaded correctly");
-            return INPUT;
-        }
-    }
-
-    /**
-     * The method that does the actual task of editing the details of a service
-     *
-     * @return {@link #SUCCESS}
-     */
-    public String editService()
-    {
-        try
-        {
-            String location = "serviceConfig/" + getSelectedLocation();
-            File file = new File(location);
-            servicesService.updateService(file, servicesService.getServiceById(serviceId));
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("Error editing the service",e);
-            errorType = "error";
-            this.addFieldError("editServiceError",e.getMessage());
-            File dir = new File("serviceConfig");
-            FileFilter fileFilter =  new XCCGFileFilter();
-
-            File[] fileList = dir.listFiles(fileFilter);
-            for(int i=0;i<fileList.length;i++)
-            {
-                serviceFileList.add(fileList[i].getName());
-            }
-            setServiceFileList(serviceFileList);
-            return INPUT;
-        }
     }
 }
 

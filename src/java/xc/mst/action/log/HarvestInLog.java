@@ -45,66 +45,6 @@ public class HarvestInLog extends ActionSupport
 	private String errorType; 
 
     /**
-     * Sets the list of Providers
-     *
-     * @param providerList list of providers
-     */
-    public void setProviderList(List<Provider> providerList)
-    {
-        this.providerList = providerList;
-    }
-
-    /**
-     * Returns the list of providers
-     *
-     * @return list of providers
-     */
-    public List<Provider> getProviderList()
-    {
-        return this.providerList;
-    }
-
-     /**
-     * Sets the boolean value which determines if the rows are to be sorted in ascending order
-     *
-     * @param isAscendingOrder
-     */
-    public void setIsAscendingOrder(boolean isAscendingOrder)
-    {
-        this.isAscendingOrder = isAscendingOrder;
-    }
-
-    /**
-     * Gets the boolean value which determines if the rows are to be sorted in ascending order
-     *
-     * return
-     */
-    public boolean getIsAscendingOrder()
-    {
-        return this.isAscendingOrder;
-    }
-
-     /**
-     * Sets the name of the column on which the sorting should be performed
-      *
-     * @param columnSorted column name
-     */
-    public void setColumnSorted(String columnSorted)
-    {
-        this.columnSorted = columnSorted;
-    }
-
-    /**
-     * Returns the name of the column on which sorting should be performed
-     *
-     * @return column name
-     */
-    public String getColumnSorted()
-    {
-        return this.columnSorted;
-    }
-
-    /**
      * Overrides default implementation to view the 'Harvest-In Logs' Page.
      *
      * @return {@link #SUCCESS}
@@ -172,4 +112,64 @@ public class HarvestInLog extends ActionSupport
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
+
+     /**
+     * Sets the list of Providers
+     *
+     * @param providerList list of providers
+     */
+    public void setProviderList(List<Provider> providerList)
+    {
+        this.providerList = providerList;
+    }
+
+    /**
+     * Returns the list of providers
+     *
+     * @return list of providers
+     */
+    public List<Provider> getProviderList()
+    {
+        return this.providerList;
+    }
+
+     /**
+     * Sets the boolean value which determines if the rows are to be sorted in ascending order
+     *
+     * @param isAscendingOrder
+     */
+    public void setIsAscendingOrder(boolean isAscendingOrder)
+    {
+        this.isAscendingOrder = isAscendingOrder;
+    }
+
+    /**
+     * Gets the boolean value which determines if the rows are to be sorted in ascending order
+     *
+     * return
+     */
+    public boolean getIsAscendingOrder()
+    {
+        return this.isAscendingOrder;
+    }
+
+     /**
+     * Sets the name of the column on which the sorting should be performed
+      *
+     * @param columnSorted column name
+     */
+    public void setColumnSorted(String columnSorted)
+    {
+        this.columnSorted = columnSorted;
+    }
+
+    /**
+     * Returns the name of the column on which sorting should be performed
+     *
+     * @return column name
+     */
+    public String getColumnSorted()
+    {
+        return this.columnSorted;
+    }
 }

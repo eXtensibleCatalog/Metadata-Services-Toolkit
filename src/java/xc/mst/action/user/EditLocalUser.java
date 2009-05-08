@@ -70,126 +70,6 @@ public class EditLocalUser extends ActionSupport
 	/** Error type */
 	private String errorType; 
 	
-     /**
-     * Sets the email ID of the user
-      *
-     * @param email email ID
-     */
-    public void setEmail(String email)
-    {
-        this.email = email.trim();
-    }
-
-    /**
-     * Returns the email ID of the user
-     *
-     * @return email ID
-     */
-    public String getEmail()
-    {
-        return email;
-    }
-
-    /**
-     * Sets the password of the user
-     *
-     * @param password The password to be assigned
-     */
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    /**
-     * Returns the password of the user
-     *
-     * @return user's password
-     */
-    public String getPassword()
-    {
-        return password;
-    }
-
-    /**
-     * Sets the list of groups that the new user has been assigned
-     *
-     * @param selectedGroupList list of selected groups
-     */
-    public void setGroupsSelected(String[] groupsSelected)
-    {
-        this.groupsSelected = groupsSelected;
-    }
-
-    /**
-     * Returns the list of groups that have been assigned to the user
-     *
-     * @return list of selected groups
-     */
-    public String[] getGroupsSelected()
-    {
-        return groupsSelected;
-    }
-
-    /**
-     * Sets the user whose details are to be edited
-     *
-     * @param user user object
-     */
-    public void setTemporaryUser(User user)
-    {
-        this.temporaryUser = user;
-    }
-
-    /**
-     * Returns the user whose details are to be edited.
-     *
-     * @return user object
-     */
-    public User getTemporaryUser()
-    {
-        return temporaryUser;
-    }
-
-    /**
-     * Sets the ID of the user whose details are to be edited.
-     *
-     * @param userId user ID
-     */
-    public void setUserId(int userId)
-    {
-        this.userId = userId;
-    }
-
-    /**
-     * Returns the ID of the user whose details are to be edited.
-     *
-     * @return user ID
-     */
-    public int getUserId()
-    {
-        return userId;
-    }
-
-    /**
-     * Assigns the list of groups that a user can belong to
-     *
-     * @param groupList list of groups
-     */
-    public void setGroupList(List<Group> groupList)
-    {
-        this.groupList = groupList;
-    }
-
-    /**
-     * Returns a list of groups that a user can belong to
-     *
-     * @return list of groups
-     */
-    public List<Group> getGroupList()
-    {
-        return groupList;
-    }
-
     /**
      * Overrides default implementation to view the edit local user page.
      *
@@ -327,5 +207,126 @@ public class EditLocalUser extends ActionSupport
 	public void setLastName(String lastName) {
 		this.lastName = lastName.trim();
 	}
+
+    /**
+     * Sets the email ID of the user
+      *
+     * @param email email ID
+     */
+    public void setEmail(String email)
+    {
+        this.email = email.trim();
+    }
+
+    /**
+     * Returns the email ID of the user
+     *
+     * @return email ID
+     */
+    public String getEmail()
+    {
+        return email;
+    }
+
+    /**
+     * Sets the password of the user
+     *
+     * @param password The password to be assigned
+     */
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    /**
+     * Returns the password of the user
+     *
+     * @return user's password
+     */
+    public String getPassword()
+    {
+        return password;
+    }
+
+    /**
+     * Sets the list of groups that the new user has been assigned
+     *
+     * @param selectedGroupList list of selected groups
+     */
+    public void setGroupsSelected(String[] groupsSelected)
+    {
+        this.groupsSelected = groupsSelected;
+    }
+
+    /**
+     * Returns the list of groups that have been assigned to the user
+     *
+     * @return list of selected groups
+     */
+    public String[] getGroupsSelected()
+    {
+        return groupsSelected;
+    }
+
+    /**
+     * Sets the user whose details are to be edited
+     *
+     * @param user user object
+     */
+    public void setTemporaryUser(User user)
+    {
+        this.temporaryUser = user;
+    }
+
+    /**
+     * Returns the user whose details are to be edited.
+     *
+     * @return user object
+     */
+    public User getTemporaryUser()
+    {
+        return temporaryUser;
+    }
+
+    /**
+     * Sets the ID of the user whose details are to be edited.
+     *
+     * @param userId user ID
+     */
+    public void setUserId(int userId)
+    {
+        this.userId = userId;
+    }
+
+    /**
+     * Returns the ID of the user whose details are to be edited.
+     *
+     * @return user ID
+     */
+    public int getUserId()
+    {
+        return userId;
+    }
+
+    /**
+     * Assigns the list of groups that a user can belong to
+     *
+     * @param groupList list of groups
+     */
+    public void setGroupList(List<Group> groupList)
+    {
+        this.groupList = groupList;
+    }
+
+    /**
+     * Returns a list of groups that a user can belong to
+     *
+     * @return list of groups
+     */
+    public List<Group> getGroupList()
+    {
+        return groupList;
+    }
+
 
 }

@@ -34,7 +34,40 @@ public class DisplayOAIRequest extends ActionSupport
     /** The string that that depicts the OAI requests*/
     private String requestString;
 
+   
+
     /**
+     * Overrides default implementation to return the OAI PMH request information pertaining to a repository.
+     *
+     * @return {@link #SUCCESS}
+     */
+    @Override
+    public String execute()
+    {
+        try
+        {
+            ScheduleService scheduleService = new DefaultScheduleService();
+            List<HarvestSchedule> allHarvestSchedules = scheduleService.getAllSchedules();
+            Iterator<HarvestSchedule> harvestIter = allHarvestSchedules.iterator();
+            while(harvestIter.hasNext())
+            {
+                HarvestSchedule schedule = (HarvestSchedule)harvestIter.next();
+                if(schedule.getProvider().getId()==Integer.parseInt(providerId))
+                {
+                    setRequestString(schedule.getRequest());
+                    break;
+                }
+            }
+
+        }
+        catch(Exception e)
+        {
+            log.error("Unable to Display the request String",e);
+        }
+        return SUCCESS;
+    }
+
+     /**
      * Sets the request String to be displayed in the JSP
      *
      * @param requestString request String
@@ -72,36 +105,5 @@ public class DisplayOAIRequest extends ActionSupport
     public String getProviderId()
     {
         return this.providerId;
-    }
-
-    /**
-     * Overrides default implementation to return the OAI PMH request information pertaining to a repository.
-     *
-     * @return {@link #SUCCESS}
-     */
-    @Override
-    public String execute()
-    {
-        try
-        {
-            ScheduleService scheduleService = new DefaultScheduleService();
-            List<HarvestSchedule> allHarvestSchedules = scheduleService.getAllSchedules();
-            Iterator<HarvestSchedule> harvestIter = allHarvestSchedules.iterator();
-            while(harvestIter.hasNext())
-            {
-                HarvestSchedule schedule = (HarvestSchedule)harvestIter.next();
-                if(schedule.getProvider().getId()==Integer.parseInt(providerId))
-                {
-                    setRequestString(schedule.getRequest());
-                    break;
-                }
-            }
-
-        }
-        catch(Exception e)
-        {
-            log.error("Unable to Display the request String",e);
-        }
-        return SUCCESS;
     }
 }

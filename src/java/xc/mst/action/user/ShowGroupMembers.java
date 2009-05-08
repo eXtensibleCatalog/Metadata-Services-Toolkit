@@ -49,7 +49,60 @@ public class ShowGroupMembers extends ActionSupport
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-    /**
+     /**
+     * Overrides default implementation to view the page which displays all the members of a group.
+      * 
+     * @return {@link #SUCCESS}
+     */
+    @Override
+    public String execute()
+    {
+        try
+        {
+            Group tempGroup = groupService.getGroupById(groupId);
+            if(tempGroup!=null)
+            {
+                if(columnSorted.equalsIgnoreCase("UserName")||columnSorted.equalsIgnoreCase("FirstName")||columnSorted.equalsIgnoreCase("LastName"))
+                {
+                    if(columnSorted.equalsIgnoreCase("UserName"))
+                    {
+                         membershipList = userService.getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_USERNAME);
+                    }
+                    else if(columnSorted.equalsIgnoreCase("FirstName"))
+                    {
+                         membershipList = userService.getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_FIRST_NAME);
+                    }
+                    else
+                    {
+                         membershipList = userService.getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_LAST_NAME);
+                    }
+                   
+                    setMembershipList(membershipList);
+                    setGroupId(this.groupId);
+                    return SUCCESS;
+                }
+                else
+                {
+                    this.addFieldError("showGroupsMembersError", "The column "+columnSorted+" does not exist");
+                    return INPUT;
+                }
+            }
+            else
+            {
+                
+                this.addFieldError("showGroupsMembersError", "There is no group with the group ID specified");
+                return INPUT;
+            }
+        }
+        catch(Exception e)
+        {
+            log.debug("There was a problem displaying members of the group",e);
+            this.addFieldError("showGroupMembersError", "There was a problem displaying the page");
+            return INPUT;
+        }
+    }
+
+     /**
      * Sets the group ID
      *
      * @param groupId group ID
@@ -129,56 +182,4 @@ public class ShowGroupMembers extends ActionSupport
         return this.columnSorted;
     }
 
-     /**
-     * Overrides default implementation to view the page which displays all the members of a group.
-      * 
-     * @return {@link #SUCCESS}
-     */
-    @Override
-    public String execute()
-    {
-        try
-        {
-            Group tempGroup = groupService.getGroupById(groupId);
-            if(tempGroup!=null)
-            {
-                if(columnSorted.equalsIgnoreCase("UserName")||columnSorted.equalsIgnoreCase("FirstName")||columnSorted.equalsIgnoreCase("LastName"))
-                {
-                    if(columnSorted.equalsIgnoreCase("UserName"))
-                    {
-                         membershipList = userService.getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_USERNAME);
-                    }
-                    else if(columnSorted.equalsIgnoreCase("FirstName"))
-                    {
-                         membershipList = userService.getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_FIRST_NAME);
-                    }
-                    else
-                    {
-                         membershipList = userService.getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_LAST_NAME);
-                    }
-                   
-                    setMembershipList(membershipList);
-                    setGroupId(this.groupId);
-                    return SUCCESS;
-                }
-                else
-                {
-                    this.addFieldError("showGroupsMembersError", "The column "+columnSorted+" does not exist");
-                    return INPUT;
-                }
-            }
-            else
-            {
-                
-                this.addFieldError("showGroupsMembersError", "There is no group with the group ID specified");
-                return INPUT;
-            }
-        }
-        catch(Exception e)
-        {
-            log.debug("There was a problem displaying members of the group",e);
-            this.addFieldError("showGroupMembersError", "There was a problem displaying the page");
-            return INPUT;
-        }
-    }
 }

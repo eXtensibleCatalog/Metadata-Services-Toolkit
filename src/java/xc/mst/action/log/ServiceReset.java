@@ -44,46 +44,6 @@ public class ServiceReset extends ActionSupport
 	private String errorType; 
 
     /**
-     * Sets the Service ID of the Service whose Service Logs need to be reset
-     *
-     * @param serviceId service ID
-     */
-    public void setServiceId(int serviceId)
-    {
-        this.serviceId = serviceId;
-    }
-
-    /**
-     * Returns the Service ID of the Service whose Service Logs need to be reset
-     *
-     * @return service ID
-     */
-    public int getServiceId()
-    {
-        return this.serviceId;
-    }
-
-    /**
-     * Sets the name of the service
-     *
-     * @param serviceName log file name
-     */
-    public void setServiceLogFileName(String serviceLogFileName)
-    {
-        this.serviceLogFileName = serviceLogFileName;
-    }
-
-    /**
-     * Returns the name of the Log file for the Service
-     *
-     * @return log file name
-     */
-    public String getServiceLogFileName()
-    {
-        return this.serviceLogFileName;
-    }
-
-    /**
      * Overrides default implementation to reset the 'Service Logs' for a service.
      *
      * @return {@link #SUCCESS}
@@ -168,4 +128,44 @@ public class ServiceReset extends ActionSupport
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
+
+     /**
+     * Sets the Service ID of the Service whose Service Logs need to be reset
+     *
+     * @param serviceId service ID
+     */
+    public void setServiceId(int serviceId)
+    {
+        this.serviceId = serviceId;
+    }
+
+    /**
+     * Returns the Service ID of the Service whose Service Logs need to be reset
+     *
+     * @return service ID
+     */
+    public int getServiceId()
+    {
+        return this.serviceId;
+    }
+
+    /**
+     * Sets the name of the service
+     *
+     * @param serviceName log file name
+     */
+    public void setServiceLogFileName(String serviceLogFileName)
+    {
+        this.serviceLogFileName = serviceLogFileName;
+    }
+
+    /**
+     * Returns the name of the Log file for the Service
+     *
+     * @return log file name
+     */
+    public String getServiceLogFileName()
+    {
+        return this.serviceLogFileName;
+    }
 }

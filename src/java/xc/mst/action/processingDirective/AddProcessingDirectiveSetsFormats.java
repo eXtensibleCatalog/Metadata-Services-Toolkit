@@ -90,177 +90,6 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
 	private String errorType; 
 
     /**
-	 * Set the servlet request.
-	 *
-	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
-	 */
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
-
-    /**
-     * Sets the name of the output set
-     *
-     * @param outputSetName name of the new output set
-     */
-    public void setOutputSetName(String outputSetName)
-    {
-        this.outputSetName = outputSetName;
-    }
-
-    /**
-     * Returns value of the output set
-     *
-     * @return output set name
-     */
-    public String getOutputSetName()
-    {
-        return outputSetName;
-    }
-
-    /**
-     * Sets the specifications of the output set
-     *
-     * @param outputSetSpec output set specifications
-     */
-    public void setOutputSetSpec(String outputSetSpec)
-    {
-        this.outputSetSpec = outputSetSpec;
-    }
-
-    /**
-     * Returns specifications of the output set
-     *
-     * @return output set specifications
-     */
-    public String getOutputSetSpec()
-    {
-        return outputSetSpec;
-    }
-
-    /**
-     * Sets the list of all sets that are relevant to that Provider/Service
-     *
-     * @param setList list of sets
-     */
-    public void setSetList(List<Set> setList)
-    {
-        this.setList = setList;
-    }
-
-    /**
-     * Gets the list of all sets that are relevant to that Provider/Service
-     *
-     * @return list of all sets
-     */
-    public List<Set> getSetList()
-    {
-        return setList;
-    }
-
-    /**
-     * Sets the list of all formats that are relevant to that Provider/Service
-     *
-     * @param formatList list of all formats
-     */
-    public void setFormatList(List<Format> formatList)
-    {
-        this.formatList = formatList;
-    }
-
-    /**
-     * Gets the list of all formats that are relevant to that Provider/Service
-     *
-     * @return list of all formats
-     */
-    public List<Format> getFormatList()
-    {
-        return formatList;
-    }
-
-    /**
-     * Sets the list of sets that the user has selected
-     *
-     * @param setsSelected sets selected
-     */
-    public void setSetsSelected(String[] setsSelected)
-    {
-        this.setsSelected = setsSelected;
-    }
-
-    /**
-     * Returns the list of sets selected by the user
-     *
-     * @return list of selected sets
-     */
-    public String[] getSetsSelected()
-    {
-        return setsSelected;
-    }
-
-    /**
-     * Sets the list of formats selected by the user
-     *
-     * @param formatsSelected list of formats selected
-     */
-    public void setFormatsSelected(String[] formatsSelected)
-    {
-        this.formatsSelected = formatsSelected;
-    }
-
-    /**
-     * Returns the list of formats selected by the user
-     *
-     * @return list of formats
-     */
-    public String[] getFormatsSelected()
-    {
-        return formatsSelected;
-    }
-
-
-    /**
-     * Sets the boolean value representing the user's choice to maintain sets
-     *
-     * @param maintainSets
-     */
-    public void setMaintainSourceSets(String[] maintainSourceSets)
-    {
-
-        this.maintainSourceSets = maintainSourceSets;
-    }
-
-    /**
-     * Returns the boolean value representing the user's choice to maintain sets
-     *
-     * @return
-     */
-    public String[] getMaintainSourceSets()
-    {
-        return maintainSourceSets;
-    }
-
-    /**
-     * Sets the temporary processing Directive object
-     *
-     * @param temporaryProcessingDirective
-     */
-    public void setTemporaryProcessingDirective(ProcessingDirective temporaryProcessingDirective)
-    {
-        this.temporaryProcessingDirective = temporaryProcessingDirective;
-    }
-
-    /**
-     * Returns the temporary processing directive object
-     *
-     * @return processing directive object
-     */
-    public ProcessingDirective getTemporaryProcessingDirective()
-    {
-        return this.temporaryProcessingDirective;
-    }
-
-    /**
      * Overrides default implementation to view the add processing directives (step 2) page.
      *
      * @return {@link #SUCCESS}
@@ -628,6 +457,177 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
             log.error("There was a problem redirecting to 'All Processing Rules' page",e);
             return INPUT;
         }
+    }
+
+        /**
+	 * Set the servlet request.
+	 *
+	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
+	 */
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+    /**
+     * Sets the name of the output set
+     *
+     * @param outputSetName name of the new output set
+     */
+    public void setOutputSetName(String outputSetName)
+    {
+        this.outputSetName = outputSetName;
+    }
+
+    /**
+     * Returns value of the output set
+     *
+     * @return output set name
+     */
+    public String getOutputSetName()
+    {
+        return outputSetName;
+    }
+
+    /**
+     * Sets the specifications of the output set
+     *
+     * @param outputSetSpec output set specifications
+     */
+    public void setOutputSetSpec(String outputSetSpec)
+    {
+        this.outputSetSpec = outputSetSpec;
+    }
+
+    /**
+     * Returns specifications of the output set
+     *
+     * @return output set specifications
+     */
+    public String getOutputSetSpec()
+    {
+        return outputSetSpec;
+    }
+
+    /**
+     * Sets the list of all sets that are relevant to that Provider/Service
+     *
+     * @param setList list of sets
+     */
+    public void setSetList(List<Set> setList)
+    {
+        this.setList = setList;
+    }
+
+    /**
+     * Gets the list of all sets that are relevant to that Provider/Service
+     *
+     * @return list of all sets
+     */
+    public List<Set> getSetList()
+    {
+        return setList;
+    }
+
+    /**
+     * Sets the list of all formats that are relevant to that Provider/Service
+     *
+     * @param formatList list of all formats
+     */
+    public void setFormatList(List<Format> formatList)
+    {
+        this.formatList = formatList;
+    }
+
+    /**
+     * Gets the list of all formats that are relevant to that Provider/Service
+     *
+     * @return list of all formats
+     */
+    public List<Format> getFormatList()
+    {
+        return formatList;
+    }
+
+    /**
+     * Sets the list of sets that the user has selected
+     *
+     * @param setsSelected sets selected
+     */
+    public void setSetsSelected(String[] setsSelected)
+    {
+        this.setsSelected = setsSelected;
+    }
+
+    /**
+     * Returns the list of sets selected by the user
+     *
+     * @return list of selected sets
+     */
+    public String[] getSetsSelected()
+    {
+        return setsSelected;
+    }
+
+    /**
+     * Sets the list of formats selected by the user
+     *
+     * @param formatsSelected list of formats selected
+     */
+    public void setFormatsSelected(String[] formatsSelected)
+    {
+        this.formatsSelected = formatsSelected;
+    }
+
+    /**
+     * Returns the list of formats selected by the user
+     *
+     * @return list of formats
+     */
+    public String[] getFormatsSelected()
+    {
+        return formatsSelected;
+    }
+
+
+    /**
+     * Sets the boolean value representing the user's choice to maintain sets
+     *
+     * @param maintainSets
+     */
+    public void setMaintainSourceSets(String[] maintainSourceSets)
+    {
+
+        this.maintainSourceSets = maintainSourceSets;
+    }
+
+    /**
+     * Returns the boolean value representing the user's choice to maintain sets
+     *
+     * @return
+     */
+    public String[] getMaintainSourceSets()
+    {
+        return maintainSourceSets;
+    }
+
+    /**
+     * Sets the temporary processing Directive object
+     *
+     * @param temporaryProcessingDirective
+     */
+    public void setTemporaryProcessingDirective(ProcessingDirective temporaryProcessingDirective)
+    {
+        this.temporaryProcessingDirective = temporaryProcessingDirective;
+    }
+
+    /**
+     * Returns the temporary processing directive object
+     *
+     * @return processing directive object
+     */
+    public ProcessingDirective getTemporaryProcessingDirective()
+    {
+        return this.temporaryProcessingDirective;
     }
 
     /**

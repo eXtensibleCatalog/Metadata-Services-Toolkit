@@ -66,104 +66,7 @@ public class AddLDAP extends ActionSupport
 	/** URL to forward the user to get forgot password */
 	private String forgotPasswordUrl;
 
-    /**
-     * Sets the display name of the LDAP server
-     * @param displayName display name of server
-     */
-    public void setDisplayName(String displayName)
-    {
-        this.displayName = displayName.trim();
-    }
-
-    /**
-     * Returns the display name of the LDAP server
-     * @return display name
-     */
-    public String getDisplayName()
-    {
-        return this.displayName;
-    }
-
-    /**
-     * Sets the URL of the server to the specified value
-     *
-     * @param serverURL URL of the server
-     */
-    public void setServerURL(String serverURL)
-    {
-        this.serverURL = serverURL.trim();
-    }
-
-    /**
-     * Returns the server URL
-     *
-     * @return URL of the server
-     */
-    public String getServerURL()
-    {
-        return this.serverURL;
-    }
-
-    /**
-     * Sets the port number of the LDAP server to the specified value
-     *
-     * @param port port number
-     */
-    public void setPort(String port)
-    {
-        this.port = port;
-    }
-
-    /**
-     * Returns the port number of the LDAP server
-     *
-     * @return port number
-     */
-    public String getPort()
-    {
-        return port;
-    }
-
-    /**
-     * Sets the user name attribute
-     *
-     * @param userNameAttribute username attribute
-     */
-    public void setUserNameAttribute(String userNameAttribute)
-    {
-        this.userNameAttribute = userNameAttribute;
-    }
-
-    /**
-     * Returns the user name attribute
-     *
-     * @return username attribute
-     */
-    public String getUserNameAttribute()
-    {
-        return this.userNameAttribute;
-    }
-
-    /**
-     * Sets the start location
-     *
-     * @param startLocation start location
-     */
-    public void setStartLocation(String startLocation)
-    {
-        this.startLocation = startLocation;
-    }
-
-    /**
-     * Returns the start location
-     *
-     * @return start location
-     */
-    public String getStartLocation()
-    {
-        return this.startLocation;
-    }
-
+   
 
      /**
      * Overrides default implementation to add an LDAP server.
@@ -289,6 +192,105 @@ public class AddLDAP extends ActionSupport
             return INPUT;
         }
     }
+
+     /**
+     * Sets the display name of the LDAP server
+     * @param displayName display name of server
+     */
+    public void setDisplayName(String displayName)
+    {
+        this.displayName = displayName.trim();
+    }
+
+    /**
+     * Returns the display name of the LDAP server
+     * @return display name
+     */
+    public String getDisplayName()
+    {
+        return this.displayName;
+    }
+
+    /**
+     * Sets the URL of the server to the specified value
+     *
+     * @param serverURL URL of the server
+     */
+    public void setServerURL(String serverURL)
+    {
+        this.serverURL = serverURL.trim();
+    }
+
+    /**
+     * Returns the server URL
+     *
+     * @return URL of the server
+     */
+    public String getServerURL()
+    {
+        return this.serverURL;
+    }
+
+    /**
+     * Sets the port number of the LDAP server to the specified value
+     *
+     * @param port port number
+     */
+    public void setPort(String port)
+    {
+        this.port = port;
+    }
+
+    /**
+     * Returns the port number of the LDAP server
+     *
+     * @return port number
+     */
+    public String getPort()
+    {
+        return port;
+    }
+
+    /**
+     * Sets the user name attribute
+     *
+     * @param userNameAttribute username attribute
+     */
+    public void setUserNameAttribute(String userNameAttribute)
+    {
+        this.userNameAttribute = userNameAttribute;
+    }
+
+    /**
+     * Returns the user name attribute
+     *
+     * @return username attribute
+     */
+    public String getUserNameAttribute()
+    {
+        return this.userNameAttribute;
+    }
+
+    /**
+     * Sets the start location
+     *
+     * @param startLocation start location
+     */
+    public void setStartLocation(String startLocation)
+    {
+        this.startLocation = startLocation;
+    }
+
+    /**
+     * Returns the start location
+     *
+     * @return start location
+     */
+    public String getStartLocation()
+    {
+        return this.startLocation;
+    }
+
 
     /**
      * Returns the status of the add operation

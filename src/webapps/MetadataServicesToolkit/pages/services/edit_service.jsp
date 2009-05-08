@@ -76,7 +76,7 @@
                       <td>
                           
                           <select id="fileLocation" name ="fileLocation">
-                              <c:forEach var="n" items="${serviceFileList}" varStatus="a">
+                              <c:forEach var="n" items="${serviceFiles}" varStatus="a">
                                   <c:choose>
                                       <c:when test="${fn:contains(temporaryService.xccfgFileName,n)}">
                                           <option selected id="${n}" value="${n}">${n}

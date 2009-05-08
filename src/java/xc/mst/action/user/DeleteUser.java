@@ -45,36 +45,6 @@ public class DeleteUser extends ActionSupport
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-    /**
-     * Sets the ID of the user to be deleted
-     *
-     * @param userId user ID
-     */
-    public void setUserId(int userId)
-    {
-        this.userId = userId;
-    }
-
-    /**
-     * Returns the ID of the user to be deleted
-     *
-     * @return user ID
-     */
-    public int getUserId()
-    {
-        return userId;
-    }
-
-    /**
-     * Returns list of users
-     *
-     * @return
-     */
-    public List<User> getUserList()
-    {
-        return userService.getAllUsersSorted(false,"username");
-    }
-
      /**
      * Overrides default implementation to delete a user from the system.
       *
@@ -139,5 +109,36 @@ public class DeleteUser extends ActionSupport
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
+
+    /**
+     * Sets the ID of the user to be deleted
+     *
+     * @param userId user ID
+     */
+    public void setUserId(int userId)
+    {
+        this.userId = userId;
+    }
+
+    /**
+     * Returns the ID of the user to be deleted
+     *
+     * @return user ID
+     */
+    public int getUserId()
+    {
+        return userId;
+    }
+
+    /**
+     * Returns list of users
+     *
+     * @return
+     */
+    public List<User> getUserList()
+    {
+        return userService.getAllUsersSorted(false,"username");
+    }
+
 
 }

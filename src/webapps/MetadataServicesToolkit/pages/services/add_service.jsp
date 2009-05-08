@@ -75,7 +75,7 @@
                       <td valign="top">Configuration File  &nbsp;&nbsp;</td>
                       <td>
                           <select id="fileLocation" name ="fileLocation">
-                              <c:forEach var="n" items="${serviceFileList}" varStatus="a">
+                              <c:forEach var="n" items="${serviceFiles}" varStatus="a">
                                   <option id="${n}" value="${n}">${n}
                               </c:forEach>
                           </select>

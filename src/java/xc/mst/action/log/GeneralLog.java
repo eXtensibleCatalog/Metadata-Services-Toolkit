@@ -43,25 +43,6 @@ public class GeneralLog extends ActionSupport
 	/** Error type */
 	private String errorType; 
 	
-    /**
-     * Sets the list of log files
-     *
-     * @param logList list of log files
-     */
-    public void setLogList(List<Log> logList)
-    {
-        this.logList = logList;
-    }
-
-    /**
-     * Returns the list of logs files
-     *
-     * @return list of log files
-     */
-    public List<Log> getLogList()
-    {
-        return this.logList;
-    }
 
     /**
      * Overrides default implementation to view the General Logs Page.
@@ -172,5 +153,25 @@ public class GeneralLog extends ActionSupport
     public String getColumnSorted()
     {
         return this.columnSorted;
+    }
+    
+    /**
+     * Sets the list of log files
+     *
+     * @param logList list of log files
+     */
+    public void setLogList(List<Log> logList)
+    {
+        this.logList = logList;
+    }
+
+    /**
+     * Returns the list of logs files
+     *
+     * @return list of log files
+     */
+    public List<Log> getLogList()
+    {
+        return this.logList;
     }
 }
