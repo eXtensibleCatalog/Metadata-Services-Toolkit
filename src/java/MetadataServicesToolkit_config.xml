@@ -3,7 +3,7 @@
   <variables>
   </variables>
   <category name="general">
-     <property name="LoggerConfigFileLocation" value="C:\Documents and Settings\tejaswih\My Documents\NetBeansProjects\MetadataServicesToolkit\src\java\log4j.config.txt" />
+     <property name="LoggerConfigFileLocation" value="C:\AllXcProjects\MetadataServicesToolkit\src\java\log4j.config.txt" />
      <property name="LuceneIndexerRAMBufferMB" value="1024" />
 
     <property name="OrganizationCode" value="NRU" />
@@ -11,11 +11,11 @@
     <property name="MaxRunningHarvestJobs" value="1" />
     <property name="MaxRunningServiceJobs" value="1" />
 
-    <property name="LuceneIndexDirectory" value="C:\lucene_MST_dev" />
+    <property name="LuceneIndexDirectory" value="C:\lucene_MST" />
 
     <property name="DatabaseUrl" value="jdbc:mysql://localhost:3306/MetadataServicesToolkit" />
     <property name="DatabaseUsername" value="root" />
-    <property name="DatabasePassword" value="admin" />
+    <property name="DatabasePassword" value="argl3frast3r" />
 
     <property name="OaiRepoName" value="University of Rochester" />
     <property name="OaiRepoBaseUrl" value = "http://localhost:8080/MetadataServicesToolkit/oaiRepository" />

@@ -1080,7 +1080,8 @@ public class DefaultServiceDAO extends ServiceDAO
 
 				    // Insert the input set assignments
 				    for(xc.mst.bo.provider.Set inputSet : service.getOutputSets())
-				    	success = serviceInputSetDAO.insert(service.getId(), inputSet.getId()) && success;
+				    	if(inputSet != null)
+				    		success = serviceInputSetDAO.insert(service.getId(), inputSet.getId()) && success;
 				    
 				    if(success)
 				    	LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the service with the name " + service.getName());

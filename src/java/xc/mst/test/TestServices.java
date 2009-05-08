@@ -75,10 +75,10 @@ public class TestServices
 		MSTSolrServer.getInstance("8080");
 	}
 	
-	private static File unprocessedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggInput");
-	private static File processedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggOutput");
+	private static File unprocessedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\NormInput");
+	private static File processedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\NormOutput");
 
-	private static int serviceId = 4;
+	private static int serviceId = 1;
 
 	/**
 	 * Builds the XML Document based on the record's OAI XML

@@ -1128,7 +1128,7 @@ public class MarcXmlManagerForNormalizationService
 	 * @param copyToTag The tag we're copying into
 	 */
 	@SuppressWarnings("unchecked")
-	public void copyMarcXmlField(String copyFromTag, String copyToTag, String subfieldsToCopy, String newInd1, String newInd2)
+	public void copyMarcXmlField(String copyFromTag, String copyToTag, String subfieldsToCopy, String newInd1, String newInd2, boolean skipAPrefix)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Copying the MARC XML tag " + copyFromTag + " subfields " + subfieldsToCopy + " into the MARC XML tag " + copyToTag);
@@ -1145,6 +1145,17 @@ public class MarcXmlManagerForNormalizationService
 			// If the current field is the correct tag, clone it into newField and change it's tag attribute to the correct value
 			if(field.getAttribute("tag").getValue().equals(copyFromTag))
 			{
+				// Get the number of leading characters to skip from the 2nd indicator
+				int skip = 0;
+				try
+				{
+					skip = Integer.parseInt(field.getAttribute("ind2").getValue());
+				}
+				catch(NumberFormatException e)
+				{
+					
+				}
+				
 				// Create the datafield for the copied tag, and set its attributes
 				// The indicators should be the same as on the original field
 				newField = new Element("datafield", marcNamespace);
@@ -1155,8 +1166,28 @@ public class MarcXmlManagerForNormalizationService
 				// Loop over the field's subfields and copy over the requested ones
 				List<Element> subfields = field.getChildren("subfield", marcNamespace);
 				for(Element subfield : subfields)
+				{
 					if(subfieldsToCopy.contains(subfield.getAttributeValue("code")))
+					{
 						newField.addContent("\n\t").addContent((Element)subfield.clone());
+						
+						if(skipAPrefix && skip > 0)
+						{
+							// Get the control fields
+							List<Element> subfieldsOfNewfield = getSubfieldsOfField(newField, 'a');
+
+							// Iterate over the subfields to find the target subfield
+							for(Element subfieldOfNewfield : subfieldsOfNewfield)
+							{
+								// Get the current text of the subfield
+								String currentText = subfieldOfNewfield.getText();
+								
+								if(currentText.charAt(skip-1) == ' ')
+									subfieldOfNewfield.setText(currentText.substring(skip, skip+1).toUpperCase() + currentText.substring(skip+1));
+							} // end loop over the target field's subfields
+						}
+					}
+				}
 
 				break;
 			} // end if (tag found)

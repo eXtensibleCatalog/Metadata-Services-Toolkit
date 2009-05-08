@@ -1472,9 +1472,9 @@ public class NormalizationService extends MetadataService
 		if(marcXml.getField130() == null && marcXml.getField240() == null && marcXml.getField243() == null && marcXml.getField245() != null)
 		{
 			if(marcXml.getField100Element() != null || marcXml.getField110Element() != null || marcXml.getField111Element() != null)
-				marcXml.copyMarcXmlField("245", "240", "afknp", "0", "0");
+				marcXml.copyMarcXmlField("245", "240", "afknp", "0", "0", true);
 			else
-				marcXml.copyMarcXmlField("245", "130", "afknp", "0", " ");
+				marcXml.copyMarcXmlField("245", "130", "afknp", "0", " ", true);
 		}
 
 		return marcXml;
