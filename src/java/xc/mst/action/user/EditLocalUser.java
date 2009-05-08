@@ -40,7 +40,7 @@ public class EditLocalUser extends ActionSupport
      private ServerService serverService = new DefaultServerService();
 
     /**The ID of the user whose details are to be edited */
-    private String userId;
+    private int userId;
 
     /**A user object that is used to pre-fill JSP form fields. */
     private User temporaryUser;
@@ -155,7 +155,7 @@ public class EditLocalUser extends ActionSupport
      *
      * @param userId user ID
      */
-    public void setUserId(String userId)
+    public void setUserId(int userId)
     {
         this.userId = userId;
     }
@@ -165,7 +165,7 @@ public class EditLocalUser extends ActionSupport
      *
      * @return user ID
      */
-    public String getUserId()
+    public int getUserId()
     {
         return userId;
     }
@@ -201,7 +201,7 @@ public class EditLocalUser extends ActionSupport
         try
         {
             setGroupList(groupService.getAllGroups());
-            User user = userService.getUserById(Integer.parseInt(userId));
+            User user = userService.getUserById(userId);
             setTemporaryUser(user);
             return SUCCESS;
         }
@@ -225,7 +225,7 @@ public class EditLocalUser extends ActionSupport
         {
            
             setGroupList(groupService.getAllGroups());
-            User user = userService.getUserById(Integer.parseInt(userId));
+            User user = userService.getUserById(userId);
             user.setServer(serverService.getServerByName("Local"));
             user.setEmail(email);
             user.setFailedLoginAttempts(0);
@@ -247,7 +247,7 @@ public class EditLocalUser extends ActionSupport
             User similarEmail = userService.getUserByEmail(email, serverService.getServerByName("Local"));
             if(similarEmail!=null)
             {
-                if(similarEmail.getId()!=Integer.parseInt(userId))
+                if(similarEmail.getId()!=userId)
                 {
                     if(similarEmail.getServer().getName().equalsIgnoreCase("Local"))
                     {

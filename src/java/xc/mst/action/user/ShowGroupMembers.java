@@ -29,7 +29,7 @@ import xc.mst.manager.user.UserService;
 public class ShowGroupMembers extends ActionSupport
 {
     /** The group whose members are to be displayed */
-    private String groupId;
+    private int groupId;
 
     /** The column on which the rows are sorted*/
     private String columnSorted = "UserName";
@@ -54,7 +54,7 @@ public class ShowGroupMembers extends ActionSupport
      *
      * @param groupId group ID
      */
-    public void setGroupId(String groupId)
+    public void setGroupId(int groupId)
     {
         this.groupId = groupId;
     }
@@ -64,7 +64,7 @@ public class ShowGroupMembers extends ActionSupport
      *
      * @return group ID
      */
-    public String getGroupId()
+    public int getGroupId()
     {
         return this.groupId;
     }
@@ -139,7 +139,7 @@ public class ShowGroupMembers extends ActionSupport
     {
         try
         {
-            Group tempGroup = groupService.getGroupById(Integer.parseInt(groupId));
+            Group tempGroup = groupService.getGroupById(groupId);
             if(tempGroup!=null)
             {
                 if(columnSorted.equalsIgnoreCase("UserName")||columnSorted.equalsIgnoreCase("FirstName")||columnSorted.equalsIgnoreCase("LastName"))

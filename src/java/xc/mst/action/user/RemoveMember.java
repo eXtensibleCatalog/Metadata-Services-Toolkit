@@ -26,10 +26,10 @@ import xc.mst.manager.user.UserService;
 public class RemoveMember extends ActionSupport
 {
     /** The ID of the user who has to be removed from the group */
-    private String userId;
+    private int userId;
 
     /** The ID of the group form which th euser should be removed */
-    private String groupId;
+    private int groupId;
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -39,7 +39,7 @@ public class RemoveMember extends ActionSupport
      *
      * @param groupId group ID
      */
-    public void setGroupId(String groupId)
+    public void setGroupId(int groupId)
     {
         this.groupId = groupId;
     }
@@ -49,7 +49,7 @@ public class RemoveMember extends ActionSupport
      *
      * @return group ID
      */
-    public String getGroupId()
+    public int getGroupId()
     {
         return this.groupId;
     }
@@ -59,7 +59,7 @@ public class RemoveMember extends ActionSupport
      *
      * @param userId user ID
      */
-    public void setUserId(String userId)
+    public void setUserId(int userId)
     {
         this.userId = userId;
     }
@@ -69,7 +69,7 @@ public class RemoveMember extends ActionSupport
      *
      * @return user ID
      */
-    public String getUserId()
+    public int getUserId()
     {
         return this.userId;
     }
@@ -86,8 +86,8 @@ public class RemoveMember extends ActionSupport
         {
             UserService userService = new DefaultUserService();
             GroupService groupService = new DefaultGroupService();
-            User user = userService.getUserById(Integer.parseInt(userId));
-            user.removeGroup(groupService.getGroupById(Integer.parseInt(groupId)));
+            User user = userService.getUserById(userId);
+            user.removeGroup(groupService.getGroupById(groupId));
             userService.updateUser(user);
             setGroupId(groupId);
             return SUCCESS;
