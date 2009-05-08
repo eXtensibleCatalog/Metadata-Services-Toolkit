@@ -88,8 +88,8 @@
                     </ul>
                 </div>
                 <div align="right" style="margin-bottom:10px;">
-                        <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addProcessingDirective();" name="next">Continue to Step 2</button>
+                        <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirective.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirective.addProcessingDirective();" name="next">Continue to Step 2</button>
                 </div>
                     <form action="/MetadataServicesToolkit/addProcessingDirectives.action" method="post" name="addProcessingDirective">
                     <div class="greybody">
@@ -164,8 +164,8 @@
                     </div>
 
                     <div align="right" style="margin-top:10px;">
-                        <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="YAHOO.xc.mst.processingDirective.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addProcessingDirective();" name="next">Continue to Step 2</button>
+                        <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="YAHOO.xc.mst.processingDirective.addDirective.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirective.addProcessingDirective();" name="next">Continue to Step 2</button>
                     </div>
                     </form>
              </div>

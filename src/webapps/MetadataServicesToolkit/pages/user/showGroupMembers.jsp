@@ -206,10 +206,10 @@
                                     <td class="${classColumn}">${n.lastName}</td>
                                     <td>
                                         <c:if test="${n.username == 'admin'}">
-                                        	<button class="xc_button_disabled" disabled="true" type="submit" name="removeMember" onclick="javascript:YAHOO.xc.mst.user.removeMember(${n.id},${groupId});">Remove</button>
+                                        	<button class="xc_button_disabled" disabled="true" type="submit" name="removeMember" onclick="javascript:YAHOO.xc.mst.user.removeUser.removeMember(${n.id},${groupId});">Remove</button>
                                         </c:if>
                                         <c:if test="${n.username != 'admin'}">
-                                                 <button class="xc_button" type="button" name="removeMember" onclick="javascript:YAHOO.xc.mst.user.removeMember(${n.id},${groupId});">Remove</button>
+                                                 <button class="xc_button" type="button" name="removeMember" onclick="javascript:YAHOO.xc.mst.user.removeUser.removeMember(${n.id},${groupId});">Remove</button>
                                         </c:if>
 
                                     </td>

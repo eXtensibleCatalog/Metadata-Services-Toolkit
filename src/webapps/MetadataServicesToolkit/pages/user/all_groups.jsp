@@ -157,10 +157,10 @@
                                     <td class="${classColumn}">${n.description}</td>
                                     <c:choose>
                                         <c:when test="${n.id==1}">
-                                            <td><button disabled class="xc_button_disabled" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.user.deleteGroup(${n.id});">Delete</button></td>
+                                            <td><button disabled class="xc_button_disabled" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.user.removeGroup.deleteGroup(${n.id});">Delete</button></td>
                                         </c:when>
                                         <c:otherwise>
-                                            <td><button class="xc_button" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.user.deleteGroup(${n.id});">Delete</button></td>
+                                            <td><button class="xc_button" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.user.removeGroup.deleteGroup(${n.id});">Delete</button></td>
                                         </c:otherwise>
                                     </c:choose>
                                     

@@ -7,9 +7,9 @@
   *
   */
   
-YAHOO.namespace("xc.mst.repository");
+YAHOO.namespace("xc.mst.repository.addRepository");
 
-YAHOO.xc.mst.repository = {
+YAHOO.xc.mst.repository.addRepository = {
 
 addValidator : function()
          {

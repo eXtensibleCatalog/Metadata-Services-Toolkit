@@ -123,8 +123,8 @@
                </table>
                <br><br>
                 <div align="left">
-                      <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
-                      <button class="xc_button" type="button" name="addgroup" onclick="javascript:YAHOO.xc.mst.user.addGroup();">Add Group</button>
+                      <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.newGroup.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
+                      <button class="xc_button" type="button" name="addgroup" onclick="javascript:YAHOO.xc.mst.user.newGroup.addGroup();">Add Group</button>
                 </div>
 
           </form>

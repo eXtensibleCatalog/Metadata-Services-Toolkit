@@ -303,15 +303,15 @@
               <ul style="list-style:none;">
                   <li style="float:left;">
                       <div align="left" style="vertical-align:bottom;">
-                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.editFunction(${provider.id});" type="button" name="edit">Edit</button>&nbsp;
-                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.downloadFile('HarvestIn','${provider.id}');" type="button" name="View Log">View Log</button>&nbsp;
-                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.reValidateFunction(${provider.id});" type="button" name="Revalidate">Revalidate</button>&nbsp;
+                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.editFunction(${provider.id});" type="button" name="edit">Edit</button>&nbsp;
+                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.downloadFile('HarvestIn','${provider.id}');" type="button" name="View Log">View Log</button>&nbsp;
+                        <button class="xc_button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.reValidateFunction(${provider.id});" type="button" name="Revalidate">Revalidate</button>&nbsp;
                         <button class="xc_button" id="confirmDeleteRepository" type="button"  name="delete">Delete</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </div>
                   </li>
                   <li style="float:right;">
                       <div align="right" style="vertical-align:bottom;">
-                          <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.repository.doneFunction();" name="done">Done</button>
+                          <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.doneFunction();" name="done">Done</button>
                       </div>
                   </li>
               

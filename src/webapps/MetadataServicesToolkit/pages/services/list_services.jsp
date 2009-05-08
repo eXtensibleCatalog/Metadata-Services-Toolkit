@@ -170,10 +170,10 @@
                                         <td class="${classColumn}"><c:out value="${url}"/></td>
                                         <td>${n.status}</td>
                                         <td>
-                                            <button onclick="javascript:YAHOO.xc.mst.services.downloadFile('service','${n.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
-                                            <button onclick="javascript:YAHOO.xc.mst.services.downloadFile('harvestout','${n.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
+                                            <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${n.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
+                                            <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${n.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
                                         </td>
-                                        <td><button class="xc_button" onclick="javascript:YAHOO.xc.mst.services.deleteService(${n.id})" type="button" name="delete">Delete</button></td>
+                                        <td><button class="xc_button" onclick="javascript:YAHOO.xc.mst.services.listServices.deleteService(${n.id})" type="button" name="delete">Delete</button></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

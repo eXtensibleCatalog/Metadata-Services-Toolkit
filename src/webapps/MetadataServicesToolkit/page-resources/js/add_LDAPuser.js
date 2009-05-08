@@ -7,9 +7,9 @@
   *
   */
   
-YAHOO.namespace("xc.mst.user");
+YAHOO.namespace("xc.mst.user.addLDAP");
 
-YAHOO.xc.mst.user = {
+YAHOO.xc.mst.user.addLDAP = {
     addLDAPUser : function()
     {
         try

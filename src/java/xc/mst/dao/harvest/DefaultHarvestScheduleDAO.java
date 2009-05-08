@@ -332,7 +332,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                                                HARVEST_SCHEDULES_TABLE_NAME + "." +COL_NOTIFY_EMAIL + ", " +
                                                HARVEST_SCHEDULES_TABLE_NAME + "." +COL_STATUS + ", " +
                                                HARVEST_SCHEDULES_TABLE_NAME + "."+COL_REQUEST + " " +
-                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME + "," + PROVIDERS_TABLE_NAME + " ON" + " " +PROVIDERS_TABLE_NAME + "." +COL_PROVIDER_NAME +
+                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME + "," + PROVIDERS_TABLE_NAME + " ON" + " " +PROVIDERS_TABLE_NAME + "." +COL_PROVIDER_ID +
                                    "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
 
                 if(log.isDebugEnabled())

@@ -37,18 +37,13 @@ public class HarvestOutLog extends ActionSupport
     private ServicesService servicesService = new DefaultServicesService();
 
     /** Sets the list of all services */
-    private List<Service> serviceList;
+    private List<Service> services = new ArrayList<Service>();
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
     
 	/** Error type */
 	private String errorType; 
-
-    public HarvestOutLog()
-    {
-        serviceList = new ArrayList<Service>();
-    }
 
     /**
      * Sets the list of all services
@@ -57,7 +52,7 @@ public class HarvestOutLog extends ActionSupport
      */
     public void setServiceList(List<Service> serviceList)
     {
-        this.serviceList = serviceList;
+        this.services = serviceList;
     }
 
     /**
@@ -67,7 +62,7 @@ public class HarvestOutLog extends ActionSupport
      */
     public List<Service> getServiceList()
     {
-        return serviceList;
+        return services;
     }
 
      /**

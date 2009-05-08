@@ -94,8 +94,8 @@
                      <input type="text" id="repositoryURL" name="repositoryURL" value="<s:property value="repositoryURL"/>" style="height:25px;width:470px;" maxlength="255">
                 
                  <div style="margin-top:20px;margin-left:0px;vertical-align:bottom;">
-                   <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.repository.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                   <button class="xc_button" type="button" name="edit" onclick="javascript:YAHOO.xc.mst.repository.editValidator()">Save</button>
+                   <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.repository.editRepository.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
+                   <button class="xc_button" type="button" name="edit" onclick="javascript:YAHOO.xc.mst.repository.editRepository.editValidator()">Save</button>
 
                  </div>
         </div>

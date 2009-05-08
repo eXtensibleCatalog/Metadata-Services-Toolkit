@@ -7,9 +7,9 @@
   *
   */
   
-YAHOO.namespace("xc.mst.processingDirective");
+YAHOO.namespace("xc.mst.processingDirective.addDirective");
 
-YAHOO.xc.mst.processingDirective = {
+YAHOO.xc.mst.processingDirective.addDirective = {
 
 cancel : function()
  {

@@ -155,8 +155,8 @@
            
             <br><br>
             <div align="left">
-                 <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.editcancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
-                 <button class="xc_button" type="button" name="addlocaluser" onclick="javascript:YAHOO.xc.mst.user.editValidate();">Edit Local User</button>
+                 <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.editLocal.editcancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
+                 <button class="xc_button" type="button" name="addlocaluser" onclick="javascript:YAHOO.xc.mst.user.editLocal.editValidate();">Edit Local User</button>
             </div>
 
 

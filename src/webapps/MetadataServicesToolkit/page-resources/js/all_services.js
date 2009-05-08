@@ -7,9 +7,9 @@
   *
   */
 
-YAHOO.namespace("xc.mst.services");
+YAHOO.namespace("xc.mst.services.listServices");
 
-YAHOO.xc.mst.services = {
+YAHOO.xc.mst.services.listServices = {
 
  downloadFile: function(type,id)
             {

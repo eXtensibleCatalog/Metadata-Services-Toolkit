@@ -7,9 +7,9 @@
   *
   */
   
-YAHOO.namespace("xc.mst.repository");
+YAHOO.namespace("xc.mst.repository.allRepositories");
 
-YAHOO.xc.mst.repository = {
+YAHOO.xc.mst.repository.allRepositories = {
 
 
         removeErrorMessage : function()

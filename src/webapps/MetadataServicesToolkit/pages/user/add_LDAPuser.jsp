@@ -147,10 +147,10 @@
 
 
                     <div align="left">
-                         <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
+                         <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.addLDAP.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
 
 
-                         <button class="xc_button" type="button" name="addLDAPuser" onclick="javascript:YAHOO.xc.mst.user.addLDAPUser();">Add LDAP User</button>
+                         <button class="xc_button" type="button" name="addLDAPuser" onclick="javascript:YAHOO.xc.mst.user.addLDAP.addLDAPUser();">Add LDAP User</button>
 
 
 

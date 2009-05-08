@@ -7,9 +7,9 @@
   *
   */
   
-YAHOO.namespace("xc.mst.logs");
+YAHOO.namespace("xc.mst.logs.harvestIn");
 
-YAHOO.xc.mst.logs = {
+YAHOO.xc.mst.logs.harvestIn = {
 
     displayOAIRequest : function(providerId)
     {

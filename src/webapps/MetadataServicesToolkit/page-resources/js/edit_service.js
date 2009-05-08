@@ -7,9 +7,9 @@
   *
   */
 
-YAHOO.namespace("xc.mst.services");
+YAHOO.namespace("xc.mst.services.alterService");
 
-YAHOO.xc.mst.services = {
+YAHOO.xc.mst.services.alterService = {
 
  editService: function(serviceId)
             {

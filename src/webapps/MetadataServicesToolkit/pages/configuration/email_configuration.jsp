@@ -135,7 +135,7 @@
 
                     <div align="left">
                         <!-- <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp; -->
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.changeEmailConfig();" name="changeEmailConfig">Change Email Configuration</button>
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.EmailServer.changeEmailConfig();" name="changeEmailConfig">Change Email Configuration</button>
                     </div>
 
                 </form>

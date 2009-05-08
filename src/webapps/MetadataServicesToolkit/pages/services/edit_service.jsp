@@ -94,8 +94,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <button class="xc_button_small" onclick="javascript:YAHOO.xc.mst.services.cancel();" type="button" name="cancel">Cancel</button>&nbsp;&nbsp;
-                            <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.services.editService(${temporaryService.id});" name="editService">Save</button>
+                            <button class="xc_button_small" onclick="javascript:YAHOO.xc.mst.services.alterService.cancel();" type="button" name="cancel">Cancel</button>&nbsp;&nbsp;
+                            <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.services.alterService.editService(${temporaryService.id});" name="editService">Save</button>
                         </td>
                     </tr>
                 </table>

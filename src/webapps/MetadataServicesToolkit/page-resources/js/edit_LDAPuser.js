@@ -7,9 +7,9 @@
   *
   */
   
-YAHOO.namespace("xc.mst.user");
+YAHOO.namespace("xc.mst.user.editLDAP");
 
-YAHOO.xc.mst.user = {
+YAHOO.xc.mst.user.editLDAP = {
     editLDAPUser : function()
     {
         try

@@ -7,9 +7,9 @@
   *
   */
   
-YAHOO.namespace("xc.mst.user");
+YAHOO.namespace("xc.mst.user.editLocal");
 
-YAHOO.xc.mst.user = {
+YAHOO.xc.mst.user.editLocal = {
     editValidate : function()
     {
         try

@@ -235,10 +235,10 @@
                                     <td class="${classColumn}">${n.lastName}</td>
                                     <td>
                                         <c:if test="${n.username == 'admin'}">
-                                        	<button class="xc_button_disabled" disabled="true" type="submit" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.deleteUser(${n.id});">Delete</button>
+                                        	<button class="xc_button_disabled" disabled="true" type="submit" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.removeUser.deleteUser(${n.id});">Delete</button>
                                         </c:if>
                                         <c:if test="${n.username != 'admin'}">
-                                                 <button class="xc_button" type="button" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.deleteUser(${n.id});">Delete</button>
+                                                 <button class="xc_button" type="button" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.removeUser.deleteUser(${n.id});">Delete</button>
                                         </c:if>
                                             
                                     </td>

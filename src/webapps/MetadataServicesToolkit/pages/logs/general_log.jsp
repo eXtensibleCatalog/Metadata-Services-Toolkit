@@ -78,7 +78,7 @@
                 <div class="clear">&nbsp;</div>
 
                 <div align="right" style="margin-top:10px;margin-bottom:10px;">
-                    <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.resetAll();" name="next">Reset All *</button>
+                    <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.general.resetAll();" name="next">Reset All *</button>
                 </div>
 
                 <div class="viewTable">
@@ -210,7 +210,7 @@
                                                <c:set var="classColumn" value="sortColumn"/>
                                            </c:if>
                                       <td class="${classColumn}">
-                                          <a onclick="javascript:YAHOO.xc.mst.logs.downloadFile(${n.id});"><U>${n.logFileName}</U></a>
+                                          <a onclick="javascript:YAHOO.xc.mst.logs.general.downloadFile(${n.id});"><U>${n.logFileName}</U></a>
                                       </td>
                                             <c:set var="classColumn" value="plainColumn"/>
                                             <c:if test="${columnSorted=='Warnings'}">
@@ -227,7 +227,7 @@
                                           ${n.errors}
                                       </td>
                                       <td>
-                                          <button onclick="javascript:YAHOO.xc.mst.logs.resetFunction('${n.id}');" class="xc_button" type="button" name="reset">Reset</button>
+                                          <button onclick="javascript:YAHOO.xc.mst.logs.general.resetFunction('${n.id}');" class="xc_button" type="button" name="reset">Reset</button>
                                       </td>
                                             <c:set var="classColumn" value="plainColumn"/>
                                             <c:if test="${columnSorted=='LastLogReset'}">
@@ -252,7 +252,7 @@
                     </table>
                     * Reset will reset the statistic to 0 and move the log file to the archives directory
                      <div align="right" style="margin-top:10px;margin-bottom:10px;">
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.resetAll();" name="next">Reset All</button>
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.general.resetAll();" name="next">Reset All</button>
                     </div>
                      <form name="generalLogReset" method="post">
                         <input type="hidden" name="logId" id="logId">

@@ -81,7 +81,7 @@
                  <div class="clear">&nbsp;</div>
 
               <div align="right" style="margin-top:10px;margin-bottom:10px;">
-                <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.resetAll();" name="next">Reset All *</button>
+                <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.harvestIn.resetAll();" name="next">Reset All *</button>
               </div>
                 <div class="viewTable">
                     <table width="100%">
@@ -238,14 +238,14 @@
 									  <c:param name="query" value="${n.name}"/>
 								 </c:url>                              	
                                   <tr>
-                                      <td><a style="cursor:pointer;"onclick="javascript:YAHOO.xc.mst.logs.displayOAIRequest(${n.id});"><U>OAI Request</U></a></td>
+                                      <td><a style="cursor:pointer;"onclick="javascript:YAHOO.xc.mst.logs.harvestIn.displayOAIRequest(${n.id});"><U>OAI Request</U></a></td>
                                       <td><a style="text-decoration:none;color:black;" href="${browseRecordsAction}"><U>Browse Records</U></a></td>
                                            <c:set var="classColumn" value="plainColumn"/>
                                            <c:if test="${columnSorted=='RepositoryName'}">
                                                <c:set var="classColumn" value="sortColumn"/>
                                            </c:if>
                                       <td class="${classColumn}">
-                                          <a style="cursor:pointer;" onclick="javascript:YAHOO.xc.mst.logs.downloadFile(${n.id});"><U>${n.name}</U></a>
+                                          <a style="cursor:pointer;" onclick="javascript:YAHOO.xc.mst.logs.harvestIn.downloadFile(${n.id});"><U>${n.name}</U></a>
                                       </td>
                                            <c:set var="classColumn" value="plainColumn"/>
                                            <c:if test="${columnSorted=='LastHarvestEndTime'}">
@@ -269,7 +269,7 @@
                                           ${n.recordsReplaced}
                                       </td>
                                       <td>
-                                          <button class="xc_button" type="button" name="reset" onclick="javascript:YAHOO.xc.mst.logs.resetFunction('${n.logFileName}','${n.id}')">Reset</button>
+                                          <button class="xc_button" type="button" name="reset" onclick="javascript:YAHOO.xc.mst.logs.harvestIn.resetFunction('${n.logFileName}','${n.id}')">Reset</button>
                                       </td>
                                            <c:set var="classColumn" value="plainColumn"/>
                                            <c:if test="${columnSorted=='LastLogReset'}">
@@ -294,7 +294,7 @@
                     </table>
                     * Reset will reset the statistic to 0 and move the log file to the archives directory
                      <div align="right" style="margin-top:10px;margin-bottom:10px;">
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.resetAll();" name="next">Reset All</button>
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.harvestIn.resetAll();" name="next">Reset All</button>
                     </div>
                     <form name="harvestInReset" method="post">
                         <input type="hidden" name="harvestInLogFileName" id="harvestInLogFileName">

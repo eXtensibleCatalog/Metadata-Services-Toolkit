@@ -80,7 +80,7 @@
                 <div class="clear">&nbsp;</div>
 
               <div align="right" style="margin-bottom:10px;">
-                <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.resetAll();" name="next">Reset All *</button>
+                <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.harvestOut.resetAll();" name="next">Reset All *</button>
               </div>
                 <div class="viewTable">
                     <table width="100%">
@@ -267,7 +267,7 @@
                                                <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
                                       <td class="${classColumn}">
-                                          <a style="cursor:pointer;" onclick ="javascript:YAHOO.xc.mst.log.downloadFile('${n.id}')"><U>${n.name}</U></a>
+                                          <a style="cursor:pointer;" onclick ="javascript:YAHOO.xc.mst.log.harvestOut.downloadFile('${n.id}')"><U>${n.name}</U></a>
                                       </td>
                                              <c:set var="classColumn" value="plainColumn"/>
                                              <c:if test="${columnSorted=='RecordsAvailable'}">
@@ -297,7 +297,7 @@
                                       <td class="${classColumn}">
                                           ${n.harvestOutErrors}
                                       </td>
-                                      <td><button class="xc_button" type="button" name="reset" onclick="javascript:YAHOO.xc.mst.log.resetFunction('${n.harvestOutLogFileName}','${n.id}')">Reset</button></td>
+                                      <td><button class="xc_button" type="button" name="reset" onclick="javascript:YAHOO.xc.mst.log.harvestOut.resetFunction('${n.harvestOutLogFileName}','${n.id}')">Reset</button></td>
                                              <c:set var="classColumn" value="plainColumn"/>
                                              <c:if test="${columnSorted=='LastLogReset'}">
                                                <c:set var="classColumn" value="sortColumn"/>
@@ -320,7 +320,7 @@
                     </table>
                     * Reset will reset the statistic to 0 and move the log file to the archives directory
                      <div align="right" style="margin-top:10px;margin-bottom:10px;">
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.resetAll();" name="next">Reset All</button>
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.harvestOut.resetAll();" name="next">Reset All</button>
                     </div>
                     <form name="harvestOutReset" method="post">
                         <input type="hidden" name="harvestOutLogFileName" id="harvestOutLogFileName">

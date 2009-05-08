@@ -85,8 +85,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <button class="xc_button_small" onclick="javascript:YAHOO.xc.mst.services.cancel();" type="button" name="cancel">Cancel</button>&nbsp;&nbsp;
-                            <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.services.addService();" name="addService">Add</button>
+                            <button class="xc_button_small" onclick="javascript:YAHOO.xc.mst.services.newService.cancel();" type="button" name="cancel">Cancel</button>&nbsp;&nbsp;
+                            <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.services.newService.addService();" name="addService">Add</button>
                         </td>
                     </tr>
                 </table>

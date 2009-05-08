@@ -127,8 +127,8 @@
 
                     <br><br>
                     <div align="left">
-                          <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
-                          <button class="xc_button" type="button" name="editgroup" onclick="javascript:YAHOO.xc.mst.user.editGroup();">Edit Group</button>
+                          <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.alterGroup.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
+                          <button class="xc_button" type="button" name="editgroup" onclick="javascript:YAHOO.xc.mst.user.alterGroup.editGroup();">Edit Group</button>
                     </div>
 
             </form>

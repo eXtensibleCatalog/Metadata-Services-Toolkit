@@ -6,9 +6,9 @@
   * website http://www.extensiblecatalog.org/. 
   *
   */
- YAHOO.namespace("xc.mst.repository");
+ YAHOO.namespace("xc.mst.repository.viewRepository");
 
-YAHOO.xc.mst.repository = {
+YAHOO.xc.mst.repository.viewRepository = {
 
     delRepository : function(id)
     {

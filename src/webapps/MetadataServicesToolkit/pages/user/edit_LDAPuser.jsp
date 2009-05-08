@@ -143,9 +143,9 @@
 
 
                         <div align="left">
-                             <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
+                             <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.editLDAP.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
                              
-                             <button class="xc_button" type="button" name="editlocaluser" onclick="javascript:YAHOO.xc.mst.user.editLDAPUser();">Edit LDAP User</button>
+                             <button class="xc_button" type="button" name="editlocaluser" onclick="javascript:YAHOO.xc.mst.user.editLDAP.editLDAPUser();">Edit LDAP User</button>
                                  
 
                         </div>

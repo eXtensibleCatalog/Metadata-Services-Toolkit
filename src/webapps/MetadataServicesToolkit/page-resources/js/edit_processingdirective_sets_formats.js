@@ -7,7 +7,7 @@
   *
   */
   
-YAHOO.namespace("xc.mst.processingDirective");
+YAHOO.namespace("xc.mst.processingDirective.editDirectiveSetsFormats");
 
 YAHOO.xc.mst.processingDirective = {
 

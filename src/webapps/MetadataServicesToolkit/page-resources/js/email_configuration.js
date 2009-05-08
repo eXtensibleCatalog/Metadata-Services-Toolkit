@@ -7,9 +7,9 @@
   *
   */
   
-YAHOO.namespace("xc.mst.configuration");
+YAHOO.namespace("xc.mst.configuration.EmailServer");
 
-YAHOO.xc.mst.configuration = {
+YAHOO.xc.mst.configuration.EmailServer = {
 
  changeEmailConfig : function()
  {
