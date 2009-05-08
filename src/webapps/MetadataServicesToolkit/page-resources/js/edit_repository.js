@@ -64,7 +64,7 @@ editValidator : function()
 					YAHOO.xc.mst.repository.editRepository.processingDialog.render();
 
 
-					YAHOO.xc.mst.repository.processingDialog.showDialog();
+					YAHOO.xc.mst.repository.editRepository.processingDialog.showDialog();
                                    	setTimeout("YAHOO.xc.mst.repository.editRepository.submitForm()", 2000);
                                    
                                }

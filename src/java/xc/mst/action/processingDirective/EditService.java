@@ -40,7 +40,7 @@ public class EditService extends ActionSupport
     private String selectedLocation;
 
     /** The ID of the service whose details are being edited */
-    private String serviceId;
+    private int serviceId;
 
     /** The temporary service object which is used to populate data in the JSP page*/
     private Service temporaryService;
@@ -78,7 +78,7 @@ public class EditService extends ActionSupport
      *
      * @param serviceId service ID
      */
-    public void setServiceId(String serviceId)
+    public void setServiceId(int serviceId)
     {
         this.serviceId = serviceId;
     }
@@ -88,7 +88,7 @@ public class EditService extends ActionSupport
      *
      * @return service ID
      */
-    public String getServiceId()
+    public int getServiceId()
     {
         return this.serviceId;
     }
@@ -161,7 +161,7 @@ public class EditService extends ActionSupport
     {
         try
         {
-            temporaryService = servicesService.getServiceById(Integer.parseInt(getServiceId()));
+            temporaryService = servicesService.getServiceById(serviceId);
             setTemporaryService(temporaryService);
             File dir = new File("serviceConfig");
             
@@ -194,7 +194,7 @@ public class EditService extends ActionSupport
         {
             String location = "serviceConfig/" + getSelectedLocation();
             File file = new File(location);
-            servicesService.updateService(file, servicesService.getServiceById(Integer.parseInt(serviceId)));
+            servicesService.updateService(file, servicesService.getServiceById(serviceId));
             return SUCCESS;
         }
         catch(Exception e)
