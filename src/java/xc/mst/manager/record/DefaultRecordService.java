@@ -1130,7 +1130,8 @@ public class DefaultRecordService extends RecordService
 			// Get each set from the list of set IDs this record belongs to.  If the set is
 			// not null, add its setSpec to the header.
 			for(Set set : record.getSets())
-				header.append("\t<setSpec>").append(set.getSetSpec()).append("</setSpec>\n");
+				if(set != null)
+					header.append("\t<setSpec>").append(set.getSetSpec()).append("</setSpec>\n");
 
 			header.append("</header>");
 

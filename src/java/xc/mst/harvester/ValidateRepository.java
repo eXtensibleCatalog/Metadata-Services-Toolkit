@@ -418,10 +418,10 @@ public class ValidateRepository implements ErrorHandler
 		}
 		else
 		{
-			LogWriter.addError(provider.getLogFileName(), "Provider supports an invalid deleted record support according to the OAI protocol. Invalid response: " + deletedRecord);
+			LogWriter.addError(provider.getLogFileName(), "Provider supports an invalid deleted record support according to the OAI protocol. Invalid response: " + deletedRecordString);
 			provider.setErrors(provider.getErrors() + 1);
 
-			throw new Hexception("Provider shows an invalid deleted record support according to the OAI protocol. Invalid response: " + deletedRecord);
+			throw new Hexception("Provider shows an invalid deleted record support according to the OAI protocol. Invalid response: " + deletedRecordString);
 		}
 
 		// Check the protocol version

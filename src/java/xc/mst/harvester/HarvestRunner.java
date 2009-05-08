@@ -168,6 +168,17 @@ public class HarvestRunner
 		try
 		{
 			harvestScheduleDao.update(harvestSchedule, false);
+
+			// Set the current harvest's end time
+			currentHarvest.setEndTime(new Date());
+			harvestDao.update(currentHarvest);
+			
+			// Set the provider's last harvest time
+			provider = providerDao.getById(provider.getId());
+			provider.setLastHarvestEndTime(new Date());
+			providerDao.update(provider);
+
+			LogWriter.addInfo(provider.getLogFileName(), "Finished harvest of " + baseURL);
 		}
 		catch(DataException e)
 		{
@@ -225,16 +236,6 @@ public class HarvestRunner
 			// Set the harvest schedule step's last run date to the time when we started the harvest.
 			harvestScheduleStep.setLastRan(startTime);
 			harvestScheduleStepDao.update(harvestScheduleStep, harvestScheduleStep.getSchedule().getId());
-
-			// Set the current harvest's end time
-			currentHarvest.setEndTime(new Date());
-			harvestDao.update(currentHarvest);
-			
-			// Set the provider's last harvest time
-			provider.setLastHarvestEndTime(new Date());
-			providerDao.update(provider);
-
-			LogWriter.addInfo(harvestScheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvest of " + baseURL);
 		} // end try(run the harvest)
 		catch(Exception e)
 		{

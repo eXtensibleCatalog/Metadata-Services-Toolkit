@@ -1470,7 +1470,12 @@ public class NormalizationService extends MetadataService
 		// If 130, 240, and 243 all don't exist and 245 does exist, copy the 245 into a new 240 field.
 		// Only copy subfields afknp.
 		if(marcXml.getField130() == null && marcXml.getField240() == null && marcXml.getField243() == null && marcXml.getField245() != null)
-			marcXml.copyMarcXmlField("245", "240", "afknp");
+		{
+			if(marcXml.getField100Element() != null || marcXml.getField110Element() != null || marcXml.getField111Element() != null)
+				marcXml.copyMarcXmlField("245", "240", "afknp", "0", "0");
+			else
+				marcXml.copyMarcXmlField("245", "130", "afknp", "0", " ");
+		}
 
 		return marcXml;
 	}

@@ -184,7 +184,7 @@ CREATE TABLE harvests
 (
   harvest_id INT(11) NOT NULL AUTO_INCREMENT,
   start_time TIMESTAMP NOT NULL,
-  end_time TIMESTAMP,
+  end_time TIMESTAMP NULL,
   request TEXT,
   result LONGTEXT,
   harvest_schedule_name VARCHAR(127) NOT NULL,

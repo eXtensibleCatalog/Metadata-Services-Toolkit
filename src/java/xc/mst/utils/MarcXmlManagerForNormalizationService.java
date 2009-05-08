@@ -1128,7 +1128,7 @@ public class MarcXmlManagerForNormalizationService
 	 * @param copyToTag The tag we're copying into
 	 */
 	@SuppressWarnings("unchecked")
-	public void copyMarcXmlField(String copyFromTag, String copyToTag, String subfieldsToCopy)
+	public void copyMarcXmlField(String copyFromTag, String copyToTag, String subfieldsToCopy, String newInd1, String newInd2)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Copying the MARC XML tag " + copyFromTag + " subfields " + subfieldsToCopy + " into the MARC XML tag " + copyToTag);
@@ -1149,8 +1149,8 @@ public class MarcXmlManagerForNormalizationService
 				// The indicators should be the same as on the original field
 				newField = new Element("datafield", marcNamespace);
 				newField.setAttribute("tag", copyToTag);
-				newField.setAttribute("ind1", "0");
-				newField.setAttribute("ind2", "0");
+				newField.setAttribute("ind1", newInd1);
+				newField.setAttribute("ind2", newInd2);
 
 				// Loop over the field's subfields and copy over the requested ones
 				List<Element> subfields = field.getChildren("subfield", marcNamespace);
