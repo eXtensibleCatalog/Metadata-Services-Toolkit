@@ -234,140 +234,144 @@
         <!--  ************************************ -->
         <!--  Services  actions                    -->
         <!--  ************************************ -->
-        <action name="listServices" class="xc.mst.action.processingDirective.ListServices">
+        <action name="listServices" class="xc.mst.action.services.ListServices">
         	<interceptor-ref name="default"/>
 			<result name="success">/pages/services/list_services.jsp</result>
 			<result name="input">/pages/services/list_services.jsp</result>
 		</action>
 		
-        <action name="viewAddService" class="xc.mst.action.processingDirective.AddService">
+        <action name="viewAddService" class="xc.mst.action.services.AddService">
         	<interceptor-ref name="default"/>
 			<result name="success">/pages/services/add_service.jsp</result>
 		</action>
         
-        <action name="addService" class="xc.mst.action.processingDirective.AddService" method="addService">
+        <action name="addService" class="xc.mst.action.services.AddService" method="addService">
         	<interceptor-ref name="default"/>
 			<result name="success" type="redirect">listServices.action</result>
             <result name="input">/pages/services/add_service.jsp</result>
 		</action>
         
-        <action name="deleteService" class="xc.mst.action.processingDirective.DeleteService">
+        <action name="deleteService" class="xc.mst.action.services.DeleteService">
         	<interceptor-ref name="editStack"/>
             <result name="success">/pages/services/service_delete_confirmation.jsp</result>
             <result name="input">listServices.action</result>
         </action>
 
-        <action name="deleteServiceRecords" class="xc.mst.action.processingDirective.DeleteService" method="deleteServiceAndRecords">
+        <action name="deleteServiceRecords" class="xc.mst.action.services.DeleteService" method="deleteServiceAndRecords">
         	<interceptor-ref name="editStack"/>
             <result name="success" type="redirect">listServices.action</result>
         </action>
 
 
-        <action name="viewEditService" class="xc.mst.action.processingDirective.EditService">
+        <action name="viewEditService" class="xc.mst.action.services.EditService">
         	<interceptor-ref name="default"/>
 			<result name="success">/pages/services/edit_service.jsp</result>
 		</action>
-        <action name="editService" class="xc.mst.action.processingDirective.EditService" method="editService">
+        <action name="editService" class="xc.mst.action.services.EditService" method="editService">
         	<interceptor-ref name="default"/>
 			<result name="success" type="redirect">listServices.action</result>
             <result name="input">/pages/services/edit_service.jsp</result>
 		</action>
 
-        <action name="serviceAbort" class="xc.mst.action.processingDirective.ServiceInteract">
+        <action name="serviceAbort" class="xc.mst.action.services.ServiceInteract">
         	<interceptor-ref name="default"/>
 			<result name="success">inc/refreshPageOnce.jsp?serviceStatus=aborted</result>
 		</action>
 
-        <action name="servicePause" class="xc.mst.action.processingDirective.ServiceInteract" method="pauseJob">
+        <action name="servicePause" class="xc.mst.action.services.ServiceInteract" method="pauseJob">
         	<interceptor-ref name="default"/>
 			<result name="success">inc/refreshPageOnce.jsp?serviceStatus=paused</result>
 		</action>
 
-        <action name="serviceResume" class="xc.mst.action.processingDirective.ServiceInteract" method="resumeJob">
+        <action name="serviceResume" class="xc.mst.action.services.ServiceInteract" method="resumeJob">
         	<interceptor-ref name="default"/>
 			<result name="success">inc/refreshPageOnce.jsp?serviceStatus=resumed</result>
 		</action>
 
-        <action name="refreshServiceBar" class="xc.mst.action.processingDirective.RefreshServiceBar">
+        <action name="refreshServiceBar" class="xc.mst.action.services.RefreshServiceBar">
          	<interceptor-ref name="default"/>
 			<result name="success">inc/service_bar.jsp</result>
 			<result name="input">inc/error.jsp</result>
 		</action>
 
+        <!--  ************************************ -->
+        <!--    Processing Rules actions           -->
+        <!--  ************************************ -->
+
          <action name="listProcessingDirectives" class="xc.mst.action.processingDirective.ListProcessingDirectives">
          	<interceptor-ref name="default"/>
-			<result name="success">/pages/services/list_processingdirectives.jsp</result>
-			<result name="input">/pages/services/list_processingdirectives.jsp</result>
+			<result name="success">/pages/processing_rules/list_processingdirectives.jsp</result>
+			<result name="input">/pages/processing_rules/list_processingdirectives.jsp</result>
 		</action>
         
          <action name="viewAddProcessingDirectives" class="xc.mst.action.processingDirective.AddProcessingDirective">
 			<interceptor-ref name="default"/>
-			<result name="success">/pages/services/add_processingdirective.jsp</result>
-			<result name="input">/pages/services/add_processingdirective.jsp</result>
+			<result name="success">/pages/processing_rules/add_processingdirective.jsp</result>
+			<result name="input">/pages/processing_rules/add_processingdirective.jsp</result>
 		</action>
         <action name="addProcessingDirectiveGoBack" class="xc.mst.action.processingDirective.AddProcessingDirectiveSetsFormats" method="addProcessingDirectiveGoBack">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">viewAddProcessingDirectives.action</result>
-			<result name="input">/pages/services/add_processingdirective_sets_formats.jsp</result>
+			<result name="input">/pages/processing_rules/add_processingdirective_sets_formats.jsp</result>
 		</action>
         <action name="addProcessingDirectiveCancel" class="xc.mst.action.processingDirective.AddProcessingDirectiveSetsFormats" method="addProcessingDirectiveCancel">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">listProcessingDirectives.action</result>
-			<result name="input">/pages/services/add_processingdirective_sets_formats.jsp</result>
+			<result name="input">/pages/processing_rules/add_processingdirective_sets_formats.jsp</result>
 		</action>
 		
          <action name="addProcessingDirectives" class="xc.mst.action.processingDirective.AddProcessingDirective" method="addProcessingDirectives">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">viewAddProcessingDirectivesSetsFormats.action</result>
-			<result name="input">/pages/services/add_processingdirective.jsp</result>
+			<result name="input">/pages/processing_rules/add_processingdirective.jsp</result>
 		</action>
 		
         <action name="viewAddProcessingDirectivesSetsFormats" class="xc.mst.action.processingDirective.AddProcessingDirectiveSetsFormats">
 			<interceptor-ref name="default"/>
-			<result name="success">/pages/services/add_processingdirective_sets_formats.jsp</result>
-			<result name="input">/pages/services/add_processingdirective_sets_formats.jsp</result>
+			<result name="success">/pages/processing_rules/add_processingdirective_sets_formats.jsp</result>
+			<result name="input">/pages/processing_rules/add_processingdirective_sets_formats.jsp</result>
 		</action>
 		
          <action name="addProcessingDirectivesSetsFormats" class="xc.mst.action.processingDirective.AddProcessingDirectiveSetsFormats" method="addProcessingDirectivesSetsFormats">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">listProcessingDirectives.action</result>
-            <result name="input">/pages/services/add_processingdirective_sets_formats.jsp</result>
-			<result name="error">/pages/services/add_processingdirective_sets_formats.jsp</result>
+            <result name="input">/pages/processing_rules/add_processingdirective_sets_formats.jsp</result>
+			<result name="error">/pages/processing_rules/add_processingdirective_sets_formats.jsp</result>
 		</action>
 		
          <action name="viewEditProcessingDirectives" class="xc.mst.action.processingDirective.EditProcessingDirective">
 			<interceptor-ref name="default"/>
-			<result name="success">/pages/services/edit_processingdirective.jsp</result>
-			<result name="input">/pages/services/edit_processingdirective.jsp</result>
+			<result name="success">/pages/processing_rules/edit_processingdirective.jsp</result>
+			<result name="input">/pages/processing_rules/edit_processingdirective.jsp</result>
 		</action>
 		
         <action name="editProcessingDirectives" class="xc.mst.action.processingDirective.EditProcessingDirective" method="editProcessingDirectives">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">viewEditProcessingDirectivesSetsFormats.action?ProcessingDirectiveId=${processingDirectiveId}</result>
-			<result name="input">/pages/services/edit_processingdirective.jsp</result>
+			<result name="input">/pages/processing_rules/edit_processingdirective.jsp</result>
 		</action>
 		
         <action name="viewEditProcessingDirectivesSetsFormats" class="xc.mst.action.processingDirective.EditProcessingDirectiveSetsFormats">
 			<interceptor-ref name="default"/>
-			<result name="success">/pages/services/edit_processingdirective_sets_formats.jsp</result>
-			<result name="input">/pages/services/edit_processingdirective_sets_formats.jsp</result>
+			<result name="success">/pages/processing_rules/edit_processingdirective_sets_formats.jsp</result>
+			<result name="input">/pages/processing_rules/edit_processingdirective_sets_formats.jsp</result>
 		</action>
 		
         <action name="editProcessingDirectivesSetsFormats" class="xc.mst.action.processingDirective.EditProcessingDirectiveSetsFormats" method="editProcessingDirectivesSetsFormats">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">listProcessingDirectives.action</result>
-			<result name="input">/pages/services/edit_processingdirective_sets_formats.jsp</result>
-            <result name="error">/pages/services/edit_processingdirective_sets_formats.jsp</result>
+			<result name="input">/pages/processing_rules/edit_processingdirective_sets_formats.jsp</result>
+            <result name="error">/pages/processing_rules/edit_processingdirective_sets_formats.jsp</result>
 		</action>
         <action name="editProcessingDirectiveGoBack" class="xc.mst.action.processingDirective.EditProcessingDirectiveSetsFormats" method="editProcessingDirectiveGoBack">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">viewEditProcessingDirectives.action</result>
-			<result name="input">/pages/services/edit_processingdirective_sets_formats.jsp</result>
+			<result name="input">/pages/processing_rules/edit_processingdirective_sets_formats.jsp</result>
 		</action>
         <action name="editProcessingDirectiveCancel" class="xc.mst.action.processingDirective.EditProcessingDirectiveSetsFormats" method="editProcessingDirectiveCancel">
 			<interceptor-ref name="default"/>
 			<result name="success" type="redirect">listProcessingDirectives.action</result>
-			<result name="input">/pages/services/edit_processingdirective_sets_formats.jsp</result>
+			<result name="input">/pages/processing_rules/edit_processingdirective_sets_formats.jsp</result>
 		</action>
          <action name="deleteProcessingDirective" class="xc.mst.action.processingDirective.DeleteProcessingDirective">
 			<interceptor-ref name="default"/>
