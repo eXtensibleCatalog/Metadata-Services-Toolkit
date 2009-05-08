@@ -374,3 +374,21 @@
  	color:#f70302;
  	font-weight:bold;
  }
+
+.textBoxClass
+{
+    width:200px;
+    height:25px;
+}
+
+.listBox
+{
+    font-family: verdana,sans-serif;
+    font-size: 11px;
+}
+
+.textBox1
+{
+    width : 300px;
+    height : 30px;
+}

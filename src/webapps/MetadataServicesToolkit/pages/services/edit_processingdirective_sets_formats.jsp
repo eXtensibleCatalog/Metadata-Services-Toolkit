@@ -14,7 +14,7 @@
 <c:import url="/inc/doctype-frag.jsp"/>
 
 <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-<LINK href="page-resources/css/processing_rules.css" rel="stylesheet" type="text/css" >
+    
 <html>
     <head>
         <title>Edit Processing Directive</title>
