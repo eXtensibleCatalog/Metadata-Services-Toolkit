@@ -35,7 +35,7 @@ public class ServiceReset extends ActionSupport
     private String serviceLogFileName;
 
     /**ID of the service to be reset */
-    private String serviceId;
+    private int serviceId;
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -48,7 +48,7 @@ public class ServiceReset extends ActionSupport
      *
      * @param serviceId service ID
      */
-    public void setServiceId(String serviceId)
+    public void setServiceId(int serviceId)
     {
         this.serviceId = serviceId;
     }
@@ -58,7 +58,7 @@ public class ServiceReset extends ActionSupport
      *
      * @return service ID
      */
-    public String getServiceId()
+    public int getServiceId()
     {
         return this.serviceId;
     }
@@ -94,7 +94,7 @@ public class ServiceReset extends ActionSupport
         try
         {
             
-            Service tempService = servicesService.getServiceById(Integer.parseInt(serviceId));
+            Service tempService = servicesService.getServiceById(serviceId);
             tempService.setServicesLastLogReset(new Date());
             tempService.setServicesWarnings(0);
             tempService.setServicesErrors(0);

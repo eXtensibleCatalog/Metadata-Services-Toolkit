@@ -20,7 +20,7 @@ public class GeneralLogReset extends ActionSupport
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**The ID of the general Log file */
-    private String logId;
+    private int logId;
 
     /**Service object created for interaction with general log files */
     private LogService logService = new DefaultLogService();
@@ -30,7 +30,7 @@ public class GeneralLogReset extends ActionSupport
      *
      * @param logId ID of the log
      */
-    public void setLogId(String logId)
+    public void setLogId(int logId)
     {
         this.logId = logId;
     }
@@ -40,7 +40,7 @@ public class GeneralLogReset extends ActionSupport
      *
      * @return log ID
      */
-    public String getLogId()
+    public int getLogId()
     {
         return this.logId;
     }
@@ -55,8 +55,7 @@ public class GeneralLogReset extends ActionSupport
     {
         try
         {
-            int id = Integer.parseInt(logId);
-            Log logs = logService.getById(id);
+            Log logs = logService.getById(logId);
             logs.setErrors(0);
             logs.setLastLogReset(new Date());
             logs.setWarnings(0);

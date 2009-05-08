@@ -45,7 +45,7 @@ addValidator : function()
 					// make it modal - 
 					// it should not start out as visible - it should not be shown until 
 					// new repository button is clicked.
-					YAHOO.xc.mst.repository.processingDialog = new YAHOO.widget.Dialog('processingDialog', 
+					YAHOO.xc.mst.repository.addRepository.processingDialog = new YAHOO.widget.Dialog('processingDialog',
 					{ width : "400px",
 						  visible : false, 
 						  modal : true,
@@ -54,22 +54,22 @@ addValidator : function()
 
 
 					     // Show the dialog
-				       YAHOO.xc.mst.repository.processingDialog.showDialog = function()
+				       YAHOO.xc.mst.repository.addRepository.processingDialog.showDialog = function()
 				       {
-					   YAHOO.xc.mst.repository.processingDialog.show();
-					   YAHOO.xc.mst.repository.processingDialog.center();
+					   YAHOO.xc.mst.repository.addRepository.processingDialog.show();
+					   YAHOO.xc.mst.repository.addRepository.processingDialog.center();
 				       },
 
 
 
 					// Render the Dialog
-					YAHOO.xc.mst.repository.processingDialog.render();
+					YAHOO.xc.mst.repository.addRepository.processingDialog.render();
 
 
-					YAHOO.xc.mst.repository.processingDialog.showDialog();
+					YAHOO.xc.mst.repository.addRepository.processingDialog.showDialog();
 							
 		
-				       setTimeout("YAHOO.xc.mst.repository.submitForm()", 2000);
+				       setTimeout("YAHOO.xc.mst.repository.addRepository.submitForm()", 2000);
 				     
                                }
                            

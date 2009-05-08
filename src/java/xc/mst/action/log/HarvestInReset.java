@@ -35,7 +35,7 @@ public class HarvestInReset extends ActionSupport
     private String harvestInLogFileName;
 
     /**ID of the service to be reset */
-    private String providerId;
+    private int providerId;
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -48,7 +48,7 @@ public class HarvestInReset extends ActionSupport
       *
      * @param providerId provider ID
      */
-    public void setProviderId(String providerId)
+    public void setProviderId(int providerId)
     {
         this.providerId = providerId;
     }
@@ -58,7 +58,7 @@ public class HarvestInReset extends ActionSupport
      *
      * @return ID of the provider
      */
-    public String getProviderId()
+    public int getProviderId()
     {
         return this.providerId;
     }
@@ -93,7 +93,7 @@ public class HarvestInReset extends ActionSupport
     {
         try
         {
-            Provider provider = providerService.getProviderById(Integer.parseInt(providerId));
+            Provider provider = providerService.getProviderById(providerId);
             provider.setErrors(0);
             provider.setWarnings(0);
             provider.setRecordsAdded(0);
