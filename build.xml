@@ -141,7 +141,7 @@
 	</target>
 
 	<!-- Compile for regular classes -->
-	<target name="compile" depends="retrieve,clean,init,copy-resources" xmlns:ext="http://edu.ur/d1/ext">
+	<target name="compile" depends="retrieve,clean,init,copy-resources" xmlns:ext="http://edu.ur/d1/ext"> 
 		<javac srcdir="${sourcedir}"
 			destdir="${targetdir}/classes"
 			target="${java.target}"
@@ -171,9 +171,8 @@
 
     <fileset id="web.libs" dir="${lib.dir}">
             <exclude name="testng*"/>
-            <exclude name="yui*"/>
-            <exclude name="servlet-api*"/>
-            <exclude name="jsp-api*"/>
+ 	            <exclude name="servlet-api*"/>
+   	            <exclude name="jsp-api*"/> 
 	</fileset>
 	
 	<!-- test compiling -->
