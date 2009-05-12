@@ -60,8 +60,7 @@ public class MySqlConnectionManager
             return dbConnection;
         }
         else
-        {
-            
+        {            
             Connection connObject = openDbConnection();
             if(connObject==null)
             {
@@ -109,26 +108,26 @@ public class MySqlConnectionManager
 	    } // end try (open and return connection)
 	    catch (ClassNotFoundException e) // Could not find the database driver
 	    {
-	        log.warn("Could not find the MySQL database driver.");
-            e.printStackTrace();
+	        log.warn("Could not find the MySQL database driver.", e);
+            
 	        return null;
 	    } // end catch(ClassNotFoundException)
 	    catch (SQLException e) // Could not connect to the database
 	    {
 	    	log.warn("Could not connect to the database specified in the configuration file.", e);
-            e.printStackTrace();
+            
 	        return null;
 	    } // end catch(SQLException)
 	    catch(UnsatisfiedLinkError e) // Something was wrong with the URL
 	    {
 	    	log.warn("Could not connect to the database specified in the configuration file.", e);
-            e.printStackTrace();
+            
 	        return null;
 	    } // end catch(UnsatisfiedLinkError)
         catch(Exception e) //any other error
-        {
-            e.printStackTrace();
-            log.debug(e);
+        {            
+            log.error("An Exception occurred while connecting to the database.", e);
+            
             return null;
         }
 	} // end method openDbConnection()

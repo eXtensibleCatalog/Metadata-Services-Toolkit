@@ -340,7 +340,7 @@ public class DefaultLogDAO extends LogDAO
 			ResultSet rs = null;
 
 			try
-			{
+			{	
 					// Create the PreparedStatement to insert a log if it hasn't already been defined
 					if(psInsert == null)
 					{
@@ -384,7 +384,7 @@ public class DefaultLogDAO extends LogDAO
 			catch(SQLException e)
 			{
 				log.error("A SQLException occurred while inserting a new log.", e);
-
+				
 				return false;
 			} // end catch(SQLException)
 			finally
