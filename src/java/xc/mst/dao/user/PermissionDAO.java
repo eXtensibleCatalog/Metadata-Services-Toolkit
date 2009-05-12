@@ -77,4 +77,12 @@ public abstract class PermissionDAO
      * @return
      */
     public abstract Permission getPermissionById(int permissionId);
+    
+    /**
+     * Returns a permission for user sorted by ascending order of tab order
+     * 
+     * @param userId User ID
+     * @return
+     */
+    public abstract List<Permission> getPermissionsForUserByTabOrderAsc(int userId);
 } // end class PermissionDAO

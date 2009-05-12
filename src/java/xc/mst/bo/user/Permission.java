@@ -27,6 +27,11 @@ public class Permission
 	private String tabName = null;
 
 	/**
+	 * The oders of the top level tab 
+	 */
+	private int tabOrder;
+	
+	/**
 	 * Gets the value of the Top Level Tab ID
 	 *
 	 * @return The Top Level Tab ID
@@ -76,4 +81,12 @@ public class Permission
 
 		return (other.tabId == this.tabId && ((other.tabName == null && this.tabName == null) || other.tabName.equals(this.tabName)));
 	} // end method equals(Object)
+
+	public int getTabOrder() {
+		return tabOrder;
+	}
+
+	public void setTabOrder(int tabOrder) {
+		this.tabOrder = tabOrder;
+	}
 } // end class Permission

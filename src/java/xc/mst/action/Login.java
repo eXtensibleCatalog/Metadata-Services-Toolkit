@@ -99,32 +99,30 @@ public class Login extends ActionSupport implements ServletRequestAware {
             	return "no-permission";
             }
             
-            Iterator<Group> groupIter = userGroups.iterator();
-            Group tempGroup = (Group)groupIter.next();
-            List<Permission> tempPermissions = tempGroup.getPermissions();
-            Iterator<Permission> permissionsIter = tempPermissions.iterator();
-            Permission tempPermission = (Permission)permissionsIter.next();
-            switch(tempPermission.getTabId())
-            {
-                case 1 : setForwardLink("allRepository.action");
-                         break;
-                case 2 : setForwardLink("allSchedules.action");
-                         break;
-                case 3:  setForwardLink("listServices.action");
-                         break;
-                case 4 : setForwardLink("browseRecords.action");
-                         break;
-                case 5 : setForwardLink("serviceLog.action");
-                         break;
-                case 6 : setForwardLink("allUsers.action");
-                         break;
-                case 7 : setForwardLink("emailConfig.action");
-                         break;
-                case 8 : setForwardLink("searchIndex.action");
-                         break;
-                default: setForwardLink("logout.action");
-                         break;
+            List<Permission> permissions = userService.getPermissionsForUserByTabOrderAsc(sessionUser);
+
+            if (permissions != null) {
+	            if (permissions.get(0).getTabName().equalsIgnoreCase("Repositories")) {
+	            	setForwardLink("allRepository.action");
+	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Schedule")) {
+	            	setForwardLink("allSchedules.action");
+	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Services")) {
+	            	setForwardLink("listServices.action");            	
+	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Processing Rules")) {
+	            	setForwardLink("listProcessingDirectives.action");
+	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Browse Records")) {
+	            	setForwardLink("viewBrowseRecords.action");            	
+	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Logs")) {
+	            	setForwardLink("generalLog.action");
+	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Users/Groups")) {
+	            	setForwardLink("allUsers.action");            	
+	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Configuration")) {
+	            	setForwardLink("viewEmailConfig.action");
+	            } else {
+	            	return "no-permission";        	
+	            }            
             }
+            
             log.debug("User exist in session. User forwarded to : " + forwardLink);
 
             return "user-initial-page";

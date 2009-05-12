@@ -76,7 +76,7 @@
                  </mst:checkUserPermission>
 
        			<mst:checkUserPermission permission="Logs">
-                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="">Logs</a>
+                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="generalLog.action">Logs</a>
                    <div id="logs" class="yuimenu">
                        <div class="bd">
                             <ul>
@@ -106,7 +106,7 @@
                  </mst:checkUserPermission>
 
        			<mst:checkUserPermission permission="Configuration">
-                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="">Configuration</a>
+                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="viewEmailConfig.action">Configuration</a>
                    <div id="configuration" class="yuimenu">
                        <div class="bd">
                             <ul>

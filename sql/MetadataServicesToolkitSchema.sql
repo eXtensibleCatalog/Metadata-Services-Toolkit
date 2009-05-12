@@ -720,7 +720,7 @@ delete from groups;
 delete from groups_to_top_level_tabs;
 
 insert into top_level_tabs values(1,'Repositories',1);
-insert into top_level_tabs values(2,'Harvest',2);
+insert into top_level_tabs values(2,'Schedule',2);
 insert into top_level_tabs values(3,'Services',3);
 insert into top_level_tabs values(4,'Processing Rules',4);
 insert into top_level_tabs values(5,'Browse Records',5);
@@ -730,10 +730,7 @@ insert into top_level_tabs values(8,'Configuration',8);
 
 
 insert into groups values(1,'Administrator','Administrator');
-insert into groups values(2,'Librarian','Librarian');
-insert into groups values(3,'XCPartner','XCPartner');
-insert into groups values(4,'Suscriber','Suscriber');
-insert into groups values(5,'Guest','Guest');
+
 
 insert into groups_to_top_level_tabs values(1,1,1);
 insert into groups_to_top_level_tabs values(2,1,2);
@@ -743,29 +740,15 @@ insert into groups_to_top_level_tabs values(5,1,5);
 insert into groups_to_top_level_tabs values(6,1,6);
 insert into groups_to_top_level_tabs values(7,1,7);
 insert into groups_to_top_level_tabs values(8,1,8);
-insert into groups_to_top_level_tabs values(9,2,1);
-insert into groups_to_top_level_tabs values(10,2,2);
-insert into groups_to_top_level_tabs values(11,2,3);
-insert into groups_to_top_level_tabs values(12,2,4);
-insert into groups_to_top_level_tabs values(13,3,5);
-insert into groups_to_top_level_tabs values(14,3,6);
-insert into groups_to_top_level_tabs values(15,3,7);
-insert into groups_to_top_level_tabs values(16,3,8);
-insert into groups_to_top_level_tabs values(17,4,4);
-insert into groups_to_top_level_tabs values(18,4,8);
-insert into groups_to_top_level_tabs values(19,4,5);
-insert into groups_to_top_level_tabs values(20,5,4);
 
 INSERT INTO servers (server_id, url, name, type, port, username_attribute, start_location, institution, forgot_password_url, forgot_password_label, show_forgot_password_link)
-VALUES (NULL, 'Local', 'Local', '4', '0', 'Local', 'Local', 'University of Rochester', 'Local', 'Local', '0');
+VALUES (1, '', 'Local', 'Local', '0', '', '', 'University Name', '', '', '0');
 
 
 
 -- Insert default admin user
-insert into users values(1,'admin','MST', 'admin','0DPiKuNIrrVmD8IUCuw1hQxNqZc=','sranganathan@library.rochester.edu',1,'2008-10-20 00:00:00','2008-10-20 00:00:00',0);
+insert into users values(1,'admin','MST', 'admin','0DPiKuNIrrVmD8IUCuw1hQxNqZc=','',1,'2008-10-20 00:00:00','2008-10-20 00:00:00',0);
 
 -- Insert group for admin user
 insert into users_to_groups values(1,1,1);
 
--- insert Email configuration values
-insert into emailconfig (email_config_id, server_address, port_number, from_address, password) values(1,"mail.rochester.edu",25, 'xcsupport@library.rochester.edu', 'Migration1');

@@ -54,12 +54,16 @@
             <c:import url="/inc/header.jsp"/>
             
             <c:import url="/inc/menu.jsp"/>
-            <jsp:include page="/inc/breadcrumb.jsp"> 
-
-                    <jsp:param name="bread" value="Browse Records" />
-
-            </jsp:include>
-            
+	 	    <c:if test="${!initialLoad}">
+               	<jsp:include page="/inc/breadcrumb.jsp"> 
+	                    <jsp:param name="bread" value="Browse Records, Search Results" />
+		         </jsp:include>
+            </c:if>            
+             <c:if test="${initialLoad}">
+ 	            <jsp:include page="/inc/breadcrumb.jsp"> 
+	                    <jsp:param name="bread" value="Browse Records" />
+	            </jsp:include>
+            </c:if>    
  		</div>
 		<!--  end header -->
 		
@@ -161,8 +165,8 @@
 
 					<div >	
 						<!-- Display of filters -->
-						<c:if test="${query != ''}">
-							<p class="searched_for">You Searched for : "${query}"<c:if test="${result.facetFilters != '[]'}">, </c:if>
+						<c:if test="${query != '' || result.facetFilters != '[]'}">
+							<p class="searched_for">You Searched for : <c:if test="${query != ''}">"${query}"</c:if><c:if test="${result.facetFilters != '[]' && query != ''}">, </c:if>
 							<c:forEach var="filter" items="${result.facetFilters}"  varStatus="status"><c:if test="${status.count > 1}">, </c:if><c:if test="${filter.name == 'format_name'}">Schema</c:if><c:if test="${filter.name == 'set_name'}">Set</c:if><c:if test="${filter.name == 'provider_name'}">Repository</c:if><c:if test="${filter.name == 'service_name'}">Service</c:if><c:if test="${filter.name == 'harvest_start_time'}">Harvest</c:if><c:if test="${filter.name == 'error'}">Error</c:if>:${filter.value}</c:forEach>							
 							</p>
 						</c:if>

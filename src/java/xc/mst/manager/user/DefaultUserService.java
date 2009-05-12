@@ -15,19 +15,25 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
+
 import org.apache.log4j.Logger;
+
 import sun.misc.BASE64Encoder;
 import xc.mst.bo.user.Group;
+import xc.mst.bo.user.Permission;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.user.DefaultPermissionDAO;
 import xc.mst.dao.user.DefaultUserDAO;
 import xc.mst.dao.user.DefaultUserGroupUtilDAO;
+import xc.mst.dao.user.PermissionDAO;
 import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.user.UserGroupUtilDAO;
 import xc.mst.email.Emailer;
@@ -49,6 +55,9 @@ public class DefaultUserService implements UserService{
 
     /** User-Group Util Dao object */
 	private UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
+	
+    /** Permission Dao object */
+	private PermissionDAO permissionDAO = new DefaultPermissionDAO();	
 
     /** Group DAO Object */
 	private GroupService groupService = new DefaultGroupService();
@@ -432,5 +441,15 @@ public class DefaultUserService implements UserService{
 			emailer.sendEmail(admin.getEmail(), adminSubject, adminMessageBody.toString());
 		}
  
+    }
+
+    /**
+     * Get permissions for user ordered by tab order
+     *  
+     * @param user User to get permissions
+     * @return user permissions
+     */
+    public List<Permission> getPermissionsForUserByTabOrderAsc(User user) {
+    	return permissionDAO.getPermissionsForUserByTabOrderAsc(user.getId());
     }
 }

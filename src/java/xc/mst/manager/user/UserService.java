@@ -10,6 +10,8 @@
 package xc.mst.manager.user;
 
 import java.util.List;
+
+import xc.mst.bo.user.Permission;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.dao.DataException;
@@ -161,7 +163,7 @@ public interface UserService {
     * @param groupId group ID
     * @return sorted list of users
     */
-    public abstract List<User> getUsersForGroup(int groupId);
+    public List<User> getUsersForGroup(int groupId);
 
     /**
      * Retrieves the number of users in a group
@@ -169,12 +171,20 @@ public interface UserService {
      * @param groupId group ID
      * @return member count
      */
-    public abstract int getUserCountForGroup(int groupId);
+    public int getUserCountForGroup(int groupId);
 
     /**
      * returns the number of LDAP users in the system
      *
      * @return number of LDAP users
      */
-    public abstract int getLDAPUserCount();
+    public int getLDAPUserCount();
+
+    /**
+     * Get permissions for user ordered by tab order
+     *  
+     * @param user User to get permissions
+     * @return user permissions
+     */
+    public List<Permission> getPermissionsForUserByTabOrderAsc(User user);
 }
