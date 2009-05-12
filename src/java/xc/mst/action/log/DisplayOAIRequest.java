@@ -26,7 +26,7 @@ import xc.mst.manager.harvest.ScheduleService;
 public class DisplayOAIRequest extends ActionSupport
 {
     /** The ID of the provider whose related OAI request is being displayed */
-    private String providerId;
+    private int providerId;
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -52,7 +52,7 @@ public class DisplayOAIRequest extends ActionSupport
             while(harvestIter.hasNext())
             {
                 HarvestSchedule schedule = (HarvestSchedule)harvestIter.next();
-                if(schedule.getProvider().getId()==Integer.parseInt(providerId))
+                if(schedule.getProvider().getId()== providerId)
                 {
                     setRequestString(schedule.getRequest());
                     break;
@@ -92,7 +92,7 @@ public class DisplayOAIRequest extends ActionSupport
      *
      * @param providerId provider ID
      */
-    public void setProviderId(String providerId)
+    public void setProviderId(int providerId)
     {
         this.providerId = providerId;
     }
@@ -102,7 +102,7 @@ public class DisplayOAIRequest extends ActionSupport
      *
      * @return provider ID
      */
-    public String getProviderId()
+    public int getProviderId()
     {
         return this.providerId;
     }

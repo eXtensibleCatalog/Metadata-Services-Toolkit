@@ -120,13 +120,14 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
 
             Provider tempProvider = providerService.getProviderByName(source);
             Service tempService = servService.getServiceByName(source);
-            if(tempProvider!=null)
+
+            if(tempProvider!=null) //source is a provider
             {
                  temporaryProcessingDirective.setSourceProvider(tempProvider);
                  temporaryProcessingDirective.setSourceService(null);
                  request.getSession().setAttribute("sourceType", "provider");
             }
-            else
+            else //source is a service
             {
                  temporaryProcessingDirective.setSourceService(tempService);
                  temporaryProcessingDirective.setSourceProvider(null);

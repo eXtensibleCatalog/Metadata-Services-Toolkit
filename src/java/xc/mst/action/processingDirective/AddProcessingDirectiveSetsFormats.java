@@ -168,7 +168,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
             List<Format> tempFormatList = new ArrayList<Format>();
             List<Set> tempSetList = new ArrayList<Set>();
 
-            if(FormatIdList!=null)
+            if(FormatIdList!=null) //setting the triggering formats of the processing Directive
             {
                 for(int i=0;i<FormatIdList.length;i++)
                 {
@@ -180,7 +180,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                 }
             }
 
-            if(SetIdList!=null)
+            if(SetIdList!=null) //setting the triggering sets of the procesisng directive
             {
                 for(int i=0;i<SetIdList.length;i++)
                 {
@@ -206,7 +206,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
 
            
           
-            if(sourceType.equalsIgnoreCase("provider"))
+            if(sourceType.equalsIgnoreCase("provider"))  //if the source is a provider
             {
                 Provider tempProvider = providerService.getProviderByName(tempProcDir.getSourceProvider().getName());
 
@@ -231,12 +231,13 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                 tempProcDir.setTriggeringFormats(tempFormatList);
                 tempProcDir.setTriggeringSets(tempSetList);
                 request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
-                if(flag==1)
+
+                if(flag==1) //processing directive with same details doesnt exist
                 {
                     Set setExists = setService.getSetBySetSpec(outputSetSpec);
-                    if(setExists==null)
+                    if(setExists==null) //output set doesnt already exist
                     {
-                        if((outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
+                        if((outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase(""))) //output set field has some value
                         {
                             Set tempSet = new Set();
                             tempSet.setDisplayName(outputSetName);
@@ -244,12 +245,12 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                             setService.insertSet(tempSet);
                             tempProcDir.setOutputSet(tempSet);
                         }
-                        else
+                        else //no value has been given for output set and output set field is left blank
                         {
                             tempProcDir.setOutputSet(setExists);
                         }
                     }
-                    else
+                    else //output set with the same setSpec already exists
                     {
                          this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Output Source Set with set specification "+setExists.getSetSpec()+" already exists");
                          errorType = "error";
@@ -260,7 +261,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                     }
                     PDService.insertProcessingDirective(tempProcDir);
                 }
-                else
+                else  //processing directive with the same provider/service combination exists
                 {
                      this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Cannot insert Processing Directive with same Source:'"+tempProcDir.getSourceProvider().getName()+"' and Service:'"+tempProcDir.getService().getName()+"' combination");
                      errorType = "error";
@@ -276,7 +277,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                 // end of validation and insertion(if applicable)
 
             }
-            else
+            else //source is a service
             {
 
                 Service tempService = servicesService.getServiceByName(tempProcDir.getSourceService().getName());
@@ -301,12 +302,12 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                 tempProcDir.setTriggeringSets(tempSetList);
                 request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
 
-                if(flag==1)
+                if(flag==1) //processing directive with the same service/service combo doesnt exist
                 {
                     Set setExists = setService.getSetBySetSpec(outputSetSpec);
-                    if(setExists==null)
+                    if(setExists==null) //output set doesnt already exist
                     {
-                        if((outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
+                        if((outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase(""))) //output set has some value being set
                         {
                             Set tempSet = new Set();
                             tempSet.setDisplayName(outputSetName);
@@ -314,12 +315,12 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                             setService.insertSet(tempSet);
                             tempProcDir.setOutputSet(tempSet);
                         }
-                        else
+                        else  //output set textbox is left empty
                         {
                             tempProcDir.setOutputSet(setExists);
                         }
                     }
-                    else
+                    else //output set already exists
                     {
                          this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Output Source Set with set specification "+setExists.getSetSpec()+" already exists");
                          errorType = "error";
@@ -330,7 +331,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                     }
                     PDService.insertProcessingDirective(tempProcDir);
                 }
-                else
+                else //processing directive with same service/service combination already exists
                 {
                      this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Cannot insert Processing Directive with same Source:'"+tempProcDir.getSourceService().getName()+"' and Service:'"+tempProcDir.getService().getName()+"' combination");
                      errorType = "error";

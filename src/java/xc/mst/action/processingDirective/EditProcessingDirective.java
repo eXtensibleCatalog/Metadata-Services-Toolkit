@@ -241,11 +241,11 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
             }
             Service tempService = temporaryProcessingDirective.getSourceService();
 
-            if(tempService!=null)
+            if(tempService!=null) //source is a service
             {
                 setSourceType("service");
             }
-            else
+            else //source is a provider
             {
 
                 setSourceType("provider");
@@ -284,14 +284,14 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
             Provider tempProvider = provService.getProviderByName(source);
             Service tempService = servService.getServiceByName(source);
             
-            if(tempProvider!=null)
+            if(tempProvider!=null) //source is a provider
             {
                 request.getSession().setAttribute("sourceType","provider");
                 temporaryProcessingDirective.setSourceProvider(tempProvider);
                 temporaryProcessingDirective.setSourceService(null);
 
             }
-            else
+            else //source is a service
             {
                 request.getSession().setAttribute("sourceType","service");
                 temporaryProcessingDirective.setSourceService(tempService);

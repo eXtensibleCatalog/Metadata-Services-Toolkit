@@ -85,7 +85,7 @@ public class ServiceLog extends ActionSupport
 
                 setIsAscendingOrder(isAscendingOrder);
                 setColumnSorted(columnSorted);
-                setServiceList(services);
+                setServices(services);
             }
             else
             {
@@ -128,7 +128,7 @@ public class ServiceLog extends ActionSupport
      *
      * @param serviceList list of all services
      */
-    public void setServiceList(List<Service> serviceList)
+    public void setServices(List<Service> serviceList)
     {
         this.services = serviceList;
     }
@@ -138,7 +138,7 @@ public class ServiceLog extends ActionSupport
      *
      * @return list of all services
      */
-    public List<Service> getServiceList()
+    public List<Service> getServices()
     {
         return services;
     }

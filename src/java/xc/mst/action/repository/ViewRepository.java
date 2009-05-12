@@ -71,7 +71,7 @@ public class ViewRepository extends ActionSupport implements UserAware
       {
           try
           {
-                provider = new DefaultProviderService().getProviderById(repositoryId);    
+                provider = providerService.getProviderById(repositoryId);
                 return SUCCESS;
           }
           catch(Exception e)

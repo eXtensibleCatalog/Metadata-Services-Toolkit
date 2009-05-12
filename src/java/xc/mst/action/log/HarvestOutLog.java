@@ -85,7 +85,7 @@ public class HarvestOutLog extends ActionSupport
 
                 setIsAscendingOrder(isAscendingOrder);
                 setColumnSorted(columnSorted);
-                setServiceList(servicesList);
+                setServices(servicesList);
                 return SUCCESS;
 
             }
@@ -128,7 +128,7 @@ public class HarvestOutLog extends ActionSupport
      *
      * @param serviceList list of all services
      */
-    public void setServiceList(List<Service> serviceList)
+    public void setServices(List<Service> serviceList)
     {
         this.services = serviceList;
     }
@@ -138,7 +138,7 @@ public class HarvestOutLog extends ActionSupport
      *
      * @return list of all services
      */
-    public List<Service> getServiceList()
+    public List<Service> getServices()
     {
         return services;
     }

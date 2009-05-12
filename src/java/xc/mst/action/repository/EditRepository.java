@@ -94,23 +94,22 @@ public class EditRepository extends ActionSupport
 
             Provider repositorySameName = providerService.getProviderByName(repositoryName);
             Provider repositorySameURL = providerService.getProviderByURL(repositoryURL);
-            if(repositorySameName!=null||repositorySameURL!=null)
+            if(repositorySameName!=null||repositorySameURL!=null) //repository with the same details already exists
             {
 
-                if(repositorySameName!=null)
+                if(repositorySameName!=null) //repository with same name exists
                 {
 
-                    if(repositorySameName.getId()!=getRepositoryId())
+                    if(repositorySameName.getId()!=getRepositoryId()) //another repository with the same name exists
                     {
 
                          this.addFieldError("editRepositoryError", "Repository with Name '"+repositoryName+"' already exists");
-                         errorType = "error";
-                        
+                         errorType = "error";                        
                          return INPUT;
                     }
                     else
                     {
-                        if(repositorySameURL!=null)
+                        if(repositorySameURL!=null) //repository with same URL already exists
                         {
                             if(repositorySameURL.getId()!=getRepositoryId())
                             {
@@ -122,7 +121,7 @@ public class EditRepository extends ActionSupport
                         }
                         else
                         {
-                            if(urlChanged)
+                            if(urlChanged) //perform revalidation because repository URL has been changed
                             {
 
                                 provider.setIdentify(false);
@@ -135,7 +134,7 @@ public class EditRepository extends ActionSupport
                                 ValidateRepository vr = new ValidateRepository();
                                 vr.validate(provider.getId());
                             }
-                            else
+                            else //just update Repository details without revalidation
                             {
                                 providerService.updateProvider(provider);
                             }
@@ -145,10 +144,10 @@ public class EditRepository extends ActionSupport
 
                     }
                 }
-                else
+                else //repository with same URL already exists
                 {
 
-                    if(repositorySameURL.getId()!=getRepositoryId())
+                    if(repositorySameURL.getId()!=getRepositoryId()) //repository with same URL already existsand is not the repository whose details are being edited
                     {
 
                          this.addFieldError("editRepositoryError", "Repository with URL '"+repositoryURL+"' already exists");
@@ -158,7 +157,7 @@ public class EditRepository extends ActionSupport
                     else
                     {
 
-                        if(urlChanged)
+                        if(urlChanged) //repository URL has been changed and therefore revalidation has to be performed
                         {
 
                             provider.setIdentify(false);
@@ -181,10 +180,10 @@ public class EditRepository extends ActionSupport
                 }
 
             }
-            else
+            else //no reposiotry with the same details exists
             {
 
-                if(urlChanged)
+                if(urlChanged) //URL changed and therefore revalidation is performed
                 {
 
                     provider.setIdentify(false);
