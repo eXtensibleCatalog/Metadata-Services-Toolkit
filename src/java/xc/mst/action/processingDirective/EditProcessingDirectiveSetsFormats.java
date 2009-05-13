@@ -344,7 +344,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
                         tempFormatList.add(tempFormat);
                     }
                 }
-                tempSetList = setService.getAllSets();
+                tempSetList = tempProcDir.getSourceService().getOutputSets();
             }
             setFormatList(tempFormatList);
             setSetList(tempSetList);
