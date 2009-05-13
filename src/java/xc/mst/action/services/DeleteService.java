@@ -59,11 +59,12 @@ public class DeleteService extends ActionSupport
     @Override
     public String execute()
     {
+    	if (log.isDebugEnabled()) {
+    	  log.debug("DeleteService:execute():Service Id to be deleted : " + serviceId);
+    	}
+          Service service = serviceService.getServiceById(serviceId);
         try
         {
-            log.debug("DeleteService:execute():Service Id to be deleted : " + serviceId);
-            Service service = serviceService.getServiceById(serviceId);
-
             long numberOfRecordsHarvested = recordService.getNumberOfRecordsByServiceId(serviceId);
             // Delete service only if it is not harvested.
             if (numberOfRecordsHarvested > 0) {
@@ -90,11 +91,13 @@ public class DeleteService extends ActionSupport
      */
     public String deleteServiceAndRecords()
     {
-        try
-        {
-            log.debug("DeleteRepository:deleteServiceAndRecords():Service Id to be deleted : " + serviceId);
-            Service service = serviceService.getServiceById(serviceId);
+    	if (log.isDebugEnabled()) {
+    		log.debug("DeleteRepository:deleteServiceAndRecords():Service Id to be deleted : " + serviceId);
+    	}
+        Service service = serviceService.getServiceById(serviceId);
 
+    	try
+        {
             // Delete service
    	    	serviceService.deleteService(service);
             return SUCCESS;
