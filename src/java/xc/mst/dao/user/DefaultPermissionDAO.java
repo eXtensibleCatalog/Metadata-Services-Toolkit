@@ -324,7 +324,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 					                       				" ( " + " SELECT " + COL_GROUP_ID + " FROM " + UserGroupUtilDAO.USERS_TO_GROUPS_TABLE_NAME + " WHERE " + UserGroupUtilDAO.COL_USER_ID + " =? " +
 					                       				" ) " +
 					                       			" ) " + 
-					                       	" ORDER BY ASC " + TOP_LEVEL_TABS_TABLE_NAME + "." + COL_TAB_ORDER;
+					                       	" ORDER BY  " + TOP_LEVEL_TABS_TABLE_NAME + "." + COL_TAB_ORDER + " ASC";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get the permission for an user ID\" PreparedStatement from the SQL " + selectSql);
@@ -345,15 +345,16 @@ public class DefaultPermissionDAO extends PermissionDAO
                 // The user Permissions
 			    List<Permission> permissions = new ArrayList<Permission>();
 
-
+			    Permission permission = null;
 				if(results.next())
 				{
-					Permission permission = new Permission();
+					permission = new Permission();
 
 					// Set the fields on the permission
 					permission.setTabId(results.getInt(1));
 					permission.setTabName(results.getString(2));
 					permission.setTabOrder(results.getInt(3));
+					permissions.add(permission);
 
 
 				}
