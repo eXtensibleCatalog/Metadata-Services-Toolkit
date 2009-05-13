@@ -198,15 +198,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                             <c:forEach var="n" items="${userList}" varStatus="a">
+                             <c:forEach var="user" items="${userList}" varStatus="userCount">
 
                                  <tr>
                                      <c:choose>
-                                         <c:when test="${n.server.name=='Local'}">
-                                             <c:set var="url" value="/MetadataServicesToolkit/viewEditLocalUser.action?userId=${n.id}"/>
+                                         <c:when test="${user.server.name=='Local'}">
+                                             <c:set var="url" value="/MetadataServicesToolkit/viewEditLocalUser.action?userId=${user.id}"/>
                                          </c:when>
                                          <c:otherwise>
-                                              <c:set var="url" value="/MetadataServicesToolkit/viewEditLDAPUser.action?userId=${n.id}"/>
+                                              <c:set var="url" value="/MetadataServicesToolkit/viewEditLDAPUser.action?userId=${user.id}"/>
                                          </c:otherwise>
                                     </c:choose>
 
@@ -214,31 +214,31 @@
                                                 <c:if test="${columnSorted=='UserName'}">
                                                     <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
-                                    <td class="${classColumn}"><a href="${url}"><U>${n.username}</U></a></td>
+                                    <td class="${classColumn}"><a href="${url}"><U>${user.username}</U></a></td>
                                     <td>
-                                        ${n.server.type}
+                                        ${user.server.type}
                                     </td>
                                                 <c:set var="classColumn" value="plainColumn"/>
                                                 <c:if test="${columnSorted=='LastLogin'}">
                                                     <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
-                                    <td class="${classColumn}">${n.accountCreated}</td>
+                                    <td class="${classColumn}">${user.accountCreated}</td>
                                                 <c:set var="classColumn" value="plainColumn"/>
                                                 <c:if test="${columnSorted=='FirstName'}">
                                                     <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
-                                    <td class="${classColumn}">${n.firstName}</td>
+                                    <td class="${classColumn}">${user.firstName}</td>
                                                 <c:set var="classColumn" value="plainColumn"/>
                                                 <c:if test="${columnSorted=='LastName'}">
                                                     <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
-                                    <td class="${classColumn}">${n.lastName}</td>
+                                    <td class="${classColumn}">${user.lastName}</td>
                                     <td>
-                                        <c:if test="${n.username == 'admin'}">
-                                        	<button class="xc_button_disabled" disabled="true" type="submit" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.removeUser.deleteUser(${n.id});">Delete</button>
+                                        <c:if test="${user.username == 'admin'}">
+                                        	<button class="xc_button_disabled" disabled="true" type="submit" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.removeUser.deleteUser(${user.id});">Delete</button>
                                         </c:if>
-                                        <c:if test="${n.username != 'admin'}">
-                                                 <button class="xc_button" type="button" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.removeUser.deleteUser(${n.id});">Delete</button>
+                                        <c:if test="${user.username != 'admin'}">
+                                                 <button class="xc_button" type="button" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.removeUser.deleteUser(${user.id});">Delete</button>
                                         </c:if>
                                             
                                     </td>

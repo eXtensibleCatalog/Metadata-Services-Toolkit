@@ -89,12 +89,16 @@
                        
                         <tr>
                             <td valign="top">Description  &nbsp;&nbsp;</td>
-                            <td><textarea id="groupDescription" name ="groupDescription" cols="30" rows="5" value="${temporaryGroup.description}" maxlength="255"></textarea><br></td>
+                            <td><textarea id="groupDescription" name ="groupDescription" cols="30" rows="5" maxlength="255">${temporaryGroup.description}</textarea><br></td>
                         </tr>
                        
                     </table>
 
                     <br><br>
+
+                    <c:forEach var="m" items="${temporaryGroup.permissions}" varStatus="b">
+                      ${m.tabName} ,
+                    </c:forEach>
 
                     <table>
                         <tr>
@@ -103,17 +107,17 @@
                                <select multiple size="8" id="permissionsSelected" name ="permissionsSelected" style="width:300px; height:125px;">
                                   <c:forEach var="n" items="${tabNames}" varStatus="a">
                                       <c:set var="flag" value="${false}"/>
-                                      <c:forEach var="m" items="${selectedPermissions}" varStatus="b">
-                                          <c:if test="${a.count == m}">
+                                      <c:forEach var="m" items="${temporaryGroup.permissions}" varStatus="b">
+                                          <c:if test="${a.count == m.tabId}">
                                               <c:set var="flag" value="${true}"/>
                                           </c:if>
                                       </c:forEach>
                                        <c:choose>
                                             <c:when test="${flag==true}">
-                                                <Option SELECTED ID="<c:out value="${a.count}" />" value="<c:out value="${a.count}" />"><c:out value="${n.tabName}" />
+                                                <Option SELECTED ID="${a.count}" value="${a.count}">${n.tabName}
                                             </c:when>
                                             <c:otherwise>
-                                                <Option ID="<c:out value="${a.count}" />" value="<c:out value="${a.count}" />"><c:out value="${n.tabName}" />
+                                                <Option ID="${a.count}" value="${a.count}">${n.tabName}
                                             </c:otherwise>
                                        </c:choose>
                                   </c:forEach>
@@ -126,8 +130,8 @@
 
                     <br><br>
                     <div align="left">
-                          <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.alterGroup.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
-                          <button class="xc_button" type="button" name="editgroup" onclick="javascript:YAHOO.xc.mst.user.alterGroup.editGroup();">Edit Group</button>
+                          <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.group.alterGroup.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
+                          <button class="xc_button" type="button" name="editgroup" onclick="javascript:YAHOO.xc.mst.group.alterGroup.editGroup();">Edit Group</button>
                     </div>
 
             </form>

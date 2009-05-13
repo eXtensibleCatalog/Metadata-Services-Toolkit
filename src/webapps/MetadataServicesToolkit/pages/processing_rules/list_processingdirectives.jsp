@@ -59,7 +59,7 @@
                 <c:import url="/inc/menu.jsp"/>
                 <jsp:include page="/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Services , List Processing Directives" />
+                    <jsp:param name="bread" value="Processing Rules , List Processing Rules" />
 
                 </jsp:include>
                 
@@ -109,41 +109,41 @@
                         <tbody>
 
 
-                            <c:forEach var="n" items="${processingDirectives}" varStatus="a">
+                            <c:forEach var="directive" items="${processingDirectives}" varStatus="directiveCount">
 
-                                <c:set var="totalFormatsSize" value="${fn:length(n.triggeringFormats)}"/>
+                                <c:set var="totalFormatsSize" value="${fn:length(directive.triggeringFormats)}"/>
                                 
                                 <c:set var="formatList" value=""/>
-                                    <c:forEach var="m" items="${n.triggeringFormats}" varStatus="b">
+                                    <c:forEach var="triggerFormat" items="${directive.triggeringFormats}" varStatus="triggerFormatCount">
                                         <c:choose>
-                                            <c:when test="${b.count==1}">
-                                                <c:set var="formatList" value="${m.name}"/>
+                                            <c:when test="${triggerFormatCount.count==1}">
+                                                <c:set var="formatList" value="${triggerFormat.name}"/>
                                             </c:when>
                                             <c:otherwise>
-                                                <c:set var="formatList" value="${formatList},${m.name}"/>
+                                                <c:set var="formatList" value="${formatList},${triggerFormat.name}"/>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:forEach>
-                                <c:set var="totalSetsSize" value="${fn:length(n.triggeringSets)}"/>
+                                <c:set var="totalSetsSize" value="${fn:length(directive.triggeringSets)}"/>
                                  
                                  <c:set var="setList" value=""/>
-                                    <c:forEach var="m" items="${n.triggeringSets}" varStatus="b">
+                                    <c:forEach var="triggerSet" items="${directive.triggeringSets}" varStatus="triggerSetCount">
                                         <c:choose>
-                                            <c:when test="${b.count==1}">
-                                                <c:set var="setList" value="${m.setSpec}"/>
+                                            <c:when test="${triggerSetCount.count==1}">
+                                                <c:set var="setList" value="${triggerSet.setSpec}"/>
                                             </c:when>
                                             <c:otherwise>
-                                                <c:set var="setList" value="${setList},${m.setSpec}"/>
+                                                <c:set var="setList" value="${setList},${triggerSet.setSpec}"/>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:forEach>
 
 
                               <tr>
-                                <c:set var="url" value='/MetadataServicesToolkit/viewEditProcessingDirectives.action?ProcessingDirectiveId=${n.id}' />
+                                <c:set var="url" value='/MetadataServicesToolkit/viewEditProcessingDirectives.action?ProcessingDirectiveId=${directive.id}' />
 
-                                <c:set var="x1" value="${n.sourceProvider}" />
-                                <c:set var="x2" value="${n.sourceService}" />
+                                <c:set var="x1" value="${directive.sourceProvider}" />
+                                <c:set var="x2" value="${directive.sourceService}" />
 
                                
                                
@@ -157,7 +157,7 @@
 
                                 </c:if>
 
-                                <td class="sortcolumn" align="left"><div style="margin-left:10px;margin-top:10px;height:17px;text-align:left;"><c:out value="${n.id}" /></div></td>
+                                <td class="sortcolumn" align="left"><div style="margin-left:10px;margin-top:10px;height:17px;text-align:left;"><c:out value="${directive.id}" /></div></td>
 
 
 
@@ -166,7 +166,7 @@
                                         <td>
                                             <div align="left" style="margin-left:5px;">
                                                 <a style="color:black;" href="<c:out value="${url}" />">
-                                                   <U> ${x1.name} >>> ${n.service.name} </U>
+                                                   <U> ${x1.name} >>> ${directive.service.name} </U>
                                                 </a>
                                             </div>
                                         </td>
@@ -176,33 +176,33 @@
 
                                                <div align="left" style="margin-left:5px;">
                                                     <a style="color:black;" href="<c:out value="${url}" />">
-                                                        <U> ${x2.name} >>> ${n.service.name} </U>
+                                                        <U> ${x2.name} >>> ${directive.service.name} </U>
                                                     </a>
                                                </div>
                                         </td>
                                     </c:if>
 
                                 <td title="${formatList}">
-                                    <c:set var="totalFormatsSize" value="${fn:length(n.triggeringFormats)}"/>
+                                    <c:set var="totalFormatsSize" value="${fn:length(directive.triggeringFormats)}"/>
                                     <div style="text-align:left" id="formatsList">
-                                        <c:forEach var="m" items="${n.triggeringFormats}" varStatus="b">
-                                            <c:if test="${b.count==1}">
-                                                ${m.name}.....
+                                        <c:forEach var="triggerFormat" items="${directive.triggeringFormats}" varStatus="triggerFormatCount">
+                                            <c:if test="${triggerFormatCount.count==1}">
+                                                ${triggerFormat.name}.....
                                             </c:if>
                                         </c:forEach>
                                     </div>
                                 </td>
                                 <td title="${setList}">
                                     <div style="text-align:left" id="setsList">
-                                        <c:set var="totalSetsSize" value="${fn:length(n.triggeringSets)}"/>
-                                        <c:forEach var="m" items="${n.triggeringSets}" varStatus="b">
-                                            <c:if test="${b.count==1}">
-                                                ${m.setSpec}.....
+                                        <c:set var="totalSetsSize" value="${fn:length(directive.triggeringSets)}"/>
+                                        <c:forEach var="triggerSet" items="${directive.triggeringSets}" varStatus="triggerSetCount">
+                                            <c:if test="${triggerSetCount.count==1}">
+                                                ${triggerSet.setSpec}.....
                                             </c:if>
                                         </c:forEach>
                                     </div>
                                 </td>
-                                <td><button class="xc_button" type="button" name="deleteService" onclick="javascript:YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirective(${n.id});">Delete</button></td>
+                                <td><button class="xc_button" type="button" name="deleteService" onclick="javascript:YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirective(${directive.id});">Delete</button></td>
 
                                </tr>
                            </c:forEach>

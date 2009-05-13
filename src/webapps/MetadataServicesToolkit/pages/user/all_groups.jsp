@@ -142,25 +142,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                             <c:forEach var="n" items="${groupList}" varStatus="a">
+                             <c:forEach var="group" items="${groupList}" varStatus="groupCount">
                                  <tr>
                                             <c:set var="classColumn" value="plainColumn"/>
                                             <c:if test="${columnSorted=='GroupName'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
-                                    <td class="${classColumn}"><a style="text-decoration:none;color:black;" href="/MetadataServicesToolkit/viewEditGroup.action?groupId=<c:out value="${n.id}"/>"><U>${n.name}</U></a></td>
-                                    <td><a href="showGroupMembers.action?groupId=${n.id}&isAscendingOrder=true&columnSorted=UserName"><U>${n.memberCount}</U></a></td>
+                                    <td class="${classColumn}"><a href="/MetadataServicesToolkit/viewEditGroup.action?groupId=<c:out value="${group.id}"/>"><U>${group.name}</U></a></td>
+                                    <td><a href="showGroupMembers.action?groupId=${group.id}&isAscendingOrder=true&columnSorted=UserName"><U>${group.memberCount}</U></a></td>
                                             <c:set var="classColumn" value="plainColumn"/>
                                             <c:if test="${columnSorted=='GroupDescription'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
-                                    <td class="${classColumn}">${n.description}</td>
+                                    <td class="${classColumn}">${group.description}</td>
                                     <c:choose>
-                                        <c:when test="${n.id==1}">
-                                            <td><button disabled class="xc_button_disabled" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.user.removeGroup.deleteGroup(${n.id});">Delete</button></td>
+                                        <c:when test="${group.id==1}">
+                                            <td><button disabled class="xc_button_disabled" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.group.removeGroup.deleteGroup(${group.id});">Delete</button></td>
                                         </c:when>
                                         <c:otherwise>
-                                            <td><button class="xc_button" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.user.removeGroup.deleteGroup(${n.id});">Delete</button></td>
+                                            <td><button class="xc_button" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.group.removeGroup.deleteGroup(${group.id});">Delete</button></td>
                                         </c:otherwise>
                                     </c:choose>
                                     

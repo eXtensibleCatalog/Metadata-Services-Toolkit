@@ -260,52 +260,52 @@
                             </tr>
                         </thead>
                         <tbody>
-                              <c:forEach var="n" items="${serviceList}" varStatus="a">
+                              <c:forEach var="log" items="${services}" varStatus="count">
                                   <tr>
                                             <c:set var="classColumn" value="plainColumn"/>
                                             <c:if test="${columnSorted=='ServiceName'}">
                                                <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
                                       <td class="${classColumn}">
-                                          <a style="cursor:pointer;" onclick ="javascript:YAHOO.xc.mst.log.harvestOut.downloadFile('${n.id}')"><U>${n.name}</U></a>
+                                          <a style="cursor:pointer;" onclick ="javascript:YAHOO.xc.mst.log.harvestOut.downloadFile('${log.id}')"><U>${log.name}</U></a>
                                       </td>
                                              <c:set var="classColumn" value="plainColumn"/>
                                              <c:if test="${columnSorted=='RecordsAvailable'}">
                                                <c:set var="classColumn" value="sortColumn"/>
                                              </c:if>
                                       <td class="${classColumn}">
-                                          ${n.harvestOutRecordsAvailable}
+                                          ${log.harvestOutRecordsAvailable}
                                       </td>
                                              <c:set var="classColumn" value="plainColumn"/>
                                              <c:if test="${columnSorted=='RecordsHarvested'}">
                                                <c:set var="classColumn" value="sortColumn"/>
                                              </c:if>
                                       <td class="${classColumn}">
-                                          ${n.harvestOutRecordsHarvested}
+                                          ${log.harvestOutRecordsHarvested}
                                       </td>
                                              <c:set var="classColumn" value="plainColumn"/>
                                              <c:if test="${columnSorted=='Warnings'}">
                                                <c:set var="classColumn" value="sortColumn"/>
                                              </c:if>
                                       <td class="${classColumn}">
-                                          ${n.harvestOutWarnings}
+                                          ${log.harvestOutWarnings}
                                       </td>
                                              <c:set var="classColumn" value="plainColumn"/>
                                              <c:if test="${columnSorted=='Errors'}">
                                                <c:set var="classColumn" value="sortColumn"/>
                                              </c:if>
                                       <td class="${classColumn}">
-                                          ${n.harvestOutErrors}
+                                          ${log.harvestOutErrors}
                                       </td>
-                                      <td><button class="xc_button" type="button" name="reset" onclick="javascript:YAHOO.xc.mst.log.harvestOut.resetFunction('${n.harvestOutLogFileName}','${n.id}')">Reset</button></td>
+                                      <td><button class="xc_button" type="button" name="reset" onclick="javascript:YAHOO.xc.mst.log.harvestOut.resetFunction('${log.harvestOutLogFileName}','${log.id}')">Reset</button></td>
                                              <c:set var="classColumn" value="plainColumn"/>
                                              <c:if test="${columnSorted=='LastLogReset'}">
                                                <c:set var="classColumn" value="sortColumn"/>
                                              </c:if>
                                       <c:choose>
-                                          <c:when test="${n.harvestOutLastLogReset!=null}">
+                                          <c:when test="${log.harvestOutLastLogReset!=null}">
                                                  <td class="${classColumn}">
-                                                    ${n.harvestOutLastLogReset}
+                                                    ${log.harvestOutLastLogReset}
                                                  </td>
                                           </c:when>
                                           <c:otherwise>

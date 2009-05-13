@@ -88,7 +88,7 @@
 
                    <tr>
                        <td valign="top">Description  &nbsp;&nbsp;</td>
-                       <td><textarea id="groupDescription" name ="groupDescription" cols="30" rows="5" value="${temporaryGroup.description}" maxlength="255"></textarea><br><br></td>
+                       <td><textarea id="groupDescription" name ="groupDescription" cols="30" rows="5" maxlength="255">${temporaryGroup.description}</textarea><br><br></td>
                    </tr>
                    
             
@@ -109,10 +109,10 @@
                                       </c:forEach>
                                        <c:choose>
                                             <c:when test="${flag==true}">
-                                                <Option SELECTED ID="<c:out value="${a.count}" />" value="<c:out value="${a.count}" />"><c:out value="${n.tabName}" />
+                                                <Option SELECTED ID="${a.count}" value="${a.count}">${n.tabName}>
                                             </c:when>
                                             <c:otherwise>
-                                                <Option ID="<c:out value="${a.count}" />" value="<c:out value="${a.count}" />"><c:out value="${n.tabName}" />
+                                                <Option ID="${a.count}" value="${a.count}">${n.tabName}
                                             </c:otherwise>
                                        </c:choose>
                                   </c:forEach>
@@ -122,8 +122,8 @@
                </table>
                <br><br>
                 <div align="left">
-                      <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.newGroup.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
-                      <button class="xc_button" type="button" name="addgroup" onclick="javascript:YAHOO.xc.mst.user.newGroup.addGroup();">Add Group</button>
+                      <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.group.newGroup.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
+                      <button class="xc_button" type="button" name="addgroup" onclick="javascript:YAHOO.xc.mst.group.newGroup.addGroup();">Add Group</button>
                 </div>
 
           </form>

@@ -203,40 +203,40 @@
                             </tr>
                         </thead>
                         <tbody>
-                              <c:forEach var="n" items="${logList}" varStatus="a">
+                              <c:forEach var="log" items="${logList}" varStatus="count">
                                   <tr>
                                            <c:set var="classColumn" value="plainColumn"/>
                                            <c:if test="${columnSorted=='LogFileName'}">
                                                <c:set var="classColumn" value="sortColumn"/>
                                            </c:if>
                                       <td class="${classColumn}">
-                                          <a onclick="javascript:YAHOO.xc.mst.logs.general.downloadFile(${n.id});"><U>${n.logFileName}</U></a>
+                                          <a onclick="javascript:YAHOO.xc.mst.logs.general.downloadFile(${log.id});"><U>${log.logFileName}</U></a>
                                       </td>
                                             <c:set var="classColumn" value="plainColumn"/>
                                             <c:if test="${columnSorted=='Warnings'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
                                       <td class="${classColumn}">
-                                          ${n.warnings}
+                                          ${log.warnings}
                                       </td>
                                             <c:set var="classColumn" value="plainColumn"/>
                                             <c:if test="${columnSorted=='Errors'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
                                       <td class="${classColumn}">
-                                          ${n.errors}
+                                          ${log.errors}
                                       </td>
                                       <td>
-                                          <button onclick="javascript:YAHOO.xc.mst.logs.general.resetFunction('${n.id}');" class="xc_button" type="button" name="reset">Reset</button>
+                                          <button onclick="javascript:YAHOO.xc.mst.logs.general.resetFunction('${log.id}');" class="xc_button" type="button" name="reset">Reset</button>
                                       </td>
                                             <c:set var="classColumn" value="plainColumn"/>
                                             <c:if test="${columnSorted=='LastLogReset'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
                                             <c:choose>
-                                                <c:when test="${n.lastLogReset!=null}">
+                                                <c:when test="${log.lastLogReset!=null}">
                                                     <td class="${classColumn}">
-                                                        ${n.lastLogReset}
+                                                        ${log.lastLogReset}
                                                     </td>
                                                </c:when>
                                                <c:otherwise>

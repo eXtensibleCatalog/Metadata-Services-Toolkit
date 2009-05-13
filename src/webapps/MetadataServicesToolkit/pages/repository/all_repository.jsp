@@ -188,9 +188,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                             <c:forEach var="n" items="${repositories}" varStatus="a">
+                             <c:forEach var="repository" items="${repositories}" varStatus="repositoryCount">
                                   <c:choose>
-                                        <c:when test="${(n.identify==true)&&(n.listSets==true)&&(n.service==true)&&(n.listFormats==true)}">
+                                        <c:when test="${(repository.identify==true)&&(repository.listSets==true)&&(repository.service==true)&&(repository.listFormats==true)}">
                                              <tr>
                                                 <c:set var="classColumn" value="plainColumn"/>
                                                 <c:if test="${columnSorted=='RepositoryName'}">
@@ -198,7 +198,7 @@
                                                 </c:if>
                                                 <td class="${classColumn}">
                                                                                                       
-                                                        <a style="color:black;text-decoration:none;" href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${n.id}" />"><U><c:out value="${n.name}" /></U></a>
+                                                        <a href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${repository.id}" />"><U><c:out value="${repository.name}" /></U></a>
                                                    
                                                 </td>
                                                 <c:set var="classColumn" value="plainColumn"/>
@@ -206,7 +206,7 @@
                                                      <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
                                                 <td class="${classColumn}">
-                                                     <c:out value="${n.oaiProviderUrl}" />                                                   
+                                                     <c:out value="${repository.oaiProviderUrl}" />
                                                 </td>
                                                 <td>
                                                     <ul style="list-style:none;">
@@ -215,7 +215,7 @@
                                                     </ul>
                                                 </td>
                                                 <c:choose>
-                                                    <c:when test="${n.lastHarvestEndTime==null}">
+                                                    <c:when test="${repository.lastHarvestEndTime==null}">
                                                          <c:set var="classColumn" value="plainColumn"/>
                                                            <c:if test="${columnSorted=='LastHarvestEndTime'}">
                                                                 <c:set var="classColumn" value="sortColumn"/>
@@ -230,7 +230,7 @@
                                                              <c:set var="classColumn" value="sortColumn"/>
                                                         </c:if>
                                                         <td class="${classColumn}">
-                                                             ${n.lastHarvestEndTime}
+                                                             ${repository.lastHarvestEndTime}
                                                         </td>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -245,7 +245,7 @@
                                                 </c:if>
                                                 <td class ="${classColumn}">
 
-                                                        <a style="color:black;text-decoration:none;" href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${n.id}" />"><U><c:out value="${n.name}" /></U></a>
+                                                        <a href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${repository.id}" />"><U><c:out value="${repository.name}" /></U></a>
 
                                                 </td>
                                                 <c:set var="classColumn" value="errorColumn"/>
@@ -253,7 +253,7 @@
                                                      <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
                                                 <td class="${classColumn}">
-                                                     <c:out value="${n.oaiProviderUrl}" />
+                                                     <c:out value="${repository.oaiProviderUrl}" />
                                                 </td>
                                                 <td>
                                                     <ul style="list-style:none;">
@@ -262,7 +262,7 @@
                                                     </ul>
                                                 </td>
                                                 <c:choose>
-                                                    <c:when test="${n.lastHarvestEndTime==null}">
+                                                    <c:when test="${repository.lastHarvestEndTime==null}">
                                                          <c:set var="classColumn" value="v"/>
                                                            <c:if test="${columnSorted=='LastHarvestEndTime'}">
                                                                 <c:set var="classColumn" value="sortColumn"/>
@@ -277,7 +277,7 @@
                                                              <c:set var="classColumn" value="sortColumn"/>
                                                         </c:if>
                                                         <td class="${classColumn}">
-                                                             ${n.lastHarvestEndTime}
+                                                             ${repository.lastHarvestEndTime}
                                                         </td>
                                                     </c:otherwise>
                                                 </c:choose>

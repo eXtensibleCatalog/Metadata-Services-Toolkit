@@ -57,7 +57,7 @@
                 <c:import url="/inc/menu.jsp"/>
                 <jsp:include page="/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Services , <a style='text-decoration:none;' href='listProcessingDirectives.action'><U>List Processing Directives</U></a> , Edit Processing Directives (Step 2)" />
+                    <jsp:param name="bread" value="Processing Rules , <a href='listProcessingDirectives.action'><U>List Processing Rules</U></a> , Edit Processing Rules (Step 2)" />
 
                 </jsp:include>
                 
@@ -176,11 +176,11 @@
                                                          selected
                                                     </c:if>
                                                 >All Sets</option>
-                                                <c:forEach var="n" items="${setList}" varStatus="a">
+                                                <c:forEach var="set" items="${setList}" varStatus="setcount">
                                                     <c:set var="flag" value="${false}"/>
-                                                      <c:forEach var="m" items="${temporaryProcessingDirective.triggeringSets}" varStatus="a1">
+                                                      <c:forEach var="triggerSet" items="${temporaryProcessingDirective.triggeringSets}" varStatus="triggerSetCount">
 
-                                                            <c:if test="${n.id == m.id}">
+                                                            <c:if test="${set.id == triggerSet.id}">
                                                                 <c:set var="flag" value="${true}"/>
 
                                                             </c:if>
@@ -188,10 +188,10 @@
                                                     </c:forEach>
                                                     <c:choose>
                                                         <c:when test="${flag==true}">
-                                                             <option selected value="<c:out value="${n.id}"/>" >${n.displayName}(${n.setSpec})
+                                                             <option selected value="<c:out value="${set.id}"/>" >${set.displayName}(${set.setSpec})
                                                         </c:when>
                                                          <c:otherwise>
-                                                             <option value="<c:out value="${n.id}"/>" >${n.displayName}(${n.setSpec})
+                                                             <option value="<c:out value="${set.id}"/>" >${set.displayName}(${set.setSpec})
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
@@ -207,10 +207,10 @@
                                <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:10px;">
                                     You have the option to create a named set of output records <br>
                                     for this processing directive&nbsp;&nbsp;&nbsp;<br><br>
-                                    Output Set Name &nbsp;&nbsp;&nbsp; <input type="text" class="textBox1" name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50">
+                                    Output Set Name &nbsp;&nbsp;&nbsp; <input type="text" class="processingDirective_TextBox" name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50">
                                 </div>
                                  <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:50px;">
-                                    Output Set Specification &nbsp;&nbsp;&nbsp;<input type="text" class="textBox1" name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50">
+                                    Output Set Specification &nbsp;&nbsp;&nbsp;<input type="text" class="processingDirective_TextBox" name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50">
                                 </div>
 
                                 
@@ -239,21 +239,21 @@
                                         <div class="listBox">
                                             <B>Formats</B> <br>
                                            <select multiple style="width:300px;" size="10" id="formatsSelected" name="formatsSelected">
-                                               <c:forEach var="n" items="${formatList}" varStatus="a">
+                                               <c:forEach var="format" items="${formatList}" varStatus="formatCount">
                                                     <c:set var="flag" value="${false}"/>
-                                                      <c:forEach var="m" items="${temporaryProcessingDirective.triggeringFormats}" varStatus="a1">
+                                                      <c:forEach var="triggerFormat" items="${temporaryProcessingDirective.triggeringFormats}" varStatus="triggerFormatCount">
 
-                                                            <c:if test="${n.id == m.id}">
+                                                            <c:if test="${format.id == triggerFormat.id}">
                                                                 <c:set var="flag" value="${true}"/>
                                                             </c:if>
 
                                                     </c:forEach>
                                                     <c:choose>
                                                         <c:when test="${flag == true}">
-                                                             <option selected value="<c:out value="${n.id}"/>" ><c:out value="${n.name}"/> <br>
+                                                             <option selected value="<c:out value="${format.id}"/>" ><c:out value="${format.name}"/> <br>
                                                         </c:when>
                                                          <c:otherwise>
-                                                             <option value="<c:out value="${n.id}"/>" ><c:out value="${n.name}"/> <br>
+                                                             <option value="<c:out value="${format.id}"/>" ><c:out value="${format.name}"/> <br>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
