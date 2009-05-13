@@ -154,26 +154,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="n" items="${services}" varStatus="a">
+                                <c:forEach var="service" items="${services}" varStatus="serviceCount">
                                     <tr>
                                             <c:set var="classColumn" value="plainColumn"/>
                                             <c:if test="${columnSorted=='ServiceName'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
-                                        <td class="${classColumn}"><a href="viewEditService.action?serviceId=${n.id}"><U><c:out value="${n.name}"/></U></a></td>
+                                        <td class="${classColumn}"><a href="viewEditService.action?serviceId=${service.id}"><U><c:out value="${service.name}"/></U></a></td>
                                         <c:set var="baseURL" value="${baseURL}"/>
-                                        <c:set var = "url" value="${fn:replace(baseURL,'8080',n.port)}" />
+                                        <c:set var = "url" value="${fn:replace(baseURL,'8080',service.port)}" />
                                             <c:set var="classColumn" value="plainColumn"/>
                                             <c:if test="${columnSorted=='Port'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
                                         <td class="${classColumn}"><c:out value="${url}"/></td>
-                                        <td>${n.status}</td>
+                                        <td>${service.status}</td>
                                         <td>
-                                            <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${n.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
-                                            <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${n.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
+                                            <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
+                                            <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
                                         </td>
-                                        <td><button class="xc_button" onclick="javascript:YAHOO.xc.mst.services.listServices.deleteService(${n.id})" type="button" name="delete">Delete</button></td>
+                                        <td><button class="xc_button" onclick="javascript:YAHOO.xc.mst.services.listServices.deleteService(${service.id})" type="button" name="delete">Delete</button></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
