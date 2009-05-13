@@ -74,7 +74,7 @@ public class Server
 	/**
 	 * Enumeration for the different types of servers the MST handles
 	 */
-	public enum ServerType { UNDEFINED, LDAP, NCIP, LOCAL }
+	public enum ServerType { UNDEFINED, LDAP, LOCAL }
 
 	/**
 	 * Gets the server's ID
