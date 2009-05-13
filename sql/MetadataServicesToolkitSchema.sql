@@ -742,7 +742,7 @@ insert into groups_to_top_level_tabs values(7,1,7);
 insert into groups_to_top_level_tabs values(8,1,8);
 
 INSERT INTO servers (server_id, url, name, type, port, username_attribute, start_location, institution, forgot_password_url, forgot_password_label, show_forgot_password_link)
-VALUES (1, '', 'Local', 'Local', '0', '', '', 'University Name', '', '', '0');
+VALUES (1, '', 'Local', 2, '0', '', '', 'University Name', '', '', '0');
 
 
 
