@@ -69,7 +69,9 @@ public class AllSchedules extends ActionSupport
     {
         try
         {
-            log.debug("In All schedules Execute() with class");
+        	if (log.isDebugEnabled()) {
+        		log.debug("In All schedules Execute()");
+        	}
             if((columnSorted.equalsIgnoreCase("ScheduleName"))||(columnSorted.equalsIgnoreCase("Recurrence"))||(columnSorted.equalsIgnoreCase("Status")))
             {
                 if(columnSorted.equalsIgnoreCase("ScheduleName"))
@@ -98,7 +100,7 @@ public class AllSchedules extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e);
+            log.error("Exception occured while getting Harvest schedule information.", e);
             schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, scheduleDao.COL_SCHEDULE_NAME);
             return SUCCESS;
         }
@@ -110,7 +112,10 @@ public class AllSchedules extends ActionSupport
      * @return
      */
     public String deleteSchedule() {
-    	log.debug("AllSchedules::deleteSchedule() scheduleId = " + scheduleId);
+    	
+    	if (log.isDebugEnabled()) {
+    		log.debug("AllSchedules::deleteSchedule() scheduleId = " + scheduleId);
+    	}
 
     	HarvestSchedule schedule = scheduleService.getScheduleById(scheduleId);
 
@@ -142,7 +147,7 @@ public class AllSchedules extends ActionSupport
 	    	} 
             catch (DataException e)
             {
-	    		log.debug("Deleting the schedule failed" + e.getMessage());
+	    		log.error("Deleting the schedule failed" + e);
 	    		schedules = scheduleService.getAllSchedules();
 	    		addFieldError("scheduleDeleteFailed", "Problems with deleting the schedule :" + schedule.getScheduleName());
 	    		errorType = "error";

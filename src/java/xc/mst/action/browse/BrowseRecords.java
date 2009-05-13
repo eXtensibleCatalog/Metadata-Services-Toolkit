@@ -126,7 +126,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	 * Search for records
 	 */
 	public String browse() {
-		log.debug("query::"+query);
+		if (log.isDebugEnabled()){
+			log.debug("User entered query::"+query);
+		}
 		
 		SolrQuery solrQuery = new SolrQuery();
 
@@ -163,10 +165,11 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	    	solrQuery.removeFilterQuery(removeFacetName + ":\"" + removeFacetValue.replaceAll(":", "\\\\:") + "\"");
 	    }
 
-	    log.debug("query after adding/removing facet ::"+query);
-	    log.debug("selectedFacetNames after Add ::"+selectedFacetNames);
-	    log.debug("selectedFacetValues after Add ::"+selectedFacetValues);
-	
+	    if (log.isDebugEnabled()) {
+		    log.debug("Query after adding/removing facet ::"+query);
+		    log.debug("After Adding facet names ::"+selectedFacetNames);
+		    log.debug("After Adding facet values ::"+selectedFacetValues);
+	    }
 	    // Create facet names and values List
 	    StringTokenizer facetNameTokenizer = new StringTokenizer(selectedFacetNames, "|");
 	    List<String> facetNamesList = new ArrayList<String>();
@@ -198,18 +201,16 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	    		facetValuesList.add(myValueToken);
 	    	}
 	    }
-	    
-	    log.debug("Final facetNamesList:"+facetNamesList);
-	    log.debug("Final facetValuesList:"+facetValuesList);
-	    
+
 	    if (removeFacetValue != null && removeFacetValue.length() > 0) {
 	    	selectedFacetNames = newSelectedFacetNames.toString();
 	    	selectedFacetValues = newSelectedFacetValues.toString();
 	    }
 
-	    log.debug("Final after remove selectedFacetNames:"+selectedFacetNames);
-	    log.debug("Final after remove selectedFacetValues:"+selectedFacetValues);
-	    
+	    if (log.isDebugEnabled()) {
+		    log.debug("After removing facet names(final):"+selectedFacetNames);
+		    log.debug("After removing facet values(final):"+selectedFacetValues);
+	    }	    
 	    // Query formation
 		
 		solrQuery.setFacet(true)
@@ -229,7 +230,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		solrQuery.setRows(numberOfResultsToShow);
 	    result = browseRecordService.search(solrQuery);   
 	    
-	    log.debug("result::"+result);
+	    if (log.isDebugEnabled()) {
+	    	log.debug("Search result::"+result);
+	    }
 	    
 	    if((result != null) && (rowEnd > result.getTotalNumberOfResults()))
 		{
@@ -262,6 +265,10 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
      */
 	public String viewRecord() throws IOException {
 		
+		if (log.isDebugEnabled()) {
+			log.debug("viewRecord:  view record Id : " + recordId);
+		}
+		
 		RecordService recordService = new DefaultRecordService();
 		record = recordService.getById(recordId);
 		recordXML = record.getOaiXml();
@@ -284,7 +291,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
      */
 	public String viewErrorDescription() throws IOException {
 		
-		log.debug("viewErrorDescription: error: " + error);
+		if (log.isDebugEnabled()) {
+			log.debug("viewErrorDescription: error to view : " + error);
+		}
 
 		ServicesService servicesService = new DefaultServicesService();
 		int indexOfHypen = error.indexOf("-");

@@ -88,7 +88,9 @@ public class Login extends ActionSupport implements ServletRequestAware {
     	// Get the user object in session
 		User sessionUser = (User) request.getSession().getAttribute("user");
 		
-		log.debug("User in session: " + sessionUser);
+		if (log.isDebugEnabled()) {
+			log.debug("User in session: " + sessionUser);
+		}
 
 		// If user exist in session then forward to page for which user has permission
 		if (sessionUser != null) {
@@ -118,8 +120,9 @@ public class Login extends ActionSupport implements ServletRequestAware {
 	            	return "no-permission";        	
 	            }            
             }
-            
-            log.debug("User exist in session. User forwarded to : " + forwardLink);
+            if (log.isDebugEnabled()) {
+            	log.debug("User exist in session. User forwarded to : " + forwardLink);
+            }
 
             return "user-initial-page";
 		}
@@ -132,7 +135,9 @@ public class Login extends ActionSupport implements ServletRequestAware {
      */
 	public String login() throws Exception {
 
-		log.debug("Trying to login username :" + userName);
+		if (log.isDebugEnabled()) {
+			log.debug("Trying to login username :" + userName);
+		}
 		Server server = serverService.getServerByName(serverName);
         user = userService.getUserByUserName(userName, server);
 

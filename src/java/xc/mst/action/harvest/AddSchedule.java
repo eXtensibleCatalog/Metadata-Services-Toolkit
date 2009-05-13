@@ -133,7 +133,9 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     @Override
     public String execute()
     {
-    	log.debug("In Add schedule Execute()");
+    	if (log.isDebugEnabled()) {
+    		log.debug("In Add schedule Execute()");
+    	}
         repositories = providerService.getAllProviders();
         
         schedule = new HarvestSchedule();
@@ -154,7 +156,9 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
      */
     public String addScheduleAndProvider() throws DataException {
 
-    	log.debug("AddSchedule::addScheduleAndProvider():: scheduleName=" + scheduleName);
+    	if (log.isDebugEnabled()) {
+    		log.debug("AddSchedule::addScheduleAndProvider():: scheduleName=" + scheduleName);
+    	}
 
     	schedule = (HarvestSchedule) request.getSession().getAttribute("schedule");
     	
@@ -216,7 +220,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	    	ValidateRepository validateRepository = new ValidateRepository();
     	        validateRepository.validate(repositoryId);
         	} catch (Hexception he) {
-        		log.debug(he);
+        		log.error("Exception occured while validating the repository", he);
         	}
 
     	} else {
@@ -241,9 +245,10 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
      * @throws DataException
      */
     public String updateSchedule() throws DataException {
-
-    	log.debug("In update schedule updateSchedule()");
-
+    	
+    	if (log.isDebugEnabled()) {
+    		log.debug("In update schedule updateSchedule()");
+    	}
     	//schedule = scheduleService.getScheduleById(scheduleId);
     	schedule = (HarvestSchedule) request.getSession().getAttribute("schedule");
 
@@ -318,7 +323,9 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
      */
     public String addSchedule() throws DataException {
 
-    	log.debug("AddSchedule::addSchedule():: scheduleId=" + scheduleId);
+    	if (log.isDebugEnabled()) {
+    		log.debug("AddSchedule::addSchedule():: scheduleId=" + scheduleId);
+    	}
 
     	schedule = (HarvestSchedule) request.getSession().getAttribute("schedule");
     	
@@ -380,7 +387,9 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
      */
     public String addSetFormatForSchedule() throws DataException {
 
-    	log.debug("AddSchedule::addSetFormatForSchedule():: scheduleId=" + scheduleId);
+    	if (log.isDebugEnabled()) {
+    		log.debug("AddSchedule::addSetFormatForSchedule():: scheduleId=" + scheduleId);
+    	}
 
     	//schedule = scheduleService.getScheduleById(scheduleId);
     	schedule = (HarvestSchedule) request.getSession().getAttribute("schedule");
@@ -434,29 +443,6 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     		return INPUT;
     	}
 
-    	// TODO DONOT remove this commented code
-    	// This is code to harvest the repository manually
-    	// Later this will be moved to a servlet as Scheduler Thread
-//    	log.debug("schedule new :"+schedule);
-//    	log.debug("schedule new Id :"+schedule.getId());
-//    	try {
-//    		HarvestScheduleStepDAO d = new DefaultHarvestScheduleStepDAO();
-//    		List<HarvestScheduleStep> steps = d.getStepsForSchedule(schedule.getId());
-//
-//    		log.debug("steps:"+steps);
-//
-//    		for(HarvestScheduleStep step:steps) {
-//	    		log.debug("steps Id :"+step.getId());
-//
-//	    		HarvestRunner h = new HarvestRunner(step.getId());
-//	    		h.runHarvest();
-//    		}
-//    	} catch (Exception e) {
-//    		e.printStackTrace();
-//    	}
-
-    	// End of harvest code
-
     	return SUCCESS;
 
     }
@@ -468,7 +454,9 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
      */
     public String viewEdit() {
 
-    	log.debug("AddSchedule::viewEdit():: scheduleId=" + scheduleId);
+    	if (log.isDebugEnabled()) {
+    		log.debug("AddSchedule::viewEdit():: scheduleId=" + scheduleId);
+    	}
 
     	schedule = scheduleService.getScheduleById(scheduleId);
 
