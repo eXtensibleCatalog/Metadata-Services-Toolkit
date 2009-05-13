@@ -205,7 +205,7 @@
 		              action="deleteServiceRecords.action">
 		      		  
 		      		  <input type="hidden" name="serviceId" id="service_delete_id"/>
-			          <div id="deleteServiceError" cssClass="errorMessage"></div>
+			          <div id="deleteServiceError" cssClass="errorMessage"></div><br>
 			          Are you sure you want to delete the service?
 		          </form>			          
 		      </div>

@@ -111,7 +111,7 @@ YAHOO.xc.mst.services.listServices = {
 
 		
 		YAHOO.xc.mst.services.listServices.deleteServiceOkDialog = new YAHOO.widget.Dialog('deleteServiceOkDialog', 
-		{ width : "400px",
+		{ width : "600px",
 			  visible : false, 
 			  modal : true,
 			  buttons : [ { text:'Yes', handler:handleYes},
