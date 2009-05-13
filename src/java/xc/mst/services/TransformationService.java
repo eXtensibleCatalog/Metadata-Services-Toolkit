@@ -249,9 +249,7 @@ public class TransformationService extends MetadataService
 				transformedRecord = process653(originalRecord, transformedRecord);
 				transformedRecord = process654(originalRecord, transformedRecord);
 				transformedRecord = process655(originalRecord, transformedRecord);
-				//transformedRecord = process700(originalRecord, transformedRecord);
 				transformedRecord = process720(originalRecord, transformedRecord);
-				transformedRecord = process730(originalRecord, transformedRecord);
 				transformedRecord = process740(originalRecord, transformedRecord);
 				transformedRecord = process752(originalRecord, transformedRecord);
 				transformedRecord = process760(originalRecord, transformedRecord);
@@ -270,8 +268,12 @@ public class TransformationService extends MetadataService
 				transformedRecord = process810(originalRecord, transformedRecord);
 				transformedRecord = process811(originalRecord, transformedRecord);
 				transformedRecord = process830(originalRecord, transformedRecord);
+				transformedRecord = process843(originalRecord, transformedRecord);
 				transformedRecord = process852(originalRecord, transformedRecord);
 				transformedRecord = process856(originalRecord, transformedRecord);
+				transformedRecord = process866(originalRecord, transformedRecord);
+				transformedRecord = process867(originalRecord, transformedRecord);
+				transformedRecord = process868(originalRecord, transformedRecord);
 				transformedRecord = process931(originalRecord, transformedRecord);
 				transformedRecord = process932(originalRecord, transformedRecord);
 				transformedRecord = process933(originalRecord, transformedRecord);
@@ -290,7 +292,7 @@ public class TransformationService extends MetadataService
 				transformedRecord = process700(originalRecord, transformedRecord);
 				transformedRecord = process710(originalRecord, transformedRecord);
 				transformedRecord = process711(originalRecord, transformedRecord);
-
+				transformedRecord = process730(originalRecord, transformedRecord);
 			}
 			// If the record is a holdings record according to the leader06
 			else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y')
@@ -944,7 +946,7 @@ public class TransformationService extends MetadataService
 			{
 				String value = titleOfWorkBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
 
-				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_THE_WORK, XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
+				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
 				
 			}
 			
@@ -953,7 +955,7 @@ public class TransformationService extends MetadataService
 			{
 				String value = titleOfExpressionBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
 
-				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_THE_EXPRESSION, XCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
+				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
 			}
 		}
 
@@ -1087,7 +1089,7 @@ public class TransformationService extends MetadataService
 			{
 				String value = titleOfWorkBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
 
-				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_THE_WORK, XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
+				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
 				
 			}
 			
@@ -1096,7 +1098,7 @@ public class TransformationService extends MetadataService
 			{
 				String value = titleOfExpressionBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
 
-				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_THE_EXPRESSION, XCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
+				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
 			}
 		}
 
@@ -1202,7 +1204,7 @@ public class TransformationService extends MetadataService
 			{
 				String value = titleOfWorkBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
 
-				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_THE_WORK, XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
+				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
 				
 			}
 			
@@ -1211,7 +1213,7 @@ public class TransformationService extends MetadataService
 			{
 				String value = titleOfExpressionBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
 
-				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_THE_EXPRESSION, XCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
+				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
 			}
 
 		}
@@ -2257,7 +2259,7 @@ public class TransformationService extends MetadataService
 				String targetSubfields = "abcdegq";
 
 				// The name of the element to add
-				String elementName = Constants.ELEMENT_CREATOR;
+				String elementName = Constants.ELEMENT_CONTRIBUTOR;
 				Namespace elementNamespace = XCRecord.XC_NAMESPACE;
 
 				// Get the $4 element, which we'll use to add "role" elements
@@ -2897,7 +2899,7 @@ public class TransformationService extends MetadataService
 				if(ind2.equals("2"))
 				{
 					// The subfields to map to the title and creator respectively
-					String titleOfWorkSubfields = "kmnoprst";
+					String titleOfWorkSubfields = "fkpst";
 					String titleOfExpressionSubfields = "klmnoprst";
 
 					// Setup the attribute list for the creator and title processed field
@@ -2957,7 +2959,7 @@ public class TransformationService extends MetadataService
 						String value = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
 
 						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 711's subfields' value, which is " + value);
+							log.debug("Adding a " + FrbrLevel.EXPRESSION + " level title based on the concatination of the 711's subfields' value, which is " + value);
 
 						// Add an xc:title based on the 711 subfields' values
 						// Add to the non-default work element for this 711 field
@@ -3521,6 +3523,21 @@ public class TransformationService extends MetadataService
 	}
 
 	/**
+	 * Processes the 843 field from the MarcXmlRecord we're transforming.
+	 * The abcdefmn subfields become the xc:description field at the holdings FRBR level.
+	 *
+	 * @param transformMe The MARC XML record we're transforming
+	 * @param transformInto The XC record which will store the transformed version of the record
+	 * @return A reference to transformInto after this transformation step has been completed.
+	 */
+	private XCRecord process843(MarcXmlRecord transformMe, XCRecord transformInto)
+	{
+		// Create an xc:description based on the 843 abcdefmn values
+		return processFieldBasic(transformMe, transformInto, "843", "abcdefmn", "description", XCRecord.XC_NAMESPACE, null, FrbrLevel.HOLDINGS);
+	}
+
+	
+	/**
 	 * Processes the 852 field from the MarcXmlRecord we're transforming.
 	 * The abcefg subfields become the xc:location field at the holdings FRBR level.
 	 * The hijklmpqstxz2368 subfields become the xc:callNumber field at the holdings FRBR level.
@@ -3805,6 +3822,49 @@ public class TransformationService extends MetadataService
 		return transformInto;
 	}
 
+	/**
+	 * Processes the 866 field from the MarcXmlRecord we're transforming.
+	 * The az subfields become the xc:textualHoldings field at the holdings FRBR level.
+	 *
+	 * @param transformMe The MARC XML record we're transforming
+	 * @param transformInto The XC record which will store the transformed version of the record
+	 * @return A reference to transformInto after this transformation step has been completed.
+	 */
+	private XCRecord process866(MarcXmlRecord transformMe, XCRecord transformInto)
+	{
+		// Create an xc:description based on the 866 abcdefmn values
+		return processFieldBasic(transformMe, transformInto, "866", "az", "textualHoldings", XCRecord.XC_NAMESPACE, new Attribute("type","Basic Bibliographic Unit"), FrbrLevel.HOLDINGS);
+	}
+
+	/**
+	 * Processes the 867 field from the MarcXmlRecord we're transforming.
+	 * The az subfields become the xc:textualHoldings field at the holdings FRBR level.
+	 *
+	 * @param transformMe The MARC XML record we're transforming
+	 * @param transformInto The XC record which will store the transformed version of the record
+	 * @return A reference to transformInto after this transformation step has been completed.
+	 */
+	private XCRecord process867(MarcXmlRecord transformMe, XCRecord transformInto)
+	{
+		// Create an xc:description based on the 867 abcdefmn values
+		return processFieldBasic(transformMe, transformInto, "867", "az", "textualHoldings", XCRecord.XC_NAMESPACE, new Attribute("type","Supplementary material"), FrbrLevel.HOLDINGS);
+	}
+
+	/**
+	 * Processes the 868 field from the MarcXmlRecord we're transforming.
+	 * The az subfields become the xc:textualHoldings field at the holdings FRBR level.
+	 *
+	 * @param transformMe The MARC XML record we're transforming
+	 * @param transformInto The XC record which will store the transformed version of the record
+	 * @return A reference to transformInto after this transformation step has been completed.
+	 */
+	private XCRecord process868(MarcXmlRecord transformMe, XCRecord transformInto)
+	{
+		// Create an xc:description based on the 867 abcdefmn values
+		return processFieldBasic(transformMe, transformInto, "868", "az", "textualHoldings", XCRecord.XC_NAMESPACE, new Attribute("type","Indexes"), FrbrLevel.HOLDINGS);
+	}
+	
+	
 	/**
 	 * Processes the 931 field from the MarcXmlRecord we're transforming.
 	 * The $a subfields become dcterms:type fields at the expression FRBR level.
@@ -4234,7 +4294,7 @@ public class TransformationService extends MetadataService
 		attributes.add(new Attribute("type", field003));
 
 		// Add the element to the XC record
-		transformInto.addElement("recordID", field001.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
+		//transformInto.addElement("recordID", field001.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 
 		if(log.isDebugEnabled())
 			log.debug("Adding a " + FrbrLevel.HOLDINGS + " level recordId with a type of \"" + field003 + "\" and a value of " + field001);
@@ -4273,9 +4333,17 @@ public class TransformationService extends MetadataService
 		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
 		attributes.add(new Attribute("type", field003));
 
+		
 		// Add the element to the XC record
 		transformInto.addElement("manifestationHeld", field004.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.HOLDINGS);
+		
 
+		attributes = new ArrayList<Attribute>();
+		attributes.add(new Attribute("type", field003));
+
+		transformInto.addElement("recordID", field004.trim(), XCRecord.XC_NAMESPACE, attributes , FrbrLevel.MANIFESTATION);
+		
+		
 		// Return the result
 		return transformInto;
 	}
