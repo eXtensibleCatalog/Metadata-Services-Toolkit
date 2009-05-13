@@ -7,9 +7,9 @@
   *
   */
   
-YAHOO.namespace("xc.mst.configuration.LDAPServer");
+YAHOO.namespace("xc.mst.configuration.ldap");
 
-YAHOO.xc.mst.configuration.LDAPServer.MyObject = {
+YAHOO.xc.mst.configuration.ldap.MyObject = {
 
   converter :function(c)
     {

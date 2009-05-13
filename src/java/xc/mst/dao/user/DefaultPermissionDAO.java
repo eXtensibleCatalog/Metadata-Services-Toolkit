@@ -266,7 +266,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetPermissionsForGroup.executeQuery();
+				results = psGetPermissionById.executeQuery();
 
                 // The current Permission
 			    Permission permission = new Permission();
@@ -279,7 +279,6 @@ public class DefaultPermissionDAO extends PermissionDAO
 					permission.setTabId(results.getInt(1));
 					permission.setTabName(results.getString(2));
 					permission.setTabOrder(results.getInt(3));
-
 
 				}
 

@@ -26,7 +26,7 @@ YAHOO.xc.mst.logs.harvestIn = {
 
     downloadFile: function(providerId)
             {
-                window.location = "pages/logs/downloadLogFile.jsp?logType=HarvestIn&id="+providerId;
+                window.location = "downloadLogFile.action?logType=HarvestIn&id="+providerId;
             },
 
     resetFunction : function(harvestInLogFileName,providerId)

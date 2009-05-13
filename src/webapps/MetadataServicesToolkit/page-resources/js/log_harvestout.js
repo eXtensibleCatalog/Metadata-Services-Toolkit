@@ -13,7 +13,7 @@ YAHOO.xc.mst.log.harvestOut = {
 
  downloadFile: function(serviceId)
             {
-                window.location = "pages/logs/downloadLogFile.jsp?logType=HarvestOut&id="+serviceId;
+                window.location = "downloadLogFile.action?logType=HarvestOut&id="+serviceId;
             },
 
  resetFunction : function(harvestOutLogFileName,serviceId)

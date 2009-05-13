@@ -14,7 +14,7 @@ YAHOO.xc.mst.logs.general = {
 
     downloadFile: function(logId)
             {
-                window.location = "pages/logs/downloadLogFile.jsp?logType=General&id="+logId;
+                window.location = "downloadLogFile.action?logType=General&id="+logId;
             },
 
     resetFunction : function(logId)

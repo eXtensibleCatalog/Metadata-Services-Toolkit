@@ -11,6 +11,7 @@ package xc.mst.manager.user;
 
 import java.util.List;
 import xc.mst.bo.user.Group;
+import xc.mst.bo.user.Permission;
 import xc.mst.dao.DataException;
 import xc.mst.dao.user.DefaultGroupDAO;
 import xc.mst.dao.user.GroupDAO;
@@ -42,7 +43,10 @@ public class DefaultGroupService implements GroupService {
      * @param group The group to be inserted
      */
     public void insertGroup(Group group) throws DataException{
-
+        for(Permission permission:group.getPermissions())
+        {
+           System.out.println("The permission is "+permission.getTabName()) ;
+        }
         groupDao.insert(group);
     }
 

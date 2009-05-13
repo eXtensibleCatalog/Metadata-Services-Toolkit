@@ -131,11 +131,10 @@ public class EditGroup extends ActionSupport
                 }
             }
 
-            
-
             group.removeAllPermissions();
             for(int i=0;i<permissionsSelected.length;i++)
             {
+                System.out.println("The permission select ID is "+permissionsSelected[i]);
                 int permissionId = Integer.parseInt(permissionsSelected[i]);
                 group.addPermission(permissionService.getPermissionById(permissionId));
             }

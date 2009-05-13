@@ -1,3 +1,11 @@
+/**
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  */
 
 package xc.mst.action;
 
@@ -22,7 +30,7 @@ import java.io.*;
  *
  * @author Tejaswi Haramurali
  */
-public class downloadLogFile extends ActionSupport implements ServletResponseAware
+public class DownloadLogFiles extends ActionSupport implements ServletResponseAware
 {
     /** Indicates the type of log file being downloaded */
     private String logType;

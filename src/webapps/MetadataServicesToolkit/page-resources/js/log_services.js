@@ -13,7 +13,7 @@ YAHOO.xc.mst.log.services = {
 
     downloadFile : function(serviceId)
            {
-               window.location = "pages/logs/downloadLogFile.jsp?logType=Service&id="+serviceId;
+               window.location = "downloadLogFile.action?logType=Service&id="+serviceId;
            },
 
     resetFunction : function(serviceLogFileName,serviceId)

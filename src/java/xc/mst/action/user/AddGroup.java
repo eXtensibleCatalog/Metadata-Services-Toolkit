@@ -14,6 +14,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import java.util.*;
 import org.apache.log4j.Logger;
 import xc.mst.bo.user.Group;
+import xc.mst.bo.user.Permission;
 import xc.mst.constants.Constants;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultPermissionService;
@@ -109,8 +110,12 @@ public class AddGroup extends ActionSupport
 
             for(int i=0;i<permissionsSelected.length;i++)
             {
+                System.out.println("Inserting "+permissionsSelected[i]);
                 int permissionId = Integer.parseInt(permissionsSelected[i]);
-                group.addPermission(permissionService.getPermissionById(permissionId));
+                System.out.println("permissionId int value is "+permissionId);
+                Permission tempPermission = permissionService.getPermissionById(permissionId);
+                System.out.println("tempPermission's name is "+tempPermission.getTabName());
+                group.addPermission(tempPermission);
             }
 
             groupService.insertGroup(group);

@@ -7,9 +7,9 @@
   *
   */
 
-YAHOO.namespace("xc.mst.user.newGroup");
+YAHOO.namespace("xc.mst.group.newGroup");
 
-YAHOO.xc.mst.user.newGroup = {
+YAHOO.xc.mst.group.newGroup = {
     addGroup : function()
     {
         try

@@ -7,9 +7,9 @@
   *
   */
   
-YAHOO.namespace("xc.mst.user.alterGroup");
+YAHOO.namespace("xc.mst.group.alterGroup");
 
-YAHOO.xc.mst.user.alterGroup = {
+YAHOO.xc.mst.group.alterGroup = {
     editGroup : function()
     {
         try

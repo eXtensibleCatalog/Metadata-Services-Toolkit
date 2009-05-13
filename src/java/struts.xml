@@ -605,7 +605,7 @@
             <interceptor-ref name="default"/>
 			<result name="success">/pages/logs/display_oai_request.jsp</result>
 		</action>
-        <action name="downloadLogFile" class="xc.mst.action.downloadLogFile">
+        <action name="downloadLogFile" class="xc.mst.action.DownloadLogFiles">
             <interceptor-ref name="default"/>
             <result name="success" type="no-op"/>
         </action>

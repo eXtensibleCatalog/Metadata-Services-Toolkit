@@ -30,7 +30,7 @@
                     </li>
                  </mst:checkUserPermission>
 
-       			<mst:checkUserPermission permission="Harvest">
+       			<mst:checkUserPermission permission="Schedule">
                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="<c:url value="/allSchedules.action"/>">Schedule</a>
                    <div id="schedule" class="yuimenu">
                        <div class="bd">

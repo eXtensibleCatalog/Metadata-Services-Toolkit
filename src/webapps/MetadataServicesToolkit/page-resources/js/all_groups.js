@@ -7,9 +7,9 @@
   *
   */
   
-YAHOO.namespace("xc.mst.user.removeGroup");
+YAHOO.namespace("xc.mst.group.removeGroup");
 
-YAHOO.xc.mst.user.removeGroup = {
+YAHOO.xc.mst.group.removeGroup = {
 
  deleteGroup : function(groupId)
  {
