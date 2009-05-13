@@ -18,7 +18,7 @@
     <property name="DatabasePassword" value="argl3frast3r" />
 
     <property name="OaiRepoName" value="University of Rochester" />
-    <property name="OaiRepoBaseUrl" value = "http://localhost:8080/MetadataServicesToolkit/oaiRepository" />
+    <property name="OaiRepoBaseUrl" value = "http://localhost:8080/MetadataServicesToolkit/oaiRepositoryServlet" />
     <property name="OaiRepoProtocolVersion" value="2.0" />
     <property name="OaiRepoAdminEmail" value="pkiraly@tesuji.eu" />
     <property name="OaiRepoDeletedRecord" value="transient" />
