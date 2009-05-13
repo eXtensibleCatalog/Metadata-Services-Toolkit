@@ -11,7 +11,7 @@
                  ERROR : No Harvest Schedule has been set up for the specified Provider
             </c:when>
             <c:otherwise>
-                 ERROR : Unable to display Request String (Note: If no harvest schedule is set up for the provider, the OAI request string will not be constructed)
+                 ERROR : The provider has not yet been harvested so there are no OAI requests to display
             </c:otherwise>
         </c:choose>
        

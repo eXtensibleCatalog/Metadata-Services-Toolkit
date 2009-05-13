@@ -161,6 +161,68 @@
                         <tr>
                             <td>
                                 <c:choose>
+                                    <c:when test="${empty formatList}">
+                                         <div class="listBox" style="width:300px;">
+                                            <B>Formats</B> <br><br>
+                                                <I>No Formats to display</I>
+                                         </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="listBox">
+                                            <B>Formats</B> <br>
+                                           <select multiple style="width:300px;" size="10" id="formatsSelected" name="formatsSelected">
+                                               <c:forEach var="format" items="${formatList}" varStatus="formatCount">
+                                                    <c:set var="flag" value="${false}"/>
+                                                      <c:forEach var="triggerFormat" items="${temporaryProcessingDirective.triggeringFormats}" varStatus="triggerFormatCount">
+
+                                                            <c:if test="${format.id == triggerFormat.id}">
+                                                                <c:set var="flag" value="${true}"/>
+                                                            </c:if>
+
+                                                    </c:forEach>
+                                                    <c:choose>
+                                                        <c:when test="${flag == true}">
+                                                             <option selected value="<c:out value="${format.id}"/>" ><c:out value="${format.name}"/> <br>
+                                                        </c:when>
+                                                         <c:otherwise>
+                                                             <option value="<c:out value="${format.id}"/>" ><c:out value="${format.name}"/> <br>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+                                           </select>
+
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                      
+                            <td>
+
+                               <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:10px;">
+                                    You have the option to create a named set of output records <br>
+                                    for this processing directive&nbsp;&nbsp;&nbsp;<br><br>
+                                    Output Set Name &nbsp;&nbsp;&nbsp; <input type="text" class="processingDirective_TextBox" name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50">
+                                </div>
+                                 <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:50px;">
+                                    Output Set Specification &nbsp;&nbsp;&nbsp;<input type="text" class="processingDirective_TextBox" name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50">
+                                </div>
+
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="10">
+                                <c:if test="${!empty setList}">
+                                     <div class="smallText">
+                                        (CTRL click to select multiple sets)
+                                    </div>
+                                </c:if>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <c:choose>
                                     <c:when test="${empty setList}">
                                          <div class="listBox" style="width:300px;">
                                             <B>Sets</B> <br><br>
@@ -196,72 +258,11 @@
                                                     </c:choose>
                                                 </c:forEach>
                                             </select>
-                                           
+
                                          </div>
                                      </c:otherwise>
                                  </c:choose>
-                            </td>
-                      
-                            <td>
 
-                               <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:10px;">
-                                    You have the option to create a named set of output records <br>
-                                    for this processing directive&nbsp;&nbsp;&nbsp;<br><br>
-                                    Output Set Name &nbsp;&nbsp;&nbsp; <input type="text" class="processingDirective_TextBox" name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50">
-                                </div>
-                                 <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:50px;">
-                                    Output Set Specification &nbsp;&nbsp;&nbsp;<input type="text" class="processingDirective_TextBox" name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50">
-                                </div>
-
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td height="10">
-                                <c:if test="${!empty setList}">
-                                     <div class="smallText">
-                                        (CTRL click to select multiple sets)
-                                    </div>
-                                </c:if>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${empty formatList}">
-                                         <div class="listBox" style="width:300px;">
-                                            <B>Formats</B> <br><br>
-                                                <I>No Formats to display</I>
-                                         </div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="listBox">
-                                            <B>Formats</B> <br>
-                                           <select multiple style="width:300px;" size="10" id="formatsSelected" name="formatsSelected">
-                                               <c:forEach var="format" items="${formatList}" varStatus="formatCount">
-                                                    <c:set var="flag" value="${false}"/>
-                                                      <c:forEach var="triggerFormat" items="${temporaryProcessingDirective.triggeringFormats}" varStatus="triggerFormatCount">
-
-                                                            <c:if test="${format.id == triggerFormat.id}">
-                                                                <c:set var="flag" value="${true}"/>
-                                                            </c:if>
-
-                                                    </c:forEach>
-                                                    <c:choose>
-                                                        <c:when test="${flag == true}">
-                                                             <option selected value="<c:out value="${format.id}"/>" ><c:out value="${format.name}"/> <br>
-                                                        </c:when>
-                                                         <c:otherwise>
-                                                             <option value="<c:out value="${format.id}"/>" ><c:out value="${format.name}"/> <br>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:forEach>
-                                           </select>
-
-                                        </div>
-                                    </c:otherwise>
-                                </c:choose>
                             </td>
                         </tr>
                         <tr>
