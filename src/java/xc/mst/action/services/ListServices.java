@@ -39,6 +39,9 @@ public class ListServices extends ActionSupport
     /** The list of services that are part of the MST */
     private List<Service> ServicesList;
 
+    /** Base URL of the system **/
+    private String baseURL;
+
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
@@ -52,7 +55,8 @@ public class ListServices extends ActionSupport
     {
         try
         {
-
+           String address = java.net.InetAddress.getLocalHost().getHostAddress();
+           baseURL = "htpp://"+address+":8080/MetadataServicesToolkit/oaiRepositoryServlet";
            ServicesService servService = new DefaultServicesService();
            if(columnSorted.equalsIgnoreCase("ServiceName")||(columnSorted.equalsIgnoreCase("Port")))
             {
@@ -144,5 +148,24 @@ public class ListServices extends ActionSupport
         return this.columnSorted;
     }
 
+    /**
+     * Sets the base URL
+     *
+     * @param Base URL
+     */
+    public void setBaseURL(String baseURL)
+    {
+        this.baseURL = baseURL;
+    }
+
+    /**
+     * Returns base URL
+     *
+     * @return base URL
+     */
+    public String getBaseURL()
+    {
+        return this.baseURL;
+    }
     
 }

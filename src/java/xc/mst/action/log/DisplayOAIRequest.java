@@ -34,6 +34,8 @@ public class DisplayOAIRequest extends ActionSupport
     /** The string that that depicts the OAI requests*/
     private String requestString;
 
+    /**Boolean value which determines whether a harvest has been set up for the provider in question */
+    private boolean noHarvestString;
    
 
     /**
@@ -60,8 +62,15 @@ public class DisplayOAIRequest extends ActionSupport
             }
 
         }
+        catch(NullPointerException e)
+        {
+            setNoHarvestString(true);
+            System.out.println("NULL Pointer exception");
+            log.error("No Harvest has been set up for the provider",e);
+        }
         catch(Exception e)
         {
+            System.out.println("Some other exception "+e);
             log.error("Unable to Display the request String",e);
         }
         return SUCCESS;
@@ -105,5 +114,25 @@ public class DisplayOAIRequest extends ActionSupport
     public int getProviderId()
     {
         return this.providerId;
+    }
+
+    /**
+     * Sets the noHarvestString boolean variable
+     *
+     * @param noHarvestString boolean variable
+     */
+    public void setNoHarvestString(boolean noHarvestString)
+    {
+        this.noHarvestString = noHarvestString;
+    }
+
+    /**
+     * Returns the boolean value which determines whether a harvest has been set up for a given provider
+     *
+     * @return boolean value
+     */
+    public boolean getNoHarvestString()
+    {
+        return this.noHarvestString;
     }
 }
