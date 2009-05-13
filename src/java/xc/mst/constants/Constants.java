@@ -334,13 +334,17 @@ public class Constants
 	// XC Element Name Constants
 	//*******************************************************************
 	
-	public static final String ELEMENT_TITLE_OF_THE_WORK = "titleOfWork";
+	public static final String ELEMENT_TITLE_OF_WORK = "titleOfWork";
 
-	public static final String ELEMENT_CREATOR = "creator";
+	public static final String ELEMENT_CONTRIBUTOR = "contributor";
 
-	public static final String ELEMENT_TITLE_OF_THE_EXPRESSION = "titleOfExpression";
+	public static final String ELEMENT_TITLE_OF_EXPRESSION = "titleOfExpression";
 
 	public static final String ELEMENT_IDENTIFIER_FOR_THE_WORK = "identifierOfTheWork";
+	
+	public static final String ELEMENT_CREATOR = "creator";
+	
+	public static final String ELEMENT_SUBJECT = "subject";
 	
 	
 }
