@@ -400,13 +400,13 @@ public class XCRecord
 	public void addAdditionalExpressionElement(String titleOfExpression)
 	{
 		Element additionalExpressionElement = (Element)xcExpressionElement.clone();
-		Element titleOfExpressionElement = additionalExpressionElement.getChild("titleOfTheExpression", XC_NAMESPACE);
+		Element titleOfExpressionElement = additionalExpressionElement.getChild(Constants.ELEMENT_TITLE_OF_EXPRESSION, XC_NAMESPACE);
 		
 		if(titleOfExpressionElement != null)
 			titleOfExpressionElement.setText(titleOfExpression);
 		else
 		{
-			titleOfExpressionElement  = new Element(Constants.ELEMENT_TITLE_OF_THE_EXPRESSION, XC_NAMESPACE);
+			titleOfExpressionElement  = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XC_NAMESPACE);
 			titleOfExpressionElement.setText(titleOfExpression);
 		}
 		
@@ -425,18 +425,34 @@ public class XCRecord
 	{
 		Element additionalWorkElement = (Element)xcWorkElement.clone();
 		
-		
-		Element titleOfWorkEmelent = additionalWorkElement.getChild(Constants.ELEMENT_TITLE_OF_THE_WORK, RDVOCAB_NAMESPACE);
+		// Replace the titleOfWork element content with the new one
+		Element titleOfWorkEmelent = additionalWorkElement.getChild(Constants.ELEMENT_TITLE_OF_WORK, RDVOCAB_NAMESPACE);
 		if(titleOfWorkEmelent != null)
 			titleOfWorkEmelent.setText(titleOfTheWork);
+		// If there is no titleOfWork element, create it
 		else
 			{
-				titleOfWorkEmelent  = new Element(Constants.ELEMENT_TITLE_OF_THE_WORK, RDVOCAB_NAMESPACE);
+				titleOfWorkEmelent  = new Element(Constants.ELEMENT_TITLE_OF_WORK, RDVOCAB_NAMESPACE);
 				titleOfWorkEmelent.setText(titleOfTheWork);
 			}
 		
 		additionalWorkElement.addContent("\n\t\t");
 		additionalWorkElement.addContent(titleOfWorkEmelent.detach());
+		
+		// Remove existing creator element
+		if(additionalWorkElement.getChild(Constants.ELEMENT_CREATOR, XC_NAMESPACE) != null)
+			additionalWorkElement.removeChild(Constants.ELEMENT_CREATOR, XC_NAMESPACE);
+		
+		//Remove the extra subject elements other than the first two.
+		if( additionalWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE)!= null )
+		{
+			int size = additionalWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE).size();
+					
+				for(;size >2; size-- )
+					((Element)additionalWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE).get(size-1)).detach();	
+			
+		}
+		
 		if(creatorElement!=null)
 		{
 			additionalWorkElement.addContent("\n\t\t");
