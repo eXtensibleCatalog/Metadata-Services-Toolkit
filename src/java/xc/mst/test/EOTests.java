@@ -100,7 +100,7 @@ public class EOTests
 			server = null;
 			server = dao.getById(serverId);
 			
-			server.setType(Server.ServerType.NCIP);
+			server.setType(Server.ServerType.LOCAL);
 			dao.update(server);
 			
 			serverId = server.getId();
