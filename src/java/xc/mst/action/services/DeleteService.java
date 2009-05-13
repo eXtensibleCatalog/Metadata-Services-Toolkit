@@ -64,9 +64,10 @@ public class DeleteService extends ActionSupport
             log.debug("DeleteService:execute():Service Id to be deleted : " + serviceId);
             Service service = serviceService.getServiceById(serviceId);
 
+            long numberOfRecordsHarvested = recordService.getNumberOfRecordsByServiceId(serviceId);
             // Delete service only if it is not harvested.
-            if (recordService.getNumberOfRecordsByServiceId(serviceId) > 0) {
-                message = "Service has harvested data.";
+            if (numberOfRecordsHarvested > 0) {
+                message = "Deleting the " + service.getName() + " will result in deletion of " + numberOfRecordsHarvested + " records harvested by it and the processing rules that uses this service.";
                 deleted = false;
             } else {
     	    	serviceService.deleteService(service);
@@ -76,7 +77,7 @@ public class DeleteService extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug(e, e.fillInStackTrace());
+            log.error("Exception occured while deleting the service " + service.getName(), e);
             this.addFieldError("viewRepositoryError", "Service cannot be deleted");
             errorType = "error";
             return INPUT;
@@ -100,7 +101,7 @@ public class DeleteService extends ActionSupport
         }
         catch(Exception e)
         {
-            log.error("Exception occured while deleting Service.", e);
+            log.error("Exception occured while deleting the service " + service.getName(), e);
             this.addFieldError("viewRepositoryError", "Service cannot be deleted");
             errorType = "error";
             return INPUT;

@@ -143,9 +143,7 @@
 		   </div>
 		   
 			<div class="record_box">
-				<pre class="preWrap">
-					${recordXML}
-				</pre>
+				<pre class="preWrap">${recordXML}</pre>
 			</div>
  		</div>
 		<!--  end body -->		

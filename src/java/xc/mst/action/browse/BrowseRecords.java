@@ -265,6 +265,14 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		RecordService recordService = new DefaultRecordService();
 		record = recordService.getById(recordId);
 		recordXML = record.getOaiXml();
+
+		recordXML = recordXML.replaceAll("<marc:record", "\n<marc:record");
+		recordXML = recordXML.replaceAll("</marc:record", "\n</marc:record");
+		recordXML = recordXML.replaceAll("<marc:leader", "\n\t<marc:leader");
+		recordXML = recordXML.replaceAll("<marc:controlfield", "\n\t<marc:controlfield");
+		recordXML = recordXML.replaceAll("<marc:datafield", "\n\t<marc:datafield");
+		recordXML = recordXML.replaceAll("</marc:datafield", "\n\t</marc:datafield");
+		recordXML = recordXML.replaceAll("<marc:subfield", "\n\t\t<marc:subfield");
 		recordXML = recordXML.replaceAll("<", "&lt;");
 		recordXML = recordXML.replaceAll(">", "&gt;");
 		

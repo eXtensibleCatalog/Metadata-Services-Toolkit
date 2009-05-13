@@ -19,20 +19,17 @@ import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
 
 /**
- * Tag to check user permissions
+ * Tag to get latest harvest end time
  *
  * @author Sharmila Ranganathan
  */
 public class HarvestUtil {
 		
 		/**
-		 * Determine if the contents can be moved into the specified location.  This is true 
-		 * if the destination is not equal to the current destination.  A collection cannot be 
-		 * moved into itself;
+		 * Returns the latest harvest end time for the given harvest schedule 
 		 * 
-		 * @param objectsToMove - set of information to be moved
-		 * @param destination - destination  to move to
-		 * @return true if the set of information can be moved into the specified location
+		 * @param harvestSchedule - Harvest schedule to get the latest harvest end time
+		 * @return Returns the latest harvest end time 
 		 */
 		public static String latestHarvest(HarvestSchedule harvestSchedule)
 		{
@@ -41,7 +38,6 @@ public class HarvestUtil {
 			List<Harvest> harvests = scheduleService.getHarvestsForSchedule(harvestSchedule); 
 			Timestamp latestRun = null;
 			for(Harvest harvest:harvests) {
-				latestRun = harvest.getEndTime();
 				if(latestRun == null) {
 					latestRun = harvest.getEndTime();
 					continue;

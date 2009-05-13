@@ -206,7 +206,6 @@
 		      		  
 		      		  <input type="hidden" name="serviceId" id="service_delete_id"/>
 			          <div id="deleteServiceError" cssClass="errorMessage"></div>
-			          Deleting the service will result in deletion of Processing rules that uses this service and the records harvested. <br>
 			          Are you sure you want to delete the service?
 		          </form>			          
 		      </div>
