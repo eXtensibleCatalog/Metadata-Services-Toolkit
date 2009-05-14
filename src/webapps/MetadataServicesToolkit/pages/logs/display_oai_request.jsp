@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 
 <c:choose>
-    <c:when test="${requestString!=null}">
-        ${requestString}
+    <c:when test="${oaiRequest!=null}">
+        ${oaiRequest}
     </c:when>
     <c:otherwise>
         <c:choose>

@@ -34,7 +34,7 @@ public class DisplayOAIRequest extends ActionSupport
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /** The string that that depicts the OAI requests*/
-    private String requestString;
+    private String oaiRequest;
 
     /**Boolean value which determines whether a harvest has been set up for the provider in question */
     private boolean noHarvestString;
@@ -56,7 +56,7 @@ public class DisplayOAIRequest extends ActionSupport
 
             if(schedule!=null)
             {
-                setRequestString(schedule.getRequest());
+                setOaiRequest(schedule.getRequest());
             }
             else
             {
@@ -95,9 +95,9 @@ public class DisplayOAIRequest extends ActionSupport
      *
      * @param requestString request String
      */
-    public void setRequestString(String requestString)
+    public void setOaiRequest(String requestString)
     {
-        this.requestString = requestString;
+        this.oaiRequest = requestString;
     }
 
     /**
@@ -105,9 +105,9 @@ public class DisplayOAIRequest extends ActionSupport
      *
      * @return request String
      */
-    public String getRequestString()
+    public String getOaiRequest()
     {
-        return this.requestString;
+        return this.oaiRequest;
     }
 
     /**
