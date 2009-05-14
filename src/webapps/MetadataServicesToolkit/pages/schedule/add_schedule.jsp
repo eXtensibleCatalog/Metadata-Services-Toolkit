@@ -147,19 +147,30 @@
 					</c:if>
 					> Hourly
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Run at&nbsp;
+				<c:if test="${schedule.recurrence == 'Hourly'}">
+					<select id="schedule_minute" name="minute" >
+						<option value = "-1"> Select </option>
+						<c:forEach begin="0" end="59" step="1" var="minute">
+							<option value = "${minute}"
+							<c:if test="${schedule.minute == minute}">
+								selected
+							</c:if>
+							> ${minute}</option>
+						</c:forEach>
+					</select>				
+					&nbsp;&nbsp;minutes past the hour
+				</c:if>			
 				
-				<select id="schedule_minute" name="minute" >
-					<option value = "0"> Select </option>
-					<c:forEach begin="1" end="60" step="1" var="minute">
-						<option value = "${minute}"
-						<c:if test="${schedule.minute == minute}">
-							selected
-						</c:if>
-						> ${minute}</option>
-					</c:forEach>
-				</select>				
-				&nbsp;&nbsp;minutes past the hour
-				
+				<c:if test="${schedule.recurrence != 'Hourly'}">
+					<select id="schedule_minute" name="minute" >
+						<option value = "-1"> Select </option>
+						<c:forEach begin="0" end="59" step="1" var="minute">
+							<option value = "${minute}"> ${minute}</option>
+						</c:forEach>
+					</select>				
+					&nbsp;&nbsp;minutes past the hour
+				</c:if>
+									
 				<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="radio" name="recurrence" value="Daily"
 					<c:if test="${schedule.recurrence == 'Daily'}">
@@ -170,18 +181,31 @@
 				
 				<select id="schedule_hour" name="dailyHour" />
 				
-					<option value = "0"> Select </option>
+					<option value = "-1"> Select </option>
 
-					<c:forEach begin="1" end="24" step="1" var="time">
+					<c:forEach begin="0" end="23" step="1" var="time">
 						<option value = "${time}"
 						<c:if test="${schedule.recurrence == 'Daily' && schedule.hour == time}">
 							selected
 						</c:if>
-						> ${time}:00</option>
+						> ${time}</option>
 					</c:forEach>
 				</select>
-								
-				&nbsp;&nbsp; each day</td>
+				
+				&nbsp;&nbsp; hour&nbsp;
+				
+				<select id="schedule_daily_minute" name="dailyMinute" >
+					<option value = "-1"> Select </option>
+					<c:forEach begin="0" end="59" step="1" var="minute">
+						<option value = "${minute}"
+						<c:if test="${schedule.minute == minute}">
+							selected
+						</c:if>
+						> ${minute}</option>
+					</c:forEach>
+				</select>		
+				
+				&nbsp;&nbsp; minutes each day</td>
 				
 				<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="radio" name="recurrence" value="Weekly"
@@ -232,8 +256,8 @@
 				</select>
 				at					
 				<select id="schedule_week_hour" name="hour" />
-					<option value = "0"> Select </option>
-					<c:forEach begin="1" end="24" step="1" var="time">
+					<option value = "-1"> Select </option>
+					<c:forEach begin="0" end="23" step="1" var="time">
 						<option value = "${time}"
 						<c:if test="${schedule.recurrence == 'Weekly' && schedule.hour == time}">
 							selected

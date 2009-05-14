@@ -92,7 +92,7 @@
 				Hourly at ${schedule.minute} minutes past the hour
 			</c:if>
 			<c:if test="${schedule.recurrence == 'Daily'}">
-				Daily at ${schedule.hour}:00
+				Daily at ${schedule.hour}:${schedule.minute}
 			</c:if>
 			<c:if test="${schedule.recurrence == 'Weekly'}">
 				Weekly on 

@@ -77,6 +77,9 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 	/** Hour at which the schedule should run every day */
 	private int dailyHour;
 
+	/** Minute at which the schedule should run every day */
+	private int dailyMinute;
+	
 	/** Email id to notify the schedule */
 	private String notifyEmail;
 
@@ -176,8 +179,8 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	if (recurrence != null) {
 			if (recurrence.equalsIgnoreCase("Daily")) {
 				schedule.setHour(dailyHour);
+				schedule.setMinute(dailyMinute);
 				// Reset other values
-				schedule.setMinute(0);
 				schedule.setDayOfWeek(0);
 			}
 
@@ -186,7 +189,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 
 				// Reset other values
 				schedule.setDayOfWeek(0);
-				schedule.setHour(0);
+				schedule.setHour(-1);
 
 			}
 
@@ -195,7 +198,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 				schedule.setHour(hour);
 
 				//Reset other values
-				schedule.setMinute(0);
+				schedule.setMinute(-1);
 			}
     	}
 
@@ -681,6 +684,14 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 	 */
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
+	}
+
+	public int getDailyMinute() {
+		return dailyMinute;
+	}
+
+	public void setDailyMinute(int dailyMinute) {
+		this.dailyMinute = dailyMinute;
 	}
 
 

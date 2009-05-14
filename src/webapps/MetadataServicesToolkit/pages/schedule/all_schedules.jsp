@@ -227,7 +227,7 @@
                             </c:if>
 						<td class="${classColumn}">
 							<c:if test="${schedule.recurrence == 'Daily'}">
-								${schedule.recurrence} Time ${schedule.hour}:00
+								${schedule.recurrence} Time ${schedule.hour}:${schedule.minute}
 							</c:if>
 							<c:if test="${schedule.recurrence == 'Hourly'}">
 								${schedule.recurrence} at ${schedule.minute} minutes past the hour
