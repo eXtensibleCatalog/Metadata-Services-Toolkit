@@ -8,7 +8,7 @@
   */
  YAHOO.namespace("xc.mst.repository.viewRepository");
 
-YAHOO.xc.mst.repository.viewRepository.viewRepository = {
+YAHOO.xc.mst.repository.viewRepository = {
 
     delRepository : function(id)
     {
@@ -33,7 +33,7 @@ YAHOO.xc.mst.repository.viewRepository.viewRepository = {
 		// make it modal - 
 		// it should not start out as visible - it should not be shown until 
 		// new repository button is clicked.
-		YAHOO.xc.mst.repository.viewRepository.processingDialog = new YAHOO.widget.Dialog('processingDialog',
+		YAHOO.xc.mst.repository.viewRepository.processingDialog = new YAHOO.widget.Dialog('processingDialog', 
 		{ width : "400px",
 			  visible : false, 
 			  modal : true,
@@ -143,7 +143,7 @@ YAHOO.xc.mst.repository.viewRepository.viewRepository = {
 		// make it modal - 
 		// it should not start out as visible - it should not be shown until 
 		// new repository button is clicked.
-		YAHOO.xc.mst.repository.viewRepository.deleteRepositoryDialog = new YAHOO.widget.Dialog('deleteRepositoryDialog',
+		YAHOO.xc.mst.repository.viewRepository.deleteRepositoryDialog = new YAHOO.widget.Dialog('deleteRepositoryDialog', 
 	        { width : "400px",
 			  visible : false, 
 			  modal : true,
@@ -169,11 +169,11 @@ YAHOO.xc.mst.repository.viewRepository.viewRepository = {
 
 	       // listener for showing the dialog when clicked.
 		YAHOO.util.Event.addListener("confirmDeleteRepository", "click", 
-		    YAHOO.xc.mst.repository.viewRepository.deleteRepositoryDialog.showDialog,
+		    YAHOO.xc.mst.repository.viewRepository.deleteRepositoryDialog.showDialog, 
 		    YAHOO.xc.mst.repository.viewRepository.deleteRepositoryDialog, true);
 
 		
-		YAHOO.xc.mst.repository.viewRepository.deleteRepositoryOkDialog = new YAHOO.widget.Dialog('deleteRepositoryOkDialog',
+		YAHOO.xc.mst.repository.viewRepository.deleteRepositoryOkDialog = new YAHOO.widget.Dialog('deleteRepositoryOkDialog', 
 		{ width : "400px",
 			  visible : false, 
 			  modal : true,
