@@ -263,16 +263,16 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
      	if (recurrence != null) {
 			if (recurrence.equalsIgnoreCase("Daily")) {
 				schedule.setHour(dailyHour);
+				schedule.setMinute(dailyMinute);
 				// Reset other values
-				schedule.setMinute(-1);
-				schedule.setDayOfWeek(-1);
+				schedule.setDayOfWeek(0);
 			}
 
 			if (recurrence.equalsIgnoreCase("Hourly")) {
 				schedule.setMinute(minute);
 
 				// Reset other values
-				schedule.setDayOfWeek(-1);
+				schedule.setDayOfWeek(0);
 				schedule.setHour(-1);
 
 			}
