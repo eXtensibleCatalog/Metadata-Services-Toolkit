@@ -11,6 +11,8 @@ package xc.mst.test;
 
 import java.io.File;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
+import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
@@ -34,6 +37,8 @@ import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.harvester.HarvestRunner;
+import xc.mst.manager.harvest.DefaultScheduleService;
+import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.MSTSolrServer;
@@ -82,34 +87,10 @@ public class EOTests
 	{
 		try
 		{	
-			ServerDAO dao = new DefaultServerDAO();
-			Server server = new Server();
-			server.setUrl("test");
-			server.setForgotPasswordLabel("fpl");
-			server.setForgotPasswordUrl("fpu");
-			server.setInstitution("inst");
-			server.setName("name");
-			server.setPort(123);
-			server.setShowForgotPasswordLink(false);
-			server.setStartLocation("sl");
-			server.setUserNameAttribute("una");
-			server.setType(Server.ServerType.LDAP);
-			dao.insert(server);
+			ScheduleService scheduleService = new DefaultScheduleService();
+			HarvestSchedule schedule = scheduleService.getScheduleForProvider(new DefaultProviderDAO().getById(1));
+			System.out.println(schedule.getRequest());
 			
-			int serverId = server.getId();
-			server = null;
-			server = dao.getById(serverId);
-			
-			server.setType(Server.ServerType.LOCAL);
-			dao.update(server);
-			
-			serverId = server.getId();
-			server = null;
-			server = dao.getById(serverId);
-			if(true) return;
-			
-			MSTSolrServer.getInstance("8080");
-			MetadataService.runService(2, 0);
 			if(true) return;
 			
 			//File file = new File("C:\\AllXcProjects\\MetadataServicesToolkit\\serviceConfig\\DefaultNormalizationServiceConfig.xccfg");

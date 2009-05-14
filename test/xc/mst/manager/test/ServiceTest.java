@@ -45,7 +45,8 @@ public class ServiceTest {
             service.setServicesLastLogReset(new Date());
             service.setServicesLogFileName("serviceLogFileName");
             service.setServicesWarnings(0);
-            File configFile = new File("serviceConfig/DefaultNormalizationService.xccfg");
+            service.setXccfgFileName("serviceConfig/DefaultNormalizationServiceConfig.xccfg");
+            File configFile = new File("serviceConfig/DefaultNormalizationServiceConfig.xccfg");
             BufferedReader in = new BufferedReader(new FileReader(configFile));
 
                 // The name of the service, which must appear in the first line of the configuration file

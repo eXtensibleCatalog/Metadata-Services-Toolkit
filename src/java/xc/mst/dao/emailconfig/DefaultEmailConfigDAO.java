@@ -169,8 +169,33 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 				psSetConfiguration.setLong(6, emailconfig.getTimeout());
 				psSetConfiguration.setBoolean(7, emailconfig.getForgottenPasswordLink());
 
-				// Execute the update statement and return the result
-				return psSetConfiguration.executeUpdate() > 0;
+				// Execute the update statement.  If nothing was updated we need to insert instead of update
+				if(psSetConfiguration.executeUpdate() == 0)
+				{
+					String insertSql = "INSERT INTO " + TABLE_NAME + " (" + COL_EMAIL_SERVER_ADDRESS + ", " +
+					                                                        COL_PORT_NUMBER + ", " +
+					                                                        COL_FROM_ADDRESS + ", " +
+					                                                        COL_PASSWORD + ", " +
+					                                                        COL_ENCRYPTED_CONNECTION + ", " +
+					                                                        COL_TIMEOUT + ", " +
+					                                                        COL_FORGOTTEN_PASSWORD_LINK + ") " +
+                                       "VALUES (?, ?, ?, ?, ?, ?, ?)";
+					
+					PreparedStatement psInsert = dbConnection.prepareStatement(insertSql);
+					
+					// Set the parameters on the insert statement
+					psInsert.setString(1, emailconfig.getEmailServerAddress());
+					psInsert.setInt(2, emailconfig.getPortNumber());
+					psInsert.setString(3, emailconfig.getFromAddress());
+					psInsert.setString(4, emailconfig.getPassword());
+					psInsert.setString(5, emailconfig.getEncryptedConnection());
+					psInsert.setLong(6, emailconfig.getTimeout());
+					psInsert.setBoolean(7, emailconfig.getForgottenPasswordLink());
+					
+					return psInsert.executeUpdate() > 0;
+				}
+				
+				return false;
 			} // end try(set the email configuration)
 			catch(SQLException e)
 			{
