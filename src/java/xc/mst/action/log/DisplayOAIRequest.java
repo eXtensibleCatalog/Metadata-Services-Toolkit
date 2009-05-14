@@ -17,6 +17,8 @@ import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.constants.Constants;
 import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
+import xc.mst.manager.repository.DefaultProviderService;
+import xc.mst.manager.repository.ProviderService;
 
 /**
  * Displays the OAI request that was actually sent
@@ -49,6 +51,19 @@ public class DisplayOAIRequest extends ActionSupport
         try
         {
             ScheduleService scheduleService = new DefaultScheduleService();
+            ProviderService providerService = new DefaultProviderService();
+            HarvestSchedule schedule = scheduleService.getScheduleForProvider(providerService.getProviderById(providerId));
+
+            if(schedule!=null)
+            {
+                setRequestString(schedule.getRequest());
+            }
+            else
+            {
+                setNoHarvestString(true);
+                log.error("No Harvest has been set up for the provider");
+            }
+            /*
             List<HarvestSchedule> allHarvestSchedules = scheduleService.getAllSchedules();
             Iterator<HarvestSchedule> harvestIter = allHarvestSchedules.iterator();
             while(harvestIter.hasNext())
@@ -60,17 +75,16 @@ public class DisplayOAIRequest extends ActionSupport
                     break;
                 }
             }
-
+            */
         }
+        /*
         catch(NullPointerException e)
         {
             setNoHarvestString(true);
-            System.out.println("NULL Pointer exception");
             log.error("No Harvest has been set up for the provider",e);
-        }
+        }*/
         catch(Exception e)
         {
-            System.out.println("Some other exception "+e);
             log.error("Unable to Display the request String",e);
         }
         return SUCCESS;

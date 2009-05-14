@@ -110,11 +110,11 @@ public class AddGroup extends ActionSupport
 
             for(int i=0;i<permissionsSelected.length;i++)
             {
-                System.out.println("Inserting "+permissionsSelected[i]);
+                
                 int permissionId = Integer.parseInt(permissionsSelected[i]);
-                System.out.println("permissionId int value is "+permissionId);
+                
                 Permission tempPermission = permissionService.getPermissionById(permissionId);
-                System.out.println("tempPermission's name is "+tempPermission.getTabName());
+                
                 group.addPermission(tempPermission);
             }
 

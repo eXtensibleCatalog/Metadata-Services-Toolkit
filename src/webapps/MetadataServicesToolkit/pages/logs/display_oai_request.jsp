@@ -8,7 +8,7 @@
     <c:otherwise>
         <c:choose>
             <c:when test="${noHarvestString==true}">
-                No Harvest Schedule has been set up for the specified Provider
+                 No Harvest Schedule has been set up for the specified Provider
             </c:when>
             <c:otherwise>
                  The provider has not yet been harvested so there are no OAI requests to display

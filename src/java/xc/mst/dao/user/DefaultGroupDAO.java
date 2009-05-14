@@ -460,7 +460,7 @@ public class DefaultGroupDAO extends GroupDAO
 				    // Add the permissions to the group
 				    for(Permission permission : group.getPermissions())
                     {
-                        System.out.println("Group ID-->"+group.getId()+" and permission ID-->"+permission.getTabName());
+                        
 				    	success = groupPermissionDao.insert(group.getId(), permission.getTabId()) && success;
                     }
 

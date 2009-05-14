@@ -43,10 +43,7 @@ public class DefaultGroupService implements GroupService {
      * @param group The group to be inserted
      */
     public void insertGroup(Group group) throws DataException{
-        for(Permission permission:group.getPermissions())
-        {
-           System.out.println("The permission is "+permission.getTabName()) ;
-        }
+       
         groupDao.insert(group);
     }
 
