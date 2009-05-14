@@ -12,6 +12,7 @@ package xc.mst.manager.test;
 
 import org.testng.annotations.Test;
 import xc.mst.bo.user.Server;
+import xc.mst.bo.user.Server.ServerType;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.ServerService;
 
@@ -41,7 +42,7 @@ public class ServerTest
             server.setInstitution("University of Rochester");
             server.setName("Net ID Server");
             server.setPort(45);
-            server.setType(1);
+            server.setType(ServerType.LDAP);
             server.setUrl("http://www.rochester.edu");
 
             serverService.insertServer(server);
@@ -54,7 +55,7 @@ public class ServerTest
             assert(anotherServer.getPort()==server.getPort()): "The Port numbers dont match";
             assert(anotherServer.getShowForgotPasswordLink()==false): "Fields dont match";
             assert(anotherServer.getStartLocation().equalsIgnoreCase(server.getStartLocation())): "The start locations dont match";
-            assert(anotherServer.getType()==1): "Server type should be 1";
+            assert(anotherServer.getType().equals(ServerType.LDAP)): "Server type should be LDAP";
             assert(anotherServer.getUrl().equalsIgnoreCase(server.getUrl())): "The URLs dont match";
             assert(anotherServer.getUserNameAttribute().equalsIgnoreCase(server.getUserNameAttribute())): "The username Attributes dont match";
             
