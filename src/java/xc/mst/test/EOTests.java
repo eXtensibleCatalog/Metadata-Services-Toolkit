@@ -20,7 +20,6 @@ import org.apache.log4j.PropertyConfigurator;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
-import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
@@ -37,8 +36,6 @@ import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.harvester.HarvestRunner;
-import xc.mst.manager.harvest.DefaultScheduleService;
-import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.MSTSolrServer;
@@ -87,10 +84,15 @@ public class EOTests
 	{
 		try
 		{	
-			ScheduleService scheduleService = new DefaultScheduleService();
-			HarvestSchedule schedule = scheduleService.getScheduleForProvider(new DefaultProviderDAO().getById(1));
-			System.out.println(schedule.getRequest());
-			
+			DateFormat sdf = DateFormat.getTimeInstance(DateFormat.SHORT);
+			Date date = sdf.parse("3:42 PM");
+			Calendar now = Calendar.getInstance();
+			now.setTime(date);
+			now.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+			System.out.println("Harvest Scheduler checking for harvests scheduled to run now.  The time is " +
+					  now.get(Calendar.MINUTE) + " minutes, " + now.get(Calendar.HOUR_OF_DAY) + " hours, and " +
+					  now.get(Calendar.DAY_OF_WEEK) + " day of the week.");
+
 			if(true) return;
 			
 			//File file = new File("C:\\AllXcProjects\\MetadataServicesToolkit\\serviceConfig\\DefaultNormalizationServiceConfig.xccfg");

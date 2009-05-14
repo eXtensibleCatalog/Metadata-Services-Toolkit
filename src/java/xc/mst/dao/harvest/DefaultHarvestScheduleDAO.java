@@ -932,7 +932,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	                                   "AND (" + COL_END_DATE + " IS NULL OR " + COL_END_DATE + ">=?) " +
 	                                   "AND " + "((0=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=?)" +
 	                                             "OR (0=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=0)" +
-	                                             "OR " + COL_MINUTE + "=?)";
+	                                             "OR " + COL_MINUTE + "=? AND " + COL_HOUR + "=-1 AND " + COL_DAY_OF_WEEK + "=0)";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the PreparedStatement to get a harvest schedule by its time the SQL " + selectSql);
