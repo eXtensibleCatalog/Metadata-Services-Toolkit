@@ -70,7 +70,7 @@ YAHOO.xc.mst.repository.viewRepository = {
     
     downloadFile: function(type,id)
     {
-        window.location = "pages/logs/downloadLogFile.jsp?logType="+type+"&id="+id;
+        window.location = "downloadLogFile.action?logType="+type+"&id="+id;
     },
     
 
