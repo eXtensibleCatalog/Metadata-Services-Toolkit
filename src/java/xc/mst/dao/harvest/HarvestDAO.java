@@ -10,6 +10,7 @@
 package xc.mst.dao.harvest;
 
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -177,4 +178,12 @@ public abstract class HarvestDAO
 			throw new DataException(errors);
 		} // end if(error found)
 	} // end method validateFields(Harvest, boolean, boolean)
+
+	/**
+	 * Get latest harvest end time for given harvest schedule
+	 * 
+	 * @param harvestScheduleName name of schedule
+	 * @return latest harvest end time if found otherwise null
+	 */
+	public abstract Timestamp getLatestHarvestEndTimeForSchedule(String harvestScheduleName);
 } // end class HarvestDAO

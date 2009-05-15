@@ -12,14 +12,13 @@ package xc.mst.dao.harvest;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.dao.DataException;
 import xc.mst.dao.MySqlConnectionManager;
-import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
-import xc.mst.dao.harvest.HarvestScheduleDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.ProviderDAO;
 
@@ -64,6 +63,11 @@ public class DefaultHarvestDAO extends HarvestDAO
 	 * A PreparedStatement to delete a harvest from the database
 	 */
 	private static PreparedStatement psDelete = null;
+	
+	/**
+	 * A PreparedStatement to get latest harvest end time for a schedule
+	 */
+	private static PreparedStatement psGetLatestHarvestEndTime = null;	
 
 	/**
 	 * Lock to synchronize access to the get all PreparedStatement
@@ -94,6 +98,11 @@ public class DefaultHarvestDAO extends HarvestDAO
 	 * Lock to synchronize access to the delete PreparedStatement
 	 */
 	private static Object psDeleteLock = new Object();
+	
+	/**
+	 * Lock to synchronize access toget latest harvest end time for a schedule
+	 */
+	private static Object psGetLatestHarvestEndTimeLock = new Object();
 
 	@Override
 	public List<Harvest> getAll()
@@ -590,4 +599,63 @@ public class DefaultHarvestDAO extends HarvestDAO
 			} // end catch(SQLException)
 		} // end synchronized
 	} // end method delete(Harvest)
+
+	@Override
+	public Timestamp getLatestHarvestEndTimeForSchedule(String harvestScheduleName)
+	{
+		synchronized(psGetLatestHarvestEndTimeLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Get latest harvest end time with  harvest schedule name " + harvestScheduleName);
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+			
+			Timestamp endTime = null;
+
+			try
+			{
+				// Create the PreparedStatement to get latest harvest end time for a given harvest schedule if it hasn't already been defined
+				if(psGetLatestHarvestEndTime == null)
+				{
+					// SQL to get the rows
+					String selectSql = "SELECT " + "MAX("  + COL_END_TIME + ") " +
+	                                   "FROM " + HARVESTS_TABLE_NAME + " " +
+	                                   "WHERE " + COL_HARVEST_SCHEDULE_NAME + "=?";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get latest harvest end time by harvest schedule ID\" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetLatestHarvestEndTime = dbConnection.prepareStatement(selectSql);
+				} // end if(get by harvest schedule ID PreparedStatement not defined)
+
+				// Set the parameters on the PreparedStatement
+				psGetLatestHarvestEndTime.setString(1, harvestScheduleName);
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = psGetLatestHarvestEndTime.executeQuery();
+				results.next();
+				endTime = results.getTimestamp(1);
+
+				if(log.isDebugEnabled())
+					log.debug("Found harvests end time " + endTime);
+
+				return endTime;
+			} // end try(get results)
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the harvest latest end time with harvest schedule ID " + harvestScheduleName, e);
+
+				return endTime;
+			} // end catch(SQLException)
+			finally
+			{
+				MySqlConnectionManager.closeResultSet(results);
+			} // end finally(close ResultSet)
+		} // end synchronized
+	} // end method getHarvestsForSchedule(int)
 } // end class DefaultHarvestDAO

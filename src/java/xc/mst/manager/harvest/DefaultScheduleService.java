@@ -9,7 +9,9 @@
 
 package xc.mst.manager.harvest;
 
+import java.sql.Timestamp;
 import java.util.List;
+
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Provider;
@@ -121,4 +123,14 @@ public class DefaultScheduleService implements ScheduleService {
         return harvestDAO.getHarvestsForSchedule(harvestSchedule.getScheduleName());
     }
 	
+	/**
+	 * Get latest harvest end time for given harvest schedule
+	 * 
+	 * @param harvestSchedule harvest schedule
+	 * @return latest harvest end time if found otherwise null
+	 */
+	public Timestamp getLatestHarvestEndTime(HarvestSchedule harvestSchedule)
+    {
+        return harvestDAO.getLatestHarvestEndTimeForSchedule(harvestSchedule.getScheduleName());
+    }
 }

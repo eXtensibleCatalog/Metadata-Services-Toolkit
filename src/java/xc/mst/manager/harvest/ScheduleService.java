@@ -9,6 +9,7 @@
 
 package xc.mst.manager.harvest;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import xc.mst.bo.harvest.Harvest;
@@ -91,4 +92,12 @@ public interface ScheduleService {
 	 * @return List of Harvest found
 	 */
 	public List<Harvest> getHarvestsForSchedule(HarvestSchedule harvestSchedule);
+
+	/**
+	 * Get latest harvest end time for given harvest schedule
+	 * 
+	 * @param harvestSchedule harvest schedule
+	 * @return latest harvest end time if found otherwise null
+	 */
+	public Timestamp getLatestHarvestEndTime(HarvestSchedule harvestSchedule);
 }
