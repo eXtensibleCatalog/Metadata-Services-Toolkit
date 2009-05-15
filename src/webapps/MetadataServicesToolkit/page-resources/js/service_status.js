@@ -111,6 +111,10 @@ refreshServiceBar : function()
                 var findError = o.responseText.search("No User Found");
                 if(findError==-1)
                 {
+                     if(o.responseText != null && o.responseText.search("Process Description") < 0 )
+                        {
+                            window.location = 'viewLogin.action';
+                        }
                     document.getElementById("serviceBar").innerHTML = o.responseText;
                 }
                 else
@@ -120,7 +124,7 @@ refreshServiceBar : function()
             }
             });
 
-            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',2000);
+            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',100);
         }
         catch(e)
         {
@@ -130,7 +134,12 @@ refreshServiceBar : function()
     },
 	init : function()
 	{
-	    YAHOO.xc.mst.serviceStatusBar.refreshServiceBar();
+         var user = document.getElementById("loggedInUser").value;
+         if(user!=null&&user!='')
+             {
+                 YAHOO.xc.mst.serviceStatusBar.refreshServiceBar();
+             }
+         
 	}
 
  }

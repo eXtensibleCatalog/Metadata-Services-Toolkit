@@ -23,7 +23,7 @@
         </div>
     </mst:checkUserPermission>
 </c:if>
-
+<input type="hidden" id="loggedInUser" name="loggedInUser" value="${user}">
 <div id="header">
  
                

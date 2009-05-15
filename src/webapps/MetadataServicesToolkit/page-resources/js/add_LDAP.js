@@ -9,7 +9,7 @@
   
 YAHOO.namespace("xc.mst.configuration.ldap");
 
-YAHOO.xc.mst.configuration.ldap.MyObject = {
+YAHOO.xc.mst.configuration.ldap = {
 
   converter :function(c)
     {
@@ -98,7 +98,7 @@ YAHOO.xc.mst.configuration.ldap.MyObject = {
                                
 
                                 var j;
-                                j = YAHOO.xc.mst.configuration.MyObject.converter(port[i]);
+                                j = YAHOO.xc.mst.configuration.ldap.converter(port[i]);
                                
                                 if((j<48)||(j>57))
                                     {
