@@ -42,27 +42,27 @@ public class SolrIndexManager {
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 	/** Solr server */
-	private static SolrServer server = null;
+	protected static SolrServer server = null;
 
 	/**
 	 * The singleton instance of the LuceneIndexManager
 	 */
-	private static SolrIndexManager instance = null;
+	protected static SolrIndexManager instance = null;
 
 	/**
 	 * Data access object for managing general logs
 	 */
-	private static LogDAO logDao = new DefaultLogDAO();
+	protected static LogDAO logDao = new DefaultLogDAO();
 
 	/**
 	 * The repository management log file name
 	 */
-	private static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SOLR_INDEX);
+	protected static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SOLR_INDEX);
 	
 	/*
 	 * Private default constructor
 	 */
-	private SolrIndexManager() {}
+	protected SolrIndexManager() {}
 	
 	/**
 	 * Gets the singleton instance of the LuceneIndexManager
