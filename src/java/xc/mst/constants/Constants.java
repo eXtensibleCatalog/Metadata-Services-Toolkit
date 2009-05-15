@@ -242,6 +242,28 @@ public class Constants
 	 */
 	public static final String CONFIG_OAI_REPO_MAX_RECORDS_LENGTH = "OaiRepoMaxRecordsLength";
 
+	
+	/**
+	 * Parameter for looking up the threading model used for indexing SOLR
+	 */
+	public static final String CONFIG_SOLR_INDEXER = "SOLRIndexer";
+	
+	/**
+	 * Parameter for looking up the threading model used for indexing SOLR
+	 */
+	public static final String CONFIG_SOLR_INDEXER_MULTI_THREAD_COUNT = "SOLRIndexerMultiThreadCount";
+	
+	/**
+	 * Parameter constant value for Single Threaded indexing in SOLR
+	 */
+	public static final String SOLR_INDEXER_SINGLE_THREADED = "SingleThreaded";
+
+	/**
+	 * Parameter constant value for Single Threaded indexing in SOLR
+	 */
+	public static final String SOLR_INDEXER_MULTI_THREADED = "MultiThreaded";
+	
+	
 	//*******************************************************************
 	// Error Messages
 	//*******************************************************************
