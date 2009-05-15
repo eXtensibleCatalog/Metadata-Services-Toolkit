@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.log4j.PropertyConfigurator;
@@ -73,6 +74,8 @@ public class EOTests
 			System.err.println("The configuration file was invalid or did not exist.");
 			System.exit(1);
 		}
+		
+		MSTSolrServer.getInstance("8080");
 	}
 
 	/**
@@ -84,14 +87,23 @@ public class EOTests
 	{
 		try
 		{	
-			DateFormat sdf = DateFormat.getTimeInstance(DateFormat.SHORT);
-			Date date = sdf.parse("3:42 PM");
-			Calendar now = Calendar.getInstance();
-			now.setTime(date);
-			now.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-			System.out.println("Harvest Scheduler checking for harvests scheduled to run now.  The time is " +
-					  now.get(Calendar.MINUTE) + " minutes, " + now.get(Calendar.HOUR_OF_DAY) + " hours, and " +
-					  now.get(Calendar.DAY_OF_WEEK) + " day of the week.");
+			RecordList test = new DefaultRecordService().getAll();
+			System.out.println("size: " + test.size());
+			
+			java.util.Set<String> set = new HashSet<String>();
+			for(Record record : test)
+				if(!set.contains(record.getOaiIdentifier()))
+					set.add(record.getOaiIdentifier());
+			
+			System.out.println("size: " + test.size());
+			
+			int i = 0;
+			for(Record record : test)
+				i++;
+			
+			//System.out.println(test.get(5) == null ? "null" : "not null");
+			System.out.println("size: " + test.size());
+			System.out.println("set size: " + set.size());
 
 			if(true) return;
 			

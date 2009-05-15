@@ -104,26 +104,8 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get all records
 		SolrQuery query = new SolrQuery().setQuery(FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records.");
-
-			return new RecordList(null);
-		} // end if(there were no results)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getAll()
 
 	@Override
@@ -194,26 +176,8 @@ public class DefaultRecordService extends RecordService
 
 		SolrQuery query = new SolrQuery().setQuery(queryString);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records.");
-
-			return new RecordList(null);
-		} // end if(there were no results)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records matching the query " + queryString + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getByLuceneQuery(String)
 
 	@Override
@@ -227,26 +191,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_PROVIDER_ID + ":" + Integer.toString(providerId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records with provider ID " + providerId + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records with provider ID " + providerId + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getByProviderId(int)
 
 	@Override
@@ -260,26 +206,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_SERVICE_ID + ":" +  Integer.toString(serviceId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs== null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records with service ID " + serviceId + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records with service ID " + serviceId + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getByServiceId(int)
 
 	@Override
@@ -294,26 +222,9 @@ public class DefaultRecordService extends RecordService
 		SolrQuery query = new SolrQuery();
 		query.setQuery(FIELD_SERVICE_ID + ":" +  Integer.toString(serviceId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs== null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records with service ID " + serviceId + ".");
-
-			return numberOfRecords;
-		} // end if(no results found)
-
-		numberOfRecords = docs.getNumFound();
-		
-		if(log.isDebugEnabled())
-			log.debug("Number of records found:" + numberOfRecords);
 
 		// Return the list of results
-		return numberOfRecords;
+		return new RecordList(query).size();
 	} // end method getByServiceId(long)
 	
 	@Override
@@ -327,26 +238,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_PROCESSED_BY_SERVICE_ID + ":" +  Integer.toString(serviceId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs== null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records with processing service ID " + serviceId + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records with processing service ID " + serviceId + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getByProcessingServiceId(int)
 	
 	@Override
@@ -360,26 +253,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_HARVEST_ID + ":" + Integer.toString(harvestId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records with harvest ID " + harvestId + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records with harvest ID " + harvestId + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getByHarvestId(int)
 
 	@Override
@@ -393,26 +268,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_HARVEST_SCHEDULE_ID + ":" +  Integer.toString(harvestScheduleId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records with harvest schedule ID " + harvestScheduleId + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records with harvest schedule ID " + harvestScheduleId + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getByHarvestScheduleId(int)
 
 	@Override
@@ -427,26 +284,8 @@ public class DefaultRecordService extends RecordService
 				+ FIELD_SERVICE_ID + ":" + Integer.toString(serviceId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records with format ID " + formatId + " and service ID " + serviceId);
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records with format ID " + formatId + " and service ID " + serviceId + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getByFormatIdAndServiceId(int, int)
 
 	@Override
@@ -460,26 +299,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records that are input for the service with  service ID " + serviceId + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records that are input for the service with service ID " + serviceId + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getInputForService(int)
 
 	@Override
@@ -493,26 +314,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_PROVIDER_NAME + ":" + providerName + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records harvested from the provider with the name " + providerName + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records harvested from the provider with the name " + providerName + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getByProviderName(String)
 
 	@Override
@@ -526,26 +329,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_PROVIDER_URL + ":" + providerUrl + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records harvested from the provider with the URL " + providerUrl + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records harvested from the provider with the URL " + providerUrl + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getByProviderUrl(String)
 	
 	@Override
@@ -559,26 +344,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_SET_NAME + ":" + setName + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records from the set with the name " + setName + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records from the set with the name " + setName + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getBySetName(String)
 
 	@Override
@@ -592,26 +359,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_SET_SPEC  + ":" + setSpec + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE +  ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records from the set with the setSpec " + setSpec + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records from the set with the setSpec " + setSpec + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getBySetSpec(String)
 
 	@Override
@@ -625,26 +374,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_FORMAT_NAME + ":" + formatName + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE  + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records from the format with the name " + formatName + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records from the format with the name " + formatName + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getByFormatName(String)
 
 	@Override
@@ -759,26 +490,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_PROCESSED_FROM + ":" + Long.toString(processedFromId) + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records processed from the record with ID " + processedFromId + ".");
-
-			return new RecordList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records processed from the record with ID " + processedFromId + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getByProcessedFrom(long)
 
 	@Override
@@ -792,26 +505,8 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_TRAIT + ":" + trait.replaceAll(":", "\\\\:") + " AND "
 				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any records with trait " + trait + ".");
-
-			return new RecordList(null);
-		} // end if(records not found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " records with trait " + trait + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new RecordList(docs);
+		return new RecordList(query);
 	} // end method getByTrait(String)
 
 	@Override

@@ -13,6 +13,7 @@ package xc.mst.utils.index;
 import java.util.AbstractList;
 
 import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.common.SolrDocumentList;
 
 import xc.mst.bo.record.Record;
@@ -30,14 +31,39 @@ import xc.mst.manager.record.RecordService;
 public class RecordList extends AbstractList<Record>
 {
 	/**
-	 * The docs around which the RecordList was built
+	 * The maximum number of results to 
+	 */
+	private static final int MAX_RESULTS = 2048;
+	
+	/**
+	 * An Object which manages the Solr index
+	 */
+	protected static SolrIndexManager indexMgr = SolrIndexManager.getInstance();
+	
+	/**
+	 * The current offset into the results of the query that are in the document list
+	 */
+	private int currentOffset = 0;
+	
+	/**
+	 * A list of documents from the query between results currentOffset and currentOffset+MAX_RESULTS
 	 */
 	private SolrDocumentList docs = null;
+	
+	/**
+	 * The query for which the RecordList was built
+	 */
+	private SolrQuery query = null;
 
 	/**
 	 * The service used to get a record from a Lucene document
 	 */
 	private static RecordService service = new DefaultRecordService();
+	
+	/**
+	 * The number of elements in the list
+	 */
+	private int size = -1;
 
 	/**
 	 * A reference to the logger for this class
@@ -45,14 +71,17 @@ public class RecordList extends AbstractList<Record>
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 	/**
-	 * Constructs a RecordList around the results of a Lucene query.  The docs
+	 * Constructs a RecordList around a Solr query.  The docs returned by the query
 	 * are assumed to all be Record Objects
 	 *
-	 * @param docs The docs returned by a Lucene query
+	 * @param query The Solr query for which the RecordList was built
 	 */
-	public RecordList(SolrDocumentList docs)
+	public RecordList(SolrQuery query)
 	{
-		this.docs = docs;
+		this.query = query;
+		query.setRows(MAX_RESULTS);
+		query.setStart(currentOffset);
+		docs = indexMgr.getDocumentList(query);
 	}
 
 	/**
@@ -63,7 +92,20 @@ public class RecordList extends AbstractList<Record>
 	 */
 	public Record get(int index)
 	{
-		return (docs != null ? service.getRecordFromDocument(docs.get(index)) : null);
+		if(query == null)
+			return null;
+		
+		if(currentOffset < index && currentOffset + MAX_RESULTS > index)
+			return (docs.size() > (index-currentOffset) ? service.getRecordFromDocument(docs.get(index-currentOffset)) : null);
+		
+		// Truncation will make this the largest multiple of MAX_RESULTS which comes before the requested index
+		currentOffset = (index/MAX_RESULTS)*MAX_RESULTS;
+		
+		query.setRows(MAX_RESULTS);
+		query.setStart(currentOffset);
+		docs = indexMgr.getDocumentList(query);
+		
+		return (docs.size() > (index-currentOffset) ? service.getRecordFromDocument(docs.get(index-currentOffset)) : null);
 	}
 
 	/**
@@ -84,6 +126,46 @@ public class RecordList extends AbstractList<Record>
 	 */
 	public int size()
 	{
-		return (docs != null ? docs.size() : 0);
+		if(size >= 0)
+			return size;
+		
+		if(query == null)
+		{
+			size = 0;
+			return size;
+		}
+		
+		// Binary search to find the size of the list
+		int low = 0;
+		int high = Integer.MAX_VALUE;
+		int mid;
+		
+		while(low <= high)
+		{
+			mid = (low + high) / 2;
+			
+			if(get(mid) != null)
+			{
+				if(get(mid+1) == null)
+				{
+					size = mid+1;
+					return size;
+				}
+				else
+					low = mid+1;
+			}
+			else
+			{
+				if(get(mid-1) != null)
+				{
+					size = mid-1;
+					return size;
+				}
+				else
+					high = mid;
+			}
+		}
+		
+		return -1;
 	}
 }
