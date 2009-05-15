@@ -31,7 +31,10 @@ import xc.mst.dao.user.GroupDAO;
  */
 public class AllGroups extends ActionSupport
 {
-    /** determines whether the columns are to be sorted in ascending or descending order  */
+    /** Serial id */
+	private static final long serialVersionUID = -6634790751181787459L;
+
+	/** determines whether the columns are to be sorted in ascending or descending order  */
     private boolean isAscendingOrder = true;
 
     /** determines the column on which the rows are to be sorted */
@@ -71,9 +74,9 @@ public class AllGroups extends ActionSupport
                      tempList = groupService.getAllGroupsSorted(isAscendingOrder, GroupDAO.COL_DESCRIPTION);
                 }
                
-                List<Group> finalList = new ArrayList();
+                List<Group> finalList = new ArrayList<Group>();
 
-                Iterator iter = tempList.iterator();
+                Iterator<Group> iter = tempList.iterator();
                 while(iter.hasNext())
                 {
                     Group group = (Group)iter.next();

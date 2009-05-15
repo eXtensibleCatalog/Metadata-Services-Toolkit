@@ -32,7 +32,10 @@ import xc.mst.manager.user.UserService;
  */
 public class AddLDAPUser extends ActionSupport
 {
-    /** creates service object for users  */
+    /** Serial id  */
+	private static final long serialVersionUID = 4411174825770792605L;
+
+	/** creates service object for users  */
     private UserService userService = new DefaultUserService();
 
     /** creates service object for servers */

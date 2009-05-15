@@ -24,7 +24,10 @@ import xc.mst.manager.processingDirective.ProcessingDirectiveService;
  */
 public class ListProcessingDirectives extends ActionSupport
 {
-    /** creates service object for processing directives */
+    /** Serial id */
+	private static final long serialVersionUID = 8908002900698813282L;
+
+	/** creates service object for processing directives */
     private ProcessingDirectiveService proDirService = new DefaultProcessingDirectiveService();
 
     /** The list of processing directives that have been set up by the user */
@@ -49,8 +52,7 @@ public class ListProcessingDirectives extends ActionSupport
                      
            processingDirectives = proDirService.getAllProcessingDirectives();
            setProcessingDirectives(processingDirectives);
-           //HttpServletRequest request = ServletActionContext.getRequest();
-           //request.setAttribute("processingDirectivesList", getProcessingDirectives());
+
            return SUCCESS;
         }
         catch(Exception e)

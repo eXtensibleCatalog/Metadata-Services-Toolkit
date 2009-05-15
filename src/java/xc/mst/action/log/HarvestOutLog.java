@@ -10,15 +10,18 @@
 
 package xc.mst.action.log;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This action method is used to display the Service logs
@@ -27,7 +30,10 @@ import xc.mst.manager.processingDirective.ServicesService;
  */
 public class HarvestOutLog extends ActionSupport
 {
-    /**The column on which the rows are to be sorted */
+    /** Serial id */
+	private static final long serialVersionUID = -3510624101788171450L;
+
+	/**The column on which the rows are to be sorted */
     private String columnSorted="ServiceName";
 
     /** boolean parameter determines if the rows are to sorted in ascending or descending order */
@@ -55,37 +61,36 @@ public class HarvestOutLog extends ActionSupport
     {
         try
         {
-            List<Service> servicesList = new ArrayList<Service>();
             if(columnSorted.equalsIgnoreCase("ServiceName")||(columnSorted.equalsIgnoreCase("RecordsAvailable"))||(columnSorted.equalsIgnoreCase("RecordsHarvested"))||(columnSorted.equalsIgnoreCase("Warnings"))||(columnSorted.equalsIgnoreCase("Errors"))||(columnSorted.equalsIgnoreCase("LastLogReset")))
             {
                 if(columnSorted.equalsIgnoreCase("ServiceName"))
                 {
-                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
+                	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
                 }
                 else if(columnSorted.equalsIgnoreCase("Warnings"))
                 {
-                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_WARNINGS);
+                	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_WARNINGS);
                 }
                 else if(columnSorted.equalsIgnoreCase("Errors"))
                 {
-                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_ERRORS);
+                	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_ERRORS);
                 }
                 else if(columnSorted.equalsIgnoreCase("RecordsAvailable"))
                 {
-                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_RECORDS_AVAILABLE);
+                	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_RECORDS_AVAILABLE);
                 }
                 else if(columnSorted.equalsIgnoreCase("RecordsHarvested"))
                 {
-                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_RECORDS_HARVESTED);
+                	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_RECORDS_HARVESTED);
                 }
                 else
                 {
-                    servicesList = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_LAST_LOG_RESET);
+                	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_LAST_LOG_RESET);
                 }
 
                 setIsAscendingOrder(isAscendingOrder);
                 setColumnSorted(columnSorted);
-                setServices(servicesList);
+
                 return SUCCESS;
 
             }
@@ -128,9 +133,9 @@ public class HarvestOutLog extends ActionSupport
      *
      * @param serviceList list of all services
      */
-    public void setServices(List<Service> serviceList)
+    public void setServices(List<Service> services)
     {
-        this.services = serviceList;
+        this.services = services;
     }
 
     /**

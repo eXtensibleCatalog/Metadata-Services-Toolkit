@@ -27,7 +27,10 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class DisplayOAIRequest extends ActionSupport
 {
-    /** The ID of the provider whose related OAI request is being displayed */
+    /** Serial id */
+	private static final long serialVersionUID = 3209874357092858611L;
+
+	/** The ID of the provider whose related OAI request is being displayed */
     private int providerId;
 
     /** A reference to the logger for this class */

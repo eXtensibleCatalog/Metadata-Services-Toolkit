@@ -29,7 +29,10 @@ import xc.mst.manager.user.PermissionService;
  */
 public class AddGroup extends ActionSupport
 {
-    /** The name of the group */
+    /** Serial id */
+	private static final long serialVersionUID = -1479234838280649053L;
+
+	/** The name of the group */
     private String groupName;
 
     /** A Description of the group */

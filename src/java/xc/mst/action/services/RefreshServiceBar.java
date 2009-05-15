@@ -23,7 +23,10 @@ import xc.mst.scheduling.Scheduler;
  */
 public class RefreshServiceBar extends ActionSupport implements ServletRequestAware
 {
-     /** A reference to the logger for this class */
+     /** Serial id */
+	private static final long serialVersionUID = -3395960723337222914L;
+
+	/** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /** Servlet request object */

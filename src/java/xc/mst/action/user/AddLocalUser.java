@@ -31,7 +31,10 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class AddLocalUser extends ActionSupport
 {
-    /** creates service object for users */
+    /** Serial id */
+	private static final long serialVersionUID = 8341069230872861667L;
+
+	/** creates service object for users */
     private UserService userService = new DefaultUserService();
 
     /** creates service object for groups */

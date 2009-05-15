@@ -33,7 +33,10 @@ import xc.mst.manager.user.UserService;
  */
 public class EditLDAPUser extends ActionSupport
 {
-    /** creates service object for servers */
+    /** Serial id */
+	private static final long serialVersionUID = -4469959520693478750L;
+
+	/** creates service object for servers */
     private  ServerService serverService = new DefaultServerService();
 
     /** creates service object for groups */

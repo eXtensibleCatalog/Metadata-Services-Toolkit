@@ -27,7 +27,10 @@ import xc.mst.manager.processingDirective.ServicesService;
  */
 public class ServiceLog extends ActionSupport
 {
-    /** The coulmn on which the rows are to be sorted */
+    /** Serial id */
+	private static final long serialVersionUID = -5518728481476078414L;
+
+	/** The coulmn on which the rows are to be sorted */
     private String columnSorted="ServiceName";
     
     /** Boolena parameter determines if the rows are to be sorted in ascending or descending order */
@@ -85,7 +88,6 @@ public class ServiceLog extends ActionSupport
 
                 setIsAscendingOrder(isAscendingOrder);
                 setColumnSorted(columnSorted);
-                setServices(services);
             }
             else
             {
@@ -126,11 +128,11 @@ public class ServiceLog extends ActionSupport
      /**
      * Sets the list of all services
      *
-     * @param serviceList list of all services
+     * @param services list of all services
      */
-    public void setServices(List<Service> serviceList)
+    public void setServices(List<Service> services)
     {
-        this.services = serviceList;
+        this.services = services;
     }
 
     /**
