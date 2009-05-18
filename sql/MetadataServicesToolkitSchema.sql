@@ -187,7 +187,7 @@ CREATE TABLE harvests
   end_time TIMESTAMP NULL,
   request TEXT,
   result LONGTEXT,
-  harvest_schedule_name VARCHAR(127) NOT NULL,
+  harvest_schedule_id INT(11) NOT NULL,
   provider_id INT(11) NOT NULL,
 
   PRIMARY KEY (harvest_id),

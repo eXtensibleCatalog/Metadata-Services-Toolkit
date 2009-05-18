@@ -70,7 +70,7 @@ public abstract class HarvestDAO
 	/**
 	 * The name of the harvest schedule name column
 	 */
-	public final static String COL_HARVEST_SCHEDULE_NAME = "harvest_schedule_name";
+	public final static String COL_HARVEST_SCHEDULE_ID = "harvest_schedule_id";
 
 	/**
 	 * The name of the provider ID column
@@ -166,8 +166,8 @@ public abstract class HarvestDAO
 			if(harvest.getStartTime() == null)
 				errorMessage.append("The start time field is invalid. ");
 
-			if(harvest.getHarvestScheduleName() == null || harvest.getHarvestScheduleName().length() == 0 || harvest.getHarvestScheduleName().length() > 127)
-				errorMessage.append("The harvest schedule name is invalid. ");
+			if(harvest.getHarvestScheduleId() <= 0)
+				errorMessage.append("The harvest schedule ID is invalid. ");
 		} // end if(we need to check the non-ID fields)
 
 		// Log the error and throw the exception if any fields are invalid

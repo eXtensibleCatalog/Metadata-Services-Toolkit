@@ -38,15 +38,17 @@ public class Group
 	 * A list of permissions belonging to the group
 	 */
 	private List<Permission> permissions = new ArrayList<Permission>();
+
+	/**
+	 * The number of members belonging to the group
+	 */
+	private int memberCount;
 	
-	/** Default group name Administrator */
+	/** 
+	 * Default group name Administrator 
+	 */
 	public static final String ADMINISTRATOR = "Administrator";
-
-    /**
-     * Number of members in the group
-     */
-    private int memberCount = 0;
-
+    
 	/**
 	 * Gets the group's ID
 	 *
@@ -170,6 +172,7 @@ public class Group
     {
         return this.memberCount;
     }
+    
 	@Override
 	public boolean equals(Object o)
 	{

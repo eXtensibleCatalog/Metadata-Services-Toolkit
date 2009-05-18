@@ -129,7 +129,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 				                                   COL_END_TIME + ", " +
 				                                   COL_REQUEST + ", " +
 				                                   COL_RESULT + ", " +
-				                                   COL_HARVEST_SCHEDULE_NAME + ", " +
+				                                   COL_HARVEST_SCHEDULE_ID + ", " +
 				                                   COL_PROVIDER_ID + " " +
 	                                   "FROM " + HARVESTS_TABLE_NAME;
 
@@ -158,7 +158,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTime(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestScheduleName(results.getString(6));
+					harvest.setHarvestScheduleId(results.getInt(6));
 					harvest.setProvider(providerDao.getById(results.getInt(7)));
 
 					// Add the harvest to the list
@@ -205,7 +205,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 	                                               COL_END_TIME + ", " +
 	                                               COL_REQUEST + ", " +
 	                                               COL_RESULT + ", " +
-	                                               COL_HARVEST_SCHEDULE_NAME + ", " +
+	                                               COL_HARVEST_SCHEDULE_ID + ", " +
 				                                   COL_PROVIDER_ID + " " +
 	                                   "FROM " + HARVESTS_TABLE_NAME + " " +
  				                       "WHERE " + COL_HARVEST_ID + "=?";
@@ -238,7 +238,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTimestamp(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestScheduleName(results.getString(6));
+					harvest.setHarvestScheduleId(results.getInt(6));
 					harvest.setProvider(providerDao.getById(results.getInt(7)));
 
 					if(log.isDebugEnabled())
@@ -288,7 +288,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 	                                               COL_END_TIME + ", " +
 	                                               COL_REQUEST + ", " +
 	                                               COL_RESULT + ", " +
-	                                               COL_HARVEST_SCHEDULE_NAME + ", " +
+	                                               COL_HARVEST_SCHEDULE_ID + ", " +
 				                                   COL_PROVIDER_ID + " " +
 	                                   "FROM " + HARVESTS_TABLE_NAME + " " +
 				                       "WHERE " + COL_HARVEST_ID + "=?";
@@ -321,7 +321,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTime(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestScheduleName(results.getString(6));
+					harvest.setHarvestScheduleId(results.getInt(6));
 					harvest.setProvider(providerDao.getById(results.getInt(7)));
 
 					if(log.isDebugEnabled())
@@ -374,10 +374,10 @@ public class DefaultHarvestDAO extends HarvestDAO
 				                                   COL_END_TIME + ", " +
 				                                   COL_REQUEST + ", " +
 				                                   COL_RESULT + ", " +
-				                                   COL_HARVEST_SCHEDULE_NAME + ", " +
+				                                   COL_HARVEST_SCHEDULE_ID + ", " +
 				                                   COL_PROVIDER_ID + " " +
 	                                   "FROM " + HARVESTS_TABLE_NAME + " " +
-	                                   "WHERE " + COL_HARVEST_SCHEDULE_NAME + "=?";
+	                                   "WHERE " + COL_HARVEST_SCHEDULE_ID + "=?";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get harvest by harvest schedule ID\" PreparedStatement from the SQL " + selectSql);
@@ -407,7 +407,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTimestamp(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestScheduleName(results.getString(6));
+					harvest.setHarvestScheduleId(results.getInt(6));
 					harvest.setProvider(providerDao.getById(results.getInt(7)));
 
 					// Add the harvest to the list
@@ -456,7 +456,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 		            	    													COL_END_TIME + ", " +
 		            	    													COL_REQUEST + ", " +
 		            	    													COL_RESULT + ", " +
-		            	    													COL_HARVEST_SCHEDULE_NAME + ", " +
+		            	    													COL_HARVEST_SCHEDULE_ID + ", " +
 		            	    													COL_PROVIDER_ID + ") " +
 		            				       "VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -473,7 +473,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					psInsert.setTimestamp(2, harvest.getEndTime());
 					psInsert.setString(3, harvest.getRequest());
 					psInsert.setString(4, harvest.getResult());
-					psInsert.setString(5, harvest.getHarvestScheduleName());
+					psInsert.setInt(5, harvest.getHarvestScheduleId());
 					psInsert.setInt(6, harvest.getProvider().getId());
 
 					// Execute the insert statement and return the result
@@ -524,7 +524,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 				                                                          COL_END_TIME + "=?, " +
 				                                                          COL_REQUEST + "=?, " +
 				                                                          COL_RESULT + "=?, " +
-				                                                          COL_HARVEST_SCHEDULE_NAME + "=?, " +
+				                                                          COL_HARVEST_SCHEDULE_ID + "=?, " +
 				                                                          COL_PROVIDER_ID + "=? " +
 	                                   "WHERE " + COL_HARVEST_ID + "=?";
 
@@ -541,7 +541,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 				psUpdate.setTimestamp(2, harvest.getEndTime());
 				psUpdate.setString(3, harvest.getRequest());
 				psUpdate.setString(4, harvest.getResult());
-				psUpdate.setString(5, harvest.getHarvestScheduleName());
+				psUpdate.setInt(5, harvest.getHarvestScheduleId());
 				psUpdate.setInt(6, harvest.getProvider().getId());
 				psUpdate.setInt(7, harvest.getId());
 
@@ -621,7 +621,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					// SQL to get the rows
 					String selectSql = "SELECT " + "MAX("  + COL_END_TIME + ") " +
 	                                   "FROM " + HARVESTS_TABLE_NAME + " " +
-	                                   "WHERE " + COL_HARVEST_SCHEDULE_NAME + "=?";
+	                                   "WHERE " + COL_HARVEST_SCHEDULE_ID + "=?";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get latest harvest end time by harvest schedule ID\" PreparedStatement from the SQL " + selectSql);

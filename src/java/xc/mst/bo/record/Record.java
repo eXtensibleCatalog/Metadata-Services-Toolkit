@@ -20,6 +20,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
+import xc.mst.dao.harvest.HarvestScheduleDAO;
 
 /**
  * Represents a record
@@ -849,8 +850,9 @@ public class Record
 		buffer.append(" updatedAt=" + updatedAt);
 		buffer.append(" sets=" + sets);
 		buffer.append(" frbrLevelId=" + frbrLevelId);
-		if (harvest != null) {
-			buffer.append(" ScheduleName=" + harvest.getHarvestScheduleName());
+		if (harvest != null) 
+		{
+			buffer.append(" ScheduleId=" + harvest.getHarvestScheduleId());
 		}
 		buffer.append(" oaiDatestamp=" + oaiDatestamp);
 		buffer.append(" oaiHeader=" + oaiHeader);

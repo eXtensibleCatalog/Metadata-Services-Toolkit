@@ -24,11 +24,14 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
+import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.harvest.DefaultHarvestDAO;
+import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestDAO;
+import xc.mst.dao.harvest.HarvestScheduleDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.DefaultSetDAO;
@@ -68,6 +71,11 @@ public class DefaultRecordService extends RecordService
 	 * Data access object for getting harvests
 	 */
 	private HarvestDAO harvestDao = new DefaultHarvestDAO();
+	
+	/**
+	 * Data access object for getting harvest schedules
+	 */
+	private HarvestScheduleDAO harvestScheduleDao = new DefaultHarvestScheduleDAO();
 
 	/**
 	 * Data access object for getting services
@@ -854,11 +862,15 @@ public class DefaultRecordService extends RecordService
 
 		doc.addField(FIELD_HARVEST_ID, (record.getHarvest() == null ? "0" : Integer.toString(record.getHarvest().getId())));
 		
-		if (record.getHarvest() != null) {
-			doc.addField(FIELD_HARVEST_SCHEDULE_NAME, record.getHarvest().getHarvestScheduleName());
+		if (record.getHarvest() != null) 
+		{
+			HarvestSchedule schedule = harvestScheduleDao.getById(record.getHarvest().getId());
+			if(schedule != null)
+				doc.addField(FIELD_HARVEST_SCHEDULE_NAME, schedule.getId());
 		}
 
-		if (record.getHarvest() != null && record.getProvider() != null) {
+		if (record.getHarvest() != null && record.getProvider() != null) 
+		{
 			doc.addField(FIELD_HARVEST_START_TIME,record.getProvider().getName() + " " + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(record.getHarvest().getStartTime()));
 		}
 		
