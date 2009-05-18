@@ -265,7 +265,7 @@
                         		${mst:lastHarvest(schedule)}
                         	</c:if>
                         	<c:if test="${fn:startsWith(lastRun, 'Success')}">
-                        		<li style="float:left;margin-top:-2px;"><div><img src="page-resources/img/tick.jpg"></div></li> ${mst:lastHarvest(schedule)}
+                        		<div  style="display:inline;"><img src="page-resources/img/tick.jpg"></div> ${mst:lastHarvest(schedule)}
                         	</c:if>
                         	
                         </td>

@@ -28,11 +28,11 @@
                                 <c:forTokens var="str" delims="," varStatus="a" items="${breadcrumb}">
                                     <c:choose>
                                         <c:when test = "${a.last}">
-                                            <li style="float:left;margin-top:-8px;"><div>${str}</div></li>
+                                            <li><div>${str}</div></li>
                                         </c:when>
                                         <c:otherwise>
-                                            <li style="float:left;margin-top:-8px;margin-right:10px;"><div>${str}</div></li>
-                                            <li style="float:left;margin-top:-15px;margin-right:10px;"><div><img src="page-resources/img/breadcrumb.gif"></div></li>
+                                            <li><div>${str}</div></li>
+                                            <li><div><img src="page-resources/img/breadcrumb.gif"></div></li>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forTokens>

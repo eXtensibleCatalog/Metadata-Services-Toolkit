@@ -1,9 +1,9 @@
 <!--
   * Copyright (c) 2009 University of Rochester
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   -->
 
@@ -36,8 +36,8 @@
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
-	<SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container-min.js"></SCRIPT>    
-	<SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>     
+	<SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container-min.js"></SCRIPT>
+	<SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/button/button-min.js"></script>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
@@ -63,7 +63,7 @@
                     <jsp:param name="bread" value="Services , List Services" />
 
                 </jsp:include>
-                
+
             </div>
             <!--  end header -->
 
@@ -81,7 +81,7 @@
                  <div id="error_div"></div>
 
                  <div class="clear">&nbsp;</div>
-                 
+
                     <div class="viewTable">
                         <table width="100%">
                             <thead>
@@ -114,7 +114,7 @@
                                                         </c:otherwise>
                                                     </c:choose>
                                                  </c:if>
-                                            
+
                                         </div>
 
                                     </td>
@@ -169,7 +169,7 @@
                                             </c:if>
                                         <td class="${classColumn}"><c:out value="${url}"/></td>
                                         <td>${service.status}</td>
-                                        <td>
+                                        <td width="200">
                                             <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
                                             <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
                                         </td>
@@ -188,11 +188,11 @@
 	      <div id="deleteServiceDialog" class="hidden">
 	          <div class="hd">Delete Service</div>
 		      <div class="bd">
-		          <form id="deleteService" name="deleteService" method="POST" 
+		          <form id="deleteService" name="deleteService" method="POST"
 		              action="deleteService.action">
-		              
+
 		              <input type="hidden" name="serviceId" id="service_id"/>
-		              
+
 			          <p>Are you sure you wish to delete the service?</p>
 		          </form>
 		      </div>
@@ -201,13 +201,13 @@
 	      <div id="deleteServiceOkDialog" class="hidden">
 	          <div class="hd">Delete Service</div>
 		      <div class="bd">
-		          <form name="deleteServiceRecords" method="POST" 
+		          <form name="deleteServiceRecords" method="POST"
 		              action="deleteServiceRecords.action">
-		      		  
+
 		      		  <input type="hidden" name="serviceId" id="service_delete_id"/>
 			          <div id="deleteServiceError" cssClass="errorMessage"></div><br>
 			          Are you sure you want to delete the service?
-		          </form>			          
+		          </form>
 		      </div>
 	      </div>
 

@@ -33,6 +33,8 @@
 .headerMessage {
 	float:right;
 	margin-top:10px;
+    position:relative;
+    top : 15px;
 	
 }
 

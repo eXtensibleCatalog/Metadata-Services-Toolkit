@@ -1,9 +1,9 @@
 <!--
   * Copyright (c) 2009 University of Rochester
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   -->
 
@@ -28,11 +28,11 @@
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
 		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
-            
+
         <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js" ></script>
         <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/event/event-min.js" ></script>
         <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
-        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>    
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
@@ -41,7 +41,7 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
 
 
-        
+
     </head>
 
     <body class="yui-skin-sam">
@@ -64,13 +64,13 @@
 
             </jsp:include>
 
-            
+
  		</div>
 		<!--  end header -->
 
 		<!-- body -->
 		<div id="bd">
-           
+
             <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div id="server_error_div">
@@ -81,7 +81,7 @@
                     </div>
                  </c:if>
                 <div id="error_div"></div>
-                
+
                 <div class="clear">&nbsp;</div>
 
                 <div class="viewTable">
@@ -97,7 +97,7 @@
                                                      </c:url>
                                                       <a href="${repositorySortUrl}">Name</a>
                                                  </c:if>
-                                                
+
                                                  <c:if test="${columnSorted=='RepositoryName'}">
                                                    <c:url var="repositorySortUrl" value="allRepository.action">
                                                      <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
@@ -118,7 +118,7 @@
                                                  </c:if>
 
 
-                                               
+
                                     </div>
 
                                 </td>
@@ -163,7 +163,7 @@
                                              </c:url>
                                              <a href="${repositorySortUrl}">Last Harvested</a>
                                          </c:if>
-                                         
+
                                         <c:if test="${columnSorted=='LastHarvestEndTime'}">
                                            <c:url var="repositorySortUrl" value="allRepository.action">
                                              <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
@@ -197,9 +197,9 @@
                                                      <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
                                                 <td class="${classColumn}">
-                                                                                                      
+
                                                         <a href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${repository.id}" />"><U><c:out value="${repository.name}" /></U></a>
-                                                   
+
                                                 </td>
                                                 <c:set var="classColumn" value="plainColumn"/>
                                                 <c:if test="${columnSorted=='RepositoryURL'}">
@@ -209,10 +209,9 @@
                                                      <c:out value="${repository.oaiProviderUrl}" />
                                                 </td>
                                                 <td>
-                                                    <ul style="list-style:none;">
-                                                        <li style="float:left;margin-top:-10px;"><div><img src="page-resources/img/tick.jpg"></div></li>
-                                                        <li style="float:left;margin-top:-8px;"><div>Success</div></li>
-                                                    </ul>
+                                                    <img src="page-resources/img/tick.png">
+                                                    <span style="position:relative;top:-2px;">Success</span>
+
                                                 </td>
                                                 <c:choose>
                                                     <c:when test="${repository.lastHarvestEndTime==null}">
@@ -221,7 +220,7 @@
                                                                 <c:set var="classColumn" value="sortColumn"/>
                                                            </c:if>
                                                         <td class="${classColumn}">
-                                                               Never                                                         
+                                                               Never
                                                         </td>
                                                     </c:when>
                                                     <c:otherwise>
@@ -256,10 +255,10 @@
                                                      <c:out value="${repository.oaiProviderUrl}" />
                                                 </td>
                                                 <td>
-                                                    <ul style="list-style:none;">
-                                                        <li style="float:left;margin-top:-10px;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
-                                                        <li style="float:left;margin-top:-8px;"><div>Error</div></li>
-                                                    </ul>
+								   <span style="position:relative;top:2px;">
+                                                     <img src="page-resources/img/error_triangle.png">
+								     <span style="position:relative;top:-3px;">Error</span>
+                                                   </span>
                                                 </td>
                                                 <c:choose>
                                                     <c:when test="${repository.lastHarvestEndTime==null}">
@@ -289,7 +288,7 @@
                     </table>
 			</div>
 
-               
+
  		</div>
 		<!--  end body -->
 
