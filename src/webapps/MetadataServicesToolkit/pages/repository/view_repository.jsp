@@ -210,7 +210,7 @@
                                             
                                             <ul style="list-style:none;">
                                                 <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;Identify</B> :</div></li>
-                                                <li style="float:left;"><div><img src="page-resources/img/bluetick.jpg"></div></li>
+                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/bluetick.jpg"></div></li>
                                                 <li style="float:left;"><div>Success</div></li>
                                             </ul>
                                         </td>
@@ -221,7 +221,7 @@
                                         <td height="33" bgcolor="#ffeded">
                                             <ul style="list-style:none;">
                                                 <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;Identify</B> : </div></li>
-                                                <li style="float:left;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
+                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
                                                 <li style="float:left;"><div>Error</div></li>
                                             </ul>
                                         </td>
@@ -234,7 +234,7 @@
                                         <td height="33" bgcolor="#edfaff">
                                             <ul style="list-style:none;">
                                                 <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;List Formats</B> :</div></li>
-                                                <li style="float:left;"><div><img src="page-resources/img/bluetick.jpg"></div></li>
+                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/bluetick.jpg"></div></li>
                                                 <li style="float:left;"><div>Success</div></li>
                                             </ul>
                                         </td>
@@ -245,7 +245,7 @@
                                         <td height="33" bgcolor="#ffeded">
                                             <ul style="list-style:none;">
                                                 <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;List Formats</B> :</div></li>
-                                                <li style="float:left;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
+                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
                                                 <li style="float:left;"><div>Error</div></li>
                                             </ul>
                                         </td>
@@ -258,7 +258,7 @@
                                         <td height="33" bgcolor="#edfaff">
                                             <ul style="list-style:none;">
                                                 <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;List Sets</B> : </div></li>
-                                                <li style="float:left;"><div><img src="page-resources/img/bluetick.jpg"></div></li>
+                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/bluetick.jpg"></div></li>
                                                 <li style="float:left;"><div>Success</div></li>
                                             </ul>
                                         </td>
@@ -269,7 +269,7 @@
                                         <td height="33" bgcolor="#ffeded">
                                             <ul style="list-style:none;">
                                                 <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;List Sets</B> : </div></li>
-                                                <li style="float:left;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
+                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
                                                 <li style="float:left;"><div>Error</div></li>
                                             </ul>
                                         </td>
