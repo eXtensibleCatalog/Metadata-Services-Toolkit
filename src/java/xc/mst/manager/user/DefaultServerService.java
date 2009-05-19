@@ -13,6 +13,7 @@ package xc.mst.manager.user;
 import java.util.List;
 import xc.mst.bo.user.Server;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.user.DefaultServerDAO;
 import xc.mst.dao.user.ServerDAO;
 
@@ -32,8 +33,9 @@ public class DefaultServerService implements ServerService {
      *
      * @param serverId The ID of the server to be returned
      * @return
+     * @throws DatabaseConfigException 
      */
-    public Server getServerById(int serverId) {
+    public Server getServerById(int serverId) throws DatabaseConfigException {
 
         return serverDao.getById(serverId);
     }
@@ -43,8 +45,9 @@ public class DefaultServerService implements ServerService {
      *
      * @param serverName The name of the server to be returned
      * @return server object
+     * @throws DatabaseConfigException 
      */
-    public Server getServerByName(String serverName) {
+    public Server getServerByName(String serverName) throws DatabaseConfigException {
 
         return serverDao.getByName(serverName);
     }

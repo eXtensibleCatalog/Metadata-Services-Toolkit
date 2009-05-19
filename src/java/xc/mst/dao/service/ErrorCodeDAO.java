@@ -17,6 +17,7 @@ import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 public abstract class ErrorCodeDAO
@@ -60,16 +61,18 @@ public abstract class ErrorCodeDAO
 	 * Gets all error codes from the database
 	 *
 	 * @return A list containing all error codes in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<ErrorCode> getAll();
+	public abstract List<ErrorCode> getAll() throws DatabaseConfigException;
 	
 	/**
 	 * Gets the error code from the database with the passed error code ID
 	 *
 	 * @param id The ID of the error code to get
 	 * @return The error code with the passed error code ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract ErrorCode getById(int id);
+	public abstract ErrorCode getById(int id) throws DatabaseConfigException;
 
 	/**
 	 * Gets the error code from the database with the passed error code ID.
@@ -77,8 +80,9 @@ public abstract class ErrorCodeDAO
 	 *
 	 * @param id The ID of the error code to get
 	 * @return The error code with the passed ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract ErrorCode loadBasicErrorCode(int id);
+	public abstract ErrorCode loadBasicErrorCode(int id) throws DatabaseConfigException;
 
 	/**
 	 * Gets the error code from the database with the passed error code and Service
@@ -86,8 +90,9 @@ public abstract class ErrorCodeDAO
 	 * @param errorCode The error code of the error code to get
 	 * @param service The service of the error code to get
 	 * @return The error code with the passed error code
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract ErrorCode getByErrorCodeAndService(String errorCode, Service service);
+	public abstract ErrorCode getByErrorCodeAndService(String errorCode, Service service) throws DatabaseConfigException;
 
 	/**
 	 * Inserts an error code into the database

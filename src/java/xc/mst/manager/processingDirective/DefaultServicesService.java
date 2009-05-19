@@ -17,6 +17,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.service.*;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
@@ -98,8 +99,9 @@ public class DefaultServicesService implements ServicesService
      * Returns a list of all services
      *
      * @return List of Services
+     * @throws DatabaseConfigException 
      */
-    public List<Service> getAllServices()
+    public List<Service> getAllServices() throws DatabaseConfigException
     {
         return servicesDao.getAll();
     }
@@ -110,8 +112,9 @@ public class DefaultServicesService implements ServicesService
      * @param sort determines whether the list of services is sorted in ascending or descending order
      * @param columnSorted column on which the rows are sorted
      * @return list of services
+     * @throws DatabaseConfigException 
      */
-    public List<Service> getAllServicesSorted(boolean sort,String columnSorted)
+    public List<Service> getAllServicesSorted(boolean sort,String columnSorted) throws DatabaseConfigException
     {
         return servicesDao.getSorted(sort, columnSorted);
     }
@@ -899,8 +902,9 @@ public class DefaultServicesService implements ServicesService
      *
      * @param serviceId service ID
      * @return Service object
+     * @throws DatabaseConfigException 
      */
-    public Service getServiceById(int serviceId)
+    public Service getServiceById(int serviceId) throws DatabaseConfigException
     {
         return servicesDao.getById(serviceId);
     }
@@ -910,8 +914,9 @@ public class DefaultServicesService implements ServicesService
      *
      * @param serviceName name of the service
      * @return service object
+     * @throws DatabaseConfigException 
      */
-    public Service getServiceByName(String serviceName)
+    public Service getServiceByName(String serviceName) throws DatabaseConfigException
     {
         return servicesDao.getByServiceName(serviceName);
     }
@@ -921,8 +926,9 @@ public class DefaultServicesService implements ServicesService
      * 
      * @param servicePort service port
      * @return service object
+     * @throws DatabaseConfigException 
      */
-    public Service getServiceByPort(int servicePort)
+    public Service getServiceByPort(int servicePort) throws DatabaseConfigException
     {
         return servicesDao.getByPort(servicePort);
     }

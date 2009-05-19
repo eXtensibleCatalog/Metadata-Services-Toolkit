@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.user.Group;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -60,38 +61,44 @@ public abstract class GroupDAO
 	 * Gets all groups in the database
 	 *
 	 * @return A list containing all groups in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<Group> getAll();
+	public abstract List<Group> getAll() throws DatabaseConfigException;
 
     /**
-     * returns a sorted list of all the groups in the system
+     * Returns a sorted list of all the groups in the system
+     * 
      * @return list of groups
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
      */
-    public abstract List<Group> getAllSorted(boolean isAscendingOrder,String columnSorted);
+    public abstract List<Group> getAllSorted(boolean isAscendingOrder, String columnSorted) throws DatabaseConfigException;
     
 	/**
 	 * Gets a group by it's ID
 	 *
 	 * @param groupId The ID of the group to get
 	 * @return The group with the passed ID, or null if there was no group with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Group getById(int groupId);
+	public abstract Group getById(int groupId) throws DatabaseConfigException;
 	
 	/**
 	 * Gets a group by name
 	 *
 	 * @param groupName The name of the group to get
 	 * @return The group or null if there was no group with that name.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Group getByName(String groupName);
+	public abstract Group getByName(String groupName) throws DatabaseConfigException;
 
 	/**
 	 * Gets a group by it's ID.  Does not set the list of permissions on the returned group.
 	 *
 	 * @param groupId The ID of the group to get
 	 * @return The group with the passed ID, or null if there was no group with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Group loadBasicGroup(int groupId);
+	public abstract Group loadBasicGroup(int groupId) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a group into the database

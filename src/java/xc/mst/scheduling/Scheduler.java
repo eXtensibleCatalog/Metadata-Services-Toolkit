@@ -9,19 +9,19 @@
 
 package xc.mst.scheduling;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.harvest.HarvestSchedule;
-import xc.mst.bo.harvest.HarvestScheduleStep;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestScheduleDAO;
 
@@ -117,7 +117,16 @@ public class Scheduler extends Thread
 			List<HarvestSchedule> schedulesToRun = null;
 
 			// Get the schedules to run
-			schedulesToRun = harvestScheduleDao.getSchedulesToRun(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.DAY_OF_WEEK), now.get(Calendar.MINUTE));
+			try 
+			{
+				schedulesToRun = harvestScheduleDao.getSchedulesToRun(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.DAY_OF_WEEK), now.get(Calendar.MINUTE));
+			} 
+			catch (DatabaseConfigException e1) 
+			{
+				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+				
+				schedulesToRun = new ArrayList<HarvestSchedule>();
+			}
 
 			// Run each scheduled harvest
 			for(HarvestSchedule scheduleToRun : schedulesToRun)

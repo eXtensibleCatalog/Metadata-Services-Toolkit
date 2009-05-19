@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Format;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -65,31 +66,35 @@ public abstract class FormatDAO
 	 * Gets all formats in the database
 	 *
 	 * @return A list containing all formats in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<Format> getAll();
+	public abstract List<Format> getAll() throws DatabaseConfigException;
 
 	/**
 	 * Gets a format by it's ID
 	 *
 	 * @param formatId The ID of the format to get
 	 * @return The format with the passed ID, or null if there was no format with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Format getById(int formatId);
+	public abstract Format getById(int formatId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a format by it's name
 	 *
 	 * @param name The name of the format to get
 	 * @return The format with the passed name, or null if there was no format with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Format getByName(String name);
+	public abstract Format getByName(String name) throws DatabaseConfigException;
 
 	/**
 	 * Gets all formats in the database which the passed provider supports
 	 *
 	 * @return A list containing all formats in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<Format> getFormatsForProvider(int providerId);
+	public abstract List<Format> getFormatsForProvider(int providerId) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a format into the database

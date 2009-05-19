@@ -18,6 +18,7 @@ import org.apache.solr.common.SolrDocumentList;
 
 import xc.mst.bo.record.Manifestation;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.record.DefaultManifestationService;
 import xc.mst.manager.record.ManifestationService;
 
@@ -66,7 +67,16 @@ public class ManifestationList extends AbstractList<Manifestation>
 	 */
 	public Manifestation get(int index)
 	{
+		try 
+		{
 			return (docs != null ? service.getManifestationFromDocument(docs.get(index)) : null);
+		} 
+		catch (DatabaseConfigException e) 
+		{
+			log.error("Cannot connect to the database with the parameters from the config file.", e);
+			
+			return null;
+		}
 	}
 
 	/**

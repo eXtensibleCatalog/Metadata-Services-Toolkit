@@ -19,6 +19,7 @@ import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import xc.mst.bo.log.Log;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.utils.LogWriter;
@@ -52,12 +53,27 @@ public class MSTSolrServer {
 	/**
 	 * The repository management log file name
 	 */
-	private static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SOLR_INDEX);
+	private static Log logObj = null;
+	
+	static
+	{
+		try 
+		{
+			logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SOLR_INDEX);
+		} 
+		catch (DatabaseConfigException e) 
+		{
+			log.error("Cannot connect to the database with the parameters in the configuration file.", e);
+		}
+	}
 	
 	/**
 	 * Default constructor
 	 */
-	private MSTSolrServer() {}
+	private MSTSolrServer() 
+	{
+		
+	}
 	
 	/**
 	 * Gets the singleton instance of the LuceneIndexManager

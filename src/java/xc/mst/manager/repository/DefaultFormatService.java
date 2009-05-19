@@ -13,6 +13,7 @@ import java.util.List;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.FormatDAO;
 
@@ -31,8 +32,9 @@ public class DefaultFormatService implements FormatService {
 	 *
 	 * @param formatId Id of the format
 	 * @return Format if exist else null
+	 * @throws DatabaseConfigException 
 	 */
-	public Format getFormatById(int formatId) {
+	public Format getFormatById(int formatId) throws DatabaseConfigException {
 		return formatDAO.getById(formatId);
 	}
 
@@ -59,8 +61,9 @@ public class DefaultFormatService implements FormatService {
      * Get all formats
      *
      * @return all formats
+     * @throws DatabaseConfigException 
      */
-    public List<Format> getAllFormats() {
+    public List<Format> getAllFormats() throws DatabaseConfigException {
     	return formatDAO.getAll();
     }
 

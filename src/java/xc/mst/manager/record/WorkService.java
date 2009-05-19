@@ -21,6 +21,7 @@ import org.jconfig.ConfigurationManager;
 import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.SolrIndexManager;
 import xc.mst.utils.index.ThreadedSolrIndexManager;
@@ -100,8 +101,9 @@ public abstract class WorkService
 	 * Gets the Work that matches the passed XC work ID
 	 *
 	 * @param The XC work ID of the target work element
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Work getByXcWorkId(long workId);
+	public abstract Work getByXcWorkId(long workId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a list of Works that have not been processed
@@ -193,8 +195,9 @@ public abstract class WorkService
 	 *
 	 * @param doc The document containing information on the Work.
 	 * @return The work which was contained in the passed Document.
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Work getWorkFromDocument(SolrDocument doc);
+	public abstract Work getWorkFromDocument(SolrDocument doc) throws DatabaseConfigException;
 
 	/**
 	 * Parses a Work from the fields in a Document from the index.
@@ -212,8 +215,9 @@ public abstract class WorkService
 	 * @param doc The document whose fields need to be set.
 	 * @param generateNewId True to generate a new record ID for the work, false to use the work's current ID
 	 * @return A reference to the Document after its fields have been set
+	 * @throws DatabaseConfigException 
 	 */
-	protected abstract SolrInputDocument setFieldsOnDocument(Work work, SolrInputDocument doc, boolean generateNewId);
+	protected abstract SolrInputDocument setFieldsOnDocument(Work work, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 
 	/**
 	 * Validates the fields on the passed Work Object

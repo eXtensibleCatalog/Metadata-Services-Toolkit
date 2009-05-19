@@ -12,6 +12,7 @@ package xc.mst.manager.repository;
 import java.util.List;
 import xc.mst.bo.provider.Provider;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * Provider interface used add/delete/update a Repository/Provider
@@ -25,24 +26,27 @@ public interface ProviderService {
       *
      * @param providerName The Name of the Provider
      * @return Provider Object
+     * @throws DatabaseConfigException 
      */
-    public Provider getProviderByName(String providerName);
+    public Provider getProviderByName(String providerName) throws DatabaseConfigException;
 
     /**
      * Returns a Provider object based on the ID
      *
      * @param providerId The ID of the provider object to be returned
      * @return Provider Object
+     * @throws DatabaseConfigException 
      */
-    public Provider getProviderById(int providerId);
+    public Provider getProviderById(int providerId) throws DatabaseConfigException;
 
     /**
      * Returns a Provider Object based on the URL of the provider
      *
      * @param providerURL The URL of the Provider
      * @return Provider Object
+     * @throws DatabaseConfigException 
      */
-    public Provider getProviderByURL(String providerUrl);
+    public Provider getProviderByURL(String providerUrl) throws DatabaseConfigException;
 
     /**
      * Inserts a Provider
@@ -69,8 +73,9 @@ public interface ProviderService {
      * This method is used to return a list of all the providers
      *
      * @return returns a list of providers
+     * @throws DatabaseConfigException 
      */
-    public List<Provider> getAllProviders();
+    public List<Provider> getAllProviders() throws DatabaseConfigException;
 
   /**
    * Returns a list of all providers sorted
@@ -78,6 +83,7 @@ public interface ProviderService {
    * @param sort determines if the rows are to be sorted in ascending or descending order
    * @param columnSorted column on which the sorting is done
    * @return list of providers
+ * @throws DatabaseConfigException 
    */
-    public List<Provider> getAllProvidersSorted(boolean sort,String columnSorted);
+    public List<Provider> getAllProvidersSorted(boolean sort,String columnSorted) throws DatabaseConfigException;
 }

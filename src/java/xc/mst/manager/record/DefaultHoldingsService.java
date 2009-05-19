@@ -16,6 +16,7 @@ import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Manifestation;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.index.HoldingsList;
 
 /**
@@ -30,7 +31,7 @@ import xc.mst.utils.index.HoldingsList;
 public class DefaultHoldingsService extends HoldingsService
 {
 	@Override
-	public Holdings getByXcHoldingsId(long holdingsId)
+	public Holdings getByXcHoldingsId(long holdingsId) throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with XC holdings ID " + holdingsId);
@@ -152,7 +153,7 @@ public class DefaultHoldingsService extends HoldingsService
 	} // end method getByLinkedManifestation(Manifestation)
 
 	@Override
-	public Holdings getHoldingsFromDocument(SolrDocument doc)
+	public Holdings getHoldingsFromDocument(SolrDocument doc) throws DatabaseConfigException
 	{
 		// Create a Holdings object to store the result
 		Holdings holdings = Holdings.buildHoldingsFromRecord(recordService.getRecordFromDocument(doc));
@@ -172,7 +173,7 @@ public class DefaultHoldingsService extends HoldingsService
 	} // end method getBasicHoldingsFromDocument(Document)
 
 	@Override
-	protected SolrInputDocument setFieldsOnDocument(Holdings holdings, SolrInputDocument doc, boolean generateNewId)
+	protected SolrInputDocument setFieldsOnDocument(Holdings holdings, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record
 		return recordService.setFieldsOnDocument(holdings, doc, generateNewId);

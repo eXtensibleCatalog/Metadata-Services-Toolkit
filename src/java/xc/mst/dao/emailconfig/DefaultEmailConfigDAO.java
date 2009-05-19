@@ -12,11 +12,10 @@ package xc.mst.dao.emailconfig;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import xc.mst.bo.emailconfig.EmailConfig;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -47,8 +46,12 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 	private static Object psSetConfigurationLock = new Object();
 
     @Override
-	public EmailConfig getConfiguration()
+	public EmailConfig getConfiguration() throws DatabaseConfigException
 	{
+    	// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetConfigurationLock)
 		{
 			if(log.isDebugEnabled())
@@ -130,6 +133,10 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 	@Override
 	public boolean setConfiguration(EmailConfig emailconfig) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Validate the fields on the passed EmailConfig Object
 		validateFields(emailconfig, false, true);
 

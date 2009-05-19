@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
 
@@ -34,8 +35,9 @@ public class HarvestUtil {
 	 * 
 	 * @param harvestSchedule - Harvest schedule to get the latest harvest end time
 	 * @return Returns the latest harvest end time 
+	 * @throws DatabaseConfigException 
 	 */
-	public static String latestHarvest(HarvestSchedule harvestSchedule)
+	public static String latestHarvest(HarvestSchedule harvestSchedule) throws DatabaseConfigException
 	{
 
 		ScheduleService scheduleService = new DefaultScheduleService();

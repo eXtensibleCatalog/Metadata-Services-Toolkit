@@ -34,6 +34,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
@@ -114,7 +115,7 @@ public class XcRecordSplitter
 	/**
 	 * The XC schema format
 	 */
-	private final static Format xcSchemaFormat = formatDao.getByName("xc");
+	private static Format xcSchemaFormat = null;
 
 	/**
 	 * The logger object
@@ -131,6 +132,15 @@ public class XcRecordSplitter
 	@SuppressWarnings("unchecked")
 	public XcRecordSplitter(Record record, Service service)
 	{
+		try
+		{
+			xcSchemaFormat = formatDao.getByName("xc");
+		}
+		catch(DatabaseConfigException e)
+		{
+			log.error("Could not connect to the database with the parameters from the configuration file.", e);
+		}
+		
 		recordId = record.getId();
 		this.service = service;
 

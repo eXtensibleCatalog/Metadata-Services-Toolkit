@@ -13,6 +13,7 @@ package xc.mst.manager.user;
 
 import java.util.List;
 import xc.mst.bo.user.Permission;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.user.DefaultPermissionDAO;
 import xc.mst.dao.user.PermissionDAO;
 
@@ -31,8 +32,9 @@ public class DefaultPermissionService implements PermissionService
 	 *
 	 * @param groupId The ID of the group to get permissions for
 	 * @return A list of permissions belonging to the group
+     * @throws DatabaseConfigException 
 	 */
-	public List<Permission> getPermissionsForGroup(int groupId)
+	public List<Permission> getPermissionsForGroup(int groupId) throws DatabaseConfigException
     {
         return permissionDao.getPermissionsForGroup(groupId);
     }
@@ -41,8 +43,9 @@ public class DefaultPermissionService implements PermissionService
      * returns a permission by its ID
      * @param permissionId permission ID
      * @return
+     * @throws DatabaseConfigException 
      */
-    public Permission getPermissionById(int permissionId)
+    public Permission getPermissionById(int permissionId) throws DatabaseConfigException
     {
         return permissionDao.getPermissionById(permissionId);
     }
@@ -51,8 +54,9 @@ public class DefaultPermissionService implements PermissionService
      * Returns a list of all permissions in the system
      *
      * @return list of permissions
+     * @throws DatabaseConfigException 
      */
-    public List getAllPermissions()
+    public List<Permission> getAllPermissions() throws DatabaseConfigException
     {
         return permissionDao.getAll();
     }

@@ -14,6 +14,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * Browse for records
@@ -28,8 +29,9 @@ public interface BrowseRecordService {
      *
 	 * @param query Query to perform the search
 	 * @return Search results
+	 * @throws DatabaseConfigException 
 	 */
-	public SolrBrowseResult search(SolrQuery query);
+	public SolrBrowseResult search(SolrQuery query) throws DatabaseConfigException;
 	
 	/**
 	 * Get error description for this code and service
@@ -37,7 +39,8 @@ public interface BrowseRecordService {
 	 * @param errorCode Error code
 	 * @param service Service which generated the error
 	 * @return Error if found
+	 * @throws DatabaseConfigException 
 	 */
-	public ErrorCode getError(String errorCode, Service service); 
+	public ErrorCode getError(String errorCode, Service service) throws DatabaseConfigException; 
 
 }

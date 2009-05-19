@@ -15,6 +15,7 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.bo.record.Work;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.index.WorkList;
 
 /**
@@ -29,7 +30,7 @@ import xc.mst.utils.index.WorkList;
 public class DefaultWorkService extends WorkService
 {
 	@Override
-	public Work getByXcWorkId(long workId)
+	public Work getByXcWorkId(long workId) throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with XC work ID " + workId);
@@ -122,7 +123,7 @@ public class DefaultWorkService extends WorkService
 	} // end method getUnprocessendWorks()
 
 	@Override
-	public Work getWorkFromDocument(SolrDocument doc)
+	public Work getWorkFromDocument(SolrDocument doc) throws DatabaseConfigException
 	{
 		// Create a Work object to store the result
 		Work work = Work.buildWorkFromRecord(recordService.getRecordFromDocument(doc));
@@ -148,7 +149,7 @@ public class DefaultWorkService extends WorkService
 	} // end method getBasicWorkFromDocument(Document)
 
 	@Override
-	protected SolrInputDocument setFieldsOnDocument(Work work, SolrInputDocument doc, boolean generateNewId)
+	protected SolrInputDocument setFieldsOnDocument(Work work, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record
 		doc = recordService.setFieldsOnDocument(work, doc, generateNewId);

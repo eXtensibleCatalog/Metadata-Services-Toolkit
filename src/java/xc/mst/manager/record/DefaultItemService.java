@@ -16,6 +16,7 @@ import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Item;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.index.ItemList;
 
 /**
@@ -30,7 +31,7 @@ import xc.mst.utils.index.ItemList;
 public class DefaultItemService extends ItemService
 {
 	@Override
-	public Item getByXcItemId(long itemId)
+	public Item getByXcItemId(long itemId) throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with XC item ID " + itemId);
@@ -121,7 +122,7 @@ public class DefaultItemService extends ItemService
 	} // end method getByLinkedHoldings(Holdings)
 
 	@Override
-	public Item getItemFromDocument(SolrDocument doc)
+	public Item getItemFromDocument(SolrDocument doc) throws DatabaseConfigException
 	{
 		// Create a Item object to store the result
 		Item item = Item.buildItemFromRecord(recordService.getRecordFromDocument(doc));
@@ -141,7 +142,7 @@ public class DefaultItemService extends ItemService
 	} // end method getBasicItemFromDocument(Document)
 
 	@Override
-	protected SolrInputDocument setFieldsOnDocument(Item item, SolrInputDocument doc, boolean generateNewId)
+	protected SolrInputDocument setFieldsOnDocument(Item item, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record
 		return recordService.setFieldsOnDocument(item, doc, generateNewId);

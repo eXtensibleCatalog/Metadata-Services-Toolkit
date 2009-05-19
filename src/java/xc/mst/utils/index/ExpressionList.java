@@ -20,6 +20,7 @@ import org.apache.solr.common.SolrDocumentList;
 
 import xc.mst.bo.record.Expression;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.record.DefaultExpressionService;
 import xc.mst.manager.record.ExpressionService;
 
@@ -68,7 +69,16 @@ public class ExpressionList extends AbstractList<Expression>
 	 */
 	public Expression get(int index)
 	{
+		try 
+		{
 			return (documentList != null ? service.getExpressionFromDocument(documentList.get(index)) : null);
+		} 
+		catch (DatabaseConfigException e) 
+		{
+			log.error("Cannot connect to the database with the parameters from the config file.", e);
+			
+			return null;
+		}
 	}
 
 	/**

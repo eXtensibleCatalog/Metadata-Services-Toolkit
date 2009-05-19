@@ -14,6 +14,7 @@ import java.util.List;
 
 import xc.mst.bo.log.Log;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 
@@ -37,8 +38,9 @@ public class DefaultLogService implements LogService
 	 * Gets all logs from the database
 	 *
 	 * @return A list of Log Objects representing all logs in the database
+     * @throws DatabaseConfigException 
 	 */
-	public List<Log> getAll()
+	public List<Log> getAll() throws DatabaseConfigException
     {
         return logDao.getAll();
     }
@@ -48,8 +50,9 @@ public class DefaultLogService implements LogService
 	 *
 	 * @param id The ID of the log to get
 	 * @return A the log with the log ID
+	 * @throws DatabaseConfigException 
 	 */
-	public Log getById(int id)
+	public Log getById(int id) throws DatabaseConfigException
     {
         return logDao.getById(id);
     }
@@ -96,8 +99,9 @@ public class DefaultLogService implements LogService
 	 * @param asc True to sort in ascending order, false to sort in descending order
      * @param columnName determines the name of the column on which the rows should be sorted
 	 * @return A list containing all general logs in the database
+     * @throws DatabaseConfigException 
 	 */
-	public List<Log> getSorted(boolean asc,String columnName)
+	public List<Log> getSorted(boolean asc,String columnName) throws DatabaseConfigException
     {
         return logDao.getSorted(asc, columnName);
     }

@@ -28,6 +28,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.constants.NormalizationServiceConstants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MarcXmlManagerForNormalizationService;
 import xc.mst.utils.index.RecordList;
@@ -121,7 +122,14 @@ public class NormalizationService extends MetadataService
 	public NormalizationService()
 	{
 		// Initialize the XC format
-		marcxmlFormat = getFormatByName("marcxml");
+		try 
+		{
+			marcxmlFormat = getFormatByName("marcxml");
+		} 
+		catch (DatabaseConfigException e) 
+		{
+			log.error("Could not connect to the database with the parameters in the configuration file.", e);
+		}
 	}
 
 	@Override

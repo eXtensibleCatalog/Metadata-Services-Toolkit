@@ -13,6 +13,7 @@ import java.util.List;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.user.DefaultGroupDAO;
 import xc.mst.dao.user.GroupDAO;
 
@@ -32,8 +33,9 @@ public class DefaultGroupService implements GroupService {
      *
      * @param groupId the ID of the group to be returned
      * @return group object
+     * @throws DatabaseConfigException 
      */
-    public Group getGroupById(int groupId) {
+    public Group getGroupById(int groupId) throws DatabaseConfigException {
         return groupDao.getById(groupId);
     }
 
@@ -70,8 +72,9 @@ public class DefaultGroupService implements GroupService {
      * Returns a list of all groups
      *
      * @return list of groups
+     * @throws DatabaseConfigException 
      */
-    public List<Group> getAllGroups()
+    public List<Group> getAllGroups() throws DatabaseConfigException
     {
         return groupDao.getAll();
     }
@@ -82,8 +85,9 @@ public class DefaultGroupService implements GroupService {
      * @param isAscendingOrder determines if the rows are to be sorted in ascending or descending order
      * @param columnSorted the column on which the rows are to be sorted
      * @return list of groups
+     * @throws DatabaseConfigException 
      */
-    public List<Group> getAllGroupsSorted(boolean isAscendingOrder,String columnSorted)
+    public List<Group> getAllGroupsSorted(boolean isAscendingOrder,String columnSorted) throws DatabaseConfigException
     {
         return groupDao.getAllSorted(isAscendingOrder, columnSorted);
     }
@@ -93,8 +97,9 @@ public class DefaultGroupService implements GroupService {
      * 
      * @param groupName Specifies the name of the group object to be returned
      * @return Group if exists otherwise null
+     * @throws DatabaseConfigException 
      */
-    public Group getGroupByName(String groupName) {
+    public Group getGroupByName(String groupName) throws DatabaseConfigException {
     	return groupDao.getByName(groupName);
     }
 

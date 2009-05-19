@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.record.ResumptionToken;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -75,16 +76,18 @@ public abstract class ResumptionTokenDAO
 	 * Gets all resumption tokens in the database
 	 *
 	 * @return A list of all resumption tokens in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<ResumptionToken> getAll();
+	public abstract List<ResumptionToken> getAll() throws DatabaseConfigException;
 
 	/**
 	 * Gets the resumption token from the database with the passed ID
 	 *
 	 * @param id The ID of the resumption token to get
 	 * @return The resumption token with the passed ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract ResumptionToken getById(long id);
+	public abstract ResumptionToken getById(long id) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a resumption token from the database

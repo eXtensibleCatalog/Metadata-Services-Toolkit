@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -109,8 +110,9 @@ public abstract class UserGroupUtilDAO
      *
      * @param groupId group ID
      * @return List of users
+     * @throws DatabaseConfigException 
      */
-    public abstract List<User> getUsersForGroup(int groupId);
+    public abstract List<User> getUsersForGroup(int groupId) throws DatabaseConfigException;
 
     /**
      * Returns the number of users who are members of the groups
@@ -126,8 +128,9 @@ public abstract class UserGroupUtilDAO
      * @param sort determines if the rows are to be sorted in ascending or descending order
      * @param columnSorted the column on which the rows are to be sorted
      * @return list of users
+     * @throws DatabaseConfigException 
      */
-    public abstract List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted);
+    public abstract List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted) throws DatabaseConfigException;
     
 } // end class UserGroupUtil
 

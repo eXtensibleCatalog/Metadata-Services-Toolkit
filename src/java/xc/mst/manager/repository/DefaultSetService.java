@@ -13,6 +13,7 @@ import java.util.List;
 
 import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultSetDAO;
 import xc.mst.dao.provider.SetDAO;
 
@@ -32,8 +33,9 @@ public class DefaultSetService implements SetService {
 	 *
 	 * @param setId Id of the set
 	 * @return Set if exist else null
+	 * @throws DatabaseConfigException 
 	 */
-	public Set getSetById(int setId) {
+	public Set getSetById(int setId) throws DatabaseConfigException {
 		return setDAO.getById(setId);
 	}
 
@@ -60,8 +62,9 @@ public class DefaultSetService implements SetService {
      * Get all sets
      *
      * @return all sets
+     * @throws DatabaseConfigException 
      */
-    public List<Set> getAllSets() {
+    public List<Set> getAllSets() throws DatabaseConfigException {
     	return setDAO.getAll();
     }
 
@@ -70,8 +73,9 @@ public class DefaultSetService implements SetService {
      * 
      * @param setSpec The set specification value
      * @return Set Object
+     * @throws DatabaseConfigException 
      */
-    public Set getSetBySetSpec(String setSpec)
+    public Set getSetBySetSpec(String setSpec) throws DatabaseConfigException
     {
         return setDAO.getBySetSpec(setSpec);
     }

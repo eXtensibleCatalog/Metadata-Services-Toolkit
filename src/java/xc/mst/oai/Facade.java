@@ -25,6 +25,7 @@ import xc.mst.bo.record.ResumptionToken;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultSetDAO;
 import xc.mst.dao.provider.FormatDAO;
@@ -266,8 +267,9 @@ public class Facade
 
 	/**
 	 * Executes the correct OAI function based on the verb
+	 * @throws DatabaseConfigException 
 	 */
-	public void execute()
+	public void execute() throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Executing request for verb " + verb + ".");
@@ -341,8 +343,9 @@ public class Facade
 	 * Create response to the Identify verb. The parameters arrive in the
 	 * form (which is a FormBean). The XML response will be set to the value of
 	 * the form bean's xml field.
+	 * @throws DatabaseConfigException 
 	 */
-	public void doIdentify()
+	public void doIdentify() throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering doIdentify");
@@ -398,8 +401,9 @@ public class Facade
 
 	/**
 	 * Create an XML response to the ListMetadataFormat verb.
+	 * @throws DatabaseConfigException 
 	 */
-	public void doListMetadataFormats()
+	public void doListMetadataFormats() throws DatabaseConfigException
 	{
 		// Create the ListMetadataFormats element for the OAI response
 		Element listMetadataFormats = new Element("ListMetadataFormats");
@@ -476,8 +480,9 @@ public class Facade
 	 * Create response to the ListSets verb. List the sets in XML format.
 	 * The parameters arrive in the form parameter (which is a FormBean). The XML
 	 * response will be the value of the form xml field.
+	 * @throws DatabaseConfigException 
 	 */
-	public void doListSets()
+	public void doListSets() throws DatabaseConfigException
 	{
 		// Get all the sets in the database
 		List<Set> sets = setDao.getAll();
@@ -514,8 +519,9 @@ public class Facade
 
 	/**
 	 * Create the response to the ListIdentifiers verb.
+	 * @throws DatabaseConfigException
 	 */
-	public void doListIdentifiers()
+	public void doListIdentifiers() throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering doListIdentifiers");
@@ -540,8 +546,9 @@ public class Facade
 
 	/**
 	 * Create the response to the ListRecords verb.
+	 * @throws DatabaseConfigException 
 	 */
-	public void doListRecords()
+	public void doListRecords() throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering doListRecords");
@@ -566,8 +573,9 @@ public class Facade
 
 	/**
 	 * Create response to the GetRecord verb
+	 * @throws DatabaseConfigException 
 	 */
-	public void doGetRecord()
+	public void doGetRecord() throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering doGetRecord");
@@ -649,8 +657,9 @@ public class Facade
 	 * @param getRecords true if we should return the full records, false if we should only return the headers
 	 * @return The XML containing a list of headers or record and header combinations as well as a resumption token.
 	 *         These should be included in the response's ListRecords or ListIdentifiers element.
+	 * @throws DatabaseConfigException 
 	 */
-	private String handleRecordLists(String from, String until, String metadataPrefix, String set, String resumptionTokenId, boolean getRecords)
+	private String handleRecordLists(String from, String until, String metadataPrefix, String set, String resumptionTokenId, boolean getRecords) throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering handleRecordLists");

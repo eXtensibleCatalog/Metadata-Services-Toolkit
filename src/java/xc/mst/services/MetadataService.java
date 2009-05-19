@@ -27,6 +27,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
 import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
@@ -195,8 +196,9 @@ public abstract class MetadataService
 	 * Sets the service ID for this service
 	 *
 	 * @param serviceId This service's ID
+	 * @throws DatabaseConfigException 
 	 */
-	protected void setServiceId(int serviceId)
+	protected void setServiceId(int serviceId) throws DatabaseConfigException
 	{
 		this.service = serviceDao.getById(serviceId);
 	} // end method setServiceId(int)
@@ -243,7 +245,17 @@ public abstract class MetadataService
 			log.debug("Entering MetadataService.runService for the service with ID " + serviceId + ".");
 
 		// Get the service
-		Service service = serviceDao.getById(serviceId);
+		Service service;
+		try 
+		{
+			service = serviceDao.getById(serviceId);
+		} 
+		catch (DatabaseConfigException e1) 
+		{
+			log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+			
+			return false;
+		}
 
 		// The name of the class for the service specified in the configuration file.
 		String targetClassName = service.getClassName();
@@ -337,7 +349,16 @@ public abstract class MetadataService
 			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + " could not be found.");
 
 			// Load the provider again in case it was updated during the harvest
-			service = serviceDao.getById(service.getId());
+			try 
+			{
+				service = serviceDao.getById(service.getId());
+			} 
+			catch (DatabaseConfigException e1) 
+			{
+				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+				
+				return false;
+			}
 
 			// Increase the warning and error counts as appropriate, then update the provider
 			service.setServicesErrors(service.getServicesErrors() + 1);
@@ -363,7 +384,16 @@ public abstract class MetadataService
 			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + "'s processRecords method could not be accessed.");
 
 			// Load the provider again in case it was updated during the harvest
-			service = serviceDao.getById(service.getId());
+			try 
+			{
+				service = serviceDao.getById(service.getId());
+			} 
+			catch (DatabaseConfigException e1) 
+			{
+				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+				
+				return false;
+			}
 
 			// Increase the warning and error counts as appropriate, then update the provider
 			service.setServicesErrors(service.getServicesErrors() + 1);
@@ -389,7 +419,16 @@ public abstract class MetadataService
 			LogWriter.addError(service.getServicesLogFileName(), "An internal error occurred while trying to start the " + service.getName() + " Service.");
 
 			// Load the provider again in case it was updated during the harvest
-			service = serviceDao.getById(service.getId());
+			try 
+			{
+				service = serviceDao.getById(service.getId());
+			} 
+			catch (DatabaseConfigException e1) 
+			{
+				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+				
+				return false;
+			}
 
 			// Increase the warning and error counts as appropriate, then update the provider
 			service.setServicesErrors(service.getServicesErrors() + 1);
@@ -422,7 +461,17 @@ public abstract class MetadataService
 			log.debug("Entering MetadataService.checkService for the service with ID " + serviceId + ".");
 
 		// Get the service
-		Service serviceObj = serviceDao.getById(serviceId);
+		Service serviceObj = null;
+		try 
+		{
+			serviceObj = serviceDao.getById(serviceId);
+		} 
+		catch (DatabaseConfigException e3) 
+		{
+			log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e3);
+			
+			return; // We can't connect to the database so we can't write the status
+		}
 
 		MetadataService serviceToTest = null;
 		
@@ -509,7 +558,16 @@ public abstract class MetadataService
 			LogWriter.addError(serviceObj.getServicesLogFileName(), "Tried to validate the " + serviceObj.getName() + " Service, but the java class " + targetClassName + " could not be found.");
 
 			// Load the provider again in case it was updated during the harvest
-			serviceObj = serviceDao.getById(serviceObj.getId());
+			try 
+			{
+				serviceObj = serviceDao.getById(serviceObj.getId());
+			} 
+			catch (DatabaseConfigException e3) 
+			{
+				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e3);
+				
+				return;
+			}
 
 			// Increase the warning and error counts as appropriate, then update the provider
 			serviceObj.setServicesErrors(serviceObj.getServicesErrors() + 1);
@@ -541,7 +599,14 @@ public abstract class MetadataService
 			LogWriter.addError(serviceObj.getServicesLogFileName(), "Tried to validate the " + serviceObj.getName() + " Service, but the java class " + targetClassName + "'s processRecords method could not be accessed.");
 
 			// Load the provider again in case it was updated during the harvest
-			serviceObj = serviceDao.getById(serviceObj.getId());
+			try 
+			{
+				serviceObj = serviceDao.getById(serviceObj.getId());
+			} 
+			catch (DatabaseConfigException e3) 
+			{
+				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e3);
+			}
 
 			// Increase the warning and error counts as appropriate, then update the provider
 			serviceObj.setServicesErrors(serviceObj.getServicesErrors() + 1);
@@ -573,7 +638,14 @@ public abstract class MetadataService
 			LogWriter.addError(serviceObj.getServicesLogFileName(), "An internal error occurred while trying to validate the " + serviceObj.getName() + " Service.");
 
 			// Load the provider again in case it was updated during the harvest
-			serviceObj = serviceDao.getById(serviceObj.getId());
+			try 
+			{
+				serviceObj = serviceDao.getById(serviceObj.getId());
+			} 
+			catch (DatabaseConfigException e3) 
+			{
+				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e3);
+			}
 
 			// Increase the warning and error counts as appropriate, then update the provider
 			serviceObj.setServicesErrors(serviceObj.getServicesErrors() + 1);
@@ -774,7 +846,17 @@ public abstract class MetadataService
 		finally // Update the error and warning count for the service
 		{
 			// Load the provider again in case it was updated during the harvest
-			Service service = serviceDao.getById(this.service.getId());
+			Service service = null;
+			try 
+			{
+				service = serviceDao.getById(this.service.getId());
+			} 
+			catch (DatabaseConfigException e1) 
+			{
+				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+				
+				return false;
+			}
 
 			// Increase the warning and error counts as appropriate, then update the provider
 			service.setServicesWarnings(service.getServicesWarnings() + warningCount);
@@ -956,8 +1038,9 @@ public abstract class MetadataService
 	 * 
 	 * @param name The name of the target Format
 	 * @return The Format with the passed name
+	 * @throws DatabaseConfigException 
 	 */
-	protected Format getFormatByName(String name)
+	protected Format getFormatByName(String name) throws DatabaseConfigException
 	{
 		return formatDao.getByName(name);
 	}
@@ -988,8 +1071,9 @@ public abstract class MetadataService
 	 * 
 	 * @param setSpec The setSpec of the target set
 	 * @return The set with the passed setSpec
+	 * @throws DatabaseConfigException 
 	 */
-	protected Set getSet(String setSpec)
+	protected Set getSet(String setSpec) throws DatabaseConfigException
 	{
 		return setDao.getBySetSpec(setSpec);
 	}
@@ -1018,8 +1102,9 @@ public abstract class MetadataService
 	 * 
 	 * @param oaiId The OAI identifier of the target record
 	 * @return The record with the passed OAI identifier, or null if no records matched the identifier
+	 * @throws DatabaseConfigException 
 	 */
-	protected Record getByOaiId(String oaiId)
+	protected Record getByOaiId(String oaiId) throws DatabaseConfigException
 	{
 		return recordService.getByOaiIdentifierAndService(oaiId, service.getId());
 	}

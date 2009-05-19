@@ -12,6 +12,7 @@ package xc.mst.manager.configuration;
 
 import xc.mst.bo.emailconfig.EmailConfig;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * This action method is used to configure the details of the EMail server
@@ -24,8 +25,9 @@ public interface EmailConfigService
 	 * Gets the Email Configuration
 	 *
 	 * @return The email configuration, or null if there was no email configuration in the database.
+     * @throws DatabaseConfigException 
 	 */
-	public abstract EmailConfig getEmailConfiguration();
+	public abstract EmailConfig getEmailConfiguration() throws DatabaseConfigException;
 
 	/**
 	 * Updates the email configuration

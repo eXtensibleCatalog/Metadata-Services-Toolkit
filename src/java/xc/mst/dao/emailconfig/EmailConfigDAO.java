@@ -10,13 +10,13 @@
 package xc.mst.dao.emailconfig;
 
 import java.sql.Connection;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.emailconfig.EmailConfig;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -85,15 +85,16 @@ public abstract class EmailConfigDAO
 	 * Gets the Email Configuration
 	 *
 	 * @return The email configuration, or null if there was no email configuration in the database.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract EmailConfig getConfiguration();
+	public abstract EmailConfig getConfiguration() throws DatabaseConfigException;
 
 	/**
 	 * Updates the email configuration
 	 *
 	 * @param emailconfig The new email configuration
 	 * @return True on success, false on failure
-	 * @throws DataException if the passed email configuration was not valid
+	 * @throws DataException if there was a problem connecting to the database
 	 */
 	public abstract boolean setConfiguration(EmailConfig emailconfig) throws DataException;
 

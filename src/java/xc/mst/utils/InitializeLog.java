@@ -24,6 +24,7 @@ import org.apache.log4j.PropertyConfigurator;
 import xc.mst.bo.log.Log;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
@@ -58,7 +59,16 @@ public class InitializeLog  extends HttpServlet {
 	    
 	    // Initialize the general MST logs
 	    LogDAO logDao = new DefaultLogDAO();
-	    List<Log> logs = logDao.getAll();
+	    List<Log> logs = null;
+		try 
+		{
+			logs = logDao.getAll();
+		} 
+		catch (DatabaseConfigException e) 
+		{
+			return;
+		}
+		
 	    for(Log log : logs)
 	    	LogWriter.addInfo(log.getLogFileLocation(), "Beginning logging for " + log.getLogFileName() + ".");
 	  }

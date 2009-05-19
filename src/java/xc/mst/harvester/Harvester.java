@@ -45,6 +45,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.harvest.DefaultHarvestDAO;
 import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestDAO;
@@ -209,11 +210,6 @@ public class Harvester implements ErrorHandler
 	private boolean isPaused = false;
 
 	/**
-	 * How long the Harvester should wait for a response from the OAI server before giving up and throwing an error
-	 */
-	private int timeOutMilliseconds = 180000;
-
-	/**
      * The harvest schedule being run
      */
 	private HarvestSchedule schedule = null;
@@ -335,11 +331,11 @@ public class Harvester implements ErrorHandler
 	{
 		LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Starting harvest of " + baseURL);
 
-		// Create a Harvester and use it to run the harvest
-		runningHarvester = new Harvester(timeOutMilliseconds, scheduleStep, currentHarvest);
-
 		try
 		{
+			// Create a Harvester and use it to run the harvest
+			runningHarvester = new Harvester(timeOutMilliseconds, scheduleStep, currentHarvest);
+			
 			// Update the status of the harvest schedule
 			runningHarvester.persistStatus(Constants.STATUS_SERVICE_RUNNING);
 
@@ -359,24 +355,29 @@ public class Harvester implements ErrorHandler
 
 			// Send an Email report on the results of the harvest
 			runningHarvester.sendReportEmail(null);
-		} catch (DataException e) {
+		} 
+		catch(DatabaseConfigException e)
+		{
+			log.error("Unable to connect to the database with the parameters defined in the configuration file.", e);
+		}
+		catch (DataException e) 
+		{
 			
 			log.error("Unable to update the harvest status", e);
 		}
 		finally // Update the error and warning count for the provider
-		{
-			// Load the provider again in case it was updated during the harvest
-			Provider provider = providerDao.getById(scheduleStep.getSchedule().getProvider().getId());
-
-			// Increase the warning and error counts as appropriate, then update the provider
-			provider.setWarnings(provider.getWarnings() + runningHarvester.warningCount);
-			provider.setErrors(provider.getErrors() + runningHarvester.errorCount);
-			provider.setRecordsAdded(provider.getRecordsAdded() + runningHarvester.addedCount);
-			provider.setRecordsReplaced(provider.getRecordsReplaced() + runningHarvester.updatedCount);
-
-		
+		{		
 			try
 			{
+				// Load the provider again in case it was updated during the harvest
+				Provider provider = providerDao.getById(scheduleStep.getSchedule().getProvider().getId());
+
+				// Increase the warning and error counts as appropriate, then update the provider
+				provider.setWarnings(provider.getWarnings() + runningHarvester.warningCount);
+				provider.setErrors(provider.getErrors() + runningHarvester.errorCount);
+				provider.setRecordsAdded(provider.getRecordsAdded() + runningHarvester.addedCount);
+				provider.setRecordsReplaced(provider.getRecordsReplaced() + runningHarvester.updatedCount);
+				
 				providerDao.update(provider);
 			}
 			catch (DataException e)
@@ -397,10 +398,10 @@ public class Harvester implements ErrorHandler
 	 *                       as the start and end times.  This should represent a Harvest that has already been
 	 *                       written to the database.  The corrosponding harvest row will be updated with the
 	 *                       results after the harvest finishes running.
+	 * @throws DatabaseConfigException 
 	 */
-	public Harvester(int timeOutMilliseconds, HarvestScheduleStep scheduleStep, Harvest currentHarvest)
+	public Harvester(int timeOutMilliseconds, HarvestScheduleStep scheduleStep, Harvest currentHarvest) throws DatabaseConfigException
 	{
-		this.timeOutMilliseconds = timeOutMilliseconds;
 		HttpClientParams params = new HttpClientParams();
 		params.setSoTimeout(timeOutMilliseconds);
 		client = new HttpClient(params, new MultiThreadedHttpConnectionManager());
@@ -436,9 +437,10 @@ public class Harvester implements ErrorHandler
 	 *                                     deleted records are not supported
 	 * @exception Hexception If a serious error occurs.
 	 * @exception OAIErrorException If OAI error was returned by the data provider.
+	 * @throws DatabaseConfigException 
 	 */
 	public void doHarvest(String baseURL, String metadataPrefix, String setSpec, Date from, Date until,
-	                      boolean harvestAll, boolean harvestAllIfNoDeletedRecord) throws Hexception, OAIErrorException
+	                      boolean harvestAll, boolean harvestAllIfNoDeletedRecord) throws Hexception, OAIErrorException, DatabaseConfigException
     {
 		String errorMsg = null;
 		String request = null;

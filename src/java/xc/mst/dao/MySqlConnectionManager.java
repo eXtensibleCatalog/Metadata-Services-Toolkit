@@ -54,21 +54,7 @@ public class MySqlConnectionManager
 
 		// If there is an open connection, return it,
 		// otherwise open a new connection and return the new one
-        if(dbConnection!=null)
-        {
-            
-            return dbConnection;
-        }
-        else
-        {            
-            Connection connObject = openDbConnection();
-            if(connObject==null)
-            {
-                
-            }
-            return connObject;
-        }
-		//return (dbConnection != null ? dbConnection : openDbConnection());
+        return (dbConnection != null ? dbConnection : openDbConnection());
 
 		/*try
 		{

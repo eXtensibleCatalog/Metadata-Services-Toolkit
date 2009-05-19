@@ -8,6 +8,7 @@ import java.util.List;
 
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * Service class for interacting with the services in the MST
@@ -20,8 +21,9 @@ public interface ServicesService
      * Returns a list of all the services
      *
      * @return returns the list containing all the services
+     * @throws DatabaseConfigException 
      */
-    public List<Service> getAllServices();
+    public List<Service> getAllServices() throws DatabaseConfigException;
 
     /**
      * Parses a configuration file with information on the service to add
@@ -72,30 +74,34 @@ public interface ServicesService
      *
      * @param serviceId The Id based on which a service object is retrieved.
      * @return
+     * @throws DatabaseConfigException 
      */
-    public Service getServiceById(int serviceId);
+    public Service getServiceById(int serviceId) throws DatabaseConfigException;
 
     /**
      * Retrieves a service object based on the name of the service
      *
      * @param serviceName The name of the service
      * @return
+     * @throws DatabaseConfigException 
      */
-    public Service getServiceByName(String serviceName);
+    public Service getServiceByName(String serviceName) throws DatabaseConfigException;
 
     /**
      * Retrieves a service object based on the port number
      *
      * @param port The port number of the service
      * @return
+     * @throws DatabaseConfigException 
      */
-    public Service getServiceByPort(int port);
+    public Service getServiceByPort(int port) throws DatabaseConfigException;
 
     /**
      * returns a list of soervices sorted by name
      * 
      * @param sort boolean parameter that determines of the services are to be sorted in ascending/descending order
      * @return list of services
+     * @throws DatabaseConfigException 
      */
-    public List<Service> getAllServicesSorted(boolean sort,String columnSorted);
+    public List<Service> getAllServicesSorted(boolean sort,String columnSorted) throws DatabaseConfigException;
 }

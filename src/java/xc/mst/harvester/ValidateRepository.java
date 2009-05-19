@@ -31,6 +31,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.DefaultSetDAO;
@@ -149,8 +150,9 @@ public class ValidateRepository implements ErrorHandler
 	 *
 	 * @param providerId The ID of the provider we're validating
 	 * @throws Hexception If the validation failed
+	 * @throws DatabaseConfigException 
 	 */
-	public void validate(int providerId) throws Hexception
+	public void validate(int providerId) throws Hexception, DatabaseConfigException
 	{
 		this.providerId = providerId;
 
@@ -223,8 +225,9 @@ public class ValidateRepository implements ErrorHandler
 	 * @param providerId The provider we're validating
 	 * @param harvestId The harvest ID we should use for logging errors
 	 * @throws Hexception If there was no provider with the passed provider ID
+	 * @throws DatabaseConfigException 
 	 */
-	public void validate(int providerId, int harvestId) throws Hexception
+	public void validate(int providerId, int harvestId) throws Hexception, DatabaseConfigException
 	{
 		this.providerId = providerId;
 
@@ -298,8 +301,9 @@ public class ValidateRepository implements ErrorHandler
 	 *
 	 * @exception Hexception If an error occurred while validating the Identify verb
 	 * @exception OAIErrorException If OAI error was returned by the OAI provider
+	 * @throws DatabaseConfigException 
 	 */
-	public void checkIdentifyInfo() throws Hexception, OAIErrorException
+	public void checkIdentifyInfo() throws Hexception, OAIErrorException, DatabaseConfigException
 	{
 		String request = baseUrl + "?verb=Identify";
 		if (log.isDebugEnabled())
@@ -448,8 +452,9 @@ public class ValidateRepository implements ErrorHandler
 	 * @return The current list of metadata formats supported by the OAI provider
 	 * @exception Hexception If an error occurred while validating the Identify verb
 	 * @exception OAIErrorException If OAI error was returned by the OAI provider
+	 * @throws DatabaseConfigException 
 	 */
-	public List<Format> checkFormats() throws Hexception, OAIErrorException
+	public List<Format> checkFormats() throws Hexception, OAIErrorException, DatabaseConfigException
 	{
 		// Get the formats currently supported by the repository
 		List<Format> currentFormats = getPrefices(baseUrl);
@@ -479,8 +484,9 @@ public class ValidateRepository implements ErrorHandler
 	 * @return The current list of metadata sets supported by the OAI provider
 	 * @exception Hexception If an error occurred while validating the Identify verb
 	 * @exception OAIErrorException If OAI error was returned by the OAI provider
+	 * @throws DatabaseConfigException 
 	 */
-	public List<Set> checkSets() throws Hexception, OAIErrorException
+	public List<Set> checkSets() throws Hexception, OAIErrorException, DatabaseConfigException
 	{
 		// Get the sets currently supported by the repository
 		List<Set> currentSets = getSets(baseUrl);
@@ -757,8 +763,9 @@ public class ValidateRepository implements ErrorHandler
 	 * @return A list of metadata prefixes
 	 * @exception Hexception If an internal error occurred
 	 * @exception OAIErrorException If an OAI error occurred
+	 * @throws DatabaseConfigException 
 	 */
-	private List<Format> getPrefices(String baseURL) throws Hexception, OAIErrorException
+	private List<Format> getPrefices(String baseURL) throws Hexception, OAIErrorException, DatabaseConfigException
 	{
 		String request = baseURL + "?verb=ListMetadataFormats";
 
@@ -842,8 +849,9 @@ public class ValidateRepository implements ErrorHandler
 	 * @return A list of sets
 	 * @exception Hexception If an internal error occurred
 	 * @exception OAIErrorException If an OAI error occurred
+	 * @throws DatabaseConfigException 
 	 */
-	private List<Set> getSets(String baseURL) throws Hexception, OAIErrorException
+	private List<Set> getSets(String baseURL) throws Hexception, OAIErrorException, DatabaseConfigException
 	{
 		String request = baseURL + "?verb=ListSets";
 

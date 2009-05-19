@@ -21,6 +21,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
@@ -65,7 +66,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	/**
 	 * The repository management log file name
 	 */
-	private static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SERVICE_MANAGEMENT);
+	private static Log logObj = null;
 	
 	/**
 	 * A PreparedStatement to get all services in the database
@@ -137,9 +138,24 @@ public class DefaultServiceDAO extends ServiceDAO
 	 */
 	private static Object psDeleteLock = new Object();
 
-	@Override
-	public ArrayList<Service> getAll()
+	public DefaultServiceDAO()
 	{
+		try 
+		{
+			logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SERVICE_MANAGEMENT);
+		} catch (DatabaseConfigException e) 
+		{
+			log.error("Unable to connect to the database using the parameters from the configuration file.", e);
+		}
+	}
+	
+	@Override
+	public ArrayList<Service> getAll() throws DatabaseConfigException
+	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -259,8 +275,12 @@ public class DefaultServiceDAO extends ServiceDAO
      * @return list of services
      */
 	@Override
-	public List<Service> getSorted(boolean asc,String columnSorted)
+	public List<Service> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		if(log.isDebugEnabled())
 			log.debug("Getting all services sorted in " + (asc ? "ascending" : "descending") + " order by " + columnSorted);
 
@@ -387,8 +407,12 @@ public class DefaultServiceDAO extends ServiceDAO
 	} // end method getSortedByUserName(boolean)
 	
 	@Override
-	public Service getById(int serviceId)
+	public Service getById(int serviceId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -506,8 +530,12 @@ public class DefaultServiceDAO extends ServiceDAO
 	} // end method getById(int)
 
 	@Override
-	public Service loadBasicService(int serviceId)
+	public Service loadBasicService(int serviceId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -616,8 +644,12 @@ public class DefaultServiceDAO extends ServiceDAO
 	} // end method loadBasicService(int)
 
 	@Override
-	public Service getByPort(int port)
+	public Service getByPort(int port) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByPortLock)
 		{
 			if(log.isDebugEnabled())
@@ -735,8 +767,12 @@ public class DefaultServiceDAO extends ServiceDAO
 	} // end method getByPort(int)
 
 	@Override
-	public Service getByServiceName(String name)
+	public Service getByServiceName(String name) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByNameLock)
 		{
 			if(log.isDebugEnabled())

@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 public abstract class ServiceDAO
@@ -174,8 +175,9 @@ public abstract class ServiceDAO
 	 * Gets all services from the database
 	 *
 	 * @return A list containing all services in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract ArrayList<Service> getAll();
+	public abstract ArrayList<Service> getAll() throws DatabaseConfigException;
 
 	/**
      * Returns a sorted list of services
@@ -183,16 +185,18 @@ public abstract class ServiceDAO
      * @param asc Determines whether the rows are sorted in ascending or descending order
      * @param columnSorted The coulmn on which rows are sorted
      * @return A sorted list of services
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
      */
-	public abstract List<Service> getSorted(boolean asc,String columnSorted);
+	public abstract List<Service> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException;
 	
 	/**
 	 * Gets the service from the database with the passed service ID
 	 *
 	 * @param id The ID of the service to get
 	 * @return The service with the passed service ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Service getById(int serviceId);
+	public abstract Service getById(int serviceId) throws DatabaseConfigException;
 
 	/**
 	 * Gets the service from the database with the passed service ID.
@@ -200,24 +204,27 @@ public abstract class ServiceDAO
 	 *
 	 * @param id The ID of the service to get
 	 * @return The service with the passed service ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Service loadBasicService(int serviceId);
+	public abstract Service loadBasicService(int serviceId) throws DatabaseConfigException;
 
 	/**
 	 * Gets the service from the database with the passed port
 	 *
 	 * @param port The port of the service to get
 	 * @return The service with the passed service Port
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Service getByPort(int port);
+	public abstract Service getByPort(int port) throws DatabaseConfigException;
 
 	/**
 	 * Gets the service from the database with the passed name
 	 *
 	 * @param name The name of the service to get
 	 * @return The service with the passed service Port
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Service getByServiceName(String name);
+	public abstract Service getByServiceName(String name) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a service into the database

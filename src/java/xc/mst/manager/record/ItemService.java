@@ -21,6 +21,7 @@ import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Item;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.ItemList;
 import xc.mst.utils.index.SolrIndexManager;
@@ -90,8 +91,9 @@ public abstract class ItemService
 	 * Gets the Item that matches the passed XC item ID
 	 *
 	 * @param The XC item ID of the target item element
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Item getByXcItemId(long itemId);
+	public abstract Item getByXcItemId(long itemId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a list of all Items linked to the passed holdings
@@ -183,8 +185,9 @@ public abstract class ItemService
 	 *
 	 * @param doc The document containing information on the Item.
 	 * @return The item which was contained in the passed Document.
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Item getItemFromDocument(SolrDocument doc);
+	public abstract Item getItemFromDocument(SolrDocument doc) throws DatabaseConfigException;
 
 	/**
 	 * Parses a Item from the fields in a Document from the index.
@@ -202,8 +205,9 @@ public abstract class ItemService
 	 * @param doc The document whose fields need to be set.
 	 * @param generateNewId True to generate a new record ID for the item, false to use the item's current ID
 	 * @return A reference to the Document after its fields have been set
+	 * @throws DatabaseConfigException 
 	 */
-	protected abstract SolrInputDocument setFieldsOnDocument(Item item, SolrInputDocument doc, boolean generateNewId);
+	protected abstract SolrInputDocument setFieldsOnDocument(Item item, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 
 	/**
 	 * Validates the fields on the passed Item Object

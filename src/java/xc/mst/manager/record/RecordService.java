@@ -28,12 +28,12 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.harvest.DefaultHarvestRecordUtilDAO;
 import xc.mst.dao.harvest.HarvestRecordUtilDAO;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
-import xc.mst.utils.index.ThreadedSolrIndexManager;
 
 /**
  * Service class to query, add, update and delete records from an index.
@@ -234,8 +234,9 @@ public abstract class RecordService
 	 *
 	 * @param id The record's ID
 	 * @return The record with the passed record ID
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Record getById(long id);
+	public abstract Record getById(long id) throws DatabaseConfigException;
 
 	/**
 	 * Gets the basic information for a a record from the index with the passed record ID
@@ -363,8 +364,9 @@ public abstract class RecordService
 	 *
 	 * @param identifier The record's OAI Identifer
 	 * @return A Record Object representing the record with the passed OAI Identifier
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Record getByOaiIdentifier(String identifier);
+	public abstract Record getByOaiIdentifier(String identifier) throws DatabaseConfigException;
 
 	/**
 	 * Gets the record from the index with the passed OAI Identifier
@@ -372,8 +374,9 @@ public abstract class RecordService
 	 * @param identifier The record's OAI Identifer
 	 * @param providerId The Id of the provider from which this record was harvested
 	 * @return The record with the passed OAI Identifier
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Record getByOaiIdentifierAndProvider(String identifier, int providerId);
+	public abstract Record getByOaiIdentifierAndProvider(String identifier, int providerId) throws DatabaseConfigException;
 
 	/**
 	 * Gets the record from the index with the passed OAI Identifier
@@ -381,8 +384,9 @@ public abstract class RecordService
 	 * @param identifier The record's OAI Identifer
 	 * @param serviceId The Id of the service that processed this record
 	 * @return The record with the passed OAI Identifier
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Record getByOaiIdentifierAndService(String identifier, int serviceId);
+	public abstract Record getByOaiIdentifierAndService(String identifier, int serviceId) throws DatabaseConfigException;
 
 	/**
 	 * Gets all records from the index which have been processed from the specified record
@@ -535,8 +539,9 @@ public abstract class RecordService
 	 *
 	 * @param doc The document containing information on the Record.
 	 * @return The record which was contained in the passed Document.
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Record getRecordFromDocument(SolrDocument doc);
+	public abstract Record getRecordFromDocument(SolrDocument doc) throws DatabaseConfigException;
 
 	/**
 	 * Parses a Record from the fields in a Document from the index.
@@ -554,8 +559,9 @@ public abstract class RecordService
 	 * @param doc The document whose fields need to be set.
 	 * @param generateNewId True to generate a new ID for the record, false to use the record's current ID
 	 * @return A reference to the Document after its fields have been set
+	 * @throws DatabaseConfigException 
 	 */
-	protected abstract SolrInputDocument setFieldsOnDocument(Record record, SolrInputDocument doc, boolean generateNewId);
+	protected abstract SolrInputDocument setFieldsOnDocument(Record record, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 
 	/**
 	 * Validates the fields on the passed Record Object

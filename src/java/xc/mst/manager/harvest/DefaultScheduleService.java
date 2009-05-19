@@ -16,6 +16,7 @@ import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Provider;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.harvest.DefaultHarvestDAO;
 import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestDAO;
@@ -41,8 +42,9 @@ public class DefaultScheduleService implements ScheduleService {
 	 *
 	 * @param scheduleId Id of the schedule
 	 * @return Schedule if exist else null
+	 * @throws DatabaseConfigException 
 	 */
-	public HarvestSchedule getScheduleById(int scheduleId) {
+	public HarvestSchedule getScheduleById(int scheduleId) throws DatabaseConfigException {
 		return harvestScheduleDAO.getById(scheduleId);
 	}
 
@@ -76,8 +78,9 @@ public class DefaultScheduleService implements ScheduleService {
      * Get all schedules
      *
      * @return all schedules
+     * @throws DatabaseConfigException 
      */
-    public List<HarvestSchedule> getAllSchedules()  {
+    public List<HarvestSchedule> getAllSchedules() throws DatabaseConfigException  {
     	return harvestScheduleDAO.getAll();
     }
 
@@ -86,7 +89,7 @@ public class DefaultScheduleService implements ScheduleService {
      *
      * @param name Name of the schedule
      */
-    public HarvestSchedule getScheduleByName(String name) throws DataException {
+    public HarvestSchedule getScheduleByName(String name) throws DatabaseConfigException {
     	return harvestScheduleDAO.getByName(name);
     }
 
@@ -95,8 +98,9 @@ public class DefaultScheduleService implements ScheduleService {
 	 *
 	 * @param asc True to sort in ascending order, false to sort in descending order
 	 * @return A list containing all schedules in the database sorted by their names
+     * @throws DatabaseConfigException 
 	 */
-	public List<HarvestSchedule> getAllSchedulesSorted(boolean sort,String columnSorted)
+	public List<HarvestSchedule> getAllSchedulesSorted(boolean sort,String columnSorted) throws DatabaseConfigException
     {
         return harvestScheduleDAO.getSorted(sort,columnSorted);
     }
@@ -106,8 +110,9 @@ public class DefaultScheduleService implements ScheduleService {
 	 *
 	 * @param provider Provider to get the harvest schedule
 	 * @return Harvest schedule found
+     * @throws DatabaseConfigException 
 	 */
-	public HarvestSchedule getScheduleForProvider(Provider provider)
+	public HarvestSchedule getScheduleForProvider(Provider provider) throws DatabaseConfigException
     {
         return harvestScheduleDAO.getHarvestScheduleForProvider(provider.getId());
     }
@@ -117,10 +122,11 @@ public class DefaultScheduleService implements ScheduleService {
 	 *
 	 * @param harvestSchedule harvest schedule to get the harvests
 	 * @return List of Harvest found
+     * @throws DatabaseConfigException 
 	 */
-	public List<Harvest> getHarvestsForSchedule(HarvestSchedule harvestSchedule)
+	public List<Harvest> getHarvestsForSchedule(HarvestSchedule harvestSchedule) throws DatabaseConfigException
     {
-        return harvestDAO.getHarvestsForSchedule(harvestSchedule.getScheduleName());
+        return harvestDAO.getHarvestsForSchedule(harvestSchedule.getId());
     }
 	
 	/**
@@ -128,9 +134,10 @@ public class DefaultScheduleService implements ScheduleService {
 	 * 
 	 * @param harvestSchedule harvest schedule
 	 * @return latest harvest end time if found otherwise null
+	 * @throws DatabaseConfigException 
 	 */
-	public Timestamp getLatestHarvestEndTime(HarvestSchedule harvestSchedule)
+	public Timestamp getLatestHarvestEndTime(HarvestSchedule harvestSchedule) throws DatabaseConfigException
     {
-        return harvestDAO.getLatestHarvestEndTimeForSchedule(harvestSchedule.getScheduleName());
+        return harvestDAO.getLatestHarvestEndTimeForSchedule(harvestSchedule.getId());
     }
 }

@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.user.Permission;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -82,8 +83,12 @@ public class DefaultPermissionDAO extends PermissionDAO
     private static Object psGetPermissionByUserIdLock = new Object();
 
     @Override
-	public List<Permission> getAll()
+	public List<Permission> getAll() throws DatabaseConfigException
 	{
+    	// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -152,8 +157,12 @@ public class DefaultPermissionDAO extends PermissionDAO
 	} // end method getAll()
     
 	@Override
-	public List<Permission> getPermissionsForGroup(int groupId)
+	public List<Permission> getPermissionsForGroup(int groupId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetPermissionsForGroupLock)
 		{
 			if(log.isDebugEnabled())
@@ -231,8 +240,12 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 
     @Override
-	public Permission getPermissionById(int permissionId)
+	public Permission getPermissionById(int permissionId) throws DatabaseConfigException
 	{
+    	// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetPermissionByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -301,7 +314,12 @@ public class DefaultPermissionDAO extends PermissionDAO
 	} // end method getPermissionById(int)
 
     @Override
-    public List<Permission> getPermissionsForUserByTabOrderAsc(int userId) {
+    public List<Permission> getPermissionsForUserByTabOrderAsc(int userId) throws DatabaseConfigException 
+    {
+    	// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetPermissionByUserIdLock)
 		{
 			if(log.isDebugEnabled())

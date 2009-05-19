@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.user.User;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserService;
@@ -285,8 +286,9 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
      *
      * @param groupId group ID
      * @return Lis of users
+     * @throws DatabaseConfigException 
      */
-    public List<User> getUsersForGroup(int groupId)
+    public List<User> getUsersForGroup(int groupId) throws DatabaseConfigException
     {
         synchronized(psGetUsersForGroupLock)
 		{
@@ -417,7 +419,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
         }
     }
 
-    public List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted)
+    public List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted) throws DatabaseConfigException
     {
         synchronized(psGetUsersForGroupLock)
 		{

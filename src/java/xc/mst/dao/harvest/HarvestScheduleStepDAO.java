@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.harvest.HarvestScheduleStep;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -70,8 +71,9 @@ public abstract class HarvestScheduleStepDAO
 	 * Gets all harvest schedule steps in the database
 	 *
 	 * @return A list containing all harvest schedule steps in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<HarvestScheduleStep> getAll();
+	public abstract List<HarvestScheduleStep> getAll() throws DatabaseConfigException;
 
 	/**
 	 * Gets a harvest schedule step by it's ID
@@ -79,16 +81,18 @@ public abstract class HarvestScheduleStepDAO
 	 * @param harvestScheduleStepId The ID of the harvest schedule step to get
 	 * @return The harvest schedule step with the passed ID, or null if there
 	 *         was no harvest schedule step with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract HarvestScheduleStep getById(int harvestScheduleStepId);
+	public abstract HarvestScheduleStep getById(int harvestScheduleStepId) throws DatabaseConfigException;
 
 	/**
 	 * Gets all harvest schedule steps which belong to the harvest schedule with the passed ID
 	 *
 	 * @param harvestScheduleId The ID of the harvest schedule whose steps we should get
 	 * @return A list all harvest schedule steps which belong to the harvest schedule with the passed ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<HarvestScheduleStep> getStepsForSchedule(int harvestSchedlueId);
+	public abstract List<HarvestScheduleStep> getStepsForSchedule(int harvestSchedlueId) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a harvest schedule step into the database

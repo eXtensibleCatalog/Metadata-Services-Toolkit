@@ -199,6 +199,12 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 
 				return -1;
 			} // end catch(SQLException)
+			catch(NullPointerException e)
+			{
+				log.error("Unable to connect to the database using the parameters from the configuration file.");
+				
+				return -1;
+			}
 			finally
 			{
 				MySqlConnectionManager.closeResultSet(results);
@@ -254,6 +260,12 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch(NullPointerException e)
+			{
+				log.error("Unable to connect to the database using the parameters from the configuration file.");
+				
+				return false;
+			}
 		} // end synchronized
 	} // end method insert(int, long)
 
@@ -303,6 +315,12 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch(NullPointerException e)
+			{
+				log.error("Unable to connect to the database using the parameters from the configuration file.");
+				
+				return false;
+			}
 		} // end synchronized
 	} // end method update(int, long)
 } // end class DefaultOaiIdentiferForServiceDAO

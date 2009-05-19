@@ -18,6 +18,7 @@ import org.apache.solr.common.SolrDocumentList;
 
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 
@@ -92,20 +93,29 @@ public class RecordList extends AbstractList<Record>
 	 */
 	public Record get(int index)
 	{
-		if(query == null)
-			return null;
-		
-		if(currentOffset < index && currentOffset + MAX_RESULTS > index)
+		try
+		{
+			if(query == null)
+				return null;
+			
+			if(currentOffset < index && currentOffset + MAX_RESULTS > index)
+				return (docs.size() > (index-currentOffset) ? service.getRecordFromDocument(docs.get(index-currentOffset)) : null);
+			
+			// Truncation will make this the largest multiple of MAX_RESULTS which comes before the requested index
+			currentOffset = (index/MAX_RESULTS)*MAX_RESULTS;
+			
+			query.setRows(MAX_RESULTS);
+			query.setStart(currentOffset);
+			docs = indexMgr.getDocumentList(query);
+			
 			return (docs.size() > (index-currentOffset) ? service.getRecordFromDocument(docs.get(index-currentOffset)) : null);
-		
-		// Truncation will make this the largest multiple of MAX_RESULTS which comes before the requested index
-		currentOffset = (index/MAX_RESULTS)*MAX_RESULTS;
-		
-		query.setRows(MAX_RESULTS);
-		query.setStart(currentOffset);
-		docs = indexMgr.getDocumentList(query);
-		
-		return (docs.size() > (index-currentOffset) ? service.getRecordFromDocument(docs.get(index-currentOffset)) : null);
+		}
+		catch(DatabaseConfigException e)
+		{
+			log.error("Cannot connect to the database with the parameters from the config file.", e);
+			
+			return null;
+		}
 	}
 
 	/**

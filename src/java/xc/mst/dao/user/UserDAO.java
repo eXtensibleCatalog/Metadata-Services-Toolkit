@@ -20,6 +20,7 @@ import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -118,8 +119,9 @@ public abstract class UserDAO
 	 * Gets all users in the database
 	 *
 	 * @return A list containing all users in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<User> getAll();
+	public abstract List<User> getAll() throws DatabaseConfigException;
 
 	/**
      * Returns a sorted list of all users
@@ -127,32 +129,36 @@ public abstract class UserDAO
      * @param asc Determines if the rows are sorted in the ascending or descending order
      * @param columnSorted The column on which the rows are sorted
      * @return A sorted list of users
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
      */
-	public abstract List<User> getSorted(boolean asc, String columnSorted);
+	public abstract List<User> getSorted(boolean asc, String columnSorted) throws DatabaseConfigException;
 
 	/**
 	 * Gets a user by it's ID
 	 *
 	 * @param userId The ID of the user to get
 	 * @return The user with the passed ID, or null if there was no user with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract User getById(int userId);
+	public abstract User getById(int userId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a user by it's ID.  Does not set the list of permissions on the returned user.
 	 *
 	 * @param userId The ID of the user to get
 	 * @return The user with the passed ID, or null if there was no user with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract User loadBasicUser(int userId);
+	public abstract User loadBasicUser(int userId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a user by it's user name
 	 *
 	 * @param userName The user name of the user to get
 	 * @return The user with the passed name, or null if there was no user with that name.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract User getUserByName(String userName);
+	public abstract User getUserByName(String userName) throws DatabaseConfigException;
 
 	/**
 	 * Gets a user by their email
@@ -160,8 +166,9 @@ public abstract class UserDAO
 	 * @param email The email of the user to get
 	 * @param server Login server
 	 * @return The user with the passed email, or null if there was no user with that email.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract User getUserByEmail(String email, Server server);
+	public abstract User getUserByEmail(String email, Server server) throws DatabaseConfigException;
 
 	/**
 	 * Gets a user by it's user name and server id
@@ -169,15 +176,17 @@ public abstract class UserDAO
 	 * @param userName The user name of the user to get
 	 * @param serverId Id of the server
 	 * @return The user with the passed name and server, or null if there was no user with that name.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract User getUserByUserName(String userName, Server server);
+	public abstract User getUserByUserName(String userName, Server server) throws DatabaseConfigException;
     
     /**
      * returns the number of LDAP users in the system
      * 
      * @return number of LDAP users
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
      */
-    public abstract int getLDAPUserCount();
+    public abstract int getLDAPUserCount() throws DatabaseConfigException;
 
 	/**
 	 * Inserts a user into the database

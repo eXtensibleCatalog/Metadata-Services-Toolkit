@@ -17,6 +17,7 @@ import java.util.List;
 
 import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -117,8 +118,12 @@ public class DefaultSetDAO extends SetDAO
 	private static Object psDeleteLock = new Object();
 
 	@Override
-	public List<Set> getAll()
+	public List<Set> getAll() throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -195,8 +200,12 @@ public class DefaultSetDAO extends SetDAO
 	} // end method getAll()
 
 	@Override
-	public Set getById(int setId)
+	public Set getById(int setId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -277,8 +286,12 @@ public class DefaultSetDAO extends SetDAO
 	} // end method getById(int)
 
 	@Override
-	public Set loadBasicSet(int setId)
+	public Set loadBasicSet(int setId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -359,8 +372,12 @@ public class DefaultSetDAO extends SetDAO
 	} // end method loadBasicSet(int)
 
 	@Override
-	public Set getBySetSpec(String setSpec)
+	public Set getBySetSpec(String setSpec) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetBySetSpecLock)
 		{
 			if(log.isDebugEnabled())
@@ -441,8 +458,12 @@ public class DefaultSetDAO extends SetDAO
 	} // end method getBySetSpec(String)
 
 	@Override
-	public List<Set> getSetsForProvider(int providerId)
+	public List<Set> getSetsForProvider(int providerId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByProviderIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -528,6 +549,10 @@ public class DefaultSetDAO extends SetDAO
 	@Override
 	public boolean insert(Set set) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the non-ID fields on the set are valid
 		validateFields(set, false, true);
 
@@ -599,6 +624,10 @@ public class DefaultSetDAO extends SetDAO
 	@Override
 	public boolean insertForProvider(Set set, int providerId) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the non-ID fields on the set are valid
 		validateFields(set, false, true);
 
@@ -670,6 +699,10 @@ public class DefaultSetDAO extends SetDAO
 	@Override
 	public boolean addToProvider(Set set, int providerId) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the fields on the set are valid
 		validateFields(set, true, true);
 
@@ -718,6 +751,10 @@ public class DefaultSetDAO extends SetDAO
 	@Override
 	public boolean removeFromProvider(Set set, int providerId) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the fields on the set are valid
 		validateFields(set, true, true);
 
@@ -765,6 +802,10 @@ public class DefaultSetDAO extends SetDAO
 	@Override
 	public boolean update(Set set) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the fields on the set are valid
 		validateFields(set, true, true);
 
@@ -817,6 +858,10 @@ public class DefaultSetDAO extends SetDAO
 	@Override
 	public boolean delete(Set set) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the ID field on the set are valid
 		validateFields(set, true, false);
 

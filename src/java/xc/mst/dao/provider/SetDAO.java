@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -80,40 +81,45 @@ public abstract class SetDAO
 	 * Gets all sets in the database
 	 *
 	 * @return A list containing all sets in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<Set> getAll();
+	public abstract List<Set> getAll() throws DatabaseConfigException;
 
 	/**
 	 * Gets a set by it's ID
 	 *
 	 * @param setId The ID of the set to get
 	 * @return The set with the passed ID, or null if there was no set with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Set getById(int setId);
+	public abstract Set getById(int setId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a set by it's ID without getting extra information
 	 *
 	 * @param setId The ID of the set to get
 	 * @return The set with the passed ID, or null if there was no set with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Set loadBasicSet(int setId);
+	public abstract Set loadBasicSet(int setId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a set by it's setSpec
 	 *
 	 * @param setSpec The setSpec of the set to get
 	 * @return The set with the passed setSpec, or null if there was no set with that setSpec.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Set getBySetSpec(String setSpec);
+	public abstract Set getBySetSpec(String setSpec) throws DatabaseConfigException;
 
 	/**
 	 * Gets all sets which belong to the provider with the passed ID
 	 *
 	 * @param providerId The ID of the provider whose sets we should get
 	 * @return A list all sets which belong to the provider with the passed ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<Set> getSetsForProvider(int providerId);
+	public abstract List<Set> getSetsForProvider(int providerId) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a set into the database

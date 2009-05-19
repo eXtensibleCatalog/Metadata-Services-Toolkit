@@ -22,6 +22,7 @@ import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
@@ -57,7 +58,7 @@ public class DefaultUserDAO extends UserDAO
 	/**
 	 * The repository management log file name
 	 */
-	private static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_USER_MANAGEMENT);	
+	private static Log logObj = null;	
 	
 	/**
 	 * A PreparedStatement to get all users in the database
@@ -149,9 +150,27 @@ public class DefaultUserDAO extends UserDAO
 	 */
 	private static Object psDeleteLock = new Object();
 	
-	@Override
-	public List<User> getAll() 
+	public DefaultUserDAO()
 	{
+		super();
+		
+		try
+		{
+			logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_USER_MANAGEMENT);
+		}
+		catch(DatabaseConfigException e)
+		{
+			log.error("Unable to connect to the database using the parameters from the configuration file.", e);
+		}
+	}
+	
+	@Override
+	public List<User> getAll() throws DatabaseConfigException 
+	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -242,9 +261,14 @@ public class DefaultUserDAO extends UserDAO
      * returns the number of LDAP users in the system
      *
      * @return number of LDAP users
+     * @throws DatabaseConfigException 
      */
-    public int getLDAPUserCount()
+    public int getLDAPUserCount() throws DatabaseConfigException
     {
+    	// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
         synchronized(psLDAPUserCountLock)
 		{
             if(log.isDebugEnabled())
@@ -300,8 +324,12 @@ public class DefaultUserDAO extends UserDAO
         }
     }
 	@Override
-	public List<User> getSorted(boolean asc,String columnSorted)
+	public List<User> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		if(log.isDebugEnabled())
 			log.debug("Getting all users sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnSorted);
 	
@@ -402,8 +430,12 @@ public class DefaultUserDAO extends UserDAO
 	} // end method getSorted(boolean, String)
 	
 	@Override
-	public User getById(int userId) 
+	public User getById(int userId) throws DatabaseConfigException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Get the basic user
 		User user = loadBasicUser(userId);
 		
@@ -416,8 +448,12 @@ public class DefaultUserDAO extends UserDAO
 	} // end method getById(int)
 
 	@Override
-	public User loadBasicUser(int userId) 
+	public User loadBasicUser(int userId) throws DatabaseConfigException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -507,8 +543,12 @@ public class DefaultUserDAO extends UserDAO
 	} // end method loadBasicUser(int)
 
 	@Override
-	public User getUserByName(String userName) 
+	public User getUserByName(String userName) throws DatabaseConfigException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByUserNameLock)
 		{
 			if(log.isDebugEnabled())
@@ -602,8 +642,12 @@ public class DefaultUserDAO extends UserDAO
 	} // end method getUserByName(int)
 	
 	@Override
-	public User getUserByUserName(String userName, Server server) 
+	public User getUserByUserName(String userName, Server server) throws DatabaseConfigException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByUserNameAndServerLock)
 		{
 			if(log.isDebugEnabled())
@@ -698,8 +742,12 @@ public class DefaultUserDAO extends UserDAO
 	} // end method getUserByName(int)
 	
 	@Override
-	public User getUserByEmail(String email, Server server) 
+	public User getUserByEmail(String email, Server server) throws DatabaseConfigException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByEmailLock)
 		{
 			if(log.isDebugEnabled())
@@ -792,6 +840,10 @@ public class DefaultUserDAO extends UserDAO
 	@Override
 	public boolean insert(User user) throws DataException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the non-ID fields on the user are valid
 		validateFields(user, false, true);
 		
@@ -891,6 +943,10 @@ public class DefaultUserDAO extends UserDAO
 	@Override
 	public boolean update(User user) throws DataException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the fields on the user are valid
 		validateFields(user, true, true);
 		
@@ -975,6 +1031,10 @@ public class DefaultUserDAO extends UserDAO
 	@Override
 	public boolean delete(User user) throws DataException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the ID field on the user are valid
 		validateFields(user, true, false);
 		

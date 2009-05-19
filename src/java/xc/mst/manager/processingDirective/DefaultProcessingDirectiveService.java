@@ -16,6 +16,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
 import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
@@ -55,8 +56,9 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      *
      * @param processingDirectiveId Processing Directive ID
      * @return processing directive object
+     * @throws DatabaseConfigException 
      */
-    public ProcessingDirective getByProcessingDirectiveId(int processingDirectiveId) {
+    public ProcessingDirective getByProcessingDirectiveId(int processingDirectiveId) throws DatabaseConfigException {
         return processingDirectiveDao.getById(processingDirectiveId);
     }
 
@@ -125,8 +127,9 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      * Returns a list of all processing directives
      *
      * @return list of processing directives
+     * @throws DatabaseConfigException 
      */
-    public List<ProcessingDirective> getAllProcessingDirectives()
+    public List<ProcessingDirective> getAllProcessingDirectives() throws DatabaseConfigException
     {
         return processingDirectiveDao.getAll();
     }
@@ -136,8 +139,9 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      *
      * @param providerId provider ID
      * @return list of processing directives
+     * @throws DatabaseConfigException 
      */
-    public List getBySourceProviderId(int providerId)
+    public List<ProcessingDirective> getBySourceProviderId(int providerId) throws DatabaseConfigException
     {
         return processingDirectiveDao.getBySourceProviderId(providerId);
     }
@@ -147,8 +151,9 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      *
      * @param serviceId service ID
      * @return list of processing directives
+     * @throws DatabaseConfigException 
      */
-    public List getBySourceServiceId(int serviceId)
+    public List<ProcessingDirective> getBySourceServiceId(int serviceId) throws DatabaseConfigException
     {
         return processingDirectiveDao.getBySourceServiceId(serviceId);
     }

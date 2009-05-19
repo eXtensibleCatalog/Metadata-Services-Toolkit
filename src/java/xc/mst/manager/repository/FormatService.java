@@ -13,6 +13,7 @@ import java.util.List;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * Service to access the formats
@@ -27,8 +28,9 @@ public interface FormatService {
 	 *
 	 * @param formatId Id of the format
 	 * @return Format if exist else null
+	 * @throws DatabaseConfigException 
 	 */
-	public Format getFormatById(int formatId);
+	public Format getFormatById(int formatId) throws DatabaseConfigException;
 
 	/**
 	 * Delete Format
@@ -49,7 +51,8 @@ public interface FormatService {
      * Get all formats
      *
      * @return all formats
+     * @throws DatabaseConfigException 
      */
-    public List<Format> getAllFormats();
+    public List<Format> getAllFormats() throws DatabaseConfigException;
 
 }

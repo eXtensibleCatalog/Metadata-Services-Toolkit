@@ -17,6 +17,7 @@ import org.apache.solr.common.SolrInputDocument;
 import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Manifestation;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.index.ManifestationList;
 
 /**
@@ -31,7 +32,7 @@ import xc.mst.utils.index.ManifestationList;
 public class DefaultManifestationService extends ManifestationService
 {
 	@Override
-	public Manifestation getByXcManifestationId(long manifestationId)
+	public Manifestation getByXcManifestationId(long manifestationId) throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with XC manifestation ID " + manifestationId);
@@ -124,21 +125,21 @@ public class DefaultManifestationService extends ManifestationService
 	} // end method getByLinkedExpression(Expression)
 
 	@Override
-	public Manifestation getManifestationFromDocument(SolrDocument doc)
+	public Manifestation getManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException
 	{
 		// Return the Record in the document as a Manifestation
 		return Manifestation.buildManifestationFromRecord(recordService.getRecordFromDocument(doc));
 	} // end method getManifestationFromDocument(Document)
 
 	@Override
-	public Manifestation getBasicManifestationFromDocument(SolrDocument doc)
+	public Manifestation getBasicManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException
 	{
 		// Return the Record in the document as a Manifestation
 		return Manifestation.buildManifestationFromRecord(recordService.getRecordFromDocument(doc));
 	} // end method getBasicManifestationFromDocument(Document)
 
 	@Override
-	protected SolrInputDocument setFieldsOnDocument(Manifestation manifestation, SolrInputDocument doc, boolean generateNewId)
+	protected SolrInputDocument setFieldsOnDocument(Manifestation manifestation, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record
 		return recordService.setFieldsOnDocument(manifestation, doc, generateNewId);

@@ -17,6 +17,7 @@ import org.apache.solr.common.SolrInputDocument;
 import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Work;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.index.ExpressionList;
 
 /**
@@ -31,7 +32,7 @@ import xc.mst.utils.index.ExpressionList;
 public class DefaultExpressionService extends ExpressionService
 {
 	@Override
-	public Expression getByXcExpressionId(long expressionId)
+	public Expression getByXcExpressionId(long expressionId) throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with XC expression ID " + expressionId);
@@ -91,7 +92,7 @@ public class DefaultExpressionService extends ExpressionService
 	} // end method getByLinkedManifestation(Manifestation)
 
 	@Override
-	public Expression getExpressionFromDocument(SolrDocument doc)
+	public Expression getExpressionFromDocument(SolrDocument doc) throws DatabaseConfigException
 	{
 		// Create a Expression object to store the result
 		Expression expression = Expression.buildExpressionFromRecord(recordService.getRecordFromDocument(doc));
@@ -111,7 +112,7 @@ public class DefaultExpressionService extends ExpressionService
 	} // end method getBasicExpressionFromDocument(Document)
 
 	@Override
-	protected SolrInputDocument setFieldsOnDocument(Expression expression, SolrInputDocument doc, boolean generateNewId)
+	protected SolrInputDocument setFieldsOnDocument(Expression expression, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record and return the results
 		return recordService.setFieldsOnDocument(expression, doc, generateNewId);

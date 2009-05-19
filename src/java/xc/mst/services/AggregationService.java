@@ -9,7 +9,6 @@
 
 package xc.mst.services;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -36,6 +35,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
 import xc.mst.constants.AggregationServiceConstants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.record.DefaultExpressionService;
 import xc.mst.manager.record.DefaultHoldingsService;
 import xc.mst.manager.record.DefaultItemService;
@@ -141,7 +141,7 @@ public class AggregationService extends MetadataService
 	/**
 	 * The format ID of the XC schema format
 	 */
-	private final Format xcSchemaFormat = getFormatByName("xc");
+	private Format xcSchemaFormat = null;
 
 	/**
 	 * Builds the XML Document based on the XC record's XML
@@ -158,6 +158,14 @@ public class AggregationService extends MetadataService
 	 */
 	public AggregationService()
 	{
+		try 
+		{
+			xcSchemaFormat = getFormatByName("xc");
+		} 
+		catch (DatabaseConfigException e) 
+		{
+			log.error("Could not connect to the database with the parameters in the configuration file.", e);
+		}
 	} // end constructor
 
 	@Override
@@ -175,7 +183,16 @@ public class AggregationService extends MetadataService
 				continue;
 
 			// Check whether or not this record already exists in the database
-			Record oldRecord = getByOaiId(finalRecord.getOaiIdentifier());
+			Record oldRecord = null;
+			try 
+			{
+				oldRecord = getByOaiId(finalRecord.getOaiIdentifier());
+			} 
+			catch (DatabaseConfigException e1) 
+			{
+				log.error("Could not connect to the database with the parameters in the configuration file.", e1);
+				return;
+			}
 
 			// If the current record is a new record, insert it
 			if(oldRecord == null)

@@ -14,6 +14,7 @@ import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.manager.harvest.DefaultScheduleService;
@@ -37,8 +38,9 @@ public class DefaultProviderService implements ProviderService{
      *
      * @param providerName provider name
      * @return provider object
+     * @throws DatabaseConfigException 
      */
-    public Provider getProviderByName(String providerName){
+    public Provider getProviderByName(String providerName) throws DatabaseConfigException{
        return providerDao.getByName(providerName);
     }
 
@@ -47,8 +49,9 @@ public class DefaultProviderService implements ProviderService{
      *
      * @param providerId provider ID
      * @return provider object
+     * @throws DatabaseConfigException 
      */
-    public Provider getProviderById(int providerId){
+    public Provider getProviderById(int providerId) throws DatabaseConfigException{
        return providerDao.getById(providerId);
     }
 
@@ -57,8 +60,9 @@ public class DefaultProviderService implements ProviderService{
      *
      * @param providerUrl provider URL
      * @return provider object
+     * @throws DatabaseConfigException 
      */
-    public Provider getProviderByURL(String providerUrl) {
+    public Provider getProviderByURL(String providerUrl) throws DatabaseConfigException {
         return providerDao.getByURL(providerUrl);
     }
 
@@ -115,8 +119,9 @@ public class DefaultProviderService implements ProviderService{
      * Returns a list of all the providers
      *
      * @return provider list
+     * @throws DatabaseConfigException 
      */
-    public List<Provider> getAllProviders()
+    public List<Provider> getAllProviders() throws DatabaseConfigException
     {
         return providerDao.getAll();
     }
@@ -127,8 +132,9 @@ public class DefaultProviderService implements ProviderService{
    * @param sort determines if the rows are to be sorted in ascending or descending order
    * @param columnSorted column on which the sorting is done
    * @return list of providers
+     * @throws DatabaseConfigException 
    */
-    public List<Provider> getAllProvidersSorted(boolean sort,String columnSorted)
+    public List<Provider> getAllProvidersSorted(boolean sort,String columnSorted) throws DatabaseConfigException
     {
         return providerDao.getSorted(sort, columnSorted);
     }

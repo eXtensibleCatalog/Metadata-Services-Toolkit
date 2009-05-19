@@ -17,6 +17,7 @@ import java.util.List;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -92,8 +93,12 @@ public class DefaultFormatDAO extends FormatDAO
 	private static Object psDeleteLock = new Object();
 
 	@Override
-	public List<Format> getAll()
+	public List<Format> getAll() throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -165,8 +170,12 @@ public class DefaultFormatDAO extends FormatDAO
 	} // end method getAll()
 
 	@Override
-	public Format getById(int formatId)
+	public Format getById(int formatId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -242,8 +251,12 @@ public class DefaultFormatDAO extends FormatDAO
 	} // end method getById(int)
 
 	@Override
-	public Format getByName(String name)
+	public Format getByName(String name) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByNameLock)
 		{
 			if(log.isDebugEnabled())
@@ -319,8 +332,12 @@ public class DefaultFormatDAO extends FormatDAO
 	} // end method getByName(String)
 
 	@Override
-	public List<Format> getFormatsForProvider(int providerId)
+	public List<Format> getFormatsForProvider(int providerId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		List<Format> formats = new ArrayList<Format>();
 
 		for(Integer formatId : providerFormatDao.getFormatsForProvider(providerId))
@@ -332,6 +349,10 @@ public class DefaultFormatDAO extends FormatDAO
 	@Override
 	public boolean insert(Format format) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the non-ID fields on the format are valid
 		validateFields(format, false, true);
 
@@ -397,6 +418,10 @@ public class DefaultFormatDAO extends FormatDAO
 	@Override
 	public boolean update(Format format) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the fields on the format are valid
 		validateFields(format, true, true);
 
@@ -445,6 +470,10 @@ public class DefaultFormatDAO extends FormatDAO
 	@Override
 	public boolean delete(Format format) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the ID field on the format are valid
 		validateFields(format, true, false);
 

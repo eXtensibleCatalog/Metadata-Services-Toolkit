@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.user.Server;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -101,24 +102,27 @@ public abstract class ServerDAO
 	 * Gets all servers in the database
 	 *
 	 * @return A list of all servers in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<Server> getAll();
+	public abstract List<Server> getAll() throws DatabaseConfigException;
 
 	/**
 	 * Gets a server from the database by its ID
 	 *
 	 * @param serverId The ID of the server to get
 	 * @return The server with the passed ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Server getById(int serverId);
+	public abstract Server getById(int serverId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a server from the database by its name
 	 *
 	 * @param name The name of the server to get
 	 * @return The server with the passed name
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Server getByName(String name);
+	public abstract Server getByName(String name) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a new server into the database

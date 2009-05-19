@@ -19,6 +19,7 @@ import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
 import xc.mst.bo.user.User;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 public class DefaultGroupDAO extends GroupDAO
@@ -94,8 +95,12 @@ public class DefaultGroupDAO extends GroupDAO
 	private static Object psDeleteLock = new Object();
 
 	@Override
-	public List<Group> getAll()
+	public List<Group> getAll() throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -168,8 +173,12 @@ public class DefaultGroupDAO extends GroupDAO
 	} // end method getAll()
 
     @Override
-    public List<Group> getAllSorted(boolean isAscendingOrder,String columnSorted)
+    public List<Group> getAllSorted(boolean isAscendingOrder,String columnSorted) throws DatabaseConfigException
 	{
+    	// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -240,8 +249,12 @@ public class DefaultGroupDAO extends GroupDAO
 	} // end method getAllSorted()
 
 	@Override
-	public Group getById(int groupId)
+	public Group getById(int groupId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Get the group with the passed ID
 		Group group = loadBasicGroup(groupId);
 
@@ -254,8 +267,12 @@ public class DefaultGroupDAO extends GroupDAO
 	} // end method getById(int)
 
 	@Override
-	public Group getByName(String groupName)
+	public Group getByName(String groupName) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByNameLock)
 		{
 			if(log.isDebugEnabled())
@@ -334,8 +351,12 @@ public class DefaultGroupDAO extends GroupDAO
 	} // end method getGroupByName(int)
 	
 	@Override
-	public Group loadBasicGroup(int groupId)
+	public Group loadBasicGroup(int groupId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())

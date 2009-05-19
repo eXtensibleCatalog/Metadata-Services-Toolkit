@@ -19,6 +19,7 @@ import xc.mst.bo.log.Log;
 import xc.mst.bo.user.Server;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
@@ -34,7 +35,7 @@ public class DefaultServerDAO extends ServerDAO
 	/**
 	 * The repository management log file name
 	 */
-	private static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_AUTHENTICATION_SERVER_MANAGEMENT);
+	private static Log logObj = null;
 	
 	/**
 	 * A PreparedStatement to get all servers in the database
@@ -96,9 +97,27 @@ public class DefaultServerDAO extends ServerDAO
 	 */
 	private static Object psDeleteLock = new Object();
 
-	@Override
-	public List<Server> getAll()
+	public DefaultServerDAO()
 	{
+		super();
+		
+		try
+		{
+			logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_AUTHENTICATION_SERVER_MANAGEMENT);
+		}
+		catch(DatabaseConfigException e)
+		{
+			log.error("Unable to connect to the database using the parameters from the configuration file.", e);
+		}
+	}
+	
+	@Override
+	public List<Server> getAll() throws DatabaseConfigException
+	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -193,8 +212,12 @@ public class DefaultServerDAO extends ServerDAO
 	} // end method getAll()
 
 	@Override
-	public Server getById(int serverId)
+	public Server getById(int serverId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -295,8 +318,12 @@ public class DefaultServerDAO extends ServerDAO
 	} // end method getById(int)
 
 	@Override
-	public Server getByName(String name)
+	public Server getByName(String name) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByNameLock)
 		{
 			if(log.isDebugEnabled())
@@ -399,6 +426,10 @@ public class DefaultServerDAO extends ServerDAO
 	@Override
 	public boolean insert(Server server) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the non-ID fields on the server are valid
 		validateFields(server, false, true);
 
@@ -492,6 +523,10 @@ public class DefaultServerDAO extends ServerDAO
 	@Override
 	public boolean update(Server server) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the fields on the server are valid
 		validateFields(server, true, true);
 
@@ -570,6 +605,10 @@ public class DefaultServerDAO extends ServerDAO
 	@Override
 	public boolean delete(Server server) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the ID field on the server are valid
 		validateFields(server, true, false);
 

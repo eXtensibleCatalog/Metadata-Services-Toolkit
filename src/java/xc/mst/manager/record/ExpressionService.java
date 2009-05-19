@@ -22,6 +22,7 @@ import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.index.ExpressionList;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.SolrIndexManager;
@@ -70,8 +71,9 @@ public abstract class ExpressionService
 	 * Gets the Expression that matches the passed XC expression ID
 	 *
 	 * @param expressionId The XC expression ID of the target expression element
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Expression getByXcExpressionId(long expressionId);
+	public abstract Expression getByXcExpressionId(long expressionId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a list of all Expressions linked to the passed work
@@ -163,8 +165,9 @@ public abstract class ExpressionService
 	 *
 	 * @param doc The document containing information on the Expression.
 	 * @return The expression which was contained in the passed Document.
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Expression getExpressionFromDocument(SolrDocument doc);
+	public abstract Expression getExpressionFromDocument(SolrDocument doc) throws DatabaseConfigException;
 
 	/**
 	 * Parses a Expression from the fields in a Document from the index.
@@ -182,8 +185,9 @@ public abstract class ExpressionService
 	 * @param doc The document whose fields need to be set.
 	 * @param generateNewId True to generate a new record ID for the expression, false to use the expression's current ID
 	 * @return A reference to the Document after its fields have been set
+	 * @throws DatabaseConfigException 
 	 */
-	protected abstract SolrInputDocument setFieldsOnDocument(Expression expression, SolrInputDocument doc, boolean generateNewId);
+	protected abstract SolrInputDocument setFieldsOnDocument(Expression expression, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 
 	/**
 	 * Validates the fields on the passed Expression Object

@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -81,32 +82,45 @@ public abstract class HarvestDAO
 	 * Gets all harvests in the database
 	 *
 	 * @return A list containing all harvests in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<Harvest> getAll();
+	public abstract List<Harvest> getAll() throws DatabaseConfigException;
 
 	/**
 	 * Gets a harvest by it's ID
 	 *
 	 * @param harvestId The ID of the harvest to get
 	 * @return The harvest with the passed ID, or null if there was no harvest with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Harvest getById(int harvestId);
+	public abstract Harvest getById(int harvestId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a harvest by it's ID without getting extra information
 	 *
 	 * @param harvestId The ID of the harvest to get
 	 * @return The harvest  with the passed ID, or null if there was no harvest with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Harvest loadBasicHarvest(int harvestId);
+	public abstract Harvest loadBasicHarvest(int harvestId) throws DatabaseConfigException;
 
 	/**
 	 * Gets all harvests which were run by a harvest schedule
 	 *
 	 * @param harvestScheduleId The ID of the harvest schedule whose harvests we should get
 	 * @return A list all harvests which were run by the harvest schedule with the passed ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<Harvest> getHarvestsForSchedule(String harvestScheduleName);
+	public abstract List<Harvest> getHarvestsForSchedule(int harvestScheduleId) throws DatabaseConfigException;
+
+	/**
+	 * Get latest harvest end time for given harvest schedule
+	 * 
+	 * @param harvestScheduleName name of schedule
+	 * @return latest harvest end time if found otherwise null
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
+	 */
+	public abstract Timestamp getLatestHarvestEndTimeForSchedule(int harvestScheduleId) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a harvest into the database
@@ -178,12 +192,4 @@ public abstract class HarvestDAO
 			throw new DataException(errors);
 		} // end if(error found)
 	} // end method validateFields(Harvest, boolean, boolean)
-
-	/**
-	 * Get latest harvest end time for given harvest schedule
-	 * 
-	 * @param harvestScheduleName name of schedule
-	 * @return latest harvest end time if found otherwise null
-	 */
-	public abstract Timestamp getLatestHarvestEndTimeForSchedule(String harvestScheduleName);
 } // end class HarvestDAO

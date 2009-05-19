@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
@@ -47,9 +48,18 @@ public class InitializeServices  extends HttpServlet {
 	    LogDAO logDao = new DefaultLogDAO();
 	    
 	    // Load the services
-	    String servicesLogFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
-	    ServiceDAO serviceDao = new DefaultServiceDAO();
-	    List<Service> services = serviceDao.getAll();
+	    List<Service> services = null;
+	    String servicesLogFileName = null;
+		try 
+		{
+			servicesLogFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
+			ServiceDAO serviceDao = new DefaultServiceDAO();
+			services = serviceDao.getAll();
+		} 
+		catch (DatabaseConfigException e1) 
+		{
+			return;
+		}
     	
 		
 	    for(Service service : services)

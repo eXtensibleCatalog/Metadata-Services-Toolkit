@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -93,8 +94,9 @@ public abstract class ProcessingDirectiveDAO
 	 * Gets all processing directives from the database
 	 *
 	 * @return A list containing all processing directives in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<ProcessingDirective> getAll();
+	public abstract List<ProcessingDirective> getAll() throws DatabaseConfigException;
 
 	/**
      * Returns a sorted list of processing directives
@@ -102,16 +104,18 @@ public abstract class ProcessingDirectiveDAO
      * @param asc Determines whether the list of rows are to be sorted in ascending or descending order
      * @param columnSorted The column on which the rows are to be sorted.
      * @return A sorted list of processing directives
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
      */
-	public abstract List<ProcessingDirective> getSorted(boolean asc, String columnSorted);
+	public abstract List<ProcessingDirective> getSorted(boolean asc, String columnSorted) throws DatabaseConfigException;
 	
 	/**
 	 * Gets the processing directive from the database with the passed processing directive ID.
 	 *
 	 * @param processingDirectiveId The ID of the processing directive to get
 	 * @return The processing directive with the passed processing directive ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract ProcessingDirective getById(int processingDirectiveId);
+	public abstract ProcessingDirective getById(int processingDirectiveId) throws DatabaseConfigException;
 
 	/**
 	 * Gets the processing directive from the database with the passed processing directive ID.
@@ -119,24 +123,27 @@ public abstract class ProcessingDirectiveDAO
 	 *
 	 * @param processingDirectiveId The ID of the processing directive to get
 	 * @return The processing directive with the passed processing directive ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract ProcessingDirective loadBasicProcessingDirective(int processingDirectiveId);
+	public abstract ProcessingDirective loadBasicProcessingDirective(int processingDirectiveId) throws DatabaseConfigException;
 
 	/**
 	 * Gets the processing directives from the database with the passed source service ID
 	 *
 	 * @param serviceId The source service ID of the processing directives to get
 	 * @return A list containing the processing directives with the passed source service ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<ProcessingDirective> getBySourceServiceId(int serviceId);
+	public abstract List<ProcessingDirective> getBySourceServiceId(int serviceId) throws DatabaseConfigException;
 
 	/**
 	 * Gets the processing directives from the database with the passed source provider ID.
 	 *
 	 * @param providerId The source provider ID of the processing directives to get
 	 * @return A list containing the processing directives with the passed source provider ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<ProcessingDirective> getBySourceProviderId(int providerId);
+	public abstract List<ProcessingDirective> getBySourceProviderId(int providerId) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a processing directive into the database.

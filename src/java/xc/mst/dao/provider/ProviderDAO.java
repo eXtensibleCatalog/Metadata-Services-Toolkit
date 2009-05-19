@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -267,8 +268,9 @@ public abstract class ProviderDAO
 	 * Gets all providers in the database
 	 *
 	 * @return A list containing all providers in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<Provider> getAll();
+	public abstract List<Provider> getAll() throws DatabaseConfigException;
 
 	/**
 	 * Gets all providers in the database sorted by their names
@@ -276,39 +278,44 @@ public abstract class ProviderDAO
 	 * @param asc True to sort in ascending order, false to sort in descending order
      * @param columnName determines the name of the column on which the rows should be sorted
 	 * @return A list containing all providers in the database sorted by their names
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<Provider> getSorted(boolean asc,String columnName);
+	public abstract List<Provider> getSorted(boolean asc,String columnName) throws DatabaseConfigException;
 
 	/**
 	 * Gets a provider by it's ID
 	 *
 	 * @param providerId The ID of the provider to get
 	 * @return The provider with the passed ID, or null if there was no provider with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Provider getById(int providerId);
+	public abstract Provider getById(int providerId) throws DatabaseConfigException;
 
 	/**
      * Gets a provider by it's name
      *
      * @param name The name of the provider to get
      * @return The provider with the passed name, or null if there is no provider associated with that name.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
      */
-    public abstract Provider getByName(String name);
+    public abstract Provider getByName(String name) throws DatabaseConfigException;
 
     /**
      * Gets a provider by it's URL
      *
      * @param providerURL The URL of the provider to get
      * @return The provider with the passed URL, or null if there is no provider associated with that URL.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
      */
-    public abstract Provider getByURL(String providerURL);
+    public abstract Provider getByURL(String providerURL) throws DatabaseConfigException;
 	/**
 	 * Gets a provider by it's ID.  Does not set the list of sets or formats on the returned provider.
 	 *
 	 * @param providerId The ID of the provider to get
 	 * @return The provider with the passed ID, or null if there was no provider with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract Provider loadBasicProvider(int providerId);
+	public abstract Provider loadBasicProvider(int providerId) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a provider into the database

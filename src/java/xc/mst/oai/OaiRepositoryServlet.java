@@ -21,6 +21,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.utils.LogWriter;
@@ -72,63 +73,74 @@ public class OaiRepositoryServlet extends ActionSupport implements ServletReques
 		if(log.isDebugEnabled())
 			log.debug("In doGet, parsing out parameters");
 
-		// Get the port on which the request is coming in.  This will
-		// tell us which service's records to expose.
-		int port = request.getLocalPort();
-
-		// Get the service based on the port.
-		Service service = serviceDao.getByPort(port);
-
-		LogWriter.addInfo(service.getHarvestOutLogFileName(), "Received the OAI request " + request.getQueryString());
-
-		// Bean to manage data for handling the request
-		OaiRequestBean bean = new OaiRequestBean();
-
-		// Set parameters on the bean based on the OAI request's parameters
-		bean.setVerb(request.getParameter("verb"));
-		bean.setFrom(request.getParameter("from"));
-		bean.setUntil(request.getParameter("until"));
-		bean.setMetadataPrefix(request.getParameter("metadataPrefix"));
-		bean.setSet(request.getParameter("set"));
-		bean.setIdentifier(request.getParameter("identifier"));
-		bean.setResumptionToken(request.getParameter("resumptionToken"));
-		bean.setServiceId(service != null ? service.getId() : 0);
-
-		// Create the Facade Object, which will compute the results of the request and set them on the bean
-		Facade facade = new Facade(bean);
-
-		// Set the response header on the facade Object
-		facade.setResponseHeader(request.getRequestURL());
-
-		// Execute the correct request on the Facade Object
-		facade.execute();
-
-		// Build the OAI response
-		StringBuilder oaiResponseElement = new StringBuilder();
-
-		// Append the header
-		oaiResponseElement.append(Constants.OAI_RESPONSE_HEADER);
-
-		// Append the response date element
-		oaiResponseElement.append(bean.getResponseDateElement()).append("\n");
-
-		// Append the request element
-		oaiResponseElement.append(bean.getRequestElement()).append("\n");
-
-		// Append the response itself
-		oaiResponseElement.append(bean.getXmlResponse()).append("\n");
-
-		// Append the footer
-		oaiResponseElement.append(Constants.OAI_RESPONSE_FOOTER);
-
-		oaiXMLOutput = oaiResponseElement.toString();
-
-		response.setContentType("text/xml; charset=UTF-8");
-		
-		// Write the response
-		response.getWriter().write(oaiResponseElement.toString());
-
-	    return SUCCESS;
+		try
+		{
+			// Get the port on which the request is coming in.  This will
+			// tell us which service's records to expose.
+			int port = request.getLocalPort();
+	
+			// Get the service based on the port.
+			Service service = serviceDao.getByPort(port);
+	
+			LogWriter.addInfo(service.getHarvestOutLogFileName(), "Received the OAI request " + request.getQueryString());
+	
+			// Bean to manage data for handling the request
+			OaiRequestBean bean = new OaiRequestBean();
+	
+			// Set parameters on the bean based on the OAI request's parameters
+			bean.setVerb(request.getParameter("verb"));
+			bean.setFrom(request.getParameter("from"));
+			bean.setUntil(request.getParameter("until"));
+			bean.setMetadataPrefix(request.getParameter("metadataPrefix"));
+			bean.setSet(request.getParameter("set"));
+			bean.setIdentifier(request.getParameter("identifier"));
+			bean.setResumptionToken(request.getParameter("resumptionToken"));
+			bean.setServiceId(service != null ? service.getId() : 0);
+	
+			// Create the Facade Object, which will compute the results of the request and set them on the bean
+			Facade facade = new Facade(bean);
+	
+			// Set the response header on the facade Object
+			facade.setResponseHeader(request.getRequestURL());
+	
+			// Execute the correct request on the Facade Object
+			facade.execute();
+	
+			// Build the OAI response
+			StringBuilder oaiResponseElement = new StringBuilder();
+	
+			// Append the header
+			oaiResponseElement.append(Constants.OAI_RESPONSE_HEADER);
+	
+			// Append the response date element
+			oaiResponseElement.append(bean.getResponseDateElement()).append("\n");
+	
+			// Append the request element
+			oaiResponseElement.append(bean.getRequestElement()).append("\n");
+	
+			// Append the response itself
+			oaiResponseElement.append(bean.getXmlResponse()).append("\n");
+	
+			// Append the footer
+			oaiResponseElement.append(Constants.OAI_RESPONSE_FOOTER);
+	
+			oaiXMLOutput = oaiResponseElement.toString();
+	
+			response.setContentType("text/xml; charset=UTF-8");
+			
+			// Write the response
+			response.getWriter().write(oaiResponseElement.toString());
+	
+		    return SUCCESS;
+		}
+		catch(DatabaseConfigException e)
+		{	
+			log.error("Cannot connect to the database with the parameters from the config file.", e);
+			
+			response.getWriter().write("Do to a configuration error, this OAI repository cannot access its database.");
+			
+			return ERROR;
+		}
 	}
 
 	public HttpServletRequest getServletRequest() {

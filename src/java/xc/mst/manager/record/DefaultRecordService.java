@@ -28,6 +28,7 @@ import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.harvest.DefaultHarvestDAO;
 import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestDAO;
@@ -117,7 +118,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getAll()
 
 	@Override
-	public Record getById(long id)
+	public Record getById(long id) throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with ID " + id);
@@ -223,8 +224,6 @@ public class DefaultRecordService extends RecordService
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with service ID " + serviceId);
-
-		long numberOfRecords = 0;
 		
 		// Create a query to get the Documents with the requested service ID
 		SolrQuery query = new SolrQuery();
@@ -387,7 +386,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByFormatName(String)
 
 	@Override
-	public Record getByOaiIdentifier(String identifier)
+	public Record getByOaiIdentifier(String identifier) throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with the OAI identifier " + identifier);
@@ -420,7 +419,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByOaiIdentifier(String)
 
 	@Override
-	public Record getByOaiIdentifierAndProvider(String identifier, int providerId)
+	public Record getByOaiIdentifierAndProvider(String identifier, int providerId) throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with the OAI identifier " + identifier + " and provider ID " + providerId);
@@ -454,7 +453,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByOaiIdentifierAndProvider(String, int)
 
 	@Override
-	public Record getByOaiIdentifierAndService(String identifier, int serviceId)
+	public Record getByOaiIdentifierAndService(String identifier, int serviceId) throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with the OAI identifier " + identifier + " and service ID " + serviceId);
@@ -631,6 +630,7 @@ public class DefaultRecordService extends RecordService
 			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId));
 		if(useMetadataPrefix)
 			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID + ":").append(Integer.toString(formatId));
+		
 		// TODO
 		//if(fromDate != null || untilDate != null)
 			//query.add((Query)new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);
@@ -720,7 +720,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getBasicRecordFromDocument(Document)
 
 	@Override
-	public Record getRecordFromDocument(SolrDocument doc)
+	public Record getRecordFromDocument(SolrDocument doc) throws DatabaseConfigException
 	{
 
 		log.debug("getRecordFromSolrDocument::"+doc);
@@ -804,7 +804,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getRecordFromDocument(Document)
 
 	@Override
-	protected SolrInputDocument setFieldsOnDocument(Record record, SolrInputDocument doc, boolean generateNewId)
+	protected SolrInputDocument setFieldsOnDocument(Record record, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Set Field on Document");
@@ -864,9 +864,9 @@ public class DefaultRecordService extends RecordService
 		
 		if (record.getHarvest() != null) 
 		{
-			HarvestSchedule schedule = harvestScheduleDao.getById(record.getHarvest().getId());
+			HarvestSchedule schedule = harvestScheduleDao.getById(record.getHarvest().getHarvestScheduleId());
 			if(schedule != null)
-				doc.addField(FIELD_HARVEST_SCHEDULE_NAME, schedule.getId());
+				doc.addField(FIELD_HARVEST_SCHEDULE_NAME, schedule.getScheduleName());
 		}
 
 		if (record.getHarvest() != null && record.getProvider() != null) 

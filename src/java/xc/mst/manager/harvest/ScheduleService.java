@@ -16,6 +16,7 @@ import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Provider;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * Service to access the Schedules
@@ -30,8 +31,9 @@ public interface ScheduleService {
 	 *
 	 * @param scheduleId Id of the schedule
 	 * @return Schedule if exist else null
+	 * @throws DatabaseConfigException 
 	 */
-	public HarvestSchedule getScheduleById(int scheduleId);
+	public HarvestSchedule getScheduleById(int scheduleId) throws DatabaseConfigException;
 
 	/**
 	 * Delete Schedule
@@ -66,38 +68,43 @@ public interface ScheduleService {
      * Get all schedules
      *
      * @return all schedules
+     * @throws DatabaseConfigException 
      */
-    public List<HarvestSchedule> getAllSchedules();
+    public List<HarvestSchedule> getAllSchedules() throws DatabaseConfigException;
     
     /**
      * returns a sorted list of all the schedules
      * @param sort determines if the list is sorted in ascending or descending order
      * @param columnSorted the column on which the rows are sorted.
      * @return list of schedules
+     * @throws DatabaseConfigException 
      */
-	public abstract List<HarvestSchedule> getAllSchedulesSorted(boolean sort,String columnSorted);
+	public abstract List<HarvestSchedule> getAllSchedulesSorted(boolean sort,String columnSorted) throws DatabaseConfigException;
 
 	 /**
 	 * Gets harvest schedule for a provider
 	 *
 	 * @param provider Provider to get the harvest schedule
 	 * @return Harvest schedule found
+	 * @throws DatabaseConfigException 
 	 */
-	public HarvestSchedule getScheduleForProvider(Provider provider);
+	public HarvestSchedule getScheduleForProvider(Provider provider) throws DatabaseConfigException;
 
     /**
 	 * Gets harvests for a  schedule 
 	 *
 	 * @param harvestSchedule harvest schedule to get the harvests
 	 * @return List of Harvest found
+     * @throws DatabaseConfigException 
 	 */
-	public List<Harvest> getHarvestsForSchedule(HarvestSchedule harvestSchedule);
+	public List<Harvest> getHarvestsForSchedule(HarvestSchedule harvestSchedule) throws DatabaseConfigException;
 
 	/**
 	 * Get latest harvest end time for given harvest schedule
 	 * 
 	 * @param harvestSchedule harvest schedule
 	 * @return latest harvest end time if found otherwise null
+	 * @throws DatabaseConfigException 
 	 */
-	public Timestamp getLatestHarvestEndTime(HarvestSchedule harvestSchedule);
+	public Timestamp getLatestHarvestEndTime(HarvestSchedule harvestSchedule) throws DatabaseConfigException;
 }

@@ -23,6 +23,7 @@ import xc.mst.bo.harvest.HarvestScheduleStep;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.harvest.DefaultHarvestDAO;
 import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.DefaultHarvestScheduleStepDAO;
@@ -141,8 +142,9 @@ public class HarvestRunner
 	 * @param harvestScheduleId The ID of the harvest schedule to run
 	 * @throws OAIErrorException If the OAI provider being harvested returned an OAI error
 	 * @throws Hexception If a serious error occurred which prevented the harvest from being completed
+	 * @throws DatabaseConfigException 
 	 */
-	public HarvestRunner(int harvestScheduleId) throws OAIErrorException, Hexception
+	public HarvestRunner(int harvestScheduleId) throws OAIErrorException, Hexception, DatabaseConfigException
 	{
 		// Set the parameters for the harvest based on the harvest schedule step ID
 		harvestSchedule = harvestScheduleDao.getById(harvestScheduleId);
@@ -151,22 +153,23 @@ public class HarvestRunner
 	} // end constructor(int)
 
 	public void runHarvest()
-	{
-		StringBuilder requests = new StringBuilder();
-		
-		for(HarvestScheduleStep step : harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()))
-		{
-			runHarvestStep(step);
-			
-			if(requests.length() == 0)
-				requests.append(request);
-			else
-				requests.append("\n").append(request);
-		}
-		
-		harvestSchedule.setRequest(requests.toString());
+	{	
 		try
 		{
+			StringBuilder requests = new StringBuilder();
+			
+			for(HarvestScheduleStep step : harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()))
+			{
+				runHarvestStep(step);
+				
+				if(requests.length() == 0)
+					requests.append(request);
+				else
+					requests.append("\n").append(request);
+			}
+			
+			harvestSchedule.setRequest(requests.toString());
+			
 			harvestScheduleDao.update(harvestSchedule, false);
 
 			// Set the current harvest's end time
@@ -179,6 +182,10 @@ public class HarvestRunner
 			providerDao.update(provider);
 
 			LogWriter.addInfo(provider.getLogFileName(), "Finished harvest of " + baseURL);
+		} 
+		catch(DatabaseConfigException e)
+		{
+			log.error("Unable to connect to the database with the parameters defined in the configuration file.", e);
 		}
 		catch(DataException e)
 		{

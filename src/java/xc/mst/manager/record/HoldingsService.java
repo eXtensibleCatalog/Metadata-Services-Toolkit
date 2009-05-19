@@ -22,6 +22,7 @@ import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Manifestation;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.index.HoldingsList;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.SolrIndexManager;
@@ -112,8 +113,9 @@ public abstract class HoldingsService
 	 * Gets the Holdings that matches the passed XC holdings ID
 	 *
 	 * @param The XC holdings ID of the target holdings element
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Holdings getByXcHoldingsId(long holdingsId);
+	public abstract Holdings getByXcHoldingsId(long holdingsId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a list of all Holdings linked to the passed manifestation
@@ -204,8 +206,9 @@ public abstract class HoldingsService
 	 *
 	 * @param doc The document containing information on the Holdings.
 	 * @return The holdings which was contained in the passed Document.
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Holdings getHoldingsFromDocument(SolrDocument doc);
+	public abstract Holdings getHoldingsFromDocument(SolrDocument doc) throws DatabaseConfigException;
 
 	/**
 	 * Parses a Holdings from the fields in a Document from the index.
@@ -223,8 +226,9 @@ public abstract class HoldingsService
 	 * @param doc The document whose fields need to be set.
 	 * @param generateNewId True to generate a new record ID for the holdings, false to use the holdings's current ID
 	 * @return A reference to the Document after its fields have been set
+	 * @throws DatabaseConfigException 
 	 */
-	protected abstract SolrInputDocument setFieldsOnDocument(Holdings holdings, SolrInputDocument doc, boolean generateNewId);
+	protected abstract SolrInputDocument setFieldsOnDocument(Holdings holdings, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 
 	/**
 	 * Validates the fields on the passed Holdings Object

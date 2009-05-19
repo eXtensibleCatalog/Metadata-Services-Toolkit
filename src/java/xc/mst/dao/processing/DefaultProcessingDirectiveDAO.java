@@ -20,6 +20,7 @@ import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
@@ -138,8 +139,12 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	private static Object psDeleteLock = new Object();
 
 	@Override
-	public List<ProcessingDirective> getAll()
+	public List<ProcessingDirective> getAll() throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -222,15 +227,13 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 		} // end synchronized
 	} // end method getAll()
 
-    /**
-     * returns a sorted list of processing directives
-     * @param asc determines whether the list of rows are to be sorted in ascending or descending order
-     * @param columnSorted the column on which the rows are to be sorted.
-     * @return list of processing directives
-     */
 	@Override
-	public List<ProcessingDirective> getSorted(boolean asc,String columnSorted)
+	public List<ProcessingDirective> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		if(log.isDebugEnabled())
 			log.debug("Getting all processing directives sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnSorted);
 		
@@ -321,13 +324,17 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			catch(SQLException e)
 			{
 				log.error("An error occurred while trying to close the \"get processing directives sorted\" Statement");
-			} // end catch(DataException)
+			} // end catch(SQLException)
 		} // end finally(close ResultSet)
 	} // end method getSortedByName(boolean)
 	
 	@Override
-	public ProcessingDirective getById(int processingDirectiveId)
+	public ProcessingDirective getById(int processingDirectiveId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -414,8 +421,12 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	} // end method getById(int)
 
 	@Override
-	public ProcessingDirective loadBasicProcessingDirective(int processingDirectiveId)
+	public ProcessingDirective loadBasicProcessingDirective(int processingDirectiveId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -494,8 +505,12 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	} // end method loadBasicProcessingDirective(int)
 
 	@Override
-	public List<ProcessingDirective> getBySourceProviderId(int providerId)
+	public List<ProcessingDirective> getBySourceProviderId(int providerId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetBySourceProviderIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -583,8 +598,12 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	} // end method getBySourceProviderId(int)
 
 	@Override
-	public List<ProcessingDirective> getBySourceServiceId(int serviceId)
+	public List<ProcessingDirective> getBySourceServiceId(int serviceId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetBySourceServiceIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -674,6 +693,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	@Override
 	public boolean insert(ProcessingDirective processingDirective) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the non-ID fields on the processing directive are valid
 		validateFields(processingDirective, false, true);
 
@@ -751,6 +774,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	@Override
 	public boolean update(ProcessingDirective processingDirective) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the fields on the processing directive are valid
 		validateFields(processingDirective, true, true);
 
@@ -820,6 +847,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	@Override
 	public boolean delete(ProcessingDirective processingDirective) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the ID field on the processing directive are valid
 		validateFields(processingDirective, true, false);
 

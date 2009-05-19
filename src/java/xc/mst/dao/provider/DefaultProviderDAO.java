@@ -23,6 +23,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
@@ -73,7 +74,7 @@ public class DefaultProviderDAO extends ProviderDAO
 	/**
 	 * The repository management log file name
 	 */
-	private static Log logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_REPOSITORY_MANAGEMENT);
+	private static Log logObj = null;
 	
 	/**
 	 * A PreparedStatement to get all providers in the database
@@ -145,9 +146,27 @@ public class DefaultProviderDAO extends ProviderDAO
 	 */
 	private static Object psDeleteLock = new Object();
 
-	@Override
-	public List<Provider> getAll()
+	public DefaultProviderDAO()
 	{
+		super();
+		
+		try
+		{
+			logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_REPOSITORY_MANAGEMENT);
+		}
+		catch(DatabaseConfigException e)
+		{
+			log.error("Could not get the log file location for the repository management log.", e);
+		}
+	}
+	
+	@Override
+	public List<Provider> getAll() throws DatabaseConfigException
+	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -285,8 +304,12 @@ public class DefaultProviderDAO extends ProviderDAO
 	} // end method getAll()
 
 	@Override
-	public List<Provider> getSorted(boolean asc, String columnName)
+	public List<Provider> getSorted(boolean asc, String columnName) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		if(log.isDebugEnabled())
 			log.debug("Getting all providers sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnName);
 
@@ -433,13 +456,17 @@ public class DefaultProviderDAO extends ProviderDAO
 			catch(SQLException e)
 			{
 				log.error("An error occurred while trying to close the \"get processing directives sorted\" Statement");
-			} // end catch(DataException)
+			} // end catch(SQLException)
 		} // end finally(close ResultSet)
 	} // end method getSorted(boolean, String)
 	
 	@Override
-	public Provider getById(int providerId)
+	public Provider getById(int providerId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		Provider provider = loadBasicProvider(providerId);
 
 		// If we found the provider, set up its sets and formats
@@ -453,8 +480,12 @@ public class DefaultProviderDAO extends ProviderDAO
 	} // end method getById(int)
 
     @Override
-    public Provider getByURL(String providerURL)
+    public Provider getByURL(String providerURL) throws DatabaseConfigException
     {
+    	// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
     	synchronized(psGetByUrlLock)
 		{
 			if(log.isDebugEnabled())
@@ -595,8 +626,12 @@ public class DefaultProviderDAO extends ProviderDAO
     } // end method getByURL(String)
 
     @Override
-    public Provider getByName(String name)
+    public Provider getByName(String name) throws DatabaseConfigException
     {
+    	// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
     	synchronized(psGetByNameLock)
 		{
 			if(log.isDebugEnabled())
@@ -737,8 +772,12 @@ public class DefaultProviderDAO extends ProviderDAO
     } // end method getByName(String)
 
 	@Override
-	public Provider loadBasicProvider(int providerId)
+	public Provider loadBasicProvider(int providerId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -878,6 +917,10 @@ public class DefaultProviderDAO extends ProviderDAO
 	@Override
 	public boolean insert(Provider provider) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the non-ID fields on the provider are valid
 		validateFields(provider, false, true);
 
@@ -1040,6 +1083,10 @@ public class DefaultProviderDAO extends ProviderDAO
 	@Override
 	public boolean update(Provider provider) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the fields on the provider are valid
 		validateFields(provider, true, true);
 
@@ -1192,6 +1239,10 @@ public class DefaultProviderDAO extends ProviderDAO
 	@Override
 	public boolean delete(Provider provider) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the ID field on the provider are valid
 		validateFields(provider, true, false);
 

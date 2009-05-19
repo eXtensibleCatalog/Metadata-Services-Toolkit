@@ -23,6 +23,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.ProviderDAO;
@@ -125,8 +126,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	private static Object psDeleteLock = new Object();
 
 	@Override
-	public List<HarvestSchedule> getAll()
+	public List<HarvestSchedule> getAll() throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -214,8 +219,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	} // end method getAll()
 
 	@Override
-	public List<HarvestSchedule> getSorted(boolean asc,String columnSorted)
+	public List<HarvestSchedule> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		if(log.isDebugEnabled())
 			log.debug("Getting all harvest schedules sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnSorted);
 		
@@ -312,12 +321,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                 catch(SQLException e)
                 {
                     log.error("An error occurred while trying to close the \"get harvest schedules sorted ASC\" Statement");
-                } // end catch(DataException)
+                } // end catch(SQLException)
             } // end finally(close ResultSet)
         }
         else
         {
-             try
+            try
             {
                 // SQL to get the rows
                 String selectSql = "SELECT " + HARVEST_SCHEDULES_TABLE_NAME + "."+COL_HARVEST_SCHEDULE_ID + ", " +
@@ -393,14 +402,18 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                 catch(SQLException e)
                 {
                     log.error("An error occurred while trying to close the \"get harvest schedules sorted ASC\" Statement");
-                } // end catch(DataException)
+                } // end catch(SQLException)
             } // end finally(close ResultSet)
         }
 	} // end method getSortedByName(boolean)
 	
 	@Override
-	public HarvestSchedule getById(int harvestScheduleId) 
+	public HarvestSchedule getById(int harvestScheduleId) throws DatabaseConfigException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -502,8 +515,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	} // end method getById(int)
 
 	@Override
-	public HarvestSchedule loadWithoutSteps(int harvestScheduleId)
+	public HarvestSchedule loadWithoutSteps(int harvestScheduleId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -604,8 +621,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	} // end method loadWithoutSteps(int)
 
 	@Override
-	public HarvestSchedule getByName(String name)
+	public HarvestSchedule getByName(String name) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByNameLock)
 		{
 			if(log.isDebugEnabled())
@@ -707,8 +728,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	} // end method getByName(String)
 
 	@Override
-	public HarvestSchedule loadBasicHarvestSchedule(int harvestScheduleId)
+	public HarvestSchedule loadBasicHarvestSchedule(int harvestScheduleId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -801,8 +826,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	} // end method loadBasicHarvestSchedule(int)
 
 	@Override
-	public HarvestSchedule getHarvestScheduleForProvider(int providerId)
+	public HarvestSchedule getHarvestScheduleForProvider(int providerId) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByProviderIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -896,8 +925,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	} // end method getHarvestSchedulesForProvider(int)
 
 	@Override
-	public List<HarvestSchedule> getSchedulesToRun(int hour, int dayOfWeek,	int minute)
+	public List<HarvestSchedule> getSchedulesToRun(int hour, int dayOfWeek,	int minute) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByTimeLock)
 		{
 			// The list of results to return
@@ -1011,6 +1044,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	@Override
 	public boolean insert(HarvestSchedule harvestSchedule) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the non-ID fields on the harvest schedule are valid
 		validateFields(harvestSchedule, false, true);
 
@@ -1128,6 +1165,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	@Override
 	public boolean update(HarvestSchedule harvestSchedule, boolean updateSteps) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the fields on the harvest schedule are valid
 		validateFields(harvestSchedule, true, true);
 
@@ -1233,6 +1274,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	@Override
 	public boolean delete(HarvestSchedule harvestSchedule) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the ID field on the harvest schedule are valid
 		validateFields(harvestSchedule, true, false);
 

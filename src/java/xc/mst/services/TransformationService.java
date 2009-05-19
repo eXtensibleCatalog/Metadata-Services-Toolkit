@@ -28,6 +28,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MarcXmlRecord;
 import xc.mst.utils.XCRecord;
@@ -81,7 +82,14 @@ public class TransformationService extends MetadataService
 	public TransformationService()
 	{
 		// Initialize the XC format
-		xcFormat = getFormatByName("xc");
+		try 
+		{
+			xcFormat = getFormatByName("xc");
+		} 
+		catch (DatabaseConfigException e) 
+		{
+			log.error("Could not connect to the database with the parameters in the configuration file.", e);
+		}
 
 		// Initialize the list of roles
 		roles.put("aut", "author");

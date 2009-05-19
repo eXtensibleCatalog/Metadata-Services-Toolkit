@@ -21,6 +21,7 @@ import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Manifestation;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.ManifestationList;
 import xc.mst.utils.index.SolrIndexManager;
@@ -83,8 +84,9 @@ public abstract class ManifestationService
 	 * Gets the Manifestation that matches the passed XC manifestation ID
 	 *
 	 * @param manifestationId The XC manifestation ID of the target manifestation element
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Manifestation getByXcManifestationId(long manifestationId);
+	public abstract Manifestation getByXcManifestationId(long manifestationId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a list of all Manifestations linked to the passed expression
@@ -175,16 +177,18 @@ public abstract class ManifestationService
 	 *
 	 * @param doc The document containing information on the Manifestation.
 	 * @return The manifestation which was contained in the passed Document.
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Manifestation getManifestationFromDocument(SolrDocument doc);
+	public abstract Manifestation getManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException;
 
 	/**
 	 * Parses a Manifestation from the fields in a Document from the index.
 	 *
 	 * @param doc The document containing information on the Manifestation.
 	 * @return The manifestation which was contained in the passed Document.
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Manifestation getBasicManifestationFromDocument(SolrDocument doc);
+	public abstract Manifestation getBasicManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException;
 
 	/**
 	 * Sets the fields on the document which need to be stored in the
@@ -194,8 +198,9 @@ public abstract class ManifestationService
 	 * @param doc The document whose fields need to be set.
 	 * @param generateNewId True to generate a new record ID for the manifestation, false to use the manifestation's current ID
 	 * @return A reference to the Document after its fields have been set
+	 * @throws DatabaseConfigException 
 	 */
-	protected abstract SolrInputDocument setFieldsOnDocument(Manifestation manifestation, SolrInputDocument doc, boolean generateNewId);
+	protected abstract SolrInputDocument setFieldsOnDocument(Manifestation manifestation, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 
 	/**
 	 * Validates the fields on the passed Manifestation Object

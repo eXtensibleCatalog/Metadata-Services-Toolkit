@@ -27,6 +27,7 @@ import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.DefaultErrorCodeDAO;
 import xc.mst.dao.service.ErrorCodeDAO;
 
@@ -51,8 +52,9 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
      *
 	 * @param query Query to perform the search
 	 * @return Search results
+	 * @throws DatabaseConfigException 
 	 */
-	public SolrBrowseResult search(SolrQuery query) {
+	public SolrBrowseResult search(SolrQuery query) throws DatabaseConfigException {
 
 		SolrServer server = MSTSolrServer.getServer();
 		SolrBrowseResult result = null;
@@ -95,8 +97,9 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 	 * @param errorCode Error code
 	 * @param service Service which generated the error
 	 * @return Error if found
+	 * @throws DatabaseConfigException 
 	 */
-	public ErrorCode getError(String errorCode, Service service) {
+	public ErrorCode getError(String errorCode, Service service) throws DatabaseConfigException {
 		
 		return errorCodeDAO.getByErrorCodeAndService(errorCode, service);
 		

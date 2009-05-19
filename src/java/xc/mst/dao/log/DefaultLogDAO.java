@@ -18,6 +18,7 @@ import java.util.List;
 
 import xc.mst.bo.log.Log;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -78,8 +79,12 @@ public class DefaultLogDAO extends LogDAO
 	private static Object psDeleteLock = new Object();
 
 	@Override
-	public List<Log> getAll()
+	public List<Log> getAll() throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -155,8 +160,12 @@ public class DefaultLogDAO extends LogDAO
 	} // end method getAll()
 
 	@Override
-	public List<Log> getSorted(boolean asc,String columnSorted)
+	public List<Log> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		if(log.isDebugEnabled())
 			log.debug("Getting all logs sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnSorted);
 
@@ -240,13 +249,17 @@ public class DefaultLogDAO extends LogDAO
 			catch(SQLException e)
 			{
 				log.error("An error occurred while trying to close the \"get processing directives sorted\" Statement");
-			} // end catch(DataException)
+			} // end catch(SQLException)
 		} // end finally(close ResultSet)
 	} // end method getSortedByUserName(boolean)
 	
 	@Override
-	public Log getById(int id)
+	public Log getById(int id) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -328,6 +341,10 @@ public class DefaultLogDAO extends LogDAO
 	@Override
 	public boolean insert(Log logObj) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the non-ID fields on the log are valid
 		validateFields(logObj, false, true);
 
@@ -397,6 +414,10 @@ public class DefaultLogDAO extends LogDAO
 	@Override
 	public boolean update(Log logObj) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the fields on the log are valid
 		validateFields(logObj, true, true);
 
@@ -449,6 +470,10 @@ public class DefaultLogDAO extends LogDAO
 	@Override
 	public boolean delete(Log logObj) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the ID field on the log are valid
 		validateFields(logObj, true, false);
 

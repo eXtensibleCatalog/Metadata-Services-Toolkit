@@ -27,6 +27,7 @@ import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.emailconfig.EmailConfig;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
 import xc.mst.dao.emailconfig.DefaultEmailConfigDAO;
 
 /**
@@ -58,7 +59,16 @@ public class Emailer
 	 */
 	public Emailer()
 	{
-		config = new DefaultEmailConfigDAO().getConfiguration();
+		try 
+		{
+			config = new DefaultEmailConfigDAO().getConfiguration();
+		} 
+		catch (DataException e) 
+		{
+			log.error("An error occurred while connecting to the database.", e);
+			
+			config = null;
+		}
 	}
 
 	/**

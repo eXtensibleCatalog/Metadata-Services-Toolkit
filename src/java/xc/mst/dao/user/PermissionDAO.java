@@ -12,6 +12,7 @@ package xc.mst.dao.user;
 import java.util.List;
 
 import xc.mst.bo.user.Permission;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * Data access object for permissions belonging to a group.  These are taken from the
@@ -60,29 +61,34 @@ public abstract class PermissionDAO
 	 * Gets all possible permissions.
 	 *
 	 * @return A list of all possible permissions
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<Permission> getAll();
+	public abstract List<Permission> getAll() throws DatabaseConfigException;
 	
 	/**
 	 * Gets the permissions belonging to a group.
 	 *
 	 * @param groupId The ID of the group to get permissions for
 	 * @return A list of permissions belonging to the group
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<Permission> getPermissionsForGroup(int groupId);
+	public abstract List<Permission> getPermissionsForGroup(int groupId) throws DatabaseConfigException;
 
     /**
-     * returns a permission object based on the ID passed
+     * Returns a permission object based on the ID passed
+     * 
      * @param permissionId permission ID
-     * @return
+     * @return The Permission with the passed ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
      */
-    public abstract Permission getPermissionById(int permissionId);
+    public abstract Permission getPermissionById(int permissionId) throws DatabaseConfigException;
     
     /**
-     * Returns a permission for user sorted by ascending order of tab order
+     * Returns all permissions for user sorted by ascending order of tab order
      * 
      * @param userId User ID
-     * @return
+     * @return All permissions for user sorted by ascending order of tab order
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
      */
-    public abstract List<Permission> getPermissionsForUserByTabOrderAsc(int userId);
+    public abstract List<Permission> getPermissionsForUserByTabOrderAsc(int userId) throws DatabaseConfigException;
 } // end class PermissionDAO

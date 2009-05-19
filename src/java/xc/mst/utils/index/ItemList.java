@@ -18,6 +18,7 @@ import org.apache.solr.common.SolrDocumentList;
 
 import xc.mst.bo.record.Item;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.record.DefaultItemService;
 import xc.mst.manager.record.ItemService;
 
@@ -66,7 +67,16 @@ public class ItemList extends AbstractList<Item>
 	 */
 	public Item get(int index)
 	{
+		try 
+		{
 			return (docs != null ? service.getItemFromDocument(docs.get(index)) : null);
+		} 
+		catch (DatabaseConfigException e) 
+		{
+			log.error("Cannot connect to the database with the parameters from the config file.", e);
+			
+			return null;
+		}
 	}
 
 	/**

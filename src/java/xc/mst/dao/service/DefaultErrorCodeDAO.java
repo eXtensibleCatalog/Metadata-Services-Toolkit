@@ -18,6 +18,7 @@ import java.util.List;
 import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 public class DefaultErrorCodeDAO extends ErrorCodeDAO 
@@ -88,8 +89,12 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	private static Object psDeleteLock = new Object();
 	
 	@Override
-	public List<ErrorCode> getAll() 
+	public List<ErrorCode> getAll() throws DatabaseConfigException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -161,8 +166,12 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	}
 
 	@Override
-	public ErrorCode getById(int id) 
+	public ErrorCode getById(int id) throws DatabaseConfigException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -238,8 +247,12 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	}
 
 	@Override
-	public ErrorCode loadBasicErrorCode(int id) 
+	public ErrorCode loadBasicErrorCode(int id) throws DatabaseConfigException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -314,8 +327,12 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	}
 
 	@Override
-	public ErrorCode getByErrorCodeAndService(String errorCode, Service service) 
+	public ErrorCode getByErrorCodeAndService(String errorCode, Service service) throws DatabaseConfigException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByNameAndServiceLock)
 		{
 			if(log.isDebugEnabled())
@@ -395,6 +412,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	@Override
 	public boolean insert(ErrorCode errorCode) throws DataException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the non-ID fields on the service are valid
 		validateFields(errorCode, false, true);
 
@@ -460,6 +481,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	@Override
 	public boolean update(ErrorCode errorCode) throws DataException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the fields on the error code are valid
 		validateFields(errorCode, true, true);
 
@@ -508,6 +533,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	@Override
 	public boolean delete(ErrorCode errorCode) throws DataException 
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the ID field on the service are valid
 		validateFields(errorCode, true, false);
 

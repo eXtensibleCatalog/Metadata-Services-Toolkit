@@ -16,6 +16,7 @@ import org.apache.solr.common.SolrDocumentList;
 
 import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.record.DefaultWorkService;
 import xc.mst.manager.record.WorkService;
 
@@ -64,7 +65,16 @@ public class WorkList extends AbstractList<Work>
 	 */
 	public Work get(int index)
 	{
-		return (docs != null ? service.getWorkFromDocument(docs.get(0)) : null);
+		try 
+		{
+			return (docs != null ? service.getWorkFromDocument(docs.get(0)) : null);
+		} 
+		catch (DatabaseConfigException e) 
+		{
+			log.error("Cannot connect to the database with the parameters from the config file.", e);
+			
+			return null;
+		}
 	}
 
 	/**

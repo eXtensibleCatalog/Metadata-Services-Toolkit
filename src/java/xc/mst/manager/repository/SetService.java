@@ -13,6 +13,7 @@ import java.util.List;
 
 import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * Service to access the sets
@@ -27,16 +28,18 @@ public interface SetService {
 	 *
 	 * @param setId Id of the set
 	 * @return Set if exist else null
+	 * @throws DatabaseConfigException 
 	 */
-	public Set getSetById(int setId);
+	public Set getSetById(int setId) throws DatabaseConfigException;
 
     /**
      * Returns a Set object based on the value of the setSpec supplied.
      *
      * @param setSpec The set Specification value
      * @return Set object
+     * @throws DatabaseConfigException 
      */
-    public Set getSetBySetSpec(String setSpec);
+    public Set getSetBySetSpec(String setSpec) throws DatabaseConfigException;
     
 	/**
 	 * Delete Set
@@ -57,7 +60,8 @@ public interface SetService {
      * Get all sets
      *
      * @return all sets
+     * @throws DatabaseConfigException 
      */
-    public List<Set> getAllSets();
+    public List<Set> getAllSets() throws DatabaseConfigException;
 
 }

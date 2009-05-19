@@ -13,6 +13,7 @@ package xc.mst.manager.user;
 import java.util.List;
 import xc.mst.bo.user.Server;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * Service class which interacts with server objects
@@ -26,16 +27,18 @@ public interface ServerService {
      *
      * @param serverId the Id of the server object to be returned
      * @return The server object that is returned
+     * @throws DatabaseConfigException 
      */
-    public Server getServerById(int serverId);
+    public Server getServerById(int serverId) throws DatabaseConfigException;
 
     /**
      * Returns a server object
      *
      * @param serverName the name of the server object to be returned
      * @return The server object that is returned
+     * @throws DatabaseConfigException 
      */
-    public Server getServerByName(String serverName);
+    public Server getServerByName(String serverName) throws DatabaseConfigException;
 
     /**
      * Inserts a new server object

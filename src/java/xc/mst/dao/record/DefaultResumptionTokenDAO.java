@@ -17,6 +17,7 @@ import java.util.List;
 
 import xc.mst.bo.record.ResumptionToken;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -77,8 +78,12 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 	private static Object psDeleteLock = new Object();
 
 	@Override
-	public List<ResumptionToken> getAll()
+	public List<ResumptionToken> getAll() throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetAllLock)
 		{
 			if(log.isDebugEnabled())
@@ -154,8 +159,12 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 	} // end method getAll()
 
 	@Override
-	public ResumptionToken getById(long id)
+	public ResumptionToken getById(long id) throws DatabaseConfigException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		synchronized(psGetByIdLock)
 		{
 			if(log.isDebugEnabled())
@@ -237,6 +246,10 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 	@Override
 	public boolean insert(ResumptionToken resumptionToken) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the non-ID fields on the resumption token are valid
 		validateFields(resumptionToken, false, true);
 
@@ -305,6 +318,10 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 	@Override
 	public boolean update(ResumptionToken resumptionToken) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the fields on the resumption token are valid
 		validateFields(resumptionToken, true, true);
 
@@ -357,6 +374,10 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 	@Override
 	public boolean delete(ResumptionToken resumptionToken) throws DataException
 	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnection == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
 		// Check that the ID field on the resumption token are valid
 		validateFields(resumptionToken, true, false);
 

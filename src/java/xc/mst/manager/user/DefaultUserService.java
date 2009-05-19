@@ -30,6 +30,7 @@ import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.user.DefaultPermissionDAO;
 import xc.mst.dao.user.DefaultUserDAO;
 import xc.mst.dao.user.DefaultUserGroupUtilDAO;
@@ -64,19 +65,21 @@ public class DefaultUserService implements UserService{
 
 	/**
 	 * Get User having the specified user id
+	 * @throws DatabaseConfigException 
 	 *
 	 * @see xc.mst.manager.user.UserService#getUserById(Long)
 	 */
-	public User getUserById(int userId) {
+	public User getUserById(int userId) throws DatabaseConfigException {
 		return userDAO.getById(userId);
 	}
 
 	/**
 	 * Get User having the specified user name in the given server id
+	 * @throws DatabaseConfigException 
 	 *
 	 * @see xc.mst.manager.user.UserService#getUser(String, int)
 	 */
-	public User getUserByUserName(String userName, Server server) {
+	public User getUserByUserName(String userName, Server server) throws DatabaseConfigException {
 		return userDAO.getUserByUserName(userName, server);
 
 	}
@@ -358,8 +361,9 @@ public class DefaultUserService implements UserService{
      * @param email Email to get the user
      * @param server Login Server
      * @return User having specified email
+     * @throws DatabaseConfigException 
      */
-    public User getUserByEmail(String email, Server server) {
+    public User getUserByEmail(String email, Server server) throws DatabaseConfigException {
     	return userDAO.getUserByEmail(email, server);
     }
 
@@ -369,8 +373,9 @@ public class DefaultUserService implements UserService{
      * @param sort determines whether the list of users is sorted in ascending or descending order
      * @param columnSorted the column on which the rows of users are sorted
      * @return list of users
+     * @throws DatabaseConfigException 
      */
-    public List<User> getAllUsersSorted(boolean sort,String columnSorted)
+    public List<User> getAllUsersSorted(boolean sort,String columnSorted) throws DatabaseConfigException
     {
         return userDAO.getSorted(sort, columnSorted);
     }
@@ -380,8 +385,9 @@ public class DefaultUserService implements UserService{
      * 
      * @param group group to get the users
      * @return list of user 
+     * @throws DatabaseConfigException 
      */
-    public List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted)
+    public List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted) throws DatabaseConfigException
     {
         return userGroupUtilDAO.getUsersForGroupSorted(groupId,sort,columnSorted);
     }
@@ -391,8 +397,9 @@ public class DefaultUserService implements UserService{
      * 
      * @param groupId group ID
      * @return list of users
+     * @throws DatabaseConfigException 
      */
-    public List<User> getUsersForGroup(int groupId)
+    public List<User> getUsersForGroup(int groupId) throws DatabaseConfigException
     {
         return userGroupUtilDAO.getUsersForGroup(groupId);
     }
@@ -412,8 +419,9 @@ public class DefaultUserService implements UserService{
      * returns the number of LDAP users in the system
      *
      * @return number of LDAP users
+     * @throws DatabaseConfigException 
      */
-    public int getLDAPUserCount()
+    public int getLDAPUserCount() throws DatabaseConfigException
     {
         return userDAO.getLDAPUserCount();
     }
@@ -423,8 +431,9 @@ public class DefaultUserService implements UserService{
      *
      * @param userName User name of new user
      * @param comments Comments to get access to the system
+     * @throws DatabaseConfigException 
      */
-    public void sendEmailForUserPermission(String userName, String comments) {
+    public void sendEmailForUserPermission(String userName, String comments) throws DatabaseConfigException {
 
     	Emailer emailer = new Emailer();
 
@@ -448,8 +457,9 @@ public class DefaultUserService implements UserService{
      *  
      * @param user User to get permissions
      * @return user permissions
+     * @throws DatabaseConfigException 
      */
-    public List<Permission> getPermissionsForUserByTabOrderAsc(User user) {
+    public List<Permission> getPermissionsForUserByTabOrderAsc(User user) throws DatabaseConfigException {
     	return permissionDAO.getPermissionsForUserByTabOrderAsc(user.getId());
     }
 }

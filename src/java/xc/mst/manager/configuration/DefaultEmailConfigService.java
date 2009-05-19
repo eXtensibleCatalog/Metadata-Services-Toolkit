@@ -12,6 +12,7 @@ package xc.mst.manager.configuration;
 
 import xc.mst.bo.emailconfig.EmailConfig;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.emailconfig.DefaultEmailConfigDAO;
 import xc.mst.dao.emailconfig.EmailConfigDAO;
 
@@ -33,8 +34,9 @@ public class DefaultEmailConfigService implements EmailConfigService
 	 * Gets the Email Configuration
 	 *
 	 * @return The email configuration, or null if there was no email configuration in the database.
+     * @throws DatabaseConfigException 
 	 */
-	public EmailConfig getEmailConfiguration()
+	public EmailConfig getEmailConfiguration() throws DatabaseConfigException
     {
         return emailConfigDao.getConfiguration();
     }

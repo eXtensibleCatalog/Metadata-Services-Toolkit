@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -139,8 +140,9 @@ public abstract class HarvestScheduleDAO
 	 * Gets all harvest schedules in the database
 	 *
 	 * @return A list containing all harvest schedules in the database
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<HarvestSchedule> getAll();
+	public abstract List<HarvestSchedule> getAll() throws DatabaseConfigException;
 
 	/**
      * Returns a sorted list of all the harvest schedules
@@ -148,48 +150,54 @@ public abstract class HarvestScheduleDAO
      * @param asc Boolean parameter determines if rows are to be sorted in ascending or descending order
      * @param columnSorted The column on which the rows are sorted
      * @return A sorted list of schedules
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
      */
-	public abstract List<HarvestSchedule> getSorted(boolean asc, String columnSorted);
+	public abstract List<HarvestSchedule> getSorted(boolean asc, String columnSorted) throws DatabaseConfigException;
 	
 	/**
 	 * Gets a harvest schedule by it's ID
 	 *
 	 * @param harvestScheduleId The ID of the harvest schedule to get
 	 * @return The harvest schedule with the passed ID, or null if there was no harvest schedule with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract HarvestSchedule getById(int harvestScheduleId);
+	public abstract HarvestSchedule getById(int harvestScheduleId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a harvest schedule by it's ID without loading the schedule's steps
 	 *
 	 * @param harvestScheduleId The ID of the harvest schedule to get
 	 * @return The harvest schedule with the passed ID, or null if there was no harvest schedule with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract HarvestSchedule loadWithoutSteps(int harvestScheduleId);
+	public abstract HarvestSchedule loadWithoutSteps(int harvestScheduleId) throws DatabaseConfigException;
 
 	/**
 	 * Gets a harvest schedule by it's name
 	 *
 	 * @param name The name of the harvest schedule to get
 	 * @return The harvest schedule with the passed name, or null if there was no harvest schedule with that name.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract HarvestSchedule getByName(String name);
+	public abstract HarvestSchedule getByName(String name) throws DatabaseConfigException;
 
 	/**
 	 * Gets a harvest schedule by it's ID without getting extra information
 	 *
 	 * @param harvestScheduleId The ID of the harvest schedule to get
 	 * @return The harvest schedule with the passed ID, or null if there was no harvest schedule with that ID.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract HarvestSchedule loadBasicHarvestSchedule(int harvestScheduleId);
+	public abstract HarvestSchedule loadBasicHarvestSchedule(int harvestScheduleId) throws DatabaseConfigException;
 
 	/**
 	 * Gets all harvest schedules which harvest the provider with the passed ID
 	 *
 	 * @param providerId The ID of the provider whose schedules we should get
 	 * @return A list all harvest schedules which harvest the provider with the passed ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract HarvestSchedule getHarvestScheduleForProvider(int providerId);
+	public abstract HarvestSchedule getHarvestScheduleForProvider(int providerId) throws DatabaseConfigException;
 
 	/**
 	 * Gets all harvest schedules from the database which should be run at the time specified
@@ -199,8 +207,9 @@ public abstract class HarvestScheduleDAO
 	 * @param dayOfWeek The day of the week for which to get the harvest schedules to run
 	 * @param minute The minute for which to get the harvest schedules to run
 	 * @return A list of all HarvestSchedules to be run at the time specified by the parameters
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract List<HarvestSchedule> getSchedulesToRun(int hour, int dayOfWeek, int minute);
+	public abstract List<HarvestSchedule> getSchedulesToRun(int hour, int dayOfWeek, int minute) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a harvest schedule into the database
