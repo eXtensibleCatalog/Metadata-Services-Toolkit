@@ -78,7 +78,7 @@ public class InitializeServices  extends HttpServlet {
     			URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);
 				loader.loadClass(className);
 	    		
-	    		//MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING);
+	    		MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, false);
 			} 
     		catch (ClassNotFoundException e) 
     		{

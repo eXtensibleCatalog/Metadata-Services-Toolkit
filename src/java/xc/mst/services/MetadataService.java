@@ -300,7 +300,7 @@ public abstract class MetadataService
 			if(log.isDebugEnabled())
 				log.debug("Validating the Metadata Service with ID " + serviceId + ".");
 
-			runningService.checkService(Constants.STATUS_SERVICE_RUNNING);
+			runningService.checkService(Constants.STATUS_SERVICE_RUNNING, true);
 			
 			if(log.isDebugEnabled())
 				log.debug("Running the Metadata Service with ID " + serviceId + ".");
@@ -454,8 +454,9 @@ public abstract class MetadataService
 	 *
 	 * @param serviceId The ID of the MetadataService to run
 	 * @param successStatus The status of the MetadataService is the validation was successful
+	 * @param testSolr True to test the connection to the index, false otherwise
 	 */
-	public static void checkService(int serviceId, String successStatus)
+	public static void checkService(int serviceId, String successStatus, boolean testSolr)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering MetadataService.checkService for the service with ID " + serviceId + ".");
@@ -520,7 +521,7 @@ public abstract class MetadataService
 			if(log.isDebugEnabled())
 				log.debug("Validating the Metadata Service with ID " + serviceId + ".");
 
-			serviceToTest.checkService(successStatus);
+			serviceToTest.checkService(successStatus, testSolr);
 		} // end try(run the service through reflection)
 		catch(ClassNotFoundException e)
 		{
@@ -1116,15 +1117,37 @@ public abstract class MetadataService
 	 * the passed status.
 	 * 
 	 * @param statusForSuccess The status of the service if it is runnable
+	 * @param testSolr True to verify access to the Solr index, false otherwise
 	 * @return True iff the service is runnable
 	 */
-	protected boolean checkService(String statusForSuccess)
+	protected boolean checkService(String statusForSuccess, boolean testSolr)
 	{
-		/*// Check that we can access the Solr index
-		try
+		if(testSolr)
 		{
-			RecordList test = recordService.getInputForService(service.getId());
-			if(test == null)
+			// Check that we can access the Solr index
+			try
+			{
+				RecordList test = recordService.getInputForService(service.getId());
+				if(test == null)
+				{
+					LogWriter.addError(service.getServicesLogFileName(), "Cannot run the service because we cannot access the Solr index.");
+					service.setServicesErrors(service.getServicesErrors()+1);
+					
+					try
+					{
+						serviceDao.update(service);
+					}
+					catch(DataException e)
+					{
+						log.error("An error occurred while updating the service's error count.", e);
+					}
+					
+					persistStatus(Constants.STATUS_SERVICE_ERROR);
+					
+					return false;
+				}
+			}
+			catch(Exception e)
 			{
 				LogWriter.addError(service.getServicesLogFileName(), "Cannot run the service because we cannot access the Solr index.");
 				service.setServicesErrors(service.getServicesErrors()+1);
@@ -1133,34 +1156,16 @@ public abstract class MetadataService
 				{
 					serviceDao.update(service);
 				}
-				catch(DataException e)
+				catch(DataException e1)
 				{
-					log.error("An error occurred while updating the service's error count.", e);
+					log.error("An error occurred while updating the service's error count.", e1);
 				}
-				
+	
 				persistStatus(Constants.STATUS_SERVICE_ERROR);
 				
 				return false;
 			}
 		}
-		catch(Exception e)
-		{
-			LogWriter.addError(service.getServicesLogFileName(), "Cannot run the service because we cannot access the Solr index.");
-			service.setServicesErrors(service.getServicesErrors()+1);
-			
-			try
-			{
-				serviceDao.update(service);
-			}
-			catch(DataException e1)
-			{
-				log.error("An error occurred while updating the service's error count.", e1);
-			}
-
-			persistStatus(Constants.STATUS_SERVICE_ERROR);
-			
-			return false;
-		}*/
 		
 		try
 		{

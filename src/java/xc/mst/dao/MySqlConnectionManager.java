@@ -79,8 +79,6 @@ public class MySqlConnectionManager
 	        Class.forName("com.mysql.jdbc.Driver");
 
 	        // Get the URL, username and password to log into the database from the configuration file
-
-            configuration.getProperties().list(System.out);
 	        String url = configuration.getProperty(Constants.CONFIG_DATABASE_URL);
 	        String username = configuration.getProperty(Constants.CONFIG_DATABASE_USERNAME);
 	        String password = configuration.getProperty(Constants.CONFIG_DATABASE_PASSWORD);

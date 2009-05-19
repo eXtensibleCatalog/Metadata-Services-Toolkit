@@ -431,7 +431,7 @@ public class DefaultServicesService implements ServicesService
     		service.setServiceConfig(buffer.toString());
     		servicesDao.update(service);
     		
-    		MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING);
+    		MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
     	}    	
     	catch(DataException e)
     	{
@@ -781,7 +781,7 @@ public class DefaultServicesService implements ServicesService
     		service.setServiceConfig(buffer.toString());
     		servicesDao.update(service);
     		
-    		MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING);
+    		MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
     		
     		// Reprocess the records processed by the service
     		RecordList records = recordService.getByProcessingServiceId(service.getId());

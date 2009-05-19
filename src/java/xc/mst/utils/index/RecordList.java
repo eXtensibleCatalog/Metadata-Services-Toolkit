@@ -154,11 +154,14 @@ public class RecordList extends AbstractList<Record>
 		{
 			mid = (low + high) / 2;
 			
-			if(get(mid) != null)
+			if(mid == 0)
+				return 0;
+			
+			if(get(mid-1) != null)
 			{
-				if(get(mid+1) == null)
+				if(get(mid) == null)
 				{
-					size = mid+1;
+					size = mid;
 					return size;
 				}
 				else
@@ -166,7 +169,10 @@ public class RecordList extends AbstractList<Record>
 			}
 			else
 			{
-				if(get(mid-1) != null)
+				if(mid == 1)
+					return 0;
+				
+				if(get(mid-2) != null)
 				{
 					size = mid-1;
 					return size;

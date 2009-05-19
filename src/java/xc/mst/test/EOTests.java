@@ -90,20 +90,17 @@ public class EOTests
 			RecordList test = new DefaultRecordService().getAll();
 			System.out.println("size: " + test.size());
 			
-			java.util.Set<String> set = new HashSet<String>();
 			for(Record record : test)
-				if(!set.contains(record.getOaiIdentifier()))
-					set.add(record.getOaiIdentifier());
+				new DefaultRecordService().delete(record);
 			
+			Thread.sleep(2000);
+			SolrIndexManager.getInstance().commitIndex();
+			Thread.sleep(2000);
+			
+			test = null;
+			
+			test = new DefaultRecordService().getAll();
 			System.out.println("size: " + test.size());
-			
-			int i = 0;
-			for(Record record : test)
-				i++;
-			
-			//System.out.println(test.get(5) == null ? "null" : "not null");
-			System.out.println("size: " + test.size());
-			System.out.println("set size: " + set.size());
 
 			if(true) return;
 			
