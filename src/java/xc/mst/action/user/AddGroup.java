@@ -48,7 +48,7 @@ public class AddGroup extends ActionSupport
     private String[] selectedPermissions;
 
     /** The list of all the tab names */
-    private List tabNames;
+    private List<Permission> tabNames;
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -256,7 +256,7 @@ public class AddGroup extends ActionSupport
      *
      * @param tabNames tab names
      */
-    public void setTabNames(List tabNames)
+    public void setTabNames(List<Permission> tabNames)
     {
         this.tabNames = tabNames;
     }
@@ -266,7 +266,7 @@ public class AddGroup extends ActionSupport
      *
      * @return list of tab names
      */
-    public List getTabNames()
+    public List<Permission> getTabNames()
     {
         return tabNames;
     }

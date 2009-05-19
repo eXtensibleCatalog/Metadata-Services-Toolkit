@@ -49,7 +49,7 @@ public class EditGroup extends ActionSupport
     private List selectedPermissions = new ArrayList();
 
     /** The list of all the tab names */
-    private List tabNames = new ArrayList();
+    private List<Permission> tabNames = new ArrayList<Permission>();
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -294,7 +294,7 @@ public class EditGroup extends ActionSupport
     *
      * @param tabNames tab names
      */
-    public void setTabNames(List tabNames)
+    public void setTabNames(List<Permission> tabNames)
     {
         this.tabNames = tabNames;
     }
@@ -304,7 +304,7 @@ public class EditGroup extends ActionSupport
      *
      * @return list of tab names
      */
-    public List getTabNames()
+    public List<Permission> getTabNames()
     {
         return tabNames;
     }
