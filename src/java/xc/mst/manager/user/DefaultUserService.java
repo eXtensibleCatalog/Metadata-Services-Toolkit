@@ -99,7 +99,7 @@ public class DefaultUserService implements UserService{
      *
      * @param user
      */
-    public void insertUser(User user) throws Exception {
+    public void insertUser(User user) throws DataException {
 
 		if (!user.getServer().getName().equalsIgnoreCase("Local")) {
 			user.setPassword("");
@@ -118,7 +118,7 @@ public class DefaultUserService implements UserService{
       *
      * @param user
      */
-    public void updateUser(User user) throws Exception{
+    public void updateUser(User user) throws DataException{
         userDAO.update(user);
     }
 
@@ -156,7 +156,7 @@ public class DefaultUserService implements UserService{
       * @return
       * @throws java.lang.Exception
       */
-     public synchronized String encryptPassword(String plaintext) throws Exception
+     public synchronized String encryptPassword(String plaintext) 
       {
             MessageDigest md = null;
             try
@@ -165,7 +165,7 @@ public class DefaultUserService implements UserService{
             }
             catch(NoSuchAlgorithmException e)
             {
-              throw new Exception(e.getMessage());
+              log.error("Exception occured while encrypting the password.", e);
             }
             try
             {
@@ -173,7 +173,7 @@ public class DefaultUserService implements UserService{
             }
             catch(UnsupportedEncodingException e)
             {
-              throw new Exception(e.getMessage());
+            	log.error("Exception occured while encrypting the password.", e);
             }
 
             byte raw[] = md.digest(); //step 4
@@ -181,34 +181,6 @@ public class DefaultUserService implements UserService{
             return hash; //step 6
       }
 
-//     /**
-//      * Sends the new password to the user through e-mail
-//      *
-//      * @param userName The username of the user to whom the password should be sent
-//      * @throws java.lang.Exception
-//      */
-//    public void sendPassword(String userName) throws Exception
-//    {
-//
-//        User user = this.getUserByUserName(userName);
-//
-//        if(user!=null)  //user exists
-//        {
-//            String newPassword = createRandomPassword();
-//            String encryptedPassword = encryptPassword(newPassword);
-//            user.setPassword(encryptedPassword);
-//            this.updateUser(user);   //updates the new encrypted password in the DB
-//            String messageSubject = "New Password for MST Access";
-//            String messageBody = "The new password is "+newPassword;
-//            Emailer emailer = new Emailer();
-//            emailer.sendEmail(user.getEmail(), messageSubject, messageBody);
-//            //return control to Login Page.
-//        }
-//        else
-//        {
-//            // Do code for user does not exist
-//        }
-//    }
 
     /**
      * Authenticate user
@@ -218,7 +190,7 @@ public class DefaultUserService implements UserService{
      *
      * @return True if authentication is success else false
      */
-    public boolean  authenticateUser(User user, String password) throws Exception {
+    public boolean  authenticateUser(User user, String password)  {
     	boolean authenticationStatus = false;
     	String encodedPassword = encryptPassword(password);
 
@@ -240,7 +212,7 @@ public class DefaultUserService implements UserService{
      *
      * @return True if authentication is success else false
      */
-    public boolean  authenticateLDAPUser(User user, String password, Server server) throws Exception {
+    public boolean  authenticateLDAPUser(User user, String password, Server server)  {
 
     	log.debug("authenticateLDAPUser::" + user + "password::"+ password + server.getName());
 
@@ -290,8 +262,6 @@ public class DefaultUserService implements UserService{
 		      ldapProperties.setProperty(Context.SECURITY_CREDENTIALS, password);
 
 
-		      log.debug("before initial dir");
-		      log.debug("before initial dir" + new InitialDirContext(ldapProperties));
 		      // Get the environment properties (props) for creating initial
 		      // context and specifying LDAP service provider parameters.
 		      return new InitialDirContext(ldapProperties);
@@ -299,8 +269,7 @@ public class DefaultUserService implements UserService{
 	     catch(NamingException e)
 	     {
 		      // If the exception was an error code 49, the username or password was incorrect.
-		      log.debug("Exception::" + e);
-		      log.debug("Exception MSG::" + e.getMessage());
+		      log.error("Exception occured while authenticating user against LDAP server.If the exception was an error code 49, the username or password was incorrect", e);
 		      InitialDirContext in = null;
 		      return in;
 	     }
@@ -335,7 +304,7 @@ public class DefaultUserService implements UserService{
      *
      * @return User
      */
-    public User  getUserWithPermissions(int userId) throws Exception {
+    public User  getUserWithPermissions(int userId) throws DataException {
     	User user = userDAO.getById(userId);
 
     	return user;

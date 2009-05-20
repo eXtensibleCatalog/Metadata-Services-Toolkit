@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
+import org.apache.solr.client.solrj.response.SolrPingResponse;
 
 import xc.mst.bo.log.Log;
 import xc.mst.constants.Constants;
@@ -104,8 +105,9 @@ public class MSTSolrServer {
 
 			try {				
 				server = new CommonsHttpSolrServer( url );
-				log.debug("Solar Server::"+ server);
 				LogWriter.addInfo(logObj.getLogFileLocation(), "The Solr server instance was successfully created at " + url);
+				
+				
 			} catch (MalformedURLException me) {
 				log.error("Failure to create server instance. Solr Server is not created.", me);
 				
@@ -117,10 +119,25 @@ public class MSTSolrServer {
 				}catch(DataException e){
 					log.error("DataExcepiton while updating the log's error count.");
 				}
-				
-				//throw new DataException(me.getMessage());
-
 			}
+			
+/*			try {
+			     SolrPingResponse ping = server.ping();
+			     LogWriter.addInfo(logObj.getLogFileLocation(), "Got ping reply in " + ping.getElapsedTime() + "ms");
+			} catch (Exception e) {
+				log.error("Ping failed on solr server.", e);
+			
+				LogWriter.addError(logObj.getLogFileLocation(), "Ping failed on solr server.");
+				
+				logObj.setErrors(logObj.getErrors()+1);
+				try{
+					logDao.update(logObj);
+				}catch(DataException de){
+					log.error("DataExcepiton while updating the log's error count.");
+				}
+				
+			 }*/
+
 		}
 		return server;
 	}

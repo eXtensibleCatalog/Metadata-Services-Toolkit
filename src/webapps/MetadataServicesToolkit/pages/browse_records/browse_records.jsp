@@ -69,7 +69,16 @@
 		
 		<!-- body -->
 		<div id="bd">
-   			
+   				<!-- Display of error message -->
+                <c:if test="${errorType != null}">
+                    <div id="server_error_div">
+                    <div id="server_message_div" class="${errorType}">
+                        <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        <s:fielderror cssClass="errorMessage"/>
+                    </div>
+                    </div>
+                 </c:if>
+                 
 				<div class="facet_search_results">
 					
 					 	<div class="facetContainer">

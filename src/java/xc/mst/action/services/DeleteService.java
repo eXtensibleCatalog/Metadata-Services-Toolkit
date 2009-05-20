@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.record.DefaultRecordService;
@@ -62,9 +63,12 @@ public class DeleteService extends ActionSupport
     	if (log.isDebugEnabled()) {
     	  log.debug("DeleteService:execute():Service Id to be deleted : " + serviceId);
     	}
-          Service service = serviceService.getServiceById(serviceId);
-        try
+
+    	Service service = null;
+    	try
         {
+            service = serviceService.getServiceById(serviceId);
+
             long numberOfRecordsHarvested = recordService.getNumberOfRecordsByServiceId(serviceId);
             // Delete service only if it is not harvested.
             if (numberOfRecordsHarvested > 0) {
@@ -76,9 +80,9 @@ public class DeleteService extends ActionSupport
             }
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DataException e)
         {
-            log.error("Exception occured while deleting the service " + service.getName(), e);
+            log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), e);
             this.addFieldError("viewRepositoryError", "Service cannot be deleted");
             errorType = "error";
             return INPUT;
@@ -94,17 +98,19 @@ public class DeleteService extends ActionSupport
     	if (log.isDebugEnabled()) {
     		log.debug("DeleteRepository:deleteServiceAndRecords():Service Id to be deleted : " + serviceId);
     	}
-        Service service = serviceService.getServiceById(serviceId);
+    	 Service service = null;
 
     	try
         {
-            // Delete service
+    		service = serviceService.getServiceById(serviceId);
+    		
+    		// Delete service
    	    	serviceService.deleteService(service);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DataException e)
         {
-            log.error("Exception occured while deleting the service " + service.getName(), e);
+            log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), e);
             this.addFieldError("viewRepositoryError", "Service cannot be deleted");
             errorType = "error";
             return INPUT;

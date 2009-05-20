@@ -9,19 +9,23 @@
 
 package xc.mst.action.user;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.user.DefaultUserGroupUtilService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This action method is used to delete a user from the system
@@ -135,7 +139,7 @@ public class DeleteUser extends ActionSupport
      *
      * @return
      */
-    public List<User> getUserList()
+    public List<User> getUserList() throws DatabaseConfigException
     {
         return userService.getAllUsersSorted(false,"username");
     }

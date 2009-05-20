@@ -99,16 +99,17 @@ public class ViewRepository extends ActionSupport implements UserAware
                 message = "Repository revalidated!";
                 errorType = "info";
                 execute();
-                return SUCCESS;
+                
           }
           catch(Exception e)
           {
               log.error("Repository revalidation was unsuccessful",e);
               this.addFieldError("viewRepositoryError", "Revalidation unsuccessful");
               errorType = "error";
-              setProvider(providerService.getProviderById(repositoryId));
-              return SUCCESS;
+              execute();
+             
           }
+          return SUCCESS;
       }
 
 	/**

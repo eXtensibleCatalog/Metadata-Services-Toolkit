@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestScheduleDAO;
 import xc.mst.manager.harvest.DefaultScheduleService;
@@ -98,10 +99,9 @@ public class AllSchedules extends ActionSupport
             }
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Exception occured while getting Harvest schedule information.", e);
-            schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, scheduleDao.COL_SCHEDULE_NAME);
+            log.error("Exception occured while getting Harvest schedule information.", dce);
             return SUCCESS;
         }
     }
@@ -116,16 +116,35 @@ public class AllSchedules extends ActionSupport
     	if (log.isDebugEnabled()) {
     		log.debug("AllSchedules::deleteSchedule() scheduleId = " + scheduleId);
     	}
-
-    	HarvestSchedule schedule = scheduleService.getScheduleById(scheduleId);
+    	
+    	String returnType = SUCCESS;
+    	
+    	HarvestSchedule schedule = null;
+    	try {
+    		schedule = scheduleService.getScheduleById(scheduleId);
+    	} catch (DatabaseConfigException dce) {
+    		log.error(dce.getMessage(), dce);
+    		addFieldError("scheduleDeleteFailed", "Problems with retrieving and deleting the schedule.");
+    		errorType = "error";
+    		returnType =  INPUT;
+    	}
 
 		if (schedule != null )
         {
-
 	    	try
             {
 	    		scheduleService.deleteSchedule(schedule);
-	    		if((columnSorted.equalsIgnoreCase("ScheduleName"))||(columnSorted.equalsIgnoreCase("Recurrence")))
+            } catch (DataException e)
+            {
+	    		log.error("Deleting the schedule failed",  e);
+	    		addFieldError("scheduleDeleteFailed", "Problems with deleting the schedule :" + schedule.getScheduleName());
+	    		errorType = "error";
+	    		returnType =  INPUT;
+	    	}
+        }
+	    		
+		try {
+			if((columnSorted.equalsIgnoreCase("ScheduleName"))||(columnSorted.equalsIgnoreCase("Recurrence")))
                 {
                     if(columnSorted.equalsIgnoreCase("ScheduleName"))
                     {
@@ -144,17 +163,14 @@ public class AllSchedules extends ActionSupport
                 }
                 setIsAscendingOrder(isAscendingOrder);
               
-	    	} 
-            catch (DataException e)
-            {
+	    } catch (DataException e) {
 	    		log.error("Deleting the schedule failed" + e);
-	    		schedules = scheduleService.getAllSchedules();
-	    		addFieldError("scheduleDeleteFailed", "Problems with deleting the schedule :" + schedule.getScheduleName());
+	    		addFieldError("scheduleDIsplayError", "Problems with displaying all the schedules.");
 	    		errorType = "error";
-	    		return INPUT;
-	    	}
-		}
-    	return SUCCESS;
+	    		returnType =  INPUT;
+	    }
+		
+    	return returnType;
     }
 
     /**

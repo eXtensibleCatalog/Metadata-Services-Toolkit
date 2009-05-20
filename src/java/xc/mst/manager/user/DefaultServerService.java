@@ -86,7 +86,7 @@ public class DefaultServerService implements ServerService {
      * @return All servers
      * @throws DataException
      */
-    public List<Server> getAll() throws DataException {
+    public List<Server> getAll() throws DatabaseConfigException {
     	return serverDao.getAll();
     }
 }

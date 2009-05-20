@@ -17,6 +17,7 @@ import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.email.Emailer;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
@@ -65,8 +66,16 @@ public class UserRegistration extends ActionSupport {
 	 * To register the user
 	 */
     @Override
-	public String execute() throws DataException {
-		servers =  serverService.getAll();
+	public String execute() {
+    	
+    	try {
+    		servers =  serverService.getAll();
+    	} catch (DatabaseConfigException dce) {
+    		log.error(dce.getMessage(), dce);
+    		errorType = "error";
+    		addFieldError("dbConfigError", "Unable to access the database to get Server type information. There may be problem with database configration.");
+			return INPUT;
+    	}
 
 		return SUCCESS;
 	}
@@ -79,13 +88,14 @@ public class UserRegistration extends ActionSupport {
 	public String registerUser() {
 
 		log.debug(UserRegistration.class + ":" + "registerUser()" );
-		Server server = serverService.getServerByName(serverName);
-		newUser.setServer(server);
-		
-		// Check if user name already exist
-		User otherUser = userService.getUserByUserName(newUser.getUsername().trim(), server);
+
 
 		try {
+			Server server = serverService.getServerByName(serverName);
+			newUser.setServer(server);
+			
+			// Check if user name already exist
+			User otherUser = userService.getUserByUserName(newUser.getUsername().trim(), server);			
 			if (otherUser == null) {
 				// Check if email id already exist
 				User otherUserWithSameEmail = userService.getUserByEmail(newUser.getEmail().trim(), server);
@@ -143,7 +153,7 @@ public class UserRegistration extends ActionSupport {
 				errorType = "error";
 				return INPUT;
 			}
-		} catch (Exception e) {
+		} catch (DataException e) {
       		log.error("Exception occured while saving user registeration information", e);
 			addFieldError("dataError", e.getMessage());
 			errorType = "error";

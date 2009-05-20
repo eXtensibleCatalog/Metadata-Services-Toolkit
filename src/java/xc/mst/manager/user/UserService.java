@@ -47,13 +47,13 @@ public interface UserService {
      *
      * @param user user to inserted into the database
      */
-    public void insertUser(User user) throws Exception;
+    public void insertUser(User user) throws DataException;
 
      /**
      *
      * @param user user whose details should be updated in the database
      */
-    public void updateUser(User user) throws Exception;
+    public void updateUser(User user) throws DataException;
 
      /**
      * This method is used to create a new temporary password
@@ -61,12 +61,6 @@ public interface UserService {
      * @return The temporary password that is generated
      */
     public String createRandomPassword();
-
-//    /**
-//     * This method is used to send the newly generated password to the User specified by the userName.
-//     * @param userName The username of the user to whom the password should be sent.
-//     */
-//    public void sendPassword(String userName) throws Exception;
 
     /**
      * Authenticate user
@@ -76,7 +70,7 @@ public interface UserService {
      *
      * @return True if authentication is success else false
      */
-    public boolean  authenticateUser(User user, String password) throws Exception;
+    public boolean  authenticateUser(User user, String password);
 
     /**
      * User with group and permission data loaded
@@ -85,7 +79,7 @@ public interface UserService {
      *
      * @return User
      */
-    public User  getUserWithPermissions(int userId) throws Exception;
+    public User  getUserWithPermissions(int userId) throws DataException;
 
     /**
      * Encrypts the password
@@ -94,7 +88,7 @@ public interface UserService {
      * @return Encrypted password
      * @throws Exception
      */
-    public String encryptPassword(String plaintext) throws Exception;
+    public String encryptPassword(String plaintext) throws DataException;
 
     /**
      * Sends email to the user with new password
@@ -142,7 +136,7 @@ public interface UserService {
      *
      * @return True if authentication is success else false
      */
-    public boolean  authenticateLDAPUser(User user, String password, Server server) throws Exception;
+    public boolean  authenticateLDAPUser(User user, String password, Server server);
 
    /**
     * Returns the list of users associated with a group

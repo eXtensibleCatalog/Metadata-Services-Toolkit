@@ -125,7 +125,6 @@ public class ThreadedSolrIndexManager extends SolrIndexManager {
 		/**
 		 * Adds the document to SOLR in a separate thread
 		*/
-		@Override
 		public void run() throws RuntimeException{
 		
 				try {

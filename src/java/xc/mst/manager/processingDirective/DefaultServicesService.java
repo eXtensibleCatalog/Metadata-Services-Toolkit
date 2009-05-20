@@ -14,7 +14,8 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.Record;
-import xc.mst.bo.service.*;
+import xc.mst.bo.service.ErrorCode;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -460,7 +461,7 @@ public class DefaultServicesService implements ServicesService
 	    }
     }
     
-    @Override
+
     public void updateService(File configFile, Service service) throws DataException, IOException, ConfigFileException
     {
     	// Reload the service and confirm that it's not currently running.

@@ -13,15 +13,19 @@ package xc.mst.action.user;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.User;
+import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.UserService;
+
 import com.opensymphony.xwork2.ActionSupport;
-import org.apache.log4j.Logger;
-import xc.mst.constants.Constants;
 
 /**
  * This action method deletes a group of users
@@ -153,18 +157,22 @@ public class DeleteGroup extends ActionSupport
      */
     public List<Group> getGroupList()
     {
-
-        List<Group> tempList = groupService.getAllGroups();
-        List<Group> finalList = new ArrayList<Group>();
-
-        Iterator<Group> iter = tempList.iterator();
-        while(iter.hasNext())
-        {
-            Group group = (Group)iter.next();
-            group.setMemberCount(userService.getUsersForGroup(group.getId()).size());
-            finalList.add(group);
+    	List<Group> finalList = new ArrayList<Group>();
+    	try {
+	        List<Group> tempList = groupService.getAllGroups();
+	        
+	
+	        Iterator<Group> iter = tempList.iterator();
+	        while(iter.hasNext())
+	        {
+	            Group group = (Group)iter.next();
+	            group.setMemberCount(userService.getUsersForGroup(group.getId()).size());
+	            finalList.add(group);
+	        }
+    	} catch  (DataException e) {
+            log.error("Exception occured while geting group information", e);
         }
-        return finalList;
+	        return finalList;
     }
 
 }

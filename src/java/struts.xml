@@ -178,6 +178,7 @@
 		<action name="viewAddSchedule" class="xc.mst.action.harvest.AddSchedule">
         	<interceptor-ref name="editStack"/>
 			<result name="success">/pages/schedule/add_schedule.jsp</result>
+			<result name="input">/pages/schedule/add_schedule.jsp</result>
 		</action>
 
 		<!-- Action to add schedule and go to step 2 of add schedule -->
@@ -383,6 +384,7 @@
         <!--  ************************************ -->
         <action name="viewUserRegisteration" class="xc.mst.action.user.UserRegistration">
 			<result name="success">/pages/user/user_registration.jsp</result>
+			<result name="input">/pages/user/user_registration.jsp</result>
 		</action>
 		
         <action name="registerUser" class="xc.mst.action.user.UserRegistration" method="registerUser">
@@ -491,22 +493,26 @@
         <action name="viewBrowseRecords" class="xc.mst.action.browse.BrowseRecords">
         	<interceptor-ref name="default"/>
 			<result name="success">/pages/browse_records/browse_records.jsp</result>
+			<result name="input">/pages/browse_records/browse_records.jsp</result>
 		</action>
 		
         <action name="browseRecords" class="xc.mst.action.browse.BrowseRecords" method="browse">
         	<interceptor-ref name="default"/>
 			<result name="success">/pages/browse_records/browse_records.jsp</result>
+			<result name="input">/pages/browse_records/browse_records.jsp</result>
 		</action>
 		
 		<action name="viewRecord" class="xc.mst.action.browse.BrowseRecords" method="viewRecord">
 		 	<interceptor-ref name="default"/>
 			<result name="success">/pages/browse_records/record.jsp</result>
+			<result name="input">/pages/browse_records/record.jsp</result>
 		</action>
 		
 		
 		<action name="viewErrorDescription" class="xc.mst.action.browse.BrowseRecords" method="viewErrorDescription">
 		 	<interceptor-ref name="default"/>
 			<result name="success">/pages/browse_records/error_description.jsp</result>
+			<result name="input">/pages/browse_records/error_description.jsp</result>
 		</action>		
 		
 		 <!--  ************************************ -->

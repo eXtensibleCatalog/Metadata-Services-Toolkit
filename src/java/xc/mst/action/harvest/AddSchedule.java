@@ -25,6 +25,7 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.harvest.DefaultScheduleService;
@@ -139,14 +140,20 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	if (log.isDebugEnabled()) {
     		log.debug("In Add schedule Execute()");
     	}
-        repositories = providerService.getAllProviders();
-        
-        schedule = new HarvestSchedule();
-        request.getSession().setAttribute("schedule", schedule);
-        
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-    	startDateDisplayFormat = format.format(new  java.util.Date());
-    	
+    	try {
+	        repositories = providerService.getAllProviders();
+	        
+	        schedule = new HarvestSchedule();
+	        request.getSession().setAttribute("schedule", schedule);
+	        
+	        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+	    	startDateDisplayFormat = format.format(new  java.util.Date());
+    	} catch (DatabaseConfigException dce) {
+    		log.error(dce.getMessage(), dce);
+    		errorType = "error";
+    		addFieldError("dbError", "Error in displaying Add schedule page");
+    		return INPUT;
+    	}
     	
     	return SUCCESS;
     }
@@ -460,24 +467,32 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	if (log.isDebugEnabled()) {
     		log.debug("AddSchedule::viewEdit():: scheduleId=" + scheduleId);
     	}
-
-    	schedule = scheduleService.getScheduleById(scheduleId);
-
-    	if (schedule != null) {
-    		request.getSession().setAttribute("schedule", schedule);
-    		
-	    	SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-	    	if (schedule.getEndDate() != null) {
-	    		endDateDisplayFormat = format.format(schedule.getEndDate());
+    	
+    	try {
+	    	schedule = scheduleService.getScheduleById(scheduleId);
+	
+	    	if (schedule != null) {
+	    		request.getSession().setAttribute("schedule", schedule);
+	    		
+		    	SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+		    	if (schedule.getEndDate() != null) {
+		    		endDateDisplayFormat = format.format(schedule.getEndDate());
+		    	}
+		    	startDateDisplayFormat = format.format(schedule.getStartDate());
+	
+		    	repositories = providerService.getAllProviders();
+	    	} else {
+	    		addFieldError("scheduleNotExist", "Schedule does not exists.");
+	    		errorType = "error";
+	    		return INPUT;
 	    	}
-	    	startDateDisplayFormat = format.format(schedule.getStartDate());
-
-	    	repositories = providerService.getAllProviders();
-    	} else {
-    		addFieldError("scheduleNotExist", "Schedule does not exists.");
+    	} catch (DatabaseConfigException dce) {
+    		log.error(dce.getMessage(), dce);
     		errorType = "error";
+    		addFieldError("dbError", "Error in displaying Edit schedule page.");
     		return INPUT;
     	}
+    	
     	return SUCCESS;
     }
 
