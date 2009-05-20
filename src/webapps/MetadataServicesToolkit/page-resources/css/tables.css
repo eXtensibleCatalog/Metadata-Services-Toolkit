@@ -298,7 +298,7 @@
 .error {
 	
 	background-color: #FFEBEC;
-    	width: 100%;
+    width: 100%;
 	border: 1px solid;
 	border-color:#a9a9a9;
 	margin-top:10px;
@@ -318,19 +318,27 @@
 
 .errorMessage {
 	float:left;
-	margin-top:-10px;
+	position:relative;
+    top:5px;
 	
+}
+.errorText
+{
+    position : relative;
+    top : 1px;
 }
 
 .jsErrorMessage {
 	padding:5px;
-	
+	display : inline;
+    position : relative;
+    top: 3px;
 }
 
 .info {
 	
 	background-color: #F6FBFF;
-    	width: 100%;
+    width: 100%;
 	border: 1px solid;
 	border-color:#a9a9a9;
 	margin-top:10px;

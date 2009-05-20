@@ -72,7 +72,10 @@
                     <div id="server_error_div">
                     <div id="server_message_div" class="${errorType}">
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
-                        <s:fielderror cssClass="errorMessage"/>
+                        <span class="errorText">
+                            <mstFieldError maps=<s:fielderror/>
+                            </mstFieldError>
+                        </span>
                     </div>
                     </div>
                  </c:if>

@@ -24,6 +24,22 @@
       <rtexprvalue>true</rtexprvalue>
     </attribute>
   </tag>
+
+  <tag>
+    <name>mstFieldError</name>
+    <tag-class>xc.mst.tags.MSTFieldError</tag-class>
+    <body-content>scriptless</body-content>
+    <info>
+		This is a tag used to display all the field errors in the JSP.
+    </info>
+
+
+    <attribute>
+      <name>maps</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
  
   <!-- Pager tag -->
   <tag>

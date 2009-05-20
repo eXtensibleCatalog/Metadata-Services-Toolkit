@@ -34,10 +34,11 @@ function createErrorDiv(errorType, errorMessage) {
 		
 		}
 		
-		var messageDivElement = document.createElement('div');
+		var messageDivElement = document.createElement('span');
 		messageDivElement.setAttribute('id', 'message_div');
-		messageDivElement.setAttribute('class',errorType);
-		
+		//messageDivElement.setAttribute('class',errorType);
+		messageDivElement.className = errorType;
+
 		var imgElement = document.createElement('img');
 		imgElement.setAttribute('src',basePath + 'page-resources/img/' + errorType +'.jpg');
 		
