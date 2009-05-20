@@ -21,6 +21,7 @@ import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
@@ -83,7 +84,14 @@ public class Login extends ActionSupport implements ServletRequestAware {
     @Override
 	public String execute() throws DataException {
 
-    	servers = serverService.getAll();
+    	try {
+    		servers = serverService.getAll();
+    	}  catch (DatabaseConfigException dce) {
+    		log.error(dce.getMessage(), dce);
+    		errorType = "error";
+    		addFieldError("dbConfigError", "Unable to access the database to get Server type information. There may be problem with database configration.");
+			return INPUT;
+    	}
 
     	// Get the user object in session
 		User sessionUser = (User) request.getSession().getAttribute("user");
