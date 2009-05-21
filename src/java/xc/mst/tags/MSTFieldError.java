@@ -25,24 +25,31 @@ import java.io.IOException;
 public class MSTFieldError extends SimpleTagSupport {
 
 	/** Map that contains all the field Errors */
-	private Map errors;
+	private Map error;
 
     @Override
-    public void doTag() throws JspException,IOException
+    public void doTag() //throws JspException,IOException
     {
-
-        if( errors != null && errors.size() > 0)
-                {
-                        JspWriter out = this.getJspContext().getOut();
-                        // get message for error map
-                        List errorList = (List)errors.get(0);
-                        if( errorList != null && errorList.size() > 0)
-                        {
-                                String error = (String)errorList.get(0);
-                                out.write(error);
-                        }
-                }
-
+        try
+        {
+            if( error != null && error.size() > 0)
+                    {
+                            JspWriter out = this.getJspContext().getOut();
+                            // get message for error map
+                            Iterator iter = error.values().iterator();
+                            {
+                                List<String> tempList= (List<String>)iter.next();
+                                if(tempList!=null && tempList.size()>0)
+                                {
+                                    out.write(tempList.get(0));
+                                }
+                            }
+                    }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
@@ -51,9 +58,9 @@ public class MSTFieldError extends SimpleTagSupport {
      *
      * @param errors error map
      */
-    public void setErrors(Map errors)
+    public void setError(Map error)
     {
-        this.errors = errors;
+        this.error = error;
     }
 
     /**
@@ -61,9 +68,9 @@ public class MSTFieldError extends SimpleTagSupport {
      *
      * @return error map
      */
-    public Map getErrors()
+    public Map getError()
     {
-        return this.errors;
+        return this.error;
     }
 
 }

@@ -26,7 +26,7 @@
   </tag>
 
   <tag>
-    <name>mstFieldError</name>
+    <name>fielderror</name>
     <tag-class>xc.mst.tags.MSTFieldError</tag-class>
     <body-content>scriptless</body-content>
     <info>
@@ -35,7 +35,7 @@
 
 
     <attribute>
-      <name>maps</name>
+      <name>error</name>
       <required>true</required>
       <rtexprvalue>true</rtexprvalue>
     </attribute>

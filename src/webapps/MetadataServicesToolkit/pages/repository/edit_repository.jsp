@@ -10,6 +10,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="mst" uri="mst-tags"%>
 <c:import url="/inc/doctype-frag.jsp"/>
 
 <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
@@ -77,8 +78,8 @@
                     <div id="server_message_div" class="${errorType}">
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
                         <span class="errorText">
-                            <mstFieldError maps=<s:fielderror/>
-                            </mstFieldError>
+                            <mst:fielderror error="${fieldErrors}">
+                            </mst:fielderror>
                         </span>
                     </div>
                     </div>

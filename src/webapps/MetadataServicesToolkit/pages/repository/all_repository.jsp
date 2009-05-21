@@ -8,6 +8,7 @@
   -->
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="mst" uri="mst-tags"%>
 
 <!--  document type -->
 <c:import url="/inc/doctype-frag.jsp"/>
@@ -76,9 +77,10 @@
                     <div id="server_error_div">
                     <div id="server_message_div" class="${errorType}">
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
+                        ${fieldErrors}
                         <span class="errorText">
-                            <mstFieldError maps=<s:fielderror/>
-                            </mstFieldError>
+                            <mst:fielderror error="${fieldErrors}">
+                            </mst:fielderror>
                         </span>
                     </div>
                     </div>
