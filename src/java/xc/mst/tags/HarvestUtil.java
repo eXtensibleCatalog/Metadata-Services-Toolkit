@@ -12,11 +12,11 @@ package xc.mst.tags;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+import java.util.List;
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
-import xc.mst.constants.Constants;
-import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
 
@@ -27,23 +27,33 @@ import xc.mst.manager.harvest.ScheduleService;
  */
 public class HarvestUtil {
 		
-	/** A reference to the logger for this class */
-	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-	
-	/**
-	 * Returns the latest harvest end time for the given harvest schedule 
-	 * 
-	 * @param harvestSchedule - Harvest schedule to get the latest harvest end time
-	 * @return Returns the latest harvest end time 
-	 * @throws DatabaseConfigException 
-	 */
-	public static String latestHarvest(HarvestSchedule harvestSchedule) throws DatabaseConfigException
-	{
-
-		ScheduleService scheduleService = new DefaultScheduleService();
+		/**
+		 * Returns the latest harvest end time for the given harvest schedule 
+		 * 
+		 * @param harvestSchedule - Harvest schedule to get the latest harvest end time
+		 * @return Returns the latest harvest end time 
+		 */
+		public static String latestHarvest(HarvestSchedule harvestSchedule) throws Exception
+		{
+			ScheduleService scheduleService = new DefaultScheduleService();
+			
+			List<Harvest> harvests = scheduleService.getHarvestsForSchedule(harvestSchedule); 
+			Timestamp latestRun = null;
+			for(Harvest harvest:harvests) {
+				if(latestRun == null) {
+					latestRun = harvest.getEndTime();
+					continue;
+				}
+				
+				if(harvest.getEndTime() != null && harvest.getEndTime().after(latestRun)) {
+					latestRun = harvest.getEndTime();
+				}
+				
+			}
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd 'at' hh:mm");
 		
-		Timestamp latestRun = scheduleService.getLatestHarvestEndTime(harvestSchedule); 
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd 'at' hh:mm");
+		latestRun = scheduleService.getLatestHarvestEndTime(harvestSchedule); 
+		format = new SimpleDateFormat("yyyy-MM-dd 'at' hh:mm");
 		String output = "Not yet harvested";
 		if (latestRun != null) {
 			output = "Success last run completed " + format.format(latestRun);
