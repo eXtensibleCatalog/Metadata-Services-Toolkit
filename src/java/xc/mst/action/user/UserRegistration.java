@@ -142,14 +142,14 @@ public class UserRegistration extends ActionSupport {
 					userService.sendEmailForUserPermission(newUser.getUsername().trim(), comments);
 				} else {
 					servers =  serverService.getAll();
-					addFieldError("userEmailExist", "This email address already exist in the system.- " + newUser.getEmail().trim());
+					addFieldError("userEmailExist", "This email address already exists in the system.- " + newUser.getEmail().trim());
 					errorType = "error";
 					return INPUT;
 				}
 
 			} else {
 				servers =  serverService.getAll();
-				addFieldError("userNameExist", "User name already exist - " + newUser.getUsername().trim());
+				addFieldError("userNameExist", "User name already exists - " + newUser.getUsername().trim());
 				errorType = "error";
 				return INPUT;
 			}

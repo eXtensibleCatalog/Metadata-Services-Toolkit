@@ -134,7 +134,7 @@ public class AddLDAPUser extends ActionSupport
 
             if(serverExists==false)
             {
-                this.addFieldError("addLDAPUserError","Error : NO LDAP Server has been configured");
+                this.addFieldError("addLDAPUserError","NO LDAP Server has been configured");
                 errorType = "error";
                 setGroupList(groupService.getAllGroups());
                 setTemporaryUser(user);
@@ -151,7 +151,7 @@ public class AddLDAPUser extends ActionSupport
             {
                 if(!similarUserName.getServer().getName().equalsIgnoreCase("Local"))
                 {
-                    this.addFieldError("addLDAPUserError","Error : Username already exists");
+                    this.addFieldError("addLDAPUserError","Username already exists");
                     errorType = "error";
                     setGroupList(groupService.getAllGroups());
                     setTemporaryUser(user);
@@ -163,7 +163,7 @@ public class AddLDAPUser extends ActionSupport
             {
                 if(!similarEmail.getServer().getName().equalsIgnoreCase("Local"))
                 {
-                    this.addFieldError("addLDAPUserError","Error : Email ID already exists");
+                    this.addFieldError("addLDAPUserError","Email ID already exists");
                     errorType = "error";
                     setGroupList(groupService.getAllGroups());
                     setTemporaryUser(user);

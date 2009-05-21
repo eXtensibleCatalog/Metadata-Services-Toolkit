@@ -132,7 +132,7 @@ public class EditLDAPUser extends ActionSupport
 
             if(serverExists==false)
             {
-                this.addFieldError("addLDAPUserError","Error : NO LDAP Server has been configured");
+                this.addFieldError("addLDAPUserError","NO LDAP Server has been configured");
                 errorType = "error";
                 return ERROR;
             }
@@ -153,7 +153,7 @@ public class EditLDAPUser extends ActionSupport
                 {
                     if(!similarEmail.getServer().getName().equalsIgnoreCase("Local"))
                     {
-                        this.addFieldError("editLDAPUserError","Error : Email ID already exists");
+                        this.addFieldError("editLDAPUserError","Email ID already exists");
                         errorType = "error";
                         setGroupList(groupService.getAllGroups());
                         setTemporaryUser(user);
@@ -169,8 +169,8 @@ public class EditLDAPUser extends ActionSupport
         }
         catch(Exception e)
         {
-            log.debug("User not Added correctly",e);
-            this.addFieldError("editLDAPUserError","User not Added correctly");
+            log.debug("User details not edited correctly",e);
+            this.addFieldError("editLDAPUserError","User details not edited correctly");
             errorType = "error";
             return ERROR;
         }

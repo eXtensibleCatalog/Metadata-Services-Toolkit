@@ -87,7 +87,7 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 					errorType = "info";
 					message = "Account information saved.";
 				} else {
-					addFieldError("emailExist", "Email already exist - " + email);
+					addFieldError("emailExist", "Email already exists - " + email);
 					errorType = "error";
 					return INPUT;
 				}

@@ -72,7 +72,7 @@ public class AllUsers extends ActionSupport
             }
             else
             {
-                this.addFieldError("generalLogError", "ERROR : The specified column does not exist");
+                this.addFieldError("generalLogError", "The specified column does not exist");
             }
             
         }

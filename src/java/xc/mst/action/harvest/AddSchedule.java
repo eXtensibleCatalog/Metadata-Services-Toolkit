@@ -482,7 +482,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 	
 		    	repositories = providerService.getAllProviders();
 	    	} else {
-	    		addFieldError("scheduleNotExist", "Schedule does not exists.");
+	    		addFieldError("scheduleNotExist", "Schedule does not exist.");
 	    		errorType = "error";
 	    		return INPUT;
 	    	}

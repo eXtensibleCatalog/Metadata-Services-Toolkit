@@ -94,7 +94,7 @@ public class AllSchedules extends ActionSupport
             }
             else
             {
-                 this.addFieldError("allSchedulesError", "ERROR : The column "+columnSorted+" cannot be matched");
+                 this.addFieldError("allSchedulesError", "The column "+columnSorted+" cannot be matched");
                  schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, scheduleDao.COL_SCHEDULE_NAME);
             }
             return SUCCESS;
@@ -158,7 +158,7 @@ public class AllSchedules extends ActionSupport
                 }
                 else
                 {
-                     this.addFieldError("allSchedulesError", "ERROR : The column "+columnSorted+" cannot be matched");
+                     this.addFieldError("allSchedulesError", "The column "+columnSorted+" cannot be matched");
                      schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, scheduleDao.COL_SCHEDULE_NAME);
                 }
                 setIsAscendingOrder(isAscendingOrder);

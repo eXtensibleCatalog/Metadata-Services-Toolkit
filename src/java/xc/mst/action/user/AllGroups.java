@@ -93,7 +93,7 @@ public class AllGroups extends ActionSupport
             }
             else
             {
-                this.addFieldError("allGroupsError", "Error : The specified column name does not exist");
+                this.addFieldError("allGroupsError", "The specified column name does not exist");
                 errorType = "error";
                 return SUCCESS;
             }

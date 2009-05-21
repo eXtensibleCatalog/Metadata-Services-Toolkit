@@ -122,7 +122,7 @@ public class AddLocalUser extends ActionSupport
             {
                 if(similarUserName.getServer().getName().equalsIgnoreCase("Local"))
                 {
-                    this.addFieldError("addLocalUserError","Error : Username already exists");
+                    this.addFieldError("addLocalUserError","Username already exists");
                     errorType = "error";
                     setGroupList(groupService.getAllGroups());
                     setTemporaryUser(user);
@@ -134,7 +134,7 @@ public class AddLocalUser extends ActionSupport
             {
                 if(similarEmail.getServer().getName().equalsIgnoreCase("Local"))
                 {
-                    this.addFieldError("addLocalUserError","Error : Email ID already exists");
+                    this.addFieldError("addLocalUserError","Email ID already exists");
                     errorType = "error";
                     setGroupList(groupService.getAllGroups());
                     setTemporaryUser(user);
