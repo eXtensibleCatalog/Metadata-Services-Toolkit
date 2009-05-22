@@ -29,6 +29,7 @@ import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.user.DefaultUserDAO;
 import xc.mst.dao.user.UserDAO;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
@@ -1237,7 +1238,7 @@ public class DefaultProviderDAO extends ProviderDAO
 	} // end update(Provider)
 
 	@Override
-	public boolean delete(Provider provider) throws DataException
+	public boolean delete(Provider provider) throws DataException, IndexException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnection == null)
@@ -1326,7 +1327,7 @@ public class DefaultProviderDAO extends ProviderDAO
 	 * @param deleteMe The record to delete
 	 * @return true on success, false on failure
 	 */
-	private boolean markAsDeleted(Record record) throws DataException
+	private boolean markAsDeleted(Record record) throws DataException, IndexException
 	{
 		// Whether or not we deleted the record and all records processed from it successfully
 		boolean success = true;

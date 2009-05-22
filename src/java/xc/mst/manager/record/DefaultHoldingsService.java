@@ -17,6 +17,7 @@ import org.apache.solr.common.SolrInputDocument;
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Manifestation;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.utils.index.HoldingsList;
 
 /**
@@ -31,7 +32,7 @@ import xc.mst.utils.index.HoldingsList;
 public class DefaultHoldingsService extends HoldingsService
 {
 	@Override
-	public Holdings getByXcHoldingsId(long holdingsId) throws DatabaseConfigException
+	public Holdings getByXcHoldingsId(long holdingsId) throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with XC holdings ID " + holdingsId);
@@ -60,7 +61,7 @@ public class DefaultHoldingsService extends HoldingsService
 	} // end method getByXcHoldingsId(long)
 
 	@Override
-	public HoldingsList getByXcRecordId(String recordId)
+	public HoldingsList getByXcRecordId(String recordId) throws IndexException
 	{
 		String trait = Holdings.TRAIT_RECORD_ID + ":" + recordId;
 
@@ -91,7 +92,7 @@ public class DefaultHoldingsService extends HoldingsService
 	} // end method getByXcRecordId(String)
 
 	@Override
-	public HoldingsList getByManifestationHeld(String manifestationHeld)
+	public HoldingsList getByManifestationHeld(String manifestationHeld) throws IndexException
 	{
 		String trait = (Holdings.TRAIT_MANIFESTATION_HELD + ":" + manifestationHeld).replaceAll(":", "\\\\:");
 
@@ -122,7 +123,7 @@ public class DefaultHoldingsService extends HoldingsService
 	} // end method getByManifestationHeld(String)
 
 	@Override
-	public HoldingsList getByLinkedManifestation(Manifestation manifestation)
+	public HoldingsList getByLinkedManifestation(Manifestation manifestation) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all holdings linked to the manifestation with ID " + manifestation.getId());
@@ -153,7 +154,7 @@ public class DefaultHoldingsService extends HoldingsService
 	} // end method getByLinkedManifestation(Manifestation)
 
 	@Override
-	public Holdings getHoldingsFromDocument(SolrDocument doc) throws DatabaseConfigException
+	public Holdings getHoldingsFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
 		// Create a Holdings object to store the result
 		Holdings holdings = Holdings.buildHoldingsFromRecord(recordService.getRecordFromDocument(doc));

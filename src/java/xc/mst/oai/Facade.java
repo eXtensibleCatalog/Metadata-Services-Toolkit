@@ -34,6 +34,7 @@ import xc.mst.dao.record.DefaultResumptionTokenDAO;
 import xc.mst.dao.record.ResumptionTokenDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
@@ -403,7 +404,7 @@ public class Facade
 	 * Create an XML response to the ListMetadataFormat verb.
 	 * @throws DatabaseConfigException 
 	 */
-	public void doListMetadataFormats() throws DatabaseConfigException
+	public void doListMetadataFormats() throws DatabaseConfigException, IndexException
 	{
 		// Create the ListMetadataFormats element for the OAI response
 		Element listMetadataFormats = new Element("ListMetadataFormats");
@@ -521,7 +522,7 @@ public class Facade
 	 * Create the response to the ListIdentifiers verb.
 	 * @throws DatabaseConfigException
 	 */
-	public void doListIdentifiers() throws DatabaseConfigException
+	public void doListIdentifiers() throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering doListIdentifiers");
@@ -548,7 +549,7 @@ public class Facade
 	 * Create the response to the ListRecords verb.
 	 * @throws DatabaseConfigException 
 	 */
-	public void doListRecords() throws DatabaseConfigException
+	public void doListRecords() throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering doListRecords");
@@ -575,7 +576,7 @@ public class Facade
 	 * Create response to the GetRecord verb
 	 * @throws DatabaseConfigException 
 	 */
-	public void doGetRecord() throws DatabaseConfigException
+	public void doGetRecord() throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering doGetRecord");
@@ -659,7 +660,8 @@ public class Facade
 	 *         These should be included in the response's ListRecords or ListIdentifiers element.
 	 * @throws DatabaseConfigException 
 	 */
-	private String handleRecordLists(String from, String until, String metadataPrefix, String set, String resumptionTokenId, boolean getRecords) throws DatabaseConfigException
+	private String handleRecordLists(String from, String until, String metadataPrefix, String set, String resumptionTokenId, boolean getRecords) 
+		throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering handleRecordLists");

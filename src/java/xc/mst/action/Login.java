@@ -89,7 +89,7 @@ public class Login extends ActionSupport implements ServletRequestAware {
     	}  catch (DatabaseConfigException dce) {
     		log.error(dce.getMessage(), dce);
     		errorType = "error";
-    		addFieldError("dbConfigError", "Unable to access the database to get Server type information. There may be problem with database configration.");
+    		addFieldError("dbConfigError", "Unable to access the database to get Server type information. There may be problem with database configuration.");
 			return INPUT;
     	}
 

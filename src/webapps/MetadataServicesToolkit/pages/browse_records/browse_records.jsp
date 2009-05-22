@@ -131,7 +131,7 @@
 								<c:forEach var="fcount" items="${facet.values}">
 									<c:set var="facetExist" value="false"/>
 									<c:forEach var="filter" items="${result.facetFilters}">
-										<c:if test="${fcount.name == filter.value}">
+										<c:if test="${fcount.name == filter.value && facet.name == filter.name}">
 											<c:set var="facetExist" value="true"/>
 										</c:if>
 									</c:forEach>
@@ -399,8 +399,8 @@
 									Service: ${record.service.name}
 									<br>
 								</c:if>
-								<c:if test="${record.harvest != null}">
-									Harvest: ${record.harvest.harvestScheduleName} 
+								<c:if test="${record.harvestScheduleName != null}">
+									Harvest: ${record.harvestScheduleName} 
 									<br>
 								</c:if>
 								<div class="redError">

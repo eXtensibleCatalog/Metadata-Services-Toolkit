@@ -22,10 +22,10 @@ import xc.mst.bo.record.Item;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.ItemList;
 import xc.mst.utils.index.SolrIndexManager;
-import xc.mst.utils.index.ThreadedSolrIndexManager;
 
 /**
  * Service class to query, add, update and delete records from an index.
@@ -73,7 +73,7 @@ public abstract class ItemService
 	 * @param value The value of the holdingsExemplified element
 	 * @return A list of Item with the requested holdingsExemplified element.
 	 */
-	public ItemList getByHoldingsExemplified(String type, String value)
+	public ItemList getByHoldingsExemplified(String type, String value) throws IndexException
 	{
 		return getByHoldingsExemplified("(" + type + ")" + value);
 	} // end method getByHoldingsExemplified(String, String)
@@ -85,7 +85,7 @@ public abstract class ItemService
 	 *                            format (<type>)<value>
 	 * @return A list of Items with the requested manifestationHeld element.
 	 */
-	public abstract ItemList getByHoldingsExemplified(String holdingsExemplified);
+	public abstract ItemList getByHoldingsExemplified(String holdingsExemplified) throws IndexException;
 
 	/**
 	 * Gets the Item that matches the passed XC item ID
@@ -93,14 +93,14 @@ public abstract class ItemService
 	 * @param The XC item ID of the target item element
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Item getByXcItemId(long itemId) throws DatabaseConfigException;
+	public abstract Item getByXcItemId(long itemId) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Gets a list of all Items linked to the passed holdings
 	 *
 	 * @param holdings The holdings whose linked Items should be returned
 	 */
-	public abstract ItemList getByLinkedHoldings(Holdings holdings);
+	public abstract ItemList getByLinkedHoldings(Holdings holdings) throws IndexException;
 
 	/**
 	 * Inserts an item into the index
@@ -108,7 +108,7 @@ public abstract class ItemService
 	 * @param item The item to insert
 	 * @return true on success, false on failure
 	 */
-	public boolean insert(Item item) throws DataException
+	public boolean insert(Item item) throws DataException, IndexException
 	{
 		// Check that the non-ID fields on the item are valid
 		validateFields(item, false, true);
@@ -134,7 +134,7 @@ public abstract class ItemService
 	 * @param item The item to update
 	 * @return true on success, false on failure
 	 */
-	public boolean update(Item item) throws DataException
+	public boolean update(Item item) throws DataException, IndexException
 	{
 		// Check that the fields on the item are valid
 		validateFields(item, true, true);
@@ -187,7 +187,7 @@ public abstract class ItemService
 	 * @return The item which was contained in the passed Document.
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Item getItemFromDocument(SolrDocument doc) throws DatabaseConfigException;
+	public abstract Item getItemFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Parses a Item from the fields in a Document from the index.

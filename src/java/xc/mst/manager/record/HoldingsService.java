@@ -23,10 +23,10 @@ import xc.mst.bo.record.Manifestation;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.utils.index.HoldingsList;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.SolrIndexManager;
-import xc.mst.utils.index.ThreadedSolrIndexManager;
 
 /**
  * Service class to query, add, update and delete records from an index.
@@ -74,7 +74,7 @@ public abstract class HoldingsService
 	 * @param value The value of the recordID element
 	 * @return A list of Holdings with the requested recordID element.
 	 */
-	public HoldingsList getByXcRecordId(String type, String value)
+	public HoldingsList getByXcRecordId(String type, String value) throws IndexException
 	{
 		return getByXcRecordId("(" + type + ")" + value);
 	} // end method getByXcRecordId(String, String)
@@ -86,7 +86,7 @@ public abstract class HoldingsService
 	 *                             format (<type>)<value>
 	 * @return A list of Holdings with the requested recordID element.
 	 */
-	public abstract HoldingsList getByXcRecordId(String recordId);
+	public abstract HoldingsList getByXcRecordId(String recordId) throws IndexException;
 
 	/**
 	 * Gets a list of Holdings that match the passed manifestationHeld
@@ -95,7 +95,7 @@ public abstract class HoldingsService
 	 * @param value The value of the manifestationHeld element
 	 * @return A list of Holdings with the requested manifestationHeld element.
 	 */
-	public HoldingsList getByManifestationHeld(String type, String value)
+	public HoldingsList getByManifestationHeld(String type, String value) throws IndexException
 	{
 		return getByManifestationHeld("(" + type + ")" + value);
 	} // end method getByManifestationHeld(String, String)
@@ -107,7 +107,7 @@ public abstract class HoldingsService
 	 *                          format (<type>)<value>
 	 * @return A list of Holdings with the requested manifestationHeld element.
 	 */
-	public abstract HoldingsList getByManifestationHeld(String manifestationHeld);
+	public abstract HoldingsList getByManifestationHeld(String manifestationHeld) throws IndexException;
 
 	/**
 	 * Gets the Holdings that matches the passed XC holdings ID
@@ -115,14 +115,14 @@ public abstract class HoldingsService
 	 * @param The XC holdings ID of the target holdings element
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Holdings getByXcHoldingsId(long holdingsId) throws DatabaseConfigException;
+	public abstract Holdings getByXcHoldingsId(long holdingsId) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Gets a list of all Holdings linked to the passed manifestation
 	 *
 	 * @param manifestation The manifestation whose linked Holdings should be returned
 	 */
-	public abstract HoldingsList getByLinkedManifestation(Manifestation manifestation);
+	public abstract HoldingsList getByLinkedManifestation(Manifestation manifestation) throws IndexException;
 
 	/**
 	 * Inserts a holdings into the index
@@ -130,7 +130,7 @@ public abstract class HoldingsService
 	 * @param holdings The holdings to insert
 	 * @return true on success, false on failure
 	 */
-	public boolean insert(Holdings holdings) throws DataException
+	public boolean insert(Holdings holdings) throws DataException, IndexException
 	{
 		// Check that the non-ID fields on the holdings are valid
 		validateFields(holdings, false, true);
@@ -156,7 +156,7 @@ public abstract class HoldingsService
 	 * @param holdings The holdings to update
 	 * @return true on success, false on failure
 	 */
-	public boolean update(Holdings holdings) throws DataException
+	public boolean update(Holdings holdings) throws DataException, IndexException
 	{
 		// Check that the fields on the holdings are valid
 		validateFields(holdings, true, true);
@@ -208,7 +208,7 @@ public abstract class HoldingsService
 	 * @return The holdings which was contained in the passed Document.
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Holdings getHoldingsFromDocument(SolrDocument doc) throws DatabaseConfigException;
+	public abstract Holdings getHoldingsFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Parses a Holdings from the fields in a Document from the index.

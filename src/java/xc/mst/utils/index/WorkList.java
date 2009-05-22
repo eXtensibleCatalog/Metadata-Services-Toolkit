@@ -17,6 +17,7 @@ import org.apache.solr.common.SolrDocumentList;
 import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultWorkService;
 import xc.mst.manager.record.WorkService;
 
@@ -73,6 +74,9 @@ public class WorkList extends AbstractList<Work>
 		{
 			log.error("Cannot connect to the database with the parameters from the config file.", e);
 			
+			return null;
+		} catch(IndexException ie) {
+			log.error("Cannot connect to Solr Server. Check the port in configuration file.", ie);
 			return null;
 		}
 	}

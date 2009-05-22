@@ -30,6 +30,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.MySqlConnectionManager;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
@@ -301,7 +302,7 @@ public class TestNormalizationService
 		PropertyConfigurator.configure(configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION));
 	}
 
-	public static void main(String[] args) throws DataException, IOException
+	public static void main(String[] args) throws DataException, IOException, IndexException
 	{
 		try
 		{
@@ -344,7 +345,7 @@ public class TestNormalizationService
 		}
 	}
 
-	public static void addUnprocessedRecordFromFiles(File inputDirectory) throws DataException, IOException
+	public static void addUnprocessedRecordFromFiles(File inputDirectory) throws DataException, IOException, IndexException
 	{
 		File[] testRecords = inputDirectory.listFiles();
 

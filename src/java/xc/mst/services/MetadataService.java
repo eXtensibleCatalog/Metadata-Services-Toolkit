@@ -40,6 +40,7 @@ import xc.mst.dao.service.DefaultOaiIdentiferForServiceDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.OaiIdentifierForServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.scheduling.Scheduler;
@@ -862,7 +863,12 @@ public abstract class MetadataService
 			// Increase the warning and error counts as appropriate, then update the provider
 			service.setServicesWarnings(service.getServicesWarnings() + warningCount);
 			service.setServicesErrors(service.getServicesErrors() + errorCount);
-			service.setHarvestOutRecordsAvailable(recordService.getCount(null, null, -1, -1, service.getId()));
+			
+			try {
+				service.setHarvestOutRecordsAvailable(recordService.getCount(null, null, -1, -1, service.getId()));
+			} catch (IndexException ie) {
+				log.error("Index exception occured.", ie);
+			}
 
 			try
 			{
@@ -907,6 +913,9 @@ public abstract class MetadataService
 		{
 			log.error("An exception occurred while updating the record into the index.", e);
 		} // end catch(DataException)
+		catch (IndexException ie) {
+			log.error("An exception occurred while updating the record into the index.", ie);
+		}
 	}
 	
 	/**
@@ -932,6 +941,9 @@ public abstract class MetadataService
 		{
 			log.error("An exception occurred while inserting the record into the Lucene index.", e);
 		} // end catch(DataException)
+		catch (IndexException ie) {
+			log.error("An exception occurred while inserting the record into the index.", ie);
+		}
 	} // end method insertNewRecord(Record)
 
 	/**
@@ -961,6 +973,9 @@ public abstract class MetadataService
 		{
 			log.error("An exception occurred while updating the record into the index.", e);
 		} // end catch(DataException)
+		catch (IndexException ie) {
+			log.error("An exception occurred while updating the record into the index.", ie);
+		}
 	} // end method updateExistingRecord(Record, Record)
 
 	/**
@@ -1052,7 +1067,7 @@ public abstract class MetadataService
 	 * @param recordId The record whose successors we're getting
 	 * @return A list of records that are successors of the record with the passed ID
 	 */
-	protected RecordList getByProcessedFrom(long recordId)
+	protected RecordList getByProcessedFrom(long recordId) throws IndexException
 	{
 		return recordService.getByProcessedFrom(recordId);
 	}
@@ -1105,7 +1120,7 @@ public abstract class MetadataService
 	 * @return The record with the passed OAI identifier, or null if no records matched the identifier
 	 * @throws DatabaseConfigException 
 	 */
-	protected Record getByOaiId(String oaiId) throws DatabaseConfigException
+	protected Record getByOaiId(String oaiId) throws DatabaseConfigException, IndexException
 	{
 		return recordService.getByOaiIdentifierAndService(oaiId, service.getId());
 	}
@@ -1274,7 +1289,7 @@ public abstract class MetadataService
 		{
 			SolrIndexManager.getInstance().commitIndex();
 		} 
-		catch (DataException e) 
+		catch (IndexException e) 
 		{
 			log.error("An error occurred while commiting new records to the Solr index.", e);
 		}

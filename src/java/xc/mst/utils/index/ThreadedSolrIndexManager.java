@@ -12,6 +12,7 @@ import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
 import xc.mst.dao.DataException;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.utils.LogWriter;
 
@@ -85,7 +86,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager {
 	 * @param doc The document to add
 	 * @return true on success, false on failure
 	 */
-	public boolean addDoc(SolrInputDocument doc) throws DataException
+	public boolean addDoc(SolrInputDocument doc) throws IndexException
 	{
 			log.debug("Add index to Solr - begin");
 		
@@ -102,7 +103,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager {
 			}
 			catch(RuntimeException e)
 			{
-				throw new DataException(e.getMessage());
+				throw new IndexException(e.getMessage());
 			}
 			return true;
 		}

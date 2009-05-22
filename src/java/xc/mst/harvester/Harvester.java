@@ -61,6 +61,7 @@ import xc.mst.dao.provider.SetDAO;
 import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.email.Emailer;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.scheduling.Scheduler;
@@ -745,7 +746,7 @@ public class Harvester implements ErrorHandler
 					} // end catch(Exception)
 				} // end loop over services to be run
 			} // end try(schedule the services that the records triggered)
-			catch(DataException e)
+			catch(IndexException e)
 			{
 				log.error("An error occurred while managing the Index", e);
 
@@ -1031,6 +1032,11 @@ public class Harvester implements ErrorHandler
 			failedInserts++;
 			log.error("An exception occurred while inserting the record into the Lucene index.", e);
 		} // end catch(DataException)
+		catch (IndexException ie)
+		{
+			failedInserts++;
+			log.error("An exception occurred while inserting the record into the Lucene index.", ie);
+		} 
 	} // end method insertNewRecord(Record)
 
 	/**
@@ -1064,6 +1070,11 @@ public class Harvester implements ErrorHandler
 			failedInserts++;
 			log.error("An exception occurred while updating the record into the Lucene index.", e);
 		} // end catch(DataException)
+		catch (IndexException ie)
+		{
+			failedInserts++;
+			log.error("An exception occurred while updating the record into the Lucene index.", ie);
+		} 
 	} // end method updateExistingRecord(Record, Record)
 
 	/**
@@ -1092,6 +1103,11 @@ public class Harvester implements ErrorHandler
 			failedInserts++;
 			log.error("An exception occurred while deleting the record from the Lucene index.", e);
 		} // end catch(DataException)
+		catch (IndexException ie)
+		{
+			failedInserts++;
+			log.error("An exception occurred while deleting the record into the Lucene index.", ie);
+		} 
 	} // end method deleteExistingRecord(Record)
 
 	/**

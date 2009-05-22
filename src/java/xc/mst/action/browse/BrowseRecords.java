@@ -32,6 +32,7 @@ import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.record.BrowseRecordService;
@@ -215,8 +216,8 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			    log.debug("After removing facet names(final):"+selectedFacetNames);
 			    log.debug("After removing facet values(final):"+selectedFacetValues);
 		    }	    
+		
 		    // Query formation
-			
 			solrQuery.setFacet(true)
 		    		 .setFacetMinCount(1);
 			
@@ -260,9 +261,14 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			    }
 		    }
 		} catch (DatabaseConfigException dce) {
-    		log.error(dce.getMessage(), dce);
+    		log.error("Search failed. Problem with connecting to database using the parameters in configuration file.", dce);
     		errorType = "error";
-    		addFieldError("dbError", "Search failed.");
+    		addFieldError("dbError", "Search failed.Problem with connecting to database using the parameters in configuration file.");
+    		return INPUT;
+    	} catch (IndexException ie) {
+    		log.error("Search failed. Problem with connecting to Solr server. Check the port number in configuration file.", ie);
+    		errorType = "error";
+    		addFieldError("dbError", "Search failed.Problem with connecting to Solr server. Check the port number in configuration file.");
     		return INPUT;
     	}
     	
@@ -294,9 +300,14 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			recordXML = recordXML.replaceAll("<", "&lt;");
 			recordXML = recordXML.replaceAll(">", "&gt;");
 		}  catch (DatabaseConfigException dce) {
-    		log.error(dce.getMessage(), dce);
+			log.error("Problem with connecting to database using the parameters in configuration file.", dce);
     		errorType = "error";
-    		addFieldError("dbError", "Error occured while displaying the record information.");
+    		addFieldError("dbError", "Problem with connecting to database using the parameters in configuration file.");
+    		return INPUT;
+    	}  catch (IndexException ie) {
+    		log.error("Problem with connecting to Solr server. Check the port number in configuration file.", ie);
+    		errorType = "error";
+    		addFieldError("dbError", "Problem with connecting to Solr server. Check the port number in configuration file.");
     		return INPUT;
     	}
 			
@@ -306,7 +317,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	/**
      * View error description
      */
-	public String viewErrorDescription() throws IOException {
+	public String viewErrorDescription()  {
 		
 		if (log.isDebugEnabled()) {
 			log.debug("viewErrorDescription: error to view : " + error);
@@ -337,9 +348,14 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		      
 		    errorDescription = buffer.toString();
 		} catch (DatabaseConfigException dce) {
-    		log.error(dce.getMessage(), dce);
+			log.error("Problem with getting error information. Exception occured while connecting to database using the parameters in configuration file.", dce);
     		errorType = "error";
-    		addFieldError("dbError", "Error occured while getting the error information.");
+    		addFieldError("dbError", "Problem with getting error information. Exception occured while connecting to database using the parameters in configuration file.");
+    		return INPUT;
+    	} catch (IOException ioe) {
+    		log.error("Problem with getting error information.", ioe);
+    		errorType = "error";
+    		addFieldError("dbError", "Exception occured while getting error information.");
     		return INPUT;
     	}
 		

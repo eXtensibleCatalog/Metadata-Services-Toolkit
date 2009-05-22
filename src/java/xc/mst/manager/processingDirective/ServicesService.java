@@ -9,6 +9,7 @@ import java.util.List;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 
 /**
  * Service class for interacting with the services in the MST
@@ -46,7 +47,7 @@ public interface ServicesService
      * @throws IOException If an error occurred while reading the configuration file
      * @throws ConfigFileException If the configuration file was invalid
 	 */
-	void updateService(File configFile, Service service) throws DataException, IOException, ConfigFileException;
+	void updateService(File configFile, Service service) throws DataException, IndexException, IOException, ConfigFileException;
 
 	/**
      * Adds a new Service
@@ -60,7 +61,7 @@ public interface ServicesService
      *
      * @param service The service to be deleted
      */
-    public void deleteService(Service service) throws DataException;
+    public void deleteService(Service service) throws IndexException, DataException;
 
     /**
      * Updates the details of a Service

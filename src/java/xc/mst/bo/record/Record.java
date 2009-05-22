@@ -13,14 +13,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.solr.client.solrj.beans.Field;
-
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
-import xc.mst.dao.harvest.HarvestScheduleDAO;
 
 /**
  * Represents a record
@@ -106,6 +103,11 @@ public class Record
 	 * The record's xml
 	 */
 	private String oaiXml = null;
+	
+	/**
+	 * The harvest schedule name
+	 */
+	private String harvestScheduleName = null;
 
 	/**
 	 * This is not used by the Record class, but classes extending it which represent the individual FRBR levels can use this to indicate  the other FRBR elements to which they are linked.
@@ -881,6 +883,24 @@ public class Record
 	public int getNumberOfSuccessors() 
 	{
 		return successors.size();
+	}
+
+	/**
+	 * Get harvest schedule name
+	 * 
+	 * @return name of schedule
+	 */
+	public String getHarvestScheduleName() {
+		return harvestScheduleName;
+	}
+
+	/**
+	 * Set harvest schedule name
+	 * 
+	 * @param harvestScheduleName name of schedule
+	 */
+	public void setHarvestScheduleName(String harvestScheduleName) {
+		this.harvestScheduleName = harvestScheduleName;
 	}
 
 } // end class Record

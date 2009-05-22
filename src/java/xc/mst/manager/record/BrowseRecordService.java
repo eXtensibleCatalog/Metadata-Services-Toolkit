@@ -15,6 +15,7 @@ import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 
 /**
  * Browse for records
@@ -31,7 +32,7 @@ public interface BrowseRecordService {
 	 * @return Search results
 	 * @throws DatabaseConfigException 
 	 */
-	public SolrBrowseResult search(SolrQuery query) throws DatabaseConfigException;
+	public SolrBrowseResult search(SolrQuery query) throws IndexException, DatabaseConfigException;
 	
 	/**
 	 * Get error description for this code and service

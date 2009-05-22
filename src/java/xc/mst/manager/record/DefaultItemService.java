@@ -17,6 +17,7 @@ import org.apache.solr.common.SolrInputDocument;
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Item;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.utils.index.ItemList;
 
 /**
@@ -31,7 +32,7 @@ import xc.mst.utils.index.ItemList;
 public class DefaultItemService extends ItemService
 {
 	@Override
-	public Item getByXcItemId(long itemId) throws DatabaseConfigException
+	public Item getByXcItemId(long itemId) throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with XC item ID " + itemId);
@@ -61,7 +62,7 @@ public class DefaultItemService extends ItemService
 	} // end method getByXcItemId(long)
 
 	@Override
-	public ItemList getByHoldingsExemplified(String holdingsExemplified)
+	public ItemList getByHoldingsExemplified(String holdingsExemplified) throws IndexException
 	{
 		String trait = (Item.TRAIT_HOLDINGS_EXEMPLIFIED + ":" + holdingsExemplified).replaceAll(":", "\\\\:");
 
@@ -92,7 +93,7 @@ public class DefaultItemService extends ItemService
 	} // end method getByHoldingsExemplified(String)
 
 	@Override
-	public ItemList getByLinkedHoldings(Holdings holdings)
+	public ItemList getByLinkedHoldings(Holdings holdings) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all items linked to the holdings with ID " + holdings.getId());
@@ -122,7 +123,7 @@ public class DefaultItemService extends ItemService
 	} // end method getByLinkedHoldings(Holdings)
 
 	@Override
-	public Item getItemFromDocument(SolrDocument doc) throws DatabaseConfigException
+	public Item getItemFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
 		// Create a Item object to store the result
 		Item item = Item.buildItemFromRecord(recordService.getRecordFromDocument(doc));

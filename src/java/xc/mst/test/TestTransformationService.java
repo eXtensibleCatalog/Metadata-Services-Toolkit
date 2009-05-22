@@ -19,6 +19,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
@@ -209,7 +210,7 @@ public class TestTransformationService
 		PropertyConfigurator.configure(configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION));
 	}
 
-	public static void main(String[] args) throws DataException
+	public static void main(String[] args) throws DataException, IndexException
 	{
 		try
 		{
@@ -251,7 +252,7 @@ public class TestTransformationService
 		}
 	}
 
-	public static void addUnprocessedRecord() throws DataException
+	public static void addUnprocessedRecord() throws DataException, IndexException
 	{
 		Record record = new Record();
 

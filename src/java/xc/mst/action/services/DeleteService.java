@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.record.DefaultRecordService;
@@ -87,6 +88,13 @@ public class DeleteService extends ActionSupport
             errorType = "error";
             return INPUT;
         }
+        catch(IndexException ie)
+        {
+            log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), ie);
+            this.addFieldError("viewRepositoryError", "Service cannot be deleted");
+            errorType = "error";
+            return INPUT;
+        }
     }
 
     /**
@@ -111,6 +119,13 @@ public class DeleteService extends ActionSupport
         catch(DataException e)
         {
             log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), e);
+            this.addFieldError("viewRepositoryError", "Service cannot be deleted");
+            errorType = "error";
+            return INPUT;
+        }
+        catch(IndexException ie)
+        {
+            log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), ie);
             this.addFieldError("viewRepositoryError", "Service cannot be deleted");
             errorType = "error";
             return INPUT;

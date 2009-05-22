@@ -21,6 +21,7 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
+import xc.mst.manager.IndexException;
 
 /**
  * Accesses providers in the database
@@ -342,7 +343,7 @@ public abstract class ProviderDAO
 	 * @return True on success, false on failure
 	 * @throws DataException if the passed provider was not valid for deleting
 	 */
-	public abstract boolean delete(Provider provider) throws DataException;
+	public abstract boolean delete(Provider provider) throws DataException, IndexException;
 
 	/**
 	 * Validates the fields on the passed Provider Object

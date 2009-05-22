@@ -43,6 +43,7 @@ import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.manager.IndexException;
 import xc.mst.utils.index.RecordList;
 
 /**
@@ -105,7 +106,7 @@ public class DefaultRecordService extends RecordService
 
 
 	@Override
-	public RecordList getAll()
+	public RecordList getAll() throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records");
@@ -118,7 +119,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getAll()
 
 	@Override
-	public Record getById(long id) throws DatabaseConfigException
+	public Record getById(long id) throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with ID " + id);
@@ -148,7 +149,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getById(long)
 
 	@Override
-	public Record loadBasicRecord(long id)
+	public Record loadBasicRecord(long id) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with ID " + id);
@@ -178,7 +179,7 @@ public class DefaultRecordService extends RecordService
 	} // end method loadBasicRecord(long)
 
 	@Override
-	public RecordList getByLuceneQuery(String queryString)throws ParseException
+	public RecordList getByLuceneQuery(String queryString)throws ParseException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records that match the query " + queryString);
@@ -190,7 +191,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByLuceneQuery(String)
 
 	@Override
-	public RecordList getByProviderId(int providerId)
+	public RecordList getByProviderId(int providerId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with provider ID " + providerId);
@@ -205,7 +206,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByProviderId(int)
 
 	@Override
-	public RecordList getByServiceId(int serviceId)
+	public RecordList getByServiceId(int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with service ID " + serviceId);
@@ -220,7 +221,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByServiceId(int)
 
 	@Override
-	public long getNumberOfRecordsByServiceId(int serviceId)
+	public long getNumberOfRecordsByServiceId(int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with service ID " + serviceId);
@@ -235,7 +236,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByServiceId(long)
 	
 	@Override
-	public RecordList getByProcessingServiceId(int serviceId)
+	public RecordList getByProcessingServiceId(int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with processing service ID " + serviceId);
@@ -250,7 +251,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByProcessingServiceId(int)
 	
 	@Override
-	public RecordList getByHarvestId(int harvestId)
+	public RecordList getByHarvestId(int harvestId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with harvest ID " + harvestId);
@@ -265,7 +266,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByHarvestId(int)
 
 	@Override
-	public RecordList getByHarvestScheduleId(int harvestScheduleId)
+	public RecordList getByHarvestScheduleId(int harvestScheduleId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with harvest schedule ID " + harvestScheduleId);
@@ -280,7 +281,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByHarvestScheduleId(int)
 
 	@Override
-	public RecordList getByFormatIdAndServiceId(int formatId, int serviceId)
+	public RecordList getByFormatIdAndServiceId(int formatId, int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with format ID " + formatId + " and service ID " + serviceId);
@@ -296,7 +297,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByFormatIdAndServiceId(int, int)
 
 	@Override
-	public RecordList getInputForService(int serviceId)
+	public RecordList getInputForService(int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records that are input for the service with service ID " + serviceId);
@@ -311,7 +312,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getInputForService(int)
 
 	@Override
-	public RecordList getByProviderName(String providerName)
+	public RecordList getByProviderName(String providerName) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records harvested from the provider with the name " + providerName);
@@ -326,7 +327,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByProviderName(String)
 
 	@Override
-	public RecordList getByProviderUrl(String providerUrl)
+	public RecordList getByProviderUrl(String providerUrl) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records harvested from the provider with the URL " + providerUrl);
@@ -341,7 +342,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByProviderUrl(String)
 	
 	@Override
-	public RecordList getBySetName(String setName)
+	public RecordList getBySetName(String setName) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records from the set with the name " + setName);
@@ -356,7 +357,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getBySetName(String)
 
 	@Override
-	public RecordList getBySetSpec(String setSpec)
+	public RecordList getBySetSpec(String setSpec) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records from the set with the setSpec " + setSpec);
@@ -371,7 +372,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getBySetSpec(String)
 
 	@Override
-	public RecordList getByFormatName(String formatName)
+	public RecordList getByFormatName(String formatName) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records from the format with the name " + formatName);
@@ -386,7 +387,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByFormatName(String)
 
 	@Override
-	public Record getByOaiIdentifier(String identifier) throws DatabaseConfigException
+	public Record getByOaiIdentifier(String identifier) throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with the OAI identifier " + identifier);
@@ -419,7 +420,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByOaiIdentifier(String)
 
 	@Override
-	public Record getByOaiIdentifierAndProvider(String identifier, int providerId) throws DatabaseConfigException
+	public Record getByOaiIdentifierAndProvider(String identifier, int providerId) throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with the OAI identifier " + identifier + " and provider ID " + providerId);
@@ -453,7 +454,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByOaiIdentifierAndProvider(String, int)
 
 	@Override
-	public Record getByOaiIdentifierAndService(String identifier, int serviceId) throws DatabaseConfigException
+	public Record getByOaiIdentifierAndService(String identifier, int serviceId) throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with the OAI identifier " + identifier + " and service ID " + serviceId);
@@ -487,7 +488,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByOaiIdentifierAndService(String, int)
 
 	@Override
-	public RecordList getByProcessedFrom(long processedFromId)
+	public RecordList getByProcessedFrom(long processedFromId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records that were processed from the record with ID " + processedFromId);
@@ -502,7 +503,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByProcessedFrom(long)
 
 	@Override
-	public RecordList getByTrait(String trait)
+	public RecordList getByTrait(String trait) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with the trait " + trait);
@@ -524,7 +525,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getEarliest(int)
 
 	@Override
-	public long getCount(Date fromDate, Date untilDate, int setId, int formatId, int serviceId)
+	public long getCount(Date fromDate, Date untilDate, int setId, int formatId, int serviceId) throws IndexException
 	{
 		Date from; // fromDate, or the minimum value for a Date if fromDate is null
 		Date until; // toDate, or now if toDate is null
@@ -592,6 +593,7 @@ public class DefaultRecordService extends RecordService
 
 	@Override
 	public List<Record> getOutgoingRecordsInRange(Date fromDate, Date untilDate, int setId, int formatId, int offset, int numResults, int serviceId)
+			throws IndexException
 	{
 		Date from; // fromDate, or the minimum value for a Date if fromDate is null
 		Date until; // toDate, or now if toDate is null
@@ -694,6 +696,7 @@ public class DefaultRecordService extends RecordService
 		record.setOaiIdentifierBase(oaiId.substring(0, oaiId.lastIndexOf(":")));
 		record.setOaiIdentifier(oaiId);
 		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
+		record.setHarvestScheduleName((String)doc.getFieldValue(FIELD_HARVEST_SCHEDULE_NAME));
 
 		try
 		{
@@ -720,7 +723,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getBasicRecordFromDocument(Document)
 
 	@Override
-	public Record getRecordFromDocument(SolrDocument doc) throws DatabaseConfigException
+	public Record getRecordFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
 
 		log.debug("getRecordFromSolrDocument::"+doc);
@@ -743,6 +746,7 @@ public class DefaultRecordService extends RecordService
 		record.setProvider(providerDao.loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
 		record.setService(serviceDao.loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
 		record.setHarvest(harvestDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_HARVEST_ID))));
+		record.setHarvestScheduleName((String)doc.getFieldValue(FIELD_HARVEST_SCHEDULE_NAME));
 
 		Collection<Object> sets = doc.getFieldValues(FIELD_SET_SPEC);
 		if(sets != null)
@@ -865,17 +869,14 @@ public class DefaultRecordService extends RecordService
 		if (record.getHarvest() != null) 
 		{
 			HarvestSchedule schedule = harvestScheduleDao.getById(record.getHarvest().getHarvestScheduleId());
-			if(schedule != null)
+			if(schedule != null) {
 				doc.addField(FIELD_HARVEST_SCHEDULE_NAME, schedule.getScheduleName());
+			}
 		}
 
 		if (record.getHarvest() != null && record.getProvider() != null) 
 		{
 			doc.addField(FIELD_HARVEST_START_TIME,record.getProvider().getName() + " " + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(record.getHarvest().getStartTime()));
-		}
-		
-		if (record.getHarvest() != null && record.getService() != null) {
-			doc.addField(FIELD_HARVEST_START_TIME,record.getService().getName() + " " + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(record.getHarvest().getStartTime()));
 		}
 		
 		doc.addField(FIELD_SERVICE_ID, (record.getService() == null ? "0" : Integer.toString(record.getService().getId())));

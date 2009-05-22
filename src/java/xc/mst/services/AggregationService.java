@@ -36,6 +36,7 @@ import xc.mst.bo.record.Work;
 import xc.mst.constants.AggregationServiceConstants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultExpressionService;
 import xc.mst.manager.record.DefaultHoldingsService;
 import xc.mst.manager.record.DefaultItemService;
@@ -171,8 +172,13 @@ public class AggregationService extends MetadataService
 	@Override
 	protected void finishProcessing()
 	{
-		// Get the list of all unprocessed Manifestations
-		WorkList works = workService.getUnprocessedWorks(service.getId());
+		WorkList works = null;
+		try {
+			// Get the list of all unprocessed Manifestations
+			works = workService.getUnprocessedWorks(service.getId());
+		} catch(IndexException ie) {
+			log.error("An indexing Exception occurred while getting the list of all unprocessed Manifestations.", ie);
+		}
 
 		// For each Manifestation, build the record from the linked components.
 		for(Work work : works)
@@ -191,6 +197,9 @@ public class AggregationService extends MetadataService
 			catch (DatabaseConfigException e1) 
 			{
 				log.error("Could not connect to the database with the parameters in the configuration file.", e1);
+				return;
+			} catch(IndexException ie) {
+				log.error("Could not connect to Solr server.", ie);
 				return;
 			}
 
@@ -213,6 +222,9 @@ public class AggregationService extends MetadataService
 			{
 				log.error("A DataException occurred while marking a manifestation as being processed.", e);
 			} // end catch(DataException)
+			catch(IndexException ie) {
+				log.error("An indexing Exception occurred while  marking a manifestation as being processed.", ie);
+			}
 		} // end loop over manifestations
 	} // end method finishProcessing()
 
@@ -457,14 +469,17 @@ public class AggregationService extends MetadataService
 	{
 		List<Work> results = new ArrayList<Work>();
 
-		// If we should match works on the identifierForTheWork field
-		if(workMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_IDENTIFIER_FOR_THE_WORK, "0").equals("1"))
-		{
-			// For each identifierForTheWork, add all matches to that identifierForTheWork to the list of results
-			for(String identifierForTheWork : matchMe.getIdentifierForTheWorks())
-				results.addAll(workService.getByIdentifierForTheWork(identifierForTheWork));
-		} // end if (we're configured to match on identifierForTheWork
-
+		try {
+			// If we should match works on the identifierForTheWork field
+			if(workMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_IDENTIFIER_FOR_THE_WORK, "0").equals("1"))
+			{
+				// For each identifierForTheWork, add all matches to that identifierForTheWork to the list of results
+				for(String identifierForTheWork : matchMe.getIdentifierForTheWorks())
+					results.addAll(workService.getByIdentifierForTheWork(identifierForTheWork));
+			} // end if (we're configured to match on identifierForTheWork
+		} catch(IndexException ie) {
+			log.error("Indexing exception occured.", ie);
+		}
 		return results;
 	} // end method matchWorks(Work)
 
@@ -598,41 +613,44 @@ public class AggregationService extends MetadataService
 	{
 		List<Manifestation> results = new ArrayList<Manifestation>();
 
-		// For each recordID, add all matches to that recordID to the list of results
-		// if we're configured to match on that record ID type
-		for(String xcRecordId : matchMe.getXcRecordIds())
-		{
-			String type = xcRecordId.substring(xcRecordId.indexOf('(')+1, xcRecordId.indexOf(')'));
-
-			// If we're configured to match on the type of recordID we're checking,
-			// add all matches to that recordID
-			if(type.equals("OCoLC"))
+		try {
+			// For each recordID, add all matches to that recordID to the list of results
+			// if we're configured to match on that record ID type
+			for(String xcRecordId : matchMe.getXcRecordIds())
 			{
-				if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_OCOLC, "0").equals("1"))
-					results.addAll(manifestationService.getByXcRecordId(xcRecordId));
-			} // end if (recordID is an OCoLC ID)
-			else if(type.equals("LCCN"))
-			{
-				if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_LCCN, "0").equals("1"))
-					results.addAll(manifestationService.getByXcRecordId(xcRecordId));
-			} // end if (recordID is an LCCN ID)
-			else if(type.equals("ISBN"))
-			{
-				if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_ISBN, "0").equals("1"))
-					results.addAll(manifestationService.getByXcRecordId(xcRecordId));
-			} // end if (recordID is an ISBN ID)
-			else if(type.equals("ISSN"))
-			{
-				if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_ISSN, "0").equals("1"))
-					results.addAll(manifestationService.getByXcRecordId(xcRecordId));
-			} // end if (recordID is an ISSN ID)
-			else
-			{
-				if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_RECORD_ID, "0").equals("1"))
-					results.addAll(manifestationService.getByXcRecordId(xcRecordId));
-			} // end if (recordID is an unrecognized ID)
-		} // end loop over recordID elements
-
+				String type = xcRecordId.substring(xcRecordId.indexOf('(')+1, xcRecordId.indexOf(')'));
+	
+				// If we're configured to match on the type of recordID we're checking,
+				// add all matches to that recordID
+				if(type.equals("OCoLC"))
+				{
+					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_OCOLC, "0").equals("1"))
+						results.addAll(manifestationService.getByXcRecordId(xcRecordId));
+				} // end if (recordID is an OCoLC ID)
+				else if(type.equals("LCCN"))
+				{
+					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_LCCN, "0").equals("1"))
+						results.addAll(manifestationService.getByXcRecordId(xcRecordId));
+				} // end if (recordID is an LCCN ID)
+				else if(type.equals("ISBN"))
+				{
+					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_ISBN, "0").equals("1"))
+						results.addAll(manifestationService.getByXcRecordId(xcRecordId));
+				} // end if (recordID is an ISBN ID)
+				else if(type.equals("ISSN"))
+				{
+					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_ISSN, "0").equals("1"))
+						results.addAll(manifestationService.getByXcRecordId(xcRecordId));
+				} // end if (recordID is an ISSN ID)
+				else
+				{
+					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_RECORD_ID, "0").equals("1"))
+						results.addAll(manifestationService.getByXcRecordId(xcRecordId));
+				} // end if (recordID is an unrecognized ID)
+			} // end loop over recordID elements
+		} catch (IndexException ie) {
+			log.error("Index exception occured.", ie);
+		}
 		return results;
 	} // end method matchManifestations(Manifestation)
 
@@ -726,11 +744,14 @@ public class AggregationService extends MetadataService
 	{
 		List<Holdings> results = new ArrayList<Holdings>();
 
-		// For each record ID a holdings could match on
-		// add all holdings that match on it
-		for(String xcRecordId : matchMe.getXcRecordIds())
-			results.addAll(holdingsService.getByManifestationHeld(xcRecordId));
-
+		try {
+			// For each record ID a holdings could match on
+			// add all holdings that match on it
+			for(String xcRecordId : matchMe.getXcRecordIds())
+				results.addAll(holdingsService.getByManifestationHeld(xcRecordId));
+		} catch (IndexException ie) {
+			log.error("Index exception occured.", ie);
+		}
 		return results;
 	} // end method getHoldingsMatchingManifestation(Manifestation)
 
@@ -744,12 +765,14 @@ public class AggregationService extends MetadataService
 	private List<Manifestation> getManifestationsMatchingHoldings(Holdings matchMe)
 	{
 		List<Manifestation> results = new ArrayList<Manifestation>();
-
-		// For each manifestationHeld a manifestation could match on
-		// add all manifestations that match on it
-		for(String manifestationHeld : matchMe.getManifestationsHeld())
-			results.addAll(manifestationService.getByXcRecordId(manifestationHeld));
-
+		try {
+			// For each manifestationHeld a manifestation could match on
+			// add all manifestations that match on it
+			for(String manifestationHeld : matchMe.getManifestationsHeld())
+				results.addAll(manifestationService.getByXcRecordId(manifestationHeld));
+		} catch (IndexException ie) {
+			log.error("Index exception occured.", ie);
+		}
 		return results;
 	} // end method getManifestationsMatchingHoldings(Holdings)
 
@@ -763,12 +786,15 @@ public class AggregationService extends MetadataService
 	private List<Item> getItemsMatchingHoldings(Holdings matchMe)
 	{
 		List<Item> results = new ArrayList<Item>();
-
-		// For each record ID a holdings could match on
-		// add all holdings that match on it
-		for(String xcRecordId : matchMe.getXcRecordIds())
-			results.addAll(itemService.getByHoldingsExemplified(xcRecordId));
-
+		
+		try {
+			// For each record ID a holdings could match on
+			// add all holdings that match on it
+			for(String xcRecordId : matchMe.getXcRecordIds())
+				results.addAll(itemService.getByHoldingsExemplified(xcRecordId));
+		} catch (IndexException ie) {
+			log.error("Index exception occured.", ie);
+		}
 		return results;
 	} // end method getItemsMatchingHoldings(Holdings)
 
@@ -782,12 +808,15 @@ public class AggregationService extends MetadataService
 	private List<Holdings> getHoldingsMatchingItem(Item matchMe)
 	{
 		List<Holdings> results = new ArrayList<Holdings>();
-
-		// For each record ID a holdings could match on
-		// add all holdings that match on it
-		for(String holdingsExemplified : matchMe.getHoldingsExemplified())
-			results.addAll(holdingsService.getByXcRecordId(holdingsExemplified));
-
+		
+		try {
+			// For each record ID a holdings could match on
+			// add all holdings that match on it
+			for(String holdingsExemplified : matchMe.getHoldingsExemplified())
+				results.addAll(holdingsService.getByXcRecordId(holdingsExemplified));
+		} catch (IndexException ie) {
+			log.error("Index exception occured.", ie);
+		}
 		return results;
 	} // end method getHoldingsMatchingItem(Item)
 
@@ -808,28 +837,32 @@ public class AggregationService extends MetadataService
 		List<Holdings> holdings = new ArrayList<Holdings>();
 		List<Item> items = new ArrayList<Item>();
 
-		// Add the Expressions for the passed work
-		for(Expression expression : expressionService.getByLinkedWork(work))
-		{
-			expressions.add(expression);
-
-			// Add the Manifestations for the current expression
-			for(Manifestation manifestation : manifestationService.getByLinkedExpression(expression))
+		try {
+			// Add the Expressions for the passed work
+			for(Expression expression : expressionService.getByLinkedWork(work))
 			{
-				manifestations.add(manifestation);
-
-				// Add the Holdings for the current manifestation to the list of Holdings elements
-				for(Holdings holdingsElement : holdingsService.getByLinkedManifestation(manifestation))
+				expressions.add(expression);
+	
+				// Add the Manifestations for the current expression
+				for(Manifestation manifestation : manifestationService.getByLinkedExpression(expression))
 				{
-					holdings.add(holdingsElement);
-
-					// Add the Items associated with the current Holdings element to the list of Items
-					for(Item item : itemService.getByLinkedHoldings(holdingsElement))
-						items.add(item);
-				} // end loop over Holdings
-			} // end loop over Manifestations
-		} // end loop over expressions
-
+					manifestations.add(manifestation);
+	
+					// Add the Holdings for the current manifestation to the list of Holdings elements
+					for(Holdings holdingsElement : holdingsService.getByLinkedManifestation(manifestation))
+					{
+						holdings.add(holdingsElement);
+	
+						// Add the Items associated with the current Holdings element to the list of Items
+						for(Item item : itemService.getByLinkedHoldings(holdingsElement))
+							items.add(item);
+					} // end loop over Holdings
+				} // end loop over Manifestations
+			} // end loop over expressions
+		} catch (IndexException ie) {
+			log.error("Index exception occured.", ie);
+		}
+		
 		// If there were no manifestations, don't return a record
 		if(manifestations.size() == 0)
 			return null;

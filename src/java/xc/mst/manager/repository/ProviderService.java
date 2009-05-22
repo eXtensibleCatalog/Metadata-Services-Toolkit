@@ -10,9 +10,11 @@
 package xc.mst.manager.repository;
 
 import java.util.List;
+
 import xc.mst.bo.provider.Provider;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 
 /**
  * Provider interface used add/delete/update a Repository/Provider
@@ -60,7 +62,7 @@ public interface ProviderService {
      *
      * @param provider The provider object to be inserted
      */
-    public void deleteProvider(Provider provider) throws DataException;
+    public void deleteProvider(Provider provider) throws DataException, IndexException;
 
     /**
      * Updates the details of a provider object

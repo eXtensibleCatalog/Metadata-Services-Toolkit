@@ -22,10 +22,10 @@ import xc.mst.bo.record.Manifestation;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.ManifestationList;
 import xc.mst.utils.index.SolrIndexManager;
-import xc.mst.utils.index.ThreadedSolrIndexManager;
 
 public abstract class ManifestationService
 {
@@ -66,7 +66,7 @@ public abstract class ManifestationService
 	 * @param value The value of the XC record ID element
 	 * @return A list of Manifestations with the requested XC record ID element.
 	 */
-	public ManifestationList getByXcRecordId(String type, String value)
+	public ManifestationList getByXcRecordId(String type, String value) throws IndexException
 	{
 		return getByXcRecordId("(" + type + ")" + value);
 	} // end method getByXcRecordId(String, String)
@@ -78,7 +78,7 @@ public abstract class ManifestationService
 	 *                             format (<type>)<value>
 	 * @return A list of Manifestations with the requested XC record ID element.
 	 */
-	public abstract ManifestationList getByXcRecordId(String xcRecordId);
+	public abstract ManifestationList getByXcRecordId(String xcRecordId) throws IndexException;
 
 	/**
 	 * Gets the Manifestation that matches the passed XC manifestation ID
@@ -86,14 +86,14 @@ public abstract class ManifestationService
 	 * @param manifestationId The XC manifestation ID of the target manifestation element
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Manifestation getByXcManifestationId(long manifestationId) throws DatabaseConfigException;
+	public abstract Manifestation getByXcManifestationId(long manifestationId) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Gets a list of all Manifestations linked to the passed expression
 	 *
 	 * @param expression The expression whose linked Manifestations should be returned
 	 */
-	public abstract ManifestationList getByLinkedExpression(Expression expression);
+	public abstract ManifestationList getByLinkedExpression(Expression expression) throws IndexException;
 
 	/**
 	 * Inserts a manifestation into the index
@@ -101,7 +101,7 @@ public abstract class ManifestationService
 	 * @param manifestation The manifestation to insert
 	 * @return true on success, false on failure
 	 */
-	public boolean insert(Manifestation manifestation) throws DataException
+	public boolean insert(Manifestation manifestation) throws DataException, IndexException
 	{
 		// Check that the non-ID fields on the manifestation are valid
 		validateFields(manifestation, false, true);
@@ -127,7 +127,7 @@ public abstract class ManifestationService
 	 * @param manifestation The manifestation to update
 	 * @return true on success, false on failure
 	 */
-	public boolean update(Manifestation manifestation) throws DataException
+	public boolean update(Manifestation manifestation) throws DataException, IndexException
 	{
 		// Check that the fields on the manifestation are valid
 		validateFields(manifestation, true, true);
@@ -179,7 +179,7 @@ public abstract class ManifestationService
 	 * @return The manifestation which was contained in the passed Document.
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Manifestation getManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException;
+	public abstract Manifestation getManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Parses a Manifestation from the fields in a Document from the index.
@@ -188,7 +188,7 @@ public abstract class ManifestationService
 	 * @return The manifestation which was contained in the passed Document.
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Manifestation getBasicManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException;
+	public abstract Manifestation getBasicManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Sets the fields on the document which need to be stored in the

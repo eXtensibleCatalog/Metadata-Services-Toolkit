@@ -27,6 +27,7 @@ import xc.mst.dao.service.DefaultErrorCodeDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ErrorCodeDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.scheduling.Scheduler;
@@ -462,7 +463,7 @@ public class DefaultServicesService implements ServicesService
     }
     
 
-    public void updateService(File configFile, Service service) throws DataException, IOException, ConfigFileException
+    public void updateService(File configFile, Service service) throws DataException, IndexException, IOException, ConfigFileException
     {
     	// Reload the service and confirm that it's not currently running.
     	// Throw an error if it is
@@ -849,7 +850,7 @@ public class DefaultServicesService implements ServicesService
      * @param service service object
      * @throws xc.mst.dao.DataException
      */
-    public void deleteService(Service service) throws DataException
+    public void deleteService(Service service) throws IndexException, DataException
     {
     	// Reload the service and confirm that it's not currently running.
     	// Throw an error if it is

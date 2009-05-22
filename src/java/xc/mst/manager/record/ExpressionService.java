@@ -12,7 +12,6 @@ package xc.mst.manager.record;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.document.Document;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
 import org.jconfig.Configuration;
@@ -23,10 +22,10 @@ import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.utils.index.ExpressionList;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.SolrIndexManager;
-import xc.mst.utils.index.ThreadedSolrIndexManager;
 
 /**
  * Service class to query, add, update and delete records from an index.
@@ -73,14 +72,14 @@ public abstract class ExpressionService
 	 * @param expressionId The XC expression ID of the target expression element
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Expression getByXcExpressionId(long expressionId) throws DatabaseConfigException;
+	public abstract Expression getByXcExpressionId(long expressionId) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Gets a list of all Expressions linked to the passed work
 	 *
 	 * @param work The work whose linked Expressions should be returned
 	 */
-	public abstract ExpressionList getByLinkedWork(Work work);
+	public abstract ExpressionList getByLinkedWork(Work work) throws IndexException;
 
 	/**
 	 * Inserts a expression into the index
@@ -88,7 +87,7 @@ public abstract class ExpressionService
 	 * @param expression The expression to insert
 	 * @return true on success, false on failure
 	 */
-	public boolean insert(Expression expression) throws DataException
+	public boolean insert(Expression expression) throws DataException, IndexException
 	{
 		// Check that the non-ID fields on the expression are valid
 		validateFields(expression, false, true);
@@ -114,7 +113,7 @@ public abstract class ExpressionService
 	 * @param expression The expression to update
 	 * @return true on success, false on failure
 	 */
-	public boolean update(Expression expression) throws DataException
+	public boolean update(Expression expression) throws DataException, IndexException
 	{
 		// Check that the fields on the expression are valid
 		validateFields(expression, true, true);
@@ -167,7 +166,7 @@ public abstract class ExpressionService
 	 * @return The expression which was contained in the passed Document.
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Expression getExpressionFromDocument(SolrDocument doc) throws DatabaseConfigException;
+	public abstract Expression getExpressionFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Parses a Expression from the fields in a Document from the index.

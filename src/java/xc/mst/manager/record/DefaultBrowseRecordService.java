@@ -30,6 +30,7 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.DefaultErrorCodeDAO;
 import xc.mst.dao.service.ErrorCodeDAO;
+import xc.mst.manager.IndexException;
 
 /**
  * Browse for results using solr
@@ -54,38 +55,43 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 	 * @return Search results
 	 * @throws DatabaseConfigException 
 	 */
-	public SolrBrowseResult search(SolrQuery query) throws DatabaseConfigException {
+	public SolrBrowseResult search(SolrQuery query) throws IndexException, DatabaseConfigException {
 
 		SolrServer server = MSTSolrServer.getServer();
 		SolrBrowseResult result = null;
-		try {
-			// Discard deleted records
-			query.addFilterQuery("deleted:false");
-
+		
+		// Discard deleted records
+		query.addFilterQuery("deleted:false");
+		if (log.isDebugEnabled()) {
 			log.debug("Querying Solr server with query:" + query);
-			
-			QueryResponse rsp = server.query( query );
-
-		    // Load the records in the SolrBrowseResilt object
-		    SolrDocumentList docs = rsp.getResults();
-
-		    RecordService recordService = new DefaultRecordService();
-		    Iterator<SolrDocument> iteration = docs.iterator();
-		    List<Record> records = new ArrayList<Record>();
-
-		    while(iteration.hasNext()) {
-
-		    	records.add(recordService.getRecordFromDocument(iteration.next()));
-		    }
-
-		    // Load the facets in the SolrBrowseResilt object
-		    List<FacetField> facets = rsp.getFacetFields();
-		    result = new SolrBrowseResult(records, facets);
-		    result.setTotalNumberOfResults((int)docs.getNumFound());
-
-		} catch (SolrServerException e) {
-				log.error(" Exception occured when executing Solr Search.", e);
 		}
+		
+		QueryResponse rsp = null;
+		try {
+			rsp = server.query( query );
+		} catch (SolrServerException sse) {
+			log.error("Exception occured while executing the query. Check the solr port number in configuration file", sse);
+			throw new IndexException(sse.getMessage());
+		}
+
+	    // Load the records in the SolrBrowseResilt object
+	    SolrDocumentList docs = rsp.getResults();
+
+	    RecordService recordService = new DefaultRecordService();
+	    Iterator<SolrDocument> iteration = docs.iterator();
+	    List<Record> records = new ArrayList<Record>();
+
+	    while(iteration.hasNext()) {
+
+	    	records.add(recordService.getRecordFromDocument(iteration.next()));
+	    }
+
+	    // Load the facets in the SolrBrowseResilt object
+	    List<FacetField> facets = rsp.getFacetFields();
+	    result = new SolrBrowseResult(records, facets);
+	    result.setTotalNumberOfResults((int)docs.getNumFound());
+
+		
 
 		return result;
 

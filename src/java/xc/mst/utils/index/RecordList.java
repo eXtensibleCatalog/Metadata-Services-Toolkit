@@ -19,6 +19,7 @@ import org.apache.solr.common.SolrDocumentList;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 
@@ -77,7 +78,7 @@ public class RecordList extends AbstractList<Record>
 	 *
 	 * @param query The Solr query for which the RecordList was built
 	 */
-	public RecordList(SolrQuery query)
+	public RecordList(SolrQuery query) throws IndexException
 	{
 		this.query = query;
 		query.setRows(MAX_RESULTS);
@@ -114,6 +115,9 @@ public class RecordList extends AbstractList<Record>
 		{
 			log.error("Cannot connect to the database with the parameters from the config file.", e);
 			
+			return null;
+		} catch(IndexException ie) {
+			log.error("Cannot connect to Solr Server. Check the port in configuration file.", ie);
 			return null;
 		}
 	}

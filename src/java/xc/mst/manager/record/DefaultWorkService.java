@@ -16,6 +16,7 @@ import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.bo.record.Work;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.utils.index.WorkList;
 
 /**
@@ -30,7 +31,7 @@ import xc.mst.utils.index.WorkList;
 public class DefaultWorkService extends WorkService
 {
 	@Override
-	public Work getByXcWorkId(long workId) throws DatabaseConfigException
+	public Work getByXcWorkId(long workId) throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with XC work ID " + workId);
@@ -61,7 +62,7 @@ public class DefaultWorkService extends WorkService
 	} // end method getByXcWorkId(long)
 
 	@Override
-	public WorkList getByIdentifierForTheWork(String identifierForTheWork)
+	public WorkList getByIdentifierForTheWork(String identifierForTheWork) throws IndexException
 	{
 		String trait = Work.TRAIT_IDENTIFIER_FOR_THE_WORK + ":" + identifierForTheWork;
 
@@ -93,7 +94,7 @@ public class DefaultWorkService extends WorkService
 	} // end method getByIdentifierForTheWork(String)
 
 	@Override
-	public WorkList getUnprocessedWorks(int serviceId)
+	public WorkList getUnprocessedWorks(int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all unprocessed works.");
@@ -123,7 +124,7 @@ public class DefaultWorkService extends WorkService
 	} // end method getUnprocessendWorks()
 
 	@Override
-	public Work getWorkFromDocument(SolrDocument doc) throws DatabaseConfigException
+	public Work getWorkFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
 		// Create a Work object to store the result
 		Work work = Work.buildWorkFromRecord(recordService.getRecordFromDocument(doc));

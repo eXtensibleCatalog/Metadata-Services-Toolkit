@@ -31,6 +31,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.harvest.DefaultHarvestRecordUtilDAO;
 import xc.mst.dao.harvest.HarvestRecordUtilDAO;
+import xc.mst.manager.IndexException;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
@@ -227,7 +228,7 @@ public abstract class RecordService
 	 *
 	 * @return A list of all records in the index
 	 */
-	public abstract RecordList getAll();
+	public abstract RecordList getAll() throws IndexException;
 
 	/**
 	 * Gets the record from the index with the passed record ID
@@ -236,7 +237,7 @@ public abstract class RecordService
 	 * @return The record with the passed record ID
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Record getById(long id) throws DatabaseConfigException;
+	public abstract Record getById(long id) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Gets the basic information for a a record from the index with the passed record ID
@@ -244,7 +245,7 @@ public abstract class RecordService
 	 * @param id The record's ID
 	 * @return The basic information for a record with the passed record ID
 	 */
-	public abstract Record loadBasicRecord(long id);
+	public abstract Record loadBasicRecord(long id) throws IndexException;
 
 	/**
 	 * Gets all records from the index that match a Lucene query string
@@ -253,7 +254,7 @@ public abstract class RecordService
 	 * @return A list of all records in the index matching the provided query
 	 * @throws ParseException If the Lucene query was invalid
 	 */
-	public abstract RecordList getByLuceneQuery(String queryString) throws ParseException;
+	public abstract RecordList getByLuceneQuery(String queryString) throws ParseException, IndexException;
 
 	/**
 	 * Gets all records from the index with the passed provider ID
@@ -261,7 +262,7 @@ public abstract class RecordService
 	 * @param providerId The provider ID of the records to retrieve
 	 * @return A list of all records in the index with the passed provider ID
 	 */
-	public abstract RecordList getByProviderId(int providerId);
+	public abstract RecordList getByProviderId(int providerId) throws IndexException;
 
 	/**
 	 * Gets all records from the index with the passed service ID
@@ -269,7 +270,7 @@ public abstract class RecordService
 	 * @param serviceId The service ID of the records to retrieve
 	 * @return A list of all records in the index with the passed provider ID
 	 */
-	public abstract RecordList getByServiceId(int serviceId);
+	public abstract RecordList getByServiceId(int serviceId) throws IndexException;
 
 	/**
 	 * Gets number of records from the index with the passed service ID
@@ -277,7 +278,7 @@ public abstract class RecordService
 	 * @param serviceId The service ID of the records to retrieve
 	 * @return Number of records in the index with the passed provider ID
 	 */
-	public abstract long getNumberOfRecordsByServiceId(int serviceId);
+	public abstract long getNumberOfRecordsByServiceId(int serviceId) throws IndexException;
 	
 	/**
 	 * Gets all records from the index with the passed processing service ID
@@ -285,7 +286,7 @@ public abstract class RecordService
 	 * @param serviceId The service ID of the service that processed records to retrieve
 	 * @return A list of all records in the index with the passed processing service ID
 	 */
-	public abstract RecordList getByProcessingServiceId(int serviceId);
+	public abstract RecordList getByProcessingServiceId(int serviceId) throws IndexException;
 	
 	/**
 	 * Gets all records from the index with the passed harvest ID
@@ -293,7 +294,7 @@ public abstract class RecordService
 	 * @param harvestId The harvest ID of the records to retrieve
 	 * @return A list of all records in the index with the passed harvest ID
 	 */
-	public abstract RecordList getByHarvestId(int harvestId);
+	public abstract RecordList getByHarvestId(int harvestId) throws IndexException;
 
 	/**
 	 * Gets all records from the index with the passed harvest schedule ID
@@ -301,7 +302,7 @@ public abstract class RecordService
 	 * @param harvestScheduleId The harvest schedule ID of the records to retrieve
 	 * @return A list of all records in the index with the passed harvest schedule ID
 	 */
-	public abstract RecordList getByHarvestScheduleId(int harvestScheduleId);
+	public abstract RecordList getByHarvestScheduleId(int harvestScheduleId) throws IndexException;
 
 	/**
 	 * Gets all records from the index with the passed format ID and service ID
@@ -310,7 +311,7 @@ public abstract class RecordService
 	 * @param serviceId The service that processed the records to retrieve
 	 * @return A list all records in the index with the passed format ID
 	 */
-	public abstract RecordList getByFormatIdAndServiceId(int formatId, int serviceId);
+	public abstract RecordList getByFormatIdAndServiceId(int formatId, int serviceId) throws IndexException;
 	
 	/**
 	 * Gets all records from the index contained in the set with the passed name
@@ -318,7 +319,7 @@ public abstract class RecordService
 	 * @param setName the name of the set whose records should be returned
 	 * @return A list all records in the index contained in the set with the passed name
 	 */
-	public abstract RecordList getBySetName(String setName);
+	public abstract RecordList getBySetName(String setName) throws IndexException;
 
 	/**
 	 * Gets all records from the index contained in the set with the passed setSpec
@@ -326,7 +327,7 @@ public abstract class RecordService
 	 * @param setSpec the setSpec of the set whose records should be returned
 	 * @return A list all records in the index contained in the set with the passed setSpec
 	 */
-	public abstract RecordList getBySetSpec(String setSpec);
+	public abstract RecordList getBySetSpec(String setSpec) throws IndexException;
 
 	/**
 	 * Gets all records from the index harvested from the provider with the passed name
@@ -334,7 +335,7 @@ public abstract class RecordService
 	 * @param providerName the name of the provider whose records should be returned
 	 * @return A list all records in the index harvested from the provider with the passed name
 	 */
-	public abstract RecordList getByProviderName(String providerName);
+	public abstract RecordList getByProviderName(String providerName) throws IndexException;
 
 	/**
 	 * Gets all records from the index harvested from the provider with the passed URL
@@ -342,7 +343,7 @@ public abstract class RecordService
 	 * @param providerUrl the URL of the provider whose records should be returned
 	 * @return A list all records in the index harvested from the provider with the passed URL
 	 */
-	public abstract RecordList getByProviderUrl(String providerUrl);
+	public abstract RecordList getByProviderUrl(String providerUrl) throws IndexException;
 
 	/**
 	 * Gets all records from the index with the format with the passed name
@@ -350,14 +351,14 @@ public abstract class RecordService
 	 * @param formatName the name of the format whose records should be returned
 	 * @return A list all records in the index with the format with the passed name
 	 */
-	public abstract RecordList getByFormatName(String formatName);
+	public abstract RecordList getByFormatName(String formatName) throws IndexException;
 
 	/**
 	 * Gets all record inputs that were not processed for a given service
 	 *
 	 * @return A list of all records that need to be processed for a given service
 	 */
-	public abstract RecordList getInputForService(int serviceId);
+	public abstract RecordList getInputForService(int serviceId) throws IndexException;
 
 	/**
 	 * Gets the record from the index with the passed OAI Identifier
@@ -366,7 +367,7 @@ public abstract class RecordService
 	 * @return A Record Object representing the record with the passed OAI Identifier
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Record getByOaiIdentifier(String identifier) throws DatabaseConfigException;
+	public abstract Record getByOaiIdentifier(String identifier) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Gets the record from the index with the passed OAI Identifier
@@ -376,7 +377,7 @@ public abstract class RecordService
 	 * @return The record with the passed OAI Identifier
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Record getByOaiIdentifierAndProvider(String identifier, int providerId) throws DatabaseConfigException;
+	public abstract Record getByOaiIdentifierAndProvider(String identifier, int providerId) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Gets the record from the index with the passed OAI Identifier
@@ -386,7 +387,7 @@ public abstract class RecordService
 	 * @return The record with the passed OAI Identifier
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Record getByOaiIdentifierAndService(String identifier, int serviceId) throws DatabaseConfigException;
+	public abstract Record getByOaiIdentifierAndService(String identifier, int serviceId) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Gets all records from the index which have been processed from the specified record
@@ -394,7 +395,7 @@ public abstract class RecordService
 	 * @param processedFromId The ID of the original record whose processed Records we're getting
 	 * @return A list of all records in the index which have been processed from the specified record
 	 */
-	public abstract RecordList getByProcessedFrom(long processedFromId);
+	public abstract RecordList getByProcessedFrom(long processedFromId) throws IndexException;
 
 	/**
 	 * Gets all records from the index with the passed trait
@@ -402,7 +403,7 @@ public abstract class RecordService
 	 * @param trait The trait of the records to retrieve
 	 * @return A list of all records in the index with the passed trait
 	 */
-	public abstract RecordList getByTrait(String trait);
+	public abstract RecordList getByTrait(String trait) throws IndexException;
 
 	/**
 	 * Gets the record from the index with the earliest datestamp processed by a given service
@@ -424,7 +425,7 @@ public abstract class RecordService
 	 * @param serviceId The service which processed the outgoing records
 	 * @return The number of records matching the parameters queried for
 	 */
-	public abstract long getCount(Date fromDate, Date untilDate, int setId, int formatId, int serviceId);
+	public abstract long getCount(Date fromDate, Date untilDate, int setId, int formatId, int serviceId) throws IndexException;
 
 	/**
 	 * Returns the records between the specified dates within the specified set
@@ -438,7 +439,8 @@ public abstract class RecordService
 	 * @param serviceId The service which processed the outgoing records
 	 * @return A list of records matching the parameters queried for
 	 */
-	public abstract List<Record> getOutgoingRecordsInRange(Date fromDate, Date untilDate, int setId, int formatId, int offset, int numResults, int serviceId);
+	public abstract List<Record> getOutgoingRecordsInRange(Date fromDate, Date untilDate, int setId, int formatId, int offset, int numResults, int serviceId)
+		throws IndexException;
 
 	/**
 	 * Inserts a record into the index
@@ -446,7 +448,7 @@ public abstract class RecordService
 	 * @param record The record to insert
 	 * @return true on success, false on failure
 	 */
-	public boolean insert(Record record) throws DataException
+	public boolean insert(Record record) throws DataException, IndexException
 	{
 		// Check that the non-ID fields on the record are valid
 		validateFields(record, false, true);
@@ -483,7 +485,7 @@ public abstract class RecordService
 	 * @param record The record to update
 	 * @return true on success, false on failure
 	 */
-	public boolean update(Record record) throws DataException
+	public boolean update(Record record) throws DataException, IndexException
 	{
 		// Check that the fields on the record are valid
 		validateFields(record, true, true);
@@ -541,7 +543,7 @@ public abstract class RecordService
 	 * @return The record which was contained in the passed Document.
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Record getRecordFromDocument(SolrDocument doc) throws DatabaseConfigException;
+	public abstract Record getRecordFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Parses a Record from the fields in a Document from the index.

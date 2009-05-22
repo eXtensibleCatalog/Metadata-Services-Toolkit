@@ -15,9 +15,9 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.bo.record.Expression;
-import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Manifestation;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.utils.index.ManifestationList;
 
 /**
@@ -32,7 +32,7 @@ import xc.mst.utils.index.ManifestationList;
 public class DefaultManifestationService extends ManifestationService
 {
 	@Override
-	public Manifestation getByXcManifestationId(long manifestationId) throws DatabaseConfigException
+	public Manifestation getByXcManifestationId(long manifestationId) throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with XC manifestation ID " + manifestationId);
@@ -63,7 +63,7 @@ public class DefaultManifestationService extends ManifestationService
 	} // end method getByXcManifestationId(long)
 
 	@Override
-	public ManifestationList getByXcRecordId(String xcRecordId)
+	public ManifestationList getByXcRecordId(String xcRecordId) throws IndexException
 	{
 		String trait = (Manifestation.TRAIT_RECORD_ID + ":" + xcRecordId).replaceAll(":", "\\\\:");
 
@@ -95,7 +95,7 @@ public class DefaultManifestationService extends ManifestationService
 	} // end method getByXcRecordId(String)
 
 	@Override
-	public ManifestationList getByLinkedExpression(Expression expression)
+	public ManifestationList getByLinkedExpression(Expression expression) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all manifestations linked to the expression with ID " + expression.getId());
@@ -125,14 +125,14 @@ public class DefaultManifestationService extends ManifestationService
 	} // end method getByLinkedExpression(Expression)
 
 	@Override
-	public Manifestation getManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException
+	public Manifestation getManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
 		// Return the Record in the document as a Manifestation
 		return Manifestation.buildManifestationFromRecord(recordService.getRecordFromDocument(doc));
 	} // end method getManifestationFromDocument(Document)
 
 	@Override
-	public Manifestation getBasicManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException
+	public Manifestation getBasicManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
 		// Return the Record in the document as a Manifestation
 		return Manifestation.buildManifestationFromRecord(recordService.getRecordFromDocument(doc));

@@ -22,9 +22,9 @@ import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.SolrIndexManager;
-import xc.mst.utils.index.ThreadedSolrIndexManager;
 import xc.mst.utils.index.WorkList;
 
 /**
@@ -83,7 +83,7 @@ public abstract class WorkService
 	 * @param value The value of the identifierForTheWork element
 	 * @return A list of Works with the requested identifierForTheWork element.
 	 */
-	public WorkList getByIdentifierForTheWork(String type, String value)
+	public WorkList getByIdentifierForTheWork(String type, String value) throws IndexException
 	{
 		return getByIdentifierForTheWork("(" + type + ")" + value);
 	} // end method getByIdentifierForTheWork(String, String)
@@ -95,7 +95,7 @@ public abstract class WorkService
 	 *                             format (<type>)<value>
 	 * @return A list of Works with the requested identifierForTheWork element.
 	 */
-	public abstract WorkList getByIdentifierForTheWork(String identifierForTheWork);
+	public abstract WorkList getByIdentifierForTheWork(String identifierForTheWork) throws IndexException;
 
 	/**
 	 * Gets the Work that matches the passed XC work ID
@@ -103,7 +103,7 @@ public abstract class WorkService
 	 * @param The XC work ID of the target work element
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Work getByXcWorkId(long workId) throws DatabaseConfigException;
+	public abstract Work getByXcWorkId(long workId) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Gets a list of Works that have not been processed
@@ -111,7 +111,7 @@ public abstract class WorkService
 	 * @param serviceId The ID of the service whose unprocessed works to get
 	 * @return A list of Works that have not been processed
 	 */
-	public abstract WorkList getUnprocessedWorks(int serviceId);
+	public abstract WorkList getUnprocessedWorks(int serviceId) throws IndexException;
 
 	/**
 	 * Inserts a work into the index
@@ -119,7 +119,7 @@ public abstract class WorkService
 	 * @param work The work to insert
 	 * @return true on success, false on failure
 	 */
-	public boolean insert(Work work) throws DataException
+	public boolean insert(Work work) throws DataException, IndexException
 	{
 		// Check that the non-ID fields on the work are valid
 		validateFields(work, false, true);
@@ -145,7 +145,7 @@ public abstract class WorkService
 	 * @param work The work to update
 	 * @return true on success, false on failure
 	 */
-	public boolean update(Work work) throws DataException
+	public boolean update(Work work) throws DataException, IndexException
 	{
 		// Check that the fields on the work are valid
 		validateFields(work, true, true);
@@ -197,7 +197,7 @@ public abstract class WorkService
 	 * @return The work which was contained in the passed Document.
 	 * @throws DatabaseConfigException 
 	 */
-	public abstract Work getWorkFromDocument(SolrDocument doc) throws DatabaseConfigException;
+	public abstract Work getWorkFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
 	/**
 	 * Parses a Work from the fields in a Document from the index.

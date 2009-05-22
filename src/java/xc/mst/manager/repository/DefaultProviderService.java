@@ -10,6 +10,7 @@
 package xc.mst.manager.repository;
 
 import java.util.List;
+
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
@@ -17,6 +18,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.ProviderDAO;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
@@ -84,7 +86,7 @@ public class DefaultProviderService implements ProviderService{
      * @param provider provider object
      * @throws xc.mst.dao.DataException
      */
-    public void deleteProvider(Provider provider) throws DataException{
+    public void deleteProvider(Provider provider) throws DataException, IndexException{
     	
     	// Delete schedule for this repository
     	ScheduleService scheduleService = new DefaultScheduleService();

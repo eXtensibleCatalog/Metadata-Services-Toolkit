@@ -41,6 +41,7 @@ import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.record.RecordService;
@@ -90,7 +91,7 @@ public class TestServices
 	 */
 	private static DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 
-	public static void main(String[] args) throws DataException, IOException, JDOMException
+	public static void main(String[] args) throws DataException, IOException, JDOMException, IndexException
 	{
 		RecordService recordService = new DefaultRecordService();
 		
@@ -134,7 +135,7 @@ public class TestServices
 		}
 	}
 
-	public static void addUnprocessedRecordFromFiles(File inputDirectory) throws DataException, IOException
+	public static void addUnprocessedRecordFromFiles(File inputDirectory) throws DataException, IOException, IndexException
 	{
 		ProviderDAO providerDao = new DefaultProviderDAO();
 		FormatDAO formatDao = new DefaultFormatDAO();

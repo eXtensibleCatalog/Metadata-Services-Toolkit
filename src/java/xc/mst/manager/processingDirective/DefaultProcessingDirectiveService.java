@@ -10,7 +10,9 @@
 package xc.mst.manager.processingDirective;
 
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
@@ -21,6 +23,7 @@ import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
 import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.scheduling.Scheduler;
@@ -167,13 +170,19 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      */
     private void runProcessingDirective(ProcessingDirective pd)
     {
-    	// If the processing directive's source is a provider then we should check all
-    	// records harvested from that provider.  Otherwise we should check all records
-    	// processed by the processing directive's source service.
-    	RecordList recordsToCheck = (pd.getSourceProvider() != null ?
-    			                     recordService.getByProviderId(pd.getSourceProvider().getId()) :
-    			                	 recordService.getByServiceId(pd.getSourceService().getId()));
-
+    	RecordList recordsToCheck = null;
+    	
+    	try { 
+	    	// If the processing directive's source is a provider then we should check all
+	    	// records harvested from that provider.  Otherwise we should check all records
+	    	// processed by the processing directive's source service.
+	    	recordsToCheck = (pd.getSourceProvider() != null ?
+	    			                     recordService.getByProviderId(pd.getSourceProvider().getId()) :
+	    			                	 recordService.getByServiceId(pd.getSourceService().getId()));
+    	} catch(IndexException ie) {
+			log.error("Indexing exception occured.", ie);
+		} 
+    	
     	// Check each record against the new processing directive. Mark the matched
     	// records as input for the processing directive's service
     	for(Record record : recordsToCheck)
@@ -191,6 +200,9 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
 				{
 					log.error("Data Exception", e);
 				} // end catch(DataException)
+		    	catch(IndexException ie) {
+					log.error("Indexing exception occured.", ie);
+				} 				
 			} // end if(format matched)
 
 			// If the metadata format didn't match, check if the record is in any of the sets for the current processing directive
@@ -210,7 +222,9 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
 						{
 							log.error("Data Exception", e);
 						} // end catch(DataException)
-
+				    	catch(IndexException ie) {
+							log.error("Indexing exception occured.", ie);
+						} 
 						break;
 					} // end if(the set matched the processing directive)
 				} // end loop over the record's sets

@@ -26,6 +26,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.utils.LogWriter;
 
@@ -99,9 +100,11 @@ public class SolrIndexManager {
 	 * @param doc The document to add
 	 * @return true on success, false on failure
 	 */
-	public boolean addDoc(SolrInputDocument doc) throws DataException
+	public boolean addDoc(SolrInputDocument doc) throws IndexException
 	{
-		log.debug("Add index to Solr - begin");
+		if (log.isDebugEnabled()) {
+			log.debug("Add index to Solr - begin");
+		}
 		
 		// Check if solr server is null
 		if (server == null) {
@@ -112,9 +115,10 @@ public class SolrIndexManager {
 		try {
 			server.add(doc);
 		} catch (SolrServerException se) {
-			log.error("Solr server exception occured when adding document to the index.", se);
+			log.error("Solr server exception occured when adding document to the index. Check the Solr configuration to make sure the port number is correct.", se);
 			
-			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index: " + se.getMessage());
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index. Check the Solr configuration to make sure the port number is correct." 
+					+ se.getMessage());
 			
 			logObj.setErrors(logObj.getErrors()+1);
 			try{
@@ -123,11 +127,12 @@ public class SolrIndexManager {
 				log.error("DataExcepiton while updating the log's error count.", e);
 			}
 			
-			throw new DataException(se.getMessage());
+			throw new IndexException(se.getMessage());
 		} catch (IOException ioe) {
 			log.debug(ioe);
 			
-			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index: " + ioe.getMessage());
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index. Check the Solr configuration to make sure the port number is correct." 
+					+ ioe.getMessage());
 			
 			logObj.setErrors(logObj.getErrors()+1);
 			try{
@@ -136,9 +141,12 @@ public class SolrIndexManager {
 				log.error("DataExcepiton while updating the log's error count.", e);
 			}
 			
-			throw new DataException(ioe.getMessage());
+			throw new IndexException(ioe.getMessage());
 		}
-		log.debug("Add index to Solr - end");
+		
+		if (log.isDebugEnabled()) {
+			log.debug("Add index to Solr - end");
+		}
 		return true;
 	}
 
@@ -151,9 +159,10 @@ public class SolrIndexManager {
 		} 
 		catch (SolrServerException se) 
 		{
-			log.error("Solr server exception occured when adding document to the index.", se);
+			log.error("Solr server exception occured when deleting document in the index. Check the Solr configuration to make sure the port number is correct.", se);
 			
-			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index: " + se.getMessage());
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while deleting document in the index. Check the Solr configuration to make sure the port number is correct." 
+					+ se.getMessage());
 			
 			logObj.setErrors(logObj.getErrors()+1);
 			try{
@@ -166,9 +175,10 @@ public class SolrIndexManager {
 		} 
 		catch (IOException ioe) 
 		{
-			log.error("IO exception occured when adding document to the index.", ioe);
+			log.error("IO exception occured when deleting document in the index. Check the Solr configuration to make sure the port number is correct.", ioe);
 			
-			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index: " + ioe.getMessage());
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while deleting document in the index. Check the Solr configuration to make sure the port number is correct." 
+					+ ioe.getMessage());
 			
 			logObj.setErrors(logObj.getErrors()+1);
 			try{
@@ -187,9 +197,11 @@ public class SolrIndexManager {
 	 * @param doc The document to add
 	 * @return true on success, false on failure
 	 */
-	public boolean commitIndex() throws DataException
+	public boolean commitIndex() throws IndexException
 	{
-		log.debug("Commit index to Solr - begin");
+		if (log.isDebugEnabled()) {
+			log.debug("Commit index to Solr - begin");
+		}
 
 		// Check if solr server is null
 		if (server == null) {
@@ -200,9 +212,10 @@ public class SolrIndexManager {
 			server.commit();
 			LogWriter.addInfo(logObj.getLogFileLocation(), "Commited changes to the Solr index");
 		} catch (SolrServerException se) {
-			log.error("Solr server exception occured when commiting to the index.", se);
+			log.error("Solr server exception occured when commiting to the index. Check the Solr configuration to make sure the port number is correct.", se);
 			
-			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index: " + se.getMessage());
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index. Check the Solr configuration to make sure the port number is correct." 
+					+ se.getMessage());
 			logObj.setErrors(logObj.getErrors()+1);
 			try {
 				logDao.update(logObj);
@@ -210,11 +223,12 @@ public class SolrIndexManager {
 				log.error("DataExcepiton while updating the log's error count.");
 			}
 			
-			throw new DataException(se.getMessage());
+			throw new IndexException(se.getMessage());
 		} catch (IOException ioe) {
-			log.debug(ioe);
+			log.error("IO exception occured when commiting to the index. Check the Solr configuration to make sure the port number is correct." + ioe);
 			
-			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index: " + ioe.getMessage());
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index. Check the Solr configuration to make sure the port number is correct." 
+					+ ioe.getMessage());
 			
 			logObj.setErrors(logObj.getErrors()+1);
 			try{
@@ -223,9 +237,12 @@ public class SolrIndexManager {
 				log.error("DataExcepiton while updating the log's error count.");
 			}
 			
-			throw new DataException(ioe.getMessage());
+			throw new IndexException(ioe.getMessage());
 		}
-		log.debug("Commit index to Solr - end");
+		
+		if (log.isDebugEnabled()) {
+			log.debug("Commit index to Solr - end");
+		}
 		return true;
 	}
 
@@ -235,7 +252,7 @@ public class SolrIndexManager {
 	 * @param query Query to perform the search
 	 * @return Search results
 	 */
-	public SolrDocumentList getDocumentList(SolrQuery query) {
+	public SolrDocumentList getDocumentList(SolrQuery query) throws IndexException {
 
 		SolrDocumentList docs = null;
 		
@@ -251,9 +268,10 @@ public class SolrIndexManager {
 		    docs = rsp.getResults();
 
 		} catch (SolrServerException e) {
-				log.error("An error occurred while getting documents from the Solr index", e);
+				log.error("An error occurred while getting documents from the Solr index. Check the Solr configuration to make sure the port number is correct.", e);
 				
-				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while getting documents from the Solr index: " + e.getMessage());
+				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while getting documents from the Solr index. Check the Solr configuration to make sure the port number is correct." 
+						+ e.getMessage());
 				
 				logObj.setErrors(logObj.getErrors()+1);
 				try{
@@ -261,6 +279,7 @@ public class SolrIndexManager {
 				}catch(DataException e2){
 					log.error("DataExcepiton while updating the log's error count.");
 				}
+				throw new IndexException(e.getMessage());
 		}
 
 		return docs;
