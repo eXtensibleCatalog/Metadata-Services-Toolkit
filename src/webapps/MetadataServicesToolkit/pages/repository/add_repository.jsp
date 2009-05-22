@@ -36,9 +36,9 @@
 	<SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>     
 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
-        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/add_repository.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/button/button-min.js"></script> 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/add_repository.js"></SCRIPT>
        
     </head>
 

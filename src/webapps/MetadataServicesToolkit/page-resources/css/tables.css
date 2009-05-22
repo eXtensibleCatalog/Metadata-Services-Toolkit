@@ -325,14 +325,13 @@
 .errorText
 {
     position : relative;
-    top : 1px;
+    top : 5px;
 }
 
 .jsErrorMessage {
-	padding:5px;
 	display : inline;
     position : relative;
-    top: 3px;
+    top: 5px;
 }
 
 .info {

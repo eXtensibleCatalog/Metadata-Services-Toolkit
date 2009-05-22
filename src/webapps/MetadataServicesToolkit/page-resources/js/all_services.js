@@ -13,7 +13,7 @@ YAHOO.xc.mst.services.listServices = {
 
  downloadFile: function(type,id)
             {
-                window.location = "pages/logs/downloadLogFile.jsp?logType="+type+"&id="+id;
+                window.location = "pages/logs/downloadLogFile.action?logType="+type+"&id="+id;
             },
 
 	/**

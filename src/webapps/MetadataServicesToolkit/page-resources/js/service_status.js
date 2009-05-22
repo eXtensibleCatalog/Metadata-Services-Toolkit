@@ -124,7 +124,7 @@ refreshServiceBar : function()
             }
             });
 
-            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',100);
+            window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',1000);
         }
         catch(e)
         {

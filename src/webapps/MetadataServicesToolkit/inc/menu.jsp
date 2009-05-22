@@ -22,7 +22,7 @@
                    <div id="repository" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allRepository.action" />" >All Repositories</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allRepository.action" />" >List Repositories</a></li>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddRepository.action" />" >Add Repository</a></li>
                            </ul>
                         </div>
@@ -35,7 +35,7 @@
                    <div id="schedule" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allSchedules.action" />" >All Schedules</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allSchedules.action" />" >List Schedules</a></li>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddSchedule.action" />" >Add Schedule</a></li>
                            </ul>
                         </div>
@@ -95,9 +95,9 @@
                    <div id="UsersGroups" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allUsers.action" />" >Users</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allUsers.action" />" >List Users</a></li>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddLocalUser.action" />" >Add Local User</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allGroups.action" />" >Groups</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allGroups.action" />" >List Groups</a></li>
                                 <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddGroup.action" />" >Add Group</a></li>
                            </ul>
                         </div>
