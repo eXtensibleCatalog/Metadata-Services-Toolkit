@@ -98,12 +98,12 @@ public class XCRecord
 	/**
 	 * A list of expression elements for this XC record
 	 */
-	private HashSet<Element> additionalExpressionElements = new HashSet<Element>();
+	private ArrayList<Element> additionalExpressionElements = new ArrayList<Element>();
 
 	/**
 	 * A list of work elements for this XC record
 	 */
-	private HashSet<Element> additionalWorkElements = new HashSet<Element>();
+	private ArrayList<Element> additionalWorkElements = new ArrayList<Element>();
 
 	
 	/**
