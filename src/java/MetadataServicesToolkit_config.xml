@@ -13,7 +13,7 @@
     <property name="DatabasePassword" value="admin" />
     
     <!-- Location of log4j properties for testing -->
-    <property name="LoggerConfigFileLocation" value="C:\Documents and Settings\sharmilar\My Documents\workspace\MetadataServicesToolkit\src\java\log4j.config.txt" />
+    <property name="LoggerConfigFileLocation" value="src\java\log4j.config.txt" />
     
     <property name="LuceneIndexerRAMBufferMB" value="1024" />
     <property name="OrganizationCode" value="NRU" />
