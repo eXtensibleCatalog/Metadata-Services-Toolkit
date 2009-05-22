@@ -8,6 +8,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrInputDocument;
+import org.jconfig.Configuration;
+import org.jconfig.ConfigurationManager;
 
 import xc.mst.dao.DataException;
 import xc.mst.manager.record.MSTSolrServer;
@@ -22,12 +24,15 @@ import xc.mst.utils.LogWriter;
  */
 public class ThreadedSolrIndexManager extends SolrIndexManager {
 
-	
 	/**
 	 * Service for pipelining and executing tasks.
 	 */
 	private ExecutorService threadPool;
 	
+	/**
+	 * Service for pipelining and executing tasks.
+	 */
+	private static Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
 	/*
 	 * Private default constructor
 	 */
@@ -39,6 +44,8 @@ public class ThreadedSolrIndexManager extends SolrIndexManager {
 	 * @param maxQueueSize Size of the queue for waiting threads 
 	 */
 	private ThreadedSolrIndexManager(int numThreads, int maxQueueSize){
+		
+		log.info("SolrIndexManager Thread Pool Initialized");
 		
 		/* Initialize the thread pool*/
 		threadPool = new ThreadPoolExecutor(numThreads, 
@@ -61,12 +68,14 @@ public class ThreadedSolrIndexManager extends SolrIndexManager {
 			return instance;
 		}
 
-		if(log.isDebugEnabled()) {
-			log.debug("Initializing the SolrIndexManager instance.");
-		}
+		log.info("Initializing the SolrIndexManager instance.");
+		
+		// Get the queue size and pool size for threads
+		int poolSize = Integer.parseInt(configuration.getProperty("SOLRIndexerMultiThreadCount")) == 0 ? 20 : Integer.parseInt(configuration.getProperty("SOLRIndexerMultiThreadCount")) ;
 		
 		server = MSTSolrServer.getServer();
-		instance = new ThreadedSolrIndexManager(20, 20);
+		
+		instance = new ThreadedSolrIndexManager(poolSize, poolSize);
 		return instance;
 	}
 	
@@ -78,8 +87,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager {
 	 */
 	public boolean addDoc(SolrInputDocument doc) throws DataException
 	{
-		//System.out.println("Doc: " +doc.getDocumentBoost());
-		log.debug("Add index to Solr - begin");
+			log.debug("Add index to Solr - begin");
 		
 		// Check if solr server is null
 		if (server == null) {
