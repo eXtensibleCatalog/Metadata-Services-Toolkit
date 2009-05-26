@@ -31,12 +31,12 @@
                  </mst:checkUserPermission>
 
        			<mst:checkUserPermission permission="Schedule">
-                   <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="<c:url value="/allSchedules.action"/>">Schedule</a>
+                   <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="<c:url value="/allSchedules.action"/>">Harvest</a>
                    <div id="schedule" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allSchedules.action" />" >List Schedules</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddSchedule.action" />" >Add Schedule</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allSchedules.action" />" >List Scheduled Harvests</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddSchedule.action" />" >Add Scheduled Harvests</a></li>
                            </ul>
                         </div>
                     </div>
