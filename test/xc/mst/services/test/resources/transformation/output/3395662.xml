@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">Z673.A5</dcterms:subject>
+		<dcterms:subject xsi:type="dcterms:NLM">Z 673 A508</dcterms:subject>
+		<dcterms:subject xsi:type="dcterms:DDC">020.973</dcterms:subject>
+		<rdvocab:titleOfWork>American libraries (Online)</rdvocab:titleOfWork>
+		<xc:subject type="rvm">American Library Association-Périodiques.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Library science-Periodicals.</xc:subject>
+		<xc:subject xsi:type="dcterms:MESH">Library Science-Periodicals.</xc:subject>
+		<dcterms:relation dcterms:ISSN="0084-6406">American Library Association. ALA handbook of organization &lt;1998/99-&gt;</dcterms:relation>
+		<dcterms:relation>American Library Association. Annual report &lt;2000-&gt;</dcterms:relation>
+		<dcterms:replaces dcterms:ISSN="0364-4006">American Library Association. ALA bulletin</dcterms:replaces>
+		<rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+		<xc:subject type="rvm">American Library Association</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Library science</xc:subject>
+		<xc:subject xsi:type="dcterms:MESH">Library Science</xc:subject>
+		<xc:type type="rvm">Périodiques.</xc:type>
+		<xc:type xsi:type="dcterms:LCSH">Periodicals.</xc:type>
+		<xc:type xsi:type="dcterms:MESH">Periodicals.</xc:type>
+	</xc:entity>
+	<xc:entity type="expression">
+		<xc:titleOfExpression>American libraries (Online)</xc:titleOfExpression>
+		<dcterms:description>Official bulletin of the American Library Association.</dcterms:description>
+		<dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<xc:contributor>American Library Association.</xc:contributor>
+		<xc:contributor>EBSCO Publishing (Firm)</xc:contributor>
+		<xc:contributor>ProQuest Information and Learning Company.</xc:contributor>
+		<xc:contributor>H.W. Wilson Company.</xc:contributor>
+	</xc:entity>
+	<xc:entity type="manifestation">
+		<xc:recordID type="LCCN">70021767</xc:recordID>
+		<xc:identifier type="DNLM">A25140000</xc:identifier>
+		<xc:identifier type="ISSN">0002-9769</xc:identifier>
+		<xc:recordID type="WaSeSS">ssj0001598</xc:recordID>
+		<xc:recordID type="NRU">3395662</xc:recordID>
+		<dcterms:alternative>Am. libr. (Chic. Ill.)</dcterms:alternative>
+		<dcterms:alternative>American libraries (Chicago, Ill.)</dcterms:alternative>
+		<dcterms:title>American libraries</dcterms:title>
+		<rdvocab:placeOfProduction>[Chicago]</rdvocab:placeOfProduction>
+		<dcterms:publisher>American Library Association.</dcterms:publisher>
+		<rdvocab:frequency>11 no. a year</rdvocab:frequency>
+		<rdvocab:numberingOfSerials>v. 1- Jan. 1970-</rdvocab:numberingOfSerials>
+		<dcterms:identifier>Internet Full text. http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=AMERLIBCHIL</dcterms:identifier>
+		<xc:typeLeader06>Language material</xc:typeLeader06>
+		<xc:typeLeader06>Computer file</xc:typeLeader06>
+		<xc:type007>Text</xc:type007>
+		<xc:type007>Electronic resource</xc:type007>
+		<xc:typeSMD>Remote</xc:typeSMD>
+		<rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+		<dcterms:issued>1970-</dcterms:issued>
+	</xc:entity>
+		<xc:entity type="holdings">
+	</xc:entity>
+	<xc:entity type="item">
+	</xc:entity>
+</xc:frbr>

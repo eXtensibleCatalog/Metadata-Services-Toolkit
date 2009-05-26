@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		<rdvocab:titleOfWork>Simple gifts</rdvocab:titleOfWork>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+	</xc:entity>
+<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Simple gifts. </rdvocab:titleOfWork>
+		<xc:creator>Brackett, Joseph.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Songs, voices (3-6). To the shady woods. </rdvocab:titleOfWork>
+		<xc:creator>Tomkins, Thomas, 1572-1656.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Songs or ayres, 3rd book. What if I never speede. </rdvocab:titleOfWork>
+		<xc:creator>Dowland, John, 1563?-1626.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Madrigals, voices (3-6), set 1. Thus saith my Cloris bright </rdvocab:titleOfWork>
+		<xc:creator>Wilbye, John, 1574-1638.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Balletts. Now is the month of maying. </rdvocab:titleOfWork>
+		<xc:creator>Morley, Thomas, 1557-1603?</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Motets (1572). O magnum mysterium. </rdvocab:titleOfWork>
+		<xc:creator>Victoria, Tomás Luis de, ca. 1548-1611.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Remember, O thou man. </rdvocab:titleOfWork>
+		<xc:creator>Ravenscroft, Thomas, 1592?-1635?</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Zauberflöte. Ouverture; arr. </rdvocab:titleOfWork>
+		<xc:creator>Mozart, Wolfgang Amadeus, 1756-1791.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Jour vis un foulon. </rdvocab:titleOfWork>
+		<xc:creator>Lasso, Orlando di, 1532-1594.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Veux-tu, compère Grégoire. </rdvocab:titleOfWork>
+		<xc:creator>Charpentier, Marc-Antoine, 1643-1704.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Recopilación de sonetos y villancicos. Ojos morenos, quándo nos veremos? </rdvocab:titleOfWork>
+		<xc:creator>Vásquez, Juan, fl. 1535-1560.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Recopilación de sonetos y villancicos. Não me firays, madre. </rdvocab:titleOfWork>
+		<xc:creator>Vásquez, Juan, fl. 1535-1560.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Canzoni, libro 1. Chi la gagliarda. </rdvocab:titleOfWork>
+		<xc:creator>Donato, Baldassare, d. 1603.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Veglie de Sienna. Humor svegghiato. </rdvocab:titleOfWork>
+		<xc:creator>Vecchi, Orazio, 1550-1605.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Applauso. </rdvocab:titleOfWork>
+		<xc:creator>Vecchi, Orazio, 1550-1605.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Madrigals, voices (5) book 1. Vergine glorioso e lieta. </rdvocab:titleOfWork>
+		<xc:creator>Marenzio, Luca, 1553-1599.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Festino nella sera del Giovedi Grasso avanti cena. Contrappunto bestiale alla mente. </rdvocab:titleOfWork>
+		<xc:creator>Banchieri, Adriano, d. 1634.</xc:creator>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Sumer is icumen in. </rdvocab:titleOfWork>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Nowel syng we. </rdvocab:titleOfWork>
+	</xc:entity>
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+		
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+		<rdvocab:titleOfWork>Dormi, dormi, o bel bambin. </rdvocab:titleOfWork>
+	</xc:entity>
+		<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		<xc:titleOfExpression>Simple gifts</xc:titleOfExpression>
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+	</xc:entity>
+	<xc:entity type="manifestation">
+		<xc:recordID type="LCCN">75750655 /R</xc:recordID>
+		<xc:identifier type="SoundNr">5012</xc:identifier>
+		<xc:recordID type="OCoLC">01663487</xc:recordID>
+		<xc:recordID type="NRU">1586760</xc:recordID>
+		<dcterms:title>Simple gifts</dcterms:title>
+		<rdvocab:placeOfProduction>Cleveland, Ohio :</rdvocab:placeOfProduction>
+		<dcterms:publisher>Advent Records,</dcterms:publisher>
+		<dcterms:issued>[1975], p1974.</dcterms:issued>
+		<dcterms:extent>1 sound disc :</dcterms:extent>
+		<rdvocab:soundCharacteristics>analog, 33 1/3 rpm, stereo. ;</rdvocab:soundCharacteristics>
+		<rdvocab:dimensions>12 in.</rdvocab:dimensions>
+		<dcterms:description>"Produced for the Metropolitan Opera Guild."</dcterms:description>
+		<dcterms:description>Notes on container ; program notes and texts ([2] p.) by J. Freeman inserted.</dcterms:description>
+		<dcterms:tableOfContents>Simple gifts : Shaker hymn / [Joseph Brackett] -- Sumer is icumen in / Anon., 14th cent. -- To the shady woods / Thomas Tomkins -- What if I never speede / John Dowland -- Thus saith my Cloris bright / John Wilbye -- Now is the month of maying / Thomas Morley -- O magnum mysterium / Tomas Luis da Vittoria -- Nowel syng we / Anon., 15th cent. -- Remember o thou man / Thomas Ravenscroft -- Dormi, o bel bambin / Anon. -- Die Zauberflöte overture / Wolfgang Amadeus Mozart -- Un jour vis un foulon / Roland de Lassus -- Veux-tu, compère Grégoire / M.A. Charpentier -- Ojos morenos ; Não me firays, madre / Juan Vasquez -- Chi la gagliarda / Baldassare Donato -- L'humor svegghiato ; Applauso / Orazio Vecchi -- Vergine gloriosa / Luca Marenzio -- Contrappunto bestiale / Adriano Banchieri.</dcterms:tableOfContents>
+		<xc:typeLeader06>Musical sound recording</xc:typeLeader06>
+		<xc:type007>Sound recording</xc:type007>
+		<xc:typeSMD>Sound disk</xc:typeSMD>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Simple gifts. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Songs, voices (3-6). To the shady woods. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Songs or ayres, 3rd book. What if I never speede. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Madrigals, voices (3-6), set 1. Thus saith my Cloris bright </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Balletts. Now is the month of maying. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Motets (1572). O magnum mysterium. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Remember, O thou man. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Zauberflöte. Ouverture; arr. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Jour vis un foulon. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Veux-tu, compère Grégoire. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Recopilación de sonetos y villancicos. Ojos morenos, quándo nos veremos? </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Recopilación de sonetos y villancicos. Não me firays, madre. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Canzoni, libro 1. Chi la gagliarda. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Veglie de Sienna. Humor svegghiato. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Applauso. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Madrigals, voices (5) book 1. Vergine glorioso e lieta. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Festino nella sera del Giovedi Grasso avanti cena. Contrappunto bestiale alla mente. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Sumer is icumen in. This is L field </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Nowel syng we. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="expression">
+		<rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+		
+		<rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<dcterms:language>German</dcterms:language>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>Portuguese</dcterms:language>
+		<dcterms:language>Spanish</dcterms:language>
+		<rdarole:performer>Weidinger, Christine.</rdarole:performer>
+		<rdarole:performer>Love, Shirley.</rdarole:performer>
+		<rdarole:performer>Castel, Nico.</rdarole:performer>
+		<rdarole:performer>Schmorr, Robert.</rdarole:performer>
+		<rdarole:performer>Boucher, Gene.</rdarole:performer>
+		<rdarole:performer>Best, Richard.</rdarole:performer>
+		<xc:titleOfExpression>Dormi, dormi, o bel bambin. </xc:titleOfExpression>
+	</xc:entity>
+	<xc:entity type="item">
+	</xc:entity>
+</xc:frbr>

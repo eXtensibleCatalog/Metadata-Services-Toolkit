@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work">
+		<dcterms:subject xsi:type="dcterms:DDC">791.43/72</dcterms:subject>
+		<dcterms:subject xsi:type="dcterms:LCC">PN1995.9.D4</dcterms:subject>
+		<rdvocab:titleOfWork>No country for old men</rdvocab:titleOfWork>
+		<dcterms:abstract>Llewelyn Moss is a Vietnam vet who could use a break. One morning while hunting antelope, he spies several trucks surrounded by dead bodies. He decides to examine the site. He finds a case filled with $2 million and a truck loaded with heroin. Moss takes it with him, tells his wife he's going away for awhile, and hits the road until he can determine his next move. On his the way from El Paso to the Mexican border, he discovers he's being followed by ex-special ops agent Chigurh. Chigurh's weapon of choice is a cattle gun, and he uses it on everyone who gets in his way. Just as Sheriff Bell, a World War II vet, is on Moss's trail, Chigurh's former colleague, Wells, is on his.</dcterms:abstract>
+		<dcterms:audience>MPAA rating: Rated R; for strong graphic violence and some language.</dcterms:audience>
+		<xc:type xsi:type="dcterms:LCSH">Video recordings for the hearing impaired.</xc:type>
+		<xc:type type="migfg">Crime.</xc:type>
+		<xc:type type="NRUgenre">Drama.</xc:type>
+		<xc:type type="migfg">Thriller.</xc:type>
+		<xc:relation>McCarthy, Cormac, 1933- No country for old men.</xc:relation>
+	</xc:entity>
+	<xc:entity type="expression">
+		<xc:titleOfExpression>No country for old men</xc:titleOfExpression>
+		<dcterms:version>Widescreen version.</dcterms:version>
+		<rdvocab:artisticAndOrTechnicalCredits>Director of photography, Roger Deakins ; editor, Roderick Jaynes ; music, Carter Burwell ; costume designer, Mary Zophres ; production designer, Jess Gonchor.</rdvocab:artisticAndOrTechnicalCredits>
+		<rdvocab:performerNarratorAndOrPresenter>Tommy Lee Jones, Javier Bardem, Josh Brolin, Woody Harrelson, Kelly Macdonald.</rdvocab:performerNarratorAndOrPresenter>
+		<dcterms:requires>DVD, NTSC; region 1, widescreen (2.35:1, enhanced) presentation; Dolby Digital 5.1 surround, digitally mastered.</dcterms:requires>
+		<dcterms:language>English dialogue, with optional French, Spanish subtitles, English subtitles for the deaf and hard of hearing; closed-captioned.</dcterms:language>
+		<rdvocab:awards>Academy Awards, 2008: Best Achievement in Directing; Best Motion Picture of the Year; Best Performance by an Actor in a Supporting Role (Bardem); Best Writing, Screenplay Based on Material Previously Produced or Published. Golden Globes, USA, 2008: Golden Globe - Best Performance by an Actor in a Supporting Role in a Motion Picture (Javier Bardem) ; Best Screenplay - Motion Picture (Joel Coen, Ethan Coen)</rdvocab:awards>
+		<dcterms:relation>http://www.mrqe.com/lookup?no+country Connect to reviews of this title online</dcterms:relation>
+		<dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+		<dcterms:type xsi:type="dcterms:DCMIType">MovingImage</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<rdarole:producer>Rudin, Scott, 1958-</rdarole:producer>
+		<rdarole:producer>Coen, Ethan.</rdarole:producer>
+		<rdarole:director>Coen, Ethan.</rdarole:director>
+		<rdarole:producer>Coen, Joel.</rdarole:producer>
+		<rdarole:director>Coen, Joel.</rdarole:director>
+		<rdarole:performer>Jones, Tommy Lee, 1946-</rdarole:performer>
+		<rdarole:performer>Bardem, Javier, 1969-</rdarole:performer>
+		<rdarole:performer>Brolin, Josh.</rdarole:performer>
+		<rdarole:performer>Harrelson, Woody.</rdarole:performer>
+		<rdarole:performer>MacDonald, Kelly, 1976-</rdarole:performer>
+		<xc:contributor>Miramax Films.</xc:contributor>
+		<xc:contributor>Paramount Vantage.</xc:contributor>
+		<xc:contributor>Miramax Home Entertainment (Firm)</xc:contributor>
+		<xc:contributor>Buena Vista Home Entertainment (Firm)</xc:contributor>
+	</xc:entity>
+	<xc:entity type="manifestation">
+		<xc:identifier type="UPC">786936746754</xc:identifier>
+		<xc:identifier type="VideoNr">55640</xc:identifier>
+		<xc:recordID type="OCoLC">184908513</xc:recordID>
+		<xc:recordID type="NRU">3768890</xc:recordID>
+		<rdvocab:statementOfResponsibilityRelatingToTitle>Miramax Films and Paramount Vantage present ; written for the screen and directed by Joel Coen &amp; Ethan Coen ; produced by Scott Rudin, Ethan Coen, Joel Coen ; a Scott Rudin/Mike Zoss production.</rdvocab:statementOfResponsibilityRelatingToTitle>
+		<dcterms:title>No country for old men</dcterms:title>
+		<rdvocab:editionStatement>Widescreen version.</rdvocab:editionStatement>
+		<rdvocab:placeOfProduction>Burbank, Calif. :</rdvocab:placeOfProduction>
+		<dcterms:publisher>Miramax Home Entertainment :</dcterms:publisher>
+		<dcterms:publisher>Distributed by Buena Vista Home Entertainment,</dcterms:publisher>
+		<dcterms:issued>2008.</dcterms:issued>
+		<dcterms:extent>1 videodisc (122 min.) :</dcterms:extent>
+		<xc:otherPhysicalDetails>sd., col. ;</xc:otherPhysicalDetails>
+		<rdvocab:dimensions>4 3/4 in.</rdvocab:dimensions>
+		<dcterms:description>Originally released as a motion picture in 2007.</dcterms:description>
+		<dcterms:description>Based on the novel by Cormac McCarthy.</dcterms:description>
+		<dcterms:description>Special features: "The making of No country for old men" featurette; Working with the Coens: reflections of cast &amp; crew" featurette; "Diary of a country sheriff" featurette.</dcterms:description>
+		<xc:typeLeader06>Projected medium</xc:typeLeader06>
+		<xc:type007>Video recording</xc:type007>
+		<xc:typeSMD>Videodisc</xc:typeSMD>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<dcterms:identifier type="ISBN">0788882988</dcterms:identifier>
+	</xc:entity>
+	<xc:entity type="item">
+	</xc:entity>
+</xc:frbr>

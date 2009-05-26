@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work">
+	</xc:entity>
+	<xc:entity type="expression">
+	</xc:entity>
+	<xc:entity type="manifestation">
+		<dcterms:identifier>http://purl.oclc.org/NET/SibleyMusicLibrary/Microforms Click here to purchase a microform copy of this item.</dcterms:identifier>
+		<xc:recordID type="NRU">970288</xc:recordID>
+	</xc:entity>
+		<xc:entity type="holdings">
+		<xc:location>Sib Music Microform</xc:location>
+		<xc:callNumber>Fiche 1209</xc:callNumber>
+		<xc:recordID type="NRU">1071900</xc:recordID>
+		<xc:manifestationHeld type="NRU">970288</xc:manifestationHeld>
+	</xc:entity>
+	<xc:entity type="item">
+	</xc:entity>
+</xc:frbr>
