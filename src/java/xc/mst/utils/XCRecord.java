@@ -98,7 +98,7 @@ public class XCRecord
 	/**
 	 * A list of expression elements for this XC record
 	 */
-	private ArrayList<Element> additionalExpressionElements = new ArrayList<Element>();
+	private ArrayList<String> additionalExpressionTitles = new ArrayList<String>();
 
 	/**
 	 * A list of work elements for this XC record
@@ -256,8 +256,28 @@ public class XCRecord
 			xcRootElement.addContent("\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n\t");
 
 		// Add the extra expression elements
-		for(Element expressionElement : additionalExpressionElements)
-			xcRootElement.addContent(expressionElement.addContent("\n\t")).addContent("\n\t");
+		for(String titleOfExpression : additionalExpressionTitles)
+		{
+			Element newExpressionElement = (Element)xcExpressionElement.clone();
+
+			// Get the existing titleOfExpression element
+			Element titleOfExpressionElement = newExpressionElement.getChild(Constants.ELEMENT_TITLE_OF_EXPRESSION, XC_NAMESPACE);
+			
+			// If exists, replace the title
+			if(titleOfExpressionElement != null)
+				titleOfExpressionElement.setText(titleOfExpression);
+			// Else create a new element
+			else
+			{
+				titleOfExpressionElement  = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XC_NAMESPACE);
+				titleOfExpressionElement.setText(titleOfExpression);
+			}
+			
+			newExpressionElement.addContent("\n\t\t");
+			newExpressionElement.addContent(titleOfExpressionElement.detach());
+			
+			xcRootElement.addContent(newExpressionElement.addContent("\n\t")).addContent("\n\t");
+		}
 
 		xcRootElement.addContent(xcItemElement)
 		             .addContent("\n");
@@ -393,26 +413,14 @@ public class XCRecord
 	}
 
 	/**
-	 * Adds a holdings element to the XC record
+	 * Adds an title to be added as a titleOfExpression to new expression element in 
+	 * the XC record
 	 *
-	 * @param holdingsElementContent The element to add
+	 * @param titleOfExpression The title to add
 	 */
-	public void addAdditionalExpressionElement(String titleOfExpression)
+	public void addAdditionalExpressionTitle(String titleOfExpression)
 	{
-		Element additionalExpressionElement = (Element)xcExpressionElement.clone();
-		Element titleOfExpressionElement = additionalExpressionElement.getChild(Constants.ELEMENT_TITLE_OF_EXPRESSION, XC_NAMESPACE);
-		
-		if(titleOfExpressionElement != null)
-			titleOfExpressionElement.setText(titleOfExpression);
-		else
-		{
-			titleOfExpressionElement  = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XC_NAMESPACE);
-			titleOfExpressionElement.setText(titleOfExpression);
-		}
-		
-		additionalExpressionElement.addContent("\n\t\t");
-		additionalExpressionElement.addContent(titleOfExpressionElement.detach());
-		additionalExpressionElements.add(additionalExpressionElement);
+		additionalExpressionTitles.add(titleOfExpression);
 	
 	}
 	
@@ -442,6 +450,10 @@ public class XCRecord
 		// Remove existing creator element
 		if(additionalWorkElement.getChild(Constants.ELEMENT_CREATOR, XC_NAMESPACE) != null)
 			additionalWorkElement.removeChild(Constants.ELEMENT_CREATOR, XC_NAMESPACE);
+		
+		// Remove existing creator element
+		if(additionalWorkElement.getChild(Constants.ELEMENT_AUTHOR, RDAROLE_NAMESPACE) != null)
+			additionalWorkElement.removeChild(Constants.ELEMENT_AUTHOR, RDAROLE_NAMESPACE);
 		
 		//Remove the extra subject elements other than the first two.
 		if( additionalWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE)!= null )
