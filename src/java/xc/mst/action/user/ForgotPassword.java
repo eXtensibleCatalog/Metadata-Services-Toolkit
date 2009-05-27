@@ -71,9 +71,18 @@ public class ForgotPassword extends ActionSupport {
 		} else {
 			String newPassword = userService.createRandomPassword();
 			user.setPassword(userService.encryptPassword(newPassword));
+			
+			boolean emailSent = userService.sendEmailForForgotPassword(newPassword, user);
+			
+			if (!emailSent) {
+				StringBuffer errorMessage = new StringBuffer();
+				errorMessage.append("Emailing new password failed. E-mail is not configured for the application.");
+				addFieldError("emailError",  errorMessage.toString());
+				errorType = "error";
+				return INPUT;
+			}
 			userService.updateUser(user);
 			resetSuccess = true;
-			userService.sendEmailForForgotPassword(newPassword, user);
 		}
 
 		return SUCCESS;

@@ -316,12 +316,13 @@ public class DefaultUserService implements UserService{
      * @param newPassword New password
      * @param user user requesting reset password
      */
-    public void sendEmailForForgotPassword(String newPassword, User user) {
+    public boolean sendEmailForForgotPassword(String newPassword, User user) {
 
     	Emailer emailer = new Emailer();
 
-    	emailer.sendEmail(user.getEmail(), "New password", "Password has been reset. \nUser name is : " + user.getUsername() + "\nNew password is : " + newPassword);
+    	boolean emailSent = emailer.sendEmail(user.getEmail(), "New password", "Password has been reset. \nUser name is : " + user.getUsername() + "\nNew password is : " + newPassword);
 
+    	return emailSent;
     }
 
     /**
@@ -402,7 +403,7 @@ public class DefaultUserService implements UserService{
      * @param comments Comments to get access to the system
      * @throws DatabaseConfigException 
      */
-    public void sendEmailForUserPermission(String userName, String comments) throws DatabaseConfigException {
+    public boolean sendEmailForUserPermission(String userName, String comments) throws DatabaseConfigException {
 
     	Emailer emailer = new Emailer();
 
@@ -415,10 +416,17 @@ public class DefaultUserService implements UserService{
 		
 		List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR).getId());
 		
+		boolean emailConfigured = new Emailer().isConfigured();
+		
+		if (!emailConfigured) {
+			return false;
+		}
+		
 		for(User admin:admins) {
 			emailer.sendEmail(admin.getEmail(), adminSubject, adminMessageBody.toString());
 		}
  
+		return true;
     }
 
     /**

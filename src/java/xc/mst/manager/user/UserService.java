@@ -96,7 +96,7 @@ public interface UserService {
      * @param newPassword New password
      * @param user user requesting reset password
      */
-    public void sendEmailForForgotPassword(String newPassword, User user);
+    public boolean sendEmailForForgotPassword(String newPassword, User user);
 
     /**
      * Get user having specified email
@@ -156,7 +156,7 @@ public interface UserService {
      * @param comments Comments to get access to the system
      * @throws DatabaseConfigException 
      */
-    public void sendEmailForUserPermission(String userName, String comments) throws DatabaseConfigException ;
+    public boolean sendEmailForUserPermission(String userName, String comments) throws DatabaseConfigException ;
 
      /**
     * Returns the list of users associated with a group

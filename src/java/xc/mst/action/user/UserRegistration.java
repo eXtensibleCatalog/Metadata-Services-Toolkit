@@ -128,8 +128,7 @@ public class UserRegistration extends ActionSupport {
 					if (!emailSent) {
 						servers =  serverService.getAll();
 						StringBuffer errorMessage = new StringBuffer();
-						errorMessage.append("Email verification failed. Either the Email address doesnot exist or some problem with the mail server.\n");
-						errorMessage.append("So user registartion Failed. Please enter valid email address or try again later.");
+						errorMessage.append("E-mail is not configured for the application. E-mail should be setup for user registeration.");
 						addFieldError("emailError",  errorMessage.toString());
 						errorType = "error";
 						return INPUT;
@@ -139,7 +138,14 @@ public class UserRegistration extends ActionSupport {
 					userService.insertUser(newUser);
 
 					// Email the admin to assign permissions for new user
-					userService.sendEmailForUserPermission(newUser.getUsername().trim(), comments);
+					boolean permissionEmailSent = userService.sendEmailForUserPermission(newUser.getUsername().trim(), comments);
+					if (!permissionEmailSent) {
+						StringBuffer errorMessage = new StringBuffer();
+						errorMessage.append("E-mail is not configured for the application. E-mail should be setup for user registeration.");
+						addFieldError("emailError",  errorMessage.toString());
+						errorType = "error";
+						return INPUT;
+					}
 				} else {
 					servers =  serverService.getAll();
 					addFieldError("userEmailExist", "This email address already exists in the system.- " + newUser.getEmail().trim());
