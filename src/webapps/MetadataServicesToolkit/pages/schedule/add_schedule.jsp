@@ -199,16 +199,29 @@
 				
 				&nbsp;&nbsp; hour&nbsp;
 				
-				<select id="schedule_daily_minute" name="dailyMinute" >
-					<option value = "-1"> Select </option>
-					<c:forEach begin="0" end="59" step="1" var="minute">
-						<option value = "${minute}"
-						<c:if test="${schedule.minute == minute}">
-							selected
-						</c:if>
-						> ${minute}</option>
-					</c:forEach>
-				</select>		
+				<c:if test="${schedule.recurrence == 'Daily'}">
+					<select id="schedule_daily_minute" name="dailyMinute" >
+						<option value = "-1"> Select </option>
+						<c:forEach begin="0" end="59" step="1" var="minute">
+							<option value = "${minute}"
+							<c:if test="${schedule.minute == minute}">
+								selected
+							</c:if>
+							> ${minute}</option>
+						</c:forEach>
+					</select>		
+
+				</c:if>
+
+				<c:if test="${schedule.recurrence != 'Daily'}">
+				
+					<select id="schedule_daily_minute" name="dailyMinute" >
+						<option value = "-1"> Select </option>
+						<c:forEach begin="0" end="59" step="1" var="minute">
+							<option value = "${minute}"> ${minute}</option>
+						</c:forEach>
+					</select>		
+				</c:if>
 				
 				&nbsp;&nbsp; minutes each day</td>
 				
