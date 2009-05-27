@@ -147,13 +147,13 @@
 			<tr>
 				<td class="label" align="right"> Special Request to the Systems Administrator </td>
 				<td>
-					<textarea id="user_comments" name="comments" rows="5" cols="20">${comments}</textarea>
+					<textarea id="user_comments" style="width:450px;" name="comments" rows="5" cols="20">${comments}</textarea>
 				</td>
 			</tr>									
 			<tr>
 				<td colspan="2" align="right">
-					<button class="xc_button" type="button" name="save" onClick="Javascript:YAHOO.xc.mst.registeration.register();">Register</button>
 					<button class="xc_button_small" name="cancel" onClick="Javascript:YAHOO.xc.mst.registeration.cancel();">Cancel</button>
+                    <button class="xc_button" type="button" name="save" onClick="Javascript:YAHOO.xc.mst.registeration.register();">Register</button>
 				</td>
 			</tr>						
 		</table> 

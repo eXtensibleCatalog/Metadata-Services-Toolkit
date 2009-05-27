@@ -172,7 +172,12 @@
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
                                         <td class="${classColumn}"><c:out value="${url}"/></td>
-                                        <td>${service.status}</td>
+                                        <td>
+                                            <c:set var="service_status" value ="${service.status}"/>
+                                            <c:set var="service_status" value="${fn:replace(service_status,'_',' ')}" />
+                                            <c:set var="service_status" value="${fn:toLowerCase(service_status)}" />
+                                            ${service_status}
+                                        </td>
                                         <td width="200">
                                             <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
                                             <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>

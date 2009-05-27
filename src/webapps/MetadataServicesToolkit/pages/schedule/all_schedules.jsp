@@ -117,7 +117,7 @@
                                
                             </div>
                         </td>
-						<td>
+						<td width="170">
                                 <div>
                                         <c:if test="${columnSorted!='RepositoryName'}">
                                             <c:url var="scheduleSortUrl" value="allSchedules.action">
