@@ -29,6 +29,7 @@ import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.harvest.DefaultHarvestDAO;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.user.DefaultServerDAO;
 import xc.mst.dao.user.DefaultUserDAO;
@@ -87,11 +88,33 @@ public class EOTests
 	{
 		try
 		{	
+			Record record = new Record();
+			record.setCreatedAt(new Date());
+			record.setDeleted(false);
+			record.setFormat(new DefaultFormatDAO().getById(1));
+			record.setHarvest(new DefaultHarvestDAO().getById(1));
+			record.setOaiDatestamp("test");
+			record.setOaiHeader("test");
+			record.setOaiIdentifier("test");
+			record.setOaiXml("test");
+			record.setProvider(new DefaultProviderDAO().getById(1));
+			
+			DefaultRecordService rs = new DefaultRecordService();
+			
+			for(int i = 0; i < 100; i++)
+			{
+				rs.insert(record);
+			}
+			
+			Thread.sleep(2000);
+			SolrIndexManager.getInstance().commitIndex();
+			Thread.sleep(2000);
+			
 			RecordList test = new DefaultRecordService().getAll();
 			System.out.println("size: " + test.size());
 			
-			for(Record record : test)
-				new DefaultRecordService().delete(record);
+			for(Record record2 : test)
+				new DefaultRecordService().delete(record2);
 			
 			Thread.sleep(2000);
 			SolrIndexManager.getInstance().commitIndex();

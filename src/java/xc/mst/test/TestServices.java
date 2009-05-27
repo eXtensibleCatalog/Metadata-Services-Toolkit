@@ -97,6 +97,9 @@ public class TestServices
 		
 		try
 		{
+			System.out.println(System.getProperty("user.dir"));
+			if(true) return;
+			
 			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
 			Thread.sleep(2000);
 			SolrIndexManager.getInstance().commitIndex();
@@ -130,8 +133,16 @@ public class TestServices
 		}
 		finally
 		{
-			// TODO removed IndexManager
-			// IndexManager.closeIndex();
+			try 
+			{
+				Thread.sleep(2000);
+				SolrIndexManager.getInstance().commitIndex();
+				Thread.sleep(2000);
+			} 
+			catch (InterruptedException e) 
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -152,7 +163,6 @@ public class TestServices
 
 			record.setOaiXml(readUnicodeFile(currentRecord));
 			record.setFormat(formatDao.getById(2));
-			record.setOaiIdentifierBase("oai:rochester");
 			record.setProvider(providerDao.getById(1));
 			record.addInputForService(serviceDao.getById(serviceId));
 			if(recordService.insert(record) == false)

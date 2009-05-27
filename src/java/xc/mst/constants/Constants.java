@@ -218,11 +218,6 @@ public class Constants
 	public static final String CONFIG_OAI_REPO_IDENTIFIER = "OaiRepoIdentifier";
 
 	/**
-	 * Parameter for looking up the sample record identifier used by the OAI repository from the configuration file
-	 */
-	public static final String CONFIG_OAI_REPO_SAMPLE_IDENTIFIER = "OaiRepoSampleIdentifier";
-
-	/**
 	 * Parameter for looking up the maximum number of identifiers returned at a time by the OAI repository from the configuration file
 	 */
 	public static final String CONFIG_OAI_REPO_MAX_IDENTIFIERS = "OaiRepoMaxIdentifiers";

@@ -684,17 +684,13 @@ public class DefaultRecordService extends RecordService
 		// Create a Record object to store the result
 		Record record = new Record();
 
-		// The OAI identifier
-		String oaiId = (String) doc.getFieldValue(FIELD_OAI_IDENTIFIER);
-
 		// Set the fields on the record Object and return it
 		record.setId(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
 		record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
 		record.setDeleted(Boolean.parseBoolean((String)doc.getFieldValue(FIELD_DELETED)));
 		record.setOaiDatestamp((String)doc.getFieldValue(FIELD_OAI_DATESTAMP));
 		record.setOaiHeader((String)doc.getFieldValue(FIELD_OAI_HEADER));
-		record.setOaiIdentifierBase(oaiId.substring(0, oaiId.lastIndexOf(":")));
-		record.setOaiIdentifier(oaiId);
+		record.setOaiIdentifier((String) doc.getFieldValue(FIELD_OAI_IDENTIFIER));
 		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
 		record.setHarvestScheduleName((String)doc.getFieldValue(FIELD_HARVEST_SCHEDULE_NAME));
 
@@ -740,7 +736,6 @@ public class DefaultRecordService extends RecordService
 		record.setFormat(formatDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_FORMAT_ID))));
 		record.setOaiDatestamp((String)doc.getFieldValue(FIELD_OAI_DATESTAMP));
 		record.setOaiHeader((String)doc.getFieldValue(FIELD_OAI_HEADER));
-		record.setOaiIdentifierBase(oaiId.substring(0, oaiId.lastIndexOf(":")));
 		record.setOaiIdentifier(oaiId);
 		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
 		record.setProvider(providerDao.loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
@@ -816,11 +811,6 @@ public class DefaultRecordService extends RecordService
 		// If we need to generate an ID, set the record's ID to the next available record ID
 		if(generateNewId)
 			record.setId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD));
-
-		// If the oaiIdentifier is null, set it to the record ID
-		// appended to the end of the oaiIdentifierBase
-		if(record.getOaiIdentifier() == null || record.getOaiIdentifier().length() <= 0)
-			record.setOaiIdentifier(record.getOaiIdentifierBase() + ":" + record.getId());
 
 		// If the oaiDatestamp is null, set it to the current time
 		if(record.getOaiDatestamp() == null || record.getOaiDatestamp().length() <= 0)

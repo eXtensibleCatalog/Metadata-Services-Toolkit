@@ -18,6 +18,7 @@ import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
@@ -186,8 +187,9 @@ public class TestTransformation {
 	 * Add the input records read from the package into the index manager for processing
 	 * @throws DataException
 	 * @throws IOException
+	 * @throws IndexException 
 	 */
-	public void addUnprocessedRecordFromFiles() throws DataException, IOException
+	public void addUnprocessedRecordFromFiles() throws DataException, IOException, IndexException
 	{
 		ProviderDAO providerDao = new DefaultProviderDAO();
 		FormatDAO formatDao = new DefaultFormatDAO();
@@ -200,7 +202,6 @@ public class TestTransformation {
 			record.setOaiXml(inputRecords.get(file));
 			record.setFormat(formatDao.getById(1));
 			record.setProvider(providerDao.getById(1));
-			record.setOaiIdentifierBase("oai:rochester");
 			record.setProvider(providerDao.getById(1));
 			record.addInputForService(serviceDao
 					.getById(transformationServiceId));

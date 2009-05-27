@@ -871,9 +871,8 @@ public class AggregationService extends MetadataService
 		Record record = new Record();
 		record.setService(service);
 		record.setFormat(xcSchemaFormat);
-		record.setOaiIdentifierBase("AggrepationService");
 
-		record.setOaiIdentifierUniqueId(getNextOaiId());
+		record.setOaiIdentifier(getNextOaiId());
 
 		// Set the datestamp, and header to null so they get computed when we insert the normalized record
 		record.setOaiDatestamp(null);

@@ -31,8 +31,7 @@
     <property name="OaiRepoCompression" value="gzip;compress;deflate" />
     <property name="OaiRepoDelimiter" value=":" />
     <property name="OaiRepoScheme" value="oai" />
-    <property name="OaiRepoIdentifier" value="MetadataServicesToolkit" />
-    <property name="OaiRepoSampleIdentifier" value="oai:MetadataServicesToolkit:testDataSet:1" />
+    <property name="OaiRepoIdentifier" value="URMST" />
     <property name="OaiRepoMaxIdentifiers" value="50" />
     <property name="OaiRepoMaxRecords" value="50" />
     <property name="OaiRepoMaxIdentifiersLength" value="1000000" />

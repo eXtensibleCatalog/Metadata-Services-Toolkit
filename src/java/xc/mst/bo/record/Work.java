@@ -164,7 +164,6 @@ public class Work extends Record
 		work.setOaiDatestamp(record.getOaiDatestamp());
 		work.setOaiHeader(record.getOaiHeader());
 		work.setOaiIdentifier(record.getOaiIdentifier());
-		work.setOaiIdentifierBase(record.getOaiIdentifierBase());
 		work.setOaiXml(record.getOaiXml());
 		work.setProcessedByServices(record.getProcessedByServices());
 		work.setProcessedFrom(record.getProcessedFrom());

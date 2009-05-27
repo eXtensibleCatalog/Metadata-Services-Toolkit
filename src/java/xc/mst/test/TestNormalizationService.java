@@ -361,7 +361,6 @@ public class TestNormalizationService
 			record.getFormat().setId(1);
 			record.setProvider(new Provider());
 			record.getProvider().setId(1);
-			record.setOaiIdentifierBase("oai:rochester");
 			recordService.insert(record);
 		}
 	}

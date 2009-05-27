@@ -596,6 +596,8 @@ public abstract class RecordService
 			if(record.getFormat() == null)
 				errorMessage.append("The record's format is invalid. ");
 
+			if(record.getOaiIdentifier() == null)
+				errorMessage.append("The record's OAI identifier is invalid.");
 		} // end if(we should check the non-ID fields)
 
 		// Log the error and throw the exception if any fields are invalid

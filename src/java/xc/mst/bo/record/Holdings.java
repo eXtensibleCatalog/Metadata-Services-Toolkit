@@ -222,7 +222,6 @@ public class Holdings extends Record
 		holdings.setOaiDatestamp(record.getOaiDatestamp());
 		holdings.setOaiHeader(record.getOaiHeader());
 		holdings.setOaiIdentifier(record.getOaiIdentifier());
-		holdings.setOaiIdentifierBase(record.getOaiIdentifierBase());
 		holdings.setOaiXml(record.getOaiXml());
 		holdings.setProcessedByServices(record.getProcessedByServices());
 		holdings.setProcessedFrom(record.getProcessedFrom());

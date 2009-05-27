@@ -353,9 +353,8 @@ public class TransformationService extends MetadataService
 				Record xcRecord = Record.copyRecord(record);
 				xcRecord.setOaiXml(newRecordContent);
 				xcRecord.addProcessedFrom(record);
-				xcRecord.setOaiIdentifierBase("TransformationService");
 				xcRecord.setFormat(xcFormat);
-				xcRecord.setOaiIdentifier(serviceName + ":" + getNextOaiId());
+				xcRecord.setOaiIdentifier(getNextOaiId());
 
 				// Set the identifier, datestamp, and header to null so they get computed when we insert the transformed record
 				xcRecord.setOaiDatestamp(null);

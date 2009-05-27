@@ -337,9 +337,8 @@ public class NormalizationService extends MetadataService
 				Record normalizedRecord = Record.copyRecord(record);
 				normalizedRecord.setOaiXml((new XMLOutputter()).outputString(normalizedXml.getModifiedMarcXml()));
 				normalizedRecord.addProcessedFrom(record);
-				normalizedRecord.setOaiIdentifierBase("NormalizationService");
 				normalizedRecord.setFormat(marcxmlFormat);
-				normalizedRecord.setOaiIdentifier(serviceName + ":" + getNextOaiId());
+				normalizedRecord.setOaiIdentifier(getNextOaiId());
 
 				// Set the datestamp, and header to null so they get computed when we insert the normalized record
 				normalizedRecord.setOaiDatestamp(null);
@@ -1479,7 +1478,7 @@ public class NormalizationService extends MetadataService
 		// Only copy subfields afknp.
 		if(marcXml.getField130() == null && marcXml.getField240() == null && marcXml.getField243() == null && marcXml.getField245() != null)
 		{
-			if(marcXml.getField100Element() != null || marcXml.getField110Element() != null || marcXml.getField111Element() != null)
+			if(marcXml.getField100Element().size() > 0 || marcXml.getField110Element().size() > 0 || marcXml.getField111Element().size() > 0)
 				marcXml.copyMarcXmlField("245", "240", "afknp", "0", "0", true);
 			else
 				marcXml.copyMarcXmlField("245", "130", "afknp", "0", " ", true);

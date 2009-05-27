@@ -93,7 +93,6 @@ public class Expression extends Record
 		expression.setOaiDatestamp(record.getOaiDatestamp());
 		expression.setOaiHeader(record.getOaiHeader());
 		expression.setOaiIdentifier(record.getOaiIdentifier());
-		expression.setOaiIdentifierBase(record.getOaiIdentifierBase());
 		expression.setOaiXml(record.getOaiXml());
 		expression.setProcessedByServices(record.getProcessedByServices());
 		expression.setProcessedFrom(record.getProcessedFrom());

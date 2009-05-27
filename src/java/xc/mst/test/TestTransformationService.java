@@ -261,7 +261,6 @@ public class TestTransformationService
 		record.getFormat().setId(1);
 		record.setProvider(new Provider());
 		record.getProvider().setId(1);
-		record.setOaiIdentifierBase("oai:rochester");
 		record.setOaiIdentifier("12345");
 		record.setService(new Service());
 		record.getService().setId(1);

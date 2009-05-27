@@ -80,11 +80,6 @@ public class Record
 	private Service service = null;
 
 	/**
-	 * The record's OAI identifier without the random ID
-	 */
-	private String oaiIdentifierBase = null;
-
-	/**
 	 * The record's OAI identifier
 	 */
 	private String oaiIdentifier = null;
@@ -369,36 +364,6 @@ public class Record
 	{
 		this.oaiIdentifier = oaiIdentifier.replaceAll(" ", "_");
 	} // end method setOaiIdentifier(String)
-
-	/**
-	 * Gets the record's OAI identifier without the unique ID
-	 *
-	 * @return The record's OAI identifier without the unique ID
-	 */
-	public String getOaiIdentifierBase()
-	{
-		return oaiIdentifierBase;
-	} // end method getOaiIdentiferBase()
-
-	/**
-	 * Sets the record's OAI identifier without the unique ID
-	 *
-	 * @param oaiIdentifierBase The record's new OAI identifier without the unique ID
-	 */
-	public void setOaiIdentifierBase(String oaiIdentifierBase)
-	{
-		this.oaiIdentifierBase = oaiIdentifierBase.replaceAll(" ", "_");
-	} // end method setOaiIdentiferBase(String)
-
-	/**
-	 * Sets the unique ID of the record's OAI identifier
-	 *
-	 * @param oaiIdentifier The unique ID of the record's OAI identifier
-	 */
-	public void setOaiIdentifierUniqueId(long oaiIdentifier)
-	{
-		this.oaiIdentifier = (oaiIdentifierBase == null ? "" : oaiIdentifierBase) + ":" + oaiIdentifier;
-	} // end method setOaiIdentifierUniqueId(long)
 
 	/**
 	 * Gets the record's OAI datestamp
@@ -803,7 +768,6 @@ public class Record
 		record.setFormat(otherRecord.getFormat());
 		record.setOaiDatestamp(otherRecord.getOaiDatestamp());
 		record.setOaiHeader(otherRecord.getOaiHeader());
-		record.setOaiIdentifierBase(otherRecord.getOaiIdentifierBase());
 		record.setOaiIdentifier(otherRecord.getOaiIdentifier());
 		record.setOaiXml(otherRecord.getOaiXml());
 		record.setProvider(otherRecord.getProvider());
@@ -859,7 +823,6 @@ public class Record
 		buffer.append(" oaiDatestamp=" + oaiDatestamp);
 		buffer.append(" oaiHeader=" + oaiHeader);
 		buffer.append(" oaiIdentifier=" + oaiIdentifier);
-		buffer.append(" oaiIdentifierBase=" + oaiIdentifierBase);
 		buffer.append(" oaiXml=" + oaiXml);
 
 		return buffer.toString();

@@ -159,7 +159,6 @@ public class Item extends Record
 		item.setOaiDatestamp(record.getOaiDatestamp());
 		item.setOaiHeader(record.getOaiHeader());
 		item.setOaiIdentifier(record.getOaiIdentifier());
-		item.setOaiIdentifierBase(record.getOaiIdentifierBase());
 		item.setOaiXml(record.getOaiXml());
 		item.setProcessedByServices(record.getProcessedByServices());
 		item.setProcessedFrom(record.getProcessedFrom());
