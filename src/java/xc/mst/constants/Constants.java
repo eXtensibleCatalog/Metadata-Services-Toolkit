@@ -363,5 +363,7 @@ public class Constants
 	
 	public static final String ELEMENT_SUBJECT = "subject";
 	
+	public static final String ELEMENT_AUTHOR = "author";
+	
 	
 }
