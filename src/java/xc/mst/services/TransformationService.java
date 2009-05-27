@@ -2363,7 +2363,7 @@ public class TransformationService extends MetadataService
 					
 					// The subfields to map to the title and creator respectively
 					String titleOfWorkSubfields = "kmnoprst";
-					String titleOfExpressionSubfields = "klmnoprst";
+					String titleOfExpressionSubfields = "kmnoprst";
 
 					
 					// Setup the attribute list for the creator and title processed field
@@ -2428,7 +2428,7 @@ public class TransformationService extends MetadataService
 
 						// Add an xc:title based on the 700 subfields' values
 						// Add to the non-default work element for this 700 field
-						transformInto.addAdditionalExpressionElement(titleOfExpressionBuilder.toString());
+						transformInto.addAdditionalExpressionTitle(titleOfExpressionBuilder.toString());
 						
 					}
 				
@@ -2637,7 +2637,7 @@ public class TransformationService extends MetadataService
 				{
 					// The subfields to map to the title and creator respectively
 					String titleOfWorkSubfields = "kmnoprst";
-					String titleOfExpressionSubfields = "klmnoprst";
+					String titleOfExpressionSubfields = "kmnoprst";
 
 					// Setup the attribute list for the creator and title processed field
 					ArrayList<Attribute> titleAttributes = new ArrayList<Attribute>();
@@ -2700,7 +2700,7 @@ public class TransformationService extends MetadataService
 
 						// Add an xc:title based on the 710 subfields' values
 						// Add to the non-default work element for this 700 field
-						transformInto.addAdditionalExpressionElement(titleOfExpressionBuilder.toString());
+						transformInto.addAdditionalExpressionTitle(titleOfExpressionBuilder.toString());
 						
 					}
 
@@ -2907,7 +2907,7 @@ public class TransformationService extends MetadataService
 				{
 					// The subfields to map to the title and creator respectively
 					String titleOfWorkSubfields = "fkpst";
-					String titleOfExpressionSubfields = "klmnoprst";
+					String titleOfExpressionSubfields = "fkpst";
 
 					// Setup the attribute list for the creator and title processed field
 					ArrayList<Attribute> titleAttributes = new ArrayList<Attribute>();
@@ -2970,7 +2970,7 @@ public class TransformationService extends MetadataService
 
 						// Add an xc:title based on the 711 subfields' values
 						// Add to the non-default work element for this 711 field
-						transformInto.addAdditionalExpressionElement(titleOfExpressionBuilder.toString());
+						transformInto.addAdditionalExpressionTitle(titleOfExpressionBuilder.toString());
 						
 					}
 
@@ -3137,7 +3137,7 @@ public class TransformationService extends MetadataService
 
 					// Add an xc:title based on the 730 subfields' values
 					// Add to the non-default work element for this 730 field
-					transformInto.addAdditionalExpressionElement(titleOfExpressionBuilder.toString());
+					transformInto.addAdditionalExpressionTitle(titleOfExpressionBuilder.toString());
 				}
 
 				// Increment the artificial linking ID so the next 730 gets mapped to a seperate work element
