@@ -20,9 +20,9 @@ project
 
 .header_logo {
 
-    	width: 100%;
+    width: 100%;
 	margin-top:10px;
-	font-size:15px;
+	font-size:12px;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
 	float:left;
 }
@@ -74,7 +74,7 @@ project
     border-color:#ced2d5;
     padding-left:200px;
     margin-bottom:10px;
-    margin-top:20px;
+    margin-top:10px;
 }
 
 .greybody
