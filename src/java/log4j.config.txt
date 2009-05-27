@@ -46,7 +46,7 @@ log4j.appender.harvestOut.MaxBackupIndex=4
 log4j.appender.harvestOut.layout=org.apache.log4j.PatternLayout
 log4j.appender.harvestOut.layout.ConversionPattern=%d{DATE} %5p [%t] - %m%n
 
-# Setup the root logger to use the DEBUG level and the appender named "file"
+# Setup the root logger to use the INFO level and the appender named "file"
 log4j.rootLogger=INFO, file
 
 # Setup the appender named "file" to write to the file log.txt

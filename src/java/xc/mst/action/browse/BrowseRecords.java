@@ -290,15 +290,48 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			record = recordService.getById(recordId);
 			recordXML = record.getOaiXml();
 	
-			recordXML = recordXML.replaceAll("<marc:record", "\n<marc:record");
-			recordXML = recordXML.replaceAll("</marc:record", "\n</marc:record");
-			recordXML = recordXML.replaceAll("<marc:leader", "\n\t<marc:leader");
-			recordXML = recordXML.replaceAll("<marc:controlfield", "\n\t<marc:controlfield");
-			recordXML = recordXML.replaceAll("<marc:datafield", "\n\t<marc:datafield");
-			recordXML = recordXML.replaceAll("</marc:datafield", "\n\t</marc:datafield");
-			recordXML = recordXML.replaceAll("<marc:subfield", "\n\t\t<marc:subfield");
+			// If XML is not formatted then format it
+			if (recordXML.indexOf("\n") == -1 || recordXML.indexOf("\t") == -1) {
+				StringBuffer formattedXML = new StringBuffer();
+				int xmlLength = recordXML.length();
+				int indentCount = 0;
+	
+				
+				for (int i = 0; i < xmlLength; i++) {
+					if (recordXML.charAt(i) == '<') {
+						
+						if (recordXML.charAt(i+1) != '/') {
+							formattedXML.append("\n");
+							for (int j = 1; j <= indentCount; j++ ) {
+								formattedXML.append("\t");
+							}
+							indentCount++;
+						} else if (i > 0 && recordXML.charAt(i-1) != '>') {
+							indentCount--;
+						} else if (i > 0 && recordXML.charAt(i-1) == '>') {
+							
+							formattedXML.append("\n");
+							indentCount--;
+							for (int j = 1; j <= indentCount; j++ ) {
+								formattedXML.append("\t");
+							}
+						}
+	
+					} 
+					
+					if (recordXML.charAt(i) == '>') {
+						if (i > 0 && recordXML.charAt(i-1) == '/') {
+							indentCount--;
+						} 
+					}
+					formattedXML.append(recordXML.charAt(i));
+				}
+				recordXML = formattedXML.toString();
+			}
+			
 			recordXML = recordXML.replaceAll("<", "&lt;");
 			recordXML = recordXML.replaceAll(">", "&gt;");
+			
 		}  catch (DatabaseConfigException dce) {
 			log.error("Problem with connecting to database using the parameters in configuration file.", dce);
     		errorType = "error";
