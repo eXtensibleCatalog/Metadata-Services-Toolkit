@@ -86,14 +86,13 @@
                  <div class="clear">&nbsp;</div>
                  
                 <div class="stepsStructure">
-                    <ul style="list-style:none;">
-                        <li style="float:left;"><div><img src="page-resources/img/3.4_step1_highlight.gif"></div></li>
-                        <li style="margin-left:5px;float:left;"><div><img src="page-resources/img/3.4_step2_grey.gif"></div></li>
-                    </ul>
+                    <span style="position: relative; top: 13px;"><img src="page-resources/img/3.4_step1_highlight.gif"></span>
+                    <span style="position: relative; top: 12px;"><img src="page-resources/img/3.4_step2_grey.gif"></span>
+                    
                 </div>
                 <div align="right" style="margin-bottom:10px;">
                         <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirective.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirective.addProcessingDirective();" name="next">Continue to Step 2</button>
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirective.addProcessingDirective();" name="next"><span style="position:relative;top:-3px;">Continue to Step 2 </span> <img src="page-resources/img/bullet_go.gif"></button>
                 </div>
                     <form action="/MetadataServicesToolkit/addProcessingDirectives.action" method="post" name="addProcessingDirective">
                     <div class="greybody">
@@ -169,7 +168,7 @@
 
                     <div align="right" style="margin-top:10px;">
                         <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="YAHOO.xc.mst.processingDirective.addDirective.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirective.addProcessingDirective();" name="next">Continue to Step 2</button>
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirective.addProcessingDirective();" name="next"><span style="position:relative;top:-3px;">Continue to Step 2 </span> <img src="page-resources/img/bullet_go.gif"></button>
                     </div>
                     </form>
              </div>

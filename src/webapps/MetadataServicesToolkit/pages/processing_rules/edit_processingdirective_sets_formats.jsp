@@ -88,10 +88,9 @@
 
 
                 <div class="stepsStructure">
-                    <ul style="list-style:none;">
-                        <li style="float:left;"><div><img src="page-resources/img/3.4_step1_grey.gif"></div></li>
-                        <li style="margin-left:5px;float:left;"><div><img src="page-resources/img/3.4_step2_highlight.gif"></div></li>
-                    </ul>
+                    <span style="position: relative; top: 12px;"><img src="page-resources/img/3.4_step1_grey.gif"></span>
+                    <span style="position: relative; top: 13px;"><img src="page-resources/img/3.4_step2_highlight.gif"></span>
+                    
                 </div>
 
                  <div class="StepsHeader">
@@ -286,7 +285,7 @@
                                 <hr size="1" style="color:#cfd2d4"><br>
                                 <div align="right">
                                   <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editDirectiveSetsFormats.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                                  <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editDirectiveSetsFormats.goBack();" name="goBack">Back to Step 1</button> &nbsp;&nbsp;&nbsp;
+                                  <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editDirectiveSetsFormats.goBack();" name="goBack"><img src="page-resources/img/bullet_go_left.gif"><span style="position:relative;top:-3px;">Back to Step 1 </span> </button> &nbsp;&nbsp;&nbsp;
                                   <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editDirectiveSetsFormats.editProcessingDirective();"name="editDirective">Finish</button>
                                 </div>
                             </td>
