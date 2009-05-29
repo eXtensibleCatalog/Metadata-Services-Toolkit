@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<img src="page-resources/img/loading_graphic.gif">
+    
 Process Description :
 <c:if test="${currentProcess!=null}">
         <c:set var="nameLength" value="${fn:length(currentProcess)}"/>

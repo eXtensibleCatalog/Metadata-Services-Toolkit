@@ -93,15 +93,12 @@
                                 <td>#ID</td>
                                 <td>
                                    <div align="left">
-                                        
-                                            <ul>
-                                                <li style="float:left;"><div>Output Records from</div></li>
-                                                <li style="float:left;"><div><img src="page-resources/img/greenarrow.jpg"></div></li>
-                                                <li style="float:left;"><div>To be Processed by</div></li>
-                                            </ul>
 
-                                     
-                                   </div>
+                                           <span>Output Records from</span>
+                                           <span style="margin-left:10px;margin-right:10px;"><img src="page-resources/img/greenarrow.jpg"/></span>
+                                           <span>To be Processed by</span>
+
+                                    </div>
 
                                 </td>
                                 <td>Formats</td>

@@ -95,7 +95,7 @@
                     <table>
 
                         <tr>
-                            <td>&nbsp;Outgoing Mail Server(SMTP):  &nbsp;&nbsp;</td>
+                            <td>Outgoing Mail Server(SMTP):  &nbsp;&nbsp;</td>
                             <td><input type="text" id="emailServerAddress" name ="emailServerAddress" class="textBoxClass" value="${emailConfig.emailServerAddress}" maxlength="255"><br><br></td>
                         </tr>
 
@@ -117,6 +117,7 @@
                        <tr>
                            <td> Encrypted Connection &nbsp;&nbsp;</td>
                            <td>
+                               <br>
                                <SELECT style="width:200px; height:20px;" ID="encryptedConnection" name="encryptedConnection" >
                                   <OPTION SELECTED value="none">None</OPTION>
                                   <OPTION value="ssl">SSL</OPTION>
@@ -139,7 +140,7 @@
 
                     <div align="left">
                         <!-- <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp; -->
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.email.changeEmailConfig();" name="changeEmailConfig">Change Email Configuration</button>
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.email.changeEmailConfig();" name="changeEmailConfig">Update Email Configuration</button>
                     </div>
 
                 </form>

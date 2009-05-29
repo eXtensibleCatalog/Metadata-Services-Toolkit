@@ -112,13 +112,13 @@
                             <td><input type="text" id="startLocation" name ="startLocation" class="textBoxClass" value="${server.startLocation}" maxlength="255"></td>
                         </tr>
 
-                        <tr>
-                            <td valign="top"> <B>Show Forgot Password URL </B> &nbsp;&nbsp;</td>
-                            <td><input type="radio" id="showForgotPasswordLink" name ="showForgotPasswordLink" style="width:10px;height:30px;" value="true"
+                        <tr style="height:50px;">
+                            <td valign="center"> <B>Show Forgot Password URL </B> &nbsp;&nbsp;</td>
+                            <td><input type="radio" id="showForgotPasswordLink" name ="showForgotPasswordLink" 
                             <c:if test="${server.showForgotPasswordLink == 'true'}">
                             	checked
                             </c:if> > Yes
-                            <input type="radio" id="showForgotPasswordLink" name ="showForgotPasswordLink" style="width:10px;height:30px;" value="false"
+                            <input type="radio" id="showForgotPasswordLink" name ="showForgotPasswordLink" 
                             <c:if test="${server.showForgotPasswordLink == 'false'}">
                             	checked
                             </c:if> > No

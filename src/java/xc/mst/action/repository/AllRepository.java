@@ -44,7 +44,7 @@ public class AllRepository extends ActionSupport
     /**
      * The list of Repositories that is returned
      */
-	private List<Provider> Repositories;
+	private List<Provider> repositories;
 
     /**
      * Overrides default implementation to view all the repositories.
@@ -63,15 +63,15 @@ public class AllRepository extends ActionSupport
             {
                 if(columnSorted.equalsIgnoreCase("RepositoryName"))
                 {
-                    Repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME);
+                    repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME);
                 }
                 else if(columnSorted.equalsIgnoreCase("RepositoryURL"))
                 {
-                    Repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_OAI_PROVIDER_URL);
+                    repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_OAI_PROVIDER_URL);
                 }
                 else
                 {
-                    Repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_HARVEST_END_TIME);
+                    repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_HARVEST_END_TIME);
                 }
                
                 setIsAscendingOrder(isAscendingOrder);
@@ -99,7 +99,7 @@ public class AllRepository extends ActionSupport
      */
     public List<Provider> getRepositories()
     {
-    	return Repositories;
+        return repositories;
     }
 
     /**
