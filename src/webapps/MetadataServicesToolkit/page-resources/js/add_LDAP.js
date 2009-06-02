@@ -49,6 +49,7 @@ YAHOO.xc.mst.configuration.ldap = {
              var userNameAttribute = document.getElementById("userNameAttribute").value;
              var startLocation = document.getElementById("startLocation").value;
              var port = document.getElementById("port").value;
+            
              if((displayName=='')||(serverURL=='')||(userNameAttribute=='')||(startLocation=='')||(port==''))
              {
                 if(displayName=='')
@@ -121,7 +122,7 @@ YAHOO.xc.mst.configuration.ldap = {
          }
          catch(err)
          {
-             alert(err);
+             alert(err.description);
          }
      },
 
@@ -144,7 +145,7 @@ YAHOO.xc.mst.configuration.ldap = {
          }
          catch(err)
          {
-             alert(err);
+             alert(err.description);
          }
      }
 }

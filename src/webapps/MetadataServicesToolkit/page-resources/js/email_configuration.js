@@ -52,7 +52,7 @@ YAHOO.xc.mst.configuration.email = {
      }
      catch(err)
      {
-         alert(err);
+         alert(err.description);
      }
  },
   cancel : function()

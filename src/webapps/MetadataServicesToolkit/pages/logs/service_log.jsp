@@ -84,10 +84,10 @@
 
                 <div class="clear">&nbsp;</div>
 
-                <div align="right" style="margin-bottom:10px;">
-                    <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.services.resetAll();" name="next">Reset All *</button>
-                </div>
-                <div class="viewTable">
+                <div class="viewTable" style="margin-top:10px;">
+                    <div align="right" style="margin-bottom:10px;">
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.services.resetAll();" name="next">Reset All *</button>
+                    </div>
                     <table width="100%">
                         <thead>
                             <tr>
@@ -324,7 +324,7 @@
                         </tbody>
                     </table>
                     * Reset will reset the statistic to 0 and move the log file to the archives directory
-                     <div align="right" style="margin-top:10px;margin-bottom:10px;">
+                     <div align="right" style="margin-bottom:10px;">
                         <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.services.resetAll();" name="next">Reset All</button>
                     </div>
                     
