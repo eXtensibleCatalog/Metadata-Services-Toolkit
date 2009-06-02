@@ -96,7 +96,7 @@
                 </div>
                     <form action="/MetadataServicesToolkit/addProcessingDirectives.action" method="post" name="addProcessingDirective">
                     <div class="greybody">
-                    <table align="center" cellpadding="0" cellspacing="0" border="0" width="60%">
+                    <table cellpadding="0" cellspacing="0" border="0" width="75%">
 
                         <tr>
                             <td align="right">

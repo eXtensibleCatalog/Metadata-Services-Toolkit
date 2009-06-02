@@ -303,7 +303,7 @@
     	    </div>
         	<!--  end the grid -->
             <br><br>
-            <hr size="1" style="color:#ced2d5;">
+            <hr size="1" style="color:#ced2d5;"><br>
               <ul style="list-style:none;">
                   <li style="float:left;">
                       <div align="left" style="vertical-align:bottom;">

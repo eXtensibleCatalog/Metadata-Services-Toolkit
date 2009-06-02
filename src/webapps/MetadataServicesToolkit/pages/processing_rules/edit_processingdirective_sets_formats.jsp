@@ -197,32 +197,27 @@
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
+                                <c:if test="${!empty formatList}">
+                                     <div class="smallText">
+                                        (CTRL click to select multiple formats)
+                                    </div>
+                                </c:if>
                             </td>
                       
                             <td>
 
                                <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:10px;">
-                                    You have the option to create a named set of output records <br>
-                                    for this processing directive&nbsp;&nbsp;&nbsp;<br><br>
+                                    You have the option to create a named set of output records for this processing directive&nbsp;&nbsp;&nbsp;<br><br>
                                     Output Set Name &nbsp;&nbsp;&nbsp; <input type="text" class="processingDirective_TextBox" name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50">
                                 </div>
-                                 <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:50px;">
+                                 <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;">
                                     Output Set Specification &nbsp;&nbsp;&nbsp;<input type="text" class="processingDirective_TextBox" name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50">
                                 </div>
 
                                 
                             </td>
                         </tr>
-                        <tr>
-                            <td height="10">
-                                <c:if test="${!empty setList}">
-                                     <div class="smallText">
-                                        (CTRL click to select multiple sets)
-                                    </div>
-                                </c:if>
-
-                            </td>
-                        </tr>
+                        
                         <tr>
                             <td>
                                 <c:choose>
@@ -270,9 +265,9 @@
                         </tr>
                         <tr>
                             <td height="10">
-                                <c:if test="${!empty formatList}">
+                                <c:if test="${!empty setList}">
                                      <div class="smallText">
-                                        (CTRL click to select multiple formats)
+                                        (CTRL click to select multiple sets)
                                     </div>
                                 </c:if>
 

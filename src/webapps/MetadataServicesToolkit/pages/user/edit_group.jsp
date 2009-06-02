@@ -87,12 +87,12 @@
 
                     <table>
                         <tr>
-                            <td valign="top">Group Name  &nbsp;&nbsp;</td>
+                            <td valign="top"><B>Group Name</B>  &nbsp;&nbsp;</td>
                             <td><input type="text" id="groupName" name ="groupName" class="textBoxClass" value="${temporaryGroup.name}" maxlength="255"><br><br></td>
                         </tr>
                        
                         <tr>
-                            <td valign="top">Description  &nbsp;&nbsp;</td>
+                            <td valign="top"><B>Description</B>  &nbsp;&nbsp;</td>
                             <td><textarea id="groupDescription" name ="groupDescription" cols="30" rows="5" maxlength="255">${temporaryGroup.description}</textarea><br></td>
                         </tr>
                        
@@ -107,7 +107,7 @@
                     <table>
                         <tr>
                             <td valign="top">
-                               Permissions <br><br>
+                               <B>Permissions</B> <br>
                                <select multiple size="8" id="permissionsSelected" name ="permissionsSelected" style="width:300px; height:125px;">
                                   <c:forEach var="n" items="${tabNames}" varStatus="a">
                                       <c:set var="flag" value="${false}"/>
@@ -127,6 +127,9 @@
                                   </c:forEach>
 
                                </select>
+                               <div class="smallText">
+                                   (CTRL click to select multiple permissions)
+                               </div>
                             </td>
                        </tr>
                     </table>

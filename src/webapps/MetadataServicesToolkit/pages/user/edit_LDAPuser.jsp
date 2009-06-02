@@ -137,6 +137,9 @@
                                      </c:forEach>
 
                                    </select>
+                                    <div class="smallText">
+                                        (CTRL click to select multiple groups)
+                                    </div>
                                    <BR><br><br>
                                </td>
                            </tr>

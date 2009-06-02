@@ -76,7 +76,12 @@
                 <table>
                     <br>
                     <tr>
-                      <td valign="top">Configuration File  &nbsp;&nbsp;</td>
+                       <td colspan="2" >                          
+                                Step 1: To edit a service, see user manual for configuration file information.                     
+                       </td>
+                    </tr>
+                    <tr>
+                      <td valign="top">Step 2: Select the Configuration File  : </td>
                       <td>
                           
                           <select id="fileLocation" name ="fileLocation">

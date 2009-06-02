@@ -148,6 +148,9 @@
 
 
                                </select>
+                                <div class="smallText">
+                                   (CTRL click to select multiple groups)
+                               </div>
 
                        </td>
 
