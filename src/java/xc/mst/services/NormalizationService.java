@@ -29,7 +29,6 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.constants.NormalizationServiceConstants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.utils.LogWriter;
 import xc.mst.utils.MarcXmlManagerForNormalizationService;
 import xc.mst.utils.index.RecordList;
 
@@ -165,8 +164,8 @@ public class NormalizationService extends MetadataService
 			{
 				log.error("An error occurred while parsing the record's XML.", e);
 
-				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
-				errorCount++;
+				logWarning("An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
+				
 				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
 
 				return results;
@@ -175,8 +174,8 @@ public class NormalizationService extends MetadataService
 			{
 				log.error("An error occurred while parsing the record's XML.\n" + record.getOaiXml(), e);
 
-				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
-				errorCount++;
+				logWarning("An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
+				
 				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
 
 				return results;
@@ -302,7 +301,7 @@ public class NormalizationService extends MetadataService
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to update them
 			// instead of inserting a new Record
-			RecordList existingRecords = getByProcessedFrom(record.getId());
+			RecordList existingRecords = getByProcessedFrom(record);
 
 			// If there was already a processed record for the record we just processed, update it
 			if(existingRecords.size() > 0)
@@ -381,7 +380,7 @@ public class NormalizationService extends MetadataService
 					
 					// Add the set if it doesn't already exist
 					if(recordTypeSet == null)
-						addSet(setSpec, setName, setDescription);
+						recordTypeSet = addSet(setSpec, setName, setDescription);
 					
 					// Add the set to the record
 					normalizedRecord.addSet(recordTypeSet);
@@ -401,8 +400,7 @@ public class NormalizationService extends MetadataService
 		{
 			log.error("An error occurred while normalizing the record with ID " + record.getId(), e);
 
-			LogWriter.addError(service.getServicesLogFileName(), "An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
-			errorCount++;
+			logError("An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
 			
 			if(log.isDebugEnabled())
 				log.debug("Adding errors to the record.");

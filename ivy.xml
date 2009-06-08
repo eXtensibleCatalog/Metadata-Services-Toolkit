@@ -116,7 +116,24 @@
          <!--  Solrj files -->
         <dependency org="org.apache.solr" name="solr-solrj" rev="1.3.0" transitive="false">
             <artifact name="solr-solrj" type="jar"/>
-        </dependency>   
+        </dependency>
+        
+        <!-- Embedded Solr dependancies -->
+        <dependency org="org.apache.solr" name="solr-core" rev="1.3.0" transitive="false">
+            <artifact name="solr-core" type="jar"/>
+        </dependency>
+        <dependency org="org.apache.lucene" name="lucene-highlighter" rev="2.4.0" transitive="false">
+            <artifact name="lucene-highlighter" type="jar"/>
+        </dependency>
+        <dependency org="org.apache.lucene" name="lucene-snowball" rev="2.4.0" transitive="false">
+            <artifact name="lucene-snowball" type="jar"/>
+        </dependency>
+        <dependency org="org.apache.lucene" name="lucene-spellchecker" rev="2.4.0" transitive="false">
+            <artifact name="lucene-spellchecker" type="jar"/>
+        </dependency>
+        <dependency org="stax-utils" name="stax-utils" rev="snapshot-20040917" transitive="false">
+            <artifact name="stax-utils" type="jar"/>
+        </dependency>
         
          <!--  MySQL connector -->
         <dependency org="mysql" name="mysql-connector-java" rev="5.0.8" transitive="false">

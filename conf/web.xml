@@ -17,9 +17,8 @@
     <servlet-name>MetadataServices</servlet-name>
     <servlet-class>xc.mst.oai.OaiRepository</servlet-class>
   </servlet>
-
   
-    <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>MetadataServices</servlet-name>
     <url-pattern>/oaiRepository</url-pattern>
   </servlet-mapping>
@@ -32,7 +31,7 @@
       <param-name>log4j-init-file</param-name>
       <param-value>WEB-INF/classes/log4j.config.txt</param-value>
     </init-param>
-
+    
     <load-on-startup>1</load-on-startup>
   </servlet>
 
@@ -43,20 +42,14 @@
     <load-on-startup>4</load-on-startup>
   </servlet>
   
-   <servlet>
+  <servlet>
     <servlet-name>createSolrServer</servlet-name>
     <servlet-class>xc.mst.action.browse.SolrServerInitializationServlet</servlet-class>
 
-    <init-param>
-      <param-name>port</param-name>
-      <!-- Change the port number if the Solr server is running on different port number -->
-      <param-value>8080</param-value>
-    </init-param>
-    
     <load-on-startup>2</load-on-startup>
   </servlet>
   
-   <servlet>
+  <servlet>
     <servlet-name>initServices</servlet-name>
     <servlet-class>xc.mst.utils.InitializeServices</servlet-class>
     

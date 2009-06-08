@@ -73,7 +73,7 @@ public class TestServices
 			System.exit(1);
 		}
 		
-		MSTSolrServer.getInstance("8080");
+		MSTSolrServer.getInstance();
 	}
 	
 	private static File unprocessedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\NormInput");
@@ -97,9 +97,6 @@ public class TestServices
 		
 		try
 		{
-			System.out.println(System.getProperty("user.dir"));
-			if(true) return;
-			
 			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
 			Thread.sleep(2000);
 			SolrIndexManager.getInstance().commitIndex();

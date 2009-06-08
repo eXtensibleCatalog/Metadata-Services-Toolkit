@@ -189,28 +189,28 @@ public class AggregationService extends MetadataService
 				continue;
 
 			// Check whether or not this record already exists in the database
-			Record oldRecord = null;
-			try 
-			{
-				oldRecord = getByOaiId(finalRecord.getOaiIdentifier());
-			} 
-			catch (DatabaseConfigException e1) 
-			{
-				log.error("Could not connect to the database with the parameters in the configuration file.", e1);
-				return;
-			} catch(IndexException ie) {
-				log.error("Could not connect to Solr server.", ie);
-				return;
-			}
+//			Record oldRecord = null;
+//			try 
+//			{
+//				oldRecord = getByOaiId(finalRecord.getOaiIdentifier());
+//			} 
+//			catch (DatabaseConfigException e1) 
+//			{
+//				log.error("Could not connect to the database with the parameters in the configuration file.", e1);
+//				return;
+//			} catch(IndexException ie) {
+//				log.error("Could not connect to Solr server.", ie);
+//				return;
+//			}
 
 			// If the current record is a new record, insert it
-			if(oldRecord == null)
-				insertNewRecord(finalRecord);
-			// Otherwise we've seen the record before.  Update it as appropriate
-			// If finalRecord's deleted flag is set to true, the record will
-			// be deleted.
-			else
-				updateExistingRecord(finalRecord, oldRecord);
+//			if(oldRecord == null)
+//				insertNewRecord(finalRecord);
+//			// Otherwise we've seen the record before.  Update it as appropriate
+//			// If finalRecord's deleted flag is set to true, the record will
+//			// be deleted.
+//			else
+//				updateExistingRecord(finalRecord, oldRecord);
 
 			// Mark the Manifestation as having been processed
 			work.setProcessed(true);
@@ -960,17 +960,11 @@ public class AggregationService extends MetadataService
 		{
 			log.error("An error occurred while parsing the frbr component's XML.", e);
 
-			LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the frbr component's XML.");
-			warningCount++;
-
 			return xcRecord;
 		} // end catch IOException
 		catch(JDOMException e)
 		{
 			log.error("An error occurred while parsing the frbr component's XML.", e);
-
-			LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the frbr component's XML.");
-			warningCount++;
 
 			return xcRecord;
 		} // end catch JDOMException

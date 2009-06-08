@@ -14,6 +14,13 @@
     
     <!-- Location of log4j properties for testing -->
     <property name="LoggerConfigFileLocation" value="src\java\log4j.config.txt" />
+
+    <!-- Location of Solr home directory -->
+    <property name="SolrHome" value="solr" />
+
+
+    <!-- Severity level which Solr logs -->
+    <property name="SolrLogLevel" value="WARNING" />
     
     <property name="LuceneIndexerRAMBufferMB" value="1024" />
     <property name="OrganizationCode" value="NRU" />

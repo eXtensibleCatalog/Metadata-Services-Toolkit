@@ -59,7 +59,7 @@ public class BrowseRecordServiceTest {
  {
 	 
 	 		// Configured the default port. Change in case Solr runs on different port
-	 		MSTSolrServer.getInstance("8080");
+	 		MSTSolrServer.getInstance();
 	 		
 	 		 ProviderService providerService = new DefaultProviderService();
 

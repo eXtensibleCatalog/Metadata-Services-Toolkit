@@ -77,17 +77,17 @@ public abstract class MetadataService
 	/**
 	 * The name of this service
 	 */
-	protected String serviceName = null;
+	private String serviceName = null;
 
 	/**
 	 * The number of warnings in running the current service
 	 */
-	protected int warningCount = 0;
+	private int warningCount = 0;
 
 	/**
 	 * The number of errors in running the current service
 	 */
-	protected int errorCount = 0;
+	private int errorCount = 0;
 
 	/**
 	 * Data access object for getting processing directives
@@ -235,7 +235,7 @@ public abstract class MetadataService
 	
 			// Update database with status of service
 			if(!runningService.isCanceled)
-				runningService.persistStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
+				runningService.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
 			
 			return success;
 		} // end try(run the service through reflection)
@@ -260,7 +260,7 @@ public abstract class MetadataService
 			}
 			
 			// Update database with status of service
-			runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
+			runningService.setStatus(Constants.STATUS_SERVICE_ERROR);
 			
 			// Return false if we did not recognize the service name
 			return false;
@@ -296,7 +296,7 @@ public abstract class MetadataService
 			}
 			
 			// Update database with status of service
-			runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
+			runningService.setStatus(Constants.STATUS_SERVICE_ERROR);
 	
 			return false;
 		} // end catch(NoClassDefFoundError)
@@ -331,7 +331,7 @@ public abstract class MetadataService
 			}
 			
 			// Update database with status of service
-			runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
+			runningService.setStatus(Constants.STATUS_SERVICE_ERROR);
 	
 			return false;
 		} // end catch(IllegalAccessException)
@@ -366,7 +366,7 @@ public abstract class MetadataService
 			}
 			
 			// Update database with status of service
-			runningService.persistStatus(Constants.STATUS_SERVICE_ERROR);
+			runningService.setStatus(Constants.STATUS_SERVICE_ERROR);
 	
 			return false;
 		} // end catch(Exception)
@@ -643,7 +643,7 @@ public abstract class MetadataService
 					// If the record was deleted, delete and reprocess all records that were processed from it
 					if(processMe.getDeleted())
 					{
-						List<Record> successors = getByProcessedFrom(processMe.getId());
+						List<Record> successors = getByProcessedFrom(processMe);
 						
 						for(Record successor : successors)
 						{
@@ -700,7 +700,7 @@ public abstract class MetadataService
 								LogWriter.addInfo(service.getServicesLogFileName(), "Cancelled Service " + serviceName);
 								LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + numProcessed + " records so far.");
 								// Update database with status of service
-								persistStatus(Constants.STATUS_SERVICE_CANCELED);
+								setStatus(Constants.STATUS_SERVICE_CANCELED);
 								break;
 							}
 						// If paused then wait
@@ -708,7 +708,7 @@ public abstract class MetadataService
 							{
 								LogWriter.addInfo(service.getServicesLogFileName(), "Paused Service " + serviceName);
 								// Update database with status of service
-								persistStatus(Constants.STATUS_SERVICE_PAUSED);
+								setStatus(Constants.STATUS_SERVICE_PAUSED);
 								
 								while(isPaused && !isCanceled)
 									{
@@ -720,7 +720,7 @@ public abstract class MetadataService
 								{
 									LogWriter.addInfo(service.getServicesLogFileName(), " Cancelled Service " + serviceName);
 									// Update database with status of service
-									persistStatus(Constants.STATUS_SERVICE_CANCELED);
+									setStatus(Constants.STATUS_SERVICE_CANCELED);
 									break;
 	
 								}
@@ -729,7 +729,7 @@ public abstract class MetadataService
 								{
 									LogWriter.addInfo(service.getServicesLogFileName(), "Resumed Service " + serviceName);
 									// Update database with status of service
-									persistStatus(Constants.STATUS_SERVICE_RUNNING);
+									setStatus(Constants.STATUS_SERVICE_RUNNING);
 									
 								}
 									
@@ -771,7 +771,7 @@ public abstract class MetadataService
 			log.error("An error occurred while running the service with ID " + service.getId() + ".", e);
 			
 			// Update database with status of service
-			persistStatus(Constants.STATUS_SERVICE_ERROR);
+			setStatus(Constants.STATUS_SERVICE_ERROR);
 			
 			return false;
 		} // end catch(Exception)
@@ -974,13 +974,33 @@ public abstract class MetadataService
 	/**
 	 * Gets all records that are successors of the record with the passed ID
 	 * 
-	 * @param recordId The record whose successors we're getting
+	 * @param record The record whose successors we're getting
 	 * @return A list of records that are successors of the record with the passed ID
 	 * @throws IndexException 
 	 */
-	protected RecordList getByProcessedFrom(long recordId) throws IndexException
+	protected RecordList getByProcessedFrom(Record record) throws IndexException
 	{
-		return recordService.getByProcessedFrom(recordId);
+		return recordService.getByProcessedFrom(record.getId());
+	}
+
+	/**
+	 * Adds a new set to the database
+	 * 
+	 * @param setSpec The setSpec of the new set
+	 * @param setName The display name of the new set
+	 * @param setDescription A description of the new set
+	 * @throws DataException If an error occurred while adding the set
+	 */
+	protected Set addSet(String setSpec, String setName, String setDescription) throws DataException 
+	{
+		Set set = new Set();
+		set.setSetSpec(setSpec);
+		set.setDescription(setDescription);
+		set.setDisplayName(setName);
+		set.setIsRecordSet(true);
+		set.setIsProviderSet(false);
+		setDao.insert(set);
+		return set;
 	}
 
 	/**
@@ -994,60 +1014,36 @@ public abstract class MetadataService
 	{
 		return setDao.getBySetSpec(setSpec);
 	}
-
+	
 	/**
-	 * Adds a new set to the database
+	 * Logs an info message in the service's log file
 	 * 
-	 * @param setSpec The setSpec of the new set
-	 * @param setName The display name of the new set
-	 * @param setDescription A description of the new set
-	 * @throws DataException If an error occurred while adding the set
+	 * @param message The message to log
 	 */
-	protected void addSet(String setSpec, String setName, String setDescription) throws DataException 
+	protected void logInfo(String message)
 	{
-		Set set = new Set();
-		set.setSetSpec(setSpec);
-		set.setDescription(setDescription);
-		set.setDisplayName(setName);
-		set.setIsRecordSet(true);
-		set.setIsProviderSet(false);
-		setDao.insert(set);
+		LogWriter.addInfo(service.getServicesLogFileName(), message);
 	}
-
+	
 	/**
-	 * Gets the record for this service which has the passed OAI identifier
+	 * Logs a warning message in the service's log file
 	 * 
-	 * @param oaiId The OAI identifier of the target record
-	 * @return The record with the passed OAI identifier, or null if no records matched the identifier
-	 * @throws DatabaseConfigException 
+	 * @param message The message to log
 	 */
-	protected Record getByOaiId(String oaiId) throws DatabaseConfigException, IndexException
+	protected void logWarning(String message)
 	{
-		return recordService.getByOaiIdentifierAndService(oaiId, service.getId());
+		LogWriter.addWarning(service.getServicesLogFileName(), message);
+		warningCount++;
 	}
-
+	
 	/**
-	 * Gets the status of the service to the database
+	 * Logs an error message in the service's log file
+	 * 
+	 * @param message The message to log
 	 */
-	protected String getCurrentStatus(){
-		return service.getStatus();
-	}
-
-	/**
-	 * Logs the status of the service to the database
-	 * @throws DataException 
-	 */
-	protected void persistStatus(String status)
+	protected void logError(String message)
 	{
-		try
-		{
-			service.setStatus(status);
-			serviceDao.update(service);
-		}
-		catch(DataException e)
-		{
-			log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e);
-		}
+		LogWriter.addError(service.getServicesLogFileName(), message);
 	}
 
 	/**
@@ -1057,7 +1053,7 @@ public abstract class MetadataService
 	 *
 	 * @param record The record to insert
 	 */
-	protected void insertNewRecord(Record record)
+	private void insertNewRecord(Record record)
 	{
 		try
 		{
@@ -1086,7 +1082,7 @@ public abstract class MetadataService
 	 * @param newRecord The record as it should look after the update (the record ID is not set)
 	 * @param oldRecord The record in the Lucene index which needs to be updated
 	 */
-	protected void updateExistingRecord(Record newRecord, Record oldRecord)
+	private void updateExistingRecord(Record newRecord, Record oldRecord)
 	{
 		try
 		{
@@ -1109,6 +1105,23 @@ public abstract class MetadataService
 			log.error("An exception occurred while updating the record into the index.", ie);
 		}
 	} // end method updateExistingRecord(Record, Record)
+
+	/**
+	 * Logs the status of the service to the database
+	 * @throws DataException 
+	 */
+	private void setStatus(String status)
+	{
+		try
+		{
+			service.setStatus(status);
+			serviceDao.update(service);
+		}
+		catch(DataException e)
+		{
+			log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e);
+		}
+	}
 
 	/**
 	 * Sets the service ID for this service
@@ -1243,7 +1256,7 @@ public abstract class MetadataService
 						log.error("An error occurred while updating the service's error count.", e);
 					}
 					
-					persistStatus(Constants.STATUS_SERVICE_ERROR);
+					setStatus(Constants.STATUS_SERVICE_ERROR);
 					
 					return false;
 				}
@@ -1262,7 +1275,7 @@ public abstract class MetadataService
 					log.error("An error occurred while updating the service's error count.", e1);
 				}
 	
-				persistStatus(Constants.STATUS_SERVICE_ERROR);
+				setStatus(Constants.STATUS_SERVICE_ERROR);
 				
 				return false;
 			}
@@ -1286,12 +1299,12 @@ public abstract class MetadataService
 				log.error("An error occurred while updating the service's error count.", e1);
 			}
 
-			persistStatus(Constants.STATUS_SERVICE_ERROR);
+			setStatus(Constants.STATUS_SERVICE_ERROR);
 			
 			return false;
 		}
 		
-		persistStatus(statusForSuccess);
+		setStatus(statusForSuccess);
 		
 		return true;
 	}

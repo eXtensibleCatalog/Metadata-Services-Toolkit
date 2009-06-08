@@ -103,7 +103,11 @@ public class DefaultRecordService extends RecordService
 	 * The trait term
 	 */
 	protected final static Term TERM_TRAIT = new Term(FIELD_TRAIT, "");
-
+	
+	long totalPartTime = 0;
+	long startPartTime = 0;
+	long endPartTime = 0;
+	long counter = 0;
 
 	@Override
 	public RecordList getAll() throws IndexException
@@ -434,10 +438,18 @@ public class DefaultRecordService extends RecordService
 		// Remove the limit on the number of results returned
 		query.setRows(Integer.MAX_VALUE);
 		
+		startPartTime = System.currentTimeMillis();
+		
 		// Get the result of the query
 		SolrDocumentList docs = null;
 		docs = indexMgr.getDocumentList(query);
 
+		endPartTime = System.currentTimeMillis();
+		totalPartTime += (endPartTime - startPartTime);
+		counter++;
+		if(counter % 5000 == 0)
+			System.out.println(counter + " part time " + totalPartTime);
+		
 		// Return null if we couldn't find the record
 		if(docs == null || docs.size() == 0)
 		{

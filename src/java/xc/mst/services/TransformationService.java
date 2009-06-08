@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jdom.Attribute;
@@ -29,7 +28,6 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.utils.LogWriter;
 import xc.mst.utils.MarcXmlRecord;
 import xc.mst.utils.XCRecord;
 
@@ -144,9 +142,6 @@ public class TransformationService extends MetadataService
 			{
 				log.error("An error occurred while parsing the record's XML.", e);
 
-				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
-				warningCount++;
-
 				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
 				
 				return results;
@@ -154,9 +149,6 @@ public class TransformationService extends MetadataService
 			catch(JDOMException e)
 			{
 				log.error("An error occurred while parsing the record's XML.", e);
-
-				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
-				warningCount++;
 
 				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
 				
@@ -321,7 +313,7 @@ public class TransformationService extends MetadataService
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to update them
 			// instead of inserting a new Record
-			List<Record> existingRecords = getByProcessedFrom(record.getId());
+			List<Record> existingRecords = getByProcessedFrom(record);
 
 			String newRecordContent = transformedRecord.getXcRecordXmlNoSplit();
 
@@ -375,8 +367,7 @@ public class TransformationService extends MetadataService
 		{
 			log.error("An error occurred while Transforming the record with ID " + record.getId(), e);
 
-			LogWriter.addError(service.getServicesLogFileName(), "An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
-			errorCount++;
+			logError("An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
 
 			if(log.isDebugEnabled())
 				log.debug("Adding warnings and errors to the record.");

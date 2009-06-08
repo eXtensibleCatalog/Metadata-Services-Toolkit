@@ -118,6 +118,16 @@ public class Constants
 	public static final String CONFIG_LOGGER_CONFIG_FILE_LOCATION = "LoggerConfigFileLocation";
 
 	/**
+	 * Parameter for looking up the location of the solr configuration
+	 */
+	public static final String CONFIG_SOLR_HOME = "SolrHome";
+	
+	/**
+	 * Parameter for looking up the level at which Solr should be logging
+	 */
+	public static final String CONFIG_SOLR_LOG_LEVEL = "SolrLogLevel";
+	
+	/**
 	 * Parameter for looking up the maximum size of the Lucene indexer's RAM buffer in MB from the configuration file
 	 */
 	public static final String CONFIG_LUCENE_INDEXER_RAM_BUFFER_MB = "LuceneIndexerRAMBufferMB";
