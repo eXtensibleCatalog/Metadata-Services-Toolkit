@@ -32,7 +32,10 @@ import xc.mst.manager.repository.ProviderService;
 public class AddRepository extends ActionSupport implements UserAware
 {
 
-    /** A reference to the logger for this class */
+    /** Serial id */
+	private static final long serialVersionUID = -2353352472168477475L;
+
+	/** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /** Represents the User who is logged in */

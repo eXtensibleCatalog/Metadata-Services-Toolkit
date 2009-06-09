@@ -217,7 +217,7 @@ public class DefaultUserService implements UserService{
     	log.debug("authenticateLDAPUser::" + user + "password::"+ password + server.getName());
 
     	   DirContext dcon = getLDAPConnection(user.getUsername(), password, server);
-    	   log.debug("dcon=" +dcon);
+    	   
            if(dcon==null)
            {
                return false;
