@@ -87,22 +87,18 @@
 
                     <table>
                         <tr>
-                            <td valign="top"><B>Group Name</B>  &nbsp;&nbsp;</td>
-                            <td><input type="text" id="groupName" name ="groupName" class="textBoxClass" value="${temporaryGroup.name}" maxlength="255"><br><br></td>
+                            <td valign="top"><B>Group Name</B> <br> 
+                            <input type="text" id="groupName" name ="groupName" class="textBoxClass" value="${temporaryGroup.name}" maxlength="255"><br><br></td>
                         </tr>
                        
                         <tr>
-                            <td valign="top"><B>Description</B>  &nbsp;&nbsp;</td>
-                            <td><textarea id="groupDescription" name ="groupDescription" cols="30" rows="5" maxlength="255">${temporaryGroup.description}</textarea><br></td>
+                            <td valign="top"><B>Description</B> <br> 
+                            <textarea id="groupDescription" name ="groupDescription" cols="30" rows="5" maxlength="255">${temporaryGroup.description}</textarea><br></td>
                         </tr>
                        
                     </table>
 
                     <br><br>
-
-                    <c:forEach var="m" items="${temporaryGroup.permissions}" varStatus="b">
-                      ${m.tabName} ,
-                    </c:forEach>
 
                     <table>
                         <tr>

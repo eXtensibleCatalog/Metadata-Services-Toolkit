@@ -56,7 +56,7 @@ public class HarvestUtil {
 		format = new SimpleDateFormat("yyyy-MM-dd 'at' hh:mm");
 		String output = "Not yet harvested";
 		if (latestRun != null) {
-			output = "Success last run completed " + format.format(latestRun);
+			output = "last run completed " + format.format(latestRun);
 		}
 		
 		return output;

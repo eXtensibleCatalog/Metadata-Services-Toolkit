@@ -77,7 +77,8 @@
                     <br>
                     <tr>
                        <td colspan="2" >                          
-                                Step 1: To edit a service, see user manual for configuration file information.                     
+                                Step 1: To edit a service, see user manual for configuration file information.<br>
+                                (If you have made any changes to a service, you must come to update it)<br><br>
                        </td>
                     </tr>
                     <tr>

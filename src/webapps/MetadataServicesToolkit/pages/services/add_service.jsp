@@ -77,7 +77,7 @@
                     <br>
                     <tr>
                        <td colspan="2" >                           
-                          Step 1: To add a service, see user manual for configuration file information.                           
+                          Step 1: To add a service, see user manual for configuration file information. <BR>
                        </td>
                     </tr>
                     <tr>

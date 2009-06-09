@@ -88,33 +88,33 @@
 
                    <table>
                         <tr>
-                            <td valign="top"> <B>Display Name</B>  &nbsp;&nbsp;</td>
-                            <td><input type="text" id="displayName" name ="displayName" class="textBoxClass" value="${server.name}" maxlength="255"><br><br></td>
+                            <td valign="top"> <B>Display Name</B>  &nbsp;&nbsp;<br>
+                            <input type="text" id="displayName" name ="displayName" class="textBoxClass" value="${server.name}" maxlength="255"><br><br></td>
                         </tr>
 
                         <tr>
-                            <td valign="top"><B>Server URL</B> &nbsp;&nbsp;</td>
-                            <td><input type="text" id="serverURL" name ="serverURL" class="textBoxClass" value="${server.url}" maxlength="255"><br><br></td>
+                            <td valign="top"><B>Server URL</B> &nbsp;&nbsp;<br>
+                            <input type="text" id="serverURL" name ="serverURL" class="textBoxClass" value="${server.url}" maxlength="255"><br><br></td>
                         </tr>
                                       
                         <tr>
-                            <td valign="top"> <B>Port</B> &nbsp;&nbsp;</td>
-                            <td><input type="text" id="port" name ="port" class="textBoxClass" value="${server.port}" maxlength="255"><br><br></td>
+                            <td valign="top"> <B>Port</B> &nbsp;&nbsp;<br>
+                            <input type="text" id="port" name ="port" class="textBoxClass" value="${server.port}" maxlength="255"><br><br></td>
                         </tr>
 
                         <tr>
-                            <td valign="top"><B>Username Fieldname</B> &nbsp;&nbsp;</td>
-                            <td><input type="text" id="userNameAttribute" name ="userNameAttribute" class="textBoxClass" value="${server.userNameAttribute}" maxlength="255"><br><br></td>
+                            <td valign="top"><B>Username Fieldname</B> &nbsp;&nbsp;<br>
+                            <input type="text" id="userNameAttribute" name ="userNameAttribute" class="textBoxClass" value="${server.userNameAttribute}" maxlength="255"><br><br></td>
                         </tr>
 
                         <tr>
-                            <td valign="top"> <B>LDAP start</B> &nbsp;&nbsp;</td>
-                            <td><input type="text" id="startLocation" name ="startLocation" class="textBoxClass" value="${server.startLocation}" maxlength="255"></td>
+                            <td valign="top"> <B>LDAP start</B> &nbsp;&nbsp;<br>
+                            <input type="text" id="startLocation" name ="startLocation" class="textBoxClass" value="${server.startLocation}" maxlength="255">
                         </tr>
 
                         <tr style="height:50px;">
-                            <td valign="center"> <B>Show Forgot Password URL </B> &nbsp;&nbsp;</td>
-                            <td><input type="radio" id="showForgotPasswordLink" name ="showForgotPasswordLink" 
+                            <td valign="center"> <B>Show Forgot Password URL </B> &nbsp;&nbsp;
+                            <input type="radio" id="showForgotPasswordLink" name ="showForgotPasswordLink" 
                             <c:if test="${server.showForgotPasswordLink == 'true'}">
                             	checked
                             </c:if> > Yes
@@ -126,8 +126,8 @@
                         </tr>
                                                 
                         <tr>
-                            <td valign="top"> <B>Forgot password URL</B> &nbsp;&nbsp;</td>
-                            <td><input type="text" id="forgotPasswordUrl" name ="forgotPasswordUrl" class="textBoxClass" value="${server.forgotPasswordUrl}" maxlength="255"></td>
+                            <td valign="top"> <B>Forgot password URL</B> &nbsp;&nbsp;<br>
+                            <input type="text" id="forgotPasswordUrl" name ="forgotPasswordUrl" class="textBoxClass" value="${server.forgotPasswordUrl}" maxlength="255"></td>
                         </tr>                                                
 
 

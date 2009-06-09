@@ -331,7 +331,7 @@
 		              
 		              <input type="hidden" name="repositoryId" value="${provider.id}"/>
 		              
-			          <p>Are you sure you wish to delete the repository?</p>
+			          <p>Are you sure you want to delete the repository?</p>
 		          </form>
 		      </div>
 	      </div>
@@ -351,10 +351,10 @@
 	      </div>
 
 	      <div id="processingDialog" class="hidden">
-	          <div class="hd">Re-validating repository</div>
+	          <div class="hd">Re-validate repository</div>
 		      <div class="bd">
 		      	
-				 <strong>Validating the repository. Please wait.</strong>&nbsp;&nbsp;<img src="${pageContext.request.contextPath}/page-resources/img/processing.gif">
+				 <strong>Validating the repository. Please wait.</strong>&nbsp;&nbsp;<img src="${pageContext.request.contextPath}/page-resources/img/loading_graphic_gray.gif">
 				 <div class="clear">&nbsp;</div>
 		      </div>
 	      </div>

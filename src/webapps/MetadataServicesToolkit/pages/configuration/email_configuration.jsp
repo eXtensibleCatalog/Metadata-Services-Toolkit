@@ -90,33 +90,33 @@
                 <form action="changeEmailConfig.action" method="post" name="emailConfig">
 
 
-                    <h4><b>SMTP</b></h4>
+                    <h4><b>SMTP</b><br><br></h4>
 
                     <table>
 
                         <tr>
-                            <td>Outgoing Mail Server(SMTP):  &nbsp;&nbsp;</td>
-                            <td><input type="text" id="emailServerAddress" name ="emailServerAddress" class="textBoxClass" value="${emailConfig.emailServerAddress}" maxlength="255"><br><br></td>
+                            <td><B>Outgoing Mail Server(SMTP):  </B>&nbsp;&nbsp;<br>
+                            <input type="text" id="emailServerAddress" name ="emailServerAddress" class="textBoxClass" value="${emailConfig.emailServerAddress}" maxlength="255"><br><br></td>
                         </tr>
 
                        <tr>
-                           <td>From Address &nbsp;&nbsp;</td>
-                           <td><input type="text" id="fromAddress" name ="fromAddress" class="textBoxClass" value="${emailConfig.fromAddress}" maxlength="255"><br><br></td>
+                           <td><B>From Address </B>&nbsp;&nbsp;<br>
+                           <input type="text" id="fromAddress" name ="fromAddress" class="textBoxClass" value="${emailConfig.fromAddress}" maxlength="255"><br><br></td>
                        </tr>
 
                        <tr>
-                           <td>Password &nbsp;&nbsp;</td>
-                           <td><input type="text" id="password" name ="password" class="textBoxClass" value="${emailConfig.password}" maxlength="255"><br><br></td>
+                           <td><B>Password </B>&nbsp;&nbsp;<br>
+                           <input type="text" id="password" name ="password" class="textBoxClass" value="${emailConfig.password}" maxlength="255"><br><br></td>
                        </tr>
 
                        <tr>
-                           <td> Port Number &nbsp;&nbsp;</td>
-                           <td><input type="text" id="port" name ="port" class="textBoxClass" value="${emailConfig.portNumber}" maxlength="255"></td>
+                           <td><B> Port Number </B>&nbsp;&nbsp;<br>
+                           <input type="text" id="port" name ="port" class="textBoxClass" value="${emailConfig.portNumber}" maxlength="255"><br><br></td>
                        </tr>
 
                        <tr>
-                           <td> Encrypted Connection &nbsp;&nbsp;</td>
-                           <td>
+                           <td> <B>Encrypted Connection </B>&nbsp;&nbsp;
+                           
                                <br>
                                <SELECT style="width:200px; height:20px;" ID="encryptedConnection" name="encryptedConnection" >
                                   <OPTION SELECTED value="none">None</OPTION>
@@ -129,8 +129,8 @@
                        </tr>
 
                         <tr>
-                            <td> Timeout &nbsp;&nbsp;</td>
-                            <td> <input type="text" id="timeout" name ="timeout" class="textBoxClass" value="${emailConfig.timeout}" maxlength="255"><br><br></td>
+                            <td> <B>Timeout </B>&nbsp;&nbsp; <br>
+                            <input type="text" id="timeout" name ="timeout" class="textBoxClass" value="${emailConfig.timeout}" maxlength="255"><br><br></td>
                         </tr>
 
                        

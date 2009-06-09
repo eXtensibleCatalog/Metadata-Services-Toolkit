@@ -221,7 +221,7 @@
 			              
 			              <input type="hidden" id="processingDirective_id" name="processingDirectiveId"/>
 			              
-				          <p>Are you sure you wish to delete the Processing directive?</p>
+				          <p>Are you sure you want to delete the Processing directive?</p>
 			          </form>
 			      </div>
 		      </div>

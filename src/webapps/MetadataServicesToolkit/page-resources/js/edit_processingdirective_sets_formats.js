@@ -9,7 +9,7 @@
   
 YAHOO.namespace("xc.mst.processingDirective.editDirectiveSetsFormats");
 
-YAHOO.xc.mst.processingDirective = {
+YAHOO.xc.mst.processingDirective.editDirectiveSetsFormats = {
 
  cancel : function()
  {

@@ -7,9 +7,9 @@
   *
   */
   
-YAHOO.namespace("xc.mst.user.addLocal");
+YAHOO.namespace("xc.mst.users.addLocal");
 
-YAHOO.xc.mst.user.addLocal = {
+YAHOO.xc.mst.users.addLocal = {
     addValidate : function()
     {
         try

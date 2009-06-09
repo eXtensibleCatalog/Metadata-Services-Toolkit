@@ -86,7 +86,7 @@
 				<thead>
 					<tr>
 
-                        <td>
+                        <td width="125">
                             <div>
                                 <c:if test="${columnSorted!='ScheduleName'}">
                                      <c:url var="scheduleSortUrl" value="allSchedules.action">
@@ -208,6 +208,9 @@
                                  </c:if>
                                
                         </td>
+                        <td>
+                            Message
+                        </td>
 						<td>Delete Schedule</td>
 					</tr>
 				</thead>
@@ -230,7 +233,7 @@
                             </c:if>
 						<td class="${classColumn}">
 							<c:if test="${schedule.recurrence == 'Daily'}">
-								${schedule.recurrence} Time ${schedule.hour}:<c:if test="${schedule.minute < 10}">0${schedule.minute}</c:if><c:if test="${schedule.minute > 9}">${schedule.minute}</c:if>
+								${schedule.recurrence} Time ${schedule.hour}:<c:if test="${schedule.minute < 10}">0${schedule.minute}</c:if><c:if test="${schedule.minute > 9}">${schedule.minute} hrs {timeZone}</c:if>
 							</c:if>
 							<c:if test="${schedule.recurrence == 'Hourly'}">
 								${schedule.recurrence} at ${schedule.minute} minutes past the hour
@@ -259,18 +262,21 @@
 									Saturday
 								</c:if>
 								
-								Time ${schedule.hour}:00
+								Time ${schedule.hour}:00 hrs ${timeZone}
 							</c:if>
 						</td>
-                        <td>
+                        <td width="80">
                         	<c:set var="lastRun" value="${mst:lastHarvest(schedule)}"/>
                         	<c:if test="${fn:startsWith(lastRun, 'Not')}">
                         		${mst:lastHarvest(schedule)}
                         	</c:if>
-                        	<c:if test="${fn:startsWith(lastRun, 'Success')}">
-                        		<div  style="display:inline;"><img src="page-resources/img/tick.jpg"></div> ${mst:lastHarvest(schedule)}
+                        	<c:if test="${fn:startsWith(lastRun, 'last')}">
+                                <img src="page-resources/img/tick.jpg"><span style="position:relative;top:-5px;">Success</span>
                         	</c:if>
                         	
+                        </td>
+                        <td>
+                            ${mst:lastHarvest(schedule)} hrs ${timeZone}
                         </td>
 						<td> <button class="xc_button" id="showDeleteSchedule" type="button" name="delete" onClick="Javascript:YAHOO.mst.schedule.delete.deleteSchedule(${schedule.id}, '${schedule.scheduleName}');">Delete</button></td>
 					</tr>
@@ -290,7 +296,7 @@
 		              
 		              <input type="hidden" id="schedule_id" name="scheduleId"/>
 		              
-			          <p>Are you sure you wish to delete the Schedule?</p>
+			          <p>Are you sure you want to delete the Schedule?</p>
 		          </form>
 		      </div>
 	      </div>

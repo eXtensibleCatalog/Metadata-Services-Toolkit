@@ -202,7 +202,7 @@
 
 		              <input type="hidden" name="serviceId" id="service_id"/>
 
-			          <p>Are you sure you wish to delete the service?</p>
+			          <p>Are you sure you want to delete the service?</p>
 		          </form>
 		      </div>
 	      </div>

@@ -90,39 +90,39 @@
 
                <table>
                     <tr>
-                      <td valign="top">First Name  &nbsp;&nbsp;</td>
-                      <td><input type="text" id="firstName" name ="firstName" class="textBoxClass" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
+                      <td valign="top"><b>First Name</b>  <br>
+                      <input type="text" id="firstName" name ="firstName" class="textBoxClass" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
                     </tr>
                     
                     <tr>
-                      <td valign="top">Last Name  &nbsp;&nbsp;</td>
-                      <td><input type="text" id="lastName" name ="lastName" class="textBoxClass" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
+                      <td valign="top"><b>Last Name  </b><br>
+                      <input type="text" id="lastName" name ="lastName" class="textBoxClass" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
                     </tr>                    
 
                     <tr>
-                      <td valign="top">Username  &nbsp;&nbsp;</td>
-                      <td>${temporaryUser.username}<br><br></td>
+                      <td valign="top"><b>Username </b><br>
+                      ${temporaryUser.username}<br><br></td>
                     </tr>
 
                    <tr>
-                       <td valign="top"> Password  &nbsp;&nbsp;</td>
-                       <td><input type="password" id="password" name ="password" class="textBoxClass" value="" maxlength="255"><br><br></td>
+                       <td valign="top"><b>Password </b><br>
+                       <input type="password" id="password" name ="password" class="textBoxClass" value="" maxlength="255"><br><br></td>
                    </tr>
 
                   <tr>
-                      <td valign="top">Confirm Password  &nbsp;&nbsp;</td>
-                      <td> <input type="password" id="confpass" name ="confpass" class="textBoxClass" value="" maxlength="255"><br><br></td>
+                      <td valign="top"><b>Confirm Password </b><br>
+                      <input type="password" id="confpass" name ="confpass" class="textBoxClass" value="" maxlength="255"><br><br></td>
                   </tr>
 
                    <tr>
-                        <td valign="top"> Email  &nbsp;&nbsp;</td>
-                        <td><input type="text" id="email" name ="email" class="textBoxClass" value="${temporaryUser.email}" maxlength="255"><br><br></td>
+                        <td valign="top"><b>Email</b><br>
+                        <input type="text" id="email" name ="email" class="textBoxClass" value="${temporaryUser.email}" maxlength="255"><br><br></td>
                    </tr>
                </table>
                <table>
                    <tr>
                        <td>
-                             Groups  &nbsp;&nbsp;             <br><br>
+                             <b>Groups</b>  &nbsp;&nbsp; <br>
 
                                <select multiple size="8" id="groupsSelected" name ="groupsSelected" style="width:300px; height:125px;">
                                  <c:forEach var="m" varStatus="b" items="${groupList}">
