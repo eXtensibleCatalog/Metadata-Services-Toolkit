@@ -28,6 +28,8 @@ import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
 
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * Action class for user login
@@ -163,6 +165,13 @@ public class Login extends ActionSupport implements ServletRequestAware {
 			if (result) {
 				// Place the user object in session
 				request.getSession().setAttribute("user", completeUserData);
+
+                //get Calendar instance
+                Calendar now = Calendar.getInstance();
+                //get current TimeZone using getTimeZone method of Calendar class
+                TimeZone timeZone = now.getTimeZone();
+                //display current TimeZone using getDisplayName() method of TimeZone class
+                request.getSession().setAttribute("timeZone",timeZone.getDisplayName());
 
 				List<Permission> permissions = userService.getPermissionsForUserByTabOrderAsc(completeUserData);
 
