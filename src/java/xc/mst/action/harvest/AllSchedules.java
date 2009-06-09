@@ -61,12 +61,9 @@ public class AllSchedules extends ActionSupport
 
 
 	/**
-     * Overriding default implementation to view all schedules.
-     *
-     * @return {@link #SUCCESS}
+     * Get all schedules.
      */
-    @Override
-    public String execute()
+    public String getAllSchedules()
     {
         try
         {
@@ -105,7 +102,7 @@ public class AllSchedules extends ActionSupport
             return SUCCESS;
         }
     }
-
+    
     /**
      * Delete a schedule
      *

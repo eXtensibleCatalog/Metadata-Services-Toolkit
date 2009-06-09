@@ -70,6 +70,37 @@ YAHOO.mst.schedule.delete = {
 		    YAHOO.mst.schedule.delete.deleteScheduleDialog, true);
 
 	},
+	
+	 	
+	/**
+	 * Refresh scheule table
+	 */
+	 refreshScheduleTable : function()
+	 {
+
+		var handleSuccess = function(o) {
+			    //get the response from adding a repository
+			    var response = o.responseText;
+			    document.getElementById('scheduleTable').innerHTML = response;
+
+		};
+
+			// handle form submission failure
+		var handleFailure = function(o) {
+			    alert('All schedule failed ' );
+		};
+
+   	    // Wire up the success and failure handlers
+	    var callback = { success: handleSuccess,  failure: handleFailure };	
+		
+	    //delete the repository
+	    var cObj = YAHOO.util.Connect.asyncRequest('get',
+			'getSchedulesTable.action', callback);
+
+  			
+		window.setTimeout('YAHOO.mst.schedule.delete.refreshScheduleTable()',2000);	
+	 },
+	 
 
 	/** 
 	 * initialize the page 
@@ -77,6 +108,8 @@ YAHOO.mst.schedule.delete = {
 	init : function() 
 	{
 	    YAHOO.mst.schedule.delete.createDeleteScheduleDialog();
+	    YAHOO.mst.schedule.delete.refreshScheduleTable();
+	    
 	}
 
 }

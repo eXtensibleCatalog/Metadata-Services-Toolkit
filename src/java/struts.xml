@@ -174,6 +174,12 @@
         	<interceptor-ref name="editStack"/>
 			<result name="success">/pages/schedule/all_schedules.jsp</result>
 		</action>
+
+		<!-- To view all schedules -->        		
+		<action name="getSchedulesTable" class="xc.mst.action.harvest.AllSchedules" method="getAllSchedules">
+        	<interceptor-ref name="editStack"/>
+			<result name="success">/pages/schedule/schedules_table.jsp</result>
+		</action>		
 		
 		<!-- Action to view the page to add schedule - step 1 -->
 		<action name="viewAddSchedule" class="xc.mst.action.harvest.AddSchedule">
