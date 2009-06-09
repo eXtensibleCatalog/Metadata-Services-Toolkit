@@ -12,6 +12,8 @@ package xc.mst.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -23,6 +25,7 @@ import org.jdom.output.XMLOutputter;
 
 import xc.mst.constants.Constants;
 import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
+import xc.mst.services.MetadataService;
 
 
 
@@ -98,14 +101,13 @@ public class XCRecord
 	/**
 	 * A list of expression elements for this XC record
 	 */
-	private ArrayList<String> additionalExpressionTitles = new ArrayList<String>();
+	private ArrayList<Hashtable<String,Element>> subElementsOfExpressionElements = new ArrayList<Hashtable<String,Element>>();
 
 	/**
 	 * A list of work elements for this XC record
 	 */
-	private ArrayList<Element> additionalWorkElements = new ArrayList<Element>();
+	private ArrayList<Hashtable<String,Element>> subElementsOfWorkElements = new ArrayList<Hashtable<String,Element>>();
 
-	
 	/**
 	 * Used to ensure that duplicates are not added to the XC record
 	 */
@@ -242,8 +244,57 @@ public class XCRecord
 			xcRootElement.addContent("\t").addContent(linkingFieldToWorkElement.get(key).addContent("\n\t")).addContent("\n");
 
 		// Add the extra work elements
-		for(Element workElement : additionalWorkElements)
-			xcRootElement.addContent(workElement.addContent("\n\t")).addContent("\n\t");
+		
+		for(Hashtable<String, Element> subElements : subElementsOfWorkElements){
+			
+			Element newWorkElement = (Element)xcWorkElement.clone();	
+			
+			// Remove existing creator element
+			if(newWorkElement.getChild(Constants.ELEMENT_CREATOR, XC_NAMESPACE) != null)
+				newWorkElement.removeChild(Constants.ELEMENT_CREATOR, XC_NAMESPACE);
+			
+			// Remove existing author element
+			if(newWorkElement.getChild(Constants.ELEMENT_AUTHOR, RDAROLE_NAMESPACE) != null)
+				newWorkElement.removeChild(Constants.ELEMENT_AUTHOR, RDAROLE_NAMESPACE);
+			
+			//Remove the extra subject elements other than the first two.
+			if( newWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE)!= null )
+			{
+				int size = newWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE).size();
+						
+					for(;size >2; size-- )
+						((Element)newWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE).get(size-1)).detach();	
+				
+			}
+			
+			for (String element : subElements.keySet()) {
+				
+				if(element.equals(Constants.ELEMENT_TITLE_OF_EXPRESSION)){
+
+					// If exists, remove and add
+					if(newWorkElement.getChild(Constants.ELEMENT_TITLE_OF_EXPRESSION, XC_NAMESPACE) != null){
+						newWorkElement.removeChild(Constants.ELEMENT_TITLE_OF_EXPRESSION, XC_NAMESPACE);
+						newWorkElement.addContent(subElements.get(element));
+					}
+					// Else just add 
+					else{
+						newWorkElement.addContent(subElements.get(element));
+					}
+
+					// If exists, replace the title
+					Element titleOfExpressionElement = subElements.get(element);
+					newWorkElement.addContent("\n\t\t");
+					newWorkElement.addContent(titleOfExpressionElement.detach());
+				}
+				else if(element.equals(Constants.ELEMENT_CREATOR)) {
+					newWorkElement.addContent("\n\t\t");
+					newWorkElement.addContent(subElements.get(element));
+
+				}
+			}
+
+
+		}
 
 		xcRootElement.addContent("\t")
 		             .addContent(xcExpressionElement)
@@ -256,26 +307,23 @@ public class XCRecord
 			xcRootElement.addContent("\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n\t");
 
 		// Add the extra expression elements
-		for(String titleOfExpression : additionalExpressionTitles)
-		{
+		for(Hashtable<String, Element> subElements : subElementsOfExpressionElements){
+			
+			// Make a copy of the original 
 			Element newExpressionElement = (Element)xcExpressionElement.clone();
 
-			// Get the existing titleOfExpression element
-			Element titleOfExpressionElement = newExpressionElement.getChild(Constants.ELEMENT_TITLE_OF_EXPRESSION, XC_NAMESPACE);
-			
-			// If exists, replace the title
-			if(titleOfExpressionElement != null)
-				titleOfExpressionElement.setText(titleOfExpression);
-			// Else create a new element
-			else
-			{
-				titleOfExpressionElement  = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XC_NAMESPACE);
-				titleOfExpressionElement.setText(titleOfExpression);
+			// Get the original titleOfExpression element
+			for (String element : subElements.keySet()) {
+				
+				if(element.equals(Constants.ELEMENT_TITLE_OF_EXPRESSION))
+				{
+					// If exists, replace the title
+					Element titleOfExpressionElement = subElements.get(element);
+					newExpressionElement.addContent("\n\t\t");
+					newExpressionElement.addContent(titleOfExpressionElement.detach());
+				}
 			}
-			
-			newExpressionElement.addContent("\n\t\t");
-			newExpressionElement.addContent(titleOfExpressionElement.detach());
-			
+
 			xcRootElement.addContent(newExpressionElement.addContent("\n\t")).addContent("\n\t");
 		}
 
@@ -418,64 +466,12 @@ public class XCRecord
 	 *
 	 * @param titleOfExpression The title to add
 	 */
-	public void addAdditionalExpressionTitle(String titleOfExpression)
-	{
-		additionalExpressionTitles.add(titleOfExpression);
+	public void addLinkedWorkAndExpression( Hashtable<String, Element> workSubElements, Hashtable<String, Element> expressionSubElements){
 	
+		subElementsOfWorkElements.add(workSubElements);
+		subElementsOfExpressionElements.add(expressionSubElements);
 	}
-	
-	/**
-	 * Adds a work element to the XC record
-	 *
-	 * @param workElementContent The element to add
-	 */
-	public void addAdditionalWorkElement(String titleOfTheWork, Element creatorElement)
-	{
-		Element additionalWorkElement = (Element)xcWorkElement.clone();
-		
-		// Replace the titleOfWork element content with the new one
-		Element titleOfWorkEmelent = additionalWorkElement.getChild(Constants.ELEMENT_TITLE_OF_WORK, RDVOCAB_NAMESPACE);
-		if(titleOfWorkEmelent != null)
-			titleOfWorkEmelent.setText(titleOfTheWork);
-		// If there is no titleOfWork element, create it
-		else
-			{
-				titleOfWorkEmelent  = new Element(Constants.ELEMENT_TITLE_OF_WORK, RDVOCAB_NAMESPACE);
-				titleOfWorkEmelent.setText(titleOfTheWork);
-			}
-		
-		additionalWorkElement.addContent("\n\t\t");
-		additionalWorkElement.addContent(titleOfWorkEmelent.detach());
-		
-		// Remove existing creator element
-		if(additionalWorkElement.getChild(Constants.ELEMENT_CREATOR, XC_NAMESPACE) != null)
-			additionalWorkElement.removeChild(Constants.ELEMENT_CREATOR, XC_NAMESPACE);
-		
-		// Remove existing creator element
-		if(additionalWorkElement.getChild(Constants.ELEMENT_AUTHOR, RDAROLE_NAMESPACE) != null)
-			additionalWorkElement.removeChild(Constants.ELEMENT_AUTHOR, RDAROLE_NAMESPACE);
-		
-		//Remove the extra subject elements other than the first two.
-		if( additionalWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE)!= null )
-		{
-			int size = additionalWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE).size();
-					
-				for(;size >2; size-- )
-					((Element)additionalWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE).get(size-1)).detach();	
-			
-		}
-		
-		if(creatorElement!=null)
-		{
-			additionalWorkElement.addContent("\n\t\t");
-			additionalWorkElement.addContent(creatorElement.detach());
-		}
-		
-		additionalWorkElements.add(additionalWorkElement);
-	}
-	
-	
-	/**
+			/**
 	 * Adds an element to the XC record to a non-default work level element based on a specific linking field
 	 *
 	 * @param elementName The name of the element to add
@@ -572,4 +568,209 @@ public class XCRecord
 		addedElements.add(value.toString());
 		return true;
 	}
+
+	/**
+	 * Gets a list of documents that represent the output of transformation service. Each document in 
+	 * the list represents a FRBR level with its own OAI id. 
+	 * 
+	 * @param transformationService 
+	 * @return
+	 */
+	public ArrayList<Document> getSplitXCRecordXML(MetadataService transformationService){
+
+		ArrayList<Document> list = new ArrayList<Document>();
+
+		// Create the root document
+		xcRootElement = new Element("frbr", XC_NAMESPACE);
+		xcRootElement.addNamespaceDeclaration(XSI_NAMESPACE);
+		xcRootElement.addNamespaceDeclaration(RDVOCAB_NAMESPACE);
+		xcRootElement.addNamespaceDeclaration(DCTERMS_NAMESPACE);
+		xcRootElement.addNamespaceDeclaration(RDAROLE_NAMESPACE);
+
+		// Create original Work Document
+		String workElementOaiID = transformationService.getNextOaiId();
+		Element tempXcWorkElement = (Element)xcWorkElement.clone();
+		tempXcWorkElement.setAttribute(new Attribute("id",workElementOaiID));
+		xcRootElement.addContent("\n\t")
+					 .addContent(tempXcWorkElement)
+					 .addContent("\n");
+		list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+		xcRootElement.removeContent();
+		
+		// Create original Expression Document
+		Element expressionToWorkLinkingElement = new Element("linkWork", XC_NAMESPACE);
+		expressionToWorkLinkingElement.setText(workElementOaiID);
+		Element tempXcExpressionElement = (Element)xcExpressionElement.clone();
+		
+		tempXcExpressionElement.addContent(expressionToWorkLinkingElement.detach());
+		tempXcExpressionElement.setAttribute(new Attribute("id",transformationService.getNextOaiId()));
+		xcRootElement.addContent("\n\t")
+        			 .addContent(tempXcExpressionElement)
+					 .addContent("\n");
+		list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+		xcRootElement.removeContent();
+		
+		// Create the extra Work & Expression documents
+		int index = 0;
+		for(Hashtable<String, Element> workElement : subElementsOfWorkElements)
+		{
+			// Work
+			// Clone the orig work element
+			Element newWorkElement = (Element)xcWorkElement.clone();	
+			// Remove creator & author element from the orig element
+			if(newWorkElement.getChild(Constants.ELEMENT_CREATOR, XC_NAMESPACE) != null)
+				newWorkElement.removeChild(Constants.ELEMENT_CREATOR, XC_NAMESPACE);
+			if(newWorkElement.getChild(Constants.ELEMENT_AUTHOR, RDAROLE_NAMESPACE) != null)
+				newWorkElement.removeChild(Constants.ELEMENT_AUTHOR, RDAROLE_NAMESPACE);
+					
+			//Remove the extra subject elements other than the first two.
+			if( newWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE)!= null )
+			{
+				int size = newWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE).size();
+						
+					for(;size >2; size-- )
+						((Element)newWorkElement.getChildren(Constants.ELEMENT_SUBJECT, XC_NAMESPACE).get(size-1)).detach();	
+			
+			}
+			
+			// Add title and creator
+			for (String element : workElement.keySet()) {
+				
+				if(element.equals(Constants.ELEMENT_TITLE_OF_WORK)){
+
+					// If exists, remove and add
+					if(newWorkElement.getChild(Constants.ELEMENT_TITLE_OF_WORK, RDVOCAB_NAMESPACE) != null){
+						newWorkElement.removeChild(Constants.ELEMENT_TITLE_OF_WORK, RDVOCAB_NAMESPACE);
+						newWorkElement.addContent(workElement.get(element));
+					}
+					// Else just add 
+					else{
+						newWorkElement.addContent(workElement.get(element));
+					}
+
+					// If exists, replace the title
+					Element titleOfExpressionElement = workElement.get(element);
+					newWorkElement.addContent("\n\t\t");
+					newWorkElement.addContent(titleOfExpressionElement.detach());
+				}
+				else if(element.equals(Constants.ELEMENT_CREATOR)) {
+					newWorkElement.addContent("\n\t\t");
+					newWorkElement.addContent(workElement.get(element));
+
+				}
+			}
+			
+			// Set the OAI id
+			workElementOaiID = transformationService.getNextOaiId();
+			newWorkElement.setAttribute(new Attribute("id",workElementOaiID));
+			xcRootElement.addContent("\n\t")
+						 .addContent(newWorkElement)
+						 .addContent("\n");
+			list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+			xcRootElement.removeContent();
+
+			// Expression
+			// Clone the original expression
+			Element newExpressionElement = (Element)xcExpressionElement.clone();
+			// Generate the OAI id
+			newExpressionElement.setAttribute(new Attribute("id",transformationService.getNextOaiId()));
+			
+			// Add or replace title
+			Hashtable<String, Element> expElement = subElementsOfExpressionElements.get(index);
+			for (String element : expElement.keySet()) {
+					
+					if(element.equals(Constants.ELEMENT_TITLE_OF_EXPRESSION))
+					{
+					Element titleOfExpressionElement = expElement.get(element);
+					// If exists, replace the title
+					if (newExpressionElement.getChild(Constants.ELEMENT_TITLE_OF_EXPRESSION,XC_NAMESPACE) != null) {
+						newExpressionElement.removeChild(Constants.ELEMENT_TITLE_OF_EXPRESSION,XC_NAMESPACE);
+					}
+					newExpressionElement.addContent("\n\t\t");
+					newExpressionElement.addContent(titleOfExpressionElement
+							.detach());
+				}
+			}
+			
+			// Link to corresponding work doc
+			expressionToWorkLinkingElement = new Element("linkWork", XC_NAMESPACE);
+			expressionToWorkLinkingElement.setText(workElementOaiID);
+			newExpressionElement.addContent(expressionToWorkLinkingElement.detach());
+			
+			xcRootElement.addContent(newExpressionElement.addContent("\n\t")).addContent("\n\t");
+			list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+			xcRootElement.removeContent();
+			
+			index++;
+		}		
+		
+/*		for(String key : linkingFieldToWorkElement.keySet())
+		{
+				xcRootElement.addContent("\t").addContent(linkingFieldToWorkElement.get(key).addContent("\n\t")).addContent("\n");
+				list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+				xcRootElement.removeContent();
+		}
+*/
+		
+		// Manifestation
+		// Set the OAI id
+		xcManifestationElement.setAttribute("id", transformationService.getNextOaiId());
+		// Link to expression docs
+		for (Document document : list) {
+			if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("expression"))
+			{
+				Element linkExpression =  new Element("linkExpression",XC_NAMESPACE);
+				linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
+				xcManifestationElement.addContent(linkExpression.detach());
+			}
+			
+		}
+		xcRootElement.addContent("\n\t")
+		 			 .addContent(xcManifestationElement)
+		 			 .addContent("\n");
+		list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+		xcRootElement.removeContent();
+
+		// Create the Holdings documents
+		for(Element holdingsElement : holdingsElements){
+			holdingsElement.setAttribute("id",transformationService.getNextOaiId());
+			// Create back links to expression
+			for (Document document : list) {
+				if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("manifestation"))
+				{
+					Element linkExpression =  new Element("linkManifestation",XC_NAMESPACE);
+					linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
+					holdingsElement.addContent(linkExpression.detach());
+				}
+				
+			}
+			xcRootElement.addContent("\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n\t");
+			list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+			xcRootElement.removeContent();
+		}
+
+		// Create the Items documents
+		if(xcItemElement.getChildren().size() != 0)
+		{
+			xcItemElement.setAttribute("id", transformationService.getNextOaiId());
+			// Create back links to expression
+			for (Document document : list) {
+				if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("holdings"))
+				{
+					Element linkExpression =  new Element("linkHoldings",XC_NAMESPACE);
+					linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
+					xcItemElement.addContent(linkExpression.detach());
+				}
+			}
+			xcRootElement.addContent("\n\t")
+			 .addContent(xcItemElement)
+			 .addContent("\n");
+			list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+			xcRootElement.removeContent();
+
+		}
+		
+		return list;
+	}
+	
 }
