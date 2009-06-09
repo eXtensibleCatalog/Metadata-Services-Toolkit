@@ -953,7 +953,7 @@ public abstract class MetadataService
 	 * 
 	 * @return The next OAI identifier for the service
 	 */
-	protected String getNextOaiId()
+	public String getNextOaiId()
 	{
 		return "oai:" + mstConfiguration.getProperty(Constants.CONFIG_OAI_REPO_IDENTIFIER) + ":" + serviceName + "/" + oaiIdDao.getNextOaiIdForService(service.getId());
 	}
