@@ -182,6 +182,11 @@ YAHOO.xc.mst.schedule = {
 	
 	},	
 
+	clearEndDate : function()
+	{
+		document.getElementById('schedule_end_date').value = '';
+	},
+	
 	// initialize the page
 	// this is called once the dom has
 	// been created

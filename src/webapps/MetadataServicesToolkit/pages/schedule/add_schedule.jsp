@@ -290,8 +290,8 @@
 			          		value="${startDateDisplayFormat}" 
 			          		size="10" maxlength ="10"/>
 						
-		    		<button type="button" id="show_start_date_calendar" title="Show Calendar"><img alt="Calendar" 
-		                       src="${pageContext.request.contextPath}/page-resources/img/calendar.gif"/></button>
+		    		<button type="button" id="show_start_date_calendar" title="Show Calendar"><span style="margin-top:10px"><img alt="Calendar" 
+		                       src="${pageContext.request.contextPath}/page-resources/img/calendar.gif"/></span></button>
 		    		
 		    		<div id="containerDialog">
 					<div cssClass="hd">Calendar</div>
@@ -309,8 +309,8 @@
 					value="${endDateDisplayFormat}" 
 					size="10" maxlength ="10"/>
 
-				<button type="button" id="show_end_date_calendar" title="Show Calendar"><img alt="Calendar" 
-							       src="${pageContext.request.contextPath}/page-resources/img/calendar.gif"/></button>
+				<button type="button" id="show_end_date_calendar" title="Show Calendar"><span style="margin-top:10px"><img alt="Calendar" 
+							       src="${pageContext.request.contextPath}/page-resources/img/calendar.gif"/></span></button>
 
 				<div id="containerDialog2">
 					<div cssClass="hd">Calendar</div>
@@ -319,7 +319,7 @@
 						 <div id="cal2Container"></div> 
 					</div >
 				</div >	
-				<a href=""> clear</a>
+				<a href="javascript:YAHOO.xc.mst.schedule.clearEndDate();"> clear</a>
 				
 				<br>
 				Leave blank for no end date
