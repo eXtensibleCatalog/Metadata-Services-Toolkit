@@ -11,9 +11,17 @@ package xc.mst.services;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
 
 import org.jdom.Attribute;
 import org.jdom.Document;
@@ -21,6 +29,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
+import org.jdom.transform.JDOMSource;
 import org.xml.sax.InputSource;
 
 import xc.mst.bo.provider.Format;
@@ -311,39 +320,39 @@ public class TransformationService extends MetadataService
 				log.debug("Creating the XC record.");
 
 			// Get any records which were processed from the record we're processing
-			// If there are any (there should be at most 1) we need to update them
-			// instead of inserting a new Record
+			// If there are any (there should be at most 1) we need to delete them
 			List<Record> existingRecords = getByProcessedFrom(record);
 
-			String newRecordContent = transformedRecord.getXcRecordXmlNoSplit();
-
-			// If there was already a processed record for the record we just processed, update it
+			
+			// If there was already a processed record for the record we just processed, delete it
 			if(existingRecords.size() > 0)
 			{
 				if(log.isInfoEnabled())
 					log.info("Updating the record which was processed from an older version of the record we just processed.");
 
-				// Get the record which was processed from the record we just processed
-				// (there should only be one)
-				Record oldTransformedRecord = existingRecords.get(0);
-
-				// Set the XML to the new normalized XML
-				oldTransformedRecord.setOaiXml(newRecordContent);
-
-				// Set the record as not being deleted
-				oldTransformedRecord.setDeleted(false);
+				for (Record oldRecord : existingRecords) 
+					oldRecord.setDeleted(true);
 				
-				// Add the normalized record after modifications were made to it to
-				// the list of modified records.
-				results.add(oldTransformedRecord);
 
-				return results;
 			}
-			else // We need to create a new XC record since we haven't transformed an older version of the original record
-			{
-				// Create the XC record
-				Record xcRecord = Record.copyRecord(record);
-				xcRecord.setOaiXml(newRecordContent);
+				
+			// Add the transformed record after modifications were made to it to
+			// the list of modified records.
+
+			List<Document> recordList = transformedRecord.getSplitXCRecordXML(this);
+
+			for (Document document : recordList) {
+					
+				// Create the XC record, extract it from the Document object
+				StringWriter writer = new StringWriter();
+				TransformerFactory tf = TransformerFactory.newInstance();
+				Transformer tran = tf.newTransformer();
+				Source src = new JDOMSource(document);
+				Result res = new StreamResult(writer);
+				tran.transform(src, res);
+				
+				Record xcRecord = new Record();
+				xcRecord.setOaiXml(writer.toString());
 				xcRecord.addProcessedFrom(record);
 				xcRecord.setFormat(xcFormat);
 				xcRecord.setOaiIdentifier(getNextOaiId());
@@ -359,9 +368,9 @@ public class TransformationService extends MetadataService
 					log.info("Created XC record with ID " + xcRecord.getId() + " from unprocessed record with ID " + record.getId());
 
 				results.add(xcRecord);
-
-				return results;
 			}
+				
+			return results;
 		}
 		catch(Exception e)
 		{
@@ -373,9 +382,9 @@ public class TransformationService extends MetadataService
 				log.debug("Adding warnings and errors to the record.");
 			
 			addErrorsToRecord(record, errors);
-			
 			return results;
 		}
+		
 	}
 
 	@Override
@@ -2353,16 +2362,13 @@ public class TransformationService extends MetadataService
 					// t's with 2nd ind as 2
 					
 					// The subfields to map to the title and creator respectively
-					String titleOfWorkSubfields = "kmnoprst";
-					String titleOfExpressionSubfields = "kmnoprst";
-
-					
+					String titleOfSubfields = "kmnoprst";
+									
 					// Setup the attribute list for the creator and title processed field
 					ArrayList<Attribute> titleAttributes = new ArrayList<Attribute>();
 
 					// StringBuilders to concat the values of all the subfields of the Element for the XCRecord's creator and title
-					StringBuilder titleOfWorkBuilder = new StringBuilder();
-					StringBuilder titleOfExpressionBuilder = new StringBuilder();
+					StringBuilder titleBuilder = new StringBuilder();
 					
 					
 					// Get the subfields of the current element
@@ -2375,27 +2381,22 @@ public class TransformationService extends MetadataService
 
 					// Iterate over the subfields, and append each one to the StringBuilder if it
 					// is in the list of target subfields
-					for(Element subfield : subfields)
-					{
+					for(Element subfield : subfields){
 						// Get the subfield's code
 						String subfieldCode = subfield.getAttribute("code").getValue();
 
 						// If the current subfield belongs in the title, append it
-						if(titleOfWorkSubfields.contains(subfieldCode))
-							titleOfWorkBuilder.append(subfield.getText() + " ");
-						
-						// If the current subfield belongs in the title, append it
-						if(titleOfExpressionSubfields.contains(subfieldCode))
-							titleOfExpressionBuilder.append(subfield.getText() + " ");
+						if(titleOfSubfields.contains(subfieldCode))
+							titleBuilder.append(subfield.getText() + " ");
 						
 						if(subfieldCode.equals("0"))
 							transformInto = addElementForAuthority(transformMe, transformInto, "700", subfield.getText(), linkingTag);
 					}
 
 					// If any title fields were found
-					if(titleOfWorkBuilder.length() > 0)
+					if(titleBuilder.length() > 0)
 					{
-						String value = titleOfWorkBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
+						String value = titleBuilder.substring(0, titleBuilder.length()-1); // The value is everything except the last space
 
 						if(log.isDebugEnabled())
 							log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 700's subfields' value, which is " + value);
@@ -2405,21 +2406,19 @@ public class TransformationService extends MetadataService
 						
 						//transformInto.addElementBasedOnLinkingField(Constants.ELEMENT_TITLE_OF_THE_WORK, value, XCRecord.XC_NAMESPACE, titleAttributes, linkingTag);
 						
-						transformInto.addAdditionalWorkElement(titleOfWorkBuilder.toString(), linkedCreatorFields.get(linkingTag) );
-	
-					}
+						Hashtable<String , Element>  workSubElements = new Hashtable<String, Element>();
+						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE);
+						titleOfWorkElement.setText(titleBuilder.toString());
+						
+						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
+						workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
 
-					// If any title fields were found
-					if(titleOfExpressionBuilder.length() > 0)
-					{
-						String value = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
-
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 700's subfields' value, which is " + value);
-
-						// Add an xc:title based on the 700 subfields' values
-						// Add to the non-default work element for this 700 field
-						transformInto.addAdditionalExpressionTitle(titleOfExpressionBuilder.toString());
+						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
+						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
+						titleOfWorkElement.setText(titleBuilder.toString());
+						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
+						
+						transformInto.addLinkedWorkAndExpression(workSubElements, expressionSubElements);
 						
 					}
 				
@@ -2627,15 +2626,13 @@ public class TransformationService extends MetadataService
 				if(ind2.equals("2"))
 				{
 					// The subfields to map to the title and creator respectively
-					String titleOfWorkSubfields = "kmnoprst";
-					String titleOfExpressionSubfields = "kmnoprst";
+					String titleSubfields = "kmnoprst";
 
 					// Setup the attribute list for the creator and title processed field
 					ArrayList<Attribute> titleAttributes = new ArrayList<Attribute>();
 
 					// StringBuilders to concat the values of all the subfields of the Element for the XCRecord's creator and title
-					StringBuilder titleOfWorkBuilder = new StringBuilder();
-					StringBuilder titleOfExpressionBuilder = new StringBuilder();
+					StringBuilder titleBuilder = new StringBuilder();
 
 					// Get the subfields of the current element
 					List<Element> subfields = element.getChildren("subfield", marcNamespace);
@@ -2653,48 +2650,42 @@ public class TransformationService extends MetadataService
 						String subfieldCode = subfield.getAttribute("code").getValue();
 
 						// If the current subfield belongs in the title, append it
-						if(titleOfWorkSubfields.contains(subfieldCode))
-							titleOfWorkBuilder.append(subfield.getText() + " ");
+						if(titleSubfields.contains(subfieldCode))
+							titleBuilder.append(subfield.getText() + " ");
 						
-						// If the current subfield belongs in the title, append it
-						if(titleOfExpressionSubfields.contains(subfieldCode))
-							titleOfExpressionBuilder.append(subfield.getText() + " ");
-
 						if(subfieldCode.equals("0"))
 							transformInto = addElementForAuthority(transformMe, transformInto, "710", subfield.getText(), linkingTag);
 					}
 
 					// If any title fields were found
-					if(titleOfWorkBuilder.length() > 0)
+					if(titleBuilder.length() > 0)
 					{
-						String value = titleOfWorkBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
+						String value = titleBuilder.substring(0, titleBuilder.length()-1); // The value is everything except the last space
 
 						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 710's subfields' value, which is " + value);
+							log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 700's subfields' value, which is " + value);
 
-						// Add an xc:title based on the 710 subfields' values
-						// Add to the non-default work element for this 710 field
+						// Add an xc:title based on the 700 subfields' values
+						// Add to the non-default work element for this 700 field
 						
 						//transformInto.addElementBasedOnLinkingField(Constants.ELEMENT_TITLE_OF_THE_WORK, value, XCRecord.XC_NAMESPACE, titleAttributes, linkingTag);
 						
-						transformInto.addAdditionalWorkElement(titleOfWorkBuilder.toString(), linkedCreatorFields.get(linkingTag) );
-	
-					}
+						Hashtable<String , Element>  workSubElements = new Hashtable<String, Element>();
+						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE);
+						titleOfWorkElement.setText(titleBuilder.toString());
+						
+						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
+						workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
 
-					// If any title fields were found
-					if(titleOfExpressionBuilder.length() > 0)
-					{
-						String value = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
-
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 710's subfields' value, which is " + value);
-
-						// Add an xc:title based on the 710 subfields' values
-						// Add to the non-default work element for this 700 field
-						transformInto.addAdditionalExpressionTitle(titleOfExpressionBuilder.toString());
+						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
+						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
+						titleOfWorkElement.setText(titleBuilder.toString());
+						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
+						
+						transformInto.addLinkedWorkAndExpression(workSubElements, expressionSubElements);
 						
 					}
-
+					
 					// Increment the artificial linking ID so the next 710 gets mapped to a seperate work element
 					artificialLinkingId++;
 				}
@@ -2897,15 +2888,13 @@ public class TransformationService extends MetadataService
 				if(ind2.equals("2"))
 				{
 					// The subfields to map to the title and creator respectively
-					String titleOfWorkSubfields = "fkpst";
-					String titleOfExpressionSubfields = "fkpst";
+					String titleSubfields = "fkpst";
 
 					// Setup the attribute list for the creator and title processed field
 					ArrayList<Attribute> titleAttributes = new ArrayList<Attribute>();
 
 					// StringBuilders to concat the values of all the subfields of the Element for the XCRecord's creator and title
-					StringBuilder titleOfWorkBuilder = new StringBuilder();
-					StringBuilder titleOfExpressionBuilder = new StringBuilder();
+					StringBuilder titleBuilder = new StringBuilder();
 
 					// Get the subfields of the current element
 					List<Element> subfields = element.getChildren("subfield", marcNamespace);
@@ -2923,45 +2912,39 @@ public class TransformationService extends MetadataService
 						String subfieldCode = subfield.getAttribute("code").getValue();
 
 						// If the current subfield belongs in the title, append it
-						if(titleOfWorkSubfields.contains(subfieldCode))
-							titleOfWorkBuilder.append(subfield.getText() + " ");
+						if(titleSubfields.contains(subfieldCode))
+							titleBuilder.append(subfield.getText() + " ");
 						
-						// If the current subfield belongs in the title, append it
-						if(titleOfExpressionSubfields.contains(subfieldCode))
-							titleOfExpressionBuilder.append(subfield.getText() + " ");
-
 						if(subfieldCode.equals("0"))
 							transformInto = addElementForAuthority(transformMe, transformInto, "711", subfield.getText(), linkingTag);
 					}
 
 					// If any title fields were found
-					if(titleOfWorkBuilder.length() > 0)
+					if(titleBuilder.length() > 0)
 					{
-						String value = titleOfWorkBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
+						String value = titleBuilder.substring(0, titleBuilder.length()-1); // The value is everything except the last space
 
 						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 711's subfields' value, which is " + value);
+							log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 700's subfields' value, which is " + value);
 
-						// Add an xc:title based on the 711 subfields' values
-						// Add to the non-default work element for this 711 field
+						// Add an xc:title based on the 700 subfields' values
+						// Add to the non-default work element for this 700 field
 						
 						//transformInto.addElementBasedOnLinkingField(Constants.ELEMENT_TITLE_OF_THE_WORK, value, XCRecord.XC_NAMESPACE, titleAttributes, linkingTag);
 						
-						transformInto.addAdditionalWorkElement(titleOfWorkBuilder.toString(), linkedCreatorFields.get(linkingTag) );
-	
-					}
+						Hashtable<String , Element>  workSubElements = new Hashtable<String, Element>();
+						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE);
+						titleOfWorkElement.setText(titleBuilder.toString());
+						
+						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
+						workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
 
-					// If any title fields were found
-					if(titleOfExpressionBuilder.length() > 0)
-					{
-						String value = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
-
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.EXPRESSION + " level title based on the concatination of the 711's subfields' value, which is " + value);
-
-						// Add an xc:title based on the 711 subfields' values
-						// Add to the non-default work element for this 711 field
-						transformInto.addAdditionalExpressionTitle(titleOfExpressionBuilder.toString());
+						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
+						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
+						titleOfWorkElement.setText(titleBuilder.toString());
+						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
+						
+						transformInto.addLinkedWorkAndExpression(workSubElements, expressionSubElements);
 						
 					}
 
@@ -3104,33 +3087,38 @@ public class TransformationService extends MetadataService
 				}
 
 				// If any title fields were found
-				if(titleOfWorkBuilder.length() > 0)
+				if(titleOfWorkBuilder.length() > 0 || titleOfExpressionBuilder.length() > 0)
 				{
-					String value = titleOfWorkBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
+					String workTitleValue = titleOfWorkBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
+					String expressionTitleValue = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
 
 					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 730's subfields' value, which is " + value);
+						log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 730's subfields' value, which is " + workTitleValue);
 
-					// Add an xc:title based on the 730 subfields' values
-					// Add to the non-default work element for this 730 field
-					//transformInto.addElementBasedOnLinkingField("workTitle", value, XCRecord.RDVOCAB_NAMESPACE, titleAttributes, "730" + artificialLinkingId);
-					transformInto.addAdditionalWorkElement(titleOfWorkBuilder.toString(), null );
+				
+					Hashtable<String , Element>  workSubElements = new Hashtable<String, Element>();
+					
+					if(titleOfWorkBuilder.length() > 0){
+
+						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE);
+						titleOfWorkElement.setText(workTitleValue.toString());
+						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
+						workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
+					
+					}
+
+					Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
+					
+					if(titleOfExpressionBuilder.length() > 0){
+						
+						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
+						titleOfExpressionElement.setText(expressionTitleValue.toString());
+						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
+					}
+					
+					transformInto.addLinkedWorkAndExpression(workSubElements, expressionSubElements);
 					
 				}
-
-				// If any title fields were found
-				if(titleOfExpressionBuilder.length() > 0)
-				{
-					String value = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
-
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 730's subfields' value, which is " + value);
-
-					// Add an xc:title based on the 730 subfields' values
-					// Add to the non-default work element for this 730 field
-					transformInto.addAdditionalExpressionTitle(titleOfExpressionBuilder.toString());
-				}
-
 				// Increment the artificial linking ID so the next 730 gets mapped to a seperate work element
 				artificialLinkingId++;
 			}
