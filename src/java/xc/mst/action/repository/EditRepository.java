@@ -15,6 +15,8 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
@@ -54,13 +56,21 @@ public class EditRepository extends ActionSupport
         {
 
             Provider provider = new DefaultProviderService().getProviderById(repositoryId);
+            if(provider==null)
+            {
+                errorType = "error";
+                this.addFieldError("viewRepositoryError","There was a problem displaying the edit Repository page. An email has been sent to the administrator.");
+                return INPUT;
+            }
             setRepositoryName(provider.getName());
             setRepositoryURL(provider.getOaiProviderUrl());
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DataException e)
         {
-            log.error("The edit repository page could not be displayed",e);
+            log.error(e.getMessage(),e);
+            errorType = "error";
+            this.addFieldError("dbConfigError","Unable to access the database to get Repository information. There may be problem with database configuration.");
             return INPUT;
         }
 
@@ -204,10 +214,19 @@ public class EditRepository extends ActionSupport
                 return SUCCESS;
             }
         }
-        catch(Exception e)
+        catch(DataException e)
         {
-            log.error("The Repository details could not be edited",e);
-            return SUCCESS;
+            log.error(e.getMessage(),e);
+            errorType = "error";
+            this.addFieldError("dbConfigError","Unable to access the database to get Repository information. There may be problem with database configuration.");
+            return INPUT;
+        }
+        catch(Hexception e)
+        {
+            log.error(e.getMessage(),e);
+            errorType = "error";
+            this.addFieldError("dbConfigError","Unable to validate the repository information");
+            return INPUT;
         }
     }
 

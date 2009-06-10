@@ -19,6 +19,8 @@ import xc.mst.action.UserAware;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
@@ -60,55 +62,69 @@ public class AddRepository extends ActionSupport implements UserAware
      */
     public String addRepository()
     {
-         Provider pr = new Provider();
-         try
+        try
+        {
+
+            Provider pr = new Provider();
+        
+            ProviderService providerService = new DefaultProviderService();
+
+            Provider repositorySameName = providerService.getProviderByName(repositoryName);
+            Provider repositorySameURL = providerService.getProviderByURL(repositoryURL);
+            if(repositorySameName!=null)
             {
-                ProviderService providerService = new DefaultProviderService();
 
-                Provider repositorySameName = providerService.getProviderByName(repositoryName);
-                Provider repositorySameURL = providerService.getProviderByURL(repositoryURL);
-                if(repositorySameName!=null)
-                {
-
-                   this.addFieldError("addRepositoryError", "Repository with name '"+repositoryName+"' already exists");
-                   errorType = "error";
-                   return INPUT;
-                }
-                else if(repositorySameURL!=null)
-                {
-                   this.addFieldError("addRepositoryError", "Repository with URL '"+repositoryURL+"' already exists");
-                   errorType = "error";
-                   return INPUT;
-                }
-                else
-                {
-
-                    pr.setName(getRepositoryName());
-                    pr.setCreatedAt(new Date());
-                    pr.setUpdatedAt( new Timestamp(new Date().getTime()));
-                    pr.setLastValidationDate(new Date());
-                    pr.setOaiProviderUrl(getRepositoryURL());
-
-                    pr.setUser(user);
-
-                    providerService.insertProvider(pr);
-
-                    ValidateRepository vr = new ValidateRepository();
-                    vr.validate(pr.getId());
-
-                }
+               this.addFieldError("addRepositoryError", "A repository with the name '"+repositoryName+"' already exists.");
+               errorType = "error";
+               return INPUT;
             }
-            catch(Exception e)
+            else if(repositorySameURL!=null)
             {
-                log.error("There was a problem identified in the repository added",e);
-                this.addFieldError("addRepositoryError", "There was a problem identified in the repository added");
-                errorType = "error";
-                
-               
+               this.addFieldError("addRepositoryError", "A repository with the URL '"+repositoryURL+"' already exists");
+               errorType = "error";
+               return INPUT;
             }
+            else
+            {
+                if((pr==null)||(getRepositoryName()==null)||(getRepositoryURL()==null)||(user==null))
+                {
+                    log.error("There was a problem identified in the repository added");
+                    this.addFieldError("addRepositoryError", "There was a problem identified in the repository added");
+                    errorType = "error";
+                    return SUCCESS;
+                }
+                pr.setName(getRepositoryName());
+                pr.setCreatedAt(new Date());
+                pr.setUpdatedAt( new Timestamp(new Date().getTime()));
+                pr.setLastValidationDate(new Date());
+                pr.setOaiProviderUrl(getRepositoryURL());
 
-          setRepositoryId(pr.getId());
-          return SUCCESS;
+                pr.setUser(user);
+
+                providerService.insertProvider(pr);
+
+                ValidateRepository vr = new ValidateRepository();
+                vr.validate(pr.getId());
+
+            }
+            setRepositoryId(pr.getId());
+            return SUCCESS;
+        }
+        catch(DataException e)
+        {
+            log.error(e.getMessage(),e);
+            this.addFieldError("addRepositoryError", "Unable to access the database to add the repository");
+            errorType = "error";
+            return SUCCESS;
+        }
+        catch(Hexception e)
+        {
+            log.error(e.getMessage(),e);
+            this.addFieldError("addRepositoryError", "Unable to access the database to validate the repository");
+            errorType = "error";
+            return SUCCESS;
+        }
+
     }
 
 	 /**

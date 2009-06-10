@@ -15,6 +15,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
@@ -46,6 +47,9 @@ public class AllRepository extends ActionSupport
      */
 	private List<Provider> repositories;
 
+     /** Error type */
+	  private String errorType;
+
     /**
      * Overrides default implementation to view all the repositories.
      * 
@@ -54,8 +58,8 @@ public class AllRepository extends ActionSupport
     @Override
     public String execute()
     {
-        try
-        {
+       try
+       {
             
             ProviderService providerService = new DefaultProviderService();
 
@@ -73,7 +77,12 @@ public class AllRepository extends ActionSupport
                 {
                     repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_HARVEST_END_TIME);
                 }
-               
+
+                if(repositories==null)
+                {
+                    this.addFieldError("allRepositoryError", "The repositories list is empty. An email has been sent to the administrator");
+                    return INPUT;
+                }
                 setIsAscendingOrder(isAscendingOrder);
                 setColumnSorted(columnSorted);
                 return SUCCESS;
@@ -84,12 +93,14 @@ public class AllRepository extends ActionSupport
                 return INPUT;
             }
            
-        }
-        catch(Exception e)
-        {
-           log.error("The list of repositories could not be displayed",e);
+       }
+       catch(DataException e)
+       {
+           log.error(e.getMessage(),e);
+           errorType = "error";
+           addFieldError("dbConfigError", "Unable to access the database to show the All Repositories page.");
            return INPUT;
-        }
+       }
     }
 
     /**
@@ -141,5 +152,23 @@ public class AllRepository extends ActionSupport
     {
         return this.columnSorted;
     }
+
+    /**
+     * Returns error type
+     *
+     * @return error type
+     */
+	public String getErrorType() {
+		return errorType;
+	}
+
+    /**
+     * Sets error type
+     *
+     * @param errorType error type
+     */
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 
 }
