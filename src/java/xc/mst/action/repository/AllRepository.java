@@ -16,9 +16,12 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  * This Action Class is used for displaying all repositories
@@ -48,7 +51,10 @@ public class AllRepository extends ActionSupport
 	private List<Provider> repositories;
 
      /** Error type */
-	  private String errorType;
+      private String errorType;
+
+    /** User Service object **/
+      private UserService userService = new DefaultUserService();
 
     /**
      * Overrides default implementation to view all the repositories.
@@ -78,11 +84,6 @@ public class AllRepository extends ActionSupport
                     repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_HARVEST_END_TIME);
                 }
 
-                if(repositories==null)
-                {
-                    this.addFieldError("allRepositoryError", "The repositories list is empty. An email has been sent to the administrator");
-                    return INPUT;
-                }
                 setIsAscendingOrder(isAscendingOrder);
                 setColumnSorted(columnSorted);
                 return SUCCESS;
@@ -94,11 +95,19 @@ public class AllRepository extends ActionSupport
             }
            
        }
+       catch(DatabaseConfigException dce)
+       {
+           log.error(dce.getMessage(),dce);
+           errorType = "error";
+           this.addFieldError("dbConfigError","Unable to access the database. There may be a problem with database configuration.");
+           return INPUT;
+       }
        catch(DataException e)
        {
            log.error(e.getMessage(),e);
            errorType = "error";
-           addFieldError("dbConfigError", "Unable to access the database to show the All Repositories page.");
+           userService.sendEmailErrorReport("Error occurred while displaying all repositories page");
+           addFieldError("dbConfigError", "Error is displaying all repositories. An email has been sent to the administrator");
            return INPUT;
        }
     }

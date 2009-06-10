@@ -16,10 +16,13 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  * This method is used to edit the details of a repository
@@ -42,7 +45,10 @@ public class EditRepository extends ActionSupport
     private String repositoryURL;
     
 	/** Error type */
-	private String errorType; 
+	private String errorType;
+
+    /** User Service object **/
+    private UserService userService = new DefaultUserService();
 
    /**
      * Overrides default implementation to edit the details of a repository.
@@ -59,6 +65,7 @@ public class EditRepository extends ActionSupport
             if(provider==null)
             {
                 errorType = "error";
+                userService.sendEmailErrorReport("Error occurred while displaying the edit repositories page");
                 this.addFieldError("viewRepositoryError","There was a problem displaying the edit Repository page. An email has been sent to the administrator.");
                 return INPUT;
             }
@@ -66,11 +73,19 @@ public class EditRepository extends ActionSupport
             setRepositoryURL(provider.getOaiProviderUrl());
             return SUCCESS;
         }
+        catch(DatabaseConfigException dce)
+        {
+            log.error(dce.getMessage(),dce);
+            errorType = "error";
+            this.addFieldError("dbConfigError","Unable to access the database. There may be a problem with database configuration.");
+            return INPUT;
+        }
         catch(DataException e)
         {
             log.error(e.getMessage(),e);
             errorType = "error";
-            this.addFieldError("dbConfigError","Unable to access the database to get Repository information. There may be problem with database configuration.");
+            userService.sendEmailErrorReport("Error occurred while displaying the edit repositories page");
+            this.addFieldError("dbConfigError","Error occurred while editing repository. An email has been sent to the administrator");
             return INPUT;
         }
 
@@ -87,6 +102,13 @@ public class EditRepository extends ActionSupport
         {
             ProviderService providerService = new DefaultProviderService();
             Provider provider = providerService.getProviderById(repositoryId);
+            if(provider==null)
+            {
+                errorType = "error";
+                userService.sendEmailErrorReport("Error occurred while editing repository");
+                this.addFieldError("editRepository","Error occurred while editing repository. An email has been sent to the administrator.");
+                return INPUT;
+            }
             provider.setName(getRepositoryName());
             
             boolean urlChanged = false;

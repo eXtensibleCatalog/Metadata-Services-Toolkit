@@ -20,10 +20,13 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  * This method is for adding a new repository to the database.
@@ -53,7 +56,10 @@ public class AddRepository extends ActionSupport implements UserAware
     private int repositoryId;
 
 	/** Error type */
-	private String errorType; 
+	private String errorType;
+
+    /** User service object **/
+    private UserService userService = new DefaultUserService();
 
     /**
      * The method is used to add a repository
@@ -86,13 +92,7 @@ public class AddRepository extends ActionSupport implements UserAware
             }
             else
             {
-                if((pr==null)||(getRepositoryName()==null)||(getRepositoryURL()==null)||(user==null))
-                {
-                    log.error("There was a problem identified in the repository added");
-                    this.addFieldError("addRepositoryError", "There was a problem identified in the repository added");
-                    errorType = "error";
-                    return SUCCESS;
-                }
+               
                 pr.setName(getRepositoryName());
                 pr.setCreatedAt(new Date());
                 pr.setUpdatedAt( new Timestamp(new Date().getTime()));
@@ -110,17 +110,25 @@ public class AddRepository extends ActionSupport implements UserAware
             setRepositoryId(pr.getId());
             return SUCCESS;
         }
+        catch(DatabaseConfigException dce)
+        {
+            log.error(dce.getMessage(),dce);
+            errorType = "error";
+            this.addFieldError("dbConfigError","Unable to access the database. There may be a problem with database configuration.");
+            return INPUT;
+        }
         catch(DataException e)
         {
             log.error(e.getMessage(),e);
-            this.addFieldError("addRepositoryError", "Unable to access the database to add the repository");
+            this.addFieldError("addRepositoryError", "Error occurred while adding repository. An email has been sent to the administrator");
             errorType = "error";
+            userService.sendEmailErrorReport("Error occurred while adding repository");
             return SUCCESS;
         }
         catch(Hexception e)
         {
             log.error(e.getMessage(),e);
-            this.addFieldError("addRepositoryError", "Unable to access the database to validate the repository");
+            this.addFieldError("addRepositoryError", "Unable to validate the repository");
             errorType = "error";
             return SUCCESS;
         }

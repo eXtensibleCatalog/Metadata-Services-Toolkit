@@ -17,7 +17,11 @@ import xc.mst.constants.Constants;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.repository.DefaultProviderService;
 import com.opensymphony.xwork2.ActionSupport;
+import xc.mst.dao.DatabaseConfigException;
+import xc.mst.harvester.Hexception;
 import xc.mst.manager.repository.ProviderService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  * This method is used to View the properties of a Repository in the system
@@ -59,6 +63,8 @@ public class ViewRepository extends ActionSupport implements UserAware
       /** Provider Service object **/
       private ProviderService providerService = new DefaultProviderService();
 
+      /** User Service object **/
+      UserService userService = new DefaultUserService();
      
 
      /**
@@ -72,12 +78,20 @@ public class ViewRepository extends ActionSupport implements UserAware
           try
           {
                 provider = providerService.getProviderById(repositoryId);
+                if(provider==null)
+                {
+                    userService.sendEmailErrorReport("Error occurred while displaying view repository page.");
+                    this.addFieldError("allRepositoryError", "Error occurred while displaying repository details. An email has been sent to the administrator.");
+                    errorType = "error";
+                    return SUCCESS;
+                }
                 return SUCCESS;
           }
-          catch(Exception e)
+
+          catch(DatabaseConfigException dce)
           {
-              log.error("Repository details cannot be displayed",e);
-              this.addFieldError("allRepositoryError", "Repository details cannot be displayed");
+              log.error(dce.getMessage(),dce);
+              this.addFieldError("allRepositoryError", "Unable to access database. Database configuration may be incorrect.");
               errorType = "error";
               return SUCCESS;
           }
@@ -101,10 +115,17 @@ public class ViewRepository extends ActionSupport implements UserAware
                 execute();
                 
           }
-          catch(Exception e)
+          catch(DatabaseConfigException dce)
           {
-              log.error("Repository revalidation was unsuccessful",e);
-              this.addFieldError("viewRepositoryError", "Revalidation unsuccessful");
+              log.error(dce.getMessage(),dce);
+              this.addFieldError("viewRepositoryError", "Unable to access database. Database configuration may be incorrect");
+              errorType = "error";
+              execute();
+          }
+          catch(Hexception he)
+          {
+              log.error(he.getMessage(),he);
+              this.addFieldError("viewRepositoryError", "There was an exception when validating the repository");
               errorType = "error";
               execute();
              

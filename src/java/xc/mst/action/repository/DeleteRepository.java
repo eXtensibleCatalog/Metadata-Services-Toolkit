@@ -16,6 +16,11 @@ import xc.mst.constants.Constants;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
 import com.opensymphony.xwork2.ActionSupport;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  * This class is used to delete a repository from the database
@@ -42,6 +47,9 @@ public class DeleteRepository extends ActionSupport
 
 	/** Provider service */
     private ProviderService providerService = new DefaultProviderService();
+
+    /** User Service object **/
+    private UserService userService = new DefaultUserService();
     
     /** Determines whether repository is deleted */
 	private boolean deleted;
@@ -58,7 +66,14 @@ public class DeleteRepository extends ActionSupport
         {
             log.debug("DeleteRepository:execute():Repository Id to be deleted : " + repositoryId);
             Provider provider = providerService.getProviderById(repositoryId);
-            
+
+            if(provider==null)
+            {
+                 this.addFieldError("viewRepositoryError", "Error occurred while deleting repository. An email has been sent to the administrator.");
+                 userService.sendEmailErrorReport("Error occurred while deleting repository");
+                 errorType = "error";
+                 return INPUT;
+            }
             // Delete provider only if it is not harvested.
             if (provider.getLastHarvestEndTime() != null) {
                 message = "Repository has harvested data.";
@@ -69,10 +84,25 @@ public class DeleteRepository extends ActionSupport
             }
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Exception occured while deleting the repository", e);
-            this.addFieldError("viewRepositoryError", "Repository cannot be deleted");
+            log.error(dce.getMessage(),dce);
+            errorType = "error";
+            this.addFieldError("dbConfigError","Unable to access the database. There may be a problem with database configuration.");
+            return INPUT;
+        }
+        catch(IndexException ie)
+        {
+            log.error(ie.getMessage(),ie);
+            errorType = "error";
+            this.addFieldError("indexError","There was an index exception");
+            return INPUT;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(), de);
+            this.addFieldError("viewRepositoryError", "Error occurred while deleting repository. An email has been sent to the administrator");
+            userService.sendEmailErrorReport("Error occurred while deleting repository");
             errorType = "error";
             return INPUT;
         }
