@@ -99,6 +99,14 @@ public interface UserService {
     public boolean sendEmailForForgotPassword(String newPassword, User user);
 
     /**
+     * Sends email to all admins about an error in the MST GUI
+     *
+     * @param comments message error message which describes where the error took place.
+     * @throws DatabaseConfigException
+     */
+    public boolean sendEmailErrorReport(String message);
+
+    /**
      * Get user having specified email
      *
      * @param email Email to get the user

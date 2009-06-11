@@ -430,6 +430,46 @@ public class DefaultUserService implements UserService{
     }
 
     /**
+     * Sends email to all admins regarding a failure condition in the MST GUI
+     *
+     * @param message The message which describes where the error took place.
+     * @throws DatabaseConfigException
+     */
+    public boolean sendEmailErrorReport(String message){
+
+        try
+        {
+            Emailer emailer = new Emailer();
+
+            // Email the admin to assign permissions for new user
+            StringBuffer adminMessageBody = new StringBuffer();
+            adminMessageBody.append("Error experienced when running the MST GUI ");
+            adminMessageBody.append("\nError message : " + message);
+
+            String adminSubject = "MST GUI error";
+
+            List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR).getId());
+
+            boolean emailConfigured = new Emailer().isConfigured();
+
+            if (!emailConfigured) {
+                return false;
+            }
+
+            for(User admin:admins) {
+                emailer.sendEmail(admin.getEmail(), adminSubject, adminMessageBody.toString());
+            }
+
+            return true;
+        }
+        catch(DatabaseConfigException dce)
+        {
+            log.error(dce.getMessage(),dce);
+            return false;
+        }
+    }
+
+    /**
      * Get permissions for user ordered by tab order
      *  
      * @param user User to get permissions
