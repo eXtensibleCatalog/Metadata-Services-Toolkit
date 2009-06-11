@@ -100,7 +100,12 @@ public class RecordList extends AbstractList<Record>
 				return null;
 			
 			if(currentOffset < index && currentOffset + MAX_RESULTS > index)
+			{
+				if(docs == null)
+					return null;
+				
 				return (docs.size() > (index-currentOffset) ? service.getRecordFromDocument(docs.get(index-currentOffset)) : null);
+			}
 			
 			// Truncation will make this the largest multiple of MAX_RESULTS which comes before the requested index
 			currentOffset = (index/MAX_RESULTS)*MAX_RESULTS;
@@ -109,6 +114,9 @@ public class RecordList extends AbstractList<Record>
 			query.setStart(currentOffset);
 			docs = indexMgr.getDocumentList(query);
 			
+			if(docs == null)
+				return null;
+			
 			return (docs.size() > (index-currentOffset) ? service.getRecordFromDocument(docs.get(index-currentOffset)) : null);
 		}
 		catch(DatabaseConfigException e)
@@ -116,8 +124,11 @@ public class RecordList extends AbstractList<Record>
 			log.error("Cannot connect to the database with the parameters from the config file.", e);
 			
 			return null;
-		} catch(IndexException ie) {
+		} 
+		catch(IndexException ie) 
+		{
 			log.error("Cannot connect to Solr Server. Check the port in configuration file.", ie);
+			
 			return null;
 		}
 	}

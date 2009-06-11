@@ -1327,6 +1327,8 @@ public class Harvester implements ErrorHandler
 
 			if (exc.getMessage().matches(".*respcode.*"))
 				msg = "The request for data resulted in an invalid response from the provider. The baseURL indicated may be incorrect or the service may be unavailable. HTTP response: " + exc.getMessage();
+			else if(exc.getMessage().contains("The markup in the document following the root element must be well-formed"))
+				msg = "The OAI repository did not return valid XML, so it could not be harvested.";
 			else
 				msg = "The request for data resulted in an invalid response from the provider. Error: " + exc.getMessage();
 
