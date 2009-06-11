@@ -350,7 +350,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested set spec
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_SET_SPEC  + ":" + setSpec);
+		query.setQuery(FIELD_SET_SPEC  + ":" + setSpec.replaceAll(":", "\\\\:"));
 
 		// Return the list of results
 		return new RecordList(query);
