@@ -103,11 +103,6 @@ public class DefaultRecordService extends RecordService
 	 * The trait term
 	 */
 	protected final static Term TERM_TRAIT = new Term(FIELD_TRAIT, "");
-	
-	long totalPartTime = 0;
-	long startPartTime = 0;
-	long endPartTime = 0;
-	long counter = 0;
 
 	@Override
 	public RecordList getAll() throws IndexException
@@ -116,7 +111,7 @@ public class DefaultRecordService extends RecordService
 			log.debug("Getting all records");
 
 		// Create a query to get all records
-		SolrQuery query = new SolrQuery().setQuery(FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		SolrQuery query = new SolrQuery().setQuery("*:*");
 
 		// Return the list of results
 		return new RecordList(query);
@@ -130,8 +125,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the record with the requested record ID
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_RECORD_ID + ":" + Long.toString(id) + "  AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_RECORD_ID + ":" + Long.toString(id));
 
 		// Get the result of the query
 		SolrDocumentList docs = null;
@@ -160,8 +154,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the record with the requested record ID
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_RECORD_ID + ":" + Long.toString(id) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_RECORD_ID + ":" + Long.toString(id));
 
 		// Get the result of the query
 		SolrDocumentList docs = null;
@@ -202,8 +195,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested provider ID
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_PROVIDER_ID + ":" + Integer.toString(providerId) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_PROVIDER_ID + ":" + Integer.toString(providerId));
 
 		// Return the list of results
 		return new RecordList(query);
@@ -217,8 +209,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested service ID
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_SERVICE_ID + ":" +  Integer.toString(serviceId) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_SERVICE_ID + ":" +  Integer.toString(serviceId));
 
 		// Return the list of results
 		return new RecordList(query);
@@ -232,8 +223,7 @@ public class DefaultRecordService extends RecordService
 		
 		// Create a query to get the Documents with the requested service ID
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_SERVICE_ID + ":" +  Integer.toString(serviceId) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_SERVICE_ID + ":" +  Integer.toString(serviceId));
 
 		// Return the list of results
 		return new RecordList(query).size();
@@ -247,8 +237,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested service ID
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_PROCESSED_BY_SERVICE_ID + ":" +  Integer.toString(serviceId) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_PROCESSED_BY_SERVICE_ID + ":" +  Integer.toString(serviceId));
 
 		// Return the list of results
 		return new RecordList(query);
@@ -262,8 +251,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested harvest ID
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_HARVEST_ID + ":" + Integer.toString(harvestId) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_HARVEST_ID + ":" + Integer.toString(harvestId));
 
 		// Return the list of results
 		return new RecordList(query);
@@ -277,8 +265,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested harvest schedule ID
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_HARVEST_SCHEDULE_ID + ":" +  Integer.toString(harvestScheduleId) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_HARVEST_SCHEDULE_ID + ":" +  Integer.toString(harvestScheduleId));
 
 		// Return the list of results
 		return new RecordList(query);
@@ -293,8 +280,7 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get the Documents with the requested format ID and service ID
 		SolrQuery query = new SolrQuery();
 		query.setQuery(FIELD_FORMAT_ID + ":" + Integer.toString(formatId) + " AND "
-				+ FIELD_SERVICE_ID + ":" + Integer.toString(serviceId) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+				+ FIELD_SERVICE_ID + ":" + Integer.toString(serviceId));
 
 		// Return the list of results
 		return new RecordList(query);
@@ -308,8 +294,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested input for service IDs
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId));
 
 		// Return the list of results
 		return new RecordList(query);
@@ -323,8 +308,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested provider name
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_PROVIDER_NAME + ":" + providerName + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_PROVIDER_NAME + ":" + providerName);
 
 		// Return the list of results
 		return new RecordList(query);
@@ -338,8 +322,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested provider URL
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_PROVIDER_URL + ":" + providerUrl + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_PROVIDER_URL + ":" + providerUrl);
 
 		// Return the list of results
 		return new RecordList(query);
@@ -353,8 +336,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested set name
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_SET_NAME + ":" + setName + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_SET_NAME + ":" + setName);
 
 		// Return the list of results
 		return new RecordList(query);
@@ -368,8 +350,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested set spec
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_SET_SPEC  + ":" + setSpec + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE +  ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_SET_SPEC  + ":" + setSpec);
 
 		// Return the list of results
 		return new RecordList(query);
@@ -383,8 +364,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested format name
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_FORMAT_NAME + ":" + formatName + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE  + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_FORMAT_NAME + ":" + formatName);
 
 		// Return the list of results
 		return new RecordList(query);
@@ -398,12 +378,8 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the record with the correct identifier
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:") + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:"));
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
 		// Get the result of the query
 		SolrDocumentList docs = null;
 		docs = indexMgr.getDocumentList(query);
@@ -432,23 +408,11 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get the record with the requested OAI identifier and provider ID
 		SolrQuery query = new SolrQuery();
 		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:") + " AND "
-				+ FIELD_PROVIDER_ID + ":" + Integer.toString(providerId) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+				+ FIELD_PROVIDER_ID + ":" + Integer.toString(providerId));
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
-		startPartTime = System.currentTimeMillis();
-		
 		// Get the result of the query
 		SolrDocumentList docs = null;
 		docs = indexMgr.getDocumentList(query);
-
-		endPartTime = System.currentTimeMillis();
-		totalPartTime += (endPartTime - startPartTime);
-		counter++;
-		if(counter % 5000 == 0)
-			System.out.println(counter + " part time " + totalPartTime);
 		
 		// Return null if we couldn't find the record
 		if(docs == null || docs.size() == 0)
@@ -474,11 +438,7 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get the record with the requested OAI identifier and service ID
 		SolrQuery query = new SolrQuery();
 		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:") + " AND "
-				+ FIELD_SERVICE_ID + ":" + Integer.toString(serviceId) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
-
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
+				+ FIELD_SERVICE_ID + ":" + Integer.toString(serviceId));
 		
 		// Get the result of the query
 		SolrDocumentList docs = null;
@@ -507,8 +467,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested input for service IDs
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_PROCESSED_FROM + ":" + Long.toString(processedFromId) + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_PROCESSED_FROM + ":" + Long.toString(processedFromId));
 
 		// Return the list of results
 		return new RecordList(query);
@@ -522,8 +481,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested trait
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_TRAIT + ":" + trait.replaceAll(":", "\\\\:") + " AND "
-				+ FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType);
+		query.setQuery(FIELD_TRAIT + ":" + trait.replaceAll(":", "\\\\:"));
 
 		// Return the list of results
 		return new RecordList(query);
@@ -570,7 +528,7 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get the Documents for unprocessed records
 		SolrQuery query = new SolrQuery();
 		StringBuffer queryBuffer = new StringBuffer();
-		queryBuffer.append(FIELD_INDEXED_OBJECT_TYPE).append(":").append(Record.indexedObjectType).append(" AND ").append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
+		queryBuffer.append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
 		if(useSet)
 			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId));
 		if(useMetadataPrefix)
@@ -581,6 +539,7 @@ public class DefaultRecordService extends RecordService
 			//queryBuffer.append(new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);
 
 		query.setQuery(queryBuffer.toString());
+		
 		// Remove the limit on the number of results returned
 		query.setRows(Integer.MAX_VALUE);
 		
@@ -638,8 +597,7 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get the Documents for unprocessed records
 		SolrQuery query = new SolrQuery();
 		StringBuffer queryBuffer = new StringBuffer();
-		queryBuffer.append(FIELD_INDEXED_OBJECT_TYPE).append(":").append(Record.indexedObjectType);
-		queryBuffer.append(" AND ").append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
+		queryBuffer.append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
 		if(useSet)
 			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId));
 		if(useMetadataPrefix)

@@ -76,10 +76,10 @@ public class TestServices
 		MSTSolrServer.getInstance();
 	}
 	
-	private static File unprocessedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\NormInput");
-	private static File processedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\NormOutput");
+	private static File unprocessedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggInput");
+	private static File processedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggOutput");
 
-	private static int serviceId = 1;
+	private static int serviceId = 3;
 
 	/**
 	 * Builds the XML Document based on the record's OAI XML
@@ -159,6 +159,7 @@ public class TestServices
 			Record record = new Record();
 
 			record.setOaiXml(readUnicodeFile(currentRecord));
+			record.setOaiIdentifier(currentRecord.getName().substring(0, currentRecord.getName().lastIndexOf('.')).replaceAll(" ", "/").replaceAll("-", ":"));
 			record.setFormat(formatDao.getById(2));
 			record.setProvider(providerDao.getById(1));
 			record.addInputForService(serviceDao.getById(serviceId));
@@ -207,32 +208,36 @@ public class TestServices
 		OutputStreamWriter writer = null;
 		File outfile = null;
 
-		String controlNumber = runRegex(xml, "<marc:controlfield tag=\"001\">(\\d*)</marc:controlfield>", 1);
-
-		if(controlNumber == null)
-		{
-			// An XPATH expression to get the recordIDs
-			XPath xpath = XPath.newInstance("//xc:entity[@type='manifestation']/xc:recordID[@type='NRU']");
-
-			List<Element> elements = null;//xpath.selectNodes(builder.build(new InputSource(new StringReader(record.getOaiXml()))));
-
-			if(elements == null || elements.size() == 0)
-				controlNumber = "" + ++counter;
-			else
-			{
-				for(Element element : elements)
-	    		{
-					if(controlNumber == null)
-						controlNumber = element.getText();
-					else
-						controlNumber = controlNumber + "_" + element.getText();
-	    		}
-			}
-		}
+//		String controlNumber = runRegex(xml, "<marc:controlfield tag=\"001\">(\\d*)</marc:controlfield>", 1);
+//
+//		if(controlNumber == null)
+//		{
+//			// An XPATH expression to get the recordIDs
+//			XPath xpath = XPath.newInstance("//xc:entity[@type='manifestation']/xc:recordID[@type='NRU']");
+//
+//			List<Element> elements = xpath.selectNodes(builder.build(new InputSource(new StringReader(record.getOaiXml()))));
+//
+//			if(elements == null || elements.size() == 0)
+//				controlNumber = "" + ++counter;
+//			else
+//			{
+//				for(Element element : elements)
+//	    		{
+//					if(controlNumber == null)
+//						controlNumber = element.getText();
+//					else
+//						controlNumber = controlNumber + "_" + element.getText();
+//	    		}
+//			}
+//		}
 
 		try
-		{
-			outfile = new File(directory.getAbsolutePath() + "\\" + controlNumber + ".xml");
+		{	
+			String fileName = directory.getAbsolutePath() + "\\" + record.getOaiIdentifier() + ".xml";
+			fileName = fileName.replaceAll("/", " ");
+			fileName = fileName.replaceAll(":", "-");
+			fileName = fileName.replaceAll("-\\\\", ":\\\\");
+			outfile = new File(fileName);
 			outfile.createNewFile();
 
 			writer = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(outfile)),"UTF-8");

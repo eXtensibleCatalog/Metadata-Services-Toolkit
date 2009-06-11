@@ -121,15 +121,15 @@ public class MSTSolrServer {
 			
 			try 
 			{
-				CoreContainer container = new CoreContainer();
-				CoreDescriptor descriptor = new CoreDescriptor(container, "core1", solrHome);
-				SolrCore core = container.create(descriptor);
-				container.register("core1", core, false);
-
 				java.util.logging.Logger logg = java.util.logging.Logger.getLogger("org.apache.solr");
 			    logg.setUseParentHandlers(false);
 			    logg.log(java.util.logging.Level.INFO, "Changing log level to " + logLevel);
 			    logg.setLevel(logLevel);
+			    
+				CoreContainer container = new CoreContainer();
+				CoreDescriptor descriptor = new CoreDescriptor(container, "core1", solrHome);
+				SolrCore core = container.create(descriptor);
+				container.register("core1", core, false);
 				
 				server = new EmbeddedSolrServer(container, "core1"); 
 				LogWriter.addInfo(logObj.getLogFileLocation(), "The Solr server instance was successfully using the configuration in " + solrHome);

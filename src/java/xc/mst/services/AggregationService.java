@@ -49,6 +49,9 @@ import xc.mst.manager.record.ManifestationService;
 import xc.mst.manager.record.WorkService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.XcRecordSplitter;
+import xc.mst.utils.index.HoldingsList;
+import xc.mst.utils.index.ItemList;
+import xc.mst.utils.index.ManifestationList;
 import xc.mst.utils.index.WorkList;
 
 /**
@@ -172,60 +175,6 @@ public class AggregationService extends MetadataService
 	@Override
 	protected void finishProcessing()
 	{
-		WorkList works = null;
-		try {
-			// Get the list of all unprocessed Manifestations
-			works = workService.getUnprocessedWorks(service.getId());
-		} catch(IndexException ie) {
-			log.error("An indexing Exception occurred while getting the list of all unprocessed Manifestations.", ie);
-		}
-
-		// For each Manifestation, build the record from the linked components.
-		for(Work work : works)
-		{
-			Record finalRecord = buildRecordFromWork(work);
-
-			if(finalRecord == null)
-				continue;
-
-			// Check whether or not this record already exists in the database
-//			Record oldRecord = null;
-//			try 
-//			{
-//				oldRecord = getByOaiId(finalRecord.getOaiIdentifier());
-//			} 
-//			catch (DatabaseConfigException e1) 
-//			{
-//				log.error("Could not connect to the database with the parameters in the configuration file.", e1);
-//				return;
-//			} catch(IndexException ie) {
-//				log.error("Could not connect to Solr server.", ie);
-//				return;
-//			}
-
-			// If the current record is a new record, insert it
-//			if(oldRecord == null)
-//				insertNewRecord(finalRecord);
-//			// Otherwise we've seen the record before.  Update it as appropriate
-//			// If finalRecord's deleted flag is set to true, the record will
-//			// be deleted.
-//			else
-//				updateExistingRecord(finalRecord, oldRecord);
-
-			// Mark the Manifestation as having been processed
-			work.setProcessed(true);
-			try
-			{
-				workService.update(work);
-			} // end try
-			catch(DataException e)
-			{
-				log.error("A DataException occurred while marking a manifestation as being processed.", e);
-			} // end catch(DataException)
-			catch(IndexException ie) {
-				log.error("An indexing Exception occurred while  marking a manifestation as being processed.", ie);
-			}
-		} // end loop over manifestations
 	} // end method finishProcessing()
 
 	@Override
@@ -469,15 +418,25 @@ public class AggregationService extends MetadataService
 	{
 		List<Work> results = new ArrayList<Work>();
 
-		try {
+		try 
+		{
 			// If we should match works on the identifierForTheWork field
 			if(workMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_IDENTIFIER_FOR_THE_WORK, "0").equals("1"))
 			{
 				// For each identifierForTheWork, add all matches to that identifierForTheWork to the list of results
 				for(String identifierForTheWork : matchMe.getIdentifierForTheWorks())
-					results.addAll(workService.getByIdentifierForTheWork(identifierForTheWork));
+				{
+					WorkList matchedWorks = workService.getByIdentifierForTheWork(identifierForTheWork);
+					for(Work matchedWork : matchedWorks)
+					{
+						logInfo("Merging works with OAI identifiers " + matchedWork.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an identifierForTheWork field with a value of " + identifierForTheWork);
+						results.add(matchedWork);
+					}
+				}
 			} // end if (we're configured to match on identifierForTheWork
-		} catch(IndexException ie) {
+		} 
+		catch(IndexException ie) 
+		{
 			log.error("Indexing exception occured.", ie);
 		}
 		return results;
@@ -495,11 +454,11 @@ public class AggregationService extends MetadataService
 		workCache.clear(); // reset the cached list of works
 		toIgnore.clear(); // reset the list of ignored works
 
-		// Loop over the works, checking for multiple works with the same identifierForTheWork element.
-		for(Work matchMe : works)
+		// If we should match works on the identifierForTheWork field
+		if(workMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_IDENTIFIER_FOR_THE_WORK, "0").equals("1"))
 		{
-			// If we should match works on the identifierForTheWork field
-			if(workMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_IDENTIFIER_FOR_THE_WORK, "0").equals("1"))
+			// Loop over the works, checking for multiple works with the same identifierForTheWork element.
+			for(Work matchMe : works)
 			{
 				// For each identifierForTheWork, add all matches to that identifierForTheWork to the list of results
 				for(String identifierForTheWork : matchMe.getIdentifierForTheWorks())
@@ -507,14 +466,17 @@ public class AggregationService extends MetadataService
 					if(workCache.containsKey(identifierForTheWork))
 					{
 						Work matched = workCache.get(identifierForTheWork);
+						
+						logInfo("Merging works with OAI identifiers " + matched.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an identifierForTheWork field with a value of " + identifierForTheWork);
+						
 						matched = mergeWorks(matched, matchMe);
 						toIgnore.add(matchMe);
 					} // end if (identifierForTheWork matches another work
 					else
 						workCache.put(identifierForTheWork, matchMe);
 				} // end loop over identifierForTheWork elements
-			} // end if (we're configured to match on identifierForTheWork)
-		} // end loop over works
+			} // end loop over works
+		} // end if (we're configured to match on identifierForTheWork)
 
 		// Remove all works which were merged into other works from the list we're returning
 		for(Work removeMe : toIgnore)
@@ -613,7 +575,8 @@ public class AggregationService extends MetadataService
 	{
 		List<Manifestation> results = new ArrayList<Manifestation>();
 
-		try {
+		try 
+		{
 			// For each recordID, add all matches to that recordID to the list of results
 			// if we're configured to match on that record ID type
 			for(String xcRecordId : matchMe.getXcRecordIds())
@@ -625,30 +588,67 @@ public class AggregationService extends MetadataService
 				if(type.equals("OCoLC"))
 				{
 					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_OCOLC, "0").equals("1"))
-						results.addAll(manifestationService.getByXcRecordId(xcRecordId));
+					{
+						ManifestationList matchedManifestiations = manifestationService.getByXcRecordId(xcRecordId);
+						for(Manifestation matchedManifestiation : matchedManifestiations)
+						{
+							logInfo("Merging manifestations with OAI identifiers " + matchedManifestiation.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an xcRecordId field with a value of " + xcRecordId);
+							results.add(matchedManifestiation);
+						}
+					}
 				} // end if (recordID is an OCoLC ID)
 				else if(type.equals("LCCN"))
 				{
 					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_LCCN, "0").equals("1"))
-						results.addAll(manifestationService.getByXcRecordId(xcRecordId));
+					{
+						ManifestationList matchedManifestiations = manifestationService.getByXcRecordId(xcRecordId);
+						for(Manifestation matchedManifestiation : matchedManifestiations)
+						{
+							logInfo("Merging manifestations with OAI identifiers " + matchedManifestiation.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an xcRecordId field with a value of " + xcRecordId);
+							results.add(matchedManifestiation);
+						}
+					}
 				} // end if (recordID is an LCCN ID)
 				else if(type.equals("ISBN"))
 				{
 					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_ISBN, "0").equals("1"))
-						results.addAll(manifestationService.getByXcRecordId(xcRecordId));
+					{
+						ManifestationList matchedManifestiations = manifestationService.getByXcRecordId(xcRecordId);
+						for(Manifestation matchedManifestiation : matchedManifestiations)
+						{
+							logInfo("Merging manifestations with OAI identifiers " + matchedManifestiation.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an xcRecordId field with a value of " + xcRecordId);
+							results.add(matchedManifestiation);
+						}
+					}
 				} // end if (recordID is an ISBN ID)
 				else if(type.equals("ISSN"))
 				{
 					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_ISSN, "0").equals("1"))
-						results.addAll(manifestationService.getByXcRecordId(xcRecordId));
+					{
+						ManifestationList matchedManifestiations = manifestationService.getByXcRecordId(xcRecordId);
+						for(Manifestation matchedManifestiation : matchedManifestiations)
+						{
+							logInfo("Merging manifestations with OAI identifiers " + matchedManifestiation.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an xcRecordId field with a value of " + xcRecordId);
+							results.add(matchedManifestiation);
+						}
+					}
 				} // end if (recordID is an ISSN ID)
 				else
 				{
 					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_RECORD_ID, "0").equals("1"))
-						results.addAll(manifestationService.getByXcRecordId(xcRecordId));
+					{
+						ManifestationList matchedManifestiations = manifestationService.getByXcRecordId(xcRecordId);
+						for(Manifestation matchedManifestiation : matchedManifestiations)
+						{
+							logInfo("Merging manifestations with OAI identifiers " + matchedManifestiation.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an xcRecordId field with a value of " + xcRecordId);
+							results.add(matchedManifestiation);
+						}
+					}
 				} // end if (recordID is an unrecognized ID)
 			} // end loop over recordID elements
-		} catch (IndexException ie) {
+		} 
+		catch (IndexException ie) 
+		{
 			log.error("Index exception occured.", ie);
 		}
 		return results;
@@ -744,12 +744,22 @@ public class AggregationService extends MetadataService
 	{
 		List<Holdings> results = new ArrayList<Holdings>();
 
-		try {
+		try 
+		{
 			// For each record ID a holdings could match on
 			// add all holdings that match on it
 			for(String xcRecordId : matchMe.getXcRecordIds())
-				results.addAll(holdingsService.getByManifestationHeld(xcRecordId));
-		} catch (IndexException ie) {
+			{
+				HoldingsList matchedHoldings = holdingsService.getByManifestationHeld(xcRecordId);
+				for(Holdings matchedHolding : matchedHoldings)
+				{
+					logInfo("Linking the manifestation with OAI identifier " + matchMe.getOaiIdentifier() + " with the holdings with OAI identifier " + matchedHolding.getOaiIdentifier() + " because the manifestation's xcRecordId field had the same value as the holdings's manifestationHeld field.  This value was " + xcRecordId);
+					results.add(matchedHolding);
+				}
+			}
+		} 
+		catch (IndexException ie) 
+		{
 			log.error("Index exception occured.", ie);
 		}
 		return results;
@@ -765,12 +775,22 @@ public class AggregationService extends MetadataService
 	private List<Manifestation> getManifestationsMatchingHoldings(Holdings matchMe)
 	{
 		List<Manifestation> results = new ArrayList<Manifestation>();
-		try {
+		try 
+		{
 			// For each manifestationHeld a manifestation could match on
 			// add all manifestations that match on it
 			for(String manifestationHeld : matchMe.getManifestationsHeld())
-				results.addAll(manifestationService.getByXcRecordId(manifestationHeld));
-		} catch (IndexException ie) {
+			{
+				ManifestationList matchedManifestiations = manifestationService.getByXcRecordId(manifestationHeld);
+				for(Manifestation matchedManifestiation : matchedManifestiations)
+				{
+					logInfo("Linking the manifestation with OAI identifier " + matchedManifestiation.getOaiIdentifier() + " and the holdings with OAI identifier " + matchMe.getOaiIdentifier() + " because the manifestation's xcRecordId field had the same value as the holdings's manifestationHeld field.  This value was " + manifestationHeld);
+					results.add(matchedManifestiation);
+				}
+			}
+		} 
+		catch (IndexException ie) 
+		{
 			log.error("Index exception occured.", ie);
 		}
 		return results;
@@ -787,14 +807,25 @@ public class AggregationService extends MetadataService
 	{
 		List<Item> results = new ArrayList<Item>();
 		
-		try {
+		try 
+		{
 			// For each record ID a holdings could match on
 			// add all holdings that match on it
 			for(String xcRecordId : matchMe.getXcRecordIds())
-				results.addAll(itemService.getByHoldingsExemplified(xcRecordId));
-		} catch (IndexException ie) {
+			{
+				ItemList matchedItems = itemService.getByHoldingsExemplified(xcRecordId);
+				for(Item matchedItem : matchedItems)
+				{
+					logInfo("Linking the holdings with OAI identifier " + matchMe.getOaiIdentifier() + " with the item with OAI identifier " + matchedItem.getOaiIdentifier() + " because the holdings's xcRecordId field had the same value as the item's holdingsExemplified field.  This value was " + xcRecordId);
+					results.add(matchedItem);
+				}
+			}
+		} 
+		catch (IndexException ie) 
+		{
 			log.error("Index exception occured.", ie);
 		}
+		
 		return results;
 	} // end method getItemsMatchingHoldings(Holdings)
 
@@ -809,14 +840,25 @@ public class AggregationService extends MetadataService
 	{
 		List<Holdings> results = new ArrayList<Holdings>();
 		
-		try {
+		try 
+		{
 			// For each record ID a holdings could match on
 			// add all holdings that match on it
 			for(String holdingsExemplified : matchMe.getHoldingsExemplified())
-				results.addAll(holdingsService.getByXcRecordId(holdingsExemplified));
-		} catch (IndexException ie) {
+			{
+				HoldingsList matchedHoldings = holdingsService.getByXcRecordId(holdingsExemplified);
+				for(Holdings matchedHolding : matchedHoldings)
+				{
+					logInfo("Linking the holdings with OAI identifier " + matchedHolding.getOaiIdentifier() + " and the item with OAI identifier " + matchMe.getOaiIdentifier() + " because the holdings's xcRecordId field had the same value as the item's holdingsExemplified field.  This value was " + holdingsExemplified);
+					results.add(matchedHolding);
+				}
+			}
+		} 
+		catch (IndexException ie) 
+		{
 			log.error("Index exception occured.", ie);
 		}
+		
 		return results;
 	} // end method getHoldingsMatchingItem(Item)
 

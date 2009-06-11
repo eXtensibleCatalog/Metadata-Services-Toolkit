@@ -69,11 +69,6 @@ public abstract class RecordService
 	protected static final String FIELD_INDEXED_OBJECT_TYPE = "indexed_object_type";
 
 	/**
-	 * The Lucene object term
-	 */
-	protected static final Term TERM_INDEXED_OBJECT_TYPE = new Term(FIELD_INDEXED_OBJECT_TYPE, "");
-
-	/**
 	 * The name of the record ID field
 	 */
 	protected final static String FIELD_RECORD_ID = "record_id";

@@ -706,21 +706,24 @@ public class Harvester implements ErrorHandler
 		} // end catch(Hexception)
 		catch (OAIErrorException oaie)
 		{
+			if(oaie.getOAIErrorCode().contains("noRecordsMatch"))
+				return;
+			
 			log.error("An OAIErrorExeption occurred while harvesting " + baseURL, oaie);
-
+	
 			// Log the error for the user and send them a report email
 			LogWriter.addError(schedule.getProvider().getLogFileName(), "The OAI provider returned the following error: " + oaie.getOAIErrorCode() + "," + oaie.getOAIErrorMessage());
 			errorCount++;
-
-			sendReportEmail("The OAI provider returned the following error: " + oaie.getOAIErrorCode() + "," + oaie.getOAIErrorMessage());
-
+	
+			sendReportEmail("The OAI provider returned the following error: " + oaie.getOAIErrorCode() + ", " + oaie.getOAIErrorMessage());
+	
 			// Update the status of the harvest schedule
 			try {
 				persistStatus(Constants.STATUS_SERVICE_ERROR);
 			} catch (DataException e) {
 				log.error("An OAIErrorExeption occurred while harvesting " , e);
 			}
-			
+				
 			// Throw the Exception so the calling code knows something went wrong
 			throw new OAIErrorException(oaie.getOAIErrorCode(), oaie.getOAIErrorMessage());
 		} // end catch(OAIErrorException)
@@ -743,8 +746,7 @@ public class Harvester implements ErrorHandler
 
 			
 			// Throw the error so the calling code knows something went wrong
-			throw
-            	new Hexception("Internal harvester error: " + e);
+			throw new Hexception("Internal harvester error: " + e);
 			
 		} // end catch(Throwable)
 		finally

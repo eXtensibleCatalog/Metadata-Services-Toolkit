@@ -29,14 +29,14 @@
   <!-- Used to specify an alternate directory to hold all index data
        other than the default ./data under the Solr home.
        If replication is in use, this should match the replication configuration. -->
-  <dataDir>${solr.data.dir:./solr/data}</dataDir>
+  <dataDir>C:\lucene_MST</dataDir>
 
 
   <indexDefaults>
    <!-- Values here affect all index writers and act as a default unless overridden. -->
     <useCompoundFile>false</useCompoundFile>
 
-    <mergeFactor>10</mergeFactor>
+    <mergeFactor>100</mergeFactor>
     <!--
      If both ramBufferSizeMB and maxBufferedDocs is set, then Lucene will flush based on whichever limit is hit first.
 
@@ -48,7 +48,7 @@
     If both ramBufferSizeMB and maxBufferedDocs is set, then Lucene will flush based on whichever limit is hit first.
 
     -->
-    <ramBufferSizeMB>32</ramBufferSizeMB>
+    <ramBufferSizeMB>1024</ramBufferSizeMB>
     <maxMergeDocs>2147483647</maxMergeDocs>
     <maxFieldLength>10000</maxFieldLength>
     <writeLockTimeout>1000</writeLockTimeout>
@@ -99,8 +99,8 @@
   <mainIndex>
     <!-- options specific to the main on-disk lucene index -->
     <useCompoundFile>false</useCompoundFile>
-    <ramBufferSizeMB>32</ramBufferSizeMB>
-    <mergeFactor>10</mergeFactor>
+    <ramBufferSizeMB>1024</ramBufferSizeMB>
+    <mergeFactor>100</mergeFactor>
     <!-- Deprecated -->
     <!--<maxBufferedDocs>1000</maxBufferedDocs>-->
     <maxMergeDocs>2147483647</maxMergeDocs>
