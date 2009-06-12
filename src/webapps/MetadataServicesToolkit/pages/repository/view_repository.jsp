@@ -359,6 +359,15 @@
 		      </div>
 	      </div>
 
+	      <div id="deleteProcessingDialog" class="hidden">
+	          <div class="hd">Deleting repository</div>
+		      <div class="bd">
+		      	
+				 <strong>Deleting the repository. Please wait.</strong>&nbsp;&nbsp;<img src="${pageContext.request.contextPath}/page-resources/img/loading_graphic_gray.gif">
+				 <div class="clear">&nbsp;</div>
+		      </div>
+	      </div>	      
+
        </div>
 </body>
 </html>

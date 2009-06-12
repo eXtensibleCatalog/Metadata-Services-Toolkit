@@ -98,8 +98,36 @@ YAHOO.xc.mst.repository.viewRepository = {
 		
 		// handle a Yes of deleting repository dialog
 		var handleYes = function() {
+		
+			 YAHOO.xc.mst.repository.viewRepository.deleteRepositoryOkDialog.hide();
+			 
+			// Instantiate the Dialog
+			// make it modal - 
+			// it should not start out as visible - it should not be shown until 
+			// new repository button is clicked.
+			YAHOO.xc.mst.repository.viewRepository.deleteProcessingDialog = new YAHOO.widget.Dialog('deleteProcessingDialog', 
+			{ width : "400px",
+				  visible : false, 
+				  modal : true,
+		
+				} );
+		
+		
+			// Show the dialog
+		       YAHOO.xc.mst.repository.viewRepository.deleteProcessingDialog.showDialog = function()
+		       {
+			   YAHOO.xc.mst.repository.viewRepository.deleteProcessingDialog.show();
+			   YAHOO.xc.mst.repository.viewRepository.deleteProcessingDialog.center();
+		       },
+	
+	
+			// Render the Dialog
+			YAHOO.xc.mst.repository.viewRepository.deleteProcessingDialog.render();
+	
+	
+			YAHOO.xc.mst.repository.viewRepository.deleteProcessingDialog.showDialog();		
 			document.deleteRepositoryRecords.submit();
-		    YAHOO.xc.mst.repository.viewRepository.deleteRepositoryOkDialog.hide();
+		   
 		};
 
 		// handle a No of deleting repository dialog
