@@ -11,8 +11,6 @@
 package xc.mst.manager.record;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;

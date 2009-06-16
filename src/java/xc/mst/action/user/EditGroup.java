@@ -18,10 +18,14 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultPermissionService;
+import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.PermissionService;
+import xc.mst.manager.user.UserService;
 
 /**
  * This action method is used to edit the details of a group of users
@@ -63,6 +67,9 @@ public class EditGroup extends ActionSupport
     /**Permission Service object with provides methods to interact with permissions */
     private PermissionService permissionService = new DefaultPermissionService();
 
+    /** User Service object */
+    private UserService userService = new DefaultUserService();
+
      /**
      * Overrides default implementation to view the edit group page.
       *
@@ -75,6 +82,14 @@ public class EditGroup extends ActionSupport
         {
             
             Group group = groupService.getGroupById(groupId);
+            if(group==null)
+            {
+                this.addFieldError("editGroupError", "Error Occurred while viewing edit group page. An email has been sent to the administrator.");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                errorType = "error";
+                return INPUT;
+            }
+            
             setTemporaryGroup(group);
             Iterator<Permission> tempIter = group.getPermissions().iterator();
             while(tempIter.hasNext())
@@ -86,10 +101,10 @@ public class EditGroup extends ActionSupport
             setTabNames(permissionService.getAllPermissions());
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.debug("Problem displaying group details",e);
-            this.addFieldError("editGroupError", "Problem displaying group details");
+            log.debug(dce.getMessage(),dce);
+            this.addFieldError("editGroupError", "Unable to connect to the database. Database configuration may be incorrect");
             errorType = "error";
             return INPUT;
         }
@@ -105,6 +120,13 @@ public class EditGroup extends ActionSupport
         try
         {
             Group group = groupService.getGroupById(getGroupId());
+            if(group==null)
+            {
+                this.addFieldError("editGroupError", "Error Occurred while editing group details. An email has been sent to the administrator.");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                errorType = "error";
+                return INPUT;
+            }
             group.setDescription(getGroupDescription());
             group.setName(getGroupName());
 
@@ -142,10 +164,18 @@ public class EditGroup extends ActionSupport
             groupService.updateGroup(group);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.debug("Group could not be edited properly",e);
-            this.addFieldError("editGroupError", "Group could not be edited properly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("editGroupError", "Unable to connect to the database. Database Configuration may be incorrect");
+            errorType = "error";
+            return INPUT;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("editGroupError", "Error Occurred while editing group. An email has been sent to the administrator.");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return INPUT;
         }

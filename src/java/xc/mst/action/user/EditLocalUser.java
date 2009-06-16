@@ -16,6 +16,8 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
@@ -85,10 +87,10 @@ public class EditLocalUser extends ActionSupport
             setTemporaryUser(user);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.debug("Error in displaying the user's details",e);
-            this.addFieldError("editLocalUserError", "Error in displaying the user's details");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("editLocalUserError","Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return ERROR;
         }
@@ -145,10 +147,18 @@ public class EditLocalUser extends ActionSupport
            
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.debug("User details not updated correctly",e);
-            this.addFieldError("editLocalUserError","User details not updated correctly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("editLocalUserError","Unable to connect to the database. Database Configuration may be incorrect");
+            errorType = "error";
+            return ERROR;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("editLocalUserError","Error in editing local user. An email has been sent to the administrator");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return ERROR;
         }

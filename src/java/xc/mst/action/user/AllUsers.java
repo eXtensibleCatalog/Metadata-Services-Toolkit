@@ -13,6 +13,7 @@ import java.util.*;
 import org.apache.log4j.Logger;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.user.UserDAO;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserService;
@@ -67,19 +68,20 @@ public class AllUsers extends ActionSupport
                 {
                     setUserList(userService.getAllUsersSorted(isAscendingOrder,UserDAO.COL_LAST_NAME));
                 }
-                setIsAscendingOrder(isAscendingOrder);
-                setColumnSorted(columnSorted);
+               
             }
             else
             {
-                this.addFieldError("generalLogError", "The specified column does not exist");
+                setUserList(userService.getAllUsersSorted(isAscendingOrder, UserDAO.COL_USERNAME));
             }
+            setIsAscendingOrder(isAscendingOrder);
+            setColumnSorted(columnSorted);
             
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Error in displaying the users List",e);
-            this.addFieldError("allUsersError", "Error in displaying the users List");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("allUsersError", "Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
         }
         return SUCCESS;

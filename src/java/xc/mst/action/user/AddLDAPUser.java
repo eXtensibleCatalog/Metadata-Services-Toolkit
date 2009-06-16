@@ -18,6 +18,8 @@ import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
@@ -90,10 +92,10 @@ public class AddLDAPUser extends ActionSupport
             setGroupList(groupService.getAllGroups());
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Add LDAP User Page could not be displayed correctly",e);
-            this.addFieldError("addLDAPUserError","Add LDAP User Page could not be displayed correctly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("addLDAPUserError","Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return SUCCESS;
         }
@@ -181,10 +183,18 @@ public class AddLDAPUser extends ActionSupport
 
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("User not Added correctly",e);
-            this.addFieldError("addLDAPUserError","User not Added correctly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("addLDAPUserError","Unable to connect to the database. Database Configuration may be incorrect");
+            errorType = "error";
+            return ERROR;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("addLDAPUserError","Error in adding LDAP user. An email has been sent to the administrator");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return ERROR;
         }

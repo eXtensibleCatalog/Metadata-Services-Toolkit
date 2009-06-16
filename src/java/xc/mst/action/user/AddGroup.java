@@ -16,10 +16,14 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultPermissionService;
+import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.PermissionService;
+import xc.mst.manager.user.UserService;
 
 
 /**
@@ -62,6 +66,9 @@ public class AddGroup extends ActionSupport
     /** Permission Service object */
     private PermissionService permissionService = new DefaultPermissionService();
 
+    /**User Service object */
+    private UserService userService = new DefaultUserService();
+
      /**
      * Overrides default implementation to view the add group page.
       *
@@ -75,10 +82,10 @@ public class AddGroup extends ActionSupport
             setTabNames(permissionService.getAllPermissions());
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("The Add group Page could not be displayed correctly",e);
-            this.addFieldError("addGroupError", "The Add group Page could not be displayed correctly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("addGroupError", "Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return INPUT;
         }
@@ -124,10 +131,18 @@ public class AddGroup extends ActionSupport
             groupService.insertGroup(group);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Group could not be added properly",e);
-            this.addFieldError("addGroupError", "Group could not be added properly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("addGroupError", "Unable to connect to the database. Database Configuration may be incorrect");
+            errorType = "error";
+            return INPUT;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("addGroupError", "Error Occurred while adding group. An email has been sent to the administrator.");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return INPUT;
         }

@@ -19,6 +19,8 @@ import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
@@ -90,10 +92,10 @@ public class EditLDAPUser extends ActionSupport
             setGroupList(groupService.getAllGroups());            
             return SUCCESS;
         }
-        catch(Exception e)
+         catch(DatabaseConfigException dce)
         {
-            log.debug("Edit LDAP User Page not displayed correctly",e);
-            this.addFieldError("addLDAPUserError","Page not displayed correctly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("editLDAPUserError","Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return SUCCESS;
         }
@@ -109,6 +111,13 @@ public class EditLDAPUser extends ActionSupport
         try
         {            
             User user = userService.getUserById(userId);
+            if(user==null)
+            {
+                this.addFieldError("editLDAPUserError","Error in editing LDAP user. An email has been sent to the administrator");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                errorType = "error";
+                return ERROR;
+            }
             user.setEmail(email);
             user.setFirstName(firstName);
             user.setLastName(lastName);
@@ -167,10 +176,18 @@ public class EditLDAPUser extends ActionSupport
 
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.debug("User details not edited correctly",e);
-            this.addFieldError("editLDAPUserError","User details not edited correctly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("editLDAPUserError","Unable to connect to the database. Database Configuration may be incorrect");
+            errorType = "error";
+            return ERROR;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("editLDAPUserError","Error in editing LDAP user. An email has been sent to the administrator");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return ERROR;
         }

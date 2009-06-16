@@ -12,15 +12,20 @@ package xc.mst.email;
 import java.util.Date;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 
+import javax.mail.internet.MimeMultipart;
 import org.apache.log4j.Logger;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
@@ -155,6 +160,61 @@ public class Emailer
         }
 	}
 
+    public boolean sendEmail(String to, String subject,String messageBody,String attachedFile)
+    {
+        try
+        {
+            Message msg;
+
+            Properties props = System.getProperties();
+            props.put("mail.host", config.getEmailServerAddress());
+            if(config.getPassword() != null)
+            {
+                props.put("mail.smtp.auth", "true");
+
+                Authenticator auth = new SMTPAuthenticator(config.getFromAddress().substring(0, config.getFromAddress().indexOf('@')), config.getPassword());
+                Session session = Session.getDefaultInstance(props, auth);
+
+                msg = new MimeMessage(session);
+            }
+            else
+                msg = new MimeMessage(Session.getInstance(props, null));
+
+            msg.setSubject(subject);
+            msg.setSentDate(new Date());
+
+            msg.setFrom(InternetAddress.parse(config.getFromAddress(), false)[0]);
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
+
+            MimeBodyPart mbp1 = new MimeBodyPart();
+            mbp1.setText(messageBody);
+
+            // create the second message part
+            MimeBodyPart mbp2 = new MimeBodyPart();
+
+            // attach the file to the message
+            FileDataSource fds = new FileDataSource(attachedFile);
+            mbp2.setDataHandler(new DataHandler(fds));
+            mbp2.setFileName(fds.getName());
+
+            // create the Multipart and add its parts to it
+            Multipart mp = new MimeMultipart();
+            mp.addBodyPart(mbp1);
+            mp.addBodyPart(mbp2);
+
+            // add the Multipart to the message
+            msg.setContent(mp);
+            Transport.send(msg);
+
+	        return true;
+        }
+        catch(MessagingException e)
+        {
+        	log.error("An MessagingException occurred while trying to send the email.", e);         
+        	return false;
+        }
+       
+    }
 	/**
 	 * SimpleAuthenticator is used to do simple authentication
 	 * when the SMTP server requires it.

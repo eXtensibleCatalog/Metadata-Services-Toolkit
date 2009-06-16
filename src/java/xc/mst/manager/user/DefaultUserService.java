@@ -435,16 +435,11 @@ public class DefaultUserService implements UserService{
      * @param message The message which describes where the error took place.
      * @throws DatabaseConfigException
      */
-    public boolean sendEmailErrorReport(String message){
+    public boolean sendEmailErrorReport(String message,String filename){
 
         try
         {
             Emailer emailer = new Emailer();
-
-            // Email the admin to assign permissions for new user
-            StringBuffer adminMessageBody = new StringBuffer();
-            adminMessageBody.append("Error experienced when running the MST GUI ");
-            adminMessageBody.append("\nError message : " + message);
 
             String adminSubject = "MST GUI error";
 
@@ -457,7 +452,7 @@ public class DefaultUserService implements UserService{
             }
 
             for(User admin:admins) {
-                emailer.sendEmail(admin.getEmail(), adminSubject, adminMessageBody.toString());
+                emailer.sendEmail(admin.getEmail(), adminSubject, message.toString(),filename);
             }
 
             return true;
@@ -467,6 +462,7 @@ public class DefaultUserService implements UserService{
             log.error(dce.getMessage(),dce);
             return false;
         }
+       
     }
 
     /**

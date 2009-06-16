@@ -26,6 +26,7 @@ import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
 
 import com.opensymphony.xwork2.ActionSupport;
+import xc.mst.dao.DataException;
 
 /**
  * This action method is used to delete a user from the system
@@ -87,10 +88,18 @@ public class DeleteUser extends ActionSupport
             }
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.debug("The user was not deleted",e);
-            this.addFieldError("deleteUserError", "The user was not deleted");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("allGroupsError", "Unable to connect to the database. Database configuration may be incorrect.");
+            errorType = "error";
+            return INPUT;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("allGroupsError", "Error occurred while deleting user. An email has been sent to the administrator.");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return INPUT;
         }

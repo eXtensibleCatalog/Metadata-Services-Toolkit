@@ -73,7 +73,7 @@ public class DeleteService extends ActionSupport
             long numberOfRecordsHarvested = recordService.getNumberOfRecordsByServiceId(serviceId);
             // Delete service only if it is not harvested.
             if (numberOfRecordsHarvested > 0) {
-                message = "Deleting the " + service.getName() + " will result in deletion of " + numberOfRecordsHarvested + " records harvested by it and the processing rules that uses this service.";
+                message = "Deleting the " + service.getName() + " will result in deletion of " + numberOfRecordsHarvested + " records created by the service and the processing rules that deliver records to and from this service.";
                 deleted = false;
             } else {
     	    	serviceService.deleteService(service);

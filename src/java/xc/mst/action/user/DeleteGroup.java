@@ -26,6 +26,7 @@ import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.UserService;
 
 import com.opensymphony.xwork2.ActionSupport;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * This action method deletes a group of users
@@ -102,10 +103,18 @@ public class DeleteGroup extends ActionSupport
 
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Problem deleting Group",e);
-            this.addFieldError("allGroupsError", "Problem deleting Group");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("allGroupsError", "Unable to connect to the database. Database configuration may be incorrect.");
+            errorType = "error";
+            return INPUT;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("allGroupsError", "Error occurred while deleting group. An email has been sent to the administrator.");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return INPUT;
         }

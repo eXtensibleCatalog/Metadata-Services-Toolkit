@@ -9,8 +9,6 @@
 
 package xc.mst.action.services;
 
-import xc.mst.action.*;
-import xc.mst.action.processingDirective.*;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.File;
 import java.io.FileFilter;
@@ -19,8 +17,11 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  * Edits the details of a service
@@ -31,6 +32,9 @@ public class EditService extends ActionSupport
 {
     /** Service object to interact with the services in the MST */
     private ServicesService servicesService = new DefaultServicesService();
+
+    /** User Service Object */
+    private UserService userService = new DefaultUserService();
 
     /** Denotes the type of error */
     private String errorType;
@@ -61,6 +65,11 @@ public class EditService extends ActionSupport
         try
         {
             temporaryService = servicesService.getServiceById(serviceId);
+            if(temporaryService==null)
+            {
+                this.addFieldError("viewEditServiceError", "Error loading edit-service page. An email has been sent to the administrator.");
+                return INPUT;
+            }
             setTemporaryService(temporaryService);
             File dir = new File("serviceConfig");
             
@@ -74,10 +83,11 @@ public class EditService extends ActionSupport
             setServiceFiles(serviceFiles);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("The edit-service page could not be loaded correctly",e);
-            this.addFieldError("viewEditServiceError", "The edit-service page could not be loaded correctly");
+            log.error(dce.getMessage(), dce);
+            errorType = "error";
+            this.addFieldError("viewEditServiceError", "Unable to connect to the database. Database configuration may be incorrect");
             return INPUT;
         }
     }
@@ -91,16 +101,26 @@ public class EditService extends ActionSupport
     {
         try
         {
+            Service tempService = servicesService.getServiceById(serviceId);
+            if(tempService==null)
+            {
+                this.addFieldError("EditServiceError", "Error occurred while editing service. An email has been sent to the administrator");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                return INPUT;
+            }
             String location = "serviceConfig/" + getSelectedLocation();
             File file = new File(location);
-            servicesService.updateService(file, servicesService.getServiceById(serviceId));
+            servicesService.updateService(file,tempService);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Error editing the service",e);
+            log.error(dce.getMessage(),dce);
             errorType = "error";
-            this.addFieldError("editServiceError",e.getMessage());
+            this.addFieldError("editServiceError","Unable to connect to the database. Database configuration may be incorrect");
+        }
+        finally
+        {
             File dir = new File("serviceConfig");
             FileFilter fileFilter =  new XCCGFileFilter();
 

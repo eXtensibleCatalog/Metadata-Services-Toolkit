@@ -11,12 +11,12 @@ package xc.mst.action.services;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import java.io.IOException;
 import java.util.List;
 import org.apache.log4j.Logger;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
@@ -38,6 +38,9 @@ public class ListServices extends ActionSupport
     
     /** The list of services that are part of the MST */
     private List<Service> ServicesList;
+
+    /** error type */
+    private String errorType;
 
     /** Base URL of the system **/
     private String baseURL;
@@ -68,22 +71,30 @@ public class ListServices extends ActionSupport
                 {
                     ServicesList = servService.getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_PORT);
                 }
-                setServices(ServicesList);
-                setIsAscendingOrder(isAscendingOrder);
-                setColumnSorted(columnSorted);
-                return SUCCESS;
+               
             }
             else
             {
-                this.addFieldError("listServicesError", "The specified column does not exist");
-                return INPUT;
+               ServicesList = servService.getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_SERVICE_NAME);
             }
-           
-           
+            setServices(ServicesList);
+            setIsAscendingOrder(isAscendingOrder);
+            setColumnSorted(columnSorted);
+            return SUCCESS;
+                      
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("The list of services could not be displayed",e);
+            errorType = "error";
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("listServicesError", "Unable to connect to the database. Database configuration may be incorrect");
+            return INPUT;
+        }
+        catch(IOException ie)
+        {
+            errorType = "error";
+            log.error(ie.getMessage(),ie);
+            this.addFieldError("listServicesError", "Unable to retrieve local IP address");
             return INPUT;
         }
     }
@@ -167,5 +178,23 @@ public class ListServices extends ActionSupport
     {
         return this.baseURL;
     }
+
+    /**
+     * Returns error type
+      *
+     * @return error type
+     */
+	public String getErrorType() {
+		return errorType;
+	}
+
+    /**
+     * Sets error type
+     *
+     * @param errorType error type
+     */
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
     
 }

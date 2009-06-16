@@ -9,15 +9,16 @@
 
 package xc.mst.action.services;
 
-import xc.mst.action.*;
-import xc.mst.action.processingDirective.*;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.manager.processingDirective.ConfigFileException;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 
@@ -91,8 +92,7 @@ public class AddService extends ActionSupport
     @Override
     public String execute()
     {
-        try
-        {
+       
             File dir = new File("serviceConfig");
             FileFilter fileFilter =  new XCCGFileFilter();
 
@@ -103,13 +103,7 @@ public class AddService extends ActionSupport
             }
             setServiceFiles(serviceFiles);
             return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("The Add Service page could not be loaded correctly",e);
-            this.addFieldError("viewAddServiceError", "The Add Service page could not be loaded correctly");
-            return INPUT;
-        }
+       
     }
 
     /**
@@ -126,11 +120,26 @@ public class AddService extends ActionSupport
             servicesService.addNewService(file);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DataException de)
         {
-            log.error("Error in adding a new Service",e);
+            log.error(de.getMessage(),de);
             errorType = "error";
-            this.addFieldError("addServiceError",e.getMessage());
+            this.addFieldError("addServiceError","Error occurred while adding service");
+        }
+        catch(IOException ie)
+        {
+            log.error(ie.getMessage(),ie);
+            errorType = "error";
+            this.addFieldError("addServiceError","Error occurred while adding service");
+        }
+        catch(ConfigFileException cfe)
+        {
+            log.error(cfe.getMessage(),cfe);
+            errorType = "error";
+            this.addFieldError("addServiceError","Error occurred while adding service");
+        }
+        finally
+        {
             File dir = new File("serviceConfig");
             FileFilter fileFilter =  new XCCGFileFilter();
 

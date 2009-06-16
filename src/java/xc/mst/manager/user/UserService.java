@@ -26,6 +26,9 @@ import xc.mst.dao.DatabaseConfigException;
  */
 public interface UserService {
 
+    public static final String MESSAGE = "An error has occurred with the Metadata Services Toolkit.  Please submit this error here: http://code.google.com/p/xcmetadataservicestoolkit/issues/entry \n Please include the following information:\n Template: Defect report from user \n Summary: <error summary> \n Description: <copy paste the relevant error message from the log file here> \n";
+
+
 	/**
 	 * Get User having the specified user id
 	 *
@@ -104,7 +107,7 @@ public interface UserService {
      * @param comments message error message which describes where the error took place.
      * @throws DatabaseConfigException
      */
-    public boolean sendEmailErrorReport(String message);
+    public boolean sendEmailErrorReport(String message,String filename);
 
     /**
      * Get user having specified email

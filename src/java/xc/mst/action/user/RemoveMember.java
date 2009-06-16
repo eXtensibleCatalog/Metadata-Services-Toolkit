@@ -13,6 +13,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.GroupService;
@@ -34,6 +36,15 @@ public class RemoveMember extends ActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+    /** User Service Object */
+    private UserService userService = new DefaultUserService();
+
+    /** Group Service Object */
+    private GroupService groupService = new DefaultGroupService();
+
+    /**Error Type */
+    private String errorType;
+
      /**
      * Overrides default implementation to remove a user-group association.
       * 
@@ -44,19 +55,27 @@ public class RemoveMember extends ActionSupport
     {
         try
         {
-            UserService userService = new DefaultUserService();
-            GroupService groupService = new DefaultGroupService();
+            
             User user = userService.getUserById(userId);
             user.removeGroup(groupService.getGroupById(groupId));
             userService.updateUser(user);
             setGroupId(groupId);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.debug("There was a problem removing the member from the group",e);
-            this.addFieldError("removeMemberError", "There was a problem removing the member from the group");
-            return INPUT;
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("RemoveMemberError","Unable to connect to the database. Database Configuration may be incorrect");
+            errorType = "error";
+            return ERROR;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("removeMemberError","Error in removing a member from a group. An email has been sent to the administrator");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            errorType = "error";
+            return ERROR;
         }
     }
 
@@ -99,4 +118,22 @@ public class RemoveMember extends ActionSupport
     {
         return this.userId;
     }
+
+    /**
+     * Returns error type
+      *
+     * @return error type
+     */
+	public String getErrorType() {
+		return errorType;
+	}
+
+    /**
+     * Sets error type
+     *
+     * @param errorType error type
+     */
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
 }

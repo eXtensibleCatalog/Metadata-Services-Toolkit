@@ -18,7 +18,6 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.user.Group;
 import xc.mst.constants.Constants;
-import xc.mst.dao.DataException;
 import xc.mst.dao.user.GroupDAO;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.DefaultUserService;
@@ -26,6 +25,7 @@ import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.UserService;
 
 import com.opensymphony.xwork2.ActionSupport;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * This action method diplays all groups
@@ -98,10 +98,10 @@ public class AllGroups extends ActionSupport
                 return SUCCESS;
             }
         }
-        catch(DataException e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Groups not displayed correctly",e);
-            this.addFieldError("allGroupsError", "Groups not displayed correctly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("allGroupsError", "Unable to connect to the database. Database Configuration may be incorrect.");
             errorType = "error";
             return SUCCESS;
         }

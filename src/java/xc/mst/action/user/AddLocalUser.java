@@ -23,6 +23,8 @@ import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.UserService;
 import com.opensymphony.xwork2.ActionSupport;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * This action method is used to add a new local user
@@ -86,10 +88,10 @@ public class AddLocalUser extends ActionSupport
             setGroupList(groupService.getAllGroups());
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Groups List not displayed correctly",e);
-            this.addFieldError("addLocalUserError","Groups List not displayed correctly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("addLocalUserError","Unable to connect to the database. Database Configuration is incorrect.");
             errorType = "error";
             return ERROR;
         }
@@ -152,10 +154,18 @@ public class AddLocalUser extends ActionSupport
             userService.insertUser(user);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("User not Added correctly",e);
-            this.addFieldError("addLocalUserError","User not Added correctly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("addLDAPUserError","Unable to connect to the database. Database Configuration may be incorrect");
+            errorType = "error";
+            return ERROR;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("addLDAPUserError","Error in adding local user. An email has been sent to the administrator");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return ERROR;
         }
