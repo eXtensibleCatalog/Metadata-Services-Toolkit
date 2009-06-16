@@ -80,11 +80,11 @@ cancel : function()
                 {
                     if(sourceFlag==false)
                         {
-                            createErrorDiv("error","Atleast one source has to be selected");
+                            createErrorDiv("error","Select a source for records to be processed.");
                         }
                     else
                         {
-                            createErrorDiv("error","Atleast one service has to be selected");
+                            createErrorDiv("error","Select a service that will process the records.");
                         }
                 }
      }

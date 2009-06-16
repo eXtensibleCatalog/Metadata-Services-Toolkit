@@ -13,9 +13,13 @@ package xc.mst.action.processingDirective;
 
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
+import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
 import xc.mst.manager.processingDirective.ProcessingDirectiveService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  * This action method deletes a Processing Directive
@@ -31,7 +35,13 @@ public class DeleteProcessingDirective extends ActionSupport
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
     
 	/** Error type */
-	private String errorType; 
+	private String errorType;
+
+    /** Processing Directive Service */
+    private ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();
+
+    /** User Service object */
+    private UserService userService = new DefaultUserService();
 
     /**
      * Sets the Processing directive ID
@@ -64,11 +74,18 @@ public class DeleteProcessingDirective extends ActionSupport
     {
         try
         {
-            ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();
-            processingDirectiveService.deleteProcessingDirective(processingDirectiveService.getByProcessingDirectiveId(processingDirectiveId));
+            ProcessingDirective tempProcDir = processingDirectiveService.getByProcessingDirectiveId(processingDirectiveId);
+            if(tempProcDir==null)
+            {
+                this.addFieldError("DeleteDirectiveError", "Error Deleting Processing Rule. An email has been sent to the administrator.");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                errorType = "error";
+                return SUCCESS;
+            }
+            processingDirectiveService.deleteProcessingDirective(tempProcDir);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException e)
         {
             log.error("Deletion of processing rule Unsuccessful",e);
             this.addFieldError("listServicesError", "Deletion of processing rule Unsuccessful");

@@ -84,7 +84,7 @@ public class Login extends ActionSupport implements ServletRequestAware {
      * @return {@link #SUCCESS}
      */
     @Override
-	public String execute() throws DataException {
+	public String execute() throws DataException{
 
     	try {
     		servers = serverService.getAll();

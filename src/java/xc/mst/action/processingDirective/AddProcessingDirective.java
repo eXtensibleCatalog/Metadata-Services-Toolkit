@@ -19,6 +19,7 @@ import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.*;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.repository.DefaultProviderService;
@@ -94,10 +95,10 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
             }
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Add Processing Directive Page cannot be displayed",e);
-            this.addFieldError("addProcessingDirectiveError", "Add Processing Directive Page cannot be displayed");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("addProcessingDirectiveError", "Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return INPUT;
         }
@@ -137,10 +138,10 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
             request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Error in Adding a Source",e);
-            this.addFieldError("addProcessingDirectiveError", "Error in Adding a Source");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("addProcessingDirectiveError", "Unable to connect to the database. Database configuration may be incorrect.");
             errorType = "error";
             return INPUT;
         }

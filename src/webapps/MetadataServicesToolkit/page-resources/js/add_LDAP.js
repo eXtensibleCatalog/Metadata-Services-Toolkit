@@ -62,7 +62,7 @@ YAHOO.xc.mst.configuration.ldap = {
                     }
                 else if(userNameAttribute=='')
                     {
-                        createErrorDiv("error","UserName Attribute is a required field");
+                        createErrorDiv("error","Username Attribute is a required field");
                     }
                 else if(startLocation=='')
                     {

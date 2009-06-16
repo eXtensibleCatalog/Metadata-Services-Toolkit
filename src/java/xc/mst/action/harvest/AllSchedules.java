@@ -91,8 +91,7 @@ public class AllSchedules extends ActionSupport
             }
             else
             {
-                 this.addFieldError("allSchedulesError", "The column "+columnSorted+" cannot be matched");
-                 schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, scheduleDao.COL_SCHEDULE_NAME);
+                 schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_SCHEDULE_NAME);
             }
             return SUCCESS;
         }

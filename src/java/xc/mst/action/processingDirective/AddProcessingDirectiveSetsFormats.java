@@ -23,6 +23,8 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.*;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ProcessingDirectiveService;
@@ -33,6 +35,8 @@ import xc.mst.manager.repository.DefaultSetService;
 import xc.mst.manager.repository.FormatService;
 import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.repository.SetService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  *  This action method is the first step in adding a new processing directive
@@ -49,6 +53,9 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
 
     /** creates service object for providers */
     private ProviderService providerService = new DefaultProviderService();
+
+    /** User Service object */
+    private UserService userService = new DefaultUserService();
 
     /** The full list of all sets in the system */
     private List<Set> setList;
@@ -97,10 +104,16 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
     @Override
     public String execute()
     {
-        try
-        {
+       
             ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
             String sourceType = (String)request.getSession().getAttribute("sourceType");
+            if((tempProcDir==null)||(sourceType==null))
+            {
+                this.addFieldError("addProcessingDirectivesSetsFormatsError", "Error in loading Step 2 of Add Processing Rules page. An email has been sent to the administrator.");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                errorType = "error";
+                return INPUT;
+            }
             List<Format> tempFormatList = new ArrayList<Format>();
             List<Set> tempSetList = null;
             if(sourceType.equalsIgnoreCase("provider"))
@@ -130,14 +143,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
 
             setTemporaryProcessingDirective(tempProcDir);
             return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("Error in loading Step 2 of Add Processing Rules page",e);
-            this.addFieldError("addProcessingDirectivesSetsFormatsError", "Error in loading Step 2 of Add Processing Rules page");
-            errorType = "error";
-            return INPUT;
-        }
+        
     }
 
 
@@ -153,6 +159,14 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
         {
             ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
             String sourceType = (String)request.getSession().getAttribute("sourceType");
+
+            if((tempProcDir==null)||(sourceType==null))
+            {
+                this.addFieldError("addProcessingDirectivesSetsFormatsError", "Error occurred when adding Processing Directive. An email has been sent to the administrator.");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                errorType = "error";
+                return INPUT;
+            }
 
             if(maintainSourceSets==null)
             {
@@ -252,7 +266,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                     }
                     else //output set with the same setSpec already exists
                     {
-                         this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Output Source Set with set specification "+setExists.getSetSpec()+" already exists");
+                         this.addFieldError("listProcessingDirectivesError", "Processing rule could not be created. An output source set with set specification "+setExists.getSetSpec()+" already exists");
                          errorType = "error";
                          setFormatList(tempProcDir.getSourceProvider().getFormats());
                          setSetList(tempProcDir.getSourceProvider().getSets());
@@ -263,7 +277,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                 }
                 else  //processing directive with the same provider/service combination exists
                 {
-                     this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Cannot insert Processing Directive with same Source:'"+tempProcDir.getSourceProvider().getName()+"' and Service:'"+tempProcDir.getService().getName()+"' combination");
+                     this.addFieldError("listProcessingDirectivesError", "Processing Rule could not be created. Cannot create another processing rule with same source:'"+tempProcDir.getSourceProvider().getName()+"' and service:'"+tempProcDir.getService().getName()+"' combination");
                      errorType = "error";
                      setFormatList(tempProcDir.getSourceProvider().getFormats());
                      setSetList(tempProcDir.getSourceProvider().getSets());
@@ -322,7 +336,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                     }
                     else //output set already exists
                     {
-                         this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Output Source Set with set specification "+setExists.getSetSpec()+" already exists");
+                         this.addFieldError("listProcessingDirectivesError", "Processing rule could not be created. An output source set with set specification "+setExists.getSetSpec()+" already exists");
                          errorType = "error";
                          setFormatList(tempProcDir.getSourceService().getOutputFormats());
                          setSetList(setService.getAllSets());
@@ -333,7 +347,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                 }
                 else //processing directive with same service/service combination already exists
                 {
-                     this.addFieldError("listProcessingDirectivesError", "Insertion unsuccessful : Cannot insert Processing Directive with same Source:'"+tempProcDir.getSourceService().getName()+"' and Service:'"+tempProcDir.getService().getName()+"' combination");
+                     this.addFieldError("listProcessingDirectivesError", "Processing rule could not be created. Cannot create processing rule with same source:'"+tempProcDir.getSourceService().getName()+"' and service:'"+tempProcDir.getService().getName()+"' combination");
                      errorType = "error";
                      setFormatList(tempProcDir.getSourceService().getOutputFormats());
                      setSetList(setService.getAllSets());
@@ -351,10 +365,18 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
             request.getSession().setAttribute("temporaryProcessingDirective",null);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Insertion of Processing Rule unsuccessful",e);
-            this.addFieldError("listProcessingDirectivesError", "Insertion of Processing Rule unsuccessful");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("listProcessingDirectivesError", "Unable to connect to the database. Database configuration may be incorrect");
+            errorType = "error";
+            return ERROR;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("listProcessingDirectivesError", "Error occurred while adding Processing Rule. An email has been sent to the administrator.");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return ERROR;
         }
@@ -371,6 +393,13 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
         {
             ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
 
+            if(tempProcDir==null)
+            {
+                this.addFieldError("listProcessingDirectivesError", "Error occurred while returning to step 1 of Processing Rule. An email has been sent to the administrator.");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                errorType = "error";
+                return INPUT;
+            }
             if(maintainSourceSets==null)
                 {
 
@@ -434,9 +463,11 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                 request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
                 return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("There was a problem in redirecting to Add Processing Rule(Step 1)",e);
+            log.error(dce.getMessage(),dce);
+            errorType = "error";
+            this.addFieldError("addPDGoBackError", "Unable to connect to the Database. Database configuration may be incorrect");
             return INPUT;
         }
     }
@@ -448,16 +479,10 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
      */
     public String addProcessingDirectiveCancel()
     {
-        try
-        {
+       
             request.getSession().setAttribute("temporaryProcessingDirective",null);
             return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("There was a problem redirecting to 'All Processing Rules' page",e);
-            return INPUT;
-        }
+        
     }
 
         /**

@@ -19,12 +19,15 @@ import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.*;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ProcessingDirectiveService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  * The first step in editing a processing directive
@@ -65,6 +68,9 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
 
     /** creates a service object for providers */
     private ProviderService provService = new DefaultProviderService();
+
+    /** User service object */
+    private UserService userService = new DefaultUserService();
 
     /** creates a service object for processing directives */
     private ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
@@ -239,6 +245,13 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
             {
                 temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
             }
+            if(temporaryProcessingDirective==null)
+            {
+                this.addFieldError("editProcessingDirectiveEror", "Error occurred while displaying edit processing directives page. An email has been sent to the administrator. ");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                errorType = "error";
+                return INPUT;
+            }
             Service tempService = temporaryProcessingDirective.getSourceService();
 
             if(tempService!=null) //source is a service
@@ -257,10 +270,10 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
             setTemporaryProcessingDirective(temporaryProcessingDirective);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Problem in displaying the Specified Processing Directive",e);
-            this.addFieldError("editProcessingDirectiveEror", "Problem in displaying the Specified Processing Directive");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("editProcessingDirectiveEror", "Unbale to connect to the database. Database Configuration may be incorrect.");
             errorType = "error";
             return INPUT;
         }
@@ -280,6 +293,13 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
             if(temporaryProcessingDirective==null)
             {
                  temporaryProcessingDirective = PDService.getByProcessingDirectiveId(processingDirectiveId);
+            }
+            if(temporaryProcessingDirective==null)
+            {
+                this.addFieldError("editProcessingDirectiveEror", "Error occurred while editing processing directive. An email has been sent to the administrator. ");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                errorType = "error";
+                return INPUT;
             }
             Provider tempProvider = provService.getProviderByName(source);
             Service tempService = servService.getServiceByName(source);
@@ -304,10 +324,10 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
             request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Error in Editing the Source",e);
-            this.addFieldError("editProcessingDirectiveError", "Error in Editing the Source");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("editProcessingDirectiveError", "Unable to connect to the database. Database Configuration may be incorrect.");
             errorType = "error";
             return INPUT;
         }

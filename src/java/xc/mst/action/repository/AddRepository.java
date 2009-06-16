@@ -14,6 +14,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import xc.mst.action.UserAware;
 import xc.mst.bo.provider.Provider;
@@ -122,15 +123,15 @@ public class AddRepository extends ActionSupport implements UserAware
             log.error(e.getMessage(),e);
             this.addFieldError("addRepositoryError", "Error occurred while adding repository. An email has been sent to the administrator");
             errorType = "error";
-            userService.sendEmailErrorReport("Error occurred while adding repository");
-            return SUCCESS;
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            return INPUT;
         }
         catch(Hexception e)
         {
             log.error(e.getMessage(),e);
             this.addFieldError("addRepositoryError", "Unable to validate the repository");
             errorType = "error";
-            return SUCCESS;
+            return INPUT;
         }
 
     }

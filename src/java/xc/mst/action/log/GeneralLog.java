@@ -15,6 +15,7 @@ import java.util.*;
 import org.apache.log4j.Logger;
 import xc.mst.bo.log.Log;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.manager.logs.DefaultLogService;
 import xc.mst.manager.logs.LogService;
@@ -76,22 +77,22 @@ public class GeneralLog extends ActionSupport
                 {
                     fullList = logService.getSorted(isAscendingOrder, LogDAO.COL_LAST_LOG_RESET);
                 }
-                setLogList(fullList);
-                setIsAscendingOrder(isAscendingOrder);
-                setColumnSorted(columnSorted);
-                return SUCCESS;
+               
             }
             else
             {
-                this.addFieldError("generalLogError", "The specified column does not exist");
-                return INPUT;
+               fullList  = logService.getSorted(isAscendingOrder, LogDAO.COL_LOG_FILE_NAME);
             }
+            setLogList(fullList);
+            setIsAscendingOrder(isAscendingOrder);
+            setColumnSorted(columnSorted);
+            return SUCCESS;
            
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("There was a problem loading the general logs page",e);
-            this.addFieldError("generalLogError", "There was a problem loading the general logs page");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("generalLogError", "Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return SUCCESS;
         }

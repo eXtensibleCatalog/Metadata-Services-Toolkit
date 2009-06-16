@@ -11,6 +11,7 @@
 package xc.mst.action.log;
 
 import com.opensymphony.xwork2.ActionSupport;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Iterator;
@@ -18,8 +19,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  * Resets all the 'Harvest-In log' files relating to a Provider
@@ -30,6 +35,9 @@ public class HarvestInReset extends ActionSupport
 {
     /** Creates service object for providers */
     private ProviderService providerService = new DefaultProviderService();
+
+    /** User Service Object*/
+    private UserService userService = new DefaultUserService();
 
     /**The name of the log file which needs to be reset **/
     private String harvestInLogFileName;
@@ -54,6 +62,13 @@ public class HarvestInReset extends ActionSupport
         try
         {
             Provider provider = providerService.getProviderById(providerId);
+            if(provider==null)
+            {
+                this.addFieldError("HarvestInLogReset", "Error Occurred while resetting harvest-in log. An email has been sent to the administrator.");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                errorType = "error";
+                return SUCCESS;
+            }
             provider.setErrors(0);
             provider.setWarnings(0);
             provider.setRecordsAdded(0);
@@ -66,10 +81,26 @@ public class HarvestInReset extends ActionSupport
 
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("There was an error resetting the Harvest-In log files",e);
-            this.addFieldError("harvestInResetError", "There was an error resetting the Harvest-In log files");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("HarvestInLogReset", "Unable to connect to the database. Database Configuration may be incorrect");
+            errorType = "error";
+            return SUCCESS;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("HarvestInLogReset", "Error Occurred while resetting harvest-in log. An email has been sent to the administrator.");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            errorType = "error";
+            return SUCCESS;
+        }
+        catch(FileNotFoundException fe)
+        {
+            log.error(fe.getMessage(),fe);
+            this.addFieldError("HarvestInLogReset", "Error Occurred while resetting harvest-in log. An email has been sent to the administrator.");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return SUCCESS;
         }
@@ -103,10 +134,26 @@ public class HarvestInReset extends ActionSupport
             }
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("There was an error resetting the Harvest-In log files",e);
-            this.addFieldError("harvestInResetError", "There was an error resetting the Harvest-In log files");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("HarvestInLogReset", "Unable to connect to the database. Database Configuration may be incorrect");
+            errorType = "error";
+            return SUCCESS;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("HarvestInLogReset", "Error Occurred while resetting all harvest-in logs. An email has been sent to the administrator.");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            errorType = "error";
+            return SUCCESS;
+        }
+        catch(FileNotFoundException fe)
+        {
+            log.error(fe.getMessage(),fe);
+            this.addFieldError("HarvestInLogReset", "Error Occurred while resetting all harvest-in logs. An email has been sent to the administrator.");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return SUCCESS;
         }

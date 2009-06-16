@@ -12,7 +12,9 @@ package xc.mst.action.repository;
 
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.Date;
+import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
+import org.apache.log4j.RollingFileAppender;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
@@ -60,12 +62,13 @@ public class EditRepository extends ActionSupport
     {
         try
         {
-
+            System.out.println("Inside view edit repo");
             Provider provider = new DefaultProviderService().getProviderById(repositoryId);
+            System.out.println("After the provider is obtained and before the null check");
             if(provider==null)
-            {
+            {                
                 errorType = "error";
-                userService.sendEmailErrorReport("Error occurred while displaying the edit repositories page");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
                 this.addFieldError("viewRepositoryError","There was a problem displaying the edit Repository page. An email has been sent to the administrator.");
                 return INPUT;
             }
@@ -78,16 +81,17 @@ public class EditRepository extends ActionSupport
             log.error(dce.getMessage(),dce);
             errorType = "error";
             this.addFieldError("dbConfigError","Unable to access the database. There may be a problem with database configuration.");
-            return INPUT;
+            return SUCCESS;
         }
         catch(DataException e)
         {
             log.error(e.getMessage(),e);
             errorType = "error";
-            userService.sendEmailErrorReport("Error occurred while displaying the edit repositories page");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             this.addFieldError("dbConfigError","Error occurred while editing repository. An email has been sent to the administrator");
-            return INPUT;
+            return SUCCESS;
         }
+       
 
     }
 
@@ -105,7 +109,7 @@ public class EditRepository extends ActionSupport
             if(provider==null)
             {
                 errorType = "error";
-                userService.sendEmailErrorReport("Error occurred while editing repository");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
                 this.addFieldError("editRepository","Error occurred while editing repository. An email has been sent to the administrator.");
                 return INPUT;
             }

@@ -13,11 +13,12 @@ package xc.mst.action.configuration;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import xc.mst.bo.user.Server;
-import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
@@ -98,10 +99,18 @@ public class DeleteLDAP extends ActionSupport
                 return INPUT;
             }
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("Error deleting LDAP Server",e);
-            this.addFieldError("deleteLDAPError", "Error deleting LDAP Server");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("deleteLDAPError", "Unable to connect to the database. Database configuration may be incorrect");
+            errorType = "error";
+            return INPUT;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("deleteLDAPError", "Error occurred while deleting LDAP Server. An email has been sent to the administrator");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return INPUT;
         }

@@ -33,7 +33,7 @@ addValidator : function()
 
                            if(arr[1]==null)
                                {
-                                   createErrorDiv("error","Repository URL is invalid (Kindly ensure that protocol is specified eg:HTTP)");
+                                   createErrorDiv("error","URL should begin with a protocol such as http:// or https://");
                                }
                            else
                                {

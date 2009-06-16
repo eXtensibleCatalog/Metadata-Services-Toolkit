@@ -22,6 +22,7 @@ import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 
 import com.opensymphony.xwork2.ActionSupport;
+import xc.mst.dao.DatabaseConfigException;
 
 /**
  * This action method is used to display the Service logs
@@ -88,23 +89,20 @@ public class HarvestOutLog extends ActionSupport
                 	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_LAST_LOG_RESET);
                 }
 
-                setIsAscendingOrder(isAscendingOrder);
-                setColumnSorted(columnSorted);
-
-                return SUCCESS;
-
             }
             else
             {
-                this.addFieldError("generalLogError", "The specified column does not exist");
-                return INPUT;
+                services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
             }
+             setIsAscendingOrder(isAscendingOrder);
+             setColumnSorted(columnSorted);
+             return SUCCESS;
             
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("There was a problem in loading the Harvest-Out logs Page",e);
-            this.addFieldError("harvestOutLogError", "There was a problem in loading the Harvest-Out logs Page");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("HarvestOutLogError", "Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return SUCCESS;
         }

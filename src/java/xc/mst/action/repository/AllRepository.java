@@ -12,6 +12,7 @@ package xc.mst.action.repository;
 
 import java.util.List;
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
@@ -84,15 +85,15 @@ public class AllRepository extends ActionSupport
                     repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_HARVEST_END_TIME);
                 }
 
-                setIsAscendingOrder(isAscendingOrder);
-                setColumnSorted(columnSorted);
-                return SUCCESS;
+               
             }
-            else
+            else //remove this and do by repo name
             {
-                this.addFieldError("allRepositoryError", "The specified column does not exist");
-                return INPUT;
+                repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME);
             }
+            setIsAscendingOrder(isAscendingOrder);
+            setColumnSorted(columnSorted);
+            return SUCCESS;
            
        }
        catch(DatabaseConfigException dce)
@@ -106,8 +107,8 @@ public class AllRepository extends ActionSupport
        {
            log.error(e.getMessage(),e);
            errorType = "error";
-           userService.sendEmailErrorReport("Error occurred while displaying all repositories page");
-           addFieldError("dbConfigError", "Error is displaying all repositories. An email has been sent to the administrator");
+           userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+           addFieldError("dbConfigError", "Error in displaying all repositories. An email has been sent to the administrator regarding this issue.");
            return INPUT;
        }
     }

@@ -57,7 +57,7 @@ YAHOO.xc.mst.user.addLDAP = {
                         }
                     else
                         {
-                            createErrorDiv("error","Groups cannot be empty");
+                            createErrorDiv("error","User must be a member of at least one group.  Select one or more groups to continue.");
                         }
 
              }

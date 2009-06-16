@@ -15,8 +15,13 @@ import xc.mst.bo.user.Server;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.ServerService;
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  * This class is used to add a new LDAP server to the system
@@ -35,6 +40,9 @@ public class AddLDAP extends ActionSupport
 
 	/**Creates a service object for Servers */
     private ServerService serverService = new DefaultServerService();
+
+    /** User Service Object */
+    private UserService userService = new DefaultUserService();
 
     /**The display name used for the LDAP server **/
     private String displayName;
@@ -65,7 +73,6 @@ public class AddLDAP extends ActionSupport
 	
 	/** URL to forward the user to get forgot password */
 	private String forgotPasswordUrl;
-
    
 
      /**
@@ -94,10 +101,10 @@ public class AddLDAP extends ActionSupport
                    }
                 return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("LDAP server could not be configured correctly",e);
-            this.addFieldError("addLDAPError", "LDAP server could not be configured correctly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("addLDAPError", "Unable to connect to the database. Database configuration may be incorrect");
             errorType = "error";
             return INPUT;
         }
@@ -144,7 +151,7 @@ public class AddLDAP extends ActionSupport
                 }
                 if(displayName.equalsIgnoreCase("local"))
                 {
-                    this.addFieldError("addLDAPError", "Cannot add a server with name 'Local'. Kindly use a different name");
+                    this.addFieldError("addLDAPError", "Cannot add a server with name 'Local'. Please choose a different name");
                     errorType = "error";
                     return SUCCESS;
                 }
@@ -170,7 +177,7 @@ public class AddLDAP extends ActionSupport
 	            }
                 if(displayName.equalsIgnoreCase("local"))
                 {
-                    this.addFieldError("addLDAPError", "Cannot update a server with name 'Local'. Kindly use a different name");
+                    this.addFieldError("addLDAPError", "Cannot update a server with name 'Local'. Please choose a different name");
                     errorType = "error";
                     return SUCCESS;
                 }
@@ -184,10 +191,18 @@ public class AddLDAP extends ActionSupport
             errorType = "info";
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("LDAP server could not be configured correctly",e);
-            this.addFieldError("addLDAPError", "LDAP server could not be configured correctly");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("addLDAPError", "Unable to connect to the database. Database configuration may be incorrect");
+            errorType = "error";
+            return INPUT;
+        }
+        catch(DataException de)
+        {
+            log.error(de.getMessage(),de);
+            this.addFieldError("addLDAPError", "Error occurred while adding LDAP Server. An email has been sent to the administrator");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return INPUT;
         }

@@ -80,7 +80,7 @@ public class ViewRepository extends ActionSupport implements UserAware
                 provider = providerService.getProviderById(repositoryId);
                 if(provider==null)
                 {
-                    userService.sendEmailErrorReport("Error occurred while displaying view repository page.");
+                    userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
                     this.addFieldError("allRepositoryError", "Error occurred while displaying repository details. An email has been sent to the administrator.");
                     errorType = "error";
                     return SUCCESS;
@@ -130,6 +130,7 @@ public class ViewRepository extends ActionSupport implements UserAware
               execute();
              
           }
+          
           return SUCCESS;
       }
 

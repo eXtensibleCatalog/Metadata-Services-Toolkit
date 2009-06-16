@@ -54,7 +54,7 @@ YAHOO.xc.mst.group.newGroup = {
                      }
                   else
                       {
-                          createErrorDiv("error",'groups cannot be empty');
+                          createErrorDiv("error",'Group must include at least one permission.  Select one or more permission that members of this group will receive.');
                       }
              }
 

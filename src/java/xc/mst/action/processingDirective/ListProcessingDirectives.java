@@ -14,6 +14,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
 import xc.mst.manager.processingDirective.ProcessingDirectiveService;
 
@@ -55,10 +56,10 @@ public class ListProcessingDirectives extends ActionSupport
 
            return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("The list of processing Directives could not displayed",e);
-            this.addFieldError("listProcessingDirectivesError", "The list of processing Directives could not displayed");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("listProcessingDirectivesError", "Unable to connect to the database. Database configuration may be incorrect.");
             errorType = "error";
             return INPUT;
         }

@@ -21,12 +21,16 @@ import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
 import xc.mst.manager.processingDirective.ProcessingDirectiveService;
 import xc.mst.manager.repository.DefaultFormatService;
 import xc.mst.manager.repository.DefaultSetService;
 import xc.mst.manager.repository.FormatService;
 import xc.mst.manager.repository.SetService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  * This action method is the second and last step in editing a processing directive
@@ -46,6 +50,9 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
 
     /** creates service object for Processing Directives  */
     private ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
+
+    /** User Service object */
+    private UserService userService = new DefaultUserService();
 
     /** The complete list of sets in the system */
     private List<Set> setList;
@@ -283,11 +290,17 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
     @Override
     public String execute()
     {
-        try
-        {
+       
             
             ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
             String sourceType = (String)request.getSession().getAttribute("sourceType");
+            if((tempProcDir==null)||(sourceType==null))
+            {
+                this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred while displaying Step-2 of edit processing rules. An email has been sent to the administrator.");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                errorType = "error";
+                return INPUT;
+            }
             List<Format> tempFormatList = new ArrayList<Format>();
             List<Set> tempSetList = null;
             if(sourceType.equalsIgnoreCase("provider")) //source is a provider
@@ -350,14 +363,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
             setSetList(tempSetList);
             setTemporaryProcessingDirective(tempProcDir);
             return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("Problem in editing the processing rule",e);
-            this.addFieldError("editProcessingDirectiveSetsFormatsError", "Problem in editing the processing rule");
-            errorType = "error";
-            return INPUT;
-        }
+       
     }
 
      /**
@@ -384,6 +390,14 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
                
                
                 String sourceType = (String)request.getSession().getAttribute("sourceType");
+
+                if((temporaryProcessingDirective==null)||(sourceType==null))
+                {
+                    this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred while editing processing rule. An email has been sent to the administrator.");
+                    userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                    errorType = "error";
+                    return INPUT;
+                }
 
                 String[] SetIdList = getSetsSelected();
                 String[] FormatIdList = getFormatsSelected();
@@ -627,10 +641,18 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
                 request.getSession().setAttribute("temporaryProcessingDirective",null);
                 return SUCCESS;
            }
-           catch(Exception e)
+           catch(DatabaseConfigException dce)
            {
-                log.error("The edit of the processing rule was unsuccessful",e);
-                this.addFieldError("editProcessingDirectives2Error", "The edit of the processing rule was unsuccessful");
+                log.error(dce.getMessage(),dce);
+                this.addFieldError("editProcessingDirectives2Error", "Unable to connect to the database. Database configuation may be incorrect");
+                errorType = "error";
+                return ERROR;
+           }
+           catch(DataException de)
+           {
+                log.error(de.getMessage(),de);
+                this.addFieldError("editProcessingDirectives2Error", "Error occurred while editing processing rule. An email has been sent to the administrator.");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
                 errorType = "error";
                 return ERROR;
            }
@@ -648,7 +670,13 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
         {
            
             ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
-
+            if((tempProcDir==null))
+                {
+                    this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred returning to step-1 of editing processing rule . An email has been sent to the administrator.");
+                    userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                    errorType = "error";
+                    return INPUT;
+                }
             if(maintainSourceSets==null)
                 {
 
@@ -710,9 +738,11 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
                 request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
                 return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("There was a problem in redirecting to Edit Processing Rule(Step 1)",e);
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("editPDGoBack", "Unable to connect to database. Database configuration may be incorrect");
+            errorType = "error";
             return INPUT;
         }
     }
@@ -724,16 +754,10 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
      */
     public String editProcessingDirectiveCancel()
     {
-        try
-        {            
+                 
             request.getSession().setAttribute("temporaryProcessingDirective",null);
             return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.error("There was a problem redirecting to 'All Processing Rules' page",e);
-            return INPUT;
-        }
+       
     }
 
 	 /**

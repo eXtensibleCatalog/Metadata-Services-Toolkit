@@ -11,11 +11,16 @@
 package xc.mst.action.configuration;
 
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import xc.mst.bo.emailconfig.EmailConfig;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.configuration.DefaultEmailConfigService;
 import xc.mst.manager.configuration.EmailConfigService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 /**
  *  The action method that is used to add/edit an email Server
@@ -30,6 +35,9 @@ public class EmailConfiguration extends ActionSupport
 
     /** Creates a service Object for Email Configuration */
     private EmailConfigService emailConfigService = new DefaultEmailConfigService();
+
+    /** User Service Object */
+    private UserService userService = new DefaultUserService();
 
     /** The temporary emailConfig object that is used to populate JSP page fields **/
     private EmailConfig temporaryEmailConfig;
@@ -76,13 +84,14 @@ public class EmailConfiguration extends ActionSupport
             emailConfig = emailConfigService.getEmailConfiguration();
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error(e);
-            this.addFieldError("viewEmailConfigError", "Problem displaying the Email Configuration Page");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("emailConfigError", "Unable to connect to the database. Database configuration may be incorrect");
             errorType = "error";
             return INPUT;
         }
+
     }
 
     /**
@@ -105,10 +114,11 @@ public class EmailConfiguration extends ActionSupport
             errorType = "info";
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DataException de)
         {
-            log.error("Unable to change Email Configuration",e);
-            this.addFieldError("changeEmailConfigError", fromAddress);
+            log.error(de.getMessage(),de);
+            this.addFieldError("changeEmailConfigError", "Error occurred while updating email configuration. An email has been sent to the administrator.");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return INPUT;
         }

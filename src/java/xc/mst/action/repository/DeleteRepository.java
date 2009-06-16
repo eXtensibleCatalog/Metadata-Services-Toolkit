@@ -16,6 +16,7 @@ import xc.mst.constants.Constants;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.log4j.FileAppender;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
@@ -69,11 +70,12 @@ public class DeleteRepository extends ActionSupport
 
             if(provider==null)
             {
-                 this.addFieldError("viewRepositoryError", "Error occurred while deleting repository. An email has been sent to the administrator.");
-                 userService.sendEmailErrorReport("Error occurred while deleting repository");
-                 errorType = "error";
-                 return INPUT;
+                this.addFieldError("viewRepositoryError", "Error occurred while deleting repository. An email has been sent to the administrator");
+                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                errorType = "error";
+                return SUCCESS;
             }
+            
             // Delete provider only if it is not harvested.
             if (provider.getLastHarvestEndTime() != null) {
                 message = "Repository has harvested data.";
@@ -95,14 +97,14 @@ public class DeleteRepository extends ActionSupport
         {
             log.error(ie.getMessage(),ie);
             errorType = "error";
-            this.addFieldError("indexError","There was an index exception");
+            this.addFieldError("indexError","Error occurred while deleting the repository. An email has been sent to the administrator");
             return INPUT;
         }
         catch(DataException de)
         {
             log.error(de.getMessage(), de);
             this.addFieldError("viewRepositoryError", "Error occurred while deleting repository. An email has been sent to the administrator");
-            userService.sendEmailErrorReport("Error occurred while deleting repository");
+            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
             errorType = "error";
             return INPUT;
         }

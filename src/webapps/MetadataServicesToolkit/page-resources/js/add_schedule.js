@@ -79,7 +79,7 @@ YAHOO.xc.mst.schedule = {
 		
 		
 		if (eDate != '' && sDate > eDate) {
-			createErrorDiv('error','End Date should be greater than Start date.');
+			createErrorDiv('error','End Date should be after the Start date.');
 			return false;
 		}
 		

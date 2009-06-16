@@ -14,6 +14,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
@@ -76,20 +77,21 @@ public class HarvestInLog extends ActionSupport
                 {
                     setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_LOG_RESET));
                 }
-                setIsAscendingOrder(isAscendingOrder);
-                setColumnSorted(columnSorted);
+               
             }
             else
             {
-                this.addFieldError("generalLogError", "The specified column does not exist");
+                setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME));
             }
-            
+
+            setIsAscendingOrder(isAscendingOrder);
+            setColumnSorted(columnSorted);
             return SUCCESS;
         }
-        catch(Exception e)
+        catch(DatabaseConfigException dce)
         {
-            log.error("There was a problem loading the Harvest-In Logs page",e);
-            this.addFieldError("harvestInLogError", "There was a problem loading the Harvest-In Logs page");
+            log.error(dce.getMessage(),dce);
+            this.addFieldError("generalLogError", "Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return SUCCESS;
         }
