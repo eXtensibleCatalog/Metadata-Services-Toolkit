@@ -355,7 +355,7 @@ public class TransformationService extends MetadataService
 				xcRecord.setOaiXml(writer.toString());
 				xcRecord.addProcessedFrom(record);
 				xcRecord.setFormat(xcFormat);
-				xcRecord.setOaiIdentifier(getNextOaiId());
+				xcRecord.setOaiIdentifier(document.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("id"));
 
 				// Set the identifier, datestamp, and header to null so they get computed when we insert the transformed record
 				xcRecord.setOaiDatestamp(null);
@@ -2415,7 +2415,7 @@ public class TransformationService extends MetadataService
 
 						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
 						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
-						titleOfWorkElement.setText(titleBuilder.toString());
+						titleOfExpressionElement.setText(titleBuilder.toString());
 						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
 						
 						transformInto.addLinkedWorkAndExpression(workSubElements, expressionSubElements);
@@ -2679,7 +2679,7 @@ public class TransformationService extends MetadataService
 
 						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
 						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
-						titleOfWorkElement.setText(titleBuilder.toString());
+						titleOfExpressionElement.setText(titleBuilder.toString());
 						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
 						
 						transformInto.addLinkedWorkAndExpression(workSubElements, expressionSubElements);
@@ -2941,7 +2941,7 @@ public class TransformationService extends MetadataService
 
 						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
 						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
-						titleOfWorkElement.setText(titleBuilder.toString());
+						titleOfExpressionElement.setText(titleBuilder.toString());
 						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
 						
 						transformInto.addLinkedWorkAndExpression(workSubElements, expressionSubElements);
@@ -3103,7 +3103,8 @@ public class TransformationService extends MetadataService
 						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE);
 						titleOfWorkElement.setText(workTitleValue.toString());
 						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
-						workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
+						if(linkedCreatorFields.get(linkingTag) != null)
+							workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
 					
 					}
 
