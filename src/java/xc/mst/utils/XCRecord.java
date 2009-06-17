@@ -587,6 +587,7 @@ public class XCRecord
 		xcRootElement.addNamespaceDeclaration(DCTERMS_NAMESPACE);
 		xcRootElement.addNamespaceDeclaration(RDAROLE_NAMESPACE);
 
+		/*$$ WORK $$*/
 		// Create original Work Document
 		String workElementOaiID = transformationService.getNextOaiId();
 		Element tempXcWorkElement = (Element)xcWorkElement.clone();
@@ -597,12 +598,13 @@ public class XCRecord
 		list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
 		xcRootElement.removeContent();
 		
+		/*$$ EXPRESSION $$*/
 		// Create original Expression Document
-		Element expressionToWorkLinkingElement = new Element("linkWork", XC_NAMESPACE);
+		Element expressionToWorkLinkingElement = new Element("link", XC_NAMESPACE);
 		expressionToWorkLinkingElement.setText(workElementOaiID);
 		Element tempXcExpressionElement = (Element)xcExpressionElement.clone();
 		
-		tempXcExpressionElement.addContent(expressionToWorkLinkingElement.detach());
+		tempXcExpressionElement.addContent("\n\t\t").addContent(expressionToWorkLinkingElement.detach());
 		tempXcExpressionElement.setAttribute(new Attribute("id",transformationService.getNextOaiId()));
 		xcRootElement.addContent("\n\t")
         			 .addContent(tempXcExpressionElement)
@@ -610,6 +612,7 @@ public class XCRecord
 		list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
 		xcRootElement.removeContent();
 		
+		/*$$ LINKED WORK & EXPRESSION $$*/
 		// Create the extra Work & Expression documents
 		int index = 0;
 		for(Hashtable<String, Element> workElement : subElementsOfWorkElements)
@@ -693,37 +696,39 @@ public class XCRecord
 			}
 			
 			// Link to corresponding work doc
-			expressionToWorkLinkingElement = new Element("linkWork", XC_NAMESPACE);
+			expressionToWorkLinkingElement = new Element("link", XC_NAMESPACE);
 			expressionToWorkLinkingElement.setText(workElementOaiID);
-			newExpressionElement.addContent(expressionToWorkLinkingElement.detach());
+			newExpressionElement.addContent("\n\t\t")
+								.addContent(expressionToWorkLinkingElement.detach());
 			
-			xcRootElement.addContent(newExpressionElement.addContent("\n\t")).addContent("\n\t");
+			xcRootElement.addContent("\n\t")
+						 .addContent(newExpressionElement.addContent("\n\t")).addContent("\n");
 			list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
 			xcRootElement.removeContent();
 			
 			index++;
 		}		
 		
-/*		for(String key : linkingFieldToWorkElement.keySet())
-		{
-				xcRootElement.addContent("\t").addContent(linkingFieldToWorkElement.get(key).addContent("\n\t")).addContent("\n");
-				list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
-				xcRootElement.removeContent();
-		}
-*/
+		/*		for(String key : linkingFieldToWorkElement.keySet())
+				{
+						xcRootElement.addContent("\t").addContent(linkingFieldToWorkElement.get(key).addContent("\n\t")).addContent("\n");
+						list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+						xcRootElement.removeContent();
+				}
+		*/
 		
-		// Manifestation
+		/*$$ MANIFESTATION $$*/
 		// Set the OAI id
 		xcManifestationElement.setAttribute("id", transformationService.getNextOaiId());
 		// Link to expression docs
 		for (Document document : list) {
 			if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("expression"))
 			{
-				Element linkExpression =  new Element("linkExpression",XC_NAMESPACE);
+				Element linkExpression =  new Element("link",XC_NAMESPACE);
 				linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
-				xcManifestationElement.addContent(linkExpression.detach());
+				xcManifestationElement.addContent("\n\t\t")
+									  .addContent(linkExpression.detach());
 			}
-			
 		}
 		xcRootElement.addContent("\n\t")
 		 			 .addContent(xcManifestationElement)
@@ -731,6 +736,7 @@ public class XCRecord
 		list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
 		xcRootElement.removeContent();
 
+		/*$$ HOLDINGS $$*/
 		// Create the Holdings documents
 		for(Element holdingsElement : holdingsElements){
 			holdingsElement.setAttribute("id",transformationService.getNextOaiId());
@@ -738,17 +744,18 @@ public class XCRecord
 			for (Document document : list) {
 				if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("manifestation"))
 				{
-					Element linkExpression =  new Element("linkManifestation",XC_NAMESPACE);
+					Element linkExpression =  new Element("link",XC_NAMESPACE);
 					linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
-					holdingsElement.addContent(linkExpression.detach());
+					holdingsElement.addContent("\n\t\t").addContent(linkExpression.detach());
 				}
 				
 			}
-			xcRootElement.addContent("\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n\t");
+			xcRootElement.addContent("\n\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n");
 			list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
 			xcRootElement.removeContent();
 		}
 
+		/*$$ ITEM $$*/
 		// Create the Items documents
 		if(xcItemElement.getChildren().size() != 0)
 		{
@@ -757,9 +764,9 @@ public class XCRecord
 			for (Document document : list) {
 				if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("holdings"))
 				{
-					Element linkExpression =  new Element("linkHoldings",XC_NAMESPACE);
+					Element linkExpression =  new Element("link",XC_NAMESPACE);
 					linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
-					xcItemElement.addContent(linkExpression.detach());
+					xcItemElement.addContent("\n\t\t").addContent(linkExpression.detach());
 				}
 			}
 			xcRootElement.addContent("\n\t")
