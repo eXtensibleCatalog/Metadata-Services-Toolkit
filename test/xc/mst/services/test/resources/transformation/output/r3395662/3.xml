@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:URMST:Transformation Service/15624">
+		<xc:recordID type="LCCN">70021767</xc:recordID>
+		<xc:identifier type="DNLM">A25140000</xc:identifier>
+		<xc:identifier type="ISSN">0002-9769</xc:identifier>
+		<xc:recordID type="WaSeSS">ssj0001598</xc:recordID>
+		<xc:recordID type="NRU">3395662</xc:recordID>
+		<dcterms:alternative>Am. libr. (Chic. Ill.)</dcterms:alternative>
+		<dcterms:alternative>American libraries (Chicago, Ill.)</dcterms:alternative>
+		<dcterms:title>American libraries</dcterms:title>
+		<rdvocab:placeOfProduction>[Chicago]</rdvocab:placeOfProduction>
+		<dcterms:publisher>American Library Association.</dcterms:publisher>
+		<rdvocab:frequency>11 no. a year</rdvocab:frequency>
+		<rdvocab:numberingOfSerials>v. 1- Jan. 1970-</rdvocab:numberingOfSerials>
+		<dcterms:identifier>Internet Full text. http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=AMERLIBCHIL</dcterms:identifier>
+		<xc:typeLeader06>Language material</xc:typeLeader06>
+		<xc:typeLeader06>Computer file</xc:typeLeader06>
+		<xc:type007>Text</xc:type007>
+		<xc:type007>Electronic resource</xc:type007>
+		<xc:typeSMD>Remote</xc:typeSMD>
+		<rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+		<dcterms:issued>1970-</dcterms:issued>
+		<xc:link>oai:URMST:Transformation Service/15623</xc:link></xc:entity>
+</xc:frbr>
