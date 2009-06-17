@@ -601,8 +601,8 @@ public class Service
 	 */
 	public void setHarvestOutLastLogReset(java.util.Date harvestOutLastLogReset)
 	{
-
-		this.harvestOutLastLogReset = (lastLogReset == null ? null : new Date(lastLogReset.getTime())); // NOTE : ERIC I made a change here changing harvestOutLastLogReset to LastLogReset
+		this.harvestOutLastLogReset = (harvestOutLastLogReset == null ? null : new Date(harvestOutLastLogReset.getTime())); // NOTE : ERIC I made a change here changing harvestOutLastLogReset to LastLogReset
+		                                                                                                                    // Eric's response: That was wrong, I changed it back
 	} // end method setHarvestOutLastLogReset(Date)
 
 	/**
