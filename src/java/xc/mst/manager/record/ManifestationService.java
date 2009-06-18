@@ -42,7 +42,7 @@ public abstract class ManifestationService
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit.
 	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
 
 	/**
 	 * An Object shared by all LuceneObjects which manages the Lucene index
@@ -84,7 +84,7 @@ public abstract class ManifestationService
 	 * Gets the Manifestation that matches the passed XC manifestation ID
 	 *
 	 * @param manifestationId The XC manifestation ID of the target manifestation element
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Manifestation getByXcManifestationId(long manifestationId) throws DatabaseConfigException, IndexException;
 
@@ -177,7 +177,7 @@ public abstract class ManifestationService
 	 *
 	 * @param doc The document containing information on the Manifestation.
 	 * @return The manifestation which was contained in the passed Document.
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Manifestation getManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
@@ -186,7 +186,7 @@ public abstract class ManifestationService
 	 *
 	 * @param doc The document containing information on the Manifestation.
 	 * @return The manifestation which was contained in the passed Document.
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Manifestation getBasicManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
@@ -198,7 +198,7 @@ public abstract class ManifestationService
 	 * @param doc The document whose fields need to be set.
 	 * @param generateNewId True to generate a new record ID for the manifestation, false to use the manifestation's current ID
 	 * @return A reference to the Document after its fields have been set
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	protected abstract SolrInputDocument setFieldsOnDocument(Manifestation manifestation, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 

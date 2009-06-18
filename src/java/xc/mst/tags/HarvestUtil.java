@@ -11,9 +11,7 @@ package xc.mst.tags;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-
 import java.util.List;
-import org.apache.log4j.Logger;
 
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;

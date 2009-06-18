@@ -42,10 +42,6 @@ import xc.mst.dao.emailconfig.DefaultEmailConfigDAO;
  */
 public class Emailer
 {
-	/**
-	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit.
-	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
 
 	/**
 	 * A reference to the logger for this class
@@ -64,14 +60,14 @@ public class Emailer
 	 */
 	public Emailer()
 	{
-		try 
+		try
 		{
 			config = new DefaultEmailConfigDAO().getConfiguration();
-		} 
-		catch (DataException e) 
+		}
+		catch (DataException e)
 		{
 			log.error("An error occurred while connecting to the database.", e);
-			
+
 			config = null;
 		}
 	}

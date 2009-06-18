@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 import org.jdom.Element;
+
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
@@ -38,6 +39,7 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.XMLUtil;
 
 /**
@@ -76,7 +78,7 @@ public class Facade
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
 	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
 
 	/**
 	 * The logger object
@@ -268,7 +270,7 @@ public class Facade
 
 	/**
 	 * Executes the correct OAI function based on the verb
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public void execute() throws DatabaseConfigException
 	{
@@ -315,7 +317,7 @@ public class Facade
 		{
 			log.error("An exception occurred while executing the request.", e);
 			bean.setXmlResponse("");
-			
+
 			LogWriter.addError(service.getHarvestOutLogFileName(), "An unexpected error occurred while executing the " + verb + " request.");
 			errorCount++;
 		}
@@ -344,7 +346,7 @@ public class Facade
 	 * Create response to the Identify verb. The parameters arrive in the
 	 * form (which is a FormBean). The XML response will be set to the value of
 	 * the form bean's xml field.
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public void doIdentify() throws DatabaseConfigException
 	{
@@ -361,10 +363,10 @@ public class Facade
 		// Most of the information is pulled from the configuration file, but the earliestDatestamp
 		// is read from the database as the lowest value for the OAI_datestamp column in the results table
 		Element root = new Element("Identify");
-		root.addContent(XMLUtil.xmlEl("repositoryName", configuration.getProperty(Constants.CONFIG_OAI_REPO_NAME)));
-		root.addContent(XMLUtil.xmlEl("baseURL", configuration.getProperty(Constants.CONFIG_OAI_REPO_BASE_URL) + ":" + port));
+		root.addContent(XMLUtil.xmlEl("repositoryName", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_NAME)));
+		root.addContent(XMLUtil.xmlEl("baseURL", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_BASE_URL) + ":" + port));
 		root.addContent(XMLUtil.xmlEl("protocolVersion", configuration.getProperty(Constants.CONFIG_OAI_REPO_PROTOCOL_VERSION)));
-		root.addContent(XMLUtil.xmlEl("adminEmail", configuration.getProperty(Constants.CONFIG_OAI_REPO_ADMIN_EMAIL)));
+		root.addContent(XMLUtil.xmlEl("adminEmail", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_ADMIN_EMAIL)));
 		root.addContent(XMLUtil.xmlEl("deletedRecord", configuration.getProperty(Constants.CONFIG_OAI_REPO_DELETED_RECORD)));
 		root.addContent(XMLUtil.xmlEl("granularity", configuration.getProperty(Constants.CONFIG_OAI_REPO_GRANULARITY)));
 
@@ -387,9 +389,9 @@ public class Facade
 
 		// Add child elements to the oaiIdentifier element with useful information
 		oaiIdentifier.addContent(XMLUtil.xmlEl("scheme", configuration.getProperty(Constants.CONFIG_OAI_REPO_SCHEME)));
-		oaiIdentifier.addContent(XMLUtil.xmlEl("repositoryIdentifier", configuration.getProperty(Constants.CONFIG_OAI_REPO_IDENTIFIER)));
+		oaiIdentifier.addContent(XMLUtil.xmlEl("repositoryIdentifier", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_IDENTIFIER)));
 		oaiIdentifier.addContent(XMLUtil.xmlEl("delimiter", configuration.getProperty(Constants.CONFIG_OAI_REPO_DELIMITER)));
-		oaiIdentifier.addContent(XMLUtil.xmlEl("sampleIdentifier", "oai:" + configuration.getProperty(Constants.CONFIG_OAI_REPO_IDENTIFIER) + ":" + service.getName() + "/1"));
+		oaiIdentifier.addContent(XMLUtil.xmlEl("sampleIdentifier", "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_IDENTIFIER) + ":" + service.getName() + "/1"));
 
 		// Add a description element with the oai-identifier element we just created
 		root.addContent(XMLUtil.xmlEl("description", null).addContent(oaiIdentifier));
@@ -402,7 +404,7 @@ public class Facade
 
 	/**
 	 * Create an XML response to the ListMetadataFormat verb.
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public void doListMetadataFormats() throws DatabaseConfigException, IndexException
 	{
@@ -481,7 +483,7 @@ public class Facade
 	 * Create response to the ListSets verb. List the sets in XML format.
 	 * The parameters arrive in the form parameter (which is a FormBean). The XML
 	 * response will be the value of the form xml field.
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public void doListSets() throws DatabaseConfigException
 	{
@@ -547,7 +549,7 @@ public class Facade
 
 	/**
 	 * Create the response to the ListRecords verb.
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public void doListRecords() throws DatabaseConfigException, IndexException
 	{
@@ -574,7 +576,7 @@ public class Facade
 
 	/**
 	 * Create response to the GetRecord verb
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public void doGetRecord() throws DatabaseConfigException, IndexException
 	{
@@ -658,9 +660,9 @@ public class Facade
 	 * @param getRecords true if we should return the full records, false if we should only return the headers
 	 * @return The XML containing a list of headers or record and header combinations as well as a resumption token.
 	 *         These should be included in the response's ListRecords or ListIdentifiers element.
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
-	private String handleRecordLists(String from, String until, String metadataPrefix, String set, String resumptionTokenId, boolean getRecords) 
+	private String handleRecordLists(String from, String until, String metadataPrefix, String set, String resumptionTokenId, boolean getRecords)
 		throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())

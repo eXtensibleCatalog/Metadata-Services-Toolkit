@@ -9,10 +9,6 @@
 
 package xc.mst.utils;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.List;
 
 import javax.servlet.http.HttpServlet;
@@ -22,14 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.PropertyConfigurator;
 
 import xc.mst.bo.log.Log;
-import xc.mst.bo.service.Service;
-import xc.mst.constants.Constants;
-import xc.mst.dao.DatabaseConfigException;
+import xc.mst.dao.DataException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
-import xc.mst.dao.service.DefaultServiceDAO;
-import xc.mst.dao.service.ServiceDAO;
-import xc.mst.services.MetadataService;
 
 /**
  * Initialize log
@@ -49,28 +40,30 @@ public class InitializeLog  extends HttpServlet {
 	 */
 	public void init() {
 
-	    String prefix =  getServletContext().getRealPath("/");
-	    String file = getInitParameter("log4j-init-file");
-
-	    // if the log4j-init-file is not set, then no point in trying
-	    if(file != null) {
-	      PropertyConfigurator.configure(prefix+file);
-	    }
-	    
+		PropertyConfigurator.configure(System.getProperty("user.dir") + "\\" + MSTConfiguration.getUrlPath()+ "\\"+ "log4j.config.txt");
+		
 	    // Initialize the general MST logs
 	    LogDAO logDao = new DefaultLogDAO();
 	    List<Log> logs = null;
 		try 
 		{
 			logs = logDao.getAll();
+			// Update log file path
+			for(Log log : logs) {
+				log.setLogFileLocation(MSTConfiguration.getUrlPath() + "\\" + log.getLogFileLocation());
+		    	logDao.update(log);
+			}
+			logs = logDao.getAll();
 		} 
-		catch (DatabaseConfigException e) 
+		catch (DataException e) 
 		{
 			return;
 		}
 		
-	    for(Log log : logs)
+	
+	    for(Log log : logs) {
 	    	LogWriter.addInfo(log.getLogFileLocation(), "Beginning logging for " + log.getLogFileName() + ".");
+	    }
 	  }
 
 	  public void doGet(HttpServletRequest req, HttpServletResponse res) {

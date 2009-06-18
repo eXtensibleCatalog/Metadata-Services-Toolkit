@@ -45,7 +45,7 @@ public class MarcXmlManagerForNormalizationService
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
 	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
 
 
 	/**
@@ -638,7 +638,7 @@ public class MarcXmlManagerForNormalizationService
 	 * @return the MARC XML's 945 $l value
 	 */
 	public ArrayList<String> getField945subfieldLs() { return field945subfieldLs; }
-	
+
 	/**
 	 * A list of the original 035 fields for the MARC XML
 	 */
@@ -1024,7 +1024,7 @@ public class MarcXmlManagerForNormalizationService
 				// Add the 852 $b subfields
 				field852subfieldBs.addAll(subfields);
 			} // end if (852 found)
-			
+
 			// If the current field is 945, get its subfields
 			else if(tag.equals("945"))
 			{
@@ -1153,9 +1153,9 @@ public class MarcXmlManagerForNormalizationService
 				}
 				catch(NumberFormatException e)
 				{
-					
+
 				}
-				
+
 				// Create the datafield for the copied tag, and set its attributes
 				// The indicators should be the same as on the original field
 				newField = new Element("datafield", marcNamespace);
@@ -1170,7 +1170,7 @@ public class MarcXmlManagerForNormalizationService
 					if(subfieldsToCopy.contains(subfield.getAttributeValue("code")))
 					{
 						newField.addContent("\n\t").addContent((Element)subfield.clone());
-						
+
 						if(skipAPrefix && skip > 0)
 						{
 							// Get the control fields
@@ -1181,7 +1181,7 @@ public class MarcXmlManagerForNormalizationService
 							{
 								// Get the current text of the subfield
 								String currentText = subfieldOfNewfield.getText();
-								
+
 								if(currentText.charAt(skip-1) == ' ')
 									subfieldOfNewfield.setText(currentText.substring(skip, skip+1).toUpperCase() + currentText.substring(skip+1));
 							} // end loop over the target field's subfields
@@ -1982,7 +1982,7 @@ public class MarcXmlManagerForNormalizationService
 					potentialResults.addAll(tagTo880s.get(targetField));
 
 				for(Element potentialResult : potentialResults)
-					if(getSubfieldOfField(potentialResult, '5').contains(configuration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+					if(getSubfieldOfField(potentialResult, '5').contains(MSTConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
 						results.add(potentialResult);
 
 				return results;

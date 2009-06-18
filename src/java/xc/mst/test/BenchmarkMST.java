@@ -34,12 +34,12 @@ public class BenchmarkMST
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
 	 */
-	protected static Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+	protected static Configuration configuration = ConfigurationManager.getConfiguration();
 
 	static
 	{
 		// Load the configuration file
-		configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+		configuration = ConfigurationManager.getConfiguration();
 
 		// Configure the log file location as the value found in the configuration file.
 		String logConfigFileLocation = configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);

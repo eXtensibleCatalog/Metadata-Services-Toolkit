@@ -11,12 +11,12 @@
 package xc.mst.manager.record;
 
 import java.io.IOException;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.apache.solr.core.CoreContainer;
 import org.apache.solr.core.CoreDescriptor;
 import org.apache.solr.core.SolrCore;
@@ -31,10 +31,11 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Creates Solr Server instance
- * 
+ *
  * @author Sharmila Ranganathan
  *
  */
@@ -48,8 +49,8 @@ public class MSTSolrServer {
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
 	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
-	
+	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
+
 	/** Solr server */
 	private static SolrServer server = null;
 
@@ -67,27 +68,27 @@ public class MSTSolrServer {
 	 * The repository management log file name
 	 */
 	private static Log logObj = null;
-	
+
 	static
 	{
-		try 
+		try
 		{
 			logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SOLR_INDEX);
-		} 
-		catch (DatabaseConfigException e) 
+		}
+		catch (DatabaseConfigException e)
 		{
 			log.error("Cannot connect to the database with the parameters in the configuration file.", e);
 		}
 	}
-	
+
 	/**
 	 * Default constructor
 	 */
-	private MSTSolrServer() 
+	private MSTSolrServer()
 	{
-		
+
 	}
-	
+
 	/**
 	 * Gets the singleton instance of the LuceneIndexManager
 	 */
@@ -104,7 +105,7 @@ public class MSTSolrServer {
 		instance = new MSTSolrServer();
 		return instance;
 	}
-	
+
 	/**
 	 * Get Solr server instance
 	 *
@@ -112,32 +113,34 @@ public class MSTSolrServer {
 	 */
 	private static SolrServer createSolrServer() {
 
-		if (server == null) 
+		if (server == null)
 		{
-			String solrHome = System.getProperty("user.dir") + "\\" + configuration.getProperty(Constants.CONFIG_SOLR_HOME);
+			String solrHome = System.getProperty("user.dir") + "\\" + MSTConfiguration.getUrlPath();
+			solrHome = solrHome + "\\Solr";
+
 			java.util.logging.Level logLevel = getLogLevel(configuration.getProperty(Constants.CONFIG_SOLR_LOG_LEVEL));
-			
-			try 
+
+			try
 			{
 				java.util.logging.Logger logg = java.util.logging.Logger.getLogger("org.apache.solr");
 			    logg.setUseParentHandlers(false);
 			    logg.log(java.util.logging.Level.INFO, "Changing log level to " + logLevel);
 			    logg.setLevel(logLevel);
-			    
+
 				CoreContainer container = new CoreContainer();
 				CoreDescriptor descriptor = new CoreDescriptor(container, "core1", solrHome);
 				SolrCore core = container.create(descriptor);
 				container.register("core1", core, false);
-				
-				server = new EmbeddedSolrServer(container, "core1"); 
+
+				server = new EmbeddedSolrServer(container, "core1");
 				LogWriter.addInfo(logObj.getLogFileLocation(), "The Solr server instance was successfully using the configuration in " + solrHome);
 			}
-			catch (IOException ioe) 
+			catch (IOException ioe)
 			{
 				log.error("Failure to create server instance. Solr Server is not created.", ioe);
-				
+
 				LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
-				
+
 				logObj.setErrors(logObj.getErrors()+1);
 				try
 				{
@@ -148,12 +151,12 @@ public class MSTSolrServer {
 					log.error("DataExcepiton while updating the log's error count.");
 				}
 			}
-			catch (SAXException se) 
+			catch (SAXException se)
 			{
 				log.error("Failure to create server instance. Solr Server is not created.", se);
-				
+
 				LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
-				
+
 				logObj.setErrors(logObj.getErrors()+1);
 				try
 				{
@@ -164,12 +167,12 @@ public class MSTSolrServer {
 					log.error("DataExcepiton while updating the log's error count.");
 				}
 			}
-			catch (ParserConfigurationException pe) 
+			catch (ParserConfigurationException pe)
 			{
 				log.error("Failure to create server instance. Solr Server is not created.", pe);
-				
+
 				LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
-				
+
 				logObj.setErrors(logObj.getErrors()+1);
 				try
 				{
@@ -181,7 +184,7 @@ public class MSTSolrServer {
 				}
 			}
 		}
-		
+
 		return server;
 	}
 
@@ -211,10 +214,10 @@ public class MSTSolrServer {
 			return java.util.logging.Level.FINEST;
 		if(level.equalsIgnoreCase("SEVERE"))
 			return java.util.logging.Level.SEVERE;
-		
+
 		return java.util.logging.Level.WARNING;
 	}
-	
+
 	public  static SolrServer getServer() {
 		return server;
 	}

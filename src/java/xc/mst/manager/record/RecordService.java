@@ -56,7 +56,7 @@ public abstract class RecordService
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit.
 	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
 
 	/**
 	 * An Object shared by all LuceneObjects which manages the Lucene index
@@ -142,7 +142,7 @@ public abstract class RecordService
 	 * The name of the provider URL field
 	 */
 	protected final static String FIELD_PROVIDER_URL = "provider_url";
-	
+
 	/**
 	 * The name of the provider/service and harvest start date and time
 	 */
@@ -192,7 +192,7 @@ public abstract class RecordService
 	 * The name of the successor field
 	 */
 	protected final static String FIELD_SUCCESSOR = "successor";
-	
+
 	/**
 	 * The name of the input for service IDs field
 	 */
@@ -212,7 +212,7 @@ public abstract class RecordService
 	 * The name of the errors field
 	 */
 	protected final static String FIELD_ERROR = "error";
-	
+
 	/**
 	 * All default search fields
 	 */
@@ -230,7 +230,7 @@ public abstract class RecordService
 	 *
 	 * @param id The record's ID
 	 * @return The record with the passed record ID
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Record getById(long id) throws DatabaseConfigException, IndexException;
 
@@ -274,7 +274,7 @@ public abstract class RecordService
 	 * @return Number of records in the index with the passed provider ID
 	 */
 	public abstract long getNumberOfRecordsByServiceId(int serviceId) throws IndexException;
-	
+
 	/**
 	 * Gets all records from the index with the passed processing service ID
 	 *
@@ -282,7 +282,7 @@ public abstract class RecordService
 	 * @return A list of all records in the index with the passed processing service ID
 	 */
 	public abstract RecordList getByProcessingServiceId(int serviceId) throws IndexException;
-	
+
 	/**
 	 * Gets all records from the index with the passed harvest ID
 	 *
@@ -307,7 +307,7 @@ public abstract class RecordService
 	 * @return A list all records in the index with the passed format ID
 	 */
 	public abstract RecordList getByFormatIdAndServiceId(int formatId, int serviceId) throws IndexException;
-	
+
 	/**
 	 * Gets all records from the index contained in the set with the passed name
 	 *
@@ -360,7 +360,7 @@ public abstract class RecordService
 	 *
 	 * @param identifier The record's OAI Identifer
 	 * @return A Record Object representing the record with the passed OAI Identifier
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Record getByOaiIdentifier(String identifier) throws DatabaseConfigException, IndexException;
 
@@ -370,7 +370,7 @@ public abstract class RecordService
 	 * @param identifier The record's OAI Identifer
 	 * @param providerId The Id of the provider from which this record was harvested
 	 * @return The record with the passed OAI Identifier
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Record getByOaiIdentifierAndProvider(String identifier, int providerId) throws DatabaseConfigException, IndexException;
 
@@ -380,7 +380,7 @@ public abstract class RecordService
 	 * @param identifier The record's OAI Identifer
 	 * @param serviceId The Id of the service that processed this record
 	 * @return The record with the passed OAI Identifier
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Record getByOaiIdentifierAndService(String identifier, int serviceId) throws DatabaseConfigException, IndexException;
 
@@ -519,7 +519,7 @@ public abstract class RecordService
 
 		String deleteQuery = FIELD_RECORD_ID + ":" + Long.toString(record.getId()) + "  AND "
 		                     + FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType;
-		
+
 		// Delete all records with the matching record ID
 		boolean result = indexMgr.deleteByQuery(deleteQuery);
 
@@ -536,7 +536,7 @@ public abstract class RecordService
 	 *
 	 * @param doc The document containing information on the Record.
 	 * @return The record which was contained in the passed Document.
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Record getRecordFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
@@ -556,7 +556,7 @@ public abstract class RecordService
 	 * @param doc The document whose fields need to be set.
 	 * @param generateNewId True to generate a new ID for the record, false to use the record's current ID
 	 * @return A reference to the Document after its fields have been set
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	protected abstract SolrInputDocument setFieldsOnDocument(Record record, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 

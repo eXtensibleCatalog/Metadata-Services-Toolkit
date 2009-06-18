@@ -50,7 +50,7 @@ public abstract class HoldingsService
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit.
 	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
 
 	/**
 	 * An Object shared by all LuceneObjects which manages the Lucene index
@@ -113,7 +113,7 @@ public abstract class HoldingsService
 	 * Gets the Holdings that matches the passed XC holdings ID
 	 *
 	 * @param The XC holdings ID of the target holdings element
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Holdings getByXcHoldingsId(long holdingsId) throws DatabaseConfigException, IndexException;
 
@@ -206,7 +206,7 @@ public abstract class HoldingsService
 	 *
 	 * @param doc The document containing information on the Holdings.
 	 * @return The holdings which was contained in the passed Document.
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Holdings getHoldingsFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
@@ -226,7 +226,7 @@ public abstract class HoldingsService
 	 * @param doc The document whose fields need to be set.
 	 * @param generateNewId True to generate a new record ID for the holdings, false to use the holdings's current ID
 	 * @return A reference to the Document after its fields have been set
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	protected abstract SolrInputDocument setFieldsOnDocument(Holdings holdings, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 

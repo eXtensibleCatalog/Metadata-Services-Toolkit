@@ -62,7 +62,7 @@ public class EOTests
 	static
 	{
 		// Load the configuration file
-		configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+		configuration = ConfigurationManager.getConfiguration();
 
 		// Configure the log file location as the value found in the configuration file.
 		String logConfigFileLocation = configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
@@ -75,7 +75,7 @@ public class EOTests
 			System.err.println("The configuration file was invalid or did not exist.");
 			System.exit(1);
 		}
-		
+
 		MSTSolrServer.getInstance();
 	}
 
@@ -87,7 +87,7 @@ public class EOTests
 	public static void main(String[] args) throws DataException, SchedulingException
 	{
 		try
-		{	
+		{
 			Record record = new Record();
 			record.setCreatedAt(new Date());
 			record.setDeleted(false);
@@ -277,27 +277,27 @@ public class EOTests
 					"\n\t<marc:subfield code=\"d\">v. 12</marc:subfield>" +
 					"\n\t<marc:subfield code=\"b\">39087013612702</marc:subfield>" +
 					"\n\t</marc:datafield>");
-			
+
 			record.setProvider(new DefaultProviderDAO().getById(1));
-			
+
 			DefaultRecordService rs = new DefaultRecordService();
-			
+
 			System.out.println(formatter.format(new Date()) + " Begining insetion of 100,000 records.");
-			
+
 			for(int i = 0; i < 100000; i++)
 			{
 				rs.insert(record);
 			}
-			
+
 			System.out.println(formatter.format(new Date()) + " Finished insetion of 100,000 records.");
 
 			SolrIndexManager.getInstance().commitIndex();
-			
+
 			if(true) return;
-			
+
 			//File file = new File("C:\\AllXcProjects\\MetadataServicesToolkit\\serviceConfig\\DefaultNormalizationServiceConfig.xccfg");
 			//new DefaultServicesService().addNewService(file);
-			
+
 			return;
 		}
 		catch(Exception e)

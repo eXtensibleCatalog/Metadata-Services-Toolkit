@@ -34,6 +34,7 @@ import xc.mst.scheduling.Scheduler;
 import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.services.MetadataService;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -228,8 +229,8 @@ public class DefaultServicesService implements ServicesService
     		service.setName(name);
     		service.setServiceJar(jar);
     		service.setClassName(className);
-    		service.setHarvestOutLogFileName("logs/harvestOut/" + name + ".txt");
-    		service.setServicesLogFileName("logs/service/" + name + ".txt");
+    		service.setHarvestOutLogFileName(MSTConfiguration.getUrlPath() + "/logs/harvestOut/" + name + ".txt");
+    		service.setServicesLogFileName(MSTConfiguration.getUrlPath() + "/logs/service/" + name + ".txt");
     		service.setPort(port);
     		service.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
     		service.setXccfgFileName(configFile.getAbsolutePath());
@@ -567,8 +568,8 @@ public class DefaultServicesService implements ServicesService
     		service.setName(name);
     		service.setServiceJar(jar);
     		service.setClassName(className);
-    		service.setHarvestOutLogFileName("logs/harvestOut/" + name + ".txt");
-    		service.setServicesLogFileName("logs/service/" + name + ".txt");
+    		service.setHarvestOutLogFileName(MSTConfiguration.getUrlPath() + "/logs/harvestOut/" + name + ".txt");
+    		service.setServicesLogFileName(MSTConfiguration.getUrlPath() + "/logs/service/" + name + ".txt");
     		service.setPort(port);
     		service.setXccfgFileName(configFile.getAbsolutePath());
     		service.setHarvestOutWarnings(0);

@@ -43,15 +43,10 @@ import xc.mst.utils.LogWriter;
 public class HarvestRunner
 {
 	/**
-	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
-	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
-
-	/**
 	 * Data access object for getting provider
 	 */
 	private static ProviderDAO providerDao = new DefaultProviderDAO();
-	
+
 	/**
 	 * Data access object for getting harvests
 	 */
@@ -61,7 +56,7 @@ public class HarvestRunner
 	 * Data access object for getting harvest schedules
 	 */
 	private static HarvestScheduleDAO harvestScheduleDao = new DefaultHarvestScheduleDAO();
-	
+
 	/**
 	 * Data access object for getting harvest schedule steps
 	 */
@@ -135,14 +130,14 @@ public class HarvestRunner
 	 * The request run by the harvester
 	 */
 	private String request = null;
-	
+
 	/**
 	 * Constructs an XC_Harvester to run the passed harvest schedule step
 	 *
 	 * @param harvestScheduleId The ID of the harvest schedule to run
 	 * @throws OAIErrorException If the OAI provider being harvested returned an OAI error
 	 * @throws Hexception If a serious error occurred which prevented the harvest from being completed
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public HarvestRunner(int harvestScheduleId) throws OAIErrorException, Hexception, DatabaseConfigException
 	{
@@ -153,36 +148,36 @@ public class HarvestRunner
 	} // end constructor(int)
 
 	public void runHarvest()
-	{	
+	{
 		try
 		{
 			StringBuilder requests = new StringBuilder();
-			
+
 			for(HarvestScheduleStep step : harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()))
 			{
 				runHarvestStep(step);
-				
+
 				if(requests.length() == 0)
 					requests.append(request);
 				else
 					requests.append("\n").append(request);
 			}
-			
+
 			harvestSchedule.setRequest(requests.toString());
-			
+
 			harvestScheduleDao.update(harvestSchedule, false);
 
 			// Set the current harvest's end time
 			currentHarvest.setEndTime(new Date());
 			harvestDao.update(currentHarvest);
-			
+
 			// Set the provider's last harvest time
 			provider = providerDao.getById(provider.getId());
 			provider.setLastHarvestEndTime(new Date());
 			providerDao.update(provider);
 
 			LogWriter.addInfo(provider.getLogFileName(), "Finished harvest of " + baseURL);
-		} 
+		}
 		catch(DatabaseConfigException e)
 		{
 			log.error("Unable to connect to the database with the parameters defined in the configuration file.", e);
@@ -192,14 +187,14 @@ public class HarvestRunner
 			log.error("An error occurred while updating the harvest schedule's request field.", e);
 		}
 	}
-	
+
 	/**
 	 * Runs the harvest
 	 */
 	private void runHarvestStep(HarvestScheduleStep harvestScheduleStep)
 	{
 		try
-		{	
+		{
 			metadataPrefix = harvestScheduleStep.getFormat().getName();
 
 			// If there was a set, set up the setSpec
@@ -212,7 +207,7 @@ public class HarvestRunner
 			// Harvest all records if the from parameter was not provided
 			if(from != null)
 				harvestAll = false;
-			
+
 			// The time when we started the harvest
 			Date startTime = new Date();
 
@@ -239,7 +234,7 @@ public class HarvestRunner
 			// Set the request used to run the harvest
 			currentHarvest = harvestDao.getById(currentHarvest.getId());
 			request = currentHarvest.getRequest();
-			
+
 			// Set the harvest schedule step's last run date to the time when we started the harvest.
 			harvestScheduleStep.setLastRan(startTime);
 			harvestScheduleStepDao.update(harvestScheduleStep, harvestScheduleStep.getSchedule().getId());
@@ -249,10 +244,10 @@ public class HarvestRunner
 			log.error("An error occurred while harvesting " + baseURL, e);
 		} // end catch(Exception)
 	} // end method runHarvest()
-	
+
 	/**
 	 * Gets the request used to start the harvest
-	 * 
+	 *
 	 * @return The OAI request used to start the harvest
 	 */
 	public String getRequest()

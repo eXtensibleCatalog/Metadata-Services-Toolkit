@@ -9,12 +9,13 @@
 
 package xc.mst.action.services;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
@@ -22,6 +23,9 @@ import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserService;
+import xc.mst.utils.MSTConfiguration;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Edits the details of a service
@@ -71,7 +75,7 @@ public class EditService extends ActionSupport
                 return INPUT;
             }
             setTemporaryService(temporaryService);
-            File dir = new File("serviceConfig");
+            File dir = new File(MSTConfiguration.getUrlPath() + "\\serviceConfig");
             
             FileFilter fileFilter =  new XCCGFileFilter();
 
@@ -108,7 +112,7 @@ public class EditService extends ActionSupport
                 userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
                 return INPUT;
             }
-            String location = "serviceConfig/" + getSelectedLocation();
+            String location = MSTConfiguration.getUrlPath() + "\\serviceConfig\\" + getSelectedLocation();
             File file = new File(location);
             servicesService.updateService(file,tempService);
             return SUCCESS;
@@ -121,7 +125,7 @@ public class EditService extends ActionSupport
         }
         finally
         {
-            File dir = new File("serviceConfig");
+            File dir = new File(MSTConfiguration.getUrlPath() + "\\serviceConfig");
             FileFilter fileFilter =  new XCCGFileFilter();
 
             File[] fileList = dir.listFiles(fileFilter);

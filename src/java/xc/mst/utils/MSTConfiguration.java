@@ -1,0 +1,92 @@
+/**
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  */
+
+
+package xc.mst.utils;
+
+import java.io.File;
+
+import org.apache.log4j.Logger;
+import org.jconfig.Configuration;
+import org.jconfig.ConfigurationManager;
+import org.jconfig.ConfigurationManagerException;
+import org.jconfig.handler.XMLFileHandler;
+
+import xc.mst.constants.Constants;
+
+/**
+ * Configuration for Metadata services toolkit 
+ * 
+ * @author Sharmila Ranganathan
+ *
+ */
+public class MSTConfiguration {
+
+
+	/*  The instance of the MST configuration	 */
+	private static MSTConfiguration instance = null;
+	
+	/* The instance of the configuration */
+	private static Configuration configuration = null;
+	
+	/** Name of category */
+	private static String urlPath;
+	
+	/**
+	 * The logger object
+	 */
+	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+	
+	private MSTConfiguration() {}
+	
+	/**
+	 * Gets the singleton instance of the LuceneIndexManager
+	 */
+	public static MSTConfiguration getInstance(String urlPath)
+	{
+		if(instance != null) {
+			return instance;
+		}
+
+		createConfiguration(urlPath);
+		instance = new MSTConfiguration();
+		return instance;
+	}
+	
+	private static void createConfiguration(String urlPath) {
+		
+		MSTConfiguration.urlPath = urlPath;
+	    
+		File file = new File(System.getProperty("user.dir") + "\\" + urlPath +"\\MetadataServicesToolkit_config.xml");
+	    
+	    XMLFileHandler handler = new XMLFileHandler();
+        handler.setFile(file);
+        
+        ConfigurationManager configurationManager =
+            ConfigurationManager.getInstance();
+        try {
+	        configurationManager.load(handler, "myConfig");
+	        configuration =  ConfigurationManager.getConfiguration("myConfig");
+        } catch (ConfigurationManagerException cme) {
+        	log.error("Exception occured while loading the Configuration", cme);
+        }
+	}
+	
+	
+	public static String getProperty(String name) {
+		return configuration.getProperty(name);
+	}
+
+	public  static String getUrlPath() {
+		return urlPath;
+	}
+
+
+
+}

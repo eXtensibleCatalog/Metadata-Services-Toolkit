@@ -49,7 +49,7 @@ public abstract class WorkService
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit.
 	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
 
 	/**
 	 * An Object shared by all LuceneObjects which manages the Lucene index
@@ -101,7 +101,7 @@ public abstract class WorkService
 	 * Gets the Work that matches the passed XC work ID
 	 *
 	 * @param The XC work ID of the target work element
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Work getByXcWorkId(long workId) throws DatabaseConfigException, IndexException;
 
@@ -195,7 +195,7 @@ public abstract class WorkService
 	 *
 	 * @param doc The document containing information on the Work.
 	 * @return The work which was contained in the passed Document.
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Work getWorkFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
@@ -215,7 +215,7 @@ public abstract class WorkService
 	 * @param doc The document whose fields need to be set.
 	 * @param generateNewId True to generate a new record ID for the work, false to use the work's current ID
 	 * @return A reference to the Document after its fields have been set
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	protected abstract SolrInputDocument setFieldsOnDocument(Work work, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 

@@ -59,7 +59,7 @@ public class TestServices
 	static
 	{
 		// Load the configuration file
-		configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+		configuration = ConfigurationManager.getConfiguration();
 
 		// Configure the log file location as the value found in the configuration file.
 		String logConfigFileLocation = configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
@@ -72,10 +72,10 @@ public class TestServices
 			System.err.println("The configuration file was invalid or did not exist.");
 			System.exit(1);
 		}
-		
+
 		MSTSolrServer.getInstance();
 	}
-	
+
 	private static File unprocessedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggInput");
 	private static File processedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggOutput");
 
@@ -94,7 +94,7 @@ public class TestServices
 	public static void main(String[] args) throws DataException, IOException, JDOMException, IndexException
 	{
 		RecordService recordService = new DefaultRecordService();
-		
+
 		try
 		{
 			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
@@ -112,7 +112,7 @@ public class TestServices
 			{
 				if(record.getService() != null && record.getService().getId() == serviceId)
 					saveRecordToFile(processedRecordsDir, record);
-				
+
 				recordService.delete(record);
 			}
 		}
@@ -130,13 +130,13 @@ public class TestServices
 		}
 		finally
 		{
-			try 
+			try
 			{
 				Thread.sleep(2000);
 				SolrIndexManager.getInstance().commitIndex();
 				Thread.sleep(2000);
-			} 
-			catch (InterruptedException e) 
+			}
+			catch (InterruptedException e)
 			{
 				e.printStackTrace();
 			}
@@ -149,7 +149,7 @@ public class TestServices
 		FormatDAO formatDao = new DefaultFormatDAO();
 		ServiceDAO serviceDao = new DefaultServiceDAO();
 		RecordService recordService = new DefaultRecordService();
-		
+
 		File[] testRecords = inputDirectory.listFiles();
 
 		for(int counter = 0; counter < testRecords.length; counter++)
@@ -232,7 +232,7 @@ public class TestServices
 //		}
 
 		try
-		{	
+		{
 			String fileName = directory.getAbsolutePath() + "\\" + record.getOaiIdentifier() + ".xml";
 			fileName = fileName.replaceAll("/", " ");
 			fileName = fileName.replaceAll(":", "-");

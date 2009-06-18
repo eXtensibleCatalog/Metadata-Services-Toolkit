@@ -30,10 +30,10 @@
 	<classpathentry kind="lib" path="lib/struts2-core-2.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/testng-5.8.jar"/>
 	<classpathentry kind="lib" path="lib/xwork-2.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/AllXcProjects/MetadataServicesToolkit/lib/solr-core-1.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/AllXcProjects/MetadataServicesToolkit/lib/stax-utils-snapshot-20040917.jar"/>
-	<classpathentry kind="lib" path="C:/AllXcProjects/MetadataServicesToolkit/lib/lucene-highlighter-2.4.0.jar"/>
-	<classpathentry kind="lib" path="C:/AllXcProjects/MetadataServicesToolkit/lib/lucene-snowball-2.4.0.jar"/>
-	<classpathentry kind="lib" path="C:/AllXcProjects/MetadataServicesToolkit/lib/lucene-spellchecker-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/solr-core-1.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/stax-utils-snapshot-20040917.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-highlighter-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-snowball-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-spellchecker-2.4.0.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

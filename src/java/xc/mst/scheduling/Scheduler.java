@@ -74,7 +74,7 @@ public class Scheduler extends Thread
 	static
 	{
 		// Load the configuration file
-		configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+		configuration = ConfigurationManager.getConfiguration();
 
 		// Abort if we could not find the configuration file.
 		String logConfigFileLocation = configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
@@ -117,14 +117,14 @@ public class Scheduler extends Thread
 			List<HarvestSchedule> schedulesToRun = null;
 
 			// Get the schedules to run
-			try 
+			try
 			{
 				schedulesToRun = harvestScheduleDao.getSchedulesToRun(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.DAY_OF_WEEK), now.get(Calendar.MINUTE));
-			} 
-			catch (DatabaseConfigException e1) 
+			}
+			catch (DatabaseConfigException e1)
 			{
 				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
-				
+
 				schedulesToRun = new ArrayList<HarvestSchedule>();
 			}
 
@@ -140,23 +140,23 @@ public class Scheduler extends Thread
 				scheduleThread(harvestThread);
 			} // end loop over schedules to be run
 
-		
+
 			if(runningJob == null)
 			{
 				WorkerThread jobToStart = waitingJobs.poll();
-				
+
 					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
 					if(jobToStart != null)
 					{
 						jobToStart.start();
 						runningJob = jobToStart;
 					} // end if(the service job queue was empty)
-				
+
 			}
 			else {
 				if(!runningJob.isAlive()){
 					WorkerThread jobToStart = waitingJobs.poll();
-					
+
 					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
 					if(jobToStart != null)
 					{
@@ -209,20 +209,20 @@ public class Scheduler extends Thread
 	{
 		killed = true;
 	} // end method kill()
-	
+
 	/**
 	 * Cancels the currently running service / harvest
 	 */
 	public static void cancelRunningJob(){
-		
+
 		runningJob.cancel();
 	}
-	
+
 	/**
 	 * Pauses the currently running service / harvest
 	 */
 	public static void pauseRunningJob(){
-		
+
 		runningJob.pause();
 	}
 
@@ -230,7 +230,7 @@ public class Scheduler extends Thread
 	 * Resumes the currently running service / harvest
 	 */
 	public static void resumePausedJob(){
-		
+
 		runningJob.proceed();
 	}
 
@@ -240,5 +240,5 @@ public class Scheduler extends Thread
 	public static void setJobCompletion(){
 		runningJob = null;
 	}
-	
+
 } // end class Scheduler

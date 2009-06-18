@@ -11,9 +11,13 @@ package xc.mst.manager.repository;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.RollingFileAppender;
+
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
+import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultProviderDAO;
@@ -24,6 +28,7 @@ import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
 import xc.mst.manager.processingDirective.ProcessingDirectiveService;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Service class that is used to Add/Delete/Update a Provider/Repository
@@ -75,7 +80,8 @@ public class DefaultProviderService implements ProviderService{
      * @throws xc.mst.dao.DataException
      */
     public void insertProvider(Provider provider) throws DataException{
-    	provider.setLogFileName("logs/harvestIn/"+provider.getName()+".txt");
+    	
+    	provider.setLogFileName(MSTConfiguration.getUrlPath() + "/" + "logs/harvestIn/"+provider.getName()+".txt");
         providerDao.insert(provider);
         LogWriter.addInfo(provider.getLogFileName(), "Beginning logging for " + provider.getName());
     }
@@ -113,7 +119,7 @@ public class DefaultProviderService implements ProviderService{
      * @throws xc.mst.dao.DataException
      */
     public void updateProvider(Provider provider) throws DataException{
-    	provider.setLogFileName("logs/harvestIn/"+provider.getName());
+    	provider.setLogFileName(MSTConfiguration.getUrlPath() + "/" + "logs/harvestIn/"+provider.getName()+".txt");
         providerDao.update(provider);
     }
 

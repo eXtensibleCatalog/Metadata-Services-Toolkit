@@ -73,10 +73,9 @@ public class Login extends ActionSupport implements ServletRequestAware {
 
 	/** A reference to the logger for this class */
 	private static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-	
+
 	/** Error type */
-	private String errorType; 
-	
+	private String errorType;
 
     /**
      * Overriding default implementation to login the user.
@@ -97,14 +96,14 @@ public class Login extends ActionSupport implements ServletRequestAware {
 
     	// Get the user object in session
 		User sessionUser = (User) request.getSession().getAttribute("user");
-		
+
 		if (log.isDebugEnabled()) {
 			log.debug("User in session: " + sessionUser);
 		}
 
 		// If user exist in session then forward to page for which user has permission
 		if (sessionUser != null) {
-            
+
             List<Permission> permissions = userService.getPermissionsForUserByTabOrderAsc(sessionUser);
 
             if (permissions != null) {
@@ -115,20 +114,20 @@ public class Login extends ActionSupport implements ServletRequestAware {
 	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Schedule")) {
 	            	setForwardLink("allSchedules.action");
 	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Services")) {
-	            	setForwardLink("listServices.action");            	
+	            	setForwardLink("listServices.action");
 	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Processing Rules")) {
 	            	setForwardLink("listProcessingDirectives.action");
 	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Browse Records")) {
-	            	setForwardLink("viewBrowseRecords.action");            	
+	            	setForwardLink("viewBrowseRecords.action");
 	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Logs")) {
 	            	setForwardLink("generalLog.action");
 	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Users/Groups")) {
-	            	setForwardLink("allUsers.action");            	
+	            	setForwardLink("allUsers.action");
 	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Configuration")) {
 	            	setForwardLink("viewEmailConfig.action");
 	            } else {
-	            	return "no-permission";        	
-	            }            
+	            	return "no-permission";
+	            }
             }
             if (log.isDebugEnabled()) {
             	log.debug("User exist in session. User forwarded to : " + forwardLink);
@@ -136,7 +135,7 @@ public class Login extends ActionSupport implements ServletRequestAware {
 
             return "user-initial-page";
 		}
-		
+
     	return SUCCESS;
     }
 
@@ -183,24 +182,24 @@ public class Login extends ActionSupport implements ServletRequestAware {
     	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Schedule")) {
     	            	setForwardLink("allSchedules.action");
     	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Services")) {
-    	            	setForwardLink("listServices.action");            	
+    	            	setForwardLink("listServices.action");
     	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Processing Rules")) {
     	            	setForwardLink("listProcessingDirectives.action");
     	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Browse Records")) {
-    	            	setForwardLink("viewBrowseRecords.action");            	
+    	            	setForwardLink("viewBrowseRecords.action");
     	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Logs")) {
     	            	setForwardLink("generalLog.action");
     	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Users/Groups")) {
-    	            	setForwardLink("allUsers.action");            	
+    	            	setForwardLink("allUsers.action");
     	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Configuration")) {
     	            	setForwardLink("viewEmailConfig.action");
     	            } else {
-    	            	return "no-permission";        	
-    	            }            
+    	            	return "no-permission";
+    	            }
                 } else {
-                	return "no-permission";  
+                	return "no-permission";
                 }
-                
+
 				resultName = SUCCESS;
 			} else {
 				servers = serverService.getAll();

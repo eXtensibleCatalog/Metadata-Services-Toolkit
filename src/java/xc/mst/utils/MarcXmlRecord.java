@@ -80,7 +80,7 @@ public class MarcXmlRecord
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
 	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
 
 	/**
 	 * Constructs a MarcXmlRecord based on a MARC XML record.
@@ -222,7 +222,7 @@ public class MarcXmlRecord
 					potentialResults.addAll(tagTo880s.get(targetField));
 
 				for(Element potentialResult : potentialResults)
-					if(getSubfieldOfField(potentialResult, '5').contains(configuration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+					if(getSubfieldOfField(potentialResult, '5').contains(MSTConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
 						results.add(potentialResult);
 
 				return results;
@@ -470,7 +470,7 @@ public class MarcXmlRecord
 		List<Element> fields = marcXml.getRootElement().getChildren("datafield", marcNamespace);
 
 		// The organization code from the configuration file
-		String orgCode = configuration.getProperty(Constants.CONFIG_ORGANIZATION_CODE);
+		String orgCode = MSTConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE);
 		// Iterate over the fields and find the one with the correct tag
 		for(Element field : fields)
 		{

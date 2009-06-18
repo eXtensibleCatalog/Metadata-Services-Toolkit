@@ -49,7 +49,7 @@ public abstract class ItemService
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit.
 	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
 
 	/**
 	 * An Object shared by all LuceneObjects which manages the Lucene index
@@ -91,7 +91,7 @@ public abstract class ItemService
 	 * Gets the Item that matches the passed XC item ID
 	 *
 	 * @param The XC item ID of the target item element
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Item getByXcItemId(long itemId) throws DatabaseConfigException, IndexException;
 
@@ -185,7 +185,7 @@ public abstract class ItemService
 	 *
 	 * @param doc The document containing information on the Item.
 	 * @return The item which was contained in the passed Document.
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Item getItemFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
@@ -205,7 +205,7 @@ public abstract class ItemService
 	 * @param doc The document whose fields need to be set.
 	 * @param generateNewId True to generate a new record ID for the item, false to use the item's current ID
 	 * @return A reference to the Document after its fields have been set
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	protected abstract SolrInputDocument setFieldsOnDocument(Item item, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 

@@ -21,6 +21,7 @@ import xc.mst.dao.DataException;
 import xc.mst.manager.processingDirective.ConfigFileException;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * This is the service class for adding a new service in the MST
@@ -93,7 +94,7 @@ public class AddService extends ActionSupport
     public String execute()
     {
        
-            File dir = new File("serviceConfig");
+            File dir = new File(MSTConfiguration.getUrlPath() + "\\serviceConfig");
             FileFilter fileFilter =  new XCCGFileFilter();
 
             File[] fileList = dir.listFiles(fileFilter);
@@ -115,7 +116,7 @@ public class AddService extends ActionSupport
     {
         try
         {
-            String location = "serviceConfig/" + getSelectedLocation();
+            String location = MSTConfiguration.getUrlPath() + "\\serviceConfig\\" + getSelectedLocation();
             File file = new File(location);
             servicesService.addNewService(file);
             return SUCCESS;
@@ -140,7 +141,7 @@ public class AddService extends ActionSupport
         }
         finally
         {
-            File dir = new File("serviceConfig");
+            File dir = new File(MSTConfiguration.getUrlPath() + "\\serviceConfig");
             FileFilter fileFilter =  new XCCGFileFilter();
 
             File[] fileList = dir.listFiles(fileFilter);

@@ -49,7 +49,7 @@ public abstract class ExpressionService
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit.
 	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration("MetadataServicesToolkit");
+	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
 
 	/**
 	 * An Object shared by all LuceneObjects which manages the Lucene index
@@ -70,7 +70,7 @@ public abstract class ExpressionService
 	 * Gets the Expression that matches the passed XC expression ID
 	 *
 	 * @param expressionId The XC expression ID of the target expression element
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Expression getByXcExpressionId(long expressionId) throws DatabaseConfigException, IndexException;
 
@@ -164,7 +164,7 @@ public abstract class ExpressionService
 	 *
 	 * @param doc The document containing information on the Expression.
 	 * @return The expression which was contained in the passed Document.
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Expression getExpressionFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 
@@ -184,7 +184,7 @@ public abstract class ExpressionService
 	 * @param doc The document whose fields need to be set.
 	 * @param generateNewId True to generate a new record ID for the expression, false to use the expression's current ID
 	 * @return A reference to the Document after its fields have been set
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	protected abstract SolrInputDocument setFieldsOnDocument(Expression expression, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 
