@@ -600,7 +600,7 @@ public class XCRecord
 		
 		/*$$ EXPRESSION $$*/
 		// Create original Expression Document
-		Element expressionToWorkLinkingElement = new Element("link", XC_NAMESPACE);
+		Element expressionToWorkLinkingElement = new Element("workExpressed", XC_NAMESPACE);
 		expressionToWorkLinkingElement.setText(workElementOaiID);
 		Element tempXcExpressionElement = (Element)xcExpressionElement.clone();
 		
@@ -696,7 +696,7 @@ public class XCRecord
 			}
 			
 			// Link to corresponding work doc
-			expressionToWorkLinkingElement = new Element("link", XC_NAMESPACE);
+			expressionToWorkLinkingElement = new Element("workExpressed", XC_NAMESPACE);
 			expressionToWorkLinkingElement.setText(workElementOaiID);
 			newExpressionElement.addContent("\n\t\t")
 								.addContent(expressionToWorkLinkingElement.detach());
@@ -724,7 +724,7 @@ public class XCRecord
 		for (Document document : list) {
 			if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("expression"))
 			{
-				Element linkExpression =  new Element("link",XC_NAMESPACE);
+				Element linkExpression =  new Element("expressionManifested",XC_NAMESPACE);
 				linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
 				xcManifestationElement.addContent("\n\t\t")
 									  .addContent(linkExpression.detach());
@@ -744,7 +744,7 @@ public class XCRecord
 			for (Document document : list) {
 				if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("manifestation"))
 				{
-					Element linkExpression =  new Element("link",XC_NAMESPACE);
+					Element linkExpression =  new Element("manifestationHeld",XC_NAMESPACE);
 					linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
 					holdingsElement.addContent("\n\t\t").addContent(linkExpression.detach());
 				}
@@ -764,7 +764,7 @@ public class XCRecord
 			for (Document document : list) {
 				if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("holdings"))
 				{
-					Element linkExpression =  new Element("link",XC_NAMESPACE);
+					Element linkExpression =  new Element("holdingsExemplified",XC_NAMESPACE);
 					linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
 					xcItemElement.addContent("\n\t\t").addContent(linkExpression.detach());
 				}
