@@ -660,6 +660,9 @@ public abstract class MetadataService
 						// Mark the output record as a successor of the input record
 						processMe.addSuccessor(outgoingRecord);
 
+						// Mark the input record as a predecessor of the output record
+						outgoingRecord.addProcessedFrom(processMe);
+						
 						// Mark the record as not coming from a provider
 						outgoingRecord.setProvider(null);
 
@@ -940,6 +943,7 @@ public abstract class MetadataService
 	{
 		try
 		{
+			SolrIndexManager.getInstance().waitForJobCompletion(5000);
 			SolrIndexManager.getInstance().commitIndex();
 		}
 		catch (IndexException e)
@@ -983,6 +987,32 @@ public abstract class MetadataService
 		return recordService.getByProcessedFrom(record.getId());
 	}
 
+	/**
+	 * Gets the output record for the service with the passed OAI identifier
+	 * 
+	 * @param oaiId The OAI identifier of the record to get
+	 * @return The output record for the service with the passed OAI identifier
+	 * @throws IndexException 
+	 * @throws DatabaseConfigException 
+	 */
+	protected Record getOutputByOaiId(String oaiId) throws IndexException, DatabaseConfigException
+	{
+		return recordService.getByOaiIdentifierAndService(oaiId, service.getId());
+	}
+	
+	/**
+	 * Gets the input record for the service with the passed OAI identifier
+	 * 
+	 * @param oaiId The OAI identifier of the record to get
+	 * @return The input record for the service with the passed OAI identifier
+	 * @throws IndexException 
+	 * @throws DatabaseConfigException 
+	 */
+	protected Record getInputByOaiId(String oaiId) throws IndexException, DatabaseConfigException
+	{
+		return recordService.getInputForServiceByOaiIdentifier(oaiId, service.getId());
+	}
+	
 	/**
 	 * Adds a new set to the database
 	 *

@@ -14,9 +14,11 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
+import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.WorkList;
 
 /**
@@ -74,25 +76,25 @@ public class DefaultWorkService extends WorkService
 		query.setQuery(DefaultRecordService.FIELD_TRAIT + ":" + trait + " AND "
 				+  RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Work.indexedObjectType);
 
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the works
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find any works with trait " + trait + ".");
-
-			return new WorkList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " works with trait " + trait + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new WorkList(docs);
+		return new WorkList(query);
 	} // end method getByIdentifierForTheWork(String)
 
+	@Override
+	public WorkList getByProcessedFrom(Record processedFrom) throws IndexException
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting all records that were processed from the record with ID " + processedFrom.getId());
+
+		// Create a query to get the Documents with the requested input for service IDs
+		SolrQuery query = new SolrQuery();
+		query.setQuery(RecordService.FIELD_PROCESSED_FROM + ":" + Long.toString(processedFrom.getId()) + " AND "
+				    +  RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Work.indexedObjectType);
+
+		// Return the list of results
+		return new WorkList(query);
+	} // end method getByProcessedFrom(long)
+	
 	@Override
 	public WorkList getUnprocessedWorks(int serviceId) throws IndexException
 	{
@@ -104,23 +106,8 @@ public class DefaultWorkService extends WorkService
 		query.setQuery(FIELD_PROCESSED + ":false AND "
 				+ RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Work.indexedObjectType);
 
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find any matching works
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find any unprocessed works.");
-
-			return new WorkList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " unprocessed works from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new WorkList(docs);
+		return new WorkList(query);
 	} // end method getUnprocessendWorks()
 
 	@Override
@@ -160,4 +147,6 @@ public class DefaultWorkService extends WorkService
 
 		return doc;
 	} // end method setFieldsOnDocument(Work, Document, boolean)
+	
+	
 } // end class DefaultWorkService

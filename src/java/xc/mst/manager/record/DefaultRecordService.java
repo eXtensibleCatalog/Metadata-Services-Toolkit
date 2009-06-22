@@ -460,6 +460,36 @@ public class DefaultRecordService extends RecordService
 	} // end method getByOaiIdentifierAndService(String, int)
 
 	@Override
+	public Record getInputForServiceByOaiIdentifier(String identifier, int serviceId) throws DatabaseConfigException, IndexException 
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting the input record with the OAI identifier " + identifier + " and service ID " + serviceId);
+
+		// Create a query to get the record with the requested OAI identifier and service ID
+		SolrQuery query = new SolrQuery();
+		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:") + " AND "
+				+ FIELD_PROCESSED_BY_SERVICE_ID + ":" + Integer.toString(serviceId));
+		
+		// Get the result of the query
+		SolrDocumentList docs = null;
+		docs = indexMgr.getDocumentList(query);
+
+		// Return null if we couldn't find the record
+		if(docs == null || docs.size() == 0)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Could not find the input record with the OAI identifier " + identifier  + " and service ID " + serviceId + ".");
+
+			return null;
+		} // end if(record not found)
+
+		if(log.isDebugEnabled())
+			log.debug("Parcing the input record with the OAI identifier " + identifier + " and service ID " + serviceId + " from the Lucene Document it was stored in.");
+
+		return getRecordFromDocument(docs.get(0));
+	}
+
+	@Override
 	public RecordList getByProcessedFrom(long processedFromId) throws IndexException
 	{
 		if(log.isDebugEnabled())
@@ -726,7 +756,7 @@ public class DefaultRecordService extends RecordService
 		Collection<Object> uplinks = doc.getFieldValues(FIELD_UP_LINK);
 		if(uplinks != null)
 			for(Object uplink : uplinks)
-				record.addUpLink(loadBasicRecord(Long.parseLong((String)uplink)));
+				record.addUpLink(getByOaiIdentifier((String)uplink));
 		
 		Collection<Object> processedFroms = doc.getFieldValues(FIELD_PROCESSED_FROM);
 		if(processedFroms != null)
@@ -855,7 +885,7 @@ public class DefaultRecordService extends RecordService
 			doc.addField(FIELD_UPDATED_AT, new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(record.getUpdatedAt()));
 
 		for(Record upLink : record.getUpLinks())
-			doc.addField(FIELD_UP_LINK, Long.toString(upLink.getId()));
+			doc.addField(FIELD_UP_LINK, upLink.getOaiIdentifier());
 
 		for(Set set : record.getSets())
 		{

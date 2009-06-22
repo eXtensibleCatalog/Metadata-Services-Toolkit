@@ -14,10 +14,13 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
+import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Manifestation;
+import xc.mst.bo.record.Record;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.index.ExpressionList;
 import xc.mst.utils.index.HoldingsList;
 
 /**
@@ -72,23 +75,8 @@ public class DefaultHoldingsService extends HoldingsService
 		SolrQuery query = new SolrQuery();
 		query.setQuery(DefaultRecordService.FIELD_TRAIT + ":" + trait + " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Holdings.indexedObjectType);
 
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the holdings
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find any holdings with trait " + trait + ".");
-
-			return new HoldingsList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " holdings with trait " + trait + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new HoldingsList(docs);
+		return new HoldingsList(query);
 	} // end method getByXcRecordId(String)
 
 	@Override
@@ -103,23 +91,8 @@ public class DefaultHoldingsService extends HoldingsService
 		SolrQuery query = new SolrQuery();
 		query.setQuery(DefaultRecordService.FIELD_TRAIT + ":" + trait + " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Holdings.indexedObjectType);
 
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the holdings
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find any holdings with trait " + trait + ".");
-
-			return new HoldingsList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " holdings with trait " + trait + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new HoldingsList(docs);
+		return new HoldingsList(query);
 	} // end method getByManifestationHeld(String)
 
 	@Override
@@ -133,26 +106,25 @@ public class DefaultHoldingsService extends HoldingsService
 		query.setQuery(DefaultRecordService.FIELD_UP_LINK + ":" + Long.toString(manifestation.getId())
 				+ " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Holdings.indexedObjectType);
 
-
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find any matching holdings
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any holdings linked to the manifestation with ID " + manifestation.getId() + ".");
-
-			return new HoldingsList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " holdings linked to the manifestation with ID " + manifestation.getId() + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new HoldingsList(docs);
+		return new HoldingsList(query);
 	} // end method getByLinkedManifestation(Manifestation)
 
+	@Override
+	public HoldingsList getByProcessedFrom(Record processedFrom) throws IndexException
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting all records that were processed from the record with ID " + processedFrom.getId());
+
+		// Create a query to get the Documents with the requested input for service IDs
+		SolrQuery query = new SolrQuery();
+		query.setQuery(RecordService.FIELD_PROCESSED_FROM + ":" + Long.toString(processedFrom.getId()) + " AND "
+				    +  RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Holdings.indexedObjectType);
+
+		// Return the list of results
+		return new HoldingsList(query);
+	} // end method getByProcessedFrom(long)
+	
 	@Override
 	public Holdings getHoldingsFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{

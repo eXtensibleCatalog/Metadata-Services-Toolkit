@@ -14,10 +14,13 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
+import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Item;
+import xc.mst.bo.record.Record;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.index.ExpressionList;
 import xc.mst.utils.index.ItemList;
 
 /**
@@ -73,23 +76,8 @@ public class DefaultItemService extends ItemService
 		SolrQuery query = new SolrQuery();
 		query.setQuery(DefaultRecordService.FIELD_TRAIT + ":" + trait + " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Item.indexedObjectType);
 
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the works
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find any items with trait " + trait + ".");
-
-			return new ItemList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " items with trait " + trait + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new ItemList(docs);
+		return new ItemList(query);
 	} // end method getByHoldingsExemplified(String)
 
 	@Override
@@ -103,25 +91,25 @@ public class DefaultItemService extends ItemService
 		query.setQuery(DefaultRecordService.FIELD_UP_LINK + ":" + Long.toString(holdings.getId())
 					+ " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + Item.indexedObjectType);
 
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find any matching items
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any items linked to the holdings with ID " + holdings.getId() + ".");
-
-			return new ItemList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " items linked to the holdings with ID " + holdings.getId() + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new ItemList(docs);
+		return new ItemList(query);
 	} // end method getByLinkedHoldings(Holdings)
 
+	@Override
+	public ItemList getByProcessedFrom(Record processedFrom) throws IndexException
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting all records that were processed from the record with ID " + processedFrom.getId());
+
+		// Create a query to get the Documents with the requested input for service IDs
+		SolrQuery query = new SolrQuery();
+		query.setQuery(RecordService.FIELD_PROCESSED_FROM + ":" + Long.toString(processedFrom.getId()) + " AND "
+				    +  RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Item.indexedObjectType);
+
+		// Return the list of results
+		return new ItemList(query);
+	} // end method getByProcessedFrom(long)
+	
 	@Override
 	public Item getItemFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{

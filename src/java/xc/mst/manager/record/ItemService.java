@@ -19,6 +19,7 @@ import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Item;
+import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -102,6 +103,14 @@ public abstract class ItemService
 	 */
 	public abstract ItemList getByLinkedHoldings(Holdings holdings) throws IndexException;
 
+	/**
+	 * Gets all items from the index which have been processed from the specified record
+	 *
+	 * @param processedFrom The ID of the original record whose processed Records we're getting
+	 * @return A list of all records in the index which have been processed from the specified record
+	 */
+	public abstract ItemList getByProcessedFrom(Record processedFrom) throws IndexException;
+	
 	/**
 	 * Inserts an item into the index
 	 *

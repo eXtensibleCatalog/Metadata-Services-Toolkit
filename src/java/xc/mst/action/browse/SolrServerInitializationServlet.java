@@ -10,11 +10,14 @@
 package xc.mst.action.browse;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.RollingFileAppender;
 
 import xc.mst.constants.Constants;
 import xc.mst.manager.record.MSTSolrServer;
@@ -47,7 +50,7 @@ public class SolrServerInitializationServlet extends HttpServlet
 		}	
 		
 		// Get the port on which the request is coming in.  This port
-		// is used to create SolrServer
+		// is used to create SolrServer		
 		MSTSolrServer.getInstance();
 
 		if(log.isDebugEnabled()) {
@@ -55,8 +58,4 @@ public class SolrServerInitializationServlet extends HttpServlet
 		}
 	    
 	}
-
-
-
-
 }

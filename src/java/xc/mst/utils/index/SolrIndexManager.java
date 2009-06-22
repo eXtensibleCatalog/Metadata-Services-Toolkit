@@ -192,6 +192,15 @@ public class SolrIndexManager {
 	}
 	
 	/**
+	 * Makes the calling Thread yield until all add/update/delete jobs have completed.
+	 * 
+	 * Since SolrIndexManager is single Threaded, this method does nothing
+	 */
+	public void waitForJobCompletion(long timeout)
+	{	
+	}
+	
+	/**
 	 * Adds a document to the solr index
 	 *
 	 * @param doc The document to add

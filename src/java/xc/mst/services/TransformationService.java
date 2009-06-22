@@ -353,7 +353,6 @@ public class TransformationService extends MetadataService
 				
 				Record xcRecord = new Record();
 				xcRecord.setOaiXml(writer.toString());
-				xcRecord.addProcessedFrom(record);
 				xcRecord.setFormat(xcFormat);
 				xcRecord.setOaiIdentifier(document.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("id"));
 

@@ -18,12 +18,14 @@ import org.apache.solr.common.SolrInputDocument;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
+import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.index.IndexManagerFactory;
+import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 import xc.mst.utils.index.WorkList;
 
@@ -106,13 +108,21 @@ public abstract class WorkService
 	public abstract Work getByXcWorkId(long workId) throws DatabaseConfigException, IndexException;
 
 	/**
+	 * Gets all works from the index which have been processed from the specified record
+	 *
+	 * @param processedFrom The ID of the original record whose processed Records we're getting
+	 * @return A list of all records in the index which have been processed from the specified record
+	 */
+	public abstract WorkList getByProcessedFrom(Record processedFrom) throws IndexException;
+	
+	/**
 	 * Gets a list of Works that have not been processed
 	 *
 	 * @param serviceId The ID of the service whose unprocessed works to get
 	 * @return A list of Works that have not been processed
 	 */
 	public abstract WorkList getUnprocessedWorks(int serviceId) throws IndexException;
-
+	
 	/**
 	 * Inserts a work into the index
 	 *

@@ -335,7 +335,6 @@ public class NormalizationService extends MetadataService
 				// Create the normalized record
 				Record normalizedRecord = Record.copyRecord(record);
 				normalizedRecord.setOaiXml((new XMLOutputter()).outputString(normalizedXml.getModifiedMarcXml()));
-				normalizedRecord.addProcessedFrom(record);
 				normalizedRecord.setFormat(marcxmlFormat);
 				normalizedRecord.setOaiIdentifier(getNextOaiId());
 

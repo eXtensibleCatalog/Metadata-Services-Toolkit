@@ -16,8 +16,10 @@ import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Manifestation;
+import xc.mst.bo.record.Record;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.index.ExpressionList;
 import xc.mst.utils.index.ManifestationList;
 
 /**
@@ -75,23 +77,8 @@ public class DefaultManifestationService extends ManifestationService
 		query.setQuery(DefaultRecordService.FIELD_TRAIT + ":" + trait + " AND "
 				+ RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Manifestation.indexedObjectType);
 
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find the manifestations
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find any manifestations with trait " + trait + ".");
-
-			return new ManifestationList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " manifestations with trait " + trait + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new ManifestationList(docs);
+		return new ManifestationList(query);
 	} // end method getByXcRecordId(String)
 
 	@Override
@@ -105,25 +92,25 @@ public class DefaultManifestationService extends ManifestationService
 		query.setQuery(DefaultRecordService.FIELD_UP_LINK + ":" + Long.toString(expression.getId()) + " AND "
 				+ RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Manifestation.indexedObjectType );
 
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find any matching manifestations
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any manifestations linked to the expression with ID " + expression.getId() + ".");
-
-			return new ManifestationList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " manifestations linked to the expression with ID " + expression.getId() + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new ManifestationList(docs);
+		return new ManifestationList(query);
 	} // end method getByLinkedExpression(Expression)
 
+	@Override
+	public ManifestationList getByProcessedFrom(Record processedFrom) throws IndexException
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting all records that were processed from the record with ID " + processedFrom.getId());
+
+		// Create a query to get the Documents with the requested input for service IDs
+		SolrQuery query = new SolrQuery();
+		query.setQuery(RecordService.FIELD_PROCESSED_FROM + ":" + Long.toString(processedFrom.getId()) + " AND "
+				    +  RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Manifestation.indexedObjectType);
+
+		// Return the list of results
+		return new ManifestationList(query);
+	} // end method getByProcessedFrom(long)
+	
 	@Override
 	public Manifestation getManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{

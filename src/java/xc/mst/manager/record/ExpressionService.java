@@ -18,6 +18,7 @@ import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.record.Expression;
+import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
@@ -26,6 +27,7 @@ import xc.mst.manager.IndexException;
 import xc.mst.utils.index.ExpressionList;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.SolrIndexManager;
+import xc.mst.utils.index.WorkList;
 
 /**
  * Service class to query, add, update and delete records from an index.
@@ -81,6 +83,14 @@ public abstract class ExpressionService
 	 */
 	public abstract ExpressionList getByLinkedWork(Work work) throws IndexException;
 
+	/**
+	 * Gets all expressions from the index which have been processed from the specified record
+	 *
+	 * @param processedFrom The ID of the original record whose processed Records we're getting
+	 * @return A list of all records in the index which have been processed from the specified record
+	 */
+	public abstract ExpressionList getByProcessedFrom(Record processedFrom) throws IndexException;
+	
 	/**
 	 * Inserts a expression into the index
 	 *

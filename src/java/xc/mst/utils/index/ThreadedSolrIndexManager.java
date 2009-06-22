@@ -37,29 +37,9 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 	private static Configuration configuration = ConfigurationManager.getConfiguration();
 
 	/**
-	 * Total time spent inserting
+	 * The number of Jobs which have been scheduled to run but have not been completed
 	 */
-   private static long totalInsert = 0;
-
-    /**
-	 * Timestamp before an insert is executed
-	 */
-	private long startSetupInsert = 0;
-
-	/**
-	 * Timestamp after an insert is executed
-	 */
-	private long finishSetupInsert = 0;
-
-	/**
-	 * Total time spent inserting
-	 */
-	private static long totalSetupInsert = 0;
-
-   /**
-    * Number of inserts
-    */
-   private static int counter = 0;
+	private int numQueuedJobs = 0;
 
 	/**
 	 * Private default constructor
@@ -84,8 +64,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 											new ArrayBlockingQueue<Runnable>(maxQueueSize, false),
 											new ThreadPoolExecutor.CallerRunsPolicy());
 	}
-
-
+	
 	/**
 	 * Gets the singleton instance of the LuceneIndexManager
 	 */
@@ -116,17 +95,11 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 	public boolean addDoc(SolrInputDocument doc) throws IndexException
 	{
 		log.debug("Add index to Solr - begin");
-		startSetupInsert = System.currentTimeMillis();
 
 		// Check if solr server is null
 		if (server == null)
 		{
 			log.error("Solr server is null");
-
-			finishSetupInsert = System.currentTimeMillis();
-			totalSetupInsert += (finishSetupInsert - startSetupInsert);
-			if(counter % 5000 == 0)
-				log.info("Time for setting up " + counter + " inserts is " + totalSetupInsert);
 
 			return false;
 		}
@@ -134,20 +107,16 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 		{
 			try
 			{
-				threadPool.execute(new Job(doc));
-
-				finishSetupInsert = System.currentTimeMillis();
-				totalSetupInsert += (finishSetupInsert - startSetupInsert);
-				if(counter % 5000 == 0)
-					log.info("Time for setting up " + counter + " inserts is " + totalSetupInsert);
+				synchronized(this)
+				{
+					threadPool.execute(new Job(doc));
+					log.info("incrementing numQueuedJobs");
+					numQueuedJobs++;
+					log.info("incremented numQueuedJobs: " + numQueuedJobs);
+				}
 			}
 			catch(RuntimeException e)
-			{
-				finishSetupInsert = System.currentTimeMillis();
-				totalSetupInsert += (finishSetupInsert - startSetupInsert);
-				if(counter % 5000 == 0)
-					log.info("Time for setting up " + counter + " inserts is " + totalSetupInsert);
-
+			{	
 				throw new IndexException(e.getMessage());
 			}
 
@@ -155,6 +124,25 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 		}
 	}
 
+	/**
+	 * Makes the calling Thread yield until all add/update/delete jobs have completed.
+	 */
+	public void waitForJobCompletion(long timeout)
+	{
+		long start = System.currentTimeMillis();
+		
+		while(numQueuedJobs > 0)
+		{
+			if(timeout < System.currentTimeMillis() - start)
+			{
+				log.warn("ThreadedSolrIndexManager's jobs aren't getting marked as finished, timeout of " + timeout + " was reached.");
+				break;
+			}
+				
+			Thread.yield();
+		}
+	}
+	
 	/**
 	 * A task that adds a document to the SOLR Index Manager
 	 * @author vinaykumarb
@@ -166,16 +154,6 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 		 * Document to be added to SOLR
 		 */
 		SolrInputDocument doc;
-
-		/**
-		 * Timestamp before an insert is executed
-		 */
-		private long startInsert = 0;
-
-		/**
-		 * Timestamp after an insert is executed
-		 */
-		private long finishInsert = 0;
 
 		/**
 		 * Creates a new Job with the given initial parameters.
@@ -191,9 +169,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 		 */
 		public void run() throws RuntimeException
 		{
-			startInsert = System.currentTimeMillis();
-
-			try
+			try 
 			{
 				server.add(doc);
 			}
@@ -218,7 +194,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 			}
 			catch (IOException ioe)
 			{
-				log.debug(ioe);
+				log.error("An IOException occurred", ioe);
 
 				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index: " + ioe.getMessage());
 
@@ -235,13 +211,17 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 
 				throw new RuntimeException(ioe.getMessage());
 			}
-
+			finally
+			{
+				synchronized(this)
+				{
+					log.info("decrementing numQueuedJobs");
+					numQueuedJobs--;
+					log.info("decremented numQueuedJobs: " + numQueuedJobs);
+				}
+			}
+			
 			log.debug("Add index to Solr - end");
-			finishInsert = System.currentTimeMillis();
-			totalInsert += (finishInsert - startInsert);
-			counter++;
-			if(counter % 5000 == 0)
-				log.info("Time for " + counter + " inserts is " + totalInsert);
 		}
 	}
 }

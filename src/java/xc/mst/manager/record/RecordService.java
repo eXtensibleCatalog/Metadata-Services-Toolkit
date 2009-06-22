@@ -385,6 +385,16 @@ public abstract class RecordService
 	public abstract Record getByOaiIdentifierAndService(String identifier, int serviceId) throws DatabaseConfigException, IndexException;
 
 	/**
+	 * Gets the record from the index with the passed OAI Identifier
+	 *
+	 * @param identifier The record's OAI Identifer
+	 * @param serviceId The Id of the service for which this record is input
+	 * @return The record with the passed OAI Identifier
+	 * @throws DatabaseConfigException 
+	 */
+	public abstract Record getInputForServiceByOaiIdentifier(String identifier, int serviceId)  throws DatabaseConfigException, IndexException;
+	
+	/**
 	 * Gets all records from the index which have been processed from the specified record
 	 *
 	 * @param processedFromId The ID of the original record whose processed Records we're getting

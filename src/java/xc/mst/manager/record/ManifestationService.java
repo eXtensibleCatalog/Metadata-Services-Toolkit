@@ -19,6 +19,7 @@ import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Manifestation;
+import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -95,6 +96,14 @@ public abstract class ManifestationService
 	 */
 	public abstract ManifestationList getByLinkedExpression(Expression expression) throws IndexException;
 
+	/**
+	 * Gets all manifestations from the index which have been processed from the specified record
+	 *
+	 * @param processedFrom The ID of the original record whose processed Records we're getting
+	 * @return A list of all records in the index which have been processed from the specified record
+	 */
+	public abstract ManifestationList getByProcessedFrom(Record processedFrom) throws IndexException;
+	
 	/**
 	 * Inserts a manifestation into the index
 	 *

@@ -160,7 +160,7 @@ public class TestServices
 
 			record.setOaiXml(readUnicodeFile(currentRecord));
 			record.setOaiIdentifier(currentRecord.getName().substring(0, currentRecord.getName().lastIndexOf('.')).replaceAll(" ", "/").replaceAll("-", ":"));
-			record.setFormat(formatDao.getById(2));
+			record.setFormat(formatDao.getById(5));
 			record.setProvider(providerDao.getById(1));
 			record.addInputForService(serviceDao.getById(serviceId));
 			if(recordService.insert(record) == false)

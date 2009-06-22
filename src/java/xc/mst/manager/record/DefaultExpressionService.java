@@ -15,6 +15,7 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.bo.record.Expression;
+import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
@@ -72,25 +73,25 @@ public class DefaultExpressionService extends ExpressionService
 		SolrQuery query = new SolrQuery();
 		query.setQuery(DefaultRecordService.FIELD_UP_LINK + ":" + Long.toString(work.getId()) + " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Expression.indexedObjectType);
 
-		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return the empty list if we couldn't find any matching expressions
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the any expressions linked to the work with ID " + work.getId() + ".");
-
-			return new ExpressionList(null);
-		} // end if(no results found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the " + docs.size() + " expressions linked to the work with ID " + work.getId() + " from the Lucene Documents they were stored in.");
-
 		// Return the list of results
-		return new ExpressionList(docs);
+		return new ExpressionList(query);
 	} // end method getByLinkedManifestation(Manifestation)
 
+	@Override
+	public ExpressionList getByProcessedFrom(Record processedFrom) throws IndexException
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting all records that were processed from the record with ID " + processedFrom.getId());
+
+		// Create a query to get the Documents with the requested input for service IDs
+		SolrQuery query = new SolrQuery();
+		query.setQuery(RecordService.FIELD_PROCESSED_FROM + ":" + Long.toString(processedFrom.getId()) + " AND "
+				    +  RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Expression.indexedObjectType);
+
+		// Return the list of results
+		return new ExpressionList(query);
+	} // end method getByProcessedFrom(long)
+	
 	@Override
 	public Expression getExpressionFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{

@@ -20,10 +20,12 @@ import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Manifestation;
+import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.index.ExpressionList;
 import xc.mst.utils.index.HoldingsList;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.SolrIndexManager;
@@ -124,6 +126,14 @@ public abstract class HoldingsService
 	 */
 	public abstract HoldingsList getByLinkedManifestation(Manifestation manifestation) throws IndexException;
 
+	/**
+	 * Gets all holdings from the index which have been processed from the specified record
+	 *
+	 * @param processedFrom The ID of the original record whose processed Records we're getting
+	 * @return A list of all records in the index which have been processed from the specified record
+	 */
+	public abstract HoldingsList getByProcessedFrom(Record processedFrom) throws IndexException;
+	
 	/**
 	 * Inserts a holdings into the index
 	 *
