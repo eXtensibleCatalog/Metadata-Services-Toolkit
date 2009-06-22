@@ -21,6 +21,8 @@ import xc.mst.dao.DataException;
 import xc.mst.manager.processingDirective.ConfigFileException;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 import xc.mst.utils.MSTConfiguration;
 
 /**
@@ -32,6 +34,9 @@ public class AddService extends ActionSupport
 {
     /** Service object to ineract with the services in the MST */
     private ServicesService servicesService = new DefaultServicesService();
+
+    /** User Service Object **/
+    UserService userService = new DefaultUserService();
 
     /** Denotes the type of error */
     private String errorType;
@@ -125,20 +130,31 @@ public class AddService extends ActionSupport
         {
             log.error(de.getMessage(),de);
             errorType = "error";
-            this.addFieldError("addServiceError","Error occurred while adding service");
+            this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
+            userService.sendEmailErrorReport();
+            populateListBox();
+            return INPUT;
         }
         catch(IOException ie)
         {
-            log.error(ie.getMessage(),ie);
+            log.error(ie.getMessage(),ie);           
             errorType = "error";
-            this.addFieldError("addServiceError","Error occurred while adding service");
+            this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
+            userService.sendEmailErrorReport();
+            populateListBox();
+            return INPUT;
         }
         catch(ConfigFileException cfe)
         {
-            log.error(cfe.getMessage(),cfe);
+            log.error(cfe.getMessage(),cfe);           
             errorType = "error";
-            this.addFieldError("addServiceError","Error occurred while adding service");
+            this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
+            userService.sendEmailErrorReport();
+            populateListBox();
+            return INPUT;
         }
+        
+        /*
         finally
         {
             File dir = new File(MSTConfiguration.getUrlPath() + "\\serviceConfig");
@@ -152,6 +168,7 @@ public class AddService extends ActionSupport
             setServiceFiles(serviceFiles);
             return INPUT;
         }
+         * */
     }
 
     /**
@@ -171,6 +188,19 @@ public class AddService extends ActionSupport
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
 	}
+
+    private void populateListBox()
+    {
+        File dir = new File("serviceConfig");
+        FileFilter fileFilter =  new XCCGFileFilter();
+
+        File[] fileList = dir.listFiles(fileFilter);
+        for(int i=0;i<fileList.length;i++)
+        {
+            serviceFiles.add(fileList[i].getName());
+        }
+        setServiceFiles(serviceFiles);
+    }
 }
 
 

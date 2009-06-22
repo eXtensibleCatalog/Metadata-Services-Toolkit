@@ -48,10 +48,10 @@ public class HarvestUtil {
 				}
 				
 			}
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd 'at' hh:mm");
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 		
 		latestRun = scheduleService.getLatestHarvestEndTime(harvestSchedule); 
-		format = new SimpleDateFormat("yyyy-MM-dd 'at' hh:mm");
+		format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 		String output = "Not yet harvested";
 		if (latestRun != null) {
 			output = "last run completed " + format.format(latestRun);

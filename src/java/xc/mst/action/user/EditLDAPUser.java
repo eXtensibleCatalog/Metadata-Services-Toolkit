@@ -114,7 +114,7 @@ public class EditLDAPUser extends ActionSupport
             if(user==null)
             {
                 this.addFieldError("editLDAPUserError","Error in editing LDAP user. An email has been sent to the administrator");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return ERROR;
             }
@@ -187,7 +187,7 @@ public class EditLDAPUser extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("editLDAPUserError","Error in editing LDAP user. An email has been sent to the administrator");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return ERROR;
         }

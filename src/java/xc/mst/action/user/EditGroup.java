@@ -85,7 +85,7 @@ public class EditGroup extends ActionSupport
             if(group==null)
             {
                 this.addFieldError("editGroupError", "Error Occurred while viewing edit group page. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
@@ -123,7 +123,7 @@ public class EditGroup extends ActionSupport
             if(group==null)
             {
                 this.addFieldError("editGroupError", "Error Occurred while editing group details. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
@@ -175,7 +175,7 @@ public class EditGroup extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("editGroupError", "Error Occurred while editing group. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }

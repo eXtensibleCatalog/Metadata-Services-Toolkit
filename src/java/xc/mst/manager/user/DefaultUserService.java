@@ -13,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
@@ -21,8 +22,10 @@ import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 
+import org.apache.log4j.Appender;
 import org.apache.log4j.Logger;
 
+import org.apache.log4j.RollingFileAppender;
 import sun.misc.BASE64Encoder;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
@@ -38,6 +41,7 @@ import xc.mst.dao.user.PermissionDAO;
 import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.user.UserGroupUtilDAO;
 import xc.mst.email.Emailer;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Service class for User to deal with creating, updating
@@ -435,10 +439,12 @@ public class DefaultUserService implements UserService{
      * @param message The message which describes where the error took place.
      * @throws DatabaseConfigException
      */
-    public boolean sendEmailErrorReport(String message,String filename){
+    public boolean sendEmailErrorReport(){
 
         try
         {
+            String MESSAGE = "An error has occurred with the Metadata Services Toolkit.  Please submit this error here: http://code.google.com/p/xcmetadataservicestoolkit/issues/entry \n Please include the following information:\n Template: Defect report from user \n Summary: <error summary> \n Description: <copy paste the relevant error message from the log file here> \n";
+
             Emailer emailer = new Emailer();
 
             String adminSubject = "MST GUI error";
@@ -452,7 +458,12 @@ public class DefaultUserService implements UserService{
             }
 
             for(User admin:admins) {
-                emailer.sendEmail(admin.getEmail(), adminSubject, message.toString(),filename);
+
+                //String filename = "logs/MST_General_log.txt";
+                
+                RollingFileAppender appender =  (RollingFileAppender) Logger.getLogger(Constants.LOGGER_GENERAL).getAppender("file");
+                
+                emailer.sendEmail(admin.getEmail(), adminSubject, MESSAGE, MSTConfiguration.getUrlPath() + "/" + appender.getFile());
             }
 
             return true;
@@ -461,7 +472,7 @@ public class DefaultUserService implements UserService{
         {
             log.error(dce.getMessage(),dce);
             return false;
-        }
+        }        
        
     }
 

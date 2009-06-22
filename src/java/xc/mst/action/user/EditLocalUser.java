@@ -158,7 +158,7 @@ public class EditLocalUser extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("editLocalUserError","Error in editing local user. An email has been sent to the administrator");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return ERROR;
         }

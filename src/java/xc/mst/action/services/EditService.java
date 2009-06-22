@@ -11,6 +11,7 @@ package xc.mst.action.services;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,10 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
+import xc.mst.manager.processingDirective.ConfigFileException;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.user.DefaultUserService;
@@ -72,7 +76,7 @@ public class EditService extends ActionSupport
             if(temporaryService==null)
             {
                 this.addFieldError("viewEditServiceError", "Error loading edit-service page. An email has been sent to the administrator.");
-                return INPUT;
+                return SUCCESS;
             }
             setTemporaryService(temporaryService);
             File dir = new File(MSTConfiguration.getUrlPath() + "\\serviceConfig");
@@ -92,7 +96,7 @@ public class EditService extends ActionSupport
             log.error(dce.getMessage(), dce);
             errorType = "error";
             this.addFieldError("viewEditServiceError", "Unable to connect to the database. Database configuration may be incorrect");
-            return INPUT;
+            return SUCCESS;
         }
     }
 
@@ -109,7 +113,7 @@ public class EditService extends ActionSupport
             if(tempService==null)
             {
                 this.addFieldError("EditServiceError", "Error occurred while editing service. An email has been sent to the administrator");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 return INPUT;
             }
             String location = MSTConfiguration.getUrlPath() + "\\serviceConfig\\" + getSelectedLocation();
@@ -122,18 +126,43 @@ public class EditService extends ActionSupport
             log.error(dce.getMessage(),dce);
             errorType = "error";
             this.addFieldError("editServiceError","Unable to connect to the database. Database configuration may be incorrect");
+            populateListBox();
+            return INPUT;
         }
-        finally
+        catch(DataException de)
         {
-            File dir = new File(MSTConfiguration.getUrlPath() + "\\serviceConfig");
-            FileFilter fileFilter =  new XCCGFileFilter();
-
-            File[] fileList = dir.listFiles(fileFilter);
-            for(int i=0;i<fileList.length;i++)
-            {
-                serviceFiles.add(fileList[i].getName());
-            }
-            setServiceFiles(serviceFiles);
+            log.error(de.getMessage(),de);
+            errorType = "error";
+            this.addFieldError("editServiceError","Error occurred while editing service. An email has been sent to the administrator");
+            userService.sendEmailErrorReport();
+            populateListBox();
+            return INPUT;
+        }
+        catch(IndexException ie)
+        {
+            log.error(ie.getMessage(),ie);
+            errorType = "error";
+            this.addFieldError("editServiceError","Error occurred while editing service. An email has been sent to the administrator");
+            userService.sendEmailErrorReport();
+            populateListBox();
+            return INPUT;
+        }
+        catch(IOException ie)
+        {
+            log.error(ie.getMessage(),ie);      
+            errorType = "error";
+            this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
+            userService.sendEmailErrorReport();
+            populateListBox();
+            return INPUT;
+        }
+         catch(ConfigFileException cfe)
+        {
+            log.error(cfe.getMessage(),cfe);
+            errorType = "error";
+            this.addFieldError("editServiceError","Error occurred while editing service. An email has been sent to the administrator");
+            userService.sendEmailErrorReport();
+            populateListBox();
             return INPUT;
         }
     }
@@ -234,6 +263,19 @@ public class EditService extends ActionSupport
     public String getSelectedLocation()
     {
         return this.selectedLocation;
+    }
+
+    private void populateListBox()
+    {
+        File dir = new File("serviceConfig");
+        FileFilter fileFilter =  new XCCGFileFilter();
+
+        File[] fileList = dir.listFiles(fileFilter);
+        for(int i=0;i<fileList.length;i++)
+        {
+            serviceFiles.add(fileList[i].getName());
+        }
+        setServiceFiles(serviceFiles);
     }
 }
 

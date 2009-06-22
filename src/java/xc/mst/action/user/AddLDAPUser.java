@@ -194,7 +194,7 @@ public class AddLDAPUser extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("addLDAPUserError","Error in adding LDAP user. An email has been sent to the administrator");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return ERROR;
         }

@@ -114,7 +114,7 @@ public class DeleteGroup extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("allGroupsError", "Error occurred while deleting group. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }

@@ -187,9 +187,7 @@
                                     <c:set var="totalFormatsSize" value="${fn:length(directive.triggeringFormats)}"/>
                                     <div style="text-align:left" id="formatsList">
                                         <c:forEach var="triggerFormat" items="${directive.triggeringFormats}" varStatus="triggerFormatCount">
-                                            <c:if test="${triggerFormatCount.count==1}">
-                                                ${triggerFormat.name}.....
-                                            </c:if>
+                                            ${triggerFormat.name} <br>
                                         </c:forEach>
                                     </div>
                                 </td>
@@ -198,7 +196,7 @@
                                         <c:set var="totalSetsSize" value="${fn:length(directive.triggeringSets)}"/>
                                         <c:forEach var="triggerSet" items="${directive.triggeringSets}" varStatus="triggerSetCount">
                                             <c:if test="${triggerSetCount.count==1}">
-                                                ${triggerSet.setSpec}.....
+                                                ${triggerSet.setSpec}...
                                             </c:if>
                                         </c:forEach>
                                     </div>
