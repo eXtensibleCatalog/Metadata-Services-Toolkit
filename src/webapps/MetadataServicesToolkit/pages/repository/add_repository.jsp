@@ -93,9 +93,9 @@
         <div style="margin-left:0px;font-family: verdana,sans-serif;font-size: 12px;">
 
                  OAI-PMH <B>Repository Name</B> <br>
-                 <input type="text" id="repositoryName" name="repositoryName" value="${repositoryName}" style="height:25px;width:305px;" maxlength="255"> <br><br>
+                 <input type="text" id="repositoryName" name="repositoryName" value="${repositoryName}" style="width:305px;" maxlength="255"> <br><br>
                  OAI-PMH <B>Repository URL</B> <br>
-                 <input type="text" id="repositoryURL" name="repositoryURL" value="${repositoryURL}" style="height:25px;width:470px;" maxlength="255">
+                 <input type="text" id="repositoryURL" name="repositoryURL" value="${repositoryURL}" style="width:470px;" maxlength="255">
                 
                  <div style="margin-top:20px;margin-left:0px;vertical-align:bottom;">
                    <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.repository.addRepository.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;

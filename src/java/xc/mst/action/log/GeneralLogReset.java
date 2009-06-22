@@ -50,7 +50,7 @@ public class GeneralLogReset extends ActionSupport
             if(logs==null)
             {
                 this.addFieldError("generalLogReset", "Error Occurred while resetting general log. An email has been sent to the administrator");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return SUCCESS;
             }
@@ -74,7 +74,7 @@ public class GeneralLogReset extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("generalLogReset", "Error Occurred while resetting general log. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -82,7 +82,7 @@ public class GeneralLogReset extends ActionSupport
         {
             log.error(fe.getMessage(),fe);
             this.addFieldError("generalLogReset", "Error Occurred while resetting general log. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -123,7 +123,7 @@ public class GeneralLogReset extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("generalLogReset", "Error Occurred while resetting all general logs. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -131,7 +131,7 @@ public class GeneralLogReset extends ActionSupport
         {
             log.error(fe.getMessage(),fe);
             this.addFieldError("generalLogReset", "Error Occurred while resetting all general logs. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }

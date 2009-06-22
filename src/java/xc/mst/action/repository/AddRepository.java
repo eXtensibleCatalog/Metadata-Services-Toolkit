@@ -123,7 +123,7 @@ public class AddRepository extends ActionSupport implements UserAware
             log.error(e.getMessage(),e);
             this.addFieldError("addRepositoryError", "Error occurred while adding repository. An email has been sent to the administrator");
             errorType = "error";
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             return INPUT;
         }
         catch(Hexception e)

@@ -65,7 +65,7 @@ public class HarvestInReset extends ActionSupport
             if(provider==null)
             {
                 this.addFieldError("HarvestInLogReset", "Error Occurred while resetting harvest-in log. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return SUCCESS;
             }
@@ -92,7 +92,7 @@ public class HarvestInReset extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("HarvestInLogReset", "Error Occurred while resetting harvest-in log. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -100,7 +100,7 @@ public class HarvestInReset extends ActionSupport
         {
             log.error(fe.getMessage(),fe);
             this.addFieldError("HarvestInLogReset", "Error Occurred while resetting harvest-in log. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -145,7 +145,7 @@ public class HarvestInReset extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("HarvestInLogReset", "Error Occurred while resetting all harvest-in logs. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -153,7 +153,7 @@ public class HarvestInReset extends ActionSupport
         {
             log.error(fe.getMessage(),fe);
             this.addFieldError("HarvestInLogReset", "Error Occurred while resetting all harvest-in logs. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }

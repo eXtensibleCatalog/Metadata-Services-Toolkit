@@ -78,7 +78,7 @@ public class DeleteProcessingDirective extends ActionSupport
             if(tempProcDir==null)
             {
                 this.addFieldError("DeleteDirectiveError", "Error Deleting Processing Rule. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return SUCCESS;
             }

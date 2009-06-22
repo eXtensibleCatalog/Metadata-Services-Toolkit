@@ -304,8 +304,9 @@
 	margin-top:10px;
 	font-size:15px;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
-	height:30px;
+	height:100%;
 	float:left;
+    padding-bottom : 5px;
 }
 
 .error img {
@@ -382,12 +383,6 @@
  	font-weight:bold;
  }
 
-.textBoxClass
-{
-    width:200px;
-    height:25px;
-}
-
 .listBox
 {
     font-family: verdana,sans-serif;
@@ -404,4 +399,10 @@
 {
     font-size:14px;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+.textfield
+{
+    height:17px;
+    font-size:12px;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
 }

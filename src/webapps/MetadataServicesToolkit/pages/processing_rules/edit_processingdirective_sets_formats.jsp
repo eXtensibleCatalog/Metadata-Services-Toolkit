@@ -98,7 +98,7 @@
                         <tr>
                             <td>
                                 <div style="margin-right:10px;">
-                                    Harvest records from :
+                                    Harvested records from :
                                 </div>
                             </td>
                             <td width="5%"></td>

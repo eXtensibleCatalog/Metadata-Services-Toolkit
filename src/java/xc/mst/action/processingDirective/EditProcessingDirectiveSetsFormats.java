@@ -297,7 +297,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
             if((tempProcDir==null)||(sourceType==null))
             {
                 this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred while displaying Step-2 of edit processing rules. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
@@ -394,7 +394,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
                 if((temporaryProcessingDirective==null)||(sourceType==null))
                 {
                     this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred while editing processing rule. An email has been sent to the administrator.");
-                    userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                    userService.sendEmailErrorReport();
                     errorType = "error";
                     return INPUT;
                 }
@@ -652,7 +652,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
            {
                 log.error(de.getMessage(),de);
                 this.addFieldError("editProcessingDirectives2Error", "Error occurred while editing processing rule. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return ERROR;
            }
@@ -673,7 +673,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
             if((tempProcDir==null))
                 {
                     this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred returning to step-1 of editing processing rule . An email has been sent to the administrator.");
-                    userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                    userService.sendEmailErrorReport();
                     errorType = "error";
                     return INPUT;
                 }

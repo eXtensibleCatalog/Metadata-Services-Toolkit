@@ -89,16 +89,16 @@
                        </tr>                   
 	                    <tr>
 	                      <td valign="top">First Name <br>
-	                      <input type="text" id="firstName" name ="firstName" class="textBoxClass" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
+	                      <input type="text" id="firstName" name ="firstName" class="textfield" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
 	                    </tr>
 	                    
 	                    <tr>
 	                      <td valign="top">Last Name  <br>
-	                      <input type="text" id="lastName" name ="lastName" class="textBoxClass" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
+	                      <input type="text" id="lastName" name ="lastName" class="textfield" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
 	                    </tr>                     
                        <tr>
                            <td valign="top">Email  <br>
-                           <input type="text" id="email" name ="email" class="textBoxClass" value="${temporaryUser.email}" maxlength="255"><br><br></td>
+                           <input type="text" id="email" name ="email" class="textfield" value="${temporaryUser.email}" maxlength="255"><br><br></td>
                        </tr>
 
                       

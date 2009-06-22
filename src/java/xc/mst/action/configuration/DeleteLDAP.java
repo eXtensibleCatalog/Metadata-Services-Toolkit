@@ -110,7 +110,7 @@ public class DeleteLDAP extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("deleteLDAPError", "Error occurred while deleting LDAP Server. An email has been sent to the administrator");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }

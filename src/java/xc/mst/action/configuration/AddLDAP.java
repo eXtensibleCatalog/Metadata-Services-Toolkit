@@ -202,7 +202,7 @@ public class AddLDAP extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("addLDAPError", "Error occurred while adding LDAP Server. An email has been sent to the administrator");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }

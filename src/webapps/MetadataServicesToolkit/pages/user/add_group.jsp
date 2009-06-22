@@ -87,7 +87,7 @@
 
                    <tr>
                        <td valign="top"><B>Group Name</B> <br> 
-                       <input type="text" id="groupName" name ="groupName" class="textBoxClass" value="${temporaryGroup.name}" maxlength="255"><br><br></td>
+                       <input type="text" id="groupName" name ="groupName" class="textfield" value="${temporaryGroup.name}" maxlength="255"><br><br></td>
                    </tr>
 
                    <tr>

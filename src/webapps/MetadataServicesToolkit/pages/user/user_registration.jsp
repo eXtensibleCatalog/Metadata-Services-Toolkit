@@ -92,21 +92,21 @@
    			
 			<table class="basicTable" align="left">
 			<tr>
-				<td class="label" align="right"> First Name </td>
-				<td>
+                <td> <b>First Name</b> <br>
+				
 					<input type="text" id="user_first_name" name="newUser.firstName" value="${newUser.firstName}" maxlength="225"/>
 				</td>
 			</tr>
 			<tr>
-				<td class="label" align="right"> Last Name </td>
-				<td>
+                <td> <b>Last Name</b> <br>
+				
 					<input type="text" id="user_last_name" name="newUser.lastName" value="${newUser.lastName}" maxlength="225"/>
 				</td>
 			</tr>			
 			
 			<tr>
-				<td class="label" align="right"> Select Login Type</td>
-				<td >
+                <td> <b>Select Login Type</b> &nbsp;&nbsp;
+			
 					<select id="login_server" name="serverName" onChange="Javascript:YAHOO.xc.mst.registeration.determinePasswordBoxDisplay();">
 				
 						<c:forEach items="${servers}" var="server">
@@ -117,41 +117,36 @@
 							> ${server.name}</option>
 						</c:forEach>
 					</select>
-				
 				</td>
+				
 			</tr>
 			<tr>
-				<td class="label" align="right"> User Name </td>
-				<td>
+                <td> <b>User Name</b> <br>
 					<input type="text" id="user_name" name="newUser.username" value="${newUser.username}" maxlength="225"/>
 				</td>
 			</tr>
 			<tr>
-				<td class="label" align="right"> Password </td>
-				<td>
+                <td> <b>Password</b> <br>
 					<input type="password" id="user_password" name="newUser.password" value="${newUser.password}" />
 				</td>
 			</tr>
 			<tr>
-				<td class="label" align="right"> Password Confirmation </td>
-				<td>
+                <td> <b>Password Confirmation</b> <br>
 					<input type="password" id="user_password_confirmation" name="passwordConfirmation"/>
 				</td>
 			</tr>
 			<tr>
-				<td class="label" align="right"> Email </td>
-				<td>
+                <td> <b>Email</b> <br>
 					<input type="text" id="user_email" name="newUser.email" value="${newUser.email}" maxlength="225"/>
 				</td>
 			</tr>
 			<tr>
-				<td class="label" align="right"> Special Request to the Systems Administrator </td>
-				<td>
+                <td> <b>Special Request to the Systems Administrator</b> <br>
 					<textarea id="user_comments" style="width:450px;" name="comments" rows="5" cols="20">${comments}</textarea>
 				</td>
 			</tr>									
 			<tr>
-				<td colspan="2" align="right">
+				<td colspan="2">
 					<button class="xc_button_small" name="cancel" onClick="Javascript:YAHOO.xc.mst.registeration.cancel();">Cancel</button>
                     <button class="xc_button" type="button" name="save" onClick="Javascript:YAHOO.xc.mst.registeration.register();">Register</button>
 				</td>

@@ -110,7 +110,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
             if((tempProcDir==null)||(sourceType==null))
             {
                 this.addFieldError("addProcessingDirectivesSetsFormatsError", "Error in loading Step 2 of Add Processing Rules page. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
@@ -163,7 +163,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
             if((tempProcDir==null)||(sourceType==null))
             {
                 this.addFieldError("addProcessingDirectivesSetsFormatsError", "Error occurred when adding Processing Directive. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
@@ -376,7 +376,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
         {
             log.error(de.getMessage(),de);
             this.addFieldError("listProcessingDirectivesError", "Error occurred while adding Processing Rule. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return ERROR;
         }
@@ -396,7 +396,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
             if(tempProcDir==null)
             {
                 this.addFieldError("listProcessingDirectivesError", "Error occurred while returning to step 1 of Processing Rule. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }

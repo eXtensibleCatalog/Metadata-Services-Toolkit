@@ -87,24 +87,24 @@
                    <table>
                        <tr>
                            <td valign="top"><B>Username</B><br>  
-                           <input type="text" id="userName" name ="userName" class="textBoxClass" value="${temporaryUser.username}" maxlength="255"><br><br></td>
+                           <input type="text" id="userName" name ="userName" class="textfield" value="${temporaryUser.username}" maxlength="255"><br><br></td>
                        </tr>
                        
                        
  		                <tr>
                           <td valign="top"><b>First Name</b><br>
-		                  <input type="text" id="firstName" name ="firstName" class="textBoxClass" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
+		                  <input type="text" id="firstName" name ="firstName" class="textfield" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
 		                </tr>
 		
 		                <tr>
                           <td valign="top"><b>Last Name </b> <br>
-		                  <input type="text" id="lastName" name ="lastName" class="textBoxClass" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
+		                  <input type="text" id="lastName" name ="lastName" class="textfield" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
 		                </tr>
                        
                        
                        <tr>
                            <td valign="top"><B>Email</B> <br> 
-                           <input type="text" id="email" name ="email" class="textBoxClass" value="${temporaryUser.email}" maxlength="255"><br><br></td>
+                           <input type="text" id="email" name ="email" class="textfield" value="${temporaryUser.email}" maxlength="255"><br><br></td>
                        </tr>
                        
                        

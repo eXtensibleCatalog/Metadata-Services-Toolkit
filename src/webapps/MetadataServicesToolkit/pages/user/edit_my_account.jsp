@@ -105,36 +105,32 @@
    			
 				<table class="basicTable">
 				<tr>
-					<td class="label"> First Name </td>
-					<td>
+                    <td> <b>First Name</b> <br>
 						<input type="text"  id="user_first_name" name="firstName" value="${firstName}" size="35"/>
 					</td>
 				</tr>
 				<tr>
-					<td class="label"> Last Name </td>
-					<td>
+                    <td> <b>Last Name</b> <br>
 						<input type="text"  id="user_last_name" name="lastName" value="${lastName}" size="35"/>
 					</td>
 				</tr>				
 				
 				<tr>
-					<td class="label"> Login Type</td>
-					<td > ${user.server.name} </td>
+                    <td> <b>Login Type</b> <br>
+					 ${user.server.name} </td>
 				</tr>
 				<tr>
-					<td class="label"> User Name </td>
-					<td>
+                    <td><b>User Name</b> <br>
 						${user.username}
 					</td>
 				</tr>
 				<tr>
-					<td class="label"> Email </td>
-					<td>
+                    <td> <b>Email</b> <br>
 						<input type="text" id="user_email" name="email" value="${email}" size="35"/>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" align="center">
+					<td colspan="2" align="left">
 						<button class="xc_button" type="button" name="save" onClick="Javascript:YAHOO.xc.mst.account.save();">Save</button>
 						<button class="xc_button" name="cancel" onClick="Javascript:YAHOO.xc.mst.account.cancel();">Cancel</button> 
 						

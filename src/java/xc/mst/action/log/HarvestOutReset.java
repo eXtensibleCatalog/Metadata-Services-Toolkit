@@ -65,7 +65,7 @@ public class HarvestOutReset extends ActionSupport
             if(tempService==null)
             {
                 this.addFieldError("HarvestOutLogReset", "Error Occurred while resetting harvest-out log. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return SUCCESS;
             }
@@ -82,24 +82,24 @@ public class HarvestOutReset extends ActionSupport
         }
         catch(DatabaseConfigException dce)
         {
-            log.error(dce.getMessage(),dce);
+            log.error(dce.getMessage(),dce);            
             this.addFieldError("HarvestOutLogReset", "Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return SUCCESS;
         }
         catch(DataException de)
         {
-            log.error(de.getMessage(),de);
+            log.error(de.getMessage(),de);            
             this.addFieldError("HarvestOutLogReset", "Error Occurred while resetting harvest-out log. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
         catch(FileNotFoundException fe)
         {
-            log.error(fe.getMessage(),fe);
+            log.error(fe.getMessage(),fe);           
             this.addFieldError("HarvestOutLogReset", "Error Occurred while resetting harvest-out log. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -144,7 +144,7 @@ public class HarvestOutReset extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("HarvestOutLogReset", "Error Occurred while resetting all harvest-out logs. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -152,7 +152,7 @@ public class HarvestOutReset extends ActionSupport
         {
             log.error(fe.getMessage(),fe);
             this.addFieldError("HarvestOutLogReset", "Error Occurred while resetting all harvest-out logs. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }

@@ -248,7 +248,7 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
             if(temporaryProcessingDirective==null)
             {
                 this.addFieldError("editProcessingDirectiveEror", "Error occurred while displaying edit processing directives page. An email has been sent to the administrator. ");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
@@ -297,7 +297,7 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
             if(temporaryProcessingDirective==null)
             {
                 this.addFieldError("editProcessingDirectiveEror", "Error occurred while editing processing directive. An email has been sent to the administrator. ");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }

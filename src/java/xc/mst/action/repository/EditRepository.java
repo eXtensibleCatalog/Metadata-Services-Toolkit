@@ -62,13 +62,13 @@ public class EditRepository extends ActionSupport
     {
         try
         {
-            System.out.println("Inside view edit repo");
+            
             Provider provider = new DefaultProviderService().getProviderById(repositoryId);
-            System.out.println("After the provider is obtained and before the null check");
+           
             if(provider==null)
             {                
                 errorType = "error";
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 this.addFieldError("viewRepositoryError","There was a problem displaying the edit Repository page. An email has been sent to the administrator.");
                 return INPUT;
             }
@@ -87,7 +87,7 @@ public class EditRepository extends ActionSupport
         {
             log.error(e.getMessage(),e);
             errorType = "error";
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             this.addFieldError("dbConfigError","Error occurred while editing repository. An email has been sent to the administrator");
             return SUCCESS;
         }
@@ -109,7 +109,7 @@ public class EditRepository extends ActionSupport
             if(provider==null)
             {
                 errorType = "error";
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 this.addFieldError("editRepository","Error occurred while editing repository. An email has been sent to the administrator.");
                 return INPUT;
             }

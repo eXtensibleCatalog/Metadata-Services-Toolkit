@@ -99,25 +99,22 @@
    			
 				<table class="basicTable">
 				<tr>
-					<td class="label"> Old password </td>
-					<td>
+                    <td> <b>Old password</b> <br>
 						<input type="password" id="old_password" name="oldPassword" value="${oldPassword}"/>
 					</td>
 				</tr>
 				<tr>
-					<td class="label"> New password </td>
-					<td>
+                    <td> <b>New password</b> <br>
 						<input type="password" id="new_password" name="newPassword" value="${newPassword}"/>
 					</td>
 				</tr>
 				<tr>
-					<td class="label"> Confirm new password </td>
-					<td>
+                    <td> <b>Confirm new password</b> <br>
 						<input type="password" id="new_password_confirm" name="newPasswordConfirmation"/>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" align="right">
+					<td>
 						<button class="xc_button" type="button" name="save" onClick="Javascript:YAHOO.xc.mst.changePassword.save();">Change Password</button>
 						<button class="xc_button" name="cancel" onClick="Javascript:YAHOO.xc.mst.changePassword.cancel();">Go To My Account</button> 
 					</td>

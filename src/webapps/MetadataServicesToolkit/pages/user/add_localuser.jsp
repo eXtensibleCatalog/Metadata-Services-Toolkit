@@ -91,32 +91,32 @@
 
                 <tr>
                   <td valign="top"><b>First Name</b> <br> 
-                  <input type="text" id="firstName" name ="firstName" class="textBoxClass" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
+                  <input type="text" id="firstName" name ="firstName" class="textfield" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
                 </tr>
 
                 <tr>
                   <td valign="top"><b>Last Name</b>  <br>
-                  <input type="text" id="lastName" name ="lastName" class="textBoxClass" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
+                  <input type="text" id="lastName" name ="lastName" class="textfield" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
                 </tr>
 
                 <tr>
                   <td valign="top"><b>Username</b>  <br>
-                  <input type="text" id="userName" name ="userName" class="textBoxClass" value="${temporaryUser.username}" maxlength="255"><br><br></td>
+                  <input type="text" id="userName" name ="userName" class="textfield" value="${temporaryUser.username}" maxlength="255"><br><br></td>
                 </tr>
 
                <tr>
                    <td valign="top"><b>Password</b>  <br>
-                   <input type="password" id="password" name ="password" class="textBoxClass" value="" maxlength="255"><br><br></td>
+                   <input type="password" id="password" name ="password" class="textfield" value="" maxlength="255"><br><br></td>
                </tr>
 
               <tr>
                   <td valign="top"><b>Confirm Password</b>  <br>
-                  <input type="password" id="confpass" name ="confpass" class="textBoxClass" value="" maxlength="255"><br><br></td>
+                  <input type="password" id="confpass" name ="confpass" class="textfield" value="" maxlength="255"><br><br></td>
               </tr>
 
                <tr>
                     <td valign="top"><b>Email</b>  <br>
-                    <input type="text" id="email" name ="email" class="textBoxClass" value="${temporaryUser.email}" maxlength="255"><br><br></td>
+                    <input type="text" id="email" name ="email" class="textfield" value="${temporaryUser.email}" maxlength="255"><br><br></td>
                </tr>
 
              

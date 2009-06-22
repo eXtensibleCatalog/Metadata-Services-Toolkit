@@ -118,7 +118,7 @@ public class EmailConfiguration extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("changeEmailConfigError", "Error occurred while updating email configuration. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }

@@ -71,7 +71,7 @@ public class DeleteRepository extends ActionSupport
             if(provider==null)
             {
                 this.addFieldError("viewRepositoryError", "Error occurred while deleting repository. An email has been sent to the administrator");
-                userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+                userService.sendEmailErrorReport();
                 errorType = "error";
                 return SUCCESS;
             }
@@ -104,7 +104,7 @@ public class DeleteRepository extends ActionSupport
         {
             log.error(de.getMessage(), de);
             this.addFieldError("viewRepositoryError", "Error occurred while deleting repository. An email has been sent to the administrator");
-            userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }

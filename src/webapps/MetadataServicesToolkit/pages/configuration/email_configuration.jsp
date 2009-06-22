@@ -96,22 +96,22 @@
 
                         <tr>
                             <td><B>Outgoing Mail Server(SMTP):  </B>&nbsp;&nbsp;<br>
-                            <input type="text" id="emailServerAddress" name ="emailServerAddress" class="textBoxClass" value="${emailConfig.emailServerAddress}" maxlength="255"><br><br></td>
+                            <input type="text" id="emailServerAddress" name ="emailServerAddress" class="textfield" value="${emailConfig.emailServerAddress}" maxlength="255"><br><br></td>
                         </tr>
 
                        <tr>
                            <td><B>From Address </B>&nbsp;&nbsp;<br>
-                           <input type="text" id="fromAddress" name ="fromAddress" class="textBoxClass" value="${emailConfig.fromAddress}" maxlength="255"><br><br></td>
+                           <input type="text" id="fromAddress" name ="fromAddress" class="textfield" value="${emailConfig.fromAddress}" maxlength="255"><br><br></td>
                        </tr>
 
                        <tr>
                            <td><B>Password </B>&nbsp;&nbsp;<br>
-                           <input type="text" id="password" name ="password" class="textBoxClass" value="${emailConfig.password}" maxlength="255"><br><br></td>
+                           <input type="text" id="password" name ="password" class="textfield" value="${emailConfig.password}" maxlength="255"><br><br></td>
                        </tr>
 
                        <tr>
                            <td><B> Port Number </B>&nbsp;&nbsp;<br>
-                           <input type="text" id="port" name ="port" class="textBoxClass" value="${emailConfig.portNumber}" maxlength="255"><br><br></td>
+                           <input type="text" id="port" name ="port" class="textfield" value="${emailConfig.portNumber}" maxlength="255"><br><br></td>
                        </tr>
 
                        <tr>
@@ -130,7 +130,7 @@
 
                         <tr>
                             <td> <B>Timeout </B>&nbsp;&nbsp; <br>
-                            <input type="text" id="timeout" name ="timeout" class="textBoxClass" value="${emailConfig.timeout}" maxlength="255"><br><br></td>
+                            <input type="text" id="timeout" name ="timeout" class="textfield" value="${emailConfig.timeout}" maxlength="255"><br><br></td>
                         </tr>
 
                        

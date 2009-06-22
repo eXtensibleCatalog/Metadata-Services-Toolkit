@@ -107,7 +107,7 @@ public class AllRepository extends ActionSupport
        {
            log.error(e.getMessage(),e);
            errorType = "error";
-           userService.sendEmailErrorReport(userService.MESSAGE,"logs/MST_General_log");
+           userService.sendEmailErrorReport();
            addFieldError("dbConfigError", "Error in displaying all repositories. An email has been sent to the administrator regarding this issue.");
            return INPUT;
        }

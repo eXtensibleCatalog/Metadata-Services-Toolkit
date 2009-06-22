@@ -156,7 +156,7 @@
 								${schedule.recurrence} Time ${schedule.hour}:<c:if test="${schedule.minute < 10}">0${schedule.minute}</c:if><c:if test="${schedule.minute > 9}">${schedule.minute} hrs {timeZone}</c:if>
 							</c:if>
 							<c:if test="${schedule.recurrence == 'Hourly'}">
-								${schedule.recurrence} at ${schedule.minute} minutes past the hour
+								${schedule.recurrence} ${schedule.minute} minutes past the hour
 							</c:if>
 							<c:if test="${schedule.recurrence == 'Weekly'}">
 								${schedule.recurrence} 
@@ -196,7 +196,14 @@
                         	
                         </td>
                         <td>
-                            ${mst:lastHarvest(schedule)} hrs ${timeZone}
+                            <c:set var="lastRun" value="${mst:lastHarvest(schedule)}"/>
+                        	<c:if test="${fn:startsWith(lastRun, 'Not')}">
+                        		${mst:lastHarvest(schedule)}
+                        	</c:if>
+                        	<c:if test="${fn:startsWith(lastRun, 'last')}">
+                                ${mst:lastHarvest(schedule)} hrs ${timeZone}
+                        	</c:if>
+                            
                         </td>
 						<td> <button class="xc_button" id="showDeleteSchedule" type="button" name="delete" onClick="Javascript:YAHOO.mst.schedule.delete.deleteSchedule(${schedule.id}, '${schedule.scheduleName}');">Delete</button></td>
 					</tr>

@@ -90,7 +90,7 @@
                         <table width="100%">
                             <thead>
                                 <tr>
-                                    <td class="sortcolumn">
+                                    <td class="sortcolumn" width="140">
                                         <div>
                                             <c:if test="${columnSorted!='ServiceName'}">
                                                      <c:url var="serviceSortUrl" value="listServices.action">
@@ -171,15 +171,15 @@
                                             <c:if test="${columnSorted=='Port'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
-                                        <td class="${classColumn}"><c:out value="${url}"/></td>
+                                        <td width="330" class="${classColumn}"><c:out value="${url}"/></td>
                                         <td>
                                             <c:set var="service_status" value ="${service.status}"/>
                                             <c:set var="service_status" value="${fn:replace(service_status,'_',' ')}" />
                                             <c:set var="service_status" value="${fn:toLowerCase(service_status)}" />
                                             ${service_status}
                                         </td>
-                                        <td width="200">
-                                            <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;&nbsp;&nbsp;
+                                        <td width="300">
+                                            <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
                                             <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
                                         </td>
                                         <td><button class="xc_button" onclick="javascript:YAHOO.xc.mst.services.listServices.deleteService(${service.id})" type="button" name="delete">Delete</button></td>
