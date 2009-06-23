@@ -79,8 +79,8 @@ public class EditService extends ActionSupport
                 return SUCCESS;
             }
             setTemporaryService(temporaryService);
-            File dir = new File(MSTConfiguration.getUrlPath() + "\\serviceConfig");
-            
+            File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig");
+
             FileFilter fileFilter =  new XCCGFileFilter();
 
             File[] fileList = dir.listFiles(fileFilter);
@@ -116,7 +116,7 @@ public class EditService extends ActionSupport
                 userService.sendEmailErrorReport();
                 return INPUT;
             }
-            String location = MSTConfiguration.getUrlPath() + "\\serviceConfig\\" + getSelectedLocation();
+            String location = MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig" + MSTConfiguration.FILE_SEPARATOR + getSelectedLocation();
             File file = new File(location);
             servicesService.updateService(file,tempService);
             return SUCCESS;

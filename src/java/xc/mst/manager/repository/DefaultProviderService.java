@@ -45,7 +45,7 @@ public class DefaultProviderService implements ProviderService{
      *
      * @param providerName provider name
      * @return provider object
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Provider getProviderByName(String providerName) throws DatabaseConfigException{
        return providerDao.getByName(providerName);
@@ -56,7 +56,7 @@ public class DefaultProviderService implements ProviderService{
      *
      * @param providerId provider ID
      * @return provider object
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Provider getProviderById(int providerId) throws DatabaseConfigException{
        return providerDao.getById(providerId);
@@ -67,7 +67,7 @@ public class DefaultProviderService implements ProviderService{
      *
      * @param providerUrl provider URL
      * @return provider object
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Provider getProviderByURL(String providerUrl) throws DatabaseConfigException {
         return providerDao.getByURL(providerUrl);
@@ -80,8 +80,8 @@ public class DefaultProviderService implements ProviderService{
      * @throws xc.mst.dao.DataException
      */
     public void insertProvider(Provider provider) throws DataException{
-    	
-    	provider.setLogFileName(MSTConfiguration.getUrlPath() + "/" + "logs/harvestIn/"+provider.getName()+".txt");
+
+    	provider.setLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
         providerDao.insert(provider);
         LogWriter.addInfo(provider.getLogFileName(), "Beginning logging for " + provider.getName());
     }
@@ -93,21 +93,21 @@ public class DefaultProviderService implements ProviderService{
      * @throws xc.mst.dao.DataException
      */
     public void deleteProvider(Provider provider) throws DataException, IndexException{
-    	
+
     	// Delete schedule for this repository
     	ScheduleService scheduleService = new DefaultScheduleService();
     	HarvestSchedule harvestSchedule = scheduleService.getScheduleForProvider(provider);
     	if (harvestSchedule != null) {
     		scheduleService.deleteSchedule(harvestSchedule);
     	}
-    	
+
     	// Delete processing directive for this repository
     	ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();
     	List<ProcessingDirective> directives =  processingDirectiveService.getBySourceProviderId(provider.getId());
     	for (ProcessingDirective directive:directives) {
     		processingDirectiveService.deleteProcessingDirective(directive);
     	}
-    	
+
     	// Delete provider
         providerDao.delete(provider);
     }
@@ -119,7 +119,7 @@ public class DefaultProviderService implements ProviderService{
      * @throws xc.mst.dao.DataException
      */
     public void updateProvider(Provider provider) throws DataException{
-    	provider.setLogFileName(MSTConfiguration.getUrlPath() + "/" + "logs/harvestIn/"+provider.getName()+".txt");
+    	provider.setLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
         providerDao.update(provider);
     }
 
@@ -127,7 +127,7 @@ public class DefaultProviderService implements ProviderService{
      * Returns a list of all the providers
      *
      * @return provider list
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Provider> getAllProviders() throws DatabaseConfigException
     {
@@ -140,7 +140,7 @@ public class DefaultProviderService implements ProviderService{
    * @param sort determines if the rows are to be sorted in ascending or descending order
    * @param columnSorted column on which the sorting is done
    * @return list of providers
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
    */
     public List<Provider> getAllProvidersSorted(boolean sort,String columnSorted) throws DatabaseConfigException
     {

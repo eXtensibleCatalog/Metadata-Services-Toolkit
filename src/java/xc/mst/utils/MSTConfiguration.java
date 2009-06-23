@@ -38,6 +38,9 @@ public class MSTConfiguration {
 	/** Name of category */
 	private static String urlPath;
 	
+	/** File separator according to OS. \ for windows  / for unix. */
+	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+	
 	/**
 	 * The logger object
 	 */
@@ -62,8 +65,7 @@ public class MSTConfiguration {
 	private static void createConfiguration(String urlPath) {
 		
 		MSTConfiguration.urlPath = urlPath;
-	    
-		File file = new File(System.getProperty("user.dir") + "\\" + urlPath +"\\MetadataServicesToolkit_config.xml");
+		File file = new File(System.getProperty("user.dir") + FILE_SEPARATOR + urlPath + FILE_SEPARATOR+ "MetadataServicesToolkit_config.xml");
 	    
 	    XMLFileHandler handler = new XMLFileHandler();
         handler.setFile(file);

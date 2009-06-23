@@ -34,6 +34,7 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 
 public class TestNormalizationService
@@ -306,12 +307,6 @@ public class TestNormalizationService
 	{
 		try
 		{
-			//addUnprocessedRecord();
-			//addUnprocessedRecordFromFiles(new File("C:\\MetadataServicesToolkit\\MetadataServices\\test\\testRecords"));
-			//addUnprocessedRecordFromFiles(new File("C:\\MetadataServicesToolkit\\MetadataServices\\test\\testRecords"));
-			//LuceneObject.optimizeIndex();
-
-			//if(true) return;
 
 			System.out.println(formatter.format(System.currentTimeMillis()));
 			MetadataService.runService(1, -1);
@@ -409,7 +404,7 @@ public class TestNormalizationService
 
 		try
 		{
-			outfile = new File(directory.getAbsolutePath() + "\\" + controlNumber + ".xml");
+			outfile = new File(directory.getAbsolutePath() + MSTConfiguration.FILE_SEPARATOR + controlNumber + ".xml");
 			outfile.createNewFile();
 
 			writer = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(outfile)),"UTF-8");

@@ -115,8 +115,8 @@ public class MSTSolrServer {
 
 		if (server == null)
 		{
-			String solrHome = System.getProperty("user.dir") + "\\" + MSTConfiguration.getUrlPath();
-			solrHome = solrHome + "\\Solr";
+			String solrHome = System.getProperty("user.dir") + MSTConfiguration.FILE_SEPARATOR + MSTConfiguration.getUrlPath();
+			solrHome = solrHome + MSTConfiguration.FILE_SEPARATOR + "Solr";
 
 			java.util.logging.Level logLevel = getLogLevel(configuration.getProperty(Constants.CONFIG_SOLR_LOG_LEVEL));
 

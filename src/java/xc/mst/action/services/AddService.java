@@ -98,8 +98,8 @@ public class AddService extends ActionSupport
     @Override
     public String execute()
     {
-       
-            File dir = new File(MSTConfiguration.getUrlPath() + "\\serviceConfig");
+
+            File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig");
             FileFilter fileFilter =  new XCCGFileFilter();
 
             File[] fileList = dir.listFiles(fileFilter);
@@ -109,7 +109,7 @@ public class AddService extends ActionSupport
             }
             setServiceFiles(serviceFiles);
             return SUCCESS;
-       
+
     }
 
     /**
@@ -121,7 +121,7 @@ public class AddService extends ActionSupport
     {
         try
         {
-            String location = MSTConfiguration.getUrlPath() + "\\serviceConfig\\" + getSelectedLocation();
+            String location = MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig" + MSTConfiguration.FILE_SEPARATOR + getSelectedLocation();
             File file = new File(location);
             servicesService.addNewService(file);
             return SUCCESS;
@@ -157,7 +157,7 @@ public class AddService extends ActionSupport
         /*
         finally
         {
-            File dir = new File(MSTConfiguration.getUrlPath() + "\\serviceConfig");
+            File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig");
             FileFilter fileFilter =  new XCCGFileFilter();
 
             File[] fileList = dir.listFiles(fileFilter);
@@ -191,7 +191,7 @@ public class AddService extends ActionSupport
 
     private void populateListBox()
     {
-        File dir = new File("serviceConfig");
+    	File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig");
         FileFilter fileFilter =  new XCCGFileFilter();
 
         File[] fileList = dir.listFiles(fileFilter);

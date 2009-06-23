@@ -295,8 +295,6 @@ public class EOTests
 
 			if(true) return;
 
-			//File file = new File("C:\\AllXcProjects\\MetadataServicesToolkit\\serviceConfig\\DefaultNormalizationServiceConfig.xccfg");
-			//new DefaultServicesService().addNewService(file);
 
 			return;
 		}
