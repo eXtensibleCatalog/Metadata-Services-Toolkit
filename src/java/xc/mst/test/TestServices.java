@@ -46,6 +46,7 @@ import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -60,18 +61,19 @@ public class TestServices
 	{
 		// Load the configuration file
 		configuration = ConfigurationManager.getConfiguration();
-
+		
 		// Configure the log file location as the value found in the configuration file.
 		String logConfigFileLocation = configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
 		if(logConfigFileLocation != null)
 			PropertyConfigurator.configure(logConfigFileLocation);
-
 		// Abort if we could not find the configuration file
 		else
 		{
 			System.err.println("The configuration file was invalid or did not exist.");
 			System.exit(1);
 		}
+		
+		MSTConfiguration.getInstance("MST-instances/MetadataServicesToolkit");
 
 		MSTSolrServer.getInstance();
 	}

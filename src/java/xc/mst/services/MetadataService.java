@@ -46,6 +46,7 @@ import xc.mst.manager.record.RecordService;
 import xc.mst.scheduling.Scheduler;
 import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -959,7 +960,7 @@ public abstract class MetadataService
 	 */
 	public String getNextOaiId()
 	{
-		return "oai:" + mstConfiguration.getProperty(Constants.CONFIG_OAI_REPO_IDENTIFIER) + ":" + serviceName + "/" + oaiIdDao.getNextOaiIdForService(service.getId());
+		return "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_IDENTIFIER) + ":" + serviceName + "/" + oaiIdDao.getNextOaiIdForService(service.getId());
 	}
 
 	/**
