@@ -110,7 +110,7 @@
 	          <div class="hd">Editing Repository</div>
 		      <div class="bd">
 		      		
-				 <strong>Updating and validating the repository. Please wait.</strong>&nbsp;&nbsp;<img src="${pageContext.request.contextPath}/page-resources/img/processing.gif">
+				 <strong>Updating and validating the repository. Please wait.</strong>&nbsp;&nbsp;<img src="${pageContext.request.contextPath}/page-resources/img/loading_graphic_gray.gif">
 				 <div class="clear">&nbsp;</div>
 		      </div>
 	      </div>

@@ -80,6 +80,7 @@
                           Step 1: To add a service, see user manual for configuration file information. <BR>
                        </td>
                     </tr>
+                    <br>
                     <tr>
                       <td valign="top">
                           Step 2 : Select the Configuration File :

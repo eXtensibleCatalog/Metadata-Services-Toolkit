@@ -1,13 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<img src="page-resources/img/loading_graphic.gif">
+<c:if test="${currentProcess!=null}">
+    <img src="page-resources/img/loading_graphic.gif">
+</c:if>
     
 Process Description :
 <c:if test="${currentProcess!=null}">
         <c:set var="nameLength" value="${fn:length(currentProcess)}"/>
         <c:choose>
-            <c:when test="${namelength<25}">
+            <c:when test="${nameLength<25}">
                 <xxx id="currentProcess">${currentProcess}</xxx>
             </c:when>
             <c:otherwise>

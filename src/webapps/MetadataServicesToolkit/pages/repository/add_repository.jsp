@@ -111,7 +111,7 @@
 	          <div class="hd">Adding Repository</div>
 		      <div class="bd">
 		      	
-				 <strong>Adding and validating the repository. Please wait.</strong>&nbsp;&nbsp;<img src="${pageContext.request.contextPath}/page-resources/img/processing.gif">
+				 <strong>Adding and validating the repository. Please wait.</strong>&nbsp;&nbsp;<img src="${pageContext.request.contextPath}/page-resources/img/loading_graphic_gray.gif">
 				 <div class="clear">&nbsp;</div>
 		      </div>
 	      </div>
