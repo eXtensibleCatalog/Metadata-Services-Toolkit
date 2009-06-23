@@ -168,6 +168,8 @@
 
        </form>
      </div>
+            <!--  this is the footer of the page -->
+            <c:import url="/inc/footer.jsp"/>       
    </div>
  </body>
 </html>

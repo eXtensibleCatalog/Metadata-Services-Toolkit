@@ -475,11 +475,12 @@
 				    </div>
 				</c:if>		    
 						    
-
+</div>
 			
  		</div>
 		<!--  end body -->		
-            
+            <!--  this is the footer of the page -->
+            <c:import url="/inc/footer.jsp"/>              
         </div>
         <!-- end doc -->
     </body>
