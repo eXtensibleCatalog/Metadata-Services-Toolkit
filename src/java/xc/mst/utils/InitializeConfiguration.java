@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 import xc.mst.constants.Constants;
 
 /**
- * Initialize coniguration
+ * Initialize configuration
  *
  * @author Sharmila Ranganathan
  *

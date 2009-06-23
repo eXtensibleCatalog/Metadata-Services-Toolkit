@@ -127,3 +127,12 @@ project
 position : relative;
 top : 3px;
 }
+
+.footer
+{
+    height : 1px;
+    border-top-style:solid;
+    border-width:1px;
+    border-color:#ced2d5;
+    margin-top:20px;
+}

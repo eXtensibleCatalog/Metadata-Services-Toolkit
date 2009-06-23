@@ -8,7 +8,7 @@
   -->
 
 
-<hr style="color: #717171; height: 1px;"> 
+<div class="footer"/> 
 <div align="right">
 		MetadataServicesToolkit v 0.1
 </div>
