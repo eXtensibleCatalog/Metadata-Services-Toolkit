@@ -468,7 +468,6 @@ public class DefaultUserService implements UserService{
             	  filename =  ((RollingFileAppender)app).getFile();
               }
             }
-            System.out.println("filename:"+filename);
 
            for(User admin:admins) {
                 emailer.sendEmail(admin.getEmail(), adminSubject, MESSAGE, filename);
