@@ -24,8 +24,8 @@ import javax.naming.directory.InitialDirContext;
 
 import org.apache.log4j.Appender;
 import org.apache.log4j.Logger;
-
 import org.apache.log4j.RollingFileAppender;
+
 import sun.misc.BASE64Encoder;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
@@ -41,7 +41,6 @@ import xc.mst.dao.user.PermissionDAO;
 import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.user.UserGroupUtilDAO;
 import xc.mst.email.Emailer;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * Service class for User to deal with creating, updating
@@ -439,15 +438,16 @@ public class DefaultUserService implements UserService{
      * @param message The message which describes where the error took place.
      * @throws DatabaseConfigException
      */
+    @SuppressWarnings("unchecked")
     public boolean sendEmailErrorReport(){
 
         try
         {
-            String MESSAGE = "An error has occurred with the Metadata Services Toolkit.  Please submit this error here: http://code.google.com/p/xcmetadataservicestoolkit/issues/entry \n Please include the following information:\n Template: Defect report from user \n Summary: <error summary> \n Description: <copy paste the relevant error message from the log file here> \n";
+            String MESSAGE = "An error has occurred with the Metadata Services Toolkit.  Please submit this error here: http://code.google.com/p/xcmetadataservicestoolkit/issues/entry \n\n Please include the following information:\n Template: Defect report from user \n Summary: <error summary> \n Description: <copy paste the relevant error message from the attached log file here> \n";
 
             Emailer emailer = new Emailer();
 
-            String adminSubject = "MST GUI error";
+            String adminSubject = "MST error";
 
             List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR).getId());
 
@@ -457,20 +457,28 @@ public class DefaultUserService implements UserService{
                 return false;
             }
 
-            for(User admin:admins) {
+            // Get the log file path
+            String filename = null;
+            Enumeration<Appender> root = Logger.getRootLogger().getAllAppenders();
+                       
+            while ( root.hasMoreElements() ){
+              Appender app = (Appender)root.nextElement();
+              
+              if ( app instanceof RollingFileAppender ){
+            	  filename =  ((RollingFileAppender)app).getFile();
+              }
+            }
+            System.out.println("filename:"+filename);
 
-                //String filename = "logs/MST_General_log.txt";
-                
-                RollingFileAppender appender =  (RollingFileAppender) Logger.getLogger(Constants.LOGGER_GENERAL).getAppender("file");
-                
-                emailer.sendEmail(admin.getEmail(), adminSubject, MESSAGE, MSTConfiguration.getUrlPath() + "/" + appender.getFile());
+           for(User admin:admins) {
+                emailer.sendEmail(admin.getEmail(), adminSubject, MESSAGE, filename);
             }
 
             return true;
         }
         catch(DatabaseConfigException dce)
-        {
-            log.error(dce.getMessage(),dce);
+        {	
+            log.error("Error occured while emailing the error log file to admin.", dce);
             return false;
         }        
        
