@@ -102,8 +102,17 @@
 			            </tr>
 			            <tr>
                             <td class="label" style="font-size:13px;">
-                               
-                                   URL : ${provider.oaiProviderUrl}
+                               <table>
+                                   <tr>
+                                       <td>
+                                           URL :
+                                       </td>
+                                       <td>
+                                           ${provider.oaiProviderUrl}
+                                       </td>
+                                   </tr>
+                               </table>
+                                    
                             </td>
 			            </tr>
                         <tr>

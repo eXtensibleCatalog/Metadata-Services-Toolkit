@@ -94,9 +94,15 @@
                                 <td>
                                    <div align="left">
 
-                                           <span>Output Records from</span>
-                                           <span style="margin-left:10px;margin-right:10px;"><img src="page-resources/img/greenarrow.jpg"/></span>
-                                           <span>To be Processed by</span>
+                                           <table style="position:relative;top:-2px;border-style: none; border-color: #ffffff;margin:0px;padding:0px;">
+                                                 <tbody>
+                                                    <tr>
+                                                        <td style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span>Output Records from</span> </td>
+                                                        <td style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span style="margin-left: 10px; margin-right: 10px;"><img src="page-resources/img/greenarrow.jpg"/></span> </td>
+                                                        <td style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span>To be Processed by</span> </td>
+                                                    </tr>
+                                                 </tbody>
+                                            </table>
 
                                     </div>
 
@@ -177,7 +183,18 @@
 
                                                <div align="left" style="margin-left:5px;">
                                                     <a style="color:black;" href="<c:out value="${url}" />">
-                                                        <U> ${x2.name} >>> ${directive.service.name} </U>
+                                                        <U> 
+                                                            <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;"> ${x2.name} </td>
+                                                                        <td width="10%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt;"> >>> </td>
+                                                                        <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;"> &nbsp;${directive.service.name} </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </U>
                                                     </a>
                                                </div>
                                         </td>

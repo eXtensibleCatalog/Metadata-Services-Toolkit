@@ -56,8 +56,11 @@ Process Description :
         </c:choose>
     </c:when>
     <c:otherwise>
-         <button style="display:none;" id='resumeButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("resume");' name='Resume'>Resume</button> &nbsp;&nbsp;&nbsp;
-         <button id='pauseButton' disabled class="xc_button_disabled" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("pause");' name='Pause'>Pause</button> &nbsp;&nbsp;&nbsp;
-         <button id='abortButton' disabled class="xc_button_disabled" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("abort");' name='Abort'>Abort</button>
+        <ul style="list-style:none;">
+            <li style="float:right;"><button style="display:none;" id='resumeButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("resume");' name='Resume'>Resume</button> &nbsp;&nbsp;&nbsp;</li>
+            <li style="float:right;"><button id='pauseButton' disabled class="xc_button_disabled" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("pause");' name='Pause'>Pause</button> &nbsp;&nbsp;&nbsp;</li>
+            <li style="float:right;"><button id='abortButton' disabled class="xc_button_disabled" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("abort");' name='Abort'>Abort</button></li>
+        </ul>
     </c:otherwise>
 </c:choose>
+
