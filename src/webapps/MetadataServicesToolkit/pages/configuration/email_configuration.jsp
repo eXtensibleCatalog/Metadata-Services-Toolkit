@@ -115,14 +115,29 @@
                        </tr>
 
                        <tr>
-                           <td> <B>Encrypted Connection </B>&nbsp;&nbsp;
+                           <td> <B>Encrypted Connection </B>&nbsp;&nbsp; 
                            
                                <br>
                                <SELECT style="width:200px; height:20px;" ID="encryptedConnection" name="encryptedConnection" >
-                                  <OPTION SELECTED value="none">None</OPTION>
-                                  <OPTION value="ssl">SSL</OPTION>
-                                  <OPTION value="tls">TLS</OPTION>
-                                  <OPTION value="auto">AUTO</OPTION>
+                                  <OPTION  value="none">None</OPTION>
+
+                                  <OPTION value="ssl" 
+                                  <c:if test="${emailConfig.encryptedConnection == 'ssl'}">
+                                  	SELECTED
+                                  </c:if>
+                                  >SSL</OPTION>
+
+                                  <OPTION value="tls" 
+                                  <c:if test="${emailConfig.encryptedConnection == 'tls'}">
+                                  	selected
+                                  </c:if>
+                                  >TLS</OPTION>
+
+                                  <OPTION value="auto" 
+                                  <c:if test="${emailConfig.encryptedConnection == 'auto'}">
+                                  	selected
+                                  </c:if>
+                                  >AUTO</OPTION>
                                 </SELECT>
                                 <br><br>
                            </td>
