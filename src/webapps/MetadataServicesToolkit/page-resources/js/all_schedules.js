@@ -9,7 +9,6 @@
  YAHOO.namespace("xc.mst.schedule.view");
 
 YAHOO.xc.mst.schedule.view = {
-
 	/**
 	 * Delete schedule
 	 *

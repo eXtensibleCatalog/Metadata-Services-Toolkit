@@ -48,7 +48,7 @@ addValidator : function()
 					YAHOO.xc.mst.repository.addRepository.processingDialog = new YAHOO.widget.Dialog('processingDialog',
 					{ width : "400px",
 						  visible : false, 
-						  modal : true,
+						  modal : true
 
 						} );
 
