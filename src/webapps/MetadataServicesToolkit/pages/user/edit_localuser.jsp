@@ -116,7 +116,7 @@
 
                    <tr>
                         <td valign="top"><b>Email</b><br>
-                        <input type="text" id="email" name ="email" class="textfield" value="${temporaryUser.email}" maxlength="255"><br><br></td>
+                        <input type="text" id="email" name ="email" class="textfield" value="${temporaryUser.email}" maxlength="255" size="47"><br><br></td>
                    </tr>
                </table>
                <table>

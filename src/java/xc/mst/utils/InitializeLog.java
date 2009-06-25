@@ -50,9 +50,14 @@ public class InitializeLog  extends HttpServlet {
 			logs = logDao.getAll();
 			// Update log file path
 			for(Log log : logs) {
-				log.setLogFileLocation(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + log.getLogFileLocation());
-		    	logDao.update(log);
+				// add the path if its not added previously. In case of server restart, the path need not be added since it would have been
+				// addeed the fisrt time server was restarted.
+				if (log.getLogFileLocation().indexOf(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR) == -1) {
+					log.setLogFileLocation(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + log.getLogFileLocation());
+			    	logDao.update(log);
+				}
 			}
+			
 			logs = logDao.getAll();
 		} 
 		catch (DataException e) 

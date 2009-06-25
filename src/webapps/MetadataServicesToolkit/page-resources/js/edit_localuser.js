@@ -12,9 +12,7 @@ YAHOO.namespace("xc.mst.user.editLocal");
 YAHOO.xc.mst.user.editLocal = {
     editValidate : function()
     {
-        try
-        {
-             
+   
             var email = document.getElementById("email").value;
             var pass = document.getElementById("password").value;
             var confpass = document.getElementById("confpass").value;
@@ -40,10 +38,11 @@ YAHOO.xc.mst.user.editLocal = {
 				var validChar = '*,(,),_,#,@';
 				var i = 0;
 				for(i = 0; i < document.getElementById('password').value.length; i++) {
-					if(document.getElementById('password').value[i].match(alphaExp)){
-	
+			
+					if(document.getElementById('password').value.charAt(i).match(alphaExp)){
+
 					}else{
-						if  (validChar.indexOf(document.getElementById('password').value[i]) < 0 ) {
+						if  (validChar.indexOf(document.getElementById('password').value.charAt(i)) < 0 ) {
 						    createErrorDiv("error",'Invalid character in password. Only A-Z, a-z, 0-9 , *, @, (,), _,# are allowed.');
 							return false;
 						}
@@ -97,13 +96,7 @@ YAHOO.xc.mst.user.editLocal = {
                       }
              }
             
-
-        }
-        catch(err)
-        {
-            alert(err);
-        }
-    },
+},    
     editcancel : function()
     {
         document.editLocalUser.action = "allUsers.action";

@@ -42,10 +42,10 @@ YAHOO.xc.mst.changePassword = {
 		var validChar = '*,(,),_,#,@';
 		var i = 0;
 		for(i = 0; i < document.getElementById('new_password').value.length; i++) {
-			if(document.getElementById('new_password').value[i].match(alphaExp)){
+			if(document.getElementById('new_password').value.charAt(i).match(alphaExp)){
 
 			}else{
-				if  (validChar.indexOf(document.getElementById('new_password').value[i]) < 0 ) {
+				if  (validChar.indexOf(document.getElementById('new_password').value.charAt(i)) < 0 ) {
 					alert('Invalid character in password. Only A-Z, a-z, 0-9 , *, @, (,), _,# are allowed.');
 					return false;
 				}

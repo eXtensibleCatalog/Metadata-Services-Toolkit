@@ -13,7 +13,7 @@
                                        <c:param name="isAscendingOrder" value="true"/>
                                        <c:param name="columnSorted" value="ScheduleName"/>
                                      </c:url>
-                                      <a href="javascript:YAHOO.mst.schedule.delete.refreshScheduleTable('true', 'ScheduleName');">Schedule name</a>
+                                      <a href="javascript:YAHOO.xc.mst.schedule.view.refreshScheduleTable('true', 'ScheduleName');">Schedule name</a>
                                  </c:if>
 
                                  <c:if test="${columnSorted=='ScheduleName'}">
@@ -22,7 +22,7 @@
                                      <c:param name="columnSorted" value="ScheduleName"/>
                                    </c:url>
 
-                                   <a href="javascript:YAHOO.mst.schedule.delete.refreshScheduleTable(${!isAscendingOrder}, 'ScheduleName');">Schedule Name</a>
+                                   <a href="javascript:YAHOO.xc.mst.schedule.view.refreshScheduleTable(${!isAscendingOrder}, 'ScheduleName');">Schedule Name</a>
 
                                     <c:choose>
                                         <c:when test="${isAscendingOrder==true}">
@@ -44,7 +44,7 @@
                                                 <c:param name="isAscendingOrder" value="true"/>
                                                 <c:param name="columnSorted" value="RepositoryName"/>
                                             </c:url>
-                                            <a href="javascript:YAHOO.mst.schedule.delete.refreshScheduleTable('true', 'RepositoryName');">Repository name</a>
+                                            <a href="javascript:YAHOO.xc.mst.schedule.view.refreshScheduleTable('true', 'RepositoryName');">Repository name</a>
                                         </c:if>
 
                                         <c:if test="${columnSorted=='RepositoryName'}">
@@ -53,7 +53,7 @@
                                                 <c:param name="columnSorted" value="RepositoryName"/>
                                         </c:url>
 
-                                       <a href="javascript:YAHOO.mst.schedule.delete.refreshScheduleTable(${!isAscendingOrder}, 'RepositoryName');">Repository Name</a>
+                                       <a href="javascript:YAHOO.xc.mst.schedule.view.refreshScheduleTable(${!isAscendingOrder}, 'RepositoryName');">Repository Name</a>
 
                                         <c:choose>
                                             <c:when test="${isAscendingOrder==true}">
@@ -75,7 +75,7 @@
                                        <c:param name="isAscendingOrder" value="true"/>
                                        <c:param name="columnSorted" value="Recurrence"/>
                                      </c:url>
-                                      <a href="javascript:YAHOO.mst.schedule.delete.refreshScheduleTable('true', 'Recurrence');">Recurrence</a>
+                                      <a href="javascript:YAHOO.xc.mst.schedule.view.refreshScheduleTable('true', 'Recurrence');">Recurrence</a>
                                  </c:if>
 
                                  <c:if test="${columnSorted=='Recurrence'}">
@@ -84,7 +84,7 @@
                                      <c:param name="columnSorted" value="Recurrence"/>
                                    </c:url>
 
-                                   <a href="$javascript:YAHOO.mst.schedule.delete.refreshScheduleTable(${!isAscendingOrder}, 'Recurrence');">Recurrence</a>
+                                   <a href="$javascript:YAHOO.xc.mst.schedule.view.refreshScheduleTable(${!isAscendingOrder}, 'Recurrence');">Recurrence</a>
 
                                     <c:choose>
                                         <c:when test="${isAscendingOrder==true}">
@@ -105,7 +105,7 @@
                                        <c:param name="isAscendingOrder" value="true"/>
                                        <c:param name="columnSorted" value="Status"/>
                                      </c:url>
-                                      <a href="javascript:YAHOO.mst.schedule.delete.refreshScheduleTable('true', 'Status');">Status</a>
+                                      <a href="javascript:YAHOO.xc.mst.schedule.view.refreshScheduleTable('true', 'Status');">Status</a>
                                  </c:if>
 
                                  <c:if test="${columnSorted=='Status'}">
@@ -114,7 +114,7 @@
                                      <c:param name="columnSorted" value="Status"/>
                                    </c:url>
 
-                                   <a href="javascript:YAHOO.mst.schedule.delete.refreshScheduleTable(${!isAscendingOrder}, 'Status');">Status</a>
+                                   <a href="javascript:YAHOO.xc.mst.schedule.view.refreshScheduleTable(${!isAscendingOrder}, 'Status');">Status</a>
 
                                     <c:choose>
                                         <c:when test="${isAscendingOrder==true}">
@@ -205,7 +205,7 @@
                         	</c:if>
                             
                         </td>
-						<td> <button class="xc_button" id="showDeleteSchedule" type="button" name="delete" onClick="Javascript:YAHOO.mst.schedule.delete.deleteSchedule(${schedule.id}, '${schedule.scheduleName}');">Delete</button></td>
+						<td> <button class="xc_button" id="showDeleteSchedule" type="button" name="delete" onClick="javascript:YAHOO.xc.mst.schedule.view.deleteSchedule(${schedule.id}, '${schedule.scheduleName}');">Delete</button></td>
 					</tr>
 					</c:forEach>
 				</tbody>

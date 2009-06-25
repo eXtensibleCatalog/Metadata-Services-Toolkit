@@ -134,8 +134,9 @@ refreshServiceBar : function()
     },
 	init : function()
 	{
-         var user = document.getElementById("loggedInUser").value;
-         if(user!=null&&user!='')
+         var showServiceStatus = document.getElementById("userHasPermission").value;
+
+         if(showServiceStatus)
              {
                  YAHOO.xc.mst.serviceStatusBar.refreshServiceBar();
              }

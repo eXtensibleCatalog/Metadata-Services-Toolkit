@@ -12,8 +12,7 @@ YAHOO.namespace("xc.mst.users.addLocal");
 YAHOO.xc.mst.users.addLocal = {
     addValidate : function()
     {
-        try
-        {
+
            
             var email = document.getElementById("email").value;
             var pass = document.getElementById("password").value;
@@ -39,10 +38,11 @@ YAHOO.xc.mst.users.addLocal = {
 			var validChar = '*,(,),_,#,@';
 			var i = 0;
 			for(i = 0; i < document.getElementById('password').value.length; i++) {
-				if(document.getElementById('password').value[i].match(alphaExp)){
+			
+				if(document.getElementById('password').value.charAt(i).match(alphaExp)){
 
 				}else{
-					if  (validChar.indexOf(document.getElementById('password').value[i]) < 0 ) {
+					if  (validChar.indexOf(document.getElementById('password').value.charAt(i)) < 0 ) {
 					    createErrorDiv("error",'Invalid character in password. Only A-Z, a-z, 0-9 , *, @, (,), _,# are allowed.');
 						return false;
 					}
@@ -104,11 +104,7 @@ YAHOO.xc.mst.users.addLocal = {
                       }
              }
             
-        }
-        catch(err)
-        {
-            alert(err);
-        }
+
     },
     addcancel : function()
     {

@@ -18,12 +18,13 @@
 
 <c:if test="${user!=null}">
     <mst:checkUserPermission permission="Services">
+    	<input type="hidden" id="userHasPermission" name="userHasPermission" value="true">
         <div class="serviceStatus" id="serviceBar">
 
         </div>
     </mst:checkUserPermission>
 </c:if>
-<input type="hidden" id="loggedInUser" name="loggedInUser" value="${user}">
+
 <div id="header">
  
                

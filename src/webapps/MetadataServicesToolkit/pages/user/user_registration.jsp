@@ -137,7 +137,7 @@
 			</tr>
 			<tr>
                 <td> <b>Email</b> <br>
-					<input type="text" id="user_email" name="newUser.email" value="${newUser.email}" maxlength="225"/>
+					<input type="text" id="user_email" name="newUser.email" value="${newUser.email}" maxlength="225" size="42"/>
 				</td>
 			</tr>
 			<tr>

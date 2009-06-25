@@ -118,14 +118,14 @@ public class ViewRepository extends ActionSupport implements UserAware
           catch(DatabaseConfigException dce)
           {
               log.error(dce.getMessage(),dce);
-              this.addFieldError("viewRepositoryError", "Unable to access database. Database configuration may be incorrect");
+              this.addFieldError("validateRepositoryError", "Unable to access database. Database configuration may be incorrect");
               errorType = "error";
               execute();
           }
           catch(Hexception he)
           {
               log.error(he.getMessage(),he);
-              this.addFieldError("viewRepositoryError", "There was an exception when validating the repository");
+              this.addFieldError("validateRepositoryError", "There was an exception when validating the repository");
               errorType = "error";
               execute();
              

@@ -10,6 +10,7 @@
 package xc.mst.action.harvest;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,6 @@ import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.repository.SetService;
 
 import com.opensymphony.xwork2.ActionSupport;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
 
 
 
@@ -102,7 +101,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 	private int minute;
 
 	/** Start date for schedule to run */
-	private Date startDate;
+	private String startDate;
 
 	/** End date for schedule to stop */
 	private Date endDate;
@@ -166,7 +165,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
      * @return
      * @throws DataException
      */
-    public String addScheduleAndProvider() throws DataException {
+    public String addScheduleAndProvider() throws DataException, ParseException {
 
     	if (log.isDebugEnabled()) {
     		log.debug("AddSchedule::addScheduleAndProvider():: scheduleName=" + scheduleName);
@@ -211,7 +210,8 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 			}
     	}
 
-    	schedule.setStartDate(startDate);
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    	schedule.setStartDate(new java.sql.Date(dateFormat.parse(startDate).getTime()));
     	schedule.setEndDate(endDate);
 
     	// Check if schedule exist for this provider
@@ -256,7 +256,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
      * @return
      * @throws DataException
      */
-    public String updateSchedule() throws DataException {
+    public String updateSchedule() throws DataException, ParseException{
     	
     	if (log.isDebugEnabled()) {
     		log.debug("In update schedule updateSchedule()");
@@ -265,7 +265,8 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	schedule = (HarvestSchedule) request.getSession().getAttribute("schedule");
 
 
-		schedule.setStartDate(startDate);
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    	schedule.setStartDate(new java.sql.Date(dateFormat.parse(startDate).getTime()));
     	schedule.setEndDate(endDate);
 		schedule.setRecurrence(recurrence);
 
@@ -665,7 +666,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 	 *
 	 * @param startDate
 	 */
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 

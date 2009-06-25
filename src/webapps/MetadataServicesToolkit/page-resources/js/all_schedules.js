@@ -6,11 +6,9 @@
   * website http://www.extensiblecatalog.org/. 
   *
   */
-  
-YAHOO.namespace("mst.schedule.delete");
+ YAHOO.namespace("xc.mst.schedule.view");
 
-YAHOO.mst.schedule.delete = {
-
+YAHOO.xc.mst.schedule.view = {
 
 	/**
 	 * Delete schedule
@@ -19,7 +17,7 @@ YAHOO.mst.schedule.delete = {
 	deleteSchedule : function(scheduleId, scheduleName)
 	{	
 		document.getElementById('schedule_id').value= scheduleId;
-		YAHOO.mst.schedule.delete.deleteScheduleDialog.showDialog();
+		YAHOO.xc.mst.schedule.view.deleteScheduleDialog.showDialog();
 		    
 	},
 	
@@ -30,21 +28,21 @@ YAHOO.mst.schedule.delete = {
 	{
 		// Define various event handlers for Dialog
 		var handleSubmit = function() {
-			document.deleteSchedule.submit();
-		    YAHOO.mst.schedule.delete.deleteScheduleDialog.hide();
+		    document.deleteSchedule.submit();
+		    YAHOO.xc.mst.schedule.view.deleteScheduleDialog.hide();
 		};
 		
 			
 		// handle a cancel of deleting user dialog
 		var handleCancel = function() {
-		    YAHOO.mst.schedule.delete.deleteScheduleDialog.hide();
+		    YAHOO.xc.mst.schedule.view.deleteScheduleDialog.hide();
 		};
 		
 		// Instantiate the Dialog
 		// make it modal - 
 		// it should not start out as visible - it should not be shown until 
 		// new user button is clicked.
-		YAHOO.mst.schedule.delete.deleteScheduleDialog = new YAHOO.widget.Dialog('deleteScheduleDialog', 
+		YAHOO.xc.mst.schedule.view.deleteScheduleDialog = new YAHOO.widget.Dialog('deleteScheduleDialog', 
 	        { width : "400px",
 			  visible : false, 
 			  modal : true,
@@ -54,20 +52,17 @@ YAHOO.mst.schedule.delete = {
 		
 			
 	       // Show the dialog
-	       YAHOO.mst.schedule.delete.deleteScheduleDialog.showDialog = function()
+	       YAHOO.xc.mst.schedule.view.deleteScheduleDialog.showDialog = function()
 	       {
-	           YAHOO.mst.schedule.delete.deleteScheduleDialog.show();
-	           YAHOO.mst.schedule.delete.deleteScheduleDialog.center();
+	           YAHOO.xc.mst.schedule.view.deleteScheduleDialog.show();
+	           YAHOO.xc.mst.schedule.view.deleteScheduleDialog.center();
 	       }
 
 
 		// Render the Dialog
-		YAHOO.mst.schedule.delete.deleteScheduleDialog.render();
+		YAHOO.xc.mst.schedule.view.deleteScheduleDialog.render();
 
-	       // listener for showing the dialog when clicked.
-		YAHOO.util.Event.addListener("confirmDeleteSchedule", "click", 
-		    YAHOO.mst.schedule.delete.deleteScheduleDialog.showDialog, 
-		    YAHOO.mst.schedule.delete.deleteScheduleDialog, true);
+	    
 
 	},
 	
@@ -98,7 +93,7 @@ YAHOO.mst.schedule.delete = {
 			'getSchedulesTable.action', callback);
 
   			
-		window.setTimeout('YAHOO.mst.schedule.delete.refreshScheduleTable()',2000);	
+		window.setTimeout('YAHOO.xc.mst.schedule.view.refreshScheduleTable()',2000);	
 	 },
 	 
 
@@ -107,12 +102,12 @@ YAHOO.mst.schedule.delete = {
 	 */ 
 	init : function() 
 	{
-	    YAHOO.mst.schedule.delete.createDeleteScheduleDialog();
-	    YAHOO.mst.schedule.delete.refreshScheduleTable();
+	    YAHOO.xc.mst.schedule.view.createDeleteScheduleDialog();
+	    YAHOO.xc.mst.schedule.view.refreshScheduleTable();
 	    
 	}
 
 }
 
 // initialize the code once the dom is ready
-YAHOO.util.Event.onDOMReady(YAHOO.mst.schedule.delete.init);
+YAHOO.util.Event.onDOMReady(YAHOO.xc.mst.schedule.view.init);

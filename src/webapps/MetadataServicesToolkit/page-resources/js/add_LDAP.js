@@ -42,8 +42,7 @@ YAHOO.xc.mst.configuration.ldap = {
      addLDAP : function()
      {
 
-         try
-         {
+         
              var displayName = document.getElementById("displayName").value;
              var serverURL = document.getElementById("serverURL").value;
              var userNameAttribute = document.getElementById("userNameAttribute").value;
@@ -88,7 +87,7 @@ YAHOO.xc.mst.configuration.ldap = {
 
                  if(arr[1]==null)
                      {
-                         createErrorDiv("error","Repository URL is invalid (Kindly ensure that protocol is specified eg:HTTP)");
+                         createErrorDiv("error","Server URL is invalid (Kindly ensure that protocol is specified eg:HTTP)");
                      }
                  else
                      {
@@ -99,7 +98,7 @@ YAHOO.xc.mst.configuration.ldap = {
                                
 
                                 var j;
-                                j = YAHOO.xc.mst.configuration.ldap.converter(port[i]);
+                                j = YAHOO.xc.mst.configuration.ldap.converter(port.charAt(i));
                                
                                 if((j<48)||(j>57))
                                     {
@@ -119,11 +118,7 @@ YAHOO.xc.mst.configuration.ldap = {
                             }
                      }
              }
-         }
-         catch(err)
-         {
-             alert(err.description);
-         }
+         
      },
 
     cancel: function()

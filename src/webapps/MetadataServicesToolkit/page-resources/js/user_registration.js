@@ -57,10 +57,10 @@ YAHOO.xc.mst.registeration = {
 			var validChar = '*,(,),_,#,@';
 			var i = 0;
 			for(i = 0; i < document.getElementById('user_password').value.length; i++) {
-				if(document.getElementById('user_password').value[i].match(alphaExp)){
+				if(document.getElementById('user_password').value.charAt(i).match(alphaExp)){
 
 				}else{
-					if  (validChar.indexOf(document.getElementById('user_password').value[i]) < 0 ) {
+					if  (validChar.indexOf(document.getElementById('user_password').value.charAt(i)) < 0 ) {
 						createErrorDiv("error",'Invalid character in password. Only A-Z, a-z, 0-9 , *, @, (,), _,# are allowed.');
 						return false;
 					}

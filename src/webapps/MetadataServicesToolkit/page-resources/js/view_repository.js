@@ -36,7 +36,7 @@ YAHOO.xc.mst.repository.viewRepository = {
 		YAHOO.xc.mst.repository.viewRepository.processingDialog = new YAHOO.widget.Dialog('processingDialog', 
 		{ width : "400px",
 			  visible : false, 
-			  modal : true,
+			  modal : true
 	
 			} );
 	
@@ -108,7 +108,7 @@ YAHOO.xc.mst.repository.viewRepository = {
 			YAHOO.xc.mst.repository.viewRepository.deleteProcessingDialog = new YAHOO.widget.Dialog('deleteProcessingDialog', 
 			{ width : "400px",
 				  visible : false, 
-				  modal : true,
+				  modal : true
 		
 				} );
 		
