@@ -10,9 +10,8 @@
 
 package xc.mst.action.configuration;
 
-import com.opensymphony.xwork2.ActionSupport;
-import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
+
 import xc.mst.bo.emailconfig.EmailConfig;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
@@ -22,6 +21,8 @@ import xc.mst.manager.configuration.EmailConfigService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserService;
 
+import com.opensymphony.xwork2.ActionSupport;
+
 /**
  *  The action method that is used to add/edit an email Server
  *
@@ -30,7 +31,10 @@ import xc.mst.manager.user.UserService;
 public class EmailConfiguration extends ActionSupport
 {
 
-    /** A reference to the logger for this class */
+    /**  Serial id */
+	private static final long serialVersionUID = 4328003705417402790L;
+
+	/** A reference to the logger for this class */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /** Creates a service Object for Email Configuration */
@@ -49,13 +53,13 @@ public class EmailConfiguration extends ActionSupport
     private String fromAddress;
 
     /**The port number of the email server **/
-    private String port;
+    private int port;
 
     /**The password for the email server **/
     private String password;
 
     /**The timeout period **/
-    private String timeout;
+    private int timeout;
 
     /**The type of encrypted connection (can also ne 'none') **/
     private String encryptedConnection;
@@ -107,8 +111,8 @@ public class EmailConfiguration extends ActionSupport
             emailConfig.setEncryptedConnection(encryptedConnection);
             emailConfig.setFromAddress(fromAddress);
             emailConfig.setPassword(password);
-            emailConfig.setPortNumber(Integer.parseInt(port));
-            emailConfig.setTimeout(Integer.parseInt(timeout));
+            emailConfig.setPortNumber(port);
+            emailConfig.setTimeout(timeout);
             emailConfigService.setEmailConfiguration(emailConfig);
             message = "Email Configuration details saved.";
             errorType = "info";
@@ -169,7 +173,7 @@ public class EmailConfiguration extends ActionSupport
      *
      * @param port port number
      */
-    public void setPort(String port)
+    public void setPort(int port)
     {
 
         this.port = port;
@@ -180,7 +184,7 @@ public class EmailConfiguration extends ActionSupport
      *
      * @return port number
      */
-    public String getPort()
+    public int getPort()
     {
 
         return port;
@@ -211,7 +215,7 @@ public class EmailConfiguration extends ActionSupport
      *
      * @param timeout
      */
-    public void setTimeout(String timeout)
+    public void setTimeout(int timeout)
     {
         this.timeout = timeout;
     }
@@ -221,7 +225,7 @@ public class EmailConfiguration extends ActionSupport
      *
      * @return timeout period
      */
-    public String getTimeout()
+    public int getTimeout()
     {
         return timeout;
     }
