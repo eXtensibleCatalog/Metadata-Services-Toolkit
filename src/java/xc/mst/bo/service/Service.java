@@ -137,6 +137,13 @@ public class Service
 	 * The name of the .xccfg file defining the service
 	 */
 	private String xccfgFileName = null;
+	
+	/**
+	 * The version of the service
+	 */
+	private String version = null;
+	
+	
 
 	/**
 	 * Gets the service's ID
@@ -659,6 +666,23 @@ public class Service
 	public void setXccfgFileName(String xccfgFileName) 
 	{
 		this.xccfgFileName = xccfgFileName;
+	}
+	
+	/**
+	 * Gets the version of the service
+	 * 
+	 * @return The version of the service
+	 */
+	public String getVersion() {
+		return version;
+	}
+
+	/**
+	 * Sets the version of the service
+	 * @param version The version of the service
+	 */
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 	@Override
