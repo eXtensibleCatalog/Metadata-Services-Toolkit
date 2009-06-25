@@ -932,7 +932,7 @@ public class TransformationService extends MetadataService
 						atts.add(new Attribute("type", "lcnaf", XCRecord.XSI_NAMESPACE));
 						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), XCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
-					else if(prefix.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+					else if(prefix.equals(getOrganizationCode()))
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
 						atts.add(new Attribute("type", "xcauth"));
@@ -1074,7 +1074,7 @@ public class TransformationService extends MetadataService
 						atts.add(new Attribute("type", "lcnaf", XCRecord.XSI_NAMESPACE));
 						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), XCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
-					else if(prefix.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+					else if(prefix.equals(getOrganizationCode()))
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
 						atts.add(new Attribute("type", "xcauth"));
@@ -1189,7 +1189,7 @@ public class TransformationService extends MetadataService
 						atts.add(new Attribute("type", "lcnaf", XCRecord.XSI_NAMESPACE));
 						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), XCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
-					else if(prefix.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+					else if(prefix.equals(getOrganizationCode()))
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
 						atts.add(new Attribute("type", "xcauth"));
@@ -4004,7 +4004,7 @@ public class TransformationService extends MetadataService
 			for (Element subfield : subfields) {
 				
 				if(		subfield.getAttribute("code").getValue().equals("5") &&
-						subfield.getText().equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+						subfield.getText().equals(getOrganizationCode()))
 				
 					// Do not process this field
 					process = false;
@@ -4134,7 +4134,7 @@ public class TransformationService extends MetadataService
 					// Otherwise return null since we don't recognize the prefix
 					if(prefix.equals("DLC"))
 						attributes.add(new Attribute("agentID", "lcnaf:n" + authValue));
-					else if(prefix.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+					else if(prefix.equals(getOrganizationCode()))
 						attributes.add(new Attribute("agentID", "xcauth:" + authValue));
 				}
 
@@ -4270,7 +4270,7 @@ public class TransformationService extends MetadataService
 		String field001 = transformMe.getControlField("001");
 		String field003 = transformMe.getControlField("003");
 		if(field003 == null)
-			field003 = mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE);
+			field003 = getOrganizationCode();
 
 		if(log.isDebugEnabled())
 			log.debug("Adding a " + FrbrLevel.MANIFESTATION + " level recordId with a type of \"" + field003 + "\" and a value of " + field001);
@@ -4310,7 +4310,7 @@ public class TransformationService extends MetadataService
 		String field004 = transformMe.getControlField("004");
 		String field003 = transformMe.getControlField("003");
 		if(field003 == null)
-			field003 = mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE);
+			field003 = getOrganizationCode();
 
 		if(log.isDebugEnabled())
 			log.debug("Adding a " + FrbrLevel.HOLDINGS + " level manifestationHeld with a type of \"" + field003 + "\" and a value of " + field004);
@@ -5633,7 +5633,7 @@ public class TransformationService extends MetadataService
 			// Otherwise return null since we don't recognize the prefix
 			if(prefix.equals("DLC"))
 				return new Attribute("agentID", "lcnaf:n" + value);
-			else if(prefix.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+			else if(prefix.equals(getOrganizationCode()))
 				return new Attribute("agentID", "xcauth:" + value);
 			else
 				return null;
@@ -5645,7 +5645,7 @@ public class TransformationService extends MetadataService
 			// Otherwise return null since we don't recognize the prefix
 			if(prefix.equals("DLC"))
 				return new Attribute("workID", "lcnaf:n" + value);
-			else if(prefix.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+			else if(prefix.equals(getOrganizationCode()))
 				return new Attribute("workID", "xcauth:" + value);
 			else
 				return null;
@@ -5657,7 +5657,7 @@ public class TransformationService extends MetadataService
 			// Otherwise return null since we don't recognize the prefix
 			if(prefix.equals("DLC"))
 				return new Attribute("subjID", "lcnaf:sh" + value);
-			else if(prefix.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+			else if(prefix.equals(getOrganizationCode()))
 				return new Attribute("subjID", "xcauth:" + value);
 			else
 				return null;
@@ -5669,7 +5669,7 @@ public class TransformationService extends MetadataService
 			// Otherwise return null since we don't recognize the prefix
 			if(prefix.equals("DLC"))
 				return new Attribute("chronID", "lcnaf:sh" + value);
-			else if(prefix.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+			else if(prefix.equals(getOrganizationCode()))
 				return new Attribute("chronID", "xcauth:" + value);
 			else
 				return null;
@@ -5681,7 +5681,7 @@ public class TransformationService extends MetadataService
 			// Otherwise return null since we don't recognize the prefix
 			if(prefix.equals("DLC"))
 				return new Attribute("geoID", "lcnaf:sh" + value);
-			else if(prefix.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+			else if(prefix.equals(getOrganizationCode()))
 				return new Attribute("geoID", "xcauth:" + value);
 			else
 				return null;
@@ -5724,7 +5724,7 @@ public class TransformationService extends MetadataService
 				// Otherwise return null since we don't recognize the prefix
 				if(prefix.equals("DLC"))
 					return new Attribute("agentID", "lcnaf:" + value);
-				else if(prefix.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+				else if(prefix.equals(getOrganizationCode()))
 					return new Attribute("agentID", "xcauth:" + value);
 				else
 					return null;
@@ -5736,7 +5736,7 @@ public class TransformationService extends MetadataService
 				// Otherwise return null since we don't recognize the prefix
 				if(prefix.equals("DLC"))
 					return new Attribute("workID", "lcnaf:n" + value);
-				else if(prefix.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+				else if(prefix.equals(getOrganizationCode()))
 					return new Attribute("workID", "xcauth:" + value);
 				else
 					return null;
@@ -5782,7 +5782,7 @@ public class TransformationService extends MetadataService
 				atts.add(new Attribute("type", "lcnaf", XCRecord.XSI_NAMESPACE));
 				transformInto.addElementBasedOnLinkingField("identifierForTheWork", "n" + value, XCRecord.RDVOCAB_NAMESPACE, atts, linkingField);
 			}
-			else if(prefix.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+			else if(prefix.equals(getOrganizationCode()))
 			{
 				ArrayList<Attribute> atts = new ArrayList<Attribute>();
 				atts.add(new Attribute("type", "xcauth"));

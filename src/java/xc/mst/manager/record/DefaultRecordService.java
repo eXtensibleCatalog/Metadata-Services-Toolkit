@@ -511,7 +511,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested trait
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_TRAIT + ":" + trait.replaceAll(":", "\\\\:"));
+		query.setQuery(FIELD_TRAIT + ":" + trait.replaceAll(" ", "_").replaceAll(":", "\\\\:"));
 
 		// Return the list of results
 		return new RecordList(query);
@@ -906,7 +906,7 @@ public class DefaultRecordService extends RecordService
 			doc.addField(FIELD_PROCESSED_BY_SERVICE_ID, Long.toString(processedByService.getId()));
 
 		for(String trait : record.getTraits())
-			doc.addField(FIELD_TRAIT, trait);
+			doc.addField(FIELD_TRAIT, trait.replaceAll(" ", "_"));
 
 		for(String error : record.getErrors())
 			doc.addField(FIELD_ERROR, error);

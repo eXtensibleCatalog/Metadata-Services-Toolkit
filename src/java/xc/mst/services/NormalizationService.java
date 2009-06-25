@@ -182,7 +182,7 @@ public class NormalizationService extends MetadataService
 			}
 
 			// Create a MarcXmlManagerForNormalizationService for the record
-			MarcXmlManagerForNormalizationService normalizedXml = new MarcXmlManagerForNormalizationService(marcXml, mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE));
+			MarcXmlManagerForNormalizationService normalizedXml = new MarcXmlManagerForNormalizationService(marcXml, getOrganizationCode());
 
 			// Get the Leader 06.  This will allow us to determine the record's type, and we'll put it in the correct set for that type
 			char leader06 = normalizedXml.getLeader().charAt(6);
@@ -668,7 +668,7 @@ public class NormalizationService extends MetadataService
 		boolean moveAllOrgCodes = enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_MOVE_ALL_MARC_ORG_CODES, "0").equals("1");
 
 		// Create the new 035 field
-		if(moveAllOrgCodes || control003.equals(mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+		if(moveAllOrgCodes || control003.equals(getOrganizationCode()))
 		{
 			String new035 = "(" + control003 + ")" + control001;
 
@@ -1190,7 +1190,7 @@ public class NormalizationService extends MetadataService
 		}
 
 		// Create the new 035 field
-		String new035 = "(" + mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE) + ")" + control001;
+		String new035 = "(" + getOrganizationCode() + ")" + control001;
 
 		if(log.isDebugEnabled())
 			log.debug("Supplying the record's organization code to a new 035 field with value " + new035 + ".");

@@ -61,11 +61,6 @@ import xc.mst.utils.index.SolrIndexManager;
 public abstract class MetadataService
 {
 	/**
-	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
-	 */
-	protected static final Configuration mstConfiguration = ConfigurationManager.getConfiguration();
-
-	/**
 	 * The logger object
 	 */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_PROCESSING);
@@ -74,6 +69,12 @@ public abstract class MetadataService
 	 * The service representing this service in the database
 	 */
 	protected Service service = null;
+
+	/**
+	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
+	 */
+	private static final Configuration mstConfiguration = ConfigurationManager
+			.getConfiguration();
 
 	/**
 	 * The name of this service
@@ -954,6 +955,25 @@ public abstract class MetadataService
 	}
 
 	/**
+	 * Updates a record in the index
+	 */
+	protected void updateRecord(Record record)
+	{
+		try
+		{
+			recordService.update(record);
+		}
+		catch (IndexException e)
+		{
+			log.error("An error occurred while updating a record in the Solr index.", e);
+		}
+		catch (DataException e)
+		{
+			log.error("An error occurred while updating a record in the Solr index.", e);
+		}
+	}
+	
+	/**
 	 * Gets the next OAI identifier for the service
 	 *
 	 * @return The next OAI identifier for the service
@@ -988,6 +1008,18 @@ public abstract class MetadataService
 		return recordService.getByProcessedFrom(record.getId());
 	}
 
+	/**
+	 * Gets all records that contain the passed trait
+	 *
+	 * @param trait The trait of the records we're getting
+	 * @return A list of records that have the passed trait
+	 * @throws IndexException
+	 */
+	protected RecordList getByTrait(String trait) throws IndexException
+	{
+		return recordService.getByTrait(trait);
+	}
+	
 	/**
 	 * Gets the output record for the service with the passed OAI identifier
 	 * 
@@ -1077,6 +1109,11 @@ public abstract class MetadataService
 		LogWriter.addError(service.getServicesLogFileName(), message);
 	}
 
+	protected String getOrganizationCode()
+	{
+		return mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE);
+	}
+	
 	/**
 	 * Inserts a record in the Lucene index and sets up RecordInput values
 	 * for any processing directives the record matched so the appropriate

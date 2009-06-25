@@ -56,6 +56,7 @@ import xc.mst.utils.index.ExpressionList;
 import xc.mst.utils.index.HoldingsList;
 import xc.mst.utils.index.ItemList;
 import xc.mst.utils.index.ManifestationList;
+import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.WorkList;
 
 /**
@@ -270,6 +271,9 @@ public class AggregationService extends MetadataService
 				return results;
 			} // end catch JDOMException
 			
+			// The OAI identifiers of the records that the record we're processing has uplinks to
+			List<String> uplinks = new ArrayList<String>();
+			
 			// Iterate over each of the components in the passed record, and add them to
 			// the correct FRBR component list.
 			List<Element> components = xml.getRootElement().getChildren();
@@ -279,32 +283,43 @@ public class AggregationService extends MetadataService
 				                                                    // be the FRBR level it belongs to
 				// Add the component to the appropriate list, parsing out the key fields
 				if(level.equals("work") && component.getChildren().size() > 0)
-				{
+				{	
 					Work work = buildWork(component, record);
 					results.addAll(processWork(work, xml));
 				}
 				else if(level.equals("expression") && component.getChildren().size() > 0)
 				{
+					uplinks = getLinks(xml, "linkWork");
 					Expression expression = buildExpression(component, record);
 					results.addAll(processExpression(expression, xml));
 				}
 				else if(level.equals("manifestation") && component.getChildren().size() > 0)
 				{
+					uplinks = getLinks(xml, "linkExpression");
 					Manifestation manifestation = buildManifestation(component, record);
 					results.addAll(processManifestation(manifestation, xml));
 				}
 				else if(level.equals("holdings") && component.getChildren().size() > 0)
 				{
+					uplinks = getLinks(xml, "linkManifestation");
 					Holdings holdings = buildHoldings(component, record);
 					results.addAll(processHoldings(holdings, xml));
 				}
 				else if(level.equals("item") && component.getChildren().size() > 0)
 				{
+					uplinks = getLinks(xml, "linkHoldings");
 					Item item = buildItem(component, record);
 					results.addAll(processItem(item, xml));
 				}
 			} // end loop over components
-	
+			
+			// Add the uplinks from the input as traits on the output
+			// indicating that the record the output was processed from
+			// had an uplink to those input records
+			for(Record outrecord : results)
+				for(String uplink : uplinks)
+					outrecord.addTrait("inputHasUplink:" + uplink);
+			
 			// Return the list of FRBR components to be added or updated in the Lucene index
 			return results;
 		}
@@ -394,6 +409,15 @@ public class AggregationService extends MetadataService
 			} // end loop over expressions
 		} // end if newWorks not empty
 		
+		// Get the output records that were processed from records linked to the
+		// record we just processed
+		RecordList linkedToInput = getByTrait("inputHasUplink:" + oldOaiIdentifier);
+		
+		// For each output record that were processed from records linked to the
+		// record we just processed, add a link from each current processed record to it
+		for(Record linked : linkedToInput)
+			updateRecord(addLinkToRecordXml(linked, results, "linkWork"));
+		
 		return results;
 	} // end method processWork(Work work)
 
@@ -461,6 +485,15 @@ public class AggregationService extends MetadataService
 		// them with other expressions or other FRBR levels so no further processing is required.
 		results.add(expression);
 
+		// Get the output records that were processed from records linked to the
+		// record we just processed
+		RecordList linkedToInput = getByTrait("inputHasUplink:" + oldOaiIdentifier);
+		
+		// For each output record that were processed from records linked to the
+		// record we just processed, add a link from each current processed record to it
+		for(Record linked : linkedToInput)
+			updateRecord(addLinkToRecordXml(linked, results, "linkExpression"));
+		
 		return results;
 	} // end method processExpressions(XcRecordSplitter)
 
@@ -566,6 +599,15 @@ public class AggregationService extends MetadataService
 			results.add(holdingsElement);
 		} // end loop over matched holdings
 		
+		// Get the output records that were processed from records linked to the
+		// record we just processed
+		RecordList linkedToInput = getByTrait("inputHasUplink:" + oldOaiIdentifier);
+		
+		// For each output record that were processed from records linked to the
+		// record we just processed, add a link from each current processed record to it
+		for(Record linked : linkedToInput)
+			updateRecord(addLinkToRecordXml(linked, results, "linkManifestation"));
+		
 		return results;
 	} // end method processManifestations(XcRecordSplitter)
 
@@ -647,6 +689,15 @@ public class AggregationService extends MetadataService
 		// Add the holdings to the list of records to insert
 		results.add(holdings);
 
+		// Get the output records that were processed from records linked to the
+		// record we just processed
+		RecordList linkedToInput = getByTrait("inputHasUplink:" + oldOaiIdentifier);
+		
+		// For each output record that were processed from records linked to the
+		// record we just processed, add a link from each current processed record to it
+		for(Record linked : linkedToInput)
+			updateRecord(addLinkToRecordXml(linked, results, "linkHoldings"));
+		
 		return results;
 	} // end method processHoldings(XcRecordSplitter)
 
@@ -666,9 +717,6 @@ public class AggregationService extends MetadataService
 
 		// Create a new copy of the xml Document to avoid a ConcurrentModificationException
 		Document xml = (Document)recordxml.clone();
-		
-		// Get the id of the unprocessed record
-		String oldOaiIdentifier = getFRBRLevelIdentifier(xml);
 		
 		// Generate a new id for the processed record
 		String newOaiIdentifier = getNextOaiId();
@@ -1697,6 +1745,52 @@ public class AggregationService extends MetadataService
 		}
 	} // end method getFRBRLevelIdentifier(Document)
 	
+	/**
+	 * Adds a link from one record to another in the record's XML
+	 * 
+	 * @param from The record to add the link from
+	 * @param to The record to link to
+	 * @param linkToAdd The name of the link field to add
+	 * @return The from record after the link has been added
+	 */
+	private Record addLinkToRecordXml(Record from, List<Record> to, String linkToAdd) 
+	{
+		// The XML for the XC record
+		Document xml = null;
+
+		// Parse the XML from the record
+		try
+		{
+			if(log.isDebugEnabled())
+				log.debug("Parsing the record's XML into a Document Object.");
+
+			xml = builder.build(new InputSource(new StringReader(from.getOaiXml())));
+		} // end try
+		catch(IOException e)
+		{
+			log.error("An error occurred while parsing the record's XML.", e);
+
+			LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + from.getOaiIdentifier() + ".");
+
+			return from;
+		} // end catch IOException
+		catch(JDOMException e)
+		{
+			log.error("An error occurred while parsing the record's XML.", e);
+
+			LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + from.getOaiIdentifier() + ".");
+
+			return from;
+		} // end catch JDOMException
+		
+		for(Record linkTo : to)
+			xml = addLink(xml, linkToAdd, linkTo.getOaiIdentifier());
+		
+		from.setOaiXml(outputter.outputString(xml));
+		
+		return from;
+	}
+
 	/**
 	 * Gets the ID attribute of the passed XC record
 	 * 
