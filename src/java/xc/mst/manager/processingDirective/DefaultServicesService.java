@@ -158,31 +158,42 @@ public class DefaultServicesService implements ServicesService
     			throw new ConfigFileException("Cannot add a service named " + name + " because a service with that name already exists.");
     		}
 
-    		// The .jar file containing the service, which must appear in the secord line of the configuration file
+    		// The version of the service, which must appear in the second line of the configuration file
+    		String version = in.readLine();
+    		version = (version.indexOf('#') >= 0 ? version.substring(0, version.indexOf('#')).trim() : version.trim());
+    		
+    		if(version == null || version.length() == 0)
+    		{
+    			LogWriter.addError(logFileName, "Error adding a new service: The second line of the service configuration file must be the service's version.");
+    			throw new ConfigFileException("The second line of the service configuration file must be the service's version.");
+    		}
+
+
+    		// The .jar file containing the service, which must appear in the third line of the configuration file
     		String jar = in.readLine();
     		jar = (jar.indexOf('#') >= 0 ? jar.substring(0, jar.indexOf('#')).trim() : jar.trim());
     		if(jar == null || jar.length() == 0 || !jar.endsWith(".jar"))
     		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The secord line of the service configuration file must be the .jar file containing the service.");
-    			throw new ConfigFileException("The secord line of the service configuration file must be the .jar file containing the service.");
+    			LogWriter.addError(logFileName, "Error adding a new service: The third line of the service configuration file must be the .jar file containing the service.");
+    			throw new ConfigFileException("The third line of the service configuration file must be the .jar file containing the service.");
     		}
 
-    		// The name of the service's class, which must appear in the third line of the configuration file
+    		// The name of the service's class, which must appear in the fourth line of the configuration file
     		String className = in.readLine();
     		className = (className.indexOf('#') >= 0 ? className.substring(0, className.indexOf('#')).trim() : className.trim());
     		if(className == null || className.length() == 0)
     		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The third line of the service configuration file must be the service's class name.");
-    			throw new ConfigFileException("The third line of the service configuration file must be the service's class name.");
+    			LogWriter.addError(logFileName, "Error adding a new service: The fourth line of the service configuration file must be the service's class name.");
+    			throw new ConfigFileException("The fourth line of the service configuration file must be the service's class name.");
     		}
 
-    		// The port on which the service's OAI repository operates, which must appear in the fourth line of the configuration file
+    		// The port on which the service's OAI repository operates, which must appear in the fifth line of the configuration file
     		String portString = in.readLine();
     		portString = (portString.indexOf('#') >= 0 ? portString.substring(0, portString.indexOf('#')).trim() : portString.trim());
     		if(portString == null || portString.length() == 0)
     		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The fourth line of the service configuration file must be the service's OAI repository's port.");
-    			throw new ConfigFileException("The fourth line of the service configuration file must be the service's OAI repository's port.");
+    			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's OAI repository's port.");
+    			throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
     		}
     		int port = 0;
     		try
@@ -191,8 +202,8 @@ public class DefaultServicesService implements ServicesService
     		}
     		catch(NumberFormatException e)
     		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The fourth line of the service configuration file must be the service's OAI repository's port.");
-    			throw new ConfigFileException("The fourth line of the service configuration file must be the service's OAI repository's port.");
+    			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's OAI repository's port.");
+    			throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
     		}
 
     		// The .jar file we need to load the service from
@@ -227,6 +238,7 @@ public class DefaultServicesService implements ServicesService
 	    	// Populate the service BO
     		Service service = new Service();
     		service.setName(name);
+    		service.setVersion(version);
     		service.setServiceJar(jar);
     		service.setClassName(className);
     		service.setHarvestOutLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
@@ -498,31 +510,41 @@ public class DefaultServicesService implements ServicesService
     			throw new ConfigFileException("Cannot update the service " + name + " because a service with that name already exists.");
     		}
 
-    		// The .jar file containing the service, which must appear in the secord line of the configuration file
+    		// The version of the service, which must appear in the second line of the configuration file
+    		String version = in.readLine();
+    		version = (version.indexOf('#') >= 0 ? version.substring(0, version.indexOf('#')).trim() : version.trim());
+    		if(version == null || version.length() == 0)
+    		{
+    			LogWriter.addError(logFileName, "Error adding a new service: The second line of the service configuration file must be the service's version.");
+    			throw new ConfigFileException("The second line of the service configuration file must be the service's version.");
+    		}
+
+    		
+    		// The .jar file containing the service, which must appear in the third line of the configuration file
     		String jar = in.readLine();
     		jar = (jar.indexOf('#') >= 0 ? jar.substring(0, jar.indexOf('#')).trim() : jar.trim());
     		if(jar == null || jar.length() == 0 || !jar.endsWith(".jar"))
     		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The secord line of the service configuration file must be the .jar file containing the service.");
-    			throw new ConfigFileException("The secord line of the service configuration file must be the .jar file containing the service.");
+    			LogWriter.addError(logFileName, "Error adding a new service: The third line of the service configuration file must be the .jar file containing the service.");
+    			throw new ConfigFileException("The third line of the service configuration file must be the .jar file containing the service.");
     		}
 
-    		// The name of the service's class, which must appear in the third line of the configuration file
+    		// The name of the service's class, which must appear in the fourth line of the configuration file
     		String className = in.readLine();
     		className = (className.indexOf('#') >= 0 ? className.substring(0, className.indexOf('#')).trim() : className.trim());
     		if(className == null || className.length() == 0)
     		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The third line of the service configuration file must be the service's class name.");
-    			throw new ConfigFileException("The third line of the service configuration file must be the service's class name.");
+    			LogWriter.addError(logFileName, "Error adding a new service: The fourth line of the service configuration file must be the service's class name.");
+    			throw new ConfigFileException("The fourth line of the service configuration file must be the service's class name.");
     		}
 
-    		// The port on which the service's OAI repository operates, which must appear in the fourth line of the configuration file
+    		// The port on which the service's OAI repository operates, which must appear in the fifth line of the configuration file
     		String portString = in.readLine();
     		portString = (portString.indexOf('#') >= 0 ? portString.substring(0, portString.indexOf('#')).trim() : portString.trim());
     		if(portString == null || portString.length() == 0)
     		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The fourth line of the service configuration file must be the service's OAI repository's port.");
-    			throw new ConfigFileException("The fourth line of the service configuration file must be the service's OAI repository's port.");
+    			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's OAI repository's port.");
+    			throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
     		}
     		int port = 0;
     		try
@@ -531,8 +553,8 @@ public class DefaultServicesService implements ServicesService
     		}
     		catch(NumberFormatException e)
     		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The fourth line of the service configuration file must be the service's OAI repository's port.");
-    			throw new ConfigFileException("The fourth line of the service configuration file must be the service's OAI repository's port.");
+    			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's OAI repository's port.");
+    			throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
     		}
 
     		// The .jar file we need to load the service from
@@ -566,6 +588,7 @@ public class DefaultServicesService implements ServicesService
 
 	    	// Populate the service BO
     		service.setName(name);
+    		service.setVersion(version);
     		service.setServiceJar(jar);
     		service.setClassName(className);
     		service.setHarvestOutLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
