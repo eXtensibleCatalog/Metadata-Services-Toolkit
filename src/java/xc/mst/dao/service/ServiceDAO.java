@@ -142,6 +142,12 @@ public abstract class ServiceDAO
 	public final static String COL_XCCFG_FILE_NAME = "xccfg_file_name";
 	
 	/**
+	 * The version of the service
+	 */
+	public final static String COL_VERSION = "version";
+		
+	
+	/**
 	 * A set of all columns which are valid for sorting
 	 */
 	protected static Set<String> sortableColumns = new HashSet<String>();
@@ -169,6 +175,7 @@ public abstract class ServiceDAO
 		sortableColumns.add(COL_HARVEST_OUT_LOG_FILE_NAME);
 		sortableColumns.add(COL_STATUS);
 		sortableColumns.add(COL_XCCFG_FILE_NAME);
+		sortableColumns.add(COL_VERSION);
 	} // end initialization of sortableColumns
 	
 	/**

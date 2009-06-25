@@ -193,7 +193,8 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_STATUS + " " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_XCCFG_FILE_NAME + " " +
+												   COL_XCCFG_FILE_NAME + ", " +
+												   COL_VERSION + " " +
 								       "FROM " + SERVICES_TABLE_NAME;
 
 					if(log.isDebugEnabled())
@@ -236,6 +237,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setHarvestOutLogFileName(results.getString(18));
 					service.setStatus(results.getString(19));
 					service.setXccfgFileName(results.getString(20));
+					service.setVersion(results.getString(21));
 
 					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 						service.addInputFormat(formatDao.getById(inputFormatId));
@@ -323,7 +325,8 @@ public class DefaultServiceDAO extends ServiceDAO
 										   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 										   COL_STATUS + " " +
 										   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-										   COL_XCCFG_FILE_NAME + " " +
+										   COL_XCCFG_FILE_NAME + ", " +
+										   COL_VERSION + " " +
 						       "FROM " + SERVICES_TABLE_NAME + " " +
 						       "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
 	
@@ -366,6 +369,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				service.setHarvestOutLogFileName(results.getString(18));
 				service.setStatus(results.getString(19));
 				service.setXccfgFileName(results.getString(20));
+				service.setVersion(results.getString(21));
 
 				for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 					service.addInputFormat(formatDao.getById(inputFormatId));
@@ -445,9 +449,10 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_STATUS + " " +
+												   COL_STATUS + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_XCCFG_FILE_NAME + " " +
+												   COL_XCCFG_FILE_NAME + ", " +
+												   COL_VERSION + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_SERVICE_ID + "=?";
 
@@ -494,6 +499,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setHarvestOutLogFileName(results.getString(18));
 					service.setStatus(results.getString(19));
 					service.setXccfgFileName(results.getString(20));
+					service.setVersion(results.getString(21));
 
 					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 						service.addInputFormat(formatDao.getById(inputFormatId));
@@ -568,9 +574,10 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_STATUS + " " +
+												   COL_STATUS + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_XCCFG_FILE_NAME + " " +
+												   COL_XCCFG_FILE_NAME + ", " +
+												   COL_VERSION + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_SERVICE_ID + "=?";
 
@@ -617,6 +624,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setHarvestOutLogFileName(results.getString(18));
 					service.setStatus(results.getString(19));
 					service.setXccfgFileName(results.getString(20));
+					service.setVersion(results.getString(21));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the service with ID " + serviceId + " in the database.");
@@ -682,9 +690,10 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_STATUS + " " +
+												   COL_STATUS + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_XCCFG_FILE_NAME + " " +
+												   COL_XCCFG_FILE_NAME + ", " +
+												   COL_VERSION + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_PORT + "=?";
 
@@ -731,6 +740,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setHarvestOutLogFileName(results.getString(18));
 					service.setStatus(results.getString(19));
 					service.setXccfgFileName(results.getString(20));
+					service.setVersion(results.getString(21));
 
 					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 						service.addInputFormat(formatDao.getById(inputFormatId));
@@ -805,9 +815,10 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_STATUS + " " +
+												   COL_STATUS + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_XCCFG_FILE_NAME + " " +
+												   COL_XCCFG_FILE_NAME + ", " +
+												   COL_VERSION + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_SERVICE_NAME + "=?";
 
@@ -854,6 +865,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setHarvestOutLogFileName(results.getString(18));
 					service.setStatus(results.getString(19));
 					service.setXccfgFileName(results.getString(20));
+					service.setVersion(results.getString(21));
 
 					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 						service.addInputFormat(formatDao.getById(inputFormatId));
@@ -927,8 +939,9 @@ public class DefaultServiceDAO extends ServiceDAO
 	            	      													         COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 	            	      													         COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 	            	      													         COL_STATUS + ", " +
-	            	      													         COL_XCCFG_FILE_NAME + ") " +
-	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	            	      													         COL_XCCFG_FILE_NAME + ", " +
+	            	      													         COL_VERSION + ") " +
+	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"insert service\" PreparedStatemnt from the SQL " + insertSql);
@@ -958,6 +971,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				psInsert.setString(17, service.getHarvestOutLogFileName());
 				psInsert.setString(18, service.getStatus());
 				psInsert.setString(19, service.getXccfgFileName());
+				psInsert.setString(20, service.getVersion());
 
 				// Execute the insert statement and return the result
 				if(psInsert.executeUpdate() > 0)
@@ -1062,7 +1076,8 @@ public class DefaultServiceDAO extends ServiceDAO
 				                                                          COL_HARVEST_OUT_LAST_LOG_RESET + "=?, " +
 				                                                          COL_HARVEST_OUT_LOG_FILE_NAME + "=?, " +
 				                                                          COL_STATUS + "=?, " +
-				                                                          COL_XCCFG_FILE_NAME + "=? " +
+				                                                          COL_XCCFG_FILE_NAME + "=?, " +
+				                                                          COL_VERSION + "=? " +
 	                                   "WHERE " + COL_SERVICE_ID + "=?";
 
 					if(log.isDebugEnabled())
@@ -1093,7 +1108,8 @@ public class DefaultServiceDAO extends ServiceDAO
 				psUpdate.setString(17, service.getHarvestOutLogFileName());
 				psUpdate.setString(18, service.getStatus());
 				psUpdate.setString(19, service.getXccfgFileName());
-				psUpdate.setInt(20, service.getId());
+				psUpdate.setString(20, service.getVersion());
+				psUpdate.setInt(21, service.getId());
 				
 
 				// Execute the update statement and return the result
