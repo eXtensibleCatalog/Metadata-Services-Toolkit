@@ -428,11 +428,12 @@ public class ValidateRepository implements ErrorHandler
 			throw new Hexception("Provider shows an invalid deleted record support according to the OAI protocol. Invalid response: " + deletedRecordString);
 		}
 
+		provider = providerDao.getById(providerId);
+		
 		// Check the protocol version
 		try
 		{
 			Element versionElem = mustFindChild(verbele, "protocolVersion");
-			Provider provider = providerDao.getById(providerId);
 			provider.setProtocolVersion(getContent(versionElem));
 		}
 		catch (Hexception e)
@@ -440,7 +441,6 @@ public class ValidateRepository implements ErrorHandler
 			throw new Hexception("The data provider returned an invalid response to the Identify request: " + e.getMessage());
 		}
 
-		provider = providerDao.getById(providerId);
 		provider.setIdentify(true);
 	}
 
