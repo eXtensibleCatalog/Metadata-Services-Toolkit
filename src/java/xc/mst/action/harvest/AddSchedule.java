@@ -9,7 +9,6 @@
 
 package xc.mst.action.harvest;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -104,7 +103,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 	private String startDate;
 
 	/** End date for schedule to stop */
-	private Date endDate;
+	private String endDate;
 
 	/** End date for schedule  */
 	private String endDateDisplayFormat;
@@ -165,7 +164,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
      * @return
      * @throws DataException
      */
-    public String addScheduleAndProvider() throws DataException, ParseException {
+    public String addScheduleAndProvider() throws DataException {
 
     	if (log.isDebugEnabled()) {
     		log.debug("AddSchedule::addScheduleAndProvider():: scheduleName=" + scheduleName);
@@ -211,8 +210,31 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	}
 
     	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-    	schedule.setStartDate(new java.sql.Date(dateFormat.parse(startDate).getTime()));
-    	schedule.setEndDate(endDate);
+    	try { 
+	    	schedule.setStartDate(new java.sql.Date(dateFormat.parse(startDate).getTime()));
+    	} catch (ParseException pe) {
+    		addFieldError("invalidStartDate", "Invalid format for start date. Please enter in the format mm/dd/yyyy");
+    		errorType = "error";
+    		repositories = providerService.getAllProviders();
+   			endDateDisplayFormat = endDate;
+        	startDateDisplayFormat = startDate;
+    		return INPUT;
+    	}
+    	
+    	try { 
+	    	if (endDate != null && endDate.length() > 0) {
+	    		schedule.setEndDate(new java.sql.Date(dateFormat.parse(endDate).getTime()));
+	    	} else {
+	    		schedule.setEndDate(null);
+	    	}
+    	} catch (ParseException pe) {
+    		addFieldError("invalidEndDate", "Invalid format for end date. Please enter in the format mm/dd/yyyy");
+    		errorType = "error";
+    		repositories = providerService.getAllProviders();
+   			endDateDisplayFormat = endDate;
+        	startDateDisplayFormat = startDate;
+    		return INPUT;
+    	}
 
     	// Check if schedule exist for this provider
     	HarvestSchedule otherSchedule = null;
@@ -256,7 +278,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
      * @return
      * @throws DataException
      */
-    public String updateSchedule() throws DataException, ParseException{
+    public String updateSchedule() throws DataException{
     	
     	if (log.isDebugEnabled()) {
     		log.debug("In update schedule updateSchedule()");
@@ -264,10 +286,34 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	//schedule = scheduleService.getScheduleById(scheduleId);
     	schedule = (HarvestSchedule) request.getSession().getAttribute("schedule");
 
-
     	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-    	schedule.setStartDate(new java.sql.Date(dateFormat.parse(startDate).getTime()));
-    	schedule.setEndDate(endDate);
+
+    	try { 
+	    	schedule.setStartDate(new java.sql.Date(dateFormat.parse(startDate).getTime()));
+    	} catch (ParseException pe) {
+    		addFieldError("invalidStartDate", "Invalid format for start date. Please enter in the format mm/dd/yyyy");
+    		errorType = "error";
+    		repositories = providerService.getAllProviders();
+   			endDateDisplayFormat = endDate;
+    		startDateDisplayFormat = startDate;
+    		return INPUT;
+    	}
+    	
+    	try { 
+	    	if (endDate != null && endDate.length() > 0) {
+	    		schedule.setEndDate(new java.sql.Date(dateFormat.parse(endDate).getTime()));
+	    	} else {
+	    		schedule.setEndDate(null);
+	    	}
+    	} catch (ParseException pe) {
+    		addFieldError("invalidEndDate", "Invalid format for end date. Please enter in the format mm/dd/yyyy");
+    		errorType = "error";
+    		repositories = providerService.getAllProviders();
+   			endDateDisplayFormat = endDate;
+    		startDateDisplayFormat = startDate;
+    		return INPUT;
+    	}
+    	
 		schedule.setRecurrence(recurrence);
 
      	if (recurrence != null) {
@@ -320,7 +366,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
     		if (schedule.getEndDate() != null) {
     			endDateDisplayFormat = format.format(schedule.getEndDate());
-    		}        	startDateDisplayFormat = format.format(schedule.getStartDate());
+    		}   startDateDisplayFormat = format.format(schedule.getStartDate());
     		return INPUT;
     	}
 
@@ -675,7 +721,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 	 *
 	 * @param endDate
 	 */
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
