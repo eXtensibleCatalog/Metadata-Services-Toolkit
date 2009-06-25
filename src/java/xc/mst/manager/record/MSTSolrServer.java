@@ -116,8 +116,10 @@ public class MSTSolrServer {
 		if (server == null)
 		{
 			String solrHome = System.getProperty("user.dir") + MSTConfiguration.FILE_SEPARATOR + MSTConfiguration.getUrlPath();
-			solrHome = solrHome + MSTConfiguration.FILE_SEPARATOR + "Solr";
+			solrHome = solrHome + MSTConfiguration.FILE_SEPARATOR + "solr";
 
+			log.info("Opening Solr at " + solrHome);
+			
 			java.util.logging.Level logLevel = getLogLevel(configuration.getProperty(Constants.CONFIG_SOLR_LOG_LEVEL));
 
 			try
@@ -179,6 +181,22 @@ public class MSTSolrServer {
 					logDao.update(logObj);
 				}
 				catch(DataException e)
+				{
+					log.error("DataExcepiton while updating the log's error count.");
+				}
+			}
+			catch (Exception e)
+			{
+				log.error("Failure to create server instance. Solr Server is not created.", e);
+
+				LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
+
+				logObj.setErrors(logObj.getErrors()+1);
+				try
+				{
+					logDao.update(logObj);
+				}
+				catch(DataException e1)
 				{
 					log.error("DataExcepiton while updating the log's error count.");
 				}
