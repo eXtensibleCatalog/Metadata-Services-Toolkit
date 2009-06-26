@@ -82,11 +82,19 @@ public class EditService extends ActionSupport
                 return SUCCESS;
             }
             setTemporaryService(temporaryService);
-            File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig");
+            File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services" + MSTConfiguration.FILE_SEPARATOR + "serviceConfig");
 
             FileFilter fileFilter =  new XCCGFileFilter();
 
             File[] fileList = dir.listFiles(fileFilter);
+            
+            if (fileList == null) {
+           	 	errorType = "error";
+           	 	log.error("Problem with service configuration. Check the path of service folder.");
+                this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
+                return SUCCESS;
+            }
+            
             for(int i=0;i<fileList.length;i++)
             {
                 serviceFiles.add(fileList[i].getName());
@@ -119,7 +127,7 @@ public class EditService extends ActionSupport
                 userService.sendEmailErrorReport();
                 return INPUT;
             }
-            String location = MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig" + MSTConfiguration.FILE_SEPARATOR + getSelectedLocation();
+            String location = MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services" + MSTConfiguration.FILE_SEPARATOR + "serviceConfig" + MSTConfiguration.FILE_SEPARATOR + getSelectedLocation();
             File file = new File(location);
             servicesService.updateService(file,tempService);
             return SUCCESS;
