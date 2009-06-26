@@ -1,5 +1,6 @@
 Normalization Service # The name of the service
-MetadataServicesToolkit/serviceJars/NormalizationService.jar # The .jar file containing the service
+1.0 # The version of the service
+NormalizationService.jar # The .jar file containing the service
 xc.mst.services.NormalizationService # The class within the .jar file that represents the service.  This class must extend xc.mst.services.MetadataService
 8085
 
@@ -23,34 +24,34 @@ ERROR MESSAGES
 #-----------------------------------------
 #-----------------------------------------
 error code: 100
-error description file: MetadataServicesToolkit/serviceErrors/normalization/100.html
+error description file: normalization/100.html
 
 error code: 101
-error description file: MetadataServicesToolkit/serviceErrors/normalization/101.html
+error description file: normalization/101.html
 
 error code: 102
-error description file: MetadataServicesToolkit/serviceEerrors/normalization/102.html
+error description file: normalization/102.html
 
 error code: 103
-error description file: MetadataServicesToolkit/serviceErrors/normalization/103.html
+error description file: normalization/103.html
 
 error code: 104
-error description file: MetadataServicesToolkit/serviceErrors/normalization/104.html
+error description file: normalization/104.html
 
 error code: 105
-error description file: MetadataServicesToolkit/serviceErrors/normalization/105.html
+error description file: normalization/105.html
 
 error code: 106
-error description file: MetadataServicesToolkit/serviceErrors/normalization/106.html
+error description file: normalization/106.html
 
 error code: 107
-error description file: MetadataServicesToolkit/serviceErrors/normalization/107.html
+error description file: normalization/107.html
 
 error code: 108
-error description file: MetadataServicesToolkit/serviceErrors/normalization/108.html
+error description file: normalization/108.html
 
 error code: 109
-error description file: MetadataServicesToolkit/serviceErrors/normalization/109.html
+error description file: normalization/109.html
 
 #-----------------------------------------
 #-----------------------------------------
