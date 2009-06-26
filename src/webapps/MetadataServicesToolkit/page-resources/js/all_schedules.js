@@ -81,7 +81,6 @@ YAHOO.xc.mst.schedule.view = {
 
 			// handle form submission failure
 		var handleFailure = function(o) {
-			    alert('All schedule failed ' );
 		};
 
    	    // Wire up the success and failure handlers

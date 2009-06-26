@@ -441,7 +441,7 @@ CREATE TABLE services
   harvest_out_log_file_name VARCHAR(255) NOT NULL,
   status VARCHAR(20),
   xccfg_file_name VARCHAR(255) NOT NULL,
-
+  version VARCHAR(10),
   PRIMARY KEY(service_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

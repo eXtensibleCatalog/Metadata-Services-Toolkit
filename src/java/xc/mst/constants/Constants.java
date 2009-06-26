@@ -268,6 +268,11 @@ public class Constants
 	 */
 	public static final String SOLR_INDEXER_MULTI_THREADED = "MultiThreaded";
 	
+	/**
+	 * Parameter constant value for Instances folder name
+	 */
+	public static final String INSTANCES_FOLDER_NAME = "InstanceFolderName";
+	
 	
 	//*******************************************************************
 	// Error Messages

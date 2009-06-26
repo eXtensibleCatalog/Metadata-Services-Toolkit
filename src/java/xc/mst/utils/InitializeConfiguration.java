@@ -23,16 +23,12 @@ import xc.mst.constants.Constants;
  */
 public class InitializeConfiguration  extends HttpServlet {
 
-	/**
-	 * Eclipse generated id
-	 */
+	/**  Eclipse generated id */
 	private static final long serialVersionUID = 6847591197004656298L;
 	
-	/**
-	 * The logger object
-	 */
+	/** The logger object */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
+	
 	/**
 	 * Initialize configuration
 	 */

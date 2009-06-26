@@ -46,11 +46,9 @@
     <!-- The maximum size in bytes of a ListRecords response  -->
     <property name="OaiRepoMaxRecordsLength" value="1000000" />
     
-        
-    <property name="LuceneIndexerRAMBufferMB" value="1024" />
-    <property name="MaxRunningHarvestJobs" value="1" />
-    <property name="MaxRunningServiceJobs" value="1" />
-    <property name="LuceneIndexDirectory" value="C:\lucene_MST" />
+    <!-- The name of folder under which multiple MST configuration folders are placed. This folder resides under tomcat working directory -->
+    <property name="InstanceFolderName" value="MST-instances" />
+
     
   </category>
 </properties>

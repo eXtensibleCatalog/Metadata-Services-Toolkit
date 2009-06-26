@@ -115,9 +115,9 @@ public class SolrIndexManager {
 		try {
 			server.add(doc);
 		} catch (SolrServerException se) {
-			log.error("Solr server exception occured when adding document to the index. Check the Solr configuration to make sure the port number is correct.", se);
+			log.error("Solr server exception occured when adding document to the index. Check the path to solr folder.", se);
 			
-			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index. Check the Solr configuration to make sure the port number is correct." 
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index. Check the path to solr folder." 
 					+ se.getMessage());
 			
 			logObj.setErrors(logObj.getErrors()+1);
@@ -131,7 +131,7 @@ public class SolrIndexManager {
 		} catch (IOException ioe) {
 			log.debug(ioe);
 			
-			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index. Check the Solr configuration to make sure the port number is correct." 
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index. Check the path to solr folder." 
 					+ ioe.getMessage());
 			
 			logObj.setErrors(logObj.getErrors()+1);
@@ -159,9 +159,9 @@ public class SolrIndexManager {
 		} 
 		catch (SolrServerException se) 
 		{
-			log.error("Solr server exception occured when deleting document in the index. Check the Solr configuration to make sure the port number is correct.", se);
+			log.error("Solr server exception occured when deleting document in the index. Check the path to solr folder.", se);
 			
-			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while deleting document in the index. Check the Solr configuration to make sure the port number is correct." 
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while deleting document in the index. Check the path to solr folder." 
 					+ se.getMessage());
 			
 			logObj.setErrors(logObj.getErrors()+1);
@@ -175,9 +175,9 @@ public class SolrIndexManager {
 		} 
 		catch (IOException ioe) 
 		{
-			log.error("IO exception occured when deleting document in the index. Check the Solr configuration to make sure the port number is correct.", ioe);
+			log.error("IO exception occured when deleting document in the index. Check the path to solr folder.", ioe);
 			
-			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while deleting document in the index. Check the Solr configuration to make sure the port number is correct." 
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while deleting document in the index. Check the path to solr folder." 
 					+ ioe.getMessage());
 			
 			logObj.setErrors(logObj.getErrors()+1);
@@ -221,9 +221,9 @@ public class SolrIndexManager {
 			server.commit();
 			LogWriter.addInfo(logObj.getLogFileLocation(), "Commited changes to the Solr index");
 		} catch (SolrServerException se) {
-			log.error("Solr server exception occured when commiting to the index. Check the Solr configuration to make sure the port number is correct.", se);
+			log.error("Solr server exception occured when commiting to the index. Check the path to solr folder.", se);
 			
-			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index. Check the Solr configuration to make sure the port number is correct." 
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index. Check the path to solr folder." 
 					+ se.getMessage());
 			logObj.setErrors(logObj.getErrors()+1);
 			try {
@@ -234,9 +234,9 @@ public class SolrIndexManager {
 			
 			throw new IndexException(se.getMessage());
 		} catch (IOException ioe) {
-			log.error("IO exception occured when commiting to the index. Check the Solr configuration to make sure the port number is correct." + ioe);
+			log.error("IO exception occured when commiting to the index. Check the path to solr foldert." + ioe);
 			
-			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index. Check the Solr configuration to make sure the port number is correct." 
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index. Check the path to solr folder." 
 					+ ioe.getMessage());
 			
 			logObj.setErrors(logObj.getErrors()+1);
@@ -277,9 +277,9 @@ public class SolrIndexManager {
 		    docs = rsp.getResults();
 
 		} catch (SolrServerException e) {
-				log.error("An error occurred while getting documents from the Solr index. Check the Solr configuration to make sure the port number is correct.", e);
+				log.error("An error occurred while getting documents from the Solr index. Check the path to solr folder.", e);
 				
-				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while getting documents from the Solr index. Check the Solr configuration to make sure the port number is correct." 
+				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while getting documents from the Solr index. Check the path to solr folder." 
 						+ e.getMessage());
 				
 				logObj.setErrors(logObj.getErrors()+1);

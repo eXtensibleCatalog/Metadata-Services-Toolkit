@@ -41,10 +41,11 @@ public class MSTConfiguration {
 	/** File separator according to OS. \ for windows  / for unix. */
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
 	
-	/**
-	 * The logger object
-	 */
+	/** The logger object */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+	
+	/**  Object used to read properties from the default configuration file */
+	protected static final Configuration defaultConfiguration = ConfigurationManager.getConfiguration();
 	
 	private MSTConfiguration() {}
 	
@@ -62,10 +63,18 @@ public class MSTConfiguration {
 		return instance;
 	}
 	
+	/*
+	 * Creates and initializes configuration for MST
+	 */
 	private static void createConfiguration(String urlPath) {
 		
-		MSTConfiguration.urlPath = urlPath;
-		File file = new File(System.getProperty("user.dir") + FILE_SEPARATOR + urlPath + FILE_SEPARATOR+ "MetadataServicesToolkit_config.xml");
+		MSTConfiguration.urlPath = defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + urlPath;
+		String externalConfigurationFilePath = System.getProperty("user.dir") + FILE_SEPARATOR + MSTConfiguration.urlPath + FILE_SEPARATOR+ "MetadataServicesToolkit_config.xml";
+		
+		if (log.isDebugEnabled()) {
+			log.debug("External MST configuration file path : " + externalConfigurationFilePath);
+		}
+		File file = new File(externalConfigurationFilePath);
 	    
 	    XMLFileHandler handler = new XMLFileHandler();
         handler.setFile(file);
@@ -80,11 +89,21 @@ public class MSTConfiguration {
         }
 	}
 	
-	
+	/**
+	 * Get value of given property
+	 *  
+	 * @param name name of property
+	 * @return value of property
+	 */
 	public static String getProperty(String name) {
 		return configuration.getProperty(name);
 	}
 
+	/**
+	 * Get relative path from tomcat working directory to MST configuration folder 
+	 * 
+	 * @return path to MST configuration folder
+	 */
 	public  static String getUrlPath() {
 		return urlPath;
 	}

@@ -266,9 +266,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
     		addFieldError("dbError", "Search failed.Problem with connecting to database using the parameters in configuration file.");
     		return INPUT;
     	} catch (IndexException ie) {
-    		log.error("Search failed. Problem with connecting to Solr server. Check the port number in configuration file.", ie);
+    		log.error("Search failed. Problem with connecting to Solr server. Check the path to solr folder.", ie);
     		errorType = "error";
-    		addFieldError("dbError", "Search failed.Problem with connecting to Solr server. Check the port number in configuration file.");
+    		addFieldError("dbError", "Search failed. Problem with connecting to Solr server. Check the path to solr folder.");
     		return INPUT;
     	}
     	
@@ -338,9 +338,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
     		addFieldError("dbError", "Problem with connecting to database using the parameters in configuration file.");
     		return INPUT;
     	}  catch (IndexException ie) {
-    		log.error("Problem with connecting to Solr server. Check the port number in configuration file.", ie);
+    		log.error("Problem with connecting to Solr server. Check the path to solr folder.", ie);
     		errorType = "error";
-    		addFieldError("dbError", "Problem with connecting to Solr server. Check the port number in configuration file.");
+    		addFieldError("dbError", "Problem with connecting to Solr server. Check the path to solr folder.");
     		return INPUT;
     	}
 			

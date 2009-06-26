@@ -66,11 +66,16 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 			log.debug("Querying Solr server with query:" + query);
 		}
 		
+		if (server == null) {
+			log.error("Solr server is null. Check the path to solr folder.");
+			throw new IndexException("Solr server is null. Check the path to solr folder.");
+		}
+		
 		QueryResponse rsp = null;
 		try {
 			rsp = server.query( query );
 		} catch (SolrServerException sse) {
-			log.error("Exception occured while executing the query. Check the solr port number in configuration file", sse);
+			log.error("Exception occured while executing the query. Check the path to solr folder.", sse);
 			throw new IndexException(sse.getMessage());
 		}
 
