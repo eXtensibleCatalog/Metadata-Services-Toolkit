@@ -88,30 +88,23 @@
                            ${temporaryUser.username}<br><br></td>
                        </tr>                   
 	                    <tr>
-	                      <td valign="top">First Name <br>
-	                      <input type="text" id="firstName" name ="firstName" class="textfield" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
+	                      <td valign="top"><b>First Name</b> <br>
+	                      <input type="text" id="firstName" name ="firstName" class="textfield" value="${temporaryUser.firstName}" maxlength="255" size="47"><br><br></td>
 	                    </tr>
 	                    
 	                    <tr>
-	                      <td valign="top">Last Name  <br>
-	                      <input type="text" id="lastName" name ="lastName" class="textfield" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
+	                      <td valign="top"><b>Last Name</b>  <br>
+	                      <input type="text" id="lastName" name ="lastName" class="textfield" value="${temporaryUser.lastName}" maxlength="255" size="47"><br><br></td>
 	                    </tr>                     
                        <tr>
-                           <td valign="top">Email  <br>
-                           <input type="text" id="email" name ="email" class="textfield" value="${temporaryUser.email}" maxlength="255"><br><br></td>
+                           <td valign="top"><b>Email </b> <br>
+                           <input type="text" id="email" name ="email" class="textfield" value="${temporaryUser.email}" maxlength="255" size="47"><br><br></td>
                        </tr>
 
                       
 
-                   </table>
-
-
-
-                       <br><br>
-
-                        <table>
                            <tr>
-                               <td>Groups  &nbsp;&nbsp;
+                               <td><b>Groups </b>
 
                                    <br>
                                    <select multiple size="8" id="groupsSelected" name ="groupsSelected" style="width:300px; height:125px;">

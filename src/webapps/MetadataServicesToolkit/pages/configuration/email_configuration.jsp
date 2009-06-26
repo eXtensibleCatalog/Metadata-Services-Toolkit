@@ -96,29 +96,29 @@
 
                         <tr>
                             <td><B>Outgoing Mail Server(SMTP):  </B>&nbsp;&nbsp;<br>
-                            <input type="text" id="emailServerAddress" name ="emailServerAddress" class="textfield" value="${emailConfig.emailServerAddress}" maxlength="255"><br><br></td>
+                            <input type="text" id="emailServerAddress" name ="emailServerAddress" class="textfield" value="${emailConfig.emailServerAddress}" maxlength="255" size="45"><br><br></td>
                         </tr>
 
                        <tr>
                            <td><B>From Address </B>&nbsp;&nbsp;<br>
-                           <input type="text" id="fromAddress" name ="fromAddress" class="textfield" value="${emailConfig.fromAddress}" maxlength="255"><br><br></td>
+                           <input type="text" id="fromAddress" name ="fromAddress" class="textfield" value="${emailConfig.fromAddress}" maxlength="255" size="45"><br><br></td>
                        </tr>
 
                        <tr>
                            <td><B>Password </B>&nbsp;&nbsp;<br>
-                           <input type="text" id="password" name ="password" class="textfield" value="${emailConfig.password}" maxlength="255"><br><br></td>
+                           <input type="text" id="password" name ="password" class="textfield" value="${emailConfig.password}" maxlength="255" size="45"><br><br></td>
                        </tr>
 
                        <tr>
                            <td><B> Port Number </B>&nbsp;&nbsp;<br>
-                           <input type="text" id="port" name ="port" class="textfield" value="${emailConfig.portNumber}" maxlength="255"><br><br></td>
+                           <input type="text" id="port" name ="port" class="textfield" value="${emailConfig.portNumber}" maxlength="255" size="45"><br><br></td>
                        </tr>
 
                        <tr>
                            <td> <B>Encrypted Connection </B>&nbsp;&nbsp; 
                            
                                <br>
-                               <SELECT style="width:200px; height:20px;" ID="encryptedConnection" name="encryptedConnection" >
+                               <SELECT style="width:290px; height:20px;" ID="encryptedConnection" name="encryptedConnection" >
                                   <OPTION  value="none">None</OPTION>
 
                                   <OPTION value="ssl" 
@@ -145,7 +145,7 @@
 
                         <tr>
                             <td> <B>Timeout </B>&nbsp;&nbsp; <br>
-                            <input type="text" id="timeout" name ="timeout" class="textfield" value="${emailConfig.timeout}" maxlength="255"><br><br></td>
+                            <input type="text" id="timeout" name ="timeout" class="textfield" value="${emailConfig.timeout}" maxlength="255" size="45"><br><br></td>
                         </tr>
 
                        

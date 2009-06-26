@@ -87,9 +87,6 @@ public class UserRegistration extends ActionSupport {
 	 */
 	public String registerUser() {
 
-		log.debug(UserRegistration.class + ":" + "registerUser()" );
-
-
 		try {
 			Server server = serverService.getServerByName(serverName);
 			newUser.setServer(server);
@@ -105,8 +102,9 @@ public class UserRegistration extends ActionSupport {
 					// Check if user entered password for LDAP server is valid.
 					if (!server.getName().equalsIgnoreCase("local")) {
 						if (!userService.authenticateLDAPUser(newUser, newUser.getPassword(), server)) {
-							addFieldError("authenticationError",  "Password did not match.");
+							addFieldError("authenticationError",  "Password entered did not match the password in " + server.getName() + " account.");
 							errorType = "error";
+							servers =  serverService.getAll();
 							return INPUT;
 						}
 						// LDAP user's password need not be stored.
@@ -144,6 +142,7 @@ public class UserRegistration extends ActionSupport {
 						errorMessage.append("E-mail is not configured for the application. E-mail should be setup for user registeration.");
 						addFieldError("emailError",  errorMessage.toString());
 						errorType = "error";
+						servers =  serverService.getAll();
 						return INPUT;
 					}
 				} else {

@@ -69,12 +69,14 @@ YAHOO.xc.mst.registeration = {
 
 		}
 
-		if (!document.getElementById('login_server').value == 'local') {
+		if (document.getElementById('login_server').value != 'local') {
+		
 			if (document.getElementById('user_password').value=='') {
 			    createErrorDiv("error",'Password is required.');
 				return false;
 			}
 			if (document.getElementById('user_password').value!=document.getElementById('user_password_confirmation').value) {
+			
 			    createErrorDiv("error",'Password does not match confirmation password.');
 				return false;
 			}

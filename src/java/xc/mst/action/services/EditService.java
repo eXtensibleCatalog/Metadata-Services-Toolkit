@@ -38,7 +38,10 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class EditService extends ActionSupport
 {
-    /** Service object to interact with the services in the MST */
+    /** serial id */
+	private static final long serialVersionUID = -6594114196228418111L;
+
+	/** Service object to interact with the services in the MST */
     private ServicesService servicesService = new DefaultServicesService();
 
     /** User Service Object */

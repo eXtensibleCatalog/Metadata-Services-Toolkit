@@ -91,12 +91,12 @@
                <table>
                     <tr>
                       <td valign="top"><b>First Name</b>  <br>
-                      <input type="text" id="firstName" name ="firstName" class="textfield" value="${temporaryUser.firstName}" maxlength="255"><br><br></td>
+                      <input type="text" id="firstName" name ="firstName" class="textfield" value="${temporaryUser.firstName}" maxlength="255" size="47"><br><br></td>
                     </tr>
                     
                     <tr>
                       <td valign="top"><b>Last Name  </b><br>
-                      <input type="text" id="lastName" name ="lastName" class="textfield" value="${temporaryUser.lastName}" maxlength="255"><br><br></td>
+                      <input type="text" id="lastName" name ="lastName" class="textfield" value="${temporaryUser.lastName}" maxlength="255" size="47"><br><br></td>
                     </tr>                    
 
                     <tr>
@@ -106,12 +106,12 @@
 
                    <tr>
                        <td valign="top"><b>Password </b><br>
-                       <input type="password" id="password" name ="password" class="textfield" value="" maxlength="255"><br><br></td>
+                       <input type="password" id="password" name ="password" class="textfield" value="" maxlength="255" size="47"><br><br></td>
                    </tr>
 
                   <tr>
                       <td valign="top"><b>Confirm Password </b><br>
-                      <input type="password" id="confpass" name ="confpass" class="textfield" value="" maxlength="255"><br><br></td>
+                      <input type="password" id="confpass" name ="confpass" class="textfield" value="" maxlength="255" size="47"><br><br></td>
                   </tr>
 
                    <tr>

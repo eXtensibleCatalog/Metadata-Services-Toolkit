@@ -97,13 +97,14 @@ public class DeleteRepository extends ActionSupport
         {
             log.error(ie.getMessage(),ie);
             errorType = "error";
-            this.addFieldError("indexError","Error occurred while deleting the repository. An email has been sent to the administrator");
+            this.addFieldError("indexError","Error occurred while deleting the repository and index. Email has been sent to administrator regarding the issue.");
+            userService.sendEmailErrorReport();
             return INPUT;
         }
         catch(DataException de)
         {
             log.error(de.getMessage(), de);
-            this.addFieldError("viewRepositoryError", "Error occurred while deleting repository. An email has been sent to the administrator");
+            this.addFieldError("viewRepositoryError", "Error occurred while deleting repository. An email has been sent to the administrator.");
             userService.sendEmailErrorReport();
             errorType = "error";
             return INPUT;

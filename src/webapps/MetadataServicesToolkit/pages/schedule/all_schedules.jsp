@@ -100,6 +100,7 @@
 		      </div>
 	      </div>
             <!--  this is the footer of the page -->
+             <div class="clear">&nbsp;</div>
             <c:import url="/inc/footer.jsp"/>  
         </div>
         <!-- end doc -->

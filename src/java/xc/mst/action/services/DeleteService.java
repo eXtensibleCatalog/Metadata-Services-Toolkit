@@ -19,6 +19,8 @@ import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.UserService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -40,6 +42,9 @@ public class DeleteService extends ActionSupport
 
     /** The record service */
     private RecordService recordService = new DefaultRecordService();
+    
+    /** The user service */
+    private UserService userService = new DefaultUserService();
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -84,14 +89,15 @@ public class DeleteService extends ActionSupport
         catch(DataException e)
         {
             log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), e);
-            this.addFieldError("viewRepositoryError", "Service cannot be deleted");
-            errorType = "error";
+            this.addFieldError("viewRepositoryError", "Error occured while deleting service. Email has been sent to the administrator regarding the error.");
+            userService.sendEmailErrorReport();
             return INPUT;
         }
         catch(IndexException ie)
         {
-            log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), ie);
-            this.addFieldError("viewRepositoryError", "Service cannot be deleted");
+        	log.error("Exception occured while deleting the service " + ((service != null)?service.getName():"") + " and index. Check the path to solr folder.", ie);
+            this.addFieldError("viewRepositoryError", "Error occured while deleting the service " + ((service != null)?service.getName():"") + ".Email has been sent to the administrator regarding the error.");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }
@@ -119,14 +125,16 @@ public class DeleteService extends ActionSupport
         catch(DataException e)
         {
             log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), e);
-            this.addFieldError("viewRepositoryError", "Service cannot be deleted");
+            this.addFieldError("viewRepositoryError", "Error occured while deleting service. Email has been sent to the administrator regarding the error.");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }
         catch(IndexException ie)
         {
-            log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), ie);
-            this.addFieldError("viewRepositoryError", "Service cannot be deleted");
+            log.error("Exception occured while deleting the service " + ((service != null)?service.getName():"") + " and index. Check the path to solr folder.", ie);
+            this.addFieldError("viewRepositoryError", "Error occured while deleting the service " + ((service != null)?service.getName():"") + ".Email has been sent to the administrator regarding the error.");
+            userService.sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }

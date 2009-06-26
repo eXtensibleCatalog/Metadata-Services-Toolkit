@@ -219,6 +219,7 @@
 		          </form>
 		      </div>
 	      </div>
+	       <div class="clear">&nbsp;</div>
             <!--  this is the footer of the page -->
             <c:import url="/inc/footer.jsp"/>  
 

@@ -87,12 +87,12 @@
 
                    <tr>
                        <td valign="top"><B>Group Name</B> <br> 
-                       <input type="text" id="groupName" name ="groupName" class="textfield" value="${temporaryGroup.name}" maxlength="255"><br><br></td>
+                       <input type="text" id="groupName" name ="groupName" class="textfield" value="${temporaryGroup.name}" maxlength="255" size="46"><br><br></td>
                    </tr>
 
                    <tr>
                        <td valign="top"><B>Description</B>  <br>
-                       <textarea id="groupDescription" name ="groupDescription" cols="30" rows="5" maxlength="255">${temporaryGroup.description}</textarea><br><br></td>
+                       <textarea id="groupDescription" name ="groupDescription" cols="40" rows="5" maxlength="255">${temporaryGroup.description}</textarea><br><br></td>
                    </tr>
                    
             
