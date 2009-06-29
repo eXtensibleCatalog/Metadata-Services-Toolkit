@@ -188,7 +188,7 @@ public class DefaultServicesService implements ServicesService
     			LogWriter.addError(logFileName, "Error adding a new service: The third line of the service configuration file must be the .jar file containing the service.");
     			throw new ConfigFileException("The third line of the service configuration file must be the .jar file containing the service.");
     		}
-    		jar = configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceJars" + MSTConfiguration.FILE_SEPARATOR + jar;
+    		jar = configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceJar" + MSTConfiguration.FILE_SEPARATOR + jar;
 
     		// The name of the service's class, which must appear in the fourth line of the configuration file
     		String className = in.readLine();
@@ -543,7 +543,7 @@ public class DefaultServicesService implements ServicesService
     			LogWriter.addError(logFileName, "Error adding a new service: The third line of the service configuration file must be the .jar file containing the service.");
     			throw new ConfigFileException("The third line of the service configuration file must be the .jar file containing the service.");
     		}
-    		jar = configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceJars" + MSTConfiguration.FILE_SEPARATOR + jar;
+    		jar = configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceJar" + MSTConfiguration.FILE_SEPARATOR + jar;
 
     		// The name of the service's class, which must appear in the fourth line of the configuration file
     		String className = in.readLine();
