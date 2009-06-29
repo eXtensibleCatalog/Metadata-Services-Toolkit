@@ -321,9 +321,9 @@ public class EditRepository extends ActionSupport
      *
      * @param RepoId The ID of the repository to be edited
      */
-    public void setRepositoryId(String RepoId)
+    public void setRepositoryId(int repositoryId)
     {
-        repositoryId = Integer.parseInt(RepoId);
+        this.repositoryId = repositoryId;
     }
 
     /**

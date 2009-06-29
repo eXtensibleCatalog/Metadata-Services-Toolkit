@@ -125,7 +125,7 @@ public class ViewRepository extends ActionSupport implements UserAware
           catch(Hexception he)
           {
               log.error(he.getMessage(),he);
-              this.addFieldError("validateRepositoryError", "There was an exception when validating the repository");
+              this.addFieldError("validateRepositoryError", "Validation failed. There was an error when validating the repository");
               errorType = "error";
               execute();
              
@@ -176,10 +176,10 @@ public class ViewRepository extends ActionSupport implements UserAware
        *
        * @param repoId The ID of the repository to be viewed
        */
-      public void setRepositoryId(String repoId)
+      public void setRepositoryId(int repositoryId)
       {
 
-          this.repositoryId = Integer.parseInt(repoId);
+          this.repositoryId = repositoryId;
       }
 
       /**
