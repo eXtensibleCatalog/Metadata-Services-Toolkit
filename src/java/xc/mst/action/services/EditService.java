@@ -82,23 +82,41 @@ public class EditService extends ActionSupport
                 return SUCCESS;
             }
             setTemporaryService(temporaryService);
-            File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services" + MSTConfiguration.FILE_SEPARATOR + "serviceConfig");
+            File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services");
 
             FileFilter fileFilter =  new XCCGFileFilter();
 
-            File[] fileList = dir.listFiles(fileFilter);
+            File[] fileList = dir.listFiles();
             
-            if (fileList == null) {
+            if (fileList == null) 
+            {
            	 	errorType = "error";
            	 	log.error("Problem with service configuration. Check the path of service folder.");
-                this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
+           	 	this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
                 return SUCCESS;
             }
-            
-            for(int i=0;i<fileList.length;i++)
+            for(File file : fileList)
             {
-                serviceFiles.add(fileList[i].getName());
+            	String xccfgFolderLocation = file.getPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig";
+            	File xccfgFolder = new File(xccfgFolderLocation);
+            	
+            	if(!xccfgFolder.exists() || !xccfgFolder.isDirectory())
+            		continue;
+            	
+            	File[] xccfgFolderList = xccfgFolder.listFiles(fileFilter);
+                
+                if (xccfgFolderList == null) 
+                {
+               	 	errorType = "error";
+               	 	log.error("Problem with service configuration. Check the path of service folder.");
+               	 	this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
+                    return SUCCESS;
+                }
+                
+                for(File xccfgFile : xccfgFolderList)
+                	serviceFiles.add(xccfgFile.getName());
             }
+            
             setServiceFiles(serviceFiles);
             return SUCCESS;
         }

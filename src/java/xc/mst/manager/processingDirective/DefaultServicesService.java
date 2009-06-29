@@ -1,3 +1,11 @@
+/**
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  */
 
 package xc.mst.manager.processingDirective;
 
@@ -133,6 +141,9 @@ public class DefaultServicesService implements ServicesService
     public void addNewService(File configFile) throws DataException, IOException, ConfigFileException
     {
     	BufferedReader in = null; // Reads the file
+    	
+    	String configFolderPath = configFile.getPath();
+    	
     	try
     	{
     		MetadataService mService = null; // An instance of the service we're adding
@@ -177,7 +188,7 @@ public class DefaultServicesService implements ServicesService
     			LogWriter.addError(logFileName, "Error adding a new service: The third line of the service configuration file must be the .jar file containing the service.");
     			throw new ConfigFileException("The third line of the service configuration file must be the .jar file containing the service.");
     		}
-    		jar = MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services" + MSTConfiguration.FILE_SEPARATOR + "serviceJars" + MSTConfiguration.FILE_SEPARATOR + jar;
+    		jar = configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceJars" + MSTConfiguration.FILE_SEPARATOR + jar;
 
     		// The name of the service's class, which must appear in the fourth line of the configuration file
     		String className = in.readLine();
@@ -419,7 +430,7 @@ public class DefaultServicesService implements ServicesService
 
     				ErrorCode errorCode = new ErrorCode();
     				errorCode.setErrorCode(errorCodeStr);
-    				errorCode.setErrorDescriptionFile(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services" + MSTConfiguration.FILE_SEPARATOR + "serviceErrors" + MSTConfiguration.FILE_SEPARATOR + errorDescriptionFile);
+    				errorCode.setErrorDescriptionFile(configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceErrors" + MSTConfiguration.FILE_SEPARATOR + errorDescriptionFile);
     				errorCode.setService(service);
 
     				errorCodeDao.insert(errorCode);
@@ -486,6 +497,9 @@ public class DefaultServicesService implements ServicesService
     		throw new DataException("Cannot update a service while it is running.");
 
     	BufferedReader in = null; // Reads the file
+    	
+    	String configFolderPath = configFile.getParentFile().getParent();
+    	
     	try
     	{
     		MetadataService mService = null; // An instance of the service we're adding
@@ -529,7 +543,7 @@ public class DefaultServicesService implements ServicesService
     			LogWriter.addError(logFileName, "Error adding a new service: The third line of the service configuration file must be the .jar file containing the service.");
     			throw new ConfigFileException("The third line of the service configuration file must be the .jar file containing the service.");
     		}
-    		jar = MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services" + MSTConfiguration.FILE_SEPARATOR + "serviceJars" + MSTConfiguration.FILE_SEPARATOR + jar;
+    		jar = configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceJars" + MSTConfiguration.FILE_SEPARATOR + jar;
 
     		// The name of the service's class, which must appear in the fourth line of the configuration file
     		String className = in.readLine();
@@ -775,13 +789,13 @@ public class DefaultServicesService implements ServicesService
     				{
     					errorCode = new ErrorCode();
     					errorCode.setErrorCode(errorCodeStr);
-    					errorCode.setErrorDescriptionFile(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services" + MSTConfiguration.FILE_SEPARATOR + "serviceErrors" + MSTConfiguration.FILE_SEPARATOR + errorDescriptionFile);
+    					errorCode.setErrorDescriptionFile(configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceErrors" + MSTConfiguration.FILE_SEPARATOR + errorDescriptionFile);
     					errorCode.setService(service);
     					errorCodeDao.insert(errorCode);
     				}
     				else
     				{
-    					errorCode.setErrorDescriptionFile(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services" + MSTConfiguration.FILE_SEPARATOR + "serviceErrors" + MSTConfiguration.FILE_SEPARATOR + errorDescriptionFile);
+    					errorCode.setErrorDescriptionFile(configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceErrors" + MSTConfiguration.FILE_SEPARATOR + errorDescriptionFile);
     					errorCodeDao.update(errorCode);
     				}
     			}
