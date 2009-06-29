@@ -35,7 +35,10 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class AddService extends ActionSupport
 {
-    /** Service object to ineract with the services in the MST */
+    /** Serial Id */
+	private static final long serialVersionUID = -6656889195768543265L;
+
+	/** Service object to ineract with the services in the MST */
     private ServicesService servicesService = new DefaultServicesService();
 
     /** User Service Object **/
