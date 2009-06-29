@@ -66,22 +66,32 @@ public class ServiceTest {
                     throw new ConfigFileException("Cannot add a service named " + name + " because a service with that name already exists.");
                 }
 
-                // The .jar file containing the service, which must appear in the secord line of the configuration file
+                // The version of the service, which must appear in the second line of the configuration file
+        		String version = in.readLine();
+        		version = (version.indexOf('#') >= 0 ? version.substring(0, version.indexOf('#')).trim() : version.trim());
+        		
+        		if(version == null || version.length() == 0)
+        		{
+        			throw new ConfigFileException("The second line of the service configuration file must be the service's version.");
+        		}
+
+                
+                // The .jar file containing the service, which must appear in the third line of the configuration file
                 String jar = in.readLine();
                 jar = (jar.indexOf('#') >= 0 ? jar.substring(0, jar.indexOf('#')).trim() : jar.trim());
                 if(jar == null || jar.length() == 0 || !jar.endsWith(".jar"))
                 {
 
-                    throw new ConfigFileException("The secord line of the service configuration file must be the .jar file containing the service.");
+                    throw new ConfigFileException("The third line of the service configuration file must be the .jar file containing the service.");
                 }
 
-                // The name of the service's class, which must appear in the third line of the configuration file
+                // The name of the service's class, which must appear in the fourth line of the configuration file
                 String className = in.readLine();
                 className = (className.indexOf('#') >= 0 ? className.substring(0, className.indexOf('#')).trim() : className.trim());
                 if(className == null || className.length() == 0)
                 {
 
-                    throw new ConfigFileException("The third line of the service configuration file must be the service's class name.");
+                    throw new ConfigFileException("The fourth line of the service configuration file must be the service's class name.");
                 }
 
                 // The port on which the service's OAI repository operates, which must appear in the fourth line of the configuration file
@@ -90,12 +100,13 @@ public class ServiceTest {
                 if(portString == null || portString.length() == 0)
                 {
 
-                    throw new ConfigFileException("The fourth line of the service configuration file must be the service's OAI repository's port.");
+                    throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
                 }
                 service.setServiceJar(jar);
                 service.setPort(Integer.parseInt(portString));
                 service.setName(name);
                 service.setClassName(className);
+                service.setVersion(version);
             servicesService.insertService(service);
 
             Service newService = servicesService.getServiceById(service.getId());
@@ -110,6 +121,7 @@ public class ServiceTest {
             assert service.getServicesWarnings()==newService.getServicesWarnings();
             assert service.getServicesLastLogReset()==newService.getServicesLastLogReset();
             assert service.getServicesLogFileName().equalsIgnoreCase(newService.getServicesLogFileName());
+            assert service.getVersion().equalsIgnoreCase(newService.getVersion());
 
             servicesService.deleteService(service);
         }
