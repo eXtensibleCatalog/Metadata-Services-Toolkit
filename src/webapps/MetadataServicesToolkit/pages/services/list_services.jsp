@@ -171,14 +171,19 @@
                                             <c:if test="${columnSorted=='Port'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
-                                        <td width="330" class="${classColumn}"><c:out value="${url}"/></td>
+                                        <td class="${classColumn}"><c:out value="${url}"/></td>
                                         <td>
                                             <c:set var="service_status" value ="${service.status}"/>
-                                            <c:set var="service_status" value="${fn:replace(service_status,'_',' ')}" />
-                                            <c:set var="service_status" value="${fn:toLowerCase(service_status)}" />
-                                            ${service_status}
+                                            <c:choose>
+                                                <c:when test="${service_status=='NOT_RUNNING'}">
+                                                    not running
+                                                </c:when>
+                                                <c:otherwise>
+                                                    running
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
-                                        <td width="300">
+                                        <td width="220">
                                             <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
                                             <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
                                         </td>

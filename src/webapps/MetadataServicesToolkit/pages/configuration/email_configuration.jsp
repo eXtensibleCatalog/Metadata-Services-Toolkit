@@ -90,7 +90,7 @@
                 <form action="changeEmailConfig.action" method="post" name="emailConfig">
 
 
-                    <h4><b>SMTP</b><br><br></h4>
+                    <h4><br></h4>
 
                     <table>
 

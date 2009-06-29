@@ -176,23 +176,29 @@
 					<br>
 					<select name="selectedSetIds" multiple style="width:300px;" size="10"> 
 						<option value="0" 
-							<c:if test="${schedule.sets == '[]' || schedule.sets == '[null]'}">
-								 selected
-							</c:if>
-						>All Sets</option>
-						
-						<c:forEach var="set" items="${repository.sets}">
-							<option value="${set.id}"
-							<c:forEach items="${schedule.sets}" var="scheduleSet">
-								<c:if test="${scheduleSet.id == set.id}">
-											selected
-								</c:if>
-							</c:forEach>
-							>${set.displayName}
-						</c:forEach>
-					</option>
+                                <c:if test="${schedule.sets == '[]' || schedule.sets == '[null]'}">
+                                     selected
+                                </c:if>
+                            >All Sets</option>
+
+                            <c:forEach var="set" items="${repository.sets}">
+                                <option value="${set.id}"
+                                <c:forEach items="${schedule.sets}" var="scheduleSet">
+                                    <c:if test="${scheduleSet.id == set.id}">
+                                                selected
+                                    </c:if>
+                                </c:forEach>
+                                >${set.displayName}
+                            </c:forEach>
+                        </option>
+                    </select>
 					<br>
-					(CTRL click to select multiple sets)
+                        <c:if test="${!empty repository.sets}">
+                             <div class="smallText">
+                                (CTRL click to select multiple sets)
+                            </div>
+                        </c:if>
+					
 				</td>
 			</tr>
 

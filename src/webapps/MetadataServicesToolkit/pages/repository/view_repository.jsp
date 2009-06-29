@@ -104,8 +104,8 @@
                             <td class="label" style="font-size:13px;">
                                <table>
                                    <tr>
-                                       <td>
-                                           URL :
+                                       <td valign="top">
+                                           URL:
                                        </td>
                                        <td>
                                            ${provider.oaiProviderUrl}

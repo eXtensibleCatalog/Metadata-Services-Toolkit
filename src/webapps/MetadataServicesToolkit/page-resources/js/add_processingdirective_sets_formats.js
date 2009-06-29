@@ -35,40 +35,20 @@ goBack : function()
      try
      {
          var choice = true;
-         if((document.getElementById("setsSelected")==null)||(document.getElementById("formatsSelected")==null))
+         if(document.getElementById("formatsSelected")==null)
              {
-                    if((document.getElementById("setsSelected")==null)&&(document.getElementById("formatsSelected")==null))
-                        {
-                            createErrorDiv('error','Processing Rule cannot be created as neither sets or formats are available');
-                            choice = false;
-                        }
-                    else if(document.getElementById("setsSelected")==null)
-                        {
-                            if (document.addProcessingDirectiveSetsFormats.formatsSelected.value=='') {
-                                createErrorDiv('error','Select a format.');
-                                choice = false;
-                            }
-
-                        }
-                    else if(document.getElementById("formatsSelected")==null)
-                        {
-                             if (document.addProcessingDirectiveSetsFormats.setsSelected.value=='') {
-                                createErrorDiv('error','Select a set.');
-                                choice = false;
-                            }
-                        }
+                    
+                   createErrorDiv('error','Formats empty. Processing Rule cannot be created without specifying a format.');
+                   choice = false;
                                        
              }
          else
              {
-                 if((document.addProcessingDirectiveSetsFormats.setsSelected.value=='')&&(document.addProcessingDirectiveSetsFormats.formatsSelected.value==''))
-                     {
-
-                          createErrorDiv('error','Both sets and formats cannot be left unselected. Either sets or formats have to selected');
-                          choice = false;
-
-                     }
-                   
+                 if (document.addProcessingDirectiveSetsFormats.formatsSelected.value=='')
+                 {
+                     createErrorDiv('error','Select a format.');
+                     choice = false;
+                 }
              }
 
          if(choice==true)

@@ -105,7 +105,7 @@
 			</tr>			
 			
 			<tr>
-                <td> <b>Select Login Type</b> &nbsp;&nbsp;
+                <td> <b>Select Login Type</b> <br>
 			
 					<select id="login_server" name="serverName" onChange="Javascript:YAHOO.xc.mst.registeration.determinePasswordBoxDisplay();">
 				

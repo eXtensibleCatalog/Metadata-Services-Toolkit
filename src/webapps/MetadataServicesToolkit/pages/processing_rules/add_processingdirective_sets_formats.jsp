@@ -95,34 +95,34 @@
                  <div class="StepsHeader">
                     <table width="400">
                         <tr>
-                            <td>
-                                <div style="margin-right:10px;">
+                            <td width="45%">
+                                <div align="right" style="margin-right:10px;">
                                     Harvested records from :
                                 </div>
                             </td>
-                            <td width="5%"></td>
-                            <td>
+                            <td width="10%"></td>
+                            <td width="45%">
                                 <div style="margin-left:15px;">
                                     To be processed by :
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td width="45%">
 
                             </td>
-                            <td width="5%">
+                            <td width="10%">
                                 <div align="center">
                                     <img src="page-resources/img/greenarrow_greybgrd.jpg">
                                 </div>
                             </td>
-                            <td>
+                            <td width="45%">
                                 
                             </td>
                         </tr>
                         <tr>
-                            <td> 
-                                <div style="margin-right:10px;">
+                            <td width="45%">
+                                <div align="right" style="margin-right:10px;">
                                     <c:choose>
                                         <c:when test="${sourceType=='provider'}">
                                             <c:set var="sourceDisplay" value="${temporaryProcessingDirective.sourceProvider.name}"/>
@@ -137,8 +137,8 @@
                                 </div>
 
                             </td>
-                            <td width="5%"></td>
-                            <td>
+                            <td width="10%"></td>
+                            <td width="45%">
                                 <div style="margin-left:15px;">
                                      <B>${temporaryProcessingDirective.service.name}</B>
                                 </div>
