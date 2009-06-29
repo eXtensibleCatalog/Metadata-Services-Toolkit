@@ -184,8 +184,7 @@ public class EditService extends ActionSupport
                 userService.sendEmailErrorReport();
                 return INPUT;
             }
-            String location = MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services" + MSTConfiguration.FILE_SEPARATOR + "serviceConfig" + MSTConfiguration.FILE_SEPARATOR + getSelectedLocation();
-            File file = new File(location);
+            File file = new File(getSelectedLocation());
             servicesService.updateService(file,tempService);
             return SUCCESS;
         }
