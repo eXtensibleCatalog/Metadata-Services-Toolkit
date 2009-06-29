@@ -87,13 +87,13 @@
                       <td>
                           
                           <select id="fileLocation" name ="fileLocation">
-                              <c:forEach var="n" items="${serviceFiles}" varStatus="a">
+                              <c:forEach var="serviceFile" items="${serviceFiles}" varStatus="a">
                                   <c:choose>
-                                      <c:when test="${fn:contains(temporaryService.xccfgFileName,n)}">
-                                          <option selected id="${n}" value="${n}">${n}
+                                      <c:when test="${fn:contains(temporaryService.xccfgFileName,serviceFile)}">
+                                          <option selected id="${serviceFile.name}" value="${serviceFile.path}">${serviceFile.name}
                                       </c:when>
                                       <c:otherwise>
-                                          <option id="${n}" value="${n}">${n}
+		                                  <option id="${serviceFile.name}" value="${serviceFile.path}">${serviceFile.name}
                                       </c:otherwise>
                                   </c:choose>
                                   

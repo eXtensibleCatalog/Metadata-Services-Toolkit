@@ -32,7 +32,10 @@ import java.io.*;
  */
 public class DownloadLogFiles extends ActionSupport implements ServletResponseAware
 {
-    /** Indicates the type of log file being downloaded */
+    /** Serial id*/
+	private static final long serialVersionUID = -2716024718026119266L;
+
+	/** Indicates the type of log file being downloaded */
     private String logType;
 
     /** The ID of the log */

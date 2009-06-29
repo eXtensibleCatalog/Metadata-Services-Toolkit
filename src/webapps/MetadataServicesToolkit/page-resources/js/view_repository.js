@@ -10,25 +10,20 @@
 
 YAHOO.xc.mst.repository.viewRepository = {
 
-    delRepository : function(id)
-    {
-        
-        var result;
-        result = confirm('Are you sure you want to delete the repository ? ');
-        if (result)
-        {
-            window.location = "deleteRepository.action?RepositoryId="+id;
-        }
-
-    },
-    
-    doneFunction:function()
+    done:function()
     {
         window.location = "allRepository.action";
     },
     
-    reValidateFunction : function(id)
+    createValidateDialog : function()
     {
+
+		var reValidateFunction = function() {
+			document.repositoryForm.action = "viewRepositoryValidate.action";
+        		document.repositoryForm.submit();
+		};
+    
+
 		// Instantiate the Dialog
 		// make it modal - 
 		// it should not start out as visible - it should not be shown until 
@@ -46,6 +41,7 @@ YAHOO.xc.mst.repository.viewRepository = {
 	       {
 		   YAHOO.xc.mst.repository.viewRepository.processingDialog.show();
 		   YAHOO.xc.mst.repository.viewRepository.processingDialog.center();
+		   reValidateFunction();
 	       },
 
 
@@ -53,20 +49,23 @@ YAHOO.xc.mst.repository.viewRepository = {
 		YAHOO.xc.mst.repository.viewRepository.processingDialog.render();
 
 
-		YAHOO.xc.mst.repository.viewRepository.processingDialog.showDialog();
+		//YAHOO.xc.mst.repository.viewRepository.processingDialog.showDialog();
+		
+		 // listener for showing the dialog when clicked.
+		YAHOO.util.Event.addListener("revalidateRepository", "click", 
+		    YAHOO.xc.mst.repository.viewRepository.processingDialog.showDialog, 
+		    YAHOO.xc.mst.repository.viewRepository.processingDialog, true);
+
     
-        window.location = "viewRepositoryValidate.action?RepositoryId="+id;
+        
     },
     
-    editFunction : function(id)
+    editFunction : function()
     {
-        window.location = "viewEditRepository.action?RepositoryId="+id;
+        document.repositoryForm.action = "viewEditRepository.action";
+        document.repositoryForm.submit();
     },
     
-    removeErrorMessage : function(id)
-    {
-        window.location = "viewRepository.action?RepositoryId="+id;
-    },
     
     downloadFile: function(type,id)
     {
@@ -229,6 +228,7 @@ YAHOO.xc.mst.repository.viewRepository = {
 	init : function() 
 	{
 	    YAHOO.xc.mst.repository.viewRepository.createDeleteRepositoryDialog();
+	    YAHOO.xc.mst.repository.viewRepository.createValidateDialog();
 	}
 
 }

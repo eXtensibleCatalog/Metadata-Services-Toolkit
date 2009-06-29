@@ -9,13 +9,14 @@
 
 package xc.mst.action.services;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.manager.processingDirective.ConfigFileException;
@@ -24,6 +25,8 @@ import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserService;
 import xc.mst.utils.MSTConfiguration;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This is the service class for adding a new service in the MST
@@ -42,7 +45,7 @@ public class AddService extends ActionSupport
     private String errorType;
 
     /** List of XCCFG files */
-    private List<String> serviceFiles = new ArrayList<String>();
+    private List<XccFgFile> serviceFiles = new ArrayList<XccFgFile>();
 
     /** The XCCFG file that is selected by the user */
     private String selectedLocation;
@@ -55,7 +58,7 @@ public class AddService extends ActionSupport
      *
      * @return list of config files
      */
-    public List<String> getServiceFiles()
+    public List<XccFgFile> getServiceFiles()
     {
         return this.serviceFiles;
     }
@@ -65,7 +68,7 @@ public class AddService extends ActionSupport
      *
      * @param serviceFileList list of config files
      */
-    public void setServiceFiles(List<String> serviceFiles)
+    public void setServiceFiles(List<XccFgFile> serviceFiles)
     {
         this.serviceFiles = serviceFiles;
     }
@@ -128,13 +131,51 @@ public class AddService extends ActionSupport
     			return SUCCESS;
     		}
                 
-    		for(File xccfgFile : xccfgFolderList)
-    			serviceFiles.add(xccfgFile.getName());
+    		for(File xccfgFile : xccfgFolderList) {
+    			XccFgFile configFile = new XccFgFile(xccfgFile.getName(), xccfgFile.getPath());
+    			serviceFiles.add(configFile);
+    		}
     	}
-    	setServiceFiles(serviceFiles);
+    	
     	return SUCCESS;
     }
 
+    /**
+     * Class to represent xccfg file
+     * 
+     * @author sharmilar
+     *
+     */
+    public class XccFgFile {
+    	/** Name of file */
+    	private String name;
+    	
+    	/** Path of file */
+    	private String path;
+
+    	/** Constructor */
+    	XccFgFile(String name, String path) {
+    		this.name = name;
+    		this.path = path;
+    		
+    	}
+    	
+    	/** 
+    	 * Get file name 
+    	 */
+		public String getName() {
+			return name;
+		}
+
+		/**
+		 * Get file path
+		 * @return
+		 */
+		public String getPath() {
+			return path;
+		}
+    }
+    
     /**
      * The method that actually adds the service to the MST
      *
@@ -144,8 +185,7 @@ public class AddService extends ActionSupport
     {
         try
         {
-            String location = MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services" + MSTConfiguration.FILE_SEPARATOR + "serviceConfig" + MSTConfiguration.FILE_SEPARATOR + getSelectedLocation();
-            File file = new File(location);
+            File file = new File(getSelectedLocation());
             servicesService.addNewService(file);
             return SUCCESS;
         }
@@ -244,8 +284,10 @@ public class AddService extends ActionSupport
     			return;
     		}
                 
-    		for(File xccfgFile : xccfgFolderList)
-    			serviceFiles.add(xccfgFile.getName());
+    		for(File xccfgFile : xccfgFolderList) {
+    			XccFgFile configFile = new XccFgFile(xccfgFile.getName(), xccfgFile.getPath());
+    			serviceFiles.add(configFile);
+    		}
     	}
     	setServiceFiles(serviceFiles);
     }

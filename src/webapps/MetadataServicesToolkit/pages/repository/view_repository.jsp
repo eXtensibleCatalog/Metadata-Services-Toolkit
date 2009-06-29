@@ -304,11 +304,15 @@
     	    </div>
         	<!--  end the grid -->
             <hr size="1" style="color:#ced2d5;"><br>
-              <button name="edit" type="button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.editFunction(1);" class="xc_button">Edit</button>
-                        <button name="View Log" type="button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.downloadFile('HarvestIn','1');" class="xc_button">View Log</button>
-                        <button name="Revalidate" type="button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.reValidateFunction(1);" class="xc_button">Revalidate</button>
+            <form id="repositoryForm" name="repositoryForm" method="POST">
+	    	<input type="hidden" name="repositoryId" value="${provider.id}"/>
+	    </form>		  
+              		<button name="edit" type="button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.editFunction();" class="xc_button">Edit</button>
+                        <button name="View Log" type="button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.downloadFile('HarvestIn',${provider.id});" class="xc_button">View Log</button>
+                        <button name="Revalidate" type="button" id="revalidateRepository" class="xc_button">Revalidate</button>
                         <button name="delete" type="button" id="confirmDeleteRepository" class="xc_button">Delete</button>            
-                        <button name="done" style="float:right;position:relative;top:-30px;" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.doneFunction();" type="button" class="xc_button">Done</button>
+                        <button name="done" style="float:right;position:relative;top:-30px;" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.done();" type="button" class="xc_button">Done</button>
+             
         </div>
 
 
@@ -344,11 +348,12 @@
 	      </div>
 
 	      <div id="processingDialog" class="hidden">
-	          <div class="hd">Re-validate repository</div>
+	          <div class="hd">Revalidate repository</div>
 		      <div class="bd">
 		      	
 				 <strong>Validating the repository. Please wait.</strong>&nbsp;&nbsp;<img src="${pageContext.request.contextPath}/page-resources/img/loading_graphic_gray.gif">
 				 <div class="clear">&nbsp;</div>
+				 
 		      </div>
 	      </div>
 
