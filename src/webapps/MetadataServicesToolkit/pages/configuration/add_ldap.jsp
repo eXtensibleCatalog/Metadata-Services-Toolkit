@@ -113,7 +113,7 @@
                         </tr>
 
                         <tr style="height:50px;">
-                            <td valign="center"> <B>Show forgot password URL </B> &nbsp;&nbsp;
+                            <td valign="center"> <B>Show forgot password URL </B> &nbsp;&nbsp;<br>
                             <input type="radio" id="showForgotPasswordLink" name ="showForgotPasswordLink" 
                             <c:if test="${server.showForgotPasswordLink == 'true'}">
                             	checked

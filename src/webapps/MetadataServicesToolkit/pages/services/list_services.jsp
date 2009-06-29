@@ -176,14 +176,14 @@
                                             <c:set var="service_status" value ="${service.status}"/>
                                             <c:choose>
                                                 <c:when test="${service_status=='NOT_RUNNING'}">
-                                                    not running
+                                                    Not running
                                                 </c:when>
                                                 <c:otherwise>
-                                                    running
+                                                    Running
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
-                                        <td width="220">
+                                        <td width="190">
                                             <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
                                             <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
                                         </td>
