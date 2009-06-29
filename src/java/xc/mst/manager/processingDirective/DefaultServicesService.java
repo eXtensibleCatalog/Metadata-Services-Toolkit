@@ -142,7 +142,7 @@ public class DefaultServicesService implements ServicesService
     {
     	BufferedReader in = null; // Reads the file
     	
-    	String configFolderPath = configFile.getPath();
+    	String configFolderPath = configFile.getParentFile().getParent();
     	
     	try
     	{
