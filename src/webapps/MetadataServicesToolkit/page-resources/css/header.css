@@ -91,13 +91,13 @@ project
 .StepsHeader
 {
     background-color:#f8f8f8;
-    height : 65px;
+    height : 60px;
     border-bottom-style:solid;
     border-top-style:solid;
     border-width:1px;
     border-color:#ced2d5;
-    padding-top:10px;
-    padding-left : 280px;
+ 
+    padding-left : 180px;
     margin-bottom : 25px;
 }
 .smallText

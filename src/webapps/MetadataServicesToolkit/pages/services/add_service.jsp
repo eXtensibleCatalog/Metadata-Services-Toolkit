@@ -77,7 +77,7 @@
                     <br>
                     <tr>
                        <td colspan="2" >                           
-                          Step 1: To add a service, see user manual for configuration file information. <BR><BR>
+                          Step 1: To add a service, see <a style="text-decoration:underline;color:blue;"href="page-resources/docs/MST User Manual.doc">user manual</a> for configuration file information. <BR><BR>
                        </td>
                     </tr>
                     <br>

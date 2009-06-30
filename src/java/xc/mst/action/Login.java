@@ -84,7 +84,6 @@ public class Login extends ActionSupport implements ServletRequestAware {
      */
     @Override
 	public String execute() throws DataException{
-
     	try {
     		servers = serverService.getAll();
     	}  catch (DatabaseConfigException dce) {

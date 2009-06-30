@@ -58,7 +58,7 @@
                 <c:import url="/inc/menu.jsp"/>
                 <jsp:include page="/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Processing Rules , Add Processing Rules (Step 2)" />
+                    <jsp:param name="bread" value="Processing Rules , Add Processing Rule (Step 2)" />
 
                 </jsp:include>
                 
@@ -93,51 +93,39 @@
                 </div>
 
                  <div class="StepsHeader">
-                    <table width="400">
+                    <table width="600">
                         <tr>
-                            <td width="45%">
+                            <td width="38%">
                                 <div align="right" style="margin-right:10px;">
                                     Harvested records from :
                                 </div>
                             </td>
-                            <td width="10%"></td>
+                            <td width="2%"><br><img src="page-resources/img/greenarrow_greybgrd.jpg"></td>
                             <td width="45%">
                                 <div style="margin-left:15px;">
                                     To be processed by :
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td width="45%">
 
-                            </td>
-                            <td width="10%">
-                                <div align="center">
-                                    <img src="page-resources/img/greenarrow_greybgrd.jpg">
-                                </div>
-                            </td>
-                            <td width="45%">
-                                
-                            </td>
-                        </tr>
                         <tr>
-                            <td width="45%">
+                            <td width="38%">
                                 <div align="right" style="margin-right:10px;">
                                     <c:choose>
                                         <c:when test="${sourceType=='provider'}">
                                             <c:set var="sourceDisplay" value="${temporaryProcessingDirective.sourceProvider.name}"/>
-                                            <B>${temporaryProcessingDirective.sourceProvider.name}</B>
+                                            <B>${temporaryProcessingDirective.sourceProvider.name}</B>&nbsp;&nbsp;
                                         </c:when>
                                         <c:otherwise>
                                             <c:set var="sourceDisplay" value="${temporaryProcessingDirective.sourceService.name}"/>
-                                            <B>${temporaryProcessingDirective.sourceService.name}</B>
+                                            <B>${temporaryProcessingDirective.sourceService.name}</B>&nbsp;&nbsp;
                                         </c:otherwise>
                                     </c:choose>
                                     
                                 </div>
 
                             </td>
-                            <td width="10%"></td>
+                            <td width="2%"></td>
                             <td width="45%">
                                 <div style="margin-left:15px;">
                                      <B>${temporaryProcessingDirective.service.name}</B>
@@ -154,7 +142,7 @@
                     <B>Which records from ${sourceDisplay} should be processed ?</B>
                 </div>
 
-                    <table align="center" cellpadding="0" cellspacing="0" border="0" width="60%">
+                    <table class="basicTable">
 
                         <tr>
                             <td>
@@ -199,12 +187,12 @@
                             </td>
                             <td>
                                 
-                                <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:10px;">
+                                <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:5px;">
                                     You have the option to create a named set of output records for this processing directive&nbsp;&nbsp;&nbsp;<br><br>
-                                    Output Set Name &nbsp;&nbsp;&nbsp; <input type="text" class="processingDirective_TextBox" name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50">
+                                    Output Set Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"  name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50" size="40">
                                 </div>
                                  <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;">
-                                    Output Set Specification &nbsp;&nbsp;&nbsp;<input type="text" class="processingDirective_TextBox" name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50">
+                                    Output Set Specification &nbsp;&nbsp;<input type="text"  name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50" size="40">
                                 </div>
 
                                
@@ -254,13 +242,6 @@
                                          </div>
                                      </c:otherwise>
                                  </c:choose>
-
-
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td height="10">
                                 <c:if test="${!empty setList}">
                                     <div class="smallText">
                                         (CTRL click to select multiple sets)
@@ -277,8 +258,8 @@
                                 <hr size="1" style="color:#cfd2d4"><br>
                                 <div align="right">
                                   <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirectiveSetsFormats.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                                  <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirectiveSetsFormats.goBack();" name="goBack"><img src="page-resources/img/bullet_go_left.gif"><span style="position:relative;top:-3px;">Back to Step 1 </span> </button> &nbsp;&nbsp;&nbsp;
-                                  <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirectiveSetsFormats.addDirective();" name="addDirective">Finish</button>
+                                  <button style="vertical-align:bottom;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirectiveSetsFormats.goBack();" name="goBack"><img src="page-resources/img/bullet_go_left.gif"><span style="position:relative;top:-3px;">Back to Step 1 </span> </button> &nbsp;&nbsp;&nbsp;
+                                  <button style="vertical-align:bottom;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirectiveSetsFormats.addDirective();" name="addDirective">Finish</button>
                                 </div>
                             </td>
                         </tr>
