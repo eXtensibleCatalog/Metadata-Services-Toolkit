@@ -103,14 +103,17 @@ public class HarvesterWorkerThread extends WorkerThread
 	 * Gets the status of the job
 	 */
 	public String getJobStatus() {
+		return Harvester.getRunningHarvester().getHarvesterStatus();
 		
-		String status = Harvester.getRunningHarvester().getHarvesterStatus();
+/*		String status = Harvester.getRunningHarvester().getHarvesterStatus();
 		
 		if(status.equals(Constants.STATUS_SERVICE_CANCELED) || status.equals(Constants.STATUS_SERVICE_CANCELED)
 				|| status.equals(Constants.STATUS_SERVICE_NOT_RUNNING) || status.equals(Constants.STATUS_SERVICE_PAUSED))
 				return "No Process Running";
 		else
 			return "Harvesting from provider "+ Harvester.getRunningHarvester().getProvider().getName();
+			
+*/
 	}
 
 } // end class HarvestWorkerThread
