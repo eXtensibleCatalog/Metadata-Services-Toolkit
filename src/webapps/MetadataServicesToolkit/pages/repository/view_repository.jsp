@@ -96,15 +96,16 @@
 			
 			            
 			            <tr>
-			                <td class="label" style="font-size:13px;">
+			                <td style="font-size:13px;">
                                 
-                                    Repository name : ${provider.name} <br></td>
+                                    <span><b>Repository name :</b> </span> ${provider.name} <br>
+                            </td>
 			            </tr>
 			            <tr>
-                            <td class="label" style="font-size:13px;">
+                            <td style="font-size:13px;">
                                <table>
                                    <tr>
-                                       <td valign="top">
+                                       <td class="label" valign="top">
                                            URL:
                                        </td>
                                        <td>
@@ -124,8 +125,8 @@
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div style="width:150px;"><B>OAI Versions Supported </B></div> </li>
-                                    <li style="float:left;"><div>:</div></li>
+                                    <li style="float:left;"><div align="right" style="width:150px;"><B>OAI Versions Supported </B></div> </li>
+                                    <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;"><div style="margin-left:15px;">${provider.protocolVersion} </div></li>
                                 </ul>
                             </td>
@@ -134,8 +135,8 @@
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div style="width:150px;"><B>Last Validation Date</B> </div> </li>
-                                    <li style="float:left;"><div>:</div></li>
+                                    <li style="float:left;"><div align="right" style="width:150px;"><B>Last Validation Date</B> </div> </li>
+                                    <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;"><div style="margin-left:15px;">${provider.lastValidationDate}</div></li>
                                 </ul>
                             </td>
@@ -144,8 +145,8 @@
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div style="width:150px;"><B>Created By</B> </div> </li>
-                                    <li style="float:left;"><div>:</div></li>
+                                    <li style="float:left;"><div align="right" style="width:150px;"><B>Created By</B> </div> </li>
+                                    <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;"><div style="margin-left:15px;">${user.firstName} ${user.lastName}</div></li>
                                 </ul>
                             </td>
@@ -154,8 +155,8 @@
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div style="width:150px;"><B>Creation Date</B> </div> </li>
-                                    <li style="float:left;"><div>:</div></li>
+                                    <li style="float:left;"><div align="right" style="width:150px;"><B>Creation Date</B> </div> </li>
+                                    <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;"><div style="margin-left:15px;">${provider.createdAt}</div></li>
                                 </ul>
                             </td>
@@ -164,8 +165,8 @@
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div style="width:150px;"><B>Last Modified Date</B> </div> </li>
-                                    <li style="float:left;"><div>:</div></li>
+                                    <li style="float:left;"><div align="right" style="width:150px;"><B>Last Modified Date</B> </div> </li>
+                                    <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;"><div style="margin-left:15px;">${provider.updatedAt}</div></li>
                                 </ul>
                             </td>
@@ -174,8 +175,8 @@
                         <tr>
                             <td style="margin-top:15px;">
                                <ul style="list-style:none;">
-                                    <li style="float:left;"><div style="width:150px;"><B>Formats</B> </div> </li>
-                                    <li style="float:left;"><div>:</div></li>
+                                    <li style="float:left;"><div align="right" style="width:150px;"><B>Formats</B> </div> </li>
+                                    <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;">
                                         <div style="margin-left:15px;">
                                             <c:forEach var="format" items="${provider.formats}">
@@ -192,8 +193,8 @@
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div style="width:150px;"><B>Sets Supported</B> </div> </li>
-                                    <li style="float:left;"><div>:</div></li>
+                                    <li style="float:left;"><div align="right" style="width:150px;"><B>Sets Supported</B> </div> </li>
+                                    <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;">
                                         <div style="margin-left:15px;">
                                             <c:forEach var="set" items="${provider.sets}">
@@ -337,8 +338,8 @@
 		      		  
 		      		  <input type="hidden" name="repositoryId" value="${provider.id}"/>
 			          <div id="deleteRepositoryError" cssClass="errorMessage"></div>
-			          Repository ${provider.name} contains harvested records.
-                      Deleting this repository will result in deletion of ${provider.recordsAdded} records as well as related scheduled harvests and processing rules. 
+			          Repository ${provider.name} contains harvested data records.
+                      Deleting this repository will result in deletion of ${provider.recordsAdded} records as well as related Harvest Schedules, scheduled harvests, processing rules and the records harvested. 
                       Are you sure you want to delete this repository?
 
 

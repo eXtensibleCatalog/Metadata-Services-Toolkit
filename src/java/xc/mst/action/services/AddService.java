@@ -118,7 +118,7 @@ public class AddService extends ActionSupport
     	}
     	for(File file : fileList)
     	{
-    		String xccfgFolderLocation = file.getPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig";
+    		String xccfgFolderLocation = file.getPath() + MSTConfiguration.FILE_SEPARATOR + "MST-instances" + MSTConfiguration.FILE_SEPARATOR + "MetadataServicesToolkit" + MSTConfiguration.FILE_SEPARATOR + "serviceConfig";
     		File xccfgFolder = new File(xccfgFolderLocation);
     		
     		if(!xccfgFolder.exists() || !xccfgFolder.isDirectory())
