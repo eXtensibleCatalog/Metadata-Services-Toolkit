@@ -65,7 +65,7 @@ public class ForgotPassword extends ActionSupport {
 		if (user == null)
 		{
 			addFieldError("emailDoesnotExist",
-					"The Email id does not exist in the system : " + email);
+					"The Email id " + email + " does not exist in the system." );
 			errorType = "error";
 			return INPUT;
 		} else {
