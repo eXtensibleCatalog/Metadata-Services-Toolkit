@@ -12,6 +12,7 @@ package xc.mst.scheduling;
 import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
+import xc.mst.harvester.Harvester;
 import xc.mst.services.MetadataService;
 
 /**
@@ -119,7 +120,14 @@ public class ServiceWorkerThread extends WorkerThread
 	 */
 	public String getJobStatus() {
 		
-		return MetadataService.getRunningService().getServiceStatus();
+		String status = MetadataService.getRunningService().getServiceStatus();
+		
+		if(status.equals(Constants.STATUS_SERVICE_CANCELED) || status.equals(Constants.STATUS_SERVICE_CANCELED)
+				|| status.equals(Constants.STATUS_SERVICE_NOT_RUNNING) || status.equals(Constants.STATUS_SERVICE_PAUSED))
+				return "No Process Running";
+		else
+			return "Processing through "+ MetadataService.getRunningService().getServiceName();
+		
 	}
 	
 	
