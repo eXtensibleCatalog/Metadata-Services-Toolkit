@@ -87,7 +87,7 @@
          <form method="post" name="addLocalUser" id="addLocalUser">
 
           <br>
-            <table>
+            <table style="margin-left:10px">
 
                 <tr>
                   <td valign="top"><b>First Name</b> <br> 
@@ -120,11 +120,6 @@
                </tr>
 
              
-
-
-            </table>
-          
-               <table>
                    <tr>
                        <td><b>Groups</b>  &nbsp;&nbsp;
                        
@@ -158,17 +153,18 @@
                           
                        </td>
                    </tr>
-              </table>
+             
 
       
             
-
+	<tr> <td>
             <div align="left" style="margin-top:10px;">
                  <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.users.addLocal.addcancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
                  <button class="xc_button" type="button" name="addlocaluser" onclick="javascript:YAHOO.xc.mst.users.addLocal.addValidate();">Add Local User</button>
             </div>
+        </td></tr>
 
-
+ 	</table>
         </form>
      </div>
             <!--  this is the footer of the page -->

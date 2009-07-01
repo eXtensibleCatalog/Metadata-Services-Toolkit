@@ -86,7 +86,7 @@
 
                 <form action="addLDAP.action" method="post" name="addLDAP">
 
-                   <table>
+                   <table style="margin-left:10px">
                         <tr>
                             <td valign="top"> <B>Display name</B>  &nbsp;&nbsp;<br>
                             <input type="text" id="displayName" name ="displayName" class="textfield" value="${server.name}" maxlength="255" size="40"><br><br></td>
@@ -130,15 +130,16 @@
                             <input type="text" id="forgotPasswordUrl" name ="forgotPasswordUrl" class="textfield" value="${server.forgotPasswordUrl}" maxlength="255" size="60"></td>
                         </tr>                                                
 
-
-                   </table>
-                   <br><br><br><br>
+		<tr><td>
+                   <br><br><br>
                        
                     <div align="left">
                         <!-- <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.MyObject.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp; -->
                         <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.ldap.deleteLDAP();" name="deleteLDAP">Clear LDAP Server</button>
                         <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.ldap.addLDAP();" name="addLDAP">Update LDAP Server</button>
                     </div>
+                    </td></tr>
+                   </table>
 
                 </form>
             </div>

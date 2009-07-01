@@ -85,14 +85,11 @@
                      </div>
                  </c:if>
                  <div id="error_div"></div>
-                 <div class="clear">&nbsp;</div>
-
+                 
                 <form action="changeEmailConfig.action" method="post" name="emailConfig">
 
 
-                    <h4><br></h4>
-
-                    <table>
+                    <table style="margin-left:10px">
 
                         <tr>
                             <td><B>Outgoing Mail Server(SMTP):  </B>&nbsp;&nbsp;<br>
@@ -150,13 +147,14 @@
 
                        
 
-                    </table>
                     <br><br><br>
-
+		<tr><td>
                     <div align="left">
                         <!-- <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp; -->
                         <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.email.changeEmailConfig();" name="changeEmailConfig">Update Email Configuration</button>
                     </div>
+                 </td></tr>
+                    </table>
 
                 </form>
             </div>

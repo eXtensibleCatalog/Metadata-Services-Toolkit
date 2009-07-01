@@ -82,7 +82,7 @@
             <br><br>
                 <form action="editLDAPUser.action?UserId=${temporaryUser.id}" method="post" name="editLDAPUser">
 
-                   <table>
+                   <table style="margin-left:10px">
                        <tr>
                            <td valign="top"><b>Username</b> <br>
                            ${temporaryUser.username}<br><br></td>
@@ -136,19 +136,18 @@
                                    <BR><br><br>
                                </td>
                            </tr>
-                        </table>
+                        
 
 
 
-
+			<tr><td>
                         <div align="left">
                              <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.user.editLDAP.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
                              
                              <button class="xc_button" type="button" name="editlocaluser" onclick="javascript:YAHOO.xc.mst.user.editLDAP.editLDAPUser();">Update LDAP User</button>
-                                 
-
                         </div>
-
+                        </td></tr>
+		</table>
                 </form>
           </div>
             <!--  this is the footer of the page -->

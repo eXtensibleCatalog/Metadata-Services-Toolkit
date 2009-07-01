@@ -90,7 +90,7 @@
 
         <form action="/MetadataServicesToolkit/editRepository.action?RepositoryId=<s:property value="repositoryId"/>" name="editRepositoryForm" method="post">
               
-        <div style="margin-left:0px;font-family: verdana,sans-serif;font-size: 12px;">
+        <div style="margin-left:10px;font-family: verdana,sans-serif;font-size: 12px;">
 
                 OAI-PMH <B>Repository Name</B> <br>
                     <input type="text" id="repositoryName" name="repositoryName" value="<s:property value="repositoryName"/>" style="width:305px;" maxlength="255"><br><br>
@@ -114,5 +114,7 @@
 				 <div class="clear">&nbsp;</div>
 		      </div>
 	      </div>
+	       <!--  this is the footer of the page -->
+            <c:import url="/inc/footer.jsp"/>   
         </div>
 </body>

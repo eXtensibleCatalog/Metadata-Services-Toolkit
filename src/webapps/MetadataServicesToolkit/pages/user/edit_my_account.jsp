@@ -103,7 +103,7 @@
    			
    			<form name="myAccountForm" method="post">
    			
-				<table class="basicTable">
+				<table class="basicTable" >
 				<tr>
                     <td> <b>First Name</b> <br>
 						<input type="text"  id="user_first_name" name="firstName" value="${firstName}" size="35"/>

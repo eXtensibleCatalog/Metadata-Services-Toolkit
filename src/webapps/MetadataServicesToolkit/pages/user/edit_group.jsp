@@ -85,7 +85,7 @@
                 <br>
                     
 
-                    <table>
+                    <table style="margin-left:10px">
                         <tr>
                             <td valign="top"><B>Group Name</B> <br> 
                             <input type="text" id="groupName" name ="groupName" class="textfield" value="${temporaryGroup.name}" maxlength="255" size="46"><br><br></td>
@@ -93,14 +93,9 @@
                        
                         <tr>
                             <td valign="top"><B>Description</B> <br> 
-                            <textarea id="groupDescription" name ="groupDescription" cols="40" rows="5" maxlength="255">${temporaryGroup.description}</textarea><br></td>
+                            <textarea id="groupDescription" name ="groupDescription" cols="40" rows="5" maxlength="255">${temporaryGroup.description}</textarea><br><br></td>
                         </tr>
                        
-                    </table>
-
-                    <br><br>
-
-                    <table>
                         <tr>
                             <td valign="top">
                                <B>Permissions</B> <br>
@@ -128,14 +123,15 @@
                                </div>
                             </td>
                        </tr>
-                    </table>
 
-
+		<tr><td>
                     <br><br>
                     <div align="left">
                           <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.group.alterGroup.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
                           <button class="xc_button" type="button" name="editgroup" onclick="javascript:YAHOO.xc.mst.group.alterGroup.editGroup();">Update Group</button>
                     </div>
+                 </td></tr>
+                    </table>
 
             </form>
         </div>

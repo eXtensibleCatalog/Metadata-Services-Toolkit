@@ -76,7 +76,7 @@
 
 /* this is forms created using tables */
 .formTable {
-	align:left;
+	margin-left:10px;
     color:#313131;
 }
 .formTable td { padding-top: 5px;

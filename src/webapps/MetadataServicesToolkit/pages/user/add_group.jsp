@@ -83,7 +83,7 @@
 
             <form action="addGroup.action" method="post" name="addGroup">
             <br><br>
-                <table>
+                <table style="margin-left:10px">
 
                    <tr>
                        <td valign="top"><B>Group Name</B> <br> 
@@ -95,11 +95,6 @@
                        <textarea id="groupDescription" name ="groupDescription" cols="40" rows="5" maxlength="255">${temporaryGroup.description}</textarea><br><br></td>
                    </tr>
                    
-            
-                </table>
-               <br><br>
-
-               <table>
                    <tr>
                        <td>
                             <B>Permissions</B> <br>
@@ -126,14 +121,16 @@
                             </div>
                        </td>
                    </tr>
-               </table>
+                <tr><td>
                <br><br>
                 <div align="left">
                       <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.group.newGroup.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
                       <button class="xc_button" type="button" name="addgroup" onclick="javascript:YAHOO.xc.mst.group.newGroup.addGroup();">Add Group</button>
                 </div>
-
+                </td></tr>
+               </table>
           </form>
+
      </div>
             <!--  this is the footer of the page -->
             <c:import url="/inc/footer.jsp"/>       

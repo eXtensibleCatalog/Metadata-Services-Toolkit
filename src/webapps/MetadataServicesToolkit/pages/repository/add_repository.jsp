@@ -90,7 +90,7 @@
 
 	<div class="clear">&nbsp;</div>
 
-        <div style="margin-left:0px;font-family: verdana,sans-serif;font-size: 12px;">
+        <div style="margin-left:10px;font-family: verdana,sans-serif;font-size: 12px;">
 
                  OAI-PMH <B>Repository Name</B> <br>
                  <input type="text" id="repositoryName" name="repositoryName" value="${repositoryName}" style="width:305px;" maxlength="255"> <br><br>

@@ -89,28 +89,31 @@
 
 			<c:if test="${!resetSuccess}">
 				<form name="forgotPasswordForm" action="resetPassword.action" method="post">
-					<table class="basicTable" align="center">
-	
+					<table class="basicTable" align="center" >
+					<tr> <td>
 					    <strong> Email address associated with the account: </strong>
-					    
+									    
 					    <input type="text" size="50" class="input" id="forgotPasswordForm_email" name="email" value="${email}"/>
-							          
-					    <div class="clear">&nbsp;</div>
+					</td></tr>						          
 					    
+					  <tr> <td>  
 					    (Note: Password details will be sent to this E-mail ID)
+					   </td></tr> 
 					    
-					    <div class="clear">&nbsp;</div>
-					    
+					   <tr> <td> 
 					    <button class="xc_button" name="submit" type="submit">Submit</button> 
+					    <br>	<br>
+			 			<a href="home.action">Go To Home Page </a>
+					    </td></tr>
 					</table>
 				</form>
 			</c:if>		
 			<c:if test="${resetSuccess}">
 				<p> New password has been sent to your email address.  </p>
-				
-			</c:if>		
-			<br>	<br>
+				<br>	<br>
 			 <a href="home.action">Go To Home Page </a>
+			</c:if>		
+			
 
  		</div>
 		<!--  end body -->		

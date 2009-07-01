@@ -73,7 +73,7 @@
 
                  <div class="clear">&nbsp;</div>
 
-                <table>
+                <table style="margin-left:10px">
                     <br>
                     <tr>
                        <td colspan="2" >                           

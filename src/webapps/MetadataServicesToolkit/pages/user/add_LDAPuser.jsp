@@ -84,7 +84,7 @@
 
                 <br>
 
-                   <table>
+                   <table style="margin-left:10px">>
                        <tr>
                            <td valign="top"><B>Username</B><br>  
                            <input type="text" id="userName" name ="userName" class="textfield" value="${temporaryUser.username}" maxlength="255"><br><br></td>
