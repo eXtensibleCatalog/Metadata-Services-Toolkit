@@ -41,6 +41,22 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/button/button-min.js"></script> 
         
         <SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
+        
+<style type="text/css">
+<!--
+a:link
+{
+COLOR: #000000;
+text-decoration:underline;
+}
+a:visited
+{
+COLOR: #000000;
+text-decoration:underline;
+}
+-->
+</style>
+        
     </head>
     
     <body class="yui-skin-sam">
