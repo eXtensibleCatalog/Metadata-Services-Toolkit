@@ -25,15 +25,15 @@
        </c:choose>
 </c:if>
 
-Process Description :
+<div style="display:none">ServiceStatus</div>
 <c:if test="${currentProcess!=null}">
         <c:set var="nameLength" value="${fn:length(currentProcess)}"/>
         <c:choose>
-            <c:when test="${nameLength<25}">
+            <c:when test="${nameLength<45}">
                 <xxx id="currentProcess">${currentProcess}</xxx>
             </c:when>
             <c:otherwise>
-                <xxx id="currentProcess" title="${currentProcess}">${fn:substring(currentProcess,0,20)}...</xxx>
+                <xxx id="currentProcess" title="${currentProcess}">${fn:substring(currentProcess,0,45)}...</xxx>
             </c:otherwise>
         </c:choose>
 </c:if>

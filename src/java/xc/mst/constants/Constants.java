@@ -380,5 +380,14 @@ public class Constants
 	
 	public static final String ELEMENT_AUTHOR = "author";
 	
+	//*******************************************************************
+	// MST Thread type  Constants
+	//*******************************************************************
+
+	public static final String THREAD_SERVICE = "SERVICE";
+	
+	public static final String THREAD_REPOSITORY = "REPOSITORY";
+	
+	
 	
 }

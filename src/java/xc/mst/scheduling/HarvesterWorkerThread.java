@@ -26,6 +26,9 @@ public class HarvesterWorkerThread extends WorkerThread
 	 * A reference to the logger for this class
 	 */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+	
+	/** Type of thread */
+	public static final String type = Constants.THREAD_REPOSITORY;
 
 	/**
 	 * The ID of the harvest schedule to run
@@ -103,17 +106,17 @@ public class HarvesterWorkerThread extends WorkerThread
 	 * Gets the status of the job
 	 */
 	public String getJobStatus() {
+		
 		return Harvester.getRunningHarvester().getHarvesterStatus();
 		
-/*		String status = Harvester.getRunningHarvester().getHarvesterStatus();
-		
-		if(status.equals(Constants.STATUS_SERVICE_CANCELED) || status.equals(Constants.STATUS_SERVICE_CANCELED)
-				|| status.equals(Constants.STATUS_SERVICE_NOT_RUNNING) || status.equals(Constants.STATUS_SERVICE_PAUSED))
-				return "No Process Running";
-		else
-			return "Harvesting from provider "+ Harvester.getRunningHarvester().getProvider().getName();
-			
-*/
+	}
+
+	/**
+	 * Gets the thread type
+	 * @return
+	 */
+	public String getType() {
+		return type;
 	}
 
 } // end class HarvestWorkerThread

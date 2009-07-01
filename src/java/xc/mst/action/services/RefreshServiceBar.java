@@ -9,12 +9,15 @@
 
 package xc.mst.action.services;
 
-import com.opensymphony.xwork2.ActionSupport;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
+
 import xc.mst.constants.Constants;
 import xc.mst.scheduling.Scheduler;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This class is used to return the latest status of the processes running in the MST
@@ -46,20 +49,37 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
     @Override
     public String execute()
     {
+    	
             try
             {
 
                 if(Scheduler.getRunningJob()!=null)
                 {
-                    if(Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase("CANCELED"))
+                    if(Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_CANCELED))
                     {
-                        currentProcess = "Aborting " + Scheduler.getRunningJob().getJobName() + "...";
-                        setCurrentProcess(currentProcess);
+                    	if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+                        	currentProcess = "Aborting harvest of provider " + Scheduler.getRunningJob().getJobName();
+                        } else {
+                        	currentProcess = "Aborting process " + Scheduler.getRunningJob().getJobName();
+                        }
                     }
-                    else
+                    else if (Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_PAUSED))
                     {
-                        currentProcess = Scheduler.getRunningJob().getJobName();
-                        setCurrentProcess(currentProcess);
+                        if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+                        	currentProcess = "Paused harvesting from provider " + Scheduler.getRunningJob().getJobName();
+                        } else {
+                        	currentProcess = "Paused processing through " + Scheduler.getRunningJob().getJobName();
+                        }
+                    }  
+                    else if (Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_NOT_RUNNING))
+                    {
+                        	currentProcess = null;
+                    } else {
+                    	 if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+                         	currentProcess = "Harvesting from provider " + Scheduler.getRunningJob().getJobName();
+                         } else {
+                         	currentProcess = "Processing through " + Scheduler.getRunningJob().getJobName();
+                         }
                     }
                 }
                 else

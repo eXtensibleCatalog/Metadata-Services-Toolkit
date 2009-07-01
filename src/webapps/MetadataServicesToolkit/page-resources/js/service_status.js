@@ -111,7 +111,7 @@ refreshServiceBar : function()
                 var findError = o.responseText.search("No User Found");
                 if(findError==-1)
                 {
-                     if(o.responseText != null && o.responseText.search("Process Description") < 0 )
+                     if(o.responseText != null && o.responseText.search("ServiceStatus") < 0 )
                         {
                             window.location = 'viewLogin.action';
                         }
