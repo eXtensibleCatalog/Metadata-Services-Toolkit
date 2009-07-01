@@ -149,6 +149,11 @@
         <dependency org="taglibs" name="standard" rev="1.1.1">
             <artifact name="standard" type="jar"/>
         </dependency> 
+        
+         <!-- ant-contrib-1.0b3 jar -->
+        <dependency org="ant-contrib" name="cpptasks" rev="1.0b3">
+            <artifact name="cpptasks" type="jar"/>
+        </dependency>         
 
     </dependencies>
 </ivy-module>
