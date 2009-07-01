@@ -135,8 +135,8 @@
                        
                     <div align="left">
                         <!-- <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.MyObject.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp; -->
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.ldap.deleteLDAP();" name="deleteLDAP">Clear LDAP Server</button>
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.ldap.addLDAP();" name="addLDAP">Update LDAP Server</button>
+                        <button style="width:150px;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.ldap.deleteLDAP();" name="deleteLDAP">Clear LDAP Server</button>
+                        <button style="width:160px;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.ldap.addLDAP();" name="addLDAP">Update LDAP Server</button>
                     </div>
                     </td></tr>
                    </table>

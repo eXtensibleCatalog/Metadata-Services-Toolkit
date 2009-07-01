@@ -327,7 +327,7 @@
 				<br><br>
 				<div align="right">
 					<button style="vertical-align:bottom;" class="xc_button_small" name="cancel" onClick="Javascript:YAHOO.xc.mst.schedule.allSchedules();">Cancel</button> 
-                    <button class="xc_button" type="button" name="next" onClick="Javascript:YAHOO.xc.mst.schedule.saveSchedule();">Move to Step 2 <img src="page-resources/img/bullet_go.gif"></button>
+                    <button style="width:140px;" class="xc_button" type="button" name="next" onClick="Javascript:YAHOO.xc.mst.schedule.saveSchedule();">Move to Step 2 <img src="page-resources/img/bullet_go.gif"></button>
 				</div>
 			</form>
 		</c:if>

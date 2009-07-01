@@ -257,7 +257,7 @@
                                 <hr size="1" style="color:#cfd2d4"><br>
                                 <div align="right">
                                   <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirectiveSetsFormats.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                                  <button style="vertical-align:bottom;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirectiveSetsFormats.goBack();" name="goBack"><img src="page-resources/img/bullet_go_left.gif"><span style="position:relative;top:-3px;">Back to Step 1 </span> </button> &nbsp;&nbsp;&nbsp;
+                                  <button style="vertical-align:bottom;width:170px;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirectiveSetsFormats.goBack();" name="goBack"><img src="page-resources/img/bullet_go_left.gif"><span style="position:relative;top:-3px;">Back to Step 1 </span> </button> &nbsp;&nbsp;&nbsp;
                                   <button style="vertical-align:bottom;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.addDirectiveSetsFormats.addDirective();" name="addDirective">Finish</button>
                                 </div>
                             </td>

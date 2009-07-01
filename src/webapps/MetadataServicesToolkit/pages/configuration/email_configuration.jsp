@@ -151,7 +151,7 @@
 		<tr><td>
                     <div align="left">
                         <!-- <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp; -->
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.email.changeEmailConfig();" name="changeEmailConfig">Update Email Configuration</button>
+                        <button style="width:200px;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.email.changeEmailConfig();" name="changeEmailConfig">Update Email Configuration</button>
                     </div>
                  </td></tr>
                     </table>

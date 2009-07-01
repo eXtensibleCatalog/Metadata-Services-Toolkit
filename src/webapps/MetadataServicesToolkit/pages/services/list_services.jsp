@@ -183,7 +183,7 @@
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
-                                        <td width="190">
+                                        <td width="220">
                                             <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
                                             <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
                                         </td>

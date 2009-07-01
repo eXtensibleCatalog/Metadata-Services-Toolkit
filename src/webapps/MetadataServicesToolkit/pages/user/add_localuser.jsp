@@ -160,7 +160,7 @@
 	<tr> <td>
             <div align="left" style="margin-top:10px;">
                  <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.users.addLocal.addcancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
-                 <button class="xc_button" type="button" name="addlocaluser" onclick="javascript:YAHOO.xc.mst.users.addLocal.addValidate();">Add Local User</button>
+                 <button style="width:130px;" class="xc_button" type="button" name="addlocaluser" onclick="javascript:YAHOO.xc.mst.users.addLocal.addValidate();">Add Local User</button>
             </div>
         </td></tr>
 

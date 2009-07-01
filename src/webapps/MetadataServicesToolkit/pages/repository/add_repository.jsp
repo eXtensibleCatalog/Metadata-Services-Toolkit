@@ -99,7 +99,7 @@
                 
                  <div style="margin-top:20px;margin-left:0px;vertical-align:bottom;">
                    <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.repository.addRepository.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                   <button style="width:100px;" class="xc_button" type="button" id="add_repository" name="add" onclick="javascript:YAHOO.xc.mst.repository.addRepository.addValidator();">Add</button>
+                   <button class="xc_button" type="button" id="add_repository" name="add" onclick="javascript:YAHOO.xc.mst.repository.addRepository.addValidator();">Add</button>
                  </div>
         </div>
         <br><br>

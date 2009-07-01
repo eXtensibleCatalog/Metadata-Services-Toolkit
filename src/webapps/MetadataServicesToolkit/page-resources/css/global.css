@@ -167,6 +167,7 @@ ul.basicNav {
     font-family: Verdana;
     color: #454545;
     cursor:pointer;
+    width : 100px;
 }
 
 .xc_button_disabled

@@ -128,7 +128,7 @@
                     <br><br>
                     <div align="left">
                           <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.group.alterGroup.cancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
-                          <button class="xc_button" type="button" name="editgroup" onclick="javascript:YAHOO.xc.mst.group.alterGroup.editGroup();">Update Group</button>
+                          <button style="width:130px;" class="xc_button" type="button" name="editgroup" onclick="javascript:YAHOO.xc.mst.group.alterGroup.editGroup();">Update Group</button>
                     </div>
                  </td></tr>
                     </table>
