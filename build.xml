@@ -281,5 +281,19 @@
         </war>
     </target>
 
+	<target name="dist" depends="makeWar">
+		<delete dir="release/mst-instances"/>
+		<mkdir dir="release/mst-instances/MetadataServicesToolkit"/>
+		<mkdir dir="release/mst-instances/MetadataServicesToolkit/logs" />
+		<copydir dest="release/mst-instances/MetadataServicesToolkit/services" src="services"/>
+		<copydir dest="release/mst-instances/MetadataServicesToolkit/solr" src="solr"/>
+		<delete dir="release/mst-instances/MetadataServicesToolkit/solr/data"/>
+		<mkdir dir="release/mst-instances/MetadataServicesToolkit/solr/data"/>
+		<copydir dest="release/mst-instances/MetadataServicesToolkit/sql" src="sql"/>
+		<copy todir="release/mst-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
+		<copy todir="release/mst-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
+		<copy file="MetadataServicesToolkit.war" todir="release/mst-instances"/>
+		<zip destfile="MetadataServicesToolkitv1.0.zip" basedir="release" />
+	</target>
 
 </project>
