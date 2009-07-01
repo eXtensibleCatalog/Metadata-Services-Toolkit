@@ -38,7 +38,7 @@
         </c:choose>
 </c:if>
 <c:if test="${currentProcess == null}">
-    <xxx id="currentProcess">No Process running</xxx>
+    <xxx id="currentProcess">No process running</xxx>
 </c:if>
 </li>
 
