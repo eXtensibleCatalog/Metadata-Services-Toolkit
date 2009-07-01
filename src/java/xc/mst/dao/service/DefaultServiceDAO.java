@@ -450,7 +450,6 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_STATUS + ", " +
-												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_XCCFG_FILE_NAME + ", " +
 												   COL_VERSION + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
