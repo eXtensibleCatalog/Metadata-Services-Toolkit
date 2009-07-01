@@ -22,6 +22,7 @@
         <c:import url="/inc/meta-frag.jsp"/>
 
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
+<LINK href="page-resources/yui/assets/skins/sam/skin.css"  rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/base-mst.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/yui/menu/assets/skins/sam/menu.css"  rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
@@ -36,7 +37,12 @@
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container-min.js"></SCRIPT>    
+<SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>     
+
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/button/button-min.js"></script> 
+
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/harvest_in_log.js"></SCRIPT>
         
@@ -241,14 +247,14 @@
 									  <c:param name="query" value="${log.name}"/>
 								 </c:url>                              	
                                   <tr>
-                                      <td><a style="cursor:pointer;"onclick="javascript:YAHOO.xc.mst.logs.harvestIn.displayOAIRequest(${log.id});"><U>OAI Request</U></a></td>
-                                      <td><a href="${browseRecordsAction}"><U>Browse Records</U></a></td>
+                                      <td><a style="cursor:pointer;color:#245f8a;""onclick="javascript:YAHOO.xc.mst.logs.harvestIn.displayOAIRequest(${log.id});">OAI Request</a></td>
+                                      <td><a href="${browseRecordsAction}">Browse Records</a></td>
                                            <c:set var="classColumn" value="plainColumn"/>
                                            <c:if test="${columnSorted=='RepositoryName'}">
                                                <c:set var="classColumn" value="sortColumn"/>
                                            </c:if>
                                       <td class="${classColumn}">
-                                          <a style="cursor:pointer;" onclick="javascript:YAHOO.xc.mst.logs.harvestIn.downloadFile(${log.id});"><U>${log.name}</U></a>
+                                          <a style="cursor:pointer;color:#245f8a;" onclick="javascript:YAHOO.xc.mst.logs.harvestIn.downloadFile(${log.id});">${log.name}</a>
                                       </td>
                                            <c:set var="classColumn" value="plainColumn"/>
                                            <c:if test="${columnSorted=='LastHarvestEndTime'}">
@@ -308,6 +314,14 @@
 
  		</div>
 		<!--  end body -->
+
+	      <div id="oaiRequestDialog" class="hidden">
+	          <div class="hd">OAI request</div>
+		      <div class="bd">
+				 <div id="oai_request_div"></div>
+		      </div>
+	      </div>	      
+
             <!--  this is the footer of the page -->
             <c:import url="/inc/footer.jsp"/>  
         </div>

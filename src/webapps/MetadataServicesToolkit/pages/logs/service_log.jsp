@@ -272,7 +272,7 @@
                                                <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
                                       <td class="${classColumn}">
-                                          <a style="cursor:pointer;" onclick ="javascript:YAHOO.xc.mst.log.services.downloadFile('${log.id}')"><U>${log.name}</U></a>
+                                          <a style="cursor:pointer;color:#245f8a;" onclick ="javascript:YAHOO.xc.mst.log.services.downloadFile('${log.id}')">${log.name}</a>
                                       </td>
                                              <c:set var="classColumn" value="plainColumn"/>
                                              <c:if test="${columnSorted=='InputRecords'}">

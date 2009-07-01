@@ -141,7 +141,7 @@
                             <c:if test="${columnSorted=='ScheduleName'}">
                                 <c:set var="classColumn" value="sortColumn"/>
                             </c:if>
-						<td class="${classColumn}"><a href="viewEditSchedule.action?scheduleId=${schedule.id}"><U>${schedule.scheduleName}</U></a></td>
+						<td class="${classColumn}"><a href="viewEditSchedule.action?scheduleId=${schedule.id}">${schedule.scheduleName}</a></td>
                             <c:set var="classColumn" value="plainColumn"/>
                             <c:if test="${columnSorted=='RepositoryName'}">
                                 <c:set var="classColumn" value="sortColumn"/>

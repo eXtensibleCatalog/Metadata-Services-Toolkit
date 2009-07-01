@@ -36,7 +36,10 @@ import xc.mst.manager.user.UserService;
  */
 public class EditProcessingDirective extends ActionSupport implements ServletRequestAware
 {
-    /** Temporary Processing Directive object which is used to display details on the JSP */
+	 /** Serial ID*/
+	private static final long serialVersionUID = -4075467154916214233L;
+
+	/** Temporary Processing Directive object which is used to display details on the JSP */
     private ProcessingDirective temporaryProcessingDirective;
 
     /**ID of the processing directive whose details are to be edited */

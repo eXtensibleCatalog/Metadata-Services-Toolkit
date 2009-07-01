@@ -164,7 +164,7 @@
                                             <c:if test="${columnSorted=='ServiceName'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
-                                        <td class="${classColumn}"><a href="viewEditService.action?serviceId=${service.id}"><U><c:out value="${service.name}"/></U></a></td>
+                                        <td class="${classColumn}"><a href="viewEditService.action?serviceId=${service.id}"><c:out value="${service.name}"/></a></td>
                                         <c:set var="baseURL" value="${baseURL}"/>
                                         <c:set var = "url" value="${fn:replace(baseURL,'8080',service.port)}" />
                                             <c:set var="classColumn" value="plainColumn"/>

@@ -172,19 +172,20 @@
                                        
                                         <td>
                                             <div align="left" style="margin-left:5px;">
-                                                <a style="color:black;" href="<c:out value="${url}" />">
-                                                   <U> 
+                                                
+                                                    <a href="<c:out value="${url}" />">
                                                         <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;"> ${x1.name} </td>
-                                                                    <td width="10%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt;"> >>> </td>
-                                                                    <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;"> &nbsp;${directive.service.name} </td>
+                                                                    <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;color:#245f8a;"> ${x1.name}</td>
+                                                                    <td width="10%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt;color:#245f8a;"> >>> </td>
+                                                                    <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;color:#245f8a;"> &nbsp;${directive.service.name} </td>
+                                                                    
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                   </U>
-                                                </a>
+                                                  </a> 
+                                               
                                             </div>
                                         </td>
                                     </c:if>
@@ -192,19 +193,17 @@
                                         <td>
 
                                                <div align="left" style="margin-left:5px;">
-                                                    <a style="color:black;" href="<c:out value="${url}" />">
-                                                        <U> 
+                                                    <a  href="<c:out value="${url}" />">
+                                                        
                                                             <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;"> ${x2.name} </td>
-                                                                        <td width="10%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt;"> >>> </td>
-                                                                        <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;"> &nbsp;${directive.service.name} </td>
+                                                                        <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;color:#245f8a;"> ${x2.name} </td>
+                                                                        <td width="10%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt;color:#245f8a;"> >>> </td>
+                                                                        <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;color:#245f8a;"> &nbsp;${directive.service.name} </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
-
-                                                        </U>
                                                     </a>
                                                </div>
                                         </td>

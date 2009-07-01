@@ -17,6 +17,7 @@
 	width : 100%;
 	clear: both;
 }
+/*
 a:link
 {
 COLOR: #000000;
@@ -24,6 +25,25 @@ COLOR: #000000;
 a:visited
 {
 COLOR: #000000;
+}
+*/
+a:link {
+	color:#245f8a;
+	text-decoration:none;
+	size: 11px;
+}
+
+a:visited {
+	color:#245f8a;
+	text-decoration:none;
+	size: 11px;
+}
+
+a:hover {
+	color:#0f75bc;
+	text-decoration:none;
+	text-decoration:underline;
+	size: 11px;
 }
 
 

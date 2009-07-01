@@ -10,13 +10,15 @@
 
 package xc.mst.action.processingDirective;
 
-import java.util.List;
-import org.apache.log4j.Logger;
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
+
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
@@ -32,6 +34,8 @@ import xc.mst.manager.repository.SetService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserService;
 
+import com.opensymphony.xwork2.ActionSupport;
+
 /**
  * This action method is the second and last step in editing a processing directive
  *
@@ -39,7 +43,10 @@ import xc.mst.manager.user.UserService;
  */
 public class EditProcessingDirectiveSetsFormats extends ActionSupport implements ServletRequestAware
 {
-    /** Temporary Processing Directive Object that is used to display details on the JSP */
+	 /** Serial ID*/
+	private static final long serialVersionUID = -4669427548096070810L;
+
+	/** Temporary Processing Directive Object that is used to display details on the JSP */
     private ProcessingDirective temporaryProcessingDirective;
 
     /** creates service object for sets  */
@@ -401,8 +408,8 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
 
                 String[] SetIdList = getSetsSelected();
                 String[] FormatIdList = getFormatsSelected();
-                List<Format> tempFormatList = new ArrayList();
-                List<Set> tempSetList = new ArrayList();
+                List<Format> tempFormatList = new ArrayList<Format>();
+                List<Set> tempSetList = new ArrayList<Set>();
 
                 if(FormatIdList!=null) //formats selected
                 {

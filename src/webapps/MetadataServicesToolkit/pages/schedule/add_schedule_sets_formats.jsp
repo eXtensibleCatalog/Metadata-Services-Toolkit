@@ -80,7 +80,7 @@
                  </c:if>
 
 		<div id="error_div"></div>
-		   			
+		<div id="clear">&nbsp;</div>			   			
 		<div class="stepsStructure">
 			<span style="position: relative; top: 13px;"><img src="page-resources/img/schedule_step1_grey.gif"></span>
 			<span style="position: relative; top: 13px;"><img src="page-resources/img/schedule_step2_hghlight.gif"></span>

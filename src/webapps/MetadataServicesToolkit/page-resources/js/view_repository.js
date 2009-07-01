@@ -49,7 +49,7 @@ YAHOO.xc.mst.repository.viewRepository = {
 		YAHOO.xc.mst.repository.viewRepository.processingDialog.render();
 
 
-		//YAHOO.xc.mst.repository.viewRepository.processingDialog.showDialog();
+
 		
 		 // listener for showing the dialog when clicked.
 		YAHOO.util.Event.addListener("revalidateRepository", "click", 

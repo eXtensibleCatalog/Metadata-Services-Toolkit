@@ -82,6 +82,7 @@
                     </div>
                  </c:if>
                  <div id="error_div"></div>
+                 <div id="clear">&nbsp;</div>
 
                  
                 <div class="stepsStructure">

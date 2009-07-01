@@ -45,7 +45,10 @@ import xc.mst.manager.user.UserService;
  */
 public class AddProcessingDirectiveSetsFormats extends ActionSupport implements ServletRequestAware
 {
-    /** Ceates service object for processing directives*/
+    /** Serial ID*/
+	private static final long serialVersionUID = 8688364366954617970L;
+
+	/** Ceates service object for processing directives*/
     private ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
 
     /** creates service object for services */

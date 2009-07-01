@@ -218,7 +218,7 @@
                                                 <c:if test="${columnSorted=='UserName'}">
                                                     <c:set var="classColumn" value="sortColumn"/>
                                                 </c:if>
-                                    <td class="${classColumn}"><a href="${url}"><U>${user.username}</U></a></td>
+                                    <td class="${classColumn}"><a href="${url}">${user.username}</a></td>
                                     <td>
                                         ${user.server.type}
                                     </td>

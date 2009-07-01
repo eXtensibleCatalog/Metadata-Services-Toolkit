@@ -32,7 +32,10 @@ import xc.mst.manager.repository.ProviderService;
  */
 public class AddProcessingDirective extends ActionSupport implements ServletRequestAware
 {
-    /**This String value denotes whether the Processing Directive session variable needs to be reset */
+	 /** Serial ID*/
+	private static final long serialVersionUID = 6410442216158839046L;
+
+	/**This String value denotes whether the Processing Directive session variable needs to be reset */
     private String refreshSession;
 
     /** Creates a service object for Services */

@@ -28,7 +28,10 @@ import xc.mst.manager.user.UserService;
  */
 public class DeleteProcessingDirective extends ActionSupport
 {
-    /** The ID of the Processing Directive to be deleted */
+	 /** Serial ID*/
+	private static final long serialVersionUID = -3203721703516486193L;
+
+	/** The ID of the Processing Directive to be deleted */
     private int processingDirectiveId;
 
     /** A reference to the logger for this class */

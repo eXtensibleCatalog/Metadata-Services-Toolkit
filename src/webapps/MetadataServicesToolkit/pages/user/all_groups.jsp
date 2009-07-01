@@ -152,7 +152,7 @@
                                             <c:if test="${columnSorted=='GroupName'}">
                                                 <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
-                                    <td class="${classColumn}"><a href="/MetadataServicesToolkit/viewEditGroup.action?groupId=<c:out value="${group.id}"/>"><U>${group.name}</U></a></td>
+                                    <td class="${classColumn}"><a href="/MetadataServicesToolkit/viewEditGroup.action?groupId=<c:out value="${group.id}"/>">${group.name}</a></td>
                                     <td><a href="showGroupMembers.action?groupId=${group.id}&isAscendingOrder=true&columnSorted=UserName"><U>${group.memberCount}</U></a></td>
                                             <c:set var="classColumn" value="plainColumn"/>
                                             <c:if test="${columnSorted=='GroupDescription'}">
