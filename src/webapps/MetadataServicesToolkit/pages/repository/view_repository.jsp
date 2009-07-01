@@ -92,7 +92,7 @@
    	        	<!-- First grid start -->
 		        <div class="yui-u first">
 
-			        <table class="formTable">
+			        <table width="600" class="formTable">
 			
 			            
 			            <tr>
