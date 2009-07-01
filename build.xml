@@ -282,15 +282,16 @@
     </target>
 	
 	<taskdef name="ForEach" classname="net.sf.antcontrib.logic.ForEach" classpathref="libraries"/>
-	<target name="dist">
+	<target name="dist" depends="makeWar">
 		<delete dir="dist"/>
 		<!-- Create the MST zip archive -->
-		<mkdir dir="dist/mst-instances/MetadataServicesToolkit"/>
-		<copydir dest="dist/mst-instances/MetadataServicesToolkit/solr" src="solr"/>
-		<delete dir="dist/mst-instances/MetadataServicesToolkit/solr/data"/>
-		<copydir dest="dist/mst-instances/MetadataServicesToolkit/sql" src="sql"/>
-		<copy todir="dist/mst-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
-		<copy todir="dist/mst-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
+		<mkdir dir="dist/MST-instances/MetadataServicesToolkit"/>
+		<copydir dest="dist/MST-instances/MetadataServicesToolkit/solr" src="solr"/>
+		<delete dir="dist/MST-instances/MetadataServicesToolkit/solr/data"/>
+		<copydir dest="dist/MST-instances/MetadataServicesToolkit/sql" src="sql"/>
+		<delete dir="." includes="dist/MST-instances/MetadataServicesToolkit/sql/**" excludes="dist/MST-instances/MetadataServicesToolkit/sql/create_database_script.sql"  />
+		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
+		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
 		<copy file="MetadataServicesToolkit.war" todir="dist/mst-instances"/>
 		<zip destfile="dist/MetadataServicesToolkitv1.0.zip"  basedir="dist" />
 		<!-- Create the Services zip archive -->
@@ -307,7 +308,7 @@
 				</dirset>
 			</path>
 		</ForEach>
-	
+		<delete dir="dist/MST-instances" />
 	</target>
 	
 	<target name="zipArchive" >
