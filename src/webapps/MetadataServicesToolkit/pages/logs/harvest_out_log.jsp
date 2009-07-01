@@ -323,9 +323,9 @@
                               </c:forEach>
                         </tbody>
                     </table>
-                    * Reset will reset the statistic to 0 and move the log file to the archives directory
+                    * Reset all will reset the statistic to 0 and move the log file to the archives directory
                      <div align="right" style="margin-bottom:10px;">
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.harvestOut.resetAll();" name="next">Reset All</button>
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.log.harvestOut.resetAll();" name="next">*Reset All</button>
                     </div>
                     <form name="harvestOutReset" method="post">
                         <input type="hidden" name="harvestOutLogFileName" id="harvestOutLogFileName">

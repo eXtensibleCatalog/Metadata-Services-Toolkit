@@ -92,7 +92,7 @@
    	        	<!-- First grid start -->
 		        <div class="yui-u first">
 
-			        <table class="formTable" >
+			        <table class="formTable">
 			
 			            
 			            <tr>
@@ -123,9 +123,9 @@
                         </tr>
 			            
 			            <tr>
-                            <td>
+                            <td width="">
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div align="right" style="width:130px;"><B>OAI version Supported </B></div> </li>
+                                    <li style="float:left;"><div align="right" style="width:180px;"><B>OAI Versions Supported </B></div> </li>
                                     <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;"><div style="margin-left:15px;">${provider.protocolVersion} </div></li>
                                 </ul>
@@ -135,7 +135,7 @@
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div align="right" style="width:130px;"><B>Last Validation Date</B> </div> </li>
+                                    <li style="float:left;"><div align="right" style="width:180px;"><B>Last Validation Date</B> </div> </li>
                                     <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;"><div style="margin-left:15px;">${provider.lastValidationDate}</div></li>
                                 </ul>
@@ -145,7 +145,7 @@
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div align="right" style="width:130px;"><B>Created By</B> </div> </li>
+                                    <li style="float:left;"><div align="right" style="width:180px;"><B>Created By</B> </div> </li>
                                     <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;"><div style="margin-left:15px;">${user.firstName} ${user.lastName}</div></li>
                                 </ul>
@@ -155,7 +155,7 @@
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div align="right" style="width:130px;"><B>Creation Date</B> </div> </li>
+                                    <li style="float:left;"><div align="right" style="width:180px;"><B>Creation Date</B> </div> </li>
                                     <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;"><div style="margin-left:15px;">${provider.createdAt}</div></li>
                                 </ul>
@@ -165,7 +165,7 @@
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div align="right" style="width:130px;"><B>Last Modified Date</B> </div> </li>
+                                    <li style="float:left;"><div align="right" style="width:180px;"><B>Last Modified Date</B> </div> </li>
                                     <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;"><div style="margin-left:15px;">${provider.updatedAt}</div></li>
                                 </ul>
@@ -175,7 +175,7 @@
                         <tr>
                             <td style="margin-top:15px;">
                                <ul style="list-style:none;">
-                                    <li style="float:left;"><div align="right" style="width:130px;"><B>Formats</B> </div> </li>
+                                    <li style="float:left;"><div align="right" style="width:180px;"><B>Formats</B> </div> </li>
                                     <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;">
                                         <div style="margin-left:15px;">
@@ -193,7 +193,7 @@
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">
-                                    <li style="float:left;"><div align="right" style="width:130px;"><B>Sets Supported</B> </div> </li>
+                                    <li style="float:left;"><div align="right" style="width:180px;"><B>Sets Supported</B> </div> </li>
                                     <li style="float:left;"><div>&nbsp;:</div></li>
                                     <li style="float:left;">
                                         <div style="margin-left:15px;">

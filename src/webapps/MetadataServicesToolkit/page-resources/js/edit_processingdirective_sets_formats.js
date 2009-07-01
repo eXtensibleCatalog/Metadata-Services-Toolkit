@@ -49,8 +49,29 @@ YAHOO.xc.mst.processingDirective.editDirectiveSetsFormats = {
  },
  editProcessingDirective : function(id)
  {
-     document.editProcessingDirectiveSetsFormats.action= 'editProcessingDirectivesSetsFormats.action';
-     document.getElementById("processingDirectiveId").value = id;
-     document.editProcessingDirectiveSetsFormats.submit();
+     var choice = true;
+     if(document.getElementById("formatsSelected")==null)
+         {
+
+               createErrorDiv('error','Formats empty. Processing Rule cannot be created without specifying a format.');
+               choice = false;
+
+         }
+     else
+         {
+             if (document.editProcessingDirectiveSetsFormats.formatsSelected.value=='')
+             {
+                 createErrorDiv('error','Select a format.');
+                 choice = false;
+             }
+         }
+
+     if(choice==true)
+     {
+        document.editProcessingDirectiveSetsFormats.action= 'editProcessingDirectivesSetsFormats.action';
+        document.getElementById("processingDirectiveId").value = id;
+        document.editProcessingDirectiveSetsFormats.submit();
+     }
+     
  }
 }

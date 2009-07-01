@@ -85,6 +85,7 @@
                     <div align="right" style="margin-bottom:10px;">
                         <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.general.resetAll();" name="next">Reset All *</button>
                     </div>
+
                     <table width="100%">
                         <thead>
                             <tr>
@@ -253,9 +254,9 @@
                               </c:forEach>
                         </tbody>
                     </table>
-                    * Reset will reset the statistic to 0 and move the log file to the archives directory
+                    * Reset all will reset the statistic to 0 and move the log file to the archives directory
                      <div align="right" style="margin-bottom:10px;">
-                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.general.resetAll();" name="next">Reset All</button>
+                        <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.logs.general.resetAll();" name="next">*Reset All</button>
                     </div>
                      <form name="generalLogReset" method="post">
                         <input type="hidden" name="logId" id="logId">
