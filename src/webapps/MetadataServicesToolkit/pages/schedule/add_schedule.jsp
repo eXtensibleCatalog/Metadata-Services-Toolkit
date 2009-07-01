@@ -96,13 +96,10 @@
                  </c:if>
 
 		<div id="error_div"></div>
-		<div id="clear">&nbsp;</div>		
 		
 		<div class="stepsStructure">
-		    <ul style="list-style:none;">
-			<li style="float:left;"><div><img src="page-resources/img/schedule_step1_highlight.gif"></div></li>
-			<li style="margin-left:5px;float:left;"><div><img src="page-resources/img/schedule_step2_grey.gif"></div></li>
-		    </ul>
+			<span style="position: relative; top: 13px;"><img src="page-resources/img/schedule_step1_highlight.gif"></span>
+			<span style="position: relative; top: 13px;"><img src="page-resources/img/schedule_step2_grey.gif"></span>
 		</div>
                 
                 

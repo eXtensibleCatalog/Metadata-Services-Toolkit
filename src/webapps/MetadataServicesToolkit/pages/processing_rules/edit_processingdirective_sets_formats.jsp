@@ -82,8 +82,6 @@
                  </c:if>
                  <div id="error_div"></div>
                  
-                 <div class="clear">&nbsp;</div>
-
               <c:set var="sessionSourceType" scope="session" value="${sourceType}"/>
 
 
