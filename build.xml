@@ -280,20 +280,39 @@
 	         </lib>
         </war>
     </target>
-
-	<target name="dist" depends="makeWar">
-		<delete dir="release/mst-instances"/>
-		<mkdir dir="release/mst-instances/MetadataServicesToolkit"/>
-		<mkdir dir="release/mst-instances/MetadataServicesToolkit/logs" />
-		<copydir dest="release/mst-instances/MetadataServicesToolkit/services" src="services"/>
-		<copydir dest="release/mst-instances/MetadataServicesToolkit/solr" src="solr"/>
-		<delete dir="release/mst-instances/MetadataServicesToolkit/solr/data"/>
-		<mkdir dir="release/mst-instances/MetadataServicesToolkit/solr/data"/>
-		<copydir dest="release/mst-instances/MetadataServicesToolkit/sql" src="sql"/>
-		<copy todir="release/mst-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
-		<copy todir="release/mst-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
-		<copy file="MetadataServicesToolkit.war" todir="release/mst-instances"/>
-		<zip destfile="MetadataServicesToolkitv1.0.zip" basedir="release" />
+	
+	<taskdef name="ForEach" classname="net.sf.antcontrib.logic.ForEach" classpathref="libraries"/>
+	<target name="dist">
+		<delete dir="dist"/>
+		<!-- Create the MST zip archive -->
+		<mkdir dir="dist/mst-instances/MetadataServicesToolkit"/>
+		<copydir dest="dist/mst-instances/MetadataServicesToolkit/solr" src="solr"/>
+		<delete dir="dist/mst-instances/MetadataServicesToolkit/solr/data"/>
+		<copydir dest="dist/mst-instances/MetadataServicesToolkit/sql" src="sql"/>
+		<copy todir="dist/mst-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
+		<copy todir="dist/mst-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
+		<copy file="MetadataServicesToolkit.war" todir="dist/mst-instances"/>
+		<zip destfile="dist/MetadataServicesToolkitv1.0.zip"  basedir="dist" />
+		<!-- Create the Services zip archive -->
+		<dirset  dir="services"></dirset>
+		
+		<ForEach target="zipArchive" param="dir" >
+			<path>
+				<dirset dir="." >
+					<include name="services/**"/>
+					<exclude name="services"/>
+					<exclude name="services/**/serviceConfig"/>
+					<exclude name="services/**/serviceErrors"/>
+					<exclude name="services/**/serviceJar"/>
+				</dirset>
+			</path>
+		</ForEach>
+	
+	</target>
+	
+	<target name="zipArchive" >
+		<zip destfile="${dir}v1.0.zip" basedir="${dir}" /> 
+		<move file="${dir}v1.0.zip" todir="dist" />
 	</target>
 
 </project>
