@@ -136,7 +136,7 @@
 						
 					</td>
 					<td>
-						<button class="xc_button" type="button" name="changePassword" onClick="Javascript:YAHOO.xc.mst.account.changePassword(${user.id});">Change Password</button>
+						<button style="width:140px;" class="xc_button" type="button" name="changePassword" onClick="Javascript:YAHOO.xc.mst.account.changePassword(${user.id});">Change Password</button>
 					</td>
 				</tr>						
 				</table> 

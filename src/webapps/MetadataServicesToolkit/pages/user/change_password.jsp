@@ -115,8 +115,8 @@
 				</tr>
 				<tr>
 					<td>
-						<button class="xc_button" type="button" name="save" onClick="Javascript:YAHOO.xc.mst.changePassword.save();">Change Password</button>
-						<button class="xc_button" name="cancel" onClick="Javascript:YAHOO.xc.mst.changePassword.cancel();">Go To My Account</button> 
+						<button style="width:140px;" class="xc_button" type="button" name="save" onClick="Javascript:YAHOO.xc.mst.changePassword.save();">Change Password</button>
+						<button style="width:140px;" class="xc_button" name="cancel" onClick="Javascript:YAHOO.xc.mst.changePassword.cancel();">Go To My Account</button>
 					</td>
 				</tr>						
 				</table> 
