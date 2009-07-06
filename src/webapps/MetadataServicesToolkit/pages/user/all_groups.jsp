@@ -152,7 +152,7 @@
                              <c:choose>
                                  <c:when test="${empty groupList}">
                                      <div class="emptytablebar">
-                                         Choose List Groups <img src="page-resources/img/bullet_go.gif"> Add Group to add a group
+                                         <div style="margin-top: 40px;"> Choose List Groups <img style="position:relative;top:3px;" src="page-resources/img/bullet_go.gif"/> Add Group to add a group </div>
                                      </div>
                                 </c:when>
                                 <c:otherwise>

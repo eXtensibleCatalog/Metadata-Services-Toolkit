@@ -92,7 +92,7 @@
                 <c:choose>
                     <c:when test="${empty repositories}">
                          <div class="emptytablebar">
-                             No Logs found
+                             <div style="margin-top: 40px;"> No Logs found </div>
                          </div>
                     </c:when>
                     <c:otherwise>

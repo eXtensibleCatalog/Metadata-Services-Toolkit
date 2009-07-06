@@ -141,7 +141,7 @@
                     <c:choose>
                         <c:when test="${empty schedules}">
                              <div class="emptytablebar">
-                                 Choose Harvest <img src="page-resources/img/bullet_go.gif"> Add Scheduled Harvest to add a new scheduled harvest
+                                 <div style="margin-top: 40px;"> Choose Harvest <img style="position:relative;top:3px;" src="page-resources/img/bullet_go.gif"/> Add Scheduled Harvest to add a new scheduled harvest </div>
                              </div>
                          </c:when>
                          <c:otherwise>
