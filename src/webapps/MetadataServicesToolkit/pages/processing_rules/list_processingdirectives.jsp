@@ -121,7 +121,7 @@
                             <c:choose>
                                 <c:when test="${empty processingDirectives}">
                                      <div class="emptytablebar">
-                                         <div style="margin-top: 40px;"> Choose Processing Rules <img style="position:relative;top:3px;" src="page-resources/img/bullet_go.gif"/> Add Processing Rule to add a processing rule </div>
+                                         <div style="margin-top: 40px;"> Choose <b>Processing Rules</b> <img style="position:relative;top:3px;" src="page-resources/img/bullet_go.gif"/> <b>Add Processing Rule</b> to add a processing rule </div>
                                      </div>
                                 </c:when>
                                 <c:otherwise>

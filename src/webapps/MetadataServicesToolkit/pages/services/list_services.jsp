@@ -164,7 +164,7 @@
                                 <c:choose>
                                     <c:when test="${empty services}">
                                          <div class="emptytablebar">
-                                             <div style="margin-top: 40px;"> Choose Services <img style="position:relative;top:3px;" src="page-resources/img/bullet_go.gif"/> Add Service to add a new service </div>
+                                             <div style="margin-top: 40px;"> Choose <b>Services</b> <img style="position:relative;top:3px;" src="page-resources/img/bullet_go.gif"/> <b>Add Service</b> to add a new service </div>
                                          </div>
                                     </c:when>
                                         <c:otherwise>

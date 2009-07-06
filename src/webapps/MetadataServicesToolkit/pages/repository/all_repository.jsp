@@ -197,7 +197,7 @@
                              <c:choose>
                                  <c:when test="${empty repositories}">
                                      <div class="emptytablebar">
-                                         <div style="margin-top: 40px;"> Choose Repository <img style="position:relative;top:3px;" src="page-resources/img/bullet_go.gif"/> Add Repository to add a new repository </div>
+                                         <div style="margin-top: 40px;"> Choose <b>Repository</b> <img style="position:relative;top:3px;" src="page-resources/img/bullet_go.gif"/> <b>Add Repository</b> to add a new repository </div>
                                      </div>
                                  </c:when>
                                  <c:otherwise>
