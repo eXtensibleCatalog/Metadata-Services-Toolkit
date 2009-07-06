@@ -82,94 +82,107 @@
 
               <div class="viewTable">
                     <table width="100%">
-                        <thead>
-                            <tr>
-                                <td>
-                                    
-                                        <c:if test="${columnSorted!='GroupName'}">
-                                             <c:url var="groupSortUrl" value="allGroups.action">
-                                               <c:param name="isAscendingOrder" value="true"/>
-                                               <c:param name="columnSorted" value="GroupName"/>
-                                             </c:url>
-                                              <a href="${groupSortUrl}">Group Name</a>
-                                         </c:if>
+                        <c:if test="${not empty groupList}">
+                            <thead>
+                                <tr>
+                                    <td>
 
-                                         <c:if test="${columnSorted=='GroupName'}">
-                                               <c:url var="groupSortUrl" value="allGroups.action">
-                                                 <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                                 <c:param name="columnSorted" value="GroupName"/>
-                                               </c:url>
+                                            <c:if test="${columnSorted!='GroupName'}">
+                                                 <c:url var="groupSortUrl" value="allGroups.action">
+                                                   <c:param name="isAscendingOrder" value="true"/>
+                                                   <c:param name="columnSorted" value="GroupName"/>
+                                                 </c:url>
+                                                  <a href="${groupSortUrl}">Group Name</a>
+                                             </c:if>
 
-                                               <a href="${groupSortUrl}">Group Name</a>
+                                             <c:if test="${columnSorted=='GroupName'}">
+                                                   <c:url var="groupSortUrl" value="allGroups.action">
+                                                     <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                     <c:param name="columnSorted" value="GroupName"/>
+                                                   </c:url>
 
-                                                <c:choose>
-                                                    <c:when test="${isAscendingOrder==true}">
-                                                        &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+                                                   <a href="${groupSortUrl}">Group Name</a>
 
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                    </c:otherwise>
-                                                </c:choose>
-                                          </c:if>
-                                </td>
-                                <td>Members</td>
-                                <td>
-                                        <c:if test="${columnSorted!='GroupDescription'}">
-                                             <c:url var="groupSortUrl" value="allGroups.action">
-                                               <c:param name="isAscendingOrder" value="true"/>
-                                               <c:param name="columnSorted" value="GroupDescription"/>
-                                             </c:url>
-                                              <a href="${groupSortUrl}">Group Description</a>
-                                         </c:if>
+                                                    <c:choose>
+                                                        <c:when test="${isAscendingOrder==true}">
+                                                            &nbsp;<img src="page-resources/img/triangle_sort.jpg">
 
-                                         <c:if test="${columnSorted=='GroupDescription'}">
-                                               <c:url var="groupSortUrl" value="allGroups.action">
-                                                 <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                                 <c:param name="columnSorted" value="GroupDescription"/>
-                                               </c:url>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                              </c:if>
+                                    </td>
+                                    <td>Members</td>
+                                    <td>
+                                            <c:if test="${columnSorted!='GroupDescription'}">
+                                                 <c:url var="groupSortUrl" value="allGroups.action">
+                                                   <c:param name="isAscendingOrder" value="true"/>
+                                                   <c:param name="columnSorted" value="GroupDescription"/>
+                                                 </c:url>
+                                                  <a href="${groupSortUrl}">Group Description</a>
+                                             </c:if>
 
-                                               <a href="${groupSortUrl}">Group Decription</a>
+                                             <c:if test="${columnSorted=='GroupDescription'}">
+                                                   <c:url var="groupSortUrl" value="allGroups.action">
+                                                     <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                     <c:param name="columnSorted" value="GroupDescription"/>
+                                                   </c:url>
 
-                                                <c:choose>
-                                                    <c:when test="${isAscendingOrder==true}">
-                                                        &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+                                                   <a href="${groupSortUrl}">Group Decription</a>
 
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                    </c:otherwise>
-                                                </c:choose>
-                                          </c:if>
-                                </td>
-                                <td>Delete</td>
-                            </tr>
-                        </thead>
+                                                    <c:choose>
+                                                        <c:when test="${isAscendingOrder==true}">
+                                                            &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                              </c:if>
+                                    </td>
+                                    <td>Delete</td>
+                                </tr>
+                            </thead>
+                        </c:if>
+                        
                         <tbody>
-                             <c:forEach var="group" items="${groupList}" varStatus="groupCount">
-                                 <tr>
-                                            <c:set var="classColumn" value="plainColumn"/>
-                                            <c:if test="${columnSorted=='GroupName'}">
-                                                <c:set var="classColumn" value="sortColumn"/>
-                                            </c:if>
-                                    <td class="${classColumn}"><a href="/MetadataServicesToolkit/viewEditGroup.action?groupId=<c:out value="${group.id}"/>">${group.name}</a></td>
-                                    <td><a href="showGroupMembers.action?groupId=${group.id}&isAscendingOrder=true&columnSorted=UserName"><U>${group.memberCount}</U></a></td>
-                                            <c:set var="classColumn" value="plainColumn"/>
-                                            <c:if test="${columnSorted=='GroupDescription'}">
-                                                <c:set var="classColumn" value="sortColumn"/>
-                                            </c:if>
-                                    <td class="${classColumn}">${group.description}</td>
-                                    <c:choose>
-                                        <c:when test="${group.id==1}">
-                                            <td><button disabled class="xc_button_disabled" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.group.removeGroup.deleteGroup(${group.id});">Delete</button></td>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <td><button class="xc_button" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.group.removeGroup.deleteGroup(${group.id});">Delete</button></td>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    
-                                 </tr>
-                            </c:forEach>
+                             <c:choose>
+                                 <c:when test="${empty groupList}">
+                                     <div class="emptytablebar">
+                                         Choose List Groups <img src="page-resources/img/bullet_go.gif"> Add Group to add a group
+                                     </div>
+                                </c:when>
+                                <c:otherwise>
+                                        <c:forEach var="group" items="${groupList}" varStatus="groupCount">
+                                             <tr>
+                                                        <c:set var="classColumn" value="plainColumn"/>
+                                                        <c:if test="${columnSorted=='GroupName'}">
+                                                            <c:set var="classColumn" value="sortColumn"/>
+                                                        </c:if>
+                                                <td class="${classColumn}"><a href="/MetadataServicesToolkit/viewEditGroup.action?groupId=<c:out value="${group.id}"/>">${group.name}</a></td>
+                                                <td><a href="showGroupMembers.action?groupId=${group.id}&isAscendingOrder=true&columnSorted=UserName"><U>${group.memberCount}</U></a></td>
+                                                        <c:set var="classColumn" value="plainColumn"/>
+                                                        <c:if test="${columnSorted=='GroupDescription'}">
+                                                            <c:set var="classColumn" value="sortColumn"/>
+                                                        </c:if>
+                                                <td class="${classColumn}">${group.description}</td>
+                                                <c:choose>
+                                                    <c:when test="${group.id==1}">
+                                                        <td><button disabled class="xc_button_disabled" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.group.removeGroup.deleteGroup(${group.id});">Delete</button></td>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <td><button class="xc_button" type="button" name="deleteGroup" onclick="javascript:YAHOO.xc.mst.group.removeGroup.deleteGroup(${group.id});">Delete</button></td>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                             </tr>
+                                        </c:forEach>
+                                </c:otherwise>
+                             </c:choose>
+                             
                         </tbody>
                     </table>
 			</div>

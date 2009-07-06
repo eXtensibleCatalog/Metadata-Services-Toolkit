@@ -88,108 +88,122 @@
 
                     <div class="viewTable">
                         <table width="100%">
-                            <thead>
-                                <tr>
-                                    <td class="sortcolumn" width="140">
-                                        <div>
-                                            <c:if test="${columnSorted!='ServiceName'}">
-                                                     <c:url var="serviceSortUrl" value="listServices.action">
-                                                       <c:param name="isAscendingOrder" value="true"/>
-                                                       <c:param name="columnSorted" value="ServiceName"/>
-                                                     </c:url>
-                                                      <a href="${serviceSortUrl}">Service Name</a>
-                                                 </c:if>
-
-                                                 <c:if test="${columnSorted=='ServiceName'}">
-                                                   <c:url var="serviceSortUrl" value="listServices.action">
-                                                     <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                                     <c:param name="columnSorted" value="ServiceName"/>
-                                                   </c:url>
-
-                                                   <a href="${serviceSortUrl}">Service Name</a>
-
-                                                    <c:choose>
-                                                        <c:when test="${isAscendingOrder==true}">
-                                                            &nbsp;<img src="page-resources/img/triangle_sort.jpg">
-
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                 </c:if>
-
-                                        </div>
-
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <c:if test="${columnSorted!='Port'}">
-                                                     <c:url var="serviceSortUrl" value="listServices.action">
-                                                       <c:param name="isAscendingOrder" value="true"/>
-                                                       <c:param name="columnSorted" value="Port"/>
-                                                     </c:url>
-                                                      <a href="${serviceSortUrl}">Associated Repository URL</a>
-                                                 </c:if>
-
-                                                 <c:if test="${columnSorted=='Port'}">
-                                                   <c:url var="serviceSortUrl" value="listServices.action">
-                                                     <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                                     <c:param name="columnSorted" value="Port"/>
-                                                   </c:url>
-
-                                                   <a href="${serviceSortUrl}">Associated Repository URL</a>
-
-                                                    <c:choose>
-                                                        <c:when test="${isAscendingOrder==true}">
-                                                            &nbsp;<img src="page-resources/img/triangle_sort.jpg">
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                 </c:if>
-                                        </div>
-
-                                    </td>
-                                    <td>Status</td>
-                                    <td>View Log</td>
-                                    <td>Delete</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="service" items="${services}" varStatus="serviceCount">
+                            <c:if test="${not empty services}">
+                                  <thead>
                                     <tr>
-                                            <c:set var="classColumn" value="plainColumn"/>
-                                            <c:if test="${columnSorted=='ServiceName'}">
-                                                <c:set var="classColumn" value="sortColumn"/>
-                                            </c:if>
-                                        <td class="${classColumn}"><a href="viewEditService.action?serviceId=${service.id}"><c:out value="${service.name}"/></a></td>
-                                        <c:set var="baseURL" value="${baseURL}"/>
-                                        <c:set var = "url" value="${fn:replace(baseURL,'8080',service.port)}" />
-                                            <c:set var="classColumn" value="plainColumn"/>
-                                            <c:if test="${columnSorted=='Port'}">
-                                                <c:set var="classColumn" value="sortColumn"/>
-                                            </c:if>
-                                        <td class="${classColumn}"><c:out value="${url}"/></td>
+                                        <td class="sortcolumn" width="140">
+                                            <div>
+                                                <c:if test="${columnSorted!='ServiceName'}">
+                                                         <c:url var="serviceSortUrl" value="listServices.action">
+                                                           <c:param name="isAscendingOrder" value="true"/>
+                                                           <c:param name="columnSorted" value="ServiceName"/>
+                                                         </c:url>
+                                                          <a href="${serviceSortUrl}">Service Name</a>
+                                                     </c:if>
+
+                                                     <c:if test="${columnSorted=='ServiceName'}">
+                                                       <c:url var="serviceSortUrl" value="listServices.action">
+                                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                         <c:param name="columnSorted" value="ServiceName"/>
+                                                       </c:url>
+
+                                                       <a href="${serviceSortUrl}">Service Name</a>
+
+                                                        <c:choose>
+                                                            <c:when test="${isAscendingOrder==true}">
+                                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                     </c:if>
+
+                                            </div>
+
+                                        </td>
                                         <td>
-                                            <c:set var="service_status" value ="${service.status}"/>
-                                            <c:choose>
-                                                <c:when test="${service_status=='NOT_RUNNING'}">
-                                                    Not running
-                                                </c:when>
-                                                <c:otherwise>
-                                                    Running
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <div>
+                                                <c:if test="${columnSorted!='Port'}">
+                                                         <c:url var="serviceSortUrl" value="listServices.action">
+                                                           <c:param name="isAscendingOrder" value="true"/>
+                                                           <c:param name="columnSorted" value="Port"/>
+                                                         </c:url>
+                                                          <a href="${serviceSortUrl}">Associated Repository URL</a>
+                                                     </c:if>
+
+                                                     <c:if test="${columnSorted=='Port'}">
+                                                       <c:url var="serviceSortUrl" value="listServices.action">
+                                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                         <c:param name="columnSorted" value="Port"/>
+                                                       </c:url>
+
+                                                       <a href="${serviceSortUrl}">Associated Repository URL</a>
+
+                                                        <c:choose>
+                                                            <c:when test="${isAscendingOrder==true}">
+                                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                     </c:if>
+                                            </div>
+
                                         </td>
-                                        <td width="220">
-                                            <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
-                                            <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
-                                        </td>
-                                        <td><button class="xc_button" onclick="javascript:YAHOO.xc.mst.services.listServices.deleteService(${service.id})" type="button" name="delete">Delete</button></td>
+                                        <td>Status</td>
+                                        <td>View Log</td>
+                                        <td>Delete</td>
                                     </tr>
-                                </c:forEach>
+                                </thead>
+                            </c:if>
+                            
+                            <tbody>
+                                <c:choose>
+                                    <c:when test="${empty services}">
+                                         <div class="emptytablebar">
+                                             Choose Services <img src="page-resources/img/bullet_go.gif"> Add Service to add a new service
+                                         </div>
+                                    </c:when>
+                                        <c:otherwise>
+                                          <c:forEach var="service" items="${services}" varStatus="serviceCount">
+                                            <tr>
+                                                    <c:set var="classColumn" value="plainColumn"/>
+                                                    <c:if test="${columnSorted=='ServiceName'}">
+                                                        <c:set var="classColumn" value="sortColumn"/>
+                                                    </c:if>
+                                                <td class="${classColumn}"><a href="viewEditService.action?serviceId=${service.id}"><c:out value="${service.name}"/></a></td>
+                                                <c:set var="baseURL" value="${baseURL}"/>
+                                                <c:set var = "url" value="${fn:replace(baseURL,'8080',service.port)}" />
+                                                    <c:set var="classColumn" value="plainColumn"/>
+                                                    <c:if test="${columnSorted=='Port'}">
+                                                        <c:set var="classColumn" value="sortColumn"/>
+                                                    </c:if>
+                                                <td class="${classColumn}"><c:out value="${url}"/></td>
+                                                <td>
+                                                    <c:set var="service_status" value ="${service.status}"/>
+                                                    <c:choose>
+                                                        <c:when test="${service_status=='NOT_RUNNING'}">
+                                                            Not running
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Running
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                <td width="220">
+                                                    <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
+                                                    <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
+                                                </td>
+                                                <td><button class="xc_button" onclick="javascript:YAHOO.xc.mst.services.listServices.deleteService(${service.id})" type="button" name="delete">Delete</button></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
+                                
+                                
                             </tbody>
                         </table>
                         <form name="deleteService" method="post">

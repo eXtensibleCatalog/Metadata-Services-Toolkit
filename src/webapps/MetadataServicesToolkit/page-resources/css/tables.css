@@ -406,3 +406,11 @@
     font-size:12px;
     font-family:Verdana, Arial, Helvetica, sans-serif;
 }
+.emptytablebar
+{
+    height : 100px;
+    background-color : #ecf0f3;
+    border: 1px solid #bcbcbc;
+    padding-left : 20px;
+    text-align : left;
+}

@@ -90,204 +90,216 @@
 
                 <div class="viewTable">
                     <table width="100%">
-                        <thead>
-                            <tr>
-                                <td>
-                                    <div id="Div1">
-                                                <c:if test="${columnSorted!='RepositoryName'}">
-                                                     <c:url var="repositorySortUrl" value="allRepository.action">
-                                                       <c:param name="isAscendingOrder" value="true"/>
-                                                       <c:param name="columnSorted" value="RepositoryName"/>
-                                                     </c:url>
-                                                      <a href="${repositorySortUrl}">Name</a>
-                                                 </c:if>
+                        <c:if test="${not empty repositories}">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                <div id="Div1">
+                                                            <c:if test="${columnSorted!='RepositoryName'}">
+                                                                 <c:url var="repositorySortUrl" value="allRepository.action">
+                                                                   <c:param name="isAscendingOrder" value="true"/>
+                                                                   <c:param name="columnSorted" value="RepositoryName"/>
+                                                                 </c:url>
+                                                                  <a href="${repositorySortUrl}">Name</a>
+                                                             </c:if>
 
-                                                 <c:if test="${columnSorted=='RepositoryName'}">
-                                                   <c:url var="repositorySortUrl" value="allRepository.action">
-                                                     <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                                     <c:param name="columnSorted" value="RepositoryName"/>
-                                                   </c:url>
+                                                             <c:if test="${columnSorted=='RepositoryName'}">
+                                                               <c:url var="repositorySortUrl" value="allRepository.action">
+                                                                 <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                                 <c:param name="columnSorted" value="RepositoryName"/>
+                                                               </c:url>
 
-                                                   <a href="${repositorySortUrl}">Name</a>
+                                                               <a href="${repositorySortUrl}">Name</a>
 
-                                                    <c:choose>
-                                                        <c:when test="${isAscendingOrder==true}">
-                                                            &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+                                                                <c:choose>
+                                                                    <c:when test="${isAscendingOrder==true}">
+                                                                        &nbsp;<img src="page-resources/img/triangle_sort.jpg">
 
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                 </c:if>
-
-
-
-                                    </div>
-
-                                </td>
-                                <td>
-                                     <div id="Div2">
-                                          <c:if test="${columnSorted!='RepositoryURL'}">
-                                             <c:url var="repositorySortUrl" value="allRepository.action">
-                                               <c:param name="isAscendingOrder" value="true"/>
-                                               <c:param name="columnSorted" value="RepositoryURL"/>
-                                             </c:url>
-                                             <a href="${repositorySortUrl}">URL</a>
-                                         </c:if>
-
-                                        <c:if test="${columnSorted=='RepositoryURL'}">
-                                           <c:url var="repositorySortUrl" value="allRepository.action">
-                                             <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                             <c:param name="columnSorted" value="RepositoryURL"/>
-                                           </c:url>
-
-                                           <a href="${repositorySortUrl}">URL</a>
-                                            <c:choose>
-                                                <c:when test="${isAscendingOrder==true}">
-                                                    &nbsp;<img src="page-resources/img/triangle_sort.jpg">
-
-                                                </c:when>
-                                                <c:otherwise>
-                                                    &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                </c:otherwise>
-                                            </c:choose>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                             </c:if>
 
 
-                                        </c:if>
-                                    </div>
-                                </td>
-                                <td>Status</td>
-                                <td>
-                                     <div id="Div3">
-                                          <c:if test="${columnSorted!='LastHarvestEndTime'}">
-                                             <c:url var="repositorySortUrl" value="allRepository.action">
-                                               <c:param name="isAscendingOrder" value="true"/>
-                                               <c:param name="columnSorted" value="LastHarvestEndTime"/>
-                                             </c:url>
-                                             <a href="${repositorySortUrl}">Last Harvested</a>
-                                         </c:if>
 
-                                        <c:if test="${columnSorted=='LastHarvestEndTime'}">
-                                           <c:url var="repositorySortUrl" value="allRepository.action">
-                                             <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                             <c:param name="columnSorted" value="LastHarvestEndTime"/>
-                                           </c:url>
+                                                </div>
 
-                                           <a href="${repositorySortUrl}">Last Harvested</a>
-                                            <c:choose>
-                                                <c:when test="${isAscendingOrder==true}">
-                                                    &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+                                            </td>
+                                            <td>
+                                                 <div id="Div2">
+                                                      <c:if test="${columnSorted!='RepositoryURL'}">
+                                                         <c:url var="repositorySortUrl" value="allRepository.action">
+                                                           <c:param name="isAscendingOrder" value="true"/>
+                                                           <c:param name="columnSorted" value="RepositoryURL"/>
+                                                         </c:url>
+                                                         <a href="${repositorySortUrl}">URL</a>
+                                                     </c:if>
 
-                                                </c:when>
-                                                <c:otherwise>
-                                                    &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                </c:otherwise>
-                                            </c:choose>
+                                                    <c:if test="${columnSorted=='RepositoryURL'}">
+                                                       <c:url var="repositorySortUrl" value="allRepository.action">
+                                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                         <c:param name="columnSorted" value="RepositoryURL"/>
+                                                       </c:url>
+
+                                                       <a href="${repositorySortUrl}">URL</a>
+                                                        <c:choose>
+                                                            <c:when test="${isAscendingOrder==true}">
+                                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                            </c:otherwise>
+                                                        </c:choose>
 
 
-                                        </c:if>
-                                    </div>
-                                </td>
-                            </tr>
-                        </thead>
+                                                    </c:if>
+                                                </div>
+                                            </td>
+                                            <td>Status</td>
+                                            <td>
+                                                 <div id="Div3">
+                                                      <c:if test="${columnSorted!='LastHarvestEndTime'}">
+                                                         <c:url var="repositorySortUrl" value="allRepository.action">
+                                                           <c:param name="isAscendingOrder" value="true"/>
+                                                           <c:param name="columnSorted" value="LastHarvestEndTime"/>
+                                                         </c:url>
+                                                         <a href="${repositorySortUrl}">Last Harvested</a>
+                                                     </c:if>
+
+                                                    <c:if test="${columnSorted=='LastHarvestEndTime'}">
+                                                       <c:url var="repositorySortUrl" value="allRepository.action">
+                                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                         <c:param name="columnSorted" value="LastHarvestEndTime"/>
+                                                       </c:url>
+
+                                                       <a href="${repositorySortUrl}">Last Harvested</a>
+                                                        <c:choose>
+                                                            <c:when test="${isAscendingOrder==true}">
+                                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                            </c:otherwise>
+                                                        </c:choose>
+
+
+                                                    </c:if>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                             </c:if>
                         <tbody>
-                             <c:forEach var="repository" items="${repositories}" varStatus="repositoryCount">
-                                  <c:choose>
-                                        <c:when test="${(repository.identify==true)&&(repository.listSets==true)&&(repository.service==true)&&(repository.listFormats==true)}">
-                                             <tr>
-                                                <c:set var="classColumn" value="plainColumn"/>
-                                                <c:if test="${columnSorted=='RepositoryName'}">
-                                                     <c:set var="classColumn" value="sortColumn"/>
-                                                </c:if>
-                                                <td class="${classColumn}">
+                             <c:choose>
+                                 <c:when test="${empty repositories}">
+                                     <div class="emptytablebar">
+                                         Choose Repository <img src="page-resources/img/bullet_go.gif"> Add Repository to add a new repository
+                                     </div>
+                                 </c:when>
+                                 <c:otherwise>
+                                          <c:forEach var="repository" items="${repositories}" varStatus="repositoryCount">
+                                              <c:choose>
+                                                    <c:when test="${(repository.identify==true)&&(repository.listSets==true)&&(repository.service==true)&&(repository.listFormats==true)}">
+                                                         <tr>
+                                                            <c:set var="classColumn" value="plainColumn"/>
+                                                            <c:if test="${columnSorted=='RepositoryName'}">
+                                                                 <c:set var="classColumn" value="sortColumn"/>
+                                                            </c:if>
+                                                            <td class="${classColumn}">
 
-                                                        <a href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${repository.id}" />"><c:out value="${repository.name}" /></a>
+                                                                    <a href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${repository.id}" />"><c:out value="${repository.name}" /></a>
 
-                                                </td>
-                                                <c:set var="classColumn" value="plainColumn"/>
-                                                <c:if test="${columnSorted=='RepositoryURL'}">
-                                                     <c:set var="classColumn" value="sortColumn"/>
-                                                </c:if>
-                                                <td class="${classColumn}">
-                                                     <c:out value="${repository.oaiProviderUrl}" />
-                                                </td>
-                                                <td>
-                                                    <img src="page-resources/img/tick.png">
-                                                    <span style="position:relative;top:-2px;">Success</span>
+                                                            </td>
+                                                            <c:set var="classColumn" value="plainColumn"/>
+                                                            <c:if test="${columnSorted=='RepositoryURL'}">
+                                                                 <c:set var="classColumn" value="sortColumn"/>
+                                                            </c:if>
+                                                            <td class="${classColumn}">
+                                                                 <c:out value="${repository.oaiProviderUrl}" />
+                                                            </td>
+                                                            <td>
+                                                                <img src="page-resources/img/tick.png">
+                                                                <span style="position:relative;top:-2px;">Success</span>
 
-                                                </td>
-                                                <c:choose>
-                                                    <c:when test="${repository.lastHarvestEndTime==null}">
-                                                         <c:set var="classColumn" value="plainColumn"/>
-                                                           <c:if test="${columnSorted=='LastHarvestEndTime'}">
-                                                                <c:set var="classColumn" value="sortColumn"/>
-                                                           </c:if>
-                                                        <td class="${classColumn}">
-                                                               Never
-                                                        </td>
+                                                            </td>
+                                                            <c:choose>
+                                                                <c:when test="${repository.lastHarvestEndTime==null}">
+                                                                     <c:set var="classColumn" value="plainColumn"/>
+                                                                       <c:if test="${columnSorted=='LastHarvestEndTime'}">
+                                                                            <c:set var="classColumn" value="sortColumn"/>
+                                                                       </c:if>
+                                                                    <td class="${classColumn}">
+                                                                           Never
+                                                                    </td>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <c:set var="classColumn" value="plainColumn"/>
+                                                                    <c:if test="${columnSorted=='LastHarvestEndTime'}">
+                                                                         <c:set var="classColumn" value="sortColumn"/>
+                                                                    </c:if>
+                                                                    <td class="${classColumn}">
+                                                                         ${repository.lastHarvestEndTime}
+                                                                    </td>
+                                                                </c:otherwise>
+                                                            </c:choose>
+
+                                                         </tr>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <c:set var="classColumn" value="plainColumn"/>
-                                                        <c:if test="${columnSorted=='LastHarvestEndTime'}">
-                                                             <c:set var="classColumn" value="sortColumn"/>
-                                                        </c:if>
-                                                        <td class="${classColumn}">
-                                                             ${repository.lastHarvestEndTime}
-                                                        </td>
+                                                        <tr class="errorColumn">
+                                                            <c:set var="classColumn" value="errorColumn"/>
+                                                            <c:if test="${columnSorted=='RepositoryName'}">
+                                                                 <c:set var="classColumn" value="sortColumn"/>
+                                                            </c:if>
+                                                            <td class ="${classColumn}">
+
+                                                                    <a href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${repository.id}" />"><c:out value="${repository.name}" /></a>
+
+                                                            </td>
+                                                            <c:set var="classColumn" value="errorColumn"/>
+                                                            <c:if test="${columnSorted=='RepositoryURL'}">
+                                                                 <c:set var="classColumn" value="sortColumn"/>
+                                                            </c:if>
+                                                            <td class="${classColumn}">
+                                                                 <c:out value="${repository.oaiProviderUrl}" />
+                                                            </td>
+                                                            <td>
+                                               <span style="position:relative;top:2px;">
+                                                                 <img src="page-resources/img/error_triangle.png">
+                                                 <span style="position:relative;top:-3px;">Error</span>
+                                                               </span>
+                                                            </td>
+                                                            <c:choose>
+                                                                <c:when test="${repository.lastHarvestEndTime==null}">
+                                                                     <c:set var="classColumn" value="v"/>
+                                                                       <c:if test="${columnSorted=='LastHarvestEndTime'}">
+                                                                            <c:set var="classColumn" value="sortColumn"/>
+                                                                       </c:if>
+                                                                    <td class="${classColumn}">
+                                                                           Never
+                                                                    </td>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <c:set var="classColumn" value="errorColumn"/>
+                                                                    <c:if test="${columnSorted=='LastHarvestEndTime'}">
+                                                                         <c:set var="classColumn" value="sortColumn"/>
+                                                                    </c:if>
+                                                                    <td class="${classColumn}">
+                                                                         ${repository.lastHarvestEndTime}
+                                                                    </td>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                         </tr>
                                                     </c:otherwise>
                                                 </c:choose>
-
-                                             </tr>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <tr class="errorColumn">
-                                                <c:set var="classColumn" value="errorColumn"/>
-                                                <c:if test="${columnSorted=='RepositoryName'}">
-                                                     <c:set var="classColumn" value="sortColumn"/>
-                                                </c:if>
-                                                <td class ="${classColumn}">
-
-                                                        <a href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${repository.id}" />"><c:out value="${repository.name}" /></a>
-
-                                                </td>
-                                                <c:set var="classColumn" value="errorColumn"/>
-                                                <c:if test="${columnSorted=='RepositoryURL'}">
-                                                     <c:set var="classColumn" value="sortColumn"/>
-                                                </c:if>
-                                                <td class="${classColumn}">
-                                                     <c:out value="${repository.oaiProviderUrl}" />
-                                                </td>
-                                                <td>
-								   <span style="position:relative;top:2px;">
-                                                     <img src="page-resources/img/error_triangle.png">
-								     <span style="position:relative;top:-3px;">Error</span>
-                                                   </span>
-                                                </td>
-                                                <c:choose>
-                                                    <c:when test="${repository.lastHarvestEndTime==null}">
-                                                         <c:set var="classColumn" value="v"/>
-                                                           <c:if test="${columnSorted=='LastHarvestEndTime'}">
-                                                                <c:set var="classColumn" value="sortColumn"/>
-                                                           </c:if>
-                                                        <td class="${classColumn}">
-                                                               Never
-                                                        </td>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <c:set var="classColumn" value="errorColumn"/>
-                                                        <c:if test="${columnSorted=='LastHarvestEndTime'}">
-                                                             <c:set var="classColumn" value="sortColumn"/>
-                                                        </c:if>
-                                                        <td class="${classColumn}">
-                                                             ${repository.lastHarvestEndTime}
-                                                        </td>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                             </tr>
-                                        </c:otherwise>
-                                    </c:choose>
-                            </c:forEach>
+                                        </c:forEach>
+                                 </c:otherwise>
+                             </c:choose>
+                             
                         </tbody>
                     </table>
 			</div>

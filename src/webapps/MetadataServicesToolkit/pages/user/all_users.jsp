@@ -83,171 +83,184 @@
 
              <div class="viewTable">
                     <table width="100%">
-                        <thead>
-                            <tr>
-                                <td>
-                                        <c:if test="${columnSorted!='UserName'}">
-                                             <c:url var="userSortUrl" value="allUsers.action">
-                                               <c:param name="isAscendingOrder" value="true"/>
-                                               <c:param name="columnSorted" value="UserName"/>
-                                             </c:url>
-                                              <a href="${userSortUrl}">User Name</a>
-                                         </c:if>
+                        <c:if test="${not empty userList}">
+                            <thead>
+                                <tr>
+                                    <td>
+                                            <c:if test="${columnSorted!='UserName'}">
+                                                 <c:url var="userSortUrl" value="allUsers.action">
+                                                   <c:param name="isAscendingOrder" value="true"/>
+                                                   <c:param name="columnSorted" value="UserName"/>
+                                                 </c:url>
+                                                  <a href="${userSortUrl}">User Name</a>
+                                             </c:if>
 
-                                         <c:if test="${columnSorted=='UserName'}">
-                                           <c:url var="userSortUrl" value="allUsers.action">
-                                             <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                             <c:param name="columnSorted" value="UserName"/>
-                                           </c:url>
+                                             <c:if test="${columnSorted=='UserName'}">
+                                               <c:url var="userSortUrl" value="allUsers.action">
+                                                 <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                 <c:param name="columnSorted" value="UserName"/>
+                                               </c:url>
 
-                                           <a href="${userSortUrl}">User Name</a>
+                                               <a href="${userSortUrl}">User Name</a>
 
-                                            <c:choose>
-                                                <c:when test="${isAscendingOrder==true}">
-                                                    &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+                                                <c:choose>
+                                                    <c:when test="${isAscendingOrder==true}">
+                                                        &nbsp;<img src="page-resources/img/triangle_sort.jpg">
 
-                                                </c:when>
-                                                <c:otherwise>
-                                                    &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                </c:otherwise>
-                                            </c:choose>
-                                         </c:if>
-                                </td>
-                                <td>Account type</td>
-                                <td>
-                                        <c:if test="${columnSorted!='LastLogin'}">
-                                             <c:url var="userSortUrl" value="allUsers.action">
-                                               <c:param name="isAscendingOrder" value="true"/>
-                                               <c:param name="columnSorted" value="LastLogin"/>
-                                             </c:url>
-                                              <a href="${userSortUrl}">Last Login</a>
-                                         </c:if>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                             </c:if>
+                                    </td>
+                                    <td>Account type</td>
+                                    <td>
+                                            <c:if test="${columnSorted!='LastLogin'}">
+                                                 <c:url var="userSortUrl" value="allUsers.action">
+                                                   <c:param name="isAscendingOrder" value="true"/>
+                                                   <c:param name="columnSorted" value="LastLogin"/>
+                                                 </c:url>
+                                                  <a href="${userSortUrl}">Last Login</a>
+                                             </c:if>
 
-                                         <c:if test="${columnSorted=='LastLogin'}">
-                                           <c:url var="userSortUrl" value="allUsers.action">
-                                             <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                             <c:param name="columnSorted" value="LastLogin"/>
-                                           </c:url>
+                                             <c:if test="${columnSorted=='LastLogin'}">
+                                               <c:url var="userSortUrl" value="allUsers.action">
+                                                 <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                 <c:param name="columnSorted" value="LastLogin"/>
+                                               </c:url>
 
-                                           <a href="${userSortUrl}">Last Login</a>
+                                               <a href="${userSortUrl}">Last Login</a>
 
-                                            <c:choose>
-                                                <c:when test="${isAscendingOrder==true}">
-                                                    &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+                                                <c:choose>
+                                                    <c:when test="${isAscendingOrder==true}">
+                                                        &nbsp;<img src="page-resources/img/triangle_sort.jpg">
 
-                                                </c:when>
-                                                <c:otherwise>
-                                                    &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                </c:otherwise>
-                                            </c:choose>
-                                         </c:if>
-                                </td>
-                                <td>
-                                        <c:if test="${columnSorted!='FirstName'}">
-                                             <c:url var="userSortUrl" value="allUsers.action">
-                                               <c:param name="isAscendingOrder" value="true"/>
-                                               <c:param name="columnSorted" value="FirstName"/>
-                                             </c:url>
-                                              <a href="${userSortUrl}">First Name</a>
-                                         </c:if>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                             </c:if>
+                                    </td>
+                                    <td>
+                                            <c:if test="${columnSorted!='FirstName'}">
+                                                 <c:url var="userSortUrl" value="allUsers.action">
+                                                   <c:param name="isAscendingOrder" value="true"/>
+                                                   <c:param name="columnSorted" value="FirstName"/>
+                                                 </c:url>
+                                                  <a href="${userSortUrl}">First Name</a>
+                                             </c:if>
 
-                                         <c:if test="${columnSorted=='FirstName'}">
-                                           <c:url var="userSortUrl" value="allUsers.action">
-                                             <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                             <c:param name="columnSorted" value="FirstName"/>
-                                           </c:url>
+                                             <c:if test="${columnSorted=='FirstName'}">
+                                               <c:url var="userSortUrl" value="allUsers.action">
+                                                 <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                 <c:param name="columnSorted" value="FirstName"/>
+                                               </c:url>
 
-                                           <a href="${userSortUrl}">First Name</a>
+                                               <a href="${userSortUrl}">First Name</a>
 
-                                            <c:choose>
-                                                <c:when test="${isAscendingOrder==true}">
-                                                    &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+                                                <c:choose>
+                                                    <c:when test="${isAscendingOrder==true}">
+                                                        &nbsp;<img src="page-resources/img/triangle_sort.jpg">
 
-                                                </c:when>
-                                                <c:otherwise>
-                                                    &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                </c:otherwise>
-                                            </c:choose>
-                                         </c:if>
-                                </td>
-                                <td>
-                                        <c:if test="${columnSorted!='LastName'}">
-                                             <c:url var="userSortUrl" value="allUsers.action">
-                                               <c:param name="isAscendingOrder" value="true"/>
-                                               <c:param name="columnSorted" value="LastName"/>
-                                             </c:url>
-                                              <a href="${userSortUrl}">Last Name</a>
-                                         </c:if>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                             </c:if>
+                                    </td>
+                                    <td>
+                                            <c:if test="${columnSorted!='LastName'}">
+                                                 <c:url var="userSortUrl" value="allUsers.action">
+                                                   <c:param name="isAscendingOrder" value="true"/>
+                                                   <c:param name="columnSorted" value="LastName"/>
+                                                 </c:url>
+                                                  <a href="${userSortUrl}">Last Name</a>
+                                             </c:if>
 
-                                         <c:if test="${columnSorted=='LastName'}">
-                                           <c:url var="userSortUrl" value="allUsers.action">
-                                             <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                             <c:param name="columnSorted" value="LastName"/>
-                                           </c:url>
+                                             <c:if test="${columnSorted=='LastName'}">
+                                               <c:url var="userSortUrl" value="allUsers.action">
+                                                 <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
+                                                 <c:param name="columnSorted" value="LastName"/>
+                                               </c:url>
 
-                                           <a href="${userSortUrl}">Last Name</a>
+                                               <a href="${userSortUrl}">Last Name</a>
 
-                                            <c:choose>
-                                                <c:when test="${isAscendingOrder==true}">
-                                                    &nbsp;<img src="page-resources/img/triangle_sort.jpg">
+                                                <c:choose>
+                                                    <c:when test="${isAscendingOrder==true}">
+                                                        &nbsp;<img src="page-resources/img/triangle_sort.jpg">
 
-                                                </c:when>
-                                                <c:otherwise>
-                                                    &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                </c:otherwise>
-                                            </c:choose>
-                                         </c:if>
-                                </td>
-                                <td>Delete</td>
-                            </tr>
-                        </thead>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                             </c:if>
+                                    </td>
+                                    <td>Delete</td>
+                                </tr>
+                           </thead>
+                        </c:if>
+                        
                         <tbody>
-                             <c:forEach var="user" items="${userList}" varStatus="userCount">
+                             <c:choose>
+                                 <c:when test="${empty userList}">
+                                     <div class="emptytablebar">
+                                         Choose List Users <img src="page-resources/img/bullet_go.gif"> Add Local User to add a local user
+                                     </div>
+                                </c:when>
+                                <c:otherwise>
+                                        <c:forEach var="user" items="${userList}" varStatus="userCount">
 
-                                 <tr>
-                                     <c:choose>
-                                         <c:when test="${user.server.name=='Local'}">
-                                             <c:set var="url" value="/MetadataServicesToolkit/viewEditLocalUser.action?userId=${user.id}"/>
-                                         </c:when>
-                                         <c:otherwise>
-                                              <c:set var="url" value="/MetadataServicesToolkit/viewEditLDAPUser.action?userId=${user.id}"/>
-                                         </c:otherwise>
-                                    </c:choose>
+                                             <tr>
+                                                 <c:choose>
+                                                     <c:when test="${user.server.name=='Local'}">
+                                                         <c:set var="url" value="/MetadataServicesToolkit/viewEditLocalUser.action?userId=${user.id}"/>
+                                                     </c:when>
+                                                     <c:otherwise>
+                                                          <c:set var="url" value="/MetadataServicesToolkit/viewEditLDAPUser.action?userId=${user.id}"/>
+                                                     </c:otherwise>
+                                                </c:choose>
 
-                                                <c:set var="classColumn" value="plainColumn"/>
-                                                <c:if test="${columnSorted=='UserName'}">
-                                                    <c:set var="classColumn" value="sortColumn"/>
-                                                </c:if>
-                                    <td class="${classColumn}"><a href="${url}">${user.username}</a></td>
-                                    <td>
-                                        ${user.server.type}
-                                    </td>
-                                                <c:set var="classColumn" value="plainColumn"/>
-                                                <c:if test="${columnSorted=='LastLogin'}">
-                                                    <c:set var="classColumn" value="sortColumn"/>
-                                                </c:if>
-                                    <td class="${classColumn}">${user.accountCreated}</td>
-                                                <c:set var="classColumn" value="plainColumn"/>
-                                                <c:if test="${columnSorted=='FirstName'}">
-                                                    <c:set var="classColumn" value="sortColumn"/>
-                                                </c:if>
-                                    <td class="${classColumn}">${user.firstName}</td>
-                                                <c:set var="classColumn" value="plainColumn"/>
-                                                <c:if test="${columnSorted=='LastName'}">
-                                                    <c:set var="classColumn" value="sortColumn"/>
-                                                </c:if>
-                                    <td class="${classColumn}">${user.lastName}</td>
-                                    <td>
-                                        <c:if test="${user.username == 'admin'}">
-                                        	<button class="xc_button_disabled" disabled="true" type="submit" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.removeUser.deleteUser(${user.id});">Delete</button>
-                                        </c:if>
-                                        <c:if test="${user.username != 'admin'}">
-                                                 <button class="xc_button" type="button" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.removeUser.deleteUser(${user.id});">Delete</button>
-                                        </c:if>
-                                            
-                                    </td>
-                                 </tr>
-                            </c:forEach>
+                                                            <c:set var="classColumn" value="plainColumn"/>
+                                                            <c:if test="${columnSorted=='UserName'}">
+                                                                <c:set var="classColumn" value="sortColumn"/>
+                                                            </c:if>
+                                                <td class="${classColumn}"><a href="${url}">${user.username}</a></td>
+                                                <td>
+                                                    ${user.server.type}
+                                                </td>
+                                                            <c:set var="classColumn" value="plainColumn"/>
+                                                            <c:if test="${columnSorted=='LastLogin'}">
+                                                                <c:set var="classColumn" value="sortColumn"/>
+                                                            </c:if>
+                                                <td class="${classColumn}">${user.accountCreated}</td>
+                                                            <c:set var="classColumn" value="plainColumn"/>
+                                                            <c:if test="${columnSorted=='FirstName'}">
+                                                                <c:set var="classColumn" value="sortColumn"/>
+                                                            </c:if>
+                                                <td class="${classColumn}">${user.firstName}</td>
+                                                            <c:set var="classColumn" value="plainColumn"/>
+                                                            <c:if test="${columnSorted=='LastName'}">
+                                                                <c:set var="classColumn" value="sortColumn"/>
+                                                            </c:if>
+                                                <td class="${classColumn}">${user.lastName}</td>
+                                                <td>
+                                                    <c:if test="${user.username == 'admin'}">
+                                                        <button class="xc_button_disabled" disabled="true" type="submit" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.removeUser.deleteUser(${user.id});">Delete</button>
+                                                    </c:if>
+                                                    <c:if test="${user.username != 'admin'}">
+                                                             <button class="xc_button" type="button" name="deleteUser" onclick="javascript:YAHOO.xc.mst.user.removeUser.deleteUser(${user.id});">Delete</button>
+                                                    </c:if>
+
+                                                </td>
+                                             </tr>
+                                        </c:forEach>
+                                </c:otherwise>
+                             </c:choose>
+                             
                         </tbody>
                     </table>
 			</div>
