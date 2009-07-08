@@ -10,6 +10,9 @@ log4j.logger.validation=INFO, validation
 log4j.logger.processing=INFO, processing
 log4j.logger.harvestOut=INFO, harvestOut
 
+# To stop logging struts warning messages - 'Could not find property [org.apache.catalina.jsp_file]'
+log4j.logger.com.opensymphony.xwork2.ognl.OgnlValueStack=ERROR
+
 # Setup the Harvest In appender
 log4j.appender.harvestIn=org.apache.log4j.RollingFileAppender
 log4j.appender.harvestIn.File=MST-instances/MetadataServicesToolkit/logs/MST_HarvestIn_log.txt

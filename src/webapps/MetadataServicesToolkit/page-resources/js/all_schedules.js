@@ -73,9 +73,8 @@ YAHOO.xc.mst.schedule.view = {
 	 {
 
 		var handleSuccess = function(o) {
-			    //get the response from adding a repository
-			    var response = o.responseText;
-			    document.getElementById('scheduleTable').innerHTML = response;
+		    //get the response from adding a repository
+		    document.getElementById('scheduleTable').innerHTML = o.responseText;
 
 		};
 
@@ -88,7 +87,7 @@ YAHOO.xc.mst.schedule.view = {
 		
 	    //delete the repository
 	    var cObj = YAHOO.util.Connect.asyncRequest('get',
-			'getSchedulesTable.action', callback);
+			'getSchedulesTable.action' + '?bustcache='+new Date().getTime(), callback);
 
   			
 		window.setTimeout('YAHOO.xc.mst.schedule.view.refreshScheduleTable()',2000);	

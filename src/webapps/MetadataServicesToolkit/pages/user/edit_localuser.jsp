@@ -91,12 +91,12 @@
                <table style="margin-left:10px">
                     <tr>
                       <td valign="top"><b>First Name</b>  <br>
-                      <input type="text" id="firstName" name ="firstName" class="textfield" value="${temporaryUser.firstName}" maxlength="255" size="47"><br><br></td>
+                      <input type="text" id="firstName" name ="firstName" class="textfield" value="${temporaryUser.firstName}" maxlength="255" size="39"><br><br></td>
                     </tr>
                     
                     <tr>
                       <td valign="top"><b>Last Name  </b><br>
-                      <input type="text" id="lastName" name ="lastName" class="textfield" value="${temporaryUser.lastName}" maxlength="255" size="47"><br><br></td>
+                      <input type="text" id="lastName" name ="lastName" class="textfield" value="${temporaryUser.lastName}" maxlength="255" size="39"><br><br></td>
                     </tr>                    
 
                     <tr>
@@ -106,23 +106,23 @@
 
                    <tr>
                        <td valign="top"><b>Password </b><br>
-                       <input type="password" id="password" name ="password" class="textfield" value="" maxlength="255" size="47"><br><br></td>
+                       <input type="password" id="password" name ="password" class="textfield" value="" maxlength="255" size="39"><br><br></td>
                    </tr>
 
                   <tr>
                       <td valign="top"><b>Confirm Password </b><br>
-                      <input type="password" id="confpass" name ="confpass" class="textfield" value="" maxlength="255" size="47"><br><br></td>
+                      <input type="password" id="confpass" name ="confpass" class="textfield" value="" maxlength="255" size="39"><br><br></td>
                   </tr>
 
                    <tr>
                         <td valign="top"><b>Email</b><br>
-                        <input type="text" id="email" name ="email" class="textfield" value="${temporaryUser.email}" maxlength="255" size="47"><br><br></td>
+                        <input type="text" id="email" name ="email" class="textfield" value="${temporaryUser.email}" maxlength="255" size="39"><br><br></td>
                    </tr>
                    <tr>
                        <td>
                              <b>Groups</b>  &nbsp;&nbsp; <br>
 
-                               <select multiple size="8" id="groupsSelected" name ="groupsSelected" style="width:300px; height:125px;">
+                               <select multiple size="8" id="groupsSelected" name ="groupsSelected" style="width:250px; height:125px;">
                                  <c:forEach var="m" varStatus="b" items="${groupList}">
 
                                      <c:set var="flag" value="${false}"/>

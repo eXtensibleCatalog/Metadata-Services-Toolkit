@@ -175,7 +175,7 @@ text-decoration:underline;
 													  <c:param name="startPageNumber" value="${startPageNumber}"/>
 													  <c:param name="currentPageNumber" value="${currentPageNumber}"/>
 												  </c:url>
-										   		&nbsp;&nbsp;&nbsp;<a href="${viewError}">[info]</a>
+										   		&nbsp;<a href="${viewError}"><img src="${pageContext.request.contextPath}/page-resources/img/information.png"/></a>
 										   	</c:if>											
 											
 											<br/>
@@ -348,7 +348,7 @@ text-decoration:underline;
 					<div class="search_box_div">
 						<form name="browseRecordsForm" method="post" action="browseRecords.action">
 
-							<input type="text" id="search_text" name="query" value="${query}" size="40"/>
+							<input type="text" id="search_text" name="query" value="${query}" size="40"/>&nbsp;&nbsp;&nbsp;
 							<button class="xc_button" type="submit" name="save" >Search</button>
 							<br><input type="checkbox" id="search_xml" name="searchXML" value="true" 
 							<c:if test="${searchXML}">

@@ -339,7 +339,7 @@
 		      		  <input type="hidden" name="repositoryId" value="${provider.id}"/>
 			          <div id="deleteRepositoryError" cssClass="errorMessage"></div>
 			          Repository ${provider.name} contains harvested data records.
-                      Deleting this repository will result in deletion of ${provider.recordsAdded} records as well as related Harvest Schedules, scheduled harvests, processing rules and the records harvested. 
+                      Deleting this repository will result in deletion of ${provider.recordsAdded} records as well as related harvest schedules, scheduled harvests, processing rules and the records harvested. 
                       Are you sure you want to delete this repository?
 
 

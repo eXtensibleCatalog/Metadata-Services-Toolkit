@@ -193,19 +193,17 @@
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>
-                                                <td width="220">
-                                                    <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
-                                                    <button onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
+                                                <td width="175px">
+                                                    <button style="width:70px" onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
+                                                    <button style="width:85px" onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
                                                 </td>
-                                                <td><button class="xc_button" onclick="javascript:YAHOO.xc.mst.services.listServices.deleteService(${service.id})" type="button" name="delete">Delete</button></td>
+                                                <td><button style="width:60px" class="xc_button" onclick="javascript:YAHOO.xc.mst.services.listServices.deleteService(${service.id})" type="button" name="delete">Delete</button></td>
                                             </tr>
                                         </c:forEach>
                                                                   
                                 </tbody>
                         </table>
-                        <form name="deleteService" method="post">
-                            <input type="hidden" name="serviceId" id="serviceId">
-                        </form>
+ 
                     </div>
                 </c:otherwise>
             </c:choose>

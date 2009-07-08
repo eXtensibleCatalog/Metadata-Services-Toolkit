@@ -331,7 +331,7 @@
 				 <div id="oai_request_div"></div>
 		      </div>
 	      </div>	      
-
+	<div class="clear"></div>
             <!--  this is the footer of the page -->
             <c:import url="/inc/footer.jsp"/>  
         </div>
