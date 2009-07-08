@@ -411,6 +411,17 @@
     height : 100px;
     background-color : #ecf0f3;
     border: 1px solid #bcbcbc;
+    border-collapse : collapse;
     padding-left : 20px;
     text-align : left;
+}
+.emptytable_innerdiv
+{
+    margin-top: 40px;
+    border : none;
+}
+.emptytable_img
+{
+    position:relative;
+    top:3px;
 }

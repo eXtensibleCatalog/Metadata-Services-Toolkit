@@ -87,7 +87,7 @@
                 <c:choose>
                     <c:when test="${empty services}">
                          <div class="emptytablebar">
-                             <div style="margin-top: 40px;"> No Logs found </div>
+                             <div class="emptytable_innerdiv"> No Logs found </div>
                          </div>
                     </c:when>
                     <c:otherwise>

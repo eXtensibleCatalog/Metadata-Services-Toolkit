@@ -1,9 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="mst" uri="mst-tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"   prefix="fn" %>
-			<div class="viewTable">
+
+<c:choose>
+    <c:when test="${empty schedules}">
+         <div class="emptytablebar">
+             <div class="emptytable_innerdiv"> Choose <b>Harvest</b> <img class="emptytable_img" src="page-resources/img/bullet_go.gif"/> <b>Add Scheduled Harvest</b> to add a new scheduled harvest </div>
+         </div>
+     </c:when>
+     <c:otherwise>
+	    <div class="viewTable">
 			<table width="100%">
-                <c:if test="${not empty schedules}">
+                
                     <thead>
 					<tr>
 
@@ -135,16 +143,11 @@
 						<td>Delete Schedule</td>
 					</tr>
 				  </thead>
-                </c:if>
+              
 				
 				<tbody>
-                    <c:choose>
-                        <c:when test="${empty schedules}">
-                             <div class="emptytablebar">
-                                 <div style="margin-top: 40px;"> Choose <b>Harvest</b> <img style="position:relative;top:3px;" src="page-resources/img/bullet_go.gif"/> <b>Add Scheduled Harvest</b> to add a new scheduled harvest </div>
-                             </div>
-                         </c:when>
-                         <c:otherwise>
+                    
+                  
                                  <c:forEach var="schedule" items="${schedules}">
                                         <tr>
                                                 <c:set var="classColumn" value="plainColumn"/>
@@ -216,9 +219,9 @@
                                             <td> <button class="xc_button" id="showDeleteSchedule" type="button" name="delete" onClick="javascript:YAHOO.xc.mst.schedule.view.deleteSchedule(${schedule.id}, '${schedule.scheduleName}');">Delete</button></td>
                                         </tr>
                                     </c:forEach>
-                         </c:otherwise>
-                    </c:choose>
-					
+                       
 				</tbody>
 			</table>
-			</div>
+	  </div>
+  </c:otherwise>
+</c:choose>

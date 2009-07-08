@@ -85,168 +85,165 @@
                  <div id="error_div"></div>
 
                  <div class="clear">&nbsp;</div>
-                 
-                <div class="viewTable">
-                 <table width="100%">
-                     <c:if test="${not empty processingDirectives}">
-                        <thead>
-                            <tr>
-                                <td>#ID</td>
-                                <td>
-                                   <div align="left">
+                <c:choose>
+                    <c:when test="${empty processingDirectives}">
+                         <div class="emptytablebar">
+                             <div class="emptytable_innerdiv"> Choose <b>Processing Rules</b> <img class="emptytable_img" src="page-resources/img/bullet_go.gif"/> <b>Add Processing Rule</b> to add a processing rule </div>
+                         </div>
+                    </c:when>
+                    <c:otherwise>
+                                <div class="viewTable">
+                                 <table width="100%">
 
-                                           <table style="position:relative;top:-2px;border-style: none; border-color: #ffffff;margin:0px;padding:0px;">
-                                                 <tbody>
-                                                    <tr>
-                                                        <td style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span>Output Records from</span> </td>
-                                                        <td style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span style="margin-left: 10px; margin-right: 10px;"><img src="page-resources/img/greenarrow.jpg"/></span> </td>
-                                                        <td style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span>To be Processed by</span> </td>
-                                                    </tr>
-                                                 </tbody>
-                                            </table>
+                                        <thead>
+                                            <tr>
+                                                <td>#ID</td>
+                                                <td>
+                                                   <div align="left">
 
-                                    </div>
+                                                           <table style="position:relative;top:-2px;border-style: none; border-color: #ffffff;margin:0px;padding:0px;">
+                                                                 <tbody>
+                                                                    <tr>
+                                                                        <td style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span>Output Records from</span> </td>
+                                                                        <td style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span style="margin-left: 10px; margin-right: 10px;"><img src="page-resources/img/greenarrow.jpg"/></span> </td>
+                                                                        <td style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span>To be Processed by</span> </td>
+                                                                    </tr>
+                                                                 </tbody>
+                                                            </table>
 
-                                </td>
-                                <td>Formats</td>
-                                <td>Sets</td>
-                                <td>Delete</td>
-                            </tr>
-                        </thead>
-                     </c:if>
-                        
+                                                    </div>
 
-                        <tbody>
+                                                </td>
+                                                <td>Formats</td>
+                                                <td>Sets</td>
+                                                <td>Delete</td>
+                                            </tr>
+                                        </thead>
 
-                            <c:choose>
-                                <c:when test="${empty processingDirectives}">
-                                     <div class="emptytablebar">
-                                         <div style="margin-top: 40px;"> Choose <b>Processing Rules</b> <img style="position:relative;top:3px;" src="page-resources/img/bullet_go.gif"/> <b>Add Processing Rule</b> to add a processing rule </div>
-                                     </div>
-                                </c:when>
-                                <c:otherwise>
-                                      <c:forEach var="directive" items="${processingDirectives}" varStatus="directiveCount">
-
-                                                    <c:set var="totalFormatsSize" value="${fn:length(directive.triggeringFormats)}"/>
-
-                                                    <c:set var="formatList" value=""/>
-                                                        <c:forEach var="triggerFormat" items="${directive.triggeringFormats}" varStatus="triggerFormatCount">
-                                                            <c:choose>
-                                                                <c:when test="${triggerFormatCount.count==1}">
-                                                                    <c:set var="formatList" value="${triggerFormat.name}"/>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <c:set var="formatList" value="${formatList},${triggerFormat.name}"/>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:forEach>
-                                                    <c:set var="totalSetsSize" value="${fn:length(directive.triggeringSets)}"/>
-
-                                                     <c:set var="setList" value=""/>
-                                                        <c:forEach var="triggerSet" items="${directive.triggeringSets}" varStatus="triggerSetCount">
-                                                            <c:choose>
-                                                                <c:when test="${triggerSetCount.count==1}">
-                                                                    <c:set var="setList" value="${triggerSet.setSpec}"/>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <c:set var="setList" value="${setList},${triggerSet.setSpec}"/>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:forEach>
+                                        <tbody>
 
 
-                                                  <tr>
-                                                    <c:set var="url" value='/MetadataServicesToolkit/viewEditProcessingDirectives.action?ProcessingDirectiveId=${directive.id}' />
+                                                      <c:forEach var="directive" items="${processingDirectives}" varStatus="directiveCount">
 
-                                                    <c:set var="x1" value="${directive.sourceProvider}" />
-                                                    <c:set var="x2" value="${directive.sourceService}" />
+                                                                    <c:set var="totalFormatsSize" value="${fn:length(directive.triggeringFormats)}"/>
+
+                                                                    <c:set var="formatList" value=""/>
+                                                                        <c:forEach var="triggerFormat" items="${directive.triggeringFormats}" varStatus="triggerFormatCount">
+                                                                            <c:choose>
+                                                                                <c:when test="${triggerFormatCount.count==1}">
+                                                                                    <c:set var="formatList" value="${triggerFormat.name}"/>
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    <c:set var="formatList" value="${formatList},${triggerFormat.name}"/>
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+                                                                        </c:forEach>
+                                                                    <c:set var="totalSetsSize" value="${fn:length(directive.triggeringSets)}"/>
+
+                                                                     <c:set var="setList" value=""/>
+                                                                        <c:forEach var="triggerSet" items="${directive.triggeringSets}" varStatus="triggerSetCount">
+                                                                            <c:choose>
+                                                                                <c:when test="${triggerSetCount.count==1}">
+                                                                                    <c:set var="setList" value="${triggerSet.setSpec}"/>
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    <c:set var="setList" value="${setList},${triggerSet.setSpec}"/>
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+                                                                        </c:forEach>
+
+
+                                                                  <tr>
+                                                                    <c:set var="url" value='/MetadataServicesToolkit/viewEditProcessingDirectives.action?ProcessingDirectiveId=${directive.id}' />
+
+                                                                    <c:set var="x1" value="${directive.sourceProvider}" />
+                                                                    <c:set var="x2" value="${directive.sourceService}" />
 
 
 
 
-                                                    <c:if test='${x1!=null}'>
-                                                        <c:set var="bool" value="${true}" />
+                                                                    <c:if test='${x1!=null}'>
+                                                                        <c:set var="bool" value="${true}" />
 
-                                                    </c:if>
-                                                    <c:if test='${x2!=null}'>
-                                                      <c:set var="bool" value="${false}" />
+                                                                    </c:if>
+                                                                    <c:if test='${x2!=null}'>
+                                                                      <c:set var="bool" value="${false}" />
 
-                                                    </c:if>
+                                                                    </c:if>
 
-                                                    <td class="sortcolumn" align="left"><div style="margin-left:10px;margin-top:10px;height:17px;text-align:left;"><c:out value="${directive.id}" /></div></td>
+                                                                    <td class="sortcolumn" align="left"><div style="margin-left:10px;margin-top:10px;height:17px;text-align:left;"><c:out value="${directive.id}" /></div></td>
 
 
 
-                                                        <c:if test="${bool=='true'}">
+                                                                        <c:if test="${bool=='true'}">
 
-                                                            <td>
-                                                                <div align="left" style="margin-left:5px;">
+                                                                            <td>
+                                                                                <div align="left" style="margin-left:5px;">
 
-                                                                        <a href="<c:out value="${url}" />">
-                                                                            <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;">
-                                                                                <tbody>
-                                                                                    <tr>
-                                                                                        <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;color:#245f8a;"> ${x1.name}</td>
-                                                                                        <td width="10%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt;color:#245f8a;"> >>> </td>
-                                                                                        <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;color:#245f8a;"> &nbsp;${directive.service.name} </td>
+                                                                                        <a href="<c:out value="${url}" />">
+                                                                                            <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;color:#245f8a;"> ${x1.name}</td>
+                                                                                                        <td width="10%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt;color:#245f8a;"> >>> </td>
+                                                                                                        <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;color:#245f8a;"> &nbsp;${directive.service.name} </td>
 
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                      </a>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                      </a>
 
-                                                                </div>
-                                                            </td>
-                                                        </c:if>
-                                                        <c:if test="${bool=='false'}">
-                                                            <td>
+                                                                                </div>
+                                                                            </td>
+                                                                        </c:if>
+                                                                        <c:if test="${bool=='false'}">
+                                                                            <td>
 
-                                                                   <div align="left" style="margin-left:5px;">
-                                                                        <a  href="<c:out value="${url}" />">
+                                                                                   <div align="left" style="margin-left:5px;">
+                                                                                        <a  href="<c:out value="${url}" />">
 
-                                                                                <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;">
-                                                                                    <tbody>
-                                                                                        <tr>
-                                                                                            <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;color:#245f8a;"> ${x2.name} </td>
-                                                                                            <td width="10%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt;color:#245f8a;"> >>> </td>
-                                                                                            <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;color:#245f8a;"> &nbsp;${directive.service.name} </td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                        </a>
-                                                                   </div>
-                                                            </td>
-                                                        </c:if>
+                                                                                                <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;">
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;color:#245f8a;"> ${x2.name} </td>
+                                                                                                            <td width="10%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt;color:#245f8a;"> >>> </td>
+                                                                                                            <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;color:#245f8a;"> &nbsp;${directive.service.name} </td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                        </a>
+                                                                                   </div>
+                                                                            </td>
+                                                                        </c:if>
 
-                                                    <td title="${formatList}">
-                                                        <c:set var="totalFormatsSize" value="${fn:length(directive.triggeringFormats)}"/>
-                                                        <div style="text-align:left" id="formatsList">
-                                                            <c:forEach var="triggerFormat" items="${directive.triggeringFormats}" varStatus="triggerFormatCount">
-                                                                ${triggerFormat.name} <br>
-                                                            </c:forEach>
-                                                        </div>
-                                                    </td>
-                                                    <td title="${setList}">
-                                                        <div style="text-align:left" id="setsList">
-                                                            <c:set var="totalSetsSize" value="${fn:length(directive.triggeringSets)}"/>
-                                                            <c:forEach var="triggerSet" items="${directive.triggeringSets}" varStatus="triggerSetCount">
-                                                                <c:if test="${triggerSetCount.count==1}">
-                                                                    ${triggerSet.setSpec}...
-                                                                </c:if>
-                                                            </c:forEach>
-                                                        </div>
-                                                    </td>
-                                                    <td><button class="xc_button" type="button" name="deleteService" onclick="javascript:YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirective(${directive.id});">Delete</button></td>
+                                                                    <td title="${formatList}">
+                                                                        <c:set var="totalFormatsSize" value="${fn:length(directive.triggeringFormats)}"/>
+                                                                        <div style="text-align:left" id="formatsList">
+                                                                            <c:forEach var="triggerFormat" items="${directive.triggeringFormats}" varStatus="triggerFormatCount">
+                                                                                ${triggerFormat.name} <br>
+                                                                            </c:forEach>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td title="${setList}">
+                                                                        <div style="text-align:left" id="setsList">
+                                                                            <c:set var="totalSetsSize" value="${fn:length(directive.triggeringSets)}"/>
+                                                                            <c:forEach var="triggerSet" items="${directive.triggeringSets}" varStatus="triggerSetCount">
+                                                                                <c:if test="${triggerSetCount.count==1}">
+                                                                                    ${triggerSet.setSpec}...
+                                                                                </c:if>
+                                                                            </c:forEach>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><button class="xc_button" type="button" name="deleteService" onclick="javascript:YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirective(${directive.id});">Delete</button></td>
 
-                                                   </tr>
-                                               </c:forEach>
-                                </c:otherwise>
-                            </c:choose>
-                           
-                      
-                    </tbody>
-                 </table>
-                </div>
+                                                                   </tr>
+                                                               </c:forEach>
+
+                                    </tbody>
+                                 </table>
+                                </div>
+                            </c:otherwise>
+                          </c:choose>
 
 
 		      <div id="deleteProcessingDirectiveDialog" class="hidden">

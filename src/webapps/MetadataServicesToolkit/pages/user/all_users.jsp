@@ -208,7 +208,7 @@
                              <c:choose>
                                  <c:when test="${empty userList}">
                                      <div class="emptytablebar">
-                                         <div style="margin-top: 40px;"> Choose <b>List Users</b> <img style="position:relative;top:3px;" src="page-resources/img/bullet_go.gif"/> <b>Add Local User</b> to add a local user </div>
+                                         <div class="emptytable_innerdiv"> Choose <b>List Users</b> <img class="emptytable_img" src="page-resources/img/bullet_go.gif"/> <b>Add Local User</b> to add a local user </div>
                                      </div>
                                 </c:when>
                                 <c:otherwise>

@@ -88,8 +88,9 @@
                           
                           <select id="fileLocation" name ="fileLocation">
                               <c:forEach var="serviceFile" items="${serviceFiles}" varStatus="a">
+                                 
                                   <c:choose>
-                                      <c:when test="${fn:contains(temporaryService.xccfgFileName,serviceFile)}">
+                                      <c:when test="${fn:contains(temporaryService.xccfgFileName,serviceFile.name)}">
                                           <option selected id="${serviceFile.name}" value="${serviceFile.path}">${serviceFile.name}
                                       </c:when>
                                       <c:otherwise>

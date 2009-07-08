@@ -85,10 +85,16 @@
                  <div id="error_div"></div>
 
                  <div class="clear">&nbsp;</div>
-
-                    <div class="viewTable">
-                        <table width="100%">
-                            <c:if test="${not empty services}">
+                 <c:choose>
+                    <c:when test="${empty services}">
+                         <div class="emptytablebar">
+                             <div class="emptytable_innerdiv"> Choose <b>Services</b> <img class="emptytable_img" src="page-resources/img/bullet_go.gif"/> <b>Add Service</b> to add a new service </div>
+                         </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="viewTable">
+                            <table width="100%">
+                            
                                   <thead>
                                     <tr>
                                         <td class="sortcolumn" width="140">
@@ -158,16 +164,10 @@
                                         <td>Delete</td>
                                     </tr>
                                 </thead>
-                            </c:if>
+                           
                             
                             <tbody>
-                                <c:choose>
-                                    <c:when test="${empty services}">
-                                         <div class="emptytablebar">
-                                             <div style="margin-top: 40px;"> Choose <b>Services</b> <img style="position:relative;top:3px;" src="page-resources/img/bullet_go.gif"/> <b>Add Service</b> to add a new service </div>
-                                         </div>
-                                    </c:when>
-                                        <c:otherwise>
+                               
                                           <c:forEach var="service" items="${services}" varStatus="serviceCount">
                                             <tr>
                                                     <c:set var="classColumn" value="plainColumn"/>
@@ -200,16 +200,15 @@
                                                 <td><button class="xc_button" onclick="javascript:YAHOO.xc.mst.services.listServices.deleteService(${service.id})" type="button" name="delete">Delete</button></td>
                                             </tr>
                                         </c:forEach>
-                                    </c:otherwise>
-                                </c:choose>
-                                
-                                
-                            </tbody>
+                                                                  
+                                </tbody>
                         </table>
                         <form name="deleteService" method="post">
                             <input type="hidden" name="serviceId" id="serviceId">
                         </form>
                     </div>
+                </c:otherwise>
+            </c:choose>
 
             </div>
 
