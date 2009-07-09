@@ -209,12 +209,16 @@
 
                                             </td>
                                             <td>
-                                                <c:set var="lastRun" value="${mst:lastHarvest(schedule)}"/>
 
-                                                <c:if test="${fn:startsWith(lastRun, 'last')}">
-                                                    ${mst:lastHarvest(schedule)} hrs ${timeZone}
-                                                </c:if>
-
+                                                <c:set var="schedule_status" value ="${schedule.status}"/>
+                                                <c:choose>
+                                                    <c:when test="${schedule_status=='NOT_RUNNING'}">
+                                                        Not running
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        In Progress
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </td>
                                             <td> <button class="xc_button" id="showDeleteSchedule" type="button" name="delete" onClick="javascript:YAHOO.xc.mst.schedule.view.deleteSchedule(${schedule.id}, '${schedule.scheduleName}');">Delete</button></td>
                                         </tr>

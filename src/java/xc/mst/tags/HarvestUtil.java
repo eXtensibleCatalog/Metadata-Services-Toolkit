@@ -35,29 +35,19 @@ public class HarvestUtil {
 		{
 			ScheduleService scheduleService = new DefaultScheduleService();
 			
-			List<Harvest> harvests = scheduleService.getHarvestsForSchedule(harvestSchedule); 
+			
 			Timestamp latestRun = null;
-			for(Harvest harvest:harvests) {
-				if(latestRun == null) {
-					latestRun = harvest.getEndTime();
-					continue;
-				}
-				
-				if(harvest.getEndTime() != null && harvest.getEndTime().after(latestRun)) {
-					latestRun = harvest.getEndTime();
-				}
-				
-			}
+			
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 		
-		latestRun = scheduleService.getLatestHarvestEndTime(harvestSchedule); 
-		format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-		String output = "Not yet harvested";
-		if (latestRun != null) {
-			output = "last run completed " + format.format(latestRun);
-		}
-		
-		return output;
+            latestRun = scheduleService.getLatestHarvestEndTime(harvestSchedule);
+            format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            String output = "Not yet harvested";
+            if (latestRun != null) {
+                output = "last run completed " + format.format(latestRun);
+            }
+
+            return output;
 		
 	}
 }
