@@ -752,5 +752,3 @@ insert into users(user_id,username,first_name,last_name,password,email,server_id
 -- Insert group for admin user
 insert into users_to_groups values(1,1,1);
 
--- insert Email configuration values
-insert into emailconfig (email_config_id, server_address, port_number, from_address, password) values(1,"mail.rochester.edu",25, 'xcsupport@library.rochester.edu', 'Migration1');
