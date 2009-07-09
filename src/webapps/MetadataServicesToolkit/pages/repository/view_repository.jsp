@@ -10,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="mst" uri="mst-tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:import url="/inc/doctype-frag.jsp"/>
 
 <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
@@ -56,11 +57,21 @@
 
             <!--  this is the header of the page -->
             <c:import url="/inc/menu.jsp"/>
-             <jsp:include page="/inc/breadcrumb.jsp">
+            
 
-                    <jsp:param name="bread" value="Repository , <a style='color:#292929;' href='allRepository.action'><U>All Repositories</U></a> , View Repository : ${provider.name}" />
+		<c:if test="${fn:length(provider.name) > 65}">
+		 	<jsp:include page="/inc/breadcrumb.jsp">
+                    		<jsp:param name="bread" value="Repository , <a style='color:#292929;' href='allRepository.action'><U>All Repositories</U></a> , View Repository : <a style='text-decoration:none;color:black;' title='${provider.name}'> ${fn:substring(provider.name,0,65)}...</a>" />
+                     	</jsp:include>
+                </c:if>
+                
+                <c:if test="${fn:length(provider.name) <= 65}">
+                	 <jsp:include page="/inc/breadcrumb.jsp">
+                		<jsp:param name="bread" value="Repository , <a style='color:#292929;' href='allRepository.action'><U>All Repositories</U></a> , View Repository : ${provider.name}" />
+                	 </jsp:include>
+                 </c:if>
 
-            </jsp:include>
+           
 
             <div id="error_div"></div>
             <!-- Display of error message -->
@@ -87,10 +98,7 @@
 		<div id="bd">
 
             <div class="clear">&nbsp;</div>
-			<!-- start the grid -->
-   	        <div class="yui-g">
-   	        	<!-- First grid start -->
-		        <div class="yui-u first">
+
 
 			        <table class="formTable">
 			
@@ -100,6 +108,89 @@
                                 
                                     <span><b>Repository name :</b> </span> ${provider.name} <br>
                             </td>
+                            		
+                            		
+                            		<td rowspan="3">
+                            		 <table width="220" border="1" style="color:#313131;">
+					                           <c:choose>
+					                               <c:when test="${provider.identify==true}">
+					                                    <tr>
+					                                        <td height="33" bgcolor="#edfaff">
+					                                            
+					                                            <ul style="list-style:none;">
+					                                                <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;Identify</B> :</div></li>
+					                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/bluetick.jpg"></div></li>
+					                                                <li style="float:left;"><div>Success</div></li>
+					                                            </ul>
+					                                        </td>
+					                                    </tr>
+					                               </c:when>
+					                               <c:otherwise>
+					                                    <tr>
+					                                        <td height="33" bgcolor="#ffeded">
+					                                            <ul style="list-style:none;">
+					                                                <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;Identify</B> : </div></li>
+					                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
+					                                                <li style="float:left;"><div>Error</div></li>
+					                                            </ul>
+					                                        </td>
+					                                    </tr>
+					                               </c:otherwise>
+					                           </c:choose>
+					                           <c:choose>
+					                               <c:when test="${provider.listFormats==true}">
+					                                    <tr>
+					                                        <td height="33" bgcolor="#edfaff">
+					                                            <ul style="list-style:none;">
+					                                                <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;List Formats</B> :</div></li>
+					                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/bluetick.jpg"></div></li>
+					                                                <li style="float:left;"><div>Success</div></li>
+					                                            </ul>
+					                                        </td>
+					                                    </tr>
+					                               </c:when>
+					                               <c:otherwise>
+					                                    <tr>
+					                                        <td height="33" bgcolor="#ffeded">
+					                                            <ul style="list-style:none;">
+					                                                <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;List Formats</B> :</div></li>
+					                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
+					                                                <li style="float:left;"><div>Error</div></li>
+					                                            </ul>
+					                                        </td>
+					                                    </tr>
+					                               </c:otherwise>
+					                           </c:choose>
+					                            <c:choose>
+					                               <c:when test="${provider.listSets==true}">
+					                                     <tr>
+					                                        <td height="33" bgcolor="#edfaff">
+					                                            <ul style="list-style:none;">
+					                                                <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;List Sets</B> : </div></li>
+					                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/bluetick.jpg"></div></li>
+					                                                <li style="float:left;"><div>Success</div></li>
+					                                            </ul>
+					                                        </td>
+					                                     </tr>
+					                               </c:when>
+					                               <c:otherwise>
+					                                     <tr>
+					                                        <td height="33" bgcolor="#ffeded">
+					                                            <ul style="list-style:none;">
+					                                                <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;List Sets</B> : </div></li>
+					                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
+					                                                <li style="float:left;"><div>Error</div></li>
+					                                            </ul>
+					                                        </td>
+					                                     </tr>
+					                               </c:otherwise>
+					                           </c:choose>
+					                           
+					                           
+                       </table>
+                            		
+                            		
+                            		</td>
 			            </tr>
 			            <tr>
                             <td style="font-size:13px;">
@@ -173,7 +264,7 @@
 			                
 			            </tr>
                         <tr>
-                            <td style="margin-top:15px;">
+                            <td colspan="2" style="margin-top:15px;">
                                <ul style="list-style:none;">
                                     <li style="float:left;"><div align="right" style="width:140px;"><B>Formats</B> </div> </li>
                                     <li style="float:left;"><div>&nbsp;:</div></li>
@@ -191,7 +282,7 @@
 
 			            </tr>
 			            <tr>
-                            <td>
+                            <td  colspan="2" >
                                 <ul style="list-style:none;">
                                     <li style="float:left;"><div align="right" style="width:140px;"><B>Sets Supported</B> </div> </li>
                                     <li style="float:left;"><div>&nbsp;:</div></li>
@@ -210,100 +301,13 @@
 			       </table>
 			           
 	         
-         	<!--  end the first column -->
-                </div>
-		
-		<!-- start second column -->
-       	        <div class="yui-u">
+         	
                    
-                       <table width="220" border="1" style="color:#313131;">
-                           <c:choose>
-                               <c:when test="${provider.identify==true}">
-                                    <tr>
-                                        <td height="33" bgcolor="#edfaff">
-                                            
-                                            <ul style="list-style:none;">
-                                                <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;Identify</B> :</div></li>
-                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/bluetick.jpg"></div></li>
-                                                <li style="float:left;"><div>Success</div></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                               </c:when>
-                               <c:otherwise>
-                                    <tr>
-                                        <td height="33" bgcolor="#ffeded">
-                                            <ul style="list-style:none;">
-                                                <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;Identify</B> : </div></li>
-                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
-                                                <li style="float:left;"><div>Error</div></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                               </c:otherwise>
-                           </c:choose>
-                           <c:choose>
-                               <c:when test="${provider.listFormats==true}">
-                                    <tr>
-                                        <td height="33" bgcolor="#edfaff">
-                                            <ul style="list-style:none;">
-                                                <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;List Formats</B> :</div></li>
-                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/bluetick.jpg"></div></li>
-                                                <li style="float:left;"><div>Success</div></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                               </c:when>
-                               <c:otherwise>
-                                    <tr>
-                                        <td height="33" bgcolor="#ffeded">
-                                            <ul style="list-style:none;">
-                                                <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;List Formats</B> :</div></li>
-                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
-                                                <li style="float:left;"><div>Error</div></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                               </c:otherwise>
-                           </c:choose>
-                            <c:choose>
-                               <c:when test="${provider.listSets==true}">
-                                     <tr>
-                                        <td height="33" bgcolor="#edfaff">
-                                            <ul style="list-style:none;">
-                                                <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;List Sets</B> : </div></li>
-                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/bluetick.jpg"></div></li>
-                                                <li style="float:left;"><div>Success</div></li>
-                                            </ul>
-                                        </td>
-                                     </tr>
-                               </c:when>
-                               <c:otherwise>
-                                     <tr>
-                                        <td height="33" bgcolor="#ffeded">
-                                            <ul style="list-style:none;">
-                                                <li style="float:left;"><div style="width:90px;" align="right"><B>&nbsp;List Sets</B> : </div></li>
-                                                <li style="float:left;position:relative;top:-3px;"><div><img src="page-resources/img/error_triangle.jpg"></div></li>
-                                                <li style="float:left;"><div>Error</div></li>
-                                            </ul>
-                                        </td>
-                                     </tr>
-                               </c:otherwise>
-                           </c:choose>
-                           
-                           
-                       </table>
+                      
                         
                           <br>
                           
-        	    </div>
-                </td>
-            	<!--  end the second column -->
-               </tr>
 
-               </table>
-    	    </div>
-        	<!--  end the grid -->
             <hr size="1" style="color:#ced2d5;"><br>
             <form id="repositoryForm" name="repositoryForm" method="POST">
 	    	<input type="hidden" name="repositoryId" value="${provider.id}"/>

@@ -93,15 +93,15 @@
                 </div>
 
                  <div class="StepsHeader">
-                    <table width="600">
+                    <table width="100%">
                         <tr>
-                            <td width="38%">
+                            <td width="49%">
                                 <div align="right" style="margin-right:10px;">
                                     Harvested records from :
                                 </div>
                             </td>
                             <td width="2%"><br><img src="page-resources/img/greenarrow_greybgrd.jpg"></td>
-                            <td width="45%">
+                            <td width="49%">
                                 <div style="margin-left:15px;">
                                     To be processed by :
                                 </div>
@@ -109,7 +109,7 @@
                         </tr>
 
                         <tr>
-                            <td width="38%">
+                            <td width="49%">
                                 <div align="right" style="margin-right:10px;">
                                     <c:choose>
                                         <c:when test="${sourceType=='provider'}">
@@ -126,7 +126,7 @@
 
                             </td>
                             <td width="2%"></td>
-                            <td width="45%">
+                            <td width="49%">
                                 <div style="margin-left:15px;">
                                      <B>${temporaryProcessingDirective.service.name}</B>
                                 </div>

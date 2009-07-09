@@ -222,7 +222,7 @@
                                                                         <td class="${classColumn}">
                                                                              <c:out value="${repository.oaiProviderUrl}" />
                                                                         </td>
-                                                                        <td>
+                                                                        <td width="80px">
                                                                             <img src="page-resources/img/tick.png">
                                                                             <span style="position:relative;top:-2px;">Success</span>
 
@@ -268,7 +268,7 @@
                                                                         <td class="${classColumn}">
                                                                              <c:out value="${repository.oaiProviderUrl}" />
                                                                         </td>
-                                                                        <td>
+                                                                        <td width="80px">
                                                            <span style="position:relative;top:2px;">
                                                                              <img src="page-resources/img/error_triangle.png">
                                                              <span style="position:relative;top:-3px;">Error</span>
