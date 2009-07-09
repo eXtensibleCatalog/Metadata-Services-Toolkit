@@ -571,6 +571,14 @@ public abstract class RecordService
 	protected abstract SolrInputDocument setFieldsOnDocument(Record record, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException;
 
 	/**
+	 * Escapes characters that aren't allowed in queries run on the index
+	 * 
+	 * @param str The String to be escaped
+	 * @return The escaped String
+	 */
+	protected abstract String escapeString(String str);
+	
+	/**
 	 * Validates the fields on the passed Record Object
 	 *
 	 * @param record The record to validate

@@ -187,20 +187,20 @@ public class Scheduler extends Thread
 	 *
 	 * @param scheduleMe The Thread to be run.
 	 */
-	public static void scheduleThread(HarvesterWorkerThread scheduleMe)
+	public static void scheduleThread(WorkerThread scheduleMe)
 	{
 		waitingJobs.add(scheduleMe);
-	} // end method scheduleThread(HarvesterWorkerThread)
+	} // end method scheduleThread(WorkerThread)
 
 	/**
 	 * Adds a WorkerThread to the queue of Threads to be run.
 	 *
 	 * @param scheduleMe The Thread to be run.
 	 */
-	public static void scheduleThread(ServiceWorkerThread scheduleMe)
-	{
-		waitingJobs.add(scheduleMe);
-	} // end method scheduleThread(ServiceWorkerThread)
+	//public static void scheduleThread(ServiceWorkerThread scheduleMe)
+	//{
+    //		waitingJobs.add(scheduleMe);
+    //} // end method scheduleThread(ServiceWorkerThread)
 
 	/**
 	 * Kills the Scheduling Thread

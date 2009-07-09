@@ -66,7 +66,7 @@ public class DefaultHoldingsService extends HoldingsService
 	@Override
 	public HoldingsList getByXcRecordId(String recordId) throws IndexException
 	{
-		String trait = Holdings.TRAIT_RECORD_ID + ":" + recordId;
+		String trait = recordService.escapeString(Holdings.TRAIT_RECORD_ID + ":" + recordId);
 
 		if(log.isDebugEnabled())
 			log.debug("Getting all holdings with trait " + trait);
@@ -82,7 +82,7 @@ public class DefaultHoldingsService extends HoldingsService
 	@Override
 	public HoldingsList getByManifestationHeld(String manifestationHeld) throws IndexException
 	{
-		String trait = (Holdings.TRAIT_MANIFESTATION_HELD + ":" + manifestationHeld).replaceAll(":", "\\\\:");
+		String trait = recordService.escapeString(Holdings.TRAIT_MANIFESTATION_HELD + ":" + manifestationHeld);
 
 		if(log.isDebugEnabled())
 			log.debug("Getting all holdings with trait " + trait);

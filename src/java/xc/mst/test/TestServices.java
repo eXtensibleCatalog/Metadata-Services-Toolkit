@@ -73,7 +73,7 @@ public class TestServices
 			System.exit(1);
 		}
 		
-		MSTConfiguration.getInstance("MST-instances/MetadataServicesToolkit");
+		MSTConfiguration.getInstance("MetadataServicesToolkit");
 
 		MSTSolrServer.getInstance();
 	}
@@ -81,7 +81,7 @@ public class TestServices
 	private static File unprocessedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggInput");
 	private static File processedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggOutput");
 
-	private static int serviceId = 3;
+	private static int serviceId = 7;
 
 	/**
 	 * Builds the XML Document based on the record's OAI XML

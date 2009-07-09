@@ -67,7 +67,7 @@ public class DefaultItemService extends ItemService
 	@Override
 	public ItemList getByHoldingsExemplified(String holdingsExemplified) throws IndexException
 	{
-		String trait = (Item.TRAIT_HOLDINGS_EXEMPLIFIED + ":" + holdingsExemplified).replaceAll(":", "\\\\:");
+		String trait = recordService.escapeString(Item.TRAIT_HOLDINGS_EXEMPLIFIED + ":" + holdingsExemplified);
 
 		if(log.isDebugEnabled())
 			log.debug("Getting all items with trait " + trait);

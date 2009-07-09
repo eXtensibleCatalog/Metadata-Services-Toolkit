@@ -73,8 +73,7 @@ public abstract class MetadataService
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
 	 */
-	private static final Configuration mstConfiguration = ConfigurationManager
-			.getConfiguration();
+	private static final Configuration mstConfiguration = ConfigurationManager.getConfiguration();
 
 	/**
 	 * The name of this service
@@ -765,7 +764,7 @@ public abstract class MetadataService
 				} // end try(start the service)
 				catch(Exception e)
 				{
-					log.error("An error occurred while running the service with ID " + serviceToRun.intValue() + ".", e);
+					log.error("An error occurred while scheduling the service with ID " + serviceToRun.intValue() + ".", e);
 				} // end catch(Exception)
 			} // end loop over services to run
 

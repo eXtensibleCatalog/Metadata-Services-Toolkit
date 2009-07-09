@@ -949,4 +949,13 @@ public class DefaultRecordService extends RecordService
 
 		return doc;
 	} // end method setFieldsOnDocument(Record, Document, boolean)
+
+	@Override
+	protected String escapeString(String str) 
+	{
+		return str.replaceAll(":", "\\\\:")
+				  .replaceAll("\\(", "\\\\\\(")
+				  .replaceAll("\\)", "\\\\\\)")
+				  .replaceAll("!", "\\\\!");
+	}
 } // end class DefaultRecordService

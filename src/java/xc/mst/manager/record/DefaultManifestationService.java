@@ -67,7 +67,7 @@ public class DefaultManifestationService extends ManifestationService
 	@Override
 	public ManifestationList getByXcRecordId(String xcRecordId) throws IndexException
 	{
-		String trait = (Manifestation.TRAIT_RECORD_ID + ":" + xcRecordId).replaceAll(":", "\\\\:");
+		String trait = recordService.escapeString(Manifestation.TRAIT_RECORD_ID + ":" + xcRecordId);
 
 		if(log.isDebugEnabled())
 			log.debug("Getting all manifestations with trait " + trait);

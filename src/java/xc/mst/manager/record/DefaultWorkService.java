@@ -66,7 +66,7 @@ public class DefaultWorkService extends WorkService
 	@Override
 	public WorkList getByIdentifierForTheWork(String identifierForTheWork) throws IndexException
 	{
-		String trait = Work.TRAIT_IDENTIFIER_FOR_THE_WORK + ":" + identifierForTheWork;
+		String trait = recordService.escapeString(Work.TRAIT_IDENTIFIER_FOR_THE_WORK + ":" + identifierForTheWork);
 
 		if(log.isDebugEnabled())
 			log.debug("Getting all works with trait " + trait);

@@ -396,18 +396,6 @@ public class AggregationService extends MetadataService
 			newWorks.add(match);
 			results.add(match);
 		} // end loop over matches
-
-		// Update the IDs from the up links
-		if(newWorks.size() > 0)
-		{	
-			for(Expression expression : expressionService.getByLinkedWork(work))
-			{
-				expression.removeLinkToWork(work);
-				for(Work newWork : newWorks)
-					expression.addLinkToWork(newWork);
-				results.add(expression);
-			} // end loop over expressions
-		} // end if newWorks not empty
 		
 		// Get the output records that were processed from records linked to the
 		// record we just processed
@@ -545,7 +533,7 @@ public class AggregationService extends MetadataService
 				
 				for(Expression linkToMe : expressionsProducedByLinkedExpression)
 				{
-					xml = addLink(xml, "linkWork", linkToMe.getOaiIdentifier());
+					xml = addLink(xml, "linkExpression", linkToMe.getOaiIdentifier());
 					manifestation.addLinkToExpression(linkToMe);
 				}
 			}
@@ -557,9 +545,6 @@ public class AggregationService extends MetadataService
 		manifestation.setOaiXml(outputter.outputString(xml));
 		
 		List<Manifestation> matches = matchManifestations(manifestation);
-
-		// A list of manifestation IDs that the current manifestation merged with
-		List<Manifestation> newManifestations= new ArrayList<Manifestation>();
 		
 		// If there were no matches add the manifestation to the list of results
 		if(matches.size() == 0)
@@ -569,35 +554,8 @@ public class AggregationService extends MetadataService
 		for(Manifestation match : matches)
 		{
 			mergeManifestations(match, manifestation);
-			newManifestations.add(match);
 			results.add(match);
 		} // end loop over matches
-
-		// Update the IDs from the up links
-		if(newManifestations.size() > 0)
-		{
-			for(Holdings holdings : holdingsService.getByLinkedManifestation(manifestation))
-			{
-				holdings.removeLinkToManifestation(manifestation);
-				for(Manifestation newManifestation : newManifestations)
-					holdings.addLinkToManifestation(newManifestation);
-				results.add(holdings);
-			} // end loop over holdings
-		} // end if newManifestationIds not empty
-
-		// Check the database for any holdings elements that need to be linked to
-		// the  manifestations, and add the links as appropriate
-		List<Holdings> holdings = getHoldingsMatchingManifestation(manifestation);
-		for(Holdings holdingsElement : holdings)
-		{
-			if(newManifestations.size() == 0)
-				holdingsElement.addLinkToManifestation(manifestation);
-			else
-				for(Manifestation newManifestation : newManifestations)
-					holdingsElement.addLinkToManifestation(newManifestation);
-
-			results.add(holdingsElement);
-		} // end loop over matched holdings
 		
 		// Get the output records that were processed from records linked to the
 		// record we just processed
@@ -607,6 +565,18 @@ public class AggregationService extends MetadataService
 		// record we just processed, add a link from each current processed record to it
 		for(Record linked : linkedToInput)
 			updateRecord(addLinkToRecordXml(linked, results, "linkManifestation"));
+		
+		refreshIndex();
+		
+		// Check the database for any holdings elements that need to be linked to
+		// the  manifestations, and add the links as appropriate
+		List<Holdings> holdings = getHoldingsMatchingManifestation(manifestation);
+		for(Holdings holdingsElement : holdings)
+		{
+			addLinkToRecordXml(holdingsElement, results, "linkManifestation");
+
+			results.add(holdingsElement);
+		} // end loop over matched holdings
 		
 		return results;
 	} // end method processManifestations(XcRecordSplitter)
@@ -664,20 +634,23 @@ public class AggregationService extends MetadataService
 			}
 		}
 		
-		// Remove the ID so a new one gets generated
-		holdings.setId(-1);
-		
-		holdings.setOaiXml(outputter.outputString(xml));
-		
 		// Check the database for any manifestation elements that need to be linked to
 		// the  holdings, and add the links as appropriate
 		List<Manifestation> manifestations = getManifestationsMatchingHoldings(holdings);
 		for(Manifestation manifestation : manifestations)
+		{
 			holdings.addLinkToManifestation(manifestation);
+			xml = addLink(xml, "linkManifestation", manifestation.getOaiIdentifier());
+		}
+		
+		// Remove the ID so a new one gets generated
+		holdings.setId(-1);
+		
+		holdings.setOaiXml(outputter.outputString(xml));
 
 		// Check the database for any item elements that need to be linked to
 		// the  holdings, and add the links as appropriate
-		List<Item> items = getItemsMatchingHoldings(holdings);
+		List<Item> items = getItemsMatchingHoldings(holdings); 
 		for(Item item : items)
 		{
 			item.addLinkToHoldings(holdings);
@@ -1469,11 +1442,6 @@ public class AggregationService extends MetadataService
 													   			  .addContent(((Element)expressionElement.clone()))
 													   			  .addContent("\n\t")));
 
-		// Add an up link from this expression to each work
-//TODO: fix		
-//		for(Work work : works)
-//			expression.addLinkToWork(work);
-
 		return expression;
 	} // end method buildExpression(Element)
 
@@ -1508,11 +1476,6 @@ public class AggregationService extends MetadataService
 		                                                   .addContent(((Element)manifestationElement.clone()))
 		                                                   .addContent("\n\t")));
 
-			// Add an up link from this manifestation to each expression
-//TODO: fix	
-//			for(Expression expression : expressions)
-//				manifestation.addLinkToExpression(expression);
-
 			// An XPATH expression to get the recordId elements
 			XPath xpath = XPath.newInstance("./xc:recordID");
 			xpath.addNamespace(XC_NAMESPACE);
@@ -1532,6 +1495,25 @@ public class AggregationService extends MetadataService
 				manifestation.addXcRecordId(type, value);
 			} // end loop over recordId elements
 
+			// An XPATH expression to get the recordId elements
+			xpath = XPath.newInstance("./dcterms:identifier");
+			xpath.addNamespace(XC_NAMESPACE);
+
+			// Get the subfields.
+			elements = xpath.selectNodes(manifestationElement);
+
+			// Loop over the recordId elements and add value of each to the manifestation
+			for(Element element : elements)
+			{
+				String value = element.getText();
+				String type = element.getAttributeValue("type");
+
+				if(log.isDebugEnabled())
+					log.debug("Found an identifier element with a value of " + value + " and a type of " + type + ".");
+
+				manifestation.addXcRecordId(type, value);
+			} // end loop over recordId elements
+			
 			return manifestation;
 		} // end try
 		catch(JDOMException e)
@@ -1571,11 +1553,6 @@ public class AggregationService extends MetadataService
                                                      .setContent(new Text("\n\t"))
                                                      .addContent(((Element)holdingsElement.clone()))
                                                      .addContent("\n\t")));
-
-			// Add an up link from this holdings to each manifestation
-//TODO: fix				
-//			for(Manifestation manifestation : manifestations)
-//				holdings.addLinkToManifestation(manifestation);
 
 			// An XPATH expression to get the recordId elements
 			XPath xpath = XPath.newInstance("./xc:recordID");
@@ -1657,11 +1634,6 @@ public class AggregationService extends MetadataService
 			// An XPATH expression to get the holdingsExemplified elements
 			XPath xpath = XPath.newInstance("./xc:holdingsExemplified");
 			xpath.addNamespace(XC_NAMESPACE);
-
-			// Add an up link from this item to each holdings
-//TODO: fix	
-//			for(Holdings holding : holdings)
-//				item.addLinkToHoldings(holding);
 
 			// Get the subfields.
 			List<Element> elements = xpath.selectNodes(itemElement);
@@ -1783,8 +1755,17 @@ public class AggregationService extends MetadataService
 			return from;
 		} // end catch JDOMException
 		
+		List<String> currentLinks = getLinks(xml, linkToAdd);
+		
 		for(Record linkTo : to)
-			xml = addLink(xml, linkToAdd, linkTo.getOaiIdentifier());
+		{
+			if(!currentLinks.contains(linkTo.getOaiIdentifier()))
+			{
+				xml = addLink(xml, linkToAdd, linkTo.getOaiIdentifier());
+				from.addUpLink(linkTo);
+				currentLinks.add(linkTo.getOaiIdentifier());
+			}
+		}
 		
 		from.setOaiXml(outputter.outputString(xml));
 		

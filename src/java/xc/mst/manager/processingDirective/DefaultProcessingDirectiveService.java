@@ -26,6 +26,7 @@ import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.scheduling.ProcessingDirectiveWorkerThread;
 import xc.mst.scheduling.Scheduler;
 import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.utils.index.RecordList;
@@ -170,90 +171,8 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      */
     private void runProcessingDirective(ProcessingDirective pd)
     {
-    	RecordList recordsToCheck = null;
-    	
-    	try { 
-	    	// If the processing directive's source is a provider then we should check all
-	    	// records harvested from that provider.  Otherwise we should check all records
-	    	// processed by the processing directive's source service.
-	    	recordsToCheck = (pd.getSourceProvider() != null ?
-	    			                     recordService.getByProviderId(pd.getSourceProvider().getId()) :
-	    			                	 recordService.getByServiceId(pd.getSourceService().getId()));
-    	} catch(IndexException ie) {
-			log.error("Indexing exception occured.", ie);
-		} 
-    	
-    	// Check each record against the new processing directive. Mark the matched
-    	// records as input for the processing directive's service
-    	for(Record record : recordsToCheck)
-    	{
-    		// Check if the record matches any of the metadata formats for the new processing directive
-			if(pd.getTriggeringFormats().contains(record.getFormat()))
-			{
-				record.addInputForService(pd.getService());
-
-				try
-				{
-					recordService.update(record);
-				} // end try(update the record)
-				catch (DataException e)
-				{
-					log.error("Data Exception", e);
-				} // end catch(DataException)
-		    	catch(IndexException ie) {
-					log.error("Indexing exception occured.", ie);
-				} 				
-			} // end if(format matched)
-
-			// If the metadata format didn't match, check if the record is in any of the sets for the current processing directive
-			else
-			{
-				for(Set set : record.getSets())
-				{
-					if(pd.getTriggeringSets().contains(set))
-					{
-						record.addInputForService(pd.getService());
-
-						try
-						{
-							recordService.update(record);
-						} // end try(update the record)
-						catch (DataException e)
-						{
-							log.error("Data Exception", e);
-						} // end catch(DataException)
-				    	catch(IndexException ie) {
-							log.error("Indexing exception occured.", ie);
-						} 
-						break;
-					} // end if(the set matched the processing directive)
-				} // end loop over the record's sets
-			} // end else(the format did not trigger the processing directive)
-    	} // end loop over potentially matching records
-
-    	// Reopen the reader so it can see the changes made by running the service
-
-		try
-		{
-			SolrIndexManager.getInstance().commitIndex();
-		} // end try(reopen the reader)
-		catch(Exception e)
-		{
-			log.error("An error occurred while reopening the index");
-		} // end catch(Exception)
-
-    	// Run the service that is the processing directive's target
-    	try
-		{
-			ServiceWorkerThread serviceThread = new ServiceWorkerThread();
-			serviceThread.setServiceId(pd.getService().getId());
-			if(pd.getOutputSet() != null)
-				serviceThread.setOutputSetId(pd.getOutputSet().getId());
-			Scheduler.scheduleThread(serviceThread);
-		} // end try(start the service)
-		catch(Exception e)
-		{
-			log.error("An error occurred while running the service with ID " + pd.getService().getId() + ".", e);
-		} // end catch(Exception)
+    	ProcessingDirectiveWorkerThread pdThread = new ProcessingDirectiveWorkerThread();
+    	pdThread.setProcessingDirective(pd);
+    	Scheduler.scheduleThread(pdThread);
     } // end method runNewProcessingDirective(ProcessingDirective)
 }
