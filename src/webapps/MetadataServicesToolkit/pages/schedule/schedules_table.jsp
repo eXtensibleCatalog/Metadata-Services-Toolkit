@@ -199,26 +199,31 @@
                                                 </c:if>
                                             </td>
                                             <td width="80">
-                                                <c:set var="lastRun" value="${mst:lastHarvest(schedule)}"/>
-                                                <c:if test="${fn:startsWith(lastRun, 'Not')}">
-                                                    ${mst:lastHarvest(schedule)}
-                                                </c:if>
-                                                <c:if test="${fn:startsWith(lastRun, 'last')}">
-                                                    <img src="page-resources/img/tick.jpg"><span style="position:relative;top:-5px;">Success</span>
-                                                </c:if>
-
-                                            </td>
-                                            <td>
-
                                                 <c:set var="schedule_status" value ="${schedule.status}"/>
                                                 <c:choose>
                                                     <c:when test="${schedule_status=='NOT_RUNNING'}">
-                                                        Not running
+                                                         <c:set var="lastRun" value="${mst:lastHarvest(schedule)}"/>
+                                                            <c:if test="${fn:startsWith(lastRun, 'Not')}">
+                                                                ${mst:lastHarvest(schedule)}
+                                                            </c:if>
+                                                            <c:if test="${fn:startsWith(lastRun, 'last')}">
+                                                                <img src="page-resources/img/tick.jpg"><span style="position:relative;top:-5px;">Success</span>
+                                                            </c:if>
                                                     </c:when>
                                                     <c:otherwise>
                                                         In Progress
                                                     </c:otherwise>
                                                 </c:choose>
+                                               
+
+                                            </td>
+                                            <td>
+                                                <c:set var="lastRun" value="${mst:lastHarvest(schedule)}"/>
+
+                                                <c:if test="${fn:startsWith(lastRun, 'last')}">
+                                                    ${mst:lastHarvest(schedule)} hrs ${timeZone}
+                                                </c:if>
+
                                             </td>
                                             <td> <button class="xc_button" id="showDeleteSchedule" type="button" name="delete" onClick="javascript:YAHOO.xc.mst.schedule.view.deleteSchedule(${schedule.id}, '${schedule.scheduleName}');">Delete</button></td>
                                         </tr>

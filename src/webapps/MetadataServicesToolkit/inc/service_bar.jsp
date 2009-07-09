@@ -10,9 +10,10 @@
 	<c:choose>
             <c:when test="${displayType!=null}">
                     <c:if test="${displayType eq varPause}">
+                        <img src="page-resources/img/loading_graphic.gif">
                     </c:if>
                     <c:if test="${displayType eq varResume}">
-                          <img src="page-resources/img/loading_graphic.gif">
+                          
                     </c:if>
                     <c:if test="${displayType eq varAbort}">
                           <img src="page-resources/img/loading_graphic.gif">

@@ -131,7 +131,7 @@ public class AddRepository extends ActionSupport implements UserAware
             log.error(e.getMessage(),e);
             this.addFieldError("addRepositoryError", "Unable to validate the repository");
             errorType = "error";
-            return INPUT;
+            return SUCCESS;
         }
 
     }
