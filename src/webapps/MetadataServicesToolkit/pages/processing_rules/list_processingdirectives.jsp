@@ -99,14 +99,14 @@
                                             <tr>
                                                 <td>#ID</td>
                                                 <td>
-                                                   <div align="left">
+                                                   <div align="center">
 
-                                                           <table style="position:relative;top:-2px;border-style: none; border-color: #ffffff;margin:0px;padding:0px;">
+                                                           <table style="position:relative;top:-2px;border-style: none; border-color: #ffffff;margin:0px;padding:0px;" width=100%>
                                                                  <tbody>
                                                                     <tr>
-                                                                        <td style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span>Output Records from</span> </td>
-                                                                        <td style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span style="margin-left: 10px; margin-right: 10px;"><img src="page-resources/img/greenarrow.jpg"/></span> </td>
-                                                                        <td style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span>To be Processed by</span> </td>
+                                                                        <td width="47%" style="border-color:#ffffff;border-style:none;padding:0;margin:0;text-align:right"> <span>Output Records from</span> </td>
+                                                                        <td width="6%" style="border-color:#ffffff;border-style:none;padding:0;margin:0;"> <span style="margin-left: 10px; margin-right: 10px;"><img src="page-resources/img/greenarrow.jpg"/></span></td>
+                                                                        <td width="47%" style="border-color:#ffffff;border-style:none;padding:0;margin:0;text-align:left;"><span>To be Processed by</span> </td>
                                                                     </tr>
                                                                  </tbody>
                                                             </table>
@@ -178,15 +178,15 @@
                                                                         <c:if test="${bool=='true'}">
 
                                                                             <td>
-                                                                                <div align="left" style="margin-left:5px;">
+                                                                                <div align="center" >
 
                                                                                         <a href="<c:out value="${url}" />">
-                                                                                            <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;">
+                                                                                            <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;" width="100%">
                                                                                                 <tbody>
                                                                                                     <tr>
-                                                                                                        <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;color:#245f8a;"> ${x1.name}</td>
-                                                                                                        <td width="10%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt;color:#245f8a;"> >>> </td>
-                                                                                                        <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;color:#245f8a;"> &nbsp;${directive.service.name} </td>
+                                                                                                        <td width="47%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;color:#245f8a;"> ${x1.name}</td>
+                                                                                                        <td width="6%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; margin-left: 10px; margin-right: 10px;;color:#245f8a;"> &nbsp;>>> </td>
+                                                                                                        <td width="47%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;color:#245f8a;padding-left:10px;">${directive.service.name}</td>
 
                                                                                                     </tr>
                                                                                                 </tbody>
@@ -199,15 +199,15 @@
                                                                         <c:if test="${bool=='false'}">
                                                                             <td>
 
-                                                                                   <div align="left" style="margin-left:5px;">
+                                                                                   <div align="center" >
                                                                                         <a  href="<c:out value="${url}" />">
 
-                                                                                                <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;">
+                                                                                                <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;" width="100%">
                                                                                                     <tbody>
                                                                                                         <tr>
-                                                                                                            <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;color:#245f8a;"> ${x2.name} </td>
-                                                                                                            <td width="10%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt;color:#245f8a;"> >>> </td>
-                                                                                                            <td width="45%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;color:#245f8a;"> &nbsp;${directive.service.name} </td>
+                                                                                                            <td width="47%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;color:#245f8a;"> ${x2.name} </td>
+                                                                                                            <td width="6%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; margin-left: 10px; margin-right: 10px;;color:#245f8a;"> >>> </td>
+                                                                                                            <td width="47%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding:0px;text-align:left;color:#245f8a;"> &nbsp;${directive.service.name} </td>
                                                                                                         </tr>
                                                                                                     </tbody>
                                                                                                 </table>
