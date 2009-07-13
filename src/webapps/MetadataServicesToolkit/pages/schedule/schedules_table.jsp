@@ -166,13 +166,13 @@
                                                 </c:if>
                                             <td class="${classColumn}">
                                                 <c:if test="${schedule.recurrence == 'Daily'}">
-                                                    ${schedule.recurrence} Time ${schedule.hour}:<c:if test="${schedule.minute < 10}">0${schedule.minute}</c:if><c:if test="${schedule.minute > 9}">${schedule.minute} hrs {timeZone}</c:if>
+                                                    ${schedule.recurrence} at ${schedule.hour}:<c:if test="${schedule.minute < 10}">0${schedule.minute}</c:if><c:if test="${schedule.minute > 9}">${schedule.minute} </c:if> ${timeZone}
                                                 </c:if>
                                                 <c:if test="${schedule.recurrence == 'Hourly'}">
                                                     ${schedule.recurrence} ${schedule.minute} minutes past the hour
                                                 </c:if>
                                                 <c:if test="${schedule.recurrence == 'Weekly'}">
-                                                    ${schedule.recurrence}
+                                                    ${schedule.recurrence} on 
                                                     <c:if test="${schedule.dayOfWeek == 1}">
                                                         Sunday
                                                     </c:if>
@@ -195,7 +195,7 @@
                                                         Saturday
                                                     </c:if>
 
-                                                    Time ${schedule.hour}:00 hrs ${timeZone}
+                                                    at ${schedule.hour}:00 ${timeZone}
                                                 </c:if>
                                             </td>
                                             <td width="80">
