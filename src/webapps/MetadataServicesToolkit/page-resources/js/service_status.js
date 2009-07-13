@@ -106,8 +106,7 @@ refreshServiceBar : function()
             var url = "refreshServiceBar.action";
             YAHOO.util.Connect.asyncRequest('GET', url, {
             success: function (o)
-            {
-                
+            {                
                 var findError = o.responseText.search("No User Found");
                 if(findError==-1)
                 {

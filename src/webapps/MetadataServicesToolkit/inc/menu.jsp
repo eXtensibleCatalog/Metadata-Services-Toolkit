@@ -18,12 +18,12 @@
             <ul class="first-of-type">
 
        			<mst:checkUserPermission permission="Repositories">
-                   <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="<c:url value="/allRepository.action" />" ><span class="wrenchImg">&nbsp;</span>Repository</a>
+                   <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/allRepository.action" />" ><span class="wrenchImg">&nbsp;</span>Repository</a>
                    <div id="repository" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allRepository.action" />" >List Repositories</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddRepository.action" />" >Add Repository</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/allRepository.action" />" >List Repositories</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewAddRepository.action" />" >Add Repository</a></li>
                            </ul>
                         </div>
                     </div>
@@ -31,12 +31,12 @@
                  </mst:checkUserPermission>
 
        			<mst:checkUserPermission permission="Schedule">
-                   <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="<c:url value="/allSchedules.action"/>">Harvest</a>
+                   <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/allSchedules.action"/>">Harvest</a>
                    <div id="schedule" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/allSchedules.action" />" >List Scheduled Harvests</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddSchedule.action" />" >Add Scheduled Harvests</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/allSchedules.action" />" >List Scheduled Harvests</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewAddSchedule.action" />" >Add Scheduled Harvests</a></li>
                            </ul>
                         </div>
                     </div>
@@ -44,12 +44,12 @@
                  </mst:checkUserPermission>
 
        			<mst:checkUserPermission permission="Services">
-                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="<c:url value="/listServices.action"/>">Services</a>
+                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/listServices.action"/>">Services</a>
                    <div id="Services" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/listServices.action" />" >List Services</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddService.action" />" >Add Service</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/listServices.action" />" >List Services</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewAddService.action" />" >Add Service</a></li>
                            </ul>
                         </div>
                     </div>
@@ -57,12 +57,12 @@
                  </mst:checkUserPermission>
 
                  <mst:checkUserPermission permission="Processing Rules">
-                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="<c:url value="/listProcessingDirectives.action"/>">Processing Rules</a>
+                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/listProcessingDirectives.action"/>">Processing Rules</a>
                    <div id="Processing Rules" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/listProcessingDirectives.action" />" >List Processing Rules</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="<c:url value="/viewAddProcessingDirectives.action?refreshSession=yes" />" >Add Processing Rules</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/listProcessingDirectives.action" />" >List Processing Rules</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewAddProcessingDirectives.action?refreshSession=yes" />" >Add Processing Rules</a></li>
                            </ul>
                         </div>
                     </div>
@@ -71,19 +71,19 @@
 
 
        			<mst:checkUserPermission permission="Browse Records">
-                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="<c:url value="/viewBrowseRecords.action"/>">Browse Records</a>
+                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewBrowseRecords.action"/>">Browse Records</a>
                     </li>
                  </mst:checkUserPermission>
 
        			<mst:checkUserPermission permission="Logs">
-                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" href="generalLog.action">Logs</a>
+                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000" href="generalLog.action">Logs</a>
                    <div id="logs" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="generalLog.action" >General</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="harvestInLog.action" >Harvest In</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="harvestOutLog.action" >Harvest Out</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" href="serviceLog.action" >Services</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="generalLog.action" >General</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="harvestInLog.action" >Harvest In</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="harvestOutLog.action" >Harvest Out</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="serviceLog.action" >Services</a></li>
                            </ul>
                         </div>
                     </div>
