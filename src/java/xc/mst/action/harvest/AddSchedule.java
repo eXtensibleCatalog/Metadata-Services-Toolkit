@@ -26,8 +26,6 @@ import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.harvester.Hexception;
-import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.repository.DefaultFormatService;
@@ -249,14 +247,6 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	if (otherSchedule == null || (otherSchedule.getId() == scheduleId)) {
 	    	// Add schedule to session
     		request.getSession().setAttribute("schedule", schedule);
-
-        	try {
-    	    	ValidateRepository validateRepository = new ValidateRepository();
-    	        validateRepository.validate(repositoryId);
-        	} catch (Hexception he) {
-        		log.error("Exception occured while validating the repository", he);
-        	}
-
     	} else {
     		addFieldError("providerExist", "Harvest schedule for repository - " + repository.getName() + " already exists. There can only be one schedule for a repository. ");
     		errorType = "error";
