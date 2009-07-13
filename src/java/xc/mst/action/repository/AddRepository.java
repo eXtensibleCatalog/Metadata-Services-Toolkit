@@ -10,15 +10,12 @@
 
 package xc.mst.action.repository;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 import java.sql.Timestamp;
 import java.util.Date;
-import org.apache.log4j.FileAppender;
+
 import org.apache.log4j.Logger;
-import xc.mst.action.UserAware;
+
 import xc.mst.bo.provider.Provider;
-import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -29,13 +26,15 @@ import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserService;
 
+import com.opensymphony.xwork2.ActionSupport;
+
 /**
  * This method is for adding a new repository to the database.
  *
  * @author  Tejaswi Haramurali
  */
 
-public class AddRepository extends ActionSupport implements UserAware
+public class AddRepository extends ActionSupport 
 {
 
     /** Serial id */
@@ -44,8 +43,6 @@ public class AddRepository extends ActionSupport implements UserAware
 	/** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-    /** Represents the User who is logged in */
-    private User user;
 
     /** Represents the Name of the Repository that should be added */
     private String repositoryName;
@@ -99,8 +96,6 @@ public class AddRepository extends ActionSupport implements UserAware
                 pr.setUpdatedAt( new Timestamp(new Date().getTime()));
                 pr.setLastValidationDate(new Date());
                 pr.setOaiProviderUrl(getRepositoryURL());
-
-                pr.setUser(user);
 
                 providerService.insertProvider(pr);
 
@@ -213,14 +208,5 @@ public class AddRepository extends ActionSupport implements UserAware
         return repositoryURL;
     }
 
-    /**
-     * This method is used to set a user
-     *
-     * @param user The user object to be set
-     */
-    public void setUser(User user)
-    {
-        this.user = user;
-    }
     
 }

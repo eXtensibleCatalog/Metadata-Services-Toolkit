@@ -49,11 +49,6 @@ public class Provider
 	private String url = null;
 
 	/**
-	 * The User that added the provider
-	 */
-	private User user = null;
-
-	/**
 	 * The provider's title
 	 */
 	private String title = null;
@@ -307,26 +302,6 @@ public class Provider
 	{
 		this.url = url;
 	} // end method setOaiProviderUrl(String)
-
-	/**
-	 * Gets the user who added the provider
-	 *
-	 * @return The user who added the provider
-	 */
-	public User getUser()
-	{
-		return user;
-	} // end method getUser()
-
-	/**
-	 * Sets the user who added the provider
-	 *
-	 * @param user The new user who added the provider
-	 */
-	public void setUser(User user)
-	{
-		this.user = user;
-	} // end method setUser(User)
 
 	/**
 	 * Gets the provider's title

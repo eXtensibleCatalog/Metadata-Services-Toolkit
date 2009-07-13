@@ -83,7 +83,6 @@ CREATE TABLE providers
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   name VARCHAR(255) NOT NULL,
   oai_provider_url VARCHAR(255) NOT NULL,
-  user_id INT(11) NOT NULL,
   title VARCHAR(127),
   creator VARCHAR(127),
   subject VARCHAR(63),
@@ -114,9 +113,7 @@ CREATE TABLE providers
   last_log_reset DATETIME,
   log_file_name VARCHAR(255) NOT NULL,
 
-  PRIMARY KEY (provider_id ),
-
-  INDEX idx_providers_user_id (user_id)
+  PRIMARY KEY (provider_id )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

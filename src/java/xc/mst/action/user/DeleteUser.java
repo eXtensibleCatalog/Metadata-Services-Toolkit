@@ -9,24 +9,20 @@
 
 package xc.mst.action.user;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.repository.DefaultProviderService;
-import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.user.DefaultUserGroupUtilService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
 
 import com.opensymphony.xwork2.ActionSupport;
-import xc.mst.dao.DataException;
 
 /**
  * This action method is used to delete a user from the system
@@ -35,14 +31,15 @@ import xc.mst.dao.DataException;
  */
 public class DeleteUser extends ActionSupport
 {
-    /**The ID of the user to be deleted */
+    /** Serial id */
+	private static final long serialVersionUID = 2276027380221702568L;
+
+	/**The ID of the user to be deleted */
     private int userId;
 
     /** creates service object for users */
     private UserService userService = new DefaultUserService();
 
-    /** creates service object for providers */
-    private ProviderService providerService = new DefaultProviderService();
 
 	/** Error type */
 	private String errorType;
@@ -62,30 +59,10 @@ public class DeleteUser extends ActionSupport
         {
 
             User tempUser = userService.getUserById(userId);
-            List<Provider> providerList = providerService.getAllProviders();
-            Iterator<Provider> iter = providerList.iterator();
-            boolean deleteFlag = true;
-            while(iter.hasNext())
-            {
-                Provider tempProvider = (Provider)iter.next();
-                if(tempProvider.getUser().getId()==userId)
-                {
-                    deleteFlag = false;
-                }
-            }
 
-            if(deleteFlag==true)
-            {
-                userService.deleteUser(tempUser);
-                UserGroupUtilService UGUtilService = new DefaultUserGroupUtilService();
-                UGUtilService.deleteGroupsForUserId(userId);
-            }
-            else
-            {
-                this.addFieldError("deleteUserError", "The user '"+tempUser.getUsername()+"' is associated with a Repository and cannot be deleted");
-                errorType = "error";
-                return INPUT;
-            }
+            userService.deleteUser(tempUser);
+            UserGroupUtilService UGUtilService = new DefaultUserGroupUtilService();
+            UGUtilService.deleteGroupsForUserId(userId);
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)

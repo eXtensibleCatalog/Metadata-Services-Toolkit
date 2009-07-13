@@ -233,16 +233,7 @@
                             </td>
 			                
 			            </tr>
-			            <tr>
-                            <td>
-                                <ul style="list-style:none;">
-                                    <li style="float:left;"><div align="right" style="width:140px;"><B>Created By</B> </div> </li>
-                                    <li style="float:left;"><div>&nbsp;:</div></li>
-                                    <li style="float:left;"><div style="margin-left:15px;">${user.firstName} ${user.lastName}</div></li>
-                                </ul>
-                            </td>
-			               
-			            </tr>
+
 			            <tr>
                             <td>
                                 <ul style="list-style:none;">

@@ -391,9 +391,6 @@ public abstract class ProviderDAO
 			if(provider.getLanguage() != null && provider.getLanguage().length() > 15)
 				errorMessage.append("The language field is invalid. ");
 
-			if(provider.getUser() == null)
-				errorMessage.append("The user_id field is invalid. ");
-
 			if(provider.getTitle() != null && provider.getTitle().length() > 127)
 				errorMessage.append("The title field is invalid. ");
 
