@@ -47,5 +47,11 @@ public class HarvestUtil {
 
             return output;
 		
-	}
+        }
+
+        public static String simpleDateFormat(Timestamp timeStamp)
+        {
+            SimpleDateFormat simpledateformat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            return simpledateformat.format((java.util.Date) timeStamp);
+        }
 }

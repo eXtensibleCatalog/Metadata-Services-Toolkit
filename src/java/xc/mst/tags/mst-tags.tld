@@ -132,6 +132,14 @@
     <function-signature>
         java.lang.String latestHarvest(xc.mst.bo.harvest.HarvestSchedule)
     </function-signature>
-  </function> 
+  </function>
+
+  <function>
+    <name>simpleDateFormat</name>
+    <function-class>xc.mst.tags.HarvestUtil</function-class>
+    <function-signature>
+        java.lang.String simpleDateFormat(java.sql.Timestamp)
+    </function-signature>
+  </function>
     
 </taglib>
