@@ -76,7 +76,7 @@ YAHOO.xc.mst.configuration.ldap = {
              else
              {
              
-                if (document.getElementById("showForgotPasswordLink").checked) {
+                if (document.addLDAP.showForgotPasswordLink.checked) {
                 	 if (document.getElementById("forgotPasswordUrl").value == '') {
                 	 	createErrorDiv("error","Forgot password URL is required.");
                 	 	return false;

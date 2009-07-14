@@ -90,7 +90,7 @@
                  <div class="clear">&nbsp;</div>
 
                 <c:choose>
-                    <c:when test="${empty repositories}">
+                    <c:when test="${empty providerList}">
                          <div class="emptytablebar">
                              <div class="emptytable_innerdiv"> No Logs found </div>
                          </div>

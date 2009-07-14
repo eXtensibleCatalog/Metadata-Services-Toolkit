@@ -69,7 +69,7 @@ public class AddLDAP extends ActionSupport
 	private String errorType; 
 	
 	/** Indicates whether to show forgot password URL */
-	private boolean showForgotPasswordLink;
+	private String showForgotPasswordLink;
 	
 	/** URL to forward the user to get forgot password */
 	private String forgotPasswordUrl;
@@ -143,11 +143,13 @@ public class AddLDAP extends ActionSupport
                 server.setType(Server.ServerType.LDAP);
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
-                server.setShowForgotPasswordLink(showForgotPasswordLink);
-                if (showForgotPasswordLink) {
+                
+                if (showForgotPasswordLink.equalsIgnoreCase("yesbutton")) {
                 	server.setForgotPasswordUrl(forgotPasswordUrl);
+                    server.setShowForgotPasswordLink(true);
                 } else {
                 	server.setForgotPasswordUrl(null);
+                    server.setShowForgotPasswordLink(false);
                 }
                 if(displayName.equalsIgnoreCase("local"))
                 {
@@ -169,11 +171,13 @@ public class AddLDAP extends ActionSupport
                 server.setType(Server.ServerType.LDAP);
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
-                server.setShowForgotPasswordLink(showForgotPasswordLink);
-                if (showForgotPasswordLink) {
+                
+                if (showForgotPasswordLink.equalsIgnoreCase("yesbutton")) {
                 	server.setForgotPasswordUrl(forgotPasswordUrl);
+                    server.setShowForgotPasswordLink(true);
 	            } else {
 	            	server.setForgotPasswordUrl(null);
+                    server.setShowForgotPasswordLink(false);
 	            }
                 if(displayName.equalsIgnoreCase("local"))
                 {
@@ -361,11 +365,11 @@ public class AddLDAP extends ActionSupport
 		this.errorType = errorType;
 	}
 
-	public boolean isShowForgotPasswordLink() {
+	public String isShowForgotPasswordLink() {
 		return showForgotPasswordLink;
 	}
 
-	public void setShowForgotPasswordLink(boolean showForgotPasswordLink) {
+	public void setShowForgotPasswordLink(String showForgotPasswordLink) {
 		this.showForgotPasswordLink = showForgotPasswordLink;
 	}
 
