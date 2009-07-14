@@ -249,7 +249,7 @@
                                 <ul style="list-style:none;">
                                     <li style="float:left;"><div align="right" style="width:140px;"><B>Last Modified Date</B> </div> </li>
                                     <li style="float:left;"><div>&nbsp;:</div></li>
-                                    <li style="float:left;"><div style="margin-left:15px;">${provider.updatedAt} ${timeZone}</div></li>
+                                    <li style="float:left;"><div style="margin-left:15px;">${mst:simpleDateFormat(provider.updatedAt)} ${timeZone}</div></li>
                                 </ul>
                             </td>
 			                
