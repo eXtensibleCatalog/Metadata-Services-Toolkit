@@ -80,10 +80,13 @@ public class RecordList extends AbstractList<Record>
 	 */
 	public RecordList(SolrQuery query) throws IndexException
 	{
-		this.query = query;
-		query.setRows(MAX_RESULTS);
-		query.setStart(currentOffset);
-		docs = indexMgr.getDocumentList(query);
+		if(query != null)
+		{
+			this.query = query;
+			query.setRows(MAX_RESULTS);
+			query.setStart(currentOffset);
+			docs = indexMgr.getDocumentList(query);
+		}
 	}
 
 	/**

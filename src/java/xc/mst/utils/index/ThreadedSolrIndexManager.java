@@ -110,9 +110,9 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 				synchronized(this)
 				{
 					threadPool.execute(new Job(doc));
-					log.info("incrementing numQueuedJobs");
+					log.debug("incrementing numQueuedJobs");
 					numQueuedJobs++;
-					log.info("incremented numQueuedJobs: " + numQueuedJobs);
+					log.debug("incremented numQueuedJobs: " + numQueuedJobs);
 				}
 			}
 			catch(RuntimeException e)
@@ -215,9 +215,9 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 			{
 				synchronized(this)
 				{
-					log.info("decrementing numQueuedJobs");
+					log.debug("decrementing numQueuedJobs");
 					numQueuedJobs--;
-					log.info("decremented numQueuedJobs: " + numQueuedJobs);
+					log.debug("decremented numQueuedJobs: " + numQueuedJobs);
 				}
 			}
 			
