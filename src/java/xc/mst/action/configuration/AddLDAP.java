@@ -144,7 +144,7 @@ public class AddLDAP extends ActionSupport
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
                 
-                if (showForgotPasswordLink.equalsIgnoreCase("yesbutton")) {
+                if (showForgotPasswordLink.equalsIgnoreCase("yes")) {
                 	server.setForgotPasswordUrl(forgotPasswordUrl);
                     server.setShowForgotPasswordLink(true);
                 } else {
@@ -172,7 +172,7 @@ public class AddLDAP extends ActionSupport
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
                 
-                if (showForgotPasswordLink.equalsIgnoreCase("yesbutton")) {
+                if (showForgotPasswordLink.equalsIgnoreCase("yes")) {
                 	server.setForgotPasswordUrl(forgotPasswordUrl);
                     server.setShowForgotPasswordLink(true);
 	            } else {

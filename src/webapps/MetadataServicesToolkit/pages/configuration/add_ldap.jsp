@@ -114,11 +114,11 @@
 
                         <tr style="height:50px;">
                             <td valign="center"> <B>Show forgot password URL </B> &nbsp;&nbsp;<br>
-                            <input type="radio" name ="showForgotPasswordLink" value="yesbutton"
+                            <input type="radio" name ="showForgotPasswordLink" value="yes"
                             <c:if test="${server.showForgotPasswordLink == 'true'}">
                             	checked
                             </c:if> > Yes
-                            <input type="radio" name ="showForgotPasswordLink" value="nobutton"
+                            <input type="radio" name ="showForgotPasswordLink" value="no"
                             <c:if test="${server.showForgotPasswordLink == 'false'}">
                             	checked
                             </c:if> > No
