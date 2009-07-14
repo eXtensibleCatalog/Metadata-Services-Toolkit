@@ -73,8 +73,15 @@ YAHOO.xc.mst.schedule.view = {
 	 {
 
 		var handleSuccess = function(o) {
-		    //get the response from adding a repository
-		    document.getElementById('scheduleTable').innerHTML = o.responseText;
+		
+			if(o.responseText != null && o.responseText.search("SchedulePage") < 0 )
+			{
+				window.location = 'viewLogin.action';
+			} else {
+				//get the response from adding a repository
+				document.getElementById('scheduleTable').innerHTML = o.responseText;
+			}
+			
 
 		};
 

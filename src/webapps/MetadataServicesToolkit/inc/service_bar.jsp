@@ -25,8 +25,10 @@
             </c:otherwise>
        </c:choose>
 </c:if>
-
+<!-- Begin - This is required to identify that the response is a status bar and not login screen -->
 <div style="display:none">ServiceStatus</div>
+<!-- End - This is required to identify that the response is a status bar and not login screen -->
+
 <c:if test="${currentProcess!=null}">
         <c:set var="nameLength" value="${fn:length(currentProcess)}"/>
         <c:choose>

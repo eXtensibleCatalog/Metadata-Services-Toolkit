@@ -2,6 +2,10 @@
 <%@ taglib prefix="mst" uri="mst-tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"   prefix="fn" %>
 
+<!-- Begin - This is required to identify that the response is a schedule table and not login screen -->
+<div style="display:none">SchedulePage</div>
+<!-- End - This is required to identify that the response is a schedule table and not login screen -->
+
 <c:choose>
     <c:when test="${empty schedules}">
          <div class="emptytablebar">

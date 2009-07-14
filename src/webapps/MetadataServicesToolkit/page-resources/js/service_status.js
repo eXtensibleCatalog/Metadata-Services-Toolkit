@@ -106,20 +106,15 @@ refreshServiceBar : function()
             var url = "refreshServiceBar.action";
             YAHOO.util.Connect.asyncRequest('GET', url, {
             success: function (o)
-            {                
-                var findError = o.responseText.search("No User Found");
-                if(findError==-1)
-                {
+            {
+                
                      if(o.responseText != null && o.responseText.search("ServiceStatus") < 0 )
                         {
                             window.location = 'viewLogin.action';
-                        }
-                    document.getElementById("serviceBar").innerHTML = o.responseText;
-                }
-                else
-                {
-                    document.getElementById("serviceBar").style.display = "none";
-                }
+                        } else {
+                    	    document.getElementById("serviceBar").innerHTML = o.responseText;
+                    	}
+                    	
             }
             });
 
