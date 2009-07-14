@@ -1,7 +1,5 @@
 package xc.mst.scheduling;
 
-import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.processing.ProcessingDirective;
@@ -197,4 +195,8 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 			}
 		}
 	} // end method checkProcessingDirectives(Record)
+
+	public ProcessingDirective getProcessingDirective() {
+		return processingDirective;
+	}
 }

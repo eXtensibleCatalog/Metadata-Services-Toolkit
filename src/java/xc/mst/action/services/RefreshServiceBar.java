@@ -55,32 +55,34 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
 
                 if(Scheduler.getRunningJob()!=null)
                 {
-                    if(Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_CANCELED))
-                    {
-                    	if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-                        	currentProcess = "Aborting harvest of provider " + Scheduler.getRunningJob().getJobName();
-                        } else {
-                        	currentProcess = "Aborting process " + Scheduler.getRunningJob().getJobName();
-                        }
-                    }
-                    else if (Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_PAUSED))
-                    {
-                        if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-                        	currentProcess = "Paused harvesting from provider " + Scheduler.getRunningJob().getJobName();
-                        } else {
-                        	currentProcess = "Paused processing through " + Scheduler.getRunningJob().getJobName();
-                        }
-                    }  
-                    else if (Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_NOT_RUNNING))
-                    {
-                        	currentProcess = null;
-                    } else {
-                    	 if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-                         	currentProcess = "Harvesting from provider " + Scheduler.getRunningJob().getJobName();
-                         } else {
-                         	currentProcess = "Processing through " + Scheduler.getRunningJob().getJobName();
-                         }
-                    }
+                	if(!Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE)) {
+	                    if(Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_CANCELED))
+	                    {
+	                    	if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+	                        	currentProcess = "Aborting harvest of provider " + Scheduler.getRunningJob().getJobName();
+	                        } else {
+	                        	currentProcess = "Aborting process " + Scheduler.getRunningJob().getJobName();
+	                        }
+	                    }
+	                    else if (Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_PAUSED))
+	                    {
+	                        if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+	                        	currentProcess = "Paused harvesting from provider " + Scheduler.getRunningJob().getJobName();
+	                        } else {
+	                        	currentProcess = "Paused processing through " + Scheduler.getRunningJob().getJobName();
+	                        }
+	                    }  
+	                    else if (Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_NOT_RUNNING))
+	                    {
+	                        	currentProcess = null;
+	                    } else {
+	                    	 if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+	                         	currentProcess = "Harvesting from provider " + Scheduler.getRunningJob().getJobName();
+	                         } else {
+	                         	currentProcess = "Processing through " + Scheduler.getRunningJob().getJobName();
+	                         }
+	                    }
+                	}
                 }
                 else
                 {

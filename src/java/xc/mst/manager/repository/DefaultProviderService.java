@@ -11,10 +11,10 @@ package xc.mst.manager.repository;
 
 import java.util.List;
 
-
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
+import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultProviderDAO;
@@ -24,6 +24,8 @@ import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
 import xc.mst.manager.processingDirective.ProcessingDirectiveService;
+import xc.mst.scheduling.HarvesterWorkerThread;
+import xc.mst.scheduling.ProcessingDirectiveWorkerThread;
 import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
@@ -93,13 +95,28 @@ public class DefaultProviderService implements ProviderService{
     public void deleteProvider(Provider provider) throws DataException, IndexException{
 
     	// Delete schedule for this repository
+    	
+    	// Check if any harvest is running 
         if(Scheduler.getRunningJob()!=null)
         {
-            if(Scheduler.getRunningJob().getJobName().contains(provider.getName()))
-            {
-                Scheduler.cancelRunningJob();
-            }
+        	// Check if this repository is being harvested 
+        	if (Scheduler.getRunningJob().getType().equals(Constants.THREAD_REPOSITORY)) {
+        		HarvesterWorkerThread harvesterWorkerThread = (HarvesterWorkerThread)Scheduler.getRunningJob();
+        		if (harvesterWorkerThread.getJobName().equals(provider.getName())) {
+        			Scheduler.cancelRunningJob();
+        		}
+        	}
+        	
+        	// Check if this repository is being processed by processing directive
+        	if (Scheduler.getRunningJob().getType().equals(Constants.THREAD_PROCESSING_DIRECTIVE)) {
+        		ProcessingDirectiveWorkerThread processingDirectiveWorkerThread = (ProcessingDirectiveWorkerThread)Scheduler.getRunningJob();
+        		Provider sourceProvider = processingDirectiveWorkerThread.getProcessingDirective().getSourceProvider();
+        		if (sourceProvider != null && sourceProvider.getName().equals(provider.getName())) {
+        			Scheduler.cancelRunningJob();
+        		}
+        	}
         }
+        
     	ScheduleService scheduleService = new DefaultScheduleService();
     	HarvestSchedule harvestSchedule = scheduleService.getScheduleForProvider(provider);
     	if (harvestSchedule != null) {
