@@ -11,9 +11,7 @@ package xc.mst.tags;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
-import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
@@ -44,7 +42,7 @@ public class HarvestUtil {
             format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
             String output = "Not yet harvested";
             if (latestRun != null) {
-                output = "last run completed " + format.format(latestRun);
+                output = "last run completed on " + format.format(latestRun);
             }
 
             return output;

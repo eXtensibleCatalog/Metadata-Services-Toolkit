@@ -221,7 +221,7 @@
                                                 <c:set var="lastRun" value="${mst:lastHarvest(schedule)}"/>
 
                                                 <c:if test="${fn:startsWith(lastRun, 'last')}">
-                                                    ${mst:lastHarvest(schedule)} hrs ${timeZone}
+                                                    ${mst:lastHarvest(schedule)} ${timeZone}
                                                 </c:if>
 
                                             </td>
