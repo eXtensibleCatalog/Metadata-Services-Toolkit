@@ -483,49 +483,11 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
                                 setService.insertSet(tempSet);
                                 temporaryProcessingDirective.setOutputSet(tempSet);
                             }
-                            else //sets a null value as output set
-                            {
-                                temporaryProcessingDirective.setOutputSet(setExists); 
-                            }
+                            
                         }
                         else //outputset with the same setspec already exists
                         {
-                            List<ProcessingDirective> PDList = PDService.getAllProcessingDirectives();
-                            boolean outputSetFlag = false;
-                            Iterator<ProcessingDirective> procDirIter = PDList.iterator();
-                            while(procDirIter.hasNext())
-                            {
-                                ProcessingDirective processingDirective = (ProcessingDirective)procDirIter.next();
-                                if(processingDirective.getOutputSet()!=null)
-                                {
-                                    if(processingDirective.getOutputSet().getSetSpec().equals(setExists.getSetSpec()))
-                                    {
-                                        if(processingDirective.getId()==temporaryProcessingDirective.getId()) //The already existing output set is associated with the same directive
-                                        {
-                                            outputSetFlag = true;
-                                            break;
-                                        }
-                                        else //The already existing output set is associated with another directive
-                                        {
-                                            outputSetFlag = false;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            if(outputSetFlag==true) //only if the output set is assictaied with the same directive, it is set
-                            {
-                                temporaryProcessingDirective.setOutputSet(setExists);
-                            }
-                            else //the output set is associated with another directive
-                            {
-                                this.addFieldError("listProcessingDirectivesError", "Updation unsuccessful : Output Source Set with set specification "+setExists.getSetSpec()+" already exists");
-                                errorType = "error";
-                                setFormatList(temporaryProcessingDirective.getSourceProvider().getFormats());
-                                setSetList(temporaryProcessingDirective.getSourceProvider().getSets());
-                                setTemporaryProcessingDirective(temporaryProcessingDirective);
-                                return INPUT;
-                            }
+                           temporaryProcessingDirective.setOutputSet(setExists); 
                         }
                        PDService.updateProcessingDirective(temporaryProcessingDirective);
                     }
@@ -582,49 +544,11 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
                                 setService.insertSet(tempSet);
                                 temporaryProcessingDirective.setOutputSet(tempSet);
                            }
-                           else //output set is either null or empty
-                           {
-                               temporaryProcessingDirective.setOutputSet(setExists);
-                           }
+                           
                         }
                         else //output set with same outputSetSpec already exists
                         {
-                            List<ProcessingDirective> PDList = PDService.getAllProcessingDirectives();
-                            boolean outputSetFlag = false;
-                            Iterator<ProcessingDirective> procDirIter = PDList.iterator();
-                            while(procDirIter.hasNext())
-                            {
-                                ProcessingDirective processingDirective = (ProcessingDirective)procDirIter.next();
-                                if(processingDirective.getOutputSet()!=null)
-                                {
-                                    if(processingDirective.getOutputSet().getSetSpec().equals(setExists.getSetSpec()))
-                                    {
-                                        if(processingDirective.getId()==temporaryProcessingDirective.getId())
-                                        {
-                                            outputSetFlag = true;
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            outputSetFlag = false;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            if(outputSetFlag==true) //output set is the same one that is associated with this directive
-                            {
-                                temporaryProcessingDirective.setOutputSet(setExists);
-                            }
-                            else //output set with the same setSpec is already associated with another directive
-                            {
-                                this.addFieldError("listProcessingDirectivesError", "Updation unsuccessful : Output Source Set with set specification "+setExists.getSetSpec()+" already exists");
-                                errorType = "error";
-                                setFormatList(temporaryProcessingDirective.getSourceService().getOutputFormats());
-                                setSetList(setService.getAllSets());
-                                setTemporaryProcessingDirective(temporaryProcessingDirective);
-                                return INPUT;
-                            }
+                            temporaryProcessingDirective.setOutputSet(setExists);
                         }
                        PDService.updateProcessingDirective(temporaryProcessingDirective);
                     }

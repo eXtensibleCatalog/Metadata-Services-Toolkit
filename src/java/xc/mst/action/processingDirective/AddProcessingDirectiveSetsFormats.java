@@ -266,19 +266,11 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                             setService.insertSet(tempSet);
                             tempProcDir.setOutputSet(tempSet);
                         }
-                        else //no value has been given for output set and output set field is left blank
-                        {
-                            tempProcDir.setOutputSet(setExists);
-                        }
+                        
                     }
                     else //output set with the same setSpec already exists
                     {
-                         this.addFieldError("listProcessingDirectivesError", "Processing rule could not be created. An output source set with set specification "+setExists.getSetSpec()+" already exists");
-                         errorType = "error";
-                         setFormatList(tempProcDir.getSourceProvider().getFormats());
-                         setSetList(tempProcDir.getSourceProvider().getSets());
-                         setTemporaryProcessingDirective(tempProcDir);
-                         return INPUT;
+                         tempProcDir.setOutputSet(setExists);
                     }
                     PDService.insertProcessingDirective(tempProcDir);
                 }
@@ -336,19 +328,11 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                             setService.insertSet(tempSet);
                             tempProcDir.setOutputSet(tempSet);
                         }
-                        else  //output set textbox is left empty
-                        {
-                            tempProcDir.setOutputSet(setExists);
-                        }
+                        
                     }
                     else //output set already exists
                     {
-                         this.addFieldError("listProcessingDirectivesError", "Processing rule could not be created. An output source set with set specification "+setExists.getSetSpec()+" already exists");
-                         errorType = "error";
-                         setFormatList(tempProcDir.getSourceService().getOutputFormats());
-                         setSetList(setService.getAllSets());
-                         setTemporaryProcessingDirective(tempProcDir);
-                         return INPUT;
+                         tempProcDir.setOutputSet(setExists);
                     }
                     PDService.insertProcessingDirective(tempProcDir);
                 }
