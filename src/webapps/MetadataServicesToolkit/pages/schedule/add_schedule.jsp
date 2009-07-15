@@ -72,7 +72,7 @@
             <!--  this is the header of the page -->
             <c:import url="/inc/menu.jsp"/>
             <jsp:include page="/inc/breadcrumb.jsp">
-                    <jsp:param name="bread" value="Harvest , New Harvest:Step 1" />
+                    <jsp:param name="bread" value="Harvest | New Harvest:Step 1" />
             </jsp:include>
 	</div>
 	<!--  end header -->

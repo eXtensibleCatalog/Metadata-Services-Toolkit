@@ -72,7 +72,7 @@ text-decoration:underline;
             <c:import url="/inc/menu.jsp"/>
 	 	    <c:if test="${!initialLoad}">
                	<jsp:include page="/inc/breadcrumb.jsp"> 
-	                    <jsp:param name="bread" value="Browse Records, Search Results" />
+	                    <jsp:param name="bread" value="Browse Records | Search Results" />
 		         </jsp:include>
             </c:if>            
              <c:if test="${initialLoad}">

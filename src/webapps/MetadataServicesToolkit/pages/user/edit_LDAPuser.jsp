@@ -56,7 +56,7 @@
             <c:import url="/inc/menu.jsp"/>
             <jsp:include page="/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Users & Groups ,<a href='allUsers.action' style='text-decoration:none;'>All Users</a>, Edit LDAP User" />
+                    <jsp:param name="bread" value="Users & Groups | <a href='allUsers.action' style='text-decoration:none;'>All Users</a> | Edit LDAP User" />
 
             </jsp:include>
  		</div>

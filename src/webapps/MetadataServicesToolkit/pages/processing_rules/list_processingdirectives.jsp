@@ -60,7 +60,7 @@
                 <c:import url="/inc/menu.jsp"/>
                 <jsp:include page="/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Processing Rules , List Processing Rules" />
+                    <jsp:param name="bread" value="Processing Rules | List Processing Rules" />
 
                 </jsp:include>
                 

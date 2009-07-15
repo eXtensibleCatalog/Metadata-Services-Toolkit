@@ -60,7 +60,7 @@
             <c:import url="/inc/menu.jsp"/>
             <jsp:include page="/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Repository , All Repositories" />
+                    <jsp:param name="bread" value="Repository | All Repositories" />
 
             </jsp:include>
 

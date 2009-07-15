@@ -57,7 +57,7 @@
                 <c:import url="/inc/menu.jsp"/>
                 <jsp:include page="/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Configuration , Email Server" />
+                    <jsp:param name="bread" value="Configuration | Email Server" />
 
             </jsp:include>
             </div>

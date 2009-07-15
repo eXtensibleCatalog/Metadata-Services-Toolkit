@@ -61,13 +61,13 @@
 
 		<c:if test="${fn:length(provider.name) > 65}">
 		 	<jsp:include page="/inc/breadcrumb.jsp">
-                    		<jsp:param name="bread" value="Repository , <a style='color:#292929;' href='allRepository.action'><U>All Repositories</U></a> , View Repository : <a style='text-decoration:none;color:black;' title='${provider.name}'> ${fn:substring(provider.name,0,65)}...</a>" />
+                    		<jsp:param name="bread" value="Repository | <a style='color:#292929;' href='allRepository.action'><U>All Repositories</U></a> | View Repository : <a style='text-decoration:none;color:black;' title='${provider.name}'> ${fn:substring(provider.name,0,65)}...</a>" />
                      	</jsp:include>
                 </c:if>
                 
                 <c:if test="${fn:length(provider.name) <= 65}">
                 	 <jsp:include page="/inc/breadcrumb.jsp">
-                		<jsp:param name="bread" value="Repository , <a style='color:#292929;' href='allRepository.action'><U>All Repositories</U></a> , View Repository : ${provider.name}" />
+                		<jsp:param name="bread" value="Repository | <a style='color:#292929;' href='allRepository.action'><U>All Repositories</U></a> | View Repository : ${provider.name}" />
                 	 </jsp:include>
                  </c:if>
 

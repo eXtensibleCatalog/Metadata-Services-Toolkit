@@ -61,7 +61,7 @@
 				<c:param name="currentPageNumber" value="${currentPageNumber}"/>
 	    	</c:url>            
             <jsp:include page="/inc/breadcrumb.jsp"> 
-	          <jsp:param name="bread" value="Browse Records,<a href='${viewResults}'>Search Results</a>, View Record 
+	          <jsp:param name="bread" value="Browse Records | <a href='${viewResults}'>Search Results</a>, View Record
 	           		<c:if test='${record.provider != null}'>${record.provider.name}</c:if> 
 					<c:if test='${record.service != null}'>${record.service.name}</c:if>
 					${record.id}" />

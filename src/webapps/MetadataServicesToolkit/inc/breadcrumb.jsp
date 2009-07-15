@@ -25,7 +25,7 @@
         <div class="breadcrumb">
              <ul>
            
-                                <c:forTokens var="str" delims="," varStatus="a" items="${breadcrumb}">
+                                <c:forTokens var="str" delims="|" varStatus="a" items="${breadcrumb}">
                                     <c:choose>
                                         <c:when test = "${a.last}">
                                             <li><div>${str}</div></li>

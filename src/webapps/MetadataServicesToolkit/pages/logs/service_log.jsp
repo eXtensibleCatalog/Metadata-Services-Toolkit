@@ -58,8 +58,8 @@
             <c:import url="/inc/menu.jsp"/>
              <jsp:include page="/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Logs,Services" />
-
+                    <jsp:param name="bread" value="Logs | Services" />
+                    
              </jsp:include>
  		</div>
 		<!--  end header -->
@@ -87,7 +87,7 @@
                 <c:choose>
                     <c:when test="${empty services}">
                          <div class="emptytablebar">
-                             <div class="emptytable_innerdiv"> No Logs found </div>
+                             <div class="emptytable_innerdiv"> No logs found </div>
                          </div>
                     </c:when>
                     <c:otherwise>

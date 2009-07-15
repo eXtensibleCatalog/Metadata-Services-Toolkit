@@ -60,7 +60,7 @@
             <c:import url="/inc/menu.jsp"/>
              <jsp:include page="/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Repository , <a style='text-decoration:none;color:#292929;' href='allRepository.action'><U>All Repositories</U></a> , Edit Repository" />
+                    <jsp:param name="bread" value="Repository | <a style='text-decoration:none;color:#292929;' href='allRepository.action'><U>All Repositories</U></a> | Edit Repository" />
 
             </jsp:include>
 
