@@ -146,7 +146,7 @@ public class ValidateRepository implements ErrorHandler
 	}
 	
 	/**
-	 * Validates the OAI provider with the passed provider ID.
+	 * Validates the OAI provider with the passed provider ID
 	 *
 	 * @param providerId The ID of the provider we're validating
 	 * @throws Hexception If the validation failed
