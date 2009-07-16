@@ -178,6 +178,10 @@ public class HarvestRunner
 
 			LogWriter.addInfo(provider.getLogFileName(), "Finished harvest of " + baseURL);
 		}
+		catch (Hexception e) {
+				
+			log.info("Harvest Aborted!");
+		}
 		catch(DatabaseConfigException e)
 		{
 			log.error("Unable to connect to the database with the parameters defined in the configuration file.", e);
@@ -190,8 +194,9 @@ public class HarvestRunner
 
 	/**
 	 * Runs the harvest
+	 * @throws Hexception 
 	 */
-	private void runHarvestStep(HarvestScheduleStep harvestScheduleStep)
+	private void runHarvestStep(HarvestScheduleStep harvestScheduleStep) throws Hexception
 	{
 		try
 		{
@@ -239,6 +244,9 @@ public class HarvestRunner
 			harvestScheduleStep.setLastRan(startTime);
 			harvestScheduleStepDao.update(harvestScheduleStep, harvestScheduleStep.getSchedule().getId());
 		} // end try(run the harvest)
+		catch (Hexception e) {
+				 throw new Hexception("Harvest Step Aborted!");
+		}
 		catch(Exception e)
 		{
 			log.error("An error occurred while harvesting " + baseURL, e);
