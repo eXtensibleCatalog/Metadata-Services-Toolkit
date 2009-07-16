@@ -83,7 +83,6 @@ public class HarvesterTest
 		provider.setDescription("Repository used in TestNG tests");
 		provider.setOaiProviderUrl("http://geolib.geo.auth.gr/digeo/index.php/index/oai");
 		provider.setCreatedAt(new java.util.Date());
-		provider.setUser(user);
 		providerService.insertProvider(provider);
 		
 		ValidateRepository validateRepository = new ValidateRepository();
