@@ -83,7 +83,6 @@ public class BrowseRecordServiceTest {
             provider.setDescription("description");
             provider.setOaiProviderUrl("http://www.cimec.org.ar/ojs/index.php/cimec-repo/oai");
             provider.setCreatedAt(new java.util.Date());
-            provider.setUser(user);
             providerService.insertProvider(provider);
             
             ValidateRepository validateRepository = new ValidateRepository();

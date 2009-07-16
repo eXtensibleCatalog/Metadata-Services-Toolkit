@@ -13,14 +13,12 @@ package xc.mst.manager.test;
 
 import java.util.Date;
 
-import org.apache.log4j.PropertyConfigurator;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
 import org.testng.annotations.Test;
+
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
-import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.helper.TestHelper;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.user.DefaultServerService;
@@ -37,6 +35,7 @@ import xc.mst.manager.user.ServerService;
 public class ProviderServiceTest
 {
 
+	
 
     /**
      * Method which tests all the functionality related to Providers
@@ -44,6 +43,8 @@ public class ProviderServiceTest
      */
     public void addProviderTest() throws DataException
                 {
+    	
+    	TestHelper helper = new TestHelper(); 
         try
         {
                 ServerService serverService = new DefaultServerService();
@@ -54,7 +55,6 @@ public class ProviderServiceTest
             provider.setDescription("description");
             provider.setOaiProviderUrl("http://oaitoolkit.com");
             provider.setCreatedAt(new Date(new java.util.Date().getTime()));
-            provider.setUser(user);
             provider.setErrors(0);
             provider.setWarnings(0);
             provider.setLastLogReset(new Date());
@@ -66,7 +66,6 @@ public class ProviderServiceTest
             assert provider.getName().equals(anotherProvider.getName()) : "Name should be repositoryname";
             assert provider.getOaiProviderUrl().equals(anotherProvider.getOaiProviderUrl()) : "Name should be http://oaitoolkit.com";
             assert provider.getDescription().equals(anotherProvider.getDescription()) : "Description should be description";
-            assert provider.getUser().getUsername().equals(anotherProvider.getUser().getUsername()) : "Name should be admin";
             assert provider.getErrors()==anotherProvider.getErrors();
             assert provider.getWarnings()==anotherProvider.getWarnings();
           //  assert provider.getLastLogReset().compareTo(anotherProvider.getLastLogReset()) == 0;

@@ -72,7 +72,6 @@ public class ScheduleServiceTest {
             provider.setDescription("description");
             provider.setOaiProviderUrl("http://oaitoolkit.com");
             provider.setCreatedAt(new Date(new java.util.Date().getTime()));
-            provider.setUser(user);
             providerService.insertProvider(provider);
 
             Format format = new Format();
