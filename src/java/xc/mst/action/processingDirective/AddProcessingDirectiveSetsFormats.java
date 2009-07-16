@@ -225,136 +225,26 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                 }
             }
 
+           tempProcDir.setTriggeringFormats(tempFormatList);
+           tempProcDir.setTriggeringSets(tempSetList);
+           request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
+
+           Set setExists = setService.getSetBySetSpec(outputSetSpec);
+           if((setExists==null) && (outputSetSpec!=null) && (!outputSetSpec.equals(""))) //output set doesnt already exist
+           {
+        	   Set tempSet = new Set();
+        	   tempSet.setDisplayName(outputSetName);
+        	   tempSet.setSetSpec(outputSetSpec);
+        	   setService.insertSet(tempSet);
+        	   tempProcDir.setOutputSet(tempSet);
+           }
+           else
+        	   tempProcDir.setOutputSet(setExists);
            
-          
-            if(sourceType.equalsIgnoreCase("provider"))  //if the source is a provider
-            {
-                Provider tempProvider = providerService.getProviderByName(tempProcDir.getSourceProvider().getName());
+           PDService.insertProcessingDirective(tempProcDir);
 
-                // Validation to ensure that processing directive with same details is not inserted again
-                int flag = 1;
-                List<ProcessingDirective> procDirList = PDService.getBySourceProviderId(tempProvider.getId());
-                if(!procDirList.isEmpty())
-                {
-                    Iterator<ProcessingDirective> iter = procDirList.iterator();
-                    while(iter.hasNext())
-                    {
-                        ProcessingDirective temp = (ProcessingDirective)iter.next();
-
-                        if(tempProcDir.getService().getId()== temp.getService().getId())
-                        {
-                            flag = 0;
-                            break;
-                        }
-                    }
-                }
-
-                tempProcDir.setTriggeringFormats(tempFormatList);
-                tempProcDir.setTriggeringSets(tempSetList);
-                request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
-
-                if(flag==1) //processing directive with same details doesnt exist
-                {
-                    Set setExists = setService.getSetBySetSpec(outputSetSpec);
-                    if(setExists==null) //output set doesnt already exist
-                    {
-                        if((outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase(""))) //output set field has some value
-                        {
-                            Set tempSet = new Set();
-                            tempSet.setDisplayName(outputSetName);
-                            tempSet.setSetSpec(outputSetSpec);
-                            setService.insertSet(tempSet);
-                            tempProcDir.setOutputSet(tempSet);
-                        }
-                        
-                    }
-                    else //output set with the same setSpec already exists
-                    {
-                         tempProcDir.setOutputSet(setExists);
-                    }
-                    PDService.insertProcessingDirective(tempProcDir);
-                }
-                else  //processing directive with the same provider/service combination exists
-                {
-                     this.addFieldError("listProcessingDirectivesError", "Processing Rule could not be created. Cannot create another processing rule with same source:'"+tempProcDir.getSourceProvider().getName()+"' and service:'"+tempProcDir.getService().getName()+"' combination");
-                     errorType = "error";
-                     setFormatList(tempProcDir.getSourceProvider().getFormats());
-                     setSetList(tempProcDir.getSourceProvider().getSets());
-                     Set tempSet = new Set();
-                     tempSet.setDisplayName(outputSetName);
-                     tempSet.setSetSpec(outputSetSpec);
-                     tempProcDir.setOutputSet(tempSet);
-                     setTemporaryProcessingDirective(tempProcDir);
-                     return INPUT;
-                }
-                // end of validation and insertion(if applicable)
-
-            }
-            else //source is a service
-            {
-
-                Service tempService = servicesService.getServiceByName(tempProcDir.getSourceService().getName());
-                // Validation to ensure that processing directive with same details is not inserted again
-                int flag = 1;
-                List<ProcessingDirective> procDirList = PDService.getBySourceServiceId(tempService.getId());
-                if(!procDirList.isEmpty())
-                {
-                    Iterator<ProcessingDirective> iter = procDirList.iterator();
-                    while(iter.hasNext())
-                    {
-                        ProcessingDirective temp = (ProcessingDirective)iter.next();
-                        if(tempProcDir.getService().getId()== temp.getService().getId())
-                        {
-                            flag = 0;
-                            break;
-                        }
-                    }
-                }
-
-                tempProcDir.setTriggeringFormats(tempFormatList);
-                tempProcDir.setTriggeringSets(tempSetList);
-                request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
-
-                if(flag==1) //processing directive with the same service/service combo doesnt exist
-                {
-                    Set setExists = setService.getSetBySetSpec(outputSetSpec);
-                    if(setExists==null) //output set doesnt already exist
-                    {
-                        if((outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase(""))) //output set has some value being set
-                        {
-                            Set tempSet = new Set();
-                            tempSet.setDisplayName(outputSetName);
-                            tempSet.setSetSpec(outputSetSpec);
-                            setService.insertSet(tempSet);
-                            tempProcDir.setOutputSet(tempSet);
-                        }
-                        
-                    }
-                    else //output set already exists
-                    {
-                         tempProcDir.setOutputSet(setExists);
-                    }
-                    PDService.insertProcessingDirective(tempProcDir);
-                }
-                else //processing directive with same service/service combination already exists
-                {
-                     this.addFieldError("listProcessingDirectivesError", "Processing rule could not be created. Cannot create processing rule with same source:'"+tempProcDir.getSourceService().getName()+"' and service:'"+tempProcDir.getService().getName()+"' combination");
-                     errorType = "error";
-                     setFormatList(tempProcDir.getSourceService().getOutputFormats());
-                     setSetList(setService.getAllSets());
-                     Set tempSet = new Set();
-                     tempSet.setDisplayName(outputSetName);
-                     tempSet.setSetSpec(outputSetSpec);
-                     tempProcDir.setOutputSet(tempSet);
-                     setTemporaryProcessingDirective(tempProcDir);
-                     return INPUT;
-                }
-                // end of validation
-
-            }
-
-            request.getSession().setAttribute("temporaryProcessingDirective",null);
-            return SUCCESS;
+           request.getSession().setAttribute("temporaryProcessingDirective",null);
+           return SUCCESS;
         }
         catch(DatabaseConfigException dce)
         {
