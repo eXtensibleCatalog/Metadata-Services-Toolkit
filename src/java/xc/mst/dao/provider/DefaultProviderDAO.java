@@ -27,8 +27,6 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
-import xc.mst.dao.user.DefaultUserDAO;
-import xc.mst.dao.user.UserDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
@@ -51,11 +49,6 @@ public class DefaultProviderDAO extends ProviderDAO
 	 * Data access object for getting formats
 	 */
 	private FormatDAO formatDao = new DefaultFormatDAO();
-
-	/**
-	 * Data access object for getting users
-	 */
-	private UserDAO userDao = new DefaultUserDAO();
 	
 	/**
 	 * Data access object for managing formats for a provider

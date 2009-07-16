@@ -964,7 +964,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	                                   "WHERE (" + COL_START_DATE + " IS NULL OR " + COL_START_DATE + "<=?) " +
 	                                   "AND (" + COL_END_DATE + " IS NULL OR " + COL_END_DATE + ">=?) " +
 	                                   "AND " + "((0=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=?)" +
-	                                             "OR (0=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=0)" +
+	                                             "OR (" + COL_MINUTE + "=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=0)" +
 	                                             "OR " + COL_MINUTE + "=? AND " + COL_HOUR + "=-1 AND " + COL_DAY_OF_WEEK + "=0)";
 
 					if(log.isDebugEnabled())

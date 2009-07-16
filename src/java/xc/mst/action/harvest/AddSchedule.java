@@ -203,7 +203,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 				schedule.setHour(hour);
 
 				//Reset other values
-				schedule.setMinute(-1);
+				schedule.setMinute(0);
 			}
     	}
 
@@ -328,7 +328,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 				schedule.setHour(hour);
 
 				//Reset other values
-				schedule.setMinute(-1);
+				schedule.setMinute(0);
 			}
     	}
 
