@@ -1670,11 +1670,18 @@ public class Harvester implements ErrorHandler
 
 					throw new Hexception("Harvest received kill signal");
 				}
+				else{
+					LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been resumed.");
+
+					// Update the status of the harvest schedule
+					persistStatus(Constants.STATUS_SERVICE_RUNNING);
+
+				}
 			}
 		}
 		catch(DataException e)
 		{
-			log.error("An OAIErrorExeption occurred while harvesting " , e);
+			log.error("Unable to connect to database " , e);
 		}
 	}
 
