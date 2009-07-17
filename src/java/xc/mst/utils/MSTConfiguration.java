@@ -108,6 +108,18 @@ public class MSTConfiguration {
 		return urlPath;
 	}
 
+	public static Configuration getConfiguration() {
+		return configuration;
+	}
+
+	public static void setConfiguration(Configuration configuration) {
+		MSTConfiguration.configuration = configuration;
+	}
+
+	public static void setUrlPath(String urlPath) {
+		MSTConfiguration.urlPath = urlPath;
+	}
+
 
 
 }

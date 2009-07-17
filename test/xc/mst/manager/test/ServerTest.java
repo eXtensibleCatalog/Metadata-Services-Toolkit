@@ -15,6 +15,7 @@ import xc.mst.bo.user.Server;
 import xc.mst.bo.user.Server.ServerType;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.ServerService;
+import xc.mst.helper.TestHelper;
 
 /**
  * Tests for Servers
@@ -30,6 +31,9 @@ public class ServerTest
      */
     public void addServer()
     {
+    	
+      	 // Initialize Solr, database, log before testing
+      	 TestHelper helper = TestHelper.getInstance();
         try
         {
             ServerService serverService = new DefaultServerService();

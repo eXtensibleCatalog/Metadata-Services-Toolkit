@@ -17,6 +17,7 @@ import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
 import xc.mst.manager.user.DefaultGroupService;
 import xc.mst.manager.user.GroupService;
+import xc.mst.helper.TestHelper;
 
 /**
  * Tests for Groups
@@ -32,6 +33,8 @@ public class GroupsTest
      */
     public void addGroup()
     {
+      	 // Initialize Solr, database, log before testing
+      	 TestHelper helper = TestHelper.getInstance();
         try
         {
             GroupService groupService = new DefaultGroupService();

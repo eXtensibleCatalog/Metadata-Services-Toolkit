@@ -17,11 +17,10 @@ import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
-import xc.mst.bo.user.User;
 import xc.mst.dao.DataException;
+import xc.mst.helper.TestHelper;
 import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
-import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.repository.DefaultFormatService;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.DefaultSetService;
@@ -43,16 +42,6 @@ import xc.mst.manager.user.UserService;
 @Test(groups = { "baseTests" }, enabled = true)
 public class ScheduleServiceTest {
 
- ProviderService providerService = new DefaultProviderService();
-
- ScheduleService scheduleService = new DefaultScheduleService();
-
- FormatService formatService = new DefaultFormatService();
-
- SetService setService = new DefaultSetService();
-
- UserService userService = new DefaultUserService();
-
  /**
   * Test creating schedule
   *
@@ -61,10 +50,21 @@ public class ScheduleServiceTest {
  public void addScheduleTest() throws DataException
  {
 
+   	 // Initialize Solr, database, log before testing
+   	 TestHelper helper = TestHelper.getInstance();  
+   	 
+   	 ProviderService providerService = new DefaultProviderService();
+
+   	 ScheduleService scheduleService = new DefaultScheduleService();
+
+   	 FormatService formatService = new DefaultFormatService();
+
+   	 SetService setService = new DefaultSetService();
+
+   	 UserService userService = new DefaultUserService();
   try
         {
 	  	    ServerService serverService = new DefaultServerService();
-            User user = new DefaultUserService().getUserByUserName("admin", serverService.getServerByName("Local"));
 
             Provider provider = new Provider();
 

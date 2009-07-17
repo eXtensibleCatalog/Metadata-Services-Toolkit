@@ -20,6 +20,7 @@ import xc.mst.manager.processingDirective.ServicesService;
 import org.testng.annotations.Test;
 import xc.mst.manager.processingDirective.ConfigFileException;
 import xc.mst.utils.LogWriter;
+import xc.mst.helper.TestHelper;
 
 /**
  * Test class for testing services
@@ -31,6 +32,8 @@ public class ServiceTest {
 
     public void serviceTest() throws DataException
     {
+      	 // Initialize Solr, database, log before testing
+      	 TestHelper helper = TestHelper.getInstance();
         try
         {
             ServicesService servicesService = new DefaultServicesService();
@@ -45,8 +48,8 @@ public class ServiceTest {
             service.setServicesLastLogReset(new Date());
             service.setServicesLogFileName("serviceLogFileName");
             service.setServicesWarnings(0);
-            service.setXccfgFileName("serviceConfig/DefaultNormalizationServiceConfig.xccfg");
-            File configFile = new File("serviceConfig/DefaultNormalizationServiceConfig.xccfg");
+            service.setXccfgFileName("MST-instances/MetadataServicesToolkit/services/Normalization/serviceConfig/DefaultNormalizationServiceConfig.xccfg");
+            File configFile = new File("MST-instances/MetadataServicesToolkit/services/Normalization/serviceConfig/DefaultNormalizationServiceConfig.xccfg");
             BufferedReader in = new BufferedReader(new FileReader(configFile));
 
                 // The name of the service, which must appear in the first line of the configuration file

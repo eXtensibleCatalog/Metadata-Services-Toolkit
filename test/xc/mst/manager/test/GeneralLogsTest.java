@@ -15,6 +15,7 @@ import xc.mst.dao.DataException;
 import xc.mst.manager.logs.DefaultLogService;
 import xc.mst.manager.logs.LogService;
 import org.testng.annotations.Test;
+import xc.mst.helper.TestHelper;
 
 /**
  * Tests for General Logs
@@ -26,6 +27,8 @@ public class GeneralLogsTest {
 
     public void generalLogsTest() throws DataException
     {
+      	 // Initialize Solr, database, log before testing
+      	 TestHelper helper = TestHelper.getInstance();
         try
         {
             LogService logService = new DefaultLogService();

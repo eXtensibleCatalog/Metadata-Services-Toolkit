@@ -38,6 +38,7 @@ import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
+import xc.mst.helper.TestHelper;
 
 
 /**
@@ -57,9 +58,9 @@ public class BrowseRecordServiceTest {
   */
  public void browseRecordTest() throws Exception
  {
+   	 // Initialize Solr, database, log before testing
+   	 TestHelper helper = TestHelper.getInstance();
 	 
-	 		// Configured the default port. Change in case Solr runs on different port
-	 		MSTSolrServer.getInstance();
 	 		
 	 		 ProviderService providerService = new DefaultProviderService();
 
@@ -117,7 +118,7 @@ public class BrowseRecordServiceTest {
             query.addFilterQuery("provider_name:\"Test Repository Name\"");
             SolrBrowseResult result =  browseRecordService.search(query);
             
-            assert result.getTotalNumberOfResults() == 17 : "Total number of records should be 17. But it is " + result.getTotalNumberOfResults();
+            assert result.getTotalNumberOfResults() == 22 : "Total number of records should be 22. But it is " + result.getTotalNumberOfResults();
 
             providerService.deleteProvider(provider);
 

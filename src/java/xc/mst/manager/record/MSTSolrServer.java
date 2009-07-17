@@ -239,4 +239,8 @@ public class MSTSolrServer {
 	public  static SolrServer getServer() {
 		return server;
 	}
+
+	public static void setServer(SolrServer server) {
+		MSTSolrServer.server = server;
+	}
 }

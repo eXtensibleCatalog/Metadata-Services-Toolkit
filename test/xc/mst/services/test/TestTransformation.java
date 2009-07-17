@@ -33,6 +33,7 @@ import xc.mst.services.MetadataService;
 import xc.mst.utils.XCRecord;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
+import xc.mst.helper.TestHelper;
 
 public class TestTransformation {
 
@@ -94,7 +95,8 @@ public class TestTransformation {
 		
 		try {
 			
-			MSTSolrServer.getInstance();
+		   	 // Initialize Solr, database, log before testing
+		   	 TestHelper helper = TestHelper.getInstance(); 
 
 			// Initialize Record Service
 			recordService = new DefaultRecordService();

@@ -7,8 +7,6 @@
   *
   */
 
-
-
 package xc.mst.manager.test;
 
 import java.util.Date;
@@ -44,11 +42,11 @@ public class ProviderServiceTest
     public void addProviderTest() throws DataException
                 {
     	
-    	TestHelper helper = new TestHelper(); 
+   	 // Initialize Solr, database, log before testing
+   	 TestHelper helper = TestHelper.getInstance();
         try
         {
                 ServerService serverService = new DefaultServerService();
-            User user = new DefaultUserService().getUserByUserName("admin", serverService.getServerByName("Local"));
             ProviderService providerService = new DefaultProviderService();
             Provider provider = new Provider();
             provider.setName("repositoryname");

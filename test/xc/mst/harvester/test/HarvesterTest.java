@@ -43,6 +43,7 @@ import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
 import xc.mst.utils.index.RecordList;
+import xc.mst.helper.TestHelper;
 
 /**
  * Tests the harvester
@@ -61,8 +62,8 @@ public class HarvesterTest
 	{
 		System.setProperty("source.encoding", "UTF-8");
 		
-		// Configured the default port. Change in case Solr runs on different port
-		MSTSolrServer.getInstance();
+	   	 // Initialize Solr, database, log before testing
+	   	 TestHelper helper = TestHelper.getInstance();
 		
 		ProviderService providerService = new DefaultProviderService();
 		
@@ -134,10 +135,9 @@ public class HarvesterTest
         
         RecordList records = new DefaultRecordService().getByProviderId(provider.getId());
         
-        assert records.size() == 3224 : "Total number of records should be 3224. But it is " + records.size();
+        assert records.size() == 3333 : "Total number of records should be 3333. But it is " + records.size();
 
         providerService.deleteProvider(provider);
         
-        assert false : "Harvester Test ran, no errors.";
 	}
 }

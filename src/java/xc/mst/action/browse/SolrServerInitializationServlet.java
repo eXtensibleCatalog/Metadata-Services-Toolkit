@@ -49,8 +49,6 @@ public class SolrServerInitializationServlet extends HttpServlet
 			log.debug("In execute, initialize SolrServer");
 		}	
 		
-		// Get the port on which the request is coming in.  This port
-		// is used to create SolrServer		
 		MSTSolrServer.getInstance();
 
 		if(log.isDebugEnabled()) {

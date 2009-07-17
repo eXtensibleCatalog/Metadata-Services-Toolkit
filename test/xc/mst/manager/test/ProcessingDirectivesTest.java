@@ -18,7 +18,7 @@ import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ProcessingDirectiveService;
 import xc.mst.manager.processingDirective.ServicesService;
-
+import xc.mst.helper.TestHelper;
 
 
 /**
@@ -35,14 +35,17 @@ public class ProcessingDirectivesTest
      */
     public void addProcDir()
     {
+      	 // Initialize Solr, database, log before testing
+      	 TestHelper helper = TestHelper.getInstance();
         try
         {
-            ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
+            ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();
             ServicesService servicesService = new DefaultServicesService();
             List setList = new ArrayList();
             List formatList = new ArrayList();
 
             ProcessingDirective processingDirective = new ProcessingDirective();
+            processingDirective.setId(10001);
             processingDirective.setMaintainSourceSets(false);
             processingDirective.setOutputSet(null);
             processingDirective.setService(servicesService.getServiceById(1));
@@ -50,15 +53,15 @@ public class ProcessingDirectivesTest
             processingDirective.setSourceProvider(null);
             processingDirective.setTriggeringFormats(formatList);
             processingDirective.setTriggeringSets(setList);
-            PDService.insertProcessingDirective(processingDirective);
+            processingDirectiveService.insertProcessingDirective(processingDirective);
 
-            ProcessingDirective anotherDirective = PDService.getByProcessingDirectiveId(processingDirective.getId());
+            ProcessingDirective anotherDirective = processingDirectiveService.getByProcessingDirectiveId(processingDirective.getId());
             assert (anotherDirective.getOutputSet()==null): "The output set is should be null";
             assert (anotherDirective.getService().getId()==1): "The service ID should be 1";
             assert (anotherDirective.getSourceService().getId()==1): "The Source Service ID should be 1";
             assert (anotherDirective.getSourceProvider()==null): "The Source Provider is null";
 
-            PDService.deleteProcessingDirective(processingDirective);
+            processingDirectiveService.deleteProcessingDirective(processingDirective);
         }
         catch(Exception e)
         {

@@ -18,6 +18,7 @@ import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
+import xc.mst.helper.TestHelper;
 
 /**
  * Tests for Users
@@ -33,6 +34,8 @@ public class UsersTest
      */
     public void addUser()
     {
+      	 // Initialize Solr, database, log before testing
+      	 TestHelper helper = TestHelper.getInstance();
         try
         {
             List groupList = new ArrayList();
