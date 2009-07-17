@@ -16,7 +16,7 @@
 
 <html>
     <head>
-        <title>Welcome To MST</title>
+        <title>XC Metadata Services Toolkit</title>
         <c:import url="/inc/meta-frag.jsp"/>
         
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
