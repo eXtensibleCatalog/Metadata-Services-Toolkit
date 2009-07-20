@@ -45,7 +45,6 @@ public class TestHelper {
 
 	
 	public static TestHelper getInstance() {
-		System.out.println("TestHelper getInstance()::" + instance);
 		if(instance != null) {
 			
 			return instance;
