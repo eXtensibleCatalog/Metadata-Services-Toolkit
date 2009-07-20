@@ -11,9 +11,12 @@
 package xc.mst.manager.test;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.testng.annotations.Test;
 import xc.mst.bo.processing.ProcessingDirective;
+import xc.mst.bo.service.Service;
+import xc.mst.dao.DataException;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ProcessingDirectiveService;
@@ -33,40 +36,42 @@ public class ProcessingDirectivesTest
      * Method which tests all the functionality related to Processing Directives
      *
      */
-    public void addProcDir()
+    public void addProcDir() throws DataException
     {
       	 // Initialize Solr, database, log before testing
       	 TestHelper helper = TestHelper.getInstance();
-        try
-        {
-            ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();
+        
+            ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
             ServicesService servicesService = new DefaultServicesService();
             List setList = new ArrayList();
             List formatList = new ArrayList();
 
-            ProcessingDirective processingDirective = new ProcessingDirective();
-            processingDirective.setId(10001);
-            processingDirective.setMaintainSourceSets(false);
-            processingDirective.setOutputSet(null);
-            processingDirective.setService(servicesService.getServiceById(1));
-            processingDirective.setSourceService(servicesService.getServiceById(1));
-            processingDirective.setSourceProvider(null);
-            processingDirective.setTriggeringFormats(formatList);
-            processingDirective.setTriggeringSets(setList);
-            processingDirectiveService.insertProcessingDirective(processingDirective);
 
-            ProcessingDirective anotherDirective = processingDirectiveService.getByProcessingDirectiveId(processingDirective.getId());
-            assert (anotherDirective.getOutputSet()==null): "The output set is should be null";
-            assert (anotherDirective.getService().getId()==1): "The service ID should be 1";
-            assert (anotherDirective.getSourceService().getId()==1): "The Source Service ID should be 1";
-            assert (anotherDirective.getSourceProvider()==null): "The Source Provider is null";
+            List serviceList = servicesService.getAllServices();
+            if(serviceList.size()!=0)
+            {
+                Iterator iter = serviceList.iterator();
+                Service tempService = (Service)iter.next();
 
-            processingDirectiveService.deleteProcessingDirective(processingDirective);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
+                ProcessingDirective processingDirective = new ProcessingDirective();
+                processingDirective.setMaintainSourceSets(false);
+                processingDirective.setOutputSet(null);
+
+                processingDirective.setService(tempService);
+                processingDirective.setSourceService(tempService);
+                processingDirective.setSourceProvider(null);
+                processingDirective.setTriggeringFormats(formatList);
+                processingDirective.setTriggeringSets(setList);
+                PDService.insertProcessingDirective(processingDirective);
+
+                ProcessingDirective anotherDirective = PDService.getByProcessingDirectiveId(processingDirective.getId());
+                assert (anotherDirective.getOutputSet()==null): "The output set is should be null";
+                assert (anotherDirective.getService().getId()==1): "The service ID should be 1";
+                assert (anotherDirective.getSourceService().getId()==1): "The Source Service ID should be 1";
+                assert (anotherDirective.getSourceProvider()==null): "The Source Provider is null";
+
+                PDService.deleteProcessingDirective(processingDirective);
+            }
     }
 
 
