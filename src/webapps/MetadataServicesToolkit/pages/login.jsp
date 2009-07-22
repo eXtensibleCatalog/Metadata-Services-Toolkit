@@ -70,7 +70,9 @@
 		
 		<!-- body -->
 		<div id="bd">
-   			
+   			<!-- Begin - This is required to identify that the response is a login screen -->
+			<div style="display:none">LoginPage</div>
+			<!-- End - This is required to identify that the response is a login screen -->
 			 <!-- Display of error message -->
                  <c:if test="${errorType != null}">
                     <div id="server_error_div">
@@ -90,7 +92,7 @@
 
                 <div class="clear">&nbsp;</div>
 			
-			<form name="loginForm" action="/MetadataServicesToolkit/login.action" method="post">
+			<form name="loginForm" action="login.action" method="post">
 				<table class="basicTable" align="left">
 					
 					<tr>

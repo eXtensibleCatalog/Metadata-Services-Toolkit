@@ -9,11 +9,13 @@
 
 package xc.mst.action.services;
 
-import com.opensymphony.xwork2.ActionSupport;
-
-import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
+import org.apache.struts2.interceptor.ServletRequestAware;
+
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
@@ -21,16 +23,21 @@ import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 
+import com.opensymphony.xwork2.ActionSupport;
+
 /**
  * This action is used to display all the services that are part of the MST
  *
  * @author Tejaswi Haramurali
  */
 
-public class ListServices extends ActionSupport 
+public class ListServices extends ActionSupport implements ServletRequestAware
 {
        
-    /** Determines whether the rows are to be sorted in ascending or descending order*/
+    /** Serial id */
+	private static final long serialVersionUID = 5867719363631588555L;
+
+	/** Determines whether the rows are to be sorted in ascending or descending order*/
     private boolean isAscendingOrder = true;
 
     /** The coumn on which the rows are sorted*/
@@ -47,6 +54,9 @@ public class ListServices extends ActionSupport
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    
+    /** Http servlet request */
+    private HttpServletRequest servletRequest;
 
     /**
      * Overrides default implementation to list all services
@@ -58,8 +68,7 @@ public class ListServices extends ActionSupport
     {
         try
         {
-           String address = java.net.InetAddress.getLocalHost().getHostAddress();
-           baseURL = "htpp://"+address+":8080/MetadataServicesToolkit/oaiRepositoryServlet";
+           baseURL = "http://" + servletRequest.getServerName() + ":" + "SERVICE_PORT" + servletRequest.getContextPath() + "/oaiRepositoryServlet";
            ServicesService servService = new DefaultServicesService();
            if(columnSorted.equalsIgnoreCase("ServiceName")||(columnSorted.equalsIgnoreCase("Port")))
             {
@@ -90,13 +99,7 @@ public class ListServices extends ActionSupport
             this.addFieldError("listServicesError", "Unable to connect to the database. Database configuration may be incorrect");
             return INPUT;
         }
-        catch(IOException ie)
-        {
-            errorType = "error";
-            log.error(ie.getMessage(),ie);
-            this.addFieldError("listServicesError", "Unable to retrieve local IP address");
-            return INPUT;
-        }
+        
     }
 
     /**
@@ -195,6 +198,10 @@ public class ListServices extends ActionSupport
      */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	public void setServletRequest(HttpServletRequest servletRequest) {
+		this.servletRequest = servletRequest;
 	}
     
 }

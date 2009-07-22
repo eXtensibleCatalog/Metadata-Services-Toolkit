@@ -84,7 +84,7 @@
 
                  <div class="clear">&nbsp;</div>
 
-        <form action="/MetadataServicesToolkit/editLocalUser.action?UserId=${temporaryUser.id}" method="post" name="editLocalUser">
+        <form action="editLocalUser.action?UserId=${temporaryUser.id}" method="post" name="editLocalUser">
             <br>
              
 

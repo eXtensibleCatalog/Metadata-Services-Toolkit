@@ -16,49 +16,44 @@ YAHOO.xc.mst.logs.harvestIn = {
 
             var url = "displayOAIRequest.action?providerId="+providerId;
             YAHOO.util.Connect.asyncRequest('GET', url, {
-            success: function (o)
-            {
-                document.getElementById('oai_request_div').innerHTML = o.responseText;
-
-		// handle a No of deleting repository dialog
-		var handleClose = function() {
-		    YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog.hide();
-		};                
-                
-		// Instantiate the Dialog
-		// make it modal - 
-		// it should not start out as visible - it should not be shown until 
-		// new repository button is clicked.
-		YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog = new YAHOO.widget.Dialog('oaiRequestDialog', 
-		{ width : "700px",
-			  visible : false, 
-			  modal : true,
-			  buttons : [ { text:'Close', handler:handleClose }]
-	
-		} );
-	
-	
-		// Show the dialog
-	       YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog.showDialog = function()
-	       {
-		   YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog.show();
-		   YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog.center();
-	       },
-
-
-		// Render the Dialog
-		YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog.render();
-
-
-		YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog.showDialog();                
-                
-            }
+	            success: function (o)
+	            {
+			        document.getElementById('oai_request_div').innerHTML = o.responseText;
+			
+					// handle a No of deleting repository dialog
+					var handleClose = function() {
+					    YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog.hide();
+					};                
+			                
+					// Instantiate the Dialog
+					// make it modal - 
+					// it should not start out as visible - it should not be shown until 
+					// new repository button is clicked.
+					YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog = new YAHOO.widget.Dialog('oaiRequestDialog', 
+					{ width : "700px",
+						  visible : false, 
+						  modal : true,
+						  buttons : [ { text:'Close', handler:handleClose }]
+				
+					} );
+				
+				
+					// Show the dialog
+				       YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog.showDialog = function()
+				       {
+					   YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog.show();
+					   YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog.center();
+				       },
+			
+			
+					// Render the Dialog
+					YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog.render();
+			
+			
+					YAHOO.xc.mst.logs.harvestIn.oaiRequestDialog.showDialog();                
+	                
+	            }
             });
-
-
-
-
-
      },
 
     downloadFile: function(providerId)

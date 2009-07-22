@@ -176,7 +176,7 @@
                                                     </c:if>
                                                 <td class="${classColumn}"><a href="viewEditService.action?serviceId=${service.id}"><c:out value="${service.name}"/></a></td>
                                                 <c:set var="baseURL" value="${baseURL}"/>
-                                                <c:set var = "url" value="${fn:replace(baseURL,'8080',service.port)}" />
+                                                <c:set var = "url" value="${fn:replace(baseURL,'SERVICE_PORT',service.port)}" />
                                                     <c:set var="classColumn" value="plainColumn"/>
                                                     <c:if test="${columnSorted=='Port'}">
                                                         <c:set var="classColumn" value="sortColumn"/>

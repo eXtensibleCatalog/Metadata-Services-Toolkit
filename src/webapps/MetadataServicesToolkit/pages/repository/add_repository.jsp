@@ -86,7 +86,7 @@
                  </c:if>
                  <div id="error_div"></div>
                  
-        <form action="/MetadataServicesToolkit/addRepository.action" name="addRepositoryForm" method="post">
+        <form action="addRepository.action" name="addRepositoryForm" method="post">
 
 	<div class="clear">&nbsp;</div>
 

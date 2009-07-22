@@ -88,7 +88,7 @@
 
                <div class="clear">&nbsp;</div>
 
-        <form action="/MetadataServicesToolkit/editRepository.action?RepositoryId=<s:property value="repositoryId"/>" name="editRepositoryForm" method="post">
+        <form action="editRepository.action?RepositoryId=<s:property value="repositoryId"/>" name="editRepositoryForm" method="post">
               
         <div style="margin-left:10px;font-family: verdana,sans-serif;font-size: 12px;">
 

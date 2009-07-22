@@ -91,7 +91,7 @@
                     <button style="width:170px;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editDirective.editProcessingDirective();" name="next"><span style="position:relative;top:-3px;">Continue to Step 2 </span> <img src="page-resources/img/bullet_go.gif"></button>
                 </div>
 
-                    <form action="/MetadataServicesToolkit/editProcessingDirectives.action?ProcessingDirectiveId=${processingDirectiveId}" method="post" name="editProcessingDirective">
+                    <form action="editProcessingDirectives.action?ProcessingDirectiveId=${processingDirectiveId}" method="post" name="editProcessingDirective">
                     <div class="greybody">
                     <table cellpadding="0" cellspacing="0" border="0" width="75%">
 
