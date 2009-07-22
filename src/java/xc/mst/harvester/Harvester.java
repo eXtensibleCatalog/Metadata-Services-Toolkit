@@ -408,7 +408,7 @@ public class Harvester implements ErrorHandler
 	public Harvester(int timeOutMilliseconds, HarvestScheduleStep scheduleStep, Harvest currentHarvest) throws DatabaseConfigException
 	{
 		HttpClientParams params = new HttpClientParams();
-		params.setSoTimeout(30); // TODO: Value too small.  Set to normal value after testing timeout
+		params.setSoTimeout(timeOutMilliseconds);
 		client = new HttpClient(params, new MultiThreadedHttpConnectionManager());
 		this.currentHarvest = currentHarvest;
 		this.schedule = scheduleStep.getSchedule();

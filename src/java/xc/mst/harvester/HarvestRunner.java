@@ -33,6 +33,7 @@ import xc.mst.dao.harvest.HarvestScheduleStepDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * This class is an interface to the Harvester class which requires only the ID of the harvest schedule
@@ -239,6 +240,20 @@ public class HarvestRunner
 			currentHarvest.setHarvestScheduleId(harvestScheduleStep.getSchedule().getId());
 			harvestDao.insert(currentHarvest);
 
+			String timeout = MSTConfiguration.getProperty(Constants.CONFIG_HARVESTER_TIMEOUT_URL);
+			if(timeout != null)
+			{
+				try
+				{
+					timeOutMilliseconds = Integer.parseInt(timeout);
+				}
+				catch(NumberFormatException e)
+				{
+					log.warn("The HarvesterTimeout in the configuration file was not an integer.");
+				}
+			}
+			
+			
 			// Run the harvest
 			Harvester.harvest(
 					 baseURL,
