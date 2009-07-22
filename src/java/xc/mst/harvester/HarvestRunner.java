@@ -180,22 +180,21 @@ public class HarvestRunner
 		}
 		catch (Hexception e) 
 		{
-			if(e.getMessage().contains("Harvest Step Aborted!"))
+			try
 			{
-				log.info("Harvest Aborted!");
-				try
-				{
-					harvestDao.delete(currentHarvest);
-				}
-				catch(DatabaseConfigException e2)
-				{
-					log.error("Unable to connect to the database with the parameters defined in the configuration file.", e2);
-				}
-				catch(DataException e2)
-				{
-					log.error("An error occurred while deleting the aborted harvest.", e2);
-				}
+				harvestDao.delete(currentHarvest);
 			}
+			catch(DatabaseConfigException e2)
+			{
+				log.error("Unable to connect to the database with the parameters defined in the configuration file.", e2);
+			}
+			catch(DataException e2)
+			{
+				log.error("An error occurred while deleting the aborted harvest.", e2);
+			}
+			
+			if(e.getMessage().contains("Harvest received kill signal"))
+				log.info("Harvest Aborted!");
 			else
 				log.warn("Harvest failed.");
 		}
@@ -261,8 +260,9 @@ public class HarvestRunner
 			harvestScheduleStep.setLastRan(startTime);
 			harvestScheduleStepDao.update(harvestScheduleStep, harvestScheduleStep.getSchedule().getId());
 		} // end try(run the harvest)
-		catch (Hexception e) {
-				 throw new Hexception("Harvest Step Aborted!");
+		catch (Hexception e) 
+		{
+			throw e;
 		}
 		catch(Exception e)
 		{

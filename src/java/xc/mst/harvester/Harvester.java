@@ -408,7 +408,7 @@ public class Harvester implements ErrorHandler
 	public Harvester(int timeOutMilliseconds, HarvestScheduleStep scheduleStep, Harvest currentHarvest) throws DatabaseConfigException
 	{
 		HttpClientParams params = new HttpClientParams();
-		params.setSoTimeout(timeOutMilliseconds);
+		params.setSoTimeout(30); // TODO: Value too small.  Set to normal value after testing timeout
 		client = new HttpClient(params, new MultiThreadedHttpConnectionManager());
 		this.currentHarvest = currentHarvest;
 		this.schedule = scheduleStep.getSchedule();
@@ -1324,6 +1324,8 @@ public class Harvester implements ErrorHandler
 				msg = "The request for data resulted in an invalid response from the provider. The baseURL indicated may be incorrect or the service may be unavailable. HTTP response: " + exc.getMessage();
 			else if(exc.getMessage().contains("The markup in the document following the root element must be well-formed"))
 				msg = "The OAI repository did not return valid XML, so it could not be harvested.";
+			else if(exc.getMessage().contains("Read timed out"))
+				msg = "The request for data timed out.";
 			else
 				msg = "The request for data resulted in an invalid response from the provider. Error: " + exc.getMessage();
 

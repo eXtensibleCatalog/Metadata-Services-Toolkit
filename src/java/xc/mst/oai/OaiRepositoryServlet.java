@@ -82,6 +82,14 @@ public class OaiRepositoryServlet extends ActionSupport implements ServletReques
 			// Get the service based on the port.
 			Service service = serviceDao.getByPort(port);
 	
+			if(service == null)
+			{
+				// Write the response
+				response.getWriter().write("No OAI repository is configured to run on port " + port);
+		
+			    return SUCCESS;
+			}
+			
 			LogWriter.addInfo(service.getHarvestOutLogFileName(), "Received the OAI request " + request.getQueryString());
 	
 			// Bean to manage data for handling the request
