@@ -306,7 +306,7 @@ public class AggregationService extends MetadataService
 				}
 				else if(level.equals("item") && component.getChildren().size() > 0)
 				{
-					uplinks = getLinks(xml, "linkHoldings");
+					uplinks = getLinks(xml, "holdingsExemplified");
 					Item item = buildItem(component, record);
 					results.addAll(processItem(item, xml));
 				}
@@ -718,7 +718,7 @@ public class AggregationService extends MetadataService
 		// For each output record that were processed from records linked to the
 		// record we just processed, add a link from each current processed record to it
 		for(Record linked : linkedToInput)
-			updateRecord(addLinkToRecordXml(linked, results, "workExpressed"));
+			updateRecord(Expression.buildExpressionFromRecord(addLinkToRecordXml(linked, results, "workExpressed")));
 		
 		return results;
 	} // end method processWork(Work work)
@@ -1596,6 +1596,9 @@ public class AggregationService extends MetadataService
 	@SuppressWarnings("unchecked")
 	private Document addLink(Document xml, String linkType, String linkContent)
 	{
+		if(getLinks(xml, linkType).contains(linkContent)) // Don't add a duplicate link
+			return xml;
+		
 		Element newLink = new Element(linkType, XC_NAMESPACE);
 		newLink.setText(linkContent);
 		

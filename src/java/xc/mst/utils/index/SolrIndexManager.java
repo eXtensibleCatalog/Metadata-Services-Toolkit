@@ -218,6 +218,7 @@ public class SolrIndexManager {
 			return false;
 		}
 		try {
+			LogWriter.addInfo(logObj.getLogFileLocation(), "Committing changes to the Solr index");
 			server.commit();
 			LogWriter.addInfo(logObj.getLogFileLocation(), "Commited changes to the Solr index");
 		} catch (SolrServerException se) {

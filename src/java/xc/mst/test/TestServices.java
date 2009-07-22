@@ -16,21 +16,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.StringReader;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
-import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
-import org.jdom.xpath.XPath;
-import org.xml.sax.InputSource;
 
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
@@ -81,7 +76,7 @@ public class TestServices
 	private static File unprocessedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggInput");
 	private static File processedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggOutput");
 
-	private static int serviceId = 7;
+	private static int serviceId = 1;
 
 	/**
 	 * Builds the XML Document based on the record's OAI XML

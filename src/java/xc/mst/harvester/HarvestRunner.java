@@ -178,9 +178,26 @@ public class HarvestRunner
 
 			LogWriter.addInfo(provider.getLogFileName(), "Finished harvest of " + baseURL);
 		}
-		catch (Hexception e) {
-				
-			log.info("Harvest Aborted!");
+		catch (Hexception e) 
+		{
+			if(e.getMessage().contains("Harvest Step Aborted!"))
+			{
+				log.info("Harvest Aborted!");
+				try
+				{
+					harvestDao.delete(currentHarvest);
+				}
+				catch(DatabaseConfigException e2)
+				{
+					log.error("Unable to connect to the database with the parameters defined in the configuration file.", e2);
+				}
+				catch(DataException e2)
+				{
+					log.error("An error occurred while deleting the aborted harvest.", e2);
+				}
+			}
+			else
+				log.warn("Harvest failed.");
 		}
 		catch(DatabaseConfigException e)
 		{

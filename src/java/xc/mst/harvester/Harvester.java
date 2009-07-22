@@ -666,10 +666,10 @@ public class Harvester implements ErrorHandler
 			} while(resumption != null); // Repeat as long as we get a resumption token
 
 			// Update the status of the harvest schedule
-			if(!runningHarvester.killed)
+			if(!killed)
 				persistStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
-
-
+			else
+				persistStatus(Constants.STATUS_SERVICE_CANCELED);
 		} // end try(run the harvest)
 		catch (Hexception he)
 		{
