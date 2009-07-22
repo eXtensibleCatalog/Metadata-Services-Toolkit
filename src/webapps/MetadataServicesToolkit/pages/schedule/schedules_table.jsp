@@ -202,7 +202,7 @@
                                                     at ${schedule.hour}:00 ${timeZone}
                                                 </c:if>
                                             </td>
-                                            <td width="80">
+											<td width="80">
                                                 <c:set var="schedule_status" value ="${schedule.status}"/>
                                                 <c:choose>
                                                     <c:when test="${schedule_status=='NOT_RUNNING'}">
@@ -214,9 +214,15 @@
                                                                 <img src="page-resources/img/tick.jpg"><span style="position:relative;top:-5px;">Success</span>
                                                             </c:if>
                                                     </c:when>
-                                                    <c:otherwise>
-                                                        In Progress
-                                                    </c:otherwise>
+                                                    <c:when test="${schedule_status=='RUNNING'}">
+                                                          In Progress
+                                                    </c:when>
+                                                    <c:when test="${schedule_status=='CANCELED'}">
+                                                          Aborted
+                                                    </c:when>
+                                                    <c:when test="${schedule_status=='ERROR'}">
+                                                          Error
+                                                    </c:when>                                                    
                                                 </c:choose>
                                                
 
@@ -224,9 +230,18 @@
                                             <td>
                                                 <c:set var="lastRun" value="${mst:lastHarvest(schedule)}"/>
 
-                                                <c:if test="${fn:startsWith(lastRun, 'last')}">
-                                                    ${mst:lastHarvest(schedule)} ${timeZone}
-                                                </c:if>
+												<c:choose>
+						                            <c:when test="${schedule_status=='NOT_RUNNING'}">
+														<c:if test="${fn:startsWith(lastRun, 'last')}">
+														    ${mst:lastHarvest(schedule)} ${timeZone}
+														</c:if>
+                                                    </c:when>
+                                                    
+                                                    <c:when test="${schedule_status=='CANCELED'}">
+                                                          Last scheduled harvest was aborted.
+                                                    </c:when>
+                                                </c:choose>
+
 
                                             </td>
                                             <td> <button class="xc_button" id="showDeleteSchedule" type="button" name="delete" onClick="javascript:YAHOO.xc.mst.schedule.view.deleteSchedule(${schedule.id}, '${schedule.scheduleName}');">Delete</button></td>
