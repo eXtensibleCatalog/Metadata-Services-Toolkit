@@ -28,6 +28,10 @@
     <!-- The institution specific OAI identifier prefix -->
     <property name="OaiRepoIdentifier" value="URMST" />
 
+    <!-- The number of milliseconds the harvester should wait for a response
+         from an OAI repository before reporting an error -->
+    <property name="HarvesterTimeout" value="300000" />
+
   </category>
   
 </properties>
