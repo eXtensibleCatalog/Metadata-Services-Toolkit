@@ -164,6 +164,8 @@ public class HarvestRunner
 					requests.append("\n").append(request);
 			}
 
+			harvestSchedule = harvestScheduleDao.getById(harvestSchedule.getId());
+			
 			harvestSchedule.setRequest(requests.toString());
 
 			harvestScheduleDao.update(harvestSchedule, false);
