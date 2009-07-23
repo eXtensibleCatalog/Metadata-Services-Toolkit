@@ -726,16 +726,6 @@
 			<result name="input">/pages/browse_records/error_description.jsp</result>
 		</action>		
 		
-		 <!--  ************************************ -->
-        <!--  OAI repository servlet  actions          -->
-        <!--  ************************************ -->
-        
-        <action name="oaiRepositoryServlet" class="xc.mst.oai.OaiRepositoryServlet">
-			<result name="success" type="no-op"/>
-		</action>
-		
-		
-		
 		<!--  ************************************ -->
         <!--  Configuration actions          -->
         <!--  ************************************ -->
@@ -899,5 +889,16 @@
 	      	</interceptor-ref>
             <result name="success" type="no-op"/>
         </action>
+        
+		 <!--  ************************************ -->
+        <!--  OAI repository servlet  actions          -->
+        <!--  ************************************ -->
+        
+        <action name="oaiRepositoryServlet" class="xc.mst.oai.OaiRepositoryServlet">
+			<result name="success" type="no-op"/>
+		</action>
+		        
 	</package>
+	
+ 			
 </struts>

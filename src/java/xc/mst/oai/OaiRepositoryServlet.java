@@ -75,6 +75,28 @@ public class OaiRepositoryServlet extends ActionSupport implements ServletReques
 
 		try
 		{
+			// Get servlet path from request 
+			String servletPath = request.getServletPath();
+			
+			// Extract the service name from servlet path
+			int firstOccuranceOfSlash = servletPath.indexOf("/");
+			
+			// Check if / exist in servlet path
+			if (firstOccuranceOfSlash != -1) {
+				int secondOccuranceOfSlash = servletPath.indexOf("/", firstOccuranceOfSlash + 1);
+			
+				String serviceName = null;
+				if ((firstOccuranceOfSlash != -1 && secondOccuranceOfSlash != -1) && (secondOccuranceOfSlash > firstOccuranceOfSlash)) {
+					serviceName = servletPath.substring(firstOccuranceOfSlash + 1, secondOccuranceOfSlash);
+				} else { // Invalid URL
+					// Show error message
+					// TODO
+				}
+			} else { // Invalid URL
+				// Show error message
+				// TODO
+			}
+			
 			// Get the port on which the request is coming in.  This will
 			// tell us which service's records to expose.
 			int port = request.getLocalPort();
