@@ -109,11 +109,14 @@ refreshServiceBar : function()
             {
                 
                      if(o.responseText != null && o.responseText.search("ServiceStatus") < 0 )
-                        {
+                     {
+			 			if(o.responseText != null && o.responseText.search("LoginPage") > 0 )
+                        {   
                             window.location = 'viewLogin.action';
-                        } else {
+                         }
+                     } else {
                     	    document.getElementById("serviceBar").innerHTML = o.responseText;
-                    	}
+                     }
                     	
             }
             });
