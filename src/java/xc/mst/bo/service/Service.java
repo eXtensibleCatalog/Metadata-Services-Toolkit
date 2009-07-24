@@ -15,6 +15,7 @@ import java.util.List;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
+import xc.mst.constants.Constants;
 
 /**
  * Represents a service in the MST
@@ -131,7 +132,7 @@ public class Service
 	/**
 	 * The current status of the service.
 	 */
-	private String status = null;
+	private String status = Constants.STATUS_SERVICE_NOT_RUNNING;
 	
 	/**
 	 * The name of the .xccfg file defining the service

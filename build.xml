@@ -281,39 +281,58 @@
         </war>
     </target>
 	
-	<taskdef name="ForEach" classname="net.sf.antcontrib.logic.ForEach" classpathref="libraries"/>
 	<target name="dist" depends="makeWar">
 		<delete dir="dist"/>
 		<!-- Create the MST zip archive -->
 		<mkdir dir="dist/MST-instances/MetadataServicesToolkit"/>
-		<copydir dest="dist/MST-instances/MetadataServicesToolkit/solr" src="solr"/>
+		<copy todir="dist/MST-instances/MetadataServicesToolkit/solr">
+			<fileset dir="MST-instances/MetadataServicesToolkit/solr"/>
+		</copy>
 		<delete dir="dist/MST-instances/MetadataServicesToolkit/solr/data"/>
-		<copydir dest="dist/MST-instances/MetadataServicesToolkit/sql" src="sql"/>
+		<copy todir="dist/MST-instances/MetadataServicesToolkit/sql">
+			<fileset dir="MST-instances/MetadataServicesToolkit/sql"/>
+		</copy>
 		<delete dir="." includes="dist/MST-instances/MetadataServicesToolkit/sql/**" excludes="dist/MST-instances/MetadataServicesToolkit/sql/create_database_script.sql"  />
 		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
 		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
 		<copy file="MetadataServicesToolkit.war" todir="dist/mst-instances"/>
 		<zip destfile="dist/MetadataServicesToolkitv1.0.zip"  basedir="dist" />
-		<!-- Create the Services zip archive -->
-		<dirset  dir="services"></dirset>
+
+		<!-- Create the Normalization Services zip archive -->
+		<dirset dir="MST-instances/MetadataServicesToolkit/services/Normalization" >
+			<include name="services/**"/>
+			<exclude name="services"/>
+			<exclude name="services/**/serviceConfig"/>
+			<exclude name="services/**/serviceErrors"/>
+			<exclude name="services/**/serviceJar"/>
+		</dirset>
+		<zip destfile="Normalizationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit/services/Normalization" /> 
+		<move file="Normalizationv1.0.zip" todir="dist" />
 		
-		<ForEach target="zipArchive" param="dir" >
-			<path>
-				<dirset dir="." >
-					<include name="services/**"/>
-					<exclude name="services"/>
-					<exclude name="services/**/serviceConfig"/>
-					<exclude name="services/**/serviceErrors"/>
-					<exclude name="services/**/serviceJar"/>
-				</dirset>
-			</path>
-		</ForEach>
+		<!-- Create the Transformation Services zip archive -->
+		<dirset dir="MST-instances/MetadataServicesToolkit/services/Transformation" >
+			<include name="services/**"/>
+			<exclude name="services"/>
+			<exclude name="services/**/serviceConfig"/>
+			<exclude name="services/**/serviceErrors"/>
+			<exclude name="services/**/serviceJar"/>
+		</dirset>
+		<zip destfile="Transformationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit/services/Transformation" /> 
+		<move file="Transformationv1.0.zip" todir="dist" />
+
+		<!-- Create the Aggregation Services zip archive -->
+		<dirset dir="MST-instances/MetadataServicesToolkit/services/Aggregation" >
+			<include name="services/**"/>
+			<exclude name="services"/>
+			<exclude name="services/**/serviceConfig"/>
+			<exclude name="services/**/serviceErrors"/>
+			<exclude name="services/**/serviceJar"/>
+		</dirset>
+		<zip destfile="Aggregationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit/services/Aggregation" /> 
+		<move file="Aggregationv1.0.zip" todir="dist" />
+			
 		<delete dir="dist/MST-instances" />
 	</target>
-	
-	<target name="zipArchive" >
-		<zip destfile="${dir}v1.0.zip" basedir="${dir}" /> 
-		<move file="${dir}v1.0.zip" todir="dist" />
-	</target>
+
 
 </project>

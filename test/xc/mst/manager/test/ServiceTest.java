@@ -114,17 +114,15 @@ public class ServiceTest {
 
             Service newService = servicesService.getServiceById(service.getId());
 
-            assert service.getHarvestOutErrors()==newService.getHarvestOutErrors();
-            assert service.getHarvestOutLastLogReset()==newService.getHarvestOutLastLogReset();
-            assert service.getHarvestOutLogFileName().equals(newService.getHarvestOutLogFileName());
-            assert service.getHarvestOutRecordsAvailable()==service.getHarvestOutRecordsAvailable();
-            assert service.getHarvestOutRecordsHarvested()==newService.getHarvestOutRecordsHarvested();
-            assert service.getHarvestOutWarnings()==newService.getHarvestOutWarnings();
-            assert service.getServicesErrors()==newService.getServicesErrors();
-            assert service.getServicesWarnings()==newService.getServicesWarnings();
-            assert service.getServicesLastLogReset()==newService.getServicesLastLogReset();
-            assert service.getServicesLogFileName().equalsIgnoreCase(newService.getServicesLogFileName());
-            assert service.getVersion().equalsIgnoreCase(newService.getVersion());
+            assert service.getHarvestOutErrors()==newService.getHarvestOutErrors() : "Harvest out errors are not equal";
+            assert service.getHarvestOutLogFileName().equals(newService.getHarvestOutLogFileName()) : "Harvest out log file name are not equal";
+            assert service.getHarvestOutRecordsAvailable()==service.getHarvestOutRecordsAvailable() : "Harvest out records avaialable are not equal";
+            assert service.getHarvestOutRecordsHarvested()==newService.getHarvestOutRecordsHarvested() : "Harvest out records harvested are not equal";
+            assert service.getHarvestOutWarnings()==newService.getHarvestOutWarnings() : "Harvest out warnings are not equal";
+            assert service.getServicesErrors()==newService.getServicesErrors() : "Harvest out service error are not equal";
+            assert service.getServicesWarnings()==newService.getServicesWarnings() : "Service warnings are not equal";
+            assert service.getServicesLogFileName().equalsIgnoreCase(newService.getServicesLogFileName()) : "Service log file name are not equal";
+            assert service.getVersion().equalsIgnoreCase(newService.getVersion()) : "Service version are not equal";
 
             servicesService.deleteService(service);
         }
