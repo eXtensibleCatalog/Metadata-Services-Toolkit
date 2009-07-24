@@ -52,6 +52,16 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 	 * A PreparedStatement to list all users for a group
 	 */
 	private static PreparedStatement psGetUsersForGroup = null;
+	
+    /**
+	 * A PreparedStatement to get number of users in a group
+	 */
+	private static PreparedStatement psGetUserCountForGroup = null;	
+	
+    /**
+	 * A PreparedStatement to get all users in a group
+	 */
+	private static PreparedStatement psGetUsersForGroupSorted = null;
 
 	/**
 	 * Lock to prevent concurrent access of the prepared statement to add a group for a user
@@ -77,6 +87,16 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 	 * Lock to prevent concurrent access of the prepared statement to list all users associated with a group
 	 */
 	private static Object psGetUsersForGroupLock = new Object();
+	
+    /**
+	 * Lock to prevent concurrent access of the prepared statement to get number of users associated with a group
+	 */
+	private static Object psGetUserCountForGroupLock = new Object();
+	
+    /**
+	 * Lock to prevent concurrent access of the prepared statement to list all users associated with a group sorted 
+	 */
+	private static Object psGetUsersForGroupSortedLock = new Object();
 
 	@Override
 	public boolean insert(int userId, int groupId)
@@ -359,7 +379,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
      */
     public int getUserCountForGroup(int groupId)
     {
-         synchronized(psGetUsersForGroupLock)
+         synchronized(psGetUserCountForGroupLock)
 		{
             if(log.isDebugEnabled())
 				log.debug("Getting the users for the group with group ID " + groupId);
@@ -367,13 +387,11 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 			// The ResultSet from the SQL query
 			ResultSet results = null;
 
-			// The list of users for the group with the passed ID
-			List<User> users = new ArrayList<User>();
 
 			try
 			{
 				// If the PreparedStatement to get users by group ID wasn't defined, create it
-				if(psGetUsersForGroup == null)
+				if(psGetUserCountForGroup == null)
 				{
 					// SQL to get the rows
 					String selectSql = "SELECT COUNT(" + COL_USER_ID + ") " +
@@ -385,16 +403,16 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetUsersForGroup = dbConnection.prepareStatement(selectSql);
+					psGetUserCountForGroup = dbConnection.prepareStatement(selectSql);
 				}
 
 				// Set the parameters on the select statement
-				psGetUsersForGroup.setInt(1, groupId);
+				psGetUserCountForGroup.setInt(1, groupId);
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetUsersForGroup.executeQuery();
+				results = psGetUserCountForGroup.executeQuery();
                 
 				// Return the result
 				if(results.next())
@@ -419,9 +437,18 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
         }
     }
 
+    /**
+     * Get users in a specified group sorted by given sort column
+     * 
+     * @param groupId Id of group
+     * @param sort ascending or descending
+     * @param columnSorted Column name to be sorted
+     * 
+     * @return Users in a group
+     */
     public List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted) throws DatabaseConfigException
     {
-        synchronized(psGetUsersForGroupLock)
+        synchronized(psGetUsersForGroupSortedLock)
 		{
             if(log.isDebugEnabled())
 				log.debug("Getting the users for the group with group ID " + groupId);
@@ -445,16 +472,16 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetUsersForGroup = dbConnection.prepareStatement(selectSql);
+					psGetUsersForGroupSorted = dbConnection.prepareStatement(selectSql);
 
 
 				// Set the parameters on the select statement
-				psGetUsersForGroup.setInt(1, groupId);
+				psGetUsersForGroupSorted.setInt(1, groupId);
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetUsersForGroup.executeQuery();
+				results = psGetUsersForGroupSorted.executeQuery();
 
 				UserService userService = new DefaultUserService();
 				// For each result returned, add the group ID object to the list with the returned data

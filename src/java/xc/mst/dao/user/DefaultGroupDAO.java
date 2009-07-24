@@ -17,7 +17,6 @@ import java.util.List;
 
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
-import xc.mst.bo.user.User;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
@@ -38,6 +37,11 @@ public class DefaultGroupDAO extends GroupDAO
 	 * A PreparedStatement to get all groups in the database
 	 */
 	private static PreparedStatement psGetAll = null;
+	
+	/**
+	 * A PreparedStatement to get all groups sorted in the database
+	 */
+	private static PreparedStatement psGetAllSorted = null;
 
 	/**
 	 * A PreparedStatement to get a group from the database by its ID
@@ -68,6 +72,11 @@ public class DefaultGroupDAO extends GroupDAO
 	 * Lock to synchronize access to the get all PreparedStatement
 	 */
 	private static Object psGetAllLock = new Object();
+	
+	/**
+	 * Lock to synchronize access to the get all sorted PreparedStatement
+	 */
+	private static Object psGetAllSortedLock = new Object();
 
 	/**
 	 * Lock to synchronize access to the get by ID PreparedStatement
@@ -179,7 +188,7 @@ public class DefaultGroupDAO extends GroupDAO
 		if(dbConnection == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
-		synchronized(psGetAllLock)
+		synchronized(psGetAllSortedLock)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Getting all groups");
@@ -204,13 +213,13 @@ public class DefaultGroupDAO extends GroupDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnection.prepareStatement(selectSql);
+					psGetAllSorted = dbConnection.prepareStatement(selectSql);
 				
 
 				// Get the results of the SELECT statement
 
 				// Execute the query
-				results = psGetAll.executeQuery();
+				results = psGetAllSorted.executeQuery();
 
 				// If any results were returned
 				while(results.next())
