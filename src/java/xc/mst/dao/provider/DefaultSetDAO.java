@@ -18,7 +18,6 @@ import java.util.List;
 import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.MySqlConnectionManager;
 
 /**
  * MySQL implementation of the data access object for the sets table
@@ -121,7 +120,7 @@ public class DefaultSetDAO extends SetDAO
 	public List<Set> getAll() throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetAllLock)
@@ -133,13 +132,15 @@ public class DefaultSetDAO extends SetDAO
 			ResultSet results = null;
 
 			// The list of all sets
-			ArrayList<Set> sets = new ArrayList<Set>();
+			List<Set> sets = new ArrayList<Set>();
 
 			try
 			{
 				// Create the PreparedStatment to get all sets if it hasn't already been created
-				if(psGetAll == null)
+				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
+					dbConnectionManager.unregisterStatement(psGetAll);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SET_ID + ", " +
 												   COL_DISPLAY_NAME + ", " +
@@ -155,13 +156,13 @@ public class DefaultSetDAO extends SetDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnection.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get all PreparedStatement not defined)
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetAll.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetAll);
 
 				// For each result returned, add a Set object to the list with the returned data
 				while(results.next())
@@ -194,7 +195,7 @@ public class DefaultSetDAO extends SetDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getAll()
@@ -203,7 +204,7 @@ public class DefaultSetDAO extends SetDAO
 	public Set getById(int setId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -217,8 +218,10 @@ public class DefaultSetDAO extends SetDAO
 			try
 			{
 				// Create the PreparedStatment to get a set by it's ID if it hasn't already been created
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SET_ID + ", " +
 												   COL_DISPLAY_NAME + ", " +
@@ -235,7 +238,7 @@ public class DefaultSetDAO extends SetDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the PreparedStatement
@@ -244,7 +247,7 @@ public class DefaultSetDAO extends SetDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// For each result returned, add a Set object to the list with the returned data
 				if(results.next())
@@ -280,7 +283,7 @@ public class DefaultSetDAO extends SetDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getById(int)
@@ -289,7 +292,7 @@ public class DefaultSetDAO extends SetDAO
 	public Set loadBasicSet(int setId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -303,8 +306,10 @@ public class DefaultSetDAO extends SetDAO
 			try
 			{
 				// Create the PreparedStatment to get a set by it's ID if it hasn't already been created
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SET_ID + ", " +
 												   COL_DISPLAY_NAME + ", " +
@@ -321,7 +326,7 @@ public class DefaultSetDAO extends SetDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the PreparedStatement
@@ -330,7 +335,7 @@ public class DefaultSetDAO extends SetDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// For each result returned, add a Set object to the list with the returned data
 				if(results.next())
@@ -366,7 +371,7 @@ public class DefaultSetDAO extends SetDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method loadBasicSet(int)
@@ -375,7 +380,7 @@ public class DefaultSetDAO extends SetDAO
 	public Set getBySetSpec(String setSpec) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetBySetSpecLock)
@@ -389,8 +394,10 @@ public class DefaultSetDAO extends SetDAO
 			try
 			{
 				// Create the PreparedStatment to get a set by it's setSpec if it hasn't already been created
-				if(psGetBySetSpec == null)
+				if(psGetBySetSpec == null || dbConnectionManager.isClosed(psGetBySetSpec))
 				{
+					dbConnectionManager.unregisterStatement(psGetBySetSpec);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SET_ID + ", " +
 												   COL_DISPLAY_NAME + ", " +
@@ -407,7 +414,7 @@ public class DefaultSetDAO extends SetDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetBySetSpec = dbConnection.prepareStatement(selectSql);
+					psGetBySetSpec = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by setSpec PreparedStatement not defined)
 
 				// Set the parameters on the PreparedStatement
@@ -416,7 +423,7 @@ public class DefaultSetDAO extends SetDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetBySetSpec.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetBySetSpec);
 
 				// For each result returned, add a Set object to the list with the returned data
 				if(results.next())
@@ -452,7 +459,7 @@ public class DefaultSetDAO extends SetDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getBySetSpec(String)
@@ -461,7 +468,7 @@ public class DefaultSetDAO extends SetDAO
 	public List<Set> getSetsForProvider(int providerId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByProviderIdLock)
@@ -478,8 +485,10 @@ public class DefaultSetDAO extends SetDAO
 			try
 			{
 				// Create the PreparedStatment to get a set by it's ID if it hasn't already been created
-				if(psGetByProviderId == null)
+				if(psGetByProviderId == null || dbConnectionManager.isClosed(psGetByProviderId))
 				{
+					dbConnectionManager.unregisterStatement(psGetByProviderId);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SET_ID + ", " +
 												   COL_DISPLAY_NAME + ", " +
@@ -496,7 +505,7 @@ public class DefaultSetDAO extends SetDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByProviderId = dbConnection.prepareStatement(selectSql);
+					psGetByProviderId = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by provider ID PreparedStatement wasn't defined)
 
 				// Set the parameters on the PreparedStatement
@@ -505,7 +514,7 @@ public class DefaultSetDAO extends SetDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetByProviderId.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByProviderId);
 
 				// For each result returned, add a Set object to the list with the returned data
 				while(results.next())
@@ -541,7 +550,7 @@ public class DefaultSetDAO extends SetDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getSetsForProvider(int)
@@ -550,7 +559,7 @@ public class DefaultSetDAO extends SetDAO
 	public boolean insert(Set set) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the non-ID fields on the set are valid
@@ -567,8 +576,10 @@ public class DefaultSetDAO extends SetDAO
 			try
 			{
 				// Build the PreparedStatement to insert a set if it wasn't already created
-				if(psInsert == null)
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + SETS_TABLE_NAME + " (" + COL_DISPLAY_NAME + ", " +
 	            	      													COL_DESCRIPTION + ", " +
@@ -583,7 +594,7 @@ public class DefaultSetDAO extends SetDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -595,10 +606,10 @@ public class DefaultSetDAO extends SetDAO
 				psInsert.setInt(6, 0);
 
 				// Execute the insert statement and return the result
-				if(psInsert.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psInsert) > 0)
 				{
 					// Get the auto-generated resource identifier ID and set it correctly on this Set Object
-					rs = dbConnection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+					rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
 				    if (rs.next())
 				        set.setId(rs.getInt(1));
@@ -616,7 +627,7 @@ public class DefaultSetDAO extends SetDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method insert(Set)
@@ -625,7 +636,7 @@ public class DefaultSetDAO extends SetDAO
 	public boolean insertForProvider(Set set, int providerId) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the non-ID fields on the set are valid
@@ -642,8 +653,10 @@ public class DefaultSetDAO extends SetDAO
 			try
 			{
 				// Build the PreparedStatement to insert a set if it wasn't already created
-				if(psInsert == null)
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + SETS_TABLE_NAME + " (" + COL_DISPLAY_NAME + ", " +
 	            	      													COL_DESCRIPTION + ", " +
@@ -658,7 +671,7 @@ public class DefaultSetDAO extends SetDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -670,10 +683,10 @@ public class DefaultSetDAO extends SetDAO
 				psInsert.setInt(6, providerId);
 
 				// Execute the insert statement and return the result
-				if(psInsert.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psInsert) > 0)
 				{
 					// Get the auto-generated resource identifier ID and set it correctly on this Set Object
-					rs = dbConnection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+					rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
 				    if (rs.next())
 				        set.setId(rs.getInt(1));
@@ -691,7 +704,7 @@ public class DefaultSetDAO extends SetDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method insert(Set)
@@ -700,7 +713,7 @@ public class DefaultSetDAO extends SetDAO
 	public boolean addToProvider(Set set, int providerId) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the fields on the set are valid
@@ -714,8 +727,10 @@ public class DefaultSetDAO extends SetDAO
 			try
 			{
 				// Create a PreparedStatement to update a set if it wasn't already created
-				if(psAddToProvider == null)
+				if(psAddToProvider == null || dbConnectionManager.isClosed(psAddToProvider))
 				{
+					dbConnectionManager.unregisterStatement(psAddToProvider);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + SETS_TABLE_NAME + " SET " + COL_PROVIDER_ID + "=?, " +
 					                                                           COL_PROVIDER_SET + "=?, " +
@@ -727,7 +742,7 @@ public class DefaultSetDAO extends SetDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psAddToProvider = dbConnection.prepareStatement(updateSql);
+					psAddToProvider = dbConnectionManager.prepareStatement(updateSql);
 				} // end if(update PreparedStatemnt wasn't defined)
 
 				// Set the parameters on the update statement
@@ -737,7 +752,7 @@ public class DefaultSetDAO extends SetDAO
 				psAddToProvider.setInt(4, set.getId());
 
 				// Execute the update statement and return the result
-				return psAddToProvider.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psAddToProvider) > 0;
 			} // end try(update the row)
 			catch(SQLException e)
 			{
@@ -752,7 +767,7 @@ public class DefaultSetDAO extends SetDAO
 	public boolean removeFromProvider(Set set, int providerId) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the fields on the set are valid
@@ -766,8 +781,10 @@ public class DefaultSetDAO extends SetDAO
 			try
 			{
 				// Create a PreparedStatement to update a set if it wasn't already created
-				if(psRemoveFromProvider == null)
+				if(psRemoveFromProvider == null || dbConnectionManager.isClosed(psRemoveFromProvider))
 				{
+					dbConnectionManager.unregisterStatement(psRemoveFromProvider);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + SETS_TABLE_NAME + " SET " + COL_PROVIDER_ID + "=0, " +
                                                                                COL_PROVIDER_SET + "=?, " +
@@ -779,7 +796,7 @@ public class DefaultSetDAO extends SetDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psRemoveFromProvider = dbConnection.prepareStatement(updateSql);
+					psRemoveFromProvider = dbConnectionManager.prepareStatement(updateSql);
 				} // end if(update PreparedStatemnt wasn't defined)
 
 				// Set the parameters on the update statement
@@ -788,7 +805,7 @@ public class DefaultSetDAO extends SetDAO
 				psRemoveFromProvider.setInt(3, set.getId());
 
 				// Execute the update statement and return the result
-				return psRemoveFromProvider.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psRemoveFromProvider) > 0;
 			} // end try(update the row)
 			catch(SQLException e)
 			{
@@ -803,7 +820,7 @@ public class DefaultSetDAO extends SetDAO
 	public boolean update(Set set) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the fields on the set are valid
@@ -817,8 +834,10 @@ public class DefaultSetDAO extends SetDAO
 			try
 			{
 				// Create a PreparedStatement to update a set if it wasn't already created
-				if(psUpdate == null)
+				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
+					dbConnectionManager.unregisterStatement(psUpdate);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + SETS_TABLE_NAME + " SET " + COL_DISPLAY_NAME + "=?, " +
 				                                                          COL_DESCRIPTION + "=?, " +
@@ -832,7 +851,7 @@ public class DefaultSetDAO extends SetDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnection.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql);
 				} // end if(update PreparedStatemnt wasn't defined)
 
 				// Set the parameters on the update statement
@@ -844,7 +863,7 @@ public class DefaultSetDAO extends SetDAO
 				psUpdate.setInt(6, set.getId());
 
 				// Execute the update statement and return the result
-				return psUpdate.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psUpdate) > 0;
 			} // end try(update the row)
 			catch(SQLException e)
 			{
@@ -859,7 +878,7 @@ public class DefaultSetDAO extends SetDAO
 	public boolean delete(Set set) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the ID field on the set are valid
@@ -873,8 +892,10 @@ public class DefaultSetDAO extends SetDAO
 			try
 			{
 				// Create the PreparedStatement to delete a set if it wasn't already defined
-				if(psDelete == null)
+				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
+					dbConnectionManager.unregisterStatement(psDelete);
+					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM "+ SETS_TABLE_NAME + " " +
 		                               "WHERE " + COL_SET_ID + " = ? ";
@@ -884,14 +905,14 @@ public class DefaultSetDAO extends SetDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnection.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement
 				psDelete.setInt(1, set.getId());
 
 				// Execute the delete statement and return the result
-				return psDelete.execute();
+				return dbConnectionManager.execute(psDelete);
 			} // end try(delete the set)
 			catch(SQLException e)
 			{

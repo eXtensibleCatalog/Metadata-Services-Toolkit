@@ -7,7 +7,6 @@
   *
   */
 
-
 package xc.mst.manager.record;
 
 import java.io.IOException;

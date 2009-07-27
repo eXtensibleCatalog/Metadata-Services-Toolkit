@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import xc.mst.dao.MySqlConnectionManager;
-
 /**
  * MySQL implementation of the utility class for manipulating the records from a harvest
  *
@@ -78,8 +76,10 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 			try
 			{
 				// If the PreparedStatement to insert a harvest to Top Level Tab is not defined, create it
-				if(psInsert == null)
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + HARVESTS_TO_RECORDS_TABLE_NAME +
 					                                    " (" + COL_HARVEST_ID + ", " +
@@ -91,7 +91,8 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					dbConnectionManager.registerStatement(psInsert);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -99,7 +100,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 				psInsert.setLong(2, recordId);
 
 				// Execute the insert statement and return the result
-				return psInsert.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psInsert) > 0;
 			} // end try (insert the record)
 			catch(SQLException e)
 			{
@@ -109,7 +110,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally
 		} // end synchronized
 	} // end method insert(int, int)
@@ -128,8 +129,10 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 			try
 			{
 				// If the PreparedStatement to insert a harvest to record is not defined, create it
-				if(psDelete == null)
+				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
+					dbConnectionManager.unregisterStatement(psDelete);
+					
 					// SQL to insert the new row
 					String deleteSql = "DELETE FROM " + HARVESTS_TO_RECORDS_TABLE_NAME + " " +
 	            		    		   "WHERE " + COL_HARVEST_ID + "=? " +
@@ -140,7 +143,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnection.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -148,7 +151,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 				psDelete.setLong(2, recordId);
 
 				// Execute the delete statement and return the result
-				return psDelete.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psDelete) > 0;
 			} // end try (delete the record)
 			catch(SQLException e)
 			{
@@ -158,7 +161,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally
 		} // end synchronized
 	} // end method delete(int, long)
@@ -177,8 +180,10 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 			try
 			{
 				// If the PreparedStatement to insert a harvest to record is not defined, create it
-				if(psDeleteForRecord == null)
+				if(psDeleteForRecord == null || dbConnectionManager.isClosed(psDeleteForRecord))
 				{
+					dbConnectionManager.unregisterStatement(psDeleteForRecord);
+					
 					// SQL to insert the new row
 					String deleteSql = "DELETE FROM " + HARVESTS_TO_RECORDS_TABLE_NAME + " " +
 	            		    		   "WHERE " + COL_RECORD_ID + "=? ";
@@ -188,14 +193,14 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDeleteForRecord = dbConnection.prepareStatement(deleteSql);
+					psDeleteForRecord = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the delete statement
 				psDeleteForRecord.setLong(1, recordId);
 
 				// Execute the delete statement and return the result
-				return psDeleteForRecord.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psDeleteForRecord) > 0;
 			} // end try (delete the harvest/record associations)
 			catch(SQLException e)
 			{
@@ -205,7 +210,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally
 		} // end synchronized
 	} // end method deleteForRecord(long)
@@ -227,8 +232,10 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 			try
 			{
 				// If the PreparedStatement to get records by harvest ID wasn't defined, create it
-				if(psGetRecordsForHarvest == null)
+				if(psGetRecordsForHarvest == null || dbConnectionManager.isClosed(psGetRecordsForHarvest))
 				{
+					dbConnectionManager.unregisterStatement(psGetRecordsForHarvest);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_RECORD_ID + " " +
 	                                   "FROM " + HARVESTS_TO_RECORDS_TABLE_NAME + " " +
@@ -239,7 +246,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetRecordsForHarvest = dbConnection.prepareStatement(selectSql);
+					psGetRecordsForHarvest = dbConnectionManager.prepareStatement(selectSql);
 				}
 
 				// Set the parameters on the select statement
@@ -248,7 +255,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetRecordsForHarvest.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetRecordsForHarvest);
 
 				// For each result returned, add a harvest to Top Level Tab object to the list with the returned data
 				while(results.next())
@@ -267,7 +274,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally
 		} // end synchronized
 	} // end method getRecordsForHarvest(int)

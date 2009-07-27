@@ -9,7 +9,6 @@
 
 package xc.mst.dao.user;
 
-import java.sql.Connection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,15 +30,15 @@ import xc.mst.dao.MySqlConnectionManager;
 public abstract class UserDAO
 {
 	/**
-	 * The connection to the database
-	 */
-	protected final static Connection dbConnection = MySqlConnectionManager.getDbConnection();
-
-	/**
 	 * A reference to the logger for this class
 	 */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+	/**
+	 * The Object managing the database connection
+	 */
+	protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
+	
 	/**
 	 * The name of the users database table
 	 */

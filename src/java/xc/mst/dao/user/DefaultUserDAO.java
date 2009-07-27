@@ -23,7 +23,6 @@ import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.utils.LogWriter;
@@ -168,7 +167,7 @@ public class DefaultUserDAO extends UserDAO
 	public List<User> getAll() throws DatabaseConfigException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetAllLock)
@@ -185,8 +184,10 @@ public class DefaultUserDAO extends UserDAO
 			try
 			{
 				// If the PreparedStatement to get all users was not defined, create it
-				if(psGetAll == null)
-				{			
+				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
+				{
+					dbConnectionManager.unregisterStatement(psGetAll);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
@@ -205,14 +206,13 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnection.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get all PreparedStatement not defined)
-			
 			
 				// Get the results of the SELECT statement			
 			
 				// Execute the query
-				results = psGetAll.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetAll);
 			
 				// If any results were returned
 				while(results.next())
@@ -252,7 +252,7 @@ public class DefaultUserDAO extends UserDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getAll()
@@ -266,7 +266,7 @@ public class DefaultUserDAO extends UserDAO
     public int getLDAPUserCount() throws DatabaseConfigException
     {
     	// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
         synchronized(psLDAPUserCountLock)
@@ -280,8 +280,10 @@ public class DefaultUserDAO extends UserDAO
 			try
 			{
 				// If the PreparedStatement to get users by group ID wasn't defined, create it
-				if(psLDAPUserCount == null)
+				if(psLDAPUserCount == null || dbConnectionManager.isClosed(psLDAPUserCount))
 				{
+					dbConnectionManager.unregisterStatement(psLDAPUserCount);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT COUNT(" + COL_USER_ID + ") " +
 	                                   "FROM " + USERS_TABLE_NAME + " " +
@@ -292,14 +294,13 @@ public class DefaultUserDAO extends UserDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psLDAPUserCount = dbConnection.prepareStatement(selectSql);
+					psLDAPUserCount = dbConnectionManager.prepareStatement(selectSql);
 				}
-
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psLDAPUserCount.executeQuery();
+				results = dbConnectionManager.executeQuery(psLDAPUserCount);
 
 				// Return the result
 				if(results.next())
@@ -319,15 +320,16 @@ public class DefaultUserDAO extends UserDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally
         }
     }
+    
 	@Override
 	public List<User> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		if(log.isDebugEnabled())
@@ -370,7 +372,7 @@ public class DefaultUserDAO extends UserDAO
 				log.debug("Creating the \"get all users sorted\" Statement from the SQL " + selectSql);
 		
 			// A statement to run the select SQL
-			getSorted = dbConnection.createStatement();
+			getSorted = dbConnectionManager.createStatement();
 			
 			// Get the results of the SELECT statement			
 			
@@ -416,11 +418,12 @@ public class DefaultUserDAO extends UserDAO
 		} // end catch(SQLException)
 		finally
 		{
-			MySqlConnectionManager.closeResultSet(results);
+			dbConnectionManager.closeResultSet(results);
 			
 			try
 			{
-				getSorted.close();
+				if(getSorted != null)
+					getSorted.close();
 			} // end try(close the Statement)
 			catch(SQLException e)
 			{
@@ -433,7 +436,7 @@ public class DefaultUserDAO extends UserDAO
 	public User getById(int userId) throws DatabaseConfigException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Get the basic user
@@ -451,7 +454,7 @@ public class DefaultUserDAO extends UserDAO
 	public User loadBasicUser(int userId) throws DatabaseConfigException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -465,8 +468,10 @@ public class DefaultUserDAO extends UserDAO
 			try
 			{
 				// If the PreparedStatement to get a user by ID was not defined, create it
-				if(psGetById == null)
-				{			
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
+				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
@@ -486,7 +491,7 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement not defined)
 						
 				// Set the parameters on the select statement
@@ -495,7 +500,7 @@ public class DefaultUserDAO extends UserDAO
 				// Get the result of the SELECT statement			
 			
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 				
 				// If any results were returned
 				if(results.next())
@@ -537,7 +542,7 @@ public class DefaultUserDAO extends UserDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method loadBasicUser(int)
@@ -546,7 +551,7 @@ public class DefaultUserDAO extends UserDAO
 	public User getUserByName(String userName) throws DatabaseConfigException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByUserNameLock)
@@ -560,8 +565,10 @@ public class DefaultUserDAO extends UserDAO
 			try
 			{
 				// If the PreparedStatement to get a user by user name was not defined, create it
-				if(psGetByUserName == null)
-				{			
+				if(psGetByUserName == null || dbConnectionManager.isClosed(psGetByUserName))
+				{
+					dbConnectionManager.unregisterStatement(psGetByUserName);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
@@ -581,7 +588,7 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByUserName = dbConnection.prepareStatement(selectSql);
+					psGetByUserName = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by user name PreparedStatement not defined)
 						
 				// Set the parameters on the select statement
@@ -590,7 +597,7 @@ public class DefaultUserDAO extends UserDAO
 				// Get the result of the SELECT statement			
 			
 				// Execute the query
-				results = psGetByUserName.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByUserName);
 				
 				// If any results were returned
 				if(results.next())
@@ -636,7 +643,7 @@ public class DefaultUserDAO extends UserDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method getUserByName(int)
@@ -645,7 +652,7 @@ public class DefaultUserDAO extends UserDAO
 	public User getUserByUserName(String userName, Server server) throws DatabaseConfigException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByUserNameAndServerLock)
@@ -659,8 +666,10 @@ public class DefaultUserDAO extends UserDAO
 			try
 			{
 				// If the PreparedStatement to get a user by user name was not defined, create it
-				if(psGetByUserNameAndServer == null)
-				{			
+				if(psGetByUserNameAndServer == null || dbConnectionManager.isClosed(psGetByUserNameAndServer))
+				{
+					dbConnectionManager.unregisterStatement(psGetByUserNameAndServer);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
@@ -680,7 +689,7 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByUserNameAndServer = dbConnection.prepareStatement(selectSql);
+					psGetByUserNameAndServer = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by user name PreparedStatement not defined)
 						
 				// Set the parameters on the select statement
@@ -690,7 +699,7 @@ public class DefaultUserDAO extends UserDAO
 				// Get the result of the SELECT statement			
 			
 				// Execute the query
-				results = psGetByUserNameAndServer.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByUserNameAndServer);
 				
 				// If any results were returned
 				if(results.next())
@@ -736,7 +745,7 @@ public class DefaultUserDAO extends UserDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method getUserByName(int)
@@ -745,7 +754,7 @@ public class DefaultUserDAO extends UserDAO
 	public User getUserByEmail(String email, Server server) throws DatabaseConfigException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByEmailLock)
@@ -759,8 +768,10 @@ public class DefaultUserDAO extends UserDAO
 			try
 			{
 				// If the PreparedStatement to get a user by email was not defined, create it
-				if(psGetByEmail == null)
-				{			
+				if(psGetByEmail == null || dbConnectionManager.isClosed(psGetByEmail))
+				{
+					dbConnectionManager.unregisterStatement(psGetByEmail);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
@@ -780,7 +791,7 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByEmail = dbConnection.prepareStatement(selectSql);
+					psGetByEmail = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by email PreparedStatement not defined)
 						
 				// Set the parameters on the select statement
@@ -790,7 +801,7 @@ public class DefaultUserDAO extends UserDAO
 				// Get the result of the SELECT statement			
 			
 				// Execute the query
-				results = psGetByEmail.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByEmail);
 				
 				// If any results were returned
 				if(results.next())
@@ -832,7 +843,7 @@ public class DefaultUserDAO extends UserDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method getUserByEmail(int)
@@ -841,7 +852,7 @@ public class DefaultUserDAO extends UserDAO
 	public boolean insert(User user) throws DataException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the non-ID fields on the user are valid
@@ -862,8 +873,10 @@ public class DefaultUserDAO extends UserDAO
 			try
 			{
 				// If the PreparedStatement to insert a user was not defined, create it
-				if(psInsert == null)
-				{			
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
+				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + USERS_TABLE_NAME + " (" + COL_USERNAME + ", " +
 					                                                        COL_FIRST_NAME + ", " +
@@ -881,7 +894,7 @@ public class DefaultUserDAO extends UserDAO
 								
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
 				}
 				
 				// Set the parameters on the insert statement
@@ -896,10 +909,10 @@ public class DefaultUserDAO extends UserDAO
 				psInsert.setInt(9, user.getFailedLoginAttempts());
 		                    
 				// Execute the insert statement and return the result
-				if(psInsert.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psInsert) > 0)
 				{
 					// Get the auto-generated user ID and set it correctly on this User Object
-					rs = dbConnection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+					rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 		
 					if (rs.next())
 						user.setId(rs.getInt(1));
@@ -935,7 +948,7 @@ public class DefaultUserDAO extends UserDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method insert(User)
@@ -944,7 +957,7 @@ public class DefaultUserDAO extends UserDAO
 	public boolean update(User user) throws DataException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the fields on the user are valid
@@ -958,8 +971,10 @@ public class DefaultUserDAO extends UserDAO
 			try
 			{
 				// If the PreparedStatement to update a user was not defined, create it
-				if(psUpdate == null)
+				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
+					dbConnectionManager.unregisterStatement(psUpdate);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + USERS_TABLE_NAME + " SET " + COL_USERNAME + "=?, " +
 																		  COL_FIRST_NAME + "=?, " +
@@ -977,7 +992,7 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnection.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql);
 				} // end if(update PreparedStatement not defined)
 					
 				// Set the parameters on the update statement
@@ -993,7 +1008,7 @@ public class DefaultUserDAO extends UserDAO
 				psUpdate.setInt(10,user.getId());
 				
 				// Execute the update statement and return the result
-				boolean success = psUpdate.executeUpdate() > 0;
+				boolean success = dbConnectionManager.executeUpdate(psUpdate) > 0;
 				
 				// Delete the old groups for the user
 				userGroupDao.deleteGroupsForUser(user.getId());
@@ -1032,7 +1047,7 @@ public class DefaultUserDAO extends UserDAO
 	public boolean delete(User user) throws DataException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the ID field on the user are valid
@@ -1046,8 +1061,10 @@ public class DefaultUserDAO extends UserDAO
 			try
 			{
 				// If the PreparedStatement to delete a user was not defined, create it
-				if(psDelete == null)
-				{			
+				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
+				{
+					dbConnectionManager.unregisterStatement(psDelete);
+					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM " + USERS_TABLE_NAME + " " +
 									   "WHERE " + COL_USER_ID + " = ? ";
@@ -1057,14 +1074,14 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnection.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if(delete PreparedStatement not defined)
 				
 				// Set the parameters on the delete statement
 				psDelete.setInt(1, user.getId());
 				
 				// Execute the delete statement and return the result
-				boolean success = psDelete.execute();
+				boolean success = dbConnectionManager.execute(psDelete);
 				
 				if(success)
 					LogWriter.addInfo(logObj.getLogFileLocation(), "Deleted the user with the username " + user.getUsername());

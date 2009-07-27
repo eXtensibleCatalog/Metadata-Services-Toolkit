@@ -19,7 +19,6 @@ import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.MySqlConnectionManager;
 
 public class DefaultErrorCodeDAO extends ErrorCodeDAO 
 {
@@ -92,7 +91,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	public List<ErrorCode> getAll() throws DatabaseConfigException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetAllLock)
@@ -109,8 +108,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 			try
 			{
 				// Create the PreparedStatment to get all error codes if it hasn't already been created
-				if(psGetAll == null)
+				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
+					dbConnectionManager.unregisterStatement(psGetAll);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_ERROR_CODE_ID + ", " +
 												   COL_ERROR_CODE + ", " +
@@ -123,13 +124,13 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnection.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get all PreparedStatement not defined)
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetAll.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetAll);
 
 				// For each result returned, add a Service object to the list with the returned data
 				while(results.next())
@@ -160,7 +161,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	}
@@ -169,7 +170,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	public ErrorCode getById(int id) throws DatabaseConfigException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -183,8 +184,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 			try
 			{
 				// Create the PreparedStatment to get all error codes if it hasn't already been created
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_ERROR_CODE_ID + ", " +
 												   COL_ERROR_CODE + ", " +
@@ -198,7 +201,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get all PreparedStatement not defined)
 
 				// Set the parameters on the SELECT statement
@@ -207,7 +210,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// For each result returned, add a Service object to the list with the returned data
 				if(results.next())
@@ -241,7 +244,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	}
@@ -250,7 +253,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	public ErrorCode loadBasicErrorCode(int id) throws DatabaseConfigException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -264,8 +267,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 			try
 			{
 				// Create the PreparedStatment to get all error codes if it hasn't already been created
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_ERROR_CODE_ID + ", " +
 												   COL_ERROR_CODE + ", " +
@@ -279,7 +284,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get all PreparedStatement not defined)
 
 				// Set the parameters on the SELECT statement
@@ -288,7 +293,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// For each result returned, add a Service object to the list with the returned data
 				if(results.next())
@@ -321,7 +326,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	}
@@ -330,7 +335,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	public ErrorCode getByErrorCodeAndService(String errorCode, Service service) throws DatabaseConfigException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByNameAndServiceLock)
@@ -344,8 +349,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 			try
 			{
 				// Create the PreparedStatment to get all error codes if it hasn't already been created
-				if(psGetByNameAndService == null)
+				if(psGetByNameAndService == null || dbConnectionManager.isClosed(psGetByNameAndService))
 				{
+					dbConnectionManager.unregisterStatement(psGetByNameAndService);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_ERROR_CODE_ID + ", " +
 												   COL_ERROR_CODE + ", " +
@@ -360,7 +367,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByNameAndService = dbConnection.prepareStatement(selectSql);
+					psGetByNameAndService = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get all PreparedStatement not defined)
 
 				// Set the parameters on the SELECT statement
@@ -370,7 +377,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetByNameAndService.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByNameAndService);
 
 				// For each result returned, add a Service object to the list with the returned data
 				if(results.next())
@@ -404,7 +411,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	}
@@ -413,7 +420,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	public boolean insert(ErrorCode errorCode) throws DataException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the non-ID fields on the service are valid
@@ -430,8 +437,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 			try
 			{
 				// Build the PreparedStatement to insert a service if it wasn't already created
-				if(psInsert == null)
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + ERROR_CODES_TABLE_NAME + " (" + COL_ERROR_CODE + ", " +
 	            	      													            COL_ERROR_DESCRIPTION_FILE + ", " +
@@ -443,7 +452,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -452,10 +461,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 				psInsert.setInt(3, errorCode.getService().getId());
 
 				// Execute the insert statement and return the result
-				if(psInsert.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psInsert) > 0)
 				{
 					// Get the auto-generated resource identifier ID and set it correctly on this Service Object
-					rs = dbConnection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+					rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
 				    if (rs.next())
 				        errorCode.setId(rs.getInt(1));
@@ -473,7 +482,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	}
@@ -482,7 +491,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	public boolean update(ErrorCode errorCode) throws DataException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the fields on the error code are valid
@@ -496,8 +505,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 			try
 			{
 				// Create a PreparedStatement to update a service if it wasn't already created
-				if(psUpdate == null)
+				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
+					dbConnectionManager.unregisterStatement(psUpdate);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + ERROR_CODES_TABLE_NAME + " SET " + COL_ERROR_CODE + "=?, " +
 				                                                          COL_ERROR_DESCRIPTION_FILE + "=?, " +
@@ -509,7 +520,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnection.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql);
 				} // end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -519,7 +530,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 				psUpdate.setInt(4, errorCode.getId());
 
 				// Execute the update statement and return the result
-				return psUpdate.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psUpdate) > 0;
 			} // end try(update error code)
 			catch(SQLException e)
 			{
@@ -534,7 +545,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 	public boolean delete(ErrorCode errorCode) throws DataException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the ID field on the service are valid
@@ -548,8 +559,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 			try
 			{
 				// Create the PreparedStatement to delete a error code if it wasn't already defined
-				if(psDelete == null)
+				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
+					dbConnectionManager.unregisterStatement(psDelete);
+					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM " + ERROR_CODES_TABLE_NAME + " " +
 		                               "WHERE " + COL_ERROR_CODE_ID + " = ? ";
@@ -559,14 +572,14 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnection.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement
 				psDelete.setInt(1, errorCode.getId());
 
 				// Execute the delete statement and return the result
-				return psDelete.execute();
+				return dbConnectionManager.execute(psDelete);
 			} // end try(delete the error code)
 			catch(SQLException e)
 			{

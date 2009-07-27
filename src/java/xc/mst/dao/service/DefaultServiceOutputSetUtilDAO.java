@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import xc.mst.dao.MySqlConnectionManager;
-
 public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 {
 	/**
@@ -77,8 +75,10 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 			try
 			{
 				// If the PreparedStatement to add an output set to a service is not defined, create it
-				if(psInsert == null)
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + SERVICES_TO_OUTPUT_SETS_TABLE_NAME +
 					                                    " (" + COL_SERVICE_ID + ", " +
@@ -90,7 +90,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -98,7 +98,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 				psInsert.setInt(2, setId);
 
 				// Execute the insert statement and return the result
-				return psInsert.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psInsert) > 0;
 			} // end try (insert the output set to service assignment)
 			catch(SQLException e)
 			{
@@ -108,7 +108,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally
 		} // end synchronized
 	} // end method insert(int, int)
@@ -127,8 +127,10 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 			try
 			{
 				// If the PreparedStatement to remove an output set from a service is not defined, create it
-				if(psDelete == null)
+				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
+					dbConnectionManager.unregisterStatement(psDelete);
+					
 					// SQL to insert the new row
 					String deleteSql = "DELETE FROM " + SERVICES_TO_OUTPUT_SETS_TABLE_NAME + " " +
 	            		    		   "WHERE " + COL_SERVICE_ID + "=? " +
@@ -139,7 +141,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnection.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -147,7 +149,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 				psDelete.setInt(2, setId);
 
 				// Execute the delete statement and return the result
-				return psDelete.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psDelete) > 0;
 			} // end try (delete the output set to service assignment)
 			catch(SQLException e)
 			{
@@ -157,7 +159,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally
 		} // end synchronized
 	} // end method delete(int, int)
@@ -179,8 +181,10 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 			try
 			{
 				// If the PreparedStatement to get output set IDs by service ID wasn't defined, create it
-				if(psGetOutputSetsForService == null)
+				if(psGetOutputSetsForService == null || dbConnectionManager.isClosed(psGetOutputSetsForService))
 				{
+					dbConnectionManager.unregisterStatement(psGetOutputSetsForService);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SET_ID + " " +
 	                                   "FROM " + SERVICES_TO_OUTPUT_SETS_TABLE_NAME + " " +
@@ -191,7 +195,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetOutputSetsForService = dbConnection.prepareStatement(selectSql);
+					psGetOutputSetsForService = dbConnectionManager.prepareStatement(selectSql);
 				}
 
 				// Set the parameters on the select statement
@@ -200,7 +204,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetOutputSetsForService.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetOutputSetsForService);
 
 				// For each result returned, add the set ID to the list with the returned data
 				while(results.next())
@@ -219,7 +223,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally
 		} // end synchronized
 	} // end method getOutputSetsForService(int)
@@ -235,8 +239,10 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 			try
 			{
 				// If the PreparedStatement to delete output set assignments by service ID wasn't defined, create it
-				if(psDeleteOutputSetsForService == null)
+				if(psDeleteOutputSetsForService == null || dbConnectionManager.isClosed(psDeleteOutputSetsForService))
 				{
+					dbConnectionManager.unregisterStatement(psDeleteOutputSetsForService);
+					
 					// SQL to get the rows
 					String selectSql = "DELETE FROM " + SERVICES_TO_OUTPUT_SETS_TABLE_NAME + " " +
 		    		                   "WHERE " + COL_SERVICE_ID + "=? ";
@@ -246,7 +252,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDeleteOutputSetsForService = dbConnection.prepareStatement(selectSql);
+					psDeleteOutputSetsForService = dbConnectionManager.prepareStatement(selectSql);
 				}
 
 				// Set the parameters on the select statement
@@ -255,7 +261,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 				// Get the result of the SELECT statement
 
 				// Execute the insert statement and return the result
-				return psDeleteOutputSetsForService.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psDeleteOutputSetsForService) > 0;
 			} // end try (remove all output set assignments from the service)
 			catch(SQLException e)
 			{

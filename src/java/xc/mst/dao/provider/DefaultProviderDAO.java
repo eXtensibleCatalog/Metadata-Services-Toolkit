@@ -24,7 +24,6 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.manager.IndexException;
@@ -158,7 +157,7 @@ public class DefaultProviderDAO extends ProviderDAO
 	public List<Provider> getAll() throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetAllLock)
@@ -170,13 +169,15 @@ public class DefaultProviderDAO extends ProviderDAO
 			ResultSet results = null;
 
 			// The list of all providers
-			ArrayList<Provider> providers = new ArrayList<Provider>();
+			List<Provider> providers = new ArrayList<Provider>();
 
 			try
 			{
 				// If the PreparedStatement to get all providers was not defined, create it
-				if(psGetAll == null)
+				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
+					dbConnectionManager.unregisterStatement(psGetAll);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROVIDER_ID + ", " +
 				                                   COL_CREATED_AT + ", " +
@@ -219,13 +220,13 @@ public class DefaultProviderDAO extends ProviderDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnection.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get all PreparedStatement not defined)
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetAll.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetAll);
 
 				// For each result returned, add a Provider object to the list with the returned data
 				while(results.next())
@@ -290,7 +291,7 @@ public class DefaultProviderDAO extends ProviderDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getAll()
@@ -299,7 +300,7 @@ public class DefaultProviderDAO extends ProviderDAO
 	public List<Provider> getSorted(boolean asc, String columnName) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		if(log.isDebugEnabled())
@@ -367,7 +368,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				log.debug("Creating the \"get all providers sorted\" PreparedStatement from the SQL " + selectSql);
 
 			// A statement to run the select SQL
-			getSorted = dbConnection.createStatement();
+			getSorted = dbConnectionManager.createStatement();
 			
 			// Get the results of the SELECT statement			
 			
@@ -437,11 +438,12 @@ public class DefaultProviderDAO extends ProviderDAO
 		} // end catch(SQLException)
 		finally
 		{
-			MySqlConnectionManager.closeResultSet(results);
+			dbConnectionManager.closeResultSet(results);
 			
 			try
 			{
-				getSorted.close();
+				if(getSorted != null)
+					getSorted.close();
 			} // end try(close the Statement)
 			catch(SQLException e)
 			{
@@ -454,7 +456,7 @@ public class DefaultProviderDAO extends ProviderDAO
 	public Provider getById(int providerId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		Provider provider = loadBasicProvider(providerId);
@@ -473,7 +475,7 @@ public class DefaultProviderDAO extends ProviderDAO
     public Provider getByURL(String providerURL) throws DatabaseConfigException
     {
     	// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
     	synchronized(psGetByUrlLock)
@@ -487,8 +489,10 @@ public class DefaultProviderDAO extends ProviderDAO
 			try
 			{
 				// If the PreparedStatement to get a provider by URL was not defined, create it
-				if(psGetByUrl == null)
+				if(psGetByUrl == null || dbConnectionManager.isClosed(psGetByUrl))
 				{
+					dbConnectionManager.unregisterStatement(psGetByUrl);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_PROVIDER_ID + ", " +
 					    				           COL_CREATED_AT + ", " +
@@ -532,7 +536,7 @@ public class DefaultProviderDAO extends ProviderDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByUrl = dbConnection.prepareStatement(selectSql);
+					psGetByUrl = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by URL PreparedStatement not defined)
 
 				// Set the parameters on the select statement
@@ -541,7 +545,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetByUrl.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByUrl);
 
 				// If any results were returned
 				if(results.next())
@@ -608,7 +612,7 @@ public class DefaultProviderDAO extends ProviderDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally
 		} // end synchronized
     } // end method getByURL(String)
@@ -617,7 +621,7 @@ public class DefaultProviderDAO extends ProviderDAO
     public Provider getByName(String name) throws DatabaseConfigException
     {
     	// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
     	synchronized(psGetByNameLock)
@@ -631,8 +635,10 @@ public class DefaultProviderDAO extends ProviderDAO
 			try
 			{
 				// If the PreparedStatement to get a provider by ID was not defined, create it
-				if(psGetByName == null)
+				if(psGetByName == null || dbConnectionManager.isClosed(psGetByName))
 				{
+					dbConnectionManager.unregisterStatement(psGetByName);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_PROVIDER_ID + ", " +
 					    				           COL_CREATED_AT + ", " +
@@ -676,7 +682,7 @@ public class DefaultProviderDAO extends ProviderDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByName = dbConnection.prepareStatement(selectSql);
+					psGetByName = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by name PreparedStatement not defined)
 
 				// Set the parameters on the select statement
@@ -685,7 +691,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetByName.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByName);
 
 				// If any results were returned
 				if(results.next())
@@ -752,7 +758,7 @@ public class DefaultProviderDAO extends ProviderDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
     } // end method getByName(String)
@@ -761,7 +767,7 @@ public class DefaultProviderDAO extends ProviderDAO
 	public Provider loadBasicProvider(int providerId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -775,8 +781,10 @@ public class DefaultProviderDAO extends ProviderDAO
 			try
 			{
 				// If the PreparedStatement to get a provider by ID was not defined, create it
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_PROVIDER_ID + ", " +
 					    				           COL_CREATED_AT + ", " +
@@ -820,7 +828,7 @@ public class DefaultProviderDAO extends ProviderDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -829,7 +837,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// If any results were returned
 				if(results.next())
@@ -893,7 +901,7 @@ public class DefaultProviderDAO extends ProviderDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method loadBasicProvider(int)
@@ -902,7 +910,7 @@ public class DefaultProviderDAO extends ProviderDAO
 	public boolean insert(Provider provider) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the non-ID fields on the provider are valid
@@ -919,8 +927,10 @@ public class DefaultProviderDAO extends ProviderDAO
 			try
 			{
 				// If the PreparedStatement to insert a provider was not defined, create it
-				if(psInsert == null)
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + PROVIDERS_TABLE_NAME + " (" + COL_CREATED_AT + ", " +
 	            	    													COL_UPDATED_AT + ", " +
@@ -965,7 +975,7 @@ public class DefaultProviderDAO extends ProviderDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -1004,10 +1014,10 @@ public class DefaultProviderDAO extends ProviderDAO
 				psInsert.setString(33, provider.getLogFileName());
 
 				// Execute the insert statement and return the result
-				if(psInsert.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psInsert) > 0)
 				{
 					// Get the auto-generated resource identifier ID and set it correctly on this Provider Object
-					rs = dbConnection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+					rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
 				    if (rs.next())
 				        provider.setId(rs.getInt(1));
@@ -1057,7 +1067,7 @@ public class DefaultProviderDAO extends ProviderDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end insert(Provider)
@@ -1066,7 +1076,7 @@ public class DefaultProviderDAO extends ProviderDAO
 	public boolean update(Provider provider) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the fields on the provider are valid
@@ -1080,8 +1090,10 @@ public class DefaultProviderDAO extends ProviderDAO
 			try
 			{
 				// If the PreparedStatement to update a provider is not defined, create it
-				if(psUpdate == null)
+				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
+					dbConnectionManager.unregisterStatement(psUpdate);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + PROVIDERS_TABLE_NAME + " SET " + COL_CREATED_AT + "=?, " +
 				                                                          COL_NAME + "=?, " +
@@ -1122,7 +1134,7 @@ public class DefaultProviderDAO extends ProviderDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnection.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql);
 				} // end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -1162,7 +1174,7 @@ public class DefaultProviderDAO extends ProviderDAO
 
 				// Execute the update statement and return the result
 				// Execute the update statement and return the result
-				if(psUpdate.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psUpdate) > 0)
 				{
 					// Remove the old permissions for the group
 					boolean success = providerFormatDao.deleteFormatsForProvider(provider.getId());
@@ -1220,7 +1232,7 @@ public class DefaultProviderDAO extends ProviderDAO
 	public boolean delete(Provider provider) throws DataException, IndexException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the ID field on the provider are valid
@@ -1234,8 +1246,10 @@ public class DefaultProviderDAO extends ProviderDAO
 			try
 			{
 				// If the PreparedStatement to delete a provider was not defined, create it
-				if(psDelete == null)
+				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
+					dbConnectionManager.unregisterStatement(psDelete);
+					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM "+ PROVIDERS_TABLE_NAME + " " +
 		                               "WHERE " + COL_PROVIDER_ID + " = ? ";
@@ -1245,14 +1259,14 @@ public class DefaultProviderDAO extends ProviderDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnection.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement
 				psDelete.setInt(1, provider.getId());
 
 				// Execute the delete statement and return the result
-				psDelete.execute();
+				dbConnectionManager.execute(psDelete);
 
 				boolean success = true;
 

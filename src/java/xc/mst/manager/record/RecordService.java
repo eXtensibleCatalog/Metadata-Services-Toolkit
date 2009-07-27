@@ -534,8 +534,8 @@ public abstract class RecordService
 		boolean result = indexMgr.deleteByQuery(deleteQuery);
 
 		// If the delete was successful, also delete rows in the MySQL tables which reference it
-		if(result)
-			harvestRecordDao.deleteForRecord(record.getId());
+		//if(result)
+		//	harvestRecordDao.deleteForRecord(record.getId());
 
 		// Return the result of the delete
 		return result;

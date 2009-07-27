@@ -19,7 +19,6 @@ import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.MySqlConnectionManager;
 
 public class DefaultGroupDAO extends GroupDAO
 {
@@ -107,7 +106,7 @@ public class DefaultGroupDAO extends GroupDAO
 	public List<Group> getAll() throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetAllLock)
@@ -119,13 +118,15 @@ public class DefaultGroupDAO extends GroupDAO
 			ResultSet results = null;
 
 			// A list to hold the results of the query
-			ArrayList<Group> groups = new ArrayList<Group>();
+			List<Group> groups = new ArrayList<Group>();
 
 			try
 			{
 				// If the PreparedStatement to get all groups was not defined, create it
-				if(psGetAll == null)
+				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
+					dbConnectionManager.unregisterStatement(psGetAll);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_GROUP_ID + ", " +
 					                               COL_NAME + ", " +
@@ -137,13 +138,13 @@ public class DefaultGroupDAO extends GroupDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnection.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql);
 				}
 
 				// Get the results of the SELECT statement
 
 				// Execute the query
-				results = psGetAll.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetAll);
 
 				// If any results were returned
 				while(results.next())
@@ -176,7 +177,7 @@ public class DefaultGroupDAO extends GroupDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method getAll()
@@ -185,7 +186,7 @@ public class DefaultGroupDAO extends GroupDAO
     public List<Group> getAllSorted(boolean isAscendingOrder,String columnSorted) throws DatabaseConfigException
 	{
     	// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetAllSortedLock)
@@ -197,7 +198,7 @@ public class DefaultGroupDAO extends GroupDAO
 			ResultSet results = null;
 
 			// A list to hold the results of the query
-			ArrayList<Group> groups = new ArrayList<Group>();
+			List<Group> groups = new ArrayList<Group>();
 
 			try
 			{
@@ -213,13 +214,13 @@ public class DefaultGroupDAO extends GroupDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAllSorted = dbConnection.prepareStatement(selectSql);
+					psGetAllSorted = dbConnectionManager.prepareStatement(selectSql);
 				
 
 				// Get the results of the SELECT statement
 
 				// Execute the query
-				results = psGetAllSorted.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetAllSorted);
 
 				// If any results were returned
 				while(results.next())
@@ -252,7 +253,7 @@ public class DefaultGroupDAO extends GroupDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method getAllSorted()
@@ -261,7 +262,7 @@ public class DefaultGroupDAO extends GroupDAO
 	public Group getById(int groupId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Get the group with the passed ID
@@ -279,7 +280,7 @@ public class DefaultGroupDAO extends GroupDAO
 	public Group getByName(String groupName) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByNameLock)
@@ -293,8 +294,10 @@ public class DefaultGroupDAO extends GroupDAO
 			try
 			{
 				// If the PreparedStatement to get a group by name was not defined, create it
-				if(psGetByName == null)
+				if(psGetByName == null || dbConnectionManager.isClosed(psGetByName))
 				{			
+					dbConnectionManager.unregisterStatement(psGetByName);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_GROUP_ID + ", " +
 					                    COL_NAME + ", " +
@@ -307,7 +310,7 @@ public class DefaultGroupDAO extends GroupDAO
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByName = dbConnection.prepareStatement(selectSql);
+					psGetByName = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by name PreparedStatement not defined)
 						
 				// Set the parameters on the select statement
@@ -316,7 +319,7 @@ public class DefaultGroupDAO extends GroupDAO
 				// Get the result of the SELECT statement			
 			
 				// Execute the query
-				results = psGetByName.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByName);
 				
 				// If any results were returned
 				if(results.next())
@@ -354,7 +357,7 @@ public class DefaultGroupDAO extends GroupDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method getGroupByName(int)
@@ -363,7 +366,7 @@ public class DefaultGroupDAO extends GroupDAO
 	public Group loadBasicGroup(int groupId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -377,8 +380,10 @@ public class DefaultGroupDAO extends GroupDAO
 			try
 			{
 				// If the PreparedStatement to get a group by ID was not defined, create it
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_GROUP_ID + ", " +
 					                               COL_NAME + ", " +
@@ -391,7 +396,7 @@ public class DefaultGroupDAO extends GroupDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(the get by ID PreparedStatement wasn't defined)
 
 				// Set the parameters on the update statement
@@ -400,7 +405,7 @@ public class DefaultGroupDAO extends GroupDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// If any results were returned
 				if(results.next())
@@ -435,7 +440,7 @@ public class DefaultGroupDAO extends GroupDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method loadGroupBasic(int)
@@ -457,8 +462,10 @@ public class DefaultGroupDAO extends GroupDAO
 			try
 			{
 				// If the PreparedStatement to insert a group was not defined, create it
-				if(psInsert == null)
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + GROUPS_TABLE_NAME + " (" + COL_NAME + ", " +
 	                                                                               COL_DESCRIPTION + ") " +
@@ -469,7 +476,7 @@ public class DefaultGroupDAO extends GroupDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -477,10 +484,10 @@ public class DefaultGroupDAO extends GroupDAO
 				psInsert.setString(2, group.getDescription());
 
 				// Execute the insert statement and return the result
-				if(psInsert.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psInsert) > 0)
 				{
 					// Get the auto-generated user ID and set it correctly on this Group Object
-					rs = dbConnection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+					rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
 				    if (rs.next())
 				        group.setId(rs.getInt(1));
@@ -507,7 +514,7 @@ public class DefaultGroupDAO extends GroupDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method insert(Group)
@@ -526,8 +533,10 @@ public class DefaultGroupDAO extends GroupDAO
 			try
 			{
 				// If the PreparedStatement to update a group was not defined, create it
-				if(psUpdate == null)
+				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
+					dbConnectionManager.unregisterStatement(psUpdate);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + GROUPS_TABLE_NAME + " SET " + COL_NAME + "=?, " +
 																		  COL_DESCRIPTION + "=? " +
@@ -538,7 +547,7 @@ public class DefaultGroupDAO extends GroupDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnection.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql);
 				} // end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -547,7 +556,7 @@ public class DefaultGroupDAO extends GroupDAO
 				psUpdate.setInt(3, group.getId());
 
 				// Execute the update statement and return the result
-				if(psUpdate.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psUpdate) > 0)
 				{
 					// Remove the old permissions for the group
 					boolean success = groupPermissionDao.deletePermissionsForGroup(group.getId());
@@ -584,8 +593,10 @@ public class DefaultGroupDAO extends GroupDAO
 			try
 			{
 				// If the PreparedStatement to delete a group was not defined, create it
-				if(psDelete == null)
+				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
+					dbConnectionManager.unregisterStatement(psDelete);
+					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM " + GROUPS_TABLE_NAME + " " +
 									   "WHERE " + COL_GROUP_ID + " = ? ";
@@ -595,7 +606,7 @@ public class DefaultGroupDAO extends GroupDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnection.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement
@@ -604,7 +615,7 @@ public class DefaultGroupDAO extends GroupDAO
 				// Execute the delete statement and return the result
 				// Permissions will delete automatically because of a
 				// Foreign Key which cascades deletes
-				return psDelete.execute();
+				return dbConnectionManager.execute(psDelete);
 			} // end try
 			catch(SQLException e)
 			{

@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import xc.mst.bo.emailconfig.EmailConfig;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.MySqlConnectionManager;
 
 /**
  * MySQL implementation of the Data Access Object for the email config table
@@ -49,7 +48,7 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 	public EmailConfig getConfiguration() throws DatabaseConfigException
 	{
     	// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetConfigurationLock)
@@ -63,8 +62,9 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 			try
 			{
 				// If the PreparedStatement to get the email configuration was not defined, create it
-				if(psGetConfiguration == null)
+				if(psGetConfiguration == null || dbConnectionManager.isClosed(psGetConfiguration))
 				{
+					dbConnectionManager.unregisterStatement(psGetConfiguration);
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_EMAIL_CONFIG_ID + ", " +
 					                               COL_EMAIL_SERVER_ADDRESS + ", " +
@@ -81,13 +81,13 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetConfiguration = dbConnection.prepareStatement(selectSql);
+					psGetConfiguration = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get configuration PreparedStatement not defined)
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetConfiguration.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetConfiguration);
 
 				// If any results were returned
 				if(results.next())
@@ -125,7 +125,7 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getById(int)
@@ -134,7 +134,7 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 	public boolean setConfiguration(EmailConfig emailconfig) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Validate the fields on the passed EmailConfig Object
@@ -148,8 +148,10 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 			try
 			{
 				// If the PreparedStatement to update the email configuration was not defined, create it
-				if(psSetConfiguration == null)
+				if(psSetConfiguration == null || dbConnectionManager.isClosed(psSetConfiguration))
 				{
+					dbConnectionManager.unregisterStatement(psSetConfiguration);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + TABLE_NAME + " SET " + COL_EMAIL_SERVER_ADDRESS + "=?, " +
 	                                                                      COL_PORT_NUMBER + "=?, " +
@@ -164,7 +166,7 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psSetConfiguration = dbConnection.prepareStatement(updateSql);
+					psSetConfiguration = dbConnectionManager.prepareStatement(updateSql);
 				} /// end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -177,7 +179,7 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 				psSetConfiguration.setBoolean(7, emailconfig.getForgottenPasswordLink());
 
 				// Execute the update statement.  If nothing was updated we need to insert instead of update
-				if(psSetConfiguration.executeUpdate() == 0)
+				if(dbConnectionManager.executeUpdate(psSetConfiguration) == 0)
 				{
 					String insertSql = "INSERT INTO " + TABLE_NAME + " (" + COL_EMAIL_SERVER_ADDRESS + ", " +
 					                                                        COL_PORT_NUMBER + ", " +
@@ -188,7 +190,7 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 					                                                        COL_FORGOTTEN_PASSWORD_LINK + ") " +
                                        "VALUES (?, ?, ?, ?, ?, ?, ?)";
 					
-					PreparedStatement psInsert = dbConnection.prepareStatement(insertSql);
+					PreparedStatement psInsert = dbConnectionManager.prepareStatement(insertSql);
 					
 					// Set the parameters on the insert statement
 					psInsert.setString(1, emailconfig.getEmailServerAddress());
@@ -199,7 +201,9 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 					psInsert.setLong(6, emailconfig.getTimeout());
 					psInsert.setBoolean(7, emailconfig.getForgottenPasswordLink());
 					
-					return psInsert.executeUpdate() > 0;
+					boolean result = psInsert.executeUpdate() > 0;
+					psInsert.close();
+					return result;
 				}
 				
 				return false;

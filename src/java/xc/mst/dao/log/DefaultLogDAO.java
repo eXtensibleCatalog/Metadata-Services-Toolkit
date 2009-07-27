@@ -19,7 +19,6 @@ import java.util.List;
 import xc.mst.bo.log.Log;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.MySqlConnectionManager;
 
 /**
  * MySQL implementation of the Data Access Object for the logs table
@@ -82,7 +81,7 @@ public class DefaultLogDAO extends LogDAO
 	public List<Log> getAll() throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetAllLock)
@@ -94,13 +93,15 @@ public class DefaultLogDAO extends LogDAO
 			ResultSet results = null;
 
 			// The list of all Logs
-			ArrayList<Log> logs = new ArrayList<Log>();
+			List<Log> logs = new ArrayList<Log>();
 
 			try
 			{
 				// If the PreparedStatement to get all logs was not defined, create it
-				if(psGetAll == null)
+				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
+					dbConnectionManager.unregisterStatement(psGetAll);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_LOG_ID + ", " +
 												   COL_WARNINGS + ", " +
@@ -115,13 +116,13 @@ public class DefaultLogDAO extends LogDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnection.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get all PreparedStatement not defined)
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetAll.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetAll);
 
 				// For each result returned, add a Log object to the list with the returned data
 				while(results.next())
@@ -154,7 +155,7 @@ public class DefaultLogDAO extends LogDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // synchronized
 	} // end method getAll()
@@ -163,7 +164,7 @@ public class DefaultLogDAO extends LogDAO
 	public List<Log> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		if(log.isDebugEnabled())
@@ -202,7 +203,7 @@ public class DefaultLogDAO extends LogDAO
 				log.debug("Creating the \"get all logs sorted\" Statement the SQL " + selectSql);
 
 			// A statement to run the select SQL
-			getSorted = dbConnection.createStatement();
+			getSorted = dbConnectionManager.createStatement();
 			
 			// Get the results of the SELECT statement			
 			
@@ -240,11 +241,12 @@ public class DefaultLogDAO extends LogDAO
 		} // end catch(SQLException)
 		finally
 		{
-			MySqlConnectionManager.closeResultSet(results);
+			dbConnectionManager.closeResultSet(results);
 			
 			try
 			{
-				getSorted.close();
+				if(getSorted != null)
+					getSorted.close();
 			} // end try(close the Statement)
 			catch(SQLException e)
 			{
@@ -257,7 +259,7 @@ public class DefaultLogDAO extends LogDAO
 	public Log getById(int id) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -271,8 +273,10 @@ public class DefaultLogDAO extends LogDAO
 			try
 			{
 				// If the PreparedStatement to get a log by ID was not defined, create it
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_LOG_ID + ", " +
 					                               COL_WARNINGS + ", " +
@@ -288,7 +292,7 @@ public class DefaultLogDAO extends LogDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -297,7 +301,7 @@ public class DefaultLogDAO extends LogDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// If any results were returned
 				if(results.next())
@@ -333,7 +337,7 @@ public class DefaultLogDAO extends LogDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getById(int)
@@ -342,7 +346,7 @@ public class DefaultLogDAO extends LogDAO
 	public boolean insert(Log logObj) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the non-ID fields on the log are valid
@@ -359,8 +363,10 @@ public class DefaultLogDAO extends LogDAO
 			try
 			{	
 					// Create the PreparedStatement to insert a log if it hasn't already been defined
-					if(psInsert == null)
+					if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 					{
+						dbConnectionManager.unregisterStatement(psInsert);
+						
 						// SQL to insert the new row
 						String insertSql = "INSERT INTO " + LOGS_TABLE_NAME + " (" + COL_WARNINGS + ", " +
 		            	    													     COL_ERRORS + ", " +
@@ -374,7 +380,7 @@ public class DefaultLogDAO extends LogDAO
 
 						// A prepared statement to run the insert SQL
 						// This should sanitize the SQL and prevent SQL injection
-						psInsert = dbConnection.prepareStatement(insertSql);
+						psInsert = dbConnectionManager.prepareStatement(insertSql);
 					} // end if(insert PreparedStatement not defined)
 
 					// Set the parameters on the insert statement
@@ -385,10 +391,10 @@ public class DefaultLogDAO extends LogDAO
 					psInsert.setString(5, logObj.getLogFileLocation());
 
 					// Execute the insert statement and return the result
-					if(psInsert.executeUpdate() > 0)
+					if(dbConnectionManager.executeUpdate(psInsert) > 0)
 					{
 						// Get the auto-generated resource identifier ID and set it correctly on this log Object
-						rs = dbConnection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+						rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
 					    if (rs.next())
 					        logObj.setId(rs.getInt(1));
@@ -406,7 +412,7 @@ public class DefaultLogDAO extends LogDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method insert(log)
@@ -415,7 +421,7 @@ public class DefaultLogDAO extends LogDAO
 	public boolean update(Log logObj) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the fields on the log are valid
@@ -429,8 +435,10 @@ public class DefaultLogDAO extends LogDAO
 			try
 			{
 				// If the PreparedStatement to update a log has not been created, create it
-				if(psUpdate == null)
+				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
+					dbConnectionManager.unregisterStatement(psUpdate);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + LOGS_TABLE_NAME + " SET " + COL_WARNINGS + "=?, " +
 				                                                               COL_ERRORS + "=?, " +
@@ -444,7 +452,7 @@ public class DefaultLogDAO extends LogDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnection.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql);
 				} // end if(update PreparedStatement is not defined)
 
 				// Set the parameters on the update statement
@@ -456,7 +464,7 @@ public class DefaultLogDAO extends LogDAO
 				psUpdate.setInt(6, logObj.getId());
 
 				// Execute the update statement and return the result
-				return psUpdate.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psUpdate) > 0;
 			} // end try(update log)
 			catch(SQLException e)
 			{
@@ -471,7 +479,7 @@ public class DefaultLogDAO extends LogDAO
 	public boolean delete(Log logObj) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the ID field on the log are valid
@@ -485,8 +493,10 @@ public class DefaultLogDAO extends LogDAO
 			try
 			{
 				// If the PreparedStatement to delete a log was not defined, create it
-				if(psDelete == null)
+				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
+					dbConnectionManager.unregisterStatement(psDelete);
+					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM "+ LOGS_TABLE_NAME + " " +
 		                               "WHERE " + COL_LOG_ID + " = ? ";
@@ -496,14 +506,14 @@ public class DefaultLogDAO extends LogDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnection.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement
 				psDelete.setInt(1, logObj.getId());
 
 				// Execute the delete statement and return the result
-				return psDelete.execute();
+				return dbConnectionManager.execute(psDelete);
 			} // end try(delete log)
 			catch(SQLException e)
 			{

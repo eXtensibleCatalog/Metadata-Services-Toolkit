@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import xc.mst.dao.MySqlConnectionManager;
-
 /**
  * MySQL implementation of the utility class for manipulating the sets that trigger a processing directive
  *
@@ -82,8 +80,10 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 			try
 			{
 				// If the PreparedStatement to add an input set to a processing directive is not defined, create it
-				if(psInsert == null)
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + PROCESSING_DIRECTIVES_TO_INPUT_SETS_TABLE_NAME +
 					                                    " (" + COL_PROCESSING_DIRECTIVE_ID + ", " +
@@ -95,7 +95,7 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -103,7 +103,7 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 				psInsert.setInt(2, inputSetId);
 
 				// Execute the insert statement and return the result
-				return psInsert.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psInsert) > 0;
 			} // end try (insert the group)
 			catch(SQLException e)
 			{
@@ -113,7 +113,7 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally
 		} // end synchronized
 	} // end method insert(int, int)
@@ -132,8 +132,10 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 			try
 			{
 				// If the PreparedStatement to delete an input set for a processing directive is not defined, create it
-				if(psDelete == null)
+				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
+					dbConnectionManager.unregisterStatement(psDelete);
+					
 					// SQL to insert the new row
 					String deleteSql = "DELETE FROM " + PROCESSING_DIRECTIVES_TO_INPUT_SETS_TABLE_NAME + " " +
 	            		    		   "WHERE " + COL_PROCESSING_DIRECTIVE_ID + "=? " +
@@ -144,7 +146,7 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnection.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -152,7 +154,7 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 				psDelete.setInt(2, setId);
 
 				// Execute the delete statement and return the result
-				return psDelete.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psDelete) > 0;
 			} // end try (delete the group)
 			catch(SQLException e)
 			{
@@ -162,7 +164,7 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally
 		} // end synchronized
 	} // end method delete(int, int)
@@ -184,8 +186,10 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 			try
 			{
 				// If the PreparedStatement to get input sets by processing directive ID wasn't defined, create it
-				if(psGetInputSetsForProcessingDirective == null)
+				if(psGetInputSetsForProcessingDirective == null || dbConnectionManager.isClosed(psGetInputSetsForProcessingDirective))
 				{
+					dbConnectionManager.unregisterStatement(psGetInputSetsForProcessingDirective);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SET_ID + " " +
 	                                   "FROM " + PROCESSING_DIRECTIVES_TO_INPUT_SETS_TABLE_NAME + " " +
@@ -196,7 +200,7 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetInputSetsForProcessingDirective = dbConnection.prepareStatement(selectSql);
+					psGetInputSetsForProcessingDirective = dbConnectionManager.prepareStatement(selectSql);
 				}
 
 				// Set the parameters on the select statement
@@ -205,7 +209,7 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetInputSetsForProcessingDirective.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetInputSetsForProcessingDirective);
 
 				// For each result returned, add a set ID to the list with the returned data
 				while(results.next())
@@ -224,7 +228,7 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally
 		} // end synchronized
 	} // end method getInputSetsForProcessingDirective(int)
@@ -240,8 +244,10 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 			try
 			{
 				// If the PreparedStatement to delete input sets by processing directive ID wasn't defined, create it
-				if(psDeleteInputSetsForProcessingDirective == null)
+				if(psDeleteInputSetsForProcessingDirective == null || dbConnectionManager.isClosed(psDeleteInputSetsForProcessingDirective))
 				{
+					dbConnectionManager.unregisterStatement(psDeleteInputSetsForProcessingDirective);
+					
 					// SQL to get the rows
 					String selectSql = "DELETE FROM " + PROCESSING_DIRECTIVES_TO_INPUT_SETS_TABLE_NAME + " " +
 		    		                   "WHERE " + COL_PROCESSING_DIRECTIVE_ID + "=? ";
@@ -251,7 +257,7 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDeleteInputSetsForProcessingDirective = dbConnection.prepareStatement(selectSql);
+					psDeleteInputSetsForProcessingDirective = dbConnectionManager.prepareStatement(selectSql);
 				}
 
 				// Set the parameters on the select statement
@@ -260,7 +266,7 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 				// Get the result of the SELECT statement
 
 				// Execute the insert statement and return the result
-				return psDeleteInputSetsForProcessingDirective.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psDeleteInputSetsForProcessingDirective) > 0;
 			} // end try (remove all sets that are input for the processing directive)
 			catch(SQLException e)
 			{

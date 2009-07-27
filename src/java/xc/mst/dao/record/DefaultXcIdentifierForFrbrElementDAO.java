@@ -13,8 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import xc.mst.dao.MySqlConnectionManager;
-
 /**
  * MySQL implementation of the class to get, cache, and update the next unique XC
  * identifiers for elements at each FRBR level. A Metadata Service can use the
@@ -152,8 +150,10 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 			try
 			{
 				// If the PreparedStatement to get the next XC identifier by FRBR level element ID wasn't defined, create it
-				if(psGetByElementId == null)
+				if(psGetByElementId == null || dbConnectionManager.isClosed(psGetByElementId))
 				{
+					dbConnectionManager.unregisterStatement(psGetByElementId);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_NEXT_XC_ID + " " +
 	                                   "FROM " + XC_ID_FOR_FRBR_ELEMENTS_TABLE_NAME + " " +
@@ -164,7 +164,7 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByElementId = dbConnection.prepareStatement(selectSql);
+					psGetByElementId = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by service ID PreparedStatement was null)
 
 				// Set the parameters on the select statement
@@ -173,7 +173,7 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetByElementId.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByElementId);
 
 				// If a row was found, return it's next XC identifier
 				if(results.next())
@@ -207,7 +207,7 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 			}
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getByElementId(int)
@@ -231,8 +231,10 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 			try
 			{
 				// If the PreparedStatement to insert a XC identifier for FRBR level is not defined, create it
-				if(psInsert == null)
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + XC_ID_FOR_FRBR_ELEMENTS_TABLE_NAME +
 					                                                 " (" + COL_ELEMENT_ID + ", " +
@@ -244,7 +246,7 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -252,7 +254,7 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 				psInsert.setLong(2, nextXcId);
 
 				// Execute the insert statement and return true iff it succeeded
-				return psInsert.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psInsert) > 0;
 			} // end try(insert the row)
 			catch(SQLException e)
 			{
@@ -287,8 +289,10 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 			try
 			{
 				// If the PreparedStatement to update the next XC identifier for a FRBR level was not defined, create it
-				if(psUpdate == null)
+				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
+					dbConnectionManager.unregisterStatement(psUpdate);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + XC_ID_FOR_FRBR_ELEMENTS_TABLE_NAME +
 													" SET " + COL_NEXT_XC_ID + "=? " +
@@ -299,7 +303,7 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnection.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql);
 				} // end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -307,7 +311,7 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 				psUpdate.setInt(2, elementId);
 
 				// Execute the update statement and return the result
-				return psUpdate.executeUpdate() > 0;
+				return dbConnectionManager.executeUpdate(psUpdate) > 0;
 			} // end try(update the row)
 			catch(SQLException e)
 			{

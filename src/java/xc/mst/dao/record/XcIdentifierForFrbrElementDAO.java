@@ -9,7 +9,6 @@
 
 package xc.mst.dao.record;
 
-import java.sql.Connection;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
@@ -28,14 +27,14 @@ import xc.mst.dao.MySqlConnectionManager;
 public abstract class XcIdentifierForFrbrElementDAO
 {
 	/**
-	 * The connection to the database
-	 */
-	protected final static Connection dbConnection = MySqlConnectionManager.getDbConnection();
-
-	/**
 	 * A reference to the logger for this class
 	 */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+	
+	/**
+	 * The Object managing the database connection
+	 */
+	protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
 
 	/**
 	 * A static map from the FRBR element ID to the next XC Identifier for that FRBR element

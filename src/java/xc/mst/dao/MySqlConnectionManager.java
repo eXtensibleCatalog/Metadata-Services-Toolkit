@@ -13,10 +13,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
+
+import java.sql.PreparedStatement;
 
 import xc.mst.constants.Constants;
 import xc.mst.utils.MSTConfiguration;
@@ -40,15 +45,54 @@ public class MySqlConnectionManager
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 	/**
+	 * The singleton MySqlConnectionManager
+	 */
+	private static MySqlConnectionManager instance = null;
+	
+	/**
 	 * The Connection to the database
 	 */
-	private static Connection dbConnection = null;
+	private Connection dbConnection = null;
 
+	/**
+	 * A set containing all PreparedStatements known to the connection manager.  If
+	 * connection to the database is lost each of these is set to null to signal the
+	 * DAOs.  If the connection is later restored the DAOs will know to recreate the 
+	 * PreparedStatements.
+	 */
+	private Set<PreparedStatement> registeredPreparedStatements = new HashSet<PreparedStatement>();
+	
+	/**
+	 * A set containing all PreparedStatements known to the connection manager that
+	 * have been closed.
+	 */
+	private Set<PreparedStatement> closedPreparedStatements = new HashSet<PreparedStatement>();
+	
+	/**
+	 * Constructor for MySqlConnectionManager
+	 */
+	private MySqlConnectionManager()
+	{		
+	} // end constructor
+	
+	/**
+	 * Gets the singleton instance of the MySqlConnectionManager
+	 * 
+	 * @return The singleton MySqlConnectionManager
+	 */	
+	public static MySqlConnectionManager getInstance()
+	{
+		if(instance == null)
+			instance = new MySqlConnectionManager();
+		
+		return instance;
+	} // end method getInstance()
+	
 	/**
 	 * Sets up and returns a connection to the MST database whose location is
 	 * defined in the configuration file.
 	 */
-	public static Connection getDbConnection()
+	public Connection getDbConnection()
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering getDbConnection()");
@@ -56,20 +100,9 @@ public class MySqlConnectionManager
 		// If there is an open connection, return it,
 		// otherwise open a new connection and return the new one
         return (dbConnection != null ? dbConnection : openDbConnection());
-
-		/*try
-		{
-			return ((dbConnection != null && dbConnection.isValid(10)) ? dbConnection : openDbConnection());
-		}
-		catch(Exception e) // If something went wrong verifying the connection was valid, open a new one
-		{
-			log.error("Error validating the connection to the database, returning a new connection.", e);
-
-			return openDbConnection();
-		}*/
 	} // end method getDbConnection()
 
-	private static Connection openDbConnection()
+	private Connection openDbConnection()
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering openDbConnection()");
@@ -122,7 +155,7 @@ public class MySqlConnectionManager
 	 *
 	 * @return true on success, false on failure
 	 */
-	public static boolean closeDbConnection()
+	public boolean closeDbConnection()
 	{
 		try
 		{
@@ -144,12 +177,47 @@ public class MySqlConnectionManager
 	} // end method closeDbConnection()
 
 	/**
+	 * Registers a PreparedStatement to the connection manager.  If the connection to the database
+	 * is lost the registered PreparedStatements will be closed and set to null so code trying to
+	 * reuse them will know they are no longer valid.
+	 * 
+	 * @param statement The PreparedStatement to register
+	 */
+	public void registerStatement(PreparedStatement statement)
+	{
+		registeredPreparedStatements.add(statement);
+	} // end method registerStatement(PreparedStatement)
+	
+	/**
+	 * Unregisters a PreparedStatement from the connection manager.
+	 * 
+	 * @param statement The PreparedStatement to unregister
+	 */
+	public void unregisterStatement(PreparedStatement statement)
+	{
+		registeredPreparedStatements.remove(statement);
+		closedPreparedStatements.remove(statement);
+	} // end method registerStatement(PreparedStatement)
+	
+	/**
+	 * Returns true iff the passed statement is registered and has been closed
+	 * 
+	 * @param statement The statement to check
+	 * @return True iff the passed statement is registered and has been closed
+	 */
+	public boolean isClosed(PreparedStatement statement)
+	{
+		boolean test = closedPreparedStatements.contains(statement);
+		return closedPreparedStatements.contains(statement);
+	}
+	
+	/**
 	 * Closes a ResultSet and logs any errors which occurred
 	 *
 	 * @param results The result set to close
 	 * @return true on success, false on failure
 	 */
-	public static boolean closeResultSet(ResultSet results)
+	public boolean closeResultSet(ResultSet results)
 	{
 		try
 		{
@@ -164,4 +232,166 @@ public class MySqlConnectionManager
 			return false;
 		} // end catch(SQLException)
 	} // end method closeResultSet(ResultSet)
-} // end class DatabaseDAO
+	
+	/**
+	 * Creates and registers a PreparedStatement based on the SQL query.
+	 * 
+	 * @param sql The SQL for the PreparedStatement to create
+	 * @return The PreparedStatement for the passed sql string
+	 * @throws SQLException If the query could not be created
+	 */
+	public PreparedStatement prepareStatement(String sql) throws SQLException
+	{
+		try
+		{
+			PreparedStatement result = dbConnection.prepareStatement(sql);
+			registerStatement(result);
+			return result;
+		}
+		catch(SQLException e)
+		{
+			resetConnection();
+			throw e;
+		}
+	}
+	
+	/**
+	 * Creates a Statement on the database connection
+	 * 
+	 * @return The Statement created for the database connection
+	 * @throws SQLException If the Statement could not be created
+	 */
+	public Statement createStatement() throws SQLException
+	{
+		try
+		{
+			return dbConnection.createStatement();
+		}
+		catch(SQLException e)
+		{
+			resetConnection();
+			throw e;
+		}
+	}
+
+	/**
+	 * Runs a query against the database.  If it fails, attempts to reconnect to
+	 * the database.
+	 * 
+	 * @param query The query to run
+	 * @return The result of running the query
+	 * @throws SQLException If the query failed twice
+	 */
+	public ResultSet executeQuery(PreparedStatement query) throws SQLException
+	{
+		// TODO: Should this throw an Exception?  They're running a query we don't manage, so
+		//       we can't reset it on a failure.
+		if(!registeredPreparedStatements.contains(query))
+			log.warn("Running a query that was not registered: " + query);
+		
+		try
+		{
+			return query.executeQuery();
+		}
+		catch(SQLException e)
+		{
+			resetConnection();
+			throw e;
+		}
+	}
+	
+	/**
+	 * Runs a query against the database.  If it fails, attempts to reconnect to
+	 * the database.
+	 * 
+	 * @param query The query to run
+	 * @return The result of running the query
+	 * @throws SQLException If the query failed twice
+	 */
+	public int executeUpdate(PreparedStatement query) throws SQLException
+	{
+		// TODO: Should this throw an Exception?  They're running a query we don't manage, so
+		//       we can't reset it on a failure.
+		if(!registeredPreparedStatements.contains(query))
+			log.warn("Running a query that was not registered: " + query);
+		
+		try
+		{
+			return query.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			resetConnection();
+			throw e;
+		}
+	}
+	
+	/**
+	 * Runs a query against the database.  If it fails, attempts to reconnect to
+	 * the database.
+	 * 
+	 * @param query The query to run
+	 * @return The result of running the query
+	 * @throws SQLException If the query failed twice
+	 */
+	public boolean execute(PreparedStatement query) throws SQLException
+	{
+		// TODO: Should this throw an Exception?  They're running a query we don't manage, so
+		//       we can't reset it on a failure.
+		if(!registeredPreparedStatements.contains(query))
+			log.warn("Running a query that was not registered: " + query);
+		
+		try
+		{
+			return query.execute();
+		}
+		catch(SQLException e)
+		{
+			resetConnection();
+			throw e;
+		}
+	}
+	
+	/**
+	 * Attempts to reset the connection to the database
+	 * 
+	 * @throws SQLException If the connection could not be re-established
+	 */
+	private void resetConnection() throws SQLException
+	{
+		// Expire the database connection
+		try
+		{
+			if(!dbConnection.isClosed())
+				dbConnection.close();
+		}
+		catch(SQLException e)
+		{
+			log.error("Error trying to close the database connection.");
+		}
+		finally
+		{
+			// Reopen the connection
+			openDbConnection();
+		}
+		
+		// Expire the registered PreparedStatements
+		for(PreparedStatement statement : registeredPreparedStatements)
+		{
+			try
+			{
+				if(!closedPreparedStatements.contains(statement))
+				{
+					statement.close();
+					closedPreparedStatements.add(statement);
+				}
+			}
+			catch(SQLException e)
+			{
+				log.error("Error trying to close a PreparedStatement.");
+			}
+		}
+		
+		registeredPreparedStatements.clear();
+	}
+} // end class MySqlConnectionManager

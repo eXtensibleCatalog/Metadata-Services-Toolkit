@@ -21,7 +21,6 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.DefaultSetDAO;
@@ -142,7 +141,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	public List<ProcessingDirective> getAll() throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetAllLock)
@@ -154,13 +153,15 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			ResultSet results = null;
 
 			// The list of all ProcessingDirectives
-			ArrayList<ProcessingDirective> processingDirectives = new ArrayList<ProcessingDirective>();
+			List<ProcessingDirective> processingDirectives = new ArrayList<ProcessingDirective>();
 
 			try
 			{
 				// If the PreparedStatemnt to get all ProcessingDirectives was not defined, create it
-				if(psGetAll == null)
+				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
+					dbConnectionManager.unregisterStatement(psGetAll);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROCESSING_DIRECTIVE_ID + ", " +
 					    						   COL_SOURCE_PROVIDER_ID + ", " +
@@ -175,13 +176,13 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnection.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get all PreparedStatement not defined)
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetAll.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetAll);
 
 				// For each result returned, add a ProcessingDirective object to the list with the returned data
 				while(results.next())
@@ -222,7 +223,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getAll()
@@ -231,7 +232,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	public List<ProcessingDirective> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		if(log.isDebugEnabled())
@@ -269,7 +270,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				log.debug("Creating the \"get all processing directives sorted\" Statement from the SQL " + selectSql);
 		
 			// A statement to run the select SQL
-			getSorted = dbConnection.createStatement();
+			getSorted = dbConnectionManager.createStatement();
 			
 			// Get the results of the SELECT statement			
 			
@@ -315,11 +316,12 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 		} // end catch(SQLException)
 		finally
 		{
-			MySqlConnectionManager.closeResultSet(results);
+			dbConnectionManager.closeResultSet(results);
 			
 			try
 			{
-				getSorted.close();
+				if(getSorted != null)
+					getSorted.close();
 			} // end try(close the Statement)
 			catch(SQLException e)
 			{
@@ -332,7 +334,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	public ProcessingDirective getById(int processingDirectiveId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -346,8 +348,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			try
 			{
 				// If the PreparedStatemnt to get all ProcessingDirectives was not defined, create it
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROCESSING_DIRECTIVE_ID + ", " +
 					    						   COL_SOURCE_PROVIDER_ID + ", " +
@@ -363,7 +367,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the get by ID prepared statement
@@ -372,7 +376,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// For each result returned, add a ProcessingDirective object to the list with the returned data
 				if(results.next())
@@ -415,7 +419,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getById(int)
@@ -424,7 +428,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	public ProcessingDirective loadBasicProcessingDirective(int processingDirectiveId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -438,8 +442,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			try
 			{
 				// If the PreparedStatemnt to get all ProcessingDirectives was not defined, create it
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROCESSING_DIRECTIVE_ID + ", " +
 					    						   COL_SOURCE_PROVIDER_ID + ", " +
@@ -455,7 +461,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the get by ID prepared statement
@@ -464,7 +470,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// For each result returned, add a ProcessingDirective object to the list with the returned data
 				if(results.next())
@@ -499,7 +505,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method loadBasicProcessingDirective(int)
@@ -508,7 +514,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	public List<ProcessingDirective> getBySourceProviderId(int providerId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetBySourceProviderIdLock)
@@ -520,13 +526,15 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			ResultSet results = null;
 
 			// The list of all ProcessingDirectives
-			ArrayList<ProcessingDirective> processingDirectives = new ArrayList<ProcessingDirective>();
+			List<ProcessingDirective> processingDirectives = new ArrayList<ProcessingDirective>();
 
 			try
 			{
 				// If the PreparedStatemnt to get a ProcessingDirective by ID was not defined, create it
-				if(psGetBySourceProviderId == null)
+				if(psGetBySourceProviderId == null || dbConnectionManager.isClosed(psGetBySourceProviderId))
 				{
+					dbConnectionManager.unregisterStatement(psGetBySourceProviderId);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROCESSING_DIRECTIVE_ID + ", " +
 					    						   COL_SOURCE_PROVIDER_ID + ", " +
@@ -542,7 +550,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetBySourceProviderId = dbConnection.prepareStatement(selectSql);
+					psGetBySourceProviderId = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by source provider ID PreparedStatement not defined)
 
 				// Set the parameters on the PreparedStatement
@@ -551,7 +559,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetBySourceProviderId.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetBySourceProviderId);
 
 				// For each result returned, add a ProcessingDirective object to the list with the returned data
 				while(results.next())
@@ -592,7 +600,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getBySourceProviderId(int)
@@ -601,7 +609,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	public List<ProcessingDirective> getBySourceServiceId(int serviceId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetBySourceServiceIdLock)
@@ -613,13 +621,15 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			ResultSet results = null;
 
 			// The list of all ProcessingDirectives
-			ArrayList<ProcessingDirective> processingDirectives = new ArrayList<ProcessingDirective>();
+			List<ProcessingDirective> processingDirectives = new ArrayList<ProcessingDirective>();
 
 			try
 			{
 				// If the PreparedStatemnt to get a ProcessingDirective by ID was not defined, create it
-				if(psGetBySourceServiceId == null)
+				if(psGetBySourceServiceId == null || dbConnectionManager.isClosed(psGetBySourceServiceId))
 				{
+					dbConnectionManager.unregisterStatement(psGetBySourceServiceId);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROCESSING_DIRECTIVE_ID + ", " +
 					    						   COL_SOURCE_PROVIDER_ID + ", " +
@@ -635,7 +645,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetBySourceServiceId = dbConnection.prepareStatement(selectSql);
+					psGetBySourceServiceId = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by source service ID PreparedStatement not defined)
 
 				// Set the parameters on the PreparedStatement
@@ -644,7 +654,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetBySourceServiceId.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetBySourceServiceId);
 
 				// For each result returned, add a ProcessingDirective object to the list with the returned data
 				while(results.next())
@@ -685,7 +695,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getBySourceServiceId(int)
@@ -694,7 +704,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	public boolean insert(ProcessingDirective processingDirective) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the non-ID fields on the processing directive are valid
@@ -711,8 +721,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			try
 			{
 				// If the PreparedStatement to insert a processing directive is not defined, create it
-				if(psInsert == null)
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + PROCESSING_DIRECTIVE_TABLE_NAME + " (" + COL_SOURCE_PROVIDER_ID + ", " +
 	            	    													COL_SOURCE_SERVICE_ID + ", " +
@@ -726,7 +738,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -737,10 +749,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				psInsert.setBoolean(5, processingDirective.getMaintainSourceSets());
 
 				// Execute the insert statement and return the result
-				if(psInsert.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psInsert) > 0)
 				{
 					// Get the auto-generated processing directive ID and set it correctly on this ProcessingDirective Object
-					rs = dbConnection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+					rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
 				    if (rs.next())
 				        processingDirective.setId(rs.getInt(1));
@@ -766,7 +778,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method insert(ProcessingDirective)
@@ -775,7 +787,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	public boolean update(ProcessingDirective processingDirective) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the fields on the processing directive are valid
@@ -789,8 +801,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			try
 			{
 				// If the PreparedStatement to update a processing directive was not defined, create it
-				if(psUpdate == null)
+				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
+					dbConnectionManager.unregisterStatement(psUpdate);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + PROCESSING_DIRECTIVE_TABLE_NAME + " SET " + COL_SOURCE_PROVIDER_ID + "=?, " +
 				                                                          COL_SOURCE_SERVICE_ID + "=?, " +
@@ -804,7 +818,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnection.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql);
 				} // end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -816,7 +830,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				psUpdate.setInt(6, processingDirective.getId());
 
 				// Execute the insert statement and return the result
-				if(psUpdate.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psUpdate) > 0)
 				{
 					// Remove the old input sets and formats for the processing directive
 					inputSetDao.deleteInputSetsForProcessingDirective(processingDirective.getId());
@@ -848,7 +862,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	public boolean delete(ProcessingDirective processingDirective) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the ID field on the processing directive are valid
@@ -862,8 +876,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			try
 			{
 				// If the PreparedStatement to delete a service to output format was not defined, create it
-				if(psDelete == null)
+				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
+					dbConnectionManager.unregisterStatement(psDelete);
+					
 					// Delete processing directive input set and format.(delete the reference first before deleting the processing directive)
 					inputFormatDao.deleteInputFormatsForProcessingDirective(processingDirective.getId());
 					inputSetDao.deleteInputSetsForProcessingDirective(processingDirective.getId());
@@ -877,14 +893,14 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnection.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement
 				psDelete.setInt(1, processingDirective.getId());
 
 				// Execute the delete statement and return the result
-				return psDelete.execute();
+				return dbConnectionManager.execute(psDelete);
 			} // end try(delete row)
 			catch(SQLException e)
 			{

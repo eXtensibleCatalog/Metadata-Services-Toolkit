@@ -9,7 +9,6 @@
 
 package xc.mst.dao.user;
 
-import java.sql.Connection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -32,10 +31,10 @@ public abstract class UserGroupUtilDAO
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 	/**
-	 * The connection to the database
+	 * The Object managing the database connection
 	 */
-	protected final static Connection dbConnection = MySqlConnectionManager.getDbConnection();
-
+	protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
+	
 	/**
 	 * The name of the user to groups database table
 	 */
@@ -70,7 +69,7 @@ public abstract class UserGroupUtilDAO
 	 * The name of the last name column
 	 */
 	public final static String COL_LAST_NAME = "last_name";
-
+	
 	/**
 	 * Inserts a row in the database assigning a user to a group.
 	 *

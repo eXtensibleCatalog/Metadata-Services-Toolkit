@@ -22,7 +22,6 @@ import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
@@ -153,7 +152,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	public ArrayList<Service> getAll() throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetAllLock)
@@ -170,8 +169,10 @@ public class DefaultServiceDAO extends ServiceDAO
 			try
 			{
 				// Create the PreparedStatment to get all services if it hasn't already been created
-				if(psGetAll == null)
+				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
+					dbConnectionManager.unregisterStatement(psGetAll);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 												   COL_SERVICE_NAME + ", " +
@@ -202,13 +203,13 @@ public class DefaultServiceDAO extends ServiceDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnection.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get all PreparedStatement not defined)
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetAll.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetAll);
 
 				// For each result returned, add a Service object to the list with the returned data
 				while(results.next())
@@ -265,7 +266,7 @@ public class DefaultServiceDAO extends ServiceDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getAll()
@@ -280,7 +281,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	public List<Service> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		if(log.isDebugEnabled())
@@ -335,7 +336,7 @@ public class DefaultServiceDAO extends ServiceDAO
 
 			// A prepared statement to run the select SQL
 			// This should sanitize the SQL and prevent SQL injection
-			getSorted = dbConnection.createStatement();
+			getSorted = dbConnectionManager.createStatement();
 			
 			// Get the results of the SELECT statement			
 			
@@ -397,11 +398,12 @@ public class DefaultServiceDAO extends ServiceDAO
 		} // end catch(SQLException)
 		finally
 		{
-			MySqlConnectionManager.closeResultSet(results);
+			dbConnectionManager.closeResultSet(results);
 			
 			try
 			{
-				getSorted.close();
+				if(getSorted != null)
+					getSorted.close();
 			} // end try(close the Statement)
 			catch(SQLException e)
 			{
@@ -414,7 +416,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	public Service getById(int serviceId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -428,8 +430,10 @@ public class DefaultServiceDAO extends ServiceDAO
 			try
 			{
 				// Create the PreparedStatment to get a service by ID if it hasn't already been created
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
@@ -460,7 +464,7 @@ public class DefaultServiceDAO extends ServiceDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the select statement
@@ -469,7 +473,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// If any results were returned
 				if(results.next())
@@ -529,7 +533,7 @@ public class DefaultServiceDAO extends ServiceDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getById(int)
@@ -538,7 +542,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	public Service loadBasicService(int serviceId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -552,8 +556,10 @@ public class DefaultServiceDAO extends ServiceDAO
 			try
 			{
 				// Create the PreparedStatment to get a service by ID if it hasn't already been created
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
@@ -585,7 +591,7 @@ public class DefaultServiceDAO extends ServiceDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -594,7 +600,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// If any results were returned
 				if(results.next())
@@ -645,7 +651,7 @@ public class DefaultServiceDAO extends ServiceDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method loadBasicService(int)
@@ -654,7 +660,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	public Service getByPort(int port) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByPortLock)
@@ -668,8 +674,10 @@ public class DefaultServiceDAO extends ServiceDAO
 			try
 			{
 				// Create the PreparedStatment to get a service by port if it hasn't already been created
-				if(psGetByPort == null)
+				if(psGetByPort == null || dbConnectionManager.isClosed(psGetByPort))
 				{
+					dbConnectionManager.unregisterStatement(psGetByPort);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
@@ -701,7 +709,7 @@ public class DefaultServiceDAO extends ServiceDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByPort = dbConnection.prepareStatement(selectSql);
+					psGetByPort = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by port PreparedStatement not defined)
 
 				// Set the parameters on the select statement
@@ -710,7 +718,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetByPort.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByPort);
 
 				// If any results were returned
 				if(results.next())
@@ -770,7 +778,7 @@ public class DefaultServiceDAO extends ServiceDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getByPort(int)
@@ -779,7 +787,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	public Service getByServiceName(String name) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByNameLock)
@@ -793,8 +801,10 @@ public class DefaultServiceDAO extends ServiceDAO
 			try
 			{
 				// Create the PreparedStatment to get a service by name if it hasn't already been created
-				if(psGetByName == null)
+				if(psGetByName == null || dbConnectionManager.isClosed(psGetByName))
 				{
+					dbConnectionManager.unregisterStatement(psGetByName);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
@@ -826,7 +836,7 @@ public class DefaultServiceDAO extends ServiceDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByName = dbConnection.prepareStatement(selectSql);
+					psGetByName = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by name PreparedStatement not defined)
 
 				// Set the parameters on the select statement
@@ -835,7 +845,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetByName.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByName);
 
 				// If any results were returned
 				if(results.next())
@@ -895,7 +905,7 @@ public class DefaultServiceDAO extends ServiceDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getByServiceName(String)
@@ -917,8 +927,10 @@ public class DefaultServiceDAO extends ServiceDAO
 			try
 			{
 				// Build the PreparedStatement to insert a service if it wasn't already created
-				if(psInsert == null)
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + SERVICES_TABLE_NAME + " (" + COL_SERVICE_NAME + ", " +
 					                                                                 COL_SERVICE_JAR + ", " +
@@ -947,7 +959,7 @@ public class DefaultServiceDAO extends ServiceDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -973,10 +985,10 @@ public class DefaultServiceDAO extends ServiceDAO
 				psInsert.setString(20, service.getVersion());
 
 				// Execute the insert statement and return the result
-				if(psInsert.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psInsert) > 0)
 				{
 					// Get the auto-generated resource identifier ID and set it correctly on this Service Object
-					rs = dbConnection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+					rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
 				    if (rs.next())
 				        service.setId(rs.getInt(1));
@@ -1035,7 +1047,7 @@ public class DefaultServiceDAO extends ServiceDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method insert(Service)
@@ -1054,8 +1066,10 @@ public class DefaultServiceDAO extends ServiceDAO
 			try
 			{
 				// Create a PreparedStatement to update a service if it wasn't already created
-				if(psUpdate == null)
+				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
+					dbConnectionManager.unregisterStatement(psUpdate);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + SERVICES_TABLE_NAME + " SET " + COL_SERVICE_NAME + "=?, " +
 					                                                      COL_SERVICE_JAR + "=?, " +
@@ -1084,7 +1098,7 @@ public class DefaultServiceDAO extends ServiceDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnection.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql);
 				} // end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -1112,7 +1126,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				
 
 				// Execute the update statement and return the result
-				if(psUpdate.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psUpdate) > 0)
 				{
 					boolean success = true;
 
@@ -1183,8 +1197,10 @@ public class DefaultServiceDAO extends ServiceDAO
 			try
 			{
 				// Create the PreparedStatement to delete a service if it wasn't already defined
-				if(psDelete == null)
+				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
+					dbConnectionManager.unregisterStatement(psDelete);
+					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM " + SERVICES_TABLE_NAME + " " +
 		                               "WHERE " + COL_SERVICE_ID + " = ? ";
@@ -1194,14 +1210,14 @@ public class DefaultServiceDAO extends ServiceDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnection.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement
 				psDelete.setInt(1, service.getId());
 
 				// Execute the delete statement and return the result
-				boolean success = psDelete.execute();
+				boolean success = dbConnectionManager.execute(psDelete);
 				
 				if(success)
 					LogWriter.addInfo(logObj.getLogFileLocation(), "Deleted the service with the name " + service.getName());

@@ -24,7 +24,6 @@ import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.ProviderDAO;
 
@@ -129,7 +128,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	public List<HarvestSchedule> getAll() throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetAllLock)
@@ -141,13 +140,15 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			ResultSet results = null;
 
 			// A list to hold the results of the query
-			ArrayList<HarvestSchedule> harvestSchedules = new ArrayList<HarvestSchedule>();
+			List<HarvestSchedule> harvestSchedules = new ArrayList<HarvestSchedule>();
 
 			try
 			{
 				// If the PreparedStatement to get all harvest schedules was not defined, create it
-				if(psGetAll == null)
+				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
+					dbConnectionManager.unregisterStatement(psGetAll);
+					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
                                                    COL_SCHEDULE_NAME + ", " +
@@ -168,13 +169,13 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnection.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get all PreparedStatement wasn't defined)
 
 				// Get the results of the SELECT statement
 
 				// Execute the query
-				results = psGetAll.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetAll);
 
 				// If any results were returned
 				while(results.next())
@@ -213,7 +214,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getAll()
@@ -222,7 +223,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	public List<HarvestSchedule> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		if(log.isDebugEnabled())
@@ -268,7 +269,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
                 // A prepared statement to run the select SQL
                 // This should sanitize the SQL and prevent SQL injection
-                getSorted = dbConnection.createStatement();
+                getSorted = dbConnectionManager.createStatement();
 
                 // Get the results of the SELECT statement
 
@@ -312,11 +313,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
             } // end catch(SQLException)
             finally
             {
-                MySqlConnectionManager.closeResultSet(results);
+            	dbConnectionManager.closeResultSet(results);
 
                 try
                 {
-                    getSorted.close();
+                	if(getSorted != null)
+                		getSorted.close();
                 } // end try(close the Statement)
                 catch(SQLException e)
                 {
@@ -349,7 +351,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
                 // A prepared statement to run the select SQL
                 // This should sanitize the SQL and prevent SQL injection
-                getSorted = dbConnection.createStatement();
+                getSorted = dbConnectionManager.createStatement();
 
                 // Get the results of the SELECT statement
 
@@ -393,11 +395,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
             } // end catch(SQLException)
             finally
             {
-                MySqlConnectionManager.closeResultSet(results);
+            	dbConnectionManager.closeResultSet(results);
 
                 try
                 {
-                    getSorted.close();
+                	if(getSorted != null)
+                		getSorted.close();
                 } // end try(close the Statement)
                 catch(SQLException e)
                 {
@@ -411,7 +414,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	public HarvestSchedule getById(int harvestScheduleId) throws DatabaseConfigException 
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -425,8 +428,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			try
 			{
 				// If the PreparedStatement to get a harvest schedule by ID was not defined, create it
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
                                                    COL_SCHEDULE_NAME + ", " +
@@ -448,7 +453,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement wasn't defined)
 
 				// Set the parameters on the SELECT statement
@@ -457,7 +462,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// If any results were returned
 				if(results.next())
@@ -509,7 +514,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(closeResultSet)
 		} // end synchronized
 	} // end method getById(int)
@@ -518,7 +523,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	public HarvestSchedule loadWithoutSteps(int harvestScheduleId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -532,8 +537,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			try
 			{
 				// If the PreparedStatement to get a harvest schedule by ID was not defined, create it
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
                                                    COL_SCHEDULE_NAME + ", " +
@@ -555,7 +562,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement wasn't defined)
 
 				// Set the parameters on the SELECT statement
@@ -564,7 +571,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// If any results were returned
 				if(results.next())
@@ -615,7 +622,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(closeResultSet)
 		} // end synchronized
 	} // end method loadWithoutSteps(int)
@@ -624,7 +631,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	public HarvestSchedule getByName(String name) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByNameLock)
@@ -638,8 +645,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			try
 			{
 				// If the PreparedStatement to get a harvest schedule by ID was not defined, create it
-				if(psGetByName == null)
+				if(psGetByName == null || dbConnectionManager.isClosed(psGetByName))
 				{
+					dbConnectionManager.unregisterStatement(psGetByName);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
                                                    COL_SCHEDULE_NAME + ", " +
@@ -661,7 +670,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByName = dbConnection.prepareStatement(selectSql);
+					psGetByName = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement wasn't defined)
 
 				// Set the parameters on the SELECT statement
@@ -670,7 +679,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetByName.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByName);
 
 				// If any results were returned
 				if(results.next())
@@ -722,7 +731,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(closeResultSet)
 		} // end synchronized
 	} // end method getByName(String)
@@ -731,7 +740,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	public HarvestSchedule loadBasicHarvestSchedule(int harvestScheduleId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByIdLock)
@@ -745,8 +754,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			try
 			{
 				// If the PreparedStatement to get a harvest schedule by ID was not defined, create it
-				if(psGetById == null)
+				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
+					dbConnectionManager.unregisterStatement(psGetById);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
                                                    COL_SCHEDULE_NAME + ", " +
@@ -768,7 +779,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnection.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by ID PreparedStatement wasn't defined)
 
 				// Set the parameters on the SELECT statement
@@ -777,7 +788,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetById);
 
 				// If any results were returned
 				if(results.next())
@@ -820,7 +831,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(closeResultSet)
 		} // end synchronized
 	} // end method loadBasicHarvestSchedule(int)
@@ -829,7 +840,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	public HarvestSchedule getHarvestScheduleForProvider(int providerId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByProviderIdLock)
@@ -845,8 +856,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			try
 			{
 				// If the PreparedStatement to get a harvest schedule by ID was not defined, create it
-				if(psGetByProviderId == null)
+				if(psGetByProviderId == null || dbConnectionManager.isClosed(psGetByProviderId))
 				{
+					dbConnectionManager.unregisterStatement(psGetByProviderId);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
                     							   COL_SCHEDULE_NAME + ", " +
@@ -868,7 +881,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByProviderId = dbConnection.prepareStatement(selectSql);
+					psGetByProviderId = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by provider ID PreparedStatement not defined)
 
 				// Set the parameters on the SELECT statement
@@ -877,7 +890,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetByProviderId.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByProviderId);
 
 				// If any results were returned
 				if (results.next())
@@ -919,7 +932,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getHarvestSchedulesForProvider(int)
@@ -928,13 +941,13 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	public List<HarvestSchedule> getSchedulesToRun(int hour, int dayOfWeek,	int minute) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetByTimeLock)
 		{
 			// The list of results to return
-			ArrayList<HarvestSchedule> harvestSchedules = new ArrayList<HarvestSchedule>();
+			List<HarvestSchedule> harvestSchedules = new ArrayList<HarvestSchedule>();
 
 			if(log.isDebugEnabled())
 				log.debug("Getting all harvest schedules with hour " + hour + " or day of the week " + dayOfWeek + " or minute " + minute);
@@ -945,8 +958,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			try
 			{
 				// If the PreparedStatement to get harvest schedules by their time was not defined, create it
-				if(psGetByTime == null)
+				if(psGetByTime == null || dbConnectionManager.isClosed(psGetByTime))
 				{
+					dbConnectionManager.unregisterStatement(psGetByTime);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_ID + ", " +
                     							   COL_SCHEDULE_NAME + ", " +
@@ -972,7 +987,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByTime = dbConnection.prepareStatement(selectSql);
+					psGetByTime = dbConnectionManager.prepareStatement(selectSql);
 				} // end if(get by time PreparedStatement wasn't defined)
 
 				// Set the parameters on the update statement
@@ -989,7 +1004,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetByTime.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetByTime);
 
 				// Add each returned result to the list of harvest schedules which match the requested parameters
 				while(results.next())
@@ -1036,7 +1051,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method getSchedulesToRun(int, int, int)
@@ -1045,7 +1060,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	public boolean insert(HarvestSchedule harvestSchedule) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the non-ID fields on the harvest schedule are valid
@@ -1067,8 +1082,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			try
 			{
 				// If the PreparedStatement to insert a harvest schedule was not defined, create it
-				if(psInsert == null)
+				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
+					dbConnectionManager.unregisterStatement(psInsert);
+					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + HARVEST_SCHEDULES_TABLE_NAME + " (" + COL_SCHEDULE_NAME + ", " +
 	                                                                        COL_RECURRENCE + ", " +
@@ -1088,7 +1105,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnection.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql);
 				} // end if(insert PreparedStatement wasn't defined)
 
 				// Set the parameters on the insert statement
@@ -1106,10 +1123,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				psInsert.setString(11, harvestSchedule.getRequest());
 
 				// Execute the insert statement and return the result
-				if(psInsert.executeUpdate() > 0)
+				if(dbConnectionManager.executeUpdate(psInsert) > 0)
 				{
 					// Get the auto-generated user ID and set it correctly on this Harvest Schedule Object
-					rs = dbConnection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+					rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
 				    if (rs.next())
 				    	harvestSchedule.setId(rs.getInt(1));
@@ -1157,7 +1174,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(rs);
+				dbConnectionManager.closeResultSet(rs);
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method insert(HarvestSchedule)
@@ -1166,7 +1183,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	public boolean update(HarvestSchedule harvestSchedule, boolean updateSteps) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the fields on the harvest schedule are valid
@@ -1185,8 +1202,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			try
 			{
 				// If the PreparedStatement to update a harvest schedule was not defined, create it
-				if(psUpdate == null)
+				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
+					dbConnectionManager.unregisterStatement(psUpdate);
+					
 					// SQL to update new row
 					String updateSql = "UPDATE " + HARVEST_SCHEDULES_TABLE_NAME + " SET " + COL_SCHEDULE_NAME + "=?, " +
 	                                                                      COL_RECURRENCE + "=?, " +
@@ -1206,7 +1225,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnection.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql);
 				} // end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -1224,7 +1243,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				psUpdate.setInt(12, harvestSchedule.getId());
 
 				// Execute the update statement and return the result
-				boolean success = psUpdate.executeUpdate() > 0;
+				boolean success = dbConnectionManager.executeUpdate(psUpdate) > 0;
 
 				if(updateSteps)
 				{
@@ -1275,7 +1294,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	public boolean delete(HarvestSchedule harvestSchedule) throws DataException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		// Check that the ID field on the harvest schedule are valid
@@ -1289,8 +1308,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			try
 			{
 				// If the PreparedStatement to delete a harvest schedule was not defined, create it
-				if(psDelete == null)
+				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
+					dbConnectionManager.unregisterStatement(psDelete);
+					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM "+ HARVEST_SCHEDULES_TABLE_NAME + " " +
 									   "WHERE " + COL_HARVEST_SCHEDULE_ID + " = ? ";
@@ -1300,14 +1321,14 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnection.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement
 				psDelete.setInt(1, harvestSchedule.getId());
 
 				// Execute the delete statement and return the result
-				return psDelete.execute();
+				return dbConnectionManager.execute(psDelete);
 			} // end try(delete the schedule
 			catch(SQLException e)
 			{

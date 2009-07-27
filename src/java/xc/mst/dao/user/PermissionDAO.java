@@ -13,6 +13,7 @@ import java.util.List;
 
 import xc.mst.bo.user.Permission;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.dao.MySqlConnectionManager;
 
 /**
  * Data access object for permissions belonging to a group.  These are taken from the
@@ -22,6 +23,11 @@ import xc.mst.dao.DatabaseConfigException;
  */
 public abstract class PermissionDAO
 {
+	/**
+	 * The Object managing the database connection
+	 */
+	protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
+	
 	/**
 	 * The name of the groups to top level tabs database table
 	 */

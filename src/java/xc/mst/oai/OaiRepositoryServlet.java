@@ -81,33 +81,28 @@ public class OaiRepositoryServlet extends ActionSupport implements ServletReques
 			// Extract the service name from servlet path
 			int firstOccuranceOfSlash = servletPath.indexOf("/");
 			
+			String serviceName = null;
+			
 			// Check if / exist in servlet path
-			if (firstOccuranceOfSlash != -1) {
+			if (firstOccuranceOfSlash != -1) 
+			{
 				int secondOccuranceOfSlash = servletPath.indexOf("/", firstOccuranceOfSlash + 1);
 			
-				String serviceName = null;
-				if ((firstOccuranceOfSlash != -1 && secondOccuranceOfSlash != -1) && (secondOccuranceOfSlash > firstOccuranceOfSlash)) {
+				if ((firstOccuranceOfSlash != -1 && secondOccuranceOfSlash != -1) && (secondOccuranceOfSlash > firstOccuranceOfSlash))
 					serviceName = servletPath.substring(firstOccuranceOfSlash + 1, secondOccuranceOfSlash);
-				} else { // Invalid URL
-					// Show error message
-					// TODO
-				}
-			} else { // Invalid URL
-				// Show error message
-				// TODO
-			}
-			
-			// Get the port on which the request is coming in.  This will
-			// tell us which service's records to expose.
-			int port = request.getLocalPort();
+				else // Invalid URL
+					response.getWriter().write("Invalid URL");
+			} 
+			else // Invalid URL
+				response.getWriter().write("Invalid URL");
 	
 			// Get the service based on the port.
-			Service service = serviceDao.getByPort(port);
+			Service service = serviceDao.getByServiceName(serviceName);
 	
 			if(service == null)
 			{
 				// Write the response
-				response.getWriter().write("No OAI repository is configured to run on port " + port);
+				response.getWriter().write("Invalid service name: " + serviceName);
 		
 			    return SUCCESS;
 			}

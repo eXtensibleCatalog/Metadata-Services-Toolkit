@@ -9,7 +9,6 @@
 
 package xc.mst.dao.harvest;
 
-import java.sql.Connection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -28,11 +27,11 @@ public abstract class HarvestRecordUtilDAO
 	 * A reference to the logger for this class
 	 */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
+	
 	/**
-	 * The connection to the database
+	 * The Object managing the database connection
 	 */
-	protected final static Connection dbConnection = MySqlConnectionManager.getDbConnection();
+	protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
 
 	/**
 	 * The name of the harvest to records database table

@@ -9,7 +9,6 @@
 
 package xc.mst.dao.user;
 
-import java.sql.Connection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -29,15 +28,15 @@ import xc.mst.dao.MySqlConnectionManager;
 public abstract class ServerDAO
 {
 	/**
-	 * The connection to the database
-	 */
-	protected final static Connection dbConnection = MySqlConnectionManager.getDbConnection();
-
-	/**
 	 * A reference to the logger for this class
 	 */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
+	/**
+	 * The Object managing the database connection
+	 */
+	protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
+	
 	/**
 	 * The name of the database table with server information
 	 */

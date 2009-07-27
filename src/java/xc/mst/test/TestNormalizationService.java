@@ -336,7 +336,7 @@ public class TestNormalizationService
 		{
 			// TODO removed IndexManager
 			//IndexManager.closeIndex();
-			MySqlConnectionManager.closeDbConnection();
+			MySqlConnectionManager.getInstance().closeDbConnection();
 		}
 	}
 

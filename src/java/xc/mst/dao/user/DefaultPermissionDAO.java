@@ -9,7 +9,6 @@
 
 package xc.mst.dao.user;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +20,6 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.user.Permission;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.MySqlConnectionManager;
 
 /**
  * Default data access object for permissions belonging to a group.  These are taken from the
@@ -36,11 +34,6 @@ public class DefaultPermissionDAO extends PermissionDAO
 	 * A reference to the logger for this class
 	 */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-	/**
-	 * The connection to the database
-	 */
-	private final static Connection dbConnection = MySqlConnectionManager.getDbConnection();
 
 	/**
 	 * Prepared statement to get all possible permissions
@@ -86,7 +79,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 	public List<Permission> getAll() throws DatabaseConfigException
 	{
     	// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetAllLock)
@@ -100,8 +93,10 @@ public class DefaultPermissionDAO extends PermissionDAO
 			try
 			{
 				// If the PreparedStatement to get a groups to Top Level Tab by ID wasn't defined, create it
-				if(psGetAll == null)
+				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
+					dbConnectionManager.unregisterStatement(psGetAll);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_TOP_LEVEL_TAB_ID + ", " +
 				                                   COL_TAB_NAME + ", " + COL_TAB_ORDER + " " +
@@ -112,13 +107,13 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnection.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql);
 				} // end if (PreparedStatement to get permissions for a group is null)
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetAll.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetAll);
 
 				// A list of the permissions found in the database
 				List<Permission> permissions = new ArrayList<Permission>();
@@ -151,7 +146,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method getAll()
@@ -160,7 +155,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 	public List<Permission> getPermissionsForGroup(int groupId) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetPermissionsForGroupLock)
@@ -174,8 +169,10 @@ public class DefaultPermissionDAO extends PermissionDAO
 			try
 			{
 				// If the PreparedStatement to get a groups to Top Level Tab by ID wasn't defined, create it
-				if(psGetPermissionsForGroup == null)
+				if(psGetPermissionsForGroup == null || dbConnectionManager.isClosed(psGetPermissionsForGroup))
 				{
+					dbConnectionManager.unregisterStatement(psGetPermissionsForGroup);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + TOP_LEVEL_TABS_TABLE_NAME + "." + COL_TOP_LEVEL_TAB_ID + ", " +
 				                                   COL_TAB_NAME + ", " + COL_TAB_ORDER + " " +
@@ -190,7 +187,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetPermissionsForGroup = dbConnection.prepareStatement(selectSql);
+					psGetPermissionsForGroup = dbConnectionManager.prepareStatement(selectSql);
 				} // end if (PreparedStatement to get permissions for a group is null)
 
 				// Set the parameters on the update statement
@@ -199,7 +196,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetPermissionsForGroup.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetPermissionsForGroup);
 
 				// A list of the permissions found in the database
 				List<Permission> permissions = new ArrayList<Permission>();
@@ -232,7 +229,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method getPermissionsForGroup(int)
@@ -243,7 +240,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 	public Permission getPermissionById(int permissionId) throws DatabaseConfigException
 	{
     	// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetPermissionByIdLock)
@@ -257,8 +254,10 @@ public class DefaultPermissionDAO extends PermissionDAO
 			try
 			{
 				// If the PreparedStatement to get a permission by ID doesn't exist, create it
-				if(psGetPermissionById == null)
+				if(psGetPermissionById == null || dbConnectionManager.isClosed(psGetPermissionById))
 				{
+					dbConnectionManager.unregisterStatement(psGetPermissionById);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_TOP_LEVEL_TAB_ID + ", " +
 				                                   COL_TAB_NAME + ", " + COL_TAB_ORDER + " " +
@@ -270,7 +269,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetPermissionById = dbConnection.prepareStatement(selectSql);
+					psGetPermissionById = dbConnectionManager.prepareStatement(selectSql);
 				} // end if (PreparedStatement to get permission for an ID is null)
 
 				// Set the parameters on the update statement
@@ -279,7 +278,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetPermissionById.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetPermissionById);
 
                 // The current Permission
 			    Permission permission = new Permission();
@@ -308,7 +307,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 	} // end method getPermissionById(int)
@@ -317,7 +316,7 @@ public class DefaultPermissionDAO extends PermissionDAO
     public List<Permission> getPermissionsForUserByTabOrderAsc(int userId) throws DatabaseConfigException 
     {
     	// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnection == null)
+		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
 		synchronized(psGetPermissionByUserIdLock)
@@ -331,8 +330,10 @@ public class DefaultPermissionDAO extends PermissionDAO
 			try
 			{
 				// If the PreparedStatement to get a permission by user ID doesn't exist, create it
-				if(psGetPermissionByUserId == null)
+				if(psGetPermissionByUserId == null || dbConnectionManager.isClosed(psGetPermissionByUserId))
 				{
+					dbConnectionManager.unregisterStatement(psGetPermissionByUserId);
+					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_TOP_LEVEL_TAB_ID + ", " +
 				                                   COL_TAB_NAME + ", " + COL_TAB_ORDER + " " +
@@ -349,7 +350,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetPermissionByUserId = dbConnection.prepareStatement(selectSql);
+					psGetPermissionByUserId = dbConnectionManager.prepareStatement(selectSql);
 				} // end if (PreparedStatement to get permission for an ID is null)
 
 				// Set the parameters on the update statement
@@ -358,7 +359,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = psGetPermissionByUserId.executeQuery();
+				results = dbConnectionManager.executeQuery(psGetPermissionByUserId);
 
                 // The user Permissions
 			    List<Permission> permissions = new ArrayList<Permission>();
@@ -390,7 +391,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 			} // end catch(SQLException)
 			finally
 			{
-				MySqlConnectionManager.closeResultSet(results);
+				dbConnectionManager.closeResultSet(results);
 			} // end finally (close ResultSet)
 		} // end synchronized
 		

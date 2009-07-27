@@ -11,6 +11,8 @@ package xc.mst.dao.user;
 
 import java.util.List;
 
+import xc.mst.dao.MySqlConnectionManager;
+
 /**
  * Utility class for manipulating the permissions assigned to a group
  *
@@ -18,6 +20,11 @@ import java.util.List;
  */
 public abstract class GroupPermissionUtilDAO
 {
+	/**
+	 * The Object managing the database connection
+	 */
+	protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
+
 	/**
 	 * The name of the groups to top level tabs database table
 	 */
