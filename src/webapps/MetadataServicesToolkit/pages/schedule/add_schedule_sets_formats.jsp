@@ -157,11 +157,11 @@
 				
 				<td width="50%">
 					Rename this harvest schedule(optional)<br>
-					<input type="text" name="scheduleName" value="${schedule.scheduleName}" size="40"/> 
+					<input type="text" name="scheduleName" value="${schedule.scheduleName}" size="40" maxlength="265"/> 
 					<br><br>
 					
 					Contact email:<br>
-					<input type="text" name="notifyEmail" value="${schedule.notifyEmail}" size="40"/><br>
+					<input type="text" name="notifyEmail" value="${schedule.notifyEmail}" size="40" maxlength="255"/><br>
 					(Email will be sent when error occurs with the harvest.Separate multiple email address with comma.)
 				
 				</td>

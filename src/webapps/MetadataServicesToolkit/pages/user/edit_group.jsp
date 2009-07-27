@@ -93,7 +93,7 @@
                        
                         <tr>
                             <td valign="top"><B>Description</B> <br> 
-                            <textarea id="groupDescription" name ="groupDescription" cols="40" rows="5" maxlength="255">${temporaryGroup.description}</textarea><br><br></td>
+                            <textarea id="groupDescription" name ="groupDescription" cols="40" rows="5" maxlength="1023">${temporaryGroup.description}</textarea><br><br></td>
                         </tr>
                        
                         <tr>

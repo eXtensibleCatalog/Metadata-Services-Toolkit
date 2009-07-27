@@ -178,22 +178,22 @@ public abstract class ServerDAO
 			if(log.isDebugEnabled())
 				log.debug("Checking the non-ID fields");
 
-			if(server.getUrl() == null || server.getUrl().length() <= 0 || server.getUrl().length() > 127)
+			if(server.getUrl() == null || server.getUrl().length() <= 0 || server.getUrl().length() > 255)
 				errorMessage.append("The URL is invalid. ");
 
-			if(server.getName() == null || server.getName().length() <= 0 || server.getName().length() > 127)
+			if(server.getName() == null || server.getName().length() <= 0 || server.getName().length() > 255)
 				errorMessage.append("The name is invalid. ");
 
-			if(server.getUserNameAttribute() == null || server.getUserNameAttribute().length() <= 0 || server.getUserNameAttribute().length() > 127)
+			if(server.getUserNameAttribute() == null || server.getUserNameAttribute().length() <= 0 || server.getUserNameAttribute().length() > 255)
 				errorMessage.append("The username attribute is invalid. ");
 
-			if(server.getInstitution() != null && server.getInstitution().length() > 127)
+			if(server.getInstitution() != null && server.getInstitution().length() > 255)
 				errorMessage.append("The institution is invalid. ");
 
-			if(server.getForgotPasswordUrl() != null && server.getForgotPasswordUrl().length() > 127)
+			if(server.getForgotPasswordUrl() != null && server.getForgotPasswordUrl().length() > 255)
 				errorMessage.append("The forgot password URL is invalid. ");
 
-			if(server.getForgotPasswordLabel() != null && server.getForgotPasswordLabel().length() > 63)
+			if(server.getForgotPasswordLabel() != null && server.getForgotPasswordLabel().length() > 255)
 				errorMessage.append("The forgot password label is invalid. ");
 		} // end if(we should validate the non-ID fields)
 

@@ -416,6 +416,9 @@ public abstract class ProviderDAO
 
 			if(provider.getProtocolVersion() != null && provider.getProtocolVersion().length() > 7)
 				errorMessage.append("The protocol_version field is invalid. ");
+			
+			if(provider.getLogFileName() != null && provider.getLogFileName().length() > 355)
+				errorMessage.append("The log file name is invalid. ");			
 		} // end if(we should validate the non-ID fields)
 
 		// Log the error and throw the exception if any fields are invalid

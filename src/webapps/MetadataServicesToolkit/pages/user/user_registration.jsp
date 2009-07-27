@@ -127,12 +127,12 @@
 			</tr>
 			<tr>
                 <td> <b>Password</b> <br>
-					<input type="password" id="user_password" name="newUser.password" value="${newUser.password}" />
+					<input type="password" id="user_password" name="newUser.password" value="${newUser.password}" maxlength="63"/>
 				</td>
 			</tr>
 			<tr>
                 <td> <b>Password Confirmation</b> <br>
-					<input type="password" id="user_password_confirmation" name="passwordConfirmation"/>
+					<input type="password" id="user_password_confirmation" name="passwordConfirmation" maxlength="63"/>
 				</td>
 			</tr>
 			<tr>

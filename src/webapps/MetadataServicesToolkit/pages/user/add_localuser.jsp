@@ -106,12 +106,12 @@
 
                <tr>
                    <td valign="top"><b>Password</b>  <br>
-                   <input type="password" id="password" name ="password" class="textfield" value="" maxlength="255" size="39"><br><br></td>
+                   <input type="password" id="password" name ="password" class="textfield" value="" maxlength="63" size="39"><br><br></td>
                </tr>
 
               <tr>
                   <td valign="top"><b>Confirm Password</b>  <br>
-                  <input type="password" id="confpass" name ="confpass" class="textfield" value="" maxlength="255" size="39"><br><br></td>
+                  <input type="password" id="confpass" name ="confpass" class="textfield" value="" maxlength="63" size="39"><br><br></td>
               </tr>
 
                <tr>

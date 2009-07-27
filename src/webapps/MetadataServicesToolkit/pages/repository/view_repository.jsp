@@ -59,13 +59,13 @@
             <c:import url="/inc/menu.jsp"/>
             
 
-		<c:if test="${fn:length(provider.name) > 65}">
+		<c:if test="${fn:length(provider.name) > 60}">
 		 	<jsp:include page="/inc/breadcrumb.jsp">
-                    		<jsp:param name="bread" value="Repository | <a style='color:#292929;' href='allRepository.action'><U>All Repositories</U></a> | View Repository : <a style='text-decoration:none;color:black;' title='${provider.name}'> ${fn:substring(provider.name,0,65)}...</a>" />
+                    		<jsp:param name="bread" value="Repository | <a style='color:#292929;' href='allRepository.action'><U>All Repositories</U></a> | View Repository : <a style='text-decoration:none;color:black;' title='${provider.name}'> ${fn:substring(provider.name,0,60)}...</a>" />
                      	</jsp:include>
                 </c:if>
                 
-                <c:if test="${fn:length(provider.name) <= 65}">
+                <c:if test="${fn:length(provider.name) <= 60}">
                 	 <jsp:include page="/inc/breadcrumb.jsp">
                 		<jsp:param name="bread" value="Repository | <a style='color:#292929;' href='allRepository.action'><U>All Repositories</U></a> | View Repository : ${provider.name}" />
                 	 </jsp:include>
@@ -105,9 +105,18 @@
 			            
 			            <tr>
 			                <td style="font-size:13px;">
-                                
-                                    <span><b>Repository name :</b> </span> ${provider.name} <br>
-                            </td>
+						<table>
+						   <tr>
+						       <td class="label" valign="top">
+							   Repository name:
+						       </td>
+						       <td>
+							   ${provider.name}
+						       </td>
+						   </tr>
+					       </table>                                
+                                    
+                            		</td>
                             		
                             		
                             		<td rowspan="3">

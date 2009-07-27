@@ -16,15 +16,15 @@ DROP TABLE IF EXISTS servers;
 CREATE TABLE servers
 (
   server_id INT(11) NOT NULL AUTO_INCREMENT,
-  url VARCHAR(127) NOT NULL,
-  name VARCHAR(127) NOT NULL,
+  url VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL,
   type INT(11) NOT NULL,  
   port INT(11) NOT NULL,
-  username_attribute VARCHAR(127) NOT NULL,
-  start_location VARCHAR(127) NOT NULL,
-  institution VARCHAR(127),
-  forgot_password_url VARCHAR(127),
-  forgot_password_label VARCHAR(63),
+  username_attribute VARCHAR(255) NOT NULL,
+  start_location VARCHAR(255) NOT NULL,
+  institution VARCHAR(255),
+  forgot_password_url VARCHAR(255),
+  forgot_password_label VARCHAR(255),
   show_forgot_password_link BOOLEAN NOT NULL DEFAULT false,
 
   PRIMARY KEY(server_id)
@@ -111,7 +111,7 @@ CREATE TABLE providers
   last_oai_request VARCHAR(511),
   last_harvest_end_time DATETIME,
   last_log_reset DATETIME,
-  log_file_name VARCHAR(255) NOT NULL,
+  log_file_name VARCHAR(355) NOT NULL,
 
   PRIMARY KEY (provider_id )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -125,7 +125,7 @@ DROP TABLE IF EXISTS harvest_schedules;
 CREATE TABLE harvest_schedules
 (
   harvest_schedule_id INT(11) NOT NULL AUTO_INCREMENT,
-  schedule_name VARCHAR(127),
+  schedule_name VARCHAR(265),
   recurrence VARCHAR(127),
   provider_id INT(11) NOT NULL,
   start_date DATETIME,
@@ -133,7 +133,7 @@ CREATE TABLE harvest_schedules
   minute INT(11),
   day_of_week INT(11),
   hour INT(11),
-  notify_email VARCHAR(127),
+  notify_email VARCHAR(255),
   status VARCHAR(20),
   request TEXT,
 
@@ -419,10 +419,10 @@ DROP TABLE IF EXISTS services;
 CREATE TABLE services
 (
   service_id INT(11) NOT NULL AUTO_INCREMENT,
-  service_name VARCHAR(63) NOT NULL,
+  service_name VARCHAR(255) NOT NULL,
   service_jar VARCHAR(255) NOT NULL,
   service_configuration TEXT,
-  class_name VARCHAR(63),
+  class_name VARCHAR(155),
   port INT(11),
   warnings INT(11) NOT NULL DEFAULT 0,
   errors INT(11) NOT NULL DEFAULT 0,
@@ -625,7 +625,7 @@ DROP TABLE IF EXISTS groups;
 CREATE TABLE groups
 (
   group_id INT(11) NOT NULL AUTO_INCREMENT,
-  name VARCHAR(127) NOT NULL,
+  name VARCHAR(255) NOT NULL,
   description VARCHAR(1023),  
   
   PRIMARY KEY(group_id)
@@ -698,7 +698,7 @@ CREATE TABLE emailconfig
   server_address VARCHAR(255) NOT NULL,
   port_number INT(11) NOT NULL,
   from_address VARCHAR(255) NOT NULL,
-  password VARCHAR(255),
+  password VARCHAR(100),
   encrypted_connection VARCHAR(31), 
   timeout INT(11),
   forgotten_password_link BOOL,

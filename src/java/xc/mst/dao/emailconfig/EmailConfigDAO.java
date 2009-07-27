@@ -130,7 +130,7 @@ public abstract class EmailConfigDAO
 			if(emailconfig.getFromAddress() == null || emailconfig.getFromAddress().length() <= 0 || emailconfig.getFromAddress().length() > 255)
 				errorMessage.append("The from address is invalid. ");
 
-			if(emailconfig.getPassword() != null && emailconfig.getPassword().length() > 255)
+			if(emailconfig.getPassword() != null && emailconfig.getPassword().length() > 100)
 				errorMessage.append("The password is invalid. ");
 
 			if(emailconfig.getEncryptedConnection() != null && emailconfig.getEncryptedConnection().length() > 31)

@@ -99,7 +99,7 @@
                                       
                         <tr>
                             <td valign="top"> <B>Port</B> &nbsp;&nbsp;<br>
-                            <input type="text" id="port" name ="port" class="textfield" value="${server.port}" maxlength="255" size="40"><br><br></td>
+                            <input type="text" id="port" name ="port" class="textfield" value="${server.port}" maxlength="11" size="40"><br><br></td>
                         </tr>
 
                         <tr>

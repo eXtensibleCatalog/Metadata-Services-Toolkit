@@ -278,10 +278,10 @@ public abstract class HarvestScheduleDAO
 			if(schedule.getProvider() == null)
 				errorMessage.append("The provider is invalid. ");
 
-			if(schedule.getNotifyEmail() != null && schedule.getNotifyEmail().length() > 127)
+			if(schedule.getNotifyEmail() != null && schedule.getNotifyEmail().length() > 255)
 				errorMessage.append("The notify_email is invalid. ");
 
-			if(schedule.getScheduleName() != null && schedule.getScheduleName().length() > 127)
+			if(schedule.getScheduleName() != null && schedule.getScheduleName().length() > 265)
 				errorMessage.append("The schedule_name is invalid. ");
 
 			if(schedule.getRecurrence() != null && schedule.getRecurrence().length() > 127)

@@ -103,12 +103,12 @@
 
                        <tr>
                            <td><B>Password </B>&nbsp;&nbsp;<br>
-                           <input type="text" id="password" name ="password" class="textfield" value="${emailConfig.password}" maxlength="255" size="45"><br><br></td>
+                           <input type="text" id="password" name ="password" class="textfield" value="${emailConfig.password}" maxlength="100" size="45"><br><br></td>
                        </tr>
 
                        <tr>
                            <td><B> Port Number </B>&nbsp;&nbsp;<br>
-                           <input type="text" id="port" name ="port" class="textfield" value="${emailConfig.portNumber}" maxlength="255" size="45"><br><br></td>
+                           <input type="text" id="port" name ="port" class="textfield" value="${emailConfig.portNumber}" maxlength="11" size="45"><br><br></td>
                        </tr>
 
                        <tr>
@@ -142,7 +142,7 @@
 
                         <tr>
                             <td> <B>Timeout </B>&nbsp;&nbsp; <br>
-                            <input type="text" id="timeout" name ="timeout" class="textfield" value="${emailConfig.timeout}" maxlength="255" size="45"><br><br></td>
+                            <input type="text" id="timeout" name ="timeout" class="textfield" value="${emailConfig.timeout}" maxlength="11" size="45"><br><br></td>
                         </tr>
 
                        

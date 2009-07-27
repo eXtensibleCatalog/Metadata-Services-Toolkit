@@ -154,7 +154,7 @@ public abstract class GroupDAO
 			if(log.isDebugEnabled())
 				log.debug("Checking the non-ID fields");
 
-			if(group.getName() == null || group.getName().length() <= 0 || group.getName().length() > 127)
+			if(group.getName() == null || group.getName().length() <= 0 || group.getName().length() > 255)
 				errorMessage.append("The name is invalid. ");
 
 			if(group.getDescription() != null && group.getDescription().length() > 1023)
