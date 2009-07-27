@@ -299,36 +299,15 @@
 		<zip destfile="dist/MetadataServicesToolkitv1.0.zip"  basedir="dist" />
 
 		<!-- Create the Normalization Services zip archive -->
-		<dirset dir="MST-instances/MetadataServicesToolkit/services/Normalization" >
-			<include name="services/**"/>
-			<exclude name="services"/>
-			<exclude name="services/**/serviceConfig"/>
-			<exclude name="services/**/serviceErrors"/>
-			<exclude name="services/**/serviceJar"/>
-		</dirset>
-		<zip destfile="Normalizationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit/services/Normalization" /> 
+		<zip destfile="Normalizationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Normalization/**"/> 
 		<move file="Normalizationv1.0.zip" todir="dist" />
 		
 		<!-- Create the Transformation Services zip archive -->
-		<dirset dir="MST-instances/MetadataServicesToolkit/services/Transformation" >
-			<include name="services/**"/>
-			<exclude name="services"/>
-			<exclude name="services/**/serviceConfig"/>
-			<exclude name="services/**/serviceErrors"/>
-			<exclude name="services/**/serviceJar"/>
-		</dirset>
-		<zip destfile="Transformationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit/services/Transformation" /> 
+		<zip destfile="Transformationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Transformation/**" /> 
 		<move file="Transformationv1.0.zip" todir="dist" />
 
 		<!-- Create the Aggregation Services zip archive -->
-		<dirset dir="MST-instances/MetadataServicesToolkit/services/Aggregation" >
-			<include name="services/**"/>
-			<exclude name="services"/>
-			<exclude name="services/**/serviceConfig"/>
-			<exclude name="services/**/serviceErrors"/>
-			<exclude name="services/**/serviceJar"/>
-		</dirset>
-		<zip destfile="Aggregationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit/services/Aggregation" /> 
+		<zip destfile="Aggregationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Aggregation/**" /> 
 		<move file="Aggregationv1.0.zip" todir="dist" />
 			
 		<delete dir="dist/MST-instances" />
