@@ -207,7 +207,6 @@ public class MySqlConnectionManager
 	 */
 	public boolean isClosed(PreparedStatement statement)
 	{
-		boolean test = closedPreparedStatements.contains(statement);
 		return closedPreparedStatements.contains(statement);
 	}
 	
@@ -237,15 +236,17 @@ public class MySqlConnectionManager
 	 * Creates and registers a PreparedStatement based on the SQL query.
 	 * 
 	 * @param sql The SQL for the PreparedStatement to create
+	 * @param replaces The PreparedStatement Object that is being replaced, or null if nothing is replaced
 	 * @return The PreparedStatement for the passed sql string
 	 * @throws SQLException If the query could not be created
 	 */
-	public PreparedStatement prepareStatement(String sql) throws SQLException
+	public PreparedStatement prepareStatement(String sql, PreparedStatement replaces) throws SQLException
 	{
 		try
 		{
 			PreparedStatement result = dbConnection.prepareStatement(sql);
 			registerStatement(result);
+			unregisterStatement(replaces);
 			return result;
 		}
 		catch(SQLException e)

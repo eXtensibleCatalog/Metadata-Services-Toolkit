@@ -78,8 +78,6 @@ public class DefaultProviderFormatUtilDAO extends ProviderFormatUtilDAO
 				// If the PreparedStatement to insert a provider to Top Level Tab is not defined, create it
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + FORMATS_TO_PROVIDERS_TABLE_NAME +
 					                                    " (" + COL_PROVIDER_ID + ", " +
@@ -91,7 +89,7 @@ public class DefaultProviderFormatUtilDAO extends ProviderFormatUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -130,8 +128,6 @@ public class DefaultProviderFormatUtilDAO extends ProviderFormatUtilDAO
 				// If the PreparedStatement to insert a provider to format is not defined, create it
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
-					dbConnectionManager.unregisterStatement(psDelete);
-					
 					// SQL to insert the new row
 					String deleteSql = "DELETE FROM " + FORMATS_TO_PROVIDERS_TABLE_NAME +
 	            		    		   "WHERE " + COL_PROVIDER_ID + "=? " +
@@ -142,7 +138,7 @@ public class DefaultProviderFormatUtilDAO extends ProviderFormatUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
 				} // end if (delete prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -184,8 +180,6 @@ public class DefaultProviderFormatUtilDAO extends ProviderFormatUtilDAO
 				// If the PreparedStatement to get formats by provider ID wasn't defined, create it
 				if(psGetFormatsForProvider == null || dbConnectionManager.isClosed(psGetFormatsForProvider))
 				{
-					dbConnectionManager.unregisterStatement(psGetFormatsForProvider);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_FORMAT_ID + " " +
 	                                   "FROM " + FORMATS_TO_PROVIDERS_TABLE_NAME + " " +
@@ -196,7 +190,7 @@ public class DefaultProviderFormatUtilDAO extends ProviderFormatUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetFormatsForProvider = dbConnectionManager.prepareStatement(selectSql);
+					psGetFormatsForProvider = dbConnectionManager.prepareStatement(selectSql, psGetFormatsForProvider);
 				} // end if(get formats for provider PreparedStatement not defined)
 
 				// Set the parameters on the select statement
@@ -242,8 +236,6 @@ public class DefaultProviderFormatUtilDAO extends ProviderFormatUtilDAO
 				// If the PreparedStatement to delete formats by provider ID wasn't defined, create it
 				if(psDeleteFormatForProvider == null || dbConnectionManager.isClosed(psDeleteFormatForProvider))
 				{
-					dbConnectionManager.unregisterStatement(psDeleteFormatForProvider);
-					
 					// SQL to get the rows
 					String selectSql = "DELETE FROM " + FORMATS_TO_PROVIDERS_TABLE_NAME + " " +
 		    		                   "WHERE " + COL_PROVIDER_ID + "=? ";
@@ -253,7 +245,7 @@ public class DefaultProviderFormatUtilDAO extends ProviderFormatUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDeleteFormatForProvider = dbConnectionManager.prepareStatement(selectSql);
+					psDeleteFormatForProvider = dbConnectionManager.prepareStatement(selectSql, psDeleteFormatForProvider);
 				} // end if(delete formats for provider PreparedStatement not defined)
 
 				// Set the parameters on the select statement

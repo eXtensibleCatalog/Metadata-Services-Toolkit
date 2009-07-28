@@ -77,8 +77,6 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 				// If the PreparedStatement to add an output set to a service is not defined, create it
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + SERVICES_TO_OUTPUT_SETS_TABLE_NAME +
 					                                    " (" + COL_SERVICE_ID + ", " +
@@ -90,7 +88,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -129,8 +127,6 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 				// If the PreparedStatement to remove an output set from a service is not defined, create it
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
-					dbConnectionManager.unregisterStatement(psDelete);
-					
 					// SQL to insert the new row
 					String deleteSql = "DELETE FROM " + SERVICES_TO_OUTPUT_SETS_TABLE_NAME + " " +
 	            		    		   "WHERE " + COL_SERVICE_ID + "=? " +
@@ -141,7 +137,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -183,8 +179,6 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 				// If the PreparedStatement to get output set IDs by service ID wasn't defined, create it
 				if(psGetOutputSetsForService == null || dbConnectionManager.isClosed(psGetOutputSetsForService))
 				{
-					dbConnectionManager.unregisterStatement(psGetOutputSetsForService);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SET_ID + " " +
 	                                   "FROM " + SERVICES_TO_OUTPUT_SETS_TABLE_NAME + " " +
@@ -195,7 +189,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetOutputSetsForService = dbConnectionManager.prepareStatement(selectSql);
+					psGetOutputSetsForService = dbConnectionManager.prepareStatement(selectSql, psGetOutputSetsForService);
 				}
 
 				// Set the parameters on the select statement
@@ -241,8 +235,6 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 				// If the PreparedStatement to delete output set assignments by service ID wasn't defined, create it
 				if(psDeleteOutputSetsForService == null || dbConnectionManager.isClosed(psDeleteOutputSetsForService))
 				{
-					dbConnectionManager.unregisterStatement(psDeleteOutputSetsForService);
-					
 					// SQL to get the rows
 					String selectSql = "DELETE FROM " + SERVICES_TO_OUTPUT_SETS_TABLE_NAME + " " +
 		    		                   "WHERE " + COL_SERVICE_ID + "=? ";
@@ -252,7 +244,7 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDeleteOutputSetsForService = dbConnectionManager.prepareStatement(selectSql);
+					psDeleteOutputSetsForService = dbConnectionManager.prepareStatement(selectSql, psDeleteOutputSetsForService);
 				}
 
 				// Set the parameters on the select statement

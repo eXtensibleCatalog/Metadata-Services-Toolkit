@@ -133,8 +133,6 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 				// If the PreparedStatement to get all harvest schedule steps was not already defined, create it
 				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
-					dbConnectionManager.unregisterStatement(psGetAll);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_STEP_ID + ", " +
 				                                   COL_HARVEST_SCHEDULE_ID + ", " +
@@ -148,7 +146,7 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnectionManager.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql, psGetAll);
 				} // end if(get all PreparedStatement not defined)
 
 				// Get the result of the SELECT statement
@@ -211,8 +209,6 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 				// Create the PreparedStatement to get a harvest schedule step by ID if it was not already created
 				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
-					dbConnectionManager.unregisterStatement(psGetById);
-					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_STEP_ID + ", " +
 				                                   COL_HARVEST_SCHEDULE_ID + ", " +
@@ -227,7 +223,7 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnectionManager.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql, psGetById);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the SELECT statement
@@ -299,8 +295,6 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 				// If the PreparedStatement to get all harvest schedule steps was not already defined, create it
 				if(psGetByHarvestScheduleId == null || dbConnectionManager.isClosed(psGetByHarvestScheduleId))
 				{
-					dbConnectionManager.unregisterStatement(psGetByHarvestScheduleId);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_HARVEST_SCHEDULE_STEP_ID + ", " +
 				                                   COL_HARVEST_SCHEDULE_ID + ", " +
@@ -315,7 +309,7 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByHarvestScheduleId = dbConnectionManager.prepareStatement(selectSql);
+					psGetByHarvestScheduleId = dbConnectionManager.prepareStatement(selectSql, psGetByHarvestScheduleId);
 				} // end if(get by harvest schedule ID PreparedStatement not defined)
 
 				// Set the parameters on the PreparedStatement
@@ -394,8 +388,6 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 				// If the PreparedStatement to insert a harvest schedule step was not defined, create it
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + HARVEST_SCHEDULE_STEP_TABLE_NAME + " (" + COL_HARVEST_SCHEDULE_ID + ", " +
 				                                                            COL_FORMAT_ID + ", " +
@@ -408,7 +400,7 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -473,8 +465,6 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 			{
 				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
-					dbConnectionManager.unregisterStatement(psUpdate);
-					
 					// SQL to update new row
 					String updateSql = "UPDATE " + HARVEST_SCHEDULE_STEP_TABLE_NAME + " SET " + COL_HARVEST_SCHEDULE_ID + "=?, " +
 				                                                          COL_FORMAT_ID + "=?, " +
@@ -487,7 +477,7 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnectionManager.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql, psUpdate);
 				} // end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -528,8 +518,6 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 			{
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
-					dbConnectionManager.unregisterStatement(psDelete);
-					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM "+ HARVEST_SCHEDULE_STEP_TABLE_NAME + " " +
 									   "WHERE " + COL_HARVEST_SCHEDULE_STEP_ID + " = ? ";
@@ -539,7 +527,7 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement
@@ -569,8 +557,6 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 			{
 				if(psDeleteStepsForSchedule == null || dbConnectionManager.isClosed(psDeleteStepsForSchedule))
 				{
-					dbConnectionManager.unregisterStatement(psDeleteStepsForSchedule);
-					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM "+ HARVEST_SCHEDULE_STEP_TABLE_NAME + " " +
 									   "WHERE " + COL_HARVEST_SCHEDULE_ID + " = ? ";
@@ -580,7 +566,7 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDeleteStepsForSchedule = dbConnectionManager.prepareStatement(deleteSql);
+					psDeleteStepsForSchedule = dbConnectionManager.prepareStatement(deleteSql, psDeleteStepsForSchedule);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement

@@ -87,8 +87,6 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
 				// If the PreparedStatement to insert a group to Top Level Tab is not defined, create it
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-						
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + GROUPS_TO_TOP_LEVEL_TABS_TABLE_NAME +
 					                                    " (" + COL_GROUP_ID + ", " +
@@ -100,7 +98,7 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -139,8 +137,6 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
 				// If the PreparedStatement to insert a group to Top Level Tab is not defined, create it
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
-					dbConnectionManager.unregisterStatement(psDelete);
-					
 					// SQL to insert the new row
 					String deleteSql = "DELETE FROM " + GROUPS_TO_TOP_LEVEL_TABS_TABLE_NAME +
 	            		    		   "WHERE " + COL_GROUP_ID + "=? " +
@@ -151,7 +147,7 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -193,8 +189,6 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
 				// If the PreparedStatement to get permissions by group ID wasn't defined, create it
 				if(psGetPermissionsForGroup == null || dbConnectionManager.isClosed(psGetPermissionsForGroup))
 				{
-					dbConnectionManager.unregisterStatement(psGetPermissionsForGroup);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_TOP_LEVEL_TAB_ID + " " +
 	                                   "FROM " + GROUPS_TO_TOP_LEVEL_TABS_TABLE_NAME + " " +
@@ -205,7 +199,7 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetPermissionsForGroup = dbConnectionManager.prepareStatement(selectSql);
+					psGetPermissionsForGroup = dbConnectionManager.prepareStatement(selectSql, psGetPermissionsForGroup);
 				}
 
 				// Set the parameters on the select statement
@@ -251,8 +245,6 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
 				// If the PreparedStatement to delete permissions by group ID wasn't defined, create it
 				if(psDeletePermissionsForGroup == null || dbConnectionManager.isClosed(psDeletePermissionsForGroup))
 				{
-					dbConnectionManager.unregisterStatement(psDeletePermissionsForGroup);
-					
 					// SQL to get the rows
 					String selectSql = "DELETE FROM " + GROUPS_TO_TOP_LEVEL_TABS_TABLE_NAME + " " +
 		    		                   "WHERE " + COL_GROUP_ID + "=? ";
@@ -262,7 +254,7 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDeletePermissionsForGroup = dbConnectionManager.prepareStatement(selectSql);
+					psDeletePermissionsForGroup = dbConnectionManager.prepareStatement(selectSql, psDeletePermissionsForGroup);
 				}
 
 				// Set the parameters on the select statement

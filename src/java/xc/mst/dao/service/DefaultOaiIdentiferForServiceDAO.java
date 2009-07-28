@@ -152,8 +152,6 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 				// If the PreparedStatement to get the next oai identifier by service ID wasn't defined, create it
 				if(psGetByServiceId == null || dbConnectionManager.isClosed(psGetByServiceId))
 				{
-					dbConnectionManager.unregisterStatement(psGetByServiceId);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_NEXT_OAI_ID + " " +
 	                                   "FROM " + OAI_IDENTIFIER_FOR_SERVICES_TABLE_NAME + " " +
@@ -164,7 +162,7 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByServiceId = dbConnectionManager.prepareStatement(selectSql);
+					psGetByServiceId = dbConnectionManager.prepareStatement(selectSql, psGetByServiceId);
 				} // end if(get by service ID PreparedStatement was null)
 
 				// Set the parameters on the select statement
@@ -233,8 +231,6 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 				// If the PreparedStatement to insert a oai identifier for service is not defined, create it
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + OAI_IDENTIFIER_FOR_SERVICES_TABLE_NAME +
 					                                                 " (" + COL_SERVICE_ID + ", " +
@@ -246,7 +242,7 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -291,8 +287,6 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 				// If the PreparedStatement to update the next oai identifier for a service was not defined, create it
 				if(psUpdate == null || psUpdate.isClosed())
 				{
-					dbConnectionManager.unregisterStatement(psUpdate);
-					
 					// SQL to update new row
 					String updateSql = "UPDATE " + OAI_IDENTIFIER_FOR_SERVICES_TABLE_NAME +
 													" SET " + COL_NEXT_OAI_ID + "=? " +
@@ -303,7 +297,7 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnectionManager.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql, psUpdate);
 				} // end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement

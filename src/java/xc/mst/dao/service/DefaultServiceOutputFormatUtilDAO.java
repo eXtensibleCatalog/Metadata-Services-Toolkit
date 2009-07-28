@@ -77,8 +77,6 @@ public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDA
 				// If the PreparedStatement to add an output format to a service is not defined, create it
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + SERVICES_TO_OUTPUT_FORMATS_TABLE_NAME +
 					                                    " (" + COL_SERVICE_ID + ", " +
@@ -90,7 +88,7 @@ public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDA
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -129,8 +127,6 @@ public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDA
 				// If the PreparedStatement to remove an output format from a service is not defined, create it
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
-					dbConnectionManager.unregisterStatement(psDelete);
-					
 					// SQL to insert the new row
 					String deleteSql = "DELETE FROM " + SERVICES_TO_OUTPUT_FORMATS_TABLE_NAME + " " +
 	            		    		   "WHERE " + COL_SERVICE_ID + "=? " +
@@ -141,7 +137,7 @@ public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDA
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -183,8 +179,6 @@ public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDA
 				// If the PreparedStatement to get output format IDs by service ID wasn't defined, create it
 				if(psGetOutputFormatsForService == null || dbConnectionManager.isClosed(psGetOutputFormatsForService))
 				{
-					dbConnectionManager.unregisterStatement(psGetOutputFormatsForService);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_FORMAT_ID + " " +
 	                                   "FROM " + SERVICES_TO_OUTPUT_FORMATS_TABLE_NAME + " " +
@@ -195,7 +189,7 @@ public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDA
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetOutputFormatsForService = dbConnectionManager.prepareStatement(selectSql);
+					psGetOutputFormatsForService = dbConnectionManager.prepareStatement(selectSql, psGetOutputFormatsForService);
 				}
 
 				// Set the parameters on the select statement
@@ -241,8 +235,6 @@ public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDA
 				// If the PreparedStatement to delete output format assignments by service ID wasn't defined, create it
 				if(psDeleteOutputFormatsForService == null || dbConnectionManager.isClosed(psDeleteOutputFormatsForService))
 				{
-					dbConnectionManager.unregisterStatement(psDeleteOutputFormatsForService);
-					
 					// SQL to get the rows
 					String selectSql = "DELETE FROM " + SERVICES_TO_OUTPUT_FORMATS_TABLE_NAME + " " +
 		    		                   "WHERE " + COL_SERVICE_ID + "=? ";
@@ -252,7 +244,7 @@ public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDA
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDeleteOutputFormatsForService = dbConnectionManager.prepareStatement(selectSql);
+					psDeleteOutputFormatsForService = dbConnectionManager.prepareStatement(selectSql, psDeleteOutputFormatsForService);
 				}
 
 				// Set the parameters on the select statement

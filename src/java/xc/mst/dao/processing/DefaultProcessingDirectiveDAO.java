@@ -160,8 +160,6 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// If the PreparedStatemnt to get all ProcessingDirectives was not defined, create it
 				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
-					dbConnectionManager.unregisterStatement(psGetAll);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROCESSING_DIRECTIVE_ID + ", " +
 					    						   COL_SOURCE_PROVIDER_ID + ", " +
@@ -176,7 +174,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnectionManager.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql, psGetAll);
 				} // end if(get all PreparedStatement not defined)
 
 				// Get the result of the SELECT statement
@@ -350,8 +348,6 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// If the PreparedStatemnt to get all ProcessingDirectives was not defined, create it
 				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
-					dbConnectionManager.unregisterStatement(psGetById);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROCESSING_DIRECTIVE_ID + ", " +
 					    						   COL_SOURCE_PROVIDER_ID + ", " +
@@ -367,7 +363,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnectionManager.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql, psGetById);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the get by ID prepared statement
@@ -444,8 +440,6 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// If the PreparedStatemnt to get all ProcessingDirectives was not defined, create it
 				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
-					dbConnectionManager.unregisterStatement(psGetById);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROCESSING_DIRECTIVE_ID + ", " +
 					    						   COL_SOURCE_PROVIDER_ID + ", " +
@@ -461,7 +455,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnectionManager.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql, psGetById);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the get by ID prepared statement
@@ -533,8 +527,6 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// If the PreparedStatemnt to get a ProcessingDirective by ID was not defined, create it
 				if(psGetBySourceProviderId == null || dbConnectionManager.isClosed(psGetBySourceProviderId))
 				{
-					dbConnectionManager.unregisterStatement(psGetBySourceProviderId);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROCESSING_DIRECTIVE_ID + ", " +
 					    						   COL_SOURCE_PROVIDER_ID + ", " +
@@ -550,7 +542,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetBySourceProviderId = dbConnectionManager.prepareStatement(selectSql);
+					psGetBySourceProviderId = dbConnectionManager.prepareStatement(selectSql, psGetBySourceProviderId);
 				} // end if(get by source provider ID PreparedStatement not defined)
 
 				// Set the parameters on the PreparedStatement
@@ -628,8 +620,6 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// If the PreparedStatemnt to get a ProcessingDirective by ID was not defined, create it
 				if(psGetBySourceServiceId == null || dbConnectionManager.isClosed(psGetBySourceServiceId))
 				{
-					dbConnectionManager.unregisterStatement(psGetBySourceServiceId);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_PROCESSING_DIRECTIVE_ID + ", " +
 					    						   COL_SOURCE_PROVIDER_ID + ", " +
@@ -645,7 +635,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetBySourceServiceId = dbConnectionManager.prepareStatement(selectSql);
+					psGetBySourceServiceId = dbConnectionManager.prepareStatement(selectSql, psGetBySourceServiceId);
 				} // end if(get by source service ID PreparedStatement not defined)
 
 				// Set the parameters on the PreparedStatement
@@ -723,8 +713,6 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// If the PreparedStatement to insert a processing directive is not defined, create it
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + PROCESSING_DIRECTIVE_TABLE_NAME + " (" + COL_SOURCE_PROVIDER_ID + ", " +
 	            	    													COL_SOURCE_SERVICE_ID + ", " +
@@ -738,7 +726,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -803,8 +791,6 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// If the PreparedStatement to update a processing directive was not defined, create it
 				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
-					dbConnectionManager.unregisterStatement(psUpdate);
-					
 					// SQL to update new row
 					String updateSql = "UPDATE " + PROCESSING_DIRECTIVE_TABLE_NAME + " SET " + COL_SOURCE_PROVIDER_ID + "=?, " +
 				                                                          COL_SOURCE_SERVICE_ID + "=?, " +
@@ -818,7 +804,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnectionManager.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql, psUpdate);
 				} // end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -878,8 +864,6 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				// If the PreparedStatement to delete a service to output format was not defined, create it
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
-					dbConnectionManager.unregisterStatement(psDelete);
-					
 					// Delete processing directive input set and format.(delete the reference first before deleting the processing directive)
 					inputFormatDao.deleteInputFormatsForProcessingDirective(processingDirective.getId());
 					inputSetDao.deleteInputSetsForProcessingDirective(processingDirective.getId());
@@ -893,7 +877,7 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement

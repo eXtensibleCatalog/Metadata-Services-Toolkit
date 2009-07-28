@@ -95,8 +95,6 @@ public class DefaultPermissionDAO extends PermissionDAO
 				// If the PreparedStatement to get a groups to Top Level Tab by ID wasn't defined, create it
 				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
-					dbConnectionManager.unregisterStatement(psGetAll);
-					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_TOP_LEVEL_TAB_ID + ", " +
 				                                   COL_TAB_NAME + ", " + COL_TAB_ORDER + " " +
@@ -107,7 +105,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnectionManager.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql, psGetAll);
 				} // end if (PreparedStatement to get permissions for a group is null)
 
 				// Get the result of the SELECT statement
@@ -171,8 +169,6 @@ public class DefaultPermissionDAO extends PermissionDAO
 				// If the PreparedStatement to get a groups to Top Level Tab by ID wasn't defined, create it
 				if(psGetPermissionsForGroup == null || dbConnectionManager.isClosed(psGetPermissionsForGroup))
 				{
-					dbConnectionManager.unregisterStatement(psGetPermissionsForGroup);
-					
 					// SQL to get the row
 					String selectSql = "SELECT " + TOP_LEVEL_TABS_TABLE_NAME + "." + COL_TOP_LEVEL_TAB_ID + ", " +
 				                                   COL_TAB_NAME + ", " + COL_TAB_ORDER + " " +
@@ -187,7 +183,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetPermissionsForGroup = dbConnectionManager.prepareStatement(selectSql);
+					psGetPermissionsForGroup = dbConnectionManager.prepareStatement(selectSql, psGetPermissionsForGroup);
 				} // end if (PreparedStatement to get permissions for a group is null)
 
 				// Set the parameters on the update statement
@@ -256,8 +252,6 @@ public class DefaultPermissionDAO extends PermissionDAO
 				// If the PreparedStatement to get a permission by ID doesn't exist, create it
 				if(psGetPermissionById == null || dbConnectionManager.isClosed(psGetPermissionById))
 				{
-					dbConnectionManager.unregisterStatement(psGetPermissionById);
-					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_TOP_LEVEL_TAB_ID + ", " +
 				                                   COL_TAB_NAME + ", " + COL_TAB_ORDER + " " +
@@ -269,7 +263,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetPermissionById = dbConnectionManager.prepareStatement(selectSql);
+					psGetPermissionById = dbConnectionManager.prepareStatement(selectSql, psGetPermissionById);
 				} // end if (PreparedStatement to get permission for an ID is null)
 
 				// Set the parameters on the update statement
@@ -332,8 +326,6 @@ public class DefaultPermissionDAO extends PermissionDAO
 				// If the PreparedStatement to get a permission by user ID doesn't exist, create it
 				if(psGetPermissionByUserId == null || dbConnectionManager.isClosed(psGetPermissionByUserId))
 				{
-					dbConnectionManager.unregisterStatement(psGetPermissionByUserId);
-					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_TOP_LEVEL_TAB_ID + ", " +
 				                                   COL_TAB_NAME + ", " + COL_TAB_ORDER + " " +
@@ -350,7 +342,7 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetPermissionByUserId = dbConnectionManager.prepareStatement(selectSql);
+					psGetPermissionByUserId = dbConnectionManager.prepareStatement(selectSql, psGetPermissionByUserId);
 				} // end if (PreparedStatement to get permission for an ID is null)
 
 				// Set the parameters on the update statement

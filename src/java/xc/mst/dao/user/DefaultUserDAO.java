@@ -186,8 +186,6 @@ public class DefaultUserDAO extends UserDAO
 				// If the PreparedStatement to get all users was not defined, create it
 				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
-					dbConnectionManager.unregisterStatement(psGetAll);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
@@ -206,7 +204,7 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnectionManager.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql, psGetAll);
 				} // end if(get all PreparedStatement not defined)
 			
 				// Get the results of the SELECT statement			
@@ -282,8 +280,6 @@ public class DefaultUserDAO extends UserDAO
 				// If the PreparedStatement to get users by group ID wasn't defined, create it
 				if(psLDAPUserCount == null || dbConnectionManager.isClosed(psLDAPUserCount))
 				{
-					dbConnectionManager.unregisterStatement(psLDAPUserCount);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT COUNT(" + COL_USER_ID + ") " +
 	                                   "FROM " + USERS_TABLE_NAME + " " +
@@ -294,7 +290,7 @@ public class DefaultUserDAO extends UserDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psLDAPUserCount = dbConnectionManager.prepareStatement(selectSql);
+					psLDAPUserCount = dbConnectionManager.prepareStatement(selectSql, psLDAPUserCount);
 				}
 
 				// Get the result of the SELECT statement
@@ -470,8 +466,6 @@ public class DefaultUserDAO extends UserDAO
 				// If the PreparedStatement to get a user by ID was not defined, create it
 				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
-					dbConnectionManager.unregisterStatement(psGetById);
-					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
@@ -491,7 +485,7 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnectionManager.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql, psGetById);
 				} // end if(get by ID PreparedStatement not defined)
 						
 				// Set the parameters on the select statement
@@ -567,8 +561,6 @@ public class DefaultUserDAO extends UserDAO
 				// If the PreparedStatement to get a user by user name was not defined, create it
 				if(psGetByUserName == null || dbConnectionManager.isClosed(psGetByUserName))
 				{
-					dbConnectionManager.unregisterStatement(psGetByUserName);
-					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
@@ -588,7 +580,7 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByUserName = dbConnectionManager.prepareStatement(selectSql);
+					psGetByUserName = dbConnectionManager.prepareStatement(selectSql, psGetByUserName);
 				} // end if(get by user name PreparedStatement not defined)
 						
 				// Set the parameters on the select statement
@@ -668,8 +660,6 @@ public class DefaultUserDAO extends UserDAO
 				// If the PreparedStatement to get a user by user name was not defined, create it
 				if(psGetByUserNameAndServer == null || dbConnectionManager.isClosed(psGetByUserNameAndServer))
 				{
-					dbConnectionManager.unregisterStatement(psGetByUserNameAndServer);
-					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
@@ -689,7 +679,7 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByUserNameAndServer = dbConnectionManager.prepareStatement(selectSql);
+					psGetByUserNameAndServer = dbConnectionManager.prepareStatement(selectSql, psGetByUserNameAndServer);
 				} // end if(get by user name PreparedStatement not defined)
 						
 				// Set the parameters on the select statement
@@ -770,8 +760,6 @@ public class DefaultUserDAO extends UserDAO
 				// If the PreparedStatement to get a user by email was not defined, create it
 				if(psGetByEmail == null || dbConnectionManager.isClosed(psGetByEmail))
 				{
-					dbConnectionManager.unregisterStatement(psGetByEmail);
-					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_USER_ID + ", " +
 				                                   COL_USERNAME + ", " +
@@ -791,7 +779,7 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByEmail = dbConnectionManager.prepareStatement(selectSql);
+					psGetByEmail = dbConnectionManager.prepareStatement(selectSql, psGetByEmail);
 				} // end if(get by email PreparedStatement not defined)
 						
 				// Set the parameters on the select statement
@@ -875,8 +863,6 @@ public class DefaultUserDAO extends UserDAO
 				// If the PreparedStatement to insert a user was not defined, create it
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + USERS_TABLE_NAME + " (" + COL_USERNAME + ", " +
 					                                                        COL_FIRST_NAME + ", " +
@@ -894,7 +880,7 @@ public class DefaultUserDAO extends UserDAO
 								
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				}
 				
 				// Set the parameters on the insert statement
@@ -973,8 +959,6 @@ public class DefaultUserDAO extends UserDAO
 				// If the PreparedStatement to update a user was not defined, create it
 				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
-					dbConnectionManager.unregisterStatement(psUpdate);
-					
 					// SQL to update new row
 					String updateSql = "UPDATE " + USERS_TABLE_NAME + " SET " + COL_USERNAME + "=?, " +
 																		  COL_FIRST_NAME + "=?, " +
@@ -992,7 +976,7 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnectionManager.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql, psUpdate);
 				} // end if(update PreparedStatement not defined)
 					
 				// Set the parameters on the update statement
@@ -1063,8 +1047,6 @@ public class DefaultUserDAO extends UserDAO
 				// If the PreparedStatement to delete a user was not defined, create it
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
-					dbConnectionManager.unregisterStatement(psDelete);
-					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM " + USERS_TABLE_NAME + " " +
 									   "WHERE " + COL_USER_ID + " = ? ";
@@ -1074,7 +1056,7 @@ public class DefaultUserDAO extends UserDAO
 				
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
 				} // end if(delete PreparedStatement not defined)
 				
 				// Set the parameters on the delete statement

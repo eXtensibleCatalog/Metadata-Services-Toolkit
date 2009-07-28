@@ -113,8 +113,6 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 				// If the PreparedStatement to add a user to a group is not defined, create it
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + USERS_TO_GROUPS_TABLE_NAME +
 					                                    " (" + COL_USER_ID + ", " +
@@ -126,7 +124,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -165,8 +163,6 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 				// If the PreparedStatement to remove a user from a group is not defined, create it
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
-					dbConnectionManager.unregisterStatement(psDelete);
-					
 					// SQL to insert the new row
 					String deleteSql = "DELETE FROM " + USERS_TO_GROUPS_TABLE_NAME + " " +
 	            		    		   "WHERE " + COL_USER_ID + "=? " +
@@ -177,7 +173,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -219,8 +215,6 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 				// If the PreparedStatement to get groups by user ID wasn't defined, create it
 				if(psGetGroupsForUser == null || dbConnectionManager.isClosed(psGetGroupsForUser))
 				{
-					dbConnectionManager.unregisterStatement(psGetGroupsForUser);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_GROUP_ID + " " +
 	                                   "FROM " + USERS_TO_GROUPS_TABLE_NAME + " " +
@@ -231,7 +225,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetGroupsForUser = dbConnectionManager.prepareStatement(selectSql);
+					psGetGroupsForUser = dbConnectionManager.prepareStatement(selectSql, psGetGroupsForUser);
 				}
 
 				// Set the parameters on the select statement
@@ -277,8 +271,6 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 				// If the PreparedStatement to delete groups by user ID wasn't defined, create it
 				if(psDeleteGroupForUser == null || dbConnectionManager.isClosed(psDeleteGroupForUser))
 				{
-					dbConnectionManager.unregisterStatement(psDeleteGroupForUser);
-					
 					// SQL to get the rows
 					String selectSql = "DELETE FROM " + USERS_TO_GROUPS_TABLE_NAME + " " +
 		    		                   "WHERE " + COL_USER_ID + "=? ";
@@ -288,7 +280,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDeleteGroupForUser = dbConnectionManager.prepareStatement(selectSql);
+					psDeleteGroupForUser = dbConnectionManager.prepareStatement(selectSql, psDeleteGroupForUser);
 				}
 
 				// Set the parameters on the select statement
@@ -333,8 +325,6 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 				// If the PreparedStatement to get users by group ID wasn't defined, create it
 				if(psGetUsersForGroup == null || dbConnectionManager.isClosed(psGetUsersForGroup))
 				{
-					dbConnectionManager.unregisterStatement(psGetUsersForGroup);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_USER_ID + " " +
 	                                   "FROM " + USERS_TO_GROUPS_TABLE_NAME + " " +
@@ -345,7 +335,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetUsersForGroup = dbConnectionManager.prepareStatement(selectSql);
+					psGetUsersForGroup = dbConnectionManager.prepareStatement(selectSql, psGetUsersForGroup);
 				}
 
 				// Set the parameters on the select statement
@@ -401,8 +391,6 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 				// If the PreparedStatement to get users by group ID wasn't defined, create it
 				if(psGetUserCountForGroup == null || dbConnectionManager.isClosed(psGetUserCountForGroup))
 				{
-					dbConnectionManager.unregisterStatement(psGetUserCountForGroup);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT COUNT(" + COL_USER_ID + ") " +
 	                                   "FROM " + USERS_TO_GROUPS_TABLE_NAME + " " +
@@ -413,7 +401,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetUserCountForGroup = dbConnectionManager.prepareStatement(selectSql);
+					psGetUserCountForGroup = dbConnectionManager.prepareStatement(selectSql, psGetUserCountForGroup);
 				}
 
 				// Set the parameters on the select statement
@@ -482,7 +470,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetUsersForGroupSorted = dbConnectionManager.prepareStatement(selectSql);
+					psGetUsersForGroupSorted = dbConnectionManager.prepareStatement(selectSql, null);
 
 				// Set the parameters on the select statement
 				psGetUsersForGroupSorted.setInt(1, groupId);

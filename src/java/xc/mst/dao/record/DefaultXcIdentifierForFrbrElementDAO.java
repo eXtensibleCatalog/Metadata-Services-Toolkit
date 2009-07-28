@@ -152,8 +152,6 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 				// If the PreparedStatement to get the next XC identifier by FRBR level element ID wasn't defined, create it
 				if(psGetByElementId == null || dbConnectionManager.isClosed(psGetByElementId))
 				{
-					dbConnectionManager.unregisterStatement(psGetByElementId);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_NEXT_XC_ID + " " +
 	                                   "FROM " + XC_ID_FOR_FRBR_ELEMENTS_TABLE_NAME + " " +
@@ -164,7 +162,7 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByElementId = dbConnectionManager.prepareStatement(selectSql);
+					psGetByElementId = dbConnectionManager.prepareStatement(selectSql, psGetByElementId);
 				} // end if(get by service ID PreparedStatement was null)
 
 				// Set the parameters on the select statement
@@ -233,8 +231,6 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 				// If the PreparedStatement to insert a XC identifier for FRBR level is not defined, create it
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + XC_ID_FOR_FRBR_ELEMENTS_TABLE_NAME +
 					                                                 " (" + COL_ELEMENT_ID + ", " +
@@ -246,7 +242,7 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -291,8 +287,6 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 				// If the PreparedStatement to update the next XC identifier for a FRBR level was not defined, create it
 				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
-					dbConnectionManager.unregisterStatement(psUpdate);
-					
 					// SQL to update new row
 					String updateSql = "UPDATE " + XC_ID_FOR_FRBR_ELEMENTS_TABLE_NAME +
 													" SET " + COL_NEXT_XC_ID + "=? " +
@@ -303,7 +297,7 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnectionManager.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql, psUpdate);
 				} // end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement

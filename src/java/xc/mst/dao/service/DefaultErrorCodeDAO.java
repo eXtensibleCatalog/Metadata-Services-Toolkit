@@ -110,8 +110,6 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 				// Create the PreparedStatment to get all error codes if it hasn't already been created
 				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
-					dbConnectionManager.unregisterStatement(psGetAll);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_ERROR_CODE_ID + ", " +
 												   COL_ERROR_CODE + ", " +
@@ -124,7 +122,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnectionManager.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql, psGetAll);
 				} // end if(get all PreparedStatement not defined)
 
 				// Get the result of the SELECT statement
@@ -186,8 +184,6 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 				// Create the PreparedStatment to get all error codes if it hasn't already been created
 				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
-					dbConnectionManager.unregisterStatement(psGetById);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_ERROR_CODE_ID + ", " +
 												   COL_ERROR_CODE + ", " +
@@ -201,7 +197,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnectionManager.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql, psGetById);
 				} // end if(get all PreparedStatement not defined)
 
 				// Set the parameters on the SELECT statement
@@ -269,8 +265,6 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 				// Create the PreparedStatment to get all error codes if it hasn't already been created
 				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
-					dbConnectionManager.unregisterStatement(psGetById);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_ERROR_CODE_ID + ", " +
 												   COL_ERROR_CODE + ", " +
@@ -284,7 +278,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnectionManager.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql, psGetById);
 				} // end if(get all PreparedStatement not defined)
 
 				// Set the parameters on the SELECT statement
@@ -351,8 +345,6 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 				// Create the PreparedStatment to get all error codes if it hasn't already been created
 				if(psGetByNameAndService == null || dbConnectionManager.isClosed(psGetByNameAndService))
 				{
-					dbConnectionManager.unregisterStatement(psGetByNameAndService);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_ERROR_CODE_ID + ", " +
 												   COL_ERROR_CODE + ", " +
@@ -367,7 +359,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetByNameAndService = dbConnectionManager.prepareStatement(selectSql);
+					psGetByNameAndService = dbConnectionManager.prepareStatement(selectSql, psGetByNameAndService);
 				} // end if(get all PreparedStatement not defined)
 
 				// Set the parameters on the SELECT statement
@@ -439,8 +431,6 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 				// Build the PreparedStatement to insert a service if it wasn't already created
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + ERROR_CODES_TABLE_NAME + " (" + COL_ERROR_CODE + ", " +
 	            	      													            COL_ERROR_DESCRIPTION_FILE + ", " +
@@ -452,7 +442,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if(insert PreparedStatement not defined)
 
 				// Set the parameters on the insert statement
@@ -507,8 +497,6 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 				// Create a PreparedStatement to update a service if it wasn't already created
 				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
-					dbConnectionManager.unregisterStatement(psUpdate);
-					
 					// SQL to update new row
 					String updateSql = "UPDATE " + ERROR_CODES_TABLE_NAME + " SET " + COL_ERROR_CODE + "=?, " +
 				                                                          COL_ERROR_DESCRIPTION_FILE + "=?, " +
@@ -520,7 +508,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnectionManager.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql, psUpdate);
 				} // end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -561,8 +549,6 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 				// Create the PreparedStatement to delete a error code if it wasn't already defined
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
-					dbConnectionManager.unregisterStatement(psDelete);
-					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM " + ERROR_CODES_TABLE_NAME + " " +
 		                               "WHERE " + COL_ERROR_CODE_ID + " = ? ";
@@ -572,7 +558,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement

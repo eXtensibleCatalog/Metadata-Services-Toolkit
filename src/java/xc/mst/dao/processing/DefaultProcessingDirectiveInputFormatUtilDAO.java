@@ -82,8 +82,6 @@ public class DefaultProcessingDirectiveInputFormatUtilDAO extends ProcessingDire
 				// If the PreparedStatement to add an input format to a processing directive is not defined, create it
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + PROCESSING_DIRECTIVES_TO_INPUT_FORMATS_TABLE_NAME +
 					                                    " (" + COL_PROCESSING_DIRECTIVE_ID + ", " +
@@ -95,7 +93,7 @@ public class DefaultProcessingDirectiveInputFormatUtilDAO extends ProcessingDire
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if (insert prepared statement is null)
 
 				// Format the parameters on the insert statement
@@ -134,8 +132,6 @@ public class DefaultProcessingDirectiveInputFormatUtilDAO extends ProcessingDire
 				// If the PreparedStatement to delete an input format for a processing directive is not defined, create it
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
-					dbConnectionManager.unregisterStatement(psDelete);
-					
 					// SQL to insert the new row
 					String deleteSql = "DELETE FROM " + PROCESSING_DIRECTIVES_TO_INPUT_FORMATS_TABLE_NAME + " " +
 	            		    		   "WHERE " + COL_PROCESSING_DIRECTIVE_ID + "=? " +
@@ -146,7 +142,7 @@ public class DefaultProcessingDirectiveInputFormatUtilDAO extends ProcessingDire
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
 				} // end if (insert prepared statement is null)
 
 				// Format the parameters on the insert statement
@@ -188,8 +184,6 @@ public class DefaultProcessingDirectiveInputFormatUtilDAO extends ProcessingDire
 				// If the PreparedStatement to get input formats by processing directive ID wasn't defined, create it
 				if(psGetInputFormatsForProcessingDirective == null || dbConnectionManager.isClosed(psGetInputFormatsForProcessingDirective))
 				{
-					dbConnectionManager.unregisterStatement(psGetInputFormatsForProcessingDirective);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_FORMAT_ID + " " +
 	                                   "FROM " + PROCESSING_DIRECTIVES_TO_INPUT_FORMATS_TABLE_NAME + " " +
@@ -200,7 +194,7 @@ public class DefaultProcessingDirectiveInputFormatUtilDAO extends ProcessingDire
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetInputFormatsForProcessingDirective = dbConnectionManager.prepareStatement(selectSql);
+					psGetInputFormatsForProcessingDirective = dbConnectionManager.prepareStatement(selectSql, psGetInputFormatsForProcessingDirective);
 				}
 
 				// Format the parameters on the select statement
@@ -246,8 +240,6 @@ public class DefaultProcessingDirectiveInputFormatUtilDAO extends ProcessingDire
 				// If the PreparedStatement to delete input formats by processing directive ID wasn't defined, create it
 				if(psDeleteInputFormatsForProcessingDirective == null || dbConnectionManager.isClosed(psDeleteInputFormatsForProcessingDirective))
 				{
-					dbConnectionManager.unregisterStatement(psDeleteInputFormatsForProcessingDirective);
-					
 					// SQL to get the rows
 					String selectSql = "DELETE FROM " + PROCESSING_DIRECTIVES_TO_INPUT_FORMATS_TABLE_NAME + " " +
 		    		                   "WHERE " + COL_PROCESSING_DIRECTIVE_ID + "=? ";
@@ -257,7 +249,7 @@ public class DefaultProcessingDirectiveInputFormatUtilDAO extends ProcessingDire
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDeleteInputFormatsForProcessingDirective = dbConnectionManager.prepareStatement(selectSql);
+					psDeleteInputFormatsForProcessingDirective = dbConnectionManager.prepareStatement(selectSql, psDeleteInputFormatsForProcessingDirective);
 				}
 
 				// Format the parameters on the select statement

@@ -100,8 +100,6 @@ public class DefaultLogDAO extends LogDAO
 				// If the PreparedStatement to get all logs was not defined, create it
 				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
 				{
-					dbConnectionManager.unregisterStatement(psGetAll);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_LOG_ID + ", " +
 												   COL_WARNINGS + ", " +
@@ -116,7 +114,7 @@ public class DefaultLogDAO extends LogDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnectionManager.prepareStatement(selectSql);
+					psGetAll = dbConnectionManager.prepareStatement(selectSql, psGetAll);
 				} // end if(get all PreparedStatement not defined)
 
 				// Get the result of the SELECT statement
@@ -275,8 +273,6 @@ public class DefaultLogDAO extends LogDAO
 				// If the PreparedStatement to get a log by ID was not defined, create it
 				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
 				{
-					dbConnectionManager.unregisterStatement(psGetById);
-					
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_LOG_ID + ", " +
 					                               COL_WARNINGS + ", " +
@@ -292,7 +288,7 @@ public class DefaultLogDAO extends LogDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnectionManager.prepareStatement(selectSql);
+					psGetById = dbConnectionManager.prepareStatement(selectSql, psGetById);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -365,8 +361,6 @@ public class DefaultLogDAO extends LogDAO
 					// Create the PreparedStatement to insert a log if it hasn't already been defined
 					if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 					{
-						dbConnectionManager.unregisterStatement(psInsert);
-						
 						// SQL to insert the new row
 						String insertSql = "INSERT INTO " + LOGS_TABLE_NAME + " (" + COL_WARNINGS + ", " +
 		            	    													     COL_ERRORS + ", " +
@@ -380,7 +374,7 @@ public class DefaultLogDAO extends LogDAO
 
 						// A prepared statement to run the insert SQL
 						// This should sanitize the SQL and prevent SQL injection
-						psInsert = dbConnectionManager.prepareStatement(insertSql);
+						psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 					} // end if(insert PreparedStatement not defined)
 
 					// Set the parameters on the insert statement
@@ -437,8 +431,6 @@ public class DefaultLogDAO extends LogDAO
 				// If the PreparedStatement to update a log has not been created, create it
 				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
-					dbConnectionManager.unregisterStatement(psUpdate);
-					
 					// SQL to update new row
 					String updateSql = "UPDATE " + LOGS_TABLE_NAME + " SET " + COL_WARNINGS + "=?, " +
 				                                                               COL_ERRORS + "=?, " +
@@ -452,7 +444,7 @@ public class DefaultLogDAO extends LogDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnectionManager.prepareStatement(updateSql);
+					psUpdate = dbConnectionManager.prepareStatement(updateSql, psUpdate);
 				} // end if(update PreparedStatement is not defined)
 
 				// Set the parameters on the update statement
@@ -495,8 +487,6 @@ public class DefaultLogDAO extends LogDAO
 				// If the PreparedStatement to delete a log was not defined, create it
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
-					dbConnectionManager.unregisterStatement(psDelete);
-					
 					// SQL to delete the row from the table
 					String deleteSql = "DELETE FROM "+ LOGS_TABLE_NAME + " " +
 		                               "WHERE " + COL_LOG_ID + " = ? ";
@@ -506,7 +496,7 @@ public class DefaultLogDAO extends LogDAO
 
 					// A prepared statement to run the delete SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
 				} // end if(delete PreparedStatement not defined)
 
 				// Set the parameters on the delete statement

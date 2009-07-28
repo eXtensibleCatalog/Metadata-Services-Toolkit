@@ -64,7 +64,6 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 				// If the PreparedStatement to get the email configuration was not defined, create it
 				if(psGetConfiguration == null || dbConnectionManager.isClosed(psGetConfiguration))
 				{
-					dbConnectionManager.unregisterStatement(psGetConfiguration);
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_EMAIL_CONFIG_ID + ", " +
 					                               COL_EMAIL_SERVER_ADDRESS + ", " +
@@ -81,7 +80,7 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetConfiguration = dbConnectionManager.prepareStatement(selectSql);
+					psGetConfiguration = dbConnectionManager.prepareStatement(selectSql, psGetConfiguration);
 				} // end if(get configuration PreparedStatement not defined)
 
 				// Get the result of the SELECT statement
@@ -150,8 +149,6 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 				// If the PreparedStatement to update the email configuration was not defined, create it
 				if(psSetConfiguration == null || dbConnectionManager.isClosed(psSetConfiguration))
 				{
-					dbConnectionManager.unregisterStatement(psSetConfiguration);
-					
 					// SQL to update new row
 					String updateSql = "UPDATE " + TABLE_NAME + " SET " + COL_EMAIL_SERVER_ADDRESS + "=?, " +
 	                                                                      COL_PORT_NUMBER + "=?, " +
@@ -166,7 +163,7 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 
 					// A prepared statement to run the update SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psSetConfiguration = dbConnectionManager.prepareStatement(updateSql);
+					psSetConfiguration = dbConnectionManager.prepareStatement(updateSql, psSetConfiguration);
 				} /// end if(update PreparedStatement not defined)
 
 				// Set the parameters on the update statement
@@ -190,7 +187,7 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 					                                                        COL_FORGOTTEN_PASSWORD_LINK + ") " +
                                        "VALUES (?, ?, ?, ?, ?, ?, ?)";
 					
-					PreparedStatement psInsert = dbConnectionManager.prepareStatement(insertSql);
+					PreparedStatement psInsert = dbConnectionManager.prepareStatement(insertSql, null);
 					
 					// Set the parameters on the insert statement
 					psInsert.setString(1, emailconfig.getEmailServerAddress());

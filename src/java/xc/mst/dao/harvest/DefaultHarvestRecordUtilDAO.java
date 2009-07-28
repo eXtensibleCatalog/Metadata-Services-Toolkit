@@ -78,8 +78,6 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 				// If the PreparedStatement to insert a harvest to Top Level Tab is not defined, create it
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
-					dbConnectionManager.unregisterStatement(psInsert);
-					
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + HARVESTS_TO_RECORDS_TABLE_NAME +
 					                                    " (" + COL_HARVEST_ID + ", " +
@@ -91,7 +89,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psInsert = dbConnectionManager.prepareStatement(insertSql);
+					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 					dbConnectionManager.registerStatement(psInsert);
 				} // end if (insert prepared statement is null)
 
@@ -131,8 +129,6 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 				// If the PreparedStatement to insert a harvest to record is not defined, create it
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
-					dbConnectionManager.unregisterStatement(psDelete);
-					
 					// SQL to insert the new row
 					String deleteSql = "DELETE FROM " + HARVESTS_TO_RECORDS_TABLE_NAME + " " +
 	            		    		   "WHERE " + COL_HARVEST_ID + "=? " +
@@ -143,7 +139,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql);
+					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the insert statement
@@ -182,8 +178,6 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 				// If the PreparedStatement to insert a harvest to record is not defined, create it
 				if(psDeleteForRecord == null || dbConnectionManager.isClosed(psDeleteForRecord))
 				{
-					dbConnectionManager.unregisterStatement(psDeleteForRecord);
-					
 					// SQL to insert the new row
 					String deleteSql = "DELETE FROM " + HARVESTS_TO_RECORDS_TABLE_NAME + " " +
 	            		    		   "WHERE " + COL_RECORD_ID + "=? ";
@@ -193,7 +187,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 
 					// A prepared statement to run the insert SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psDeleteForRecord = dbConnectionManager.prepareStatement(deleteSql);
+					psDeleteForRecord = dbConnectionManager.prepareStatement(deleteSql, psDeleteForRecord);
 				} // end if (insert prepared statement is null)
 
 				// Set the parameters on the delete statement
@@ -234,8 +228,6 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 				// If the PreparedStatement to get records by harvest ID wasn't defined, create it
 				if(psGetRecordsForHarvest == null || dbConnectionManager.isClosed(psGetRecordsForHarvest))
 				{
-					dbConnectionManager.unregisterStatement(psGetRecordsForHarvest);
-					
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_RECORD_ID + " " +
 	                                   "FROM " + HARVESTS_TO_RECORDS_TABLE_NAME + " " +
@@ -246,7 +238,7 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetRecordsForHarvest = dbConnectionManager.prepareStatement(selectSql);
+					psGetRecordsForHarvest = dbConnectionManager.prepareStatement(selectSql, psGetRecordsForHarvest);
 				}
 
 				// Set the parameters on the select statement
