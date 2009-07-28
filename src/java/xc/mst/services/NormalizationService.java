@@ -26,7 +26,6 @@ import org.xml.sax.InputSource;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
-import xc.mst.constants.Constants;
 import xc.mst.constants.NormalizationServiceConstants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.MarcXmlManagerForNormalizationService;
@@ -520,9 +519,7 @@ public class NormalizationService extends MetadataService
 			if(log.isDebugEnabled())
 				log.debug("Cannot find a MARC vocabulary mapping for the leader 06 value of " + leader06 + ".");
 			
-			if(leader06 == 'b' || leader06 == 'h' || leader06 == 'm')
-				errors.add(service.getId() + "-101: Obsolete leader 06 value: " + leader06);
-			else if(leader06 != ' ')
+			if(leader06 != ' ')
 				errors.add(service.getId() + "-102: Invalid leader 06 value: " + leader06);
 		}
 		else
@@ -659,9 +656,6 @@ public class NormalizationService extends MetadataService
 			if(log.isDebugEnabled())
 				log.debug("The record was missing either an 001 or an 003 control field, so we do not have to move the old marc organization code into a new 035 field.");
 
-			if(control001 == null)
-				errors.add(service.getId() + "-108: Control Field 001 was missing.");
-			
 			return marcXml;
 		}
 
