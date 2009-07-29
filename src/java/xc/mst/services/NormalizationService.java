@@ -905,8 +905,6 @@ public class NormalizationService extends MetadataService
 
 				languages.add(langFrom008);
 			}
-			else
-				errors.add(service.getId() + "-110: Invalid language code in Control Field 008 offset 35-38: " + langFrom008);
 		}
 
 		// The 041 $a and $d fields
@@ -931,8 +929,6 @@ public class NormalizationService extends MetadataService
 
 						languages.add(language);
 					}
-					else
-						errors.add(service.getId() + "-110: Invalid language code in 041 $a: " + language);
 				}
 			}
 		}
@@ -955,8 +951,6 @@ public class NormalizationService extends MetadataService
 
 						languages.add(language);
 					}
-					else
-						errors.add(service.getId() + "-110: Invalid language code in 041 $d: " + language);
 				}
 			}
 		}
