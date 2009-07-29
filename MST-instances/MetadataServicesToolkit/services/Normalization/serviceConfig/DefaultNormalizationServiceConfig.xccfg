@@ -1028,6 +1028,7 @@ d = Subunit
 i = Integrating resource
 m = Monograph/Item
 s = Serial
+p = Pamphlet
 
 #-----------------------------------------
 LOCATION CODE TO LOCATION
