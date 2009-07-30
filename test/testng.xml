@@ -10,7 +10,7 @@
 				    <class name="xc.mst.manager.test.GroupsTest"/> 
                     <class name="xc.mst.manager.test.UsersTest"/> 
                     <class name="xc.mst.manager.test.ProcessingDirectivesTest"/> 
-                    <class name="xc.mst.manager.test.GeneralLogsTest"/> 
+                    <class name="xc.mst.manager.test.GeneralLogsTest"/>  
                     <class name="xc.mst.manager.test.ServiceTest"/>
                     <class name="xc.mst.manager.test.BrowseRecordServiceTest"/>
                     <class name="xc.mst.harvester.test.HarvesterTest"/>
