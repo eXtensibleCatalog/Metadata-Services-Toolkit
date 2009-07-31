@@ -148,7 +148,12 @@
 			<tr>
 				<td colspan="2">
 					<button class="xc_button_small" name="cancel" onClick="Javascript:YAHOO.xc.mst.registeration.cancel();">Cancel</button>
-                    <button class="xc_button" type="button" name="save" onClick="Javascript:YAHOO.xc.mst.registeration.register();">Register</button>
+					<c:if test="${!configurationError}">
+						<button class="xc_button" type="button" name="save" onClick="Javascript:YAHOO.xc.mst.registeration.register();">Register</button>
+					</c:if>
+					<c:if test="${configurationError}">
+						<button disabled type="button" class="xc_button_disabled" name="save" onClick="Javascript:YAHOO.xc.mst.registeration.register();">Register</button>
+					</c:if>
 				</td>
 			</tr>						
 		</table> 

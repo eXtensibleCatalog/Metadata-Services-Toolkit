@@ -40,6 +40,7 @@ public class InitializeConfiguration  extends HttpServlet {
 	    
 		// The path in the URL(Eg: For URL: http://localhost:8080/MetadataServicesToolkit , returns '/MetadataServicesToolkit')
 		String path =  getServletContext().getContextPath();
+		// Remove the / in '/MetadataServicesToolkit'
 	    path = path.substring(1, path.length());
 	    
 	    // Initialize MST configuration.

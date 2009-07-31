@@ -101,7 +101,12 @@
 					   </td></tr> 
 					    
 					   <tr> <td> 
-					    <button class="xc_button" name="submit" type="submit">Submit</button> 
+					   <c:if test="${!configurationError}">
+					    	<button class="xc_button" name="submit" type="submit">Submit</button>
+					    </c:if>
+					    <c:if test="${configurationError}">
+					    	<button disabled type="button" class="xc_button_disabled" name="submit" type="submit">Submit</button>
+					    </c:if> 
 					    <br>	<br>
 			 			<a href="home.action">Go To Home Page </a>
 					    </td></tr>

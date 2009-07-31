@@ -10,6 +10,8 @@
 package xc.mst.action.user;
 
 import org.apache.log4j.Logger;
+import org.jconfig.Configuration;
+import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
@@ -18,6 +20,7 @@ import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
+import xc.mst.utils.MSTConfiguration;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -50,6 +53,35 @@ public class ForgotPassword extends ActionSupport {
 	/** Error type */
 	private String errorType; 
 	
+	/**  Object used to read properties from the default configuration file */
+	protected static final Configuration defaultConfiguration = ConfigurationManager.getConfiguration();
+	
+	/**  Indicates if error in configuration */
+	public boolean configurationError = false;
+	
+	public String execute() {
+		
+		if (!MSTConfiguration.mstInstanceFolderExist) {
+			addFieldError("instancesFolderError", "MST configuration is incomplete. " + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
+			log.error("MST configuration is incomplete. " +defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
+			configurationError = true;
+			errorType = "error";
+			return INPUT;
+		} else if (!MSTConfiguration.currentInstanceFolderExist) {
+			int beginIndex = MSTConfiguration.getUrlPath().indexOf(MSTConfiguration.FILE_SEPARATOR);
+			String instanceFolderName = MSTConfiguration.getUrlPath().substring(beginIndex + 1);
+			addFieldError("currentInstancesFolderError", "MST configuration is incomplete. " + instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/" + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
+			log.error("MST configuration is incomplete. " +instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/"  + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
+			configurationError = true;
+			errorType = "error";
+			return INPUT;
+		} 
+
+		
+		
+		return SUCCESS;
+		
+	}
 
 	/**
 	 * Execute method
@@ -58,7 +90,6 @@ public class ForgotPassword extends ActionSupport {
 	public String resetPassword() throws Exception {
 		log.debug("Execute called email:" + email );
 
-		//TODO : to be changed for LDAP server
 		Server server = serverService.getServerByName("Local");
 		User user = userService.getUserByEmail(email, server);
 
@@ -110,6 +141,10 @@ public class ForgotPassword extends ActionSupport {
 
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	public boolean isConfigurationError() {
+		return configurationError;
 	}
 
 

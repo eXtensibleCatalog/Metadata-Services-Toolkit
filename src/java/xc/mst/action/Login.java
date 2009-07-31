@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.jconfig.Configuration;
+import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.user.Permission;
 import xc.mst.bo.user.Server;
@@ -26,6 +28,7 @@ import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
+import xc.mst.utils.MSTConfiguration;
 
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.Calendar;
@@ -76,6 +79,13 @@ public class Login extends ActionSupport implements ServletRequestAware {
 
 	/** Error type */
 	private String errorType;
+	
+	/**  Object used to read properties from the default configuration file */
+	protected static final Configuration defaultConfiguration = ConfigurationManager.getConfiguration();
+	
+	/**  Indicates if error in configuration */
+	public boolean configurationError = false;
+
 
     /**
      * Overriding default implementation to login the user.
@@ -83,13 +93,24 @@ public class Login extends ActionSupport implements ServletRequestAware {
      * @return {@link #SUCCESS}
      */
     @Override
-	public String execute() throws DataException{
+	public String execute() throws DataException {
     	try {
     		servers = serverService.getAll();
     	}  catch (DatabaseConfigException dce) {
-    		log.error(dce.getMessage(), dce);
+    		if (!MSTConfiguration.mstInstanceFolderExist) {
+    			addFieldError("instancesFolderError", defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
+    			log.error(defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
+    		} else if (!MSTConfiguration.currentInstanceFolderExist) {
+    			int beginIndex = MSTConfiguration.getUrlPath().indexOf(MSTConfiguration.FILE_SEPARATOR);
+    			String instanceFolderName = MSTConfiguration.getUrlPath().substring(beginIndex + 1);
+    			addFieldError("currentInstancesFolderError", instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/" + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
+    			log.error(instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/"  + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
+    		} else {
+	    		log.error(dce.getMessage(), dce);
+	    		addFieldError("dbConfigError", "Unable to access the database to get Server type information. There may be problem with database configuration.");
+    		}
+    		configurationError = true;
     		errorType = "error";
-    		addFieldError("dbConfigError", "Unable to access the database to get Server type information. There may be problem with database configuration.");
 			return INPUT;
     	}
 
@@ -296,6 +317,10 @@ public class Login extends ActionSupport implements ServletRequestAware {
 
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	public boolean isConfigurationError() {
+		return configurationError;
 	}
 
 }

@@ -47,6 +47,13 @@ public class MSTConfiguration {
 	/**  Object used to read properties from the default configuration file */
 	protected static final Configuration defaultConfiguration = ConfigurationManager.getConfiguration();
 	
+	/**  Indicates whether MST instance folder exist */
+	public static boolean mstInstanceFolderExist = false;
+
+	/**  Indicates whether instance folder for this instance exist */
+	public static boolean currentInstanceFolderExist = false;
+
+	/** Default constructor */
 	private MSTConfiguration() {}
 	
 	/**
@@ -67,6 +74,16 @@ public class MSTConfiguration {
 	 * Creates and initializes configuration for MST
 	 */
 	private static void createConfiguration(String urlPath) {
+		
+		File mstInstances = new File(System.getProperty("user.dir") + FILE_SEPARATOR + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME));
+		if (mstInstances.exists()) {
+			mstInstanceFolderExist = true;
+		}
+		
+		File currentInstance = new File(System.getProperty("user.dir") + FILE_SEPARATOR + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + urlPath);
+		if (currentInstance.exists()) {
+			currentInstanceFolderExist = true;
+		}
 		
 		MSTConfiguration.urlPath = defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + urlPath;
 		String externalConfigurationFilePath = System.getProperty("user.dir") + FILE_SEPARATOR + MSTConfiguration.urlPath + FILE_SEPARATOR+ "MetadataServicesToolkit_config.xml";

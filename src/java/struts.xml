@@ -77,6 +77,7 @@
 
         <action name="viewForgotPassword" class="xc.mst.action.user.ForgotPassword">
 			<result name="success">/pages/forgot_password.jsp</result>
+			<result name="input">/pages/forgot_password.jsp</result>
         </action> 
         
         <action name="resetPassword" class="xc.mst.action.user.ForgotPassword" method="resetPassword">

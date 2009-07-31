@@ -12,6 +12,8 @@ package xc.mst.action.user;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.jconfig.Configuration;
+import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
@@ -23,6 +25,7 @@ import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
+import xc.mst.utils.MSTConfiguration;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -61,6 +64,12 @@ public class UserRegistration extends ActionSupport {
 	/** Error type */
 	private String errorType; 
 	
+	/**  Object used to read properties from the default configuration file */
+	protected static final Configuration defaultConfiguration = ConfigurationManager.getConfiguration();
+	
+	/**  Indicates if error in configuration */
+	public boolean configurationError = false;
+	
 
 	/**
 	 * To register the user
@@ -71,10 +80,22 @@ public class UserRegistration extends ActionSupport {
     	try {
     		servers =  serverService.getAll();
     	} catch (DatabaseConfigException dce) {
-    		log.error(dce.getMessage(), dce);
+    		if (!MSTConfiguration.mstInstanceFolderExist) {
+    			addFieldError("instancesFolderError", defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
+    			log.error(defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
+    		} else if (!MSTConfiguration.currentInstanceFolderExist) {
+    			int beginIndex = MSTConfiguration.getUrlPath().indexOf(MSTConfiguration.FILE_SEPARATOR);
+    			String instanceFolderName = MSTConfiguration.getUrlPath().substring(beginIndex + 1);
+    			addFieldError("currentInstancesFolderError", instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/" + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
+    			log.error(instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/"  + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
+    		} else {
+	    		log.error(dce.getMessage(), dce);
+	    		addFieldError("dbConfigError", "Unable to access the database to get Server type information. There may be problem with database configuration.");
+    		}
+    		configurationError = true;
     		errorType = "error";
-    		addFieldError("dbConfigError", "Unable to access the database to get Server type information. There may be problem with database configuration.");
 			return INPUT;
+
     	}
 
 		return SUCCESS;
@@ -201,6 +222,10 @@ public class UserRegistration extends ActionSupport {
 
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	public boolean isConfigurationError() {
+		return configurationError;
 	}
 
 }

@@ -118,34 +118,59 @@
 						<td class="label"> Password : </td>
 						<td class="input"> <input type="password" name="password" value=""/> </td>
 					</tr>
-					<tr>
-						<td colspan="2" align="center"> <button type="submit" class="xc_button" name="submit">&nbsp;&nbsp;Login&nbsp;&nbsp;</button> </td>
-					</tr>
-					<tr>
-						<td colspan="2" align="center"> <a href="viewUserRegisteration.action">New User Registeration</a>&nbsp;&nbsp;&nbsp;&nbsp;  
-						<span id="forgot_password_url">
-							&nbsp;
-						</span>						
-						<div id="forgot_password_local">
-							   | 
-							&nbsp;&nbsp;&nbsp;&nbsp;<a href="viewForgotPassword.action">Forgot Password</a>   
-						</div>
-						
-						<div id="forgot_password_ldap">
-							<c:forEach var="server" items="${servers}">
-								<c:if test="${server.name != 'Local'}">
-									<c:if test="${server.showForgotPasswordLink == 'true'}">
-										| &nbsp;&nbsp;&nbsp;&nbsp;<a href="${server.forgotPasswordUrl}">Forgot Password</a>   
+					<c:if test="${!configurationError}">
+						<tr>
+							<td colspan="2" align="center">
+							<button type="submit" class="xc_button" name="submit">&nbsp;&nbsp;Login&nbsp;&nbsp;</button>
+							 </td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center"> <a href="viewUserRegisteration.action">New User Registeration</a>&nbsp;&nbsp;&nbsp;&nbsp;  
+							<span id="forgot_password_url">
+								&nbsp;
+							</span>						
+							<div id="forgot_password_local">
+								   | 
+								&nbsp;&nbsp;&nbsp;&nbsp;<a href="viewForgotPassword.action">Forgot Password</a>   
+							</div>
+
+							<div id="forgot_password_ldap">
+								<c:forEach var="server" items="${servers}">
+									<c:if test="${server.name != 'Local'}">
+										<c:if test="${server.showForgotPasswordLink == 'true'}">
+											| &nbsp;&nbsp;&nbsp;&nbsp;<a href="${server.forgotPasswordUrl}">Forgot Password</a>   
+										</c:if>
+
 									</c:if>
-								
-								</c:if>
-							</c:forEach>
-</div>
+								</c:forEach>
+							</div>
+
+
+							</td>
+
+
+						</tr>
+					</c:if>
+					<c:if test="${configurationError}">
 						
+						<tr>
+							<td colspan="2" align="center">
+							<button disabled type="button" class="xc_button_disabled" name="submit">&nbsp;&nbsp;Login&nbsp;&nbsp;</button>
+							 </td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center" style="color:grey">New User Registeration&nbsp;&nbsp;&nbsp;&nbsp;  
+								   | 
+								&nbsp;&nbsp;&nbsp;&nbsp;Forgot Password
+
+
+							</td>
+
+
+						</tr>
 						
-						</td>
-						
-					</tr>
+					</c:if>
+
 				</table>
 			</form>
 			
