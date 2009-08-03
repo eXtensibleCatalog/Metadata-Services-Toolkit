@@ -122,8 +122,11 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 			bean.setResumptionToken(request.getParameter("resumptionToken"));
 			bean.setServiceId(service != null ? service.getId() : 0);
 	
+			
+			String oaiRepoBaseURL = "http://" + request.getServerName() + ":" +  request.getServerPort() + request.getContextPath() + "/oaiRepository";
+			
 			// Create the Facade Object, which will compute the results of the request and set them on the bean
-			Facade facade = new Facade(bean);
+			Facade facade = new Facade(bean, oaiRepoBaseURL);
 	
 			// Set the response header on the facade Object
 			facade.setResponseHeader(request.getRequestURL());

@@ -182,11 +182,6 @@ public class Constants
 	public static final String CONFIG_OAI_REPO_NAME = "OaiRepoName";
 
 	/**
-	 * Parameter for looking up the base URL of the OAI repository from the configuration file
-	 */
-	public static final String CONFIG_OAI_REPO_BASE_URL = "OaiRepoBaseUrl";
-
-	/**
 	 * Parameter for looking up the OAI version of the OAI repository from the configuration file
 	 */
 	public static final String CONFIG_OAI_REPO_PROTOCOL_VERSION = "OaiRepoProtocolVersion";

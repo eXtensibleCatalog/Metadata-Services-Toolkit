@@ -8,11 +8,11 @@ xc.mst.services.NormalizationService # The class within the .jar file that repre
 INPUT FORMATS
 #-----------------------------------------
 name: marcxml # The name of the marcxml format, which the Normalization Service accepts as input
-schema location: http://128.151.244.132:8080/OAIToolkit/schema/MARC21slim_custom.xsd # The location of the marcxml schema
+schema location: http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd # The location of the marcxml schema
 namespace: http://www.loc.gov/MARC21/slim # The namespace of the marcxml schema
 
 name: marc21 # The name of the marcxml format, which the Normalization Service accepts as input
-schema location: http://128.151.244.132:8080/OAIToolkit/schema/MARC21slim_custom.xsd # The location of the marcxml schema
+schema location: http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd # The location of the marcxml schema
 namespace: http://www.loc.gov/MARC21/slim # The namespace of the marcxml schema
 
 #-----------------------------------------

@@ -151,13 +151,18 @@ public class Facade
 	 * The service being harvested
 	 */
 	private Service service = null;
+	
+	/**
+	 * The OAI repository base URL
+	 */
+	private String oaiRepoBaseURL = null;
 
 	/**
 	 * Creates a new Facade object
 	 *
 	 * @param oaiBean The OAI request bean
 	 */
-	public Facade(OaiRequestBean oaiBean)
+	public Facade(OaiRequestBean oaiBean, String oaiRepoBaseURL)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Constructing a new Facade Object.");
@@ -173,6 +178,7 @@ public class Facade
 		identifier = bean.getIdentifier();
 		resumptionToken = bean.getResumptionToken();
 		serviceId = bean.getServiceId();
+		this.oaiRepoBaseURL = oaiRepoBaseURL;
 	}
 
 	/**
@@ -364,7 +370,7 @@ public class Facade
 		// is read from the database as the lowest value for the OAI_datestamp column in the results table
 		Element root = new Element("Identify");
 		root.addContent(XMLUtil.xmlEl("repositoryName", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_NAME)));
-		root.addContent(XMLUtil.xmlEl("baseURL", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_BASE_URL) + ":" + port));
+		root.addContent(XMLUtil.xmlEl("baseURL", oaiRepoBaseURL + ":" + port));
 		root.addContent(XMLUtil.xmlEl("protocolVersion", configuration.getProperty(Constants.CONFIG_OAI_REPO_PROTOCOL_VERSION)));
 		root.addContent(XMLUtil.xmlEl("adminEmail", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_ADMIN_EMAIL)));
 		root.addContent(XMLUtil.xmlEl("deletedRecord", configuration.getProperty(Constants.CONFIG_OAI_REPO_DELETED_RECORD)));
