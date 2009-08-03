@@ -281,6 +281,9 @@ public class NormalizationService extends MetadataService
 
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_DEDUP_9XX, "0").equals("1"))
 					normalizedXml = dedup9XX(normalizedXml);
+
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_TITLE_ARTICLE, "0").equals("1"))
+					normalizedXml = titleArticle(normalizedXml);
 			}
 
 			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_VOYAGER_LOCATION_NAME, "0").equals("1"))
@@ -1796,6 +1799,36 @@ public class NormalizationService extends MetadataService
 		// Copy the fields, but only if they contain a $t subfield
 		marcXml.seperateNames(tagsToCopy, NormalizationServiceConstants.FIELD_9XX_SEPERATE_NAME);
 
+		return marcXml;
+	}
+	
+	/**
+	 * Create a 246 field without an initial article whenever a 245 exists with an initial article.
+	 *
+	 * @param marcXml The original MARCXML record
+	 * @return The MARCXML record after performing this normalization step.
+	 */
+	private MarcXmlManagerForNormalizationService titleArticle(MarcXmlManagerForNormalizationService marcXml)
+	{
+		if(log.isInfoEnabled())
+			log.info("Entering TitleArticle normalization step.");
+
+		// Get dataFiled with tag=245
+		List<Element> dataFields = marcXml.getDataFields("245");
+		
+		for(Element dataField:dataFields) {
+
+			// Execute step only if 1st indicator is 1 & 2nd indicator is not 0 for tag=245
+			if (marcXml.getIndicatorOfField(dataField, "1").equals("1") && !marcXml.getIndicatorOfField(dataField, "2").equals("0") 
+						&& !marcXml.getIndicatorOfField(dataField, "2").equals(" ") && !marcXml.getIndicatorOfField(dataField, "2").equals("")) {
+				
+				// Create field 246
+				marcXml.copyMarcXmlField("245", "246", "anpf", "3", "0", true);
+				// Deduplicate 246
+				marcXml.deduplicateMarcXmlField("246");
+			}	
+		}
+		
 		return marcXml;
 	}
 

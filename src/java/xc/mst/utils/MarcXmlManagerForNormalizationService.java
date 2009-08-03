@@ -1171,7 +1171,7 @@ public class MarcXmlManagerForNormalizationService
 					{
 						newField.addContent("\n\t").addContent((Element)subfield.clone());
 
-						if(skipAPrefix && skip > 0)
+						if((skipAPrefix && skip > 0) && (subfield.getAttributeValue("code").equals("a")))
 						{
 							// Get the control fields
 							List<Element> subfieldsOfNewfield = getSubfieldsOfField(newField, 'a');
@@ -1182,8 +1182,7 @@ public class MarcXmlManagerForNormalizationService
 								// Get the current text of the subfield
 								String currentText = subfieldOfNewfield.getText();
 
-								if(currentText.charAt(skip-1) == ' ')
-									subfieldOfNewfield.setText(currentText.substring(skip, skip+1).toUpperCase() + currentText.substring(skip+1));
+								subfieldOfNewfield.setText(currentText.substring(skip, skip+1).toUpperCase() + currentText.substring(skip+1));
 							} // end loop over the target field's subfields
 						}
 					}

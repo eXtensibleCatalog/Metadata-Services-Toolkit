@@ -207,6 +207,9 @@ SeperateName = 1
 # 1 to remove duplicate 959, 963, 965, 967, and 969 fields. 
 Dedup9XX = 1
 
+# 1 to create a 246 field without an initial article . 
+TitleArticle = 1
+
 #-----------------------------------------
 FIELD 007 OFFSET 00 TO DCMI TYPE
 #-----------------------------------------

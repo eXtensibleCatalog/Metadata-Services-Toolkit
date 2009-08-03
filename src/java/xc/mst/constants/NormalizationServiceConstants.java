@@ -235,6 +235,11 @@ public class NormalizationServiceConstants
 	 * Parameter for looking up the whether or not the Dedup9XX normalization step is enabled.
 	 */
 	public static final String CONFIG_ENABLED_DEDUP_9XX = "Dedup9XX";
+	
+	/**
+	 * Parameter for looking up the whether or not the TitleArticle normalization step is enabled.
+	 */
+	public static final String CONFIG_ENABLED_TITLE_ARTICLE = "TitleArticle";
 
 	//*******************************************************************
 	// Properties file names
