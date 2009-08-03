@@ -20,7 +20,7 @@
     <property name="OaiRepoName" value="University of Rochester" />
     
     <!-- The URL of the OAI repository  -->
-    <property name="OaiRepoBaseUrl" value = "http://localhost:8080/MetadataServicesToolkit/oaiRepositoryServlet" />
+    <property name="OaiRepoBaseUrl" value = "http://localhost:8080/MetadataServicesToolkit/oaiRepository" />
     
     <!-- The email address of the MST administrator for the OAI repositories -->
     <property name="OaiRepoAdminEmail" value="mstadmin@library.rochester.edu" />

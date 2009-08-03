@@ -895,7 +895,7 @@
         <!--  OAI repository servlet  actions          -->
         <!--  ************************************ -->
         
-        <action name="oaiRepositoryServlet" class="xc.mst.oai.OaiRepositoryServlet">
+        <action name="oaiRepository" class="xc.mst.oai.OaiRepository">
 			<result name="success" type="no-op"/>
 		</action>
 		        

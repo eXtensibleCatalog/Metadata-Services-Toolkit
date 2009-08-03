@@ -13,16 +13,6 @@
 
     <display-name>Metadata Services Toolkit</display-name>
 
-  <servlet>
-    <servlet-name>MetadataServices</servlet-name>
-    <servlet-class>xc.mst.oai.OaiRepository</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>MetadataServices</servlet-name>
-    <url-pattern>/oaiRepository</url-pattern>
-  </servlet-mapping>
-
     <servlet>
     <servlet-name>initializeConfiguration</servlet-name>
     <servlet-class>xc.mst.utils.InitializeConfiguration</servlet-class>

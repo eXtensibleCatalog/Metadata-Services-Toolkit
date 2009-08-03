@@ -12,11 +12,12 @@ package xc.mst.oai;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
@@ -25,22 +26,33 @@ import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.utils.LogWriter;
 
+import com.opensymphony.xwork2.ActionSupport;
+
 /**
  * A simple servlet that parses an OAI request and passes the parameters to the Facade class for processing.
  *
  * @author Eric Osisek
  */
-public class OaiRepository extends HttpServlet
+public class OaiRepository extends ActionSupport implements ServletRequestAware, ServletResponseAware
 {
 	/**
 	 * Used for serialization
 	 */
 	private static final long serialVersionUID = 56789L;
 
+	/** Request */
+	private HttpServletRequest request;
+
+	/** Response */
+	private HttpServletResponse response;
+
 	/**
 	 * Data access object for getting services
 	 */
 	private static ServiceDAO serviceDao = new DefaultServiceDAO();
+
+	/** XML output */
+	private String oaiXMLOutput;
 
 	/**
 	 * A reference to the logger which writes to the HarvestOut log file
@@ -56,21 +68,46 @@ public class OaiRepository extends HttpServlet
 	 * @throws ServletException if an error occurred
 	 * @throws IOException if an error occurred
 	 */
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	public String execute() throws ServletException, IOException
 	{
 		if(log.isDebugEnabled())
 			log.debug("In doGet, parsing out parameters");
 
 		try
 		{
-			// Get the port on which the request is coming in.  This will
-			// tell us which service's records to expose.
-			int port = request.getLocalPort();
+			// Get servlet path from request 
+			String servletPath = request.getServletPath();
+			
+			// Extract the service name from servlet path
+			int firstOccuranceOfSlash = servletPath.indexOf("/");
+			
+			String serviceName = null;
+			
+			// Check if / exist in servlet path
+			if (firstOccuranceOfSlash != -1) 
+			{
+				int secondOccuranceOfSlash = servletPath.indexOf("/", firstOccuranceOfSlash + 1);
+			
+				if ((firstOccuranceOfSlash != -1 && secondOccuranceOfSlash != -1) && (secondOccuranceOfSlash > firstOccuranceOfSlash))
+					serviceName = servletPath.substring(firstOccuranceOfSlash + 1, secondOccuranceOfSlash);
+				else // Invalid URL
+					response.getWriter().write("Invalid URL");
+			} 
+			else // Invalid URL
+				response.getWriter().write("Invalid URL");
 	
 			// Get the service based on the port.
-			Service service = serviceDao.getByPort(port);
+			Service service = serviceDao.getByServiceName(serviceName);
 	
-			LogWriter.addInfo(service.getHarvestOutLogFileName(), "Received the OAI request " + request.getRequestURL());
+			if(service == null)
+			{
+				// Write the response
+				response.getWriter().write("Invalid service name: " + serviceName);
+		
+			    return SUCCESS;
+			}
+			
+			LogWriter.addInfo(service.getHarvestOutLogFileName(), "Received the OAI request " + request.getQueryString());
 	
 			// Bean to manage data for handling the request
 			OaiRequestBean bean = new OaiRequestBean();
@@ -112,31 +149,46 @@ public class OaiRepository extends HttpServlet
 			// Append the footer
 			oaiResponseElement.append(Constants.OAI_RESPONSE_FOOTER);
 	
+			oaiXMLOutput = oaiResponseElement.toString();
+	
+			response.setContentType("text/xml; charset=UTF-8");
+			
 			// Write the response
-		    response.getWriter().write(oaiResponseElement.toString());
+			response.getWriter().write(oaiResponseElement.toString());
+	
+		    return SUCCESS;
 		}
 		catch(DatabaseConfigException e)
-		{
+		{	
 			log.error("Cannot connect to the database with the parameters from the config file.", e);
 			
 			response.getWriter().write("Do to a configuration error, this OAI repository cannot access its database.");
+			
+			return ERROR;
 		}
 	}
 
-	/**
-	 * The doPost method of the servlet. This method is called when a form has its tag value method equals to
-	 * post.  It invokes the doGet method.
-	 *
-	 * @param request the request send by the client to the server
-	 * @param response the response send by the server to the client
-	 * @throws ServletException if an error occurred
-	 * @throws IOException if an error occurred
-	 */
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-		if(log.isDebugEnabled())
-			log.debug("Received a POST request, passing through the doGet method.");
+	public HttpServletRequest getServletRequest() {
+		return request;
+	}
 
-		doGet(request, response);
+	public void setServletRequest(HttpServletRequest servletRequest) {
+		this.request = servletRequest;
+	}
+
+	public HttpServletResponse getServletResponse() {
+		return response;
+	}
+
+	public void setServletResponse(HttpServletResponse servletResponse) {
+		this.response = servletResponse;
+	}
+
+	public String getOaiXMLOutput() {
+		return oaiXMLOutput;
+	}
+
+	public void setOaiXMLOutput(String oaiXMLOutput) {
+		this.oaiXMLOutput = oaiXMLOutput;
 	}
 }

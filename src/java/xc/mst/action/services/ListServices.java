@@ -68,19 +68,11 @@ public class ListServices extends ActionSupport implements ServletRequestAware
     {
         try
         {
-           baseURL = "http://" + servletRequest.getServerName() + ":" + "SERVICE_PORT" + servletRequest.getContextPath() + "/oaiRepositoryServlet";
+           baseURL = "http://" + servletRequest.getServerName() + ":" +  servletRequest.getServerPort() + servletRequest.getContextPath() + "/" + "SERVICE_NAME" + "/oaiRepository";
            ServicesService servService = new DefaultServicesService();
-           if(columnSorted.equalsIgnoreCase("ServiceName")||(columnSorted.equalsIgnoreCase("Port")))
+           if(columnSorted.equalsIgnoreCase("ServiceName"))
             {
-                if(columnSorted.equalsIgnoreCase("ServiceName"))
-                {
                     ServicesList = servService.getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_SERVICE_NAME);
-                }
-                else
-                {
-                    ServicesList = servService.getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_PORT);
-                }
-               
             }
             else
             {

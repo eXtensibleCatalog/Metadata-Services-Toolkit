@@ -129,36 +129,7 @@
                                             </div>
 
                                         </td>
-                                        <td>
-                                            <div>
-                                                <c:if test="${columnSorted!='Port'}">
-                                                         <c:url var="serviceSortUrl" value="listServices.action">
-                                                           <c:param name="isAscendingOrder" value="true"/>
-                                                           <c:param name="columnSorted" value="Port"/>
-                                                         </c:url>
-                                                          <a href="${serviceSortUrl}">Associated Repository URL</a>
-                                                     </c:if>
-
-                                                     <c:if test="${columnSorted=='Port'}">
-                                                       <c:url var="serviceSortUrl" value="listServices.action">
-                                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                                         <c:param name="columnSorted" value="Port"/>
-                                                       </c:url>
-
-                                                       <a href="${serviceSortUrl}">Associated Repository URL</a>
-
-                                                        <c:choose>
-                                                            <c:when test="${isAscendingOrder==true}">
-                                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                     </c:if>
-                                            </div>
-
-                                        </td>
+                                        <td>Associated Repository URL </td>
                                         <td>Status</td>
                                         <td>View Log</td>
                                         <td>Delete</td>
@@ -176,12 +147,8 @@
                                                     </c:if>
                                                 <td class="${classColumn}"><a href="viewEditService.action?serviceId=${service.id}"><c:out value="${service.name}"/></a></td>
                                                 <c:set var="baseURL" value="${baseURL}"/>
-                                                <c:set var = "url" value="${fn:replace(baseURL,'SERVICE_PORT',service.port)}" />
-                                                    <c:set var="classColumn" value="plainColumn"/>
-                                                    <c:if test="${columnSorted=='Port'}">
-                                                        <c:set var="classColumn" value="sortColumn"/>
-                                                    </c:if>
-                                                <td class="${classColumn}"><c:out value="${url}"/></td>
+                                                <c:set var = "url" value="${fn:replace(baseURL,'SERVICE_NAME',service.name)}" />
+                                                <td><c:out value="${url}"/></td>
                                                 <td>
                                                     <c:set var="service_status" value ="${service.status}"/>
                                                     <c:choose>
