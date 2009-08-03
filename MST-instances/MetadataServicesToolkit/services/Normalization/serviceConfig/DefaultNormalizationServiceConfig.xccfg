@@ -968,6 +968,7 @@ LEADER 06 TO FULL TYPE
 a = Text
 c = Notated music
 d = Notated music
+h = Microform
 i = Sound recording
 j = Sound recording
 k = Nonprojected graphic
@@ -993,15 +994,18 @@ LEADER 06 TO MARC VOCAB
 #***************************************** 
 
 a = Language material
+b = Archival and manuscripts control
 c = Notated music
 d = Manuscript notated music
 e = Cartographic material
 f = Manuscript cartographic material
 g = Projected medium
+h = Microform publications
 i = Nonmusical sound recording
 j = Musical sound recording
 k = Two-dimensional nonprojectable graphic
 m = Computer file
+n = Special instructional material
 o = Kit
 p = Mixed materials
 r = Three-dimensional artifact or naturally occurring object
