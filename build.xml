@@ -290,17 +290,16 @@
 		</copy>
 		<delete dir="dist/MST-instances/MetadataServicesToolkit/solr/data"/>
 		<copy todir="dist/MST-instances/MetadataServicesToolkit/sql">
-			<fileset dir="MST-instances/MetadataServicesToolkit/sql"/>
+			<fileset dir="sql"/>
 		</copy>
-		<delete dir="." includes="dist/MST-instances/MetadataServicesToolkit/sql/**" excludes="dist/MST-instances/MetadataServicesToolkit/sql/create_database_script.sql"  />
 		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
 		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
 		<copy file="MetadataServicesToolkit.war" todir="dist/mst-instances"/>
-		<zip destfile="dist/MetadataServicesToolkitv1.0.zip"  basedir="dist" />
+		<zip destfile="dist/MetadataServicesToolkitv0.2.1.zip"  basedir="dist" />
 
 		<!-- Create the Normalization Services zip archive -->
-		<zip destfile="Normalizationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Normalization/**"/> 
-		<move file="Normalizationv1.0.zip" todir="dist" />
+		<zip destfile="Normalizationv0.2.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Normalization/**"/> 
+		<move file="Normalizationv0.2.zip" todir="dist" />
 		
 		<!-- Create the Transformation Services zip archive -->
 		<zip destfile="Transformationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Transformation/**" /> 

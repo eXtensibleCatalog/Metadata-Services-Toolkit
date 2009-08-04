@@ -117,14 +117,14 @@ public class NormalizationServiceConstants
 	public static final String CONFIG_ENABLED_SUPPLY_MARC_ORG_CODE = "SupplyMARCOrgCode";
 
 	/**
-	 * Parameter for looking up the whether or not the VoyagerFix035 normalization step is enabled.
+	 * Parameter for looking up the whether or not the Fix035 normalization step is enabled.
 	 */
-	public static final String CONFIG_ENABLED_VOYAGER_FIX_035 = "VoyagerFix035";
+	public static final String CONFIG_ENABLED_FIX_035 = "Fix035";
 
 	/**
-	 * Parameter for looking up the whether or not the VoyagerDedup035 normalization step is enabled.
+	 * Parameter for looking up the whether or not the Dedup035 normalization step is enabled.
 	 */
-	public static final String CONFIG_ENABLED_VOYAGER_DEDUP_035 = "VoyagerDedup035";
+	public static final String CONFIG_ENABLED_DEDUP_035 = "Dedup035";
 
 	/**
 	 * Parameter for looking up the whether or not the RoleAuthor normalization step is enabled.
@@ -241,6 +241,11 @@ public class NormalizationServiceConstants
 	 */
 	public static final String CONFIG_ENABLED_TITLE_ARTICLE = "TitleArticle";
 
+	/**
+	 * Parameter for looking up the whether or not the 035LeadingZero normalization step is enabled.
+	 */
+	public static final String CONFIG_ENABLED_035_LEADING_ZERO = "035LeadingZero";
+	
 	//*******************************************************************
 	// Properties file names
 	//*******************************************************************

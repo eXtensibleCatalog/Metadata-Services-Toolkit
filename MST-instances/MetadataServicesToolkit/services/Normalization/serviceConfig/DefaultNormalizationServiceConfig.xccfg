@@ -146,10 +146,10 @@ LanguageTerm = 1
 SupplyMARCOrgCode = 1
 
 # 1 to cleanup common problems with OCoLC 035 fields. 
-VoyagerFix035 = 1
+Fix035 = 1
 
 # 1 to remove duplicate 035 fields. 
-VoyagerDedup035 = 1
+Dedup035 = 1
 
 # 1 to set 100, 110, and 111 $4 fields to
 # "Author" if they are not currently set and
@@ -167,7 +167,7 @@ UniformTitle = 1
 
 # 1 to change 655 $2 to "NRUgenre" and delete the 655 $5 subfield
 # for each 655 field with $2 = "local" and $5 = "NRU"
-URGenre = 1
+URGenre = 0
 
 # 1 to copy 600, 610, 611, 630, and 650 fields and 6xx $x subfields into
 # new fields containing information on the topic 
@@ -209,6 +209,9 @@ Dedup9XX = 1
 
 # 1 to create a 246 field without an initial article . 
 TitleArticle = 1
+
+# 1 to remove leading zeros . 
+035LeadingZero = 1
 
 #-----------------------------------------
 FIELD 007 OFFSET 00 TO DCMI TYPE

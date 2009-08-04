@@ -240,12 +240,12 @@ public class NormalizationService extends MetadataService
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_SUPPLY_MARC_ORG_CODE, "0").equals("1"))
 					normalizedXml = supplyMARCOrgCode(normalizedXml);
 
-				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_VOYAGER_FIX_035, "0").equals("1"))
-					normalizedXml = voyagerFix035(normalizedXml);
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1"))
+					normalizedXml = fix035(normalizedXml);
 
-				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_VOYAGER_DEDUP_035, "0").equals("1"))
-					normalizedXml = voyagerDedup035(normalizedXml);
-
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_DEDUP_035, "0").equals("1"))
+					normalizedXml = dedup035(normalizedXml);
+				
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_ROLE_AUTHOR, "0").equals("1"))
 					normalizedXml = roleAuthor(normalizedXml);
 
@@ -284,6 +284,10 @@ public class NormalizationService extends MetadataService
 
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_TITLE_ARTICLE, "0").equals("1"))
 					normalizedXml = titleArticle(normalizedXml);
+
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1"))
+					normalizedXml = removeLeadingZero035(normalizedXml);				
+
 			}
 
 			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_VOYAGER_LOCATION_NAME, "0").equals("1"))
@@ -1193,6 +1197,50 @@ public class NormalizationService extends MetadataService
 	}
 
 	/**
+	 * Removes leading zeros in 035 records. Changes (OCoLC)00021452 to (OCoLC)21452 
+	 *
+	 * @param marcXml The original MARCXML record
+	 * @return The MARCXML record after performing this normalization step.
+	 */
+	private MarcXmlManagerForNormalizationService removeLeadingZero035(MarcXmlManagerForNormalizationService marcXml)
+	{
+		if(log.isInfoEnabled())
+			log.info("Entering removeLeadingZero035 normalization step.");
+		
+		// Get 035 datafields
+		ArrayList<Element> field035Elements = marcXml.getOriginal035Fields();
+		
+		// Loop through 035 fields
+		for (Element field: field035Elements) {
+			// Get subfield $a for each 035 field
+			List<Element> aSubfields = marcXml.getSubfieldsOfField(field, 'a');
+
+			// Loop through subfield a 
+			for(Element aSubfield: aSubfields) {
+				
+				// Get value of $a
+				String value = aSubfield.getText();
+				String newValue = "";
+				
+				// Remove leading zeros in value. Ex. Change (OCoLC)00021452 to (OCoLC)21452 
+				int indexOfBracket = value.indexOf(")");
+				newValue = value.substring(0, indexOfBracket + 1);
+				
+				for (int i=indexOfBracket + 1;i < value.length();i++) {
+					if (value.charAt(i) != '0') {
+						newValue = newValue + value.charAt(i);
+					}
+				}
+				
+				// Set the new value back in subfield $a
+				aSubfield.setText(newValue);
+			}
+		}
+		
+		return marcXml;
+	}
+	
+	/**
 	 * Edits OCLC 035 records with common incorrect formats to take the format
 	 * (OCoLC)%CONTROL_NUMBER%.
 	 *
@@ -1200,10 +1248,10 @@ public class NormalizationService extends MetadataService
 	 * @return The MARCXML record after performing this normalization step.
 	 */
 	@SuppressWarnings("unchecked")
-	private MarcXmlManagerForNormalizationService voyagerFix035(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManagerForNormalizationService fix035(MarcXmlManagerForNormalizationService marcXml)
 	{
 		if(log.isInfoEnabled())
-			log.info("Entering VoyagerFix035 normalization step.");
+			log.info("Entering fix035 normalization step.");
 
 		// Get the original list of 035 elements.  We know that any 035 we
 		// supplied had the correct format, so all incorrect 035 records must
@@ -1306,10 +1354,10 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService voyagerDedup035(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManagerForNormalizationService dedup035(MarcXmlManagerForNormalizationService marcXml)
 	{
 		if(log.isInfoEnabled())
-			log.info("Entering VoyagerDedup035 normalization step.");
+			log.info("Entering dedup035 normalization step.");
 
 		marcXml.deduplicateMarcXmlField("035");
 
