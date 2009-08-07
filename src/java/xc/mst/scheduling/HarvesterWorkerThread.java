@@ -40,6 +40,7 @@ public class HarvesterWorkerThread extends WorkerThread
 	 *
 	 * @param newId The ID of the harvest schedule step to be run
 	 */
+	
 	public void setHarvestScheduleId(int newId)
 	{
 		harvestScheduleId = newId;
@@ -106,9 +107,10 @@ public class HarvesterWorkerThread extends WorkerThread
 	 * Gets the status of the job
 	 */
 	public String getJobStatus() {
-		
-		return Harvester.getRunningHarvester().getHarvesterStatus();
-		
+		if (Harvester.getRunningHarvester() != null)
+			return Harvester.getRunningHarvester().getHarvesterStatus();
+		else
+			return Constants.STATUS_SERVICE_NOT_RUNNING;
 	}
 
 	/**
@@ -117,6 +119,19 @@ public class HarvesterWorkerThread extends WorkerThread
 	 */
 	public String getType() {
 		return type;
+	}
+
+	@Override
+	public int getProcessedRecordCount() {
+		return Harvester.getRunningHarvester().getProcessedRecordCount();		
+		
+	}
+
+	@Override
+	public int getTotalRecordCount() {
+		
+		return Harvester.getRunningHarvester().getTotalRecordCount();
+		 
 	}
 
 } // end class HarvestWorkerThread

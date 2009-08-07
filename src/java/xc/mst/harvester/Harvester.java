@@ -307,6 +307,17 @@ public class Harvester implements ErrorHandler
 	 */
 	private boolean firstHarvest = false;
 
+	/**
+	 * 
+	 */
+	private int processedRecordCount = 0;
+	
+	/**
+	 * 
+	 */
+	private int totalRecordCount = 0;
+	
+	
 	long totalPartTime = 0;
 	long startPartTime = 0;
 	long endPartTime = 0;
@@ -798,6 +809,7 @@ public class Harvester implements ErrorHandler
 	private String extractRecords(String prefix, Document doc, String baseURL) throws Hexception, OAIErrorException
     {
 		String resumption = null;
+		String completedCount = null;
 		Element root = doc.getDocumentElement();
 
 		// Check whether or not the response contained an error
@@ -1016,9 +1028,12 @@ public class Harvester implements ErrorHandler
 			if (recordElement != null && recordElement.getNodeName().equals("resumptionToken"))
 			{
 				resumption = getContent(recordElement);
-
+				completedCount = recordElement.getAttribute("completeListSize");
+				totalRecordCount = Integer.parseInt(recordElement.getAttribute("completeListSize"));
+				
 				log.info("The resumption string is " + resumption);
-
+				log.info("The complete count is " + completedCount);
+				
 				if (resumption.length() == 0)
 					resumption = null;
 
@@ -1708,6 +1723,16 @@ public class Harvester implements ErrorHandler
 			return Constants.STATUS_SERVICE_RUNNING;
 		else
 			return Constants.STATUS_SERVICE_NOT_RUNNING;
+	}
+	
+	public int getProcessedRecordCount() {
+		
+		return processedRecordCount;
+	}
+
+	public int getTotalRecordCount() {
+		
+		return  totalRecordCount;
 	}
 
 

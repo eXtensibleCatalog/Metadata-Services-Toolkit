@@ -158,6 +158,15 @@ public abstract class MetadataService
 	private static MetadataService runningService;
 
 	/**
+	 * 
+	 */
+	private int processedRecordCount  = 0;
+	/**
+	 * 
+	 */
+	private int totalRecordCount = 0;
+	
+	/**
 	 * Runs the service with the passed ID
 	 *
 	 * @param serviceId The ID of the MetadataService to run
@@ -627,6 +636,7 @@ public abstract class MetadataService
 		{
 			// Get the list of record inputs for this service
 			RecordList records = recordService.getInputForService(service.getId());
+			totalRecordCount = records.size();
 
 			//DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 
@@ -638,6 +648,7 @@ public abstract class MetadataService
 			// resulting from this service.
 			for(Record processMe : records)
 			{
+				
 				// If the service is not canceled and not paused then continue
 				if(!isCanceled && !isPaused)
 				{
@@ -740,6 +751,7 @@ public abstract class MetadataService
 							}
 
 					}
+				processedRecordCount++ ;
 			} // end loop over records to process
 
 			// Reopen the reader so it can see the changes made by running the service
@@ -886,6 +898,21 @@ public abstract class MetadataService
 			return Constants.STATUS_SERVICE_RUNNING;
 		else
 			return Constants.STATUS_SERVICE_NOT_RUNNING;
+	}
+
+
+	/**
+	 * @return the processedRecordCount
+	 */
+	public int getProcessedRecordCount() {
+		return processedRecordCount;
+	}
+
+	/**
+	 * @return the totalRecordCount
+	 */
+	public int getTotalRecordCount() {
+		return totalRecordCount;
 	}
 
 	/**

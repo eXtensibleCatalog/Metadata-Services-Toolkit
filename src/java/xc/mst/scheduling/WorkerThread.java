@@ -29,4 +29,8 @@ public abstract class WorkerThread extends Thread
 	public abstract String getJobStatus();
 	
 	public abstract String getType();
+	
+	public abstract int getProcessedRecordCount();
+	
+	public abstract int getTotalRecordCount();
 } // end class WorkerThread

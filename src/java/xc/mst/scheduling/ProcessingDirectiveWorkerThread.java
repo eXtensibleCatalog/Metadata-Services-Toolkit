@@ -199,4 +199,16 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 	public ProcessingDirective getProcessingDirective() {
 		return processingDirective;
 	}
+
+	@Override
+	public int getProcessedRecordCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getTotalRecordCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
