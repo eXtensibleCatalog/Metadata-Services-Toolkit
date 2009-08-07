@@ -14,6 +14,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.StringTokenizer;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -55,9 +56,14 @@ public class NormalizationService extends MetadataService
 	private Properties enabledSteps = null;
 
 	/**
-	 * The Properties file with the voyager location name mappings
+	 * The Properties file with the location name mappings
 	 */
     private Properties locationNameProperties = null;
+    
+	/**
+	 * The Properties file with the location limit name mappings
+	 */
+    private Properties locationLimitNameProperties = null;
 
     /**
      * The Properties file with the DCMI type information for the leader 06
@@ -240,8 +246,11 @@ public class NormalizationService extends MetadataService
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_SUPPLY_MARC_ORG_CODE, "0").equals("1"))
 					normalizedXml = supplyMARCOrgCode(normalizedXml);
 
-				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1"))
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1") 
+						|| enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1")
+						|| enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_UR_FIX_035, "0").equals("1")) {
 					normalizedXml = fix035(normalizedXml);
+				}
 
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_DEDUP_035, "0").equals("1"))
 					normalizedXml = dedup035(normalizedXml);
@@ -285,16 +294,23 @@ public class NormalizationService extends MetadataService
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_TITLE_ARTICLE, "0").equals("1"))
 					normalizedXml = titleArticle(normalizedXml);
 
-				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1"))
-					normalizedXml = removeLeadingZero035(normalizedXml);				
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_BIB_LOCATION_NAME, "0").equals("1"))
+					normalizedXml = bibLocationName(normalizedXml);
+
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_III_LOCATION_NAME, "0").equals("1"))
+					normalizedXml = IIILocationName(normalizedXml);
 
 			}
 
-			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_VOYAGER_LOCATION_NAME, "0").equals("1"))
-				normalizedXml = voyagerLocationName(normalizedXml);
+			// Run these steps only if the record is a holding record
+			if("uvxy".contains(""+leader06))
+			{
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_HOLDINGS_LOCATION_NAME, "0").equals("1"))
+					normalizedXml = holdingsLocationName(normalizedXml);
 
-			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_III_LOCATION_NAME, "0").equals("1"))
-				normalizedXml = IIILocationName(normalizedXml);
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_VOYAGER_LOCATION_LIMIT_NAME, "0").equals("1"))
+					normalizedXml = locationLimitName(normalizedXml);
+			}
 			
 			if(log.isDebugEnabled())
 				log.debug("Adding errors to the record.");
@@ -832,7 +848,7 @@ public class NormalizationService extends MetadataService
 			log.debug("Leader 06 = " + leader06 + " and 008 offset 33 is " + field008offset33 + ".");
 
 		// Add the fiction or nonfiction field
-		if(field008offset33 == '1')
+		if(field008offset33 == '1' || field008offset33 == 'd' || field008offset33 == 'j' || field008offset33 == 'f' || field008offset33 == 'p')
 			marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_FICTION_OR_NONFICTION, "Fiction");
 		else
 			marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_FICTION_OR_NONFICTION, "Non-Fiction");
@@ -1195,50 +1211,6 @@ public class NormalizationService extends MetadataService
 
 		return marcXml;
 	}
-
-	/**
-	 * Removes leading zeros in 035 records. Changes (OCoLC)00021452 to (OCoLC)21452 
-	 *
-	 * @param marcXml The original MARCXML record
-	 * @return The MARCXML record after performing this normalization step.
-	 */
-	private MarcXmlManagerForNormalizationService removeLeadingZero035(MarcXmlManagerForNormalizationService marcXml)
-	{
-		if(log.isInfoEnabled())
-			log.info("Entering removeLeadingZero035 normalization step.");
-		
-		// Get 035 datafields
-		ArrayList<Element> field035Elements = marcXml.getOriginal035Fields();
-		
-		// Loop through 035 fields
-		for (Element field: field035Elements) {
-			// Get subfield $a for each 035 field
-			List<Element> aSubfields = marcXml.getSubfieldsOfField(field, 'a');
-
-			// Loop through subfield a 
-			for(Element aSubfield: aSubfields) {
-				
-				// Get value of $a
-				String value = aSubfield.getText();
-				String newValue = "";
-				
-				// Remove leading zeros in value. Ex. Change (OCoLC)00021452 to (OCoLC)21452 
-				int indexOfBracket = value.indexOf(")");
-				newValue = value.substring(0, indexOfBracket + 1);
-				
-				for (int i=indexOfBracket + 1;i < value.length();i++) {
-					if (value.charAt(i) != '0') {
-						newValue = newValue + value.charAt(i);
-					}
-				}
-				
-				// Set the new value back in subfield $a
-				aSubfield.setText(newValue);
-			}
-		}
-		
-		return marcXml;
-	}
 	
 	/**
 	 * Edits OCLC 035 records with common incorrect formats to take the format
@@ -1287,61 +1259,94 @@ public class NormalizationService extends MetadataService
 					subfield9 = subfield;
 			} // end loop over 035 subfields
 
-			// First case: $b = ocm or $b = ocn or $b = ocl, and $a contains only the control number
-			if(bSubfield != null)
-			{
-				// Check if the $b subfield was "ocm", "ocn", or "ocl"
-				if(bSubfield.getText().equals("ocm") || bSubfield.getText().equals("ocn") || bSubfield.getText().equals("ocl"))
+			// Execute only if Fix035 step is enabled
+			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1")) {
+				// First case: $b = ocm or $b = ocn or $b = ocl, and $a contains only the control number
+				if(bSubfield != null)
 				{
-					// Try to parse out the control number from the $a subfield
-					if(aSubfield != null)
+					// Check if the $b subfield was "ocm", "ocn", or "ocl"
+					if(bSubfield.getText().equals("ocm") || bSubfield.getText().equals("ocn") || bSubfield.getText().equals("ocl"))
 					{
-						try
+						// Try to parse out the control number from the $a subfield
+						if(aSubfield != null)
 						{
-							String controlNumber = aSubfield.getText().trim();
-
-							// Set $a to (OCoLC)%CONTROL_NUMBER%
-							aSubfield.setText("(OCoLC)" + controlNumber);
-						}
-						catch(NumberFormatException e)
-						{
+							try
+							{
+								String controlNumber = aSubfield.getText().trim();
+	
+								// Set $a to (OCoLC)%CONTROL_NUMBER%
+								aSubfield.setText("(OCoLC)" + controlNumber);
+							}
+							catch(NumberFormatException e)
+							{
+							}
 						}
 					}
+	
+					// Remove the b subfield as we shouldn't ever have one
+					field035.removeContent(bSubfield);
 				}
-
-				// Remove the b subfield as we shouldn't ever have one
-				field035.removeContent(bSubfield);
+	
+				// Second case: $a = (OCoLC)ocm%CONTROL_NUMBER% or (OCoLC)ocn%CONTROL_NUMBER% or (OCoLC)ocl%CONTROL_NUMBER%
+				if(aSubfield != null && (aSubfield.getText().startsWith("(OCoLC)ocm") || aSubfield.getText().startsWith("(OCoLC)ocn") || aSubfield.getText().startsWith("(OCoLC)ocl")))
+					aSubfield.setText("(OCoLC)" + aSubfield.getText().substring(10));
+	
+				// Third case: $a = ocm%CONTROL_NUMBER% or ocn%CONTROL_NUMBER% or ocl%CONTROL_NUMBER%
+				if(aSubfield != null && (aSubfield.getText().startsWith("ocm") || aSubfield.getText().startsWith("ocn") || aSubfield.getText().startsWith("ocl")))
+					aSubfield.setText("(OCoLC)" + aSubfield.getText().substring(3));
 			}
 
-			// Second case: $a = (OCoLC)ocm%CONTROL_NUMBER% or (OCoLC)ocn%CONTROL_NUMBER% or (OCoLC)ocl%CONTROL_NUMBER%
-			if(aSubfield != null && (aSubfield.getText().startsWith("(OCoLC)ocm") || aSubfield.getText().startsWith("(OCoLC)ocn") || aSubfield.getText().startsWith("(OCoLC)ocl")))
-				aSubfield.setText("(OCoLC)" + aSubfield.getText().substring(10));
-
-			// Third case: $a = ocm%CONTROL_NUMBER% or ocn%CONTROL_NUMBER% or ocl%CONTROL_NUMBER%
-			if(aSubfield != null && (aSubfield.getText().startsWith("ocm") || aSubfield.getText().startsWith("ocn") || aSubfield.getText().startsWith("ocl")))
-				aSubfield.setText("(OCoLC)" + aSubfield.getText().substring(3));
-
-			// Forth case: $9 = ocm%CONTROL_NUMBER% or ocn%CONTROL_NUMBER% or ocl%CONTROL_NUMBER%
-			if(subfield9 != null && (subfield9.getText().startsWith("ocm") || subfield9.getText().startsWith("ocn") || subfield9.getText().startsWith("ocl")))
-			{
-				// Add an $a subfield if there wasn't one
-				if(aSubfield == null)
+			// Execute only if URFix035Code9 step is enabled
+			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_UR_FIX_035, "0").equals("1")) {
+				// Forth case: $9 = ocm%CONTROL_NUMBER% or ocn%CONTROL_NUMBER% or ocl%CONTROL_NUMBER%
+				if(subfield9 != null && (subfield9.getText().startsWith("ocm") || subfield9.getText().startsWith("ocn") || subfield9.getText().startsWith("ocl")))
 				{
-					aSubfield = new Element("subfield", marcNamespace);
-					aSubfield.setAttribute("code", "a");
-					field035.addContent("\t").addContent(aSubfield).addContent("\n");
+					// Add an $a subfield if there wasn't one
+					if(aSubfield == null)
+					{
+						aSubfield = new Element("subfield", marcNamespace);
+						aSubfield.setAttribute("code", "a");
+						field035.addContent("\t").addContent(aSubfield).addContent("\n");
+					}
+	
+					aSubfield.setText("(OCoLC)" + subfield9.getText().substring(3));
+					field035.removeContent(subfield9);
 				}
-
-				aSubfield.setText("(OCoLC)" + subfield9.getText().substring(3));
-				field035.removeContent(subfield9);
+			}
+		
+			// Execute only if Fix035 step is enabled
+			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1")) {
+				// If the $a has more than one prefix, only use the first one
+				if(aSubfield != null)
+				{
+					String aSubfieldText = aSubfield.getText();
+					if(aSubfieldText.contains("(") && aSubfieldText.contains(")"))
+						aSubfield.setText(aSubfieldText.substring(0, aSubfieldText.indexOf(')') + 1) + aSubfieldText.substring(aSubfieldText.lastIndexOf(')') + 1));
+				}
 			}
 
-			// If the $a has more than one prefix, only use the first one
-			if(aSubfield != null)
-			{
-				String aSubfieldText = aSubfield.getText();
-				if(aSubfieldText.contains("(") && aSubfieldText.contains(")"))
-					aSubfield.setText(aSubfieldText.substring(0, aSubfieldText.indexOf(')') + 1) + aSubfieldText.substring(aSubfieldText.lastIndexOf(')') + 1));
+			// Execute only if 035LeadingZero step is enabled. Removes leading zeros in 035 $a records. Changes (OCoLC)00021452 to (OCoLC)21452 
+			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1")) {
+				
+				if (aSubfield != null) {
+					// Get value of $a
+					String value = aSubfield.getText();
+					String newValue = "";
+					
+					// Remove leading zeros in value. Ex. Change (OCoLC)00021452 to (OCoLC)21452 
+					int indexOfBracket = value.indexOf(")");
+					newValue = value.substring(0, indexOfBracket + 1);
+					
+					for (int i=indexOfBracket + 1;i < value.length();i++) {
+						if (value.charAt(i) != '0') {
+							newValue = newValue + value.charAt(i);
+						}
+					}
+					
+					// Set the new value back in subfield $a
+					aSubfield.setText(newValue);
+				}
+
 			}
 		}
 
@@ -1757,10 +1762,10 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService voyagerLocationName(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManagerForNormalizationService bibLocationName(MarcXmlManagerForNormalizationService marcXml)
 	{
 		if(log.isInfoEnabled())
-			log.info("Entering VoyagerLocationName normalization step.");
+			log.info("Entering bibLocationName normalization step.");
 
 		// The 852 $l value
 		ArrayList<String> field852subfieldBs = marcXml.getField852subfieldBs();
@@ -1789,6 +1794,115 @@ public class NormalizationService extends MetadataService
 		return marcXml;
 	}
 
+	/**
+	 * For the location code in 852 $b, it assigns corresponding location name to new 852 $c.
+	 *
+	 * @param marcXml The original MARCXML record
+	 * @return The MARCXML record after performing this normalization step.
+	 */
+	private MarcXmlManagerForNormalizationService holdingsLocationName(MarcXmlManagerForNormalizationService marcXml)
+	{
+		if(log.isInfoEnabled())
+			log.info("Entering holdingsLocationName normalization step.");
+
+		// Get dataFiled with tag=852
+		List<Element> dataFields = marcXml.getDataFields("852");
+		
+		// Lopp through the 852
+		for(Element dataField:dataFields) {
+			
+			// Get all $b for that field
+			List<Element> subFieldsB = marcXml.getSubfieldsOfField(dataField, 'b');
+			
+			// Loop through the $b values
+			for (Element subFieldB:subFieldsB) {
+				int index = dataField.indexOf(subFieldB);
+				String limitName = locationNameProperties.getProperty(subFieldB.getText().replace(' ', '_'), null);
+				
+				// If there was no mapping for the provided 852 $b, we can't set the value.  In this case do nothing and start looking at next $b
+				if(limitName == null)
+				{
+					continue;
+				}
+
+				if(log.isDebugEnabled())
+					log.debug("Found the location " + limitName + " for the 852 $b value of " + subFieldB.getText() + ".");
+
+				// Add the $c subfield to the MARC XML field 852
+				Element newSubfieldC = new Element("subfield", marcNamespace);
+				newSubfieldC.setAttribute("code", "c");
+				newSubfieldC.setText(limitName);
+			
+				// Add the $c subfield to the new datafield
+				dataField.addContent("\n\t").addContent(index + 1, newSubfieldC).addContent("\n");
+			}
+	    }
+
+		return marcXml;
+	}
+	
+	/**
+	 * For the location code in 852 $b, it assigns corresponding location limit name to 852 $b.
+	 * In case of more than 1 limit name exist then put each limit name in separate $b within same 852 
+	 *
+	 * @param marcXml The original MARCXML record
+	 * @return The MARCXML record after performing this normalization step.
+	 */
+	private MarcXmlManagerForNormalizationService locationLimitName(MarcXmlManagerForNormalizationService marcXml)
+	{
+		if(log.isInfoEnabled())
+			log.info("Entering locationLimitName normalization step.");
+
+		// Get dataFiled with tag=852
+		List<Element> dataFields = marcXml.getDataFields("852");
+		
+		// Lopp through the 852
+		for(Element dataField:dataFields) {
+			
+			// Get all $b for that field
+			List<Element> subFieldsB = marcXml.getSubfieldsOfField(dataField, 'b');
+			
+			// Loop through the $b values
+			for (Element subFieldB:subFieldsB) {
+				String limitNames = locationLimitNameProperties.getProperty(subFieldB.getText().replace(' ', '_'), null);
+				
+				// If there was no mapping for the provided 852 $b, we can't set the value.  In this case do nothing and start looking at next $b
+				if(limitNames == null)
+				{
+					continue;
+				}
+
+				if(log.isDebugEnabled())
+					log.debug("Found the location " + limitNames + " for the 852 $b value of " + subFieldB.getText() + ".");
+
+				// Limit names are delimited by |
+				StringTokenizer tokenizer = new StringTokenizer(limitNames, "|");
+				
+				int tokenCount = 1;
+				while (tokenizer.hasMoreTokens()) {
+					String limitName = tokenizer.nextToken().trim();
+					
+					if (tokenCount ==1) {
+						subFieldB.setText(limitName);
+					} else {
+						// Add the $b subfield to the MARC XML field 852
+						Element newSubfieldB = new Element("subfield", marcNamespace);
+						newSubfieldB.setAttribute("code", "b");
+						newSubfieldB.setText(limitName);
+						
+						// Add the $b subfield to the new datafield
+						dataField.addContent("\n\t").addContent(newSubfieldB).addContent("\n");
+					}
+					tokenCount++;
+					
+				}
+			}
+		}
+
+
+		return marcXml;
+	}
+	
 	/**
 	 * Replaces the location code in 945 $l with the name of the location it represents.
 	 *
@@ -1946,6 +2060,12 @@ public class NormalizationService extends MetadataService
 	    				locationNameProperties = new Properties();
 	    			current = locationNameProperties;
 	    		}
+	    		if(line.equals("LOCATION CODE TO LOCATION LIMIT NAME"))
+	    		{
+	    			if(locationLimitNameProperties == null)
+	    				locationLimitNameProperties = new Properties();
+	    			current = locationLimitNameProperties;
+	    		}	    		
 	    		else if(line.equals("LEADER 06 TO DCMI TYPE"))
 	    		{
 	    			if(dcmiType06Properties == null)

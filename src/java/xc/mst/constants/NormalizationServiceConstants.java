@@ -217,9 +217,9 @@ public class NormalizationServiceConstants
 	public static final String CONFIG_ENABLED_DEDUP_007_VOCAB = "Dedup007Vocab";
 
 	/**
-	 * Parameter for looking up the whether or not the VoyagerLocationName normalization step is enabled.
+	 * Parameter for looking up the whether or not the BibLocationName normalization step is enabled.
 	 */
-	public static final String CONFIG_ENABLED_VOYAGER_LOCATION_NAME = "VoyagerLocationName";
+	public static final String CONFIG_ENABLED_BIB_LOCATION_NAME = "BibLocationName";
 
 	/**
 	 * Parameter for looking up the whether or not the IIILocationName normalization step is enabled.
@@ -245,6 +245,21 @@ public class NormalizationServiceConstants
 	 * Parameter for looking up the whether or not the 035LeadingZero normalization step is enabled.
 	 */
 	public static final String CONFIG_ENABLED_035_LEADING_ZERO = "035LeadingZero";
+	
+	/**
+	 * Parameter for looking up the whether or not the HoldingsLocationName normalization step is enabled.
+	 */
+	public static final String CONFIG_ENABLED_HOLDINGS_LOCATION_NAME = "HoldingsLocationName";
+	
+	/**
+	 * Parameter for looking up the whether or not the VoyagerLocationLimitName normalization step is enabled.
+	 */
+	public static final String CONFIG_ENABLED_VOYAGER_LOCATION_LIMIT_NAME = "VoyagerLocationLimitName";
+	
+	/**
+	 * Parameter for looking up the whether or not the URFix035Code9 normalization step is enabled.
+	 */
+	public static final String CONFIG_ENABLED_UR_FIX_035 = "URFix035Code9";
 	
 	//*******************************************************************
 	// Properties file names

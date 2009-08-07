@@ -68,7 +68,7 @@ ENABLED STEPS
 #*****************************************
 
 # 1 to remove the 003 if its value is "OCoLC"
-RemoveOCoLC003 = 1
+RemoveOCoLC003 = 0
 
 # 1 to create a field with a DCMI Type based on 
 # the original record's Leader 06 value
@@ -89,7 +89,7 @@ ModeOfIssuance = 1
 # 1 to create a new 035 field with the
 # organization code in the record and the
 # record's control number 
-MoveMARCOrgCode = 1
+MoveMARCOrgCode = 0
 
 # 1 if the MoveMARCOrgCode step should run regardless of the 
 # 003 value, false if it should only run if the 003 value
@@ -143,10 +143,13 @@ LanguageTerm = 1
 # 1 to create a new 035 field with the
 # organization code in the MST configuration file
 # and the original record's control number 
-SupplyMARCOrgCode = 1
+SupplyMARCOrgCode = 0
 
 # 1 to cleanup common problems with OCoLC 035 fields. 
 Fix035 = 1
+
+# 1 to cleanup OCoLC 035 fields for $9. By default 0
+URFix035Code9 = 0
 
 # 1 to remove duplicate 035 fields. 
 Dedup035 = 1
@@ -192,12 +195,12 @@ DedupDCMIType = 1
 Dedup007Vocab = 1
 
 # 1 to replace location codes left by 
-# Voyager with the actual location. 
-VoyagerLocationName = 1
+# ILS with the actual location. 
+BibLocationName = 0
 
 # 1 to replace location codes left by 
 # III with the actual location. 
-IIILocationName = 1
+IIILocationName = 0
 
 # 1 to copy 600, 610, 611, 700, 710, 711, 800, 810, and 811 fields
 # containing a $t subfield into a 9xx field.  This will facilitate 
@@ -212,6 +215,14 @@ TitleArticle = 1
 
 # 1 to remove leading zeros . 
 035LeadingZero = 1
+
+# 1 to replace location codes left by 
+# ILS with the actual location. By default 0 
+HoldingsLocationName = 0
+
+# 1 to replace location codes by 
+# location limit name. By default 0
+VoyagerLocationLimitName = 0
 
 #-----------------------------------------
 FIELD 007 OFFSET 00 TO DCMI TYPE
@@ -1045,7 +1056,7 @@ LOCATION CODE TO LOCATION
 #-----------------------------------------
 
 #*****************************************
-# This section maps Voyager location codes with the location
+# This section maps ILS location codes with the location
 # associated with them.
 #
 # For example, The line "MAGArchv = MAG Archives" 
@@ -1551,3 +1562,402 @@ CarlDiss = Carlson Library Dissertations 1st Floor
 BGILCirc = Business and Government Information Library Circulation Desk
 CancerCtr = Wilmot Cancer Center Patient Resource Library
 RBSherlock = "Special Collections Missal Sherlockiana
+
+#-----------------------------------------
+LOCATION CODE TO LOCATION LIMIT NAME
+#-----------------------------------------
+
+#*****************************************
+# This section maps ILS location codes with the location limit name.
+#
+# If a location code has multiple limit names then they should be separated by |
+# For example, The line "ArtMuscOS = Art/Music Library | Rush Rhees Library" says that the location limit names
+# are "Art/Music Library" & "Rush Rhees Library" for location code is "ArtCage". 
+#
+# This is voyager specific. Any of the mappings may be changed based 
+# on your organization's cataloging policies.  New properties may be 
+# added for location codes not represented below, and unwanted 
+# mappings may be deleted
+#*****************************************
+
+ArtCage = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtCircDsk = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtCircRef = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtCirProc = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtFolio = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtMicro = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtMuscOS = Art/Music Library | Rush Rhees Library
+ArtMuscRef = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtMusicRR = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtPer = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtRef = Art/Music Library | Rush Rhees Library
+ArtRefBib = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtRefCD = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtRefDir = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtRefEnc = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtRefIcon = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtRes = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtResDsk = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtStack = Art/Music Library | River Campus Libraries | Rush Rhees Library
+ArtWrkRoom = Art/Music Library | River Campus Libraries | Rush Rhees Library
+AtlasCase = River Campus Libraries | Rush Rhees Library
+BGIL = Business and Government Information Library | Rush Rhees Library
+BGILcd = Business and Government Information Library | Rush Rhees Library
+BGILfed = Business and Government Information Library | Rush Rhees Library
+BGILguide = Business and Government Information Library | Newspaper and Microform Center | Rush Rhees Library
+BGILnys = Business and Government Information Library | Rush Rhees Library
+BGILover = Business and Government Information Library | BGILover = Rush Rhees Library
+BibbyBks = Medical Center Libraries
+BibbyNewBk = Medical Center Libraries
+BibbyRare = Medical Center Libraries
+BibbyRef = Medical Center Libraries
+BibbyRes = Medical Center Libraries
+BibbySer = Medical Center Libraries
+BibbyThes = Medical Center Libraries
+Borst = River Campus Libraries | Rush Rhees Library
+Borst = Rush Rhees Rare Books and Special Collections
+Carl_Text = Carlson Library | River Campus Libraries | Science Libraries
+CarlAtlas = Carlson Library | River Campus Libraries | Science Libraries
+CarlBrows = Carlson Library | River Campus Libraries | Science Libraries
+CarlCDCase = Carlson Library | River Campus Libraries | Science Libraries
+CarlCirc = Carlson Library | River Campus Libraries | Science Libraries
+CarlCirPro = Carlson Library | River Campus Libraries | Science Libraries
+CarlCmpct = Carlson Library | River Campus Libraries | Science Libraries
+CarlDiss = Carlson Library | River Campus Libraries
+CarlFicheC = Carlson Library | River Campus Libraries | Science Libraries
+CarlIndex = Carlson Library | River Campus Libraries | Science Libraries
+CarlMapCs = Carlson Library | River Campus Libraries | Science Libraries
+CarlMicro = Carlson Library | River Campus Libraries | Science Libraries
+CarlNewBk = Carlson Library | River Campus Libraries
+CarlOff = Carlson Library | River Campus Libraries | Science Libraries
+CarlOsize = Carlson Library | River Campus Libraries | Science Libraries
+CarlPer = Carlson Library | River Campus Libraries | Science Libraries
+CarlRdRef = Carlson Library | River Campus Libraries | Science Libraries
+CarlRef = Carlson Library | River Campus Libraries | Science Libraries
+CarlRes = Carlson Library | River Campus Libraries | Science Libraries
+CarlSoft = Carlson Library | River Campus Libraries | Science Libraries
+CarlStack = Carlson Library | River Campus Libraries | Science Libraries
+CarlTecRp = Carlson Library | River Campus Libraries | Science Libraries
+Data_ServR = River Campus Libraries | Rush Rhees Library
+Data_Servs = River Campus Libraries | Rush Rhees Library
+Div_Cass = Divinity Schools | River Campus Libraries
+Div_Circ = Divinity Schools | Swasey Library CRCDS
+Div_Folio = Divinity Schools | River Campus Libraries | Swasey Library CRCDS
+Div_Stack = Divinity Schools | River Campus Libraries | Rush Rhees Library
+DivAcq = Divinity Schools | Swasey Library CRCDS
+DivArchiv = Divinity Schools | Swasey Library CRCDS
+DivAudioCD = Divinity Schools | Swasey Library CRCDS
+DivBind = Divinity Schools | Swasey Library CRCDS
+DivBndPer = Divinity Schools
+DivCat = Divinity Schools | Swasey Library CRCDS
+DivCircOff = Divinity Schools | Swasey Library CRCDS
+DivColl = Swasey Library CRCDS
+DivComp = Divinity Schools | Swasey Library CRCDS
+DivDirOff = Divinity Schools | Swasey Library CRCDS
+DivDVD = Divinity Schools | Swasey Library CRCDS
+DivFlmSt = Divinity Schools | DivFlmSt = Swasey Library CRCDS
+DivGame = Divinity Schools | Swasey Library CRCDS
+DivIncSer = Divinity Schools | Swasey Library CRCDS
+DivINet = Divinity Schools | Internet | Multimedia Center | Swasey Library CRCDS
+DivKit = Divinity Schools | Swasey Library CRCDS
+DivLP = Divinity Schools | Swasey Library CRCDS
+DivMap = Divinity Schools | Swasey Library CRCDS
+DivMedia = Divinity Schools | Swasey Library CRCDS
+DivMfche = Divinity Schools | River Campus Libraries | Rush Rhees Library
+DivMflm = Divinity Schools | River Campus Libraries | Rush Rhees Library
+DivPer = Divinity Schools | River Campus Libraries | Rush Rhees Library
+DivPerCur = Divinity Schools | Swasey Library CRCDS
+DivRareOf = Divinity Schools | Swasey Library CRCDS
+DivReadRm = Divinity Schools | Swasey Library CRCDS
+DivRefOff = Divinity Schools | Swasey Library CRCDS
+DivReform = Swasey Library CRCDS
+DivRepair = Divinity Schools | Swasey Library CRCDS
+DivRes = Divinity Schools | Swasey Library CRCDS
+DivSBIRare = Divinity Schools | Swasey Library CRCDS
+DivSBIRfol = Divinity Schools | Swasey Library CRCDS
+DivSer = Divinity Schools | Swasey Library CRCDS
+DivSlid = Divinity Schools | Swasey Library CRCDS
+DivSpColF = Divinity Schools | Swasey Library CRCDS
+DivSpColl = Divinity Schools | Swasey Library CRCDS
+DivSpCoXF = Divinity Schools | Swasey Library CRCDS
+DivStorag = Divinity Schools | Swasey Library CRCDS
+DivTape = Divinity Schools
+DivThesis = Divinity Schools | Swasey Library CRCDS
+DivTSOff = Divinity Schools | Swasey Library CRCDS
+DivVHS = Divinity Schools | Swasey Library CRCDS
+DivXFolio = Divinity Schools | River Campus Libraries | Swasey Library CRCDS
+DocCirProc = Rush Rhees Library
+DocFiche = Rush Rhees Library
+DocMicCirc = Rush Rhees Library
+DocMicRef = River Campus Libraries | Rush Rhees Library
+DocNYS = Rush Rhees Library
+DocOversze = Rush Rhees Library
+DocRef = Rush Rhees Library
+DocsCDs = Rush Rhees Library
+DocSpecRes = Rush Rhees Library
+DocSuDoc = Rush Rhees Library
+E-Res = River Campus Libraries
+ESMEnsembl = Eastman School of Music Libraries
+ESMRecArts = Eastman School of Music Libraries | Sibley Music Library
+GEHCat = George Eastman House Library
+GEHConserv = George Eastman House Library
+GEHFilmRef = George Eastman House Library
+GEHMainOS = George Eastman House Library
+GEHMainStk = George Eastman House Library
+GEHMedia = George Eastman House Library
+GEHMicro = George Eastman House Library
+GEHMSS = George Eastman House Library
+GEHOffSite = George Eastman House Library
+GEHPer = George Eastman House Library
+GEHPerOS = George Eastman House Library
+GEHRareBks = George Eastman House Library
+GEHRareOS = George Eastman House Library
+GEHRareOSP = George Eastman House Library
+GEHRarePer = George Eastman House Library
+GEHRef = George Eastman House Library
+Heyen = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+HeyenFolio = River Campus Libraries | Rush Rhees Library |Rush Rhees Rare Books and Special Collections
+HighBooks = Medical Center Libraries
+HighLibn = Medical Center Libraries
+HighRef = Medical Center Libraries
+HighSer = Medical Center Libraries
+Internet = Internet
+KCEngl = River Campus Libraries | Robbins Library/Koller-Collins Center | Rush Rhees Library
+KCOversize = River Campus Libraries | Robbins Library/Koller-Collins Center | Rush Rhees Library
+KCRef = River Campus Libraries | Robbins Library/Koller-Collins Center | Rush Rhees Library
+LLE_Off = LLE | River Campus Libraries | Science Libraries
+LLE_Per = LLE | River Campus Libraries  Science Libraries
+LLE_Ref = LLE | River Campus Libraries | Science Libraries
+LLE_Soft = LLE | River Campus Libraries | Science Libraries
+LLE_Stack = LLE | River Campus Libraries | Science Libraries
+LLECirc = LLE | River Campus Libraries | Science Libraries
+LLECirProc = LLE | River Campus Libraries | Science Libraries
+LLEStack = LLE | River Campus Libraries | Science Libraries
+MAGArchv = Memorial Art Gallery
+MAGAuctn = Memorial Art Gallery
+MAGCage = Memorial Art Gallery
+MAGCirc = Memorial Art Gallery
+MAGFolio = Memorial Art Gallery
+MAGIndex = Memorial Art Gallery
+MAGJuv = Memorial Art Gallery
+MAGMulti = Memorial Art Gallery
+MAGMus = Memorial Art Gallery
+MAGOffice = Memorial Art Gallery
+MAGPer = Memorial Art Gallery
+MAGRef = Memorial Art Gallery
+MAGRes = Memorial Art Gallery
+MAGStack = Memorial Art Gallery
+MapCase = River Campus Libraries
+MapCase = Rush Rhees Library
+MgtAnnRpts = Rush Rhees Library
+MgtCirc = Rush Rhees Library
+MgtCirProc = Rush Rhees Library
+MgtIndex = Rush Rhees Library
+MgtPer = Rush Rhees Library
+MgtRedRef = Rush Rhees Library
+MgtRef = Rush Rhees Library
+MgtRes = Rush Rhees Library
+MgtResDsk = Rush Rhees Library
+MgtTest = Rush Rhees Library
+MgtVert = Rush Rhees Library
+MgtWorkPap = Rush Rhees Library
+Miner_ERes = Medical Center Libraries | Miner Library
+MinerAcq = Medical Center Libraries | Miner Library
+MinerAdmOf = Medical Center Libraries | Miner Library
+MinerCat = Medical Center Libraries | Miner Library
+MinerCirc = Medical Center Libraries | Miner Library
+MinerClos = Medical Center Libraries | Miner Library
+MinerComp = Medical Center Libraries | Miner Library
+MinerDigit = Medical Center Libraries | Miner Library
+MinerEd = Medical Center Libraries | Miner Library
+MinerFolio = Medical Center Libraries | Miner Library
+MinerGovDc = Medical Center Libraries | Miner Library
+MinerHist = Medical Center Libraries |  Miner Library
+MinerHShoe = Medical Center Libraries | Miner Library
+MinerHstRf = Medical Center Libraries | Miner Library
+MinerILL = Medical Center Libraries | Miner Library
+MinerLrnCn = Medical Center Libraries | Miner Library
+MinerLrnCt = Medical Center Libraries | Miner Library
+MinerMicro = Medical Center Libraries | Miner Library
+MinerNet = Internet | Medical Center Libraries | Miner Library | Multimedia Center
+MinerNewBk = Medical Center Libraries | Miner Library
+MinerRare = Medical Center Libraries | Miner Library
+MinerRdRm = Medical Center Libraries | Miner Library
+MinerRef1 = Medical Center Libraries | Miner Library
+MinerRef10 = Medical Center Libraries | Miner Library
+MinerRef11 = Medical Center Libraries | Miner Library
+MinerRef12 = Medical Center Libraries | Miner Library
+MinerRef13 = Medical Center Libraries | Miner Library
+MinerRef14 = Medical Center Libraries | Miner Library
+MinerRef15 = Medical Center Libraries | Miner Library
+MinerRef16 = Medical Center Libraries | Miner Library
+MinerRef17 = Medical Center Libraries | Miner Library
+MinerRef18 = Medical Center Libraries | Miner Library
+MinerRef19 = Medical Center Libraries | Miner Library
+MinerRef2 = Medical Center Libraries | Miner Library
+MinerRef20 = Medical Center Libraries | Miner Library
+MinerRef21 = Medical Center Libraries | Miner Library
+MinerRef3 = Medical Center Libraries | Miner Library
+MinerRef4 = Medical Center Libraries | Miner Library
+MinerRef5 = Medical Center Libraries | Miner Library
+MinerRef6 = Medical Center Libraries | Miner Library
+MinerRef7 = Medical Center Libraries | Miner Library
+MinerRef8 = Medical Center Libraries | Miner Library
+MinerRef9 = Medical Center Libraries | Miner Library
+MinerRefBr = Medical Center Libraries | Miner Library
+MinerRefOf = Medical Center Libraries | Miner Library
+MinerRes = Medical Center Libraries | Miner Library
+MinerRf7.5 = Medical Center Libraries | Miner Library
+MinerRSer = Medical Center Libraries | Miner Library
+MinerSer = Medical Center Libraries | Miner Library
+MinerSer2 = Medical Center Libraries | Miner Library
+MinerSoft = Medical Center Libraries | Miner Library
+MinerStack = Medical Center Libraries | Miner Library
+MinerStor = Medical Center Libraries | Miner Library
+MinerSTS = Medical Center Libraries | Miner Library
+MinerTh1 = Medical Center Libraries | Miner Library
+MinerTh2 = Medical Center Libraries | Miner Library
+MinerWebSr = Medical Center Libraries | Miner Library
+MinReserve = Medical Center Libraries | Miner Library
+MinReview = Medical Center Libraries | Miner Library
+MMC_Browse = Multimedia Center | River Campus Libraries | Rush Rhees Library
+MMC_Ref = Multimedia Center | River Campus Libraries | Rush Rhees Library
+MMC_Res = Multimedia Center | River Campus Libraries | Rush Rhees Library
+MMC_Ser = Multimedia Center | River Campus Libraries | Rush Rhees Library
+MMCBrowse = Multimedia Center
+MMCCirDsk = Multimedia Center | River Campus Libraries | Rush Rhees Library
+MMCCirProc = Multimedia Center | River Campus Libraries | Rush Rhees Library
+MMCG113 = Multimedia Center | Rush Rhees Library
+MMCG122 = Multimedia Center | Rush Rhees Library
+MMCG122B = Multimedia Center | Rush Rhees Library
+MMCG122C = Multimedia Center | Rush Rhees Library
+MMCG122E = Multimedia Center | Rush Rhees Library
+MMCG122F = Multimedia Center | Rush Rhees Library
+MMCG122s = Multimedia Center | Rush Rhees Library
+MMCResDsk = Multimedia Center | River Campus Libraries | Rush Rhees Library
+MMCSpecial = Multimedia Center | Rush Rhees Library
+MMCSplOver = Multimedia Center | Rush Rhees Library
+MMCStack = Multimedia Center | River Campus Libraries | Rush Rhees Library
+MMCStck = Multimedia Center
+MMCStfOff = Multimedia Center | River Campus Libraries | Rush Rhees Library
+MMCStkOver = Multimedia Center | Rush Rhees Library
+NetLibrary = Internet
+NewsMicro = Newspaper and Microform Center | Rush Rhees Library
+NewsNewspr = Newspaper and Microform Center | Rush Rhees Library
+NewsSuDoc = Newspaper and Microform Center | Rush Rhees Library
+POA_CDCase = POA Library | River Campus Libraries | Science Libraries
+POA_ChtCas = POA Library | River Campus Libraries | Science Libraries
+POA_ChtRm = POA Library | River Campus Libraries | Science Libraries
+POA_HisOp = POA Library | River Campus Libraries | Science Libraries
+POA_Index = POA Library | River Campus Libraries | Science Libraries
+POA_Off = POA Library | River Campus Libraries | Science Libraries
+POA_Over = POA Library | River Campus Libraries | Science Libraries
+POA_Per = POA Library | River Campus Libraries | Science Libraries
+POA_Ref = POA Library | River Campus Libraries | Science Libraries
+POA_Res = POA Library | River Campus Libraries | Science Libraries
+POA_Soft = POA Library | River Campus Libraries | Science Libraries
+POA_Stack = POA Library | River Campus Libraries | Science Libraries
+POA_Stor = POA Library | River Campus Libraries | Science Libraries
+POACirc = POA Library | River Campus Libraries | Science Libraries
+POACirProc = POA Library | River Campus Libraries | Science Libraries
+POAPer = POA Library | River Campus Libraries | Science Libraries
+RarReview = River Campus Libraries | Rush Rhees Library
+RBCage = River Campus Libraries | Rush Rhees Rare Books and Special Collections
+RBDavis = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+RBHimes = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+RBManuscrp = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+RBOffsite = Rush Rhees Rare Books and Special Collections
+RBSherlock = River Campus Libraries | Rush Rhees Rare Books and Special Collections
+RheesAtlas = River Campus Libraries | Rush Rhees Library | Rush Rhees Reference
+RheesBrows = River Campus Libraries | Rush Rhees Library
+RheesCage = River Campus Libraries
+RheesCD = River Campus Libraries | Rush Rhees Library | Rush Rhees Reference
+RheesCompd = River Campus Libraries | Rush Rhees Library | Rush Rhees Reference
+RheesDocs = River Campus Libraries
+RheesIndex = River Campus Libraries | Rush Rhees Library | Rush Rhees Reference
+RheesJuvLt = River Campus Libraries | Rush Rhees Library
+RheesLckCs = River Campus Libraries | Rush Rhees Library | Rush Rhees Reference
+RheesMap = River Campus Libraries | Rush Rhees Library | Rush Rhees Reference
+RheesMicro = River Campus Libraries | Rush Rhees Library
+RheesNews = River Campus Libraries | Rush Rhees Library
+RheesNYS = River Campus Libraries | Rush Rhees Library
+RheesOsize = River Campus Libraries | Rush Rhees Library
+RheesPer = River Campus Libraries | Rush Rhees Library
+RheesPrsrv = River Campus Libraries
+RheesRarAF = River Campus Libraries | Rush Rhees Library
+RheesRare = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+RheesRareA = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+RheesRareB = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+RheesRareC = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+RheesRareF = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+RheesRareG = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+RheesRareR = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+RheesRareS = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+RheesRef = River Campus Libraries | Rush Rhees Library | Rush Rhees Reference
+RheesRefMc = River Campus Libraries | Rush Rhees Library | Rush Rhees Reference
+RheesRefOf = River Campus Libraries | Rush Rhees Library | Rush Rhees Reference
+RheesResrv = River Campus Libraries | Rush Rhees Library
+RheesRfMic = River Campus Libraries | Rush Rhees Library
+RheesRLHM = River Campus Libraries | Rush Rhees Library | Rush Rhees Rare Books and Special Collections
+RheesStack = River Campus Libraries | Rush Rhees Library
+RheesSuDoc = River Campus Libraries | Rush Rhees Library
+RheesTrBib = River Campus Libraries | Rush Rhees Library | Rush Rhees Reference
+RhsLvlALng = River Campus Libraries | Rush Rhees Library
+RhsLvlBLng = River Campus Libraries | Rush Rhees Library
+Robbins = River Campus Libraries | Robbins Library/Koller-Collins Center |Rush Rhees Library
+RobbinsOff = River Campus Libraries | Robbins Library/Koller-Collins Center | Rush Rhees Library
+RobbinsRef = River Campus Libraries | Robbins Library/Koller-Collins Center | Rush Rhees Library
+RobOvrsize = River Campus Libraries | Robbins Library/Koller-Collins Center | Rush Rhees Library
+SibAcq = Eastman School of Music Libraries |Sibley Music Library
+SibBarcode = Eastman School of Music Libraries | Sibley Music Library
+SibBindery = Eastman School of Music Libraries | Sibley Music Library
+SibBindSp = Eastman School of Music Libraries | Sibley Music Library
+SibBJrnl = Eastman School of Music Libraries | Sibley Music Library
+SibBrittle = Eastman School of Music Libraries | Sibley Music Library
+SibCat = Eastman School of Music Libraries | Sibley Music Library
+SibCatFol = Eastman School of Music Libraries | Sibley Music Library
+SibCircDsk = Eastman School of Music Libraries | Sibley Music Library
+SibCollWks = Eastman School of Music Libraries | Sibley Music Library
+SibConserv = Eastman School of Music Libraries | Sibley Music Library
+SibCurPer = Eastman School of Music Libraries | Sibley Music Library
+SibDiscard = Eastman School of Music Libraries | Sibley Music Library
+SibErasing = Eastman School of Music Libraries | Sibley Music Library
+SibESMArch = Eastman School of Music Libraries | Sibley Music Library
+SibFolio = Eastman School of Music Libraries | Sibley Music Library
+SibFolioRC = Eastman School of Music Libraries | Sibley Music Library
+SibHeckman = Eastman School of Music Libraries | Sibley Music Library
+SibILL = Eastman School of Music Libraries | Sibley Music Library
+SibLocCode = Eastman School of Music Libraries | Sibley Music Library
+SibMicAcq = Sibley Music Library
+SibMicMast = Sibley Music Library
+SibMicro = Eastman School of Music Libraries | Sibley Music Library
+SibMinScor = Eastman School of Music Libraries | Sibley Music Library
+SibMinScRC = Eastman School of Music Libraries | Sibley Music Library
+SibMusEdC = Sibley Music Library
+SibMusEdNC = Sibley Music Library
+SibNet = Internet | Multimedia Center | Sibley Music Library
+SibNewBook = Eastman School of Music Libraries | Sibley Music Library
+SibNewMat = Eastman School of Music Libraries | Sibley Music Library
+SibOctavo = Eastman School of Music Libraries | Sibley Music Library
+SibQckRef = Eastman School of Music Libraries | Sibley Music Library
+SibRare = Eastman School of Music Libraries | Sibley Music Library
+SibRareFol = Eastman School of Music Libraries | Sibley Music Library
+SibRareRef = Eastman School of Music Libraries | Sibley Music Library
+SibRecrd = Eastman School of Music Libraries | Sibley Music Library
+SibRef = Eastman School of Music Libraries | Sibley Music Library
+SibRefMisc = Eastman School of Music Libraries | Sibley Music Library
+SibReform = Eastman School of Music Libraries | Sibley Music Library
+SibReplace = Eastman School of Music Libraries | Sibley Music Library
+SibResDesk = Eastman School of Music Libraries | Sibley Music Library
+SibReserve = Eastman School of Music Libraries | Sibley Music Library
+SibReview = Eastman School of Music Libraries | Sibley Music Library
+SibRstrctd = Eastman School of Music Libraries | Sibley Music Library
+SibScoThes = Eastman School of Music Libraries | Sibley Music Library
+SibSer = Eastman School of Music Libraries | Sibley Music Library
+SibStack = Eastman School of Music Libraries | Sibley Music Library
+SibStaffRm = Eastman School of Music Libraries | Sibley Music Library
+SibStorage = Eastman School of Music Libraries | Sibley Music Library
+SibStorFol = Eastman School of Music Libraries | Sibley Music Library
+SibUnclFol = Eastman School of Music Libraries | Sibley Music Library
+SibUnclSto = Eastman School of Music Libraries | Sibley Music Library
+WellesBrwn = River Campus Libraries | Rush Rhees Library
