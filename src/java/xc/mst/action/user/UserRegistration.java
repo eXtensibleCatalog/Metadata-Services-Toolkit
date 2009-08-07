@@ -138,9 +138,9 @@ public class UserRegistration extends ActionSupport {
 					// Email the user
 					Emailer emailer = new Emailer();
 					StringBuffer messageBody = new StringBuffer();
-					messageBody.append("Account has been created successfully in Metadata Services Toolkit.\n");
-					messageBody.append("You will be able to login once System admin assigns permissions for your account.");
-					String subject = "Your New Metadata Services Toolkit account";
+					messageBody.append("An account has been created successfully in Metadata Services Toolkit with the user name of \"" +  newUser.getUsername().trim() + "\".\n");
+					messageBody.append("You will be able to login once a system admin assigns permissions for your account.");
+					String subject = "Your new Metadata Services Toolkit account";
 
 					emailSent = emailer.sendEmail(newUser.getEmail().trim(), subject, messageBody.toString());
 

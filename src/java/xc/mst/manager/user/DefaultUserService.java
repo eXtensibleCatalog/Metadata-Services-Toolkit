@@ -49,7 +49,7 @@ import xc.mst.email.Emailer;
  * @author Sharmila Ranganathan
  *
  */
-public class DefaultUserService implements UserService{
+public class DefaultUserService implements UserService {
 
 	/** A reference to the logger for this class */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -428,6 +428,37 @@ public class DefaultUserService implements UserService{
 		for(User admin:admins) {
 			emailer.sendEmail(admin.getEmail(), adminSubject, adminMessageBody.toString());
 		}
+ 
+		return true;
+    }
+    
+    /**
+     * Sends email to user to inform that following permissions has been assigned.
+     *
+     * @param user User whose permissions has beedn changed/added/removed
+     * @throws DatabaseConfigException 
+     */
+    public boolean sendEmailToUserWithPermissions(User user) throws DatabaseConfigException {
+
+    	Emailer emailer = new Emailer();
+
+ 		// Email the user to inform that following permissions has been assigned.
+		StringBuffer messageBody = new StringBuffer();
+		messageBody.append("Hello " + user.getUsername() + ",");
+		messageBody.append("\nYou have been asssigned permissions to access following tabs in Metadata Services Toolkit.");
+		for (Permission permission: getPermissionsForUserByTabOrderAsc(user)) {
+			messageBody.append("\n\t" + permission.getTabName());
+		}
+
+		String subject = "Permissions assigned to access Metadata Services Toolkit";
+		
+		boolean emailConfigured = new Emailer().isConfigured();
+		
+		if (!emailConfigured) {
+			return false;
+		}
+		
+		emailer.sendEmail(user.getEmail(), subject, messageBody.toString());
  
 		return true;
     }

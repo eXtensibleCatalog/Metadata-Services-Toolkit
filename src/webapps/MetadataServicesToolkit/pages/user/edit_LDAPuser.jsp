@@ -104,7 +104,7 @@
                       
 
                            <tr>
-                               <td><b>Groups </b>
+                               <td><b>Select groups for user </b>
 
                                    <br>
                                    <select multiple size="8" id="groupsSelected" name ="groupsSelected" style="width:250px; height:125px;">

@@ -203,7 +203,7 @@
 		<action name="allSchedules" class="xc.mst.action.harvest.AllSchedules">
         	<interceptor-ref name="editStack"/>
 	        <interceptor-ref name="roles">
-	        	<param name="allowedRoles">schedule</param>
+	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>        	
 			<result name="success">/pages/schedule/all_schedules.jsp</result>
 		</action>
@@ -212,7 +212,7 @@
 		<action name="getSchedulesTable" class="xc.mst.action.harvest.AllSchedules" method="getAllSchedules">
         	<interceptor-ref name="editStack"/>
 	        <interceptor-ref name="roles">
-	        	<param name="allowedRoles">schedule</param>
+	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>           	
 			<result name="success">/pages/schedule/schedules_table.jsp</result>
 		</action>		
@@ -221,7 +221,7 @@
 		<action name="viewAddSchedule" class="xc.mst.action.harvest.AddSchedule">
         	<interceptor-ref name="editStack"/>
         	<interceptor-ref name="roles">
-	        	<param name="allowedRoles">schedule</param>
+	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>   
 			<result name="success">/pages/schedule/add_schedule.jsp</result>
 			<result name="input">/pages/schedule/add_schedule.jsp</result>
@@ -231,7 +231,7 @@
 		<action name="addScheduleAndNext" class="xc.mst.action.harvest.AddSchedule" method="addScheduleAndProvider">
         	<interceptor-ref name="crudStack"/>
         	<interceptor-ref name="roles">
-	        	<param name="allowedRoles">schedule</param>
+	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>   
 			<result name="success">/pages/schedule/add_schedule_sets_formats.jsp</result>
 			<result name="input">/pages/schedule/add_schedule.jsp</result>
@@ -241,7 +241,7 @@
 		<action name="saveSetFormatForScheduleAndExit" class="xc.mst.action.harvest.AddSchedule" method="addSchedule">
         	<interceptor-ref name="crudStack"/>
         	<interceptor-ref name="roles">
-	        	<param name="allowedRoles">schedule</param>
+	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>   
 			<result name="success" type="redirect">allSchedules.action</result>
 			<result name="input">/pages/schedule/add_schedule_sets_formats.jsp</result>
@@ -251,7 +251,7 @@
 		<action name="saveSetFormatForScheduleAndGoToPrevious" class="xc.mst.action.harvest.AddSchedule" method="addSetFormatForSchedule">
         	<interceptor-ref name="crudStack"/>
         	<interceptor-ref name="roles">
-	        	<param name="allowedRoles">schedule</param>
+	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>   
 			<result name="success">/pages/schedule/add_schedule.jsp</result>
 			<result name="input">/pages/schedule/add_schedule_sets_formats.jsp</result>
@@ -261,7 +261,7 @@
 		<action name="viewEditSchedule" class="xc.mst.action.harvest.AddSchedule" method="viewEdit">
         	<interceptor-ref name="editStack"/>
         	<interceptor-ref name="roles">
-	        	<param name="allowedRoles">schedule</param>
+	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>   
 			<result name="success">/pages/schedule/add_schedule.jsp</result>
 			<result name="input">/pages/schedule/add_schedule.jsp</result>
@@ -271,7 +271,7 @@
 		<action name="updateScheduleAndNext" class="xc.mst.action.harvest.AddSchedule" method="updateSchedule">
         	<interceptor-ref name="editStack"/>
         	<interceptor-ref name="roles">
-	        	<param name="allowedRoles">schedule</param>
+	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>   
 			<result name="success">/pages/schedule/add_schedule_sets_formats.jsp</result>
 			<result name="input">/pages/schedule/add_schedule.jsp</result>
@@ -281,7 +281,7 @@
 		<action name="updateScheduleAndExit" class="xc.mst.action.harvest.AddSchedule" method="updateSchedule">
         	<interceptor-ref name="editStack"/>
         	<interceptor-ref name="roles">
-	        	<param name="allowedRoles">schedule</param>
+	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>   
 			<result name="success" type="redirect">allSchedules.action</result>
 			<result name="input">/pages/schedule/add_schedule.jsp</result>
@@ -292,7 +292,7 @@
 		<action name="deleteSchedule" class="xc.mst.action.harvest.AllSchedules" method="deleteSchedule">
         	<interceptor-ref name="editStack"/>
         	<interceptor-ref name="roles">
-	        	<param name="allowedRoles">schedule</param>
+	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>   
 			<result name="success">/pages/schedule/all_schedules.jsp</result>
 			<result name="input">/pages/schedule/all_schedules.jsp</result>

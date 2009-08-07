@@ -148,6 +148,12 @@ public class EditLDAPUser extends ActionSupport
             user.setServer(tempServer);
             user.setLastLogin(new Date());
 
+            // Check if user has permissions
+            boolean hasPermission = false;
+            if (user.getGroups() != null && user.getGroups().size() > 0) {
+            	hasPermission = true;
+            }
+            
             user.removeAllGroups();
             for(int i=0;i<groupsSelected.length;i++)
             {
@@ -172,6 +178,11 @@ public class EditLDAPUser extends ActionSupport
                 }
             }
             userService.updateUser(user);
+            
+            // Email user that permissions has been added.
+            if (!hasPermission) {
+            	userService.sendEmailToUserWithPermissions(user);
+            }
 
 
             return SUCCESS;

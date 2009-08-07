@@ -356,10 +356,11 @@ public class DefaultPermissionDAO extends PermissionDAO
                 // The user Permissions
 			    List<Permission> permissions = new ArrayList<Permission>();
 
-			    Permission permission = null;
-				if(results.next())
+
+			   // Loop over the results
+				while(results.next())
 				{
-					permission = new Permission();
+					Permission permission = new Permission();
 
 					// Set the fields on the permission
 					permission.setTabId(results.getInt(1));

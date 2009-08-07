@@ -717,7 +717,7 @@ delete from groups;
 delete from groups_to_top_level_tabs;
 
 insert into top_level_tabs values(1,'Repositories',1);
-insert into top_level_tabs values(2,'Schedule',2);
+insert into top_level_tabs values(2,'Harvest',2);
 insert into top_level_tabs values(3,'Services',3);
 insert into top_level_tabs values(4,'Processing Rules',4);
 insert into top_level_tabs values(5,'Browse Records',5);

@@ -200,4 +200,12 @@ public interface UserService {
      * @throws DatabaseConfigException 
      */
     public List<Permission> getPermissionsForUserByTabOrderAsc(User user) throws DatabaseConfigException;
+    
+    /**
+     * Sends email to user to inform that following permissions has been assigned.
+     *
+     * @param user User whose permissions has beedn changed/added/removed
+     * @throws DatabaseConfigException 
+     */
+    public boolean sendEmailToUserWithPermissions(User user) throws DatabaseConfigException ;
 }

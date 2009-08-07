@@ -120,7 +120,7 @@
                    </tr>
                    <tr>
                        <td>
-                             <b>Groups</b>  &nbsp;&nbsp; <br>
+                             <b>Select groups for user</b>  &nbsp;&nbsp; <br>
 
                                <select multiple size="8" id="groupsSelected" name ="groupsSelected" style="width:250px; height:125px;">
                                  <c:forEach var="m" varStatus="b" items="${groupList}">

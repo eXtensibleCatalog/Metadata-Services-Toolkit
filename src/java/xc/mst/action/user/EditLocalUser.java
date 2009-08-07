@@ -10,9 +10,10 @@
 
 package xc.mst.action.user;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
@@ -25,6 +26,8 @@ import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
 
+import com.opensymphony.xwork2.ActionSupport;
+
 /**
  * This action method is used to edit the details of a user
  *
@@ -32,7 +35,10 @@ import xc.mst.manager.user.UserService;
  */
 public class EditLocalUser extends ActionSupport
 {
-     /** creates service object for users */
+     /** Serial  id */
+	private static final long serialVersionUID = -7257803486933942854L;
+
+	/** creates service object for users */
      private UserService userService = new DefaultUserService();
 
       /** creates service object for groups */
@@ -118,6 +124,12 @@ public class EditLocalUser extends ActionSupport
             	user.setPassword(userService.encryptPassword(password));
             }
 
+            // Check if user has permissions
+            boolean hasPermission = false;
+            if (user.getGroups() != null && user.getGroups().size() > 0) {
+            	hasPermission = true;
+            }
+
             user.removeAllGroups();
             for(int i=0;i<groupsSelected.length;i++)
             {
@@ -141,8 +153,13 @@ public class EditLocalUser extends ActionSupport
                     }
                 }
             }
-
+            
             userService.updateUser(user);
+            
+            // Email user that permissions has been added.
+            if (!hasPermission) {
+            	userService.sendEmailToUserWithPermissions(user);
+            }
 
            
             return SUCCESS;

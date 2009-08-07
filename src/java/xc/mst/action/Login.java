@@ -131,7 +131,7 @@ public class Login extends ActionSupport implements ServletRequestAware {
             		return "no-permission";
             	} else if (permissions.get(0).getTabName().equalsIgnoreCase("Repositories")) {
 	            	setForwardLink("allRepository.action");
-	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Schedule")) {
+	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Harvest")) {
 	            	setForwardLink("allSchedules.action");
 	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Services")) {
 	            	setForwardLink("listServices.action");
@@ -199,7 +199,7 @@ public class Login extends ActionSupport implements ServletRequestAware {
                 		return "no-permission";
                 	} else if (permissions.get(0).getTabName().equalsIgnoreCase("Repositories")) {
     	            	setForwardLink("allRepository.action");
-    	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Schedule")) {
+    	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Harvest")) {
     	            	setForwardLink("allSchedules.action");
     	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Services")) {
     	            	setForwardLink("listServices.action");
