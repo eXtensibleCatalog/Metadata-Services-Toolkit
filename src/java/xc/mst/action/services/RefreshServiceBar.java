@@ -77,9 +77,9 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
 	                        	currentProcess = null;
 	                    } else {
 	                    	 if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-	                         	currentProcess = "Harvesting from provider " + Scheduler.getRunningJob().getJobName();
+	                         	currentProcess = "Harvested " +  Scheduler.getRunningJob().getProcessedRecordCount() + " records out of " + Scheduler.getRunningJob().getTotalRecordCount() + " from provider " + Scheduler.getRunningJob().getJobName();
 	                         } else {
-	                         	currentProcess = "Processing through " + Scheduler.getRunningJob().getJobName();
+	                         	currentProcess = "Processed " +  Scheduler.getRunningJob().getProcessedRecordCount() + " records out of " + Scheduler.getRunningJob().getTotalRecordCount() + " through " + Scheduler.getRunningJob().getJobName();
 	                         }
 	                    }
                 	}
