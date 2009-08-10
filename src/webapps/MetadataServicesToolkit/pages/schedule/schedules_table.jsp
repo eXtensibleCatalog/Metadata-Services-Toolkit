@@ -6,6 +6,9 @@
 <div style="display:none">SchedulePage</div>
 <!-- End - This is required to identify that the response is a schedule table and not login screen -->
 
+<input type="hidden" id="is_ascending_order" name="isAscendingOrder" value="${isAscendingOrder}"/>
+<input type="hidden" id="column_sorted" name="columnSorted" value="${columnSorted}"/>
+
 <c:choose>
     <c:when test="${empty schedules}">
          <div class="emptytablebar">
@@ -97,7 +100,7 @@
                                      <c:param name="columnSorted" value="Recurrence"/>
                                    </c:url>
 
-                                   <a href="$javascript:YAHOO.xc.mst.schedule.view.refreshScheduleTable(${!isAscendingOrder}, 'Recurrence');">Recurrence</a>
+                                   <a href="javascript:YAHOO.xc.mst.schedule.view.refreshScheduleTable(${!isAscendingOrder}, 'Recurrence');">Recurrence</a>
 
                                     <c:choose>
                                         <c:when test="${isAscendingOrder==true}">
@@ -202,7 +205,11 @@
                                                     at ${schedule.hour}:00 ${timeZone}
                                                 </c:if>
                                             </td>
-											<td width="80">
+                                            <c:set var="classColumn" value="plainColumn"/>
+					    					<c:if test="${columnSorted=='Status'}">
+													<c:set var="classColumn" value="sortColumn"/>
+                                            </c:if>
+					   						<td width="80" class="${classColumn}">
                                                 <c:set var="schedule_status" value ="${schedule.status}"/>
                                                 <c:choose>
                                                     <c:when test="${schedule_status=='NOT_RUNNING'}">

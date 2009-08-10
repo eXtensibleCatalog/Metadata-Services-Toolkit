@@ -65,11 +65,19 @@ YAHOO.xc.mst.schedule.view = {
 
 	},
 	
+	/**
+	 * Refresh scheule table
+	 */
+	 getAllSchedules : function()
+	 {
+		YAHOO.xc.mst.schedule.view.refreshScheduleTable(document.getElementById('is_ascending_order').value, document.getElementById('column_sorted').value);
+
+	 },	
 	 	
 	/**
 	 * Refresh scheule table
 	 */
-	 refreshScheduleTable : function()
+	 refreshScheduleTable : function(isAscendingOrder, columnToSort)
 	 {
 
 		var handleSuccess = function(o) {
@@ -94,10 +102,10 @@ YAHOO.xc.mst.schedule.view = {
 		
 	    //delete the repository
 	    var cObj = YAHOO.util.Connect.asyncRequest('get',
-			'getSchedulesTable.action' + '?bustcache='+new Date().getTime(), callback);
+			'getSchedulesTable.action' + '?isAscendingOrder=' + isAscendingOrder + '&columnSorted=' + columnToSort + '&bustcache='+new Date().getTime(), callback);
 
   			
-		window.setTimeout('YAHOO.xc.mst.schedule.view.refreshScheduleTable()',2000);	
+		window.setTimeout('YAHOO.xc.mst.schedule.view.getAllSchedules()',2000);	
 	 },
 	 
 
@@ -107,7 +115,7 @@ YAHOO.xc.mst.schedule.view = {
 	init : function() 
 	{
 	    YAHOO.xc.mst.schedule.view.createDeleteScheduleDialog();
-	    YAHOO.xc.mst.schedule.view.refreshScheduleTable();
+	    YAHOO.xc.mst.schedule.view.refreshScheduleTable('true', 'ScheduleName');
 	    
 	}
 
