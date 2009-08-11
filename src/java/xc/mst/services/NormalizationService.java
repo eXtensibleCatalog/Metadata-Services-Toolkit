@@ -120,6 +120,11 @@ public class NormalizationService extends MetadataService
 	 */
 	private List<String> errors = new ArrayList<String>();
 
+	/**
+	 * A list of errors to add to the output record
+	 */
+	private List<String> outputRecordErrors = new ArrayList<String>();
+
     /**
 	 * Construct a NormalizationService Object
 	 */
@@ -145,6 +150,7 @@ public class NormalizationService extends MetadataService
 		
 		// Empty the lists of errors because we're beginning to process a new record
 		errors.clear();
+		outputRecordErrors.clear();
 		
 		// The list of records resulting from processing the incoming record
 		ArrayList<Record> results = new ArrayList<Record>();
@@ -317,6 +323,7 @@ public class NormalizationService extends MetadataService
 			
 			addErrorsToRecord(record, errors);
 			
+			
 			if(log.isDebugEnabled())
 				log.debug("Creating the normalized record.");
 
@@ -340,6 +347,9 @@ public class NormalizationService extends MetadataService
 
 				// Mark the record as not being deleted
 				oldNormalizedRecord.setDeleted(false);
+				
+				// Add errors
+				oldNormalizedRecord.setErrors(outputRecordErrors);
 				
 				// Add the normalized record after modifications were made to it to
 				// the list of modified records.
@@ -366,6 +376,9 @@ public class NormalizationService extends MetadataService
 
 				// Mark the record as not being deleted
 				normalizedRecord.setDeleted(false);
+				
+				// Add errors
+				normalizedRecord.setErrors(outputRecordErrors);
 				
 				// Insert the normalized record
 
@@ -542,8 +555,10 @@ public class NormalizationService extends MetadataService
 			if(log.isDebugEnabled())
 				log.debug("Cannot find a MARC vocabulary mapping for the leader 06 value of " + leader06 + ".");
 			
-			if(leader06 != ' ')
+			if(leader06 != ' ') {
 				errors.add(service.getId() + "-102: Invalid leader 06 value: " + leader06);
+				outputRecordErrors.add(service.getId() + "-102: Invalid leader 06 value: " + leader06);
+			}
 		}
 		else
 		{
@@ -644,6 +659,7 @@ public class NormalizationService extends MetadataService
 				log.debug("Cannot find a mode of issuance mapping for the leader 07 value of " + leader07 + ", returning the unmodified MARCXML.");
 
 			errors.add(service.getId() + "-103: Invalid leader 07 value: " + leader07);
+			outputRecordErrors.add(service.getId() + "-103: Invalid leader 07 value: " + leader07);
 			
 			return marcXml;
 		}
@@ -751,30 +767,34 @@ public class NormalizationService extends MetadataService
 
 		// The value of field 007
 		String field007 = marcXml.getField007();
-
-		// The character at offset 00 of the 007 field
-		char field007offset00 = (field007 != null ? field007.charAt(0) : ' ');
-
-		// Pull the 007 Vocab mapping from the configuration file based on the leader 06 value.
-		String smdVocab = vocab007Properties.getProperty(""+field007offset00, null);
-
-		// If there was no mapping for the provided 007 offset 00, we can't create the field.  In this case return the unmodified MARCXML
-		if(smdVocab == null)
-		{
+		
+		if (field007 != null) {
+	
+			// The character at offset 00 of the 007 field
+			char field007offset00 = (field007 != null ? field007.charAt(0) : ' ');
+	
+			// Pull the 007 Vocab mapping from the configuration file based on the leader 06 value.
+			String smdVocab = vocab007Properties.getProperty(""+field007offset00, null);
+	
+			// If there was no mapping for the provided 007 offset 00, we can't create the field.  In this case return the unmodified MARCXML
+			if(smdVocab == null)
+			{
+				if(log.isDebugEnabled())
+					log.debug("Cannot find an 007 Vocab mapping for the 007 offset 00 value of " + field007offset00 + ", returning the unmodified MARCXML.");
+	
+				errors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00);
+				outputRecordErrors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00);
+				
+				return marcXml;
+			}
+	
 			if(log.isDebugEnabled())
-				log.debug("Cannot find an 007 Vocab mapping for the 007 offset 00 value of " + field007offset00 + ", returning the unmodified MARCXML.");
-
-			errors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00);
-			
-			return marcXml;
+				log.debug("Found the 007 Vocab " + smdVocab + " for the 007 offset 00 value of " + field007offset00 + ".");
+	
+			// Add a MARCXML field to store the SMD Vocab
+			marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_VOCAB, smdVocab);
 		}
-
-		if(log.isDebugEnabled())
-			log.debug("Found the 007 Vocab " + smdVocab + " for the 007 offset 00 value of " + field007offset00 + ".");
-
-		// Add a MARCXML field to store the SMD Vocab
-		marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_VOCAB, smdVocab);
-
+		
 		// Return the modified MARCXML record
 		return marcXml;
 	}
@@ -1005,6 +1025,11 @@ public class NormalizationService extends MetadataService
 		{
 			// Pull the language term mapping from the configuration file based on the language code.
 			String languageTerm = languageTermProperties.getProperty(languageCode, null);
+			
+			// If no mapping for language code, then check for capitalized language code
+			if (languageTerm == null) {
+				languageTerm = languageTermProperties.getProperty(languageCode.toUpperCase(), null);
+			}
 
 			// If there was no mapping for the provided language code, we can't create the field.  In this case continue to the next language code
 			if(languageTerm == null)
@@ -1013,6 +1038,7 @@ public class NormalizationService extends MetadataService
 					log.debug("Cannot find a lanuage term mapping for the language code " + languageCode + ".");
 
 				errors.add(service.getId() + "-106: Unrecognized language code: " + languageCode);
+				outputRecordErrors.add(service.getId() + "-106: Unrecognized language code: " + languageCode);
 				
 				continue;
 			}
@@ -1064,8 +1090,10 @@ public class NormalizationService extends MetadataService
 
 				return marcXml;
 			}
-			else if(field008offset22 != '|' && field008offset22 != '#')
+			else if(field008offset22 != '|' && field008offset22 != '#') {
 				errors.add(service.getId() + "-105: Invalid value in Control Field 008 offset 22: " + field008offset22);
+				outputRecordErrors.add(service.getId() + "-105: Invalid value in Control Field 008 offset 22: " + field008offset22);
+			}
 
 			if(log.isDebugEnabled())
 				log.debug("Found the audience " + audience + " for the 008 offset 22 value of " + field008offset22 + ".");
@@ -2155,5 +2183,8 @@ public class NormalizationService extends MetadataService
 			throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 008 OFFSET 22 TO AUDIENCE");
 		else if(enabledSteps == null)
 			throw new ServiceValidationException("Service configuration file is missing the required section: ENABLED STEPS");
+		else if(locationLimitNameProperties == null)
+			throw new ServiceValidationException("Service configuration file is missing the required section: LOCATION CODE TO LOCATION LIMIT NAME");
+
 	}
 }
