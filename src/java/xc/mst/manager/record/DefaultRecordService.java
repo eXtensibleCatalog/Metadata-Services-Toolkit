@@ -21,7 +21,6 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.common.SolrDocument;
-import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.bo.harvest.HarvestSchedule;
@@ -128,11 +127,10 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_RECORD_ID + ":" + Long.toString(id));
 
 		// Get the result of the query
-		SolrDocumentList docs = null;
-		docs = indexMgr.getDocumentList(query);
+		RecordList records = new RecordList(query);
 
 		// Return null if we couldn't find the record with the correct ID
-		if(docs == null || docs.size() == 0)
+		if(records == null || records.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the record with ID " + id + ".");
@@ -143,7 +141,7 @@ public class DefaultRecordService extends RecordService
 		if(log.isDebugEnabled())
 			log.debug("Parcing the record with ID " + id + " from the Lucene Document it was stored in.");
 
-		return getRecordFromDocument(docs.get(0));
+		return records.get(0);
 	} // end method getById(long)
 
 	@Override
@@ -157,11 +155,10 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_RECORD_ID + ":" + Long.toString(id));
 
 		// Get the result of the query
-		SolrDocumentList docs = null;
-		docs = indexMgr.getDocumentList(query);
+		RecordList records = new RecordList(query);
 
 		// Return null if we couldn't find the record with the correct ID
-		if(docs == null || docs.size() == 0)
+		if(records == null || records.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the record with ID " + id + ".");
@@ -172,7 +169,7 @@ public class DefaultRecordService extends RecordService
 		if(log.isDebugEnabled())
 			log.debug("Parcing the record with ID " + id + " from the Lucene Document it was stored in.");
 
-		return getBasicRecordFromDocument(docs.get(0));
+		return records.get(0);
 	} // end method loadBasicRecord(long)
 
 	@Override
@@ -381,11 +378,10 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:"));
 
 		// Get the result of the query
-		SolrDocumentList docs = null;
-		docs = indexMgr.getDocumentList(query);
+		RecordList records = new RecordList(query);
 
 		// Return null if we couldn't find the record
-		if(docs == null || docs.size() == 0)
+		if(records == null || records.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the record with the OAI identifier " + identifier + ".");
@@ -396,7 +392,7 @@ public class DefaultRecordService extends RecordService
 		if(log.isDebugEnabled())
 			log.debug("Parcing the record with the OAI identifier " + identifier + " from the Lucene Document it was stored in.");
 
-		return getRecordFromDocument(docs.get(0));
+		return records.get(0);
 	} // end method getByOaiIdentifier(String)
 
 	@Override
@@ -411,11 +407,10 @@ public class DefaultRecordService extends RecordService
 				+ FIELD_PROVIDER_ID + ":" + Integer.toString(providerId));
 
 		// Get the result of the query
-		SolrDocumentList docs = null;
-		docs = indexMgr.getDocumentList(query);
+		RecordList records = new RecordList(query);
 		
 		// Return null if we couldn't find the record
-		if(docs == null || docs.size() == 0)
+		if(records == null || records.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the record with the OAI identifier " + identifier  + " and provider ID " + providerId + ".");
@@ -426,7 +421,7 @@ public class DefaultRecordService extends RecordService
 		if(log.isDebugEnabled())
 			log.debug("Parcing the record with the OAI identifier " + identifier + " and provider ID " + providerId + " from the Lucene Document it was stored in.");
 
-		return getRecordFromDocument(docs.get(0));
+		return records.get(0);
 	} // end method getByOaiIdentifierAndProvider(String, int)
 
 	@Override
@@ -441,11 +436,10 @@ public class DefaultRecordService extends RecordService
 				+ FIELD_SERVICE_ID + ":" + Integer.toString(serviceId));
 		
 		// Get the result of the query
-		SolrDocumentList docs = null;
-		docs = indexMgr.getDocumentList(query);
+		RecordList records = new RecordList(query);
 
 		// Return null if we couldn't find the record
-		if(docs == null || docs.size() == 0)
+		if(records == null || records.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the record with the OAI identifier " + identifier  + " and service ID " + serviceId + ".");
@@ -456,7 +450,7 @@ public class DefaultRecordService extends RecordService
 		if(log.isDebugEnabled())
 			log.debug("Parcing the record with the OAI identifier " + identifier + " and service ID " + serviceId + " from the Lucene Document it was stored in.");
 
-		return getRecordFromDocument(docs.get(0));
+		return records.get(0);
 	} // end method getByOaiIdentifierAndService(String, int)
 
 	@Override
@@ -471,11 +465,10 @@ public class DefaultRecordService extends RecordService
 				+ FIELD_PROCESSED_BY_SERVICE_ID + ":" + Integer.toString(serviceId));
 		
 		// Get the result of the query
-		SolrDocumentList docs = null;
-		docs = indexMgr.getDocumentList(query);
+		RecordList records = new RecordList(query);
 
 		// Return null if we couldn't find the record
-		if(docs == null || docs.size() == 0)
+		if(records == null || records.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the input record with the OAI identifier " + identifier  + " and service ID " + serviceId + ".");
@@ -486,7 +479,7 @@ public class DefaultRecordService extends RecordService
 		if(log.isDebugEnabled())
 			log.debug("Parcing the input record with the OAI identifier " + identifier + " and service ID " + serviceId + " from the Lucene Document it was stored in.");
 
-		return getRecordFromDocument(docs.get(0));
+		return records.get(0);
 	}
 
 	@Override
@@ -574,22 +567,13 @@ public class DefaultRecordService extends RecordService
 		query.setRows(Integer.MAX_VALUE);
 		
 		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
-
-		// Return 0 if we couldn't find the records
-		if(docs == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find any records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " with set ID " + setId) + (useMetadataPrefix ? "" : " with format ID " + formatId));
-
-			return 0;
-		} // end if(no records found)
+		RecordList records = new RecordList(query);
 
 		if(log.isDebugEnabled())
-			log.debug("Found " + docs.size() + " records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " with set ID " + setId) + (useMetadataPrefix ? "" : " with format ID " + formatId));
+			log.debug("Found " + records.size() + " records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " with set ID " + setId) + (useMetadataPrefix ? "" : " with format ID " + formatId));
 
 		// Return the list of results
-		return docs.size();
+		return records.size();
 	} // end method getCount(Date, Date, int, int, int)
 
 	@Override
@@ -639,16 +623,13 @@ public class DefaultRecordService extends RecordService
 
 		query.setQuery(queryBuffer.toString());
 		
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
-		
 		// Get the result of the query
-		SolrDocumentList docs = indexMgr.getDocumentList(query);
+		RecordList records = new RecordList(query);
 
 		ArrayList<Record> results = new ArrayList<Record>();
 
 		// Return the empty list if we couldn't find the records
-		if(docs == null)
+		if(records.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find any records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " in set with ID " + setId) + (useMetadataPrefix ? "" : " for format ID " + formatId));
@@ -657,17 +638,17 @@ public class DefaultRecordService extends RecordService
 		} // end if(no results found)
 
 		if(log.isDebugEnabled())
-			log.debug("Found " + docs.size() + " records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " in set with ID " + setId) + (useMetadataPrefix ? "" : " for format ID " + formatId));
+			log.debug("Found " + records.size() + " records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " in set with ID " + setId) + (useMetadataPrefix ? "" : " for format ID " + formatId));
 
 		// The upper bound for the results to return
-		int upperLimit = (offset+numResults < docs.size() ? offset+numResults : docs.size());
+		int upperLimit = (offset+numResults < records.size() ? offset+numResults : records.size());
 
 		// Get each Record from the docs in the target range
 		for(int counter = offset; counter < upperLimit; counter++)
 		{
 			try
 			{
-				results.add(getRecordFromDocument(docs.get(counter)));
+				results.add(records.get(counter));
 			} // end try(get the record)
 			catch(Exception e)
 			{
