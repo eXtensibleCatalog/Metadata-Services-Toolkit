@@ -1011,6 +1011,8 @@ public class Harvester implements ErrorHandler
 					else
 						updateExistingRecord(record, oldRecord);
 				} // end else(the record already existed it the index)
+				
+				processedRecordCount++;
 			} // end try(insert the record)
 			catch (Exception e)
 			{
