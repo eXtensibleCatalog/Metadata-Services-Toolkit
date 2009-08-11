@@ -2936,7 +2936,7 @@ public class TransformationService extends MetadataService
 						titleOfWorkElement.setText(titleBuilder.toString());
 						
 						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
-						workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
+						workSubElements.put(Constants.ELEMENT_CREATOR, linkingTag == null ? null : linkedCreatorFields.get(linkingTag));
 
 						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
 						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
