@@ -26,8 +26,6 @@ import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.log4j.Logger;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
@@ -1207,28 +1205,33 @@ public class Harvester implements ErrorHandler
 	 */
 	private boolean sendReportEmail(String problem)
 	{
-		// The email's subject
-		String subject = "Results of harvesting " + schedule.getProvider().getOaiProviderUrl();
-
-		// The email's body
-		StringBuilder body = new StringBuilder();
-
-		// First report any problems which prevented the harvest from finishing
-		if(problem != null)
-			body.append("The harvest failed for the following reason: ").append(problem).append("\n\n");
-
-		// Report on the number of records inserted successfully and the number of failed inserts
-		body.append(addedCount+updatedCount).append(" Records were successfully harvested.\n");
-		body.append(failedInserts).append(" Records were not able to harvested.\n\n");
-
-		// Show the log information for warnings and errors
-		if(errors.length() > 0)
-			body.append("The following errors occurred:\n").append(errors.toString()).append(warnings.length() > 0 ? "\n" : "");
-		if(warnings.length() > 0)
-			body.append("The following warnings were generated:\n").append(warnings.toString());
-
-		return mailer.sendEmail(schedule.getNotifyEmail(), subject, body.toString());
+		if (schedule.getNotifyEmail() != null && mailer.isConfigured()) {
+			// The email's subject
+			String subject = "Results of harvesting " + schedule.getProvider().getOaiProviderUrl();
+	
+			// The email's body
+			StringBuilder body = new StringBuilder();
+	
+			// First report any problems which prevented the harvest from finishing
+			if(problem != null)
+				body.append("The harvest failed for the following reason: ").append(problem).append("\n\n");
+	
+			// Report on the number of records inserted successfully and the number of failed inserts
+			body.append(addedCount+updatedCount).append(" Records were successfully harvested.\n");
+			body.append(failedInserts).append(" Records were not able to harvested.\n\n");
+	
+			// Show the log information for warnings and errors
+			if(errors.length() > 0)
+				body.append("The following errors occurred:\n").append(errors.toString()).append(warnings.length() > 0 ? "\n" : "");
+			if(warnings.length() > 0)
+				body.append("The following warnings were generated:\n").append(warnings.toString());
+	
+			return mailer.sendEmail(schedule.getNotifyEmail(), subject, body.toString());
+		} else {
+			return false;
+		}
 	} // end method sendReportEmail
+		
 
 	/**
 	 * Retrieves an OAI XML document via http and parses the XML.
