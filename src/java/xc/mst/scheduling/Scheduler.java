@@ -131,13 +131,16 @@ public class Scheduler extends Thread
 			// Run each scheduled harvest
 			for(HarvestSchedule scheduleToRun : schedulesToRun)
 			{
-				if(log.isDebugEnabled())
-					log.debug("Creating a Thread to run HarvestSchedule with id " + scheduleToRun.getId());
-
-				// Start a new Thread to run the Harvester component for the schedule
-				HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
-				harvestThread.setHarvestScheduleId(scheduleToRun.getId());
-				scheduleThread(harvestThread);
+				if(!scheduleToRun.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) && !scheduleToRun.getStatus().equals(Constants.STATUS_SERVICE_PAUSED))
+				{
+					if(log.isDebugEnabled())
+						log.debug("Creating a Thread to run HarvestSchedule with id " + scheduleToRun.getId());
+	
+					// Start a new Thread to run the Harvester component for the schedule
+					HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
+					harvestThread.setHarvestScheduleId(scheduleToRun.getId());
+					scheduleThread(harvestThread);
+				}
 			} // end loop over schedules to be run
 
 
