@@ -15,7 +15,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.SimpleTimeZone;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -138,6 +140,11 @@ public class Harvester implements ErrorHandler
 	 */
 	private static XcIdentifierForFrbrElementDAO frbrLevelIdDao = new DefaultXcIdentifierForFrbrElementDAO();
 
+	/**
+	 * Stores sets that we got from the database so we don't need to repeat queries
+	 */
+	private Map<String, Set> setsLoaded = new HashMap<String, Set>();
+	
 	/**
 	 * The number of records inserted for the current harvest
 	 */
@@ -967,20 +974,29 @@ public class Harvester implements ErrorHandler
 						setSpecAtLevel.append(setSpecAtLevel.length() <= 0 ? setSpecLevel : ":" + setSpecLevel);
 
 						String currentSetSpec = setSpecAtLevel.toString();
-
+						
 						// If the set's already in the index, get it
-						Set set = setDao.getBySetSpec(currentSetSpec);
-
-						// Add the set if there wasn't already one in the database
-						if(set == null)
+						Set set = null;
+						
+						if(setsLoaded.containsKey(currentSetSpec))
+							set = setsLoaded.get(currentSetSpec);
+						else
 						{
-							set = new Set();
-							set.setSetSpec(currentSetSpec);
-							set.setDisplayName(currentSetSpec);
-							set.setIsProviderSet(false);
-							set.setIsRecordSet(true);
-							setDao.insert(set);
-						} // end if(the set wasn't found)
+							set = setDao.getBySetSpec(currentSetSpec);
+	
+							// Add the set if there wasn't already one in the database
+							if(set == null)
+							{
+								set = new Set();
+								set.setSetSpec(currentSetSpec);
+								set.setDisplayName(currentSetSpec);
+								set.setIsProviderSet(false);
+								set.setIsRecordSet(true);
+								setDao.insert(set);
+							} // end if(the set wasn't found)
+							
+							setsLoaded.put(currentSetSpec, set);
+						}
 
 						// Add the set's ID to the list of sets to which the record belongs
 						record.addSet(set);
