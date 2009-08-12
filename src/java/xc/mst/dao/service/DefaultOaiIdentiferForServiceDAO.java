@@ -285,7 +285,7 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 			try
 			{
 				// If the PreparedStatement to update the next oai identifier for a service was not defined, create it
-				if(psUpdate == null || psUpdate.isClosed())
+				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
 					// SQL to update new row
 					String updateSql = "UPDATE " + OAI_IDENTIFIER_FOR_SERVICES_TABLE_NAME +
