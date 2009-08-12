@@ -12,10 +12,6 @@ package xc.mst.harvester;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
-
-
 
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
@@ -154,19 +150,26 @@ public class HarvestRunner
 		{
 			StringBuilder requests = new StringBuilder();
 
+			log.info("Found "+ harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()).size() + " steps.");
+			
+			harvestSchedule.setStatus(Constants.STATUS_SERVICE_RUNNING);
+			
 			for(HarvestScheduleStep step : harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()))
 			{
+				log.info("Running step with id "+ step.getId());
 				runHarvestStep(step);
 
 				if(requests.length() == 0)
 					requests.append(request);
 				else
 					requests.append("\n").append(request);
+				log.info("Finished step with id "+ step.getId());
 			}
 
 			harvestSchedule = harvestScheduleDao.getById(harvestSchedule.getId());
 			
 			harvestSchedule.setRequest(requests.toString());
+			harvestSchedule.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
 
 			harvestScheduleDao.update(harvestSchedule, false);
 
@@ -218,13 +221,17 @@ public class HarvestRunner
 		{
 			log.error("An error occurred while updating the harvest schedule's request field.", e);
 		}
+		catch (Exception e) {
+
+			log.error("An error occurred while harvesting");
+		}
 	}
 
 	/**
 	 * Runs the harvest
 	 * @throws Hexception 
 	 */
-	private void runHarvestStep(HarvestScheduleStep harvestScheduleStep) throws Hexception
+	private void runHarvestStep(HarvestScheduleStep harvestScheduleStep) throws Hexception, Exception
 	{
 		try
 		{
@@ -307,6 +314,7 @@ public class HarvestRunner
 		catch(Exception e)
 		{
 			log.error("An error occurred while harvesting " + baseURL, e);
+			throw e;
 		} // end catch(Exception)
 	} // end method runHarvest()
 
@@ -318,6 +326,25 @@ public class HarvestRunner
 	public String getRequest()
 	{
 		return request;
+	}
+	
+	/**
+	 * Logs the status of the harvest to the database
+	 * @throws DataException
+	 */
+	protected void persistStatus(String status, HarvestScheduleStep harvestScheduleStep)
+	{
+		try {
+			
+			log.info("Changing the status to " + status);
+			HarvestSchedule schedule = harvestScheduleDao.getById(harvestScheduleStep.getSchedule().getId());
+			schedule.setStatus(status);
+			harvestScheduleDao.update(schedule, false);
+
+		} catch (DataException e) {
+			log.error("Error during updating status of harvest_schedule to database.");
+			e.printStackTrace();
+		}
 	}
 } // end class HarvestRunner
 

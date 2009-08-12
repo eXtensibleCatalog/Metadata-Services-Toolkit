@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.SimpleTimeZone;
@@ -358,7 +357,7 @@ public class Harvester implements ErrorHandler
 			runningHarvester = new Harvester(timeOutMilliseconds, scheduleStep, currentHarvest);
 
 			// Update the status of the harvest schedule
-			runningHarvester.persistStatus(Constants.STATUS_SERVICE_RUNNING);
+			//runningHarvester.persistStatus(Constants.STATUS_SERVICE_RUNNING);
 
 			runningHarvester.doHarvest(baseURL, metadataPrefix, setSpec, from, until, harvestAll, harvestAllIfNoDeletedRecord);
 
@@ -377,14 +376,17 @@ public class Harvester implements ErrorHandler
 			// Send an Email report on the results of the harvest
 			runningHarvester.sendReportEmail(null);
 		}
+		catch (Hexception e) {
+
+			throw e;
+		}
+		catch (OAIErrorException e) {
+			throw e;
+			
+		}
 		catch(DatabaseConfigException e)
 		{
 			log.error("Unable to connect to the database with the parameters defined in the configuration file.", e);
-		}
-		catch (DataException e)
-		{
-
-			log.error("Unable to update the harvest status", e);
 		}
 		finally // Update the error and warning count for the provider
 		{
@@ -481,7 +483,7 @@ public class Harvester implements ErrorHandler
 
 			sendReportEmail(errorMsg);
 
-			return;
+			throw new Hexception(errorMsg);
 		}
 
 		// Report an error if the URL is invalid
@@ -494,7 +496,7 @@ public class Harvester implements ErrorHandler
 			errorCount++;
 
 			loggedHException = true;
-
+			
 			sendReportEmail(errorMsg);
 
 			throw new Hexception(errorMsg);
@@ -681,14 +683,12 @@ public class Harvester implements ErrorHandler
                 resumption = extractRecords(metadataPrefix, doc, baseURL);
 			} while(resumption != null); // Repeat as long as we get a resumption token
 
-			// Update the status of the harvest schedule
-			if(!killed)
-				persistStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
-			else
-				persistStatus(Constants.STATUS_SERVICE_CANCELED);
 		} // end try(run the harvest)
 		catch (Hexception he)
 		{
+			if(!killed)
+				persistStatus(Constants.STATUS_SERVICE_ERROR);
+			
 			log.error("A Hexeption occurred while harvesting " + baseURL, he);
 
 			// Log the error for the user and send them a report email if we didn't already
@@ -700,23 +700,15 @@ public class Harvester implements ErrorHandler
 				sendReportEmail("An internal error occurred while executing the harvest.");
 			} // end if(we didn't already log the error)
 
-			try{
-
-				if(killed)
-					persistStatus(Constants.STATUS_SERVICE_CANCELED);
-				else
-					persistStatus(Constants.STATUS_SERVICE_ERROR);
-
-			}
-			catch (DataException e) {
-				log.error("A DataExeption occurred while harvesting " , e);
-			}
 
 			// Throw the Exception so the calling code knows something went wrong
 			throw new Hexception(he.getMessage() + "\n, request was " + request);
 		} // end catch(Hexception)
 		catch (OAIErrorException oaie)
 		{
+			if(!killed)
+				persistStatus(Constants.STATUS_SERVICE_ERROR);
+
 			if(oaie.getOAIErrorCode().contains("noRecordsMatch"))
 				return;
 
@@ -728,32 +720,18 @@ public class Harvester implements ErrorHandler
 
 			sendReportEmail("The OAI provider returned the following error: " + oaie.getOAIErrorCode() + ", " + oaie.getOAIErrorMessage());
 
-			// Update the status of the harvest schedule
-			try {
-				persistStatus(Constants.STATUS_SERVICE_ERROR);
-			} catch (DataException e) {
-				log.error("An OAIErrorExeption occurred while harvesting " , e);
-			}
-
 			// Throw the Exception so the calling code knows something went wrong
 			throw new OAIErrorException(oaie.getOAIErrorCode(), oaie.getOAIErrorMessage());
 		} // end catch(OAIErrorException)
 		catch (Throwable e)
 		{
+			if(!killed)
+				persistStatus(Constants.STATUS_SERVICE_ERROR);
+
 			log.error("An error occurred while harvesting " + baseURL, e);
 
 			LogWriter.addError(schedule.getProvider().getLogFileName(), "An internal error occurred while executing the harvest: " + e.getMessage());
 			errorCount++;
-
-			// Update the status of the harvest schedule
-			try
-			{
-				persistStatus(Constants.STATUS_SERVICE_ERROR);
-			}
-			catch (DataException e1)
-			{
-				log.error("An OAIErrorExeption occurred while harvesting " , e);
-			}
 
 
 			// Throw the error so the calling code knows something went wrong
@@ -762,6 +740,9 @@ public class Harvester implements ErrorHandler
 		} // end catch(Throwable)
 		finally
 		{
+			if(killed)
+				persistStatus(Constants.STATUS_SERVICE_CANCELED);
+			
 			// Process the records we harvested
 			try
 			{
@@ -790,6 +771,8 @@ public class Harvester implements ErrorHandler
 			} // end try(schedule the services that the records triggered)
 			catch(IndexException e)
 			{
+				persistStatus(Constants.STATUS_SERVICE_ERROR);
+				
 				log.error("An error occurred while managing the Index", e);
 
 				LogWriter.addError(schedule.getProvider().getLogFileName(), "An internal error occurred while managing the Index.");
@@ -1027,6 +1010,10 @@ public class Harvester implements ErrorHandler
 				
 				processedRecordCount++;
 			} // end try(insert the record)
+			catch(Hexception hex){
+				
+				throw hex;
+			}
 			catch (Exception e)
 			{
 				failedInserts++;
@@ -1650,11 +1637,16 @@ public class Harvester implements ErrorHandler
 	 * Logs the status of the harvest to the database
 	 * @throws DataException
 	 */
-	protected void persistStatus(String status) throws DataException
+	protected void persistStatus(String status)
 	{
 		log.info("Changing the status to " + status);
 		schedule.setStatus(status);
-		harvestScheduleDao.update(schedule, false);
+		try {
+			harvestScheduleDao.update(schedule, false);
+		} catch (DataException e) {
+			log.error("Error during updating status of harvest_schedule to database.");
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -1664,61 +1656,55 @@ public class Harvester implements ErrorHandler
 	 */
 	private void checkSignal(String baseURL) throws Hexception
 	{
-		try
-		{
+		// Harvester is killed
 			if (killed)
 			{
 				LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been manually terminated.");
 
 				loggedHException = true;
 
-				// Update the status of the harvest schedule
-				persistStatus(Constants.STATUS_SERVICE_CANCELED);
-
 				sendReportEmail("Harvest of " + baseURL + " has been manually terminated.");
 
 				throw new Hexception("Harvest received kill signal");
 			}
+		// Harvester is paused
 			else if(isPaused)
 			{
 				// Update the status of the harvest schedule
 				persistStatus(Constants.STATUS_SERVICE_PAUSED);
 
+				// Sleep if paused and not killed
 				while(isPaused && !killed)
-					try
-					{
-						Thread.sleep(3000);
-					}
-					catch (InterruptedException e)
-					{
-					}
-
+				try
+				{
+					log.info("Harvester Paused. Sleeping for 3 secs.");
+					Thread.sleep(3000);
+						
+				}
+				catch (InterruptedException e)
+				{
+					log.info("Harvester Resumed.");
+				}
+				
+				// Harvester is killed while paused
 				if(killed)
 				{
 					LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been manually terminated.");
 
 					loggedHException = true;
 
-					// Update the status of the harvest schedule
-					persistStatus(Constants.STATUS_SERVICE_CANCELED);
-
 					sendReportEmail("Harvest of " + baseURL + " has been manually terminated.");
 
 					throw new Hexception("Harvest received kill signal");
 				}
 				else{
+					// Harvester is resumed while paused
 					LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been resumed.");
 
 					// Update the status of the harvest schedule
 					persistStatus(Constants.STATUS_SERVICE_RUNNING);
-
 				}
 			}
-		}
-		catch(DataException e)
-		{
-			log.error("Unable to connect to database " , e);
-		}
 	}
 
 
@@ -1744,15 +1730,30 @@ public class Harvester implements ErrorHandler
 			return Constants.STATUS_SERVICE_NOT_RUNNING;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public int getProcessedRecordCount() {
 		
 		return processedRecordCount;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getTotalRecordCount() {
 		
 		return  totalRecordCount;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isKilled() {
+		return killed;
+	}
 
 } // end class Harvester
