@@ -19,9 +19,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
+import xc.mst.dao.harvest.HarvestScheduleDAO;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
@@ -50,17 +54,20 @@ public class InitializeServices  extends HttpServlet {
 	    // Load the services
 	    List<Service> services = null;
 	    String servicesLogFileName = null;
+	    List<HarvestSchedule> schedules = null;
+		HarvestScheduleDAO scheduleDao = new DefaultHarvestScheduleDAO();
+		
 		try 
 		{
 			servicesLogFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 			ServiceDAO serviceDao = new DefaultServiceDAO();
 			services = serviceDao.getAll();
+			schedules = scheduleDao.getAll();
 		} 
 		catch (DatabaseConfigException e1) 
 		{
 			return;
 		}
-    	
 		
 	    for(Service service : services)
 	    {
@@ -91,6 +98,18 @@ public class InitializeServices  extends HttpServlet {
 	    }
 	    
 	    LogWriter.addInfo(servicesLogFileName, "Loaded services");
+	    
+	    for(HarvestSchedule schedule : schedules)
+	    {
+	    	schedule.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
+	    	try 
+	    	{
+				scheduleDao.update(schedule, false);
+			} 
+	    	catch (DataException e) 
+			{
+			}
+	    }
 	  }
 
 	  public void doGet(HttpServletRequest req, HttpServletResponse res) {
