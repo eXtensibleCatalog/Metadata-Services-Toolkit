@@ -147,7 +147,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getById(long)
 
 	@Override
-	public Record loadBasicRecord(long id) throws IndexException, DatabaseConfigException
+	public Record loadBasicRecord(long id) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with ID " + id);
