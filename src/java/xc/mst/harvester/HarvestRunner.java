@@ -232,7 +232,7 @@ public class HarvestRunner
 		}
 		catch (Exception e) {
 
-			log.error("An error occurred while harvesting");
+			log.error("An error occurred while harvesting" + e);
 		}
 	}
 
