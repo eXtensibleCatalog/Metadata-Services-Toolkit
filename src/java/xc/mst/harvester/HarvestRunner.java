@@ -302,12 +302,14 @@ public class HarvestRunner
 			harvestScheduleStep.setLastRan(startTime);
 			harvestScheduleStepDao.update(harvestScheduleStep, harvestScheduleStep.getSchedule().getId());
 		} // end try(run the harvest)
+		catch (Exception e) {
 
-		catch(Exception e)
-		{
 			log.error("An error occurred while harvesting " + baseURL, e);
+			persistStatus(Constants.STATUS_SERVICE_ERROR);
 			throw e;
-		} // end catch(Exception)
+
+		}
+		// end catch(Exception)
 	} // end method runHarvest()
 
 	/**
@@ -324,14 +326,12 @@ public class HarvestRunner
 	 * Logs the status of the harvest to the database
 	 * @throws DataException
 	 */
-	protected void persistStatus(String status, HarvestScheduleStep harvestScheduleStep)
+	protected void persistStatus(String status)
 	{
 		try {
 			
-			log.info("Changing the status to " + status);
-			HarvestSchedule schedule = harvestScheduleDao.getById(harvestScheduleStep.getSchedule().getId());
-			schedule.setStatus(status);
-			harvestScheduleDao.update(schedule, false);
+			currentHarvest.getHarvestSchedule().setStatus(status);
+			harvestScheduleDao.update(currentHarvest.getHarvestSchedule(), false);
 
 		} catch (DataException e) {
 			log.error("Error during updating status of harvest_schedule to database.");
