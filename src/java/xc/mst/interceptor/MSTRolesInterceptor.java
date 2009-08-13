@@ -13,7 +13,7 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 /**
- * Checks theuser permission to execute the action 
+ * Checks the user permission to execute the action 
  * 
  * @author Sharmila Ranganathan
  *
