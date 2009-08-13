@@ -47,6 +47,7 @@ import xc.mst.scheduling.Scheduler;
 import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -705,7 +706,18 @@ public abstract class MetadataService
 
 					numProcessed++;
 					if(numProcessed % 100000 == 0)
+					{
 						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + numProcessed + " records so far.");
+						
+						try
+						{
+							SolrIndexManager.getInstance().commitIndex();
+						}
+						catch (IndexException e)
+						{
+							log.error("An error occurred while commiting new records to the Solr index.", e);
+						}
+					}
 				}
 				else
 					{
