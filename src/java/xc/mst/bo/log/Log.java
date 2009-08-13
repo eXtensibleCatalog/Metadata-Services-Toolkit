@@ -49,12 +49,6 @@ public class Log
 	private String logFileLocation = null;
 
 	/**
-	 * The instance id of the log file
-	 */
-	private int instanceId = -1;
-
-
-	/**
 	 * Gets the log's ID
 	 *
 	 * @return The log's ID
@@ -174,20 +168,5 @@ public class Log
 		this.logFileLocation = logFileLocation;
 	} // end method setLogFileLocation(String)
 
-	/**
-	 * @return the instanceId
-	 */
-	public int getInstanceId() {
-		return instanceId;
-	}
-
-	/**
-	 * @param instanceId the instanceId to set
-	 */
-	public void setInstanceId(int instanceId) {
-		this.instanceId = instanceId;
-	}
-	
-	
 	
 } // end class Log
