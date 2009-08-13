@@ -705,9 +705,10 @@ public abstract class MetadataService
 					recordService.update(processMe);
 
 					numProcessed++;
-					if(numProcessed % 100000 == 0)
+					if(numProcessed % 10000 == 0)
 					{
-						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + numProcessed + " records so far.");
+						if(numProcessed % 100000 == 0)
+							LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + numProcessed + " records so far.");
 						
 						try
 						{
