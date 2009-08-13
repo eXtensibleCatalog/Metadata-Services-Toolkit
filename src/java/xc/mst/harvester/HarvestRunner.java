@@ -153,6 +153,7 @@ public class HarvestRunner
 			log.info("Found "+ harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()).size() + " steps.");
 			
 			harvestSchedule.setStatus(Constants.STATUS_SERVICE_RUNNING);
+			harvestDao.update(currentHarvest);
 			
 			for(HarvestScheduleStep step : harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()))
 			{
