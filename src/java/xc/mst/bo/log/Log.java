@@ -14,7 +14,7 @@ import java.sql.Date;
 /**
  * Represents a general log file used by the MST
  *
- * @author Eric Osisek
+ * @author Eric Osiseka
  */
 public class Log
 {
