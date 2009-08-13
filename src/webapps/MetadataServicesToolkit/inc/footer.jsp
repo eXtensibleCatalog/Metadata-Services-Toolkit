@@ -10,5 +10,5 @@
 
 <div class="footer"/> 
 <div align="right">
-		MetadataServicesToolkit v 0.2.1
+		MetadataServicesToolkit v 0.2.2
 </div>

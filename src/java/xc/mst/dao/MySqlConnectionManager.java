@@ -200,10 +200,10 @@ public class MySqlConnectionManager
 	} // end method registerStatement(PreparedStatement)
 	
 	/**
-	 * Returns true iff the passed statement is registered and has been closed
+	 * Returns true if the passed statement is registered and has been closed
 	 * 
 	 * @param statement The statement to check
-	 * @return True iff the passed statement is registered and has been closed
+	 * @return True if the passed statement is registered and has been closed
 	 */
 	public boolean isClosed(PreparedStatement statement)
 	{
@@ -252,7 +252,10 @@ public class MySqlConnectionManager
 		catch(SQLException e)
 		{
 			resetConnection();
-			throw e;
+			PreparedStatement result = dbConnection.prepareStatement(sql);
+			registerStatement(result);
+			unregisterStatement(replaces);
+			return result;
 		}
 	}
 	

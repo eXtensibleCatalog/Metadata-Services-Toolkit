@@ -510,6 +510,7 @@ public class Harvester implements ErrorHandler
 			validator.validate(schedule.getProvider().getId(), currentHarvest.getId());
 
 			granularity = validator.getGranularity();
+			deletedRecord = validator.getDeletedRecordSupport();
 
 			// Get the provider from the repository so we know the formats and sets it
 			// supports according to the validation we just performed

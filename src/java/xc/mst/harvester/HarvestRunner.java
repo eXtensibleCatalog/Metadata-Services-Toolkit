@@ -146,9 +146,9 @@ public class HarvestRunner
 
 	public void runHarvest()
 	{
+		StringBuilder requests = new StringBuilder();
 		try
 		{
-			StringBuilder requests = new StringBuilder();
 
 			log.info("Found "+ harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()).size() + " steps.");
 			
@@ -189,6 +189,13 @@ public class HarvestRunner
 			// If harvest is aborted it throws Hexception. So in catch block set harvest end time
 			try
 			{
+				
+				harvestSchedule = harvestScheduleDao.getById(harvestSchedule.getId());
+				
+				harvestSchedule.setRequest(requests.toString());
+
+				harvestScheduleDao.update(harvestSchedule, false);
+				
 				// Set the current harvest's end time
 				currentHarvest.setEndTime(new Date());
 				harvestDao.update(currentHarvest);
@@ -293,24 +300,7 @@ public class HarvestRunner
 			harvestScheduleStep.setLastRan(startTime);
 			harvestScheduleStepDao.update(harvestScheduleStep, harvestScheduleStep.getSchedule().getId());
 		} // end try(run the harvest)
-		catch (Hexception e) 
-		{
-			// If harvest is aborted it throws Hexception
-			try {
-				// Set the harvest schedule step's last run date to the time when we started the harvest.
-				harvestScheduleStep.setLastRan(harvestDao.getById(currentHarvest.getId()).getStartTime());
-				harvestScheduleStepDao.update(harvestScheduleStep, harvestScheduleStep.getSchedule().getId());
-			} catch(DatabaseConfigException e2)
-			{
-				log.error("Unable to connect to the database with the parameters defined in the configuration file.", e2);
-			}
-			catch(DataException e2)
-			{
-				log.error("An error occurred while deleting the aborted harvest.", e2);
-			}
 
-			throw e;
-		}
 		catch(Exception e)
 		{
 			log.error("An error occurred while harvesting " + baseURL, e);
@@ -343,7 +333,6 @@ public class HarvestRunner
 
 		} catch (DataException e) {
 			log.error("Error during updating status of harvest_schedule to database.");
-			e.printStackTrace();
 		}
 	}
 } // end class HarvestRunner
