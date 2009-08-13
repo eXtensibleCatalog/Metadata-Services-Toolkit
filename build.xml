@@ -295,7 +295,7 @@
 		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
 		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
 		<copy file="MetadataServicesToolkit.war" todir="dist/mst-instances"/>
-		<zip destfile="dist/MetadataServicesToolkitv0.2.1.zip"  basedir="dist" />
+		<zip destfile="dist/MetadataServicesToolkit_v_0.2.3.zip"  basedir="dist" />
 
 		<!-- Create the Normalization Services zip archive -->
 		<zip destfile="Normalizationv0.2.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Normalization/**"/> 
