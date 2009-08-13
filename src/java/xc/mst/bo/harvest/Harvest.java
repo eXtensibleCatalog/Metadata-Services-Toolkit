@@ -48,7 +48,7 @@ public class Harvest
 	/**
 	 * The ID of the harvest schedule that ran the harvest
 	 */
-	private int harvestScheduleId = -1;
+	private HarvestSchedule harvestSchedule = null;
 	
 	/**
 	 * The provider that was harvested
@@ -160,20 +160,20 @@ public class Harvest
 	 *
 	 * @return The ID of the harvest schedule that ran the harvest
 	 */
-	public int getHarvestScheduleId()
+	public HarvestSchedule getHarvestSchedule()
 	{
-		return harvestScheduleId;
-	} // end method getHarvestScheduleId()
+		return harvestSchedule;
+	} // end method getHarvestSchedule()
 
 	/**
-	 * Sets the ID of the harvest schedule that ran the harvest
+	 * Sets the harvest schedule that ran the harvest
 	 *
-	 * @param harvestScheduleId The ID of the harvest schedule that ran the harvest
+	 * @param harvestSchedule The harvest schedule that ran the harvest
 	 */
-	public void setHarvestScheduleId(int harvestScheduleId)
+	public void setHarvestSchedule(HarvestSchedule harvestSchedule)
 	{
-		this.harvestScheduleId = harvestScheduleId;
-	} // end method setHarvestScheduleId(String)
+		this.harvestSchedule = harvestSchedule;
+	} // end method setHarvestSchedule(HarvestSchedule)
 	
 	/**
 	 * Gets the provider that was harvested

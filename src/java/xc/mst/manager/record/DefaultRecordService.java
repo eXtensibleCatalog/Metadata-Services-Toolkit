@@ -839,7 +839,7 @@ public class DefaultRecordService extends RecordService
 		
 		if (record.getHarvest() != null) 
 		{
-			HarvestSchedule schedule = harvestScheduleDao.getById(record.getHarvest().getHarvestScheduleId());
+			HarvestSchedule schedule = record.getHarvest().getHarvestSchedule();
 			if(schedule != null) {
 				doc.addField(FIELD_HARVEST_SCHEDULE_NAME, schedule.getScheduleName());
 			}

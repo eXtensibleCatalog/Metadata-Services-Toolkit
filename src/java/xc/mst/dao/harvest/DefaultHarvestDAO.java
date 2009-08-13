@@ -162,7 +162,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTime(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestScheduleId(results.getInt(6));
+					harvest.setHarvestSchedule(harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(6)));
 					harvest.setProvider(providerDao.getById(results.getInt(7)));
 
 					// Add the harvest to the list
@@ -246,7 +246,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTimestamp(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestScheduleId(results.getInt(6));
+					harvest.setHarvestSchedule(harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(6)));
 					harvest.setProvider(providerDao.getById(results.getInt(7)));
 
 					if(log.isDebugEnabled())
@@ -333,7 +333,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTime(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestScheduleId(results.getInt(6));
+					harvest.setHarvestSchedule(harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(6)));
 					harvest.setProvider(providerDao.getById(results.getInt(7)));
 
 					if(log.isDebugEnabled())
@@ -423,7 +423,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTimestamp(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestScheduleId(results.getInt(6));
+					harvest.setHarvestSchedule(harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(6)));
 					harvest.setProvider(providerDao.getById(results.getInt(7)));
 
 					// Add the harvest to the list
@@ -556,7 +556,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 					psInsert.setTimestamp(2, harvest.getEndTime());
 					psInsert.setString(3, harvest.getRequest());
 					psInsert.setString(4, harvest.getResult());
-					psInsert.setInt(5, harvest.getHarvestScheduleId());
+					psInsert.setInt(5, harvest.getHarvestSchedule().getId());
 					psInsert.setInt(6, harvest.getProvider().getId());
 
 					// Execute the insert statement and return the result
@@ -628,7 +628,7 @@ public class DefaultHarvestDAO extends HarvestDAO
 				psUpdate.setTimestamp(2, harvest.getEndTime());
 				psUpdate.setString(3, harvest.getRequest());
 				psUpdate.setString(4, harvest.getResult());
-				psUpdate.setInt(5, harvest.getHarvestScheduleId());
+				psUpdate.setInt(5, harvest.getHarvestSchedule().getId());
 				psUpdate.setInt(6, harvest.getProvider().getId());
 				psUpdate.setInt(7, harvest.getId());
 

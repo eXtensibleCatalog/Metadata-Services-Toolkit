@@ -262,7 +262,7 @@ public class HarvestRunner
 			currentHarvest = new Harvest();
 			currentHarvest.setStartTime(startTime);
 			currentHarvest.setProvider(provider);
-			currentHarvest.setHarvestScheduleId(harvestScheduleStep.getSchedule().getId());
+			currentHarvest.setHarvestSchedule(harvestScheduleStep.getSchedule());
 			harvestDao.insert(currentHarvest);
 
 			String timeout = MSTConfiguration.getProperty(Constants.CONFIG_HARVESTER_TIMEOUT_URL);

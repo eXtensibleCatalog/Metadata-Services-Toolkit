@@ -179,7 +179,7 @@ public abstract class HarvestDAO
 			if(harvest.getStartTime() == null)
 				errorMessage.append("The start time field is invalid. ");
 
-			if(harvest.getHarvestScheduleId() <= 0)
+			if(harvest.getHarvestSchedule().getId() <= 0)
 				errorMessage.append("The harvest schedule ID is invalid. ");
 		} // end if(we need to check the non-ID fields)
 
