@@ -239,8 +239,9 @@ public abstract class RecordService
 	 *
 	 * @param id The record's ID
 	 * @return The basic information for a record with the passed record ID
+	 * @throws DatabaseConfigException 
 	 */
-	public abstract Record loadBasicRecord(long id) throws IndexException;
+	public abstract Record loadBasicRecord(long id) throws IndexException, DatabaseConfigException;
 
 	/**
 	 * Gets all records from the index that match a Lucene query string

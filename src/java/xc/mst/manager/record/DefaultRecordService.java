@@ -21,6 +21,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.bo.harvest.HarvestSchedule;
@@ -127,10 +128,11 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_RECORD_ID + ":" + Long.toString(id));
 
 		// Get the result of the query
-		RecordList records = new RecordList(query);
+		SolrDocumentList docs = null;
+		docs = indexMgr.getDocumentList(query);
 
 		// Return null if we couldn't find the record with the correct ID
-		if(records == null || records.size() == 0)
+		if(docs == null || docs.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the record with ID " + id + ".");
@@ -141,11 +143,11 @@ public class DefaultRecordService extends RecordService
 		if(log.isDebugEnabled())
 			log.debug("Parcing the record with ID " + id + " from the Lucene Document it was stored in.");
 
-		return records.get(0);
+		return getRecordFromDocument(docs.get(0));
 	} // end method getById(long)
 
 	@Override
-	public Record loadBasicRecord(long id) throws IndexException
+	public Record loadBasicRecord(long id) throws IndexException, DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with ID " + id);
@@ -155,10 +157,11 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(FIELD_RECORD_ID + ":" + Long.toString(id));
 
 		// Get the result of the query
-		RecordList records = new RecordList(query);
+		SolrDocumentList docs = null;
+		docs = indexMgr.getDocumentList(query);
 
 		// Return null if we couldn't find the record with the correct ID
-		if(records == null || records.size() == 0)
+		if(docs == null || docs.size() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find the record with ID " + id + ".");
@@ -169,7 +172,7 @@ public class DefaultRecordService extends RecordService
 		if(log.isDebugEnabled())
 			log.debug("Parcing the record with ID " + id + " from the Lucene Document it was stored in.");
 
-		return records.get(0);
+		return getBasicRecordFromDocument(docs.get(0));
 	} // end method loadBasicRecord(long)
 
 	@Override
