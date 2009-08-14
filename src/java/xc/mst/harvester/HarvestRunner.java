@@ -305,7 +305,6 @@ public class HarvestRunner
 		catch (Exception e) {
 
 			log.error("An error occurred while harvesting " + baseURL, e);
-			persistStatus(Constants.STATUS_SERVICE_ERROR);
 			throw e;
 
 		}
