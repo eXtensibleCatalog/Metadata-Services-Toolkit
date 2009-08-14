@@ -482,7 +482,7 @@ public class Harvester implements ErrorHandler
 			errorCount++;
 
 			sendReportEmail(errorMsg);
-
+			persistStatus(Constants.STATUS_SERVICE_ERROR);
 			throw new Hexception(errorMsg);
 		}
 
@@ -498,7 +498,7 @@ public class Harvester implements ErrorHandler
 			loggedHException = true;
 			
 			sendReportEmail(errorMsg);
-
+			persistStatus(Constants.STATUS_SERVICE_ERROR);
 			throw new Hexception(errorMsg);
 		} // end if(URL invalid)
 
@@ -560,7 +560,7 @@ public class Harvester implements ErrorHandler
 			loggedHException = true;
 
 			sendReportEmail(e.getMessage());
-
+			persistStatus(Constants.STATUS_SERVICE_ERROR);
 			throw e;
 		} // end catch(Hexception)
 
@@ -741,6 +741,7 @@ public class Harvester implements ErrorHandler
 		} // end catch(Throwable)
 		finally
 		{
+			
 			if(killed)
 				persistStatus(Constants.STATUS_SERVICE_CANCELED);
 			
@@ -1221,6 +1222,9 @@ public class Harvester implements ErrorHandler
 				body.append("The harvest failed for the following reason: ").append(problem).append("\n\n");
 	
 			// Report on the number of records inserted successfully and the number of failed inserts
+			if(processedRecordCount!=totalRecordCount)
+				body.append("Error: Not all records from the OAI were harvested. \n");
+			body.append(processedRecordCount +" records out of " + totalRecordCount +" processed. \n");
 			body.append(addedCount+updatedCount).append(" Records were successfully harvested.\n");
 			body.append(failedInserts).append(" Records were not able to harvested.\n\n");
 	
