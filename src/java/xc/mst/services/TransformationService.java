@@ -2410,7 +2410,8 @@ public class TransformationService extends MetadataService
 						titleOfWorkElement.setText(titleBuilder.toString());
 						
 						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
-						workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
+						if(linkingTag!=null && linkedCreatorFields.get(linkingTag) != null)
+							workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
 
 						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
 						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
@@ -2674,7 +2675,8 @@ public class TransformationService extends MetadataService
 						titleOfWorkElement.setText(titleBuilder.toString());
 						
 						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
-						workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
+						if(linkingTag!=null && linkedCreatorFields.get(linkingTag) != null)
+							workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
 
 						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
 						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
@@ -2936,7 +2938,8 @@ public class TransformationService extends MetadataService
 						titleOfWorkElement.setText(titleBuilder.toString());
 						
 						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
-						workSubElements.put(Constants.ELEMENT_CREATOR, linkingTag == null ? null : linkedCreatorFields.get(linkingTag));
+						if(linkingTag!=null && linkedCreatorFields.get(linkingTag) != null)
+							workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
 
 						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
 						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
@@ -3102,7 +3105,7 @@ public class TransformationService extends MetadataService
 						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE);
 						titleOfWorkElement.setText(workTitleValue.toString());
 						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
-						if(linkedCreatorFields.get(linkingTag) != null)
+						if(linkingTag!=null && linkedCreatorFields.get(linkingTag) != null)
 							workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
 					
 					}
