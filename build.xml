@@ -298,8 +298,8 @@
 		<zip destfile="dist/MetadataServicesToolkit_v_0.2.3.zip"  basedir="dist" />
 
 		<!-- Create the Normalization Services zip archive -->
-		<zip destfile="Normalizationv0.2.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Normalization/**"/> 
-		<move file="Normalizationv0.2.zip" todir="dist" />
+		<zip destfile="Normalization_v_0.2.1.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Normalization/**"/> 
+		<move file="Normalization_v_0.2.1.zip" todir="dist" />
 		
 		<!-- Create the Transformation Services zip archive -->
 		<zip destfile="Transformationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Transformation/**" /> 

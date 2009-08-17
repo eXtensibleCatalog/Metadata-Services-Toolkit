@@ -283,7 +283,7 @@ public class Facade
 		if(log.isDebugEnabled())
 			log.debug("Executing request for verb " + verb + ".");
 
-		// Get the service so we know which port to report
+		// Get the service
 		service = serviceDao.getById(serviceId);
 
 		// If the verb was null, return a bad verb error
@@ -773,6 +773,7 @@ public class Facade
 		}
 
 		// The total number of records which match the request
+		// TODO : it is retrieving all records instead of just the count
 		long totalRecords = recordService.getCount(fromDate, untilDate, (setObject == null ? -1 : setObject.getId()), format.getId(), serviceId);
 
 		// The offset into the returned results which we should start from
@@ -792,7 +793,7 @@ public class Facade
 		}
 		else
 		{
-			// True iff there are more results remaining than we can return at once
+			// True if there are more results remaining than we can return at once
 			boolean hasMore = (totalRecords > (offset + recordLimit));
 
 			if(log.isDebugEnabled())
@@ -947,8 +948,12 @@ public class Facade
 		// Try to parse a date from the String.  If the parse fails, return null
 		try
 		{
+			dateString = dateString.replace('T', ' ');
+			dateString = dateString.replaceFirst("Z", "");
+			dateString = dateString.replaceFirst("z", "");
+			
 			// Parse assuming granularity is to the nearest second
-			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(dateString);
+			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateString);
 		}
 		catch(ParseException e)
 		{

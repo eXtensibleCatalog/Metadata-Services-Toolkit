@@ -17,8 +17,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.lucene.document.DateTools;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.search.ConstantScoreRangeQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -561,8 +565,10 @@ public class DefaultRecordService extends RecordService
 			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID).append(":").append(Integer.toString(formatId));
 		
 		// TODO
-		//if(fromDate != null || untilDate != null)
-			//queryBuffer.append(new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);
+		if(fromDate != null || untilDate != null)
+			queryBuffer.append(" AND ").append(FIELD_UPDATED_AT + ":[").append(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)).append(" TO ").append(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)).append("]");
+
+		//queryBuffer.append(new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);
 
 		query.setQuery(queryBuffer.toString());
 		
@@ -620,13 +626,13 @@ public class DefaultRecordService extends RecordService
 		if(useMetadataPrefix)
 			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID + ":").append(Integer.toString(formatId));
 		
-		// TODO
-		//if(fromDate != null || untilDate != null)
-			//query.add((Query)new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);
+		if(fromDate != null || untilDate != null)
+			queryBuffer.append(" AND ").append(FIELD_UPDATED_AT + ":[").append(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)).append(" TO ").append(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)).append("]");
 
 		query.setQuery(queryBuffer.toString());
 		
 		// Get the result of the query
+		// TODO load only required records and not all. Set start row 
 		RecordList records = new RecordList(query);
 
 		ArrayList<Record> results = new ArrayList<Record>();
@@ -683,7 +689,7 @@ public class DefaultRecordService extends RecordService
 			if (doc.getFieldValue(FIELD_CREATED_AT) != null)
 				record.setCreatedAt(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse((String)doc.getFieldValue(FIELD_CREATED_AT)));
 			if(doc.getFieldValue(FIELD_UPDATED_AT) != null)
-				record.setUpdatedAt(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse((String)doc.getFieldValue(FIELD_UPDATED_AT)));
+				record.setUpdatedAt((Date)doc.getFieldValue(FIELD_UPDATED_AT));
 		} // end try(parse created at and updated at dates
 		catch (java.text.ParseException e)
 		{
@@ -773,7 +779,7 @@ public class DefaultRecordService extends RecordService
 				record.setCreatedAt(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse((String)doc.getFieldValue(FIELD_CREATED_AT)));
 			}
 			if(doc.getFieldValue(FIELD_UPDATED_AT) != null) {
-				record.setUpdatedAt(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse((String)doc.getFieldValue(FIELD_UPDATED_AT)));
+				record.setUpdatedAt((Date)doc.getFieldValue(FIELD_UPDATED_AT));
 			}
 		} // end try(parse created at and updated at dates
 		catch (java.text.ParseException e)
@@ -865,8 +871,9 @@ public class DefaultRecordService extends RecordService
 		doc.addField(FIELD_OAI_HEADER, record.getOaiHeader());
 		doc.addField(FIELD_OAI_XML, record.getOaiXml());
 
-		if(record.getUpdatedAt() != null)
-			doc.addField(FIELD_UPDATED_AT, new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(record.getUpdatedAt()));
+		if(record.getUpdatedAt() != null) {
+			doc.addField(FIELD_UPDATED_AT, record.getUpdatedAt());
+		}
 
 		for(Record upLink : record.getUpLinks())
 			doc.addField(FIELD_UP_LINK, upLink.getOaiIdentifier());
