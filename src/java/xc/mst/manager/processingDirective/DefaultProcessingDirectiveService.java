@@ -14,8 +14,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.processing.ProcessingDirective;
-import xc.mst.bo.provider.Set;
-import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -23,14 +21,10 @@ import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
 import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
-import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.scheduling.ProcessingDirectiveWorkerThread;
 import xc.mst.scheduling.Scheduler;
-import xc.mst.scheduling.ServiceWorkerThread;
-import xc.mst.utils.index.RecordList;
-import xc.mst.utils.index.SolrIndexManager;
 
 /**
  * Service Class that is used for the creation/deletion/updating of Processing Directives.

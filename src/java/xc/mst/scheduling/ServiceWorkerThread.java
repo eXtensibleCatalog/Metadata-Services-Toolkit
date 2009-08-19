@@ -12,7 +12,6 @@ package xc.mst.scheduling;
 import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
-import xc.mst.harvester.Harvester;
 import xc.mst.services.MetadataService;
 
 /**

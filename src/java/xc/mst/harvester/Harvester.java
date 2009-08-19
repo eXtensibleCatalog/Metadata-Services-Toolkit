@@ -798,6 +798,7 @@ public class Harvester implements ErrorHandler
 	 */
 	private String extractRecords(String prefix, Document doc, String baseURL) throws Hexception, OAIErrorException
     {
+		
 		String resumption = null;
 		Element root = doc.getDocumentElement();
 

@@ -47,7 +47,6 @@ import xc.mst.scheduling.Scheduler;
 import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
-import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 

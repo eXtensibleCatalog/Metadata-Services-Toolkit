@@ -6,12 +6,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.EndianUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrInputDocument;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
-import org.jconfig.server.WorkerThread;
 
 import xc.mst.dao.DataException;
 import xc.mst.manager.IndexException;

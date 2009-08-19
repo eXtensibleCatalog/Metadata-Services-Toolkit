@@ -41,7 +41,7 @@ public class SchedulerThreadServlet extends HttpServlet {
 	  public void destroy()
 	  {
 		  if(scheduler != null && scheduler.isAlive())
-			  scheduler.stop();
+			  scheduler.kill();
 	  }
 }
 

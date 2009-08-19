@@ -20,9 +20,7 @@ import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.DefaultWorkService;
-import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
 
 /**
