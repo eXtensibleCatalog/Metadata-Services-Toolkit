@@ -496,6 +496,9 @@ public class Facade
 		// Get all the sets in the database
 		List<Set> sets = setDao.getAll();
 
+		// Get the service for which the sets are listed 
+		Service service = serviceDao.getById(bean.getServiceId());
+		
 		// The ListSets element for the OAI response
 		Element listSets = new Element("ListSets");
 
@@ -511,16 +514,35 @@ public class Facade
 			return;
 		}
 		// Loop over the sets in the database and add each one to the listSets element
+		
 		for(Set set : sets)
 		{
+			
 			if(log.isDebugEnabled())
 				log.debug("Adding the set " + set.getSetSpec() + " to the list of returned sets.");
 
 			LogWriter.addInfo(service.getHarvestOutLogFileName(), "Adding the set " + set.getSetSpec() + " to the list of returned sets.");
 
-			listSets.addContent(XMLUtil.xmlEl("set", null).addContent(XMLUtil.xmlEl("setSpec", set.getSetSpec()))
-					                                      .addContent(XMLUtil.xmlEl("setName", set.getDisplayName())));
+			// If service sets are requested, then do not add all sets
+			if( service != null )
+				break;
+			
+			// Else list all
+			else
+				listSets.addContent(XMLUtil.xmlEl("set", null).addContent(XMLUtil.xmlEl("setSpec", set.getSetSpec()))
+                        .addContent(XMLUtil.xmlEl("setName", set.getDisplayName())));
+
 		}
+
+		// If service sets are requested, then list only the sets for that service
+		if(service!=null)
+			for (Set set : service.getOutputSets()) {
+				
+				listSets.addContent(XMLUtil.xmlEl("set", null).addContent(XMLUtil.xmlEl("setSpec", set.getSetSpec()))
+                        .addContent(XMLUtil.xmlEl("setName", set.getDisplayName())));
+
+		}
+		
 
 		// Set the result to the form
 		bean.setXmlResponse(XMLUtil.format.outputString(listSets));
