@@ -10,10 +10,8 @@
 package xc.mst.manager.record;
 
 import java.util.Date;
-import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
@@ -25,6 +23,7 @@ import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Item;
 import xc.mst.bo.record.Manifestation;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
@@ -244,15 +243,6 @@ public abstract class RecordService
 	public abstract Record loadBasicRecord(long id) throws IndexException;
 
 	/**
-	 * Gets all records from the index that match a Lucene query string
-	 *
-	 * @param queryString The Lucene query that should be run to get the records
-	 * @return A list of all records in the index matching the provided query
-	 * @throws ParseException If the Lucene query was invalid
-	 */
-	public abstract RecordList getByLuceneQuery(String queryString) throws ParseException, IndexException;
-
-	/**
 	 * Gets all records from the index with the passed provider ID
 	 *
 	 * @param providerId The provider ID of the records to retrieve
@@ -445,7 +435,7 @@ public abstract class RecordService
 	 * @param serviceId The service which processed the outgoing records
 	 * @return A list of records matching the parameters queried for
 	 */
-	public abstract List<Record> getOutgoingRecordsInRange(Date fromDate, Date untilDate, int setId, int formatId, int offset, int numResults, int serviceId)
+	public abstract SolrBrowseResult getOutgoingRecordsInRange(Date fromDate, Date untilDate, int setId, int formatId, int offset, int numResults, int serviceId)
 		throws IndexException;
 
 	/**
@@ -578,6 +568,15 @@ public abstract class RecordService
 	 * @return The escaped String
 	 */
 	protected abstract String escapeString(String str);
+	
+	/**
+	 * Load Record only with OAI header and OAI XML
+	 * 
+	 * @param doc Solr document
+	 * @return Record
+	 */
+	public abstract Record getRecordXMLFromDocument(SolrDocument doc); 
+	
 	
 	/**
 	 * Validates the fields on the passed Record Object

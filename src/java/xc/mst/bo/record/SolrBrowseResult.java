@@ -41,6 +41,10 @@ public class SolrBrowseResult {
 		this.records = records;
 		this.facets = facets;
 	}
+	
+	public SolrBrowseResult(List<Record> records) {
+		this.records = records;
+	}
 
 	public List<Record> getRecords() {
 		return records;

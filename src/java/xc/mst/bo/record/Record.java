@@ -87,7 +87,7 @@ public class Record
 	/**
 	 * The record's OAI datestamp
 	 */
-	private String oaiDatestamp = null;
+	private Date oaiDatestamp = null;
 
 	/**
 	 * The record's OAI header
@@ -370,7 +370,7 @@ public class Record
 	 *
 	 * @return The record's OAI datestamp
 	 */
-	public String getOaiDatestamp()
+	public Date getOaiDatestamp()
 	{
 		return oaiDatestamp;
 	} // end method getOaiDatestamp()
@@ -380,7 +380,7 @@ public class Record
 	 *
 	 * @param oaiDatestamp The record's new OAI datestamp
 	 */
-	public void setOaiDatestamp(String oaiDatestamp)
+	public void setOaiDatestamp(Date oaiDatestamp)
 	{
 		this.oaiDatestamp = oaiDatestamp;
 	} // end method setOaiDatestamp(String)

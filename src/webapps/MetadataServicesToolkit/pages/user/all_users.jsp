@@ -236,7 +236,7 @@
                                                             <c:if test="${columnSorted=='LastLogin'}">
                                                                 <c:set var="classColumn" value="sortColumn"/>
                                                             </c:if>
-                                                <td class="${classColumn}">${user.accountCreated}</td>
+                                                <td class="${classColumn}">${user.lastLogin}</td>
                                                             <c:set var="classColumn" value="plainColumn"/>
                                                             <c:if test="${columnSorted=='FirstName'}">
                                                                 <c:set var="classColumn" value="sortColumn"/>

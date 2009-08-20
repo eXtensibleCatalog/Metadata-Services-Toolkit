@@ -11,6 +11,7 @@ package xc.mst.harvester;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -883,7 +884,7 @@ public class Harvester implements ErrorHandler
             // the provider.
             int providerId = (schedule == null ? 1 : schedule.getProvider().getId());
             String oaiIdentifier="";
-            String oaiDatestamp = "";
+            Date oaiDatestamp = null;
             String oaiHeader = "";
             String oaiXml = "";
 
@@ -892,7 +893,19 @@ public class Harvester implements ErrorHandler
 			Element identifierElement = mustFindChild(headerElement, "identifier");
 			Element datestampElement = mustFindChild(headerElement, "datestamp");
 			oaiIdentifier = getContent(identifierElement);
-			oaiDatestamp = getContent(datestampElement);
+
+			String oaiDateString = getContent(datestampElement);
+			try {
+				if (oaiDateString != null && oaiDateString.length() > 0) {
+					oaiDateString = oaiDateString.replace('T', ' ');
+					oaiDateString = oaiDateString.replaceFirst("Z", "");
+					oaiDateString = oaiDateString.replaceFirst("z", "");
+					
+					oaiDatestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(oaiDateString);
+				}
+			} catch(ParseException pe) {
+				log.error("Parsing exception occured while converting String " + oaiDateString + " to date" );
+			}
 
 			// Try to insert the record
 			try

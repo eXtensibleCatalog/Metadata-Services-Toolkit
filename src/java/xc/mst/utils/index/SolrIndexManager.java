@@ -273,7 +273,6 @@ public class SolrIndexManager {
 		}
 		
 		try {
-
 		    QueryResponse rsp = server.query( query );
 		    docs = rsp.getResults();
 

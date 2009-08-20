@@ -31,6 +31,7 @@ import org.apache.solr.common.SolrInputDocument;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.harvest.DefaultHarvestDAO;
@@ -49,6 +50,7 @@ import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.index.RecordList;
+import xc.mst.utils.index.SolrIndexManager;
 
 /**
  * Solr implementation of the service class to query, add, update and
@@ -107,6 +109,9 @@ public class DefaultRecordService extends RecordService
 	 * The trait term
 	 */
 	protected final static Term TERM_TRAIT = new Term(FIELD_TRAIT, "");
+	
+	/** Solr manager */
+	private SolrIndexManager solrIndexManager = SolrIndexManager.getInstance();
 
 	@Override
 	public RecordList getAll() throws IndexException
@@ -178,18 +183,6 @@ public class DefaultRecordService extends RecordService
 
 		return getBasicRecordFromDocument(docs.get(0));
 	} // end method loadBasicRecord(long)
-
-	@Override
-	public RecordList getByLuceneQuery(String queryString)throws ParseException, IndexException
-	{
-		if(log.isDebugEnabled())
-			log.debug("Getting all records that match the query " + queryString);
-
-		SolrQuery query = new SolrQuery().setQuery(queryString);
-
-		// Return the list of results
-		return new RecordList(query);
-	} // end method getByLuceneQuery(String)
 
 	@Override
 	public RecordList getByProviderId(int providerId) throws IndexException
@@ -564,16 +557,14 @@ public class DefaultRecordService extends RecordService
 		if(useMetadataPrefix)
 			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID).append(":").append(Integer.toString(formatId));
 		
-		// TODO
 		if(fromDate != null || untilDate != null)
 			queryBuffer.append(" AND ").append(FIELD_UPDATED_AT + ":[").append(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)).append(" TO ").append(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)).append("]");
-
-		//queryBuffer.append(new ConstantScoreRangeQuery(FIELD_UPDATED_AT, DateTools.dateToString(from, DateTools.Resolution.SECOND), DateTools.dateToString(until, DateTools.Resolution.SECOND), true, true), Occur.MUST);
 
 		query.setQuery(queryBuffer.toString());
 		
 		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
+		query.setRows(0);
+		query.setStart(0);
 		
 		// Get the result of the query
 		RecordList records = new RecordList(query);
@@ -586,8 +577,8 @@ public class DefaultRecordService extends RecordService
 	} // end method getCount(Date, Date, int, int, int)
 
 	@Override
-	public List<Record> getOutgoingRecordsInRange(Date fromDate, Date untilDate, int setId, int formatId, int offset, int numResults, int serviceId)
-			throws IndexException
+	public SolrBrowseResult getOutgoingRecordsInRange(Date fromDate, Date untilDate, int setId, int formatId, int offset, int numResults, int serviceId)
+			throws IndexException 
 	{
 		Date from; // fromDate, or the minimum value for a Date if fromDate is null
 		Date until; // toDate, or now if toDate is null
@@ -626,46 +617,40 @@ public class DefaultRecordService extends RecordService
 		if(useMetadataPrefix)
 			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID + ":").append(Integer.toString(formatId));
 		
-		if(fromDate != null || untilDate != null)
-			queryBuffer.append(" AND ").append(FIELD_UPDATED_AT + ":[").append(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)).append(" TO ").append(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)).append("]");
-
+		// Get only fields OAI header & OAI XML
+		query.addField(FIELD_OAI_HEADER);
+		query.addField(FIELD_OAI_XML);
 		query.setQuery(queryBuffer.toString());
+		if(fromDate != null || untilDate != null) {
+			query.addFilterQuery(FIELD_UPDATED_AT + ":[" + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)) + " TO " + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)) + "]");
+		}
 		
-		// Get the result of the query
-		// TODO load only required records and not all. Set start row 
-		RecordList records = new RecordList(query);
+		query.setStart(offset);
+		query.setRows(numResults);
+		
+		SolrDocumentList docs = solrIndexManager.getDocumentList(query);
+		Iterator<SolrDocument> iteration = docs.iterator();
+		List<Record> records = new ArrayList<Record>();
 
-		ArrayList<Record> results = new ArrayList<Record>();
+	    while(iteration.hasNext()) {
+	    	records.add(getRecordXMLFromDocument(iteration.next()));
+	    }
+
+		SolrBrowseResult result = new SolrBrowseResult(records);
+		result.setTotalNumberOfResults((int)docs.getNumFound());
 
 		// Return the empty list if we couldn't find the records
-		if(records.size() == 0)
+		if(result.getTotalNumberOfResults() == 0)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Could not find any records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " in set with ID " + setId) + (useMetadataPrefix ? "" : " for format ID " + formatId));
 
-			return results;
-		} // end if(no results found)
+		} else {
+			if(log.isDebugEnabled())
+				log.debug("Found " + records.size() + " records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " in set with ID " + setId) + (useMetadataPrefix ? "" : " for format ID " + formatId));
+		}
 
-		if(log.isDebugEnabled())
-			log.debug("Found " + records.size() + " records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " in set with ID " + setId) + (useMetadataPrefix ? "" : " for format ID " + formatId));
-
-		// The upper bound for the results to return
-		int upperLimit = (offset+numResults < records.size() ? offset+numResults : records.size());
-
-		// Get each Record from the docs in the target range
-		for(int counter = offset; counter < upperLimit; counter++)
-		{
-			try
-			{
-				results.add(records.get(counter));
-			} // end try(get the record)
-			catch(Exception e)
-			{
-				log.error("An error occurred getting a document from the Lucene index.");
-			} // end catch(Exception)
-		} // end loop over results in the target range
-
-		return results;
+		return result;
 	} // end method getOutgoingRecordsInRange(Date, Date, int, int, int, int, int)
 
 	@Override
@@ -678,23 +663,18 @@ public class DefaultRecordService extends RecordService
 		record.setId(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
 		record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
 		record.setDeleted(Boolean.parseBoolean((String)doc.getFieldValue(FIELD_DELETED)));
-		record.setOaiDatestamp((String)doc.getFieldValue(FIELD_OAI_DATESTAMP));
+		if (doc.getFieldValue(FIELD_OAI_DATESTAMP) != null) {
+			record.setOaiDatestamp((Date)doc.getFieldValue(FIELD_OAI_DATESTAMP));
+		}
 		record.setOaiHeader((String)doc.getFieldValue(FIELD_OAI_HEADER));
 		record.setOaiIdentifier((String) doc.getFieldValue(FIELD_OAI_IDENTIFIER));
 		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
 		record.setHarvestScheduleName((String)doc.getFieldValue(FIELD_HARVEST_SCHEDULE_NAME));
 
-		try
-		{
-			if (doc.getFieldValue(FIELD_CREATED_AT) != null)
-				record.setCreatedAt(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse((String)doc.getFieldValue(FIELD_CREATED_AT)));
-			if(doc.getFieldValue(FIELD_UPDATED_AT) != null)
-				record.setUpdatedAt((Date)doc.getFieldValue(FIELD_UPDATED_AT));
-		} // end try(parse created at and updated at dates
-		catch (java.text.ParseException e)
-		{
-			log.error("An error occurred parsing the created at and updated at dates from the Lucene document.", e);
-		} // end catch(ParseException)
+		if (doc.getFieldValue(FIELD_CREATED_AT) != null)
+			record.setCreatedAt((Date)doc.getFieldValue(FIELD_CREATED_AT));
+		if(doc.getFieldValue(FIELD_UPDATED_AT) != null)
+			record.setUpdatedAt((Date)doc.getFieldValue(FIELD_UPDATED_AT));
 
 		Collection<Object> traits = doc.getFieldValues(FIELD_TRAIT);
 		if(traits != null) {
@@ -711,8 +691,6 @@ public class DefaultRecordService extends RecordService
 	@Override
 	public Record getRecordFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
-
-		log.debug("getRecordFromSolrDocument::"+doc);
 		// Create a Record object to store the result
 		Record record = new Record();
 
@@ -724,7 +702,9 @@ public class DefaultRecordService extends RecordService
 		record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
 		record.setDeleted(Boolean.parseBoolean((String)doc.getFieldValue(FIELD_DELETED)));
 		record.setFormat(formatDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_FORMAT_ID))));
-		record.setOaiDatestamp((String)doc.getFieldValue(FIELD_OAI_DATESTAMP));
+		if (doc.getFieldValue(FIELD_OAI_DATESTAMP) != null) {
+			record.setOaiDatestamp((Date)doc.getFieldValue(FIELD_OAI_DATESTAMP));
+		}
 		record.setOaiHeader((String)doc.getFieldValue(FIELD_OAI_HEADER));
 		record.setOaiIdentifier(oaiId);
 		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
@@ -744,15 +724,20 @@ public class DefaultRecordService extends RecordService
 				record.addError((String)error);
 		
 		Collection<Object> uplinks = doc.getFieldValues(FIELD_UP_LINK);
-		if(uplinks != null)
-			for(Object uplink : uplinks)
+		if(uplinks != null) {
+			for(Object uplink : uplinks) {
 				record.addUpLink(getByOaiIdentifier((String)uplink));
+			}
+		}
 		
 		Collection<Object> processedFroms = doc.getFieldValues(FIELD_PROCESSED_FROM);
-		if(processedFroms != null)
-			for(Object processedFrom : processedFroms)
+		if(processedFroms != null) {
+			for(Object processedFrom : processedFroms) {
 				record.addProcessedFrom(loadBasicRecord(Long.parseLong((String)processedFrom)));
-
+			}
+			
+		}
+		
 		Collection<Object> successors = doc.getFieldValues(FIELD_SUCCESSOR);
 		if(successors != null)
 			for(Object successor : successors)
@@ -773,25 +758,30 @@ public class DefaultRecordService extends RecordService
 			for(Object trait : traits)
 				record.addTrait((String)trait);
 		
-		try
-		{
-			if (doc.getFieldValue(FIELD_CREATED_AT) != null) {
-				record.setCreatedAt(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse((String)doc.getFieldValue(FIELD_CREATED_AT)));
-			}
-			if(doc.getFieldValue(FIELD_UPDATED_AT) != null) {
-				record.setUpdatedAt((Date)doc.getFieldValue(FIELD_UPDATED_AT));
-			}
-		} // end try(parse created at and updated at dates
-		catch (java.text.ParseException e)
-		{
-			log.error("An error occurred parsing the created at and updated at dates from the Lucene document.", e);
-		} // end catch(ParseException)
-
+		if (doc.getFieldValue(FIELD_CREATED_AT) != null) {
+			record.setCreatedAt((Date)doc.getFieldValue(FIELD_CREATED_AT));
+		}
+		if(doc.getFieldValue(FIELD_UPDATED_AT) != null) {
+			record.setUpdatedAt((Date)doc.getFieldValue(FIELD_UPDATED_AT));
+		}
 		
 		// Return the record we parsed from the document
 		return record;
 	} // end method getRecordFromDocument(Document)
 
+	@Override
+	public Record getRecordXMLFromDocument(SolrDocument doc) 
+	{
+		// Create a Record object to store the result
+		Record record = new Record();
+
+		record.setOaiHeader((String)doc.getFieldValue(FIELD_OAI_HEADER));
+		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
+		
+		// Return the record we parsed from the document
+		return record;
+	} // end method getRecordXMLFromDocument(Document)
+	
 	@Override
 	protected SolrInputDocument setFieldsOnDocument(Record record, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
@@ -803,8 +793,8 @@ public class DefaultRecordService extends RecordService
 			record.setId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD));
 
 		// If the oaiDatestamp is null, set it to the current time
-		if(record.getOaiDatestamp() == null || record.getOaiDatestamp().length() <= 0)
-			record.setOaiDatestamp(new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").format(generateNewId ? record.getCreatedAt() : record.getUpdatedAt()));
+		if(record.getOaiDatestamp() == null)
+			record.setOaiDatestamp(generateNewId ? record.getCreatedAt() : record.getUpdatedAt());
 
 		// If the header is null, set it based on the identifier, datestamp, and sets
 		if(record.getOaiHeader() == null || record.getOaiHeader().length() <= 0)
@@ -830,7 +820,7 @@ public class DefaultRecordService extends RecordService
 		doc.addField(FIELD_FRBR_LEVEL_ID, Long.toString(record.getFrbrLevelId()));
 		
 		if (record.getCreatedAt() != null) {
-			doc.addField(FIELD_CREATED_AT, new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(record.getCreatedAt()));
+			doc.addField(FIELD_CREATED_AT, record.getCreatedAt());
 		}
 		doc.addField(FIELD_DELETED, Boolean.toString(record.getDeleted()));
 
@@ -867,7 +857,9 @@ public class DefaultRecordService extends RecordService
 		}
 
 		doc.addField(FIELD_OAI_IDENTIFIER, record.getOaiIdentifier());
-		doc.addField(FIELD_OAI_DATESTAMP, record.getOaiDatestamp());
+		if (record.getOaiDatestamp() != null) {
+			doc.addField(FIELD_OAI_DATESTAMP, record.getOaiDatestamp());
+		}
 		doc.addField(FIELD_OAI_HEADER, record.getOaiHeader());
 		doc.addField(FIELD_OAI_XML, record.getOaiXml());
 

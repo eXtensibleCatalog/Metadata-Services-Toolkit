@@ -9,7 +9,10 @@
 
 package xc.mst.action;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,8 +34,6 @@ import xc.mst.manager.user.UserService;
 import xc.mst.utils.MSTConfiguration;
 
 import com.opensymphony.xwork2.ActionSupport;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 /**
  * Action class for user login
@@ -184,6 +185,8 @@ public class Login extends ActionSupport implements ServletRequestAware {
 			if (result) {
 				// Place the user object in session
 				request.getSession().setAttribute("user", completeUserData);
+				user.setLastLogin(new Date());
+				userService.updateUser(user);
 
                 //get Calendar instance
                 Calendar now = Calendar.getInstance();

@@ -114,7 +114,6 @@ public class AddLocalUser extends ActionSupport
             user.setAccountCreated(new Date());
             user.setFailedLoginAttempts(0);
             user.setUsername(userName);
-            user.setLastLogin(new Date());
             Server localServer = new DefaultServerService().getServerByName("Local");
             user.setServer(localServer);
 

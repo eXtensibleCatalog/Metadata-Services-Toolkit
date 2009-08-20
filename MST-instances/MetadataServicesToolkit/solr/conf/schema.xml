@@ -194,7 +194,7 @@
    
    <field name="indexed_object_type" type="string" indexed="true" stored="true"/>
    <field name="frbr_level_id" type="string" indexed="true" stored="true"/>
-   <field name="created_at" type="string" indexed="true" stored="true"/>
+   <field name="created_at" type="date" indexed="true" stored="true"/>
    <field name="deleted" type="string" indexed="true" stored="true"/>
 
    <field name="format_id" type="string" indexed="true" stored="true"/>
@@ -213,11 +213,11 @@
    <field name="service_name" type="string" indexed="true" stored="true"/>
 
    <field name="oai_identifier" type="string" indexed="true" stored="true"/>
-   <field name="oai_datestamp" type="string" indexed="true" stored="true"/>
+   <field name="oai_datestamp" type="date" indexed="true" stored="true"/>
    <field name="oai_header" type="string" indexed="true" stored="true"  />
    <field name="oai_xml" type="text" indexed="true" stored="true" compressed="true"/>
 
-   <field name="updated_at" type="string" indexed="true" stored="true"/>
+   <field name="updated_at" type="date" indexed="true" stored="true"/>
    <field name="up_link" type="string" indexed="true" stored="true" multiValued="true"/>
 
    <field name="set_spec" type="string" indexed="true" stored="true" multiValued="true"/>

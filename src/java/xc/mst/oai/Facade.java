@@ -23,6 +23,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.ResumptionToken;
+import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
@@ -41,6 +42,7 @@ import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.XMLUtil;
+import xc.mst.utils.index.RecordList;
 
 /**
  * A facade class to create the response to the different OAI verb requests
@@ -379,7 +381,7 @@ public class Facade
 		// Get the earliest record.  If it's not null, set the earliestDatestamp to it's datestamp.
 		// Otherwise, there were no records, and we will set it to the beginning of the epoch
 		Record earliest = recordService.getEarliest(serviceId);
-		root.addContent(XMLUtil.xmlEl("earliestDatestamp", (earliest != null ? earliest.getOaiDatestamp() : "1970-01-01T12:00:00Z")));
+		root.addContent(XMLUtil.xmlEl("earliestDatestamp", (earliest != null ? new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").format(earliest.getOaiDatestamp()) : "1970-01-01T12:00:00Z")));
 
 		String[] compressions = configuration.getProperty(Constants.CONFIG_OAI_REPO_COMPRESSION).split(";");
 		for(String compression : compressions)
@@ -794,12 +796,14 @@ public class Facade
 			return XMLUtil.xmlTag("error", Constants.ERROR_NO_RECORDS_MATCH, new String[]{"code", "noRecordsMatch"});
 		}
 
-		// The total number of records which match the request
-		// TODO : it is retrieving all records instead of just the count
-		long totalRecords = recordService.getCount(fromDate, untilDate, (setObject == null ? -1 : setObject.getId()), format.getId(), serviceId);
-
 		// The offset into the returned results which we should start from
 		int offset = (resToken == null ? 0 : resToken.getOffset());
+
+		// Get records from offset to record limit
+		SolrBrowseResult result = recordService.getOutgoingRecordsInRange(fromDate, untilDate, (setObject == null ? -1 : setObject.getId()), format.getId(), offset, recordLimit, serviceId);
+
+		// Total number of records satisfying the criteria. This is not the number of records loaded. 
+		long totalRecords = result.getTotalNumberOfResults();
 
 		// The XML for the OAI result
 		StringBuffer xml = new StringBuffer();
@@ -815,39 +819,35 @@ public class Facade
 		}
 		else
 		{
+			
 			// True if there are more results remaining than we can return at once
 			boolean hasMore = (totalRecords > (offset + recordLimit));
 
 			if(log.isDebugEnabled())
 				log.debug("Returning results " + offset + " - " + offset + recordLimit + " " + (set == null ? "" : "of set " + set + " ") + " and format " + format.getId() + (from == null ? "" : "from " + from + " ") + (until == null ? "" : "until " + until) + ".");
 
-			// Get the records to return
-			List<Record> records = recordService.getOutgoingRecordsInRange(fromDate, untilDate, (setObject == null ? -1 : setObject.getId()), format.getId(), offset, recordLimit, serviceId);
-
-			if(log.isDebugEnabled())
-				log.debug("Record set size: " + records.size());
-
 			// The number of records returned
 			int returnedRecordsCount = 0;
 
 			// Add whitespace to make the result more readable
 			xml.append("\n");
-
+			
 			// Append XML for each record to the result
-			for(Record record : records)
+			for(Record record:result.getRecords())
 			{
 				// If we're to get the records, append the record's OAI XML.
 				// Otherwise, we're just supposed to get the identifiers, so
 				// append the record's OAI header
-				if(getRecords)
+				if(getRecords) {
 					xml.append("<record>\n")
 					          .append(record.getOaiHeader().replaceAll("<\\?xml.*\\?>", ""))
 					          .append("\n<metadata>\n")
 					          .append(record.getOaiXml().replaceAll("<\\?xml.*\\?>", ""))
 					          .append("\n</metadata>\n")
 					          .append("\n</record>\n");
-			    else
+				} else {
 			    	xml.append(record.getOaiHeader().replaceAll("<\\?xml.*\\?>", "")).append("\n");
+				}
 				// Increment the counter for the number of records returned
 				returnedRecordsCount++;
 
@@ -935,7 +935,8 @@ public class Facade
 
 						LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and a null resumptionToken in response to the " + verb + " request.");
 
-						resumptionTokenDao.insert(resToken);
+						// TODO should it be delete instead?
+						resumptionTokenDao.delete(resToken);
 					}
 					catch(DataException e)
 					{
