@@ -144,15 +144,15 @@ public class Record
 	 */
 	private List<String> errors = new ArrayList<String>();
 	
-//	/**
-//	 * Number of predecessor
-//	 */
-//	private int numberOfPredecessor;
-//	
-//	/**
-//	 * Number of Successor
-//	 */
-//	private int numberOfSuccessor;
+	/**
+	 * Number of predecessor
+	 */
+	private int numberOfPredecessors;
+	
+	/**
+	 * Number of Successor
+	 */
+	private int numberOfSuccessors;
 	
 	/**
 	 * Get's the indexed object type of this class.  This is used to differentiate between
@@ -835,7 +835,7 @@ public class Record
 	 */
 	public int getNumberOfPredecessors() 
 	{
-		return processedFrom.size();
+		return numberOfPredecessors;
 	}
 
 	/**
@@ -845,7 +845,7 @@ public class Record
 	 */
 	public int getNumberOfSuccessors() 
 	{
-		return successors.size();
+		return numberOfSuccessors;
 	}
 
 	/**
@@ -864,6 +864,14 @@ public class Record
 	 */
 	public void setHarvestScheduleName(String harvestScheduleName) {
 		this.harvestScheduleName = harvestScheduleName;
+	}
+
+	public void setNumberOfPredecessors(int numberOfPredecessors) {
+		this.numberOfPredecessors = numberOfPredecessors;
+	}
+
+	public void setNumberOfSuccessors(int numberOfSuccessors) {
+		this.numberOfSuccessors = numberOfSuccessors;
 	}
 
 } // end class Record

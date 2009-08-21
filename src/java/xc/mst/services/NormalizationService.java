@@ -376,7 +376,7 @@ public class NormalizationService extends MetadataService
 
 				// Mark the record as not being deleted
 				normalizedRecord.setDeleted(false);
-				
+
 				// Add errors
 				normalizedRecord.setErrors(outputRecordErrors);
 				
@@ -406,7 +406,7 @@ public class NormalizationService extends MetadataService
 					setName = "MARCXML Authority Records";
 					setDescription = "A set of all MARCXML Authority records in the repository.";
 				}
-
+				
 				if(setSpec != null)
 				{
 					// Get the set for the provider
@@ -423,10 +423,9 @@ public class NormalizationService extends MetadataService
 				// Add the record to the list of records resulting from processing the
 				// incoming record
 				results.add(normalizedRecord);
-
+				
 				if(log.isInfoEnabled())
 					log.info("Created normalized record from unnormalized record with ID " + record.getId());
-
 				return results;
 			}
 		}

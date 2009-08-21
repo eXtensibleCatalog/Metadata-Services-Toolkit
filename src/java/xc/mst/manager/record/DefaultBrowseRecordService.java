@@ -62,6 +62,7 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 		
 		// Discard deleted records
 		query.addFilterQuery("deleted:false");
+		
 		if (log.isDebugEnabled()) {
 			log.debug("Querying Solr server with query:" + query);
 		}
@@ -87,8 +88,7 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 	    List<Record> records = new ArrayList<Record>();
 
 	    while(iteration.hasNext()) {
-
-	    	records.add(recordService.getRecordFromDocument(iteration.next()));
+	    	records.add(recordService.getRecordFieldsForBrowseFromDocument(iteration.next()));
 	    }
 
 	    // Load the facets in the SolrBrowseResilt object

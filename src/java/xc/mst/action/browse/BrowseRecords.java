@@ -142,7 +142,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 				solrQuery.setQuery("*:*");
 			}	else {
 				if (searchXML) {
-					solrQuery.setQuery(query + " OR " + "oai_xml:" + query.replaceAll(":", "\\\\:"));
+					solrQuery.setQuery(query.replaceAll(":", "\\\\:") + " OR " + "oai_xml:" + query.replaceAll(":", "\\\\:"));
 				} else {
 					solrQuery.setQuery(query.replaceAll(":", "\\\\:"));
 				}
@@ -220,7 +220,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		    // Query formation
 			solrQuery.setFacet(true)
 		    		 .setFacetMinCount(1);
-			
 			solrQuery.addFacetField("provider_name");
 			solrQuery.addFacetField("service_name");
 			solrQuery.addFacetField("format_name");
@@ -228,11 +227,26 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			solrQuery.addFacetField("harvest_start_time");
 			solrQuery.addFacetField("error");
 			
-		    
+			// Fileds to load
+			solrQuery.addField(RecordService.FIELD_RECORD_ID);
+			solrQuery.addField(RecordService.FIELD_FORMAT_ID);
+			solrQuery.addField(RecordService.FIELD_PROVIDER_ID);
+			solrQuery.addField(RecordService.FIELD_SERVICE_ID);
+			solrQuery.addField(RecordService.FIELD_HARVEST_SCHEDULE_NAME);
+			solrQuery.addField(RecordService.FIELD_ERROR);
+			solrQuery.addField(RecordService.FIELD_PROCESSED_FROM);
+			solrQuery.addField(RecordService.FIELD_SUCCESSOR);
+			
 			rowEnd = rowStart + numberOfResultsToShow;
 			
-			solrQuery.setStart(rowStart);
-			solrQuery.setRows(numberOfResultsToShow);
+			// In initial page load, we are not going to show any records. Only facets will be shown
+			if (isInitialLoad) {
+				solrQuery.setStart(0);
+				solrQuery.setRows(0);
+			} else {
+				solrQuery.setStart(rowStart);
+				solrQuery.setRows(numberOfResultsToShow);
+			}
 		    result = browseRecordService.search(solrQuery);   
 		    
 		    if (log.isDebugEnabled()) {

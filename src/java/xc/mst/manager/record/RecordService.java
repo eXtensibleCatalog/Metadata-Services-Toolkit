@@ -65,157 +65,157 @@ public abstract class RecordService
 	/**
 	 * The field name for the indexed object type
 	 */
-	protected static final String FIELD_INDEXED_OBJECT_TYPE = "indexed_object_type";
+	public static final String FIELD_INDEXED_OBJECT_TYPE = "indexed_object_type";
 
 	/**
 	 * The name of the record ID field
 	 */
-	protected final static String FIELD_RECORD_ID = "record_id";
+	public final static String FIELD_RECORD_ID = "record_id";
 
 	/**
 	 * The name of the frbr level ID field
 	 */
-	protected final static String FIELD_FRBR_LEVEL_ID = "frbr_level_id";
+	public final static String FIELD_FRBR_LEVEL_ID = "frbr_level_id";
 
 	/**
 	 * The name of the up link field
 	 */
-	protected final static String FIELD_UP_LINK = "up_link";
+	public final static String FIELD_UP_LINK = "up_link";
 
 	/**
 	 * The name of the created at field
 	 */
-	protected final static String FIELD_CREATED_AT = "created_at";
+	public final static String FIELD_CREATED_AT = "created_at";
 
 	/**
 	 * The name of the updated at field
 	 */
-	protected final static String FIELD_UPDATED_AT = "updated_at";
+	public final static String FIELD_UPDATED_AT = "updated_at";
 
 	/**
 	 * The name of the deleted field
 	 */
-	protected final static String FIELD_DELETED = "deleted";
+	public final static String FIELD_DELETED = "deleted";
 
 	/**
 	 * The name of the format ID field
 	 */
-	protected final static String FIELD_FORMAT_ID = "format_id";
+	public final static String FIELD_FORMAT_ID = "format_id";
 
 	/**
 	 * The name of the provider ID field
 	 */
-	protected final static String FIELD_PROVIDER_ID = "provider_id";
+	public final static String FIELD_PROVIDER_ID = "provider_id";
 
 	/**
 	 * The name of the service ID field
 	 */
-	protected final static String FIELD_SERVICE_ID = "service_id";
+	public final static String FIELD_SERVICE_ID = "service_id";
 
 	/**
 	 * The name of the service field
 	 */
-	protected final static String FIELD_SERVICE_NAME = "service_name";
+	public final static String FIELD_SERVICE_NAME = "service_name";
 
 	/**
 	 * The name of the harvest ID field
 	 */
-	protected final static String FIELD_HARVEST_ID = "harvest_id";
+	public final static String FIELD_HARVEST_ID = "harvest_id";
 
 	/**
 	 * The name of the harvest schedule ID field
 	 */
-	protected final static String FIELD_HARVEST_SCHEDULE_ID = "harvest_schedule_id";
+	public final static String FIELD_HARVEST_SCHEDULE_ID = "harvest_schedule_id";
 
 	/**
 	 * The name of the harvest schedule field
 	 */
-	protected final static String FIELD_HARVEST_SCHEDULE_NAME = "harvest_schedule_name";
+	public final static String FIELD_HARVEST_SCHEDULE_NAME = "harvest_schedule_name";
 
 	/**
 	 * The name of the provider name field
 	 */
-	protected final static String FIELD_PROVIDER_NAME = "provider_name";
+	public final static String FIELD_PROVIDER_NAME = "provider_name";
 
 	/**
 	 * The name of the provider URL field
 	 */
-	protected final static String FIELD_PROVIDER_URL = "provider_url";
+	public final static String FIELD_PROVIDER_URL = "provider_url";
 
 	/**
 	 * The name of the provider/service and harvest start date and time
 	 */
-	protected final static String FIELD_HARVEST_START_TIME = "harvest_start_time";
+	public final static String FIELD_HARVEST_START_TIME = "harvest_start_time";
 
 	/**
 	 * The name of the format name field
 	 */
-	protected final static String FIELD_FORMAT_NAME = "format_name";
+	public final static String FIELD_FORMAT_NAME = "format_name";
 
 	/**
 	 * The name of the OAI identifier  field
 	 */
-	protected final static String FIELD_OAI_IDENTIFIER = "oai_identifier";
+	public final static String FIELD_OAI_IDENTIFIER = "oai_identifier";
 
 	/**
 	 * The name of the OAI datestamp field
 	 */
-	protected final static String FIELD_OAI_DATESTAMP = "oai_datestamp";
+	public final static String FIELD_OAI_DATESTAMP = "oai_datestamp";
 
 	/**
 	 * The name of the OAI header field
 	 */
-	protected final static String FIELD_OAI_HEADER = "oai_header";
+	public final static String FIELD_OAI_HEADER = "oai_header";
 
 	/**
 	 * The name of the XML field
 	 */
-	protected final static String FIELD_OAI_XML = "oai_xml";
+	public final static String FIELD_OAI_XML = "oai_xml";
 
 	/**
 	 * The name of the set name field
 	 */
-	protected final static String FIELD_SET_NAME = "set_name";
+	public final static String FIELD_SET_NAME = "set_name";
 
 	/**
 	 * The name of the setSpec field
 	 */
-	protected final static String FIELD_SET_SPEC = "set_spec";
+	public final static String FIELD_SET_SPEC = "set_spec";
 
 	/**
 	 * The name of the processed from field
 	 */
-	protected final static String FIELD_PROCESSED_FROM = "processed_from";
+	public final static String FIELD_PROCESSED_FROM = "processed_from";
 
 	/**
 	 * The name of the successor field
 	 */
-	protected final static String FIELD_SUCCESSOR = "successor";
+	public final static String FIELD_SUCCESSOR = "successor";
 
 	/**
 	 * The name of the input for service IDs field
 	 */
-	protected final static String FIELD_INPUT_FOR_SERVICE_ID = "input_for_service_id";
+	public final static String FIELD_INPUT_FOR_SERVICE_ID = "input_for_service_id";
 
 	/**
 	 * The name of the processed by service IDs field
 	 */
-	protected final static String FIELD_PROCESSED_BY_SERVICE_ID = "processed_by_service_id";
+	public final static String FIELD_PROCESSED_BY_SERVICE_ID = "processed_by_service_id";
 
 	/**
 	 * The name of the traits field
 	 */
-	protected final static String FIELD_TRAIT = "trait";
+	public final static String FIELD_TRAIT = "trait";
 
 	/**
 	 * The name of the errors field
 	 */
-	protected final static String FIELD_ERROR = "error";
+	public final static String FIELD_ERROR = "error";
 
 	/**
 	 * All default search fields
 	 */
-	protected final static String FIELD_ALL = "all";
+	public final static String FIELD_ALL = "all";
 
 	/**
 	 * Gets all records from the index
@@ -577,6 +577,15 @@ public abstract class RecordService
 	 */
 	public abstract Record getRecordXMLFromDocument(SolrDocument doc); 
 	
+	/**
+	 * Parses a Record from the fields in a Document from the index. 
+	 * Loads only fields required to be displayed on Browse records results page
+	 *
+	 * @param doc The document containing information on the Record.
+	 * @return The record which was contained in the passed Document.
+	 * @throws DatabaseConfigException
+	 */
+	public abstract Record getRecordFieldsForBrowseFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
 	
 	/**
 	 * Validates the fields on the passed Record Object

@@ -273,6 +273,9 @@ public class SolrIndexManager {
 		}
 		
 		try {
+			if (log.isDebugEnabled()) {
+				log.debug("Executing Solr Query : " + query);
+			}
 		    QueryResponse rsp = server.query( query );
 		    docs = rsp.getResults();
 

@@ -92,7 +92,7 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 
 		// Add the next OAI identifier to the cache for the service
 		nextOaiIdForService.put(boxedServiceId, new Long(nextOaiId+1));
-
+		
 		// Return the next OAI identifier
 		return nextOaiId;
 	} // end method getNextOaiIdForService(int)

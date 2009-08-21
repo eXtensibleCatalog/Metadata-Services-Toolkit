@@ -648,7 +648,6 @@ public abstract class MetadataService
 			// resulting from this service.
 			for(Record processMe : records)
 			{
-				
 				// If the service is not canceled and not paused then continue
 				if(!isCanceled && !isPaused)
 				{
@@ -666,7 +665,7 @@ public abstract class MetadataService
 
 					// Get the results of processing the record
 					List<Record> results = processRecord(processMe);
-
+					
 					for(Record outgoingRecord : results)
 					{
 						// Mark the output record as a successor of the input record
@@ -702,7 +701,7 @@ public abstract class MetadataService
 					processMe.addProcessedByService(service);
 					processMe.removeInputForService(service);
 					recordService.update(processMe);
-
+					
 					numProcessed++;
 					if(numProcessed % 10000 == 0)
 					{
@@ -771,10 +770,10 @@ public abstract class MetadataService
 
 			// Get the results of any final processing the service needs to perform
 			finishProcessing();
-
+			
 			// Reopen the reader so it can see the changes made by running the service
 			SolrIndexManager.getInstance().commitIndex();
-
+			
 			// Start the MetadataServices triggered by processing directives
 			// matched on records resulting from the service we just finished running
 			for(Integer serviceToRun : servicesToRun.keySet())
@@ -791,7 +790,7 @@ public abstract class MetadataService
 					log.error("An error occurred while scheduling the service with ID " + serviceToRun.intValue() + ".", e);
 				} // end catch(Exception)
 			} // end loop over services to run
-
+			
 			return true;
 		} // end try(process the records)
 		catch(Exception e)
@@ -836,7 +835,6 @@ public abstract class MetadataService
 			{
 				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e);
 			}
-
 			// Update the next OAI ID for this service in the database
 			oaiIdDao.writeNextOaiId(service.getId());
 

@@ -17,12 +17,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.lucene.document.DateTools;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.search.ConstantScoreRangeQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -563,8 +558,7 @@ public class DefaultRecordService extends RecordService
 		query.setQuery(queryBuffer.toString());
 		
 		// Remove the limit on the number of results returned
-		query.setRows(0);
-		query.setStart(0);
+		query.setRows(Integer.MAX_VALUE);
 		
 		// Get the result of the query
 		RecordList records = new RecordList(query);
@@ -732,16 +726,19 @@ public class DefaultRecordService extends RecordService
 		
 		Collection<Object> processedFroms = doc.getFieldValues(FIELD_PROCESSED_FROM);
 		if(processedFroms != null) {
+			record.setNumberOfPredecessors(processedFroms.size());
 			for(Object processedFrom : processedFroms) {
 				record.addProcessedFrom(loadBasicRecord(Long.parseLong((String)processedFrom)));
 			}
-			
 		}
 		
 		Collection<Object> successors = doc.getFieldValues(FIELD_SUCCESSOR);
-		if(successors != null)
-			for(Object successor : successors)
+		if(successors != null) {
+			record.setNumberOfSuccessors(successors.size());
+			for(Object successor : successors) {
 				record.addSuccessor(loadBasicRecord(Long.parseLong((String)successor)));
+			}
+		}
 		
 		Collection<Object> inputForServices = doc.getFieldValues(FIELD_INPUT_FOR_SERVICE_ID);
 		if(inputForServices != null)
@@ -769,6 +766,39 @@ public class DefaultRecordService extends RecordService
 		return record;
 	} // end method getRecordFromDocument(Document)
 
+	@Override
+	public Record getRecordFieldsForBrowseFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
+	{
+		// Create a Record object to store the result
+		Record record = new Record();
+
+		// Set the fields on the record Object and return it
+		record.setId(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
+		record.setFormat(formatDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_FORMAT_ID))));
+		record.setProvider(providerDao.loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
+		record.setService(serviceDao.loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
+		record.setHarvestScheduleName((String)doc.getFieldValue(FIELD_HARVEST_SCHEDULE_NAME));
+
+		Collection<Object> errors = doc.getFieldValues(FIELD_ERROR);
+		if(errors != null)
+			for(Object error : errors)
+				record.addError((String)error);
+		
+		Collection<Object> processedFroms = doc.getFieldValues(FIELD_PROCESSED_FROM);
+		if(processedFroms != null) {
+			record.setNumberOfPredecessors(processedFroms.size());
+		}
+		
+		Collection<Object> successors = doc.getFieldValues(FIELD_SUCCESSOR);
+		if(successors != null) {
+			record.setNumberOfSuccessors(successors.size());
+		}
+		
+		// Return the record we parsed from the document
+		return record;
+	} // end method getRecordFromDocument(Document)
+
+	
 	@Override
 	public Record getRecordXMLFromDocument(SolrDocument doc) 
 	{
