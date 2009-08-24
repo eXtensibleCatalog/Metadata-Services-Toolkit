@@ -1,5 +1,5 @@
 Normalization Service # The name of the service
-0.2.1 # The version of the service
+0.2.2 # The version of the service
 NormalizationService.jar # The .jar file containing the service
 xc.mst.services.NormalizationService # The class within the .jar file that represents the service.  This class must extend xc.mst.services.MetadataService
 8085

@@ -552,11 +552,11 @@ public class DefaultRecordService extends RecordService
 		if(useMetadataPrefix)
 			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID).append(":").append(Integer.toString(formatId));
 		
-		if(fromDate != null || untilDate != null)
-			queryBuffer.append(" AND ").append(FIELD_UPDATED_AT + ":[").append(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)).append(" TO ").append(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)).append("]");
-
 		query.setQuery(queryBuffer.toString());
-		
+
+		if(fromDate != null || untilDate != null)
+			query.addFilterQuery(FIELD_UPDATED_AT + ":[" + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)) + " TO " + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)) + "]");
+
 		// Remove the limit on the number of results returned
 		query.setRows(Integer.MAX_VALUE);
 		
