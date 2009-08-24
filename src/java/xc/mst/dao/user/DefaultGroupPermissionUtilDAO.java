@@ -18,6 +18,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
+import xc.mst.dao.DBConnectionResetException;
 
 /**
  * MySQL implementation of the utility class for manipulating the permissions assigned to a group
@@ -114,6 +115,10 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(groupId, topLevelTabId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -163,6 +168,10 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(groupId, topLevelTabId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -225,6 +234,10 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
 
 				return topLevelTabIds;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getPermissionsForGroup(groupId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -271,6 +284,10 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return deletePermissionsForGroup(groupId);
+			}
 		} // end synchronized
 	} // end method deletePermissionsForGroup(int)
 } // end class DefaultGroupPerissionUtil

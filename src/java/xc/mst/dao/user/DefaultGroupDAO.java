@@ -17,6 +17,7 @@ import java.util.List;
 
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
@@ -173,6 +174,10 @@ public class DefaultGroupDAO extends GroupDAO
 
 				return groups;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -249,6 +254,10 @@ public class DefaultGroupDAO extends GroupDAO
 
 				return groups;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAllSorted( isAscendingOrder, columnSorted);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -351,6 +360,10 @@ public class DefaultGroupDAO extends GroupDAO
 				
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByName(groupName);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -432,6 +445,10 @@ public class DefaultGroupDAO extends GroupDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return loadBasicGroup(groupId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -504,6 +521,10 @@ public class DefaultGroupDAO extends GroupDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(group);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -566,6 +587,10 @@ public class DefaultGroupDAO extends GroupDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(group);
+			}
 		} // end synchronized
 	} // end method update(Group)
 
@@ -611,6 +636,10 @@ public class DefaultGroupDAO extends GroupDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(group);
+			}
 		} // end synchronized
 	} // end method delete(Group)
 } // end class DefaultGroupDAO

@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import xc.mst.dao.DBConnectionResetException;
+
 /**
  * Utility class for manipulating which formats belong to a provider
  *
@@ -105,6 +107,10 @@ public class DefaultProviderFormatUtilDAO extends ProviderFormatUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(providerId, formatId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -154,6 +160,10 @@ public class DefaultProviderFormatUtilDAO extends ProviderFormatUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(providerId, formatId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -216,6 +226,10 @@ public class DefaultProviderFormatUtilDAO extends ProviderFormatUtilDAO
 
 				return formatIds;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getFormatsForProvider(providerId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -262,6 +276,10 @@ public class DefaultProviderFormatUtilDAO extends ProviderFormatUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return deleteFormatsForProvider(providerId);
+			}
 		} // end synchronized
 	} // end method deleteFormatsForProvider(int)
 } // end class DefaultProviderFormatUtilDAO

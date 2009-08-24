@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import xc.mst.dao.DBConnectionResetException;
+
 /**
  * MySQL implementation of the class to get, cache, and update the next unique OAI
  * identifiers for records output by each service.  Metadata Services can use the
@@ -203,6 +205,10 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 				
 				return -1;
 			}
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByServiceId(serviceId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -264,6 +270,10 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 				
 				return false;
 			}
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(serviceId, nextOaiId);
+			}
 		} // end synchronized
 	} // end method insert(int, long)
 
@@ -318,6 +328,10 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 				log.error("Unable to connect to the database using the parameters from the configuration file.");
 				
 				return false;
+			}
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(serviceId, nextOaiId);
 			}
 		} // end synchronized
 	} // end method update(int, long)

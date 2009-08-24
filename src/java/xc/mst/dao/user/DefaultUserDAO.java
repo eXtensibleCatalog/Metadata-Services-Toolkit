@@ -21,6 +21,7 @@ import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
@@ -248,6 +249,10 @@ public class DefaultUserDAO extends UserDAO
 				log.error("A SQLException occurred while getting the users", e);
 				return users;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -314,6 +319,10 @@ public class DefaultUserDAO extends UserDAO
 
 				return 0;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getLDAPUserCount();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -534,6 +543,10 @@ public class DefaultUserDAO extends UserDAO
 				
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return loadBasicUser(userId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -633,6 +646,10 @@ public class DefaultUserDAO extends UserDAO
 				
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getUserByName(userName);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -733,6 +750,10 @@ public class DefaultUserDAO extends UserDAO
 				
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getUserByUserName(userName, server);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -829,6 +850,10 @@ public class DefaultUserDAO extends UserDAO
 				
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getUserByEmail(email, server);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -932,6 +957,10 @@ public class DefaultUserDAO extends UserDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(user);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -1024,6 +1053,10 @@ public class DefaultUserDAO extends UserDAO
 		    	
 				return false;
 			} // end catch(SQLException
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(user);
+			}
 		} // end synchronized
 	} // end method update(User)
 	
@@ -1088,6 +1121,10 @@ public class DefaultUserDAO extends UserDAO
 		    	
 				return false;
 			} // end catch(SQLException
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(user);
+			}
 		} // end synchronized
 	} // end method delete(User)
 } // end class DefaultUserDAO

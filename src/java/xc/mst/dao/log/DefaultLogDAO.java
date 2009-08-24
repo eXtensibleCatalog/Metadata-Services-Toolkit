@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.log.Log;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
@@ -151,6 +152,10 @@ public class DefaultLogDAO extends LogDAO
 
 				return logs;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -331,6 +336,10 @@ public class DefaultLogDAO extends LogDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getById(id);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -404,6 +413,10 @@ public class DefaultLogDAO extends LogDAO
 				
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(logObj);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -464,6 +477,10 @@ public class DefaultLogDAO extends LogDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(logObj);
+			}
 		} // end synchronized
 	} // end method update(Log)
 
@@ -511,6 +528,10 @@ public class DefaultLogDAO extends LogDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(logObj);
+			}
 		} // end synchronized
 	} // end method delete(Log)
 } // end class DefaultLogDAO

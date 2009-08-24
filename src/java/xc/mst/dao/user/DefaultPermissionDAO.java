@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.user.Permission;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DatabaseConfigException;
 
 /**
@@ -142,6 +143,10 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -223,6 +228,10 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getPermissionsForGroup(groupId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -299,6 +308,10 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getPermissionById(permissionId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -382,6 +395,10 @@ public class DefaultPermissionDAO extends PermissionDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getPermissionsForUserByTabOrderAsc(userId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);

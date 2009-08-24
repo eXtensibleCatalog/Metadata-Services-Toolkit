@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import xc.mst.dao.DBConnectionResetException;
+
 public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 {
 	/**
@@ -104,6 +106,10 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(serviceId, setId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -153,6 +159,10 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(serviceId, setId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -215,6 +225,10 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 
 				return setIds;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getOutputSetsForService(serviceId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -261,6 +275,10 @@ public class DefaultServiceOutputSetUtilDAO extends ServiceOutputSetUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return deleteOutputSetsForService(serviceId);
+			}
 		} // end synchronized
 	} // end method deleteOutputSetsForService(int)
 } // end class DefaultServiceOutputSetUtilDAO

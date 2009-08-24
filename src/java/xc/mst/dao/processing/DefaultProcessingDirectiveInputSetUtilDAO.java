@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import xc.mst.dao.DBConnectionResetException;
+
 /**
  * MySQL implementation of the utility class for manipulating the sets that trigger a processing directive
  *
@@ -109,6 +111,10 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(processingDirectiveId, inputSetId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -158,6 +164,10 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(processingDirectiveId, setId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -220,6 +230,10 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 
 				return setIds;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getInputSetsForProcessingDirective(processingDirectiveId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -266,6 +280,10 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return deleteInputSetsForProcessingDirective(processingDirectiveId);
+			}
 		} // end synchronized
 	} // end method deleteInputSetsForProcessingDirective(int)
 } // end class DefaultProcessingDirectiveInputSetUtilDAO

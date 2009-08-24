@@ -285,8 +285,9 @@ public class MySqlConnectionManager
 	 * @param query The query to run
 	 * @return The result of running the query
 	 * @throws SQLException If the query failed twice
+	 * @throws DBConnectionResetException 
 	 */
-	public ResultSet executeQuery(PreparedStatement query) throws SQLException
+	public ResultSet executeQuery(PreparedStatement query) throws SQLException, DBConnectionResetException
 	{
 		// TODO: Should this throw an Exception?  They're running a query we don't manage, so
 		//       we can't reset it on a failure.
@@ -298,9 +299,13 @@ public class MySqlConnectionManager
 			return query.executeQuery();
 		}
 		catch(SQLException e)
-		{
+		{	
+			// Possibly the connection timed out. Hence try a reconnect to DB. 
+			//If reconnect fails then don't re executed query 
 			resetConnection();
-			throw e;
+
+			// Propagate the connection reset so that DAO's will re-execute 
+			throw new DBConnectionResetException();
 		}
 	}
 	
@@ -311,8 +316,9 @@ public class MySqlConnectionManager
 	 * @param query The query to run
 	 * @return The result of running the query
 	 * @throws SQLException If the query failed twice
+	 * @throws DBConnectionResetException 
 	 */
-	public int executeUpdate(PreparedStatement query) throws SQLException
+	public int executeUpdate(PreparedStatement query) throws SQLException, DBConnectionResetException
 	{
 		// TODO: Should this throw an Exception?  They're running a query we don't manage, so
 		//       we can't reset it on a failure.
@@ -324,9 +330,13 @@ public class MySqlConnectionManager
 			return query.executeUpdate();
 		}
 		catch(SQLException e)
-		{
+		{	
+			// Possibly the connection timed out. Hence try a reconnect to DB. 
+			//If reconnect fails then don't re executed query 
 			resetConnection();
-			throw e;
+
+			// Propagate the connection reset so that DAO's will re-execute 
+			throw new DBConnectionResetException();
 		}
 	}
 	
@@ -337,8 +347,9 @@ public class MySqlConnectionManager
 	 * @param query The query to run
 	 * @return The result of running the query
 	 * @throws SQLException If the query failed twice
+	 * @throws DBConnectionResetException 
 	 */
-	public boolean execute(PreparedStatement query) throws SQLException
+	public boolean execute(PreparedStatement query) throws SQLException, DBConnectionResetException
 	{
 		// TODO: Should this throw an Exception?  They're running a query we don't manage, so
 		//       we can't reset it on a failure.
@@ -350,9 +361,13 @@ public class MySqlConnectionManager
 			return query.execute();
 		}
 		catch(SQLException e)
-		{
+		{	
+			// Possibly the connection timed out. Hence try a reconnect to DB. 
+			//If reconnect fails then don't re executed query 
 			resetConnection();
-			throw e;
+
+			// Propagate the connection reset so that DAO's will re-execute 
+			throw new DBConnectionResetException();
 		}
 	}
 	

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.provider.Set;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
@@ -191,6 +192,10 @@ public class DefaultSetDAO extends SetDAO
 
 				return sets;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -277,6 +282,10 @@ public class DefaultSetDAO extends SetDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getById(setId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -363,6 +372,10 @@ public class DefaultSetDAO extends SetDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return loadBasicSet(setId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -449,6 +462,10 @@ public class DefaultSetDAO extends SetDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getBySetSpec(setSpec);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -538,6 +555,10 @@ public class DefaultSetDAO extends SetDAO
 
 				return sets;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getSetsForProvider(providerId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -613,6 +634,10 @@ public class DefaultSetDAO extends SetDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(set);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -688,6 +713,10 @@ public class DefaultSetDAO extends SetDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insertForProvider(set, providerId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -744,6 +773,10 @@ public class DefaultSetDAO extends SetDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return addToProvider(set, providerId);
+			}
 		} // end synchronized
 	} // end method addToProvider(Set, int)
 
@@ -795,6 +828,10 @@ public class DefaultSetDAO extends SetDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return removeFromProvider(set, providerId);
+			}
 		} // end synchronized
 	} // end method addToProvider(Set, int)
 
@@ -851,6 +888,10 @@ public class DefaultSetDAO extends SetDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(set);
+			}
 		} // end synchronized
 	} // end method update(Set)
 
@@ -898,6 +939,10 @@ public class DefaultSetDAO extends SetDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(set);
+			}
 		} // end synchronized
 	} // end method delete(Set)
 } // end class DefaultSetDAO

@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import xc.mst.dao.DBConnectionResetException;
+
 /**
  * MySQL implementation of the utility class for manipulating the records from a harvest
  *
@@ -106,6 +108,10 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(harvestId, recordId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -155,6 +161,10 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(harvestId, recordId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -202,6 +212,10 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return deleteForRecord(recordId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -264,6 +278,10 @@ public class DefaultHarvestRecordUtilDAO extends HarvestRecordUtilDAO
 
 				return recordIds;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getRecordsForHarvest(harvestId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);

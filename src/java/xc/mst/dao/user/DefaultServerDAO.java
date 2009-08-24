@@ -18,6 +18,7 @@ import java.util.List;
 import xc.mst.bo.log.Log;
 import xc.mst.bo.user.Server;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
@@ -203,6 +204,10 @@ public class DefaultServerDAO extends ServerDAO
 
 				return servers;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -309,6 +314,10 @@ public class DefaultServerDAO extends ServerDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getById(serverId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -415,6 +424,10 @@ public class DefaultServerDAO extends ServerDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByName(name);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -512,6 +525,10 @@ public class DefaultServerDAO extends ServerDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(server);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -598,6 +615,10 @@ public class DefaultServerDAO extends ServerDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(server);
+			}
 		} // end synchronized
 	} // end method update(Server)
 
@@ -662,6 +683,10 @@ public class DefaultServerDAO extends ServerDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(server);
+			}
 		} // end synchronized
 	} // end method delete(Server)
 } // end class DefaultServerDAO

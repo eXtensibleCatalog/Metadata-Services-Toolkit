@@ -17,6 +17,7 @@ import java.util.List;
 
 import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
@@ -157,6 +158,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 				return errorCodes;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -238,6 +243,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getById(id);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -318,6 +327,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return loadBasicErrorCode(id);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -401,6 +414,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByErrorCodeAndService(errorCode, service);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -470,6 +487,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(errorCode);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -526,6 +547,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(errorCode);
+			}
 		} // end synchronized
 	}
 
@@ -573,6 +598,10 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(errorCode);
+			}
 		} // end synchronized
 	}
 }

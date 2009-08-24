@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.harvest.Harvest;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultProviderDAO;
@@ -180,6 +181,11 @@ public class DefaultHarvestDAO extends HarvestDAO
 
 				return harvests;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -267,6 +273,10 @@ public class DefaultHarvestDAO extends HarvestDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getById(harvestId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -354,6 +364,10 @@ public class DefaultHarvestDAO extends HarvestDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return loadBasicHarvest(harvestId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -441,6 +455,10 @@ public class DefaultHarvestDAO extends HarvestDAO
 
 				return harvests;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getHarvestsForSchedule(harvestScheduleId) ;
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -504,6 +522,10 @@ public class DefaultHarvestDAO extends HarvestDAO
 	
 				return endTime;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getLatestHarvestEndTimeForSchedule(harvestScheduleId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -579,6 +601,10 @@ public class DefaultHarvestDAO extends HarvestDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(harvest);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -641,6 +667,10 @@ public class DefaultHarvestDAO extends HarvestDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(harvest);
+			}
 		} // end synchronized
 	} // end method update(Harvest)
 
@@ -688,6 +718,10 @@ public class DefaultHarvestDAO extends HarvestDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(harvest);
+			}
 		} // end synchronized
 	} // end method delete(Harvest)
 } // end class DefaultHarvestDAO

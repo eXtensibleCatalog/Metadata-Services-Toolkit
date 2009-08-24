@@ -20,6 +20,7 @@ import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
@@ -262,6 +263,10 @@ public class DefaultServiceDAO extends ServiceDAO
 
 				return services;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -527,6 +532,10 @@ public class DefaultServiceDAO extends ServiceDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getById(serviceId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -643,6 +652,10 @@ public class DefaultServiceDAO extends ServiceDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return loadBasicService(serviceId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -768,6 +781,10 @@ public class DefaultServiceDAO extends ServiceDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByPort(port);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -893,6 +910,10 @@ public class DefaultServiceDAO extends ServiceDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByServiceName(name);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -1033,6 +1054,10 @@ public class DefaultServiceDAO extends ServiceDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(service);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -1166,6 +1191,10 @@ public class DefaultServiceDAO extends ServiceDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(service);
+			}
 		} // end synchronized
 	} // end method update(Service)
 
@@ -1226,6 +1255,10 @@ public class DefaultServiceDAO extends ServiceDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(service);
+			}
 		} // end synchronized
 	} // end method delete(Service)
 } // end class DefaultServiceDAO

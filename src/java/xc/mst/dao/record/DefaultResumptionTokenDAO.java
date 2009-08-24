@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.record.ResumptionToken;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
@@ -150,6 +151,10 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 
 				return resumptionTokens;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -235,6 +240,10 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getById(id);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -307,6 +316,10 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(resumptionToken);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -367,6 +380,10 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(resumptionToken);
+			}
 		} // end synchronized
 	} // end method update(ResumptionToken)
 
@@ -414,6 +431,10 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(resumptionToken);
+			}
 		} // end synchronized
 	} // end method delete(ResumptionToken)
 } // end class DefaultResumptionTokenDAO

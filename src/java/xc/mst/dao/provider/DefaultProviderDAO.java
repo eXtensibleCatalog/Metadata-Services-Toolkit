@@ -22,6 +22,7 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
@@ -287,6 +288,10 @@ public class DefaultProviderDAO extends ProviderDAO
 
 				return providers;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -606,6 +611,10 @@ public class DefaultProviderDAO extends ProviderDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByURL(providerURL);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -750,6 +759,10 @@ public class DefaultProviderDAO extends ProviderDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByName(name);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -891,6 +904,10 @@ public class DefaultProviderDAO extends ProviderDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return loadBasicProvider(providerId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -1055,6 +1072,10 @@ public class DefaultProviderDAO extends ProviderDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(provider);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -1213,6 +1234,10 @@ public class DefaultProviderDAO extends ProviderDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(provider);
+			}
 		} // end synchronized
 	} // end update(Provider)
 
@@ -1297,6 +1322,10 @@ public class DefaultProviderDAO extends ProviderDAO
 		    	
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(provider);
+			}
 		} // end synchronized
 	} // end method delete(Provider)
 

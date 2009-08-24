@@ -22,6 +22,7 @@ import xc.mst.bo.harvest.HarvestScheduleStep;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultProviderDAO;
@@ -210,6 +211,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 				return harvestSchedules;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -508,6 +513,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getById(harvestScheduleId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -614,6 +623,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return loadWithoutSteps(harvestScheduleId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -721,6 +734,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByName(name);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -819,6 +836,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return loadBasicHarvestSchedule(harvestScheduleId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -918,6 +939,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 				return harvestSchedule;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getHarvestScheduleForProvider(providerId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -1035,6 +1060,11 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 				return harvestSchedules;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				
+				log.info("Re executing the query that failed ");
+				return getSchedulesToRun(hour, dayOfWeek, minute);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -1156,6 +1186,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(harvestSchedule);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -1269,6 +1303,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(harvestSchedule, updateSteps);
+			}
 		} // end synchronized
 	} // end method update(HarvestSchedule)
 
@@ -1316,6 +1354,10 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(harvestSchedule);
+			}
 		} // end synchronized
 	} // end method delete(HarvestSchedule)
 } // end class DefaultHarvestScheduleDAO

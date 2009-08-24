@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.user.User;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserService;
@@ -140,6 +141,10 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(userId, groupId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -189,6 +194,10 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(userId, groupId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -251,6 +260,10 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 				return groupIds;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getGroupsForUser(userId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -297,6 +310,10 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return deleteGroupsForUser(userId);
+			}
 		} // end synchronized
 	} // end method deleteGroupsForUser(int)
 
@@ -362,6 +379,10 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 				return users;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getUsersForGroup(groupId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -428,6 +449,10 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 				return 0;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getUserCountForGroup(groupId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -496,6 +521,10 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 
 				return users;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getUsersForGroupSorted(groupId, sort, columnSorted);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);

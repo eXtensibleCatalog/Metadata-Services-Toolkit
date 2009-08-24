@@ -19,6 +19,7 @@ import java.util.List;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultFormatDAO;
@@ -219,6 +220,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 				return processingDirectives;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -413,6 +418,11 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				
+				log.info("Re executing the query that failed ");
+				return getById(processingDirectiveId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -497,6 +507,11 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				
+				log.info("Re executing the query that failed ");
+				return loadBasicProcessingDirective(processingDirectiveId);
+			}			
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -590,6 +605,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 				return processingDirectives;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getBySourceProviderId(providerId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -683,6 +702,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 				return processingDirectives;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getBySourceServiceId(serviceId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -764,6 +787,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(processingDirective);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -841,6 +868,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(processingDirective) ;
+			}
 		} // end synchronized
 	} // end method update(ProcessingDirective)
 
@@ -892,6 +923,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(processingDirective);
+			}
 		} // end synchronized
 	} // end method delete(ProcessingDirective)
 } // end class DefaultProcessingDirectiveDAO

@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import xc.mst.dao.DBConnectionResetException;
+
 public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDAO
 {
 	/**
@@ -104,6 +106,10 @@ public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDA
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(serviceId, formatId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -153,6 +159,10 @@ public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDA
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(serviceId, formatId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -215,6 +225,10 @@ public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDA
 
 				return formatIds;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getOutputFormatsForService(serviceId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -261,6 +275,10 @@ public class DefaultServiceOutputFormatUtilDAO extends ServiceOutputFormatUtilDA
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return deleteOutputFormatsForService(serviceId);
+			}
 		} // end synchronized
 	} // end method deleteOutputFormatsForService(int)
 } // end class DefaultServiceOutputFormatUtilDAO

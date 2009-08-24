@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.harvest.HarvestScheduleStep;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.DefaultFormatDAO;
@@ -182,6 +183,10 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 				return harvestScheduleSteps;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -265,6 +270,10 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getById(harvestScheduleStepId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -348,6 +357,10 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 				return harvestScheduleSteps;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getStepsForSchedule(harvestSchedlueId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -429,6 +442,10 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(harvestScheduleStep, harvestScheduleId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -496,6 +513,10 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(harvestScheduleStep, harvestScheduleId);
+			}
 		} // end synchronized
 	} // end method update(HarvestScheduleStep)
 
@@ -542,6 +563,10 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(harvestScheduleStep);
+			}
 		} // end synchronized
 	} // end method delete(HarvestScheduleStep)
 
@@ -581,6 +606,10 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return deleteStepsForSchedule(harvestScheduleId);
+			}
 		} // end synchronized
 	} // end method deleteStepsForSchedule(int)
 } // end class DefaultHarvestScheduleStepDAO

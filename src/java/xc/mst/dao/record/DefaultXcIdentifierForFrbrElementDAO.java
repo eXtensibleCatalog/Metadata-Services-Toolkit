@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import xc.mst.dao.DBConnectionResetException;
+
 /**
  * MySQL implementation of the class to get, cache, and update the next unique XC
  * identifiers for elements at each FRBR level. A Metadata Service can use the
@@ -203,6 +205,10 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 				
 				return -1;
 			}
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByElementId(elementId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -264,6 +270,10 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 				
 				return false;
 			}
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(elementId, nextXcId);
+			}
 		} // end synchronized
 	} // end method insert(int, long)
 
@@ -318,6 +328,10 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 				log.error("Unable to connect to the database using the parameters from the configuration file.");
 				
 				return false;
+			}
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(elementId, nextXcId);
 			}
 		} // end synchronized
 	} // end method update(int, long)

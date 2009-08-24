@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xc.mst.bo.provider.Format;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
@@ -161,6 +162,10 @@ public class DefaultFormatDAO extends FormatDAO
 
 				return formats;
 			} // end catch(SQLExeption)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getAll();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -242,6 +247,10 @@ public class DefaultFormatDAO extends FormatDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getById(formatId);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -323,6 +332,10 @@ public class DefaultFormatDAO extends FormatDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByName(name);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -407,6 +420,10 @@ public class DefaultFormatDAO extends FormatDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return insert(format);
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
@@ -463,6 +480,10 @@ public class DefaultFormatDAO extends FormatDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return update(format);
+			}
 		} // end synchronized
 	} // end update(Format)
 
@@ -510,6 +531,10 @@ public class DefaultFormatDAO extends FormatDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return delete(format);
+			}
 		} // end synchronized
 	} // end method delete(Format)
 } // end class DefaultFormatDAO

@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import xc.mst.bo.emailconfig.EmailConfig;
+import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
@@ -122,6 +123,11 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 
 				return null;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				
+				log.info("Re executing the query that failed ");
+				return getConfiguration();
+			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
@@ -211,6 +217,11 @@ public class DefaultEmailConfigDAO extends EmailConfigDAO
 
 				return false;
 			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				
+				log.info("Re executing the query that failed ");
+				return setConfiguration(emailconfig);
+			}
 		} // end synchronized
 	} // end method setConfiguration(EmailConfig)
 } // end DefaultEmailConfigDAO class
