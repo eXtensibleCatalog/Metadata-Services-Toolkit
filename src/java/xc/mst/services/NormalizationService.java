@@ -458,8 +458,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService removeOcolc003(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering RemoveOCoLC003 normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering RemoveOCoLC003 normalization step.");
 
 		// Check if the 003 is "OCoLC"
 		String field003 = marcXml.getField003();
@@ -477,8 +477,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService dcmiType06(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering DCMIType06 normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering DCMIType06 normalization step.");
 
 		// The character at offset 6 of the leader field
 		char leader06 = marcXml.getLeader().charAt(6);
@@ -539,8 +539,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService leader06MarcVocab(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering Leader06Vocab normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering Leader06Vocab normalization step.");
 
 		// The character at offset 6 of the leader field
 		char leader06 = marcXml.getLeader().charAt(6);
@@ -606,8 +606,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService vocab06(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering 007Vocab06 normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering 007Vocab06 normalization step.");
 
 		// The character at offset 6 of the leader field
 		char leader06 = marcXml.getLeader().charAt(6);
@@ -642,8 +642,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService modeOfIssuance(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering ModeOfIssuance normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering ModeOfIssuance normalization step.");
 
 		// The character at offset 7 of the leader field
 		char leader07 = marcXml.getLeader().charAt(7);
@@ -681,8 +681,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService moveMarcOrgCode(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering MoveMarcOrgCode normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering MoveMarcOrgCode normalization step.");
 
 		// Get the 001 and 003 control fields
 		String control001 = marcXml.getField001();
@@ -722,8 +722,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService dcmiType0007(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering DCMIType0007 normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering DCMIType0007 normalization step.");
 
 		// The value of field 007
 		String field007 = marcXml.getField007();
@@ -761,8 +761,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService vocab007(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering 007Vocab normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering 007Vocab normalization step.");
 
 		// The value of field 007
 		String field007 = marcXml.getField007();
@@ -806,8 +806,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService smdType007(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering 007SMDVocab normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering 007SMDVocab normalization step.");
 
 		// The value of field 007
 		String field007 = marcXml.getField007();
@@ -847,8 +847,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService fictionOrNonfiction(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering FictionOrNonfiction normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering FictionOrNonfiction normalization step.");
 
 		// The character at offset 6 of the leader field
 		char leader06 = marcXml.getLeader().charAt(6);
@@ -861,7 +861,7 @@ public class NormalizationService extends MetadataService
 		String field008 = marcXml.getField008();
 
 		// The character at offset 33 of the 008 field
-		char field008offset33 = (field008 != null ? field008.charAt(33) : ' ');
+		char field008offset33 = ((field008 != null && field008.length() >= 34) ? field008.charAt(33) : ' ');
 
 		if(log.isDebugEnabled())
 			log.debug("Leader 06 = " + leader06 + " and 008 offset 33 is " + field008offset33 + ".");
@@ -885,8 +885,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService dateRange(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering 008DateRange normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering 008DateRange normalization step.");
 
 		// The value of field 008
 		String field008 = marcXml.getField008();
@@ -925,8 +925,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService languageSplit(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering LanguageSplit normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering LanguageSplit normalization step.");
 
 		// A list of language fields we're adding as fields.
 		ArrayList<String> languages = new ArrayList<String>();
@@ -1013,8 +1013,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService languageTerm(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering LanguageTerm normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering LanguageTerm normalization step.");
 
 		// A list of language code fields we've add.
 		ArrayList<String> languageCodes = marcXml.getAddedLanguageCodes();
@@ -1062,8 +1062,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService audienceFrom008(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering 008Audience normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering 008Audience normalization step.");
 
 		// The character at offset 6 of the leader field
 		char leader06 = marcXml.getLeader().charAt(6);
@@ -1112,8 +1112,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService thesisFrom008(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering 008Thesis normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering 008Thesis normalization step.");
 
 		// If there is already a 502 field, don't make any changes
 		if(marcXml.getField502() != null && marcXml.getField502().size() > 0)
@@ -1163,8 +1163,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService isbnCleanup(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering ISBNCleanup normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering ISBNCleanup normalization step.");
 
 		// The 020 $a field
 		ArrayList<String> fields020a = marcXml.getField020();
@@ -1211,8 +1211,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService supplyMARCOrgCode(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering SupplyMARCOrgCode normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering SupplyMARCOrgCode normalization step.");
 
 		// Get the 001 and 003 control fields
 		String control001 = marcXml.getField001();
@@ -1249,8 +1249,8 @@ public class NormalizationService extends MetadataService
 	@SuppressWarnings("unchecked")
 	private MarcXmlManagerForNormalizationService fix035(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering fix035 normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering fix035 normalization step.");
 
 		// Get the original list of 035 elements.  We know that any 035 we
 		// supplied had the correct format, so all incorrect 035 records must
@@ -1388,8 +1388,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService dedup035(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering dedup035 normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering dedup035 normalization step.");
 
 		marcXml.deduplicateMarcXmlField("035");
 
@@ -1405,8 +1405,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService roleAuthor(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering RoleAuthor normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering RoleAuthor normalization step.");
 
 		// If leader 06 is 'a', set the $4 subfields of 100, 110 and 111 to "aut" if they're not already set
 		if(marcXml.getLeader().charAt(6) == 'a')
@@ -1472,8 +1472,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService roleComposer(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering RoleComposer normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering RoleComposer normalization step.");
 
 		// If leader 06 is 'c', set the $4 subfields of 100, 110 and 111 to "cmp" if they're not already set
 		if(marcXml.getLeader().charAt(6) == 'c')
@@ -1539,8 +1539,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService uniformTitle(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering UniformTitle normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering UniformTitle normalization step.");
 
 		// If 130, 240, and 243 all don't exist and 245 does exist, copy the 245 into a new 240 field.
 		// Only copy subfields afknp.
@@ -1565,8 +1565,8 @@ public class NormalizationService extends MetadataService
 	@SuppressWarnings("unchecked")
 	private MarcXmlManagerForNormalizationService urGenre(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering URGenre normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering URGenre normalization step.");
 
 		// A list of all the 655 fields in the MARCXML record
 		ArrayList<Element> field655elements = marcXml.getField655Elements();
@@ -1615,8 +1615,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService topicSplit(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering TopicSplit normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering TopicSplit normalization step.");
 
 		// A list of the tags to copy
 		ArrayList<String> tagsToCopy = new ArrayList<String>();
@@ -1651,8 +1651,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService chronSplit(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering ChronSplit normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering ChronSplit normalization step.");
 
 		// A list of the tags to copy
 		ArrayList<String> tagsToCopy = new ArrayList<String>();
@@ -1687,8 +1687,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService geogSplit(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering GeogSplit normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering GeogSplit normalization step.");
 
 		// A list of the tags to copy
 		ArrayList<String> tagsToCopy = new ArrayList<String>();
@@ -1723,8 +1723,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService genreSplit(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering GenreSplit normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering GenreSplit normalization step.");
 
 		// A list of the tags to copy
 		ArrayList<String> tagsToCopy = new ArrayList<String>();
@@ -1759,8 +1759,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService dedupDcmiType(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering DedupDCMIType normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering DedupDCMIType normalization step.");
 
 		marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_DCMI_TYPE);
 
@@ -1775,8 +1775,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService dedup007Vocab(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering Dedup007Vocab normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering Dedup007Vocab normalization step.");
 
 		marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_VOCAB);
 
@@ -1791,8 +1791,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService bibLocationName(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering bibLocationName normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering bibLocationName normalization step.");
 
 		// The 852 $l value
 		ArrayList<String> field852subfieldBs = marcXml.getField852subfieldBs();
@@ -1829,8 +1829,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService holdingsLocationName(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering holdingsLocationName normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering holdingsLocationName normalization step.");
 
 		// Get dataFiled with tag=852
 		List<Element> dataFields = marcXml.getDataFields("852");
@@ -1877,8 +1877,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService locationLimitName(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering locationLimitName normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering locationLimitName normalization step.");
 
 		// Get dataFiled with tag=852
 		List<Element> dataFields = marcXml.getDataFields("852");
@@ -1938,8 +1938,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService IIILocationName(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering IIILocationName normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering IIILocationName normalization step.");
 
 		// The 945 $l value
 		ArrayList<String> field945subfieldLs = marcXml.getField945subfieldLs();
@@ -1976,8 +1976,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService seperateName(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering SeperateName normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering SeperateName normalization step.");
 
 		// A list of the tags to copy
 		ArrayList<String> tagsToCopy = new ArrayList<String>();
@@ -1999,8 +1999,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService titleArticle(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering TitleArticle normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering TitleArticle normalization step.");
 
 		// Get dataFiled with tag=245
 		List<Element> dataFields = marcXml.getDataFields("245");
@@ -2029,8 +2029,8 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService dedup9XX(MarcXmlManagerForNormalizationService marcXml)
 	{
-		if(log.isInfoEnabled())
-			log.info("Entering Dedup9XX normalization step.");
+		if(log.isDebugEnabled())
+			log.debug("Entering Dedup9XX normalization step.");
 
 		marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_CHRON_SPLIT);
 		marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_TOPIC_SPLIT);
