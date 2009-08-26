@@ -38,13 +38,13 @@
     <property name="OaiRepoMaxIdentifiers" value="50" />
     
     <!-- The maximum number of records returned by a ListRecords request  -->
-    <property name="OaiRepoMaxRecords" value="50" />
+    <property name="OaiRepoMaxRecords" value="1000" />
     
     <!-- The maximum size in bytes of a ListIdentifiers response -->
     <property name="OaiRepoMaxIdentifiersLength" value="1000000" />
     
     <!-- The maximum size in bytes of a ListRecords response  -->
-    <property name="OaiRepoMaxRecordsLength" value="1000000" />
+    <property name="OaiRepoMaxRecordsLength" value="99999999" />
     
     <!-- The name of folder under which multiple MST configuration folders are placed. This folder resides under tomcat working directory -->
     <property name="InstanceFolderName" value="MST-instances" />
