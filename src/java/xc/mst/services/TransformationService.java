@@ -357,7 +357,7 @@ public class TransformationService extends MetadataService
 				xcRecord.setOaiIdentifier(document.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("id"));
 
 				// Set the identifier, datestamp, and header to null so they get computed when we insert the transformed record
-				xcRecord.setOaiDatestamp(null);
+				//xcRecord.setOaiDatestamp(null);
 				xcRecord.setOaiHeader(null);
 
 				// Set the record as not being deleted
