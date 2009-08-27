@@ -10,7 +10,9 @@ package xc.mst.harvester;
 
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.net.InetAddress;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -1226,7 +1228,13 @@ public class Harvester implements ErrorHandler
 	{
 		if (schedule.getNotifyEmail() != null && mailer.isConfigured()) {
 			// The email's subject
-			String subject = "Results of harvesting " + schedule.getProvider().getOaiProviderUrl();
+			InetAddress addr = null;
+			try {
+				addr = InetAddress.getLocalHost();
+			} catch (UnknownHostException e) {
+				log.error("Host name query failed.");
+			}
+			String subject = "Results of harvesting " + schedule.getProvider().getOaiProviderUrl() +" by MST Server on " + addr.getHostName();
 	
 			// The email's body
 			StringBuilder body = new StringBuilder();
