@@ -389,5 +389,12 @@ public class Constants
 	public static final String THREAD_REPOSITORY = "REPOSITORY";
 	
 	public static final String THREAD_PROCESSING_DIRECTIVE = "PD";
+
+	
+	//*******************************************************************
+	// Groups and Permissions Constants
+	//*******************************************************************
+
+	public static final String ADMINSTRATOR_GROUP = "Administrator";
 	
 }
