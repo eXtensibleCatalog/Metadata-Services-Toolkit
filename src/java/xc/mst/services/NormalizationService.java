@@ -936,7 +936,7 @@ public class NormalizationService extends MetadataService
 
 		// If the 008 field non null, add the language it specified so the list of languages
 		// provided that languages is valid
-		if(field008 != null)
+		if(field008 != null && field008.length() >= 39)
 		{
 			String langFrom008 = field008.substring(35, 38);
 
