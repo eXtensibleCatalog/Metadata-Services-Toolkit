@@ -832,7 +832,7 @@ public class DefaultRecordService extends RecordService
 			StringBuilder header = new StringBuilder();
 			header.append("<header>\n");
 			header.append("\t<identifier>").append(record.getOaiIdentifier()).append("</identifier>\n");
-			header.append("\t<datestamp>").append(record.getOaiDatestamp()).append("</datestamp>\n");
+			header.append("\t<datestamp>").append(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(record.getOaiDatestamp())).append("</datestamp>\n");
 
 			// Get each set from the list of set IDs this record belongs to.  If the set is
 			// not null, add its setSpec to the header.
