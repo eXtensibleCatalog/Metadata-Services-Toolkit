@@ -154,7 +154,7 @@ public class HarvestRunner
 			
 			harvestSchedule.setStatus(Constants.STATUS_SERVICE_RUNNING);
 			harvestScheduleDao.update(harvestSchedule, false);
-
+			Harvester.resetProcessedRecordCount();
 			
 			for(HarvestScheduleStep step : harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()))
 			{

@@ -315,14 +315,14 @@ public class Harvester implements ErrorHandler
 	private boolean firstHarvest = false;
 
 	/**
-	 * 
+	 * Count of the records processed yet
 	 */
-	private int processedRecordCount = 0;
+	private static int processedRecordCount = 0;
 	
 	/**
-	 * 
+	 * Count of the total records processed
 	 */
-	private int totalRecordCount = 0;
+	private static int totalRecordCount = 0;
 	
 	
 	long totalPartTime = 0;
@@ -1758,7 +1758,7 @@ public class Harvester implements ErrorHandler
 	}
 	
 	/**
-	 * 
+	 * Gets the Processed record count
 	 * @return
 	 */
 	public int getProcessedRecordCount() {
@@ -1767,7 +1767,16 @@ public class Harvester implements ErrorHandler
 	}
 
 	/**
-	 * 
+	 * Reset the Processed record count
+	 * @return
+	 */
+	public static void resetProcessedRecordCount() {
+		
+		processedRecordCount = 0;
+	}
+
+	/**
+	 * Gets the total record count
 	 * @return
 	 */
 	public int getTotalRecordCount() {
