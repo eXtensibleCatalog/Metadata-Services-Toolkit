@@ -157,8 +157,8 @@ public class NormalizationService extends MetadataService
 		
 		try
 		{
-			if(log.isInfoEnabled())
-				log.info("Normalizing record with ID " + record.getId() + ".");
+			if(log.isDebugEnabled())
+				log.debug("Normalizing record with ID " + record.getId() + ".");
 
 			// The XML after normalizing the record
 			Document marcXml = null;
@@ -335,8 +335,8 @@ public class NormalizationService extends MetadataService
 			// If there was already a processed record for the record we just processed, update it
 			if(existingRecords.size() > 0)
 			{
-				if(log.isInfoEnabled())
-					log.info("Updating the record which was processed from an older version of the record we just processed.");
+				if(log.isDebugEnabled())
+					log.debug("Updating the record which was processed from an older version of the record we just processed.");
 
 				// Get the record which was processed from the record we just processed
 				// (there should only be one)
@@ -361,8 +361,8 @@ public class NormalizationService extends MetadataService
 			// Do this only if the record we're processing is not deleted
 			else
 			{
-				if(log.isInfoEnabled())
-					log.info("Inserting the record since it was not processed from an older version of the record we just processed.");
+				if(log.isDebugEnabled())
+					log.debug("Inserting the record since it was not processed from an older version of the record we just processed.");
 
 				// Create the normalized record
 				Record normalizedRecord = Record.copyRecord(record);
@@ -424,8 +424,8 @@ public class NormalizationService extends MetadataService
 				// incoming record
 				results.add(normalizedRecord);
 				
-				if(log.isInfoEnabled())
-					log.info("Created normalized record from unnormalized record with ID " + record.getId());
+				if(log.isDebugEnabled())
+					log.debug("Created normalized record from unnormalized record with ID " + record.getId());
 				return results;
 			}
 		}
