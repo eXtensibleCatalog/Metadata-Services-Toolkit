@@ -10,8 +10,10 @@
 package xc.mst.services;
 
 import java.io.File;
+import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +27,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
+import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -40,9 +43,15 @@ import xc.mst.dao.service.DefaultOaiIdentiferForServiceDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.OaiIdentifierForServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.dao.user.DefaultGroupDAO;
+import xc.mst.dao.user.DefaultUserGroupUtilDAO;
+import xc.mst.dao.user.GroupDAO;
+import xc.mst.dao.user.UserGroupUtilDAO;
+import xc.mst.email.Emailer;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.manager.user.UserService;
 import xc.mst.scheduling.Scheduler;
 import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.utils.LogWriter;
@@ -167,6 +176,21 @@ public abstract class MetadataService
 	private int totalRecordCount = 0;
 	
 	/**
+	 * Used to send email reports
+	 */
+	private Emailer mailer = new Emailer();
+
+	/**
+	 * Data access object for getting user info from groups
+	 */
+	UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
+	
+	/**
+	 * Data access object for getting groups
+	 */
+	GroupDAO groupDAO = new DefaultGroupDAO();
+	
+	/**
 	 * Runs the service with the passed ID
 	 *
 	 * @param serviceId The ID of the MetadataService to run
@@ -186,7 +210,7 @@ public abstract class MetadataService
 		catch (DatabaseConfigException e1)
 		{
 			log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
-
+			runningService.sendReportEmail("Cannot connect to the database with the parameters supplied in the configuration file.");
 			return false;
 		}
 
@@ -247,13 +271,15 @@ public abstract class MetadataService
 			if(!runningService.isCanceled)
 				runningService.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
 
+			runningService.sendReportEmail(null);
 			return success;
 		} // end try(run the service through reflection)
 		catch(ClassNotFoundException e)
 		{
 			log.error("Could not find class " + targetClassName, e);
-
-
+			// Update database with status of service
+			service.setStatus(Constants.STATUS_SERVICE_ERROR);
+			runningService.sendReportEmail("The java class " + targetClassName + " could not be found.");
 
 			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + " could not be found.");
 
@@ -269,15 +295,16 @@ public abstract class MetadataService
 				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
 			}
 
-			// Update database with status of service
-			runningService.setStatus(Constants.STATUS_SERVICE_ERROR);
-
 			// Return false if we did not recognize the service name
 			return false;
 		} // end if(service is not user defined)
 		catch(NoClassDefFoundError e)
 		{
 			log.error("Could not find class " + targetClassName, e);
+
+			// Update database with status of service
+			service.setStatus(Constants.STATUS_SERVICE_ERROR);
+			runningService.sendReportEmail("The java class " + targetClassName + " could not be found.");
 
 			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + " could not be found.");
 
@@ -305,14 +332,15 @@ public abstract class MetadataService
 				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
 			}
 
-			// Update database with status of service
-			runningService.setStatus(Constants.STATUS_SERVICE_ERROR);
-
 			return false;
 		} // end catch(NoClassDefFoundError)
 		catch(IllegalAccessException e)
 		{
 			log.error("IllegalAccessException occurred while invoking the service's processRecords method.", e);
+
+			// Update database with status of service
+			service.setStatus(Constants.STATUS_SERVICE_ERROR);
+			runningService.sendReportEmail("The java class " + targetClassName + "'s processRecords method could not be accessed.");
 
 			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + targetClassName + "'s processRecords method could not be accessed.");
 
@@ -340,15 +368,16 @@ public abstract class MetadataService
 				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
 			}
 
-			// Update database with status of service
-			runningService.setStatus(Constants.STATUS_SERVICE_ERROR);
-
 			return false;
 		} // end catch(IllegalAccessException)
 		catch(Exception e)
 		{
 			log.error("Exception occurred while invoking the service's processRecords method.", e);
 
+			// Update database with status of service
+			service.setStatus(Constants.STATUS_SERVICE_ERROR);
+			runningService.sendReportEmail("Exception occurred while invoking the service's processRecords method.");
+			
 			LogWriter.addError(service.getServicesLogFileName(), "An internal error occurred while trying to start the " + service.getName() + " Service.");
 
 			// Load the provider again in case it was updated during the harvest
@@ -374,9 +403,6 @@ public abstract class MetadataService
 			{
 				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
 			}
-
-			// Update database with status of service
-			runningService.setStatus(Constants.STATUS_SERVICE_ERROR);
 
 			return false;
 		} // end catch(Exception)
@@ -1214,10 +1240,11 @@ public abstract class MetadataService
 	 * Logs the status of the service to the database
 	 * @throws DataException
 	 */
-	private void setStatus(String status)
+	public void setStatus(String status)
 	{
 		try
 		{
+			log.info("Setting the status of the service " +service.getName() +" as:" +status);
 			service.setStatus(status);
 			serviceDao.update(service);
 		}
@@ -1412,4 +1439,49 @@ public abstract class MetadataService
 
 		return true;
 	}
+	
+	/**
+	 * Builds and sends an email report about the harvest to the schedule's notify email address.
+	 *
+	 * @param problem The problem which prevented the harvest from finishing, or null if the harvest was successful
+	 */
+	public boolean sendReportEmail(String problem)
+	{
+		if (mailer.isConfigured()) {
+			// The email's subject
+			InetAddress addr = null;
+			try {
+				addr = InetAddress.getLocalHost();
+			} catch (UnknownHostException e) {
+				log.error("Host name query failed.");
+			}
+			String subject = "Results of processing " + runningService.getServiceName() +" by MST Server on " + addr.getHostName();
+	
+			// The email's body
+			StringBuilder body = new StringBuilder();
+	
+			// First report any problems which prevented the harvest from finishing
+			if(problem != null)
+				body.append("The harvest failed for the following reason: ").append(problem).append("\n\n");
+	
+			// Report on the number of records inserted successfully and the number of failed inserts
+			if(processedRecordCount!=totalRecordCount)
+				body.append("Error: Not all records were processed. \n");
+			body.append(processedRecordCount +" records out of " + totalRecordCount +" processed. \n");
+			
+			try {
+				// Send email to every admin user
+				for (User user : userGroupUtilDAO.getUsersForGroup(groupDAO.getByName(Constants.ADMINSTRATOR_GROUP).getId())) {
+					mailer.sendEmail(user.getEmail(), subject, body.toString());
+				}
+			} catch (DatabaseConfigException e) {
+				log.error("Error sending notification email.");
+			}
+			
+			return true;
+		} else {
+			return false;
+		}
+	} // end method sendReportEmail
+
 }
