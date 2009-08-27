@@ -76,6 +76,8 @@ public class ServiceWorkerThread extends WorkerThread
 		catch(Exception e)
 		{
 			log.error("An error occurred while running the service with ID " + serviceId, e);
+			MetadataService.getRunningService().setStatus(Constants.STATUS_SERVICE_ERROR);
+			MetadataService.getRunningService().sendReportEmail("An error occurred while running the service with ID " + serviceId);
 		} // end catch(Exception)
 		finally{
 			Scheduler.setJobCompletion();
