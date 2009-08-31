@@ -71,7 +71,7 @@ public class ServiceWorkerThread extends WorkerThread
 				log.debug("Invoking the service with ID " + serviceId + " and adding the results to the set with ID " + outputSetId + ".");
 
 			MetadataService.runService(serviceId, outputSetId);
-			
+			MetadataService.getRunningService().sendReportEmail(null);
 		} // end try(run the service)
 		catch(Exception e)
 		{
