@@ -1460,7 +1460,7 @@ public abstract class MetadataService
 			try {
 				addr = InetAddress.getLocalHost();
 			} catch (UnknownHostException e) {
-				log.error("Host name query failed.");
+				log.error("Host name query failed.",e);
 			}
 			String subject = "Results of processing " + runningService.getServiceName() +" by MST Server on " + addr.getHostName();
 	
