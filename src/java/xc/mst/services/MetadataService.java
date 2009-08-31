@@ -263,7 +263,7 @@ public abstract class MetadataService
 			LogWriter.addInfo(service.getServicesLogFileName(), "The " + service.getName() + " Service finished running.  " + runningService.processedRecordCount + " records were processed.");
 
 			// Update database with status of service
-			if(!runningService.isCanceled)
+			if(!runningService.isCanceled && success)
 				runningService.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
 
 			runningService.sendReportEmail(null);
