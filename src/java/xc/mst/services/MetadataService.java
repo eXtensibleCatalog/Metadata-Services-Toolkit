@@ -266,7 +266,6 @@ public abstract class MetadataService
 			if(!runningService.isCanceled)
 				runningService.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
 
-			runningService.sendReportEmail(null);
 			return success;
 		} // end try(run the service through reflection)
 		catch(ClassNotFoundException e)
@@ -1469,7 +1468,7 @@ public abstract class MetadataService
 	
 			// First report any problems which prevented the harvest from finishing
 			if(problem != null)
-				body.append("The harvest failed for the following reason: ").append(problem).append("\n\n");
+				body.append("The service failed for the following reason: ").append(problem).append("\n\n");
 	
 			// Report on the number of records inserted successfully and the number of failed inserts
 			if(processedRecordCount!=totalRecordCount)
