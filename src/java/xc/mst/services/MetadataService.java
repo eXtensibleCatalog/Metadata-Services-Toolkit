@@ -266,6 +266,7 @@ public abstract class MetadataService
 			if(!runningService.isCanceled)
 				runningService.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
 
+			runningService.sendReportEmail(null);
 			return success;
 		} // end try(run the service through reflection)
 		catch(ClassNotFoundException e)
