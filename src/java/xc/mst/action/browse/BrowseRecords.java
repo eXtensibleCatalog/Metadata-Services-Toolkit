@@ -91,7 +91,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	private HttpServletResponse servletResponse;
 	
 	/** The end row number to retrieve */ 
-	private int rowEnd;
+	private long rowEnd;
 	
 	/** Denotes whether to search XML or not */ 
 	private boolean searchXML;
@@ -118,7 +118,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	private String errorType; 
 	
 	/**
-     * Exceute method to load initial screen with just the facets
+     * Execute method to load initial screen with just the facets
      */
 	public String execute() {
 		searchXML = true;
@@ -508,11 +508,11 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		this.servletResponse = servletResponse;
 	}
 	
-	public int getRowEnd() {
+	public long getRowEnd() {
 		return rowEnd;
 	}
 
-	public void setRowEnd(int rowEnd) {
+	public void setRowEnd(long rowEnd) {
 		this.rowEnd = rowEnd;
 	}
 
@@ -521,7 +521,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	 * 
 	 * @see xc.mst.action.browse.Pager#getTotalHits()
 	 */
-	public int getTotalHits() {
+	public long getTotalHits() {
 		return result.getTotalNumberOfResults();
 	}
 

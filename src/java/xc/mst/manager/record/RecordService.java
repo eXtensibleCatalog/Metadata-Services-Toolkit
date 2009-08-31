@@ -251,6 +251,14 @@ public abstract class RecordService
 	public abstract RecordList getByProviderId(int providerId) throws IndexException;
 
 	/**
+	 * Gets number of records from the index with the passed provider ID
+	 *
+	 * @param providerId The provider ID of the records to retrieve
+	 * @return Number of records in the index with the passed provider ID
+	 */
+	public abstract int getCountByProviderId(int providerId) throws IndexException;
+
+	/**
 	 * Gets all records from the index with the passed service ID
 	 *
 	 * @param serviceId The service ID of the records to retrieve

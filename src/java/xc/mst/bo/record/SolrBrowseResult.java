@@ -23,7 +23,7 @@ import org.apache.solr.client.solrj.response.FacetField;
 public class SolrBrowseResult {
 
 	/** Total number of results */
-	private int totalNumberOfResults;
+	private long totalNumberOfResults;
 
 	/** Query */
 	private String query;
@@ -74,11 +74,11 @@ public class SolrBrowseResult {
 		facetFilters.add(facetFilter);
 	}
 
-	public int getTotalNumberOfResults() {
+	public long getTotalNumberOfResults() {
 		return totalNumberOfResults;
 	}
 
-	public void setTotalNumberOfResults(int totalNumberOfResults) {
+	public void setTotalNumberOfResults(long totalNumberOfResults) {
 		this.totalNumberOfResults = totalNumberOfResults;
 	}
 

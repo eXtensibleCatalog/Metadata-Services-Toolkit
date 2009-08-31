@@ -192,6 +192,21 @@ public class DefaultRecordService extends RecordService
 		// Return the list of results
 		return new RecordList(query);
 	} // end method getByProviderId(int)
+	
+	@Override
+	public int getCountByProviderId(int providerId) throws IndexException
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting count of records with provider ID " + providerId);
+
+		// Create a query to get the Documents with the requested provider ID
+		SolrQuery query = new SolrQuery();
+		query.setQuery(FIELD_PROVIDER_ID + ":" + Integer.toString(providerId));
+
+		RecordList records = new RecordList(query , 0);
+		// Return the size
+		return records.size();
+	} // end method getCountByProviderId(int)
 
 	@Override
 	public RecordList getByServiceId(int serviceId) throws IndexException
@@ -557,8 +572,8 @@ public class DefaultRecordService extends RecordService
 		if(fromDate != null || untilDate != null)
 			query.addFilterQuery(FIELD_UPDATED_AT + ":[" + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)) + " TO " + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)) + "]");
 
-		// Remove the limit on the number of results returned
-		query.setRows(Integer.MAX_VALUE);
+//		// Remove the limit on the number of results returned
+//		query.setRows(Integer.MAX_VALUE);
 		
 		// Get the result of the query
 		RecordList records = new RecordList(query);
@@ -631,7 +646,7 @@ public class DefaultRecordService extends RecordService
 	    }
 
 		SolrBrowseResult result = new SolrBrowseResult(records);
-		result.setTotalNumberOfResults((int)docs.getNumFound());
+		result.setTotalNumberOfResults(docs.getNumFound());
 
 		// Return the empty list if we couldn't find the records
 		if(result.getTotalNumberOfResults() == 0)

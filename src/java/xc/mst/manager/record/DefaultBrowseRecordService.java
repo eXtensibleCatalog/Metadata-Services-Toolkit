@@ -66,7 +66,7 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 		if (log.isDebugEnabled()) {
 			log.debug("Querying Solr server with query:" + query);
 		}
-		
+
 		if (server == null) {
 			log.error("Solr server is null. Check the path to solr folder.");
 			throw new IndexException("Solr server is null. Check the path to solr folder.");
@@ -91,10 +91,10 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 	    	records.add(recordService.getRecordFieldsForBrowseFromDocument(iteration.next()));
 	    }
 
-	    // Load the facets in the SolrBrowseResilt object
+	    // Load the facets in the SolrBrowseResult object
 	    List<FacetField> facets = rsp.getFacetFields();
 	    result = new SolrBrowseResult(records, facets);
-	    result.setTotalNumberOfResults((int)docs.getNumFound());
+	    result.setTotalNumberOfResults(docs.getNumFound());
 
 		
 

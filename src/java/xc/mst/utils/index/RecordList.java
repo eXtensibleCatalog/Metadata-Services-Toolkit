@@ -65,7 +65,7 @@ public class RecordList extends AbstractList<Record>
 	/**
 	 * The number of elements in the list
 	 */
-	private int size = -1;
+	private int size = 0;
 
 	/**
 	 * A reference to the logger for this class
@@ -86,9 +86,28 @@ public class RecordList extends AbstractList<Record>
 			query.setRows(MAX_RESULTS);
 			query.setStart(currentOffset);
 			docs = indexMgr.getDocumentList(query);
+			size = (int) docs.getNumFound();
 		}
 	}
-
+	
+	/**
+	 * Constructs a RecordList around a Solr query.  The docs returned by the query
+	 * are assumed to all be Record Objects
+	 *
+	 * @param query The Solr query for which the RecordList was built
+	 */
+	public RecordList(SolrQuery query, int numRowsToFetch) throws IndexException
+	{
+		if(query != null)
+		{
+			this.query = query;
+			query.setRows(numRowsToFetch);
+			query.setStart(currentOffset);
+			docs = indexMgr.getDocumentList(query);
+			size = (int) docs.getNumFound();
+		}
+	}
+	 	
 	/**
 	 * Gets the record at a given index
 	 *
@@ -99,28 +118,34 @@ public class RecordList extends AbstractList<Record>
 	{
 		try
 		{
-			if(query == null)
+			if(query == null || size == 0)
 				return null;
-			
-			if(currentOffset < index && currentOffset + MAX_RESULTS > index)
-			{
-				if(docs == null)
-					return null;
-				
-				return (docs.size() > (index-currentOffset) ? service.getRecordFromDocument(docs.get(index-currentOffset)) : null);
+		
+			if (index < size) {
+				if (index < currentOffset + MAX_RESULTS) {
+					if (currentOffset == 0) {
+						return service.getRecordFromDocument(docs.get(index));
+					} else {
+						return service.getRecordFromDocument(docs.get(index % currentOffset));
+					}
+					
+				} else {
+					query.setRows(MAX_RESULTS);
+					currentOffset = currentOffset + MAX_RESULTS;
+					query.setStart(currentOffset);
+					docs = indexMgr.getDocumentList(query);
+					if (currentOffset == 0) {
+						return service.getRecordFromDocument(docs.get(index));
+					} else {
+						return service.getRecordFromDocument(docs.get(index % currentOffset));
+					}
+					
+					
+				}
+			} else  {
+				log.error("Index out of bounds exception for RecordList index " + index);
+				return null;
 			}
-			
-			// Truncation will make this the largest multiple of MAX_RESULTS which comes before the requested index
-			currentOffset = (index/MAX_RESULTS)*MAX_RESULTS;
-			
-			query.setRows(MAX_RESULTS);
-			query.setStart(currentOffset);
-			docs = indexMgr.getDocumentList(query);
-			
-			if(docs == null)
-				return null;
-			
-			return (docs.size() > (index-currentOffset) ? service.getRecordFromDocument(docs.get(index-currentOffset)) : null);
 		}
 		catch(DatabaseConfigException e)
 		{
@@ -132,6 +157,9 @@ public class RecordList extends AbstractList<Record>
 		{
 			log.error("Cannot connect to Solr Server. Check the port in configuration file.", ie);
 			
+			return null;
+		} catch (Exception e) {
+			log.error("RecordList error at currentOffset = " + currentOffset + " and index= " + index, e);
 			return null;
 		}
 	}
@@ -154,52 +182,6 @@ public class RecordList extends AbstractList<Record>
 	 */
 	public int size()
 	{
-		if(size >= 0)
-			return size;
-		
-		if(query == null)
-		{
-			size = 0;
-			return size;
-		}
-		
-		// Binary search to find the size of the list
-		int low = 0;
-		int high = Integer.MAX_VALUE;
-		int mid;
-		
-		while(low <= high)
-		{
-			mid = (low + high) / 2;
-			
-			if(mid == 0)
-				return 0;
-			
-			if(get(mid-1) != null)
-			{
-				if(get(mid) == null)
-				{
-					size = mid;
-					return size;
-				}
-				else
-					low = mid+1;
-			}
-			else
-			{
-				if(mid == 1)
-					return 0;
-				
-				if(get(mid-2) != null)
-				{
-					size = mid-1;
-					return size;
-				}
-				else
-					high = mid;
-			}
-		}
-		
-		return -1;
+		return size;
 	}
 }

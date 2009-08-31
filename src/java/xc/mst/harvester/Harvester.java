@@ -473,7 +473,7 @@ public class Harvester implements ErrorHandler
 
 		try
 		{
-			firstHarvest = recordService.getByProviderId(schedule.getProvider().getId()).size() == 0;
+			firstHarvest = recordService.getCountByProviderId(schedule.getProvider().getId()) == 0;
 		}
 		catch (IndexException e2)
 		{

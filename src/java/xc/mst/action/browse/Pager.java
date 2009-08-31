@@ -46,7 +46,7 @@ public abstract class Pager extends ActionSupport {
 	 *  
 	 * @return
 	 */
-	public abstract int getTotalHits() ;
+	public abstract long getTotalHits() ;
 	
 	/**
 	 * Get the start row number to get the data

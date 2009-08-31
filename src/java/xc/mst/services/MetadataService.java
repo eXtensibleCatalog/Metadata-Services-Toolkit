@@ -147,11 +147,6 @@ public abstract class MetadataService
 	private HashMap<Integer, Integer> servicesToRun = new HashMap<Integer, Integer>();
 
 	/**
-	 * The number of records processed by the service so far
-	 */
-	private int numProcessed = 0;
-
-	/**
 	 * The flag for indicating cancel service operation.
 	 */
 	private boolean isCanceled;
@@ -167,7 +162,7 @@ public abstract class MetadataService
 	private static MetadataService runningService;
 
 	/**
-	 * 
+	 * The number of records processed by the service so far
 	 */
 	private int processedRecordCount  = 0;
 	/**
@@ -265,7 +260,7 @@ public abstract class MetadataService
 			// Run the service's processRecords method
 			boolean success = runningService.processRecords(outputSetId);
 
-			LogWriter.addInfo(service.getServicesLogFileName(), "The " + service.getName() + " Service finished running.  " + runningService.numProcessed + " records were processed.");
+			LogWriter.addInfo(service.getServicesLogFileName(), "The " + service.getName() + " Service finished running.  " + runningService.processedRecordCount + " records were processed.");
 
 			// Update database with status of service
 			if(!runningService.isCanceled)
@@ -663,7 +658,8 @@ public abstract class MetadataService
 			// Get the list of record inputs for this service
 			RecordList records = recordService.getInputForService(service.getId());
 			totalRecordCount = records.size();
-
+			log.info("Number of records to be processed by service = " + totalRecordCount);
+			
 			//DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 
 			// Iterate over the list of input records and process each.
@@ -728,11 +724,11 @@ public abstract class MetadataService
 					processMe.removeInputForService(service);
 					recordService.update(processMe);
 					
-					numProcessed++;
-					if(numProcessed % 10000 == 0)
+					processedRecordCount++;
+					if(processedRecordCount % 10000 == 0)
 					{
-						if(numProcessed % 100000 == 0)
-							LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + numProcessed + " records so far.");
+						if(processedRecordCount % 10000 == 0)
+							LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
 						
 						try
 						{
@@ -750,7 +746,7 @@ public abstract class MetadataService
 						if(isCanceled)
 							{
 								LogWriter.addInfo(service.getServicesLogFileName(), "Cancelled Service " + serviceName);
-								LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + numProcessed + " records so far.");
+								LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
 								// Update database with status of service
 								setStatus(Constants.STATUS_SERVICE_CANCELED);
 								break;
@@ -788,7 +784,6 @@ public abstract class MetadataService
 							}
 
 					}
-				processedRecordCount++ ;
 			} // end loop over records to process
 
 			// Reopen the reader so it can see the changes made by running the service
@@ -822,14 +817,22 @@ public abstract class MetadataService
 		catch(Exception e)
 		{
 			log.error("An error occurred while running the service with ID " + service.getId() + ".", e);
-
+			
+			try {
+				// Commit processed records to index
+				SolrIndexManager.getInstance().commitIndex();
+			} catch (IndexException ie) {
+				log.error("Exception occured when commiting " + service.getName() + " records to index", e);
+			}
+			
 			// Update database with status of service
 			setStatus(Constants.STATUS_SERVICE_ERROR);
-
+			
 			return false;
 		} // end catch(Exception)
 		finally // Update the error and warning count for the service
 		{
+			
 			// Load the provider again in case it was updated during the harvest
 			Service service = null;
 			try
@@ -846,9 +849,12 @@ public abstract class MetadataService
 			// Increase the warning and error counts as appropriate, then update the provider
 			service.setServicesWarnings(service.getServicesWarnings() + warningCount);
 			service.setServicesErrors(service.getServicesErrors() + errorCount);
-
+			// TODO change i/p record count
+			service.setInputRecordCount(service.getInputRecordCount() + processedRecordCount);
 			try {
-				service.setHarvestOutRecordsAvailable(recordService.getCount(null, null, -1, -1, service.getId()));
+				long harvestOutRecordsAvailable = recordService.getCount(null, null, -1, -1, service.getId());
+				service.setHarvestOutRecordsAvailable(harvestOutRecordsAvailable);
+				service.setOutputRecordCount((int) harvestOutRecordsAvailable);
 			} catch (IndexException ie) {
 				log.error("Index exception occured.", ie);
 			}
@@ -1169,6 +1175,7 @@ public abstract class MetadataService
 	protected void logError(String message)
 	{
 		LogWriter.addError(service.getServicesLogFileName(), message);
+		errorCount++;
 	}
 
 	protected String getOrganizationCode()

@@ -898,6 +898,10 @@
         <action name="oaiRepository" class="xc.mst.oai.OaiRepository">
 			<result name="success" type="no-op"/>
 		</action>
+
+        <action name="testOaiRepository" class="xc.mst.test.TestOAIRepositoryServlet">
+			<result name="success" type="no-op"/>
+		</action>
 		        
 	</package>
 	
