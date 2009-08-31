@@ -1232,7 +1232,7 @@ public class Harvester implements ErrorHandler
 			try {
 				addr = InetAddress.getLocalHost();
 			} catch (UnknownHostException e) {
-				log.error("Host name query failed.");
+				log.error("Host name query failed.", e);
 			}
 			String subject = "Results of harvesting " + schedule.getProvider().getOaiProviderUrl() +" by MST Server on " + addr.getHostName();
 	
@@ -1244,9 +1244,13 @@ public class Harvester implements ErrorHandler
 				body.append("The harvest failed for the following reason: ").append(problem).append("\n\n");
 	
 			// Report on the number of records inserted successfully and the number of failed inserts
-			if(processedRecordCount!=totalRecordCount)
+			if(processedRecordCount!=totalRecordCount && totalRecordCount!=0)
 				body.append("Error: Not all records from the OAI were harvested. \n");
-			body.append(processedRecordCount +" records out of " + totalRecordCount +" processed. \n");
+			if(totalRecordCount!=0)
+				body.append(processedRecordCount +" records out of " + totalRecordCount +" processed. \n");
+			else 
+				body.append(processedRecordCount +" records" +" processed. \n");
+			
 			body.append(addedCount+updatedCount).append(" Records were successfully harvested.\n");
 			body.append(failedInserts).append(" Records were not able to harvested.\n\n");
 	
