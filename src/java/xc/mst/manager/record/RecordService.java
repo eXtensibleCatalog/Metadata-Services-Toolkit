@@ -122,10 +122,6 @@ public abstract class RecordService
 	 */
 	public final static String FIELD_HARVEST_ID = "harvest_id";
 
-	/**
-	 * The name of the harvest schedule ID field
-	 */
-	public final static String FIELD_HARVEST_SCHEDULE_ID = "harvest_schedule_id";
 
 	/**
 	 * The name of the harvest schedule field
@@ -291,14 +287,6 @@ public abstract class RecordService
 	public abstract RecordList getByHarvestId(int harvestId) throws IndexException;
 
 	/**
-	 * Gets all records from the index with the passed harvest schedule ID
-	 *
-	 * @param harvestScheduleId The harvest schedule ID of the records to retrieve
-	 * @return A list of all records in the index with the passed harvest schedule ID
-	 */
-	public abstract RecordList getByHarvestScheduleId(int harvestScheduleId) throws IndexException;
-
-	/**
 	 * Gets all records from the index with the passed format ID and service ID
 	 *
 	 * @param formatId The format ID of the records to retrieve
@@ -353,6 +341,13 @@ public abstract class RecordService
 	 * @return A list of all records that need to be processed for a given service
 	 */
 	public abstract RecordList getInputForService(int serviceId) throws IndexException;
+	
+	/**
+	 * Gets count of record inputs that were not processed for a given service
+	 *
+	 * @return count of record inputs that were not processed for a given service
+	 */
+	public abstract int getCountOfRecordsToBeProcessedVyService(int serviceId) throws IndexException;
 
 	/**
 	 * Gets the record from the index with the passed OAI Identifier

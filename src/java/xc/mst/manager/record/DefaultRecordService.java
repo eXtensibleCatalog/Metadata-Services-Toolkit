@@ -265,20 +265,6 @@ public class DefaultRecordService extends RecordService
 	} // end method getByHarvestId(int)
 
 	@Override
-	public RecordList getByHarvestScheduleId(int harvestScheduleId) throws IndexException
-	{
-		if(log.isDebugEnabled())
-			log.debug("Getting all records with harvest schedule ID " + harvestScheduleId);
-
-		// Create a query to get the Documents with the requested harvest schedule ID
-		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_HARVEST_SCHEDULE_ID + ":" +  Integer.toString(harvestScheduleId));
-
-		// Return the list of results
-		return new RecordList(query);
-	} // end method getByHarvestScheduleId(int)
-
-	@Override
 	public RecordList getByFormatIdAndServiceId(int formatId, int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
@@ -307,6 +293,22 @@ public class DefaultRecordService extends RecordService
 		return new RecordList(query);
 	} // end method getInputForService(int)
 
+	@Override
+	public int getCountOfRecordsToBeProcessedVyService(int serviceId) throws IndexException
+	{
+		if(log.isDebugEnabled())
+			log.debug("Get count of records that are input for the service with service ID " + serviceId);
+
+		// Create a query to get the Documents with the requested input for service IDs
+		SolrQuery query = new SolrQuery();
+		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId));
+		
+		RecordList recordList = new RecordList(query, 0);
+		
+		// Return the count
+		return recordList.size();
+	} // end method getCountOfRecordsToBeProcessedVyService(int)
+	
 	@Override
 	public RecordList getByProviderName(String providerName) throws IndexException
 	{
@@ -562,6 +564,7 @@ public class DefaultRecordService extends RecordService
 		SolrQuery query = new SolrQuery();
 		StringBuffer queryBuffer = new StringBuffer();
 		queryBuffer.append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
+		// TODO set spec is queried against set id.
 		if(useSet)
 			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId));
 		if(useMetadataPrefix)
@@ -572,11 +575,8 @@ public class DefaultRecordService extends RecordService
 		if(fromDate != null || untilDate != null)
 			query.addFilterQuery(FIELD_UPDATED_AT + ":[" + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)) + " TO " + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)) + "]");
 
-//		// Remove the limit on the number of results returned
-//		query.setRows(Integer.MAX_VALUE);
-		
 		// Get the result of the query
-		RecordList records = new RecordList(query);
+		RecordList records = new RecordList(query, 0);
 
 		if(log.isDebugEnabled())
 			log.debug("Found " + records.size() + " records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " with set ID " + setId) + (useMetadataPrefix ? "" : " with format ID " + formatId));
@@ -621,6 +621,7 @@ public class DefaultRecordService extends RecordService
 		SolrQuery query = new SolrQuery();
 		StringBuffer queryBuffer = new StringBuffer();
 		queryBuffer.append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
+		// TODO set spec queried against set id
 		if(useSet)
 			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId));
 		if(useMetadataPrefix)

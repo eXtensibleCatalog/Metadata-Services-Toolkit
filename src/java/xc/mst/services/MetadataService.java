@@ -725,9 +725,9 @@ public abstract class MetadataService
 					recordService.update(processMe);
 					
 					processedRecordCount++;
-					if(processedRecordCount % 10000 == 0)
+					if(processedRecordCount % 100000 == 0)
 					{
-						if(processedRecordCount % 10000 == 0)
+						if(processedRecordCount % 100000 == 0)
 							LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
 						
 						try
@@ -737,6 +737,11 @@ public abstract class MetadataService
 						catch (IndexException e)
 						{
 							log.error("An error occurred while commiting new records to the Solr index.", e);
+						}
+						
+						// Update service statistics(i/p, o/p count, harvest records available, error, warning count)
+						if (!updateServiceStatistics()) {
+							return false;
 						}
 					}
 				}
@@ -832,41 +837,10 @@ public abstract class MetadataService
 		} // end catch(Exception)
 		finally // Update the error and warning count for the service
 		{
-			
-			// Load the provider again in case it was updated during the harvest
-			Service service = null;
-			try
-			{
-				service = serviceDao.getById(this.service.getId());
-			}
-			catch (DatabaseConfigException e1)
-			{
-				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
-
+			if (!updateServiceStatistics()) {
 				return false;
 			}
 
-			// Increase the warning and error counts as appropriate, then update the provider
-			service.setServicesWarnings(service.getServicesWarnings() + warningCount);
-			service.setServicesErrors(service.getServicesErrors() + errorCount);
-			// TODO change i/p record count
-			service.setInputRecordCount(service.getInputRecordCount() + processedRecordCount);
-			try {
-				long harvestOutRecordsAvailable = recordService.getCount(null, null, -1, -1, service.getId());
-				service.setHarvestOutRecordsAvailable(harvestOutRecordsAvailable);
-				service.setOutputRecordCount((int) harvestOutRecordsAvailable);
-			} catch (IndexException ie) {
-				log.error("Index exception occured.", ie);
-			}
-
-			try
-			{
-				serviceDao.update(service);
-			}
-			catch (DataException e)
-			{
-				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e);
-			}
 			// Update the next OAI ID for this service in the database
 			oaiIdDao.writeNextOaiId(service.getId());
 
@@ -880,6 +854,51 @@ public abstract class MetadataService
 		} // end finally(write the next IDs to the database)
 	} // end method processRecords(int)
 
+	/*
+	 * Update number of warnings, errors, records available, output & input records count
+	 */
+	private boolean updateServiceStatistics() {
+		// Load the provider again in case it was updated during the harvest
+		Service service = null;
+		try
+		{
+			service = serviceDao.getById(this.service.getId());
+		}
+		catch (DatabaseConfigException e1)
+		{
+			log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+
+			return false;
+		}
+
+		// Increase the warning and error counts as appropriate, then update the provider
+		service.setServicesWarnings(service.getServicesWarnings() + warningCount);
+		service.setServicesErrors(service.getServicesErrors() + errorCount);
+		// TODO change i/p record count
+//		service.setInputRecordCount(service.getInputRecordCount() + processedRecordCount);
+		try {
+			long harvestOutRecordsAvailable = recordService.getCount(null, null, -1, -1, service.getId());
+			service.setHarvestOutRecordsAvailable(harvestOutRecordsAvailable);
+			service.setOutputRecordCount((int) harvestOutRecordsAvailable);
+		} catch (IndexException ie) {
+			log.error("Index exception occured.", ie);
+		}
+
+		try
+		{
+			serviceDao.update(service);
+		}
+		catch (DataException e)
+		{
+			log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e);
+			return false;
+		}
+		errorCount = 0;
+		warningCount = 0;
+		return true;
+
+	}
+	
 	/**
 	 * Gets the reference of the service currently running
 	 * @return
@@ -1251,7 +1270,7 @@ public abstract class MetadataService
 	{
 		try
 		{
-			log.info("Setting the status of the service " +service.getName() +" as:" +status);
+			LogWriter.addInfo(service.getServicesLogFileName(), "Setting the status of the service " +service.getName() +" as:" +status);
 			service.setStatus(status);
 			serviceDao.update(service);
 		}
@@ -1442,7 +1461,9 @@ public abstract class MetadataService
 			return false;
 		}
 
-		setStatus(statusForSuccess);
+		if (statusForSuccess != null && statusForSuccess.length() > 0) {
+			setStatus(statusForSuccess);
+		}
 
 		return true;
 	}

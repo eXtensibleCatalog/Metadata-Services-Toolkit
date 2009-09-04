@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
@@ -30,6 +32,11 @@ import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.manager.IndexException;
+import xc.mst.manager.record.DefaultRecordService;
+import xc.mst.manager.record.RecordService;
+import xc.mst.scheduling.Scheduler;
+import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.services.MetadataService;
 
 /**
@@ -43,6 +50,9 @@ public class InitializeServices  extends HttpServlet {
 	 * Eclipse generated id
 	 */
 	private static final long serialVersionUID = 684759119754656298L;
+	
+	/** The logger object */
+	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 	/**
 	 * Initialize logging
@@ -50,6 +60,7 @@ public class InitializeServices  extends HttpServlet {
 	public void init() 
 	{
 	    LogDAO logDao = new DefaultLogDAO();
+	    ServiceDAO serviceDao = new DefaultServiceDAO();
 	    
 	    // Load the services
 	    List<Service> services = null;
@@ -60,7 +71,6 @@ public class InitializeServices  extends HttpServlet {
 		try 
 		{
 			servicesLogFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
-			ServiceDAO serviceDao = new DefaultServiceDAO();
 			services = serviceDao.getAll();
 			schedules = scheduleDao.getAll();
 		} 
@@ -85,7 +95,7 @@ public class InitializeServices  extends HttpServlet {
     			URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);
 				loader.loadClass(className);
 	    		
-	    		MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, false);
+	    		MetadataService.checkService(service.getId(), "", false);
 			} 
     		catch (ClassNotFoundException e) 
     		{
@@ -99,6 +109,7 @@ public class InitializeServices  extends HttpServlet {
 	    
 	    LogWriter.addInfo(servicesLogFileName, "Loaded services");
 	    
+	    // TODO why schedule is set to NOT_RUNNING. In case of schedule with status ERROR, it will be replaced  by NOT_RUNNING
 	    for(HarvestSchedule schedule : schedules)
 	    {
 	    	schedule.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
@@ -108,7 +119,32 @@ public class InitializeServices  extends HttpServlet {
 			} 
 	    	catch (DataException e) 
 			{
+	    		log.error("Exception occured while updating database with schedule status", e);
 			}
+	    }
+
+	    // Run service which has error status and has records waiting to be processed
+	    try {
+		    List<Service> allServices = serviceDao.getAll();
+    		RecordService recordService = new DefaultRecordService();
+		    
+		    for(Service service:allServices) {
+		    	if (service.getStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_ERROR)) {
+		    		int count = recordService.getCountOfRecordsToBeProcessedVyService(service.getId());
+		    		if (count > 0) {
+	    				// Schedule the service to run
+						ServiceWorkerThread serviceThread = new ServiceWorkerThread();
+						serviceThread.setServiceId(service.getId());
+						// TODO Output set has to be set correctly
+						serviceThread.setOutputSetId(0);
+						Scheduler.scheduleThread(serviceThread);
+		    		}
+		    	}
+		    }
+	    } catch (DatabaseConfigException dce) {
+	    	log.error("Problem connecting to database. Check database configuration." , dce);
+	    } catch (IndexException ie) {
+	    	log.error("Problem connecting to database. Check database configuration." , ie);
 	    }
 	  }
 

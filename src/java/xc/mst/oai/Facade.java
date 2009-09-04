@@ -93,11 +93,6 @@ public class Facade
 	private OaiRequestBean bean;
 
 	/**
-	 * The number of records harvested by the current request
-	 */
-	private int harvestedCount = 0;
-
-	/**
 	 * The number of warnings in executing the current request
 	 */
 	private int warningCount = 0;
@@ -337,7 +332,12 @@ public class Facade
 			// Increase the warning and error counts as appropriate, then update the provider
 			service.setHarvestOutWarnings(service.getHarvestOutWarnings() + warningCount);
 			service.setHarvestOutErrors(service.getHarvestOutErrors() + errorCount);
-			service.setHarvestOutRecordsHarvested(service.getHarvestOutRecordsHarvested() + harvestedCount);
+			
+			// Increase number of harvests if this is the initial request for harvest
+			if((verb.equalsIgnoreCase("ListRecords")) && (resumptionToken == null || resumptionToken.trim().length() == 0) && (metadataPrefix != null || metadataPrefix.trim().length() != 0))
+			{
+				service.setNumberOfHarvests(service.getNumberOfHarvests() + 1);
+			}
 
 			try
 			{

@@ -115,9 +115,9 @@ public class Service
 	private long harvestOutRecordsAvailable = 0;
 
 	/**
-	 * The number of records harvested from the service
+	 * The number of harvests from the service
 	 */
-	private long harvestOutRecordsHarvested = 0;
+	private long numberOfHarvests = 0;
 
 	/**
 	 * The timestamp when the service's harvest out logs were last reset
@@ -573,26 +573,6 @@ public class Service
 	} // end method setHarvestOutRecordsAvailable(long)
 
 	/**
-	 * Gets the number of records harvested from the service
-	 *
-	 * @return The number of records the service has output
-	 */
-	public long getHarvestOutRecordsHarvested()
-	{
-		return harvestOutRecordsHarvested;
-	} // end method getHarvestOutRecordsHarvested()
-
-	/**
-	 * Sets the number of records harvested from the service
-	 *
-	 * @param harvestOutRecordsHarvested The new number of records harvested from the service
-	 */
-	public void setHarvestOutRecordsHarvested(long harvestOutRecordsHarvested)
-	{
-		this.harvestOutRecordsHarvested = harvestOutRecordsHarvested;
-	} // end method setHarvestOutRecordsHarvested(long)
-
-	/**
 	 * Gets the date when the service's harvest out logs were last reset
 	 *
 	 * @return The date when the service's harvest out logs were last reset
@@ -696,4 +676,23 @@ public class Service
 
 		return other.serviceName.equals(this.serviceName);
 	} // end method equals(Object)
+
+
+	/**
+	 * Gets the number of harvests from the service
+	 *
+	 * @return The  number of harvests 
+	 */
+	public long getNumberOfHarvests() {
+		return numberOfHarvests;
+	}
+
+	/**
+	 * Sets the number of harvests from the service
+	 *
+	 * @param harvestOutRecordsHarvested The  number of harvests
+	 */
+	public void setNumberOfHarvests(long numberOfHarvests) {
+		this.numberOfHarvests = numberOfHarvests;
+	}
 } // end class Service

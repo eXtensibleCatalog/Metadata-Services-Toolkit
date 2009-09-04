@@ -72,8 +72,7 @@ public class HarvestOutReset extends ActionSupport
             tempService.setHarvestOutLastLogReset(new Date());
             tempService.setHarvestOutWarnings(0);
             tempService.setHarvestOutErrors(0);
-            tempService.setHarvestOutRecordsAvailable(0);
-            tempService.setHarvestOutRecordsHarvested(0);
+            tempService.setNumberOfHarvests(0);
             servicesService.updateService(tempService);
             String filename = harvestOutLogFileName;
             PrintWriter printWriter = new PrintWriter(filename);
@@ -123,8 +122,7 @@ public class HarvestOutReset extends ActionSupport
                 tempService.setHarvestOutLastLogReset(new Date());
                 tempService.setHarvestOutWarnings(0);
                 tempService.setHarvestOutErrors(0);
-                tempService.setHarvestOutRecordsAvailable(0);
-                tempService.setHarvestOutRecordsHarvested(0);
+                tempService.setNumberOfHarvests(0);
                 servicesService.updateService(tempService);
                 String filename = tempService.getHarvestOutLogFileName();
                 PrintWriter printWriter = new PrintWriter(filename);

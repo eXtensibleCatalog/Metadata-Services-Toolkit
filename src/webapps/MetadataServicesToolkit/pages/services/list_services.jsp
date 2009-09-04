@@ -155,8 +155,20 @@
                                                         <c:when test="${service_status=='NOT_RUNNING'}">
                                                             Not running
                                                         </c:when>
-                                                        <c:otherwise>
+                                                        <c:when test="${service_status=='RUNNING'}">
                                                             Running
+                                                        </c:when>
+                                                        <c:when test="${service_status=='ERROR'}">
+                                                            Error
+                                                        </c:when>
+                                                        <c:when test="${service_status=='PAUSED'}">
+                                                            Paused
+                                                        </c:when>
+                                                        <c:when test="${service_status=='CANCELED'}">
+                                                            Aborted
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Not running
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>

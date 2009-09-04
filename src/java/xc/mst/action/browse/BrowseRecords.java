@@ -227,7 +227,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			solrQuery.addFacetField("harvest_start_time");
 			solrQuery.addFacetField("error");
 			
-			// Fileds to load
+			// Fields to load
 			solrQuery.addField(RecordService.FIELD_RECORD_ID);
 			solrQuery.addField(RecordService.FIELD_FORMAT_ID);
 			solrQuery.addField(RecordService.FIELD_PROVIDER_ID);
@@ -304,44 +304,48 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			record = recordService.getById(recordId);
 			recordXML = record.getOaiXml();
 	
-			// If XML is not formatted then format it
-			if (recordXML.indexOf("\n") == -1 || recordXML.indexOf("\t") == -1) {
-				StringBuffer formattedXML = new StringBuffer();
-				int xmlLength = recordXML.length();
-				int indentCount = 0;
-	
-				
-				for (int i = 0; i < xmlLength; i++) {
-					if (recordXML.charAt(i) == '<') {
-						
-						if (recordXML.charAt(i+1) != '/') {
-							formattedXML.append("\n");
-							for (int j = 1; j <= indentCount; j++ ) {
-								formattedXML.append("\t");
-							}
-							indentCount++;
-						} else if (i > 0 && recordXML.charAt(i-1) != '>') {
-							indentCount--;
-						} else if (i > 0 && recordXML.charAt(i-1) == '>') {
-							
-							formattedXML.append("\n");
-							indentCount--;
-							for (int j = 1; j <= indentCount; j++ ) {
-								formattedXML.append("\t");
-							}
-						}
-	
-					} 
+			// Remove all formatting. Because some times only half XML is formatted, so lets remove formatting 
+			// and do it yourself.
+			recordXML = recordXML.replaceAll("\n", "");
+			recordXML = recordXML.replaceAll("\t", "");			
+			
+			// Now format it
+			StringBuffer formattedXML = new StringBuffer();
+			int xmlLength = recordXML.length();
+			int indentCount = 0;
+
+			
+			for (int i = 0; i < xmlLength; i++) {
+				if (recordXML.charAt(i) == '<') {
 					
-					if (recordXML.charAt(i) == '>') {
-						if (i > 0 && recordXML.charAt(i-1) == '/') {
-							indentCount--;
-						} 
+					// Format start tag < by adding new line
+					if (recordXML.charAt(i+1) != '/') {
+						formattedXML.append("\n");
+						for (int j = 3; j <= indentCount; j++ ) {
+							formattedXML.append("\t");
+						}
+						indentCount++;
+					} else if (i > 0 && recordXML.charAt(i-1) != '>') {
+						indentCount--;
+					} else if (i > 0 && recordXML.charAt(i-1) == '>') {
+						
+						formattedXML.append("\n");
+						indentCount--;
+						for (int j = 3; j <= indentCount; j++ ) {
+							formattedXML.append("\t");
+						}
 					}
-					formattedXML.append(recordXML.charAt(i));
+
+				} 
+				
+				if (recordXML.charAt(i) == '>') {
+					if (i > 0 && recordXML.charAt(i-1) == '/') {
+						indentCount--;
+					} 
 				}
-				recordXML = formattedXML.toString();
+				formattedXML.append(recordXML.charAt(i));
 			}
+			recordXML = formattedXML.toString();
 			
 			recordXML = recordXML.replaceAll("<", "&lt;");
 			recordXML = recordXML.replaceAll(">", "&gt;");

@@ -232,7 +232,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setHarvestOutWarnings(results.getInt(13));
 					service.setHarvestOutErrors(results.getInt(14));
 					service.setHarvestOutRecordsAvailable(results.getLong(15));
-					service.setHarvestOutRecordsHarvested(results.getLong(16));
+					service.setNumberOfHarvests(results.getLong(16));
 					service.setHarvestOutLastLogReset(results.getDate(17));
 					service.setHarvestOutLogFileName(results.getString(18));
 					service.setStatus(results.getString(19));
@@ -368,7 +368,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				service.setHarvestOutWarnings(results.getInt(13));
 				service.setHarvestOutErrors(results.getInt(14));
 				service.setHarvestOutRecordsAvailable(results.getLong(15));
-				service.setHarvestOutRecordsHarvested(results.getLong(16));
+				service.setNumberOfHarvests(results.getLong(16));
 				service.setHarvestOutLastLogReset(results.getDate(17));
 				service.setHarvestOutLogFileName(results.getString(18));
 				service.setStatus(results.getString(19));
@@ -498,7 +498,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setHarvestOutWarnings(results.getInt(13));
 					service.setHarvestOutErrors(results.getInt(14));
 					service.setHarvestOutRecordsAvailable(results.getLong(15));
-					service.setHarvestOutRecordsHarvested(results.getLong(16));
+					service.setNumberOfHarvests(results.getLong(16));
 					service.setHarvestOutLastLogReset(results.getDate(17));
 					service.setHarvestOutLogFileName(results.getString(18));
 					service.setStatus(results.getString(19));
@@ -627,7 +627,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setHarvestOutWarnings(results.getInt(13));
 					service.setHarvestOutErrors(results.getInt(14));
 					service.setHarvestOutRecordsAvailable(results.getLong(15));
-					service.setHarvestOutRecordsHarvested(results.getLong(16));
+					service.setNumberOfHarvests(results.getLong(16));
 					service.setHarvestOutLastLogReset(results.getDate(17));
 					service.setHarvestOutLogFileName(results.getString(18));
 					service.setStatus(results.getString(19));
@@ -747,7 +747,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setHarvestOutWarnings(results.getInt(13));
 					service.setHarvestOutErrors(results.getInt(14));
 					service.setHarvestOutRecordsAvailable(results.getLong(15));
-					service.setHarvestOutRecordsHarvested(results.getLong(16));
+					service.setNumberOfHarvests(results.getLong(16));
 					service.setHarvestOutLastLogReset(results.getDate(17));
 					service.setHarvestOutLogFileName(results.getString(18));
 					service.setStatus(results.getString(19));
@@ -876,7 +876,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setHarvestOutWarnings(results.getInt(13));
 					service.setHarvestOutErrors(results.getInt(14));
 					service.setHarvestOutRecordsAvailable(results.getLong(15));
-					service.setHarvestOutRecordsHarvested(results.getLong(16));
+					service.setNumberOfHarvests(results.getLong(16));
 					service.setHarvestOutLastLogReset(results.getDate(17));
 					service.setHarvestOutLogFileName(results.getString(18));
 					service.setStatus(results.getString(19));
@@ -986,7 +986,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				psInsert.setInt(12, service.getHarvestOutWarnings());
 				psInsert.setInt(13, service.getHarvestOutErrors());
 				psInsert.setLong(14, service.getHarvestOutRecordsAvailable());
-				psInsert.setLong(15, service.getHarvestOutRecordsHarvested());
+				psInsert.setLong(15, service.getNumberOfHarvests());
 				psInsert.setDate(16, service.getHarvestOutLastLogReset());
 				psInsert.setString(17, service.getHarvestOutLogFileName());
 				psInsert.setString(18, service.getStatus());
@@ -1127,7 +1127,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				psUpdate.setInt(12, service.getHarvestOutWarnings());
 				psUpdate.setInt(13, service.getHarvestOutErrors());
 				psUpdate.setLong(14, service.getHarvestOutRecordsAvailable());
-				psUpdate.setLong(15, service.getHarvestOutRecordsHarvested());
+				psUpdate.setLong(15, service.getNumberOfHarvests());
 				psUpdate.setDate(16, service.getHarvestOutLastLogReset());
 				psUpdate.setString(17, service.getHarvestOutLogFileName());
 				psUpdate.setString(18, service.getStatus());

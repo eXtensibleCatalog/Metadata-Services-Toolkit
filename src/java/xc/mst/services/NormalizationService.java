@@ -1089,7 +1089,7 @@ public class NormalizationService extends MetadataService
 
 				return marcXml;
 			}
-			else if(field008offset22 != '|' && field008offset22 != '#') {
+			else if(field008offset22 != ' ' && (field008offset22 != 'a' && field008offset22 != 'b' && field008offset22 != 'c' && field008offset22 != 'd' && field008offset22 != 'e' && field008offset22 != 'f' && field008offset22 != 'g' && field008offset22 != 'j'&& field008offset22 != '|' && field008offset22 != '#')) {
 				errors.add(service.getId() + "-105: Invalid value in Control Field 008 offset 22: " + field008offset22);
 				outputRecordErrors.add(service.getId() + "-105: Invalid value in Control Field 008 offset 22: " + field008offset22);
 			}
@@ -1188,9 +1188,6 @@ public class NormalizationService extends MetadataService
 			// The cleaned up ISBN number.  This is the 020 $a with everything after the first left parenthesis removed
 			String cleanIsbn = (endIndex >= 0 ? field020a.substring(0, endIndex) : field020a);
 
-			if(endIndex >= 0)
-				errors.add(service.getId() + "-109: Malformed ISBN in 020 $a: " + field020a + ".  This was fixed by the Normalization Service.");
-			
 			if(log.isDebugEnabled())
 				log.debug("Adding the cleaned up ISBN number " + cleanIsbn + " to the normalized record.");
 
@@ -1275,7 +1272,7 @@ public class NormalizationService extends MetadataService
 				if(subfield.getAttribute("code").getValue().equals("a"))
 					aSubfield = subfield;
 				else
-					errors.add(service.getId() + "-107: Invalid 035 Data Field (035s cannot contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
+					errors.add(service.getId() + "-107: Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
 
 				// Initialize the bSubfield if we found the $b
 				if(subfield.getAttribute("code").getValue().equals("b"))
@@ -2053,7 +2050,7 @@ public class NormalizationService extends MetadataService
 	{
 		String languageLower = (language != null ? language.toLowerCase() : null);
 
-		return (languageLower != null && languageLower.length() == 3 && !languageLower.contains("|")&& !languageLower.equals("mul") && !languageLower.equals("n/a") && !languageLower.equals("xxx") && !languageLower.equals("und"));
+		return (languageLower != null && languageLower.length() == 3 && !languageLower.contains("|")&& !languageLower.equals("mul") && !languageLower.equals("n/a") && !languageLower.equals("xxx") && !languageLower.equals("und")&& !languageLower.equals("zxx"));
 	}
 
 	@Override

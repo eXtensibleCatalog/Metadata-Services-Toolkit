@@ -159,7 +159,7 @@
                                                            <c:param name="isAscendingOrder" value="true"/>
                                                            <c:param name="columnSorted" value="RecordsHarvested"/>
                                                          </c:url>
-                                                          <a href="${logSortUrl}">#Records Harvested</a>
+                                                          <a href="${logSortUrl}">#Of harvests</a>
                                                      </c:if>
 
                                                      <c:if test="${columnSorted=='RecordsHarvested'}">
@@ -168,7 +168,7 @@
                                                          <c:param name="columnSorted" value="RecordsHarvested"/>
                                                        </c:url>
 
-                                                       <a href="${logSortUrl}">#Records Harvested</a>
+                                                       <a href="${logSortUrl}">#Of harvests</a>
 
                                                         <c:choose>
                                                             <c:when test="${isAscendingOrder==true}">
