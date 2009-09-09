@@ -710,8 +710,8 @@ public class Harvester implements ErrorHandler
 		} // end catch(Hexception)
 		catch (OAIErrorException oaie)
 		{
-			if(!killed)
-				persistStatus(Constants.STATUS_SERVICE_ERROR);
+			//if(!killed)
+				//persistStatus(Constants.STATUS_SERVICE_ERROR);
 
 			if(oaie.getOAIErrorCode().contains("noRecordsMatch"))
 				return;
