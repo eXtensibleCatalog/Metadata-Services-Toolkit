@@ -145,4 +145,51 @@ public class HarvestScheduleStep
 	{
 		this.lastRan = (lastRan == null ? null : new Date(lastRan.getTime()));
 	} // end method setNextListSetsListFormat(Date)
+
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o) return true;
+        if (!(o instanceof HarvestScheduleStep)) return false;
+
+		final HarvestScheduleStep other = (HarvestScheduleStep)o;
+
+        if( ( format!= null && !format.equals(other.getFormat()) ) ||
+                ( format == null && other.getFormat() != null ) ) return false;
+        
+        if( ( set!= null && !set.equals(other.getSet()) ) ||
+                ( set == null && other.getSet() != null ) ) return false;
+        
+        if( ( schedule.getId() != -1 && !(schedule.getId() == other.getSchedule().getId()) ) ||
+                ( schedule.getId() == -1 && other.getSchedule().getId()!= -1 ) ) return false;
+        
+        return true;
+
+	} // end method equals(Object)
+	
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode()
+    {
+            int value = 0;
+            value += format == null ? 0 : format.hashCode();
+            value += set == null ? 0 : set.hashCode();
+            value += schedule.getId() == -1 ? 0 : schedule.getId();
+            return value;
+    }
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("id="+id);
+		sb.append(" format="+format.getName());
+		if (set != null)
+			sb.append(" set="+set.getDisplayName());
+		sb.append(" schedule="+schedule.getId());
+		sb.append(" lastRan="+lastRan);
+		
+		return sb.toString();
+		
+	}
+
 } // end class HarvestScheduleStep

@@ -10,9 +10,9 @@
 package xc.mst.manager.record;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.queryParser.ParseException;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
 import org.jconfig.Configuration;
@@ -33,6 +33,7 @@ import xc.mst.dao.harvest.HarvestRecordUtilDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.RecordList;
+import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
 
 /**
@@ -335,12 +336,29 @@ public abstract class RecordService
 	 */
 	public abstract RecordList getByFormatName(String formatName) throws IndexException;
 
+//	/**
+//	 * Gets all record inputs that were not processed for a given service
+//	 *
+//	 * @return A list of all records that need to be processed for a given service
+//	 */
+//	public abstract Records getInputForServiceToProcess(int serviceId) throws IndexException;
+	
 	/**
 	 * Gets all record inputs that were not processed for a given service
 	 *
 	 * @return A list of all records that need to be processed for a given service
 	 */
 	public abstract RecordList getInputForService(int serviceId) throws IndexException;
+	
+//	/**
+//	 * Gets specified number of record inputs that were not processed for a given service
+//	 * 
+//	 * @param serviceId
+//	 * @param start
+//	 * @param rows
+//	 * @return A list of all records that need to be processed for a given service
+//	 */
+//	public abstract List<Record> getInputForService(int serviceId, int start, int rows) throws IndexException;
 	
 	/**
 	 * Gets count of record inputs that were not processed for a given service

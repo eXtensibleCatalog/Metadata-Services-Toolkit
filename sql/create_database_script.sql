@@ -403,8 +403,8 @@ CREATE TABLE resumption_tokens
   resumption_token_id BIGINT(11) NOT NULL AUTO_INCREMENT,
   set_spec VARCHAR(255),
   metadata_format VARCHAR(511),
-  starting_from TIMESTAMP,
-  until TIMESTAMP,
+  starting_from TIMESTAMP NULL DEFAULT NULL,
+  until TIMESTAMP NULL DEFAULT NULL,
   offset BIGINT(11) NOT NULL,
 
   PRIMARY KEY(resumption_token_id)

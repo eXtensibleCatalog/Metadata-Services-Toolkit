@@ -1260,14 +1260,17 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 				// Execute the update statement and return the result
 				boolean success = dbConnectionManager.executeUpdate(psUpdate) > 0;
-
+				
 				if(updateSteps)
 				{
+					HarvestSchedule oldHarvestSchedule = getById(harvestSchedule.getId());
+					
 					// Delete all steps from before we updated the schedule
 					harvestScheduleStepDao.deleteStepsForSchedule(harvestSchedule.getId());
 	
 					// A step in the schedule we just inserted
 				    HarvestScheduleStep step = new HarvestScheduleStep();
+				    step.setSchedule(harvestSchedule);
 	
 				    // If there are no sets, insert a step for each format to be harvested
 				    if(harvestSchedule.getSets().size() <= 0)
@@ -1275,6 +1278,15 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				    	for(Format format : harvestSchedule.getFormats())
 				    	{
 				    		step.setFormat(format);
+				    		step.setLastRan(null);
+
+			    			// If the step already exist then copy the last ran parameter
+			    			for (HarvestScheduleStep oldStep: oldHarvestSchedule.getSteps()) {
+				    			if (oldStep.equals(step)) {
+				    				step.setLastRan(oldStep.getLastRan());
+				    				break;
+				    			}
+			    			}	
 				    		success = harvestScheduleStepDao.insert(step, harvestSchedule.getId()) && success;
 				    	} // end loop over formats
 				    } // end if(the schedule had no sets)
@@ -1285,10 +1297,31 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				    	for(Format format : harvestSchedule.getFormats())
 				    	{
 				    		step.setFormat(format);
+				    		step.setSet(null);
+				    		step.setLastRan(null);
 	
+			    			// Check if there was a step with this format and all sets existed previously
+				    		// If so set last ran value because this set would have been already harvested and so 
+				    		// it is enough if we harvest from the last ran date
+				    		for (HarvestScheduleStep oldStep: oldHarvestSchedule.getSteps()) {
+				    			if (oldStep.equals(step)) {
+				    				step.setLastRan(oldStep.getLastRan());
+				    				break;
+				    			}
+			    			}	
+				    		
 				    		for(Set set : harvestSchedule.getSets())
 				    		{
 				    			step.setSet(set);
+				    			
+				    			// If the step already exist then copy the last ran parameter
+				    			for (HarvestScheduleStep oldStep: oldHarvestSchedule.getSteps()) {
+					    			if (oldStep.equals(step)) {
+					    				step.setLastRan(oldStep.getLastRan());
+					    				break;
+					    			}
+				    			}				 
+				    			
 				    			success = harvestScheduleStepDao.insert(step, harvestSchedule.getId()) && success;
 				    		}
 				    	} // end loop over formats

@@ -115,15 +115,37 @@ public class Format
 	{
 		this.schemaLocation = schemaLocation;
 	} // end method setSchemaLocation(String)
-
+	
 	@Override
 	public boolean equals(Object o)
 	{
-		if(o == null || !(o instanceof Format))
-			return false;
+		if (this == o) return true;
+        if (!(o instanceof Format)) return false;
 
-		Format other = (Format)o;
+		final Format other = (Format)o;
 
-		return other.name.equals(this.name) && other.namespace.equals(this.namespace) && other.schemaLocation.equals(this.schemaLocation);
+        if( ( name!= null && !name.equals(other.getName()) ) ||
+                ( name == null && other.getName() != null ) ) return false;
+        
+        if( ( namespace!= null && !namespace.equals(other.getNamespace()) ) ||
+                ( namespace == null && other.getNamespace() != null ) ) return false;
+        
+        if( ( schemaLocation!= null && !schemaLocation.equals(other.getSchemaLocation()) ) ||
+                ( schemaLocation == null && other.getSchemaLocation() != null ) ) return false;
+        
+        return true;
+
 	} // end method equals(Object)
+	
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode()
+    {
+            int value = 0;
+            value += name == null ? 0 : name.hashCode();
+            value += namespace == null ? 0 : namespace.hashCode();
+            value += schemaLocation == null ? 0 : schemaLocation.hashCode();
+            return value;
+    }
 } // end class Format

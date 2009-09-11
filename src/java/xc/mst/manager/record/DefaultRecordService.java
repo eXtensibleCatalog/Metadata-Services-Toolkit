@@ -12,10 +12,13 @@ package xc.mst.manager.record;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.SimpleTimeZone;
 
 import org.apache.lucene.index.Term;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -30,9 +33,7 @@ import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.harvest.DefaultHarvestDAO;
-import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestDAO;
-import xc.mst.dao.harvest.HarvestScheduleDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.DefaultSetDAO;
@@ -45,6 +46,7 @@ import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.index.RecordList;
+import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
 
 /**
@@ -74,11 +76,6 @@ public class DefaultRecordService extends RecordService
 	 * Data access object for getting harvests
 	 */
 	private HarvestDAO harvestDao = new DefaultHarvestDAO();
-	
-	/**
-	 * Data access object for getting harvest schedules
-	 */
-	private HarvestScheduleDAO harvestScheduleDao = new DefaultHarvestScheduleDAO();
 
 	/**
 	 * Data access object for getting services
@@ -279,6 +276,20 @@ public class DefaultRecordService extends RecordService
 		return new RecordList(query);
 	} // end method getByFormatIdAndServiceId(int, int)
 
+//	@Override
+//	public Records getInputForServiceToProcess(int serviceId) throws IndexException
+//	{
+//		if(log.isDebugEnabled())
+//			log.debug("Getting all records that are input for the service with service ID " + serviceId);
+//
+//		// Create a query to get the Documents with the requested input for service IDs
+//		SolrQuery query = new SolrQuery();
+//		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId));
+//
+//		// Return the list of results
+//		return new Records(query);
+//	} // end method getInputForService(int)
+	
 	@Override
 	public RecordList getInputForService(int serviceId) throws IndexException
 	{
@@ -293,6 +304,35 @@ public class DefaultRecordService extends RecordService
 		return new RecordList(query);
 	} // end method getInputForService(int)
 
+//	@Override
+//	public List<Record> getInputForService(int serviceId, int start, int rows) throws IndexException
+//	{
+//		if(log.isDebugEnabled())
+//			log.debug("Getting all records that are input for the service with service ID " + serviceId);
+//
+//		// Create a query to get the Documents with the requested input for service IDs
+//		SolrQuery query = new SolrQuery();
+//		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId));
+//		query.setRows(rows);
+//		query.setStart(start);
+//		
+//		SolrDocumentList docs = indexMgr.getDocumentList(query);
+//		log.info("Num of docs="+ docs.getNumFound());
+//		ArrayList<Record> records = new ArrayList<Record>();
+//		Iterator<SolrDocument> itr = docs.iterator();
+//		
+//		try {
+//			while (itr.hasNext()) {
+//				records.add(getRecordFromDocument(itr.next()));
+//			}
+//		} catch (DatabaseConfigException dce) {
+//			
+//		}
+//		
+//		// Return the list of results
+//		return records;
+//	} // end method getInputForService(int)
+	
 	@Override
 	public int getCountOfRecordsToBeProcessedVyService(int serviceId) throws IndexException
 	{
@@ -572,7 +612,7 @@ public class DefaultRecordService extends RecordService
 		
 		query.setQuery(queryBuffer.toString());
 
-		if(fromDate != null || untilDate != null)
+		if(from != null && until != null)
 			query.addFilterQuery(FIELD_UPDATED_AT + ":[" + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)) + " TO " + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)) + "]");
 
 		// Get the result of the query
@@ -594,17 +634,26 @@ public class DefaultRecordService extends RecordService
 
 		// If from is null, set it to the minimum possible value
 		// Otherwise set it to the same value as fromDate
-		if(fromDate == null)
-			from = new Date(0);
-		else
+		if(fromDate == null) {
+			GregorianCalendar c = new GregorianCalendar();
+			c.setTime(new Date(0));
+			c.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY) - ((c.get(Calendar.ZONE_OFFSET) + c.get(Calendar.DST_OFFSET))/(60*60*1000)));
+			from = c.getTime();
+		} else {
 			from = fromDate;
+		}
 
 		// If to is null, set it to now
 		// Otherwise set it to the same value as toDate
-		if(untilDate == null)
-			until = new Date();
-		else
+		if(untilDate == null) {
+			GregorianCalendar c = new GregorianCalendar();
+			c.setTime(new Date());
+			c.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY) - ((c.get(Calendar.ZONE_OFFSET) + c.get(Calendar.DST_OFFSET))/(60*60*1000)));
+
+			until = c.getTime();
+		} else {
 			until = untilDate;
+		}
 
 		// True if we're getting the records for a specific set, false if we're getting all records
 		boolean useSet = (setId > 0);
@@ -631,7 +680,7 @@ public class DefaultRecordService extends RecordService
 		query.addField(FIELD_OAI_HEADER);
 		query.addField(FIELD_OAI_XML);
 		query.setQuery(queryBuffer.toString());
-		if(fromDate != null || untilDate != null) {
+		if(from != null && until != null) {
 			query.addFilterQuery(FIELD_UPDATED_AT + ":[" + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)) + " TO " + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)) + "]");
 		}
 		
@@ -848,7 +897,11 @@ public class DefaultRecordService extends RecordService
 			StringBuilder header = new StringBuilder();
 			header.append("<header>\n");
 			header.append("\t<identifier>").append(record.getOaiIdentifier()).append("</identifier>\n");
-			header.append("\t<datestamp>").append(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(record.getOaiDatestamp())).append("</datestamp>\n");
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+			sdf.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
+
+			header.append("\t<datestamp>").append(sdf.format(record.getOaiDatestamp())).append("</datestamp>\n");
 
 			// Get each set from the list of set IDs this record belongs to.  If the set is
 			// not null, add its setSpec to the header.
@@ -868,6 +921,7 @@ public class DefaultRecordService extends RecordService
 		if (record.getCreatedAt() != null) {
 			doc.addField(FIELD_CREATED_AT, record.getCreatedAt());
 		}
+
 		doc.addField(FIELD_DELETED, Boolean.toString(record.getDeleted()));
 
 		doc.addField(FIELD_FORMAT_ID, Integer.toString(record.getFormat().getId()));
@@ -903,9 +957,16 @@ public class DefaultRecordService extends RecordService
 		}
 
 		doc.addField(FIELD_OAI_IDENTIFIER, record.getOaiIdentifier());
+		
 		if (record.getOaiDatestamp() != null) {
-			doc.addField(FIELD_OAI_DATESTAMP, record.getOaiDatestamp());
+			// If the record is output of a harvest then the OAI date stamp is already in UTC format
+			if(record.getProvider() != null) {
+				doc.addField(FIELD_OAI_DATESTAMP, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(record.getOaiDatestamp()));
+			} else {
+				doc.addField(FIELD_OAI_DATESTAMP, record.getOaiDatestamp());
+			}
 		}
+		
 		doc.addField(FIELD_OAI_HEADER, record.getOaiHeader());
 		doc.addField(FIELD_OAI_XML, record.getOaiXml());
 

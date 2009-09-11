@@ -171,11 +171,26 @@ public class Set
 	@Override
 	public boolean equals(Object o)
 	{
-		if(o == null || !(o instanceof Set))
-			return false;
+		if (this == o) return true;
+        if (!(o instanceof Set)) return false;
 
-		Set other = (Set)o;
+		final Set other = (Set)o;
 
-		return other.setSpec.equals(this.setSpec);
+        if( ( setSpec!= null && !setSpec.equals(other.getSetSpec()) ) ||
+                ( setSpec == null && other.getSetSpec() != null ) ) return false;
+        
+        return true;
+
 	} // end method equals(Object)
+	
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode()
+    {
+            int value = 0;
+            value += setSpec == null ? 0 : setSpec.hashCode();
+            return value;
+    }
+
 } // end class Set

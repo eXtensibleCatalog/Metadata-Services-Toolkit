@@ -376,7 +376,7 @@ public class Harvester implements ErrorHandler
 				runningHarvester.warningCount++;
 			}
 
-			// Send an Email report on the results of the harvest
+			// Send an Email report on the results of the harvest TODO
 			runningHarvester.sendReportEmail(null);
 		}
 		catch (Hexception e) {
@@ -569,11 +569,6 @@ public class Harvester implements ErrorHandler
 
 		if(log.isDebugEnabled())
 		{
-			if (from == null)
-				log.debug("doHarvest() from: null");
-			else
-				log.debug("doHarvest() from: " + from);
-
 			log.debug("harvestAll is " + harvestAll);
 		} // end if(debug level logging enabled)
 
@@ -645,7 +640,7 @@ public class Harvester implements ErrorHandler
 
 					if (until != null)
 						request += "&until=" + formatDate(granularity, until);
-
+					
 					LogWriter.addInfo(schedule.getProvider().getLogFileName(), "The OAI request is " + request);
 
 					currentHarvest.setRequest(request);
@@ -710,8 +705,8 @@ public class Harvester implements ErrorHandler
 		} // end catch(Hexception)
 		catch (OAIErrorException oaie)
 		{
-			//if(!killed)
-				//persistStatus(Constants.STATUS_SERVICE_ERROR);
+			if(!killed)
+				persistStatus(Constants.STATUS_SERVICE_ERROR);
 
 			if(oaie.getOAIErrorCode().contains("noRecordsMatch"))
 				return;

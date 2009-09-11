@@ -51,7 +51,6 @@ import xc.mst.email.Emailer;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.manager.user.UserService;
 import xc.mst.scheduling.Scheduler;
 import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.utils.LogWriter;
@@ -682,6 +681,7 @@ public abstract class MetadataService
 						{
 							successor.setDeleted(true);
 							reprocessRecord(successor);
+							// TODO return and start with next record process?
 						}
 					}
 
@@ -727,8 +727,7 @@ public abstract class MetadataService
 					processedRecordCount++;
 					if(processedRecordCount % 100000 == 0)
 					{
-						if(processedRecordCount % 100000 == 0)
-							LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
+						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
 						
 						try
 						{
