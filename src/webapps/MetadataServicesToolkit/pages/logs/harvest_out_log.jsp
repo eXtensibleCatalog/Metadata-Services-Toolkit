@@ -292,7 +292,7 @@
                                                                <c:set var="classColumn" value="sortColumn"/>
                                                              </c:if>
                                                       <td class="${classColumn}">
-                                                          ${log.harvestOutRecordsHarvested}
+                                                          ${log.numberOfHarvests}
                                                       </td>
                                                              <c:set var="classColumn" value="plainColumn"/>
                                                              <c:if test="${columnSorted=='Warnings'}">

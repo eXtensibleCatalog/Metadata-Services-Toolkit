@@ -690,7 +690,7 @@ public class Service
 	/**
 	 * Sets the number of harvests from the service
 	 *
-	 * @param harvestOutRecordsHarvested The  number of harvests
+	 * @param numberOfHarvests The  number of harvests
 	 */
 	public void setNumberOfHarvests(long numberOfHarvests) {
 		this.numberOfHarvests = numberOfHarvests;

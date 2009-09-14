@@ -820,7 +820,7 @@ public class Facade
 		}
 
 		// Get records from offset to record limit
-		SolrBrowseResult result = recordService.getOutgoingRecordsInRange(fromDate, untilDate, (setObject == null ? -1 : setObject.getId()), format.getId(), offset, recordLimit, serviceId);
+		SolrBrowseResult result = recordService.getOutgoingRecordsInRange(fromDate, untilDate, setObject, format.getId(), offset, recordLimit, serviceId);
 
 		// Total number of records satisfying the criteria. This is not the number of records loaded. 
 		long totalRecords = result.getTotalNumberOfResults();
@@ -955,7 +955,6 @@ public class Facade
 
 						LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and a null resumptionToken in response to the " + verb + " request.");
 
-						// TODO should it be delete instead?
 						resumptionTokenDao.delete(resToken);
 					}
 					catch(DataException e)

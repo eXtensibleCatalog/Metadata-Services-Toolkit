@@ -46,7 +46,6 @@ import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.index.RecordList;
-import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
 
 /**
@@ -565,32 +564,40 @@ public class DefaultRecordService extends RecordService
 	@Override
 	public Record getEarliest(int serviceId)
 	{
-		// TODO Implement for Solr
 		return null;
 	} // end method getEarliest(int)
 
 	@Override
-	public long getCount(Date fromDate, Date untilDate, int setId, int formatId, int serviceId) throws IndexException
+	public long getCount(Date fromDate, Date untilDate, Set set, int formatId, int serviceId) throws IndexException
 	{
 		Date from; // fromDate, or the minimum value for a Date if fromDate is null
 		Date until; // toDate, or now if toDate is null
 
 		// If from is null, set it to the minimum possible value
 		// Otherwise set it to the same value as fromDate
-		if(fromDate == null)
-			from = new Date(0);
-		else
+		if(fromDate == null) {
+			GregorianCalendar c = new GregorianCalendar();
+			c.setTime(new Date(0));
+			c.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY) - ((c.get(Calendar.ZONE_OFFSET) + c.get(Calendar.DST_OFFSET))/(60*60*1000)));
+			from = c.getTime();
+		} else {
 			from = fromDate;
+		}
 
 		// If to is null, set it to now
 		// Otherwise set it to the same value as toDate
-		if(untilDate == null)
-			until = new Date();
-		else
+		if(untilDate == null) {
+			GregorianCalendar c = new GregorianCalendar();
+			c.setTime(new Date());
+			c.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY) - ((c.get(Calendar.ZONE_OFFSET) + c.get(Calendar.DST_OFFSET))/(60*60*1000)));
+
+			until = c.getTime();
+		} else {
 			until = untilDate;
+		}
 
 		// True if we're getting the count for a specific set, false if we're getting it for all records
-		boolean useSet = (setId > 0);
+		boolean useSet = (set != null);
 
 		// True if we're getting the count for a specific metadataPrefix, false if we're getting it for all records
 		boolean useMetadataPrefix = (formatId > 0);
@@ -598,15 +605,15 @@ public class DefaultRecordService extends RecordService
 		DateFormat format = DateFormat.getInstance();
 
 		if(log.isDebugEnabled())
-			log.debug("Counting the records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " with set ID " + setId) + (useMetadataPrefix ? "" : " with format ID " + formatId));
+			log.debug("Counting the records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? " with set ID " + set.getSetSpec() : ""  ) + (useMetadataPrefix ? " with format ID " + formatId : "" ));
 
 		// Create a query to get the Documents for unprocessed records
 		SolrQuery query = new SolrQuery();
 		StringBuffer queryBuffer = new StringBuffer();
 		queryBuffer.append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
-		// TODO set spec is queried against set id.
+
 		if(useSet)
-			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId));
+			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(set.getSetSpec());
 		if(useMetadataPrefix)
 			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID).append(":").append(Integer.toString(formatId));
 		
@@ -619,14 +626,14 @@ public class DefaultRecordService extends RecordService
 		RecordList records = new RecordList(query, 0);
 
 		if(log.isDebugEnabled())
-			log.debug("Found " + records.size() + " records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " with set ID " + setId) + (useMetadataPrefix ? "" : " with format ID " + formatId));
+			log.debug("Found " + records.size() + " records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? " with set ID " + set.getSetSpec(): "" ) + (useMetadataPrefix ? " with format ID " + formatId : "" ));
 
 		// Return the list of results
 		return records.size();
 	} // end method getCount(Date, Date, int, int, int)
 
 	@Override
-	public SolrBrowseResult getOutgoingRecordsInRange(Date fromDate, Date untilDate, int setId, int formatId, int offset, int numResults, int serviceId)
+	public SolrBrowseResult getOutgoingRecordsInRange(Date fromDate, Date untilDate, Set set, int formatId, int offset, int numResults, int serviceId)
 			throws IndexException 
 	{
 		Date from; // fromDate, or the minimum value for a Date if fromDate is null
@@ -656,7 +663,7 @@ public class DefaultRecordService extends RecordService
 		}
 
 		// True if we're getting the records for a specific set, false if we're getting all records
-		boolean useSet = (setId > 0);
+		boolean useSet = (set != null);
 
 		// True if we're getting the count for a specific metadataPrefix, false if we're getting it for all records
 		boolean useMetadataPrefix = (formatId > 0);
@@ -664,15 +671,15 @@ public class DefaultRecordService extends RecordService
 		DateFormat format = DateFormat.getInstance();
 
 		if(log.isDebugEnabled())
-			log.debug("Getting the records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " in set with ID " + setId) + (useMetadataPrefix ? "" : " with format ID " + formatId));
+			log.debug("Getting the records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? " in set with setSPec " + set.getSetSpec() : "") + (useMetadataPrefix ? " with format ID " + formatId : "" ));
 
 		// Create a query to get the Documents for unprocessed records
 		SolrQuery query = new SolrQuery();
 		StringBuffer queryBuffer = new StringBuffer();
 		queryBuffer.append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
-		// TODO set spec queried against set id
+		
 		if(useSet)
-			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(Integer.toString(setId));
+			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(set.getSetSpec());
 		if(useMetadataPrefix)
 			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID + ":").append(Integer.toString(formatId));
 		
@@ -702,11 +709,11 @@ public class DefaultRecordService extends RecordService
 		if(result.getTotalNumberOfResults() == 0)
 		{
 			if(log.isDebugEnabled())
-				log.debug("Could not find any records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " in set with ID " + setId) + (useMetadataPrefix ? "" : " for format ID " + formatId));
+				log.debug("Could not find any records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? " in set with setSPec " + set.getSetSpec() : "") + (useMetadataPrefix ? " with format ID " + formatId : "" ));
 
 		} else {
 			if(log.isDebugEnabled())
-				log.debug("Found " + records.size() + " records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? "" : " in set with ID " + setId) + (useMetadataPrefix ? "" : " for format ID " + formatId));
+				log.debug("Found " + records.size() + " records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? " in set with setSPec " + set.getSetSpec() : "") + (useMetadataPrefix ? " with format ID " + formatId : "" ));
 		}
 
 		return result;

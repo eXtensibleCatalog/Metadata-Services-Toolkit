@@ -876,7 +876,7 @@ public abstract class MetadataService
 		// TODO change i/p record count
 //		service.setInputRecordCount(service.getInputRecordCount() + processedRecordCount);
 		try {
-			long harvestOutRecordsAvailable = recordService.getCount(null, null, -1, -1, service.getId());
+			long harvestOutRecordsAvailable = recordService.getCount(null, null, null, -1, service.getId());
 			service.setHarvestOutRecordsAvailable(harvestOutRecordsAvailable);
 			service.setOutputRecordCount((int) harvestOutRecordsAvailable);
 		} catch (IndexException ie) {

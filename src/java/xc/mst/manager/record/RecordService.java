@@ -10,7 +10,6 @@
 package xc.mst.manager.record;
 
 import java.util.Date;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.solr.common.SolrDocument;
@@ -18,6 +17,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
+import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Item;
@@ -28,12 +28,9 @@ import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.harvest.DefaultHarvestRecordUtilDAO;
-import xc.mst.dao.harvest.HarvestRecordUtilDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.RecordList;
-import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
 
 /**
@@ -47,11 +44,6 @@ public abstract class RecordService
 	 * A reference to the logger for this class
 	 */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-	/**
-	 *  Data access object for updating harvest to record assignments
-	 */
-	private HarvestRecordUtilDAO harvestRecordDao = new DefaultHarvestRecordUtilDAO();
 
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit.
@@ -435,28 +427,28 @@ public abstract class RecordService
 	 *
 	 * @param fromDate The lower bound for the date for the records to count
 	 * @param untilDate The upper bound for the date for the records to count
-	 * @param setId The setId of the set for the records to count.  If this is null,
+	 * @param set The set of the set for the records to count.  If this is null,
 	 *            the count will include all sets.
 	 * @param formatId The ID of the metadata format of the records to count.  If less than 0,
 	 *                 the count will include all metadata types.
 	 * @param serviceId The service which processed the outgoing records
 	 * @return The number of records matching the parameters queried for
 	 */
-	public abstract long getCount(Date fromDate, Date untilDate, int setId, int formatId, int serviceId) throws IndexException;
+	public abstract long getCount(Date fromDate, Date untilDate, Set set, int formatId, int serviceId) throws IndexException;
 
 	/**
 	 * Returns the records between the specified dates within the specified set
 	 *
 	 * @param fromDate The lower bound for the date for the records to return
 	 * @param untilDate The upper bound for the date for the records to return
-	 * @param setId The ID of the set for the records to return
+	 * @param set The set for the records to return
      * @param formatId The ID of the format for the records to return
 	 * @param offset The offset into the list of matching records representing the first record to return
 	 * @param numResults The number of records to return
 	 * @param serviceId The service which processed the outgoing records
 	 * @return A list of records matching the parameters queried for
 	 */
-	public abstract SolrBrowseResult getOutgoingRecordsInRange(Date fromDate, Date untilDate, int setId, int formatId, int offset, int numResults, int serviceId)
+	public abstract SolrBrowseResult getOutgoingRecordsInRange(Date fromDate, Date untilDate, Set set, int formatId, int offset, int numResults, int serviceId)
 		throws IndexException;
 
 	/**
