@@ -1880,7 +1880,7 @@ public class TransformationService extends MetadataService
 	private XCRecord process546(MarcXmlRecord transformMe, XCRecord transformInto)
 	{
 		// Create an dcterms:language based on the 546 ab3 values
-		return processFieldBasic(transformMe, transformInto, "546", "ab3", "language", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "546", "ab3", "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
