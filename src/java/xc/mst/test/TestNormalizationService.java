@@ -52,7 +52,7 @@ public class TestNormalizationService
 		"<marc:controlfield tag=\"008\">840516c19999999ab|    j   m |a aa1ajpn  </marc:controlfield>\n" +
 		"<marc:controlfield tag=\"005\">19961213000000.0</marc:controlfield>\n\n" +
 
-		/*"<marc:datafield tag=\"010\" ind1=\" \" ind2=\" \">\n" +
+		"<marc:datafield tag=\"010\" ind1=\" \" ind2=\" \">\n" +
 		"\t<marc:subfield code=\"a\">n  84032254 </marc:subfield>\n" +
 		"</marc:datafield>\n\n" +
 
@@ -150,7 +150,7 @@ public class TestNormalizationService
 
 		"<marc:datafield tag=\"502\" ind1=\"0\" ind2=\"0\">\n" +
 		"\t<marc:subfield code=\"a\">Banana</marc:subfield>\n" +
-		"</marc:datafield>\n\n" +*/
+		"</marc:datafield>\n\n" +
 
 		"<marc:datafield tag=\"600\" ind1=\" \" ind2=\" \">\n" +
 		"\t<marc:subfield code=\"a\">good600</marc:subfield>\n" +

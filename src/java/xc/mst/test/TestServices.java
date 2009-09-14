@@ -73,8 +73,8 @@ public class TestServices
 		MSTSolrServer.getInstance();
 	}
 
-	private static File unprocessedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggInput");
-	private static File processedRecordsDir = new File("C:\\AllXcProjects\\MST test records\\AggOutput");
+	private static File unprocessedRecordsDir = new File("C:\\NormalizationTestData\\input");
+	private static File processedRecordsDir = new File("C:\\NormalizationTestData\\output");
 
 	private static int serviceId = 1;
 
@@ -107,36 +107,40 @@ public class TestServices
 			RecordList records = recordService.getAll();
 			for(Record record: records)
 			{
-				if(record.getService() != null && record.getService().getId() == serviceId)
-					saveRecordToFile(processedRecordsDir, record);
+				System.out.println("record:"+ record);
+				System.out.println("record:"+ record.getCreatedAt());
+				System.out.println("record:"+ record.getId());
+//				if(record.getService() != null && record.getService().getId() == serviceId) {
+//					saveRecordToFile(processedRecordsDir, record);
+//				}
 
-				recordService.delete(record);
+//				recordService.delete(record);
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 
-			RecordList records = recordService.getAll();
-			for(Record record: records)
-			{
-				if(record.getService().getId() == serviceId)
-					saveRecordToFile(processedRecordsDir, record);
-				recordService.delete(record);
-			}
+//			RecordList records = recordService.getAll();
+//			for(Record record: records)
+//			{
+//				if(record.getService().getId() == serviceId)
+//					saveRecordToFile(processedRecordsDir, record);
+//				recordService.delete(record);
+//			}
 		}
 		finally
 		{
-			try
-			{
-				Thread.sleep(2000);
-				SolrIndexManager.getInstance().commitIndex();
-				Thread.sleep(2000);
-			}
-			catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}
+//			try
+//			{
+//				Thread.sleep(2000);
+//				SolrIndexManager.getInstance().commitIndex();
+//				Thread.sleep(2000);
+//			}
+//			catch (InterruptedException e)
+//			{
+//				e.printStackTrace();
+//			}
 		}
 	}
 
@@ -157,7 +161,7 @@ public class TestServices
 
 			record.setOaiXml(readUnicodeFile(currentRecord));
 			record.setOaiIdentifier(currentRecord.getName().substring(0, currentRecord.getName().lastIndexOf('.')).replaceAll(" ", "/").replaceAll("-", ":"));
-			record.setFormat(formatDao.getById(5));
+			record.setFormat(formatDao.getById(3));
 			record.setProvider(providerDao.getById(1));
 			record.addInputForService(serviceDao.getById(serviceId));
 			if(recordService.insert(record) == false)

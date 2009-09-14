@@ -13,14 +13,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Date;
+
+import org.testng.annotations.Test;
+
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DataException;
+import xc.mst.helper.TestHelper;
+import xc.mst.manager.processingDirective.ConfigFileException;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
-import org.testng.annotations.Test;
-import xc.mst.manager.processingDirective.ConfigFileException;
-import xc.mst.utils.LogWriter;
-import xc.mst.helper.TestHelper;
 
 /**
  * Test class for testing services
@@ -42,7 +43,7 @@ public class ServiceTest {
             service.setHarvestOutLastLogReset(new Date());
             service.setHarvestOutLogFileName("harvestOutLogFileName");
             service.setHarvestOutRecordsAvailable(0);
-            service.setHarvestOutRecordsHarvested(0);
+            service.setNumberOfHarvests(0);
             service.setHarvestOutWarnings(0);
             service.setServicesErrors(0);
             service.setServicesLastLogReset(new Date());
@@ -117,7 +118,7 @@ public class ServiceTest {
             assert service.getHarvestOutErrors()==newService.getHarvestOutErrors() : "Harvest out errors are not equal";
             assert service.getHarvestOutLogFileName().equals(newService.getHarvestOutLogFileName()) : "Harvest out log file name are not equal";
             assert service.getHarvestOutRecordsAvailable()==service.getHarvestOutRecordsAvailable() : "Harvest out records avaialable are not equal";
-            assert service.getHarvestOutRecordsHarvested()==newService.getHarvestOutRecordsHarvested() : "Harvest out records harvested are not equal";
+            assert service.getNumberOfHarvests()==newService.getNumberOfHarvests() : "Harvest out records harvested are not equal";
             assert service.getHarvestOutWarnings()==newService.getHarvestOutWarnings() : "Harvest out warnings are not equal";
             assert service.getServicesErrors()==newService.getServicesErrors() : "Harvest out service error are not equal";
             assert service.getServicesWarnings()==newService.getServicesWarnings() : "Service warnings are not equal";

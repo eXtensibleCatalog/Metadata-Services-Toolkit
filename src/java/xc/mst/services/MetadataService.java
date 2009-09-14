@@ -728,20 +728,6 @@ public abstract class MetadataService
 					if(processedRecordCount % 100000 == 0)
 					{
 						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
-						
-						try
-						{
-							SolrIndexManager.getInstance().commitIndex();
-						}
-						catch (IndexException e)
-						{
-							log.error("An error occurred while commiting new records to the Solr index.", e);
-						}
-						
-						// Update service statistics(i/p, o/p count, harvest records available, error, warning count)
-						if (!updateServiceStatistics()) {
-							return false;
-						}
 					}
 				}
 				else

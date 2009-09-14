@@ -124,13 +124,13 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 	
 			
 			String oaiRepoBaseURL = "http://" + request.getServerName() + ":" +  request.getServerPort() + request.getContextPath() + "/oaiRepository";
-			
+
 			// Create the Facade Object, which will compute the results of the request and set them on the bean
 			Facade facade = new Facade(bean, oaiRepoBaseURL);
 	
 			// Set the response header on the facade Object
 			facade.setResponseHeader(request.getRequestURL());
-	
+			
 			// Execute the correct request on the Facade Object
 			facade.execute();
 	
@@ -158,7 +158,7 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 			
 			// Write the response
 			response.getWriter().write(oaiResponseElement.toString());
-	
+
 		    return SUCCESS;
 		}
 		catch(DatabaseConfigException e)

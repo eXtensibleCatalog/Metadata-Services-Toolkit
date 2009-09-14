@@ -1292,6 +1292,7 @@ public class DefaultProviderDAO extends ProviderDAO
 					for(Record record : recordService.getByProviderId(provider.getId()))
 						success = markAsDeleted(record) && success;
 					
+					// TODO performance issue
 					for(Set set : setDao.getAll())
 						if(recordService.getBySetSpec(set.getSetSpec()).size() == 0)
 							setDao.delete(set);
@@ -1343,15 +1344,16 @@ public class DefaultProviderDAO extends ProviderDAO
 		// Mark the record as deleted
 		record.setDeleted(true);
 		success = recordService.update(record);
-
+		
+		// TODO changed from getProcessedFrom to getSuccessors. needs to be tested
 		// If there were no records processed from this record, we're done
-		if(record.getProcessedFrom().size() == 0)
+		if(record.getSuccessors().size() == 0)
 			return success;
 
 		// If we got here, we need to recursively delete all records
 		// processed from the record we just marked as deleted.
-		for(Record processedFromRecord : record.getProcessedFrom())
-			success = markAsDeleted(processedFromRecord) && success;
+		for(Record successorRecord : record.getSuccessors())
+			success = markAsDeleted(successorRecord) && success;
 
 		// Return whether or not all deletes were successful
 		return success;

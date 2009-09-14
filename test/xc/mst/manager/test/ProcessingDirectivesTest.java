@@ -55,7 +55,7 @@ public class ProcessingDirectivesTest
          service.setHarvestOutLastLogReset(new Date());
          service.setHarvestOutLogFileName("harvestOutLogFileName");
          service.setHarvestOutRecordsAvailable(0);
-         service.setHarvestOutRecordsHarvested(0);
+         service.setNumberOfHarvests(0);
          service.setHarvestOutWarnings(0);
          service.setServicesErrors(0);
          service.setServicesLastLogReset(new Date());
