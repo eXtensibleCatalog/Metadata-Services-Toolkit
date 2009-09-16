@@ -19,8 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
@@ -77,11 +75,6 @@ public abstract class MetadataService
 	 * The service representing this service in the database
 	 */
 	protected Service service = null;
-
-	/**
-	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
-	 */
-	private static final Configuration mstConfiguration = ConfigurationManager.getConfiguration();
 
 	/**
 	 * The name of this service
@@ -1184,7 +1177,7 @@ public abstract class MetadataService
 
 	protected String getOrganizationCode()
 	{
-		return mstConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE);
+		return MSTConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE);
 	}
 	
 	/**

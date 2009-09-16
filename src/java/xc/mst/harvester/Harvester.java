@@ -705,13 +705,13 @@ public class Harvester implements ErrorHandler
 		} // end catch(Hexception)
 		catch (OAIErrorException oaie)
 		{
-			if(!killed)
-				persistStatus(Constants.STATUS_SERVICE_ERROR);
-
 			if(oaie.getOAIErrorCode().contains("noRecordsMatch"))
 				return;
 
 			log.error("An OAIErrorExeption occurred while harvesting " + baseURL, oaie);
+
+			if(!killed)
+				persistStatus(Constants.STATUS_SERVICE_ERROR);
 
 			// Log the error for the user and send them a report email
 			LogWriter.addError(schedule.getProvider().getLogFileName(), "The OAI provider returned the following error: " + oaie.getOAIErrorCode() + "," + oaie.getOAIErrorMessage());
@@ -1670,8 +1670,7 @@ public class Harvester implements ErrorHandler
 		try {
 			harvestScheduleDao.update(schedule, false);
 		} catch (DataException e) {
-			log.error("Error during updating status of harvest_schedule to database.");
-			e.printStackTrace();
+			log.error("Error during updating status of harvest_schedule to database.", e);
 		}
 	}
 
