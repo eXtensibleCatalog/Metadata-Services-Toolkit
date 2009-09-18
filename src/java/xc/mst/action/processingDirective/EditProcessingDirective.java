@@ -76,7 +76,7 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
     private UserService userService = new DefaultUserService();
 
     /** creates a service object for processing directives */
-    private ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
+    private ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();
     
 	/** Error type */
 	private String errorType; 
@@ -243,11 +243,14 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
         try
         {
             
-            temporaryProcessingDirective = PDService.getByProcessingDirectiveId(processingDirectiveId);
+            temporaryProcessingDirective = processingDirectiveService.getByProcessingDirectiveId(processingDirectiveId);
             if(temporaryProcessingDirective==null)
             {
                 temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
             }
+            
+            // Place PD in session 
+            request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
             if(temporaryProcessingDirective==null)
             {
                 this.addFieldError("editProcessingDirectiveEror", "Error occurred while displaying edit processing directives page. An email has been sent to the administrator. ");
@@ -295,8 +298,9 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
 
             if(temporaryProcessingDirective==null)
             {
-                 temporaryProcessingDirective = PDService.getByProcessingDirectiveId(processingDirectiveId);
+                 temporaryProcessingDirective = processingDirectiveService.getByProcessingDirectiveId(processingDirectiveId);
             }
+            
             if(temporaryProcessingDirective==null)
             {
                 this.addFieldError("editProcessingDirectiveEror", "Error occurred while editing processing directive. An email has been sent to the administrator. ");
