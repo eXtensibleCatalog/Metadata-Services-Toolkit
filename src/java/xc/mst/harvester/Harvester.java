@@ -1145,6 +1145,7 @@ public class Harvester implements ErrorHandler
 		try
 		{
 			deleteMe.setDeleted(true);
+			deleteMe.setUpdatedAt(new Date());
 
 			// Run the processing directives against the record we're deleting
 			checkProcessingDirectives(deleteMe);
@@ -1179,25 +1180,38 @@ public class Harvester implements ErrorHandler
 		// Maintain a list of processing directives which were matched
 		ArrayList<ProcessingDirective> matchedProcessingDirectives = new ArrayList<ProcessingDirective>();
 
+		boolean matchedFormat = false;
+		boolean matchedSet = false;
+		
 		// Loop over the processing directives and check if any of them match the record
 		for(ProcessingDirective processingDirective : processingDirectives)
 		{
+			matchedFormat = false;
+			matchedSet = false;
+			
 			// Check if the record matches any of the metadata formats for the current processing directive
-			if(processingDirective.getTriggeringFormats().contains(record.getFormat()))
-				matchedProcessingDirectives.add(processingDirective);
+			if(processingDirective.getTriggeringFormats().contains(record.getFormat())) {
+				matchedFormat = true;
+			}
 
-			// If the metadata format didn't match, check if the record is in any of the sets for the current processing directive
-			else
+			// check if the record is in any of the sets for the current processing directive
+			if(processingDirective.getTriggeringSets() != null && processingDirective.getTriggeringSets().size() > 0) 
 			{
 				for(Set set : record.getSets())
 				{
 					if(processingDirective.getTriggeringSets().contains(set))
 					{
-						matchedProcessingDirectives.add(processingDirective);
+						matchedSet = true;
 						break;
-					} // end if(set triggers processing directive)
-				} // end loop over the record's sets
-			} // end else(the format did not trigger the processing directive)
+					} 
+				} 
+			} else {
+				matchedSet = true;
+			}
+			
+			if (matchedFormat && matchedSet) {
+				matchedProcessingDirectives.add(processingDirective);
+			}
 		} // end loop over processing directives
 
 		// Loop over the matched processing directives.  Add the appropriate record inputs and add the

@@ -15,6 +15,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -703,13 +704,15 @@ public abstract class MetadataService
 						Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
 
 						// If the current record is a new record, insert it
-						if(oldRecord == null)
+						if(oldRecord == null) {
 							insertNewRecord(outgoingRecord);
+						}
 						// Otherwise we've seen the record before.  Update it as appropriate
 						// If outgoingRecord's deleted flag is set to true, the record will
 						// be deleted.
-						else
+						else {
 							updateExistingRecord(outgoingRecord, oldRecord);
+						}
 					} // end loop over processed records
 
 					// Mark the record as having been processed by this service
@@ -978,22 +981,8 @@ public abstract class MetadataService
 	 */
 	protected void addErrorsToRecord(Record record, List<String> errors)
 	{
-		try
-		{
-			// Set the fields for warnings and errors on the record
-			record.setErrors(errors);
-
-			// Update the record.
-			if(!recordService.update(record))
-				log.error("The update failed for the record with ID " + record.getId() + ".");
-		} // end try(update the record)
-		catch (DataException e)
-		{
-			log.error("An exception occurred while updating the record into the index.", e);
-		} // end catch(DataException)
-		catch (IndexException ie) {
-			log.error("An exception occurred while updating the record into the index.", ie);
-		}
+		// Set the fields for warnings and errors on the record
+		record.setErrors(errors);
 	}
 
 	/**
@@ -1026,6 +1015,7 @@ public abstract class MetadataService
 	{
 		try
 		{
+			// TODO Method used only in aggregation service. Should the record's updatedAt(new Date()) be set?
 			recordService.update(record);
 		}
 		catch (IndexException e)
@@ -1223,6 +1213,7 @@ public abstract class MetadataService
 			// Set the new record's ID to the old record's ID so when we call update()
 			// on the new record it will update the correct record in the Lucene index
 			newRecord.setId(oldRecord.getId());
+			newRecord.setUpdatedAt(new Date());
 
 			// Update the record.  If the update was successful,
 			// run the processing directives against the updated record
@@ -1306,25 +1297,37 @@ public abstract class MetadataService
 		// Maintain a list of processing directives which were matched
 		ArrayList<ProcessingDirective> matchedProcessingDirectives = new ArrayList<ProcessingDirective>();
 
+		boolean matchedFormat = false;
+		boolean matchedSet = false;
+
 		// Loop over the processing directives and check if any of them match the record
 		for(ProcessingDirective processingDirective : processingDirectives)
 		{
+			matchedFormat = false;
+			matchedSet = false;
+			
 			// Check if the record matches any of the metadata formats for the current processing directive
-			if(processingDirective.getTriggeringFormats().contains(record.getFormat()))
-				matchedProcessingDirectives.add(processingDirective);
+			if(processingDirective.getTriggeringFormats().contains(record.getFormat())) {
+				matchedFormat = true;
+			}
 
-			// If the metadata format didn't match, check if the record is in any of the sets for the current processing directive
-			else
-			{
+			// check if the record is in any of the sets for the current processing directive
+			if(processingDirective.getTriggeringSets() != null && processingDirective.getTriggeringSets().size() > 0)  {
 				for(Set set : record.getSets())
 				{
 					if(processingDirective.getTriggeringSets().contains(set))
 					{
-						matchedProcessingDirectives.add(processingDirective);
+						matchedSet = true;
 						break;
-					} // end if(the set matched the processing directive)
-				} // end loop over the record's sets
-			} // end else(the format did not trigger the processing directive)
+					} 
+				}
+			} else {
+				matchedSet = true;
+			}
+			
+			if (matchedFormat && matchedSet) {
+				matchedProcessingDirectives.add(processingDirective);
+			}
 		} // end loop over processing directives
 
 		// Loop over the matched processing directives.  Add the appropriate record inputs and add the

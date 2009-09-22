@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import xc.mst.bo.log.Log;
@@ -1343,6 +1344,7 @@ public class DefaultProviderDAO extends ProviderDAO
 
 		// Mark the record as deleted
 		record.setDeleted(true);
+		record.setUpdatedAt(new Date());
 		success = recordService.update(record);
 		
 		// TODO changed from getProcessedFrom to getSuccessors. needs to be tested

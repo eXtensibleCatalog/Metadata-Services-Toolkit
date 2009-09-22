@@ -269,7 +269,7 @@ public abstract class RecordService
 	 * @param serviceId The service ID of the service that processed records to retrieve
 	 * @return A list of all records in the index with the passed processing service ID
 	 */
-	public abstract RecordList getByProcessingServiceId(int serviceId) throws IndexException;
+	public abstract RecordList getProcessedByServiceId(int serviceId) throws IndexException;
 
 	/**
 	 * Gets all records from the index with the passed harvest ID
@@ -465,7 +465,9 @@ public abstract class RecordService
 		if(log.isDebugEnabled())
 			log.debug("Inserting a new " + record.getIndexedObjectType());
 
-		record.setCreatedAt(new Date());
+		Date now = new Date();
+		record.setCreatedAt(now);
+		record.setUpdatedAt(now);
 
 		// Create a Document object and set it's type field
 		SolrInputDocument doc = new SolrInputDocument();
@@ -502,8 +504,6 @@ public abstract class RecordService
 		if(log.isDebugEnabled())
 			log.debug("Updating the record with ID " + record.getId());
 
-		// Set the updated at timestamp to now
-		record.setUpdatedAt(new Date());
 
 		// Set up a Document Object to insert the updated set into the Lucene index
 		// Create a Document object and set it's type field

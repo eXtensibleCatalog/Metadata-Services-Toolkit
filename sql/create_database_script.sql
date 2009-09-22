@@ -579,7 +579,7 @@ CREATE TABLE processing_directives
 
 
 -- -------------------------------------------------------------
--- Table structure for table 'processing_directives_to_input_formats'
+-- Table structure for table 'processing_directives_to_input_sets'
 -- -------------------------------------------------------------
 
 DROP TABLE IF EXISTS processing_directives_to_input_sets;

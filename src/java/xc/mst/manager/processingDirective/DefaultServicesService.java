@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -826,7 +827,7 @@ public class DefaultServicesService implements ServicesService
     		MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
 
     		// Reprocess the records processed by the service
-    		RecordList records = recordService.getByProcessingServiceId(service.getId());
+    		RecordList records = recordService.getProcessedByServiceId(service.getId());
     		for(Record record : records)
     		{
     			record.addInputForService(service);
@@ -840,6 +841,7 @@ public class DefaultServicesService implements ServicesService
     		for(Record record : records)
     		{
     			record.setDeleted(true);
+    			record.setUpdatedAt(new Date());
 
     			for(Service processingService : record.getProcessedByServices())
     			{
@@ -908,6 +910,7 @@ public class DefaultServicesService implements ServicesService
 		for(Record record : records)
 		{
 			record.setDeleted(true);
+			record.setUpdatedAt(new Date());
 			for(Service nextService : record.getProcessedByServices())
 			{
 				record.addInputForService(nextService);

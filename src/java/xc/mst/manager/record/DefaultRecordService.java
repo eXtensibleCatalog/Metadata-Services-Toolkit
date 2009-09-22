@@ -233,7 +233,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByServiceId(long)
 	
 	@Override
-	public RecordList getByProcessingServiceId(int serviceId) throws IndexException
+	public RecordList getProcessedByServiceId(int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with processing service ID " + serviceId);

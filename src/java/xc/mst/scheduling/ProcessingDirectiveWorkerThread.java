@@ -157,26 +157,29 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 	 */
 	private void checkProcessingDirective(Record record)
 	{
-		boolean matched = false;
+		boolean matchedFormat = false;
+		boolean matchedSet = false;
 
 		// Check if the record matches any of the metadata formats for the current processing directive
-		if(processingDirective.getTriggeringFormats().contains(record.getFormat()))
-			matched = true;
+		if(processingDirective.getTriggeringFormats().contains(record.getFormat())) {
+			matchedFormat = true;
+		}
 
-		// If the metadata format didn't match, check if the record is in any of the sets for the current processing directive
-		else
-		{
+		if(processingDirective.getTriggeringSets() != null && processingDirective.getTriggeringSets().size() > 0)  {
 			for(Set set : record.getSets())
 			{
 				if(processingDirective.getTriggeringSets().contains(set))
 				{
-					matched = true;
+					matchedSet = true;
 					break;
 				} // end if(the set matched the processing directive)
 			} // end loop over the record's sets
-		} // end else(the format did not trigger the processing directive)
+		} else {
+			// If no triggering sets then process all records
+			matchedSet = true;
+		}
 
-		if(matched)
+		if(matchedFormat && matchedSet)
 		{
 			record.addInputForService(processingDirective.getService());
 			record.removeProcessedByService(processingDirective.getService());

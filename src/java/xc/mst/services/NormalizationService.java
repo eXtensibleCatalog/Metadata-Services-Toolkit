@@ -323,7 +323,6 @@ public class NormalizationService extends MetadataService
 			
 			addErrorsToRecord(record, errors);
 			
-			
 			if(log.isDebugEnabled())
 				log.debug("Creating the normalized record.");
 
@@ -609,8 +608,11 @@ public class NormalizationService extends MetadataService
 		if(log.isDebugEnabled())
 			log.debug("Entering 007Vocab06 normalization step.");
 
+		char leader06 = ' ';
 		// The character at offset 6 of the leader field
-		char leader06 = marcXml.getLeader().charAt(6);
+		if (marcXml.getLeader() != null && marcXml.getLeader().length() >= 7 ) {
+			leader06 = marcXml.getLeader().charAt(6);
+		}
 
 		// Pull the SMD Vocab mapping from the configuration file based on the leader 06 value.
 		String marcVocab = vocab06Properties.getProperty(""+leader06, null);
@@ -700,7 +702,7 @@ public class NormalizationService extends MetadataService
 		boolean moveAllOrgCodes = enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_MOVE_ALL_MARC_ORG_CODES, "0").equals("1");
 
 		// Create the new 035 field
-		if(moveAllOrgCodes || control003.equals(getOrganizationCode()))
+		if(moveAllOrgCodes || control003.equalsIgnoreCase(getOrganizationCode()))
 		{
 			String new035 = "(" + control003 + ")" + control001;
 
