@@ -988,7 +988,7 @@ public class Harvester implements ErrorHandler
 								set.setDisplayName(currentSetSpec);
 								set.setIsProviderSet(false);
 								set.setIsRecordSet(true);
-								setDao.insert(set);
+								setDao.insertForProvider(set, providerId);
 							} // end if(the set wasn't found)
 							
 							setsLoaded.put(currentSetSpec, set);
@@ -1188,7 +1188,7 @@ public class Harvester implements ErrorHandler
 		{
 			matchedFormat = false;
 			matchedSet = false;
-			
+
 			// Check if the record matches any of the metadata formats for the current processing directive
 			if(processingDirective.getTriggeringFormats().contains(record.getFormat())) {
 				matchedFormat = true;

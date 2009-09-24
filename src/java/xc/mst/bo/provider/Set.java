@@ -192,5 +192,15 @@ public class Set
             value += setSpec == null ? 0 : setSpec.hashCode();
             return value;
     }
+    
+    @Override
+    public String toString() {
+    	StringBuffer b = new StringBuffer();
+    	b.append(" Id="+id);
+    	b.append(" name="+displayName);
+    	b.append(" setSpec="+setSpec);
+    	
+    	return b.toString();
+    }
 
 } // end class Set

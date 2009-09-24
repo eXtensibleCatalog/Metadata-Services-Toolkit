@@ -204,6 +204,12 @@ public class Provider
 	private String logFileName = null;
 
 	/**
+	 * List of sets the records harvested from this repository belong to. 
+	 * After harvest the records belong to different sets than the ones supported by the repository. 
+	 */
+	private List<Set> harvestedRecordSets = new ArrayList<Set>();
+	
+	/**
 	 * Gets provider's ID
 	 *
 	 * @return The provider's ID
@@ -993,4 +999,12 @@ public class Provider
 
 		return other.url.equals(this.url);
 	} // end method equals(Object)
+
+	public List<Set> getHarvestedRecordSets() {
+		return harvestedRecordSets;
+	}
+
+	public void setHarvestedRecordSets(List<Set> harvestedRecordSets) {
+		this.harvestedRecordSets = harvestedRecordSets;
+	}
 } // end class Provider

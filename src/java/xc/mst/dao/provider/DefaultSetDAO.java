@@ -46,6 +46,11 @@ public class DefaultSetDAO extends SetDAO
 	 * A PreparedStatement to get sets from the database by their provider ID
 	 */
 	private static PreparedStatement psGetByProviderId = null;
+	
+	/**
+	 * A PreparedStatement to get sets from the database by their provider ID
+	 */
+	private static PreparedStatement psGetRecordSetByProviderId = null;
 
 	/**
 	 * A PreparedStatement to insert a set into the database
@@ -91,6 +96,11 @@ public class DefaultSetDAO extends SetDAO
 	 * Lock to synchronize access to the get by provider ID PreparedStatement
 	 */
 	private static Object psGetByProviderIdLock = new Object();
+
+	/**
+	 * Lock to synchronize access to the get by provider ID PreparedStatement
+	 */
+	private static Object psGetRecordSetByProviderIdLock = new Object();
 
 	/**
 	 * Lock to synchronize access to the insert PreparedStatement
@@ -505,7 +515,7 @@ public class DefaultSetDAO extends SetDAO
 												   COL_RECORD_SET + ", " +
 												   COL_PROVIDER_ID + " " +
 								       "FROM " + SETS_TABLE_NAME + " " +
-								       "WHERE " + COL_PROVIDER_ID + "=?";
+								       "WHERE " + COL_PROVIDER_ID + "=?" + " and " + COL_PROVIDER_SET + "=true";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"get sets by provider ID\" PreparedStatement from the SQL " + selectSql);
@@ -565,6 +575,99 @@ public class DefaultSetDAO extends SetDAO
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getSetsForProvider(int)
+	
+	@Override
+	public List<Set> getRecordSetsForProvider(int providerId) throws DatabaseConfigException
+	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnectionManager.getDbConnection() == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
+		synchronized(psGetRecordSetByProviderIdLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Getting the set with provider ID " + providerId + ".");
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+
+			ArrayList<Set> sets = new ArrayList<Set>();
+
+			try
+			{
+				// Create the PreparedStatment to get a set by it's ID if it hasn't already been created
+				if(psGetRecordSetByProviderId == null || dbConnectionManager.isClosed(psGetRecordSetByProviderId))
+				{
+					// SQL to get the rows
+					String selectSql = "SELECT " + COL_SET_ID + ", " +
+												   COL_DISPLAY_NAME + ", " +
+												   COL_DESCRIPTION + ", " +
+												   COL_SET_SPEC + ", " +
+												   COL_PROVIDER_SET + ", " +
+												   COL_RECORD_SET + ", " +
+												   COL_PROVIDER_ID + " " +
+								       "FROM " + SETS_TABLE_NAME + " " +
+								       "WHERE " + COL_PROVIDER_ID + "=?" + " and " + COL_RECORD_SET + "=true";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get record sets by provider ID\" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetRecordSetByProviderId = dbConnectionManager.prepareStatement(selectSql, psGetRecordSetByProviderId);
+				} // end if(get by provider ID PreparedStatement wasn't defined)
+
+				// Set the parameters on the PreparedStatement
+				psGetRecordSetByProviderId.setInt(1, providerId);
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = dbConnectionManager.executeQuery(psGetRecordSetByProviderId);
+
+				// For each result returned, add a Set object to the list with the returned data
+				while(results.next())
+				{
+					// The Object which will contain data on the set
+					Set set = new Set();
+
+					// Set the columns on the set
+					set.setId(results.getInt(1));
+					set.setDisplayName(results.getString(2));
+					set.setDescription(results.getString(3));
+					set.setSetSpec(results.getString(4));
+					set.setIsProviderSet(results.getBoolean(5));
+					set.setIsRecordSet(results.getBoolean(6));
+
+					if(log.isDebugEnabled())
+						log.debug("Found the record set in the database with provider ID " + providerId + ".");
+
+					// Add the set to the list
+					sets.add(set);
+				} // end loop over results
+
+				if(log.isDebugEnabled())
+					log.debug("Found " + sets.size() + " record sets in the database with provider ID " + providerId + ".");
+
+				return sets;
+			} // end try(get sets)
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the record set with provider ID " + providerId + ".", e);
+
+				return sets;
+			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getRecordSetsForProvider(providerId);
+			}
+			finally
+			{
+				dbConnectionManager.closeResultSet(results);
+			} // end finally(close ResultSet)
+		} // end synchronized
+	} // end method getRecordSetsByProvider(int)
 
 	@Override
 	public boolean insert(Set set) throws DataException

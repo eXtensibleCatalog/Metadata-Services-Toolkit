@@ -273,6 +273,7 @@ public class DefaultProviderDAO extends ProviderDAO
 					provider.setSets(setDao.getSetsForProvider(provider.getId()));
 
 					provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
+					provider.setHarvestedRecordSets(setDao.getRecordSetsForProvider(provider.getId()));
 
 					// Add the provider to the list
 					providers.add(provider);
@@ -424,6 +425,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				provider.setSets(setDao.getSetsForProvider(provider.getId()));
 
 				provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
+				provider.setHarvestedRecordSets(setDao.getRecordSetsForProvider(provider.getId()));
 
 				// Add the provider to the list
 				providers.add(provider);
@@ -470,6 +472,7 @@ public class DefaultProviderDAO extends ProviderDAO
 		{
 			provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
 			provider.setSets(setDao.getSetsForProvider(provider.getId()));
+			provider.setHarvestedRecordSets(setDao.getRecordSetsForProvider(provider.getId()));
 		} // end if(provider found)
 
 		return provider;
@@ -593,7 +596,7 @@ public class DefaultProviderDAO extends ProviderDAO
 
 					provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
 					provider.setSets(setDao.getSetsForProvider(provider.getId()));
-
+					provider.setHarvestedRecordSets(setDao.getRecordSetsForProvider(provider.getId()));
 					if(log.isDebugEnabled())
 						log.debug("Found the provider with URL " + providerURL + " in the database.");
 
@@ -741,6 +744,7 @@ public class DefaultProviderDAO extends ProviderDAO
 
 					provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
 					provider.setSets(setDao.getSetsForProvider(provider.getId()));
+					provider.setHarvestedRecordSets(setDao.getRecordSetsForProvider(provider.getId()));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the provider with the name " + name + " in the database.");
@@ -1287,7 +1291,12 @@ public class DefaultProviderDAO extends ProviderDAO
 				// as deleted, as well as all records processed from them.
 				if(success)
 				{
+					// Remove the reference from provider to the set
 					for(Set set : setDao.getSetsForProvider(provider.getId()))
+						success = setDao.removeFromProvider(set, provider.getId()) && success;
+					
+					// Remove the reference from provider to the harvested record set
+					for(Set set : setDao.getRecordSetsForProvider(provider.getId()))
 						success = setDao.removeFromProvider(set, provider.getId()) && success;
 	
 					for(Record record : recordService.getByProviderId(provider.getId()))

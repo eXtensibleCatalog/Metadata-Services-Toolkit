@@ -11,7 +11,6 @@
 package xc.mst.action.processingDirective;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,24 +20,19 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
-import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
-import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
-import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ProcessingDirectiveService;
-import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.repository.DefaultFormatService;
-import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.DefaultSetService;
 import xc.mst.manager.repository.FormatService;
-import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.repository.SetService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserService;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -54,12 +48,6 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
 
 	/** Ceates service object for processing directives*/
     private ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
-
-    /** creates service object for services */
-    private ServicesService servicesService =  new DefaultServicesService();
-
-    /** creates service object for providers */
-    private ProviderService providerService = new DefaultProviderService();
 
     /** User Service object */
     private UserService userService = new DefaultUserService();
@@ -132,7 +120,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
             		if(tempProcDir.getService().getInputFormats().contains(tempFormat))
                         tempFormatList.add(tempFormat);
             	
-                tempSetList = tempProcDir.getSourceProvider().getSets();
+                tempSetList = tempProcDir.getSourceProvider().getHarvestedRecordSets();
             }
             else
             {
@@ -152,8 +140,6 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
             return SUCCESS;
         
     }
-
-
 
     /**
      * Step 2 in adding new processing directive
@@ -214,7 +200,7 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
                     {
                         if(sourceType.equalsIgnoreCase("provider"))
                         {
-                            tempSetList = tempProcDir.getSourceProvider().getSets();
+                            tempSetList = tempProcDir.getSourceProvider().getHarvestedRecordSets();
                         }
                         else
                         {

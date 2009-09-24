@@ -336,7 +336,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
                         tempFormatList.add(tempFormat);
                     }
                 }
-                tempSetList = tempProcDir.getSourceProvider().getSets();
+                tempSetList = tempProcDir.getSourceProvider().getHarvestedRecordSets();
             }
             else //source is a service
             {
@@ -425,7 +425,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
     				else
     				{
     					if(sourceType.equalsIgnoreCase("provider"))
-    						tempSetList = temporaryProcessingDirective.getSourceProvider().getSets();
+    						tempSetList = temporaryProcessingDirective.getSourceProvider().getHarvestedRecordSets();
     					else
     						tempSetList = temporaryProcessingDirective.getSourceService().getOutputSets();
     					
@@ -536,7 +536,6 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
                         Set tempSet = new Set();
                         tempSet.setDisplayName(outputSetName);
                         tempSet.setSetSpec(outputSetSpec);
-                        //setService.insertSet(tempSet);
                         tempProcDir.setOutputSet(tempSet);
                     }
                     else

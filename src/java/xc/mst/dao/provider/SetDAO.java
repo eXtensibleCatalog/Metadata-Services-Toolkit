@@ -119,6 +119,15 @@ public abstract class SetDAO
 	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
 	public abstract List<Set> getSetsForProvider(int providerId) throws DatabaseConfigException;
+	
+	/**
+	 * Gets all sets which belong to the records harvested by the provider with the passed ID
+	 *
+	 * @param providerId The ID of the provider whose harvested record sets we should get
+	 * @return A list all sets which belong to the provider with the passed ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
+	 */
+	public abstract List<Set> getRecordSetsForProvider(int providerId) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a set into the database

@@ -216,9 +216,9 @@
                                          </div>
                                     </c:when>
                                      <c:otherwise>
-                                         <div class="listBox">
+                                         <div style="overflow:auto;width:300px;" align="left">  
                                             <B>Sets</B> <br>
-                                            <select multiple size="10" style="width:300px;" id="setsSelected" name="setsSelected">
+                                            <select multiple size="10" id="setsSelected" name="setsSelected">
                                                 <option value="0"
                                                     <c:if test="${temporaryProcessingDirective.triggeringSets == '[]' || temporaryProcessingDirective.triggeringSets == '[null]'}">
                                                          selected
