@@ -781,23 +781,6 @@ public abstract class MetadataService
 			// Reopen the reader so it can see the changes made by running the service
 			SolrIndexManager.getInstance().commitIndex();
 			
-			// Start the MetadataServices triggered by processing directives
-			// matched on records resulting from the service we just finished running
-			for(Integer serviceToRun : servicesToRun.keySet())
-			{
-				try
-				{
-					ServiceWorkerThread serviceThread = new ServiceWorkerThread();
-					serviceThread.setServiceId(serviceToRun.intValue());
-					serviceThread.setOutputSetId(servicesToRun.get(serviceToRun).intValue());
-					Scheduler.scheduleThread(serviceThread);
-				} // end try(start the service)
-				catch(Exception e)
-				{
-					log.error("An error occurred while scheduling the service with ID " + serviceToRun.intValue() + ".", e);
-				} // end catch(Exception)
-			} // end loop over services to run
-			
 			return true;
 		} // end try(process the records)
 		catch(Exception e)
@@ -818,6 +801,24 @@ public abstract class MetadataService
 		} // end catch(Exception)
 		finally // Update the error and warning count for the service
 		{
+			
+			// Start the MetadataServices triggered by processing directives
+			// matched on records resulting from the service we just finished running
+			for(Integer serviceToRun : servicesToRun.keySet())
+			{
+				try
+				{
+					ServiceWorkerThread serviceThread = new ServiceWorkerThread();
+					serviceThread.setServiceId(serviceToRun.intValue());
+					serviceThread.setOutputSetId(servicesToRun.get(serviceToRun).intValue());
+					Scheduler.scheduleThread(serviceThread);
+				} // end try(start the service)
+				catch(Exception e)
+				{
+					log.error("An error occurred while scheduling the service with ID " + serviceToRun.intValue() + ".", e);
+				} // end catch(Exception)
+			} // end loop over services to run
+			
 			if (!updateServiceStatistics()) {
 				return false;
 			}

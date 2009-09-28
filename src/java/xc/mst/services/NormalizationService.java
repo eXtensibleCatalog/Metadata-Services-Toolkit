@@ -644,6 +644,7 @@ public class NormalizationService extends MetadataService
 	 */
 	private MarcXmlManagerForNormalizationService modeOfIssuance(MarcXmlManagerForNormalizationService marcXml)
 	{
+		
 		if(log.isDebugEnabled())
 			log.debug("Entering ModeOfIssuance normalization step.");
 
@@ -652,7 +653,6 @@ public class NormalizationService extends MetadataService
 
 		// Pull the mode of issuance mapping from the configuration file based on the leader 07 value.
 		String modeOfIssuance = modeOfIssuanceProperties.getProperty(""+leader07, null);
-
 		// If there was no mapping for the provided leader 07, we can't create the field.  In this case return the unmodified MARCXML
 		if(modeOfIssuance == null)
 		{
@@ -689,6 +689,11 @@ public class NormalizationService extends MetadataService
 		// Get the 001 and 003 control fields
 		String control001 = marcXml.getField001();
 		String control003 = marcXml.getField003();
+
+		if(control001 == null) {
+			outputRecordErrors.add(service.getId() + "-101: Cannot create 035 from 001((001 control field missing).");
+			errors.add(service.getId() + "-101: Missing control field 001.");
+		}
 
 		// If either control field didn't exist, we don't have to do anything
 		if(control001 == null || control003 == null)
@@ -947,7 +952,7 @@ public class NormalizationService extends MetadataService
 				if(log.isDebugEnabled())
 					log.debug("Found the valid language " + langFrom008 + " in the 008 field.");
 
-				languages.add(langFrom008);
+				languages.add(langFrom008.toLowerCase());
 			}
 		}
 
@@ -964,14 +969,14 @@ public class NormalizationService extends MetadataService
 			{
 				String language = field041a.substring(counter, counter+3);
 
-				if(!languages.contains(language))
+				if(!languages.contains(language.toLowerCase()))
 				{
 					if(isLanguageValid(language))
 					{
 						if(log.isDebugEnabled())
 							log.debug("Found the valid language " + language + " in the 041 $a field.");
 
-						languages.add(language);
+						languages.add(language.toLowerCase());
 					}
 				}
 			}
@@ -980,20 +985,20 @@ public class NormalizationService extends MetadataService
 		// Add the languages in 041 $d to the list of languages assuming doing so wouldn't create duplicates
 		for(String field041d : fields041d)
 		{
-			// Every group of three characters should be treated as a seperate language code.
+			// Every group of three characters should be treated as a separate language code.
 			// So characters 1-3 are one language, 4-6 are another, etc.
 			for(int counter = 0; counter + 3 <= field041d.length(); counter += 3)
 			{
 				String language = field041d.substring(counter, counter+3);
 
-				if(!languages.contains(language))
+				if(!languages.contains(language.toLowerCase()))
 				{
 					if(isLanguageValid(language))
 					{
 						if(log.isDebugEnabled())
 							log.debug("Found the valid language " + language + " in the 041 $d field.");
 
-						languages.add(language);
+						languages.add(language.toLowerCase());
 					}
 				}
 			}
@@ -1001,7 +1006,9 @@ public class NormalizationService extends MetadataService
 
 		// Add each language to the MARCXML in a new field
 		for(String language : languages)
-			marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_LANGUAGE_SPLIT, language);
+			if (!language.equals("   ")){
+				marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_LANGUAGE_SPLIT, language);
+			}
 
 		return marcXml;
 	}
@@ -1036,7 +1043,7 @@ public class NormalizationService extends MetadataService
 			if(languageTerm == null)
 			{
 				if(log.isDebugEnabled())
-					log.debug("Cannot find a lanuage term mapping for the language code " + languageCode + ".");
+					log.debug("Cannot find a language term mapping for the language code " + languageCode + ".");
 
 				errors.add(service.getId() + "-106: Unrecognized language code: " + languageCode);
 				outputRecordErrors.add(service.getId() + "-106: Unrecognized language code: " + languageCode);
@@ -1273,16 +1280,19 @@ public class NormalizationService extends MetadataService
 				// Initialize the aSubfield if we found the $a
 				if(subfield.getAttribute("code").getValue().equals("a"))
 					aSubfield = subfield;
-				else
-					errors.add(service.getId() + "-107: Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
 
 				// Initialize the bSubfield if we found the $b
-				if(subfield.getAttribute("code").getValue().equals("b"))
+				if(subfield.getAttribute("code").getValue().equals("b")) {
 					bSubfield = subfield;
+					errors.add(service.getId() + "-107: Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
+				}
 
 				// Initialize the subfield9 if we found the $9
-				if(subfield.getAttribute("code").getValue().equals("9"))
+				if(subfield.getAttribute("code").getValue().equals("9")) {
 					subfield9 = subfield;
+					errors.add(service.getId() + "-107: Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
+				}
+					
 			} // end loop over 035 subfields
 
 			// Execute only if Fix035 step is enabled

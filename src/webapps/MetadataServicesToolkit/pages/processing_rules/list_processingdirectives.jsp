@@ -154,7 +154,8 @@
 
 
                                                                   <tr>
-                                                                    <c:set var="url" value='/MetadataServicesToolkit/viewEditProcessingDirectives.action?ProcessingDirectiveId=${directive.id}' />
+                                                                    <c:url var="url" value="viewEditProcessingDirectives.action?ProcessingDirectiveId=${directive.id}">
+			    					   								</c:url>
 
                                                                     <c:set var="x1" value="${directive.sourceProvider}" />
                                                                     <c:set var="x2" value="${directive.sourceService}" />
@@ -181,7 +182,7 @@
                                                                                 <div align="center" >
 
                                                                                         <a href="<c:out value="${url}" />">
-                                                                                            <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;" width="100%">
+                                                                                            <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;" width="100%" onClick="javascript:window.location='${url}'">
                                                                                                 <tbody>
                                                                                                     <tr>
                                                                                                         <td width="47%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;color:#245f8a;"> ${x1.name}</td>
@@ -202,7 +203,7 @@
                                                                                    <div align="center" >
                                                                                         <a  href="<c:out value="${url}" />">
 
-                                                                                                <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;" width="100%">
+                                                                                                <table align="center" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0px; padding: 0px; position: relative; top: -2px;" width="100%" onClick="javascript:window.location='${url}'">
                                                                                                     <tbody>
                                                                                                         <tr>
                                                                                                             <td width="47%" style="border-style: none; border-color: rgb(255, 255, 255); margin: 0pt; padding: 0pt; text-align: right;padding-right:10px;color:#245f8a;"> ${x2.name} </td>

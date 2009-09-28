@@ -1113,7 +1113,7 @@ public class MarcXmlManagerForNormalizationService
 			if(log.isDebugEnabled())
 				log.debug("Added the language code " + subfieldAValue + ".");
 
-			addedLanguageCodes.add(subfieldAValue);
+			addedLanguageCodes.add(subfieldAValue.toLowerCase());
 		} // end if (added language code)
 
 		// If we just added a 243 element, cache the new element
