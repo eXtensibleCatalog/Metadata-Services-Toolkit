@@ -89,7 +89,7 @@ ModeOfIssuance = 1
 # 1 to create a new 035 field with the
 # organization code in the record and the
 # record's control number 
-MoveMARCOrgCode = 0
+MoveMARCOrgCode = 1
 
 # 1 if the MoveMARCOrgCode step should run regardless of the 
 # 003 value, false if it should only run if the 003 value
@@ -143,7 +143,7 @@ LanguageTerm = 1
 # 1 to create a new 035 field with the
 # organization code in the MST configuration file
 # and the original record's control number 
-SupplyMARCOrgCode = 0
+SupplyMARCOrgCode = 1
 
 # 1 to cleanup common problems with OCoLC 035 fields. 
 Fix035 = 1
