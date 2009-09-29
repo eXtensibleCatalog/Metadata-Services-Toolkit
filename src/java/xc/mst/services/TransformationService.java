@@ -39,6 +39,8 @@ import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.MarcXmlRecord;
 import xc.mst.utils.XCRecord;
+import xc.mst.utils.index.RecordList;
+import xc.mst.utils.index.SolrIndexManager;
 
 /**
  * A Metadata Service which for each unprocessed marcxml record creates an XC schema
@@ -330,12 +332,16 @@ public class TransformationService extends MetadataService
 				if(log.isInfoEnabled())
 					log.info("Updating the record which was processed from an older version of the record we just processed.");
 
-				for (Record oldRecord : existingRecords) 
+				for (int i = 0; i < existingRecords.size(); i++) {
+					Record oldRecord = existingRecords.get(i);
 					oldRecord.setDeleted(true);
-				
-
+					record.removeSucessor(oldRecord);
+					updateRecord(oldRecord);
+					
+				} 
+				SolrIndexManager.getInstance().commitIndex();
 			}
-				
+
 			// Add the transformed record after modifications were made to it to
 			// the list of modified records.
 
@@ -373,6 +379,9 @@ public class TransformationService extends MetadataService
 		}
 		catch(Exception e)
 		{
+			processedRecordCount-- ;
+			
+			errorRecordList.add(record.getId()+":" +e.getMessage());
 			log.error("An error occurred while Transforming the record with ID " + record.getId(), e);
 
 			logError("An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
@@ -5806,4 +5815,5 @@ public class TransformationService extends MetadataService
 	protected void validateService() throws ServiceValidationException 
 	{		
 	}
+
 }
