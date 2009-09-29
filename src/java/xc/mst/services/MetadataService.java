@@ -9,7 +9,11 @@
 
 package xc.mst.services;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -18,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.activation.FileDataSource;
 
 import org.apache.log4j.Logger;
 
@@ -163,9 +169,10 @@ public abstract class MetadataService
 	/**
 	 * The number of records processed by the service so far
 	 */
-	private int processedRecordCount  = 0;
+	protected int processedRecordCount = 0;
+	
 	/**
-	 * 
+	 * The number of records the service needs to process
 	 */
 	private int totalRecordCount = 0;
 	
@@ -185,12 +192,17 @@ public abstract class MetadataService
 	GroupDAO groupDAO = new DefaultGroupDAO();
 	
 	/**
+	 * List of errors pertaining to input records that were unable to be processed
+	 */
+	List<String> errorRecordList = new ArrayList<String>();
+	
+	/**
 	 * Runs the service with the passed ID
 	 *
 	 * @param serviceId The ID of the MetadataService to run
 	 * @param outputSetId The ID of the set that records processed by this service should be added to
 	 */
-	public static boolean runService(int serviceId, int outputSetId)
+	public static boolean runService(int serviceId, int processingDirectiveId)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering MetadataService.runService for the service with ID " + serviceId + ".");
@@ -257,7 +269,7 @@ public abstract class MetadataService
 				log.debug("Running the Metadata Service with ID " + serviceId + ".");
 
 			// Run the service's processRecords method
-			boolean success = runningService.processRecords(outputSetId);
+			boolean success = runningService.processRecords(processingDirectiveId);
 
 			LogWriter.addInfo(service.getServicesLogFileName(), "The " + service.getName() + " Service finished running.  " + runningService.processedRecordCount + " records were processed.");
 
@@ -677,9 +689,12 @@ public abstract class MetadataService
 					{
 						List<Record> successors = getByProcessedFrom(processMe);
 
+						// Handle reprocessing of sucessors
 						for(Record successor : successors)
 						{
+							// Set the successors ad deleted
 							successor.setDeleted(true);
+							// Schedule the services
 							reprocessRecord(successor);
 							// TODO return and start with next record process?
 						}
@@ -717,6 +732,7 @@ public abstract class MetadataService
 						// If outgoingRecord's deleted flag is set to true, the record will
 						// be deleted.
 						else {
+							
 							updateExistingRecord(outgoingRecord, oldRecord);
 						}
 					} // end loop over processed records
@@ -727,11 +743,12 @@ public abstract class MetadataService
 					recordService.update(processMe);
 					
 					processedRecordCount++;
+/*					if(processedRecordCount % 10000 == 0)
 					if(processedRecordCount % 100000 == 0)
 					{
 						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
 					}
-				}
+*/				}
 				else
 					{
 						// If canceled the stop processing records
@@ -1211,6 +1228,8 @@ public abstract class MetadataService
 				checkProcessingDirectives(newRecord);
 			else
 				log.error("The update failed for the record with ID " + newRecord.getId() + ".");
+			
+			recordService.update(newRecord);
 		} // end try(update the record)
 		catch (DataException e)
 		{
@@ -1459,41 +1478,93 @@ public abstract class MetadataService
 	 */
 	public boolean sendReportEmail(String problem)
 	{
-		if (mailer.isConfigured()) {
-			// The email's subject
-			InetAddress addr = null;
-			try {
-				addr = InetAddress.getLocalHost();
-			} catch (UnknownHostException e) {
-				log.error("Host name query failed.",e);
-			}
-			String subject = "Results of processing " + runningService.getServiceName() +" by MST Server on " + addr.getHostName();
-	
-			// The email's body
-			StringBuilder body = new StringBuilder();
-	
-			// First report any problems which prevented the harvest from finishing
-			if(problem != null)
-				body.append("The service failed for the following reason: ").append(problem).append("\n\n");
-	
-			// Report on the number of records inserted successfully and the number of failed inserts
-			if(processedRecordCount!=totalRecordCount)
-				body.append("Error: Not all records were processed. \n");
-			body.append(processedRecordCount +" records out of " + totalRecordCount +" processed. \n");
+		try {
 			
-			try {
+			if (mailer.isConfigured()) {
+				
+				// The email's subject
+				InetAddress addr = null;
+				addr = InetAddress.getLocalHost();
+
+				String subject = "Results of processing " + runningService.getServiceName() +" by MST Server on " + addr.getHostName();
+		
+				// The email's body
+				StringBuilder body = new StringBuilder();
+		
+				// First report any problems which prevented the harvest from finishing
+				if(problem != null)
+					body.append("The service failed for the following reason: ").append(problem).append("\n\n");
+		
+				// Report on the number of records inserted successfully and the number of failed inserts
+				if(processedRecordCount!=totalRecordCount)
+					body.append("Error: Not all records were processed. \n");
+				body.append(processedRecordCount +" records out of " + totalRecordCount +" processed. \n");
+				
+				
+				// Append errors if any
+				String errorLogFile = MSTConfiguration.getMSTInstancesFolderPath() + File.pathSeparator  
+											+ "logs" + File.pathSeparator + "ErrorLog.txt";
+				FileDataSource fds = new FileDataSource(errorLogFile);
+				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fds.getOutputStream()));
+				for (String recordErrorDesc : errorRecordList) {
+					writer.write(recordErrorDesc);
+					writer.newLine();
+				}
+				writer.flush();
+				writer.close();
+				
 				// Send email to every admin user
 				for (User user : userGroupUtilDAO.getUsersForGroup(groupDAO.getByName(Constants.ADMINSTRATOR_GROUP).getId())) {
-					mailer.sendEmail(user.getEmail(), subject, body.toString());
+					if(errorRecordList.size() > 0)	
+						mailer.sendEmail(user.getEmail(), subject, body.toString(),errorLogFile);
+					else
+						mailer.sendEmail(user.getEmail(), subject, body.toString());
 				}
-			} catch (DatabaseConfigException e) {
-				log.error("Error sending notification email.");
+				
+				return true;
+			} 
+			else {
+				return false;
 			}
-			
-			return true;
-		} else {
+
+		}
+		catch (UnknownHostException exp) {
+			log.error("Host name query failed. Error sending notification email.",exp);
+			return false;
+		}
+		catch (DatabaseConfigException e) {
+			log.error("Database connection exception. Error sending notification email.");
+			return false;
+		}
+		catch (Exception e) {
+			log.error("Error sending notification email.");
 			return false;
 		}
 	} // end method sendReportEmail
+	
+	/**
+	 * Gets the count of records to be processed before the service starts
+	 */
+	public int getRecordsToBeProcessedBeforeRun(){
+		return totalRecordCount;
+	}
+	
+	/**
+	 * Gets the count of records to be processed after the service completes. 
+	 * It would be meaningful to call this method after the processing is complete.
+	 */
+	public int getRecordsToBeProcessedAfterRun(){
+
+		/*		if(pd.getSourceProvider() != null)
+					records = recordService.getByProviderIdAndInputForServiceId(pd.getSourceProvider().getId(), service.getId());
+			// Get the list of record inputs for this service
+				else
+					records = recordService.getInputForService(service.getId());
+		*/ 
+	
+		return 0;
+	}
+	
+	
 
 }
