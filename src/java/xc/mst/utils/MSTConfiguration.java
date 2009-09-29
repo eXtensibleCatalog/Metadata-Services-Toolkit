@@ -137,6 +137,10 @@ public class MSTConfiguration {
 		MSTConfiguration.urlPath = urlPath;
 	}
 
+	public static String getMSTInstancesFolderPath(){
+	
+		return System.getProperty("user.dir") + FILE_SEPARATOR + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME);
+	}
 
 
 }
