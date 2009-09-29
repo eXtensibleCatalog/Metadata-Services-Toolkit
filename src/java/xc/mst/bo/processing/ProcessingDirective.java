@@ -278,4 +278,16 @@ public class ProcessingDirective
 		if(triggeringSet != null && triggeringSets.contains(triggeringSet))
 			triggeringSets.remove(triggeringSet);
 	} // end method removeTriggeringSet(Set)
+	
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("[Id="+id);
+		sb.append(" source service= "+ sourceService);
+		sb.append(" source provider= "+ sourceProvider);
+		sb.append(" service= "+ service+"]");
+		
+		return sb.toString();
+	}
+
 } // end class ProcessingDirective

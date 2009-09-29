@@ -2,14 +2,16 @@ package xc.mst.scheduling;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
-import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
-import xc.mst.dao.processing.ProcessingDirectiveDAO;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
+import xc.mst.manager.processingDirective.DefaultJobService;
+import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.index.RecordList;
@@ -48,14 +50,14 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 	private ProcessingDirective processingDirective = null;
 	
 	/**
-	 * The DAO for getting processing directives
-	 */
-	private ProcessingDirectiveDAO pdDao = new DefaultProcessingDirectiveDAO();
-
-	/**
 	 * Manager for getting, inserting and updating records
 	 */
 	private static RecordService recordService = new DefaultRecordService();
+	
+	/**
+	 * Manager for getting, inserting and updating jobs
+	 */
+	private static JobService jobService = new DefaultJobService();
 	
 	/**
 	 * Sets the processing directive to check
@@ -85,20 +87,19 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 			SolrIndexManager.getInstance().waitForJobCompletion(5000);
 			SolrIndexManager.getInstance().commitIndex();
 			
-			try
-			{
-				ServiceWorkerThread serviceThread = new ServiceWorkerThread();
-				serviceThread.setServiceId(processingDirective.getService().getId());
-				
-				if(processingDirective.getOutputSet() != null)
-					serviceThread.setOutputSetId(processingDirective.getOutputSet().getId());
-				
-				Scheduler.scheduleThread(serviceThread);
-			} // end try(start the service)
-			catch(Exception e)
-			{
-				log.error("An error occurred while scheduling the service with ID " + processingDirective.getService().getId() + ".", e);
-			} // end catch(Exception)
+			if (recordsToCheck != null) {
+				try {
+					int outputSetId = 0;
+					if(processingDirective.getOutputSet() != null) {
+						outputSetId = processingDirective.getOutputSet().getId();
+					}
+					Job job = new Job(processingDirective.getService(), outputSetId);
+					job.setOrder(jobService.getMaxOrder() + 1); 
+					jobService.insertJob(job);
+				} catch (DatabaseConfigException dce) {
+					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+				}
+			}
 		}
 		catch (IndexException e) 
 		{

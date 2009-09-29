@@ -20,10 +20,13 @@ import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.harvest.HarvestSchedule;
+import xc.mst.bo.processing.Job;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestScheduleDAO;
+import xc.mst.manager.processingDirective.DefaultJobService;
+import xc.mst.manager.processingDirective.JobService;
 
 /**
  * A Thread which runs in the background and checks every minute to see
@@ -58,6 +61,11 @@ public class Scheduler extends Thread
 	 * The WorkerThread that is currently running harvests/services
 	 */
 	private static WorkerThread runningJob;
+	
+	/**
+	 * Manager for getting, inserting and updating jobs
+	 */
+	private static JobService jobService = new DefaultJobService();
 
 	/**
 	 * Gets the currently running job
@@ -136,36 +144,89 @@ public class Scheduler extends Thread
 					if(log.isDebugEnabled())
 						log.debug("Creating a Thread to run HarvestSchedule with id " + scheduleToRun.getId());
 	
-					// Start a new Thread to run the Harvester component for the schedule
-					HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
-					harvestThread.setHarvestScheduleId(scheduleToRun.getId());
-					scheduleThread(harvestThread);
+					// Add job to database queue
+					try {
+						Job job = new Job(scheduleToRun);
+						job.setOrder(jobService.getMaxOrder() + 1); 
+						jobService.insertJob(job);
+					} catch (DatabaseConfigException dce) {
+						log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+					}
 				}
 			} // end loop over schedules to be run
 
-
 			if(runningJob == null)
 			{
-				WorkerThread jobToStart = waitingJobs.poll();
+				
+				try {
+					// Get next job to run
+					Job jobToStart = jobService.getNextJobToExecute(); 
 
 					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
 					if(jobToStart != null)
 					{
-						jobToStart.start();
-						runningJob = jobToStart;
-					} // end if(the service job queue was empty)
+						// Start a new Thread to run the Harvester component for the schedule
+						if (jobToStart.getHarvestSchedule() != null) {
+							HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
+							harvestThread.setHarvestScheduleId(jobToStart.getHarvestSchedule().getId());
+							harvestThread.start();
+							runningJob = harvestThread;
+						} else if (jobToStart.getService() != null) {
+							ServiceWorkerThread serviceThread = new ServiceWorkerThread();
+							serviceThread.setServiceId(jobToStart.getService().getId());
+							serviceThread.setOutputSetId(jobToStart.getOutputSetId());
+							serviceThread.start();
+							runningJob = serviceThread;
+						} else if (jobToStart.getProcessingDirective() != null) {
+							ProcessingDirectiveWorkerThread processingDirectiveThread = new ProcessingDirectiveWorkerThread();
+							processingDirectiveThread.setProcessingDirective(jobToStart.getProcessingDirective());
+							processingDirectiveThread.start();
+							runningJob = processingDirectiveThread;
+						}
 
+						// Delete the job from database once its scheduled to run
+						jobService.deleteJob(jobToStart);
+					} // end if(the service job queue was empty)
+				} catch(DatabaseConfigException dce) {
+					log.error("DatabaseConfigException occured when getting job from database", dce);
+				}
+					
 			}
 			else {
 				if(!runningJob.isAlive()){
-					WorkerThread jobToStart = waitingJobs.poll();
+					
+					try {
+						// Get next job to run
+						Job jobToStart = jobService.getNextJobToExecute(); 
 
-					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
-					if(jobToStart != null)
-					{
-						jobToStart.start();
-						runningJob = jobToStart;
-					} // end if(the service job queue was empty)
+						// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
+						if(jobToStart != null)
+						{
+							// Start a new Thread to run the Harvester component for the schedule
+							if (jobToStart.getHarvestSchedule() != null) {
+								HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
+								harvestThread.setHarvestScheduleId(jobToStart.getHarvestSchedule().getId());
+								harvestThread.start();
+								runningJob = harvestThread;
+							} else if (jobToStart.getService() != null) {
+								ServiceWorkerThread serviceThread = new ServiceWorkerThread();
+								serviceThread.setServiceId(jobToStart.getService().getId());
+								serviceThread.setOutputSetId(jobToStart.getOutputSetId());
+								serviceThread.start();
+								runningJob = serviceThread;
+							} else if (jobToStart.getProcessingDirective() != null) {
+								ProcessingDirectiveWorkerThread processingDirectiveThread = new ProcessingDirectiveWorkerThread();
+								processingDirectiveThread.setProcessingDirective(jobToStart.getProcessingDirective());
+								processingDirectiveThread.start();
+								runningJob = processingDirectiveThread;
+							}
+
+							// Delete the job from database once its scheduled to run
+							jobService.deleteJob(jobToStart);
+						} // end if(the service job queue was empty)
+					} catch(DatabaseConfigException dce) {
+						log.error("DatabaseConfigException occured when getting job from database", dce);
+					}
 				}
 			}
 

@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.harvest.HarvestSchedule;
+import xc.mst.bo.processing.Job;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
@@ -33,10 +34,10 @@ import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
+import xc.mst.manager.processingDirective.DefaultJobService;
+import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.scheduling.Scheduler;
-import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.services.MetadataService;
 
 /**
@@ -127,17 +128,21 @@ public class InitializeServices  extends HttpServlet {
 	    try {
 		    List<Service> allServices = serviceDao.getAll();
     		RecordService recordService = new DefaultRecordService();
+			JobService jobService = new DefaultJobService();
 		    
 		    for(Service service:allServices) {
 		    	if (service.getStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_ERROR)) {
 		    		int count = recordService.getCountOfRecordsToBeProcessedVyService(service.getId());
 		    		if (count > 0) {
-	    				// Schedule the service to run
-						ServiceWorkerThread serviceThread = new ServiceWorkerThread();
-						serviceThread.setServiceId(service.getId());
-						// TODO Output set has to be set correctly
-						serviceThread.setOutputSetId(0);
-						Scheduler.scheduleThread(serviceThread);
+		    			// Add job to queue in database
+						try {
+							Job job = new Job(service, 0);
+							job.setOrder(jobService.getMaxOrder() + 1); 
+							jobService.insertJob(job);
+						} catch (DatabaseConfigException dce) {
+							log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+						}
+						
 		    		}
 		    	}
 		    }

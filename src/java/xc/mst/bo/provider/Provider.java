@@ -1007,4 +1007,15 @@ public class Provider
 	public void setHarvestedRecordSets(List<Set> harvestedRecordSets) {
 		this.harvestedRecordSets = harvestedRecordSets;
 	}
+
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("[Id="+id);
+		sb.append(" provider= "+ name);
+		sb.append(" URL= "+ url+"]");
+		
+		return sb.toString();
+	}
+
 } // end class Provider

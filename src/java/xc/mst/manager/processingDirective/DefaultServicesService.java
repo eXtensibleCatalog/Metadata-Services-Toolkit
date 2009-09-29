@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.processing.Job;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.ErrorCode;
@@ -39,8 +40,6 @@ import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.scheduling.Scheduler;
-import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.services.MetadataService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
@@ -81,6 +80,11 @@ public class DefaultServicesService implements ServicesService
      * Service for records in the MST
      */
     private static RecordService recordService = new DefaultRecordService();
+    
+    /**
+     * Manager to insert/delete jobs in the MST
+     */
+    private static JobService jobService = new DefaultJobService();
 
     /**
      * Constant signifying the parser is parsing the service's input formats
@@ -861,10 +865,13 @@ public class DefaultServicesService implements ServicesService
 
     		for(Service runMe : servicesToRun)
     		{
-    			ServiceWorkerThread serviceThread = new ServiceWorkerThread();
-    			serviceThread.setServiceId(runMe.getId());
-    			// TODO: set the output set
-    			Scheduler.scheduleThread(serviceThread);
+    			try {
+					Job job = new Job(runMe, 0);
+					job.setOrder(jobService.getMaxOrder() + 1); 
+					jobService.insertJob(job);
+				} catch (DatabaseConfigException dce) {
+					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+				}
     		}
     	}
     	finally
@@ -923,9 +930,13 @@ public class DefaultServicesService implements ServicesService
 		// Schedule subsequent services to process that the record was deleted
 		for(Service nextSerivce : affectedServices)
 		{
-			ServiceWorkerThread serviceThread = new ServiceWorkerThread();
-			serviceThread.setServiceId(nextSerivce.getId());
-			Scheduler.scheduleThread(serviceThread);
+			try {
+				Job job = new Job(nextSerivce, 0);
+				job.setOrder(jobService.getMaxOrder() + 1); 
+				jobService.insertJob(job);
+			} catch (DatabaseConfigException dce) {
+				log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+			}
 		}
 
         servicesDao.delete(service);

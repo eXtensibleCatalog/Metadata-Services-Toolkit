@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
@@ -48,10 +49,10 @@ import xc.mst.dao.user.GroupDAO;
 import xc.mst.dao.user.UserGroupUtilDAO;
 import xc.mst.email.Emailer;
 import xc.mst.manager.IndexException;
+import xc.mst.manager.processingDirective.DefaultJobService;
+import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.scheduling.Scheduler;
-import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
@@ -126,6 +127,11 @@ public abstract class MetadataService
 	 * Manager for getting, inserting and updating records
 	 */
 	private static RecordService recordService = new DefaultRecordService();
+	
+	/**
+	 * Manager for getting, inserting and updating jobs
+	 */
+	private static JobService jobService = new DefaultJobService();
 
 	/**
 	 * The processing directives for this service
@@ -802,23 +808,6 @@ public abstract class MetadataService
 		finally // Update the error and warning count for the service
 		{
 			
-			// Start the MetadataServices triggered by processing directives
-			// matched on records resulting from the service we just finished running
-			for(Integer serviceToRun : servicesToRun.keySet())
-			{
-				try
-				{
-					ServiceWorkerThread serviceThread = new ServiceWorkerThread();
-					serviceThread.setServiceId(serviceToRun.intValue());
-					serviceThread.setOutputSetId(servicesToRun.get(serviceToRun).intValue());
-					Scheduler.scheduleThread(serviceThread);
-				} // end try(start the service)
-				catch(Exception e)
-				{
-					log.error("An error occurred while scheduling the service with ID " + serviceToRun.intValue() + ".", e);
-				} // end catch(Exception)
-			} // end loop over services to run
-			
 			if (!updateServiceStatistics()) {
 				return false;
 			}
@@ -1340,8 +1329,21 @@ public abstract class MetadataService
 
 			Integer serviceId = new Integer(matchedProcessingDirective.getService().getId());
 
-			if(!servicesToRun.containsKey(serviceId))
-				servicesToRun.put(serviceId, (matchedProcessingDirective.getOutputSet() == null ? 0 : new Integer(matchedProcessingDirective.getOutputSet().getId())));
+			if(!servicesToRun.containsKey(serviceId)) {
+				
+				int outputSetId = new Integer(matchedProcessingDirective.getOutputSet() == null ? 0 : matchedProcessingDirective.getOutputSet().getId());
+				servicesToRun.put(serviceId, outputSetId);
+
+				// Add jobs to database
+				try {
+					Job job = new Job(matchedProcessingDirective.getService(), outputSetId);
+					job.setOrder(jobService.getMaxOrder() + 1); 
+					jobService.insertJob(job);
+				} catch (DatabaseConfigException dce) {
+					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+				}
+
+			}
 		} // end loop over matched processing directives
 	} // end method checkProcessingDirectives(Record)
 

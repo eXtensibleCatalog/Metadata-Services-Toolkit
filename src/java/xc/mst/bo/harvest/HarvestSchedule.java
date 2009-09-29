@@ -484,4 +484,14 @@ public class HarvestSchedule
 	{
 		steps.clear();
 	} // end method removeAllSteps()
+	
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("Id="+id);
+		sb.append(" provider= "+ provider);
+		sb.append(" recurrence= "+ recurrence);
+		
+		return sb.toString();
+	}
 } // end class HarvestSchedule

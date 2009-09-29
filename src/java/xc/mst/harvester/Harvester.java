@@ -40,6 +40,7 @@ import org.xml.sax.SAXParseException;
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.harvest.HarvestScheduleStep;
+import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
@@ -64,6 +65,8 @@ import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.email.Emailer;
 import xc.mst.manager.IndexException;
+import xc.mst.manager.processingDirective.DefaultJobService;
+import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.scheduling.Scheduler;
@@ -136,6 +139,11 @@ public class Harvester implements ErrorHandler
 	 * Manager for getting, inserting and updating records
 	 */
 	private static RecordService recordService = new DefaultRecordService();
+	
+	/**
+	 * Manager for getting, inserting and updating jobs
+	 */
+	private static JobService jobService = new DefaultJobService();
 
 	/**
 	 * Data access object for getting FRBR level IDs
@@ -752,22 +760,6 @@ public class Harvester implements ErrorHandler
 				// Reopen the reader so it can see the record inputs we inserted for this harvest
 				SolrIndexManager.getInstance().commitIndex();
 
-				// Start the MetadataServices triggered by processing directives
-				// matched on records resulting from the service we just finished running
-				for(Integer serviceToRun : servicesToRun.keySet())
-				{
-					try
-					{
-						ServiceWorkerThread serviceThread = new ServiceWorkerThread();
-						serviceThread.setServiceId(serviceToRun.intValue());
-						serviceThread.setOutputSetId(servicesToRun.get(serviceToRun).intValue());
-						Scheduler.scheduleThread(serviceThread);
-					} // end try(schedule the service to be run)
-					catch(Exception e)
-					{
-						log.error("An error occurred while running the service with ID " + serviceToRun.intValue() + ".", e);
-					} // end catch(Exception)
-				} // end loop over services to be run
 			} // end try(schedule the services that the records triggered)
 			catch(IndexException e)
 			{
@@ -1223,8 +1215,18 @@ public class Harvester implements ErrorHandler
 
 			Integer serviceId = new Integer(matchedProcessingDirective.getService().getId());
 
-			if(!servicesToRun.containsKey(serviceId))
-				servicesToRun.put(serviceId, new Integer(matchedProcessingDirective.getOutputSet() == null ? 0 : matchedProcessingDirective.getOutputSet().getId()));
+			if(!servicesToRun.containsKey(serviceId)) {
+				int outputSetId = new Integer(matchedProcessingDirective.getOutputSet() == null ? 0 : matchedProcessingDirective.getOutputSet().getId());
+				servicesToRun.put(serviceId, outputSetId);
+				// Add jobs to database
+				try {
+					Job job = new Job(matchedProcessingDirective.getService(), outputSetId);
+					job.setOrder(jobService.getMaxOrder() + 1); 
+					jobService.insertJob(job);
+				} catch (DatabaseConfigException dce) {
+					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+				}
+			}
 		} // end loop over matched processing directives
 	} // end method checkProcessingDirectives(Record)
 

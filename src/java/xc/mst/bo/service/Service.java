@@ -695,4 +695,14 @@ public class Service
 	public void setNumberOfHarvests(long numberOfHarvests) {
 		this.numberOfHarvests = numberOfHarvests;
 	}
+
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("[Id="+id);
+		sb.append(" name = "+ serviceName +"]");
+		
+		return sb.toString();
+	}
+
 } // end class Service

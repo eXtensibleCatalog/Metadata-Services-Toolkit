@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
@@ -115,7 +116,7 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
 				serviceDao.update(processingDirective.getService());
 			}
 			
-			runProcessingDirective(processingDirective);
+//			runProcessingDirective(processingDirective);
 		} catch (DataException e) {
 			log.error("Data Exception", e);
 		}
@@ -165,8 +166,15 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      */
     private void runProcessingDirective(ProcessingDirective pd)
     {
-    	ProcessingDirectiveWorkerThread pdThread = new ProcessingDirectiveWorkerThread();
-    	pdThread.setProcessingDirective(pd);
-    	Scheduler.scheduleThread(pdThread);
+    	JobService jobService = new DefaultJobService();
+    	
+    	// Add job to database queue
+		try {
+			Job job = new Job(pd);
+			job.setOrder(jobService.getMaxOrder() + 1); 
+			jobService.insertJob(job);
+		} catch (DatabaseConfigException dce) {
+			log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+		}
     } // end method runNewProcessingDirective(ProcessingDirective)
 }

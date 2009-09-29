@@ -708,6 +708,23 @@ CREATE TABLE emailconfig
 
 
 -- -------------------------------------------------------------
+-- Table structure for jobs
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS jobs;
+CREATE TABLE jobs
+(
+  job_id INT(11) NOT NULL AUTO_INCREMENT,
+  service_id INT(11) NULL,
+  harvest_schedule_id INT(11) NULL,
+  processing_directive_id INT(11) NULL,
+  output_set_id INT(11),
+  job_order INT(11),
+  
+  PRIMARY KEY(job_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -------------------------------------------------------------
 -- Insert information for the GUI
 -- -------------------------------------------------------------
 
