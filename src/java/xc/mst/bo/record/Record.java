@@ -874,4 +874,11 @@ public class Record
 		this.numberOfSuccessors = numberOfSuccessors;
 	}
 
+	public void removeSucessor(Record successor){
+		try{
+		this.successors.remove(successor);
+		}catch (Exception e) {
+
+		}
+	}
 } // end class Record
