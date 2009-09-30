@@ -148,4 +148,15 @@ public class Format
             value += schemaLocation == null ? 0 : schemaLocation.hashCode();
             return value;
     }
+
+    @Override
+    public String toString() {
+    	StringBuffer b = new StringBuffer();
+    	b.append(" [Id="+id);
+    	b.append(" name="+name);
+    	b.append(" namespace="+namespace);
+    	b.append(" schemaLocation="+schemaLocation + "]");
+    	
+    	return b.toString();
+    }
 } // end class Format

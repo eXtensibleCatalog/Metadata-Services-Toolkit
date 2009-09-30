@@ -196,9 +196,9 @@ public class Set
     @Override
     public String toString() {
     	StringBuffer b = new StringBuffer();
-    	b.append(" Id="+id);
+    	b.append("{Id="+id);
     	b.append(" name="+displayName);
-    	b.append(" setSpec="+setSpec);
+    	b.append(" setSpec="+setSpec + "]");
     	
     	return b.toString();
     }

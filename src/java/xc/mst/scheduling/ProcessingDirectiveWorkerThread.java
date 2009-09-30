@@ -84,10 +84,11 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 			for(Record checkMe : recordsToCheck)
 				checkProcessingDirective(checkMe);
 			
+			// TODO waitForJobCompletion(5000) causes problem. Goes to SolrIndexManager and not ThreadedSolrIndexManager
 			SolrIndexManager.getInstance().waitForJobCompletion(5000);
 			SolrIndexManager.getInstance().commitIndex();
 			
-			if (recordsToCheck != null) {
+			if (recordsToCheck != null && recordsToCheck.size() > 0) {
 				try {
 					int outputSetId = 0;
 					if(processingDirective.getOutputSet() != null) {
@@ -160,7 +161,7 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 	{
 		boolean matchedFormat = false;
 		boolean matchedSet = false;
-
+		
 		// Check if the record matches any of the metadata formats for the current processing directive
 		if(processingDirective.getTriggeringFormats().contains(record.getFormat())) {
 			matchedFormat = true;

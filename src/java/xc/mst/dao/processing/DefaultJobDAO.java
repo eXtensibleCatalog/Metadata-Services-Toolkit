@@ -700,7 +700,7 @@ public class DefaultJobDAO extends JobDAO
 					job.setId(results.getInt(1));
 					job.setHarvestSchedule(results.getInt(2) == 0 ? null : harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(2)));
 					job.setService(results.getInt(3) == 0 ? null : serviceDao.loadBasicService(results.getInt(3)));
-					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.loadBasicProcessingDirective(results.getInt(4)));
+					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.getById(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
 					
