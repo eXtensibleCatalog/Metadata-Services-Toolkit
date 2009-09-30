@@ -92,4 +92,11 @@ public interface JobService {
 	 * @throws DatabaseConfigException
 	 */
 	public Job getNextJobToExecute() throws DatabaseConfigException;
+	
+	/**
+	 * Write jobs to queue
+	 *   
+	 * @throws DatabaseConfigException
+	 */
+	public void writeToFile() throws DatabaseConfigException;
 }

@@ -807,6 +807,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setId(results.getInt(1));
 					harvestSchedule.setScheduleName(results.getString(2));
 					harvestSchedule.setRecurrence(results.getString(3));
+					harvestSchedule.setProvider(providerDao.loadBasicProvider(results.getInt(4)));
 					harvestSchedule.setStartDate(results.getDate(5));
 					harvestSchedule.setEndDate(results.getDate(6));
 					harvestSchedule.setMinute(results.getInt(7));

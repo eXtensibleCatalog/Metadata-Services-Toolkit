@@ -488,9 +488,9 @@ public class HarvestSchedule
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("Id="+id);
+		sb.append("[Id="+id);
 		sb.append(" provider= "+ provider);
-		sb.append(" recurrence= "+ recurrence);
+		sb.append(" recurrence= "+ recurrence+"]");
 		
 		return sb.toString();
 	}

@@ -9,6 +9,9 @@
 
 package xc.mst.manager.processingDirective;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -21,6 +24,7 @@ import xc.mst.dao.processing.DefaultJobDAO;
 import xc.mst.dao.processing.JobDAO;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Service Class that is used for the creation/deletion/updating of jobs.
@@ -62,6 +66,9 @@ public class DefaultJobService implements JobService {
 
     	try {
 			jobDAO.insert(job);
+			
+			// Write the current jobs in queue to a file
+			writeToFile();
 		} catch (DataException e) {
 			log.error("Data Exception occured when inserting a Job." , e);
 		}
@@ -75,6 +82,9 @@ public class DefaultJobService implements JobService {
     public void deleteJob(Job job) {
         try {
 			jobDAO.delete(job);
+			
+			// Write the current jobs in queue to a file
+			writeToFile();
 		} catch (DataException e) {
 			log.error("Data Exception occured when deleting a Job." , e);
 		}
@@ -148,5 +158,44 @@ public class DefaultJobService implements JobService {
 	{
 		return jobDAO.getNextJobToExecute();
 	}
-    
+  
+	/**
+	 * Write jobs in database queue to a file
+	 *   
+	 * @throws DatabaseConfigException
+	 */
+	public void writeToFile() throws DatabaseConfigException
+	{
+		List<Job> jobs = getAllJobs();
+		
+		try{
+		    // Create file 
+		    FileWriter fstream = new FileWriter(System.getProperty("user.dir") + MSTConfiguration.FILE_SEPARATOR + MSTConfiguration.getUrlPath() +  MSTConfiguration.FILE_SEPARATOR  + "JobsInQueue.txt");
+		    BufferedWriter out = new BufferedWriter(fstream);
+		    
+		    out.write("Order\t\t Job Name\t\t\n");
+		    
+		    // Write all jobs in queue to a file
+		    for (Job job: jobs) {
+		    	if (job.getService() != null) {
+		    		out.write(job.getOrder() + "\t\t" + job.getService().getName() + "\n");
+		    	} else if (job.getProcessingDirective() != null) {
+		    		if (job.getProcessingDirective().getSourceProvider() != null) {
+		    			out.write(job.getOrder() + "\t\t" + "Processing directive: [Source=" +  job.getProcessingDirective().getSourceProvider().getName() + ", Service=" + job.getProcessingDirective().getService().getName() + "]\n");
+		    		} else {
+		    			out.write(job.getOrder() + "\t\t" + "Processing directive: [Source=" +  job.getProcessingDirective().getSourceService().getName() + ", Service=" + job.getProcessingDirective().getService().getName() + "]\n");
+		    		}
+		    	} else if (job.getHarvestSchedule() != null) {
+		    		out.write(job.getOrder() + "\t\t" + "Harvest repository: " + job.getHarvestSchedule().getProvider().getName() + "\n");
+		    	}
+		    }
+		    
+		    //Close the output stream
+		    out.close();
+		} catch(IOException ioe) {
+			log.error("IOException occured when writing jobs to file", ioe);
+		}
+		
+		
+	}
 }

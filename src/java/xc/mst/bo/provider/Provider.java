@@ -1012,7 +1012,7 @@ public class Provider
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("[Id="+id);
-		sb.append(" provider= "+ name);
+		sb.append(" name= "+ name);
 		sb.append(" URL= "+ url+"]");
 		
 		return sb.toString();
