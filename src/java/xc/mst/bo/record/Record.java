@@ -875,10 +875,6 @@ public class Record
 	}
 
 	public void removeSucessor(Record successor){
-		try{
 		this.successors.remove(successor);
-		}catch (Exception e) {
-
-		}
 	}
 } // end class Record
