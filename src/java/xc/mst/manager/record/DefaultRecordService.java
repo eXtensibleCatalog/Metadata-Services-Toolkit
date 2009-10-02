@@ -46,6 +46,7 @@ import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.index.RecordList;
+import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
 
 /**
@@ -275,19 +276,19 @@ public class DefaultRecordService extends RecordService
 		return new RecordList(query);
 	} // end method getByFormatIdAndServiceId(int, int)
 
-//	@Override
-//	public Records getInputForServiceToProcess(int serviceId) throws IndexException
-//	{
-//		if(log.isDebugEnabled())
-//			log.debug("Getting all records that are input for the service with service ID " + serviceId);
-//
-//		// Create a query to get the Documents with the requested input for service IDs
-//		SolrQuery query = new SolrQuery();
-//		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId));
-//
-//		// Return the list of results
-//		return new Records(query);
-//	} // end method getInputForService(int)
+	@Override
+	public Records getInputForServiceToProcess(int serviceId) throws IndexException
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting all records that are input for the service with service ID " + serviceId);
+
+		// Create a query to get the Documents with the requested input for service IDs
+		SolrQuery query = new SolrQuery();
+		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId));
+
+		// Return the list of results
+		return new Records(query);
+	} // end method getInputForService(int)
 	
 	@Override
 	public RecordList getInputForService(int serviceId) throws IndexException
