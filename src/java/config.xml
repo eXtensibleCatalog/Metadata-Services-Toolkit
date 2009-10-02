@@ -11,7 +11,7 @@
     <property name="SolrLogLevel" value="WARNING" />
     
     <!-- Either SingleThreaded or MultiThreaded depending on how the indexer should add records  -->
-    <property name="SOLRIndexer" value="MultiThreaded" />
+    <property name="SOLRIndexer" value="SingleThreaded" />
     
     <!-- The number of Threads a MultiThreaded indexer should use, default 10 -->
     <property name="SOLRIndexerMultiThreadCount" value="20" />
