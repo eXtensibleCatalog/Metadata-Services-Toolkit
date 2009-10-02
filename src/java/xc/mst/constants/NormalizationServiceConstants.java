@@ -162,9 +162,9 @@ public class NormalizationServiceConstants
 	public static final String CONFIG_ENABLED_LCSH_DISPLAY = "LCSHDisplay";
 
 	/**
-	 * Parameter for looking up the whether or not the TopicSplit normalization step is enabled.
+	 * Parameter for looking up the whether or not the NRUGenre normalization step is enabled.
 	 */
-	public static final String CONFIG_ENABLED_UR_GENRE = "URGenre";
+	public static final String CONFIG_ENABLED_NRU_GENRE = "NRUGenre";
 
 	/**
 	 * Parameter for looking up the whether or not the TopicSplit normalization step is enabled.
