@@ -188,7 +188,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 				}
 				catch(DataException e)
 				{
-					log.error("DataExcepiton while updating the log's error count.");
+					log.error("DataExcepiton while updating the log's error count.", e);
 				}
 
 				throw new RuntimeException(se.getMessage());
@@ -207,7 +207,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 				}
 				catch(DataException e)
 				{
-					log.error("DataExcepiton while updating the log's error count.");
+					log.error("DataExcepiton while updating the log's error count.", e);
 				}
 
 				throw new RuntimeException(ioe.getMessage());
