@@ -270,8 +270,8 @@ public class NormalizationService extends MetadataService
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_UNIFORM_TITLE, "0").equals("1"))
 					normalizedXml = uniformTitle(normalizedXml);
 
-				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_UR_GENRE, "0").equals("1"))
-					normalizedXml = urGenre(normalizedXml);
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_NRU_GENRE, "0").equals("1"))
+					normalizedXml = nruGenre(normalizedXml);
 
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_TOPIC_SPLIT, "0").equals("1"))
 					normalizedXml = topicSplit(normalizedXml);
@@ -434,6 +434,7 @@ public class NormalizationService extends MetadataService
 
 			logError("An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
 			
+			// TODO add record to error list
 			if(log.isDebugEnabled())
 				log.debug("Adding errors to the record.");
 			
@@ -1572,10 +1573,10 @@ public class NormalizationService extends MetadataService
 	 * @return The MARCXML record after performing this normalization step.
 	 */
 	@SuppressWarnings("unchecked")
-	private MarcXmlManagerForNormalizationService urGenre(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManagerForNormalizationService nruGenre(MarcXmlManagerForNormalizationService marcXml)
 	{
 		if(log.isDebugEnabled())
-			log.debug("Entering URGenre normalization step.");
+			log.debug("Entering nruGenre normalization step.");
 
 		// A list of all the 655 fields in the MARCXML record
 		ArrayList<Element> field655elements = marcXml.getField655Elements();
