@@ -92,7 +92,7 @@ ModeOfIssuance = 1
 MoveMARCOrgCode = 1
 
 # 1 if the MoveMARCOrgCode step should run regardless of the 
-# 003 value, false if it should only run if the 003 value
+# 003 value, 0 if it should only run if the 003 value
 # is the Organization Code defined in the main configuration
 # file.  This value is ignored if the MoveMARCOrgCode step
 # is not configured to run.
@@ -151,6 +151,9 @@ Fix035 = 1
 # 1 to cleanup OCoLC 035 fields for $9. By default 0
 URFix035Code9 = 0
 
+# 1 to remove leading zeros . 
+035LeadingZero = 1
+
 # 1 to remove duplicate 035 fields. 
 Dedup035 = 1
 
@@ -170,7 +173,7 @@ UniformTitle = 1
 
 # 1 to change 655 $2 to "NRUgenre" and delete the 655 $5 subfield
 # for each 655 field with $2 = "local" and $5 = "NRU"
-URGenre = 0
+NRUGenre = 0
 
 # 1 to copy 600, 610, 611, 630, and 650 fields and 6xx $x subfields into
 # new fields containing information on the topic 
@@ -212,9 +215,6 @@ Dedup9XX = 1
 
 # 1 to create a 246 field without an initial article . 
 TitleArticle = 1
-
-# 1 to remove leading zeros . 
-035LeadingZero = 1
 
 # 1 to replace location codes left by 
 # ILS with the actual location. By default 0 
