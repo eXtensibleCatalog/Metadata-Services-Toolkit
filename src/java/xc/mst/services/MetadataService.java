@@ -62,6 +62,7 @@ import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
+import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
 
 /**
@@ -202,7 +203,7 @@ public abstract class MetadataService
 	 * @param serviceId The ID of the MetadataService to run
 	 * @param outputSetId The ID of the set that records processed by this service should be added to
 	 */
-	public static boolean runService(int serviceId, int processingDirectiveId)
+	public static boolean runService(int serviceId, int outputSetId)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering MetadataService.runService for the service with ID " + serviceId + ".");
@@ -269,7 +270,7 @@ public abstract class MetadataService
 				log.debug("Running the Metadata Service with ID " + serviceId + ".");
 
 			// Run the service's processRecords method
-			boolean success = runningService.processRecords(processingDirectiveId);
+			boolean success = runningService.processRecords(outputSetId);
 
 			LogWriter.addInfo(service.getServicesLogFileName(), "The " + service.getName() + " Service finished running.  " + runningService.processedRecordCount + " records were processed.");
 
@@ -667,12 +668,10 @@ public abstract class MetadataService
 		try
 		{
 			// Get the list of record inputs for this service
-			RecordList records = recordService.getInputForService(service.getId());
+			Records records = recordService.getInputForServiceToProcess(service.getId());
 			totalRecordCount = records.size();
 			log.info("Number of records to be processed by service = " + totalRecordCount);
 			
-			//DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
-
 			// Iterate over the list of input records and process each.
 			// Then run the processing directives on the results of each and add
 			// the appropriate record inputs for services to be run on the records
@@ -732,7 +731,6 @@ public abstract class MetadataService
 						// If outgoingRecord's deleted flag is set to true, the record will
 						// be deleted.
 						else {
-							
 							updateExistingRecord(outgoingRecord, oldRecord);
 						}
 					} // end loop over processed records
@@ -743,12 +741,14 @@ public abstract class MetadataService
 					recordService.update(processMe);
 					
 					processedRecordCount++;
-/*					if(processedRecordCount % 10000 == 0)
 					if(processedRecordCount % 100000 == 0)
 					{
 						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
+						
+						SolrIndexManager.getInstance().commitIndex();
+						
 					}
-*/				}
+				}
 				else
 					{
 						// If canceled the stop processing records
@@ -1229,7 +1229,6 @@ public abstract class MetadataService
 			else
 				log.error("The update failed for the record with ID " + newRecord.getId() + ".");
 			
-			recordService.update(newRecord);
 		} // end try(update the record)
 		catch (DataException e)
 		{
