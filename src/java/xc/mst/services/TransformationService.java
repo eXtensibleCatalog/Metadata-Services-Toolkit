@@ -34,6 +34,7 @@ import org.xml.sax.InputSource;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
 import xc.mst.dao.DatabaseConfigException;
@@ -335,6 +336,10 @@ public class TransformationService extends MetadataService
 				for (int i = 0; i < existingRecords.size(); i++) {
 					Record oldRecord = existingRecords.get(i);
 					oldRecord.setDeleted(true);
+					// Mark this record as input to services that have processed it.
+					for (Service service : oldRecord.getProcessedByServices()) {
+						oldRecord.addInputForService(service);
+					}
 					record.removeSucessor(oldRecord);
 					updateRecord(oldRecord);
 					
