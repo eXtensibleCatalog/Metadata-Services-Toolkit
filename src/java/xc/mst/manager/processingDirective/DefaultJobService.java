@@ -17,6 +17,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.processing.Job;
+import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -24,6 +25,8 @@ import xc.mst.dao.processing.DefaultJobDAO;
 import xc.mst.dao.processing.JobDAO;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.manager.repository.DefaultSetService;
+import xc.mst.manager.repository.SetService;
 import xc.mst.utils.MSTConfiguration;
 
 /**
@@ -167,6 +170,7 @@ public class DefaultJobService implements JobService {
 	public void writeToFile() throws DatabaseConfigException
 	{
 		List<Job> jobs = getAllJobs();
+		SetService setService = new DefaultSetService();
 		
 		try{
 		    // Create file 
@@ -177,16 +181,25 @@ public class DefaultJobService implements JobService {
 		    
 		    // Write all jobs in queue to a file
 		    for (Job job: jobs) {
-		    	if (job.getService() != null) {
-		    		out.write(job.getOrder() + "\t\t" + job.getService().getName() + "\n");
-		    	} else if (job.getProcessingDirective() != null) {
+		    	if (job.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
+		    		out.write(job.getOrder() + "\t\t" + job.getService().getName());
+		    		if (job.getOutputSetId() > 0) { 
+		    			Set set = setService.getSetById(job.getOutputSetId());
+		    			out.write(", Output Set : " +  (set != null ? set.getDisplayName() : ""));
+		    		} else {
+		    			out.write(", Output Set : NONE" );
+		    		}
+		    		out.write("\n");
+		    	} else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE)) {
 		    		if (job.getProcessingDirective().getSourceProvider() != null) {
 		    			out.write(job.getOrder() + "\t\t" + "Processing directive: [Source=" +  job.getProcessingDirective().getSourceProvider().getName() + ", Service=" + job.getProcessingDirective().getService().getName() + "]\n");
 		    		} else {
 		    			out.write(job.getOrder() + "\t\t" + "Processing directive: [Source=" +  job.getProcessingDirective().getSourceService().getName() + ", Service=" + job.getProcessingDirective().getService().getName() + "]\n");
 		    		}
-		    	} else if (job.getHarvestSchedule() != null) {
+		    	} else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
 		    		out.write(job.getOrder() + "\t\t" + "Harvest repository: " + job.getHarvestSchedule().getProvider().getName() + "\n");
+		    	} else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
+		    		out.write(job.getOrder() + "\t\t" + "Reprocessing records through service: " + job.getService().getName() + "\n");
 		    	}
 		    }
 		    

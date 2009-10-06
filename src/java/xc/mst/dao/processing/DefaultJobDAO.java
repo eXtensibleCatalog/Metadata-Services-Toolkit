@@ -166,7 +166,8 @@ public class DefaultJobDAO extends JobDAO
 					    						   COL_SERVICE_ID + ", " +
 					    						   COL_PROCESSING_DIRECTIVE_ID + ", " +
 					    						   COL_OUTPUT_SET_ID + ", " +
-					    						   COL_ORDER + " " +
+					    						   COL_ORDER + ",  " +
+					    						   COL_TYPE + " " +
 	                                   "FROM " + JOBS_TABLE_NAME + " ORDER BY " + COL_ORDER + " ASC";
 
 					if(log.isDebugEnabled())
@@ -195,6 +196,7 @@ public class DefaultJobDAO extends JobDAO
 					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.loadBasicProcessingDirective(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
+					job.setJobType(results.getString(7));
 
 			
 					// Add the job to the list
@@ -250,7 +252,8 @@ public class DefaultJobDAO extends JobDAO
 									   COL_SERVICE_ID + ", " +
 									   COL_PROCESSING_DIRECTIVE_ID + ", " +
 									   COL_OUTPUT_SET_ID + ", " +
-									   COL_ORDER + " " +
+									   COL_ORDER + ",  " +
+		    						   COL_TYPE + " " +
 	                                   "FROM " + JOBS_TABLE_NAME + " " +
 					 			       "WHERE " + COL_JOB_ID + "=?";
 
@@ -283,6 +286,7 @@ public class DefaultJobDAO extends JobDAO
 					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.loadBasicProcessingDirective(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
+					job.setJobType(results.getString(7));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the job with ID " + jobId + " in the database.");
@@ -339,7 +343,8 @@ public class DefaultJobDAO extends JobDAO
 									   COL_SERVICE_ID + ", " +
 									   COL_PROCESSING_DIRECTIVE_ID + ", " +
 									   COL_OUTPUT_SET_ID + ", " +
-									   COL_ORDER + " " +
+									   COL_ORDER + ",  " +
+		    						   COL_TYPE + " " +
 				                       "FROM " + JOBS_TABLE_NAME + " " +
 					 			       "WHERE " + COL_JOB_ID + "=?";
 
@@ -372,6 +377,7 @@ public class DefaultJobDAO extends JobDAO
 					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.loadBasicProcessingDirective(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
+					job.setJobType(results.getString(7));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the job with ID " + jobId + " in the database.");
@@ -431,7 +437,8 @@ public class DefaultJobDAO extends JobDAO
 									   COL_SERVICE_ID + ", " +
 									   COL_PROCESSING_DIRECTIVE_ID + ", " +
 									   COL_OUTPUT_SET_ID + ", " +
-									   COL_ORDER + " " +
+									   COL_ORDER + ",  " +
+		    						   COL_TYPE + " " +
 				                       "FROM " + JOBS_TABLE_NAME + " " +
 					 			       "WHERE " + COL_HARVEST_SCHEDULE_ID + "=?";
 
@@ -464,6 +471,7 @@ public class DefaultJobDAO extends JobDAO
 					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.loadBasicProcessingDirective(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
+					job.setJobType(results.getString(7));
 
 					// Add the job to the list
 					jobs.add(job);
@@ -520,7 +528,8 @@ public class DefaultJobDAO extends JobDAO
 									   COL_SERVICE_ID + ", " +
 									   COL_PROCESSING_DIRECTIVE_ID + ", " +
 									   COL_OUTPUT_SET_ID + ", " +
-									   COL_ORDER + " " +
+									   COL_ORDER + ",  " +
+		    						   COL_TYPE + " " +
 				                       "FROM " + JOBS_TABLE_NAME + " " +
 					 			       "WHERE " + COL_SERVICE_ID + "=?";
 
@@ -553,6 +562,7 @@ public class DefaultJobDAO extends JobDAO
 					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.loadBasicProcessingDirective(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
+					job.setJobType(results.getString(7));
 					
 					// Add the job to the list
 					jobs.add(job);
@@ -675,7 +685,8 @@ public class DefaultJobDAO extends JobDAO
 									   COL_SERVICE_ID + ", " +
 									   COL_PROCESSING_DIRECTIVE_ID + ", " +
 									   COL_OUTPUT_SET_ID + ", " +
-									   COL_ORDER + " " +
+									   COL_ORDER + ", " +
+									   COL_TYPE + " " +
 				                       "FROM " + JOBS_TABLE_NAME + " " +
 					 			       "WHERE " + COL_ORDER + "=(SELECT MIN(" + COL_ORDER + ") " +
 				                       "FROM " + JOBS_TABLE_NAME + ")";
@@ -703,6 +714,7 @@ public class DefaultJobDAO extends JobDAO
 					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.getById(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
+					job.setJobType(results.getString(7));
 					
 				} // end loop over results
 
@@ -756,8 +768,9 @@ public class DefaultJobDAO extends JobDAO
 	            	    													COL_SERVICE_ID + ", " +
 	            	    													COL_PROCESSING_DIRECTIVE_ID + ", " +
 	            	    													COL_OUTPUT_SET_ID + ", " +
-	            	    													COL_ORDER + ") " +
-	            		    		   "VALUES (?, ?, ?, ?, ?)";
+	            	    													COL_ORDER + ", " +
+	            	    													COL_TYPE + ") " +
+	            		    		   "VALUES (?, ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"insert job\" PreparedStatement from the SQL " + insertSql);
@@ -773,6 +786,7 @@ public class DefaultJobDAO extends JobDAO
 				psInsert.setInt(3, (job.getProcessingDirective() == null ? 0 : job.getProcessingDirective().getId()));
 				psInsert.setInt(4, job.getOutputSetId());
 				psInsert.setInt(5, job.getOrder());
+				psInsert.setString(6, job.getJobType());
 
 				// Execute the insert statement and return the result
 				if(dbConnectionManager.executeUpdate(psInsert) > 0)
@@ -830,7 +844,8 @@ public class DefaultJobDAO extends JobDAO
 				                                                          COL_SERVICE_ID + "=?, " +
 				                                                          COL_PROCESSING_DIRECTIVE_ID + "=?, " +
 				                                                          COL_OUTPUT_SET_ID + "=?, " +
-				                                                          COL_ORDER + "=? " +
+				                                                          COL_ORDER + "=?,  " +
+				                                                          COL_TYPE + "=? " +
 	                                   "WHERE " + COL_JOB_ID + "=?";
 
 					if(log.isDebugEnabled())
@@ -847,7 +862,8 @@ public class DefaultJobDAO extends JobDAO
 				psUpdate.setInt(3, (job.getProcessingDirective() == null ? 0 : job.getProcessingDirective().getId()));
 				psUpdate.setInt(4, job.getOutputSetId());
 				psUpdate.setInt(5, job.getOrder());
-				psUpdate.setInt(6, job.getId());
+				psUpdate.setString(6, job.getJobType());
+				psUpdate.setInt(7, job.getId());
 
 				// Execute the insert statement and return the result
 				return (dbConnectionManager.executeUpdate(psUpdate) > 0);

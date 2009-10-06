@@ -314,7 +314,7 @@ public class NormalizationService extends MetadataService
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_HOLDINGS_LOCATION_NAME, "0").equals("1"))
 					normalizedXml = holdingsLocationName(normalizedXml);
 
-				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_VOYAGER_LOCATION_LIMIT_NAME, "0").equals("1"))
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_LOCATION_LIMIT_NAME, "0").equals("1"))
 					normalizedXml = locationLimitName(normalizedXml);
 			}
 			

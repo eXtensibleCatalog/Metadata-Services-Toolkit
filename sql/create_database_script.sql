@@ -720,7 +720,7 @@ CREATE TABLE jobs
   processing_directive_id INT(11) NULL,
   output_set_id INT(11),
   job_order INT(11),
-  
+  job_type VARCHAR(255) NULL,
   PRIMARY KEY(job_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

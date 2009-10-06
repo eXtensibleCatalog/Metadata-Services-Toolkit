@@ -69,8 +69,6 @@ import xc.mst.manager.processingDirective.DefaultJobService;
 import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.scheduling.Scheduler;
-import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -1220,7 +1218,7 @@ public class Harvester implements ErrorHandler
 				servicesToRun.put(serviceId, outputSetId);
 				// Add jobs to database
 				try {
-					Job job = new Job(matchedProcessingDirective.getService(), outputSetId);
+					Job job = new Job(matchedProcessingDirective.getService(), outputSetId, Constants.THREAD_SERVICE);
 					job.setOrder(jobService.getMaxOrder() + 1); 
 					jobService.insertJob(job);
 				} catch (DatabaseConfigException dce) {

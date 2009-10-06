@@ -222,7 +222,7 @@ HoldingsLocationName = 0
 
 # 1 to replace location codes by 
 # location limit name. By default 0
-VoyagerLocationLimitName = 0
+LocationLimitName = 0
 
 #-----------------------------------------
 FIELD 007 OFFSET 00 TO DCMI TYPE

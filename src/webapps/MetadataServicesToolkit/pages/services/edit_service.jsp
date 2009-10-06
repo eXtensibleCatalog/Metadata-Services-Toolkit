@@ -73,7 +73,7 @@
 
                  <div class="clear">&nbsp;</div>
 
-                <table style="margin-left:10px">
+                <table style="margin-left:10px" width="100%">
                     <br>
                     <tr>
                        <td colspan="2" >                          
@@ -83,8 +83,7 @@
                     </tr>
                     <br>
                     <tr>
-                      <td valign="top">Step 2: Select the Configuration File  : </td>
-                      <td>
+                      <td valign="top">Step 2: Select the Configuration File  : 
                           
                           <select id="fileLocation" name ="fileLocation">
                               <c:forEach var="serviceFile" items="${serviceFiles}" varStatus="a">
@@ -104,6 +103,16 @@
                           <br><br>
                       </td>
                     </tr>
+		    <tr>
+		    <td colspan="2">
+		       <font color="red">Note: On Clicking 'Save' button, the records processed by this service will be deleted and reprocessed again according to the new Configuration file changes.
+		       If you donot wish to reprocess the records, then click 'Cancel'.</font>
+		       <br>
+		       <br>
+		    </td>
+                    </tr>
+                    
+                    
                     <tr>
                         <td>
                             <button class="xc_button_small" onclick="javascript:YAHOO.xc.mst.services.alterService.cancel();" type="button" name="cancel">Cancel</button>&nbsp;&nbsp;

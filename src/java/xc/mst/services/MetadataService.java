@@ -11,8 +11,6 @@ package xc.mst.services;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.URL;
@@ -688,6 +686,12 @@ public abstract class MetadataService
 					{
 						List<Record> successors = getByProcessedFrom(processMe);
 
+						// If there are successors then the record exist and needs to be deleted. Since we are
+						// deleting the record, we need to decrement the count.
+						if (successors != null) {
+							processedRecordCount--;
+						}
+						
 						// Handle reprocessing of sucessors
 						for(Record successor : successors)
 						{
@@ -698,11 +702,12 @@ public abstract class MetadataService
 							reprocessRecord(successor);
 							// TODO return and start with next record process?
 						}
-					}
+					} 
 
 					// Get the results of processing the record
 					List<Record> results = processRecord(processMe);
 					
+					boolean updatedInputRecord = false;
 					for(Record outgoingRecord : results)
 					{
 						// Mark the output record as a successor of the input record
@@ -734,6 +739,11 @@ public abstract class MetadataService
 						// be deleted.
 						else {
 							updateExistingRecord(outgoingRecord, oldRecord);
+							
+							// If output record exist then it means that the incoming record is an updated record
+							// So we set updatedInputRecord to true. This will be used to determine whether the input
+							// record is new record or updated record.
+							updatedInputRecord = true;
 						}
 					} // end loop over processed records
 
@@ -742,7 +752,11 @@ public abstract class MetadataService
 					processMe.removeInputForService(service);
 					recordService.update(processMe);
 					
-					processedRecordCount++;
+					// If the input record is a new record then increment the processed record count
+					if (!updatedInputRecord  && !processMe.getDeleted()) {
+						processedRecordCount++;
+					}
+					
 					if(processedRecordCount % 100000 == 0)
 					{
 						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
@@ -864,8 +878,7 @@ public abstract class MetadataService
 		// Increase the warning and error counts as appropriate, then update the provider
 		service.setServicesWarnings(service.getServicesWarnings() + warningCount);
 		service.setServicesErrors(service.getServicesErrors() + errorCount);
-		// TODO change i/p record count
-//		service.setInputRecordCount(service.getInputRecordCount() + processedRecordCount);
+		service.setInputRecordCount(service.getInputRecordCount() + processedRecordCount);
 		try {
 			long harvestOutRecordsAvailable = recordService.getCount(null, null, null, -1, service.getId());
 			service.setHarvestOutRecordsAvailable(harvestOutRecordsAvailable);
@@ -1247,13 +1260,21 @@ public abstract class MetadataService
 	 */
 	public void setStatus(String status)
 	{
+
+		// Load the provider again in case it was updated during the harvest
+		Service service = null;
 		try
 		{
+			service = serviceDao.getById(this.service.getId());
 			LogWriter.addInfo(service.getServicesLogFileName(), "Setting the status of the service " +service.getName() +" as:" +status);
 			service.setStatus(status);
 			serviceDao.update(service);
 		}
-		catch(DataException e)
+		catch (DatabaseConfigException e1)
+		{
+			log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+
+		} catch(DataException e)
 		{
 			log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e);
 		}
@@ -1356,7 +1377,7 @@ public abstract class MetadataService
 
 				// Add jobs to database
 				try {
-					Job job = new Job(matchedProcessingDirective.getService(), outputSetId);
+					Job job = new Job(matchedProcessingDirective.getService(), outputSetId, Constants.THREAD_SERVICE);
 					job.setOrder(jobService.getMaxOrder() + 1); 
 					jobService.insertJob(job);
 				} catch (DatabaseConfigException dce) {

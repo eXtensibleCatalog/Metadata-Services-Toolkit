@@ -24,8 +24,6 @@ import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.scheduling.ProcessingDirectiveWorkerThread;
-import xc.mst.scheduling.Scheduler;
 
 /**
  * Service Class that is used for the creation/deletion/updating of Processing Directives.
@@ -170,7 +168,7 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
     	
     	// Add job to database queue
 		try {
-			Job job = new Job(pd);
+			Job job = new Job(pd, Constants.THREAD_PROCESSING_DIRECTIVE);
 			job.setOrder(jobService.getMaxOrder() + 1); 
 			jobService.insertJob(job);
 		} catch (DatabaseConfigException dce) {

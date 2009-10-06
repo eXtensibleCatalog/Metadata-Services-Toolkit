@@ -94,7 +94,7 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 					if(processingDirective.getOutputSet() != null) {
 						outputSetId = processingDirective.getOutputSet().getId();
 					}
-					Job job = new Job(processingDirective.getService(), outputSetId);
+					Job job = new Job(processingDirective.getService(), outputSetId, Constants.THREAD_SERVICE);
 					job.setOrder(jobService.getMaxOrder() + 1); 
 					jobService.insertJob(job);
 				} catch (DatabaseConfigException dce) {

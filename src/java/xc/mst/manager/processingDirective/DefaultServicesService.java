@@ -828,51 +828,17 @@ public class DefaultServicesService implements ServicesService
     		service.setServiceConfig(buffer.toString());
     		servicesDao.update(service);
 
+    		// TODO what does below line do? Is it necessary? Should it be here or moved to Service Reprocess thread?
     		MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
 
-    		// Reprocess the records processed by the service
-    		RecordList records = recordService.getProcessedByServiceId(service.getId());
-    		for(Record record : records)
-    		{
-    			record.addInputForService(service);
-    			recordService.update(record);
-    		}
-
-    		List<Service> servicesToRun = new ArrayList<Service>();
-
-    		// Mark the records output by the old service as deleted
-    		records = recordService.getByServiceId(service.getId());
-    		for(Record record : records)
-    		{
-    			record.setDeleted(true);
-    			record.setUpdatedAt(new Date());
-
-    			for(Service processingService : record.getProcessedByServices())
-    			{
-    				record.addInputForService(processingService);
-    				if(!servicesToRun.contains(processingService))
-    					servicesToRun.add(processingService);
-
-    			}
-
-    			recordService.update(record);
-    		}
-
-    		if(!servicesToRun.contains(service))
-    			servicesToRun.add(service);
-
-    		SolrIndexManager.getInstance().commitIndex();
-
-    		for(Service runMe : servicesToRun)
-    		{
-    			try {
-					Job job = new Job(runMe, 0);
-					job.setOrder(jobService.getMaxOrder() + 1); 
-					jobService.insertJob(job);
-				} catch (DatabaseConfigException dce) {
-					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
-				}
-    		}
+    		// Schedule a job to reprocess records through new service
+    		try {
+				Job job = new Job(service, 0, Constants.THREAD_SERVICE_REPROCESS);
+				job.setOrder(jobService.getMaxOrder() + 1); 
+				jobService.insertJob(job);
+			} catch (DatabaseConfigException dce) {
+				log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+			}
     	}
     	finally
     	{
@@ -931,7 +897,7 @@ public class DefaultServicesService implements ServicesService
 		for(Service nextSerivce : affectedServices)
 		{
 			try {
-				Job job = new Job(nextSerivce, 0);
+				Job job = new Job(nextSerivce, 0, Constants.THREAD_SERVICE);
 				job.setOrder(jobService.getMaxOrder() + 1); 
 				jobService.insertJob(job);
 			} catch (DatabaseConfigException dce) {

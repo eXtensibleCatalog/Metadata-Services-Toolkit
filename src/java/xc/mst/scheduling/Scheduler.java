@@ -146,7 +146,7 @@ public class Scheduler extends Thread
 	
 					// Add job to database queue
 					try {
-						Job job = new Job(scheduleToRun);
+						Job job = new Job(scheduleToRun, Constants.THREAD_REPOSITORY);
 						job.setOrder(jobService.getMaxOrder() + 1); 
 						jobService.insertJob(job);
 					} catch (DatabaseConfigException dce) {
@@ -166,22 +166,27 @@ public class Scheduler extends Thread
 					if(jobToStart != null)
 					{
 						// Start a new Thread to run the Harvester component for the schedule
-						if (jobToStart.getHarvestSchedule() != null) {
+						if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
 							HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
 							harvestThread.setHarvestScheduleId(jobToStart.getHarvestSchedule().getId());
 							harvestThread.start();
 							runningJob = harvestThread;
-						} else if (jobToStart.getService() != null) {
+						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
 							ServiceWorkerThread serviceThread = new ServiceWorkerThread();
 							serviceThread.setServiceId(jobToStart.getService().getId());
 							serviceThread.setOutputSetId(jobToStart.getOutputSetId());
 							serviceThread.start();
 							runningJob = serviceThread;
-						} else if (jobToStart.getProcessingDirective() != null) {
+						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE)) {
 							ProcessingDirectiveWorkerThread processingDirectiveThread = new ProcessingDirectiveWorkerThread();
 							processingDirectiveThread.setProcessingDirective(jobToStart.getProcessingDirective());
 							processingDirectiveThread.start();
 							runningJob = processingDirectiveThread;
+						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
+							ServiceReprocessWorkerThread serviceReprocessWorkerThread = new ServiceReprocessWorkerThread();
+							serviceReprocessWorkerThread.setServiceId(jobToStart.getService().getId());
+							serviceReprocessWorkerThread.start();
+							runningJob = serviceReprocessWorkerThread;
 						}
 
 						// Delete the job from database once its scheduled to run
@@ -203,22 +208,27 @@ public class Scheduler extends Thread
 						if(jobToStart != null)
 						{
 							// Start a new Thread to run the Harvester component for the schedule
-							if (jobToStart.getHarvestSchedule() != null) {
+							if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
 								HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
 								harvestThread.setHarvestScheduleId(jobToStart.getHarvestSchedule().getId());
 								harvestThread.start();
 								runningJob = harvestThread;
-							} else if (jobToStart.getService() != null) {
+							} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
 								ServiceWorkerThread serviceThread = new ServiceWorkerThread();
 								serviceThread.setServiceId(jobToStart.getService().getId());
 								serviceThread.setOutputSetId(jobToStart.getOutputSetId());
 								serviceThread.start();
 								runningJob = serviceThread;
-							} else if (jobToStart.getProcessingDirective() != null) {
+							} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE)) {
 								ProcessingDirectiveWorkerThread processingDirectiveThread = new ProcessingDirectiveWorkerThread();
 								processingDirectiveThread.setProcessingDirective(jobToStart.getProcessingDirective());
 								processingDirectiveThread.start();
 								runningJob = processingDirectiveThread;
+							} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
+								ServiceReprocessWorkerThread serviceReprocessWorkerThread = new ServiceReprocessWorkerThread();
+								serviceReprocessWorkerThread.setServiceId(jobToStart.getService().getId());
+								serviceReprocessWorkerThread.start();
+								runningJob = serviceReprocessWorkerThread;
 							}
 
 							// Delete the job from database once its scheduled to run

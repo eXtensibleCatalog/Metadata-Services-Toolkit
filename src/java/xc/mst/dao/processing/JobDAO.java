@@ -70,6 +70,11 @@ public abstract class JobDAO
 	 * The name of the order column
 	 */
 	public final static String COL_ORDER = "job_order";
+	
+	/**
+	 * The name of the type column
+	 */
+	public final static String COL_TYPE = "job_type";
 
 
 	/**

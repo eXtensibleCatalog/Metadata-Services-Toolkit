@@ -36,24 +36,30 @@ public class Job {
 	/** Order in which job has to be executed */
 	public int order;
 	
+	/** Type of job */
+	public String jobType;
+	
 	/** Default constructor */
 	public Job() {
 	}
 	
 	/** Constructor */
-	public Job(Service service, int outputSetId) {
+	public Job(Service service, int outputSetId, String jobType) {
 		this.service = service;
 		this.outputSetId = outputSetId;
+		this.jobType = jobType;
 	}
 	
 	/** Constructor */
-	public Job(HarvestSchedule harvestSchedule) {
+	public Job(HarvestSchedule harvestSchedule, String jobType) {
 		this.harvestSchedule = harvestSchedule;
+		this.jobType = jobType;
 	}
 	
 	/** Constructor */
-	public Job(ProcessingDirective processingDirective) {
+	public Job(ProcessingDirective processingDirective, String jobType) {
 		this.processingDirective = processingDirective;
+		this.jobType = jobType;
 	}
 
 	public int getId() {
@@ -115,5 +121,13 @@ public class Job {
 		
 		return sb.toString();
 		
+	}
+
+	public String getJobType() {
+		return jobType;
+	}
+
+	public void setJobType(String jobType) {
+		this.jobType = jobType;
 	}
 }

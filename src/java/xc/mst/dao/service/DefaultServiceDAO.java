@@ -1135,7 +1135,6 @@ public class DefaultServiceDAO extends ServiceDAO
 				psUpdate.setString(20, service.getVersion());
 				psUpdate.setInt(21, service.getId());
 				
-
 				// Execute the update statement and return the result
 				if(dbConnectionManager.executeUpdate(psUpdate) > 0)
 				{

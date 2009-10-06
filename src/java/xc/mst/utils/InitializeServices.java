@@ -124,19 +124,22 @@ public class InitializeServices  extends HttpServlet {
 			}
 	    }
 
-	    // Run service which has error status and has records waiting to be processed
+	    /* Run service which has error status and has records waiting to be processed
+	     * Also run service with status 'running'. If service has status running it means there was a power shutdown when service 
+	     * was running and so it needs to be stated again.
+	     */ 
 	    try {
 		    List<Service> allServices = serviceDao.getAll();
     		RecordService recordService = new DefaultRecordService();
 			JobService jobService = new DefaultJobService();
 		    
 		    for(Service service:allServices) {
-		    	if (service.getStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_ERROR)) {
+		    	if (service.getStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_ERROR) || service.getStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_RUNNING)) {
 		    		int count = recordService.getCountOfRecordsToBeProcessedVyService(service.getId());
 		    		if (count > 0) {
 		    			// Add job to queue in database
 						try {
-							Job job = new Job(service, 0);
+							Job job = new Job(service, 0, Constants.THREAD_SERVICE);
 							job.setOrder(jobService.getMaxOrder() + 1); 
 							jobService.insertJob(job);
 						} catch (DatabaseConfigException dce) {
