@@ -693,6 +693,7 @@ public abstract class MetadataService
 						{
 							// Set the successors ad deleted
 							successor.setDeleted(true);
+							recordService.update(successor);
 							// Schedule the services
 							reprocessRecord(successor);
 							// TODO return and start with next record process?
@@ -705,7 +706,8 @@ public abstract class MetadataService
 					for(Record outgoingRecord : results)
 					{
 						// Mark the output record as a successor of the input record
-						processMe.addSuccessor(outgoingRecord);
+						if(!processMe.getSuccessors().contains(outgoingRecord))
+							processMe.addSuccessor(outgoingRecord);
 
 						// Mark the input record as a predecessor of the output record
 						outgoingRecord.addProcessedFrom(processMe);
