@@ -697,10 +697,11 @@ public abstract class MetadataService
 						{
 							// Set the successors ad deleted
 							successor.setDeleted(true);
-							recordService.update(successor);
+						
 							// Schedule the services
 							reprocessRecord(successor);
 							// TODO return and start with next record process?
+							recordService.update(successor);
 						}
 					} 
 
