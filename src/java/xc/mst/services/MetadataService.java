@@ -1411,16 +1411,17 @@ public abstract class MetadataService
 
 			Integer serviceId = processingService.getId();
 
-			if(!servicesToRun.containsKey(serviceId))
+			if(!servicesToRun.containsKey(serviceId)) {
 				servicesToRun.put(serviceId, 0);
-			
-			// Add jobs to database
-			try {
-				Job job = new Job(processingService, 0, Constants.THREAD_SERVICE);
-				job.setOrder(jobService.getMaxOrder() + 1); 
-				jobService.insertJob(job);
-			} catch (DatabaseConfigException dce) {
-				log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+				
+				// Add jobs to database
+				try {
+					Job job = new Job(processingService, 0, Constants.THREAD_SERVICE);
+					job.setOrder(jobService.getMaxOrder() + 1); 
+					jobService.insertJob(job);
+				} catch (DatabaseConfigException dce) {
+					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+				}
 			}
 
 		}
