@@ -430,16 +430,15 @@ public class NormalizationService extends MetadataService
 		}
 		catch(Exception e)
 		{
+		//	errorRecordList.add("Record Id=" + record.getId() + " OAI Identifier=" + record.getOaiIdentifier() + ":" +e.getMessage());
 			log.error("An error occurred while normalizing the record with ID " + record.getId(), e);
-
 			logError("An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
-			
-			// TODO add record to error list
+
 			if(log.isDebugEnabled())
 				log.debug("Adding errors to the record.");
 			
 			addErrorsToRecord(record, errors);
-
+			
 			return results;
 		}
 	}

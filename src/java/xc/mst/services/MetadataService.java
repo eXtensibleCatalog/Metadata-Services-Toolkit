@@ -174,7 +174,12 @@ public abstract class MetadataService
 	 * The number of records the service needs to process
 	 */
 	private int totalRecordCount = 0;
-	
+
+	/**
+	 * The number of input records 
+	 */
+	protected int inputRecordCount = 0;
+
 	/**
 	 * Used to send email reports
 	 */
@@ -270,7 +275,7 @@ public abstract class MetadataService
 			// Run the service's processRecords method
 			boolean success = runningService.processRecords(outputSetId);
 
-			LogWriter.addInfo(service.getServicesLogFileName(), "The " + service.getName() + " Service finished running.  " + runningService.processedRecordCount + " records were processed.");
+			LogWriter.addInfo(service.getServicesLogFileName(), "The " + service.getName() + " Service finished running.  " + (runningService.processedRecordCount - runningService.errorCount) + " records were processed successfully. " + runningService.errorCount + " were not processed due to error.");
 
 			// Update database with status of service
 			if(!runningService.isCanceled && success)
@@ -689,10 +694,10 @@ public abstract class MetadataService
 						// If there are successors then the record exist and needs to be deleted. Since we are
 						// deleting the record, we need to decrement the count.
 						if (successors != null) {
-							processedRecordCount--;
+							inputRecordCount--;
 						}
 						
-						// Handle reprocessing of sucessors
+						// Handle reprocessing of successors
 						for(Record successor : successors)
 						{
 							// Set the successors ad deleted
@@ -700,7 +705,6 @@ public abstract class MetadataService
 						
 							// Schedule the services
 							reprocessRecord(successor);
-							// TODO return and start with next record process?
 							recordService.update(successor);
 						}
 					} 
@@ -747,17 +751,22 @@ public abstract class MetadataService
 							updatedInputRecord = true;
 						}
 					} // end loop over processed records
-
-					// Mark the record as having been processed by this service
-					processMe.addProcessedByService(service);
-					processMe.removeInputForService(service);
-					recordService.update(processMe);
 					
-					// If the input record is a new record then increment the processed record count
-					if (!updatedInputRecord  && !processMe.getDeleted()) {
-						processedRecordCount++;
+					// Mark the input record as done(processed by this service) only when its results are not empty.
+					// If results are empty then it means some exception occurred and no output records created
+					if (results.size() > 0) { 
+						// Mark the record as having been processed by this service
+						processMe.addProcessedByService(service);
+						processMe.removeInputForService(service);
+						recordService.update(processMe);
 					}
 					
+					// If the input record is a new record then increment the processed record count
+					if (!updatedInputRecord  && !processMe.getDeleted() && results.size() > 0) {
+						inputRecordCount++;
+					}
+					
+					processedRecordCount++;
 					if(processedRecordCount % 100000 == 0)
 					{
 						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
@@ -879,7 +888,7 @@ public abstract class MetadataService
 		// Increase the warning and error counts as appropriate, then update the provider
 		service.setServicesWarnings(service.getServicesWarnings() + warningCount);
 		service.setServicesErrors(service.getServicesErrors() + errorCount);
-		service.setInputRecordCount(service.getInputRecordCount() + processedRecordCount);
+		service.setInputRecordCount(service.getInputRecordCount() + inputRecordCount);
 		try {
 			long harvestOutRecordsAvailable = recordService.getCount(null, null, null, -1, service.getId());
 			service.setHarvestOutRecordsAvailable(harvestOutRecordsAvailable);
@@ -1527,12 +1536,13 @@ public abstract class MetadataService
 				// First report any problems which prevented the harvest from finishing
 				if(problem != null)
 					body.append("The service failed for the following reason: ").append(problem).append("\n\n");
-		
+
 				// Report on the number of records inserted successfully and the number of failed inserts
-				if(processedRecordCount!=totalRecordCount)
-					body.append("Error: Not all records were processed. \n");
-				body.append(processedRecordCount +" records out of " + totalRecordCount +" processed. \n");
-				
+				body.append("Total number of records to process = " + totalRecordCount +" \n");
+				body.append("Number of records processed successfully = " + (processedRecordCount - errorCount) +" \n");
+				if(errorCount > 0) {
+					body.append("Number of records not processed due to error = " + errorCount + "\n");
+				}
 				
 				// Append errors if any
 				String errorLogFile = MSTConfiguration.getMSTInstancesFolderPath() + File.pathSeparator  

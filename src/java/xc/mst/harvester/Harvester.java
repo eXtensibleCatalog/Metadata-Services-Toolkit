@@ -1005,10 +1005,11 @@ public class Harvester implements ErrorHandler
 				// Otherwise we've seen the record before.  Update or delete it as appropriate
 				else
 				{
-					if(deleted)
+					if(deleted) {
 						deleteExistingRecord(oldRecord);
-					else
+					} else {
 						updateExistingRecord(record, oldRecord);
+					}
 				} // end else(the record already existed it the index)
 				
 				processedRecordCount++;

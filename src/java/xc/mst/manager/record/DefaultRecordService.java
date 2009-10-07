@@ -456,7 +456,7 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get the record with the requested OAI identifier and provider ID
 		SolrQuery query = new SolrQuery();
 		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:") + " AND "
-				+ FIELD_PROVIDER_ID + ":" + Integer.toString(providerId));
+				+ FIELD_PROVIDER_ID + ":" + Integer.toString(providerId) + " AND " + FIELD_DELETED + ":" + "false");
 
 		// Get the result of the query
 		RecordList records = new RecordList(query);

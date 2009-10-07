@@ -384,7 +384,6 @@ public class TransformationService extends MetadataService
 		}
 		catch(Exception e)
 		{
-			processedRecordCount-- ;
 			
 			errorRecordList.add(record.getId()+":" +e.getMessage());
 			log.error("An error occurred while Transforming the record with ID " + record.getId(), e);
