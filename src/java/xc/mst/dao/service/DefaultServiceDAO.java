@@ -102,7 +102,13 @@ public class DefaultServiceDAO extends ServiceDAO
 	 * A PreparedStatement to delete a service from the database
 	 */
 	private static PreparedStatement psDelete = null;
-
+	
+	/**
+	 * A PreparedStatement to get a basic service from the database
+	 */
+	private static PreparedStatement psLoadBasicService = null;
+	
+	
 	/**
 	 * Lock to synchronize access to the get all PreparedStatement
 	 */
@@ -138,6 +144,11 @@ public class DefaultServiceDAO extends ServiceDAO
 	 */
 	private static Object psDeleteLock = new Object();
 
+	/**
+	 * Lock to synchronize access to the loadBasicService PreparedStatement
+	 */
+	private static Object psLoadBasicServiceLock = new Object();
+	
 	public DefaultServiceDAO()
 	{
 		try 
@@ -550,7 +561,7 @@ public class DefaultServiceDAO extends ServiceDAO
 		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 		
-		synchronized(psGetByIdLock)
+		synchronized(psLoadBasicServiceLock)
 		{
 			if(log.isDebugEnabled())
 				log.debug("Getting the service with ID " + serviceId);
@@ -561,7 +572,7 @@ public class DefaultServiceDAO extends ServiceDAO
 			try
 			{
 				// Create the PreparedStatment to get a service by ID if it hasn't already been created
-				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
+				if(psLoadBasicService == null || dbConnectionManager.isClosed(psLoadBasicService))
 				{
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
@@ -583,7 +594,6 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_STATUS + ", " +
-												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_XCCFG_FILE_NAME + ", " +
 												   COL_VERSION + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
@@ -594,16 +604,16 @@ public class DefaultServiceDAO extends ServiceDAO
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnectionManager.prepareStatement(selectSql, psGetById);
+					psLoadBasicService = dbConnectionManager.prepareStatement(selectSql, psLoadBasicService);
 				} // end if(get by ID PreparedStatement not defined)
 
 				// Set the parameters on the update statement
-				psGetById.setInt(1, serviceId);
+				psLoadBasicService.setInt(1, serviceId);
 
 				// Get the result of the SELECT statement
 
 				// Execute the query
-				results = dbConnectionManager.executeQuery(psGetById);
+				results = dbConnectionManager.executeQuery(psLoadBasicService);
 
 				// If any results were returned
 				if(results.next())
