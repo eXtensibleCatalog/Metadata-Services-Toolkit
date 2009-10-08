@@ -506,7 +506,7 @@ public class DefaultServicesService implements ServicesService
     	String configFolderPath = configFile.getParentFile().getParent();
     	
     	try
-    	{
+    	{ 
     		MetadataService mService = null; // An instance of the service we're adding
 
     		String logFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
@@ -882,7 +882,17 @@ public class DefaultServicesService implements ServicesService
 
 		for(Record record : records)
 		{
+			// Remove from Predecessor
 			record.setDeleted(true);
+			
+			// Get all predecessors & remove the current record as successor
+			List<Record> prdecessors =  record.getProcessedFrom();
+			for (Record predecessor : prdecessors) {
+				predecessor =  recordService.getById(predecessor.getId());
+				predecessor.removeSucessor(record);
+				recordService.update(predecessor);
+			}
+			
 			record.setUpdatedAt(new Date());
 			for(Service nextService : record.getProcessedByServices())
 			{
