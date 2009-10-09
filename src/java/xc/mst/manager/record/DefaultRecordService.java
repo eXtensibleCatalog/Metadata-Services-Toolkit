@@ -617,6 +617,8 @@ public class DefaultRecordService extends RecordService
 			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(set.getSetSpec());
 		if(useMetadataPrefix)
 			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID).append(":").append(Integer.toString(formatId));
+
+		queryBuffer.append(" AND ").append(FIELD_DELETED).append(":").append("false");
 		
 		query.setQuery(queryBuffer.toString());
 
@@ -997,8 +999,9 @@ public class DefaultRecordService extends RecordService
 		for(Record successor : record.getSuccessors())
 			doc.addField(FIELD_SUCCESSOR, Long.toString(successor.getId()));
 		
-		for(Service inputForService : record.getInputForServices())
+		for(Service inputForService : record.getInputForServices()) {
 			doc.addField(FIELD_INPUT_FOR_SERVICE_ID, Long.toString(inputForService.getId()));
+		}
 
 		for(Service processedByService : record.getProcessedByServices())
 			doc.addField(FIELD_PROCESSED_BY_SERVICE_ID, Long.toString(processedByService.getId()));

@@ -10,13 +10,14 @@
 
 package xc.mst.action.log;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
@@ -26,6 +27,8 @@ import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.UserService;
 
+import com.opensymphony.xwork2.ActionSupport;
+
 /**
  * Resets all the 'Service log' files relating to a Service
  *
@@ -33,7 +36,10 @@ import xc.mst.manager.user.UserService;
  */
 public class ServiceReset extends ActionSupport
 {
-    /**Creates a service object for Services */
+    /** Serial id */
+	private static final long serialVersionUID = -2829550192988572522L;
+
+	/**Creates a service object for Services */
     private ServicesService servicesService = new DefaultServicesService();
 
     /** User Service object */
@@ -73,8 +79,6 @@ public class ServiceReset extends ActionSupport
             tempService.setServicesLastLogReset(new Date());
             tempService.setServicesWarnings(0);
             tempService.setServicesErrors(0);
-            tempService.setOutputRecordCount(0);
-            tempService.setInputRecordCount(0);
             servicesService.updateService(tempService);
             String filename = serviceLogFileName;
             PrintWriter printWriter = new PrintWriter(filename);
@@ -124,8 +128,6 @@ public class ServiceReset extends ActionSupport
                 tempService.setServicesLastLogReset(new Date());
                 tempService.setServicesWarnings(0);
                 tempService.setServicesErrors(0);
-                tempService.setOutputRecordCount(0);
-                tempService.setInputRecordCount(0);
                 servicesService.updateService(tempService);
                 String filename = tempService.getServicesLogFileName();
                 PrintWriter printWriter = new PrintWriter(filename);

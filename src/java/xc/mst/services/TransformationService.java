@@ -40,7 +40,6 @@ import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.MarcXmlRecord;
 import xc.mst.utils.XCRecord;
-import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
 /**
@@ -131,8 +130,8 @@ public class TransformationService extends MetadataService
 		if(record.getDeleted())
 			return new ArrayList<Record>();
 		
-		if(log.isInfoEnabled())
-			log.info("Transforming record with ID " + record.getId() + ".");
+		if(log.isDebugEnabled())
+			log.debug("Transforming record with ID " + record.getId() + ".");
 		
 		// A list of records resulting from processing the incoming record
 		ArrayList<Record> results = new ArrayList<Record>();
@@ -330,8 +329,8 @@ public class TransformationService extends MetadataService
 			// If there was already a processed record for the record we just processed, delete it
 			if(existingRecords.size() > 0)
 			{
-				if(log.isInfoEnabled())
-					log.info("Updating the record which was processed from an older version of the record we just processed.");
+				if(log.isDebugEnabled())
+					log.debug("Updating the record which was processed from an older version of the record we just processed.");
 
 				for (int i = 0; i < existingRecords.size(); i++) {
 					Record oldRecord = existingRecords.get(i);
@@ -374,8 +373,8 @@ public class TransformationService extends MetadataService
 				// Set the record as not being deleted
 				xcRecord.setDeleted(false);
 				
-				if(log.isInfoEnabled())
-					log.info("Created XC record with ID " + xcRecord.getId() + " from unprocessed record with ID " + record.getId());
+				if(log.isDebugEnabled())
+					log.debug("Created XC record with ID " + xcRecord.getId() + " from unprocessed record with ID " + record.getId());
 
 				results.add(xcRecord);
 			}
@@ -385,7 +384,6 @@ public class TransformationService extends MetadataService
 		catch(Exception e)
 		{
 			
-			errorRecordList.add(record.getId()+":" +e.getMessage());
 			log.error("An error occurred while Transforming the record with ID " + record.getId(), e);
 
 			logError("An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
@@ -2376,9 +2374,6 @@ public class TransformationService extends MetadataService
 					// The subfields to map to the title and creator respectively
 					String titleOfSubfields = "kmnoprst";
 									
-					// Setup the attribute list for the creator and title processed field
-					ArrayList<Attribute> titleAttributes = new ArrayList<Attribute>();
-
 					// StringBuilders to concat the values of all the subfields of the Element for the XCRecord's creator and title
 					StringBuilder titleBuilder = new StringBuilder();
 					
@@ -2641,9 +2636,6 @@ public class TransformationService extends MetadataService
 					// The subfields to map to the title and creator respectively
 					String titleSubfields = "kmnoprst";
 
-					// Setup the attribute list for the creator and title processed field
-					ArrayList<Attribute> titleAttributes = new ArrayList<Attribute>();
-
 					// StringBuilders to concat the values of all the subfields of the Element for the XCRecord's creator and title
 					StringBuilder titleBuilder = new StringBuilder();
 
@@ -2904,9 +2896,6 @@ public class TransformationService extends MetadataService
 					// The subfields to map to the title and creator respectively
 					String titleSubfields = "fkpst";
 
-					// Setup the attribute list for the creator and title processed field
-					ArrayList<Attribute> titleAttributes = new ArrayList<Attribute>();
-
 					// StringBuilders to concat the values of all the subfields of the Element for the XCRecord's creator and title
 					StringBuilder titleBuilder = new StringBuilder();
 
@@ -3070,9 +3059,6 @@ public class TransformationService extends MetadataService
 				String titleOfWorkSubfields = "adgkmnoprst";
 				String titleOfExpressionSubfields = "adgklmnoprst";
 				
-				// Setup the attribute list for the creator and title processed field
-				ArrayList<Attribute> titleAttributes = new ArrayList<Attribute>();
-
 				// StringBuilders to concat the values of all the subfields of the Element for the XCRecord's creator and title
 				StringBuilder titleOfWorkBuilder = new StringBuilder();
 				StringBuilder titleOfExpressionBuilder = new StringBuilder();
@@ -3559,7 +3545,6 @@ public class TransformationService extends MetadataService
 		String locationGroupTargetSubfields = "b";
 		String textualHoldingsTargetSubfields = "az";
 		String callNumberTargetSubfields = "hijklm";
-		String subjectTargetSubfields = "h";
 		String descriptionTargetSubfields = "z";
 		
 

@@ -9,9 +9,7 @@
 
 package xc.mst.services;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -20,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.activation.FileDataSource;
 
 import org.apache.log4j.Logger;
 
@@ -196,11 +192,6 @@ public abstract class MetadataService
 	GroupDAO groupDAO = new DefaultGroupDAO();
 	
 	/**
-	 * List of errors pertaining to input records that were unable to be processed
-	 */
-	List<String> errorRecordList = new ArrayList<String>();
-	
-	/**
 	 * Runs the service with the passed ID
 	 *
 	 * @param serviceId The ID of the MetadataService to run
@@ -275,7 +266,7 @@ public abstract class MetadataService
 			// Run the service's processRecords method
 			boolean success = runningService.processRecords(outputSetId);
 
-			LogWriter.addInfo(service.getServicesLogFileName(), "The " + service.getName() + " Service finished running.  " + (runningService.processedRecordCount - runningService.errorCount) + " records were processed successfully. " + runningService.errorCount + " were not processed due to error.");
+			LogWriter.addInfo(service.getServicesLogFileName(), "The " + service.getName() + " Service finished running.  " + runningService.processedRecordCount + " records processed." + (runningService.processedRecordCount - runningService.errorCount) + " records were processed successfully. " + runningService.errorCount + " were not processed due to error.");
 
 			// Update database with status of service
 			if(!runningService.isCanceled && success)
@@ -823,12 +814,12 @@ public abstract class MetadataService
 
 			// Reopen the reader so it can see the changes made by running the service
 			SolrIndexManager.getInstance().commitIndex();
-
-			// Get the results of any final processing the service needs to perform
-			finishProcessing();
-			
-			// Reopen the reader so it can see the changes made by running the service
-			SolrIndexManager.getInstance().commitIndex();
+//
+//			// Get the results of any final processing the service needs to perform
+//			finishProcessing();
+//			
+//			// Reopen the reader so it can see the changes made by running the service
+//			SolrIndexManager.getInstance().commitIndex();
 			
 			return true;
 		} // end try(process the records)
@@ -893,10 +884,19 @@ public abstract class MetadataService
 			long harvestOutRecordsAvailable = recordService.getCount(null, null, null, -1, service.getId());
 			service.setHarvestOutRecordsAvailable(harvestOutRecordsAvailable);
 			service.setOutputRecordCount((int) harvestOutRecordsAvailable);
+
+			/* In case of Normalization Service update, the deleted records are updated.
+			 * So input record count will be zero, so count of output records is assigned to input count
+			 * Since for normalization it is 1:1 i/p record to o/p.
+			 */
+			if (service.getInputRecordCount() == 0) {
+				service.setInputRecordCount((int) harvestOutRecordsAvailable);
+			}
+
 		} catch (IndexException ie) {
 			log.error("Index exception occured.", ie);
 		}
-
+		
 		try
 		{
 			serviceDao.update(service);
@@ -1539,30 +1539,17 @@ public abstract class MetadataService
 					body.append("The service failed for the following reason: ").append(problem).append("\n\n");
 
 				// Report on the number of records inserted successfully and the number of failed inserts
-				body.append("Total number of records to process = " + totalRecordCount +" \n");
-				body.append("Number of records processed successfully = " + (processedRecordCount - errorCount) +" \n");
-				if(errorCount > 0) {
-					body.append("Number of records not processed due to error = " + errorCount + "\n");
-				}
+				body.append("Total number of records to process = " + totalRecordCount);
+				body.append("\nNumber of records processed successfully = " + (processedRecordCount - errorCount));
 				
-				// Append errors if any
-				String errorLogFile = MSTConfiguration.getMSTInstancesFolderPath() + File.pathSeparator  
-											+ "logs" + File.pathSeparator + "ErrorLog.txt";
-				FileDataSource fds = new FileDataSource(errorLogFile);
-				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fds.getOutputStream()));
-				for (String recordErrorDesc : errorRecordList) {
-					writer.write(recordErrorDesc);
-					writer.newLine();
+				if(errorCount > 0) {
+					body.append("\nNumber of records not processed due to error = " + errorCount);
+					body.append("\nPlease login into MST and goto Menu -> Logs -> Services to see the list of failed records and the reason for failure.");
 				}
-				writer.flush();
-				writer.close();
 				
 				// Send email to every admin user
 				for (User user : userGroupUtilDAO.getUsersForGroup(groupDAO.getByName(Constants.ADMINSTRATOR_GROUP).getId())) {
-					if(errorRecordList.size() > 0)	
-						mailer.sendEmail(user.getEmail(), subject, body.toString(),errorLogFile);
-					else
-						mailer.sendEmail(user.getEmail(), subject, body.toString());
+					mailer.sendEmail(user.getEmail(), subject, body.toString());
 				}
 				
 				return true;

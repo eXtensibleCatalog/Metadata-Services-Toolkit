@@ -498,15 +498,17 @@ public class DefaultServicesService implements ServicesService
     	// Reload the service and confirm that it's not currently running.
     	// Throw an error if it is
     	service = servicesDao.getById(service.getId());
-    	if(service.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) || service.getStatus().equals(Constants.STATUS_SERVICE_PAUSED))
+    	if(service.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) || service.getStatus().equals(Constants.STATUS_SERVICE_PAUSED)) {
     		throw new DataException("Cannot update a service while it is running.");
+    		// TODO propagate to UI
+    	}
 
     	BufferedReader in = null; // Reads the file
     	
     	String configFolderPath = configFile.getParentFile().getParent();
     	
     	try
-    	{ 
+    	{
     		MetadataService mService = null; // An instance of the service we're adding
 
     		String logFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
@@ -616,10 +618,6 @@ public class DefaultServicesService implements ServicesService
     		service.setServicesLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setPort(port);
     		service.setXccfgFileName(configFile.getAbsolutePath());
-    		service.setHarvestOutWarnings(0);
-    		service.setHarvestOutErrors(0);
-    		service.setServicesWarnings(0);
-    		service.setServicesErrors(0);
     		service.getInputFormats().clear();
     		service.getOutputFormats().clear();
 
@@ -879,18 +877,27 @@ public class DefaultServicesService implements ServicesService
 
 		// A list of services which must be run after this one
 		List<Service> affectedServices = new ArrayList<Service>();
-
+		List<Record> updatedPredecessors = new ArrayList<Record>();
+		
 		for(Record record : records)
 		{
-			// Remove from Predecessor
+			// set as deleted
 			record.setDeleted(true);
 			
 			// Get all predecessors & remove the current record as successor
-			List<Record> prdecessors =  record.getProcessedFrom();
-			for (Record predecessor : prdecessors) {
-				predecessor =  recordService.getById(predecessor.getId());
+			List<Record> predecessors =  record.getProcessedFrom();
+			for (Record predecessor : predecessors) {
+				int index = updatedPredecessors.indexOf(predecessor);
+				if (index < 0) {
+					predecessor =  recordService.getById(predecessor.getId());
+				} else {
+					predecessor = updatedPredecessors.get(index);
+				}
 				predecessor.removeSucessor(record);
-				recordService.update(predecessor);
+
+				// Remove the reference for the service which is being deleted from its predecessor
+				predecessor.removeProcessedByService(service);
+				updatedPredecessors.add(predecessor);
 			}
 			
 			record.setUpdatedAt(new Date());
@@ -901,6 +908,12 @@ public class DefaultServicesService implements ServicesService
 			}
 			recordService.update(record);
 		}
+		
+		// Update all predecessor records
+		for (Record updatedPredecessor:updatedPredecessors) {
+			recordService.update(updatedPredecessor);				
+		}
+		
 		SolrIndexManager.getInstance().commitIndex();
 
 		// Schedule subsequent services to process that the record was deleted

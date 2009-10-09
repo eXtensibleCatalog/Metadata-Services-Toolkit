@@ -103,7 +103,6 @@ public class ServiceReprocessWorkerThread extends WorkerThread
     				record.addInputForService(processingService);
     				if(!servicesToRun.contains(processingService))
     					servicesToRun.add(processingService);
-
     			}
 
     			recordService.update(record);
@@ -121,6 +120,17 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
 				}
     		}
+    		
+    		// Reset the input, output counts
+    		service.setHarvestOutWarnings(0);
+    		service.setHarvestOutErrors(0);
+    		service.setHarvestOutRecordsAvailable(0);
+    		service.setServicesWarnings(0);
+    		service.setServicesErrors(0);
+    		service.setInputRecordCount(0);
+    		service.setOutputRecordCount(0);
+    		
+    		serviceManager.updateService(service);
 
 		} catch (DataException de) {
 			log.error("Exception occured while updating records.", de);
