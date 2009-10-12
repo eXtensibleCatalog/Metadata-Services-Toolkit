@@ -666,6 +666,10 @@ public abstract class MetadataService
 			totalRecordCount = records.size();
 			log.info("Number of records to be processed by service = " + totalRecordCount);
 			
+			long startTime = new Date().getTime();
+			long endTime = 0;
+			long timeDiff = 0;
+			
 			// Iterate over the list of input records and process each.
 			// Then run the processing directives on the results of each and add
 			// the appropriate record inputs for services to be run on the records
@@ -760,9 +764,14 @@ public abstract class MetadataService
 					processedRecordCount++;
 					if(processedRecordCount % 100000 == 0)
 					{
-						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
-						
 						SolrIndexManager.getInstance().commitIndex();
+						
+						endTime = new Date().getTime();
+						timeDiff = endTime - startTime;
+						
+						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far. Time taken = " + (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " + (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " + (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  ");
+						
+						startTime = new Date().getTime();
 						
 					}
 				}
@@ -814,12 +823,17 @@ public abstract class MetadataService
 
 			// Reopen the reader so it can see the changes made by running the service
 			SolrIndexManager.getInstance().commitIndex();
-//
-//			// Get the results of any final processing the service needs to perform
-//			finishProcessing();
-//			
-//			// Reopen the reader so it can see the changes made by running the service
-//			SolrIndexManager.getInstance().commitIndex();
+
+			// Get the results of any final processing the service needs to perform
+			finishProcessing();
+			
+			// Reopen the reader so it can see the changes made by running the service
+			SolrIndexManager.getInstance().commitIndex();
+			
+			endTime = new Date().getTime();
+			timeDiff = endTime - startTime;
+			LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far. Time taken = " + (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " + (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " + (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  ");
+			
 			
 			return true;
 		} // end try(process the records)
@@ -1209,7 +1223,7 @@ public abstract class MetadataService
 	 *
 	 * @param record The record to insert
 	 */
-	private void insertNewRecord(Record record)
+	private void insertNewRecord(Record record) throws DataException, IndexException
 	{
 		try
 		{
@@ -1224,9 +1238,11 @@ public abstract class MetadataService
 		catch (DataException e)
 		{
 			log.error("An exception occurred while inserting the record into the Lucene index.", e);
+			throw e;
 		} // end catch(DataException)
 		catch (IndexException ie) {
 			log.error("An exception occurred while inserting the record into the index.", ie);
+			throw ie;
 		}
 	} // end method insertNewRecord(Record)
 
@@ -1238,7 +1254,7 @@ public abstract class MetadataService
 	 * @param newRecord The record as it should look after the update (the record ID is not set)
 	 * @param oldRecord The record in the Lucene index which needs to be updated
 	 */
-	private void updateExistingRecord(Record newRecord, Record oldRecord)
+	private void updateExistingRecord(Record newRecord, Record oldRecord) throws DataException, IndexException
 	{
 		try
 		{
@@ -1258,9 +1274,11 @@ public abstract class MetadataService
 		catch (DataException e)
 		{
 			log.error("An exception occurred while updating the record into the index.", e);
+			throw e;
 		} // end catch(DataException)
 		catch (IndexException ie) {
 			log.error("An exception occurred while updating the record into the index.", ie);
+			throw ie;
 		}
 	} // end method updateExistingRecord(Record, Record)
 

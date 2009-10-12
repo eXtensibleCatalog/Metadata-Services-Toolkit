@@ -126,7 +126,6 @@ public class Records extends AbstractList<Record>
 			{
 				if (index < currentOffset + MAX_RESULTS) 
 				{
-					//log.info("Get result. index:"+index +"  currentOffset:"+currentOffset + "  To:"+(currentOffset+MAX_RESULTS));
 					if (currentOffset == 0) {
 						return service.getRecordFromDocument(docs.get(index));
 					} else {
@@ -139,7 +138,6 @@ public class Records extends AbstractList<Record>
 					startRow = 0;
 					query.setStart(startRow);
 					docs = indexMgr.getDocumentList(query);
-					//log.info("Query from 0. index:"+index +"  currentOffset:"+currentOffset + "  To:"+(currentOffset+MAX_RESULTS) + " startRow=" +startRow + " Get ="+ (index % currentOffset));
 					
 					if (currentOffset == 0) {
 						return service.getRecordFromDocument(docs.get(index));
@@ -152,7 +150,6 @@ public class Records extends AbstractList<Record>
 					startRow = startRow + MAX_RESULTS;
 					query.setStart(startRow);
 					docs = indexMgr.getDocumentList(query);
-					//log.info("Query next 10. index:"+index +"  currentOffset:"+currentOffset + "  To:"+(currentOffset+MAX_RESULTS) + " startRow=" +startRow + " Get ="+ (index % currentOffset));
 
 					if (currentOffset == 0) {
 						return service.getRecordFromDocument(docs.get(index));

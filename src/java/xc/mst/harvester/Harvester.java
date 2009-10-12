@@ -334,6 +334,10 @@ public class Harvester implements ErrorHandler
 	long totalPartTime = 0;
 	long startPartTime = 0;
 	long endPartTime = 0;
+	
+	long startTime = 0;
+	long endTime = 0;
+	long timeDiff = 0;
 
 	/**
 	 * Harvest the given provider, saving the resulting metadata to the Lucene index.
@@ -619,6 +623,9 @@ public class Harvester implements ErrorHandler
 
 				throw new Hexception(errorMsg);
 			} // end if(metadataPrefix not specified)
+			
+			
+			startTime = new Date().getTime();
 
 			// This loop places a ListRecords request, and then continues placing requests
 			// until it receives a null resumption token
@@ -757,6 +764,12 @@ public class Harvester implements ErrorHandler
 
 				// Reopen the reader so it can see the record inputs we inserted for this harvest
 				SolrIndexManager.getInstance().commitIndex();
+				
+				endTime = new Date().getTime();
+    			timeDiff = endTime - startTime;
+            	LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Found " + recordsFound + " records so far. Finished commiting to index. Time taken = " + (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " + (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " + (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  ");
+
+    			
 
 			} // end try(schedule the services that the records triggered)
 			catch(IndexException e)
@@ -1027,8 +1040,14 @@ public class Harvester implements ErrorHandler
 			recordElement = findSibling(recordElement, "record", "resumptionToken");
 
             recordsFound++;
-            if(recordsFound % 100000 == 0)
-            	LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Found " + recordsFound + " records so far.");
+            if(recordsFound % 100000 == 0) {
+            	
+            	endTime = new Date().getTime();
+    			timeDiff = endTime - startTime;
+    		
+            	LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Found " + recordsFound + " records so far. Time taken = " + (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " + (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " + (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  ");
+            	startTime = new Date().getTime();
+            }
 
             // If the record contained a resumption token, store that resumption token
 			if (recordElement != null && recordElement.getNodeName().equals("resumptionToken"))
@@ -1036,7 +1055,7 @@ public class Harvester implements ErrorHandler
 				resumption = getContent(recordElement);
 				totalRecordCount = Integer.parseInt(recordElement.getAttribute("completeListSize"));
 				
-				log.info("The resumption string is " + resumption);
+				log.debug("The resumption string is " + resumption);
 				
 				
 				if (resumption.length() == 0)
@@ -1254,15 +1273,30 @@ public class Harvester implements ErrorHandler
 				body.append("The harvest failed for the following reason: ").append(problem).append("\n\n");
 	
 			// Report on the number of records inserted successfully and the number of failed inserts
-			if(processedRecordCount!=totalRecordCount && totalRecordCount!=0)
+			if((processedRecordCount!=totalRecordCount) && totalRecordCount!=0)
 				body.append("Error: Not all records from the OAI were harvested. \n");
-			if(totalRecordCount!=0)
-				body.append(processedRecordCount +" records out of " + totalRecordCount +" processed. \n");
-			else 
-				body.append(processedRecordCount +" records" +" processed. \n");
 			
-			body.append(addedCount+updatedCount).append(" Records were successfully harvested.\n");
-			body.append(failedInserts).append(" Records were not able to harvested.\n\n");
+			if(totalRecordCount!=0) {
+				body.append("Total number of records available for harvest =").append(totalRecordCount).append(" \n");
+				body.append("Number of records harvested =").append(processedRecordCount).append(" \n");
+				
+				body.append("Number of records added successfully to MST  = ").append(addedCount+updatedCount).append(" \n");
+				if (failedInserts !=0) {
+					body.append("Number of records failed =").append(failedInserts).append("\n\n");
+				}
+			} else if (processedRecordCount > 0) {
+				body.append("Number of records harvested =").append(processedRecordCount).append(" \n");
+				
+				body.append("Number of records added successfully to MST  = ").append(addedCount+updatedCount).append(" \n");
+				if (failedInserts !=0) {
+					body.append("Number of records failed =").append(failedInserts).append("\n\n");
+				}
+				
+			} 
+			if (runningHarvester.recordsFound == 0) {
+				body.append("There are no records available for harvest. \n");
+			}
+			
 	
 			// Show the log information for warnings and errors
 			if(errors.length() > 0)
@@ -1795,6 +1829,15 @@ public class Harvester implements ErrorHandler
 	public int getTotalRecordCount() {
 		
 		return  totalRecordCount;
+	}
+	
+	/**
+	 * Reset the total record count
+	 * @return
+	 */
+	public static void resetTotalRecordCount() {
+		
+		totalRecordCount = 0;
 	}
 
 	/**

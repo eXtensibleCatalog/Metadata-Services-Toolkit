@@ -154,18 +154,18 @@ public class HarvestRunner
 			
 			harvestSchedule.setStatus(Constants.STATUS_SERVICE_RUNNING);
 			harvestScheduleDao.update(harvestSchedule, false);
-			Harvester.resetProcessedRecordCount();
+
 			
 			for(HarvestScheduleStep step : harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()))
 			{
-				log.info("Running step with id "+ step.getId());
+				Harvester.resetProcessedRecordCount();
+				Harvester.resetTotalRecordCount();
 				runHarvestStep(step);
 
 				if(requests.length() == 0)
 					requests.append(request);
 				else
 					requests.append("\n").append(request);
-				log.info("Finished step with id "+ step.getId());
 			}
 
 			harvestSchedule = harvestScheduleDao.getById(harvestSchedule.getId());
