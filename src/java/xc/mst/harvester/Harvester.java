@@ -684,10 +684,10 @@ public class Harvester implements ErrorHandler
 					request += "?verb=" + verb + "&resumptionToken=" + resumption;
 				} // end else(this is not the first request)
 
-				if (log.isDebugEnabled())
+				if (log.isDebugEnabled()) {
 					log.debug(reqMessage);
-
-				LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Sending the OAI request: " + request);
+					log.debug("Sending the OAI request: " + request);
+				}
 
 				// Perform the harvest
 			    Document doc = getDoc(request);
