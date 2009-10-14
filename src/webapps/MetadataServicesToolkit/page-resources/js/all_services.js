@@ -40,10 +40,22 @@ YAHOO.xc.mst.services.listServices = {
 		
 		// handle a Yes of deleting service dialog
 		var handleYes = function() {
-			document.deleteServiceRecords.submit();
 		    YAHOO.xc.mst.services.listServices.deleteServiceOkDialog.hide();
+		    YAHOO.xc.mst.services.listServices.deleteServiceInfoDialog.showDialog();
+		    
+		    
 		};
 
+		// handle a Ok of deleting service dialog
+		var handleOk = function() {
+		    YAHOO.xc.mst.services.listServices.cannotDeleteServiceDialog.hide();
+		};
+
+		var handleInfoOk = function() {
+		    YAHOO.xc.mst.services.listServices.deleteServiceInfoDialog.hide();
+		    document.deleteServiceRecords.submit();
+		};
+		
 		// handle a No of deleting service dialog
 		var handleNo = function() {
 		    YAHOO.xc.mst.services.listServices.deleteServiceOkDialog.hide();
@@ -59,11 +71,19 @@ YAHOO.xc.mst.services.listServices = {
 		    // received from the server
 		    if( response.serviceDeleted == "false" )
 		    {
-		    	YAHOO.xc.mst.services.listServices.deleteServiceDialog.hide();
-		        var deleteServiceError = document.getElementById('deleteServiceError');
-			             deleteServiceError.innerHTML = '<p id="newDeleteServiceError">' 
+		    	if ( response.invalidServiceDeleteStatus == "true" ) {
+			    	YAHOO.xc.mst.services.listServices.deleteServiceDialog.hide();
+			        var cannotDeleteServiceError = document.getElementById('cannotDeleteServiceError');
+		             cannotDeleteServiceError.innerHTML = '<p id="newDeleteServiceError">' 
+ 			            + response.message + '</p>';
+ 		            YAHOO.xc.mst.services.listServices.cannotDeleteServiceDialog.showDialog();
+ 		        } else {
+		    		YAHOO.xc.mst.services.listServices.deleteServiceDialog.hide();
+		        	var deleteServiceError = document.getElementById('deleteServiceError');
+			        deleteServiceError.innerHTML = '<p id="newDeleteServiceError">' 
  			            + response.message + '</p>';
  		            YAHOO.xc.mst.services.listServices.deleteServiceOkDialog.showDialog();
+				} 		            
  		            
 		    }
 		    else
@@ -127,6 +147,41 @@ YAHOO.xc.mst.services.listServices = {
 
 		// Render the Dialog
 		YAHOO.xc.mst.services.listServices.deleteServiceOkDialog.render();
+
+		YAHOO.xc.mst.services.listServices.cannotDeleteServiceDialog = new YAHOO.widget.Dialog('cannotDeleteServiceDialog', 
+		{ width : "600px",
+			  visible : false, 
+			  modal : true,
+			  buttons : [ { text:'Ok', handler:handleOk}]
+		} );	
+
+	       // Show the dialog with error message
+	       YAHOO.xc.mst.services.listServices.cannotDeleteServiceDialog.showDialog = function()
+	       {
+	        	YAHOO.xc.mst.services.listServices.cannotDeleteServiceDialog.show();
+	        	YAHOO.xc.mst.services.listServices.cannotDeleteServiceDialog.center();
+	       }
+
+		// Render the Dialog
+		YAHOO.xc.mst.services.listServices.cannotDeleteServiceDialog.render();
+		
+		
+		YAHOO.xc.mst.services.listServices.deleteServiceInfoDialog = new YAHOO.widget.Dialog('deleteServiceInfoDialog', 
+		{ width : "600px",
+			  visible : false, 
+			  modal : true,
+			  buttons : [ { text:'Ok', handler:handleInfoOk}]
+		} );	
+
+	       // Show the dialog with error message
+	       YAHOO.xc.mst.services.listServices.deleteServiceInfoDialog.showDialog = function()
+	       {
+	        	YAHOO.xc.mst.services.listServices.deleteServiceInfoDialog.show();
+	        	YAHOO.xc.mst.services.listServices.deleteServiceInfoDialog.center();
+	       }
+
+		// Render the Dialog
+		YAHOO.xc.mst.services.listServices.deleteServiceInfoDialog.render();
 
 	},
 

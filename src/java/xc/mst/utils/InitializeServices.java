@@ -138,13 +138,11 @@ public class InitializeServices  extends HttpServlet {
 		    		int count = recordService.getCountOfRecordsToBeProcessedVyService(service.getId());
 		    		if (count > 0) {
 		    			// Add job to queue in database
-						try {
-							Job job = new Job(service, 0, Constants.THREAD_SERVICE);
-							job.setOrder(jobService.getMaxOrder() + 1); 
-							jobService.insertJob(job);
-						} catch (DatabaseConfigException dce) {
-							log.error("DatabaseConfig exception occured when ading jobs to database", dce);
-						}
+						Job job = new Job(service, 0, Constants.THREAD_SERVICE);
+						// Setting order to 1 so that it will continue the errored/running service first rather than starting the next job in queue
+						// There cannot be 2 jobs with order 1 because already a service has status 'error' / 'running' which means the order 1 is already done.
+						job.setOrder(1); 
+						jobService.insertJob(job);
 						
 		    		}
 		    	}

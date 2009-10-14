@@ -144,6 +144,11 @@ public class Service
 	 */
 	private String version = null;
 	
+	/**
+	 * Indicates whether service is deleted
+	 */
+	private boolean deleted = false;
+	
 	
 
 	/**
@@ -703,6 +708,14 @@ public class Service
 		sb.append(" name = "+ serviceName +"]");
 		
 		return sb.toString();
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 } // end class Service

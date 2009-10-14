@@ -205,7 +205,8 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_STATUS + " " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_XCCFG_FILE_NAME + ", " +
-												   COL_VERSION + " " +
+												   COL_VERSION + ", " +
+												   COL_DELETED + " " +
 								       "FROM " + SERVICES_TABLE_NAME;
 
 					if(log.isDebugEnabled())
@@ -249,6 +250,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setStatus(results.getString(19));
 					service.setXccfgFileName(results.getString(20));
 					service.setVersion(results.getString(21));
+					service.setDeleted(results.getBoolean(22));
 
 					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 						service.addInputFormat(formatDao.getById(inputFormatId));
@@ -341,7 +343,8 @@ public class DefaultServiceDAO extends ServiceDAO
 										   COL_STATUS + " " +
 										   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 										   COL_XCCFG_FILE_NAME + ", " +
-										   COL_VERSION + " " +
+										   COL_VERSION + ", " +
+										   COL_DELETED + " " +
 						       "FROM " + SERVICES_TABLE_NAME + " " +
 						       "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
 	
@@ -385,6 +388,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				service.setStatus(results.getString(19));
 				service.setXccfgFileName(results.getString(20));
 				service.setVersion(results.getString(21));
+				service.setDeleted(results.getBoolean(22));
 
 				for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 					service.addInputFormat(formatDao.getById(inputFormatId));
@@ -467,7 +471,8 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_STATUS + ", " +
 												   COL_XCCFG_FILE_NAME + ", " +
-												   COL_VERSION + " " +
+												   COL_VERSION + ", " +
+												   COL_DELETED + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_SERVICE_ID + "=?";
 
@@ -515,6 +520,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setStatus(results.getString(19));
 					service.setXccfgFileName(results.getString(20));
 					service.setVersion(results.getString(21));
+					service.setDeleted(results.getBoolean(22));
 
 					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 						service.addInputFormat(formatDao.getById(inputFormatId));
@@ -595,7 +601,8 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_STATUS + ", " +
 												   COL_XCCFG_FILE_NAME + ", " +
-												   COL_VERSION + " " +
+												   COL_VERSION + ", " +
+												   COL_DELETED + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_SERVICE_ID + "=?";
 
@@ -643,6 +650,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setStatus(results.getString(19));
 					service.setXccfgFileName(results.getString(20));
 					service.setVersion(results.getString(21));
+					service.setDeleted(results.getBoolean(22));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the service with ID " + serviceId + " in the database.");
@@ -715,7 +723,8 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_STATUS + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_XCCFG_FILE_NAME + ", " +
-												   COL_VERSION + " " +
+												   COL_VERSION + ", " +
+												   COL_DELETED + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_PORT + "=?";
 
@@ -763,6 +772,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setStatus(results.getString(19));
 					service.setXccfgFileName(results.getString(20));
 					service.setVersion(results.getString(21));
+					service.setDeleted(results.getBoolean(22));
 
 					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 						service.addInputFormat(formatDao.getById(inputFormatId));
@@ -844,7 +854,8 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_STATUS + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_XCCFG_FILE_NAME + ", " +
-												   COL_VERSION + " " +
+												   COL_VERSION + ", " +
+												   COL_DELETED + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_SERVICE_NAME + "=?";
 
@@ -892,6 +903,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setStatus(results.getString(19));
 					service.setXccfgFileName(results.getString(20));
 					service.setVersion(results.getString(21));
+					service.setDeleted(results.getBoolean(22));
 
 					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
 						service.addInputFormat(formatDao.getById(inputFormatId));
@@ -970,8 +982,9 @@ public class DefaultServiceDAO extends ServiceDAO
 	            	      													         COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 	            	      													         COL_STATUS + ", " +
 	            	      													         COL_XCCFG_FILE_NAME + ", " +
-	            	      													         COL_VERSION + ") " +
-	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	            	      													         COL_VERSION + ", " +
+	            	      													         COL_DELETED + ") " +
+	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"insert service\" PreparedStatemnt from the SQL " + insertSql);
@@ -1002,6 +1015,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				psInsert.setString(18, service.getStatus());
 				psInsert.setString(19, service.getXccfgFileName());
 				psInsert.setString(20, service.getVersion());
+				psInsert.setBoolean(21, service.isDeleted());
 
 				// Execute the insert statement and return the result
 				if(dbConnectionManager.executeUpdate(psInsert) > 0)
@@ -1111,7 +1125,8 @@ public class DefaultServiceDAO extends ServiceDAO
 				                                                          COL_HARVEST_OUT_LOG_FILE_NAME + "=?, " +
 				                                                          COL_STATUS + "=?, " +
 				                                                          COL_XCCFG_FILE_NAME + "=?, " +
-				                                                          COL_VERSION + "=? " +
+				                                                          COL_VERSION + "=?, " +
+				                                                          COL_DELETED + "=? " +
 	                                   "WHERE " + COL_SERVICE_ID + "=?";
 
 					if(log.isDebugEnabled())
@@ -1143,7 +1158,8 @@ public class DefaultServiceDAO extends ServiceDAO
 				psUpdate.setString(18, service.getStatus());
 				psUpdate.setString(19, service.getXccfgFileName());
 				psUpdate.setString(20, service.getVersion());
-				psUpdate.setInt(21, service.getId());
+				psUpdate.setBoolean(21, service.isDeleted());
+				psUpdate.setInt(22, service.getId());
 				
 				// Execute the update statement and return the result
 				if(dbConnectionManager.executeUpdate(psUpdate) > 0)
@@ -1241,16 +1257,6 @@ public class DefaultServiceDAO extends ServiceDAO
 				// Execute the delete statement and return the result
 				boolean success = dbConnectionManager.execute(psDelete);
 				
-				if(success)
-					LogWriter.addInfo(logObj.getLogFileLocation(), "Deleted the service with the name " + service.getName());
-				else
-		    	{
-		    		LogWriter.addError(logObj.getLogFileLocation(), "Failed to delete the service with the name " + service.getName());
-				
-		    		logObj.setErrors(logObj.getErrors() + 1);
-		    		logDao.update(logObj);
-		    	}
-		    	
 				return success;
 			} // end try(delete the service)
 			catch(SQLException e)

@@ -439,6 +439,7 @@ CREATE TABLE services
   status VARCHAR(20),
   xccfg_file_name VARCHAR(255) NOT NULL,
   version VARCHAR(10),
+  is_deleted boolean DEFAULT FALSE,
   PRIMARY KEY(service_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -144,6 +144,11 @@ public abstract class ServiceDAO
 	 * The version of the service
 	 */
 	public final static String COL_VERSION = "version";
+	
+	/**
+	 * Indicates service is deleted or not
+	 */
+	public final static String COL_DELETED = "is_deleted";
 		
 	
 	/**

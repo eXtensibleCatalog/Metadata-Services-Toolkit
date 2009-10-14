@@ -23,12 +23,11 @@ import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
 /**
- * A Thread which re process the records through service.
- * When a service is updated, the records need to be re processed.
+ * A Thread which deletes the service and its records .
  * 
  * @author Sharmila Ranganathan
  */
-public class ServiceReprocessWorkerThread extends WorkerThread 
+public class DeleteServiceWorkerThread extends WorkerThread 
 {
 	/**
 	 * A reference to the logger for this class
@@ -38,7 +37,7 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 	/** 
 	 * Type of thread 
 	 */
-	public static final String type = Constants.THREAD_SERVICE_REPROCESS;
+	public static final String type = Constants.THREAD_DELETE_SERVICE;
 
 	/**
 	 * The flag for indicating cancel service operation.
@@ -51,12 +50,12 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 	private boolean isPaused;
 	
 	/**
-	 * The ID of the service whose records needs to be reprocessed
+	 * The ID of the service to be deleted
 	 */
 	private int serviceId;
 	
 	/**
-	 * The service whose records needs to be reprocessed
+	 * The service to be deleted
 	 */
 	private Service service;
 	
@@ -70,67 +69,76 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 	 */
 	private static JobService jobService = new DefaultJobService();
 	
+	/**
+	 * Manager for getting, inserting and updating service
+	 */
+	private static ServicesService serviceManager = new DefaultServicesService();
+	
 	@Override
 	public void run() 
 	{
 		try
 		{
-			ServicesService serviceManager = new DefaultServicesService();
-			service = serviceManager.getServiceById(serviceId);
+	    	service = serviceManager.getServiceById(serviceId);
+
+	    	// Delete the records processed by the service and send the deleted
+	    	// records to subsequent services so they know about the delete
+			RecordList records = recordService.getByServiceId(serviceId);
+
+			// A list of services which must be run after this one
+			List<Service> affectedServices = new ArrayList<Service>();
+			List<Record> updatedPredecessors = new ArrayList<Record>();
 			
-			// Reprocess the records processed by the service
-    		RecordList records = recordService.getProcessedByServiceId(service.getId());
-    		for(Record record : records)
-    		{
-    			record.addInputForService(service);
-    			recordService.update(record);
-    		}
+			for(Record record : records)
+			{
+				// set as deleted
+				record.setDeleted(true);
+				
+				// Get all predecessors & remove the current record as successor
+				List<Record> predecessors =  record.getProcessedFrom();
+				for (Record predecessor : predecessors) {
+					int index = updatedPredecessors.indexOf(predecessor);
+					if (index < 0) {
+						predecessor =  recordService.getById(predecessor.getId());
+					} else {
+						predecessor = updatedPredecessors.get(index);
+					}
+					predecessor.removeSucessor(record);
 
-    		List<Service> servicesToRun = new ArrayList<Service>();
+					// Remove the reference for the service which is being deleted from its predecessor
+					predecessor.removeProcessedByService(service);
+					updatedPredecessors.add(predecessor);
+				}
+				
+				record.setUpdatedAt(new Date());
+				for(Service nextService : record.getProcessedByServices())
+				{
+					record.addInputForService(nextService);
+					affectedServices.add(nextService);
+				}
+				recordService.update(record);
+			}
+			
+			// Update all predecessor records
+			for (Record updatedPredecessor:updatedPredecessors) {
+				recordService.update(updatedPredecessor);				
+			}
+			
+			SolrIndexManager.getInstance().commitIndex();
 
-    		if(!servicesToRun.contains(service))
-    			servicesToRun.add(service);
-    		
-    		// Mark the records output by the old service as deleted
-    		records = recordService.getByServiceId(service.getId());
-    		for(Record record : records)
-    		{
-    			record.setDeleted(true);
-    			record.setUpdatedAt(new Date());
-
-    			for(Service processingService : record.getProcessedByServices())
-    			{
-    				record.addInputForService(processingService);
-    				if(!servicesToRun.contains(processingService))
-    					servicesToRun.add(processingService);
-    			}
-
-    			recordService.update(record);
-    		}
-
-    		SolrIndexManager.getInstance().commitIndex();
-
-    		for(Service runMe : servicesToRun)
-    		{
-    			try {
-					Job job = new Job(runMe, 0, Constants.THREAD_SERVICE);
+			// Schedule subsequent services to process that the record was deleted
+			for(Service nextSerivce : affectedServices)
+			{
+				try {
+					Job job = new Job(nextSerivce, 0, Constants.THREAD_SERVICE);
 					job.setOrder(jobService.getMaxOrder() + 1); 
 					jobService.insertJob(job);
 				} catch (DatabaseConfigException dce) {
 					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
 				}
-    		}
-    		
-    		// Reset the input, output counts
-    		service.setHarvestOutWarnings(0);
-    		service.setHarvestOutErrors(0);
-    		service.setHarvestOutRecordsAvailable(0);
-    		service.setServicesWarnings(0);
-    		service.setServicesErrors(0);
-    		service.setInputRecordCount(0);
-    		service.setOutputRecordCount(0);
-    		
-    		serviceManager.updateService(service);
+			}
+
+			serviceManager.deleteService(service);
 
 		} catch (DataException de) {
 			log.error("Exception occured while updating records.", de);
@@ -160,7 +168,7 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 	@Override
 	public String getJobName() 
 	{
-		return "Deleting old service records and preparing for service reprocess.";
+		return "Deleting service and its records";
 	}
 
 	@Override

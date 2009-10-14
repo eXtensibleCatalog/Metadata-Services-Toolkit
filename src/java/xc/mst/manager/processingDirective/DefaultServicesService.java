@@ -15,15 +15,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.provider.Format;
-import xc.mst.bo.record.Record;
 import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
@@ -43,8 +40,6 @@ import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
-import xc.mst.utils.index.RecordList;
-import xc.mst.utils.index.SolrIndexManager;
 
 /**
  * Provides implementation for service methods to interact with the services in the MST
@@ -858,77 +853,33 @@ public class DefaultServicesService implements ServicesService
     }
 
     /**
-     * Deletes a service from the MST
+     * Deletes a service from the MST. This method has to be used when the service has no processed records.
      *
-     * @param service service object
+     * @param service service to be deleted
      * @throws xc.mst.dao.DataException
      */
-    public void deleteService(Service service) throws IndexException, DataException
+    public void deleteService(Service service) throws DataException
     {
-    	// Reload the service and confirm that it's not currently running.
-    	// Throw an error if it is
-    	service = servicesDao.getById(service.getId());
-    	if(service.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) || service.getStatus().equals(Constants.STATUS_SERVICE_PAUSED))
-    		throw new DataException("Cannot update a service while it is running.");
-
-    	// Delete the records processed by the service and send the deleted
-    	// records to subsequent services so they know about the delete
-		RecordList records = recordService.getByServiceId(service.getId());
-
-		// A list of services which must be run after this one
-		List<Service> affectedServices = new ArrayList<Service>();
-		List<Record> updatedPredecessors = new ArrayList<Record>();
-		
-		for(Record record : records)
-		{
-			// set as deleted
-			record.setDeleted(true);
-			
-			// Get all predecessors & remove the current record as successor
-			List<Record> predecessors =  record.getProcessedFrom();
-			for (Record predecessor : predecessors) {
-				int index = updatedPredecessors.indexOf(predecessor);
-				if (index < 0) {
-					predecessor =  recordService.getById(predecessor.getId());
-				} else {
-					predecessor = updatedPredecessors.get(index);
-				}
-				predecessor.removeSucessor(record);
-
-				// Remove the reference for the service which is being deleted from its predecessor
-				predecessor.removeProcessedByService(service);
-				updatedPredecessors.add(predecessor);
-			}
-			
-			record.setUpdatedAt(new Date());
-			for(Service nextService : record.getProcessedByServices())
-			{
-				record.addInputForService(nextService);
-				affectedServices.add(nextService);
-			}
-			recordService.update(record);
-		}
-		
-		// Update all predecessor records
-		for (Record updatedPredecessor:updatedPredecessors) {
-			recordService.update(updatedPredecessor);				
-		}
-		
-		SolrIndexManager.getInstance().commitIndex();
-
-		// Schedule subsequent services to process that the record was deleted
-		for(Service nextSerivce : affectedServices)
-		{
-			try {
-				Job job = new Job(nextSerivce, 0, Constants.THREAD_SERVICE);
-				job.setOrder(jobService.getMaxOrder() + 1); 
-				jobService.insertJob(job);
-			} catch (DatabaseConfigException dce) {
-				log.error("DatabaseConfig exception occured when ading jobs to database", dce);
-			}
-		}
-
         servicesDao.delete(service);
+    }
+    
+    /**
+     * Deletes a service and its records by scheduling a job
+     *
+     * @param service service to be deleted
+     */
+    public void deleteServiceAndRecordsByJob(Service service) throws DataException
+    {
+    	service.setDeleted(true);
+    	servicesDao.update(service);
+    	try {
+			Job job = new Job(service, 0, Constants.THREAD_DELETE_SERVICE);
+			job.setOrder(jobService.getMaxOrder() + 1); 
+			jobService.insertJob(job);
+		} catch (DatabaseConfigException dce) {
+			log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+		}
+    	
     }
 
     /**

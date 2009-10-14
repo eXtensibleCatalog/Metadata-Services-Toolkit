@@ -57,6 +57,9 @@ public class DeleteService extends ActionSupport
 
 	/** Error type */
 	private String errorType;
+	
+	/** True if service is in a running/pause status and cannot be deleted */ 
+	private boolean invalidServiceDeleteStatus = false;
 
     /**
      * Overrides default implementation to delete a service.
@@ -77,16 +80,20 @@ public class DeleteService extends ActionSupport
 
             long numberOfRecordsHarvested = recordService.getNumberOfRecordsByServiceId(serviceId);
             // Delete service only if it is not harvested.
-            if (numberOfRecordsHarvested > 0) {
+            if (service.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) || service.getStatus().equals(Constants.STATUS_SERVICE_PAUSED)) {
+            	message = service.getName() + " cannot be deleted when it is currently running or paused.";
+                deleted = false;
+                invalidServiceDeleteStatus = true;
+            } else if (numberOfRecordsHarvested > 0) {
                 message = "Deleting the " + service.getName() + " will result in deletion of " + numberOfRecordsHarvested + " records created by the service and the processing rules that deliver records to and from this service.";
                 deleted = false;
             } else {
-    	    	serviceService.deleteService(service);
+            	serviceService.deleteService(service);
             	deleted = true;
             }
-            return SUCCESS;
-        }
-        catch(DataException e)
+        
+			return SUCCESS;
+       } catch(DataException e)
         {
             log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), e);
             this.addFieldError("viewRepositoryError", "Error occured while deleting service. Email has been sent to the administrator regarding the error.");
@@ -119,7 +126,7 @@ public class DeleteService extends ActionSupport
     		service = serviceService.getServiceById(serviceId);
     		
     		// Delete service
-   	    	serviceService.deleteService(service);
+   	    	serviceService.deleteServiceAndRecordsByJob(service);
             return SUCCESS;
         }
         catch(DataException e)
@@ -130,14 +137,7 @@ public class DeleteService extends ActionSupport
             errorType = "error";
             return INPUT;
         }
-        catch(IndexException ie)
-        {
-            log.error("Exception occured while deleting the service " + ((service != null)?service.getName():"") + " and index. Check the path to solr folder.", ie);
-            this.addFieldError("viewRepositoryError", "Error occured while deleting the service " + ((service != null)?service.getName():"") + ".Email has been sent to the administrator regarding the error.");
-            userService.sendEmailErrorReport();
-            errorType = "error";
-            return INPUT;
-        }
+       
     }
 
 
@@ -186,6 +186,14 @@ public class DeleteService extends ActionSupport
 
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	public boolean isInvalidServiceDeleteStatus() {
+		return invalidServiceDeleteStatus;
+	}
+
+	public void setInvalidServiceDeleteStatus(boolean invalidServiceDeleteStatus) {
+		this.invalidServiceDeleteStatus = invalidServiceDeleteStatus;
 	}
 
 }

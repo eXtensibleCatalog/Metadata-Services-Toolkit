@@ -57,12 +57,20 @@ public interface ServicesService
     public void insertService(Service service) throws DataException;
     
     /**
-     * deletes a service
+     * Deletes a service from the MST. This method has to be used when the service has no processed records.
      *
-     * @param service The service to be deleted
+     * @param service service to be deleted
+     * @throws xc.mst.dao.DataException
      */
-    public void deleteService(Service service) throws IndexException, DataException;
-
+    public void deleteService(Service service) throws DataException;
+    
+    /**
+     * Deletes a service and its records by scheduling a job
+     *
+     * @param service service to be deleted
+     */
+    public void deleteServiceAndRecordsByJob(Service service) throws DataException;
+    
     /**
      * Updates the details of a Service
      *

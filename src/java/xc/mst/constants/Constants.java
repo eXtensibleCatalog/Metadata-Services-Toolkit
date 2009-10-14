@@ -391,6 +391,8 @@ public class Constants
 	public static final String THREAD_PROCESSING_DIRECTIVE = "PD";
 	
 	public static final String THREAD_SERVICE_REPROCESS = "REPROCESS";
+	
+	public static final String THREAD_DELETE_SERVICE = "DELETE_SERVICE";
 
 	
 	//*******************************************************************

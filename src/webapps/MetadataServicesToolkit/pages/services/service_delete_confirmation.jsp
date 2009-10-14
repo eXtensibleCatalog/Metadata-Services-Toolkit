@@ -5,5 +5,6 @@
 
 {
     "serviceDeleted" : "${deleted}",
+    "invalidServiceDeleteStatus" : "${invalidServiceDeleteStatus}",
     "message" : "${message}"
 }

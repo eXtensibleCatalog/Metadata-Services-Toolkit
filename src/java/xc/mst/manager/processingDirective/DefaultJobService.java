@@ -200,6 +200,8 @@ public class DefaultJobService implements JobService {
 		    		out.write(job.getOrder() + "\t\t" + "Harvest repository: " + job.getHarvestSchedule().getProvider().getName() + "\n");
 		    	} else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
 		    		out.write(job.getOrder() + "\t\t" + "Reprocessing records through service: " + job.getService().getName() + "\n");
+		    	} else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
+		    		out.write(job.getOrder() + "\t\t" + "Deleting service " + job.getService().getName() + " and its records. \n");
 		    	}
 		    }
 		    

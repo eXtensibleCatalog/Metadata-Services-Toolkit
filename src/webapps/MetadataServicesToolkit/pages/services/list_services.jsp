@@ -145,7 +145,12 @@
                                                     <c:if test="${columnSorted=='ServiceName'}">
                                                         <c:set var="classColumn" value="sortColumn"/>
                                                     </c:if>
-                                                <td class="${classColumn}"><a href="viewEditService.action?serviceId=${service.id}"><c:out value="${service.name}"/></a></td>
+                                                <c:if test="${!service.deleted}">
+                                                	<td class="${classColumn}"><a href="viewEditService.action?serviceId=${service.id}"><c:out value="${service.name}"/></a></td>
+                                                </c:if>
+                                                <c:if test="${service.deleted}">
+                                                	<td class="${classColumn}">${service.name} (Deleted)</td>
+                                                </c:if>
                                                 <c:set var="baseURL" value="${baseURL}"/>
                                                 <c:set var = "url" value="${fn:replace(baseURL,'SERVICE_NAME',service.name)}" />
                                                 <td><c:out value="${url}"/></td>
@@ -172,11 +177,25 @@
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>
-                                                <td width="175px">
-                                                    <button style="width:70px" onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
-                                                    <button style="width:85px" onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
-                                                </td>
-                                                <td><button style="width:60px" class="xc_button" onclick="javascript:YAHOO.xc.mst.services.listServices.deleteService(${service.id})" type="button" name="delete">Delete</button></td>
+                                                
+                                                <c:if test="${!service.deleted}">
+	                                                <td width="175px">
+	                                                    <button style="width:70px" onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
+	                                                    <button style="width:85px" onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
+	                                                </td>
+	                                                <td>
+                                                		<button style="width:60px" class="xc_button" onclick="javascript:YAHOO.xc.mst.services.listServices.deleteService(${service.id})" type="button" name="delete">Delete</button>
+                                                	</td>
+                                                </c:if>
+                                                <c:if test="${service.deleted}">
+												<td width="175px">
+                                                    	<button style="width:70px" class="xc_button_disabled" disabled type="button" name="Service">Service</button> &nbsp;
+                                                    	<button style="width:85px" class="xc_button_disabled" disabled type="button" name="HarvestOut">Harvest Out</button>
+                                                	</td>
+                                                	<td>                                                
+                                                		<button style="width:60px" class="xc_button_disabled" disabled  type="button" name="delete">Delete</button>
+                                                	</td>
+                                                </c:if>
                                             </tr>
                                         </c:forEach>
                                                                   
@@ -214,6 +233,25 @@
 		          </form>
 		      </div>
 	      </div>
+	      
+	      <div id="cannotDeleteServiceDialog" class="hidden">
+	          <div class="hd">Delete Service</div>
+		      <div class="bd">
+			          <div id="cannotDeleteServiceError" cssClass="errorMessage"></div><br>
+			          
+		          </form>
+		      </div>
+	      </div>
+
+	      <div id="deleteServiceInfoDialog" >
+	          <div class="hd">Delete Service</div>
+		      <div class="bd">
+			          Note: Service will be marked as deleted. Process is scheduled to delete the records processed by the service.Once all records in the service are deleted, the  
+			          service will be deleted.
+			          
+		          </form>
+		      </div>
+	      </div>	      
 	       <div class="clear">&nbsp;</div>
             <!--  this is the footer of the page -->
             <c:import url="/inc/footer.jsp"/>  

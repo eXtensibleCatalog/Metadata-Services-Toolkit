@@ -187,6 +187,11 @@ public class Scheduler extends Thread
 							serviceReprocessWorkerThread.setServiceId(jobToStart.getService().getId());
 							serviceReprocessWorkerThread.start();
 							runningJob = serviceReprocessWorkerThread;
+						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
+							DeleteServiceWorkerThread deleteServiceWorkerThread = new DeleteServiceWorkerThread();
+							deleteServiceWorkerThread.setServiceId(jobToStart.getService().getId());
+							deleteServiceWorkerThread.start();
+							runningJob = deleteServiceWorkerThread;
 						}
 
 						// Delete the job from database once its scheduled to run
@@ -229,6 +234,11 @@ public class Scheduler extends Thread
 								serviceReprocessWorkerThread.setServiceId(jobToStart.getService().getId());
 								serviceReprocessWorkerThread.start();
 								runningJob = serviceReprocessWorkerThread;
+							} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
+								DeleteServiceWorkerThread deleteServiceWorkerThread = new DeleteServiceWorkerThread();
+								deleteServiceWorkerThread.setServiceId(jobToStart.getService().getId());
+								deleteServiceWorkerThread.start();
+								runningJob = deleteServiceWorkerThread;
 							}
 
 							// Delete the job from database once its scheduled to run

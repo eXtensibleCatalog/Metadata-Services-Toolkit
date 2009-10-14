@@ -55,7 +55,9 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
 
                 if(Scheduler.getRunningJob()!=null)
                 {
-                	if(!Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE) && !Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
+                	if(!Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE) 
+                			&& !Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)
+                			&& !Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
 	                    if(Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_CANCELED))
 	                    {
 	                    	if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
