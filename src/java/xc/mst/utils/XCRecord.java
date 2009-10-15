@@ -589,6 +589,8 @@ public class XCRecord
 		/*$$ WORK $$*/
 		// Create original Work Document
 		String workElementOaiID = transformationService.getNextOaiId();
+		// Change spaces to underscores
+		workElementOaiID = workElementOaiID.replace(' ', '_');
 		Element tempXcWorkElement = (Element)xcWorkElement.clone();
 		tempXcWorkElement.setAttribute(new Attribute("id",workElementOaiID));
 		xcRootElement.addContent("\n\t")
