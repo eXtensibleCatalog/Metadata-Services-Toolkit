@@ -166,7 +166,7 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 					harvestScheduleStep.setSchedule(scheduleDao.loadWithoutSteps(results.getInt(2)));
 					harvestScheduleStep.setFormat(formatDao.getById(results.getInt(3)));
 					harvestScheduleStep.setSet(results.getInt(4) == 0 ? null : setDao.loadBasicSet(results.getInt(4)));
-					harvestScheduleStep.setLastRan(results.getDate(5));
+					harvestScheduleStep.setLastRan(results.getTimestamp(5));
 
 					// Add the harvest schedule step to the list
 					harvestScheduleSteps.add(harvestScheduleStep);
@@ -250,7 +250,7 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 					harvestScheduleStep.setSchedule(scheduleDao.loadWithoutSteps(results.getInt(2)));
 					harvestScheduleStep.setFormat(formatDao.getById(results.getInt(3)));
 					harvestScheduleStep.setSet(results.getInt(4) == 0 ? null : setDao.loadBasicSet(results.getInt(4)));
-					harvestScheduleStep.setLastRan(results.getDate(5));
+					harvestScheduleStep.setLastRan(results.getTimestamp(5));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the harvest schedule step with ID " + harvestScheduleStepId + " in the database.");
@@ -340,7 +340,7 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 					harvestScheduleStep.setSchedule(scheduleDao.loadWithoutSteps(results.getInt(2)));
 					harvestScheduleStep.setFormat(formatDao.getById(results.getInt(3)));
 					harvestScheduleStep.setSet(results.getInt(4) == 0 ? null : setDao.loadBasicSet(results.getInt(4)));
-					harvestScheduleStep.setLastRan(results.getDate(5));
+					harvestScheduleStep.setLastRan(results.getTimestamp(5));
 
 					// Add the harvest schedule step to the list
 					harvestScheduleSteps.add(harvestScheduleStep);
@@ -420,7 +420,7 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 				psInsert.setInt(1, harvestScheduleId);
 				psInsert.setInt(2, harvestScheduleStep.getFormat().getId());
 				psInsert.setInt(3, (harvestScheduleStep.getSet() == null ? 0 : harvestScheduleStep.getSet().getId()));
-				psInsert.setDate(4, harvestScheduleStep.getLastRan());
+				psInsert.setTimestamp(4, harvestScheduleStep.getLastRan());
 
 				// Execute the insert statement and return the result
 				if(dbConnectionManager.executeUpdate(psInsert) > 0)
@@ -501,7 +501,7 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 				psUpdate.setInt(1, harvestScheduleId);
 				psUpdate.setInt(2, harvestScheduleStep.getFormat().getId());
 				psUpdate.setInt(3, (harvestScheduleStep.getSet() == null ? 0 : harvestScheduleStep.getSet().getId()));
-				psUpdate.setDate(4, harvestScheduleStep.getLastRan());
+				psUpdate.setTimestamp(4, harvestScheduleStep.getLastRan());
 				psUpdate.setInt(5, harvestScheduleStep.getId());
 
 				// Execute the update statement and return the result

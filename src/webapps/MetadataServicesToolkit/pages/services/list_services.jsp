@@ -152,7 +152,7 @@
                                                 	<td class="${classColumn}">${service.name} (Deleted)</td>
                                                 </c:if>
                                                 <c:set var="baseURL" value="${baseURL}"/>
-                                                <c:set var = "url" value="${fn:replace(baseURL,'SERVICE_NAME',service.name)}" />
+                                                <c:set var = "url" value="${fn:replace(baseURL,'SERVICE_NAME',fn:replace(service.name, ' ', '-'))}" />
                                                 <td><c:out value="${url}"/></td>
                                                 <td>
                                                     <c:set var="service_status" value ="${service.status}"/>

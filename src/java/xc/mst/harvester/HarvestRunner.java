@@ -251,7 +251,9 @@ public class HarvestRunner
 				setSpec = harvestScheduleStep.getSet().getSetSpec();
 
 			// Set the from field to the time when we last harvested the provider
-			from = harvestScheduleStep.getLastRan();
+			if (harvestScheduleStep.getLastRan() != null) {
+				from = new Date(harvestScheduleStep.getLastRan().getTime());
+			}
 
 			// Harvest all records if the from parameter was not provided
 			if(from != null)

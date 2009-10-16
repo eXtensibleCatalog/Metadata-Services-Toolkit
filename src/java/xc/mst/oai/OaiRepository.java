@@ -97,7 +97,7 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 				response.getWriter().write("Invalid URL");
 	
 			// Get the service based on the port.
-			Service service = serviceDao.getByServiceName(serviceName);
+			Service service = serviceDao.getByServiceName(serviceName.replace("-", " "));
 	
 			if(service == null)
 			{

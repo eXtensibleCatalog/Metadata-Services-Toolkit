@@ -160,7 +160,7 @@ CREATE TABLE harvest_schedule_steps
   harvest_schedule_id INT(11) NOT NULL, 
   format_id INT(11) NOT NULL,
   set_id INT(11),
-  last_ran DATETIME,
+  last_ran TIMESTAMP NULL,
 
   PRIMARY KEY (harvest_schedule_step_id),
   
