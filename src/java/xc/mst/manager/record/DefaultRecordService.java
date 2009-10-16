@@ -542,6 +542,20 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested input for service IDs
 		SolrQuery query = new SolrQuery();
+		query.setQuery(FIELD_PROCESSED_FROM + ":" + Long.toString(processedFromId) + " AND " + FIELD_DELETED + ":" + "false");
+
+		// Return the list of results
+		return new RecordList(query);
+	} // end method getByProcessedFrom(long)
+	
+	@Override
+	public RecordList getByProcessedFromIncludingDeletedRecords(long processedFromId) throws IndexException
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting all records that were processed from the record with ID " + processedFromId);
+
+		// Create a query to get the Documents with the requested input for service IDs
+		SolrQuery query = new SolrQuery();
 		query.setQuery(FIELD_PROCESSED_FROM + ":" + Long.toString(processedFromId));
 
 		// Return the list of results

@@ -80,10 +80,14 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 			
 			// Reprocess the records processed by the service
     		RecordList records = recordService.getProcessedByServiceId(service.getId());
+    		
+    		// This will hold the records that has to be processed and is same as the re processing
+    		// service's record's predecessor.
+    		List<Record> updatedRecords = new ArrayList<Record>();
     		for(Record record : records)
     		{
     			record.addInputForService(service);
-    			recordService.update(record);
+    			updatedRecords.add(record);
     		}
 
     		List<Service> servicesToRun = new ArrayList<Service>();
@@ -93,9 +97,26 @@ public class ServiceReprocessWorkerThread extends WorkerThread
     		
     		// Mark the records output by the old service as deleted
     		records = recordService.getByServiceId(service.getId());
+    		
     		for(Record record : records)
     		{
     			record.setDeleted(true);
+    			
+    			// Get all its predecessors & remove the current record as successor
+				List<Record> predecessors =  record.getProcessedFrom();
+				for (Record predecessor : predecessors) {
+					int index = updatedRecords.indexOf(predecessor);
+					if (index < 0) {
+						predecessor =  recordService.getById(predecessor.getId());
+					} else {
+						predecessor = updatedRecords.get(index);
+					}
+					predecessor.removeSucessor(record);
+
+					// Remove the reference for the service which is being deleted from its predecessor
+					predecessor.removeProcessedByService(service);
+					updatedRecords.add(predecessor);
+				}
     			record.setUpdatedAt(new Date());
 
     			for(Service processingService : record.getProcessedByServices())
@@ -108,6 +129,11 @@ public class ServiceReprocessWorkerThread extends WorkerThread
     			recordService.update(record);
     		}
 
+			// Update all predecessor records
+			for (Record updatedRecord:updatedRecords) {
+				recordService.update(updatedRecord);				
+			}
+			
     		SolrIndexManager.getInstance().commitIndex();
 
     		for(Service runMe : servicesToRun)

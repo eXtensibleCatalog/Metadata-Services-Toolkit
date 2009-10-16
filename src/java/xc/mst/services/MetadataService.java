@@ -1110,6 +1110,18 @@ public abstract class MetadataService
 	}
 
 	/**
+	 * Gets all records including deleted records that are successors of the record with the passed ID
+	 *
+	 * @param record The record whose successors we're getting
+	 * @return A list of records that are successors of the record with the passed ID
+	 * @throws IndexException
+	 */
+	protected RecordList getByProcessedFromIncludingDeletedRecords(Record record) throws IndexException
+	{
+		return recordService.getByProcessedFromIncludingDeletedRecords(record.getId());
+	}
+	
+	/**
 	 * Gets all records that contain the passed trait
 	 *
 	 * @param trait The trait of the records we're getting
@@ -1262,6 +1274,7 @@ public abstract class MetadataService
 			// on the new record it will update the correct record in the Lucene index
 			newRecord.setId(oldRecord.getId());
 			newRecord.setUpdatedAt(new Date());
+			newRecord.setService(service);
 
 			// Update the record.  If the update was successful,
 			// run the processing directives against the updated record

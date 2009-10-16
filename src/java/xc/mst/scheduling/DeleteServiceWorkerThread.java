@@ -114,7 +114,8 @@ public class DeleteServiceWorkerThread extends WorkerThread
 				for(Service nextService : record.getProcessedByServices())
 				{
 					record.addInputForService(nextService);
-					affectedServices.add(nextService);
+					if(!affectedServices.contains(nextService))
+						affectedServices.add(nextService);
 				}
 				recordService.update(record);
 			}

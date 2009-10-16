@@ -794,6 +794,16 @@ public class Record
 
 		return otherRecord.getOaiIdentifier().equals(this.getOaiIdentifier());
 	} // end method equals
+	
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode()
+    {
+            int value = 0;
+            value += oaiIdentifier == null ? 0 : oaiIdentifier.hashCode();
+            return value;
+    }
 
 	/*
 	 * (non-Javadoc)

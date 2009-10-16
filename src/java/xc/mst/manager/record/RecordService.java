@@ -408,6 +408,15 @@ public abstract class RecordService
 	public abstract RecordList getByProcessedFrom(long processedFromId) throws IndexException;
 
 	/**
+	 * Gets all records including deleted , from the index which have been processed from the specified record
+	 *
+	 * @param processedFromId The ID of the original record whose processed Records we're getting
+	 * @return A list of all records in the index which have been processed from the specified record
+	 */
+	public abstract RecordList getByProcessedFromIncludingDeletedRecords(long processedFromId) throws IndexException;
+
+	
+	/**
 	 * Gets all records from the index with the passed trait
 	 *
 	 * @param trait The trait of the records to retrieve

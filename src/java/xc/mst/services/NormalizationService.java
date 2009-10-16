@@ -329,7 +329,7 @@ public class NormalizationService extends MetadataService
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to update them
 			// instead of inserting a new Record
-			RecordList existingRecords = getByProcessedFrom(record);
+			RecordList existingRecords = getByProcessedFromIncludingDeletedRecords(record);
 
 			// If there was already a processed record for the record we just processed, update it
 			if(existingRecords.size() > 0)
