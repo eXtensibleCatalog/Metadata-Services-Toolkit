@@ -6,7 +6,7 @@
   * website http://www.extensiblecatalog.org/.
   *
   -->
-<project name="MetadataServicesToolkit" default="compile" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="MetadataServicesToolkit" default="dist" xmlns:ivy="antlib:org.apache.ivy.ant">
 
 	<!-- Use the build.properties file for user specific settings -->
 	<property file="build.properties"/>
@@ -295,15 +295,15 @@
 		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
 		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
 		<copy file="MetadataServicesToolkit.war" todir="dist/mst-instances"/>
-		<zip destfile="dist/MetadataServicesToolkit_v_0.2.6.2.zip"  basedir="dist" />
+		<zip destfile="dist/MetadataServicesToolkit_v_0.2.6.3.zip"  basedir="dist" />
 
 		<!-- Create the Normalization Services zip archive -->
-		<zip destfile="Normalization_v_0.2.5.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Normalization/**"/> 
-		<move file="Normalization_v_0.2.5.zip" todir="dist" />
+		<zip destfile="Normalization_v_0.2.6.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Normalization/**"/> 
+		<move file="Normalization_v_0.2.6.zip" todir="dist" />
 		
 		<!-- Create the Transformation Services zip archive -->
-		<zip destfile="Transformation_v_0.1.7.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Transformation/**" /> 
-		<move file="Transformation_v_0.1.7.zip" todir="dist" />
+		<zip destfile="Transformation_v_0.1.8.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Transformation/**" /> 
+		<move file="Transformation_v_0.1.8.zip" todir="dist" />
 
 		<!-- Create the Aggregation Services zip archive -->
 		<zip destfile="Aggregationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Aggregation/**" /> 
