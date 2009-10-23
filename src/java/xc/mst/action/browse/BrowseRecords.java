@@ -236,6 +236,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			solrQuery.addField(RecordService.FIELD_ERROR);
 			solrQuery.addField(RecordService.FIELD_PROCESSED_FROM);
 			solrQuery.addField(RecordService.FIELD_SUCCESSOR);
+			solrQuery.addField(RecordService.FIELD_OAI_IDENTIFIER);
 			
 			rowEnd = rowStart + numberOfResultsToShow;
 			

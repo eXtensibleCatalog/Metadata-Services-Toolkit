@@ -144,6 +144,7 @@ public class NormalizationService extends MetadataService
 	@Override
 	protected List<Record> processRecord(Record record)
 	{
+		
 		// If the record was deleted, don't process it
 		if(record.getDeleted())
 			return new ArrayList<Record>();
@@ -254,7 +255,7 @@ public class NormalizationService extends MetadataService
 
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1") 
 						|| enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1")
-						|| enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_UR_FIX_035, "0").equals("1")) {
+						|| enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035_CODE_9, "0").equals("1")) {
 					normalizedXml = fix035(normalizedXml);
 				}
 
@@ -330,7 +331,7 @@ public class NormalizationService extends MetadataService
 			// If there are any (there should be at most 1) we need to update them
 			// instead of inserting a new Record
 			RecordList existingRecords = getByProcessedFromIncludingDeletedRecords(record);
-
+			
 			// If there was already a processed record for the record we just processed, update it
 			if(existingRecords.size() > 0)
 			{
@@ -1331,8 +1332,8 @@ public class NormalizationService extends MetadataService
 					aSubfield.setText("(OCoLC)" + aSubfield.getText().substring(3));
 			}
 
-			// Execute only if URFix035Code9 step is enabled
-			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_UR_FIX_035, "0").equals("1")) {
+			// Execute only if Fix035Code9 step is enabled
+			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035_CODE_9, "0").equals("1")) {
 				// Forth case: $9 = ocm%CONTROL_NUMBER% or ocn%CONTROL_NUMBER% or ocl%CONTROL_NUMBER%
 				if(subfield9 != null && (subfield9.getText().startsWith("ocm") || subfield9.getText().startsWith("ocn") || subfield9.getText().startsWith("ocl")))
 				{
@@ -1367,13 +1368,23 @@ public class NormalizationService extends MetadataService
 					// Get value of $a
 					String value = aSubfield.getText();
 					String newValue = "";
-					
-					// Remove leading zeros in value. Ex. Change (OCoLC)00021452 to (OCoLC)21452 
+
+					// Remove leading zeros in value. Ex. Change (OCoLC)000214052 to (OCoLC)214052 
 					int indexOfBracket = value.indexOf(")");
 					newValue = value.substring(0, indexOfBracket + 1);
 					
+					boolean numericValueStarts = false;
+					String regex = "[1-9]";
+					
 					for (int i=indexOfBracket + 1;i < value.length();i++) {
+						
+						if (String.valueOf(value.charAt(i)).matches(regex)) {
+							numericValueStarts = true;
+						}
+						
 						if (value.charAt(i) != '0') {
+							newValue = newValue + value.charAt(i);
+						} else if (numericValueStarts) {
 							newValue = newValue + value.charAt(i);
 						}
 					}

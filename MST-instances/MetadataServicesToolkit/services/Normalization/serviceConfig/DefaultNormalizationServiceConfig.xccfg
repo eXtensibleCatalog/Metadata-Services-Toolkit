@@ -1,5 +1,5 @@
-Normalization Service # The name of the service
-0.2.4 # The version of the service
+MARCNormalization Service # The name of the service
+0.2.6 # The version of the service
 NormalizationService.jar # The .jar file containing the service
 xc.mst.services.NormalizationService # The class within the .jar file that represents the service.  This class must extend xc.mst.services.MetadataService
 8085
@@ -149,7 +149,7 @@ SupplyMARCOrgCode = 1
 Fix035 = 1
 
 # 1 to cleanup OCoLC 035 fields for $9. By default 0
-URFix035Code9 = 0
+Fix035Code9 = 0
 
 # 1 to remove leading zeros . 
 035LeadingZero = 1

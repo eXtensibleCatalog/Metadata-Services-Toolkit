@@ -800,25 +800,6 @@ public class Facade
 		// The offset into the returned results which we should start from
 		int offset = (resToken == null ? 0 : resToken.getOffset());
 		
-		// If from is null, set it to the minimum possible value
-		// Otherwise set it to the same value as fromDate
-		if(fromDate == null) {
-			GregorianCalendar c = new GregorianCalendar();
-			c.setTime(new Date(0));
-			c.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY) - ((c.get(Calendar.ZONE_OFFSET) + c.get(Calendar.DST_OFFSET))/(60*60*1000)));
-			fromDate = c.getTime();
-		}
-
-		// If to is null, set it to now
-		// Otherwise set it to the same value as toDate
-		if(untilDate == null) {
-			GregorianCalendar c = new GregorianCalendar();
-			c.setTime(new Date());
-			c.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY) - ((c.get(Calendar.ZONE_OFFSET) + c.get(Calendar.DST_OFFSET))/(60*60*1000)));
-
-			untilDate = c.getTime();
-		}
-
 		// Get records from offset to record limit
 		SolrBrowseResult result = recordService.getOutgoingRecordsInRange(fromDate, untilDate, setObject, format.getId(), offset, recordLimit, serviceId);
 

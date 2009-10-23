@@ -99,8 +99,8 @@
   <mainIndex>
     <!-- options specific to the main on-disk lucene index -->
     <useCompoundFile>false</useCompoundFile>
-    <ramBufferSizeMB>1024</ramBufferSizeMB>
-    <mergeFactor>100</mergeFactor>
+    <ramBufferSizeMB>512</ramBufferSizeMB>
+    <mergeFactor>50</mergeFactor>
     <!-- Deprecated -->
     <!--<maxBufferedDocs>1000</maxBufferedDocs>-->
     <maxMergeDocs>2147483647</maxMergeDocs>

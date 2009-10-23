@@ -401,9 +401,7 @@ text-decoration:underline;
 									  <c:param name="startPageNumber" value="${startPageNumber}"/>
 									  <c:param name="currentPageNumber" value="${currentPageNumber}"/>
 								  </c:url>
-								<a href="${viewRecord}"><c:if test="${record.provider != null}">${record.provider.name}</c:if> 
-								<c:if test="${record.service != null}">${record.service.name}</c:if>
-								${record.id}</a>
+								<a href="${viewRecord}">${record.oaiIdentifier}</a>
 								<br>
 								Schema: ${record.format.name}
 								<br>

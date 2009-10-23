@@ -257,9 +257,9 @@ public class NormalizationServiceConstants
 	public static final String CONFIG_ENABLED_LOCATION_LIMIT_NAME = "LocationLimitName";
 	
 	/**
-	 * Parameter for looking up the whether or not the URFix035Code9 normalization step is enabled.
+	 * Parameter for looking up the whether or not the Fix035Code9 normalization step is enabled.
 	 */
-	public static final String CONFIG_ENABLED_UR_FIX_035 = "URFix035Code9";
+	public static final String CONFIG_ENABLED_FIX_035_CODE_9 = "Fix035Code9";
 	
 	//*******************************************************************
 	// Properties file names

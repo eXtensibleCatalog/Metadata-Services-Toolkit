@@ -197,13 +197,12 @@ public class SolrIndexManager {
 	 * Since SolrIndexManager is single Threaded, this method does nothing
 	 */
 	public void waitForJobCompletion(long timeout)
-	{	
+	{
 	}
 	
 	/**
-	 * Adds a document to the solr index
+	 * Commits data to solr index
 	 *
-	 * @param doc The document to add
 	 * @return true on success, false on failure
 	 */
 	public boolean commitIndex() throws IndexException
@@ -256,6 +255,55 @@ public class SolrIndexManager {
 		return true;
 	}
 
+	/**
+	 * Optimize solr index
+	 *
+	 * @return true on success, false on failure
+	 */
+	public boolean optimizeIndex() throws IndexException
+	{
+
+		// Check if solr server is null
+		if (server == null) {
+			log.error("Solr server is null");
+			return false;
+		}
+		try {
+			LogWriter.addInfo(logObj.getLogFileLocation(), "Start optimizing Solr index");
+			server.optimize(true, true);
+			LogWriter.addInfo(logObj.getLogFileLocation(), "Finished optimizing Solr index");
+		} catch (SolrServerException se) {
+			log.error("Solr server exception occured when optimizing index. Check the path to solr folder.", se);
+			
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while optimizing Solr index. Check the path to solr folder." 
+					+ se.getMessage());
+			logObj.setErrors(logObj.getErrors()+1);
+			try {
+				logDao.update(logObj);
+			} catch(DataException e){
+				log.error("DataExcepiton while updating the log's error count.");
+			}
+			
+			throw new IndexException(se.getMessage());
+		} catch (IOException ioe) {
+			log.error("IO exception occured when optimizing the index. Check the path to solr foldert." + ioe);
+			
+			LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while optimizing the Solr index. Check the path to solr folder." 
+					+ ioe.getMessage());
+			
+			logObj.setErrors(logObj.getErrors()+1);
+			try{
+				logDao.update(logObj);
+			}catch(DataException e){
+				log.error("DataExcepiton while updating the log's error count.");
+			}
+			
+			throw new IndexException(ioe.getMessage());
+		}
+
+		return true;
+	}
+	
 	/**
 	 * Method to get search result documents
      *

@@ -688,7 +688,7 @@ public abstract class MetadataService
 
 						// If there are successors then the record exist and needs to be deleted. Since we are
 						// deleting the record, we need to decrement the count.
-						if (successors != null) {
+						if (successors != null && successors.size() > 0) {
 							inputRecordCount--;
 						}
 						
@@ -702,6 +702,12 @@ public abstract class MetadataService
 							reprocessRecord(successor);
 							recordService.update(successor);
 						}
+						
+						// Mark the record as having been processed by this service
+						processMe.addProcessedByService(service);
+						processMe.removeInputForService(service);
+						recordService.update(processMe);
+					
 					} 
 
 					// Get the results of processing the record
@@ -1081,7 +1087,7 @@ public abstract class MetadataService
 	 */
 	public String getNextOaiId()
 	{
-		return "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_IDENTIFIER) + ":" + serviceName + "/" + oaiIdDao.getNextOaiIdForService(service.getId());
+		return "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_IDENTIFIER) + ":" + serviceName.replace(" ", "_") + "/" + oaiIdDao.getNextOaiIdForService(service.getId());
 	}
 
 	/**

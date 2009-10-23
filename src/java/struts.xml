@@ -890,6 +890,18 @@
 	      	</interceptor-ref>
             <result name="success" type="no-op"/>
         </action>
+ 
+ 		<!--  ************************************ -->
+        <!--  Optimize SOlr index  actions          -->
+        <!--  ************************************ -->
+               
+        <action name="optimizeIndex" class="xc.mst.action.IndexOptimization">
+            <interceptor-ref name="default"/>
+            <interceptor-ref name="roles">
+	        	<param name="allowedRoles">Configuration,Services</param>
+	      	</interceptor-ref>
+            <result name="success">/pages/index_optimization.jsp</result>
+        </action>
         
 		 <!--  ************************************ -->
         <!--  OAI repository servlet  actions          -->

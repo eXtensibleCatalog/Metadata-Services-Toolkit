@@ -650,35 +650,9 @@ public class DefaultRecordService extends RecordService
 	} // end method getCount(Date, Date, int, int, int)
 
 	@Override
-	public SolrBrowseResult getOutgoingRecordsInRange(Date fromDate, Date untilDate, Set set, int formatId, int offset, int numResults, int serviceId)
+	public SolrBrowseResult getOutgoingRecordsInRange(Date from, Date until, Set set, int formatId, int offset, int numResults, int serviceId)
 			throws IndexException 
 	{
-		Date from; // fromDate, or the minimum value for a Date if fromDate is null
-		Date until; // toDate, or now if toDate is null
-
-		// If from is null, set it to the minimum possible value
-		// Otherwise set it to the same value as fromDate
-		if(fromDate == null) {
-			GregorianCalendar c = new GregorianCalendar();
-			c.setTime(new Date(0));
-			c.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY) - ((c.get(Calendar.ZONE_OFFSET) + c.get(Calendar.DST_OFFSET))/(60*60*1000)));
-			from = c.getTime();
-		} else {
-			from = fromDate;
-		}
-
-		// If to is null, set it to now
-		// Otherwise set it to the same value as toDate
-		if(untilDate == null) {
-			GregorianCalendar c = new GregorianCalendar();
-			c.setTime(new Date());
-			c.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY) - ((c.get(Calendar.ZONE_OFFSET) + c.get(Calendar.DST_OFFSET))/(60*60*1000)));
-
-			until = c.getTime();
-		} else {
-			until = untilDate;
-		}
-
 		// True if we're getting the records for a specific set, false if we're getting all records
 		boolean useSet = (set != null);
 
@@ -708,9 +682,17 @@ public class DefaultRecordService extends RecordService
 			query.addFilterQuery(FIELD_UPDATED_AT + ":[" + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)) + " TO " + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)) + "]");
 		}
 		
+		if(from != null && until == null) {
+			query.addFilterQuery(FIELD_UPDATED_AT + ":[" + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)) + " TO *]");
+		}
+
+		if(from == null && until != null) {
+			query.addFilterQuery(FIELD_UPDATED_AT + ":[ * TO " + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)) + "]");
+		}
+		
 		query.setStart(offset);
 		query.setRows(numResults);
-		
+
 		SolrDocumentList docs = solrIndexManager.getDocumentList(query);
 		Iterator<SolrDocument> iteration = docs.iterator();
 		List<Record> records = new ArrayList<Record>();
@@ -867,6 +849,7 @@ public class DefaultRecordService extends RecordService
 		record.setProvider(providerDao.loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
 		record.setService(serviceDao.loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
 		record.setHarvestScheduleName((String)doc.getFieldValue(FIELD_HARVEST_SCHEDULE_NAME));
+		record.setOaiIdentifier((String)doc.getFieldValue(FIELD_OAI_IDENTIFIER));
 
 		Collection<Object> errors = doc.getFieldValues(FIELD_ERROR);
 		if(errors != null)
@@ -1058,6 +1041,8 @@ public class DefaultRecordService extends RecordService
 		if (record.getHarvest() != null) {
 			all.append(record.getHarvest().getStartTime());
 		}
+		
+		all.append(record.getOaiIdentifier());
 		
 		doc.addField(FIELD_ALL, all.toString());
 
