@@ -275,7 +275,7 @@
          		<exclude name="xc/mst/services/TransformationService.class"/>
 	         </classes>
 
-	         <lib dir="${webapp.lib.dir}">
+	         <lib dir="${librarydir}">
 		        <exclude name="testng-4.4.1-jdk15.jar"/>
 	         </lib>
         </war>
