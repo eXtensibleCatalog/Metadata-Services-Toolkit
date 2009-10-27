@@ -277,6 +277,8 @@
 
 	         <lib dir="${librarydir}">
 		        <exclude name="testng-4.4.1-jdk15.jar"/>
+	         	<exclude name="jsp-api-6.0.18.jar"/>
+		        <exclude name="servlet-api-6.0.18.jar"/>
 	         </lib>
         </war>
     </target>
