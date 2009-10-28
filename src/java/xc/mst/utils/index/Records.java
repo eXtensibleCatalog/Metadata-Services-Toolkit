@@ -20,6 +20,7 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.services.MetadataService;
 
 /**
  * List of Records retrieved from Solr.
@@ -59,6 +60,11 @@ public class Records extends AbstractList<Record>
 	private SolrQuery query = null;
 
 	/**
+	 * The query with NOT condition for error records 
+	 */
+	private SolrQuery modifiedQuery = null;
+	
+	/**
 	 * The service used to get a record from a Lucene document
 	 */
 	private static RecordService service = new DefaultRecordService();
@@ -86,6 +92,7 @@ public class Records extends AbstractList<Record>
 			this.query = query;
 			query.setRows(MAX_RESULTS);
 			query.setStart(currentOffset);
+			modifiedQuery = query;
 			docs = indexMgr.getDocumentList(query);
 			size = (int) docs.getNumFound();
 		}
@@ -133,23 +140,33 @@ public class Records extends AbstractList<Record>
 					}
 					
 				} else if ((index) % 100000 == 0) {
-					query.setRows(MAX_RESULTS);
+
+					StringBuffer buf = new StringBuffer();
+					buf.append(query.getQuery());
+					
+					for(String identifier: MetadataService.getRunningService().getUnprocessedErrorRecordIdentifiers()) {
+						buf.append(" AND " ).append("-").append(RecordService.FIELD_OAI_IDENTIFIER).append(":").append(identifier.replaceAll(":", "\\\\:"));
+					}
+
+					modifiedQuery.setQuery(buf.toString());
+
+					modifiedQuery.setRows(MAX_RESULTS);
 					currentOffset = currentOffset + MAX_RESULTS;
 					startRow = 0;
-					query.setStart(startRow);
-					docs = indexMgr.getDocumentList(query);
-					
+					modifiedQuery.setStart(startRow);
+					docs = indexMgr.getDocumentList(modifiedQuery);
+
 					if (currentOffset == 0) {
 						return service.getRecordFromDocument(docs.get(index));
 					} else {
 						return service.getRecordFromDocument(docs.get(index % currentOffset));
 					}	
 				} else {
-					query.setRows(MAX_RESULTS);
+					modifiedQuery.setRows(MAX_RESULTS);
 					currentOffset = currentOffset + MAX_RESULTS;
 					startRow = startRow + MAX_RESULTS;
-					query.setStart(startRow);
-					docs = indexMgr.getDocumentList(query);
+					modifiedQuery.setStart(startRow);
+					docs = indexMgr.getDocumentList(modifiedQuery);
 
 					if (currentOffset == 0) {
 						return service.getRecordFromDocument(docs.get(index));

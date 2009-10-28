@@ -217,6 +217,16 @@ public class DefaultServicesService implements ServicesService
     			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's OAI repository's port.");
     			throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
     		}
+    		
+    		// The identifier for service, which must appear in the sixth line of the configuration file
+    		String identifier = in.readLine();
+    		identifier = (identifier.indexOf('#') >= 0 ? identifier.substring(0, identifier.indexOf('#')).trim() : identifier.trim());
+    		if(identifier == null || identifier.length() == 0)
+    		{
+    			LogWriter.addError(logFileName, "Error adding a new service: The sixth line of the service configuration file must be the service's identifier.");
+    			throw new ConfigFileException("The sixth line of the service configuration file must be the service's identifier.");
+    		}
+
 
     		// The .jar file we need to load the service from
     		File jarFile = new File(jar);
@@ -253,6 +263,7 @@ public class DefaultServicesService implements ServicesService
     		service.setVersion(version);
     		service.setServiceJar(jar);
     		service.setClassName(className);
+    		service.setIdentifier(identifier);
     		service.setHarvestOutLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setPort(port);
@@ -575,6 +586,16 @@ public class DefaultServicesService implements ServicesService
     			throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
     		}
 
+    		// The identifier for service, which must appear in the sixth line of the configuration file
+    		String identifier = in.readLine();
+    		identifier = (identifier.indexOf('#') >= 0 ? identifier.substring(0, identifier.indexOf('#')).trim() : identifier.trim());
+    		if(identifier == null || identifier.length() == 0)
+    		{
+    			LogWriter.addError(logFileName, "Error adding a new service: The sixth line of the service configuration file must be the service's identifier.");
+    			throw new ConfigFileException("The sixth line of the service configuration file must be the service's identifier.");
+    		}
+
+    		
     		// The .jar file we need to load the service from
     		File jarFile = new File(jar);
 
@@ -609,6 +630,7 @@ public class DefaultServicesService implements ServicesService
     		service.setVersion(version);
     		service.setServiceJar(jar);
     		service.setClassName(className);
+    		service.setIdentifier(identifier);
     		service.setHarvestOutLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setPort(port);

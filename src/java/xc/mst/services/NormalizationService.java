@@ -736,7 +736,7 @@ public class NormalizationService extends MetadataService
 		String field007 = marcXml.getField007();
 
 		// The character at offset 00 of the 007 field
-		char field007offset00 = (field007 != null ? field007.charAt(0) : ' ');
+		char field007offset00 = ((field007 != null && field007.length() > 0) ? field007.charAt(0) : ' ');
 
 		// Pull the DCMI type mapping from the configuration file based on the leader 06 value.
 		String dcmiType = dcmiType0007Properties.getProperty(""+field007offset00, null);
@@ -777,7 +777,7 @@ public class NormalizationService extends MetadataService
 		if (field007 != null) {
 	
 			// The character at offset 00 of the 007 field
-			char field007offset00 = (field007 != null ? field007.charAt(0) : ' ');
+			char field007offset00 = ((field007 != null && field007.length() > 0) ? field007.charAt(0) : ' ');
 	
 			// Pull the 007 Vocab mapping from the configuration file based on the leader 06 value.
 			String smdVocab = vocab007Properties.getProperty(""+field007offset00, null);
@@ -820,7 +820,7 @@ public class NormalizationService extends MetadataService
 		String field007 = marcXml.getField007();
 
 		// The character at offsets 00 and 01 of the 007 field
-		String field007offset00and01 = (field007 != null ? field007.substring(0, 2) : "  ");
+		String field007offset00and01 = ((field007 != null && field007.length() >= 3) ? field007.substring(0, 2) : "  ");
 
 		// Pull the SMD type mapping from the configuration file based on the leader 06 value.
 		String smdVocab = smdType007Properties.getProperty(field007offset00and01, null);

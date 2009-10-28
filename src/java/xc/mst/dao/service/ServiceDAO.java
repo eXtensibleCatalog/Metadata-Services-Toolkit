@@ -70,6 +70,11 @@ public abstract class ServiceDAO
 	public final static String COL_PORT = "port";
 
 	/**
+	 * The name of the identifier column
+	 */
+	public final static String COL_IDENTIFIER = "identifier";
+	
+	/**
 	 * The name of the warnings column
 	 */
 	public final static String COL_WARNINGS = "warnings";

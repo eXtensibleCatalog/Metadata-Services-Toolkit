@@ -38,6 +38,11 @@ public class Service
 	 * The service's jar
 	 */
 	private String serviceJar = null;
+
+	/**
+	 * The service's identifier which will be used in constructing 'local-identifier' part in OAI identifier
+	 */
+	private String identifier = null;
 	
 	/**
 	 * The service's service specific configuration parameters
@@ -716,6 +721,14 @@ public class Service
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
 	}
 
 } // end class Service

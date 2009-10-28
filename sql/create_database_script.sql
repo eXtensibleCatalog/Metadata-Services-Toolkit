@@ -424,6 +424,7 @@ CREATE TABLE services
   service_configuration   MEDIUMTEXT,
   class_name VARCHAR(155),
   port INT(11),
+  identifier VARCHAR(255) NOT NULL,
   warnings INT(11) NOT NULL DEFAULT 0,
   errors INT(11) NOT NULL DEFAULT 0,
   input_record_count INT(11) NOT NULL DEFAULT 0,

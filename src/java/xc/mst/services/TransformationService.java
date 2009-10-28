@@ -5181,7 +5181,9 @@ public class TransformationService extends MetadataService
 				{
 					if(subfieldsToDash.contains(subfieldCode))
 					{
-						builder.setCharAt(builder.length()-1, '-');
+						if (builder.length() > 0) {
+							builder.setCharAt(builder.length()-1, '-');
+						}
 						builder.append(subfield.getText() + " ");
 					}
 					else

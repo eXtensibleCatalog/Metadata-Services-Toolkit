@@ -223,9 +223,9 @@ public class Constants
 	public static final String CONFIG_OAI_REPO_SCHEME = "OaiRepoScheme";
 
 	/**
-	 * Parameter for looking up the repository identifier for the OAI repository from the configuration file
+	 * Parameter for looking up the domain name identifier for the OAI repository from the configuration file
 	 */
-	public static final String CONFIG_OAI_REPO_IDENTIFIER = "OaiRepoIdentifier";
+	public static final String CONFIG_DOMAIN_NAME_IDENTIFIER = "DomainNameIdentifier";
 
 	/**
 	 * Parameter for looking up the maximum number of identifiers returned at a time by the OAI repository from the configuration file

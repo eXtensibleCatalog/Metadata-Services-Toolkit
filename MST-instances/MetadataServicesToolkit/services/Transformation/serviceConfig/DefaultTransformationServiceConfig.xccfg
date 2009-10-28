@@ -3,6 +3,7 @@ MARCToXCTransformation Service # The name of the service
 TransformationService.jar # The .jar file containing the service
 xc.mst.services.TransformationService # The class within the .jar file that represents the service.  This class must extend xc.mst.services.MetadataService
 8086 # The port on which the service's OAI repository should operate
+MARCToXCTransformation # The service's identifier which will be used in constructing 'local-identifier' part in record's OAI identifier. This should NOT be changed once service is added. Change to this will result in inconsistent record identifiers. Make sure it is unique within a MST instance.
 
 #-----------------------------------------
 INPUT FORMATS

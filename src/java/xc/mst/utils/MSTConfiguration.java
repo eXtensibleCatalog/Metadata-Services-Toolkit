@@ -50,6 +50,9 @@ public class MSTConfiguration {
 	/**  Indicates whether MST instance folder exist */
 	public static boolean mstInstanceFolderExist = false;
 
+	/**  Name of MST instance */
+	public static String instanceName;
+	
 	/**  Indicates whether instance folder for this instance exist */
 	public static boolean currentInstanceFolderExist = false;
 
@@ -74,6 +77,8 @@ public class MSTConfiguration {
 	 * Creates and initializes configuration for MST
 	 */
 	private static void createConfiguration(String urlPath) {
+		
+		instanceName = urlPath;
 		
 		File mstInstances = new File(System.getProperty("user.dir") + FILE_SEPARATOR + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME));
 		if (mstInstances.exists()) {
@@ -140,6 +145,14 @@ public class MSTConfiguration {
 	public static String getMSTInstancesFolderPath(){
 	
 		return System.getProperty("user.dir") + FILE_SEPARATOR + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME);
+	}
+
+	public static String getInstanceName() {
+		return instanceName;
+	}
+
+	public static void setInstanceName(String instanceName) {
+		MSTConfiguration.instanceName = instanceName;
 	}
 
 

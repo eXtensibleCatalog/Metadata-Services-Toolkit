@@ -186,6 +186,9 @@ public abstract class MetadataService
 	 */
 	UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
 	
+	/** Stores the unprocessed record identifiers */
+	private ArrayList<String> unprocessedErrorRecordIdentifiers = new ArrayList<String>();
+	
 	/**
 	 * Data access object for getting groups
 	 */
@@ -670,6 +673,7 @@ public abstract class MetadataService
 			long endTime = 0;
 			long timeDiff = 0;
 			
+			
 			// Iterate over the list of input records and process each.
 			// Then run the processing directives on the results of each and add
 			// the appropriate record inputs for services to be run on the records
@@ -760,6 +764,8 @@ public abstract class MetadataService
 						processMe.addProcessedByService(service);
 						processMe.removeInputForService(service);
 						recordService.update(processMe);
+					} else if (!processMe.getDeleted()) {
+						unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
 					}
 					
 					// If the input record is a new record then increment the processed record count
@@ -926,8 +932,7 @@ public abstract class MetadataService
 			log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e);
 			return false;
 		}
-		errorCount = 0;
-		warningCount = 0;
+
 		return true;
 
 	}
@@ -1087,7 +1092,7 @@ public abstract class MetadataService
 	 */
 	public String getNextOaiId()
 	{
-		return "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_IDENTIFIER) + ":" + serviceName.replace(" ", "_") + "/" + oaiIdDao.getNextOaiIdForService(service.getId());
+		return "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + MSTConfiguration.getInstanceName() + "/" + service.getIdentifier().replace(" ", "_") + "/" + oaiIdDao.getNextOaiIdForService(service.getId());
 	}
 
 	/**
@@ -1631,6 +1636,15 @@ public abstract class MetadataService
 		*/ 
 	
 		return 0;
+	}
+
+	public ArrayList<String> getUnprocessedErrorRecordIdentifiers() {
+		return unprocessedErrorRecordIdentifiers;
+	}
+
+	public void setUnprocessedErrorRecordIdentifiers(
+			ArrayList<String> unprocessedErrorRecordIdentifiers) {
+		this.unprocessedErrorRecordIdentifiers = unprocessedErrorRecordIdentifiers;
 	}
 	
 	

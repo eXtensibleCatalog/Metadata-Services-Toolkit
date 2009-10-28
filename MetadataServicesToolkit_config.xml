@@ -22,8 +22,8 @@
     <!-- The email address of the MST administrator for the OAI repositories -->
     <property name="OaiRepoAdminEmail" value="mstadmin@library.rochester.edu" />
     
-    <!-- The institution specific OAI identifier prefix -->
-    <property name="OaiRepoIdentifier" value="URMST" />
+    <!-- The domain name identifier. This will be used in OAI identifier. -->
+    <property name="DomainNameIdentifier" value="mst.rochester.edu" />
 
     <!-- The number of milliseconds the harvester should wait for a response
          from an OAI repository before reporting an error -->
