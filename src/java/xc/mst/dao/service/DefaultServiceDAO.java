@@ -1140,7 +1140,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				                                                          COL_STATUS + "=?, " +
 				                                                          COL_XCCFG_FILE_NAME + "=?, " +
 				                                                          COL_VERSION + "=?, " +
-				                                                          COL_DELETED + "=? " +
+				                                                          COL_DELETED + "=?, " +
 				                                                          COL_IDENTIFIER + "=? " +
 	                                   "WHERE " + COL_SERVICE_ID + "=?";
 
