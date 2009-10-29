@@ -13,9 +13,6 @@
     <!-- Database password -->
     <property name="DatabasePassword" value="admin" />
     
-    <!-- The organization code for the organization running the MST, used by services for marcxml records (NRU) -->
-    <property name="OrganizationCode" value="NRU" />
-    
     <!-- The name of the OAI repository  -->
     <property name="OaiRepoName" value="University of Rochester" />
     
