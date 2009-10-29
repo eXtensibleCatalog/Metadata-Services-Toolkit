@@ -2205,4 +2205,12 @@ public class NormalizationService extends MetadataService
 			throw new ServiceValidationException("Service configuration file is missing the required section: LOCATION CODE TO LOCATION LIMIT NAME");
 
 	}
+	
+	@Override
+	protected String getOrganizationCode() {
+	
+		return enabledSteps.getProperty("OrganizationCode");
+	}
+	
+	
 }
