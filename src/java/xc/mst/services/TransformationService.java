@@ -86,6 +86,10 @@ public class TransformationService extends MetadataService
 	private HashMap<String, Element> linkedCreatorFields = new HashMap<String, Element>();
 	
 	/**
+	 * Org code used 
+	 */
+	private String orgCode = "";
+	/**
 	 * Construct a TransformationService Object
 	 */
 	public TransformationService()
@@ -172,6 +176,18 @@ public class TransformationService extends MetadataService
 			// Create an XCRecord Object to hold the transformed record
 			XCRecord transformedRecord = new XCRecord();
 
+			// Get the ORG code from the 035 field
+			if(originalRecord.getControlField("003") != null) 
+				orgCode = originalRecord.getControlField("003");
+			else if(originalRecord.getControlField("035") != null)
+				orgCode = originalRecord.getControlField("035");
+			else {
+				orgCode = "";
+
+			// Add error
+			record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
+			}
+			
 			// Get the Leader 06.  This will allow us to determine the record's type
 			// (bib or holding) and we'll process it appropriately
 			char leader06 = originalRecord.getLeader().charAt(6);
@@ -5798,13 +5814,18 @@ public class TransformationService extends MetadataService
 	}
 	
 	@Override
-	public void loadConfiguration(String configuration)
-	{	
+	public void loadConfiguration(String config){	
+		
 	}
 	
 	@Override
-	protected void validateService() throws ServiceValidationException 
-	{		
+	protected void validateService() throws ServiceValidationException {
+		
 	}
 
+	@Override
+	protected String getOrganizationCode() {
+
+		return orgCode;
+	}
 }
