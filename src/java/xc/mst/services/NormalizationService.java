@@ -1233,6 +1233,15 @@ public class NormalizationService extends MetadataService
 			return marcXml;
 		}
 
+		// Add an 003 to thee header
+		String new003 = getOrganizationCode();
+
+		if(log.isDebugEnabled())
+			log.debug("Supplying the record's organization code to a new 003 field with value " + new003 + ".");
+
+		// Add the new 003 field
+		marcXml.addMarcXmlControlField("003", new003);
+				
 		// Create the new 035 field
 		String new035 = "(" + getOrganizationCode() + ")" + control001;
 
