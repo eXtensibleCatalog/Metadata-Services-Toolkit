@@ -146,6 +146,9 @@ LanguageTerm = 1
 # and the original record's control number 
 SupplyMARCOrgCode = 1
 
+# Organization code 
+OrganizationCode = NRU
+
 # 1 to cleanup common problems with OCoLC 035 fields. 
 Fix035 = 1
 
