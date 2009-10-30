@@ -1122,6 +1122,28 @@ public class MarcXmlManagerForNormalizationService
 	} // end method addMarcXmlField
 
 	/**
+	 * Adds a new controlfield to the MARC XML record and returns the result.  
+	 * 
+	 * @param tag The tag we're adding (i.e. 931)
+	 * @param value The value of the tag we're adding
+	 */
+	public void addMarcXmlControlField(String tag, String value){
+		
+		if(log.isDebugEnabled())
+			log.debug("Adding a new controlfield to the MARC XML record with tag " + tag + " and value " +value + ".");
+
+		// Add a MARC XML field with the specified tag
+		// Both of its indicators will be empty
+		Element newFieldElement = new Element("controlfield", marcNamespace);
+		newFieldElement.setAttribute("tag", tag);
+		newFieldElement.setText(value);
+		
+		// Add the new field to the end of the MARC XML if we didn't insert it already
+		marcXml.getRootElement().addContent(newFieldElement).addContent("\n\n");
+
+	}
+	
+	/**
 	 * Copies one marcXml tag into another marcXml tag
 	 *
 	 * @param copyFromTag The tag we're copying from
