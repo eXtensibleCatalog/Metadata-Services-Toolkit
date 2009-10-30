@@ -101,7 +101,7 @@ MoveMARCOrgCode_moveAll = 0
 
 # 1 to create a field with a DCMI Type based on 
 # the original record's 007 offset 00  value 
-DCMIType0007 = 1
+DCMIType007 = 1
 
 # 1 to create a field with a term based on 
 # the original record's 007 offset 00 value 

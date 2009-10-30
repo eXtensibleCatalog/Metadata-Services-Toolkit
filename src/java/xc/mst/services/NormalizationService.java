@@ -774,11 +774,11 @@ public class NormalizationService extends MetadataService
 		// The value of field 007
 		String field007 = marcXml.getField007();
 		
-		if (field007 != null) {
+		if (field007 != null && field007.length() > 0) {
 	
 			// The character at offset 00 of the 007 field
-			char field007offset00 = ((field007 != null && field007.length() > 0) ? field007.charAt(0) : ' ');
-	
+			char field007offset00 = field007.charAt(0);
+			
 			// Pull the 007 Vocab mapping from the configuration file based on the leader 06 value.
 			String smdVocab = vocab007Properties.getProperty(""+field007offset00, null);
 	
@@ -822,23 +822,30 @@ public class NormalizationService extends MetadataService
 		// The character at offsets 00 and 01 of the 007 field
 		String field007offset00and01 = ((field007 != null && field007.length() >= 3) ? field007.substring(0, 2) : "  ");
 
-		// Pull the SMD type mapping from the configuration file based on the leader 06 value.
-		String smdVocab = smdType007Properties.getProperty(field007offset00and01, null);
-
-		// If there was no mapping for the provided 007 offset 00, we can't create the field.  In this case return the unmodified MARCXML
-		if(smdVocab == null)
-		{
+		if (!field007offset00and01.equals("  ")) {
+			// Pull the SMD type mapping from the configuration file based on the leader 06 value.
+			String smdVocab = smdType007Properties.getProperty(field007offset00and01, null);
+	
+			// If there was no mapping for the provided 007 offset 00, we can't create the field.  In this case return the unmodified MARCXML
+			if(smdVocab == null)
+			{
+				if(log.isDebugEnabled())
+					log.debug("Cannot find a SMD Vocab mapping for the 007 offset 00 and 01 values of " + field007offset00and01 + ", returning the unmodified MARCXML.");
+				
+				errors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00and01);
+				outputRecordErrors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00and01);
+	
+	
+				return marcXml;
+			}
 			if(log.isDebugEnabled())
-				log.debug("Cannot find a SMD Vocab mapping for the 007 offset 00 and 01 values of " + field007offset00and01 + ", returning the unmodified MARCXML.");
+				log.debug("Found the SMD type " + smdVocab + " for the 007 offset 00 and 01 values of " + field007offset00and01 + ".");
 
-			return marcXml;
+			// Add a MARCXML field to store the SMD Vocab
+			marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_SMD_VOCAB, smdVocab);
+
 		}
 
-		if(log.isDebugEnabled())
-			log.debug("Found the SMD type " + smdVocab + " for the 007 offset 00 and 01 values of " + field007offset00and01 + ".");
-
-		// Add a MARCXML field to store the SMD Vocab
-		marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_SMD_VOCAB, smdVocab);
 
 		// Return the modified MARCXML record
 		return marcXml;

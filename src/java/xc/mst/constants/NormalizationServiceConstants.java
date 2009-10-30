@@ -64,7 +64,7 @@ public class NormalizationServiceConstants
 	/**
 	 * Parameter for looking up the whether or not the DCMIType0007 normalization step is enabled.
 	 */
-	public static final String CONFIG_ENABLED_DCMI_TYPE_00_07 = "DCMIType0007";
+	public static final String CONFIG_ENABLED_DCMI_TYPE_00_07 = "DCMIType007";
 
 	/**
 	 * Parameter for looking up the whether or not the 007Vocab normalization step is enabled.

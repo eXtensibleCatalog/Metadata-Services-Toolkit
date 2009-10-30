@@ -212,8 +212,7 @@ text-decoration:underline;
 							   
 							<p class="searched_for">You Searched for :<strong>All Successor of:</strong><br>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<c:if test="${predecessorRecord.provider != null}">${predecessorRecord.provider.name}</c:if> 
-								<c:if test="${predecessorRecord.service != null}">${predecessorRecord.service.name}</c:if> ${predecessorRecord.id}
+									${predecessorRecord.oaiIdentifier}
 									<br>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									Schema: ${predecessorRecord.format.name}
@@ -282,9 +281,7 @@ text-decoration:underline;
 							   </c:url>						
 							<p class="searched_for">You Searched for : <strong>All Precedessors of:</strong><br>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<c:if test="${successorRecord.provider != null}">${successorRecord.provider.name}</c:if> 
-								<c:if test="${successorRecord.service != null}">
-									${successorRecord.service.name}</c:if> ${successorRecord.id}
+									 ${successorRecord.oaiIdentifier}
 									<br>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									Schema: ${successorRecord.format.name}
