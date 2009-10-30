@@ -1234,10 +1234,11 @@ public abstract class MetadataService
 		errorCount++;
 	}
 
-	protected String getOrganizationCode()
-	{
-		return MSTConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE);
-	}
+	/**
+	 * Gets the organization code for the record
+	 * @return
+	 */
+	protected abstract String getOrganizationCode();
 	
 	/**
 	 * Inserts a record in the Lucene index and sets up RecordInput values
