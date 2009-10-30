@@ -1666,6 +1666,12 @@ public class AggregationService extends MetadataService
 		}
 	} // end method getFRBRLevelIdentifier(Document)
 
+	@Override
+	protected String getOrganizationCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	//###############################################################
 	// Methods for building pyramids based on a Work.
 	// Since the Aggregation service now produces records with only
