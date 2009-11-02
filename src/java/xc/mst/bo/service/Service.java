@@ -55,11 +55,6 @@ public class Service
 	private String className = null;
 
 	/**
-	 * The port on which the service's OAI repository should be accessed
-	 */
-	private int port = -1;
-
-	/**
 	 * A list of formats which the service accepts as input
 	 */
 	private List<Format> inputFormats = new ArrayList<Format>();
@@ -255,26 +250,6 @@ public class Service
 	{
 		this.className = className;
 	} // end method setClassName(String)
-
-	/**
-	 * Gets the port on which the service's OAI repository should be accessed
-	 *
-	 * @return The port on which the service's OAI repository should be accessed
-	 */
-	public int getPort()
-	{
-		return port;
-	} // end method getPort()
-
-	/**
-	 * Sets the port on which the service's OAI repository should be accessed
-	 *
-	 * @param port The port on which the service's OAI repository should be accessed
-	 */
-	public void setPort(int port)
-	{
-		this.port = port;
-	} // end method setPort(int)
 
 	/**
 	 * Gets the formats the service accepts as input

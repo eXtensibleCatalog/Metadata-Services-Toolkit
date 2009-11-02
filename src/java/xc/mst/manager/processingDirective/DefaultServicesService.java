@@ -266,7 +266,6 @@ public class DefaultServicesService implements ServicesService
     		service.setIdentifier(identifier);
     		service.setHarvestOutLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
-    		service.setPort(port);
     		service.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
     		service.setXccfgFileName(configFile.getAbsolutePath());
 
@@ -633,7 +632,6 @@ public class DefaultServicesService implements ServicesService
     		service.setIdentifier(identifier);
     		service.setHarvestOutLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
-    		service.setPort(port);
     		service.setXccfgFileName(configFile.getAbsolutePath());
     		service.getInputFormats().clear();
     		service.getOutputFormats().clear();
@@ -937,18 +935,6 @@ public class DefaultServicesService implements ServicesService
     public Service getServiceByName(String serviceName) throws DatabaseConfigException
     {
         return servicesDao.getByServiceName(serviceName);
-    }
-
-    /**
-     * Returns service by port number
-     *
-     * @param servicePort service port
-     * @return service object
-     * @throws DatabaseConfigException
-     */
-    public Service getServiceByPort(int servicePort) throws DatabaseConfigException
-    {
-        return servicesDao.getByPort(servicePort);
     }
 
     /**

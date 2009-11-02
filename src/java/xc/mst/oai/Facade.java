@@ -365,15 +365,12 @@ public class Facade
 		// Get the service so we know which port to report
 		Service service = serviceDao.getById(serviceId);
 
-		// Get the port from the service, using 8080 as the default
-		int port = (service != null ? service.getPort() : 8080);
-
 		// Build the Identify element which will contain information on the OAI repository.
 		// Most of the information is pulled from the configuration file, but the earliestDatestamp
 		// is read from the database as the lowest value for the OAI_datestamp column in the results table
 		Element root = new Element("Identify");
 		root.addContent(XMLUtil.xmlEl("repositoryName", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_NAME)));
-		root.addContent(XMLUtil.xmlEl("baseURL", oaiRepoBaseURL + ":" + port));
+		root.addContent(XMLUtil.xmlEl("baseURL", oaiRepoBaseURL));
 		root.addContent(XMLUtil.xmlEl("protocolVersion", configuration.getProperty(Constants.CONFIG_OAI_REPO_PROTOCOL_VERSION)));
 		root.addContent(XMLUtil.xmlEl("adminEmail", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_ADMIN_EMAIL)));
 		root.addContent(XMLUtil.xmlEl("deletedRecord", configuration.getProperty(Constants.CONFIG_OAI_REPO_DELETED_RECORD)));

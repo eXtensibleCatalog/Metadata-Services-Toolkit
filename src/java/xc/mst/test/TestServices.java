@@ -76,7 +76,7 @@ public class TestServices
 	private static File unprocessedRecordsDir = new File("C:\\NormalizationTestData\\input");
 	private static File processedRecordsDir = new File("C:\\NormalizationTestData\\output");
 
-	private static int serviceId = 1;
+	private static int serviceId = 2;
 
 	/**
 	 * Builds the XML Document based on the record's OAI XML
@@ -107,14 +107,12 @@ public class TestServices
 			RecordList records = recordService.getAll();
 			for(Record record: records)
 			{
-				System.out.println("record:"+ record);
-				System.out.println("record:"+ record.getCreatedAt());
-				System.out.println("record:"+ record.getId());
-//				if(record.getService() != null && record.getService().getId() == serviceId) {
-//					saveRecordToFile(processedRecordsDir, record);
-//				}
+				//System.out.println("record:"+ record);
+				if(record.getService() != null && record.getService().getId() == serviceId) {
+					saveRecordToFile(processedRecordsDir, record);
+				}
 
-//				recordService.delete(record);
+				recordService.delete(record);
 			}
 		}
 		catch(Exception e)

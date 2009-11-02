@@ -15,13 +15,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
+
 import org.testng.annotations.Test;
+
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.Service;
-import xc.mst.dao.DataException;
+import xc.mst.helper.TestHelper;
 import xc.mst.manager.processingDirective.ConfigFileException;
 import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
 import xc.mst.manager.processingDirective.DefaultServicesService;
@@ -29,7 +30,6 @@ import xc.mst.manager.processingDirective.ProcessingDirectiveService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
-import xc.mst.helper.TestHelper;
 
 
 /**
@@ -120,7 +120,6 @@ public class ProcessingDirectivesTest
              }
          
          service.setServiceJar(jar);
-         service.setPort(Integer.parseInt(portString));
          service.setName(name);
          service.setClassName(className);
          service.setVersion(version);

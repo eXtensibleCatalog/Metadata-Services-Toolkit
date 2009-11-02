@@ -97,15 +97,6 @@ public interface ServicesService
     public Service getServiceByName(String serviceName) throws DatabaseConfigException;
 
     /**
-     * Retrieves a service object based on the port number
-     *
-     * @param port The port number of the service
-     * @return
-     * @throws DatabaseConfigException 
-     */
-    public Service getServiceByPort(int port) throws DatabaseConfigException;
-
-    /**
      * returns a list of soervices sorted by name
      * 
      * @param sort boolean parameter that determines of the services are to be sorted in ascending/descending order

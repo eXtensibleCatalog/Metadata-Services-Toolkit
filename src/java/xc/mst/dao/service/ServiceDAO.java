@@ -65,11 +65,6 @@ public abstract class ServiceDAO
 	public final static String COL_CLASS_NAME = "class_name";
 
 	/**
-	 * The name of the port column
-	 */
-	public final static String COL_PORT = "port";
-
-	/**
 	 * The name of the identifier column
 	 */
 	public final static String COL_IDENTIFIER = "identifier";
@@ -169,7 +164,6 @@ public abstract class ServiceDAO
 		sortableColumns.add(COL_SERVICE_JAR);
 		sortableColumns.add(COL_SERVICE_CONFIG);
 		sortableColumns.add(COL_CLASS_NAME);
-		sortableColumns.add(COL_PORT);
 		sortableColumns.add(COL_WARNINGS);
 		sortableColumns.add(COL_ERRORS);
 		sortableColumns.add(COL_INPUT_RECORD_COUNT);
@@ -223,15 +217,6 @@ public abstract class ServiceDAO
 	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
 	public abstract Service loadBasicService(int serviceId) throws DatabaseConfigException;
-
-	/**
-	 * Gets the service from the database with the passed port
-	 *
-	 * @param port The port of the service to get
-	 * @return The service with the passed service Port
-	 * @throws DatabaseConfigException if there was a problem connecting to the database
-	 */
-	public abstract Service getByPort(int port) throws DatabaseConfigException;
 
 	/**
 	 * Gets the service from the database with the passed name
@@ -305,9 +290,6 @@ public abstract class ServiceDAO
 			
 			if(service.getClassName() == null || service.getClassName().length() <= 0 || service.getClassName().length() > 63)
 				errorMessage.append("The class name is invalid. ");
-
-			if(service.getPort() <= 0 || service.getPort() > 66536)
-				errorMessage.append("The port is invalid. ");
 
 			if(service.getServicesLogFileName() == null || service.getServicesLogFileName().length() <= 0 || service.getServicesLogFileName().length() > 255)
 				errorMessage.append("The log file name is invalid. ");

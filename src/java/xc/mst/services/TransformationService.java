@@ -137,6 +137,9 @@ public class TransformationService extends MetadataService
 		if(log.isDebugEnabled())
 			log.debug("Transforming record with ID " + record.getId() + ".");
 		
+		// Empty the lists of errors because we're beginning to process a new record
+		errors.clear();
+		
 		// A list of records resulting from processing the incoming record
 		ArrayList<Record> results = new ArrayList<Record>();
 

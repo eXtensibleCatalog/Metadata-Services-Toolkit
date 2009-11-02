@@ -123,7 +123,7 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 			bean.setServiceId(service != null ? service.getId() : 0);
 	
 			
-			String oaiRepoBaseURL = "http://" + request.getServerName() + ":" +  request.getServerPort() + request.getContextPath() + "/oaiRepository";
+			String oaiRepoBaseURL = "http://" + request.getServerName() + ":" +  request.getServerPort() + request.getContextPath() + "/" + serviceName + "/oaiRepository";
 
 			// Create the Facade Object, which will compute the results of the request and set them on the bean
 			Facade facade = new Facade(bean, oaiRepoBaseURL);

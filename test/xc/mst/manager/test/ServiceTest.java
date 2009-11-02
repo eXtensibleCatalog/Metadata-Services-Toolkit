@@ -107,7 +107,6 @@ public class ServiceTest {
                     throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
                 }
                 service.setServiceJar(jar);
-                service.setPort(Integer.parseInt(portString));
                 service.setName(name);
                 service.setClassName(className);
                 service.setVersion(version);

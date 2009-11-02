@@ -335,6 +335,7 @@ public class Harvester implements ErrorHandler
 	long startPartTime = 0;
 	long endPartTime = 0;
 	
+	long harvestStartTime = 0;
 	long startTime = 0;
 	long endTime = 0;
 	long timeDiff = 0;
@@ -626,6 +627,7 @@ public class Harvester implements ErrorHandler
 			
 			
 			startTime = new Date().getTime();
+			harvestStartTime = startTime;
 
 			// This loop places a ListRecords request, and then continues placing requests
 			// until it receives a null resumption token
@@ -767,7 +769,9 @@ public class Harvester implements ErrorHandler
 				
 				endTime = new Date().getTime();
     			timeDiff = endTime - startTime;
-            	LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Found " + recordsFound + " records so far. Finished commiting to index. Time taken = " + (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " + (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " + (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  ");
+            	LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Indexed " + recordsFound + " records so far. Finished commiting to index. Time taken = " + (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " + (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " + (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  ");
+            	timeDiff = endTime - harvestStartTime;
+            	LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Total time taken for harvest = " + (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " + (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " + (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  ");
 
     			
 
@@ -1045,7 +1049,7 @@ public class Harvester implements ErrorHandler
             	endTime = new Date().getTime();
     			timeDiff = endTime - startTime;
     		
-            	LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Found " + recordsFound + " records so far. Time taken = " + (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " + (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " + (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  ");
+            	LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Indexed " + recordsFound + " records so far. Time taken for this 100k records = " + (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " + (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " + (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  ");
             	startTime = new Date().getTime();
             }
 
