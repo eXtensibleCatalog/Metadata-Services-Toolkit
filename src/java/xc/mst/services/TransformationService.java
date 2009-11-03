@@ -5564,6 +5564,7 @@ public class TransformationService extends MetadataService
 	@SuppressWarnings("unchecked")
 	private XCRecord processFieldReqIndicatorAttFromField(MarcXmlRecord transformMe, XCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, String targetIndicator, String indicatorRequiredValue, HashMap<String, Attribute> fieldToAttribute, FrbrLevel level)
 	{
+		
 		// Get the elements with the requested field
 		List<Element> elements = transformMe.getDataFields(field);
 
@@ -5571,57 +5572,64 @@ public class TransformationService extends MetadataService
 		if(elements.size() == 0)
 			return transformInto;
 
-		// Add each subfield to the specified level with the specified tag and attribute
-		for(Element element : elements)
-		{
-			// If they specified a required indicator, check that it exists and has the correct value
-			if(targetIndicator != null && targetIndicator.length() > 0)
+		
+			// Add each subfield to the specified level with the specified tag and attribute
+			for(Element element : elements)
 			{
-				// Get the required indicator
-				String ind = MarcXmlRecord.getIndicatorOfField(element, targetIndicator);
-
-				// If the required indicator did not match the required value, continue to the next element without processing the current one
-				if(ind == null || !ind.equals(indicatorRequiredValue))
-					continue;
+				// If they specified a required indicator, check that it exists and has the correct value
+				if(targetIndicator != null && targetIndicator.length() > 0)
+				{
+					// Get the required indicator
+					String ind = MarcXmlRecord.getIndicatorOfField(element, targetIndicator);
+	
+					// If the required indicator did not match the required value, continue to the next element without processing the current one
+					if(ind == null || !ind.equals(indicatorRequiredValue))
+						continue;
+				}
+	
+				// Setup the attribute list for the processed field
+				ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+	
+				// A StringBuilder to concat the values of all the subfields of the Element
+				StringBuilder builder = new StringBuilder();
+	
+				// Get the subfields of the current element
+				List<Element> subfields = element.getChildren("subfield", marcNamespace);
+	
+				// Iterate over the subfields, and append each one to the StringBuilder if it
+				// is in the list of target subfields
+				for(Element subfield : subfields)
+				{
+					// Get the subfield's code
+					String subfieldCode = subfield.getAttribute("code").getValue();
+	
+					if(targetSubfields.contains(subfieldCode))
+						builder.append(subfield.getText() + " ");
+	
+					try{
+					// If the subfield maps to an Attribute, add it to the attribute list
+					if(fieldToAttribute.containsKey(subfieldCode))
+						attributes.add(((Attribute)fieldToAttribute.get(subfieldCode).clone()).setValue(subfield.getText()));
+					}
+					catch (Exception e) {
+						errors.add("Subfield "+ subfieldCode +" is not repeatable in tag "+field);
+					}
+				}
+	
+				// If any target fields were found
+				if(builder.length() > 0)
+				{
+					String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
+	
+					if(log.isDebugEnabled())
+						log.debug("Adding a " + level + " level " + elementName + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+	
+					// Add the element to the XC record
+					transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+				}
 			}
-
-			// Setup the attribute list for the processed field
-			ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-
-			// A StringBuilder to concat the values of all the subfields of the Element
-			StringBuilder builder = new StringBuilder();
-
-			// Get the subfields of the current element
-			List<Element> subfields = element.getChildren("subfield", marcNamespace);
-
-			// Iterate over the subfields, and append each one to the StringBuilder if it
-			// is in the list of target subfields
-			for(Element subfield : subfields)
-			{
-				// Get the subfield's code
-				String subfieldCode = subfield.getAttribute("code").getValue();
-
-				if(targetSubfields.contains(subfieldCode))
-					builder.append(subfield.getText() + " ");
-
-				// If the subfield maps to an Attribute, add it to the attribute list
-				if(fieldToAttribute.containsKey(subfieldCode))
-					attributes.add(((Attribute)fieldToAttribute.get(subfieldCode).clone()).setValue(subfield.getText()));
-			}
-
-			// If any target fields were found
-			if(builder.length() > 0)
-			{
-				String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
-
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + level + " level " + elementName + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
-
-				// Add the element to the XC record
-				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
-			}
-		}
-
+	
+		
 		// Return the result
 		return transformInto;
 	}
