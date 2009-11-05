@@ -130,6 +130,18 @@ public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
 		return false;
 	} // end method writeNextOaiId(int)
 
+	@Override
+	public void writeNextOaiId(int serviceId, long nextOaiId)
+	{
+		// Box the integer so we can use it as a key in the cache
+		Integer boxedServiceId = new Integer(serviceId);
+		
+		// Store the next XC identifier for the FRBR level in the cache
+		nextOaiIdForService.put(boxedServiceId, new Long(nextOaiId+1));
+
+		update(serviceId, nextOaiIdForService.get(boxedServiceId).longValue());
+	} // end method writeNextXcId(int)
+	
 	/**
 	 * Gets the next OAI identifier for the service with the passed service ID
 	 * from the database.  If there was no database entry with the passed service

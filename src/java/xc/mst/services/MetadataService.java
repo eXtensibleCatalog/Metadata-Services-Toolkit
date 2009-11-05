@@ -93,6 +93,11 @@ public abstract class MetadataService
 	 * The number of errors in running the current service
 	 */
 	private int errorCount = 0;
+	
+	/**
+	 * The number of errors in running the current service per commit
+	 */
+	private int errorCountPerCommit = 0;
 
 	/**
 	 * Data access object for getting processing directives
@@ -487,7 +492,7 @@ public abstract class MetadataService
 			if(log.isDebugEnabled())
 				log.debug("Constructed the MetadataService Object, running its processRecords() method.");
 
-			LogWriter.addInfo(serviceObj.getServicesLogFileName(), "Starting the " + serviceObj.getName() + " Service.");
+			LogWriter.addInfo(serviceObj.getServicesLogFileName(), "Validated the " + serviceObj.getName() + " Service.");
 
 			if(log.isDebugEnabled())
 				log.debug("Validating the Metadata Service with ID " + serviceId + ".");
@@ -778,6 +783,12 @@ public abstract class MetadataService
 					{
 						SolrIndexManager.getInstance().commitIndex();
 						
+						updateServiceStatistics();
+						
+						// Updates the database with latest record id and OAI identifier used.
+						// So that in case of server down, the service will resume correctly.  
+						updateOAIRecordIds();
+						
 						endTime = new Date().getTime();
 						timeDiff = endTime - startTime;
 						
@@ -871,20 +882,31 @@ public abstract class MetadataService
 			if (!updateServiceStatistics()) {
 				return false;
 			}
+			
+			// Updates the database with latest record id and OAI identifier used.
+			updateOAIRecordIds();
 
-			// Update the next OAI ID for this service in the database
-			oaiIdDao.writeNextOaiId(service.getId());
 
-			// Update the next XC ID for all elements in the database
-			frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_WORK);
-			frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_EXPRESSION);
-			frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_MANIFESTATION);
-			frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_HOLDINGS);
-			frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_ITEM);
-			frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD);
 		} // end finally(write the next IDs to the database)
 	} // end method processRecords(int)
 
+	/*
+	 * Updates the database with latest record id and OAI identifier used.
+	 * So that in case of server down, the service will resume correctly.  
+	 */
+	private void updateOAIRecordIds() {
+		// Update the next OAI ID for this service in the database
+		oaiIdDao.writeNextOaiId(service.getId());
+
+		// Update the next XC ID for all elements in the database
+		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_WORK);
+		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_EXPRESSION);
+		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_MANIFESTATION);
+		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_HOLDINGS);
+		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_ITEM);
+		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD);
+	}
+	
 	/*
 	 * Update number of warnings, errors, records available, output & input records count
 	 */
@@ -904,7 +926,7 @@ public abstract class MetadataService
 
 		// Increase the warning and error counts as appropriate, then update the provider
 		service.setServicesWarnings(service.getServicesWarnings() + warningCount);
-		service.setServicesErrors(service.getServicesErrors() + errorCount);
+		service.setServicesErrors(service.getServicesErrors() + errorCountPerCommit);
 		service.setInputRecordCount(service.getInputRecordCount() + inputRecordCount);
 		try {
 			long harvestOutRecordsAvailable = recordService.getCount(null, null, null, -1, service.getId());
@@ -932,6 +954,10 @@ public abstract class MetadataService
 			log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e);
 			return false;
 		}
+		
+		warningCount = 0;
+		errorCountPerCommit = 0;
+		inputRecordCount = 0;
 
 		return true;
 
@@ -1232,6 +1258,7 @@ public abstract class MetadataService
 	{
 		LogWriter.addError(service.getServicesLogFileName(), message);
 		errorCount++;
+		errorCountPerCommit++;
 	}
 
 	/**

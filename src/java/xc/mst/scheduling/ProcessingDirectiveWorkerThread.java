@@ -76,6 +76,7 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 		{
 			RecordList recordsToCheck = new RecordList(null);
 			
+			log.info("Starting thread to process processing schedule " + processingDirective);
 			if(processingDirective.getSourceProvider() != null)
 				recordsToCheck = recordService.getByProviderId(processingDirective.getSourceProvider().getId());
 			else if(processingDirective.getSourceService() != null)
@@ -84,8 +85,6 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 			for(Record checkMe : recordsToCheck)
 				checkProcessingDirective(checkMe);
 			
-			// TODO waitForJobCompletion(5000) causes problem. Goes to SolrIndexManager and not ThreadedSolrIndexManager
-			SolrIndexManager.getInstance().waitForJobCompletion(5000);
 			SolrIndexManager.getInstance().commitIndex();
 			
 			if (recordsToCheck != null && recordsToCheck.size() > 0) {
@@ -101,6 +100,8 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
 				}
 			}
+			
+			log.info("Finished processing processing schedule " + processingDirective);
 		}
 		catch (IndexException e) 
 		{

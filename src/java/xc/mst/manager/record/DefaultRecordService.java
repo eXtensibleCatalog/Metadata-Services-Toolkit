@@ -22,6 +22,7 @@ import java.util.SimpleTimeZone;
 
 import org.apache.lucene.index.Term;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
@@ -217,6 +218,36 @@ public class DefaultRecordService extends RecordService
 
 		// Return the list of results
 		return new RecordList(query);
+	} // end method getByServiceId(int)
+	
+	@Override
+	public Record getLastCreatedRecord(int serviceId) throws IndexException, DatabaseConfigException
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting the last created record with service ID " + serviceId);
+
+		// Create a query to get the Documents with the requested service ID
+		SolrQuery query = new SolrQuery();
+		query.setQuery(FIELD_SERVICE_ID + ":" +  Integer.toString(serviceId));
+		query.setSortField(FIELD_RECORD_ID, ORDER.desc);
+		query.setRows(1);
+		query.setStart(0);
+		
+		// Get the result of the query
+		SolrDocumentList docs = null;
+		docs = indexMgr.getDocumentList(query);
+
+		// Return null if we couldn't find the record with the correct ID
+		if(docs == null || docs.size() == 0)
+		{
+			if(log.isDebugEnabled())
+				log.debug("There are no records available for service Id = " + serviceId + " .");
+
+			return null;
+		} // end if(record not found)
+
+		return getRecordFromDocument(docs.get(0));
+
 	} // end method getByServiceId(int)
 
 	@Override
@@ -891,8 +922,11 @@ public class DefaultRecordService extends RecordService
 			log.debug("Set Field on Document");
 
 		// If we need to generate an ID, set the record's ID to the next available record ID
-		if(generateNewId)
-			record.setId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD));
+		if(generateNewId) {
+			long id = frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD);
+			log.info("Record Id="+id);
+			record.setId(id);
+		}
 
 		// If the oaiDatestamp is null, set it to the current time
 		if(record.getOaiDatestamp() == null)

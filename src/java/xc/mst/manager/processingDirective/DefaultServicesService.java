@@ -20,6 +20,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.processing.Job;
+import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
@@ -199,31 +200,12 @@ public class DefaultServicesService implements ServicesService
     			throw new ConfigFileException("The fourth line of the service configuration file must be the service's class name.");
     		}
 
-    		// The port on which the service's OAI repository operates, which must appear in the fifth line of the configuration file
-    		String portString = in.readLine();
-    		portString = (portString.indexOf('#') >= 0 ? portString.substring(0, portString.indexOf('#')).trim() : portString.trim());
-    		if(portString == null || portString.length() == 0)
-    		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's OAI repository's port.");
-    			throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
-    		}
-    		int port = 0;
-    		try
-    		{
-    			port = Integer.parseInt(portString);
-    		}
-    		catch(NumberFormatException e)
-    		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's OAI repository's port.");
-    			throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
-    		}
-    		
     		// The identifier for service, which must appear in the sixth line of the configuration file
     		String identifier = in.readLine();
     		identifier = (identifier.indexOf('#') >= 0 ? identifier.substring(0, identifier.indexOf('#')).trim() : identifier.trim());
     		if(identifier == null || identifier.length() == 0)
     		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The sixth line of the service configuration file must be the service's identifier.");
+    			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's identifier.");
     			throw new ConfigFileException("The sixth line of the service configuration file must be the service's identifier.");
     		}
 
@@ -566,31 +548,12 @@ public class DefaultServicesService implements ServicesService
     			throw new ConfigFileException("The fourth line of the service configuration file must be the service's class name.");
     		}
 
-    		// The port on which the service's OAI repository operates, which must appear in the fifth line of the configuration file
-    		String portString = in.readLine();
-    		portString = (portString.indexOf('#') >= 0 ? portString.substring(0, portString.indexOf('#')).trim() : portString.trim());
-    		if(portString == null || portString.length() == 0)
-    		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's OAI repository's port.");
-    			throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
-    		}
-    		int port = 0;
-    		try
-    		{
-    			port = Integer.parseInt(portString);
-    		}
-    		catch(NumberFormatException e)
-    		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's OAI repository's port.");
-    			throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
-    		}
-
     		// The identifier for service, which must appear in the sixth line of the configuration file
     		String identifier = in.readLine();
     		identifier = (identifier.indexOf('#') >= 0 ? identifier.substring(0, identifier.indexOf('#')).trim() : identifier.trim());
     		if(identifier == null || identifier.length() == 0)
     		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The sixth line of the service configuration file must be the service's identifier.");
+    			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's identifier.");
     			throw new ConfigFileException("The sixth line of the service configuration file must be the service's identifier.");
     		}
 
@@ -880,6 +843,16 @@ public class DefaultServicesService implements ServicesService
      */
     public void deleteService(Service service) throws DataException
     {
+    	// Get all Processing Directives that has this service as source service
+    	ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();
+    	List<ProcessingDirective> processingDirectives = processingDirectiveService.getBySourceServiceId(service.getId());
+    	
+    	// Delete Processing Directive that has this service as source service
+    	for (ProcessingDirective processingDirective : processingDirectives) {
+    		processingDirectiveService.deleteProcessingDirective(processingDirective);
+    	}
+    	
+    	// Delete service
         servicesDao.delete(service);
     }
     

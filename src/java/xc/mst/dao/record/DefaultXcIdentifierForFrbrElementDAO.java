@@ -130,6 +130,18 @@ public class DefaultXcIdentifierForFrbrElementDAO extends XcIdentifierForFrbrEle
 		return false;
 	} // end method writeNextXcId(int)
 
+	@Override
+	public void writeNextXcId(int elementId, long nextXcId)
+	{
+		// Box the integer so we can use it as a key in the cache
+		Integer boxedElementId = new Integer(elementId);
+		
+		// Store the next XC identifier for the FRBR level in the cache
+		nextXcIdForFrbrElement.put(boxedElementId, new Long(nextXcId+1));
+
+		update(elementId, nextXcIdForFrbrElement.get(boxedElementId).longValue());
+	} // end method writeNextXcId(int)
+	
 	/**
 	 * Gets the next OAI identifier for the FRBR level with the passed element ID
 	 * from the database.  If there was no database entry with the passed FRBR level element

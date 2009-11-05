@@ -79,8 +79,11 @@ public class DeleteServiceWorkerThread extends WorkerThread
 	{
 		try
 		{
+			
 	    	service = serviceManager.getServiceById(serviceId);
 
+	    	log.info("Starting thread to delete service " + service.getName());
+	    	
 	    	// Delete the records processed by the service and send the deleted
 	    	// records to subsequent services so they know about the delete
 			RecordList records = recordService.getByServiceId(serviceId);
@@ -140,6 +143,8 @@ public class DeleteServiceWorkerThread extends WorkerThread
 			}
 
 			serviceManager.deleteService(service);
+			
+			log.info("Finished deleting service " + service.getName());
 
 		} catch (DataException de) {
 			log.error("Exception occured while updating records.", de);

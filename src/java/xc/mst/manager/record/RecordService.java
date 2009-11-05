@@ -591,6 +591,15 @@ public abstract class RecordService
 	 * @return The escaped String
 	 */
 	protected abstract String escapeString(String str);
+
+	/**
+	 * Get the last created record in given service
+	 *  
+	 * @param serviceId Service id in which to get last created record 
+	 * @return Last created record
+	 * @throws IndexException
+	 */
+	public abstract Record getLastCreatedRecord(int serviceId) throws IndexException, DatabaseConfigException;
 	
 	/**
 	 * Load Record only with OAI header and OAI XML

@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.Job;
+import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
@@ -31,7 +32,11 @@ import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestScheduleDAO;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
+import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
+import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
+import xc.mst.dao.service.DefaultOaiIdentiferForServiceDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
+import xc.mst.dao.service.OaiIdentifierForServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.processingDirective.DefaultJobService;
@@ -134,27 +139,77 @@ public class InitializeServices  extends HttpServlet {
 			JobService jobService = new DefaultJobService();
 		    
 		    for(Service service:allServices) {
-		    	if (service.getStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_ERROR) || service.getStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_RUNNING)) {
+	    		if (service.getStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_RUNNING)) {
+	    			// If service status is 'running' then the reason must be like server shutdown when service was running. 
+		    		// Because of this, there was no chance to save the last used record id and OAI identifiers. 
+		    		// So here we can going to update db with last used record id and OAI identifiers
+		    		updateRecordAndOAIIds(service.getId());
+		    		
 		    		int count = recordService.getCountOfRecordsToBeProcessedVyService(service.getId());
 		    		if (count > 0) {
 		    			// Add job to queue in database
 						Job job = new Job(service, 0, Constants.THREAD_SERVICE);
-						// Setting order to 1 so that it will continue the errored/running service first rather than starting the next job in queue
-						// There cannot be 2 jobs with order 1 because already a service has status 'error' / 'running' which means the order 1 is already done.
+						// Setting order to 1 so that it will continue the running service first rather than starting the next job in queue
+						// There cannot be 2 jobs with order 1 because already a service has status 'running' which means the order 1 is already done.
 						job.setOrder(1); 
 						jobService.insertJob(job);
 						
+		    		} else {
+		    			// Then it means service finished committing only status needs to be updated. 
+		    			service.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
+		    			serviceDao.update(service);
 		    		}
+		    	}
+		    }
+		    
+		    for(Service service:allServices) {
+		    	if (service.getStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_ERROR)) {
+		    		int count = recordService.getCountOfRecordsToBeProcessedVyService(service.getId());
+		    		if (count > 0) {
+		    			// Add job to queue in database
+						Job job = new Job(service, 0, Constants.THREAD_SERVICE);
+						// Setting order to 1 so that it will continue the errored service first rather than starting the next job in queue
+						// There cannot be 2 jobs with order 1 because already a service has status 'error'  which means the order 1 is already done.
+						job.setOrder(1); 
+						jobService.insertJob(job);
+						
+		    		} 
 		    	}
 		    }
 	    } catch (DatabaseConfigException dce) {
 	    	log.error("Problem connecting to database. Check database configuration." , dce);
 	    } catch (IndexException ie) {
 	    	log.error("Problem connecting to database. Check database configuration." , ie);
+	    } catch (DataException de) {
+	    	log.error("Problem connecting to database. Check database configuration." , de);
 	    }
 	  }
 
 	  public void doGet(HttpServletRequest req, HttpServletResponse res) {
 	  }
 
+	  /*
+	   * Updates last used record and OAI identifier in database
+	   */
+	  private void updateRecordAndOAIIds(int serviceId) throws IndexException, DatabaseConfigException {
+		  
+		  RecordService recordService = new DefaultRecordService();
+		  Record record = recordService.getLastCreatedRecord(serviceId);
+		  
+		  if (record != null) {
+			  
+			  // Update last record ID
+			  XcIdentifierForFrbrElementDAO xcIdentifierDAO = new DefaultXcIdentifierForFrbrElementDAO();
+			  xcIdentifierDAO.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD, record.getId());
+			  
+			  // Update last OAI Identifier
+			  OaiIdentifierForServiceDAO oaiIdentifierDAO = new DefaultOaiIdentiferForServiceDAO();
+			  String oaiIdentifier = record.getOaiIdentifier();
+			  int indexOfSlash = oaiIdentifier.lastIndexOf("/");
+			  int identifier = Integer.valueOf(oaiIdentifier.substring(indexOfSlash + 1));
+			  oaiIdentifierDAO.writeNextOaiId(serviceId, identifier);
+			  
+			  log.info("Updates database with next to use record id as " + (record.getId() + 1) + " and OAI identifiers as " + (identifier + 1) + " for service Id = " + serviceId);
+		  }
+	  }
 }

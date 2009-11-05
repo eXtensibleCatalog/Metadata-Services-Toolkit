@@ -78,6 +78,8 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 			ServicesService serviceManager = new DefaultServicesService();
 			service = serviceManager.getServiceById(serviceId);
 			
+			log.info("Starting thread to reprocess service " + service);
+			
 			// Reprocess the records processed by the service
     		RecordList records = recordService.getProcessedByServiceId(service.getId());
     		
@@ -157,11 +159,13 @@ public class ServiceReprocessWorkerThread extends WorkerThread
     		service.setOutputRecordCount(0);
     		
     		serviceManager.updateService(service);
+    		
+    		log.info("Finished reprocessing service " + service);
 
 		} catch (DataException de) {
-			log.error("Exception occured while updating records.", de);
+			log.error("Data Exception occured while reprocessing records through service Id" + serviceId , de);
 		} catch (IndexException ie) {
-			log.error("Exception occured while commiting to Solr index.", ie);
+			log.error("Index Exception occured while reprocessing records through service Id" + serviceId, ie);
 		}
 	}
 

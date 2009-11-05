@@ -91,4 +91,14 @@ public abstract class OaiIdentifierForServiceDAO
 	 * @return true on success, false on failure
 	 */
 	public abstract boolean writeNextOaiId(int serviceId);
+
+	/**
+	 * Updates the next ID for the servicein the database based on the given
+	 * value for that service. This method should be called when server is restarted after 
+	 * unexpected shut down when service was running.
+	 *
+	 * @param serviceId The service ID whose next OAI ID is to be updated
+     * @param nextOaiId next OAI identifier ID to be used
+	 */
+	public abstract void writeNextOaiId(int serviceId, long nextOaiId);
 } // end class OaiIdentifierForServiceDAO

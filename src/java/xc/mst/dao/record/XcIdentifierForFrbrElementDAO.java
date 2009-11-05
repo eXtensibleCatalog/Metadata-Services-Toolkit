@@ -121,4 +121,14 @@ public abstract class XcIdentifierForFrbrElementDAO
 	 * @return true on success, false on failure
 	 */
 	public abstract boolean writeNextXcId(int elementId);
+	
+	/**
+	 * Updates the next ID for the FRBR element in the database based on the given
+	 * value for that element. This method should be called when server is restarted after 
+	 * unexpected shut down when service was running.
+	 *
+	 * @param elementId The FRBR element ID whose next XC ID is to be updated
+     * @param nextXcId next XC ID to be used
+	 */
+	public abstract void writeNextXcId(int elementId, long nextXcId);
 } // end class XcIdentifierForFrbrElementDAO
