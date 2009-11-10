@@ -5612,7 +5612,7 @@ public class TransformationService extends MetadataService
 						attributes.add(((Attribute)fieldToAttribute.get(subfieldCode).clone()).setValue(subfield.getText()));
 					}
 					catch (Exception e) {
-						errors.add("Subfield "+ subfieldCode +" is not repeatable in tag "+field);
+						errors.add(service.getId() + "-101: Subfield "+ subfieldCode +" is not repeatable in tag "+field);
 					}
 				}
 	

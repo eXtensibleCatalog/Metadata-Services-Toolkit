@@ -1156,7 +1156,7 @@ public class NormalizationService extends MetadataService
 		String field008 = marcXml.getField008();
 
 		// If the 008 offset 24, 25, 26, or 27 is 'm', add a 502 tag with the value "Thesis."
-		if(field008.substring(24, 28).contains("m"))
+		if(field008 != null && field008.substring(24, 28).contains("m"))
 		{
 			if(log.isDebugEnabled())
 				log.debug("Adding 502 field with the value \"Thesis.\"");
