@@ -406,7 +406,7 @@ CREATE TABLE resumption_tokens
   starting_from TIMESTAMP NULL DEFAULT NULL,
   until TIMESTAMP NULL DEFAULT NULL,
   offset BIGINT(11) NOT NULL,
-
+  token VARCHAR(255),
   PRIMARY KEY(resumption_token_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

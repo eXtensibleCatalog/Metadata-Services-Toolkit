@@ -70,6 +70,11 @@ public abstract class ResumptionTokenDAO
 	 * The name of the offset column
 	 */
 	protected final static String COL_OFFSET = "offset";
+	
+	/**
+	 * The name of the token column
+	 */
+	protected final static String COL_TOKEN = "token";
 
 	/**
 	 * Gets all resumption tokens in the database
@@ -87,6 +92,16 @@ public abstract class ResumptionTokenDAO
 	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
 	public abstract ResumptionToken getById(long id) throws DatabaseConfigException;
+	
+
+	/**
+	 * Gets the resumption token from the database with the passed token
+	 *
+	 * @param token The token of the resumption token to get
+	 * @return The resumption token with the passed ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
+	 */
+	public abstract ResumptionToken getByToken(String token) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a resumption token from the database

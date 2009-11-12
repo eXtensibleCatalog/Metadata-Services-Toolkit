@@ -36,6 +36,11 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 	 * A PreparedStatement to get a resumption token from the database by its ID
 	 */
 	private static PreparedStatement psGetById = null;
+	
+	/**
+	 * A PreparedStatement to get a resumption token from the database by its token
+	 */
+	private static PreparedStatement psGetByToken = null;
 
 	/**
 	 * A PreparedStatement to insert a resumption token into the database
@@ -61,6 +66,11 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 	 * Lock to synchronize access to the PreparedStatement to get a resumption token from the database by its ID
 	 */
 	private static Object psGetByIdLock = new Object();
+	
+	/**
+	 * Lock to synchronize access to the PreparedStatement to get a resumption token from the database by its token
+	 */
+	private static Object psGetByTokenLock = new Object();
 
 	/**
 	 * Lock to synchronize access to the PreparedStatement to insert a resumption token into the database
@@ -106,7 +116,8 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 				                                   COL_METADATA_FORMAT + ", " +
 				                                   COL_FROM + ", " +
 				                                   COL_UNTIL + ", " +
-				                                   COL_OFFSET + " " +
+				                                   COL_OFFSET + ", " +
+				                                   COL_TOKEN + " " +
 	                                   "FROM " + RESUMPTION_TOKENS_TABLE_NAME;
 
 					if(log.isDebugEnabled())
@@ -135,6 +146,7 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 					resumptionToken.setFrom(results.getTimestamp(4));
 					resumptionToken.setUntil(results.getTimestamp(5));
 					resumptionToken.setOffset(results.getInt(6));
+					resumptionToken.setToken(results.getString(7));
 
 					// Add the resumption tokens to the list
 					resumptionTokens.add(resumptionToken);
@@ -188,7 +200,8 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 	            	    						   COL_METADATA_FORMAT + ", " +
 	            	    						   COL_FROM + ", " +
 	            	    						   COL_UNTIL + ", " +
-	            	    						   COL_OFFSET + " " +
+	            	    						   COL_OFFSET + ", " +
+	            	    						   COL_TOKEN + " " +
 	                                   "FROM " + RESUMPTION_TOKENS_TABLE_NAME + " " +
 	                                   "WHERE " + COL_RESUMPTION_TOKEN_ID + "=?";
 
@@ -221,6 +234,7 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 					resumptionToken.setFrom(results.getTimestamp(4));
 					resumptionToken.setUntil(results.getTimestamp(5));
 					resumptionToken.setOffset(results.getInt(6));
+					resumptionToken.setToken(results.getString(7));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the resumption token with ID " + id + " in the database.");
@@ -243,6 +257,97 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 			catch (DBConnectionResetException e){
 				log.info("Re executing the query that failed ");
 				return getById(id);
+			}
+			finally
+			{
+				dbConnectionManager.closeResultSet(results);
+			} // end finally(close ResultSet)
+		} // end synchronized
+	} // end method getById(long)
+	
+	@Override
+	public ResumptionToken getByToken(String token) throws DatabaseConfigException
+	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnectionManager.getDbConnection() == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
+		synchronized(psGetByTokenLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Getting the resumption token with token " + token);
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			try
+			{
+				// If the PreparedStatement to get a resumption token by token was not defined, create it
+				if(psGetByToken == null || dbConnectionManager.isClosed(psGetByToken))
+				{
+					// SQL to get the row
+					String selectSql = "SELECT " + COL_RESUMPTION_TOKEN_ID + ", " +
+	            	    						   COL_SET_SPEC + ", " +
+	            	    						   COL_METADATA_FORMAT + ", " +
+	            	    						   COL_FROM + ", " +
+	            	    						   COL_UNTIL + ", " +
+	            	    						   COL_OFFSET + ", " +
+	            	    						   COL_TOKEN + " " +
+	                                   "FROM " + RESUMPTION_TOKENS_TABLE_NAME + " " +
+	                                   "WHERE " + COL_TOKEN + "=?";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get resumption token by toeken\" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetByToken = dbConnectionManager.prepareStatement(selectSql, psGetByToken);
+				} // end if(get by ID PreparedStatement not defined)
+
+				// Set the parameters on the update statement
+				psGetByToken.setString(1, token);
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = dbConnectionManager.executeQuery(psGetByToken);
+
+				// If any results were returned
+				if(results.next())
+				{
+					// The Object which will contain data on the resumption token
+					ResumptionToken resumptionToken = new ResumptionToken();
+
+					// Set the fields on the resumption token
+					resumptionToken.setId(results.getLong(1));
+					resumptionToken.setSetSpec(results.getString(2));
+					resumptionToken.setMetadataFormat(results.getString(3));
+					resumptionToken.setFrom(results.getTimestamp(4));
+					resumptionToken.setUntil(results.getTimestamp(5));
+					resumptionToken.setOffset(results.getInt(6));
+					resumptionToken.setToken(results.getString(7));
+
+					if(log.isDebugEnabled())
+						log.debug("Found the resumption token with token " + token + " in the database.");
+
+					// Return the resumption token
+					return resumptionToken;
+				} // end if(result found)
+
+				if(log.isDebugEnabled())
+					log.debug("The resumption token with token " + token + " was not found in the database.");
+
+				return null;
+			} // end try(get the resumption token)
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the resumption token with token " + token, e);
+
+				return null;
+			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByToken(token);
 			}
 			finally
 			{
@@ -278,8 +383,9 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 				                                                            COL_METADATA_FORMAT + ", " +
 				                                                            COL_FROM + ", " +
 				                                                            COL_UNTIL + ", " +
-				                                                            COL_OFFSET + ") " +
-	            				       "VALUES (?, ?, ?, ?, ?)";
+				                                                            COL_OFFSET + ", " +
+				                                                            COL_TOKEN + ") " +
+	            				       "VALUES (?, ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"insert resumption token\" PreparedStatement from the SQL " + insertSql);
@@ -295,6 +401,7 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 				psInsert.setTimestamp(3, resumptionToken.getFrom());
 				psInsert.setTimestamp(4, resumptionToken.getUntil());
 				psInsert.setInt(5, resumptionToken.getOffset());
+				psInsert.setString(6, resumptionToken.getToken());
 
 				// Execute the insert statement and return the result
 				if(dbConnectionManager.executeUpdate(psInsert) > 0)
@@ -352,7 +459,8 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 				                                                          COL_METADATA_FORMAT + "=?, " +
 				                                                          COL_FROM + "=?, " +
 				                                                          COL_UNTIL + "=?, " +
-				                                                          COL_OFFSET + "=? " +
+				                                                          COL_OFFSET + "=?, " +
+				                                                          COL_TOKEN + "=? " +
 	                                   "WHERE " + COL_RESUMPTION_TOKEN_ID + "=?";
 
 					if(log.isDebugEnabled())
@@ -369,7 +477,8 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 				psUpdate.setTimestamp(3, resumptionToken.getFrom());
 				psUpdate.setTimestamp(4, resumptionToken.getUntil());
 				psUpdate.setInt(5, resumptionToken.getOffset());
-				psUpdate.setLong(6, resumptionToken.getId());
+				psUpdate.setString(6, resumptionToken.getToken());
+				psUpdate.setLong(7, resumptionToken.getId());
 
 				// Execute the update statement and return the result
 				return dbConnectionManager.executeUpdate(psUpdate) > 0;

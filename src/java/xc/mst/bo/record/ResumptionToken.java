@@ -48,6 +48,11 @@ public class ResumptionToken
 	 * The resumption token's offset column
 	 */
 	private int offset = -1;
+	
+	/**
+	 * The token issued to get more records.
+	 */
+	private String token;
 
 	/**
 	 * Gets the resumption token's ID
@@ -168,4 +173,12 @@ public class ResumptionToken
 	{
 		this.offset = offset;
 	} // end method setOffset(int)
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 } // end class ResumptionToken

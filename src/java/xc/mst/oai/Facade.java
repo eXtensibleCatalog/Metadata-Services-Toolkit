@@ -690,7 +690,7 @@ public class Facade
 	 *         These should be included in the response's ListRecords or ListIdentifiers element.
 	 * @throws DatabaseConfigException
 	 */
-	private String handleRecordLists(String from, String until, String metadataPrefix, String set, String resumptionTokenId, boolean getRecords)
+	private String handleRecordLists(String from, String until, String metadataPrefix, String set, String resumptionToken, boolean getRecords)
 		throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
@@ -716,20 +716,20 @@ public class Facade
 
 		// If there was a resumption token, get it from the database
 		ResumptionToken resToken = null;
-		if(resumptionTokenId != null)
+		if(resumptionToken != null)
 		{
 			if(log.isDebugEnabled())
-				log.debug("The request had a resumption token with ID " + resumptionTokenId);
+				log.debug("The request had a resumption token " + resumptionToken);
 
 			// Get the resumption token
-			resToken = resumptionTokenDao.getById(Long.parseLong(resumptionTokenId));
+			resToken = resumptionTokenDao.getByToken(resumptionToken);
 
 			// Return an error if the resumption token could not be found
 			if(resToken == null)
 			{
-				log.warn("Could not find the resumption token with ID " + resumptionTokenId);
+				log.warn("Could not find the resumption token with ID " + resumptionToken);
 
-				LogWriter.addWarning(service.getHarvestOutLogFileName(), "The OAI " + verb + " request contained an unrecognized resumption token \"" + resumptionTokenId + "\".");
+				LogWriter.addWarning(service.getHarvestOutLogFileName(), "The OAI " + verb + " request contained an unrecognized resumption token \"" + resumptionToken + "\".");
 				warningCount++;
 
 				return ErrorBuilder.badResumptionTokenError();
@@ -861,9 +861,6 @@ public class Facade
 				}
 			}
 
-			// Increase the offset by the number of records we returned
-			offset += returnedRecordsCount;
-
 			// If there are more results which need to be returned in a future call, set up a resumption token
 			if(hasMore)
 			{
@@ -873,13 +870,14 @@ public class Facade
 					if(log.isDebugEnabled())
 						log.debug("Updating resumption token with ID " + resToken.getId() + " to have offset " + offset);
 
-					resToken.setOffset(offset);
+					resToken.setOffset(offset + returnedRecordsCount);
+					resToken.setToken(resToken.getId() + "|" + (offset + returnedRecordsCount));
 
 					try
 					{
 						if(resumptionTokenDao.update(resToken))
 						{
-							xml.append(XMLUtil.xmlTag("resumptionToken", "" + resToken.getId(),
+							xml.append(XMLUtil.xmlTag("resumptionToken", "" + resToken.getToken(),
 										new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
 
 							LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and the resumptionToken " + resToken.getId() + " in response to the " + verb + " request.");
@@ -900,7 +898,7 @@ public class Facade
 					newResToken.setFrom(fromDate);
 					newResToken.setUntil(untilDate);
 					newResToken.setSetSpec(set);
-					newResToken.setOffset(offset);
+					newResToken.setOffset(offset + returnedRecordsCount);
 					newResToken.setMetadataFormat(metadataPrefix);
 
 					// Insert the new resumption token, this will set the resumption token's ID as a side effect
@@ -908,7 +906,9 @@ public class Facade
 					{
 						if(resumptionTokenDao.insert(newResToken))
 						{
-							xml.append(XMLUtil.xmlTag("resumptionToken", "" + newResToken.getId(),
+							newResToken.setToken(newResToken.getId() + "|" + (offset + returnedRecordsCount));
+							resumptionTokenDao.update(newResToken);
+							xml.append(XMLUtil.xmlTag("resumptionToken", "" + newResToken.getToken(),
 										new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
 
 							LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and the resumptionToken " + newResToken.getId() + " in response to the " + verb + " request.");
