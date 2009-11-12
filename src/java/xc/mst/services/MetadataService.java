@@ -919,7 +919,7 @@ public abstract class MetadataService
 		}
 		catch (DatabaseConfigException e1)
 		{
-			log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+			log.error("DatabaseConfig exception occured when getting service from database to update error, warning count.", e1);
 
 			return false;
 		}
@@ -942,7 +942,8 @@ public abstract class MetadataService
 			}
 
 		} catch (IndexException ie) {
-			log.error("Index exception occured.", ie);
+			log.error("Index exception occured while querying Solr for number of output records in service " + service.getName() + ".", ie);
+			return false;
 		}
 		
 		try
@@ -951,7 +952,7 @@ public abstract class MetadataService
 		}
 		catch (DataException e)
 		{
-			log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e);
+			log.error("Unable to update the service's warning and error counts due to a Data Exception.", e);
 			return false;
 		}
 		

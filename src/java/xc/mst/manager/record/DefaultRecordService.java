@@ -923,9 +923,7 @@ public class DefaultRecordService extends RecordService
 
 		// If we need to generate an ID, set the record's ID to the next available record ID
 		if(generateNewId) {
-			long id = frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD);
-			log.info("Record Id="+id);
-			record.setId(id);
+			record.setId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD));
 		}
 
 		// If the oaiDatestamp is null, set it to the current time
