@@ -34,6 +34,7 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
+import xc.mst.services.ServiceFactory;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 
@@ -309,7 +310,9 @@ public class TestNormalizationService
 		{
 
 			System.out.println(formatter.format(System.currentTimeMillis()));
-			MetadataService.runService(1, -1);
+			ServiceFactory sf = new ServiceFactory();
+			MetadataService ms = sf.getService(1);
+			ms.runService(1, -1);
 			System.out.println(formatter.format(System.currentTimeMillis()));
 
 			RecordList records = new DefaultRecordService().getAll();

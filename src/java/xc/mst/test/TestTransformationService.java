@@ -23,6 +23,7 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
+import xc.mst.services.ServiceFactory;
 import xc.mst.utils.index.RecordList;
 
 public class TestTransformationService
@@ -219,7 +220,9 @@ public class TestTransformationService
 			// IndexManager.getInstance().maybeReOpen();
 
 			System.out.println(System.currentTimeMillis());
-			MetadataService.runService(2, -1);
+			ServiceFactory sf = new ServiceFactory();
+			MetadataService ms = sf.getService(2);
+			ms.runService(2, -1);
 			System.out.println(System.currentTimeMillis());
 
 			// TODO removed IndexManager

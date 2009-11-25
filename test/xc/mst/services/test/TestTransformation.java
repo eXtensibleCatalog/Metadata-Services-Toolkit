@@ -30,6 +30,7 @@ import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
+import xc.mst.services.ServiceFactory;
 import xc.mst.utils.XCRecord;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
@@ -150,7 +151,9 @@ public class TestTransformation {
 		{
 
 			// Run Transformation Service
-			MetadataService.runService(transformationServiceId, -1);
+			ServiceFactory sf = new ServiceFactory();
+			MetadataService ms = sf.getService(transformationServiceId);
+			ms.runService(transformationServiceId, -1);;
 			SolrIndexManager.getInstance().commitIndex();
 			Thread.sleep(1000);
 			

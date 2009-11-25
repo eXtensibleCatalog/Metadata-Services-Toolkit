@@ -33,11 +33,14 @@ import org.jdom.transform.JDOMSource;
 import org.xml.sax.InputSource;
 
 import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.record.DefaultRecordService;
+import xc.mst.manager.record.RecordService;
 import xc.mst.utils.MarcXmlRecord;
 import xc.mst.utils.XCRecord;
 import xc.mst.utils.index.SolrIndexManager;
@@ -85,6 +88,8 @@ public class TransformationService extends MetadataService
 
 	private HashMap<String, Element> linkedCreatorFields = new HashMap<String, Element>();
 	
+	private static RecordService recordService = new DefaultRecordService();
+	
 	/**
 	 * Org code used 
 	 */
@@ -128,7 +133,100 @@ public class TransformationService extends MetadataService
 	}
 
 	@Override
-	protected List<Record> processRecord(Record record)
+	public void  processRecord(Record processMe) throws Exception {
+		// If the record was deleted, delete and reprocess all records that were processed from it
+		if(processMe.getDeleted())
+		{
+			List<Record> successors = getByProcessedFrom(processMe);
+
+			// If there are successors then the record exist and needs to be deleted. Since we are
+			// deleting the record, we need to decrement the count.
+			if (successors != null && successors.size() > 0) {
+				inputRecordCount--;
+			}
+			
+			// Handle reprocessing of successors
+			for(Record successor : successors)
+			{
+				// Set the successors ad deleted
+				successor.setDeleted(true);
+			
+				// Schedule the services
+				reprocessRecord(successor);
+				recordService.update(successor);
+			}
+			
+			// Mark the record as having been processed by this service
+			processMe.addProcessedByService(service);
+			processMe.removeInputForService(service);
+			recordService.update(processMe);
+		
+		} 
+
+		// Get the results of processing the record
+		List<Record> results = convertRecord(processMe);
+		
+		boolean updatedInputRecord = false;
+		for(Record outgoingRecord : results)
+		{
+			// Mark the output record as a successor of the input record
+			if(!processMe.getSuccessors().contains(outgoingRecord))
+				processMe.addSuccessor(outgoingRecord);
+
+			// Mark the input record as a predecessor of the output record
+			outgoingRecord.addProcessedFrom(processMe);
+			
+			// Mark the record as not coming from a provider
+			outgoingRecord.setProvider(null);
+
+			// Add all sets the outgoing record belongs to to the service's list of output sets
+			for(Set outputSet : outgoingRecord.getSets())
+				service.addOutputSet(outputSet);
+
+			if(outputSet != null)
+				outgoingRecord.addSet(outputSet);
+
+			// Check whether or not this record already exists in the database
+			Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
+
+			// If the current record is a new record, insert it
+			if(oldRecord == null) {
+				insertNewRecord(outgoingRecord);
+			}
+			// Otherwise we've seen the record before.  Update it as appropriate
+			// If outgoingRecord's deleted flag is set to true, the record will
+			// be deleted.
+			else {
+				updateExistingRecord(outgoingRecord, oldRecord);
+				
+				// If output record exist then it means that the incoming record is an updated record
+				// So we set updatedInputRecord to true. This will be used to determine whether the input
+				// record is new record or updated record.
+				updatedInputRecord = true;
+			}
+		} // end loop over processed records
+		
+		// Mark the input record as done(processed by this service) only when its results are not empty.
+		// If results are empty then it means some exception occurred and no output records created
+		if (results.size() > 0) { 
+			// Mark the record as having been processed by this service
+			processMe.addProcessedByService(service);
+			processMe.removeInputForService(service);
+			recordService.update(processMe);
+		} else if (!processMe.getDeleted()) {
+			unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
+		}
+		
+		// If the input record is a new record then increment the processed record count
+		if (!updatedInputRecord  && !processMe.getDeleted() && results.size() > 0) {
+			inputRecordCount++;
+		}
+		
+		processedRecordCount++;
+	
+	}
+	
+	private List<Record> convertRecord(Record record)
 	{
 		// If the record was deleted, don't process it
 		if(record.getDeleted())
@@ -410,7 +508,7 @@ public class TransformationService extends MetadataService
 			if(log.isDebugEnabled())
 				log.debug("Adding warnings and errors to the record.");
 			
-			addErrorsToRecord(record, errors);
+			record.setErrors(errors);
 			return results;
 		}
 		
@@ -2449,7 +2547,7 @@ public class TransformationService extends MetadataService
 						
 					}
 				
-					// Increment the artificial linking ID so the next 700 gets mapped to a seperate work element
+					// Increment the artificial linking ID so the next 700 gets mapped to a separate work element
 					artificialLinkingId++;
 				}
 				else
@@ -5838,5 +5936,9 @@ public class TransformationService extends MetadataService
 	protected String getOrganizationCode() {
 
 		return orgCode;
+	}
+	
+	public void setInputRecordCount(int inputRecordCount) {
+		this.inputRecordCount = inputRecordCount;
 	}
 }

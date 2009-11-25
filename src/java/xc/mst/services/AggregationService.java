@@ -28,6 +28,7 @@ import org.jdom.xpath.XPath;
 import org.xml.sax.InputSource;
 
 import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Item;
@@ -43,11 +44,13 @@ import xc.mst.manager.record.DefaultExpressionService;
 import xc.mst.manager.record.DefaultHoldingsService;
 import xc.mst.manager.record.DefaultItemService;
 import xc.mst.manager.record.DefaultManifestationService;
+import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.DefaultWorkService;
 import xc.mst.manager.record.ExpressionService;
 import xc.mst.manager.record.HoldingsService;
 import xc.mst.manager.record.ItemService;
 import xc.mst.manager.record.ManifestationService;
+import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.XcRecordSplitter;
@@ -165,6 +168,8 @@ public class AggregationService extends MetadataService
 	 * Used to convert between jdom Objects and Strings
 	 */
 	private static final XMLOutputter outputter = new XMLOutputter();
+	
+	private static RecordService recordService = new DefaultRecordService();
 
 	/**
 	 * Construct a NormalizationService Object
@@ -231,9 +236,101 @@ public class AggregationService extends MetadataService
 			throw new ServiceValidationException("Service configuration file is missing the required section: MANIFESTATION MERGE FIELDS");		
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	protected List<Record> processRecord(Record record)
+	public void  processRecord(Record processMe) throws Exception {
+		// If the record was deleted, delete and reprocess all records that were processed from it
+		if(processMe.getDeleted())
+		{
+			List<Record> successors = getByProcessedFrom(processMe);
+
+			// If there are successors then the record exist and needs to be deleted. Since we are
+			// deleting the record, we need to decrement the count.
+			if (successors != null && successors.size() > 0) {
+				inputRecordCount--;
+			}
+			
+			// Handle reprocessing of successors
+			for(Record successor : successors)
+			{
+				// Set the successors ad deleted
+				successor.setDeleted(true);
+			
+				// Schedule the services
+				reprocessRecord(successor);
+				recordService.update(successor);
+			}
+			
+			// Mark the record as having been processed by this service
+			processMe.addProcessedByService(service);
+			processMe.removeInputForService(service);
+			recordService.update(processMe);
+		
+		} 
+
+		// Get the results of processing the record
+		List<Record> results = convertRecord(processMe);
+		
+		boolean updatedInputRecord = false;
+		for(Record outgoingRecord : results)
+		{
+			// Mark the output record as a successor of the input record
+			if(!processMe.getSuccessors().contains(outgoingRecord))
+				processMe.addSuccessor(outgoingRecord);
+
+			// Mark the input record as a predecessor of the output record
+			outgoingRecord.addProcessedFrom(processMe);
+			
+			// Mark the record as not coming from a provider
+			outgoingRecord.setProvider(null);
+
+			// Add all sets the outgoing record belongs to to the service's list of output sets
+			for(Set outputSet : outgoingRecord.getSets())
+				service.addOutputSet(outputSet);
+
+			if(outputSet != null)
+				outgoingRecord.addSet(outputSet);
+
+			// Check whether or not this record already exists in the database
+			Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
+
+			// If the current record is a new record, insert it
+			if(oldRecord == null) {
+				insertNewRecord(outgoingRecord);
+			}
+			// Otherwise we've seen the record before.  Update it as appropriate
+			// If outgoingRecord's deleted flag is set to true, the record will
+			// be deleted.
+			else {
+				updateExistingRecord(outgoingRecord, oldRecord);
+				
+				// If output record exist then it means that the incoming record is an updated record
+				// So we set updatedInputRecord to true. This will be used to determine whether the input
+				// record is new record or updated record.
+				updatedInputRecord = true;
+			}
+		} // end loop over processed records
+		
+		// Mark the input record as done(processed by this service) only when its results are not empty.
+		// If results are empty then it means some exception occurred and no output records created
+		if (results.size() > 0) { 
+			// Mark the record as having been processed by this service
+			processMe.addProcessedByService(service);
+			processMe.removeInputForService(service);
+			recordService.update(processMe);
+		} else if (!processMe.getDeleted()) {
+			unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
+		}
+		
+		// If the input record is a new record then increment the processed record count
+		if (!updatedInputRecord  && !processMe.getDeleted() && results.size() > 0) {
+			inputRecordCount++;
+		}
+		
+		processedRecordCount++;
+	
+	}
+	
+	private List<Record> convertRecord(Record record)
 	{
 		try
 		{
@@ -1885,4 +1982,10 @@ public class AggregationService extends MetadataService
 		return works;
 	} // end method mergeWorksInList
 	 */
+
+	
+	public void setInputRecordCount(int inputRecordCount) {
+		this.inputRecordCount = inputRecordCount;
+	}
+
 } // end class AggregationService

@@ -41,6 +41,7 @@ import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
+import xc.mst.services.ServiceFactory;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
@@ -76,7 +77,7 @@ public class TestServices
 	private static File unprocessedRecordsDir = new File("C:\\NormalizationTestData\\input");
 	private static File processedRecordsDir = new File("C:\\NormalizationTestData\\output");
 
-	private static int serviceId = 2;
+	private static int serviceId = 1;
 
 	/**
 	 * Builds the XML Document based on the record's OAI XML
@@ -99,7 +100,9 @@ public class TestServices
 			SolrIndexManager.getInstance().commitIndex();
 			Thread.sleep(2000);
 			System.out.println(formatter.format(new Date()));
-			MetadataService.runService(serviceId, -1);
+			ServiceFactory sf = new ServiceFactory();
+			MetadataService ms = sf.getService(serviceId);
+			ms.runService(serviceId, -1);
 			System.out.println(formatter.format(new Date()));
 			Thread.sleep(2000);
 			SolrIndexManager.getInstance().commitIndex();
