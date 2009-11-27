@@ -241,7 +241,7 @@ public class AggregationService extends MetadataService
 		// If the record was deleted, delete and reprocess all records that were processed from it
 		if(processMe.getDeleted())
 		{
-			List<Record> successors = getByProcessedFrom(processMe);
+			List<Record> successors =  recordService.getSuccessorsCreatedByServiceId(processMe.getId(), service.getId());
 
 			// If there are successors then the record exist and needs to be deleted. Since we are
 			// deleting the record, we need to decrement the count.

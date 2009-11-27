@@ -137,7 +137,7 @@ public class TransformationService extends MetadataService
 		// If the record was deleted, delete and reprocess all records that were processed from it
 		if(processMe.getDeleted())
 		{
-			List<Record> successors = getByProcessedFrom(processMe);
+			List<Record> successors =  recordService.getSuccessorsCreatedByServiceId(processMe.getId(), service.getId());
 
 			// If there are successors then the record exist and needs to be deleted. Since we are
 			// deleting the record, we need to decrement the count.
@@ -396,7 +396,6 @@ public class TransformationService extends MetadataService
 				transformedRecord = process810(originalRecord, transformedRecord);
 				transformedRecord = process811(originalRecord, transformedRecord);
 				transformedRecord = process830(originalRecord, transformedRecord);
-				transformedRecord = process843(originalRecord, transformedRecord);
 				transformedRecord = process852(originalRecord, transformedRecord);
 				transformedRecord = process856(originalRecord, transformedRecord);
 				transformedRecord = process866(originalRecord, transformedRecord);
@@ -428,6 +427,7 @@ public class TransformationService extends MetadataService
 				// Run the transformation steps
 				// Each one processes a different MARC XML field and adds the appropriate
 				// XC fields to transformedRecord based on the field it processes.
+				transformedRecord = holdingsProcess843(originalRecord, transformedRecord);
 				transformedRecord = holdingsProcess506(originalRecord, transformedRecord);
 				transformedRecord = holdingsProcess852(originalRecord, transformedRecord);
 				transformedRecord = holdingsProcess856(originalRecord, transformedRecord);
@@ -440,7 +440,7 @@ public class TransformationService extends MetadataService
 
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to delete them
-			List<Record> existingRecords = getByProcessedFrom(record);
+			List<Record> existingRecords = recordService.getSuccessorsCreatedByServiceId(record.getId(), service.getId());
 
 			
 			// If there was already a processed record for the record we just processed, delete it
@@ -3635,7 +3635,7 @@ public class TransformationService extends MetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process843(MarcXmlRecord transformMe, XCRecord transformInto)
+	private XCRecord holdingsProcess843(MarcXmlRecord transformMe, XCRecord transformInto)
 	{
 		// Create an xc:description based on the 843 abcdefmn values
 		return processFieldBasic(transformMe, transformInto, "843", "abcdefmn", "description", XCRecord.XC_NAMESPACE, null, FrbrLevel.HOLDINGS);
@@ -3645,7 +3645,7 @@ public class TransformationService extends MetadataService
 	/**
 	 * Processes the 852 field from the MarcXmlRecord we're transforming.
 	 * The abcefg subfields become the xc:location field at the holdings FRBR level.
-	 * The hijklmpqstxz2368 subfields become the xc:callNumber field at the holdings FRBR level.
+	 * The hijklm subfields become the xc:callNumber field at the holdings FRBR level.
 	 *
 	 * @param transformMe The MARC XML record we're transforming
 	 * @param transformInto The XC record which will store the transformed version of the record
@@ -4483,8 +4483,8 @@ public class TransformationService extends MetadataService
 
 		// The subfields of the 852 datafield we're processing
 		String locationTargetSubfields = "abcefg";
-		String callNumberTargetSubfields = "hijklmpqstz2368";
-		String textualHoldingsTargetSubfields = "axz";
+		String callNumberTargetSubfields = "hijklm";
+		String textualHoldingsTargetSubfields = "az";
 
 		// If there were matching elements, return the unmodified XC record
 		if(elements.size() == 0)
@@ -4515,7 +4515,7 @@ public class TransformationService extends MetadataService
 
 			// A list of the values of the textual holdings elements, which are taken from
 			// the 866, 867, and 868 datafields immediately following the current datafield.
-			ArrayList<String> textualHoldings = new ArrayList<String>();
+			ArrayList<Element> textualHoldingsElements = new ArrayList<Element>();
 
 			Element sibling = MarcXmlRecord.getSiblingOfField(element);
 			String siblingTag = null;
@@ -4540,8 +4540,17 @@ public class TransformationService extends MetadataService
 						textualHoldingsBuilder.append(siblingSubfield.getText() + " ");
 				}
 
-				if(textualHoldingsBuilder.length() > 0)
-					textualHoldings.add(textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1));
+				if(textualHoldingsBuilder.length() > 0) {
+					if (siblingTag.equals("866")) {
+						textualHoldingsElements.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1)).setAttribute(new Attribute("type","Basic Bibliographic Unit")));
+					}
+					if (siblingTag.equals("867")) {
+						textualHoldingsElements.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1)).setAttribute(new Attribute("type","Supplementary material")));
+					}
+					if (siblingTag.equals("868")) {
+						textualHoldingsElements.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1)).setAttribute(new Attribute("type","Indexes")));
+					}
+				}
 
 				sibling = MarcXmlRecord.getSiblingOfField(sibling);
 				if(sibling != null)
@@ -4560,9 +4569,9 @@ public class TransformationService extends MetadataService
 					holdingsContent.add(new Element("location", XCRecord.XC_NAMESPACE).setText(locationValue));
 				if(callNumberValue.length() > 0)
 					holdingsContent.add(new Element("callNumber", XCRecord.XC_NAMESPACE).setText(callNumberValue));
-				for(String textualHolding : textualHoldings)
-					holdingsContent.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHolding));
-
+				for(Element textualHoldingElement : textualHoldingsElements)
+					holdingsContent.add(textualHoldingElement);
+				
 				transformInto.addHoldingsElement(holdingsContent);
 			}
 		}
@@ -4573,7 +4582,7 @@ public class TransformationService extends MetadataService
 
 	/**
 	 * Processes the 856 field from the MarcXmlRecord we're transforming.
-	 * The abcdfhijklmnopqrstuvwxyz23 subfields become the a different field depending on the 2nd indicator.
+	 * The abcdfhijklmnopqrstuvyz23 subfields become the a different field depending on the 2nd indicator.
 	 * If 2nd indicator is 0, blank, or 8, map to manifestation level dcterms:identifier
 	 * If 2nd indicator is 1, map to expression level dcterms:hasVersion
 	 * If 2nd indicator is 2, map to expression level dc:relation
@@ -4589,7 +4598,7 @@ public class TransformationService extends MetadataService
 		List<Element> elements = transformMe.getDataFields("856");
 
 		// The subfields we're processing
-		String targetSubfields = "abcdfhijklmnopqrstuvwxyz23";
+		String targetSubfields = "abcdfhijklmnopqrstuvyz23";
 
 		// If there were no matching elements, return the unmodified XC record
 		if(elements.size() == 0)

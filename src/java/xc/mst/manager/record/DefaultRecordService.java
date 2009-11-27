@@ -580,14 +580,28 @@ public class DefaultRecordService extends RecordService
 	} // end method getByProcessedFrom(long)
 	
 	@Override
-	public RecordList getByProcessedFromIncludingDeletedRecords(long processedFromId) throws IndexException
+	public RecordList getSuccessorsCreatedByServiceId(long recordId, long serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
-			log.debug("Getting all records that were processed from the record with ID " + processedFromId);
+			log.debug("Getting successor of record Id " + recordId + " that were created by service id" + serviceId);
 
 		// Create a query to get the Documents with the requested input for service IDs
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_PROCESSED_FROM + ":" + Long.toString(processedFromId));
+		query.setQuery(FIELD_PROCESSED_FROM + ":" + Long.toString(recordId) + " AND " + FIELD_DELETED + ":" + "false" + " AND " + FIELD_SERVICE_ID + ":" + serviceId);
+
+		// Return the list of results
+		return new RecordList(query);
+	} // end method getByProcessedFrom(long)
+	
+	@Override
+	public RecordList getSuccessorsCreatedByServiceIdIncludingDeletedRecords(long recordId, long serviceId) throws IndexException
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting all records that were processed from the record with ID " + recordId);
+
+		// Create a query to get the Documents with the requested input for service IDs
+		SolrQuery query = new SolrQuery();
+		query.setQuery(FIELD_PROCESSED_FROM + ":" + Long.toString(recordId) + " AND " + FIELD_SERVICE_ID + ":" + serviceId);
 
 		// Return the list of results
 		return new RecordList(query);

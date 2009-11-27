@@ -154,7 +154,7 @@ public class NormalizationService extends MetadataService
 		// If the record was deleted, delete and reprocess all records that were processed from it
 		if(processMe.getDeleted())
 		{
-			List<Record> successors = getByProcessedFrom(processMe);
+			List<Record> successors = recordService.getSuccessorsCreatedByServiceId(processMe.getId(), service.getId());
 
 			// If there are successors then the record exist and needs to be deleted. Since we are
 			// deleting the record, we need to decrement the count.
@@ -431,7 +431,7 @@ public class NormalizationService extends MetadataService
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to update them
 			// instead of inserting a new Record
-			RecordList existingRecords = getByProcessedFromIncludingDeletedRecords(record);
+			RecordList existingRecords = recordService.getSuccessorsCreatedByServiceIdIncludingDeletedRecords(record.getId(), service.getId());
 			
 			// If there was already a processed record for the record we just processed, update it
 			if(existingRecords.size() > 0)

@@ -77,7 +77,7 @@ public class TestServices
 	private static File unprocessedRecordsDir = new File("C:\\NormalizationTestData\\input");
 	private static File processedRecordsDir = new File("C:\\NormalizationTestData\\output");
 
-	private static int serviceId = 1;
+	private static int serviceId = 2;
 
 	/**
 	 * Builds the XML Document based on the record's OAI XML

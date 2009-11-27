@@ -666,30 +666,6 @@ public abstract class MetadataService
 	{
 		return formatDao.getByName(name);
 	}
-
-	/**
-	 * Gets all records that are successors of the record with the passed ID
-	 *
-	 * @param record The record whose successors we're getting
-	 * @return A list of records that are successors of the record with the passed ID
-	 * @throws IndexException
-	 */
-	protected RecordList getByProcessedFrom(Record record) throws IndexException
-	{
-		return recordService.getByProcessedFrom(record.getId());
-	}
-
-	/**
-	 * Gets all records including deleted records that are successors of the record with the passed ID
-	 *
-	 * @param record The record whose successors we're getting
-	 * @return A list of records that are successors of the record with the passed ID
-	 * @throws IndexException
-	 */
-	protected RecordList getByProcessedFromIncludingDeletedRecords(Record record) throws IndexException
-	{
-		return recordService.getByProcessedFromIncludingDeletedRecords(record.getId());
-	}
 	
 	/**
 	 * Gets all records that contain the passed trait

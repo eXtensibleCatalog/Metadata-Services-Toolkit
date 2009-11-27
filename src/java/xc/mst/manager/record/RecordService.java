@@ -296,6 +296,16 @@ public abstract class RecordService
 	 * @return A list all records in the index contained in the set with the passed name
 	 */
 	public abstract RecordList getBySetName(String setName) throws IndexException;
+	
+	/**
+	 * Get successors of given records id created by specified service id
+	 * 
+	 * @param recordId Id of record 
+	 * @param serviceId, id of service created the successors 
+	 * @return Successor records
+	 * @throws IndexException
+	 */
+	public abstract RecordList getSuccessorsCreatedByServiceId(long recordId, long serviceId) throws IndexException;
 
 	/**
 	 * Gets all records from the index contained in the set with the passed setSpec
@@ -413,7 +423,7 @@ public abstract class RecordService
 	 * @param processedFromId The ID of the original record whose processed Records we're getting
 	 * @return A list of all records in the index which have been processed from the specified record
 	 */
-	public abstract RecordList getByProcessedFromIncludingDeletedRecords(long processedFromId) throws IndexException;
+	public abstract RecordList getSuccessorsCreatedByServiceIdIncludingDeletedRecords(long recordId, long serviceId) throws IndexException;
 
 	
 	/**
