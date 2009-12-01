@@ -41,6 +41,7 @@ import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.ServiceUtil;
 
 /**
  * Provides implementation for service methods to interact with the services in the MST
@@ -450,7 +451,7 @@ public class DefaultServicesService implements ServicesService
     		service.setServiceConfig(buffer.toString());
     		servicesDao.update(service);
 
-    		MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
+    		ServiceUtil.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
     	}
     	catch(DataException e)
     	{
@@ -805,7 +806,7 @@ public class DefaultServicesService implements ServicesService
     		servicesDao.update(service);
 
     		// TODO what does below line do? Is it necessary? Should it be here or moved to Service Reprocess thread?
-    		MetadataService.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
+    		ServiceUtil.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
 
     		// Schedule a job to reprocess records through new service
     		try {
