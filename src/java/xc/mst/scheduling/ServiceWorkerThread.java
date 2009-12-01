@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
 import xc.mst.services.MetadataService;
-import xc.mst.services.ServiceFactory;
+import xc.mst.services.MetadataServiceFactory;
 
 /**
  * A Thread which runs a service
@@ -41,6 +41,11 @@ public class ServiceWorkerThread extends WorkerThread
 	private int outputSetId = -1;
 
 	/**
+	 * Reference to the running service
+	 */
+	private static MetadataService runningService;
+	
+	/**
 	 * Sets the ID of the harvest schedule to be run
 	 *
 	 * @param newId The ID of the harvest schedule to be run
@@ -66,22 +71,22 @@ public class ServiceWorkerThread extends WorkerThread
 	 */
 	public void run()
 	{
-		try
-		{
+		try {
+			
 			if(log.isDebugEnabled())
 				log.debug("Invoking the service with ID " + serviceId + " and adding the results to the set with ID " + outputSetId + ".");
 			
-			ServiceFactory serviceFactory = new ServiceFactory();
-			MetadataService metadataService = serviceFactory.getService(serviceId);
-			metadataService.runService(serviceId, outputSetId);
+			runningService = MetadataServiceFactory.getService(serviceId);
+			runningService.runService(serviceId, outputSetId);
 		} // end try(run the service)
-		catch(Exception e)
-		{
+		catch(Exception e){
+			
 			log.error("An error occurred while running the service with ID " + serviceId, e);
-			ServiceFactory.getRunningService().setStatus(Constants.STATUS_SERVICE_ERROR);
-			ServiceFactory.getRunningService().sendReportEmail("An error occurred while running the service with ID " + serviceId);
+			runningService.setStatus(Constants.STATUS_SERVICE_ERROR);
+			runningService.sendReportEmail("An error occurred while running the service with ID " + serviceId);
+			
 		} // end catch(Exception)
-		finally{
+		finally {
 			Scheduler.setJobCompletion();
 		}
 	} // end method run()
@@ -92,7 +97,7 @@ public class ServiceWorkerThread extends WorkerThread
 	public void cancel() {
 		
 		log.info("Canceling service with id:" + serviceId);
-		ServiceFactory.getRunningService().setCanceled(true);
+		runningService.setCanceled(true);
 	}
 
 	/**
@@ -100,7 +105,7 @@ public class ServiceWorkerThread extends WorkerThread
 	 */
 	public void pause() {
 		log.info("Pausing service with id:" + serviceId);
-		ServiceFactory.getRunningService().setPaused(true);
+		runningService.setPaused(true);
 		
 	}
 
@@ -110,7 +115,7 @@ public class ServiceWorkerThread extends WorkerThread
 	public void proceed() {
 		
 		log.info("Resuming service with id:" + serviceId);
-		ServiceFactory.getRunningService().setPaused(false);
+		runningService.setPaused(false);
 		
 	}
 
@@ -119,7 +124,7 @@ public class ServiceWorkerThread extends WorkerThread
 	 */
 	public String getJobName() {
 	
-		return ServiceFactory.getRunningService().getServiceName();
+		return runningService.getServiceName();
 	}
 
 	/**
@@ -127,8 +132,8 @@ public class ServiceWorkerThread extends WorkerThread
 	 */
 	public String getJobStatus() {
 
-		if (ServiceFactory.getRunningService() != null)
-			return ServiceFactory.getRunningService().getServiceStatus();
+		if (runningService != null)
+			return runningService.getServiceStatus();
 		else
 			return Constants.STATUS_SERVICE_NOT_RUNNING;
 
@@ -145,12 +150,17 @@ public class ServiceWorkerThread extends WorkerThread
 	@Override
 	public int getProcessedRecordCount() {
 	
-		return ServiceFactory.getRunningService().getProcessedRecordCount();
+		return runningService.getProcessedRecordCount();
 	}
 
 	@Override
 	public int getTotalRecordCount() {
 		
-		return ServiceFactory.getRunningService().getTotalRecordCount();
+		return runningService.getTotalRecordCount();
 	}	
+	
+	public static MetadataService getRunningService(){
+		
+		return runningService;
+	}
 } // end class ServiceWorkerThread
