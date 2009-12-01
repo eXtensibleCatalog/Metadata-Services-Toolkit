@@ -21,8 +21,9 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.scheduling.ServiceWorkerThread;
 import xc.mst.services.MetadataService;
-import xc.mst.services.ServiceFactory;
+import xc.mst.services.MetadataServiceFactory;
 
 /**
  * List of Records retrieved from Solr.
@@ -143,7 +144,7 @@ public class Records extends AbstractList<Record>
 					StringBuffer buf = new StringBuffer();
 					buf.append(query.getQuery());
 					
-					for(String identifier: ServiceFactory.getRunningService().getUnprocessedErrorRecordIdentifiers()) {
+					for(String identifier: ServiceWorkerThread.getRunningService().getUnprocessedErrorRecordIdentifiers()) {
 						buf.append(" AND " ).append("-").append(RecordService.FIELD_OAI_IDENTIFIER).append(":").append(identifier.replaceAll(":", "\\\\:"));
 					}
 
@@ -156,7 +157,7 @@ public class Records extends AbstractList<Record>
 					docs = indexMgr.getDocumentList(query);
 					
 					// Empty the error list so that redundant error record OAI identifiers are not added to query
-					ServiceFactory.getRunningService().setUnprocessedErrorRecordIdentifiers(new ArrayList<String>());
+					ServiceWorkerThread.getRunningService().setUnprocessedErrorRecordIdentifiers(new ArrayList<String>());
 					
 					if (currentOffset == 0) {
 						return service.getRecordFromDocument(docs.get(index));

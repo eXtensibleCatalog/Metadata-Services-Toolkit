@@ -41,7 +41,7 @@ import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
-import xc.mst.services.ServiceFactory;
+import xc.mst.services.MetadataServiceFactory;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
@@ -100,7 +100,7 @@ public class TestServices
 			SolrIndexManager.getInstance().commitIndex();
 			Thread.sleep(2000);
 			System.out.println(formatter.format(new Date()));
-			ServiceFactory sf = new ServiceFactory();
+			MetadataServiceFactory sf = new MetadataServiceFactory();
 			MetadataService ms = sf.getService(serviceId);
 			ms.runService(serviceId, -1);
 			System.out.println(formatter.format(new Date()));
