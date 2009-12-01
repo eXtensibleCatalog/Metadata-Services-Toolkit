@@ -10,10 +10,7 @@
 package xc.mst.services;
 
 
-import java.io.File;
 import java.net.InetAddress;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,6 +53,7 @@ import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.ServiceUtil;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
@@ -68,6 +66,7 @@ import xc.mst.utils.index.SolrIndexManager;
  *
  * @author Eric Osisek
  */
+
 public abstract class MetadataService
 {
 	/**
@@ -81,9 +80,9 @@ public abstract class MetadataService
 	protected Service service = null;
 
 	/**
-	 * The name of this service
+	 * The processing directives for this service
 	 */
-	private String serviceName = null;
+	private List<ProcessingDirective> processingDirectives = null;
 
 	/**
 	 * The number of warnings in running the current service
@@ -126,6 +125,21 @@ public abstract class MetadataService
 	private static XcIdentifierForFrbrElementDAO frbrLevelIdDao = new DefaultXcIdentifierForFrbrElementDAO();
 
 	/**
+	 * Data access object for getting user info from groups
+	 */
+	UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
+	
+	/**
+	 * Data access object for getting processing directives
+	 */
+	private static ProcessingDirectiveDAO processingDirectiveDao = new DefaultProcessingDirectiveDAO();
+	
+	/**
+	 * Data access object for getting groups
+	 */
+	GroupDAO groupDAO = new DefaultGroupDAO();
+
+	/**
 	 * Manager for getting, inserting and updating records
 	 */
 	private static RecordService recordService = new DefaultRecordService();
@@ -136,9 +150,9 @@ public abstract class MetadataService
 	private static JobService jobService = new DefaultJobService();
 
 	/**
-	 * The processing directives for this service
+	 * Used to send email reports
 	 */
-	private List<ProcessingDirective> processingDirectives = null;
+	private Emailer mailer = new Emailer();
 
 	/**
 	 * A list of services to run after this service's processing completes
@@ -156,8 +170,6 @@ public abstract class MetadataService
 	 * The flag for indicating service operation pause.
 	 */
 	private boolean isPaused;
-
-
 
 	/**
 	 * The number of records processed by the service so far
@@ -179,36 +191,21 @@ public abstract class MetadataService
 	 */
 	protected Set outputSet;
 
-	/**
-	 * Used to send email reports
-	 */
-	private Emailer mailer = new Emailer();
-
-	/**
-	 * Data access object for getting user info from groups
-	 */
-	UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
-	
-	/**
-	 * Data access object for getting processing directives
-	 */
-	private static ProcessingDirectiveDAO processingDirectiveDao = new DefaultProcessingDirectiveDAO();
-	
 	/** Stores the unprocessed record identifiers */
 	protected ArrayList<String> unprocessedErrorRecordIdentifiers = new ArrayList<String>();
 	
 	/**
-	 * Data access object for getting groups
+	 * 
+	 * @param serviceId
+	 * @param outputSetId
 	 */
-	GroupDAO groupDAO = new DefaultGroupDAO();
-	
-	public final boolean runService(int serviceId, int outputSetId) {
+	public final void runService(int serviceId, int outputSetId) {
 		
 		try {
+			
 			// Set the service's ID and name
-			setServiceId(serviceId);
-			setServiceName(service.getName());
-	
+			service = serviceDao.getById(serviceId);
+			
 			// Load the service's configuration
 			loadConfiguration(service.getServiceConfig());
 	
@@ -223,12 +220,13 @@ public abstract class MetadataService
 			if(log.isDebugEnabled())
 				log.debug("Validating the Metadata Service with ID " + serviceId + ".");
 	
-			checkService(Constants.STATUS_SERVICE_RUNNING, true);
+			ServiceUtil.checkService(service,Constants.STATUS_SERVICE_RUNNING, true);
 	
 			if(log.isDebugEnabled())
 				log.debug("Running the Metadata Service with ID " + serviceId + ".");
 	
 			setOutputSet(setDao.getById(outputSetId));
+			
 			// Run the service's processRecords method
 			boolean success = processRecords();
 	
@@ -239,7 +237,7 @@ public abstract class MetadataService
 				setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
 	
 			sendReportEmail(null);
-			return success;
+			
 		} catch (DatabaseConfigException dce) {
 				log.error("Exception occurred while invoking the service's processRecords method.", dce);
 
@@ -254,11 +252,10 @@ public abstract class MetadataService
 				{
 					service = serviceDao.getById(service.getId());
 				}
-				catch (DatabaseConfigException e1)
-				{
+				catch (DatabaseConfigException e1){
+					
 					log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
 
-					return false;
 				}
 
 				// Increase the warning and error counts as appropriate, then update the provider
@@ -273,13 +270,9 @@ public abstract class MetadataService
 					log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
 				}
 
-				return false;
-
 		}
 	}
 		
-
-
 	/**
 	 * This method gets called to give the service the service specific configuration
 	 * which was defined for it in its configuration file.
@@ -287,8 +280,6 @@ public abstract class MetadataService
 	 * @param config The service specific configuration defined in the service's configuration file
 	 */
 	public abstract void loadConfiguration(String config);
-
-
 
 	/**
 	 * The MST calls this method to signal the Metadata Service to process the records.  Depending on the
@@ -331,7 +322,11 @@ public abstract class MetadataService
 				// If the service is not canceled and not paused then continue
 				if(!isCanceled && !isPaused)
 				{
+					
+					// Process the record
 					processRecord(processMe);
+					
+					// Commit after 100k records
 					if(processedRecordCount % 100000 == 0)
 					{
 						SolrIndexManager.getInstance().commitIndex();
@@ -345,17 +340,21 @@ public abstract class MetadataService
 						endTime = new Date().getTime();
 						timeDiff = endTime - startTime;
 						
-						LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far. Time taken = " + (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " + (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " + (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  ");
+						LogWriter.addInfo(service.getServicesLogFileName(), 
+								"Processed " + processedRecordCount + " records so far. Time taken = " 
+								+ (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " 
+								+ (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " 
+								+ (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  "
+						);
 						
 						startTime = new Date().getTime();
 					}
 				}
-				else
-					{
+				else {
 						// If canceled the stop processing records
 						if(isCanceled)
 							{
-								LogWriter.addInfo(service.getServicesLogFileName(), "Cancelled Service " + serviceName);
+								LogWriter.addInfo(service.getServicesLogFileName(), "Cancelled Service " + service.getName());
 								LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
 								// Update database with status of service
 								setStatus(Constants.STATUS_SERVICE_CANCELED);
@@ -364,7 +363,7 @@ public abstract class MetadataService
 						// If paused then wait
 						else if(isPaused)
 							{
-								LogWriter.addInfo(service.getServicesLogFileName(), "Paused Service " + serviceName);
+								LogWriter.addInfo(service.getServicesLogFileName(), "Paused Service " + service.getName());
 								// Update database with status of service
 								setStatus(Constants.STATUS_SERVICE_PAUSED);
 
@@ -376,7 +375,7 @@ public abstract class MetadataService
 								// If the service is canceled after it is paused, then exit
 								if(isCanceled)
 								{
-									LogWriter.addInfo(service.getServicesLogFileName(), " Cancelled Service " + serviceName);
+									LogWriter.addInfo(service.getServicesLogFileName(), " Cancelled Service " + service.getName());
 									// Update database with status of service
 									setStatus(Constants.STATUS_SERVICE_CANCELED);
 									break;
@@ -385,14 +384,13 @@ public abstract class MetadataService
 								// If the service is resumed after it is paused, then continue
 								else
 								{
-									LogWriter.addInfo(service.getServicesLogFileName(), "Resumed Service " + serviceName);
+									LogWriter.addInfo(service.getServicesLogFileName(), "Resumed Service " + service.getName());
 									// Update database with status of service
 									setStatus(Constants.STATUS_SERVICE_RUNNING);
 
 								}
 
 							}
-
 					}
 			} // end loop over records to process
 
@@ -437,8 +435,6 @@ public abstract class MetadataService
 			
 			// Updates the database with latest record id and OAI identifier used.
 			updateOAIRecordIds();
-
-
 		} // end finally(write the next IDs to the database)
 	} // end method processRecords(int)
 
@@ -459,7 +455,7 @@ public abstract class MetadataService
 		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD);
 	}
 	
-	/*
+	/**
 	 * Update number of warnings, errors, records available, output & input records count
 	 */
 	private boolean updateServiceStatistics() {
@@ -515,11 +511,10 @@ public abstract class MetadataService
 		return true;
 
 	}
-	
-
 
 	/**
 	 * Gets the cancel status of the service.
+	 * @return true if service is canceled else false
 	 */
 	public boolean isCanceled() {
 		return isCanceled;
@@ -527,6 +522,7 @@ public abstract class MetadataService
 
 	/**
 	 * Gets the pause status of the service.
+	 * @return true if service is paused else false
 	 */
 	public boolean isPaused() {
 		return isPaused;
@@ -554,11 +550,12 @@ public abstract class MetadataService
 	 */
 	public String getServiceName()
 	{
-		return serviceName;
+		return service.getName();
 	} // end method getServiceName()
 
 	/**
-	 * Gets the status of the job
+	 * Gets the status of the service
+	 * @return This service's status
 	 */
 	public String getServiceStatus(){
 
@@ -570,8 +567,8 @@ public abstract class MetadataService
 			return Constants.STATUS_SERVICE_RUNNING;
 	}
 
-
 	/**
+	 * Gets the count of records processed
 	 * @return the processedRecordCount
 	 */
 	public int getProcessedRecordCount() {
@@ -579,6 +576,7 @@ public abstract class MetadataService
 	}
 
 	/**
+	 * Gets the count of total records
 	 * @return the totalRecordCount
 	 */
 	public int getTotalRecordCount() {
@@ -626,6 +624,7 @@ public abstract class MetadataService
 
 	/**
 	 * Updates a record in the index
+	 * @param record The record to be updated.
 	 */
 	protected void updateRecord(Record record)
 	{
@@ -649,7 +648,7 @@ public abstract class MetadataService
 	 *
 	 * @return The next OAI identifier for the service
 	 */
-	public String getNextOaiId()
+	public final String getNextOaiId()
 	{
 		return "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + MSTConfiguration.getInstanceName() + "/" + service.getIdentifier().replace(" ", "_") + "/" + oaiIdDao.getNextOaiIdForService(service.getId());
 	}
@@ -713,8 +712,7 @@ public abstract class MetadataService
 	 * @param setDescription A description of the new set
 	 * @throws DataException If an error occurred while adding the set
 	 */
-	protected Set addSet(String setSpec, String setName, String setDescription) throws DataException
-	{
+	protected Set addSet(String setSpec, String setName, String setDescription) throws DataException {
 		Set set = new Set();
 		set.setSetSpec(setSpec);
 		set.setDescription(setDescription);
@@ -732,8 +730,7 @@ public abstract class MetadataService
 	 * @return The set with the passed setSpec
 	 * @throws DatabaseConfigException
 	 */
-	protected Set getSet(String setSpec) throws DatabaseConfigException
-	{
+	protected Set getSet(String setSpec) throws DatabaseConfigException {
 		return setDao.getBySetSpec(setSpec);
 	}
 
@@ -742,8 +739,8 @@ public abstract class MetadataService
 	 *
 	 * @param message The message to log
 	 */
-	protected void logInfo(String message)
-	{
+	public final void logInfo(String message){
+		
 		LogWriter.addInfo(service.getServicesLogFileName(), message);
 	}
 
@@ -752,8 +749,8 @@ public abstract class MetadataService
 	 *
 	 * @param message The message to log
 	 */
-	protected void logWarning(String message)
-	{
+	public final void logWarning(String message){ 
+		
 		LogWriter.addWarning(service.getServicesLogFileName(), message);
 		warningCount++;
 	}
@@ -763,8 +760,8 @@ public abstract class MetadataService
 	 *
 	 * @param message The message to log
 	 */
-	protected void logError(String message)
-	{
+	public final void logError(String message){
+		
 		LogWriter.addError(service.getServicesLogFileName(), message);
 		errorCount++;
 		errorCountPerCommit++;
@@ -783,8 +780,7 @@ public abstract class MetadataService
 	 *
 	 * @param record The record to insert
 	 */
-	protected void insertNewRecord(Record record) throws DataException, IndexException
-	{
+	protected void insertNewRecord(Record record) throws DataException, IndexException {
 		try
 		{
 			record.setService(service);
@@ -814,8 +810,7 @@ public abstract class MetadataService
 	 * @param newRecord The record as it should look after the update (the record ID is not set)
 	 * @param oldRecord The record in the Lucene index which needs to be updated
 	 */
-	protected void updateExistingRecord(Record newRecord, Record oldRecord) throws DataException, IndexException
-	{
+	protected void updateExistingRecord(Record newRecord, Record oldRecord) throws DataException, IndexException {
 		try
 		{
 			// Set the new record's ID to the old record's ID so when we call update()
@@ -847,8 +842,7 @@ public abstract class MetadataService
 	 * Logs the status of the service to the database
 	 * @throws DataException
 	 */
-	public void setStatus(String status)
-	{
+	public void setStatus(String status){
 
 		// Load the provider again in case it was updated during the harvest
 		Service service = null;
@@ -868,27 +862,6 @@ public abstract class MetadataService
 			log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e);
 		}
 	}
-
-	/**
-	 * Sets the service ID for this service
-	 *
-	 * @param serviceId This service's ID
-	 * @throws DatabaseConfigException
-	 */
-	private void setServiceId(int serviceId) throws DatabaseConfigException
-	{
-		this.service = serviceDao.getById(serviceId);
-	} // end method setServiceId(int)
-
-	/**
-	 * Sets the name for this service
-	 *
-	 * @param serviceName This service's name
-	 */
-	private void setServiceName(String serviceName)
-	{
-		this.serviceName = serviceName;
-	} // end method setServiceName(int)
 
 	/**
 	 * Sets the list of processing directives for this service
@@ -1006,318 +979,6 @@ public abstract class MetadataService
 		}
 	}
 
-	/**
-	 * Checks whether or not the service is able to be run.  If the service is
-	 * not runnable, logs the reason as an error in the service's log file and
-	 * sets the service's status to "error".  Otherwise sets the service's status to
-	 * the passed status.
-	 *
-	 * @param statusForSuccess The status of the service if it is runnable
-	 * @param testSolr True to verify access to the Solr index, false otherwise
-	 * @return True iff the service is runnable
-	 */
-	private boolean checkService(String statusForSuccess, boolean testSolr)
-	{
-		if(testSolr)
-		{
-			// Check that we can access the Solr index
-			try
-			{
-				RecordList test = recordService.getInputForService(service.getId());
-				if(test == null)
-				{
-					LogWriter.addError(service.getServicesLogFileName(), "Cannot run the service because we cannot access the Solr index.");
-					service.setServicesErrors(service.getServicesErrors()+1);
-
-					try
-					{
-						serviceDao.update(service);
-					}
-					catch(DataException e)
-					{
-						log.error("An error occurred while updating the service's error count.", e);
-					}
-
-					setStatus(Constants.STATUS_SERVICE_ERROR);
-
-					return false;
-				}
-			}
-			catch(Exception e)
-			{
-				LogWriter.addError(service.getServicesLogFileName(), "Cannot run the service because we cannot access the Solr index.");
-				service.setServicesErrors(service.getServicesErrors()+1);
-
-				try
-				{
-					serviceDao.update(service);
-				}
-				catch(DataException e1)
-				{
-					log.error("An error occurred while updating the service's error count.", e1);
-				}
-
-				setStatus(Constants.STATUS_SERVICE_ERROR);
-
-				return false;
-			}
-		}
-
-		try
-		{
-			validateService();
-		}
-		catch(ServiceValidationException e)
-		{
-			LogWriter.addError(service.getServicesLogFileName(), "Cannot run the service for the following reason: " + e.getMessage() + ".");
-			service.setServicesErrors(service.getServicesErrors()+1);
-
-			try
-			{
-				serviceDao.update(service);
-			}
-			catch(DataException e1)
-			{
-				log.error("An error occurred while updating the service's error count.", e1);
-			}
-
-			setStatus(Constants.STATUS_SERVICE_ERROR);
-
-			return false;
-		}
-
-		if (statusForSuccess != null && statusForSuccess.length() > 0) {
-			setStatus(statusForSuccess);
-		}
-
-		return true;
-	}
-	
-	/**
-	 * Validates the service with the passed ID
-	 *
-	 * @param serviceId The ID of the MetadataService to run
-	 * @param successStatus The status of the MetadataService is the validation was successful
-	 * @param testSolr True to test the connection to the index, false otherwise
-	 */
-	public static void checkService(int serviceId, String successStatus, boolean testSolr)
-	{
-		if(log.isDebugEnabled())
-			log.debug("Entering MetadataService.checkService for the service with ID " + serviceId + ".");
-
-		// Get the service
-		Service serviceObj = null;
-		try
-		{
-			serviceObj = serviceDao.getById(serviceId);
-		}
-		catch (DatabaseConfigException e3)
-		{
-			log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e3);
-
-			return; // We can't connect to the database so we can't write the status
-		}
-
-		MetadataService serviceToTest = null;
-
-		// The name of the class for the service specified in the configuration file.
-		String targetClassName = serviceObj.getClassName();
-
-		// Get the class for the service specified in the configuration file
-		try
-		{
-			if(log.isDebugEnabled())
-				log.debug("Trying to get the MetadataService class named " + targetClassName);
-
-			// Get the class specified in the configuration file
-			// The class loader for the MetadataService class
-			ClassLoader serviceLoader = MetadataService.class.getClassLoader();
-
-			// Load the class from the .jar file
-			// TODO: Don't reload the class file each time.  Instead, load it into
-			//       Tomcat once when the MST is started or the service is added/updated.
-			//       This requires more research into Tomcat's class loaders
-			URLClassLoader loader = new URLClassLoader(new URL[] { new File(serviceObj.getServiceJar()).toURI().toURL() }, serviceLoader);
-			Class<?> clazz = loader.loadClass(targetClassName);
-
-			serviceToTest = (MetadataService)clazz.newInstance();
-
-			if(log.isDebugEnabled())
-				log.debug("Found the MetadataService class named " + targetClassName + ", getting its constructor.");
-
-			serviceToTest.service = serviceObj;
-
-			// Set the service's ID and name
-			serviceToTest.setServiceId(serviceId);
-			serviceToTest.setServiceName(serviceObj.getName());
-
-			// Load the service's configuration
-			serviceToTest.loadConfiguration(serviceObj.getServiceConfig());
-
-			// Create the list of ProcessingDirectives which could be run on records processed from this service
-			serviceToTest.setProcessingDirectives(processingDirectiveDao.getBySourceServiceId(serviceId));
-
-			if(log.isDebugEnabled())
-				log.debug("Constructed the MetadataService Object, running its processRecords() method.");
-
-			LogWriter.addInfo(serviceObj.getServicesLogFileName(), "Validated the " + serviceObj.getName() + " Service.");
-
-			if(log.isDebugEnabled())
-				log.debug("Validating the Metadata Service with ID " + serviceId + ".");
-
-			serviceToTest.checkService(successStatus, testSolr);
-		} // end try(run the service through reflection)
-		catch(ClassNotFoundException e)
-		{
-			log.error("Could not find class " + targetClassName, e);
-
-			LogWriter.addError(serviceObj.getServicesLogFileName(), "Tried to validate the " + serviceObj.getName() + " Service, but the java class " + targetClassName + " could not be found.");
-
-			// Increase the warning and error counts as appropriate, then update the provider
-			serviceObj.setServicesErrors(serviceObj.getServicesErrors() + 1);
-
-			try
-			{
-				serviceDao.update(serviceObj);
-			}
-			catch (DataException e2)
-			{
-				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
-			}
-
-			// Update database with status of service
-			try
-			{
-				serviceObj.setStatus(Constants.STATUS_SERVICE_ERROR);
-				serviceDao.update(serviceObj);
-			}
-			catch(DataException e1)
-			{
-				log.error("An error occurred while updating service status to database for service with ID" + serviceObj.getId() + ".", e1);
-			}
-		} // end if(service is not user defined)
-		catch(NoClassDefFoundError e)
-		{
-			log.error("Could not find class " + targetClassName, e);
-
-			LogWriter.addError(serviceObj.getServicesLogFileName(), "Tried to validate the " + serviceObj.getName() + " Service, but the java class " + targetClassName + " could not be found.");
-
-			// Load the provider again in case it was updated during the harvest
-			try
-			{
-				serviceObj = serviceDao.getById(serviceObj.getId());
-			}
-			catch (DatabaseConfigException e3)
-			{
-				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e3);
-
-				return;
-			}
-
-			// Increase the warning and error counts as appropriate, then update the provider
-			serviceObj.setServicesErrors(serviceObj.getServicesErrors() + 1);
-
-			try
-			{
-				serviceDao.update(serviceObj);
-			}
-			catch (DataException e2)
-			{
-				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
-			}
-
-			// Update database with status of service
-			try
-			{
-				serviceObj.setStatus(Constants.STATUS_SERVICE_ERROR);
-				serviceDao.update(serviceObj);
-			}
-			catch(DataException e1)
-			{
-				log.error("An error occurred while updating service status to database for service with ID" + serviceObj.getId() + ".", e1);
-			}
-		} // end catch(NoClassDefFoundError)
-		catch(IllegalAccessException e)
-		{
-			log.error("IllegalAccessException occurred while invoking the service's checkRecords method.", e);
-
-			LogWriter.addError(serviceObj.getServicesLogFileName(), "Tried to validate the " + serviceObj.getName() + " Service, but the java class " + targetClassName + "'s processRecords method could not be accessed.");
-
-			// Load the provider again in case it was updated during the harvest
-			try
-			{
-				serviceObj = serviceDao.getById(serviceObj.getId());
-			}
-			catch (DatabaseConfigException e3)
-			{
-				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e3);
-			}
-
-			// Increase the warning and error counts as appropriate, then update the provider
-			serviceObj.setServicesErrors(serviceObj.getServicesErrors() + 1);
-
-			try
-			{
-				serviceDao.update(serviceObj);
-			}
-			catch (DataException e2)
-			{
-				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
-			}
-
-			// Update database with status of service
-			try
-			{
-				serviceObj.setStatus(Constants.STATUS_SERVICE_ERROR);
-				serviceDao.update(serviceObj);
-			}
-			catch(DataException e1)
-			{
-				log.error("An error occurred while updating service status to database for service with ID" + serviceObj.getId() + ".", e1);
-			}
-		} // end catch(IllegalAccessException)
-		catch(Exception e)
-		{
-			log.error("Exception occurred while invoking the service's checkRecords method.", e);
-
-			LogWriter.addError(serviceObj.getServicesLogFileName(), "An internal error occurred while trying to validate the " + serviceObj.getName() + " Service.");
-
-			// Load the provider again in case it was updated during the harvest
-			try
-			{
-				serviceObj = serviceDao.getById(serviceObj.getId());
-			}
-			catch (DatabaseConfigException e3)
-			{
-				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e3);
-			}
-
-			// Increase the warning and error counts as appropriate, then update the provider
-			serviceObj.setServicesErrors(serviceObj.getServicesErrors() + 1);
-
-			try
-			{
-				serviceDao.update(serviceObj);
-			}
-			catch (DataException e2)
-			{
-				log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
-			}
-
-			// Update database with status of service
-			try
-			{
-				serviceObj.setStatus(Constants.STATUS_SERVICE_ERROR);
-				serviceDao.update(serviceObj);
-			}
-			catch(DataException e1)
-			{
-				log.error("An error occurred while updating service status to database for service with ID" + serviceObj.getId() + ".", e1);
-			}
-		} // end catch(Exception)
-	} // end method checkService(int)
-
-	
 	/**
 	 * Builds and sends an email report about the harvest to the schedule's notify email address.
 	 *

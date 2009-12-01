@@ -151,6 +151,7 @@ public class NormalizationService extends MetadataService
 
 	@Override
 	public void  processRecord(Record processMe) throws Exception {
+		
 		// If the record was deleted, delete and reprocess all records that were processed from it
 		if(processMe.getDeleted())
 		{
@@ -163,8 +164,8 @@ public class NormalizationService extends MetadataService
 			}
 			
 			// Handle reprocessing of successors
-			for(Record successor : successors)
-			{
+			for(Record successor : successors){
+				
 				// Set the successors ad deleted
 				successor.setDeleted(true);
 			
