@@ -1,17 +1,25 @@
 package xc.mst.utils;
 
 import java.io.File;
+import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.service.Service;
+import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.dao.user.DefaultGroupDAO;
+import xc.mst.dao.user.DefaultUserGroupUtilDAO;
+import xc.mst.dao.user.GroupDAO;
+import xc.mst.dao.user.UserGroupUtilDAO;
+import xc.mst.email.Emailer;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
@@ -35,10 +43,25 @@ public class ServiceUtil {
 	private static ServiceDAO serviceDao = new DefaultServiceDAO();
 
 	/**
+	 * Data access object for getting user info from groups
+	 */
+	private static UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
+
+	/**
+	 * Data access object for getting groups
+	 */
+	private static GroupDAO groupDAO = new DefaultGroupDAO();
+
+	/**
 	 * Manager for getting, inserting and updating records
 	 */
 	private static RecordService recordService = new DefaultRecordService();
 
+	/**
+	 * Used to send email reports
+	 */
+	private static Emailer mailer = new Emailer();
+	
 	/**
 	 * Validates the service with the passed ID
 	 *
@@ -305,5 +328,33 @@ public class ServiceUtil {
 
 		return true;
 	
+	}
+	
+	public static void sendEmail(String message) {
+
+		try {
+
+			if (mailer.isConfigured()) {
+
+				// The email's subject
+				String subject = "Message from MST Server on " + InetAddress.getLocalHost().getHostName();
+
+				// The email's body
+				StringBuilder body = new StringBuilder();
+
+				// Send email to every admin user
+				for (User user : userGroupUtilDAO.getUsersForGroup(groupDAO
+						.getByName(Constants.ADMINSTRATOR_GROUP).getId())) {
+					mailer.sendEmail(user.getEmail(), subject, body.toString());
+				}
+			}
+		} catch (UnknownHostException exp) {
+			log.error("Host name query failed. Error sending notification email.",exp);
+		} catch (DatabaseConfigException e) {
+			log.error("Database connection exception. Error sending notification email.");
+		} catch (Exception e) {
+			log.error("Error sending notification email.");
+		}
+
 	}
 }
