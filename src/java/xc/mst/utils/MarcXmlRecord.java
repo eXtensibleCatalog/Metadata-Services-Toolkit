@@ -204,9 +204,10 @@ public class MarcXmlRecord
 			else
 			{
 				List<Element> potentialResults = null;
-
-				if(tagToFields.containsKey(targetField))
+				
+				if(tagToFields.containsKey(targetField)) {
 					potentialResults = tagToFields.get(targetField);
+				}
 				else
 				{
 					// An XPATH expression to get the requested control field
@@ -218,19 +219,48 @@ public class MarcXmlRecord
 				ArrayList<Element> results = new ArrayList<Element>();
 
 				// Get the 880 fields that match the requested tag
-				if(tagTo880s.containsKey(targetField))
+				if(tagTo880s.containsKey(targetField)) {
 					potentialResults.addAll(tagTo880s.get(targetField));
+				}
 
-				for(Element potentialResult : potentialResults)
-					if(getSubfieldOfField(potentialResult, '5').contains(MSTConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+				for(Element potentialResult : potentialResults) {
+					if(getSubfieldOfField(potentialResult, '5').contains(MSTConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE))) {
 						results.add(potentialResult);
-
+					}
+				}
 				return results;
 			}
 		}
 		catch(JDOMException e)
 		{
 			log.error("An error occurred getting the " + targetField + " fields.", e);
+			return new ArrayList<Element>();
+		}
+	}
+	
+	/**
+	 * Gets data field 945. Separate method is used for 945 because it needs to return 
+	 * field 945 irrespective of $5 subfield value being organization code.
+	 *
+	 * @return A list of all data fields with the requested tag
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Element> get945()
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting the " + 945 + " fields.");
+
+		try
+		{
+			// An XPATH expression to get the requested control field
+			XPath xpath = XPath.newInstance("//marc:datafield[@tag='" + 945 + "']");
+			xpath.addNamespace(marcNamespace);
+
+			return xpath.selectNodes(marcXml);
+		}
+		catch(JDOMException e)
+		{
+			log.error("An error occurred getting the " + 945 + " fields.", e);
 			return new ArrayList<Element>();
 		}
 	}

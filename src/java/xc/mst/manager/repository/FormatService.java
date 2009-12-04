@@ -54,5 +54,14 @@ public interface FormatService {
      * @throws DatabaseConfigException 
      */
     public List<Format> getAllFormats() throws DatabaseConfigException;
+    
+	/**
+	 * Get format having the specified format name
+	 *
+	 * @param name name of the format
+	 * @return Format if exist else null
+	 * @throws DatabaseConfigException 
+	 */
+	public Format getFormatByName(String name) throws DatabaseConfigException;
 
 }

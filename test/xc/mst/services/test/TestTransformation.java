@@ -25,16 +25,15 @@ import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.helper.TestHelper;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
-import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
-import xc.mst.services.ServiceFactory;
+import xc.mst.services.MetadataServiceFactory;
 import xc.mst.utils.XCRecord;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
-import xc.mst.helper.TestHelper;
 
 public class TestTransformation {
 
@@ -151,8 +150,7 @@ public class TestTransformation {
 		{
 
 			// Run Transformation Service
-			ServiceFactory sf = new ServiceFactory();
-			MetadataService ms = sf.getService(transformationServiceId);
+			MetadataService ms  = new MetadataServiceFactory().getService(transformationServiceId);
 			ms.runService(transformationServiceId, -1);;
 			SolrIndexManager.getInstance().commitIndex();
 			Thread.sleep(1000);

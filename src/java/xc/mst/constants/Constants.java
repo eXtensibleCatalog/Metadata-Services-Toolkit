@@ -372,7 +372,7 @@ public class Constants
 
 	public static final String ELEMENT_TITLE_OF_EXPRESSION = "titleOfExpression";
 
-	public static final String ELEMENT_IDENTIFIER_FOR_THE_WORK = "identifierOfTheWork";
+	public static final String ELEMENT_IDENTIFIER_FOR_THE_WORK = "identifierForTheWork";
 	
 	public static final String ELEMENT_CREATOR = "creator";
 	

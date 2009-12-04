@@ -11,17 +11,10 @@ package xc.mst.services;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
 
 import org.jdom.Attribute;
 import org.jdom.Document;
@@ -29,7 +22,6 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
-import org.jdom.transform.JDOMSource;
 import org.xml.sax.InputSource;
 
 import xc.mst.bo.provider.Format;
@@ -43,7 +35,6 @@ import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.MarcXmlRecord;
 import xc.mst.utils.XCRecord;
-import xc.mst.utils.index.SolrIndexManager;
 
 /**
  * A Metadata Service which for each unprocessed marcxml record creates an XC schema
@@ -239,10 +230,35 @@ public class TransformationService extends MetadataService
 		errors.clear();
 		
 		// A list of records resulting from processing the incoming record
-		ArrayList<Record> results = new ArrayList<Record>();
+		List<Record> results = new ArrayList<Record>();
 
 		try
 		{
+			
+			// Get any records which were processed from the record we're processing
+			// If there are any (there should be at most 1) we need to delete them
+			List<Record> existingRecords = recordService.getSuccessorsCreatedByServiceId(record.getId(), service.getId());
+
+			
+			// If there was already a processed record for the record we just processed, delete it
+			if(existingRecords.size() > 0)
+			{
+				if(log.isDebugEnabled())
+					log.debug("Updating the record which was processed from an older version of the record we just processed.");
+
+				for (int i = 0; i < existingRecords.size(); i++) {
+					Record oldRecord = existingRecords.get(i);
+					oldRecord.setDeleted(true);
+					// Mark this record as input to services that have processed it.
+					for (Service service : oldRecord.getProcessedByServices()) {
+						oldRecord.addInputForService(service);
+					}
+					record.removeSucessor(oldRecord);
+					updateRecord(oldRecord);
+					
+				} 
+			}
+
 			// The XML before transforming the record
 			Document marcXml = null;
 
@@ -313,6 +329,7 @@ public class TransformationService extends MetadataService
 				transformedRecord = process060(originalRecord, transformedRecord);
 				transformedRecord = process074(originalRecord, transformedRecord);
 				transformedRecord = process082(originalRecord, transformedRecord);
+				transformedRecord = process084(originalRecord, transformedRecord);
 				transformedRecord = process086(originalRecord, transformedRecord);
 				transformedRecord = process090(originalRecord, transformedRecord);
 				transformedRecord = process092(originalRecord, transformedRecord);
@@ -420,82 +437,78 @@ public class TransformationService extends MetadataService
 				transformedRecord = process710(originalRecord, transformedRecord);
 				transformedRecord = process711(originalRecord, transformedRecord);
 				transformedRecord = process730(originalRecord, transformedRecord);
+				
+				// Get the XC records created as output
+				results = transformedRecord.getSplitXCRecordXML(this);
 			}
 			// If the record is a holdings record according to the leader06
 			else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y')
 			{
+				// Check if holding 004 matches bib 001 TODO
+				
+				// If not, add to held records table TODO
+				
 				// Run the transformation steps
 				// Each one processes a different MARC XML field and adds the appropriate
 				// XC fields to transformedRecord based on the field it processes.
-				transformedRecord = holdingsProcess843(originalRecord, transformedRecord);
 				transformedRecord = holdingsProcess506(originalRecord, transformedRecord);
 				transformedRecord = holdingsProcess852(originalRecord, transformedRecord);
 				transformedRecord = holdingsProcess856(originalRecord, transformedRecord);
+				transformedRecord = process866(originalRecord, transformedRecord);
+				transformedRecord = process867(originalRecord, transformedRecord);
+				transformedRecord = process868(originalRecord, transformedRecord);
 				transformedRecord = holdingsProcess001And003(originalRecord, transformedRecord);
-				transformedRecord = holdingsProcess004(originalRecord, transformedRecord);
-			}
-
-			if(log.isDebugEnabled())
-				log.debug("Creating the XC record.");
-
-			// Get any records which were processed from the record we're processing
-			// If there are any (there should be at most 1) we need to delete them
-			List<Record> existingRecords = recordService.getSuccessorsCreatedByServiceId(record.getId(), service.getId());
-
-			
-			// If there was already a processed record for the record we just processed, delete it
-			if(existingRecords.size() > 0)
-			{
-				if(log.isDebugEnabled())
-					log.debug("Updating the record which was processed from an older version of the record we just processed.");
-
-				for (int i = 0; i < existingRecords.size(); i++) {
-					Record oldRecord = existingRecords.get(i);
-					oldRecord.setDeleted(true);
-					// Mark this record as input to services that have processed it.
-					for (Service service : oldRecord.getProcessedByServices()) {
-						oldRecord.addInputForService(service);
-					}
-					record.removeSucessor(oldRecord);
-					updateRecord(oldRecord);
-					
-				} 
-				SolrIndexManager.getInstance().commitIndex();
+				/* holdingsProcess843 is commented for now. This will be implemented later.
+				transformedRecord = holdingsProcess843(originalRecord, transformedRecord);
+				*/
+				
+				// Get the XC records created as output
+				results = transformedRecord.getSplitXCRecordXMLForHoldingRecord(this);
 			}
 
 			// Add the transformed record after modifications were made to it to
 			// the list of modified records.
 
-			List<Document> recordList = transformedRecord.getSplitXCRecordXML(this);
 
-			for (Document document : recordList) {
-					
-				// Create the XC record, extract it from the Document object
-				StringWriter writer = new StringWriter();
-				TransformerFactory tf = TransformerFactory.newInstance();
-				Transformer tran = tf.newTransformer();
-				Source src = new JDOMSource(document);
-				Result res = new StreamResult(writer);
-				tran.transform(src, res);
+
+//			for (String recordType: recordList.keySet()) {
+//				Document document = recordList.get(recordType);
+//					
+//				// Create the XC record, extract it from the Document object
+//				StringWriter writer = new StringWriter();
+//				TransformerFactory tf = TransformerFactory.newInstance();
+//				Transformer tran = tf.newTransformer();
+//				Source src = new JDOMSource(document);
+//				Result res = new StreamResult(writer);
+//				tran.transform(src, res);
+//				
+//				Record xcRecord = new Record();
+//				xcRecord.setOaiXml(writer.toString());
+//				xcRecord.setFormat(xcFormat);
+//				xcRecord.setIndexedObjectType(recordType);
+//				xcRecord.setOaiIdentifier(document.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("id"));
+//
+//				// Set the identifier, datestamp, and header to null so they get computed when we insert the transformed record
+//				//xcRecord.setOaiDatestamp(null);
+//				xcRecord.setOaiHeader(null);
+//
+//				// Set the record as not being deleted
+//				xcRecord.setDeleted(false);
+//				
+//				if(log.isDebugEnabled())
+//					log.debug("Created XC record with ID " + xcRecord.getId() + " from unprocessed record with ID " + record.getId());
+//
+//				results.add(xcRecord);
+//			}
+			
+			
 				
-				Record xcRecord = new Record();
-				xcRecord.setOaiXml(writer.toString());
-				xcRecord.setFormat(xcFormat);
-				xcRecord.setOaiIdentifier(document.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("id"));
-
-				// Set the identifier, datestamp, and header to null so they get computed when we insert the transformed record
-				//xcRecord.setOaiDatestamp(null);
-				xcRecord.setOaiHeader(null);
-
-				// Set the record as not being deleted
-				xcRecord.setDeleted(false);
-				
-				if(log.isDebugEnabled())
-					log.debug("Created XC record with ID " + xcRecord.getId() + " from unprocessed record with ID " + record.getId());
-
-				results.add(xcRecord);
+			// TODO If input record is bib, then add to table
+			if (record.getIndexedObjectType().equals("MARC-Bib")) {
+				// add to bib table
+			} else if (record.getIndexedObjectType().equals("MARC-Holding")) {
+				// add
 			}
-				
 			return results;
 		}
 		catch(Exception e)
@@ -907,6 +920,32 @@ public class TransformationService extends MetadataService
 	{
 		// Create an dcterms:subject with a xsi:type of dcterms:DDC based on the 082 $a values
 		return processFieldBasic(transformMe, transformInto, "082", 'a', "subject", XCRecord.DCTERMS_NAMESPACE, new Attribute("type", "dcterms:DDC", XCRecord.XSI_NAMESPACE), FrbrLevel.WORK);
+	}
+	
+	/**
+	 * Processes the 084 field from the MarcXmlRecord we're transforming.
+	 * This becomes the xc:subject field with an type of NDC8 at the work FRBR level.
+	 *
+	 * @param transformMe The MARC XML record we're transforming
+	 * @param transformInto The XC record which will store the transformed version of the record
+	 * @return A reference to transformInto after this transformation step has been completed.
+	 */
+	private XCRecord process084(MarcXmlRecord transformMe, XCRecord transformInto)
+	{
+		
+		// Get the target subfields MARC XML record
+		List<String> subfieldValues = transformMe.getSubfield("084", '2');
+		
+		if (subfieldValues != null) {
+			for (String subfieldValue : subfieldValues) {
+				if (subfieldValue.equalsIgnoreCase("NDC8")) {
+					// Create an dcterms:subject with a xsi:type of dcterms:DDC based on the 082 $a values
+					return processFieldBasic(transformMe, transformInto, "084", 'a', "subject", XCRecord.XC_NAMESPACE, new Attribute("type", "NDC8"), FrbrLevel.WORK);
+				}
+			}
+		}
+		
+		return transformInto;
 	}
 
 	/**
@@ -1596,7 +1635,9 @@ public class TransformationService extends MetadataService
 			transformInto = processFieldBasic(transformMe, transformInto, "300", 'b', "otherPhysicalDetails", XCRecord.XC_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an rdvocab:dimensions based on the 300 $c values
-		return processFieldBasic(transformMe, transformInto, "300", 'c', "dimensions", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "300", 'c', "dimensions", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		 
+		return processFieldBasic(transformMe, transformInto, "300", 'e', "hasPart", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -3627,19 +3668,20 @@ public class TransformationService extends MetadataService
 		return processFieldWithAuthorityAttributeFromSubfield(transformMe, transformInto, "830", "adfgklmnoprstv", "isPartOf", XCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", XCRecord.DCTERMS_NAMESPACE), 'x', FrbrLevel.MANIFESTATION);
 	}
 
-	/**
+	/*
+	 * Commented for now. Will be implemented later.
 	 * Processes the 843 field from the MarcXmlRecord we're transforming.
 	 * The abcdefmn subfields become the xc:description field at the holdings FRBR level.
 	 *
 	 * @param transformMe The MARC XML record we're transforming
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
-	 */
 	private XCRecord holdingsProcess843(MarcXmlRecord transformMe, XCRecord transformInto)
 	{
 		// Create an xc:description based on the 843 abcdefmn values
 		return processFieldBasic(transformMe, transformInto, "843", "abcdefmn", "description", XCRecord.XC_NAMESPACE, null, FrbrLevel.HOLDINGS);
 	}
+	*/
 
 	
 	/**
@@ -3658,12 +3700,9 @@ public class TransformationService extends MetadataService
 		List<Element> elements = transformMe.getDataFields("852");
 
 		// The subfields of the 852 datafield we're processing
-		String locationDisplayTargetSubfields = "c";
-		String locationGroupTargetSubfields = "b";
+		String locationTargetSubfields = "bc";
 		String textualHoldingsTargetSubfields = "az";
 		String callNumberTargetSubfields = "hijklm";
-		String descriptionTargetSubfields = "z";
-		
 
 		// If there were matching elements, return the unmodified XC record
 		if(elements.size() == 0)
@@ -3673,13 +3712,10 @@ public class TransformationService extends MetadataService
 		for(Element element : elements)
 		{
 			// A StringBuilder to concat the values of all the subfields of the Element
-			StringBuilder locationDisplayBuilder = new StringBuilder();
-			StringBuilder locationGroupBuilder = new StringBuilder();
+			ArrayList<String> locationValues = new ArrayList<String>();
 			StringBuilder callNumberBuilder = new StringBuilder();
 			StringBuilder subjectLCCBuilder = new StringBuilder();
 			StringBuilder subjectDDCBuilder = new StringBuilder();
-			StringBuilder descriptionBuilder = new StringBuilder();
-			
 
 			// Get the subfields of the current element
 			List<Element> subfields = element.getChildren("subfield", marcNamespace);
@@ -3751,23 +3787,16 @@ public class TransformationService extends MetadataService
 					
 				}
 					
-				if(locationDisplayTargetSubfields.contains(subfieldCode))
-					locationDisplayBuilder.append(subfield.getText() + " ");
-
-				if(locationGroupTargetSubfields.contains(subfieldCode))
-					locationGroupBuilder.append(subfield.getText() + " ");
+				if(locationTargetSubfields.contains(subfieldCode))
+					locationValues.add(subfield.getText());
 
 				if(callNumberTargetSubfields.contains(subfieldCode))
 					callNumberBuilder.append(subfield.getText() + " ");
-
-				if(descriptionTargetSubfields.contains(subfieldCode))
-					descriptionBuilder.append(subfield.getText() + " ");
-				
 			}
 
 			// A list of the values of the textual holdings elements, which are taken from
 			// the 866, 867, and 868 datafields immediately following the current datafield.
-			ArrayList<String> textualHoldings = new ArrayList<String>();
+			ArrayList<Element> textualHoldings = new ArrayList<Element>();
 
 			Element sibling = MarcXmlRecord.getSiblingOfField(element);
 			String siblingTag = sibling.getAttributeValue("tag");
@@ -3789,36 +3818,42 @@ public class TransformationService extends MetadataService
 						textualHoldingsBuilder.append(siblingSubfield.getText() + " ");
 				}
 
-				if(textualHoldingsBuilder.length() > 0)
-					textualHoldings.add(textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1));
+				if(textualHoldingsBuilder.length() > 0) {
+					String textualHoldingsValue = textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1);
+					if (siblingTag.equals("866")) {
+						Attribute attribute = new Attribute("type","Basic Bibliographic Unit");
+						textualHoldings.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHoldingsValue).setAttribute(attribute));
+					} else if (siblingTag.equals("867")) {
+						Attribute attribute = new Attribute("type","Supplementary material");
+						textualHoldings.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHoldingsValue).setAttribute(attribute));
+					} else if (siblingTag.equals("868")) {
+						Attribute attribute = new Attribute("type","Indexes");
+						textualHoldings.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHoldingsValue).setAttribute(attribute));
+					}
+				}
+					
 
 				sibling = MarcXmlRecord.getSiblingOfField(sibling);
 				siblingTag = sibling.getAttributeValue("tag");
 			}
 
 			// If any target fields were found
-				List<Element> holdingsContent = new ArrayList<Element>();
+			List<Element> holdingsContent = new ArrayList<Element>();
 
-				String locationDisplayValue = (locationDisplayBuilder.length() > 0 ? locationDisplayBuilder.substring(0, locationDisplayBuilder.length()-1) : ""); // The value is everything except the last space
-				String locationGroupValue = (locationGroupBuilder.length() > 0 ? locationGroupBuilder.substring(0, locationGroupBuilder.length()-1) : ""); // The value is everything except the last space
-				String callNumberValue = (callNumberBuilder.length() > 0 ? callNumberBuilder.substring(0, callNumberBuilder.length()-1) : ""); // The value is everything except the last space
+			String callNumberValue = (callNumberBuilder.length() > 0 ? callNumberBuilder.substring(0, callNumberBuilder.length()-1) : ""); // The value is everything except the last space
 
-				if(locationDisplayValue.length() > 0)
-					holdingsContent.add(new Element("locationDisplay", XCRecord.XC_NAMESPACE).setText(locationDisplayValue));
-				if(locationGroupValue.length() > 0)
-					holdingsContent.add(new Element("locationGroup", XCRecord.XC_NAMESPACE).setText(locationGroupValue));
-				if(callNumberValue.length() > 0)
-					holdingsContent.add(new Element("callNumber", XCRecord.XC_NAMESPACE).setText(callNumberValue));
-				for(String textualHolding : textualHoldings)
-					holdingsContent.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHolding));
-
-				transformInto.addHoldingsElement(holdingsContent);
-			
-			if(descriptionBuilder.length() > 0){
-				holdingsContent.add(new Element("description", XCRecord.DCTERMS_NAMESPACE).setText(descriptionBuilder.toString().trim()));
-				transformInto.addHoldingsElement(holdingsContent);				
+			for(String location : locationValues) {
+				holdingsContent.add(new Element("location", XCRecord.XC_NAMESPACE).setText(location));
 			}
-			
+			if(callNumberValue.length() > 0) {
+				holdingsContent.add(new Element("callNumber", XCRecord.XC_NAMESPACE).setText(callNumberValue));
+			}
+			for(Element textualHolding : textualHoldings) {
+				holdingsContent.add(textualHolding);
+			}
+
+			transformInto.addHoldingsElement(holdingsContent);
+				
 			if(subjectLCCBuilder.length() > 0){
 				ArrayList<Attribute> attributes = new ArrayList<Attribute>();
 				attributes.add(new Attribute("type", "dcterms:LCC", XCRecord.XSI_NAMESPACE));
@@ -3839,7 +3874,7 @@ public class TransformationService extends MetadataService
 
 	/**
 	 * Processes the 856 field from the MarcXmlRecord we're transforming.
-	 * The abcdfhijklmnopqrstuvwxyz23 subfields become the a different field depending on the 2nd indicator.
+	 * The abcdfhijklmnopqrstuvyz23 subfields become the a different field depending on the 2nd indicator.
 	 * If 2nd indicator is 0, blank, or 8, map to manifestation level dcterms:identifier
 	 * If 2nd indicator is 1, map to expression level dcterms:hasVersion
 	 * If 2nd indicator is 2, map to expression level dc:relation
@@ -3936,8 +3971,16 @@ public class TransformationService extends MetadataService
 	 */
 	private XCRecord process866(MarcXmlRecord transformMe, XCRecord transformInto)
 	{
-		// Create an xc:description based on the 866 abcdefmn values
-		return processFieldBasic(transformMe, transformInto, "866", "az", "textualHoldings", XCRecord.XC_NAMESPACE, new Attribute("type","Basic Bibliographic Unit"), FrbrLevel.HOLDINGS);
+		// Get the elements with the requested field
+		List<Element> elements = transformMe.getDataFields("852");
+		
+		// Create textualHoldings only when there is no 852 field. If there are 852 fields, then textualHoldings would have been created while processing 852 field. See process852()
+		if (elements == null || elements.size() == 0) {
+			// Create an xc:description based on the 866 abcdefmn values
+			return processFieldBasic(transformMe, transformInto, "866", "az", "textualHoldings", XCRecord.XC_NAMESPACE, new Attribute("type","Basic Bibliographic Unit"), FrbrLevel.HOLDINGS);
+		}
+		
+		return transformInto;
 	}
 
 	/**
@@ -3950,8 +3993,16 @@ public class TransformationService extends MetadataService
 	 */
 	private XCRecord process867(MarcXmlRecord transformMe, XCRecord transformInto)
 	{
-		// Create an xc:description based on the 867 abcdefmn values
-		return processFieldBasic(transformMe, transformInto, "867", "az", "textualHoldings", XCRecord.XC_NAMESPACE, new Attribute("type","Supplementary material"), FrbrLevel.HOLDINGS);
+		// Get the elements with the requested field
+		List<Element> elements = transformMe.getDataFields("852");
+		
+		// Create textualHoldings only when there is no 852 field. If there are 852 fields, then textualHoldings would have been created while processing 852 field. See process852()
+		if (elements == null || elements.size() == 0) {
+			// Create an xc:description based on the 867 abcdefmn values
+			return processFieldBasic(transformMe, transformInto, "867", "az", "textualHoldings", XCRecord.XC_NAMESPACE, new Attribute("type","Supplementary material"), FrbrLevel.HOLDINGS);
+		}
+		
+		return transformInto;
 	}
 
 	/**
@@ -3964,8 +4015,16 @@ public class TransformationService extends MetadataService
 	 */
 	private XCRecord process868(MarcXmlRecord transformMe, XCRecord transformInto)
 	{
-		// Create an xc:description based on the 867 abcdefmn values
-		return processFieldBasic(transformMe, transformInto, "868", "az", "textualHoldings", XCRecord.XC_NAMESPACE, new Attribute("type","Indexes"), FrbrLevel.HOLDINGS);
+		// Get the elements with the requested field
+		List<Element> elements = transformMe.getDataFields("852");
+		
+		// Create textualHoldings only when there is no 852 field. If there are 852 fields, then textualHoldings would have been created while processing 852 field. See process852()
+		if (elements == null || elements.size() == 0) {
+			// Create an xc:description based on the 867 abcdefmn values
+			return processFieldBasic(transformMe, transformInto, "868", "az", "textualHoldings", XCRecord.XC_NAMESPACE, new Attribute("type","Indexes"), FrbrLevel.HOLDINGS);
+		}
+		
+		return transformInto;
 	}
 	
 	
@@ -4084,6 +4143,8 @@ public class TransformationService extends MetadataService
 	/**
 	 * Processes the 945 field from the MarcXmlRecord we're transforming.
 	 * The $a subfields become dcterms:audience fields at the work FRBR level.
+	 * The $ab subfields become xc:callNumber fields at the Holding FRBR level.
+	 * The $l subfields become xc:location fields at the Holding FRBR level.
 	 *
 	 * @param transformMe The MARC XML record we're transforming
 	 * @param transformInto The XC record which will store the transformed version of the record
@@ -4094,11 +4155,12 @@ public class TransformationService extends MetadataService
 	{
 
 		// Get the elements with the requested field
-		List<Element> elements = transformMe.getDataFields("945");
+		List<Element> elements = transformMe.get945();
 
 		// The subfields we're processing
 		String targetCallNumberSubfields = "ab";
 		String targetLocationDisplaySubfields = "l";
+		String targetAudienceSubfields = "a";
 
 		// If there were no matching elements, return the unmodified XC record
 		if (elements.size() == 0)
@@ -4112,6 +4174,7 @@ public class TransformationService extends MetadataService
 			// Element
 			StringBuilder callNumberBuilder = new StringBuilder();
 			StringBuilder locationDisplayBuilder = new StringBuilder();
+			StringBuilder audienceBuilder = new StringBuilder();
 
 			// Get the subfields of the current element
 			List<Element> subfields = element.getChildren("subfield",marcNamespace);
@@ -4143,32 +4206,37 @@ public class TransformationService extends MetadataService
 					
 					if (targetLocationDisplaySubfields.contains(subfieldCode))
 						locationDisplayBuilder.append(subfield.getText() + " ");
-
-
-					if(targetCallNumberSubfields.length() > 0)
-					{
-						ArrayList<Element> holdingsElements = new ArrayList<Element>();
-						
-						// Create a xc:callNumber in a seperate holdings element based on the 945 ab values
-						Element callNumberElement = new Element("callNumber",XCRecord.XC_NAMESPACE);
-						holdingsElements.add(callNumberElement.setText(callNumberBuilder.toString().trim()));
-						transformInto.addHoldingsElement(holdingsElements);
-		
-					}
 					
-					if(targetLocationDisplaySubfields.length() > 0)
-					{
-						ArrayList<Element> holdingsElements = new ArrayList<Element>();
-						
-						// Create a xc:callNumber in a seperate holdings element based on the 945 ab values
-						Element callNumberElement = new Element("locationDisplay",XCRecord.XC_NAMESPACE);
-						holdingsElements.add(callNumberElement.setText(locationDisplayBuilder.toString().trim()));
-						transformInto.addHoldingsElement(holdingsElements);
-		
-					}
+					if (targetAudienceSubfields.contains(subfieldCode))
+						audienceBuilder.append(subfield.getText() + " ");
 				}
+
+				ArrayList<Element> holdingsElements = new ArrayList<Element>();
+
+				if(callNumberBuilder.length() > 0)
+				{
+					// Create a xc:callNumber in a seperate holdings element based on the 945 ab values
+					Element callNumberElement = new Element("callNumber",XCRecord.XC_NAMESPACE);
+					holdingsElements.add(callNumberElement.setText(callNumberBuilder.toString().trim()));
+				}
+				
+				if(locationDisplayBuilder.length() > 0)
+				{
+					
+					// Create a xc:callNumber in a seperate holdings element based on the 945 ab values
+					Element callNumberElement = new Element("location",XCRecord.XC_NAMESPACE);
+					holdingsElements.add(callNumberElement.setText(locationDisplayBuilder.toString().trim()));
+				}
+
+				transformInto.addHoldingsElement(holdingsElements);
+				
+				if(audienceBuilder.length() > 0)
+				{
+					transformInto.addElement("audience", audienceBuilder.toString().trim(), XCRecord.DCTERMS_NAMESPACE, new ArrayList<Attribute>(), FrbrLevel.WORK);
+				}
+				
 		}
-		
+
 		return transformInto;
 
 	}
@@ -4415,44 +4483,6 @@ public class TransformationService extends MetadataService
 	}
 
 	/**
-	 * Adds an xc:manifestationHeld with the value from the 004.  If the 003 existed, its value is
-	 * used as the type attribute, otherwise the type is set to the organization code from
-	 * the configuration file.
-	 *
-	 * @param transformMe The MARC XML record we're transforming
-	 * @param transformInto The XC record which will store the transformed version of the record
-	 * @return A reference to transformInto after this transformation step has been completed.
-	 */
-	private XCRecord holdingsProcess004(MarcXmlRecord transformMe, XCRecord transformInto)
-	{
-		String field004 = transformMe.getControlField("004");
-		String field003 = transformMe.getControlField("003");
-		if(field003 == null)
-			field003 = getOrganizationCode();
-
-		if(log.isDebugEnabled())
-			log.debug("Adding a " + FrbrLevel.HOLDINGS + " level manifestationHeld with a type of \"" + field003 + "\" and a value of " + field004);
-
-		// Setup the attribute list
-		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-		attributes.add(new Attribute("type", field003));
-
-		
-		// Add the element to the XC record
-		transformInto.addElement("manifestationHeld", field004.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.HOLDINGS);
-		
-
-		attributes = new ArrayList<Attribute>();
-		attributes.add(new Attribute("type", field003));
-
-		transformInto.addElement("recordID", field004.trim(), XCRecord.XC_NAMESPACE, attributes , FrbrLevel.MANIFESTATION);
-		
-		
-		// Return the result
-		return transformInto;
-	}
-
-	/**
 	 * Processes the 506 field from the MarcXmlRecord we're transforming.
 	 * The abcdefu3 subfields become the dc:rights field at the manifestation FRBR level.
 	 *
@@ -4468,8 +4498,8 @@ public class TransformationService extends MetadataService
 
 	/**
 	 * Processes the 852 field from the MarcXmlRecord we're transforming.
-	 * The abcefg subfields become the xc:location field at the holdings FRBR level.
-	 * The hijklmpqstxz2368 subfields become the xc:callNumber field at the holdings FRBR level.
+	 * The b subfields become the xc:location field at the holdings FRBR level.
+	 * The hijklm subfields become the xc:callNumber field at the holdings FRBR level.
 	 *
 	 * @param transformMe The MARC XML record we're transforming
 	 * @param transformInto The XC record which will store the transformed version of the record
@@ -4482,7 +4512,7 @@ public class TransformationService extends MetadataService
 		List<Element> elements = transformMe.getDataFields("852");
 
 		// The subfields of the 852 datafield we're processing
-		String locationTargetSubfields = "abcefg";
+		String locationTargetSubfields = "b";
 		String callNumberTargetSubfields = "hijklm";
 		String textualHoldingsTargetSubfields = "az";
 
@@ -4557,23 +4587,20 @@ public class TransformationService extends MetadataService
 					siblingTag = sibling.getAttributeValue("tag");
 			}
 
-			// If any target fields were found
-			if(locationBuilder.length() > 0)
-			{
-				List<Element> holdingsContent = new ArrayList<Element>();
+			List<Element> holdingsContent = new ArrayList<Element>();
 
-				String locationValue = (locationBuilder.length() > 0 ? locationBuilder.substring(0, locationBuilder.length()-1) : ""); // The value is everything except the last space
-				String callNumberValue = (callNumberBuilder.length() > 0 ? callNumberBuilder.substring(0, callNumberBuilder.length()-1) : ""); // The value is everything except the last space
+			String locationValue = (locationBuilder.length() > 0 ? locationBuilder.substring(0, locationBuilder.length()-1) : ""); // The value is everything except the last space
+			String callNumberValue = (callNumberBuilder.length() > 0 ? callNumberBuilder.substring(0, callNumberBuilder.length()-1) : ""); // The value is everything except the last space
 
-				if(locationValue.length() > 0)
-					holdingsContent.add(new Element("location", XCRecord.XC_NAMESPACE).setText(locationValue));
-				if(callNumberValue.length() > 0)
-					holdingsContent.add(new Element("callNumber", XCRecord.XC_NAMESPACE).setText(callNumberValue));
-				for(Element textualHoldingElement : textualHoldingsElements)
-					holdingsContent.add(textualHoldingElement);
-				
-				transformInto.addHoldingsElement(holdingsContent);
+			if(locationValue.length() > 0)
+				holdingsContent.add(new Element("location", XCRecord.XC_NAMESPACE).setText(locationValue));
+			if(callNumberValue.length() > 0)
+				holdingsContent.add(new Element("callNumber", XCRecord.XC_NAMESPACE).setText(callNumberValue));
+			for(Element textualHoldingElement : textualHoldingsElements) {
+				holdingsContent.add(textualHoldingElement);
 			}
+			
+			transformInto.addHoldingsElement(holdingsContent);
 		}
 
 		// Return the result
@@ -4583,9 +4610,7 @@ public class TransformationService extends MetadataService
 	/**
 	 * Processes the 856 field from the MarcXmlRecord we're transforming.
 	 * The abcdfhijklmnopqrstuvyz23 subfields become the a different field depending on the 2nd indicator.
-	 * If 2nd indicator is 0, blank, or 8, map to manifestation level dcterms:identifier
-	 * If 2nd indicator is 1, map to expression level dcterms:hasVersion
-	 * If 2nd indicator is 2, map to expression level dc:relation
+	 * If 2nd indicator is 0, blank, or 8, map to holdings level dcterms:identifier
 	 *
 	 * @param transformMe The MARC XML record we're transforming
 	 * @param transformInto The XC record which will store the transformed version of the record
@@ -4636,31 +4661,13 @@ public class TransformationService extends MetadataService
 				String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
 				// If 2nd indicator is 0, blank, or 8, map to manifestation level dcterms:identifier
-				// If 2nd indicator is 1, map to expression level dcterms:hasVersion
-				// If 2nd indicator is 2, map to expression level dc:relation
 				if(ind2 == null || ind2.equals("0") || ind2.equals(" ") || ind2.equals("8"))
 				{
 					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.MANIFESTATION + " level identifier based on the concatination of the 856's subfields' value, which is " + value);
+						log.debug("Adding a " + FrbrLevel.HOLDINGS + " level identifier based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create an dcterms:identifier based on the 856 abcdfhijklmnopqrstuvwxyz23 values
-					transformInto.addElement("identifier", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
-				}
-				else if(ind2 != null && ind2.equals("1"))
-				{
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.EXPRESSION + " level alternative based on the concatination of the 856's subfields' value, which is " + value);
-
-					// Create a dcterms:hasVersion based on the 856 abcdfhijklmnopqrstuvwxyz23 values
-					transformInto.addElement("hasVersion", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
-				}
-				else if(ind2 != null && ind2.equals("2"))
-				{
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.EXPRESSION + " level alternative based on the concatination of the 856's subfields' value, which is " + value);
-
-					// Create a dc:relation based on the 856 abcdfhijklmnopqrstuvwxyz23 values
-					transformInto.addElement("relation", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
+					transformInto.addElement("identifier", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.HOLDINGS);
 				}
 			}
 		}

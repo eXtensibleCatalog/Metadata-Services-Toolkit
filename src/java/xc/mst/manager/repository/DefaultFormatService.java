@@ -37,6 +37,17 @@ public class DefaultFormatService implements FormatService {
 	public Format getFormatById(int formatId) throws DatabaseConfigException {
 		return formatDAO.getById(formatId);
 	}
+	
+	/**
+	 * Get format having the specified format name
+	 *
+	 * @param name name of the format
+	 * @return Format if exist else null
+	 * @throws DatabaseConfigException 
+	 */
+	public Format getFormatByName(String name) throws DatabaseConfigException {
+		return formatDAO.getByName(name);
+	}
 
 	/**
 	 * Delete Format

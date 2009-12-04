@@ -887,4 +887,8 @@ public class Record
 	public void removeSucessor(Record successor){
 		this.successors.remove(successor);
 	}
+
+	public static void setIndexedObjectType(String indexedObjectType) {
+		Record.indexedObjectType = indexedObjectType;
+	}
 } // end class Record

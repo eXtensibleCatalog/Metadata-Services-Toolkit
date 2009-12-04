@@ -9,11 +9,20 @@
 
 package xc.mst.utils;
 
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
+
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
 import org.jdom.Attribute;
@@ -21,9 +30,13 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
 import org.jdom.output.XMLOutputter;
+import org.jdom.transform.JDOMSource;
 
+import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
+import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.repository.DefaultFormatService;
 import xc.mst.services.MetadataService;
 
 
@@ -95,7 +108,7 @@ public class XCRecord
 	/**
 	 * A list of holdings elements for this XC record
 	 */
-	private HashSet<Element> holdingsElements = new HashSet<Element>();
+	public HashSet<Element> holdingsElements = new HashSet<Element>();
 
 	/**
 	 * A list of expression elements for this XC record
@@ -470,7 +483,8 @@ public class XCRecord
 		subElementsOfWorkElements.add(workSubElements);
 		subElementsOfExpressionElements.add(expressionSubElements);
 	}
-			/**
+	
+		/**
 	 * Adds an element to the XC record to a non-default work level element based on a specific linking field
 	 *
 	 * @param elementName The name of the element to add
@@ -575,10 +589,11 @@ public class XCRecord
 	 * @param transformationService 
 	 * @return
 	 */
-	public ArrayList<Document> getSplitXCRecordXML(MetadataService transformationService){
+	public List<Record> getSplitXCRecordXML(MetadataService transformationService) throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 
-		ArrayList<Document> list = new ArrayList<Document>();
-
+		List<Document> documents = new ArrayList<Document>();
+		List<Record> records = new ArrayList<Record>();
+		
 		// Create the root document
 		xcRootElement = new Element("frbr", XC_NAMESPACE);
 		xcRootElement.addNamespaceDeclaration(XSI_NAMESPACE);
@@ -596,7 +611,9 @@ public class XCRecord
 		xcRootElement.addContent("\n\t")
 					 .addContent(tempXcWorkElement)
 					 .addContent("\n");
-		list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+		Document doc = (new Document()).setRootElement((Element)xcRootElement.clone());
+		records.add(createRecord("XC-Work", doc));
+		documents.add(doc);
 		xcRootElement.removeContent();
 		
 		/*$$ EXPRESSION $$*/
@@ -610,7 +627,9 @@ public class XCRecord
 		xcRootElement.addContent("\n\t")
         			 .addContent(tempXcExpressionElement)
 					 .addContent("\n");
-		list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+		doc = (new Document()).setRootElement((Element)xcRootElement.clone());
+		records.add(createRecord("XC-Expression", doc));
+		documents.add(doc);
 		xcRootElement.removeContent();
 		
 		/*$$ LINKED WORK & EXPRESSION $$*/
@@ -670,7 +689,9 @@ public class XCRecord
 			xcRootElement.addContent("\n\t")
 						 .addContent(newWorkElement)
 						 .addContent("\n");
-			list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+			doc = (new Document()).setRootElement((Element)xcRootElement.clone());
+			records.add(createRecord("XC-Work", doc));
+			documents.add(doc);
 			xcRootElement.removeContent();
 
 			// Expression
@@ -704,7 +725,9 @@ public class XCRecord
 			
 			xcRootElement.addContent("\n\t")
 						 .addContent(newExpressionElement.addContent("\n\t")).addContent("\n");
-			list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+			doc = (new Document()).setRootElement((Element)xcRootElement.clone());
+			records.add(createRecord("XC-Expression", doc));
+			documents.add(doc);
 			xcRootElement.removeContent();
 			
 			index++;
@@ -722,7 +745,7 @@ public class XCRecord
 		// Set the OAI id
 		xcManifestationElement.setAttribute("id", transformationService.getNextOaiId());
 		// Link to expression docs
-		for (Document document : list) {
+		for (Document document : documents) {
 			if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("expression"))
 			{
 				Element linkExpression =  new Element("expressionManifested",XC_NAMESPACE);
@@ -734,15 +757,18 @@ public class XCRecord
 		xcRootElement.addContent("\n\t")
 		 			 .addContent(xcManifestationElement)
 		 			 .addContent("\n");
-		list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+		doc = (new Document()).setRootElement((Element)xcRootElement.clone());
+		records.add(createRecord("XC-Manifestation", doc));
+		documents.add(doc);
 		xcRootElement.removeContent();
 
 		/*$$ HOLDINGS $$*/
 		// Create the Holdings documents
 		for(Element holdingsElement : holdingsElements){
+			
 			holdingsElement.setAttribute("id",transformationService.getNextOaiId());
 			// Create back links to expression
-			for (Document document : list) {
+			for (Document document : documents) {
 				if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("manifestation"))
 				{
 					Element linkExpression =  new Element("manifestationHeld",XC_NAMESPACE);
@@ -752,7 +778,10 @@ public class XCRecord
 				
 			}
 			xcRootElement.addContent("\n\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n");
-			list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+			doc = (new Document()).setRootElement((Element)xcRootElement.clone());
+			records.add(createRecord("XC-Holding", doc));
+			documents.add(doc);
+			
 			xcRootElement.removeContent();
 		}
 
@@ -762,7 +791,7 @@ public class XCRecord
 		{
 			xcItemElement.setAttribute("id", transformationService.getNextOaiId());
 			// Create back links to expression
-			for (Document document : list) {
+			for (Document document : documents) {
 				if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("holdings"))
 				{
 					Element linkExpression =  new Element("holdingsExemplified",XC_NAMESPACE);
@@ -773,12 +802,84 @@ public class XCRecord
 			xcRootElement.addContent("\n\t")
 			 .addContent(xcItemElement)
 			 .addContent("\n");
-			list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
+			doc = (new Document()).setRootElement((Element)xcRootElement.clone());
+			records.add(createRecord("XC-Item", doc));
+			documents.add(doc);
 			xcRootElement.removeContent();
 
 		}
 		
-		return list;
+		return records;
 	}
 	
+	
+	/**
+	 * Gets a list of documents that represent the output of transformation service. Each document in 
+	 * the list represents a FRBR level with its own OAI id. 
+	 * 
+	 * @param transformationService 
+	 * @return
+	 */
+	public List<Record> getSplitXCRecordXMLForHoldingRecord(MetadataService transformationService) throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
+
+		List<Document> documents = new ArrayList<Document>();
+		List<Record> records = new ArrayList<Record>();
+		
+		// Create the root document
+		xcRootElement = new Element("frbr", XC_NAMESPACE);
+		xcRootElement.addNamespaceDeclaration(XSI_NAMESPACE);
+		xcRootElement.addNamespaceDeclaration(RDVOCAB_NAMESPACE);
+		xcRootElement.addNamespaceDeclaration(DCTERMS_NAMESPACE);
+		xcRootElement.addNamespaceDeclaration(RDAROLE_NAMESPACE);
+
+		/*$$ HOLDINGS $$*/
+		// Create the Holdings documents
+		for(Element holdingsElement : holdingsElements){
+			
+			holdingsElement.setAttribute("id",transformationService.getNextOaiId());
+			// Create back links to expression
+			for (Document document : documents) {
+				if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("manifestation"))
+				{
+					Element linkExpression =  new Element("manifestationHeld",XC_NAMESPACE);
+					linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
+					holdingsElement.addContent("\n\t\t").addContent(linkExpression.detach());
+				}
+				
+			}
+			xcRootElement.addContent("\n\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n");
+			Document doc = (new Document()).setRootElement((Element)xcRootElement.clone());
+			records.add(createRecord("XC-Holding", doc));
+			documents.add(doc);
+			
+			xcRootElement.removeContent();
+		}
+
+		return records;
+	}
+	
+	private Record createRecord(String recordType, Document document) throws TransformerConfigurationException, TransformerException, DatabaseConfigException {
+		
+		StringWriter writer = new StringWriter();
+		TransformerFactory tf = TransformerFactory.newInstance();
+		Transformer tran = tf.newTransformer();
+		Source src = new JDOMSource(document);
+		Result res = new StreamResult(writer);
+		tran.transform(src, res);
+		
+		Record xcRecord = new Record();
+		xcRecord.setOaiXml(writer.toString());
+		xcRecord.setFormat(new DefaultFormatService().getFormatByName("xc"));
+		xcRecord.setIndexedObjectType(recordType);
+		xcRecord.setOaiIdentifier(document.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("id"));
+
+		// Set the identifier, datestamp, and header to null so they get computed when we insert the transformed record
+		//xcRecord.setOaiDatestamp(null);
+		xcRecord.setOaiHeader(null);
+
+		// Set the record as not being deleted
+		xcRecord.setDeleted(false);
+		
+		return xcRecord;
+	}
 }
