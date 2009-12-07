@@ -24,6 +24,7 @@ import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordType;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
@@ -35,7 +36,9 @@ import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultSetDAO;
 import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.SetDAO;
+import xc.mst.dao.record.DefaultRecordTypeDAO;
 import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
+import xc.mst.dao.record.RecordTypeDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.dao.service.DefaultOaiIdentiferForServiceDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
@@ -139,6 +142,11 @@ public abstract class MetadataService
 	 */
 	GroupDAO groupDAO = new DefaultGroupDAO();
 
+	/**
+	 * Data access object for getting groups
+	 */
+	RecordTypeDAO recordTypeDAO = new DefaultRecordTypeDAO();
+		
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
@@ -309,7 +317,25 @@ public abstract class MetadataService
 			long startTime = new Date().getTime();
 			long endTime = 0;
 			long timeDiff = 0;
+
+			// Getting Record Types with the processing priority
+			List<RecordType> recordTypes = recordTypeDAO.getAll();
 			
+			boolean recordTypeSupported = false;
+			if(records.get(0).getType()!=null)
+				recordTypeSupported = true;
+			
+			// Processing records according to priority
+		for (int i = 0; i < recordTypes.size(); i++) {
+			
+			// First query for records type using record types
+			if(recordTypeSupported) {
+				RecordType recordType = recordTypes.get(i);
+				records = recordService.getByInputToServiceAndRecordType(service.getId(), recordType.getName());
+			}
+			// Secondly query for other records
+			else
+				records = recordService.getInputForServiceToProcess(service.getId());
 			
 			// Iterate over the list of input records and process each.
 			// Then run the processing directives on the results of each and add
@@ -317,6 +343,7 @@ public abstract class MetadataService
 			// resulting from the processing.  Also maintain a list of services to
 			// be invoked after this service is finished.  Finally, add the records
 			// resulting from this service.
+			
 			for(Record processMe : records)
 			{
 				// If the service is not canceled and not paused then continue
@@ -393,7 +420,7 @@ public abstract class MetadataService
 							}
 					}
 			} // end loop over records to process
-
+		}
 			// Reopen the reader so it can see the changes made by running the service
 			SolrIndexManager.getInstance().commitIndex();
 
@@ -401,7 +428,7 @@ public abstract class MetadataService
 			finishProcessing();
 			
 			// Reopen the reader so it can see the changes made by running the service
-			SolrIndexManager.getInstance().commitIndex();
+			//SolrIndexManager.getInstance().commitIndex();
 			
 			endTime = new Date().getTime();
 			timeDiff = endTime - startTime;

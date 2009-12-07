@@ -495,12 +495,15 @@ public class NormalizationService extends MetadataService
 					setSpec = "MARCXMLbibliographic";
 					setName = "MARCXML Bibliographic Records";
 					setDescription = "A set of all MARCXML Bibliographic records in the repository.";
+					normalizedRecord.setType("MARC-Bib");
 				}
 				else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y')
 				{
 					setSpec = "MARCXMLholding";
 					setName = "MARCXML Holding Records";
 					setDescription = "A set of all MARCXML Holding records in the repository.";
+					normalizedRecord.setType("MARC-Holding");
+					
 				}
 				else if(leader06 == 'z')
 				{

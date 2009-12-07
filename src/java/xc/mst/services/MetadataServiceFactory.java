@@ -27,7 +27,6 @@ public class MetadataServiceFactory {
 	 */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_PROCESSING);
 	
-
 	/**
 	 * Data access object for getting services
 	 */
