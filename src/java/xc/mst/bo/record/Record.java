@@ -37,6 +37,11 @@ public class Record
 	private long id = -1;
 
 	/**
+	 * The record's type
+	 */
+	private String type = null;
+	
+	/**
 	 * This is not used by the Record class, but classes extending it
 	 * which represent the individual FRBR levels can use this to
 	 * indicate the ID assigned by the aggregation service for that
@@ -887,7 +892,14 @@ public class Record
 	public void removeSucessor(Record successor){
 		this.successors.remove(successor);
 	}
+	public String getType() {
+		return type;
+	}
 
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 	public static void setIndexedObjectType(String indexedObjectType) {
 		Record.indexedObjectType = indexedObjectType;
 	}
