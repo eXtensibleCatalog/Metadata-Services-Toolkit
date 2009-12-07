@@ -191,6 +191,7 @@
    -->
    
    <field name="record_id" type="string" indexed="true" stored="true" required="true" /> 
+   <field name="record_type" type="string" indexed="true" stored="true" required="true" />
    
    <field name="indexed_object_type" type="string" indexed="true" stored="true"/>
    <field name="frbr_level_id" type="string" indexed="true" stored="true"/>
