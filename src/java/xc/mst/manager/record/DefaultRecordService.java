@@ -322,6 +322,23 @@ public class DefaultRecordService extends RecordService
 	} // end method getInputForService(int)
 	
 	@Override
+	public Records getByInputToServiceAndRecordType(int serviceId, String recordType) throws IndexException {
+
+		if(log.isDebugEnabled())
+			log.debug("Getting all records that are input for the service with service ID " + serviceId +" and have record type " +recordType);
+
+		// Create a query to get the Documents with the requested input for service IDs
+		SolrQuery query = new SolrQuery();
+		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId) + " AND " 
+				+ FIELD_RECORD_TYPE + ":" + recordType); 
+		
+		
+
+		// Return the list of results
+		return new Records(query);
+	}
+	
+	@Override
 	public RecordList getInputForService(int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
@@ -823,6 +840,11 @@ public class DefaultRecordService extends RecordService
 		record.setHarvest(harvestDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_HARVEST_ID))));
 		record.setHarvestScheduleName((String)doc.getFieldValue(FIELD_HARVEST_SCHEDULE_NAME));
 
+		
+		if (doc.getFieldValue(FIELD_RECORD_TYPE) != null) {
+			record.setType((String)doc.getFieldValue(FIELD_RECORD_TYPE));
+		}
+
 		Collection<Object> sets = doc.getFieldValues(FIELD_SET_SPEC);
 		if(sets != null)
 			for(Object set : sets)
@@ -969,6 +991,10 @@ public class DefaultRecordService extends RecordService
 
 		// Set the appropriate fields on it.
 		doc.addField(FIELD_RECORD_ID, Long.toString(record.getId()));
+		if (record.getType() != null) {
+			doc.addField(FIELD_RECORD_TYPE, record.getType());
+		}
+		
 		doc.addField(FIELD_FRBR_LEVEL_ID, Long.toString(record.getFrbrLevelId()));
 		
 		if (record.getCreatedAt() != null) {
@@ -1104,4 +1130,6 @@ public class DefaultRecordService extends RecordService
 				  .replaceAll("\\)", "\\\\\\)")
 				  .replaceAll("!", "\\\\!");
 	}
+
+	
 } // end class DefaultRecordService

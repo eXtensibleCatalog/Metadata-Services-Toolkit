@@ -67,6 +67,11 @@ public abstract class RecordService
 	public final static String FIELD_RECORD_ID = "record_id";
 
 	/**
+	 * The name of the record type field
+	 */
+	public final static String FIELD_RECORD_TYPE = "record_type";
+
+	/**
 	 * The name of the frbr level ID field
 	 */
 	public final static String FIELD_FRBR_LEVEL_ID = "frbr_level_id";
@@ -345,7 +350,14 @@ public abstract class RecordService
 	 * @return A list of all records that need to be processed for a given service
 	 */
 	public abstract Records getInputForServiceToProcess(int serviceId) throws IndexException;
-	
+
+	/**
+	 * Gets all record inputs that were not processed for a given Service and Record Type
+	 *
+	 * @return A list of all records that need to be processed for a given service
+	 */
+	public abstract Records getByInputToServiceAndRecordType(int serviceId, String recordType) throws IndexException;
+
 	/**
 	 * Gets all record inputs that were not processed for a given service
 	 *

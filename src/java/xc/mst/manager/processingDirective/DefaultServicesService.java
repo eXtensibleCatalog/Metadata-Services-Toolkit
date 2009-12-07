@@ -15,6 +15,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -27,6 +30,7 @@ import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.dao.provider.DefaultFormatDAO;
@@ -451,6 +455,10 @@ public class DefaultServicesService implements ServicesService
     		service.setServiceConfig(buffer.toString());
     		servicesDao.update(service);
 
+    		// Execute DB scripts
+    		executeServiceDBScripts(configFolderPath + File.pathSeparator + "serviceSql");
+    		
+    		
     		ServiceUtil.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
     	}
     	catch(DataException e)
@@ -805,6 +813,9 @@ public class DefaultServicesService implements ServicesService
     		service.setServiceConfig(buffer.toString());
     		servicesDao.update(service);
 
+       		// Execute DB scripts
+    		executeServiceDBScripts(configFolderPath + File.pathSeparator + "serviceSql");
+ 
     		// TODO what does below line do? Is it necessary? Should it be here or moved to Service Reprocess thread?
     		ServiceUtil.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
 
@@ -932,5 +943,62 @@ public class DefaultServicesService implements ServicesService
 
     	// If we got here we reached the end of the file, so return null
     	return null;
+    }
+    
+    /**
+     * Executes the sql scripts in the folder provided
+     * @param sqlFolderName Path of the folder that contains the sql scripts
+     * @throws IOException 
+     */
+    private void executeServiceDBScripts(String sqlFolderPath) throws IOException {
+    	
+    	File sqlFolder = new File(sqlFolderPath);
+    	ArrayList<String> commands = new ArrayList<String>();
+    	StringBuilder command = new StringBuilder();
+
+    	MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
+    	Statement stmt = null;
+		BufferedReader br = null;
+    	// Read the files
+    	try {
+
+    		for (String fileName : sqlFolder.list()) {
+				
+				br = new BufferedReader(new FileReader(sqlFolderPath + "/" + fileName));
+				String line = null;
+				while((line = br.readLine()) != null){
+					if(line.trim().startsWith("--"))
+						continue;				
+					command.append(line);
+					if(line.endsWith(";")){
+						commands.add(command.toString());
+						command.setLength(0);
+					}
+						
+				}
+			}
+    	
+	    	//Execute the commands
+			stmt = dbConnectionManager.createStatement();
+			for (String sql : commands) {
+					System.out.println(sql);
+					stmt.execute(sql);	
+				}
+				
+			} catch (Exception e) {
+				log.error("An exception occured while executing the sql scripts.");
+		}
+		finally {
+			dbConnectionManager.closeDbConnection();
+			if(br!=null)
+				br.close();
+			if(stmt!=null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+			
+				}
+		}
+  	
     }
 }
