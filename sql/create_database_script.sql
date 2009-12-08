@@ -725,6 +725,21 @@ CREATE TABLE jobs
   PRIMARY KEY(job_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- -------------------------------------------------------------
+-- Table structure for record_types
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS record_types;
+CREATE TABLE record_types
+(
+  id INT(11) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  processing_order INT(11) NOT NULL,
+  PRIMARY KEY(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 -- -------------------------------------------------------------
 -- Insert information for the GUI
 -- -------------------------------------------------------------
