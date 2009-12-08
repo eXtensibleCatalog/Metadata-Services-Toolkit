@@ -981,7 +981,6 @@ public class DefaultServicesService implements ServicesService
 	    	//Execute the commands
 			stmt = dbConnectionManager.createStatement();
 			for (String sql : commands) {
-					System.out.println(sql);
 					stmt.execute(sql);	
 				}
 				
@@ -996,7 +995,7 @@ public class DefaultServicesService implements ServicesService
 				try {
 					stmt.close();
 				} catch (SQLException e) {
-			
+					log.error("An exception occured while closing a connection.");
 				}
 		}
   	
