@@ -34,7 +34,7 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
-import xc.mst.utils.MarcXmlManagerForNormalizationService;
+import xc.mst.utils.MarcXmlManager;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -296,7 +296,7 @@ public class NormalizationService extends MetadataService
 			}
 
 			// Create a MarcXmlManagerForNormalizationService for the record
-			MarcXmlManagerForNormalizationService normalizedXml = new MarcXmlManagerForNormalizationService(marcXml, getOrganizationCode());
+			MarcXmlManager normalizedXml = new MarcXmlManager(marcXml, getOrganizationCode());
 
 			// Get the Leader 06.  This will allow us to determine the record's type, and we'll put it in the correct set for that type
 			char leader06 = normalizedXml.getLeader().charAt(6);
@@ -560,7 +560,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService removeOcolc003(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager removeOcolc003(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering RemoveOCoLC003 normalization step.");
@@ -579,7 +579,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService dcmiType06(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager dcmiType06(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering DCMIType06 normalization step.");
@@ -641,7 +641,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService leader06MarcVocab(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager leader06MarcVocab(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering Leader06Vocab normalization step.");
@@ -708,7 +708,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService vocab06(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager vocab06(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering 007Vocab06 normalization step.");
@@ -747,7 +747,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService modeOfIssuance(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager modeOfIssuance(MarcXmlManager marcXml)
 	{
 		
 		if(log.isDebugEnabled())
@@ -786,7 +786,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService moveMarcOrgCode(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager moveMarcOrgCode(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering MoveMarcOrgCode normalization step.");
@@ -832,7 +832,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService dcmiType0007(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager dcmiType0007(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering DCMIType0007 normalization step.");
@@ -871,7 +871,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService vocab007(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager vocab007(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering 007Vocab normalization step.");
@@ -916,7 +916,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService smdType007(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager smdType007(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering 007SMDVocab normalization step.");
@@ -964,7 +964,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService fictionOrNonfiction(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager fictionOrNonfiction(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering FictionOrNonfiction normalization step.");
@@ -1002,7 +1002,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService dateRange(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager dateRange(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering 008DateRange normalization step.");
@@ -1042,7 +1042,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService languageSplit(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager languageSplit(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering LanguageSplit normalization step.");
@@ -1132,7 +1132,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService languageTerm(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager languageTerm(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering LanguageTerm normalization step.");
@@ -1181,7 +1181,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService audienceFrom008(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager audienceFrom008(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering 008Audience normalization step.");
@@ -1231,7 +1231,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService thesisFrom008(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager thesisFrom008(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering 008Thesis normalization step.");
@@ -1282,7 +1282,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService isbnCleanup(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager isbnCleanup(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering ISBNCleanup normalization step.");
@@ -1327,7 +1327,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService supplyMARCOrgCode(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager supplyMARCOrgCode(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering SupplyMARCOrgCode normalization step.");
@@ -1374,7 +1374,7 @@ public class NormalizationService extends MetadataService
 	 * @return The MARCXML record after performing this normalization step.
 	 */
 	@SuppressWarnings("unchecked")
-	private MarcXmlManagerForNormalizationService fix035(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager fix035(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering fix035 normalization step.");
@@ -1526,7 +1526,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService dedup035(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager dedup035(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering dedup035 normalization step.");
@@ -1543,7 +1543,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService roleAuthor(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager roleAuthor(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering RoleAuthor normalization step.");
@@ -1610,7 +1610,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService roleComposer(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager roleComposer(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering RoleComposer normalization step.");
@@ -1677,7 +1677,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService uniformTitle(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager uniformTitle(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering UniformTitle normalization step.");
@@ -1703,7 +1703,7 @@ public class NormalizationService extends MetadataService
 	 * @return The MARCXML record after performing this normalization step.
 	 */
 	@SuppressWarnings("unchecked")
-	private MarcXmlManagerForNormalizationService nruGenre(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager nruGenre(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering nruGenre normalization step.");
@@ -1753,7 +1753,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService topicSplit(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager topicSplit(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering TopicSplit normalization step.");
@@ -1789,7 +1789,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService chronSplit(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager chronSplit(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering ChronSplit normalization step.");
@@ -1825,7 +1825,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService geogSplit(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager geogSplit(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering GeogSplit normalization step.");
@@ -1861,7 +1861,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService genreSplit(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager genreSplit(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering GenreSplit normalization step.");
@@ -1897,7 +1897,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService dedupDcmiType(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager dedupDcmiType(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering DedupDCMIType normalization step.");
@@ -1913,7 +1913,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService dedup007Vocab(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager dedup007Vocab(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering Dedup007Vocab normalization step.");
@@ -1929,7 +1929,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService bibLocationName(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager bibLocationName(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering bibLocationName normalization step.");
@@ -1967,7 +1967,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService holdingsLocationName(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager holdingsLocationName(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering holdingsLocationName normalization step.");
@@ -2015,7 +2015,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService locationLimitName(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager locationLimitName(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering locationLimitName normalization step.");
@@ -2076,7 +2076,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService IIILocationName(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager IIILocationName(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering IIILocationName normalization step.");
@@ -2114,7 +2114,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService seperateName(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager seperateName(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering SeperateName normalization step.");
@@ -2137,7 +2137,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService titleArticle(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager titleArticle(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering TitleArticle normalization step.");
@@ -2167,7 +2167,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
-	private MarcXmlManagerForNormalizationService dedup9XX(MarcXmlManagerForNormalizationService marcXml)
+	private MarcXmlManager dedup9XX(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering Dedup9XX normalization step.");
