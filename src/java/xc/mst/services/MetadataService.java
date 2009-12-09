@@ -202,6 +202,10 @@ public abstract class MetadataService
 	/** Stores the unprocessed record identifiers */
 	protected ArrayList<String> unprocessedErrorRecordIdentifiers = new ArrayList<String>();
 	
+	private long startTime = new Date().getTime();
+	private long endTime = 0;
+	private long timeDiff = 0;
+
 	/**
 	 * 
 	 * @param serviceId
@@ -314,113 +318,35 @@ public abstract class MetadataService
 			totalRecordCount = records.size();
 			log.info("Number of records to be processed by service = " + totalRecordCount);
 			
-			long startTime = new Date().getTime();
-			long endTime = 0;
-			long timeDiff = 0;
+			startTime = new Date().getTime();
+			endTime = 0;
+			timeDiff = 0;
 
 			// Getting Record Types with the processing priority
 			List<RecordType> recordTypes = recordTypeDAO.getAll();
 			
-			boolean recordTypeSupported = false;
+			boolean typeInformationInRecord = false;
+			boolean typeInformationInDB = false;
+			
 			if(records.get(0).getType()!=null)
-				recordTypeSupported = true;
+				typeInformationInRecord = true;
+			if(recordTypes.size() != 0)
+				typeInformationInDB = true;
 			
-			// Processing records according to priority
-		for (int i = 0; i < recordTypes.size(); i++) {
-			
-			// First query for records type using record types
-			if(recordTypeSupported) {
-				RecordType recordType = recordTypes.get(i);
-				records = recordService.getByInputToServiceAndRecordType(service.getId(), recordType.getName());
-			}
-			// Secondly query for other records
-			else
-				records = recordService.getInputForServiceToProcess(service.getId());
-			
-			// Iterate over the list of input records and process each.
-			// Then run the processing directives on the results of each and add
-			// the appropriate record inputs for services to be run on the records
-			// resulting from the processing.  Also maintain a list of services to
-			// be invoked after this service is finished.  Finally, add the records
-			// resulting from this service.
-			
-			for(Record processMe : records)
-			{
-				// If the service is not canceled and not paused then continue
-				if(!isCanceled && !isPaused)
-				{
-					
-					// Process the record
-					processRecord(processMe);
-					
-					// Commit after 100k records
-					if(processedRecordCount % 100000 == 0)
-					{
-						SolrIndexManager.getInstance().commitIndex();
-						
-						updateServiceStatistics();
-						
-						// Updates the database with latest record id and OAI identifier used.
-						// So that in case of server down, the service will resume correctly.  
-						updateOAIRecordIds();
-						
-						endTime = new Date().getTime();
-						timeDiff = endTime - startTime;
-						
-						LogWriter.addInfo(service.getServicesLogFileName(), 
-								"Processed " + processedRecordCount + " records so far. Time taken = " 
-								+ (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " 
-								+ (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " 
-								+ (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  "
-						);
-						
-						startTime = new Date().getTime();
-					}
+			// If priority info about record types is not available in DB or records, process all records with same priority
+			if(!typeInformationInDB || !typeInformationInRecord)
+				processRecordBatch(records);
+			// Else process records according to priority
+			else {
+				// Processing records according to priority
+				for (int i = 0; i < recordTypes.size(); i++) {
+					// First query for records type using record types
+					RecordType recordType = recordTypes.get(i);
+					records = recordService.getByInputToServiceAndRecordType(service.getId(), recordType.getName());
+					processRecordBatch(records);
 				}
-				else {
-						// If canceled the stop processing records
-						if(isCanceled)
-							{
-								LogWriter.addInfo(service.getServicesLogFileName(), "Cancelled Service " + service.getName());
-								LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
-								// Update database with status of service
-								setStatus(Constants.STATUS_SERVICE_CANCELED);
-								break;
-							}
-						// If paused then wait
-						else if(isPaused)
-							{
-								LogWriter.addInfo(service.getServicesLogFileName(), "Paused Service " + service.getName());
-								// Update database with status of service
-								setStatus(Constants.STATUS_SERVICE_PAUSED);
+			}
 
-								while(isPaused && !isCanceled)
-									{
-										LogWriter.addInfo(service.getServicesLogFileName(), "Service Waiting to resume" );
-										Thread.sleep(3000);
-									}
-								// If the service is canceled after it is paused, then exit
-								if(isCanceled)
-								{
-									LogWriter.addInfo(service.getServicesLogFileName(), " Cancelled Service " + service.getName());
-									// Update database with status of service
-									setStatus(Constants.STATUS_SERVICE_CANCELED);
-									break;
-
-								}
-								// If the service is resumed after it is paused, then continue
-								else
-								{
-									LogWriter.addInfo(service.getServicesLogFileName(), "Resumed Service " + service.getName());
-									// Update database with status of service
-									setStatus(Constants.STATUS_SERVICE_RUNNING);
-
-								}
-
-							}
-					}
-			} // end loop over records to process
-		}
 			// Reopen the reader so it can see the changes made by running the service
 			SolrIndexManager.getInstance().commitIndex();
 
@@ -539,6 +465,98 @@ public abstract class MetadataService
 
 	}
 
+	/**
+	 * Processes the records in the given set.
+	 * @throws IndexException 
+	 * @throws InterruptedException 
+	 */
+	private void processRecordBatch(Records records) throws IndexException, InterruptedException, Exception{
+		
+		// Iterate over the list of input records and process each.
+		// Then run the processing directives on the results of each and add
+		// the appropriate record inputs for services to be run on the records
+		// resulting from the processing.  Also maintain a list of services to
+		// be invoked after this service is finished.  Finally, add the records
+		// resulting from this service.
+
+		for(Record processMe : records)
+		{
+			// If the service is not canceled and not paused then continue
+			if(!isCanceled && !isPaused)
+			{
+				
+				// Process the record
+				processRecord(processMe);
+				
+				// Commit after 100k records
+				if(processedRecordCount % 100000 == 0)
+				{
+					SolrIndexManager.getInstance().commitIndex();
+					
+					updateServiceStatistics();
+					
+					// Updates the database with latest record id and OAI identifier used.
+					// So that in case of server down, the service will resume correctly.  
+					updateOAIRecordIds();
+					
+					endTime = new Date().getTime();
+					timeDiff = endTime - startTime;
+					
+					LogWriter.addInfo(service.getServicesLogFileName(), 
+							"Processed " + processedRecordCount + " records so far. Time taken = " 
+							+ (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " 
+							+ (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " 
+							+ (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  "
+					);
+					
+					startTime = new Date().getTime();
+				}
+			}
+			else {
+					// If canceled the stop processing records
+					if(isCanceled)
+						{
+							LogWriter.addInfo(service.getServicesLogFileName(), "Cancelled Service " + service.getName());
+							LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
+							// Update database with status of service
+							setStatus(Constants.STATUS_SERVICE_CANCELED);
+							break;
+						}
+					// If paused then wait
+					else if(isPaused)
+						{
+							LogWriter.addInfo(service.getServicesLogFileName(), "Paused Service " + service.getName());
+							// Update database with status of service
+							setStatus(Constants.STATUS_SERVICE_PAUSED);
+
+							while(isPaused && !isCanceled)
+								{
+									LogWriter.addInfo(service.getServicesLogFileName(), "Service Waiting to resume" );
+									Thread.sleep(3000);
+								}
+							// If the service is canceled after it is paused, then exit
+							if(isCanceled)
+							{
+								LogWriter.addInfo(service.getServicesLogFileName(), " Cancelled Service " + service.getName());
+								// Update database with status of service
+								setStatus(Constants.STATUS_SERVICE_CANCELED);
+								break;
+
+							}
+							// If the service is resumed after it is paused, then continue
+							else
+							{
+								LogWriter.addInfo(service.getServicesLogFileName(), "Resumed Service " + service.getName());
+								// Update database with status of service
+								setStatus(Constants.STATUS_SERVICE_RUNNING);
+
+							}
+
+						}
+				}
+		} // end loop over records to process
+	}
+	
 	/**
 	 * Gets the cancel status of the service.
 	 * @return true if service is canceled else false
