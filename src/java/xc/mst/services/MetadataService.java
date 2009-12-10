@@ -325,20 +325,9 @@ public abstract class MetadataService
 			// Getting Record Types with the processing priority
 			List<RecordType> recordTypes = recordTypeDAO.getAll();
 			
-			boolean typeInformationInRecord = false;
-			boolean typeInformationInDB = false;
-			
-			if(records.get(0).getType()!=null)
-				typeInformationInRecord = true;
-			if(recordTypes.size() != 0)
-				typeInformationInDB = true;
-			
-			// If priority info about record types is not available in DB or records, process all records with same priority
-			if(!typeInformationInDB || !typeInformationInRecord)
-				processRecordBatch(records);
-			// Else process records according to priority
-			else {
-				// Processing records according to priority
+			// If the record processing info is present in DB
+			if(recordTypes.size() != 0){
+				// Process the records which have record_type info
 				for (int i = 0; i < recordTypes.size(); i++) {
 					// First query for records type using record types
 					RecordType recordType = recordTypes.get(i);
@@ -346,6 +335,10 @@ public abstract class MetadataService
 					processRecordBatch(records);
 				}
 			}
+
+			// Now process the records with no record_type info
+			records = recordService.getInputForServiceToProcess(service.getId());
+			processRecordBatch(records);
 
 			// Reopen the reader so it can see the changes made by running the service
 			SolrIndexManager.getInstance().commitIndex();
