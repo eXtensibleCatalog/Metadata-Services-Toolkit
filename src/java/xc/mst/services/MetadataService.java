@@ -333,7 +333,8 @@ public abstract class MetadataService
 					RecordType recordType = recordTypes.get(i);
 					records = recordService.getByInputToServiceAndRecordType(service.getId(), recordType.getName());
 					processRecordBatch(records);
-				}
+					}
+				SolrIndexManager.getInstance().commitIndex();
 			}
 
 			// Now process the records with no record_type info
