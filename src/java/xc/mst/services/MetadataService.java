@@ -668,7 +668,7 @@ public abstract class MetadataService
 	{
 		try
 		{
-			// TODO Method used only in aggregation service. Should the record's updatedAt(new Date()) be set?
+			record.setUpdatedAt(new Date());
 			recordService.update(record);
 		}
 		catch (IndexException e)

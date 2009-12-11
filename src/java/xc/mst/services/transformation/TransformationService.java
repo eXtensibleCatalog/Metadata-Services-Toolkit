@@ -7,14 +7,23 @@
   *
   */
 
-package xc.mst.services;
+package xc.mst.services.transformation;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
 
 import org.jdom.Attribute;
 import org.jdom.Document;
@@ -22,6 +31,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
+import org.jdom.transform.JDOMSource;
 import org.xml.sax.InputSource;
 
 import xc.mst.bo.provider.Format;
@@ -30,11 +40,24 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
+import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.services.MetadataService;
+import xc.mst.services.ServiceValidationException;
+import xc.mst.services.transformation.bo.BibliographicManifestationMapping;
+import xc.mst.services.transformation.bo.HeldHoldingRecord;
+import xc.mst.services.transformation.bo.XCHoldingRecord;
+import xc.mst.services.transformation.bo.XCRecord;
+import xc.mst.services.transformation.dao.BibliographicManifestationMappingDAO;
+import xc.mst.services.transformation.dao.DefaultBibliographicManifestationMappingDAO;
+import xc.mst.services.transformation.dao.DefaultHeldHoldingRecordDAO;
+import xc.mst.services.transformation.dao.DefaultXCHoldingDAO;
+import xc.mst.services.transformation.dao.HeldHoldingRecordDAO;
+import xc.mst.services.transformation.dao.XCHoldingDAO;
 import xc.mst.utils.MarcXmlRecord;
-import xc.mst.utils.XCRecord;
 
 /**
  * A Metadata Service which for each unprocessed marcxml record creates an XC schema
@@ -85,6 +108,17 @@ public class TransformationService extends MetadataService
 	 * Org code used 
 	 */
 	private String orgCode = "";
+	
+	private BibliographicManifestationMappingDAO bibliographicManifestationMappingDAO = new DefaultBibliographicManifestationMappingDAO();
+	
+	private HeldHoldingRecordDAO heldHoldingRecordDAO = new DefaultHeldHoldingRecordDAO();
+	
+	private XCHoldingDAO xcHoldingDAO = new DefaultXCHoldingDAO();
+	
+	private List<HeldHoldingRecord> heldHoldingRecords;
+	
+	private HashMap<String, Record> holdingRecords = new HashMap<String, Record>();
+	
 	/**
 	 * Construct a TransformationService Object
 	 */
@@ -158,63 +192,96 @@ public class TransformationService extends MetadataService
 		List<Record> results = convertRecord(processMe);
 		
 		boolean updatedInputRecord = false;
-		for(Record outgoingRecord : results)
-		{
-			// Mark the output record as a successor of the input record
-			if(!processMe.getSuccessors().contains(outgoingRecord))
-				processMe.addSuccessor(outgoingRecord);
-
-			// Mark the input record as a predecessor of the output record
-			outgoingRecord.addProcessedFrom(processMe);
-			
-			// Mark the record as not coming from a provider
-			outgoingRecord.setProvider(null);
-
-			// Add all sets the outgoing record belongs to to the service's list of output sets
-			for(Set outputSet : outgoingRecord.getSets())
-				service.addOutputSet(outputSet);
-
-			if(outputSet != null)
-				outgoingRecord.addSet(outputSet);
-
-			// Check whether or not this record already exists in the database
-			Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
-
-			// If the current record is a new record, insert it
-			if(oldRecord == null) {
-				insertNewRecord(outgoingRecord);
-			}
-			// Otherwise we've seen the record before.  Update it as appropriate
-			// If outgoingRecord's deleted flag is set to true, the record will
-			// be deleted.
-			else {
-				updateExistingRecord(outgoingRecord, oldRecord);
-				
-				// If output record exist then it means that the incoming record is an updated record
-				// So we set updatedInputRecord to true. This will be used to determine whether the input
-				// record is new record or updated record.
-				updatedInputRecord = true;
-			}
-		} // end loop over processed records
-		
-		// Mark the input record as done(processed by this service) only when its results are not empty.
-		// If results are empty then it means some exception occurred and no output records created
-		if (results.size() > 0) { 
-			// Mark the record as having been processed by this service
-			processMe.addProcessedByService(service);
-			processMe.removeInputForService(service);
-			recordService.update(processMe);
-		} else if (!processMe.getDeleted()) {
-			unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
-		}
-		
-		// If the input record is a new record then increment the processed record count
-		if (!updatedInputRecord  && !processMe.getDeleted() && results.size() > 0) {
-			inputRecordCount++;
-		}
-		
-		processedRecordCount++;
+		// If results is not null, then record is processed. If results is null, then the record is held 
+		if (results != null) {
+			for(Record outgoingRecord : results)
+			{
+				// Mark the output record as a successor of the input record
+				if(!processMe.getSuccessors().contains(outgoingRecord))
+					processMe.addSuccessor(outgoingRecord);
 	
+				// Mark the input record as a predecessor of the output record
+				outgoingRecord.addProcessedFrom(processMe);
+				
+				// Mark the record as not coming from a provider
+				outgoingRecord.setProvider(null);
+	
+				// Add all sets the outgoing record belongs to to the service's list of output sets
+				for(Set outputSet : outgoingRecord.getSets())
+					service.addOutputSet(outputSet);
+	
+				if(outputSet != null)
+					outgoingRecord.addSet(outputSet);
+	
+				// Check whether or not this record already exists in the database
+				Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
+	
+				// If the current record is a new record, insert it
+				if(oldRecord == null) {
+					insertNewRecord(outgoingRecord);
+				}
+				// Otherwise we've seen the record before.  Update it as appropriate
+				// If outgoingRecord's deleted flag is set to true, the record will
+				// be deleted.
+				else {
+					updateExistingRecord(outgoingRecord, oldRecord);
+					
+					// If output record exist then it means that the incoming record is an updated record
+					// So we set updatedInputRecord to true. This will be used to determine whether the input
+					// record is new record or updated record.
+					updatedInputRecord = true;
+				}
+				
+				if (outgoingRecord.getType().equalsIgnoreCase("XC-Holding")) {
+					// Place all holding records in HashMap, so that they can be retrieved to link manifestation
+					holdingRecords.put(outgoingRecord.getOaiIdentifier(), outgoingRecord);
+				}
+			} // end loop over processed records
+		
+
+			// Mark the input record as done(processed by this service) only when its results are not empty.
+			// If results are empty then it means some exception occurred and no output records created
+			if (results.size() > 0) { 
+				// Mark the record as having been processed by this service
+				processMe.addProcessedByService(service);
+				processMe.removeInputForService(service);
+				recordService.update(processMe);
+			} else if (!processMe.getDeleted()) {
+				unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
+			}
+			
+			// If the input record is a new record then increment the processed record count
+			if (!updatedInputRecord  && !processMe.getDeleted() && results.size() > 0) {
+				inputRecordCount++;
+			}
+			
+			processedRecordCount++;
+		} 
+		
+		// If there are held holding records that are linked to this bib record, then process them.
+		if (heldHoldingRecords != null && heldHoldingRecords.size() > 0) {
+			processHeldRecord();
+			
+		}
+	}
+	
+	/*
+	 * Process the held Holding record
+	 */
+	private void processHeldRecord() {
+		try {
+			
+			for (HeldHoldingRecord heldHoldingRecord: heldHoldingRecords) {
+				Record heldRecord = recordService.getByOaiIdentifier(heldHoldingRecord.getHoldingRecordOAIID());
+				// Remove held record to be processed from the list 
+				heldHoldingRecords.remove(heldHoldingRecord);
+				// delete held record from table
+				heldHoldingRecordDAO.delete(heldHoldingRecord);
+				processRecord(heldRecord);
+			}
+		}  catch(Exception e) {
+			log.error("Exception occured while processing held holding records" + e);
+		} 
 	}
 	
 	private List<Record> convertRecord(Record record)
@@ -440,74 +507,69 @@ public class TransformationService extends MetadataService
 				
 				// Get the XC records created as output
 				results = transformedRecord.getSplitXCRecordXML(this);
+				
+				Record manifestationRecord = null;
+				// Store the bib oai id, bib 001 field and its manifestation in database
+				for (Record outputRecord:results) {
+
+					if (outputRecord.getType().equals("XC-Manifestation")) {
+						manifestationRecord = outputRecord;
+						
+						BibliographicManifestationMapping bibliographicManifestationMapping 
+							= new BibliographicManifestationMapping(record.getOaiIdentifier(), outputRecord.getOaiIdentifier(), originalRecord.getControlField("001"));
+						bibliographicManifestationMappingDAO.insert(bibliographicManifestationMapping);
+						break;
+					}
+				}
+				
+				// Check for any held record
+				heldHoldingRecords = heldHoldingRecordDAO.getByHolding004Field(originalRecord.getControlField("001"));
+				
+				// Get already processed holding record that has matching 004 field
+				List<XCHoldingRecord> xcHoldingRecords = xcHoldingDAO.getByHolding004Field(originalRecord.getControlField("001"));
+				
+				// link the manifestation for already processed xc holding records
+				linkManifestation(xcHoldingRecords, manifestationRecord.getOaiIdentifier());
 			}
 			// If the record is a holdings record according to the leader06
 			else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y')
 			{
-				// Check if holding 004 matches bib 001 TODO
-				
-				// If not, add to held records table TODO
-				
-				// Run the transformation steps
-				// Each one processes a different MARC XML field and adds the appropriate
-				// XC fields to transformedRecord based on the field it processes.
-				transformedRecord = holdingsProcess506(originalRecord, transformedRecord);
-				transformedRecord = holdingsProcess852(originalRecord, transformedRecord);
-				transformedRecord = holdingsProcess856(originalRecord, transformedRecord);
-				transformedRecord = process866(originalRecord, transformedRecord);
-				transformedRecord = process867(originalRecord, transformedRecord);
-				transformedRecord = process868(originalRecord, transformedRecord);
-				transformedRecord = holdingsProcess001And003(originalRecord, transformedRecord);
-				/* holdingsProcess843 is commented for now. This will be implemented later.
-				transformedRecord = holdingsProcess843(originalRecord, transformedRecord);
-				*/
-				
-				// Get the XC records created as output
-				results = transformedRecord.getSplitXCRecordXMLForHoldingRecord(this);
-			}
+				// Check if holding 004 matches bib 001
+				BibliographicManifestationMapping bibliographicManifestationMapping 
+					= bibliographicManifestationMappingDAO.getByBibliographic001Field(originalRecord.getControlField("004"));
 
-			// Add the transformed record after modifications were made to it to
-			// the list of modified records.
+				if (bibliographicManifestationMapping == null) {
+					
+					// Add to held records table 
+					HeldHoldingRecord heldHoldingRecord = new HeldHoldingRecord(record.getOaiIdentifier(), originalRecord.getControlField("004"));
+					heldHoldingRecordDAO.insert(heldHoldingRecord);
+					return null;
 
+				} else {
+					// Run the transformation steps
+					// Each one processes a different MARC XML field and adds the appropriate
+					// XC fields to transformedRecord based on the field it processes.
+					transformedRecord = holdingsProcess506(originalRecord, transformedRecord);
+					transformedRecord = holdingsProcess852(originalRecord, transformedRecord);
+					transformedRecord = holdingsProcess856(originalRecord, transformedRecord);
+					transformedRecord = process866(originalRecord, transformedRecord);
+					transformedRecord = process867(originalRecord, transformedRecord);
+					transformedRecord = process868(originalRecord, transformedRecord);
+					transformedRecord = holdingsProcess001And003(originalRecord, transformedRecord);
+					/* holdingsProcess843 is commented for now. This will be implemented later.
+					transformedRecord = holdingsProcess843(originalRecord, transformedRecord);
+					*/
+					
+					// Get the XC records created as output & Link Holding to manifestation
+					results = transformedRecord.getSplitXCRecordXMLForHoldingRecord(this, bibliographicManifestationMapping.getManifestationRecordOAIId());
+					
+					// Insert the mapping between XC holding and manifestation in database
+					for (Record outputRecord : results) {
+						XCHoldingRecord holdingRecord = new XCHoldingRecord(outputRecord.getOaiIdentifier(), originalRecord.getControlField("004"), bibliographicManifestationMapping.getManifestationRecordOAIId());
+						xcHoldingDAO.insert(holdingRecord);
 
-
-//			for (String recordType: recordList.keySet()) {
-//				Document document = recordList.get(recordType);
-//					
-//				// Create the XC record, extract it from the Document object
-//				StringWriter writer = new StringWriter();
-//				TransformerFactory tf = TransformerFactory.newInstance();
-//				Transformer tran = tf.newTransformer();
-//				Source src = new JDOMSource(document);
-//				Result res = new StreamResult(writer);
-//				tran.transform(src, res);
-//				
-//				Record xcRecord = new Record();
-//				xcRecord.setOaiXml(writer.toString());
-//				xcRecord.setFormat(xcFormat);
-//				xcRecord.setIndexedObjectType(recordType);
-//				xcRecord.setOaiIdentifier(document.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("id"));
-//
-//				// Set the identifier, datestamp, and header to null so they get computed when we insert the transformed record
-//				//xcRecord.setOaiDatestamp(null);
-//				xcRecord.setOaiHeader(null);
-//
-//				// Set the record as not being deleted
-//				xcRecord.setDeleted(false);
-//				
-//				if(log.isDebugEnabled())
-//					log.debug("Created XC record with ID " + xcRecord.getId() + " from unprocessed record with ID " + record.getId());
-//
-//				results.add(xcRecord);
-//			}
-			
-			
-				
-			// TODO If input record is bib, then add to table
-			if (record.getIndexedObjectType().equals("MARC-Bib")) {
-				// add to bib table
-			} else if (record.getIndexedObjectType().equals("MARC-Holding")) {
-				// add
+					}
+				}
 			}
 			return results;
 		}
@@ -525,6 +587,77 @@ public class TransformationService extends MetadataService
 			return results;
 		}
 		
+	}
+	
+	/*
+	 * Links manifestation record with given set of holding record
+	 */
+	private void linkManifestation(List<XCHoldingRecord> xcHoldingRecords, String manifestationOAIId) {
+		
+		List<String> xcHoldingOaiIds = new ArrayList<String>();
+		String field004 = null;
+		for (XCHoldingRecord holdingRecord : xcHoldingRecords) {
+			field004 = holdingRecord.getHolding004Field();
+
+			if (!xcHoldingOaiIds.contains(holdingRecord)) {
+				xcHoldingOaiIds.add(holdingRecord.getHoldingRecordOAIID());
+			}
+		}
+		
+		
+		try {
+			List<Record> completeSetOfRecords = new ArrayList<Record>();
+			List<String> oaiIdsToGetFromSolr = new ArrayList<String>();
+			for (String oaiId : xcHoldingOaiIds) {
+				Record r = holdingRecords.get(oaiId);
+				if (r != null) {
+					completeSetOfRecords.add(r);
+				} else {
+					oaiIdsToGetFromSolr.add(oaiId);
+				}
+			}
+
+			if (oaiIdsToGetFromSolr.size() > 0) {
+				completeSetOfRecords.addAll(recordService.getByOaiIdentifiers(xcHoldingOaiIds));
+			}
+			
+			
+			for (Record record : completeSetOfRecords) {
+				
+				Document document = builder.build(new InputSource(new StringReader(record.getOaiXml())));
+				
+				// Create back links to Manifestation
+				Element linkManifestation =  new Element("manifestationHeld",XCRecord.XC_NAMESPACE);
+				linkManifestation.setText(manifestationOAIId);
+				document.getRootElement().getChild("entity",XCRecord.XC_NAMESPACE).addContent("\t").addContent(linkManifestation.detach()).addContent("\n\t");
+		
+				StringWriter writer = new StringWriter();
+				TransformerFactory tf = TransformerFactory.newInstance();
+				Transformer tran = tf.newTransformer();
+				Source src = new JDOMSource(document);
+				Result res = new StreamResult(writer);
+				tran.transform(src, res);
+				
+				record.setOaiXml(writer.toString());
+				updateRecord(record);
+				
+				// Insert the link between holding and manifestation record
+				XCHoldingRecord holdingRecord = new XCHoldingRecord(record.getOaiIdentifier(), field004, manifestationOAIId);
+				xcHoldingDAO.insert(holdingRecord);
+			}
+		} catch(IndexException ie) {
+			log.error("Index exception occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + ie);
+		} catch (JDOMException je) {
+			log.error("JDOMException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + je);
+		} catch (IOException ioe) {
+			log.error("IOException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + ioe);
+		} catch(TransformerConfigurationException tce) {
+			log.error("TransformerConfigurationException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + tce);
+		} catch (TransformerException te) {
+			log.error("TransformerException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + te);
+		} catch (DataException de) {
+			log.error("DataException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + de);
+		}
 	}
 
 	@Override

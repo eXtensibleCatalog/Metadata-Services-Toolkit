@@ -31,7 +31,7 @@ import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 import xc.mst.services.MetadataServiceFactory;
-import xc.mst.utils.XCRecord;
+import xc.mst.services.transformation.bo.XCRecord;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 

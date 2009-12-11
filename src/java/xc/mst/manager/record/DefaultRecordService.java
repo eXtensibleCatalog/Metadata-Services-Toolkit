@@ -495,6 +495,34 @@ public class DefaultRecordService extends RecordService
 		return records.get(0);
 	} // end method getByOaiIdentifier(String)
 
+	
+	@Override
+	public RecordList getByOaiIdentifiers(List<String> identifiers) throws  IndexException
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting the record with the OAI identifier " + identifiers);
+
+		// Create a query to get the record with the correct identifier
+		SolrQuery query = new SolrQuery();
+		StringBuffer b = new StringBuffer();
+		
+		int size = identifiers.size();
+		
+		int counter = 0;
+		
+		for (String identifier : identifiers) {
+			b.append(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:"));
+			counter++;
+			
+			if (counter != size) {
+				b.append(" OR ");
+			}
+		}
+
+		query.setQuery(b.toString());
+
+		return new RecordList(query);
+	} // end method getByOaiIdentifier(String)
 	@Override
 	public Record getByOaiIdentifierAndProvider(String identifier, int providerId) throws DatabaseConfigException, IndexException
 	{

@@ -10,6 +10,7 @@
 package xc.mst.manager.record;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.solr.common.SolrDocument;
@@ -392,6 +393,15 @@ public abstract class RecordService
 	public abstract Record getByOaiIdentifier(String identifier) throws DatabaseConfigException, IndexException;
 
 	/**
+	 * Gets all matching record from the index with the passed OAI Identifier
+	 *
+	 * @param identifier List of record's OAI Identifer
+	 * @return A List of Record Object representing the record with the passed OAI Identifier
+	 * @throws IndexException
+	 */
+	public abstract RecordList getByOaiIdentifiers(List<String> identifiers) throws IndexException;
+
+	/**
 	 * Gets the record from the index with the passed OAI Identifier
 	 *
 	 * @param identifier The record's OAI Identifer
@@ -640,6 +650,8 @@ public abstract class RecordService
 	 * @throws DatabaseConfigException
 	 */
 	public abstract Record getRecordFieldsForBrowseFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
+	
+	
 	
 	/**
 	 * Validates the fields on the passed Record Object

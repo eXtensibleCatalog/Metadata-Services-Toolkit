@@ -272,7 +272,7 @@
 	         <classes dir="${targetdir}/classes">
          		<exclude name="xc/mst/services/AggregationService.class"/>
 	         	<exclude name="xc/mst/services/NormalizationService.class"/>
-         		<exclude name="xc/mst/services/TransformationService.class"/>
+         		<exclude name="xc/mst/services/transformation/*.class"/>
 	         </classes>
 
 	         <lib dir="${librarydir}">

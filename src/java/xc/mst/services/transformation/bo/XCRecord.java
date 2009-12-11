@@ -7,7 +7,7 @@
   *
   */
 
-package xc.mst.utils;
+package xc.mst.services.transformation.bo;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -767,13 +767,13 @@ public class XCRecord
 		for(Element holdingsElement : holdingsElements){
 			
 			holdingsElement.setAttribute("id",transformationService.getNextOaiId());
-			// Create back links to expression
+			// Create back links to manifestation
 			for (Document document : documents) {
 				if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("manifestation"))
 				{
-					Element linkExpression =  new Element("manifestationHeld",XC_NAMESPACE);
-					linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
-					holdingsElement.addContent("\n\t\t").addContent(linkExpression.detach());
+					Element linkManifestation =  new Element("manifestationHeld",XC_NAMESPACE);
+					linkManifestation.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
+					holdingsElement.addContent("\n\t\t").addContent(linkManifestation.detach());
 				}
 				
 			}
@@ -820,9 +820,8 @@ public class XCRecord
 	 * @param transformationService 
 	 * @return
 	 */
-	public List<Record> getSplitXCRecordXMLForHoldingRecord(MetadataService transformationService) throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
+	public List<Record> getSplitXCRecordXMLForHoldingRecord(MetadataService transformationService, String manifestationOAIId) throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 
-		List<Document> documents = new ArrayList<Document>();
 		List<Record> records = new ArrayList<Record>();
 		
 		// Create the root document
@@ -837,20 +836,14 @@ public class XCRecord
 		for(Element holdingsElement : holdingsElements){
 			
 			holdingsElement.setAttribute("id",transformationService.getNextOaiId());
-			// Create back links to expression
-			for (Document document : documents) {
-				if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("manifestation"))
-				{
-					Element linkExpression =  new Element("manifestationHeld",XC_NAMESPACE);
-					linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
-					holdingsElement.addContent("\n\t\t").addContent(linkExpression.detach());
-				}
-				
-			}
+			// Create back links to Manifestation
+			Element linkManifestation =  new Element("manifestationHeld",XC_NAMESPACE);
+			linkManifestation.setText(manifestationOAIId);
+			holdingsElement.addContent("\n\t\t").addContent(linkManifestation.detach());
+
 			xcRootElement.addContent("\n\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n");
 			Document doc = (new Document()).setRootElement((Element)xcRootElement.clone());
 			records.add(createRecord("XC-Holding", doc));
-			documents.add(doc);
 			
 			xcRootElement.removeContent();
 		}
@@ -858,6 +851,16 @@ public class XCRecord
 		return records;
 	}
 	
+	/*
+	 * Creates the record with the specified record type
+	 * 
+	 * @param recordType
+	 * @param document
+	 * @return
+	 * @throws TransformerConfigurationException
+	 * @throws TransformerException
+	 * @throws DatabaseConfigException
+	 */
 	private Record createRecord(String recordType, Document document) throws TransformerConfigurationException, TransformerException, DatabaseConfigException {
 		
 		StringWriter writer = new StringWriter();
@@ -870,7 +873,7 @@ public class XCRecord
 		Record xcRecord = new Record();
 		xcRecord.setOaiXml(writer.toString());
 		xcRecord.setFormat(new DefaultFormatService().getFormatByName("xc"));
-		xcRecord.setIndexedObjectType(recordType);
+		xcRecord.setType(recordType);
 		xcRecord.setOaiIdentifier(document.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("id"));
 
 		// Set the identifier, datestamp, and header to null so they get computed when we insert the transformed record
