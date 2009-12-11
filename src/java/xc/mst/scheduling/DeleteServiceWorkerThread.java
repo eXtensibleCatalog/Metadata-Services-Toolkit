@@ -2,6 +2,7 @@ package xc.mst.scheduling;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -100,6 +101,14 @@ public class DeleteServiceWorkerThread extends WorkerThread
 				// Get all predecessors & remove the current record as successor
 				List<Record> predecessors =  record.getProcessedFrom();
 				for (Record predecessor : predecessors) {
+					
+					for (Iterator<String> iterator = predecessor.getErrors().iterator(); iterator.hasNext();) {
+						
+						String error = iterator.next();
+						if(error.startsWith(Integer.valueOf(serviceId).toString() + "-"))
+							iterator.remove();
+					}
+					
 					int index = updatedPredecessors.indexOf(predecessor);
 					if (index < 0) {
 						predecessor =  recordService.getById(predecessor.getId());
