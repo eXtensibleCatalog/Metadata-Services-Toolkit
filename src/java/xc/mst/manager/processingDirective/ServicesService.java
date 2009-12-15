@@ -47,7 +47,7 @@ public interface ServicesService
      * @throws IOException If an error occurred while reading the configuration file
      * @throws ConfigFileException If the configuration file was invalid
 	 */
-	void updateService(File configFile, Service service) throws DataException, IndexException, IOException, ConfigFileException;
+	void updateService(File configFile, Service service, boolean reprocessingRequired) throws DataException, IndexException, IOException, ConfigFileException;
 
 	/**
      * Adds a new Service

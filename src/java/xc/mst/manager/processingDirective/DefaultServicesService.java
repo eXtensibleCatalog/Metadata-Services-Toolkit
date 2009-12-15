@@ -489,7 +489,7 @@ public class DefaultServicesService implements ServicesService
     }
 
 
-    public void updateService(File configFile, Service service) throws DataException, IndexException, IOException, ConfigFileException
+    public void updateService(File configFile, Service service, boolean reprocessingRequired) throws DataException, IndexException, IOException, ConfigFileException
     {
     	// Reload the service and confirm that it's not currently running.
     	// Throw an error if it is
@@ -824,6 +824,7 @@ public class DefaultServicesService implements ServicesService
     		ServiceUtil.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
 
     		// Schedule a job to reprocess records through new service
+    		if(reprocessingRequired)
     		try {
 				Job job = new Job(service, 0, Constants.THREAD_SERVICE_REPROCESS);
 				job.setOrder(jobService.getMaxOrder() + 1); 
