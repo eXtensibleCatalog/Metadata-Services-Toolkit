@@ -61,8 +61,8 @@ public class EditService extends ActionSupport
 
     /** The temporary service object which is used to populate data in the JSP page*/
     private Service temporaryService;
-
-     /** A reference to the logger for this class */
+    
+      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
     
 	/** Indicates whether to reprocess the records or not */ 
@@ -189,7 +189,7 @@ public class EditService extends ActionSupport
                 return INPUT;
             }
             File file = new File(getSelectedLocation());
-            servicesService.updateService(file,tempService);
+            servicesService.updateService(file,tempService,reprocessRecords);
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -335,6 +335,7 @@ public class EditService extends ActionSupport
     {
         return this.selectedLocation;
     }
+
 
     private void populateListBox()
     {
