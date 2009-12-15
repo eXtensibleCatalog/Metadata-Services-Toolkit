@@ -11,13 +11,7 @@ YAHOO.namespace("xc.mst.services.alterService");
 
 YAHOO.xc.mst.services.alterService = {
 
- editService: function(serviceId)
-            {
-                document.getElementById("selectedLocation").value = document.getElementById("fileLocation").value;
-                document.getElementById("serviceId").value = serviceId;
-                document.editService.action = "editService.action";
-                document.editService.submit();
-            },
+
  cancel : function()
     {
         document.editService.action = "listServices.action";

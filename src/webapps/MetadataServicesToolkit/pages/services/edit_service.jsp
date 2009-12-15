@@ -72,8 +72,9 @@
                 <div id="error_div"></div>
 
                  <div class="clear">&nbsp;</div>
-
+		<form name="editService" method="post" action="editService.action">
                 <table style="margin-left:10px" width="100%">
+                <input type="hidden" name="serviceId" id="serviceId" value=${temporaryService.id}>
                     <br>
                     <tr>
                        <td colspan="2" >                          
@@ -85,7 +86,7 @@
                     <tr>
                       <td valign="top">Step 2: Select the Configuration File  : 
                           
-                          <select id="fileLocation" name ="fileLocation">
+                          <select id="selectedLocation" name ="selectedLocation">
                               <c:forEach var="serviceFile" items="${serviceFiles}" varStatus="a">
                                  
                                   <c:choose>
@@ -103,27 +104,34 @@
                           <br><br>
                       </td>
                     </tr>
-		    <tr>
-		    <td colspan="2">
-		       <font color="red">Note: On Clicking 'Save' button, the records processed by this service will be deleted and reprocessed again according to the new Configuration file changes.
-		       If you donot wish to reprocess the records, then click 'Cancel'.</font>
-		       <br>
-		       <br>
-		    </td>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="reprocess_required" name="reprocessRecords" value="true" 
+							<c:if test="${reprocessRecords}">
+								checked
+							</c:if>/> Check this box if records needs to be reprocessed
+                        </td>
+                    </tr>  
+				    <tr>
+				    <td colspan="2">
+				       <font color="red">Note: On Clicking 'Save' button, the records processed by this service will be deleted and reprocessed again according to the new Configuration file changes.
+				       If you donot wish to reprocess the records, then click 'Cancel'.</font>
+				       <br>
+				       <br>
+				    </td>
                     </tr>
                     
                     
                     <tr>
                         <td>
                             <button class="xc_button_small" onclick="javascript:YAHOO.xc.mst.services.alterService.cancel();" type="button" name="cancel">Cancel</button>&nbsp;&nbsp;
-                            <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.services.alterService.editService(${temporaryService.id});" name="editService">Save</button>
+                            <button class="xc_button" type="submit" name="editService">Save</button>
                         </td>
                     </tr>
+                  
                 </table>
-                <form name="editService" method="post">
-                    <input type="hidden" name="selectedLocation" id="selectedLocation">
-                    <input type="hidden" name="serviceId" id="serviceId">
-                </form>
+              </form>
+
             </div>
             <!--  this is the footer of the page -->
             <c:import url="/inc/footer.jsp"/>              

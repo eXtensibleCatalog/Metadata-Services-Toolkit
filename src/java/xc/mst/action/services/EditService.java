@@ -64,6 +64,9 @@ public class EditService extends ActionSupport
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    
+	/** Indicates whether to reprocess the records or not */ 
+	private boolean reprocessRecords;
 
      /**
      * Overrides default implementation to view the edit service page.
@@ -75,6 +78,8 @@ public class EditService extends ActionSupport
     {
         try
         {
+        	reprocessRecords = true;
+        	
             temporaryService = servicesService.getServiceById(serviceId);
             if(temporaryService==null)
             {
@@ -371,5 +376,13 @@ public class EditService extends ActionSupport
         }
 
     }
+
+	public boolean isReprocessRecords() {
+		return reprocessRecords;
+	}
+
+	public void setReprocessRecords(boolean reprocessRecords) {
+		this.reprocessRecords = reprocessRecords;
+	}
 }
 
