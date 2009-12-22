@@ -232,7 +232,7 @@ public abstract class MetadataService
 			if(log.isDebugEnabled())
 				log.debug("Validating the Metadata Service with ID " + serviceId + ".");
 	
-			ServiceUtil.checkService(service,Constants.STATUS_SERVICE_RUNNING, true);
+			ServiceUtil.getInstance().checkService(service,Constants.STATUS_SERVICE_RUNNING, true);
 	
 			if(log.isDebugEnabled())
 				log.debug("Running the Metadata Service with ID " + serviceId + ".");
@@ -327,6 +327,7 @@ public abstract class MetadataService
 			
 			// If the record processing info is present in DB
 			if(recordTypes.size() != 0){
+			
 				// Process the records which have record_type info
 				for (int i = 0; i < recordTypes.size(); i++) {
 					// First query for records type using record types
@@ -405,7 +406,7 @@ public abstract class MetadataService
 	/**
 	 * Update number of warnings, errors, records available, output & input records count
 	 */
-	private boolean updateServiceStatistics() {
+	public boolean updateServiceStatistics() {
 		// Load the provider again in case it was updated during the harvest
 		Service service = null;
 		try
@@ -483,7 +484,7 @@ public abstract class MetadataService
 				processRecord(processMe);
 				
 				// Commit after 100k records
-				if(processedRecordCount % 100000 == 0)
+				if(processedRecordCount != 0 && processedRecordCount % 100000 == 0)
 				{
 					SolrIndexManager.getInstance().commitIndex();
 					
@@ -858,12 +859,13 @@ public abstract class MetadataService
 			newRecord.setUpdatedAt(new Date());
 			newRecord.setService(service);
 
-			// Update the record.  If the update was successful,
-			// run the processing directives against the updated record
-			if(recordService.update(newRecord))
-				checkProcessingDirectives(newRecord);
-			else
+			// Run the processing directives against the updated record
+			checkProcessingDirectives(newRecord);
+
+			// Update the record.  
+			if(!recordService.update(newRecord)) {
 				log.error("The update failed for the record with ID " + newRecord.getId() + ".");
+			}
 			
 		} // end try(update the record)
 		catch (DataException e)

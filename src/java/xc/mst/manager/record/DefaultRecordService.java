@@ -886,7 +886,7 @@ public class DefaultRecordService extends RecordService
 		Collection<Object> uplinks = doc.getFieldValues(FIELD_UP_LINK);
 		if(uplinks != null) {
 			for(Object uplink : uplinks) {
-				record.addUpLink(getByOaiIdentifier((String)uplink));
+				record.addUpLink((String)uplink);
 			}
 		}
 		
@@ -1081,8 +1081,8 @@ public class DefaultRecordService extends RecordService
 			doc.addField(FIELD_UPDATED_AT, record.getUpdatedAt());
 		}
 
-		for(Record upLink : record.getUpLinks())
-			doc.addField(FIELD_UP_LINK, upLink.getOaiIdentifier());
+		for(String upLink : record.getUpLinks())
+			doc.addField(FIELD_UP_LINK, upLink);
 
 		for(Set set : record.getSets())
 		{

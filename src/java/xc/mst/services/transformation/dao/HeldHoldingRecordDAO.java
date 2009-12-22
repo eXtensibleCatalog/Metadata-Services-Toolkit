@@ -65,6 +65,15 @@ public abstract class HeldHoldingRecordDAO
 	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
 	public abstract List<HeldHoldingRecord> getByHolding004Field(String field004) throws DatabaseConfigException;
+	
+	/**
+	 * Gets a held holding record by marcxml holding oai id
+	 *
+	 * @param holdingOAId marcxml holding oai id
+	 * @return The held holding record with the passed marcxml holding oai id, or null
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
+	 */
+	public abstract HeldHoldingRecord getByMARCXMLHoldingOAId(String holdingOAId) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a held holding record into the database

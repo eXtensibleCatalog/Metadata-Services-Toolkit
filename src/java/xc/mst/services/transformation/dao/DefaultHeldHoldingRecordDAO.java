@@ -32,6 +32,11 @@ public class DefaultHeldHoldingRecordDAO extends HeldHoldingRecordDAO
 	 * A PreparedStatement to get a HeldHoldingRecord from the database by its ID
 	 */
 	private static PreparedStatement psGetByHolding004Field = null;
+	
+	/**
+	 * A PreparedStatement to get a HeldHoldingRecord from the database by its holding OAI id
+	 */
+	private static PreparedStatement psGetByHoldingOAIId = null;
 
 	/**
 	 * A PreparedStatement to insert a HeldHoldingRecord into the database
@@ -52,6 +57,11 @@ public class DefaultHeldHoldingRecordDAO extends HeldHoldingRecordDAO
 	 * Lock to synchronize access to the PreparedStatement to get a HeldHoldingRecord from the database by field 004
 	 */
 	private static Object psGetByHolding004FieldLock = new Object();
+
+	/**
+	 * Lock to synchronize access to the PreparedStatement to get a HeldHoldingRecord from the database by holding OAI id
+	 */
+	private static Object psGetByHoldingOAIIdLock = new Object();
 
 	/**
 	 * Lock to synchronize access to the PreparedStatement insert a HeldHoldingRecord into the database
@@ -145,6 +155,81 @@ public class DefaultHeldHoldingRecordDAO extends HeldHoldingRecordDAO
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getByHolding004Field(String)
+	
+	@Override
+	public HeldHoldingRecord getByMARCXMLHoldingOAId(String holdingOAId) throws DatabaseConfigException
+	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnectionManager.getDbConnection() == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
+		synchronized(psGetByHoldingOAIIdLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Getting the HeldHoldingRecord with holding OAI Id " + holdingOAId);
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			try
+			{
+				// Create the PreparedStatment to get a HeldHoldingRecord by field 004 if it hasn't already been created
+				if(psGetByHoldingOAIId == null || dbConnectionManager.isClosed(psGetByHoldingOAIId))
+				{
+					// SQL to get the row
+					String selectSql = "SELECT " + COL_HELD_HOLDINGS_ID + ", " +
+													COL_HOLDING_OAI_ID + ", " +
+				                                   COL_HOLDING_004_FIELD+ " " +
+				                                  
+	                                   "FROM " + HELD_HOLDINGS_TABLE_NAME + " " +
+	                                   "WHERE " + COL_HOLDING_OAI_ID + "=?";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get HeldHoldingRecord by holding OAI Id\" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This psGetByHoldingOAIId sanitize the SQL and prevent SQL injection
+					psGetByHoldingOAIId = dbConnectionManager.prepareStatement(selectSql, psGetByHoldingOAIId);
+				} // end if(get by ID PreparedStatement not defined)
+
+				// Set the parameters on the update statement
+				psGetByHoldingOAIId.setString(1, holdingOAId);
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = dbConnectionManager.executeQuery(psGetByHoldingOAIId);
+				
+				// If any results were returned
+				if(results.next())
+				{
+					HeldHoldingRecord heldHoldingRecord = new HeldHoldingRecord();
+					heldHoldingRecord.setId(results.getInt(1));
+					heldHoldingRecord.setHoldingRecordOAIID(results.getString(2));
+					heldHoldingRecord.setHolding004Field(results.getString(3));
+					
+					// Return the heldHoldingRecord
+					return heldHoldingRecord;
+
+				} // end if(result found)
+				return null;
+			} 
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the HeldHoldingRecord withholding OAI Id " + holdingOAId, e);
+
+				return null;
+			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByMARCXMLHoldingOAId(holdingOAId);
+			}
+			finally
+			{
+				dbConnectionManager.closeResultSet(results);
+			} // end finally(close ResultSet)
+		} // end synchronized
+	} // end method getByMARCXMLHoldingOAId(String)
 
 	@Override
 	public boolean insert(HeldHoldingRecord heldHoldingRecord) throws DataException

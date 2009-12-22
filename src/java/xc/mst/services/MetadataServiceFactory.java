@@ -78,7 +78,7 @@ public class MetadataServiceFactory {
 		}// end try(run the service through reflection)
 		catch (DatabaseConfigException e) {
 			log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e);
-			ServiceUtil.sendEmail("Cannot connect to the database with the parameters supplied in the configuration file.");
+			ServiceUtil.getInstance().sendEmail("Cannot connect to the database with the parameters supplied in the configuration file.");
 			return null;
 		}
 		catch(ClassNotFoundException e)
@@ -87,7 +87,7 @@ public class MetadataServiceFactory {
 			// Update database with status of service
 			service.setStatus(Constants.STATUS_SERVICE_ERROR);
 			
-			// TODO runningService will be null. Use different send email for this			ServiceUtil.sendEmail("The java class " + service.getClassName() + " could not be found.");
+			// TODO runningService will be null. Use different send email for this			ServiceUtil.getInstance().sendEmail("The java class " + service.getClassName() + " could not be found.");
 
 			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + service.getClassName() + " could not be found.");
 

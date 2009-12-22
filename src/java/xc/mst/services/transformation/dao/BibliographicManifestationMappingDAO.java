@@ -9,6 +9,8 @@
 
 package xc.mst.services.transformation.dao;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
@@ -37,7 +39,7 @@ public abstract class BibliographicManifestationMappingDAO
 	/**
 	 * The name of the database table we're interacting with
 	 */
-	public final static String BIBLIOGRAPHIC_MANIFESTATION_MAPPING_TABLE_NAME = "bibliographic_manifestation";
+	public final static String MARC_BIBLIOGRAPHIC_TO_XC_MANIFESTATION_MAPPING_TABLE_NAME = "marc_bibliographic_to_xc_manifestation";
 
 	/**
 	 * The name of the ID column
@@ -66,7 +68,16 @@ public abstract class BibliographicManifestationMappingDAO
 	 * @return The bibliographic Manifestation Mapping with the passed field001, or null if there was no mapping with that 001 field.
 	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract BibliographicManifestationMapping getByBibliographic001Field(String field001) throws DatabaseConfigException;
+	public abstract List<BibliographicManifestationMapping> getByBibliographic001Field(String field001) throws DatabaseConfigException;
+
+	/**
+	 * Gets a marc bibliographic Manifestation Mapping by bib OAI id
+	 *
+	 * @param bibliographicOAIId bibliographic OAI id
+	 * @return The bibliographic Manifestation Mapping with the passed bibliographic OAI id, or null if there was no mapping.
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
+	 */
+	public abstract BibliographicManifestationMapping getByBibliographicOAIId(String bibliographicOAIId) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a bibliographic Manifestation Mapping into the database

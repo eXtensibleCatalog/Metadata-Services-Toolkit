@@ -188,7 +188,7 @@ public class Holdings extends Record
 	 */
 	public void addLinkToManifestation(Manifestation manifestation)
 	{
-		addUpLink(manifestation);
+//		addUpLink(manifestation);
 	} // end method addLinkToManifestation(Manifestation)
 
 	/**
@@ -198,7 +198,7 @@ public class Holdings extends Record
 	 */
 	public void removeLinkToManifestation(Manifestation manifestation)
 	{
-		removeUpLink(manifestation);
+//		removeUpLink(manifestation);
 	} // end method removeLinkToManifestation(Manifestation)
 
 	/**

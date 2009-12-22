@@ -59,7 +59,7 @@ public class Expression extends Record
 	 */
 	public void addLinkToWork(Work work)
 	{
-		addUpLink(work);
+//		addUpLink(work);
 	} // end method addLinkToWork(Work)
 
 	/**
@@ -69,7 +69,7 @@ public class Expression extends Record
 	 */
 	public void removeLinkToWork(Work work)
 	{
-		removeUpLink(work);
+//		removeUpLink(work);
 	} // end method removeLinkFromWork(Work)
 
 	/**

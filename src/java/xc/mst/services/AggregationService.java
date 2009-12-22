@@ -1674,7 +1674,9 @@ public class AggregationService extends MetadataService
 			if(!currentLinks.contains(linkTo.getOaiIdentifier()))
 			{
 				xml = addLink(xml, linkToAdd, linkTo.getOaiIdentifier());
-				from.addUpLink(linkTo);
+				
+				// TODO SHARMILA commented it out to avoid error since upLink is changed to String.
+//				from.addUpLink(linkTo);
 				currentLinks.add(linkTo.getOaiIdentifier());
 			}
 		}

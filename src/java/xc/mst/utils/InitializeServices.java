@@ -101,7 +101,7 @@ public class InitializeServices  extends HttpServlet {
     			URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);
 				loader.loadClass(className);
 	    		
-	    		ServiceUtil.checkService(service.getId(), "", false);
+	    		ServiceUtil.getInstance().checkService(service.getId(), "", false);
 			} 
     		catch (ClassNotFoundException e) 
     		{

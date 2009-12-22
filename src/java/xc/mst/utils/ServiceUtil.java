@@ -40,27 +40,43 @@ public class ServiceUtil {
 	/**
 	 * Data access object for getting services
 	 */
-	private static ServiceDAO serviceDao = new DefaultServiceDAO();
+	private ServiceDAO serviceDao = new DefaultServiceDAO();
 
 	/**
 	 * Data access object for getting user info from groups
 	 */
-	private static UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
+	private UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
 
 	/**
 	 * Data access object for getting groups
 	 */
-	private static GroupDAO groupDAO = new DefaultGroupDAO();
+	private GroupDAO groupDAO = new DefaultGroupDAO();
 
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private static RecordService recordService = new DefaultRecordService();
+	private RecordService recordService = new DefaultRecordService();
 
 	/**
 	 * Used to send email reports
 	 */
-	private static Emailer mailer = new Emailer();
+	private Emailer mailer = new Emailer();
+	
+	/** Singleton instance */
+	private static ServiceUtil instance;
+	
+	/**
+	 * Get instance of ServiceUtil
+	 * 
+	 * @return
+	 */
+	public static ServiceUtil getInstance() {
+		if (instance == null) {
+			instance = new ServiceUtil();
+		}
+		
+		return instance;
+	}
 	
 	/**
 	 * Validates the service with the passed ID
@@ -69,7 +85,7 @@ public class ServiceUtil {
 	 * @param successStatus The status of the MetadataService is the validation was successful
 	 * @param testSolr True to test the connection to the index, false otherwise
 	 */
-	public static void checkService(int serviceId, String successStatus, boolean testSolr){
+	public void checkService(int serviceId, String successStatus, boolean testSolr){
 
 		if(log.isDebugEnabled())
 			log.debug("Entering MetadataService.checkService for the service with ID " + serviceId + ".");
@@ -283,7 +299,7 @@ public class ServiceUtil {
 	 * @param testSolr True to verify access to the Solr index, false otherwise
 	 * @return True iff the service is runnable
 	 */
-	public static boolean checkService(Service service, String statusForSuccess, boolean testSolr) {
+	public boolean checkService(Service service, String statusForSuccess, boolean testSolr) {
 
 		if(testSolr)
 		{
@@ -330,7 +346,7 @@ public class ServiceUtil {
 	
 	}
 	
-	public static void sendEmail(String message) {
+	public void sendEmail(String message) {
 
 		try {
 

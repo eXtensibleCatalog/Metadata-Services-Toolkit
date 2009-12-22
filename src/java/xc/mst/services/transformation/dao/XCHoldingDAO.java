@@ -69,7 +69,25 @@ public abstract class XCHoldingDAO
 	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
 	public abstract  List<XCHoldingRecord> getByHolding004Field(String field004) throws DatabaseConfigException;
+	
+	/**
+	 * Gets list of holding OAI Ids by manifestation OAI Id
+	 *
+	 * @param manifestationOAIId  manifestation OAI Id
+	 * @return The list of holding manifestation mapping
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
+	 */
+	public abstract  List<XCHoldingRecord> getByManifestationOAIId(String manifestationOAIId) throws DatabaseConfigException;
 
+	/**
+	 * Gets list of holding manifestation mapping by holding OAI Id
+	 *
+	 * @param holdingOAIId  holding OAI Id
+	 * @return The list of holding manifestation mapping
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
+	 */
+	public abstract List<XCHoldingRecord> getByHoldingOAIId(String holdingOaiId) throws DatabaseConfigException;
+	
 	/**
 	 * Inserts a held holding record into the database
 	 *
@@ -96,6 +114,15 @@ public abstract class XCHoldingDAO
 	 * @throws DataException if the passed HoldingRecord was not valid for deleting
 	 */
 	public abstract boolean delete(XCHoldingRecord holdingRecord) throws DataException;
+
+	/**
+	 * Deletes a HoldingRecord from the database for given holding OAI id
+	 *
+	 * @param holdingOAIId The holding OAI id to delete
+	 * @return True on success, false on failure
+	 * @throws DataException if the passed HoldingRecord was not valid for deleting
+	 */
+	public abstract boolean deleteByHoldingOAIId(String holdingOAIId) throws DataException;
 
 	/**
 	 * Validates the fields on the passed HoldingRecord Object

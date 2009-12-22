@@ -12,8 +12,9 @@ package xc.mst.services.transformation.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import xc.mst.bo.user.Permission;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -33,6 +34,11 @@ public class DefaultBibliographicManifestationMappingDAO extends BibliographicMa
 	private static PreparedStatement psGetByBibliographic001Field = null;
 
 	/**
+	 * A PreparedStatement to get a BibliographicManifestationMapping from the database by its bib OAI id
+	 */
+	private static PreparedStatement psGetByBibliographicOAIId = null;
+	
+	/**
 	 * A PreparedStatement to insert a BibliographicManifestationMapping into the database
 	 */
 	private static PreparedStatement psInsert = null;
@@ -51,6 +57,11 @@ public class DefaultBibliographicManifestationMappingDAO extends BibliographicMa
 	 * Lock to synchronize access to the PreparedStatement to get a BibliographicManifestationMappings from the database by ID
 	 */
 	private static Object psGetByBibliographic001FieldLock = new Object();
+	
+	/**
+	 * Lock to synchronize access to the PreparedStatement to get a BibliographicManifestationMappings from the database by oai id
+	 */
+	private static Object psGetByBibliographicOAIIdLock = new Object();
 
 	/**
 	 * Lock to synchronize access to the PreparedStatement insert a BibliographicManifestationMapping into the database
@@ -68,7 +79,7 @@ public class DefaultBibliographicManifestationMappingDAO extends BibliographicMa
 	private static Object psDeleteLock = new Object();
 
 	@Override
-	public BibliographicManifestationMapping getByBibliographic001Field(String field001) throws DatabaseConfigException
+	public List<BibliographicManifestationMapping> getByBibliographic001Field(String field001) throws DatabaseConfigException
 	{
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnectionManager.getDbConnection() == null)
@@ -93,7 +104,7 @@ public class DefaultBibliographicManifestationMappingDAO extends BibliographicMa
 				                                   COL_MANIFESTATION_OAI_ID + ", " +
 				                                   COL_BIBLIOGRAPHIC_001_FIELD + " " +
 				                                  
-	                                   "FROM " + BIBLIOGRAPHIC_MANIFESTATION_MAPPING_TABLE_NAME + " " +
+	                                   "FROM " + MARC_BIBLIOGRAPHIC_TO_XC_MANIFESTATION_MAPPING_TABLE_NAME + " " +
 	                                   "WHERE " + COL_BIBLIOGRAPHIC_001_FIELD + "=?";
 
 					if(log.isDebugEnabled())
@@ -111,6 +122,87 @@ public class DefaultBibliographicManifestationMappingDAO extends BibliographicMa
 
 				// Execute the query
 				results = dbConnectionManager.executeQuery(psGetByBibliographic001Field);
+				
+				List<BibliographicManifestationMapping> bibliographicManifestationMappings = new ArrayList<BibliographicManifestationMapping>();
+
+				// If any results were returned
+				while(results.next())
+				{
+					BibliographicManifestationMapping bibliographicManifestationMapping = new BibliographicManifestationMapping();
+					bibliographicManifestationMapping.setId(results.getInt(1));
+					bibliographicManifestationMapping.setBibliographicRecordOAIId(results.getString(2));
+					bibliographicManifestationMapping.setManifestationRecordOAIId(results.getString(3));
+					bibliographicManifestationMapping.setBibliographicRecord001Field(results.getString(4));
+					
+					bibliographicManifestationMappings.add(bibliographicManifestationMapping);
+					
+				} // end if(result found)
+
+
+				// Return the bibliographicManifestationMapping
+				return bibliographicManifestationMappings;
+			} 
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the BibliographicManifestationMapping with field 001 " + field001, e);
+
+				return null;
+			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed " + e.getMessage());
+				return getByBibliographic001Field(field001);
+			}
+			finally
+			{
+				dbConnectionManager.closeResultSet(results);
+			} // end finally(close ResultSet)
+		} // end synchronized
+	} // end method getByBibliographic001Field(String)
+	
+	@Override
+	public BibliographicManifestationMapping getByBibliographicOAIId(String bibliographicOAIId) throws DatabaseConfigException
+	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnectionManager.getDbConnection() == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
+		synchronized(psGetByBibliographicOAIIdLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Getting the BibliographicManifestationMapping with OAI id " + bibliographicOAIId);
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			try
+			{
+				// Create the PreparedStatment to get a bibliographicManifestationMapping by OAI id if it hasn't already been created
+				if(psGetByBibliographicOAIId == null || dbConnectionManager.isClosed(psGetByBibliographicOAIId))
+				{
+					// SQL to get the row
+					String selectSql = "SELECT " + COL_BIBLIOGRAPHIC_MANIFESTATION_ID + ", " +
+												   COL_BIBLIOGRAPHIC_OAI_ID + ", " +
+				                                   COL_MANIFESTATION_OAI_ID + ", " +
+				                                   COL_BIBLIOGRAPHIC_001_FIELD + " " +
+				                                  
+	                                   "FROM " + MARC_BIBLIOGRAPHIC_TO_XC_MANIFESTATION_MAPPING_TABLE_NAME + " " +
+	                                   "WHERE " + COL_BIBLIOGRAPHIC_OAI_ID + "=?";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get BibliographicManifestationMapping by OAI id\" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetByBibliographicOAIId = dbConnectionManager.prepareStatement(selectSql, psGetByBibliographicOAIId);
+				} // end if(get by ID PreparedStatement not defined)
+
+				// Set the parameters on the update statement
+				psGetByBibliographicOAIId.setString(1, bibliographicOAIId);
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = dbConnectionManager.executeQuery(psGetByBibliographicOAIId);
 
 				// If any results were returned
 				if(results.next())
@@ -130,20 +222,20 @@ public class DefaultBibliographicManifestationMappingDAO extends BibliographicMa
 			} 
 			catch(SQLException e)
 			{
-				log.error("A SQLException occurred while getting the BibliographicManifestationMapping with field 001 " + field001, e);
+				log.error("A SQLException occurred while getting the BibliographicManifestationMapping with OAI Id " + bibliographicOAIId, e);
 
 				return null;
 			} // end catch(SQLException)
 			catch (DBConnectionResetException e){
 				log.info("Re executing the query that failed " + e.getMessage());
-				return getByBibliographic001Field(field001);
+				return getByBibliographicOAIId(bibliographicOAIId);
 			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(results);
 			} // end finally(close ResultSet)
 		} // end synchronized
-	} // end method getByBibliographic001Field(String)
+	} // end method getByBibliographicOAIId(String)
 
 	@Override
 	public boolean insert(BibliographicManifestationMapping bibliographicManifestationMapping) throws DataException
@@ -166,7 +258,7 @@ public class DefaultBibliographicManifestationMappingDAO extends BibliographicMa
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
 					// SQL to insert the new row
-					String insertSql = "INSERT INTO " + BIBLIOGRAPHIC_MANIFESTATION_MAPPING_TABLE_NAME + " (" +  COL_BIBLIOGRAPHIC_OAI_ID + ", " +
+					String insertSql = "INSERT INTO " + MARC_BIBLIOGRAPHIC_TO_XC_MANIFESTATION_MAPPING_TABLE_NAME + " (" +  COL_BIBLIOGRAPHIC_OAI_ID + ", " +
 	            	      													        COL_MANIFESTATION_OAI_ID + ", " +
 	            	      													        COL_BIBLIOGRAPHIC_001_FIELD + ") " +
 	            				       "VALUES (?, ?, ?)";
@@ -238,7 +330,7 @@ public class DefaultBibliographicManifestationMappingDAO extends BibliographicMa
 				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
 				{
 					// SQL to update new row
-					String updateSql = "UPDATE " + BIBLIOGRAPHIC_MANIFESTATION_MAPPING_TABLE_NAME + " SET " + COL_BIBLIOGRAPHIC_OAI_ID + "=?, " +
+					String updateSql = "UPDATE " + MARC_BIBLIOGRAPHIC_TO_XC_MANIFESTATION_MAPPING_TABLE_NAME + " SET " + COL_BIBLIOGRAPHIC_OAI_ID + "=?, " +
 				                                                          COL_MANIFESTATION_OAI_ID + "=?, " +
 				                                                          COL_BIBLIOGRAPHIC_001_FIELD + "=? " +
 	                                   "WHERE " + COL_BIBLIOGRAPHIC_MANIFESTATION_ID+ "=?";
@@ -291,7 +383,7 @@ public class DefaultBibliographicManifestationMappingDAO extends BibliographicMa
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
 					// SQL to delete the row from the table
-					String deleteSql = "DELETE FROM "+ BIBLIOGRAPHIC_MANIFESTATION_MAPPING_TABLE_NAME + " " +
+					String deleteSql = "DELETE FROM "+ MARC_BIBLIOGRAPHIC_TO_XC_MANIFESTATION_MAPPING_TABLE_NAME + " " +
 		                               "WHERE " + COL_BIBLIOGRAPHIC_MANIFESTATION_ID + " = ? ";
 
 					if(log.isDebugEnabled())

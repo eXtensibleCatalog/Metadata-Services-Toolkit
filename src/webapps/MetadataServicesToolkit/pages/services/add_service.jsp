@@ -101,6 +101,8 @@
                             <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.services.newService.addService();" name="addService">Add</button>
                         </td>
                     </tr>
+
+                    
                 </table>
                 <form name="addService" method="post">
                     <input type="hidden" name="selectedLocation" id="selectedLocation">

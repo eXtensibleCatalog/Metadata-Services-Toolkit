@@ -458,8 +458,7 @@ public class DefaultServicesService implements ServicesService
     		// Execute DB scripts
     		executeServiceDBScripts(configFolderPath + File.separator + "serviceSql");
     		
-    		
-    		ServiceUtil.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
+    		ServiceUtil.getInstance().checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
     	}
     	catch(DataException e)
     	{
@@ -821,7 +820,7 @@ public class DefaultServicesService implements ServicesService
 			}
  
     		// TODO what does below line do? Is it necessary? Should it be here or moved to Service Reprocess thread?
-    		ServiceUtil.checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
+    		ServiceUtil.getInstance().checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
 
     		// Schedule a job to reprocess records through new service
     		if(reprocessingRequired)
@@ -955,7 +954,7 @@ public class DefaultServicesService implements ServicesService
      * @param sqlFolderName Path of the folder that contains the sql scripts
      * @throws IOException 
      */
-    private void executeServiceDBScripts(String sqlFolderPath) throws Exception {
+    private void executeServiceDBScripts(String sqlFolderPath) throws DataException {
     	
     	File sqlFolder = new File(sqlFolderPath);
     	ArrayList<String> commands = new ArrayList<String>();
@@ -993,12 +992,17 @@ public class DefaultServicesService implements ServicesService
 				
 			} catch (Exception e) {
 				log.error("An exception occured while executing the sql scripts.");
-				throw new Exception("");
+				throw new DataException("An exception occured while executing the sql scripts.");
 		}
 		finally {
-			dbConnectionManager.closeDbConnection();
-			if(br!=null)
-				br.close();
+			if(br!=null) {
+				try {
+					br.close();
+				} catch(IOException ioe) {
+					log.error("An IO Exception occured while closing the buffered Reader");
+					throw new DataException("An IO Exception occured while closing the buffered Reader");
+				}
+			}
 			if(stmt!=null)
 				try {
 					stmt.close();

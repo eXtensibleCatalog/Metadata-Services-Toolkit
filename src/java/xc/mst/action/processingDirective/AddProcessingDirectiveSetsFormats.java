@@ -116,9 +116,11 @@ public class AddProcessingDirectiveSetsFormats extends ActionSupport implements 
             	// Loop over the formats the source provider can produce
             	// If the service can accept it as input, add it to the list
             	// of Formats the user can select
-            	for(Format tempFormat : tempProcDir.getSourceProvider().getFormats())
-            		if(tempProcDir.getService().getInputFormats().contains(tempFormat))
+            	for(Format tempFormat : tempProcDir.getSourceProvider().getFormats()) {
+            		if(tempProcDir.getService().getInputFormats().contains(tempFormat)) {
                         tempFormatList.add(tempFormat);
+            		}
+            	}
             	
                 tempSetList = tempProcDir.getSourceProvider().getHarvestedRecordSets();
             }

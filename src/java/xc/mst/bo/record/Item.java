@@ -125,7 +125,7 @@ public class Item extends Record
 	 */
 	public void addLinkToHoldings(Holdings holdings)
 	{
-		addUpLink(holdings);
+//		addUpLink(holdings);
 	} // end method addLinkToHoldings(Holdings)
 
 	/**
@@ -135,7 +135,7 @@ public class Item extends Record
 	 */
 	public void removeLinkToHoldings(Holdings holdings)
 	{
-		removeUpLink(holdings);
+//		removeUpLink(holdings);
 	} // end method removeLinkToHoldings(Holdings)
 
 	/**

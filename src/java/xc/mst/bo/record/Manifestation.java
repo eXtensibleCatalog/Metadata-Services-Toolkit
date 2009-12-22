@@ -125,7 +125,7 @@ public class Manifestation extends Record
 	 */
 	public void addLinkToExpression(Expression expression)
 	{
-		addUpLink(expression);
+//		addUpLink(expression);
 	} // end method addLinkToExpression(Expression)
 
 	/**
@@ -135,7 +135,7 @@ public class Manifestation extends Record
 	 */
 	public void removeLinkToExpression(Expression expression)
 	{
-		removeUpLink(expression);
+//		removeUpLink(expression);
 	} // end method removeLinkToExpression(Expression)
 
 	/**

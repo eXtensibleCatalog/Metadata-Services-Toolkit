@@ -6,8 +6,8 @@
 -- Table structure for bibliographic_manifestation
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS bibliographic_manifestation;
-CREATE TABLE bibliographic_manifestation
+DROP TABLE IF EXISTS marc_bibliographic_to_xc_manifestation;
+CREATE TABLE marc_bibliographic_to_xc_manifestation
 (
   bibliographic_manifestation_id INT(11) NOT NULL AUTO_INCREMENT,
   bibliographic_oai_id TEXT  NOT NULL,

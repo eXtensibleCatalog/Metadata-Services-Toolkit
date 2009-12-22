@@ -102,19 +102,31 @@ public class DeleteServiceWorkerThread extends WorkerThread
 				List<Record> predecessors =  record.getProcessedFrom();
 				for (Record predecessor : predecessors) {
 					
-					for (Iterator<String> iterator = predecessor.getErrors().iterator(); iterator.hasNext();) {
-						
-						String error = iterator.next();
-						if(error.startsWith(Integer.valueOf(serviceId).toString() + "-"))
-							iterator.remove();
-					}
-					
 					int index = updatedPredecessors.indexOf(predecessor);
 					if (index < 0) {
 						predecessor =  recordService.getById(predecessor.getId());
 					} else {
 						predecessor = updatedPredecessors.get(index);
 					}
+					
+					// Remove errors added to predecessor record 
+					List<String> errors =  predecessor.getErrors();
+					
+					if (errors != null && errors.size() > 0) {
+						
+						ArrayList<String> errorsToRemove = new ArrayList<String>(); 
+					
+						for (String error: errors) {
+							
+							if(error.startsWith(Integer.valueOf(service.getId()).toString() + "-")) {
+								errorsToRemove.add(error);
+							}
+						}
+						if (errorsToRemove.size() > 0) {
+							predecessor.getErrors().removeAll(errorsToRemove);
+						}
+					}
+
 					predecessor.removeSucessor(record);
 
 					// Remove the reference for the service which is being deleted from its predecessor

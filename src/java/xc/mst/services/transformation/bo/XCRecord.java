@@ -612,7 +612,7 @@ public class XCRecord
 					 .addContent(tempXcWorkElement)
 					 .addContent("\n");
 		Document doc = (new Document()).setRootElement((Element)xcRootElement.clone());
-		records.add(createRecord("XC-Work", doc));
+		records.add(createRecord("XC-Work", doc, null));
 		documents.add(doc);
 		xcRootElement.removeContent();
 		
@@ -628,7 +628,9 @@ public class XCRecord
         			 .addContent(tempXcExpressionElement)
 					 .addContent("\n");
 		doc = (new Document()).setRootElement((Element)xcRootElement.clone());
-		records.add(createRecord("XC-Expression", doc));
+		List<String> workElementOaiIDs = new ArrayList<String>();
+		workElementOaiIDs.add(workElementOaiID);
+		records.add(createRecord("XC-Expression", doc, workElementOaiIDs));
 		documents.add(doc);
 		xcRootElement.removeContent();
 		
@@ -690,7 +692,7 @@ public class XCRecord
 						 .addContent(newWorkElement)
 						 .addContent("\n");
 			doc = (new Document()).setRootElement((Element)xcRootElement.clone());
-			records.add(createRecord("XC-Work", doc));
+			records.add(createRecord("XC-Work", doc, null));
 			documents.add(doc);
 			xcRootElement.removeContent();
 
@@ -726,7 +728,10 @@ public class XCRecord
 			xcRootElement.addContent("\n\t")
 						 .addContent(newExpressionElement.addContent("\n\t")).addContent("\n");
 			doc = (new Document()).setRootElement((Element)xcRootElement.clone());
-			records.add(createRecord("XC-Expression", doc));
+			
+			List<String> workExpressedOaiIDs = new ArrayList<String>();
+			workExpressedOaiIDs.add(workElementOaiID);
+			records.add(createRecord("XC-Expression", doc, workExpressedOaiIDs));
 			documents.add(doc);
 			xcRootElement.removeContent();
 			
@@ -745,11 +750,14 @@ public class XCRecord
 		// Set the OAI id
 		xcManifestationElement.setAttribute("id", transformationService.getNextOaiId());
 		// Link to expression docs
+		List<String> linkExpressionOAIIds = new ArrayList<String>();
 		for (Document document : documents) {
 			if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("expression"))
 			{
 				Element linkExpression =  new Element("expressionManifested",XC_NAMESPACE);
-				linkExpression.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
+				String linkExpressionOAIId = document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id");
+				linkExpressionOAIIds.add(linkExpressionOAIId);
+				linkExpression.setText(linkExpressionOAIId);
 				xcManifestationElement.addContent("\n\t\t")
 									  .addContent(linkExpression.detach());
 			}
@@ -758,12 +766,13 @@ public class XCRecord
 		 			 .addContent(xcManifestationElement)
 		 			 .addContent("\n");
 		doc = (new Document()).setRootElement((Element)xcRootElement.clone());
-		records.add(createRecord("XC-Manifestation", doc));
+		records.add(createRecord("XC-Manifestation", doc, linkExpressionOAIIds));
 		documents.add(doc);
 		xcRootElement.removeContent();
 
 		/*$$ HOLDINGS $$*/
 		// Create the Holdings documents
+		List<String> manifestationHeldOAIIds = new ArrayList<String>();
 		for(Element holdingsElement : holdingsElements){
 			
 			holdingsElement.setAttribute("id",transformationService.getNextOaiId());
@@ -772,14 +781,16 @@ public class XCRecord
 				if(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("type").equals("manifestation"))
 				{
 					Element linkManifestation =  new Element("manifestationHeld",XC_NAMESPACE);
-					linkManifestation.setText(document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id"));
+					String manifestationHeld = document.getRootElement().getChild("entity",XC_NAMESPACE).getAttributeValue("id");
+					manifestationHeldOAIIds.add(manifestationHeld);
+					linkManifestation.setText(manifestationHeld);
 					holdingsElement.addContent("\n\t\t").addContent(linkManifestation.detach());
 				}
 				
 			}
 			xcRootElement.addContent("\n\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n");
 			doc = (new Document()).setRootElement((Element)xcRootElement.clone());
-			records.add(createRecord("XC-Holding", doc));
+			records.add(createRecord("XC-Holding", doc, manifestationHeldOAIIds));
 			documents.add(doc);
 			
 			xcRootElement.removeContent();
@@ -803,7 +814,7 @@ public class XCRecord
 			 .addContent(xcItemElement)
 			 .addContent("\n");
 			doc = (new Document()).setRootElement((Element)xcRootElement.clone());
-			records.add(createRecord("XC-Item", doc));
+			records.add(createRecord("XC-Item", doc, null));
 			documents.add(doc);
 			xcRootElement.removeContent();
 
@@ -820,7 +831,7 @@ public class XCRecord
 	 * @param transformationService 
 	 * @return
 	 */
-	public List<Record> getSplitXCRecordXMLForHoldingRecord(MetadataService transformationService, String manifestationOAIId) throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
+	public List<Record> getSplitXCRecordXMLForHoldingRecord(MetadataService transformationService, List<BibliographicManifestationMapping> bibliographicManifestationMappings) throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 
 		List<Record> records = new ArrayList<Record>();
 		
@@ -833,17 +844,22 @@ public class XCRecord
 
 		/*$$ HOLDINGS $$*/
 		// Create the Holdings documents
+		List<String> manifestationHeldOAIIds = new ArrayList<String>();
 		for(Element holdingsElement : holdingsElements){
 			
 			holdingsElement.setAttribute("id",transformationService.getNextOaiId());
-			// Create back links to Manifestation
-			Element linkManifestation =  new Element("manifestationHeld",XC_NAMESPACE);
-			linkManifestation.setText(manifestationOAIId);
-			holdingsElement.addContent("\n\t\t").addContent(linkManifestation.detach());
+			
+			for (BibliographicManifestationMapping bibliographicManifestationMapping : bibliographicManifestationMappings) {
+				// Create back links to Manifestation
+				Element linkManifestation =  new Element("manifestationHeld",XC_NAMESPACE);
+				linkManifestation.setText(bibliographicManifestationMapping.getManifestationRecordOAIId());
+				manifestationHeldOAIIds.add(bibliographicManifestationMapping.getManifestationRecordOAIId());
+				holdingsElement.addContent("\n\t\t").addContent(linkManifestation.detach());
+			}
 
 			xcRootElement.addContent("\n\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n");
 			Document doc = (new Document()).setRootElement((Element)xcRootElement.clone());
-			records.add(createRecord("XC-Holding", doc));
+			records.add(createRecord("XC-Holding", doc, manifestationHeldOAIIds));
 			
 			xcRootElement.removeContent();
 		}
@@ -861,7 +877,7 @@ public class XCRecord
 	 * @throws TransformerException
 	 * @throws DatabaseConfigException
 	 */
-	private Record createRecord(String recordType, Document document) throws TransformerConfigurationException, TransformerException, DatabaseConfigException {
+	private Record createRecord(String recordType, Document document, List<String> upLinks) throws TransformerConfigurationException, TransformerException, DatabaseConfigException {
 		
 		StringWriter writer = new StringWriter();
 		TransformerFactory tf = TransformerFactory.newInstance();
@@ -875,6 +891,12 @@ public class XCRecord
 		xcRecord.setFormat(new DefaultFormatService().getFormatByName("xc"));
 		xcRecord.setType(recordType);
 		xcRecord.setOaiIdentifier(document.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("id"));
+		
+		if (upLinks != null) {
+			for (String upLink: upLinks) {
+				xcRecord.addUpLink(upLink);
+			}
+		}
 
 		// Set the identifier, datestamp, and header to null so they get computed when we insert the transformed record
 		//xcRecord.setOaiDatestamp(null);

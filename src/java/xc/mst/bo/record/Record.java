@@ -112,7 +112,7 @@ public class Record
 	/**
 	 * This is not used by the Record class, but classes extending it which represent the individual FRBR levels can use this to indicate  the other FRBR elements to which they are linked.
 	 */
-	private List<Record> upLinks = new ArrayList<Record>();
+	private List<String> upLinks = new ArrayList<String>();
 
 	/**
 	 * The record's traits.  These are used by the aggregation service for matching
@@ -717,7 +717,7 @@ public class Record
 	 *
 	 * @return The record's uplinks
 	 */
-	public List<Record> getUpLinks()
+	public List<String> getUpLinks()
 	{
 		return upLinks;
 	} // end method getUpLinks()
@@ -727,7 +727,7 @@ public class Record
 	 *
 	 * @param traits The record's new up links
 	 */
-	public void setUpLinks(List<Record> upLinks)
+	public void setUpLinks(List<String> upLinks)
 	{
 		this.upLinks = upLinks;
 	} // end method setUpLinks(List<Record>)
@@ -737,7 +737,7 @@ public class Record
 	 *
 	 * @param upLink The record to add as an uplink
 	 */
-	public void addUpLink(Record upLink)
+	public void addUpLink(String upLink)
 	{
 		if(!upLinks.contains(upLink))
 			upLinks.add(upLink);
@@ -748,7 +748,7 @@ public class Record
 	 *
 	 * @param upLink The record to remove as an up link
 	 */
-	public void removeUpLink(Record upLink)
+	public void removeUpLink(String upLink)
 	{
 		if(upLinks.contains(upLink))
 			upLinks.remove(upLink);

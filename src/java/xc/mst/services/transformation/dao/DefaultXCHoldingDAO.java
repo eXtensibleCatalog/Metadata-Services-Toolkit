@@ -32,6 +32,16 @@ public class DefaultXCHoldingDAO extends XCHoldingDAO
 	 * A PreparedStatement to get a HoldingRecord from the database by its ID
 	 */
 	private static PreparedStatement psGetByHolding004Field = null;
+	
+	/**
+	 * A PreparedStatement to get a HoldingRecord from the database by its holding oai ID
+	 */
+	private static PreparedStatement psGetByHoldingOaiId = null;
+	
+	/**
+	 * A PreparedStatement to get a HoldingRecord from the database by its manifestation Oai id
+	 */
+	private static PreparedStatement psGetByManifestationOaiId = null;
 
 	/**
 	 * A PreparedStatement to insert a HoldingRecord into the database
@@ -49,10 +59,24 @@ public class DefaultXCHoldingDAO extends XCHoldingDAO
 	private static PreparedStatement psDelete = null;
 
 	/**
+	 * A PreparedStatement to delete a HoldingRecord from the database
+	 */
+	private static PreparedStatement psDeleteByHoldingOaiId = null;
+
+	/**
 	 * Lock to synchronize access to the PreparedStatement to get a HoldingRecord from the database by field 004
 	 */
 	private static Object psGetByHolding004FieldLock = new Object();
+	
+	/**
+	 * Lock to synchronize access to the PreparedStatement to get a HoldingRecord from the database by manifestation Oai id
+	 */
+	private static Object psGetByManifestationOaiIdLock = new Object();
 
+	/**
+	 * Lock to synchronize access to the PreparedStatement to get a HoldingRecord from the database by holding Oai id
+	 */
+	private static Object psGetByHoldingOaiIdLock = new Object();
 	/**
 	 * Lock to synchronize access to the PreparedStatement insert a HoldingRecord into the database
 	 */
@@ -67,6 +91,11 @@ public class DefaultXCHoldingDAO extends XCHoldingDAO
 	 * Lock to synchronize access to the PreparedStatement to delete a HoldingRecord from the database
 	 */
 	private static Object psDeleteLock = new Object();
+	
+	/**
+	 * Lock to synchronize access to the PreparedStatement to delete a HoldingRecord from the database
+	 */
+	private static Object psDeleteByHoldingOaiIdLock = new Object();
 
 
 
@@ -150,6 +179,168 @@ public class DefaultXCHoldingDAO extends XCHoldingDAO
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getByHolding004Field(String)
+	
+	@Override
+	public List<XCHoldingRecord> getByHoldingOAIId(String holdingOaiId) throws DatabaseConfigException
+	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnectionManager.getDbConnection() == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
+		synchronized(psGetByHoldingOaiIdLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Getting the HoldingRecord with holdoing OAI id " + holdingOaiId);
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			try
+			{
+				// Create the PreparedStatment to get a HoldingRecord by field 004 if it hasn't already been created
+				if(psGetByHoldingOaiId == null || dbConnectionManager.isClosed(psGetByHoldingOaiId))
+				{
+					// SQL to get the row
+					String selectSql = "SELECT " + COL_XC_HOLDINGS_ID + ", " +
+													COL_HOLDING_OAI_ID + ", " +
+				                                   COL_HOLDING_004_FIELD+ ", " +
+				                                   COL_MANIFESTATION_OAI_ID + " " +
+				                                  
+	                                   "FROM " + XC_HOLDINGS_TABLE_NAME + " " +
+	                                   "WHERE " + COL_HOLDING_OAI_ID+ "=?";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get HoldingRecord by holdoing OAI id \" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetByHoldingOaiId = dbConnectionManager.prepareStatement(selectSql, psGetByHoldingOaiId);
+				} // end if(get by ID PreparedStatement not defined)
+
+				// Set the parameters on the update statement
+				psGetByHoldingOaiId.setString(1, holdingOaiId);
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = dbConnectionManager.executeQuery(psGetByHoldingOaiId);
+				
+				List<XCHoldingRecord> records = new ArrayList<XCHoldingRecord>();
+
+				// If any results were returned
+				while (results.next())
+				{
+					XCHoldingRecord holdingRecord = new XCHoldingRecord();
+					holdingRecord.setId(results.getInt(1));
+					holdingRecord.setHoldingRecordOAIID(results.getString(2));
+					holdingRecord.setHolding004Field(results.getString(3));
+					holdingRecord.setManifestationOAIId(results.getString(4));
+				
+					records.add(holdingRecord);
+					
+				} // end if(result found)
+
+
+				// Return the holdingRecords
+				return records;
+			} 
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the HoldingRecord with holdoing OAI id  " + holdingOaiId, e);
+
+				return null;
+			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByHoldingOAIId(holdingOaiId);
+			}
+			finally
+			{
+				dbConnectionManager.closeResultSet(results);
+			} // end finally(close ResultSet)
+		} // end synchronized
+	} // end method getByHoldingOAIId(String)
+	
+	@Override
+	public List<XCHoldingRecord> getByManifestationOAIId(String manifestationOAIId)  throws DatabaseConfigException
+	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnectionManager.getDbConnection() == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
+		synchronized(psGetByManifestationOaiIdLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Getting the HoldingRecord with manifestation OAI id " + manifestationOAIId);
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			try
+			{
+				// Create the PreparedStatment to get a HoldingRecord by field 004 if it hasn't already been created
+				if(psGetByManifestationOaiId == null || dbConnectionManager.isClosed(psGetByManifestationOaiId))
+				{
+					// SQL to get the row
+					String selectSql = "SELECT " + COL_XC_HOLDINGS_ID + ", " +
+													COL_HOLDING_OAI_ID + ", " +
+				                                   COL_HOLDING_004_FIELD+ ", " +
+				                                   COL_MANIFESTATION_OAI_ID + " " +
+				                                  
+	                                   "FROM " + XC_HOLDINGS_TABLE_NAME + " " +
+	                                   "WHERE " + COL_MANIFESTATION_OAI_ID + "=?";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get HoldingRecord by manifestation OAI id\" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetByManifestationOaiId = dbConnectionManager.prepareStatement(selectSql, psGetByManifestationOaiId);
+				} // end if(get by ID PreparedStatement not defined)
+
+				// Set the parameters on the update statement
+				psGetByManifestationOaiId.setString(1, manifestationOAIId);
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = dbConnectionManager.executeQuery(psGetByManifestationOaiId);
+				
+				List<XCHoldingRecord> records = new ArrayList<XCHoldingRecord>();
+
+				// If any results were returned
+				while (results.next())
+				{
+					XCHoldingRecord holdingRecord = new XCHoldingRecord();
+					holdingRecord.setId(results.getInt(1));
+					holdingRecord.setHoldingRecordOAIID(results.getString(2));
+					holdingRecord.setHolding004Field(results.getString(3));
+					holdingRecord.setManifestationOAIId(results.getString(4));
+				
+					records.add(holdingRecord);
+					
+				} // end if(result found)
+
+
+				// Return the holdingRecords
+				return records;
+			} 
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the HoldingRecord with manifestation OAI id " + manifestationOAIId, e);
+
+				return null;
+			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByManifestationOAIId(manifestationOAIId);
+			}
+			finally
+			{
+				dbConnectionManager.closeResultSet(results);
+			} // end finally(close ResultSet)
+		} // end synchronized
+	} // end method getByManifestationOAIId(String) 
 
 	@Override
 	public boolean insert(XCHoldingRecord holdingRecord) throws DataException
@@ -325,4 +516,52 @@ public class DefaultXCHoldingDAO extends XCHoldingDAO
 			}
 		} // end synchronized
 	} // end method delete(HoldingRecord)
+	
+	@Override
+	public boolean deleteByHoldingOAIId(String holdingOAIId) throws DataException
+	{
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnectionManager.getDbConnection() == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
+		synchronized(psDeleteByHoldingOaiIdLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Deleting the holdingRecord with ID " + holdingOAIId);
+
+			try
+			{
+				// Create the PreparedStatement to delete a holdingRecord if it wasn't already defined
+				if(psDeleteByHoldingOaiId == null || dbConnectionManager.isClosed(psDeleteByHoldingOaiId))
+				{
+					// SQL to delete the row from the table
+					String deleteSql = "DELETE FROM "+ XC_HOLDINGS_TABLE_NAME + " " +
+		                               "WHERE " + COL_HOLDING_OAI_ID + " = ? ";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"delete HoldingRecord\" PreparedStatement the SQL " + deleteSql);
+
+					// A prepared statement to run the delete SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psDeleteByHoldingOaiId = dbConnectionManager.prepareStatement(deleteSql, psDeleteByHoldingOaiId);
+				} // end if(delete PreparedStatement not defined)
+
+				// Set the parameters on the delete statement
+				psDeleteByHoldingOaiId.setString(1, holdingOAIId);
+
+				// Execute the delete statement and return the result
+				return dbConnectionManager.execute(psDeleteByHoldingOaiId);
+			} // end try(delete the row)
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while deleting the HoldingRecord with OAI ID " + holdingOAIId, e);
+
+				return false;
+			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return deleteByHoldingOAIId(holdingOAIId);
+			}
+		} // end synchronized
+	} // end method deleteByHoldingOAIId(String)
 } // end class DefaultHeldHoldingRecordDAO
