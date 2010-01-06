@@ -234,7 +234,7 @@ public abstract class RecordService
 	 *
 	 * @param id The record's ID
 	 * @return The basic information for a record with the passed record ID
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Record loadBasicRecord(long id) throws IndexException;
 
@@ -302,12 +302,12 @@ public abstract class RecordService
 	 * @return A list all records in the index contained in the set with the passed name
 	 */
 	public abstract RecordList getBySetName(String setName) throws IndexException;
-	
+
 	/**
 	 * Get successors of given records id created by specified service id
-	 * 
-	 * @param recordId Id of record 
-	 * @param serviceId, id of service created the successors 
+	 *
+	 * @param recordId Id of record
+	 * @param serviceId, id of service created the successors
 	 * @return Successor records
 	 * @throws IndexException
 	 */
@@ -365,17 +365,17 @@ public abstract class RecordService
 	 * @return A list of all records that need to be processed for a given service
 	 */
 	public abstract RecordList getInputForService(int serviceId) throws IndexException;
-	
+
 //	/**
 //	 * Gets specified number of record inputs that were not processed for a given service
-//	 * 
+//	 *
 //	 * @param serviceId
 //	 * @param start
 //	 * @param rows
 //	 * @return A list of all records that need to be processed for a given service
 //	 */
 //	public abstract List<Record> getInputForService(int serviceId, int start, int rows) throws IndexException;
-	
+
 	/**
 	 * Gets count of record inputs that were not processed for a given service
 	 *
@@ -427,10 +427,10 @@ public abstract class RecordService
 	 * @param identifier The record's OAI Identifer
 	 * @param serviceId The Id of the service for which this record is input
 	 * @return The record with the passed OAI Identifier
-	 * @throws DatabaseConfigException 
+	 * @throws DatabaseConfigException
 	 */
 	public abstract Record getInputForServiceByOaiIdentifier(String identifier, int serviceId)  throws DatabaseConfigException, IndexException;
-	
+
 	/**
 	 * Gets all records from the index which have been processed from the specified record
 	 *
@@ -447,7 +447,7 @@ public abstract class RecordService
 	 */
 	public abstract RecordList getSuccessorsCreatedByServiceIdIncludingDeletedRecords(long recordId, long serviceId) throws IndexException;
 
-	
+
 	/**
 	 * Gets all records from the index with the passed trait
 	 *
@@ -618,7 +618,7 @@ public abstract class RecordService
 
 	/**
 	 * Escapes characters that aren't allowed in queries run on the index
-	 * 
+	 *
 	 * @param str The String to be escaped
 	 * @return The escaped String
 	 */
@@ -626,23 +626,23 @@ public abstract class RecordService
 
 	/**
 	 * Get the last created record in given service
-	 *  
-	 * @param serviceId Service id in which to get last created record 
+	 *
+	 * @param serviceId Service id in which to get last created record
 	 * @return Last created record
 	 * @throws IndexException
 	 */
 	public abstract Record getLastCreatedRecord(int serviceId) throws IndexException, DatabaseConfigException;
-	
+
 	/**
 	 * Load Record only with OAI header and OAI XML
-	 * 
+	 *
 	 * @param doc Solr document
 	 * @return Record
 	 */
-	public abstract Record getRecordXMLFromDocument(SolrDocument doc); 
-	
+	public abstract Record getRecordXMLFromDocument(SolrDocument doc);
+
 	/**
-	 * Parses a Record from the fields in a Document from the index. 
+	 * Parses a Record from the fields in a Document from the index.
 	 * Loads only fields required to be displayed on Browse records results page
 	 *
 	 * @param doc The document containing information on the Record.
@@ -650,9 +650,9 @@ public abstract class RecordService
 	 * @throws DatabaseConfigException
 	 */
 	public abstract Record getRecordFieldsForBrowseFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
-	
-	
-	
+
+
+
 	/**
 	 * Validates the fields on the passed Record Object
 	 *

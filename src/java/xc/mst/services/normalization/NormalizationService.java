@@ -7,12 +7,11 @@
   *
   */
 
-package xc.mst.services;
+package xc.mst.services.normalization;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
@@ -28,15 +27,16 @@ import org.xml.sax.InputSource;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
-import xc.mst.constants.NormalizationServiceConstants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.utils.LogWriter;
-import xc.mst.utils.MarcXmlManager;
+import xc.mst.manager.repository.DefaultFormatService;
+import xc.mst.manager.repository.DefaultSetService;
+import xc.mst.manager.repository.FormatService;
+import xc.mst.manager.repository.SetService;
+import xc.mst.services.MetadataService;
+import xc.mst.services.ServiceValidationException;
 import xc.mst.utils.index.RecordList;
-import xc.mst.utils.index.SolrIndexManager;
 
 /**
  * A Metadata Service which for each unprocessed marcxml record creates a new
@@ -132,6 +132,8 @@ public class NormalizationService extends MetadataService
 	private List<String> outputRecordErrors = new ArrayList<String>();
 	
 	private static RecordService recordService = new DefaultRecordService();
+	
+	private SetService setService = new DefaultSetService();
 
     /**
 	 * Construct a NormalizationService Object
@@ -141,7 +143,8 @@ public class NormalizationService extends MetadataService
 		// Initialize the XC format
 		try 
 		{
-			marcxmlFormat = getFormatByName("marcxml");
+			FormatService formatService = new DefaultFormatService();
+			marcxmlFormat = formatService.getFormatByName("marcxml");
 		} 
 		catch (DatabaseConfigException e) 
 		{
@@ -515,7 +518,7 @@ public class NormalizationService extends MetadataService
 				if(setSpec != null)
 				{
 					// Get the set for the provider
-					Set recordTypeSet = getSet(setSpec);
+					Set recordTypeSet = setService.getSetBySetSpec(setSpec);
 					
 					// Add the set if it doesn't already exist
 					if(recordTypeSet == null)
@@ -546,12 +549,6 @@ public class NormalizationService extends MetadataService
 			
 			return results;
 		}
-	}
-
-	@Override
-	protected void finishProcessing()
-	{
-		// This service does not do any final processing
 	}
 
 	/**
@@ -2327,12 +2324,12 @@ public class NormalizationService extends MetadataService
 
 	}
 	
-	@Override
 	protected String getOrganizationCode() {
 	
 		return enabledSteps.getProperty("OrganizationCode");
 	}
 	
+	@Override
 	public void setInputRecordCount(int inputRecordCount) {
 		this.inputRecordCount = inputRecordCount;
 	}

@@ -15,13 +15,13 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
-import xc.mst.dao.user.DefaultGroupDAO;
-import xc.mst.dao.user.DefaultUserGroupUtilDAO;
-import xc.mst.dao.user.GroupDAO;
-import xc.mst.dao.user.UserGroupUtilDAO;
 import xc.mst.email.Emailer;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.manager.user.DefaultGroupService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.GroupService;
+import xc.mst.manager.user.UserService;
 import xc.mst.services.MetadataService;
 import xc.mst.utils.index.RecordList;
 
@@ -41,16 +41,6 @@ public class ServiceUtil {
 	 * Data access object for getting services
 	 */
 	private ServiceDAO serviceDao = new DefaultServiceDAO();
-
-	/**
-	 * Data access object for getting user info from groups
-	 */
-	private UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
-
-	/**
-	 * Data access object for getting groups
-	 */
-	private GroupDAO groupDAO = new DefaultGroupDAO();
 
 	/**
 	 * Manager for getting, inserting and updating records
@@ -346,24 +336,38 @@ public class ServiceUtil {
 	
 	}
 	
-	public void sendEmail(String message) {
+	public void sendEmail(String message, String serviceName) {
 
 		try {
+			UserService userService = new DefaultUserService();
+			GroupService groupService = new DefaultGroupService();
 
 			if (mailer.isConfigured()) {
-
+				
 				// The email's subject
-				String subject = "Message from MST Server on " + InetAddress.getLocalHost().getHostName();
+				InetAddress addr = null;
+				addr = InetAddress.getLocalHost();
 
+				String subject = null;
+				if ( serviceName != null) {
+					subject = "Results of processing " + serviceName +" by MST Server on " + addr.getHostName();
+				} else {
+					subject = "Error message from MST Server " + addr.getHostName();
+				}
+		
 				// The email's body
 				StringBuilder body = new StringBuilder();
+		
+				// First report any problems which prevented the harvest from finishing
+				if(message != null)
+					body.append("The service failed for the following reason: ").append(message).append("\n\n");
 
 				// Send email to every admin user
-				for (User user : userGroupUtilDAO.getUsersForGroup(groupDAO
-						.getByName(Constants.ADMINSTRATOR_GROUP).getId())) {
+				for (User user : userService.getUsersForGroup(groupService.getGroupByName(Constants.ADMINSTRATOR_GROUP).getId())) {
 					mailer.sendEmail(user.getEmail(), subject, body.toString());
 				}
-			}
+			} 
+
 		} catch (UnknownHostException exp) {
 			log.error("Host name query failed. Error sending notification email.",exp);
 		} catch (DatabaseConfigException e) {

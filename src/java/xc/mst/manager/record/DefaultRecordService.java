@@ -475,7 +475,7 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the record with the correct identifier
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:"));
+		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:") + " AND " + FIELD_DELETED + ":" + "false" );
 
 		// Get the result of the query
 		RecordList records = new RecordList(query);
@@ -510,6 +510,7 @@ public class DefaultRecordService extends RecordService
 		
 		int counter = 0;
 		
+		b.append(FIELD_DELETED + ":" + "false" + " AND ");
 		for (String identifier : identifiers) {
 			b.append(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:"));
 			counter++;

@@ -782,3 +782,11 @@ insert into users(user_id,username,first_name,last_name,password,email,server_id
 -- Insert group for admin user
 insert into users_to_groups values(1,1,1);
 
+-- Insert record types
+insert into record_types values(1, 'MARC-Bib', 1);
+insert into record_types values(2, 'MARC-Holding', 2);
+insert into record_types values(3, 'XC-Work', 3);
+insert into record_types values(4, 'XC-Expression', 4);
+insert into record_types values(5, 'XC-Manifestation', 5);
+insert into record_types values(6, 'XC-Holding', 6);
+

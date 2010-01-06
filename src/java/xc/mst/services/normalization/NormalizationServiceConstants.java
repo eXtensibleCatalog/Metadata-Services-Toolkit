@@ -7,7 +7,7 @@
   *
   */
 
-package xc.mst.constants;
+package xc.mst.services.normalization;
 
 /**
  * This class defines several constants as public static final variables

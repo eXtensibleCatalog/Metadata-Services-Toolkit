@@ -35,11 +35,9 @@ import org.jdom.transform.JDOMSource;
 import org.jdom.xpath.XPath;
 import org.xml.sax.InputSource;
 
-import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
-import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
@@ -47,6 +45,7 @@ import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 import xc.mst.services.ServiceValidationException;
+import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
 import xc.mst.services.transformation.bo.BibliographicManifestationMapping;
 import xc.mst.services.transformation.bo.HeldHoldingRecord;
 import xc.mst.services.transformation.bo.XCHoldingRecord;
@@ -82,11 +81,6 @@ public class TransformationService extends MetadataService
 	 * roles and the rdarole they represent.
 	 */
 	private HashMap<String, String> roles = new HashMap<String, String>();
-
-	/**
-	 * The output format (XC schema) for records processed from this service
-	 */
-	private Format xcFormat = null;
 	
 	/**
 	 * A list of errors to add to the record currently being processed
@@ -126,16 +120,6 @@ public class TransformationService extends MetadataService
 	 */
 	public TransformationService()
 	{
-		// Initialize the XC format
-		try 
-		{
-			xcFormat = getFormatByName("xc");
-		} 
-		catch (DatabaseConfigException e) 
-		{
-			log.error("Could not connect to the database with the parameters in the configuration file.", e);
-		}
-
 		// Initialize the list of roles
 		roles.put("aut", "author");
 		roles.put("lbt", "author");
@@ -161,6 +145,7 @@ public class TransformationService extends MetadataService
 
 	@Override
 	public void  processRecord(Record processMe) throws Exception {
+		log.info("Record OAI id : " + processMe.getOaiIdentifier());
 
 		// Get the results of processing the record
 		List<Record> results = convertRecord(processMe);
@@ -397,27 +382,41 @@ public class TransformationService extends MetadataService
 			// Get the XC holding record mappings to deleted manifestation record.
 			List<XCHoldingRecord> holdingManifestationMappings = xcHoldingDAO.getByManifestationOAIId(deletedManifestationOAIId);
 			
-			List<String> holdingOaiIds = new ArrayList<String>();
+			List<Record> holdingRecordsToRemoveLink =  new ArrayList<Record>();
+			List<String> oaiIdsToGetFromSolr = new ArrayList<String>();
 			
 			for (XCHoldingRecord h: holdingManifestationMappings) {
-				// Add holding OAI ids
-				holdingOaiIds.add(h.getHoldingRecordOAIID());
 				
 				// delete holding manifestation mapping
 				xcHoldingDAO.delete(h);
+				
+				// Check if holding record is in memory hashmap, else get from Solr
+				Record r = holdingRecords.get(h.getHoldingRecordOAIID());
+				
+				if (r != null) {
+					holdingRecordsToRemoveLink.add(r);
+				} else {
+					// Add holding OAI ids
+					oaiIdsToGetFromSolr.add(h.getHoldingRecordOAIID());
+				}
 			}
-			List<Record> holdingRecords = recordService.getByOaiIdentifiers(holdingOaiIds);
+			holdingRecordsToRemoveLink.addAll(recordService.getByOaiIdentifiers(oaiIdsToGetFromSolr));
 			
 			// Remove manifestation link in holding record in Solr
-			for (Record holdingRecord : holdingRecords) {
+			for (Record holdingRecord : holdingRecordsToRemoveLink) {
 				
 				List<String> uplinks = holdingRecord.getUpLinks();
 				
 				if (uplinks != null && uplinks.size() >1) {
+					
 					holdingRecord.removeUpLink(manifestation.getOaiIdentifier());
 					
 					// Remove manifestationHeld from XML
 					removeManifestationHeld(holdingRecord, manifestation);
+					
+					// Place all holding records in HashMap, so that they can be retrieved to link manifestation
+					holdingRecords.put(holdingRecord.getOaiIdentifier(), holdingRecord);
+
 				} else {
 					
 					// Delete XC holding record 
@@ -468,7 +467,7 @@ public class TransformationService extends MetadataService
 	 */
 	private List<Record> processBibliographicRecord(Record record, MarcXmlRecord originalRecord) 
 			throws DataException, DatabaseConfigException, TransformerConfigurationException, IndexException, TransformerException{
-		
+
 		// A list of records resulting from processing the incoming record
 		List<Record> results = new ArrayList<Record>();
 		
@@ -497,7 +496,7 @@ public class TransformationService extends MetadataService
 			return new ArrayList<Record>();
 		
 		} 		
-		
+
 		// If there was already a processed record for the record we just processed, delete it
 		if(existingRecords.size() > 0)
 		{
@@ -509,55 +508,96 @@ public class TransformationService extends MetadataService
 			removeExistingBibRecords(record, existingRecords);
 
 		}
-		
+
 		// Create an XCRecord Object to hold the transformed record
 		XCRecord transformedRecord = new XCRecord();
-
+		
 		// Run the transformation steps
 		// Each one processes a different MARC XML field and adds the appropriate
 		// XC fields to transformedRecord based on the field it processes.
 		transformedRecord = process010(originalRecord, transformedRecord);
+		
 		transformedRecord = process015(originalRecord, transformedRecord);
+		
 		transformedRecord = process016(originalRecord, transformedRecord);
+		
 		transformedRecord = process022(originalRecord, transformedRecord);
+		
 		transformedRecord = process024(originalRecord, transformedRecord);
+		
 		transformedRecord = process028(originalRecord, transformedRecord);
+		
 		transformedRecord = process030(originalRecord, transformedRecord);
+		
 		transformedRecord = process035(originalRecord, transformedRecord);
+		
 		transformedRecord = process037(originalRecord, transformedRecord);
+		
 		transformedRecord = process050(originalRecord, transformedRecord);
+		
 		transformedRecord = process055(originalRecord, transformedRecord);
+		
 		transformedRecord = process060(originalRecord, transformedRecord);
+		
 		transformedRecord = process074(originalRecord, transformedRecord);
+		
 		transformedRecord = process082(originalRecord, transformedRecord);
 		transformedRecord = process084(originalRecord, transformedRecord);
+		
 		transformedRecord = process086(originalRecord, transformedRecord);
+		
 		transformedRecord = process090(originalRecord, transformedRecord);
+		
 		transformedRecord = process092(originalRecord, transformedRecord);
+		
 		transformedRecord = process100(originalRecord, transformedRecord);
+		
 		transformedRecord = process110(originalRecord, transformedRecord);
+		
 		transformedRecord = process111(originalRecord, transformedRecord);
+		
 		transformedRecord = process130(originalRecord, transformedRecord);
+		
 		transformedRecord = process210(originalRecord, transformedRecord);
+		
 		transformedRecord = process222(originalRecord, transformedRecord);
+		
 		transformedRecord = process240(originalRecord, transformedRecord);
+		
 		transformedRecord = process243(originalRecord, transformedRecord);
+		
 		transformedRecord = process245(originalRecord, transformedRecord);
+		
 		transformedRecord = process246(originalRecord, transformedRecord);
+		
 		transformedRecord = process247(originalRecord, transformedRecord);
+		
 		transformedRecord = process250(originalRecord, transformedRecord);
+		
 		transformedRecord = process254(originalRecord, transformedRecord);
+		
 		transformedRecord = process255(originalRecord, transformedRecord);
+		
 		transformedRecord = process260(originalRecord, transformedRecord);
+		
 		transformedRecord = process300(originalRecord, transformedRecord);
+		
 		transformedRecord = process310(originalRecord, transformedRecord);
+		
 		transformedRecord = process321(originalRecord, transformedRecord);
+		
 		transformedRecord = process362(originalRecord, transformedRecord);
+		
 		transformedRecord = process440(originalRecord, transformedRecord);
+		
 		transformedRecord = process490(originalRecord, transformedRecord);
+		
 		transformedRecord = process500(originalRecord, transformedRecord);
+		
 		transformedRecord = process501(originalRecord, transformedRecord);
+		
 		transformedRecord = process502(originalRecord, transformedRecord);
+		
 		transformedRecord = process504(originalRecord, transformedRecord);
 		transformedRecord = process505(originalRecord, transformedRecord);
 		transformedRecord = process506(originalRecord, transformedRecord);
@@ -638,7 +678,8 @@ public class TransformationService extends MetadataService
 		transformedRecord = process710(originalRecord, transformedRecord);
 		transformedRecord = process711(originalRecord, transformedRecord);
 		transformedRecord = process730(originalRecord, transformedRecord);
-		
+
+
 		// Get the XC records created as output
 		results = transformedRecord.getSplitXCRecordXML(this);
 		
@@ -810,6 +851,7 @@ public class TransformationService extends MetadataService
 	/*
 	 * Removes manifestation link from holding record
 	 */
+	@SuppressWarnings("unchecked")
 	private void removeManifestationHeld(Record holdingRecord, Record manifestation) {
 		
 		try {
@@ -878,6 +920,7 @@ public class TransformationService extends MetadataService
 			// retrieved from Solr
 			for (String oaiId : xcHoldingOaiIds) {
 				Record r = holdingRecords.get(oaiId);
+				
 				if (r != null) {
 					completeSetOfRecords.add(r);
 				} else {
@@ -887,6 +930,7 @@ public class TransformationService extends MetadataService
 
 			// Get holding records from Solr
 			if (oaiIdsToGetFromSolr.size() > 0) {
+			
 				completeSetOfRecords.addAll(recordService.getByOaiIdentifiers(xcHoldingOaiIds));
 			}
 			
@@ -908,6 +952,7 @@ public class TransformationService extends MetadataService
 				tran.transform(src, res);
 				
 				record.setOaiXml(writer.toString());
+				record.addUpLink(manifestationOAIId);
 				updateRecord(record);
 				
 				// Place all holding records in HashMap, so that they can be retrieved to link manifestation
@@ -932,12 +977,6 @@ public class TransformationService extends MetadataService
 		}
 	}
 
-	@Override
-	protected void finishProcessing()
-	{
-		// This service does not do any final processing
-	}
-	
 	public boolean updateServiceStatistics() {
 		
 		// Remove all records from hashmap memory. Since the records are saved we can access it from Solr
@@ -1238,6 +1277,7 @@ public class TransformationService extends MetadataService
 	 */
 	private XCRecord process050(MarcXmlRecord transformMe, XCRecord transformInto)
 	{
+
 		// Create a xc:subject with a type of dcterms:LCC based on the 050 $a values
 		//return processFieldBasic(transformMe, transformInto, "050", 'a', "subject", XCRecord.DCTERMS_NAMESPACE, new Attribute("type", "dcterms:LCC", XCRecord.XSI_NAMESPACE), FrbrLevel.WORK);
 
@@ -1280,6 +1320,7 @@ public class TransformationService extends MetadataService
 	 */
 	private XCRecord process055(MarcXmlRecord transformMe, XCRecord transformInto)
 	{
+		
 		// Setup the map from the 1st indicator to the type of the XC:identifier
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
 		indicatorToType.put("0", new Attribute("type", "dcterms:LCC", XCRecord.XSI_NAMESPACE));
@@ -6361,7 +6402,6 @@ public class TransformationService extends MetadataService
 		
 	}
 
-	@Override
 	protected String getOrganizationCode() {
 
 		return orgCode;

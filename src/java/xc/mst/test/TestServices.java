@@ -77,7 +77,7 @@ public class TestServices
 	private static File unprocessedRecordsDir = new File("C:\\NormalizationTestData\\input");
 	private static File processedRecordsDir = new File("C:\\NormalizationTestData\\output");
 
-	private static int serviceId = 1;
+	private static int serviceId = 2;
 
 	/**
 	 * Builds the XML Document based on the record's OAI XML
@@ -95,7 +95,7 @@ public class TestServices
 
 		try
 		{
-			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
+//			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
 			Thread.sleep(2000);
 			SolrIndexManager.getInstance().commitIndex();
 			Thread.sleep(2000);
@@ -107,15 +107,15 @@ public class TestServices
 			Thread.sleep(2000);
 			SolrIndexManager.getInstance().commitIndex();
 			Thread.sleep(2000);
-			RecordList records = recordService.getAll();
+			//RecordList records = recordService.getAll();
+			RecordList records = recordService.getByServiceId(serviceId);
 			for(Record record: records)
 			{
-				//System.out.println("record:"+ record);
-				if(record.getService() != null && record.getService().getId() == serviceId) {
-					saveRecordToFile(processedRecordsDir, record);
-				}
+			//	if(record.getService() != null && record.getService().getId() == serviceId) {
+//					saveRecordToFile(processedRecordsDir, record);
+			//	}
 
-				recordService.delete(record);
+//				recordService.delete(record);
 			}
 		}
 		catch(Exception e)
@@ -165,6 +165,12 @@ public class TestServices
 			record.setFormat(formatDao.getById(3));
 			record.setProvider(providerDao.getById(1));
 			record.addInputForService(serviceDao.getById(serviceId));
+			
+			
+//			record.setDeleted(true);
+			
+			
+			
 			if(recordService.insert(record) == false)
 				System.out.println("FAIL! " + currentRecord.getAbsolutePath());
 		}

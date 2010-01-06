@@ -7,7 +7,7 @@
   *
   */
 
-package xc.mst.constants;
+package xc.mst.services.aggregation;
 
 /**
  * This class defines several constants as public static final variables

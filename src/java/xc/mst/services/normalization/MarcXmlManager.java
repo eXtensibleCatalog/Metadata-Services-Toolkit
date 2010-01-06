@@ -7,7 +7,7 @@
   *
   */
 
-package xc.mst.utils;
+package xc.mst.services.normalization;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ import org.jdom.Namespace;
 import org.jdom.xpath.XPath;
 
 import xc.mst.constants.Constants;
-import xc.mst.constants.NormalizationServiceConstants;
+import xc.mst.utils.MSTConfiguration;
 
 
 /**

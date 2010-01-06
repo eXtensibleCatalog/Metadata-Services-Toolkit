@@ -209,21 +209,21 @@
 	           author="true"
 	           version="true"
 	           use="true"
-	           windowtitle="University of Rochester Digital Storage">
+	           windowtitle="Metadata Services Toolkit">
 
 	        <fileset dir="src/java" defaultexcludes="yes">
-			    <include name="edu/ur/**"/>
+			    <include name="xc/mst/bo/**"/>
 		    </fileset>
 
 		    <doctitle>
-				<![CDATA[<h1>University of Rochester Libraries File Database Web Interface</h1>]]>
+				<![CDATA[<h1>Metadata Services Toolkit Libraries Web Interface</h1>]]>
 		    </doctitle>
 		    <bottom>
-			    <![CDATA[<i>Copyright &#169; 2006 University of Rochester Libraries</i>]]>
+			    <![CDATA[<i>Copyright &#169; 2009 University of Rochester Libraries</i>]]>
 		    </bottom>
 	        <tag name="todo" scope="all" description="To do:"/>
 	        <link offline="true" href="http://java.sun.com/j2se/1.5.0/docs/api/"
-	       	    packagelistLoc="C:\downloaded_programs\java\jdk-1.5api"/>
+	       	    packagelistLoc="C:\Program Files\Java\jdk1.6.0_12\bin"/>
         </javadoc>
     </target>
 
@@ -270,9 +270,9 @@
 		         <exclude name="WEB-INF/**"/>
 	         </fileset>
 	         <classes dir="${targetdir}/classes">
-         		<exclude name="xc/mst/services/AggregationService.class"/>
-	         	<exclude name="xc/mst/services/NormalizationService.class"/>
-         		<exclude name="xc/mst/services/transformation/*.class"/>
+         		<exclude name="xc/mst/services/aggregation/**"/>
+	         	<exclude name="xc/mst/services/normalization/**"/>
+         		<exclude name="xc/mst/services/transformation/**"/>
 	         </classes>
 
 	         <lib dir="${librarydir}">

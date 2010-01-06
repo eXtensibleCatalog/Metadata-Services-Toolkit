@@ -21,7 +21,6 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
-import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordType;
@@ -32,9 +31,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
 import xc.mst.dao.processing.ProcessingDirectiveDAO;
-import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultSetDAO;
-import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.SetDAO;
 import xc.mst.dao.record.DefaultRecordTypeDAO;
 import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
@@ -57,7 +54,6 @@ import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
-import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -111,11 +107,6 @@ public abstract class MetadataService
 	 * Data access object for getting sets
 	 */
 	private static SetDAO setDao = new DefaultSetDAO();
-
-	/**
-	 * Data access object for getting formats
-	 */
-	private static FormatDAO formatDao = new DefaultFormatDAO();
 
 	/**
 	 * Data access object for getting OAI IDs
@@ -327,29 +318,37 @@ public abstract class MetadataService
 			
 			// If the record processing info is present in DB
 			if(recordTypes.size() != 0){
+				log.info("Record types exist in DB");
 			
 				// Process the records which have record_type info
 				for (int i = 0; i < recordTypes.size(); i++) {
 					// First query for records type using record types
 					RecordType recordType = recordTypes.get(i);
-					records = recordService.getByInputToServiceAndRecordType(service.getId(), recordType.getName());
-					processRecordBatch(records);
+					Records inputRecords = recordService.getByInputToServiceAndRecordType(service.getId(), recordType.getName());
+					if (inputRecords != null && inputRecords.size() >0) {
+						log.info("Number of Records:" + inputRecords.size());
+						log.info("Executing Record type :" + recordType.getName());
+						processRecordBatch(inputRecords);
+						
+						// Commit the records so that next record type can use that for processing 
+						SolrIndexManager.getInstance().commitIndex();
+						
+						updateServiceStatistics();
+						
+						// Updates the database with latest record id and OAI identifier used.
+						// So that in case of server down, the service will resume correctly.  
+						updateOAIRecordIds();
+
 					}
-				SolrIndexManager.getInstance().commitIndex();
+				}
 			}
 
 			// Now process the records with no record_type info
-			records = recordService.getInputForServiceToProcess(service.getId());
-			processRecordBatch(records);
+			Records inputRecords  = recordService.getInputForServiceToProcess(service.getId());
+			processRecordBatch(inputRecords);
 
 			// Reopen the reader so it can see the changes made by running the service
 			SolrIndexManager.getInstance().commitIndex();
-
-			// Get the results of any final processing the service needs to perform
-			finishProcessing();
-			
-			// Reopen the reader so it can see the changes made by running the service
-			//SolrIndexManager.getInstance().commitIndex();
 			
 			endTime = new Date().getTime();
 			timeDiff = endTime - startTime;
@@ -406,7 +405,7 @@ public abstract class MetadataService
 	/**
 	 * Update number of warnings, errors, records available, output & input records count
 	 */
-	public boolean updateServiceStatistics() {
+	protected boolean updateServiceStatistics() {
 		// Load the provider again in case it was updated during the harvest
 		Service service = null;
 		try
@@ -640,13 +639,6 @@ public abstract class MetadataService
 	protected abstract void processRecord(Record record) throws Exception ;
 
 	/**
-	 * This method gets called after all new records are processed.  If the service
-	 * needs to do any additional processing after it processed all the input records,
-	 * it should be done in this method.
-	 */
-	protected abstract void finishProcessing();
-
-	/**
 	 * Refreshes the index so all records are searchable.
 	 */
 	protected void refreshIndex()
@@ -692,58 +684,7 @@ public abstract class MetadataService
 	{
 		return "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + MSTConfiguration.getInstanceName() + "/" + service.getIdentifier().replace(" ", "_") + "/" + oaiIdDao.getNextOaiIdForService(service.getId());
 	}
-
-	/**
-	 * Gets a Format by name.  Subclasses of MetadataService can call this method to
-	 * get a Format from the database.
-	 *
-	 * @param name The name of the target Format
-	 * @return The Format with the passed name
-	 * @throws DatabaseConfigException
-	 */
-	protected Format getFormatByName(String name) throws DatabaseConfigException
-	{
-		return formatDao.getByName(name);
-	}
-	
-	/**
-	 * Gets all records that contain the passed trait
-	 *
-	 * @param trait The trait of the records we're getting
-	 * @return A list of records that have the passed trait
-	 * @throws IndexException
-	 */
-	protected RecordList getByTrait(String trait) throws IndexException
-	{
-		return recordService.getByTrait(trait);
-	}
-	
-	/**
-	 * Gets the output record for the service with the passed OAI identifier
-	 * 
-	 * @param oaiId The OAI identifier of the record to get
-	 * @return The output record for the service with the passed OAI identifier
-	 * @throws IndexException 
-	 * @throws DatabaseConfigException 
-	 */
-	protected Record getOutputByOaiId(String oaiId) throws IndexException, DatabaseConfigException
-	{
-		return recordService.getByOaiIdentifierAndService(oaiId, service.getId());
-	}
-	
-	/**
-	 * Gets the input record for the service with the passed OAI identifier
-	 * 
-	 * @param oaiId The OAI identifier of the record to get
-	 * @return The input record for the service with the passed OAI identifier
-	 * @throws IndexException 
-	 * @throws DatabaseConfigException 
-	 */
-	protected Record getInputByOaiId(String oaiId) throws IndexException, DatabaseConfigException
-	{
-		return recordService.getInputForServiceByOaiIdentifier(oaiId, service.getId());
-	}
-	
+		
 	/**
 	 * Adds a new set to the database
 	 *
@@ -761,17 +702,6 @@ public abstract class MetadataService
 		set.setIsProviderSet(false);
 		setDao.insert(set);
 		return set;
-	}
-
-	/**
-	 * Gets the set from the database with the passed setSpec
-	 *
-	 * @param setSpec The setSpec of the target set
-	 * @return The set with the passed setSpec
-	 * @throws DatabaseConfigException
-	 */
-	protected Set getSet(String setSpec) throws DatabaseConfigException {
-		return setDao.getBySetSpec(setSpec);
 	}
 
 	/**
@@ -807,12 +737,6 @@ public abstract class MetadataService
 		errorCountPerCommit++;
 	}
 
-	/**
-	 * Gets the organization code for the record
-	 * @return
-	 */
-	protected abstract String getOrganizationCode();
-	
 	/**
 	 * Inserts a record in the Lucene index and sets up RecordInput values
 	 * for any processing directives the record matched so the appropriate
@@ -992,11 +916,11 @@ public abstract class MetadataService
 	} // end method checkProcessingDirectives(Record)
 
 	/**
-	 * Reprocesses the passed record by all records that had processed it in the past
+	 * Reprocesses the passed record by all service that had processed it in the past
 	 *
 	 * @param record The record to reprocess
 	 */
-	public void reprocessRecord(Record record)
+	protected void reprocessRecord(Record record)
 	{
 		for(Service processingService : record.getProcessedByServices())
 		{

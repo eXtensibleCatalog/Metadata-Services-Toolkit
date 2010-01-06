@@ -7,7 +7,7 @@
   *
   */
 
-package xc.mst.services;
+package xc.mst.services.aggregation;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -35,7 +35,6 @@ import xc.mst.bo.record.Item;
 import xc.mst.bo.record.Manifestation;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
-import xc.mst.constants.AggregationServiceConstants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
@@ -52,6 +51,10 @@ import xc.mst.manager.record.ItemService;
 import xc.mst.manager.record.ManifestationService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
+import xc.mst.manager.repository.DefaultFormatService;
+import xc.mst.manager.repository.FormatService;
+import xc.mst.services.MetadataService;
+import xc.mst.services.ServiceValidationException;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.XcRecordSplitter;
 import xc.mst.utils.index.ExpressionList;
@@ -59,6 +62,7 @@ import xc.mst.utils.index.HoldingsList;
 import xc.mst.utils.index.ItemList;
 import xc.mst.utils.index.ManifestationList;
 import xc.mst.utils.index.RecordList;
+import xc.mst.utils.index.Records;
 import xc.mst.utils.index.WorkList;
 
 /**
@@ -178,7 +182,8 @@ public class AggregationService extends MetadataService
 	{
 		try 
 		{
-			xcSchemaFormat = getFormatByName("xc");
+			FormatService formatService = new DefaultFormatService();
+			xcSchemaFormat = formatService.getFormatByName("xc");
 		} 
 		catch (DatabaseConfigException e) 
 		{
@@ -436,11 +441,6 @@ public class AggregationService extends MetadataService
 			return new ArrayList<Record>();
 		}
 	} // end method processRecord(Record)
-
-	@Override
-	protected void finishProcessing()
-	{
-	} // end method finishProcessing()
 
 	//###############################################################
 	// Methods for creating a FRBR level specific record
@@ -810,7 +810,8 @@ public class AggregationService extends MetadataService
 		
 		// Get the output records that were processed from records linked to the
 		// record we just processed
-		RecordList linkedToInput = getByTrait("inputHasUplink:" + oldOaiIdentifier);
+		RecordService recordService = new DefaultRecordService();
+		RecordList linkedToInput = recordService.getByTrait("inputHasUplink:" + oldOaiIdentifier);
 		
 		// For each output record that were processed from records linked to the
 		// record we just processed, add a link from each current processed record to it
@@ -861,7 +862,7 @@ public class AggregationService extends MetadataService
 		// processed from the work in the input set
 		for(String linkedWork : linkedWorks)
 		{
-			Record inputWorkLinked = getInputByOaiId(linkedWork);
+			Record inputWorkLinked = recordService.getInputForServiceByOaiIdentifier(linkedWork, service.getId());
 			if(inputWorkLinked != null)
 			{
 				WorkList worksProducedByLinkedWork = workService.getByProcessedFrom(inputWorkLinked);
@@ -886,7 +887,7 @@ public class AggregationService extends MetadataService
 
 		// Get the output records that were processed from records linked to the
 		// record we just processed
-		RecordList linkedToInput = getByTrait("inputHasUplink:" + oldOaiIdentifier);
+		RecordList linkedToInput = recordService.getByTrait("inputHasUplink:" + oldOaiIdentifier);
 		
 		// For each output record that were processed from records linked to the
 		// record we just processed, add a link from each current processed record to it
@@ -937,7 +938,7 @@ public class AggregationService extends MetadataService
 		// processed from the expression in the input set
 		for(String linkedExpression : linkedExpressions)
 		{
-			Record inputExpressionLinked = getInputByOaiId(linkedExpression);
+			Record inputExpressionLinked = recordService.getInputForServiceByOaiIdentifier(linkedExpression, service.getId());
 			if(inputExpressionLinked != null)
 			{
 				ExpressionList expressionsProducedByLinkedExpression = expressionService.getByProcessedFrom(inputExpressionLinked);
@@ -970,7 +971,8 @@ public class AggregationService extends MetadataService
 		
 		// Get the output records that were processed from records linked to the
 		// record we just processed
-		RecordList linkedToInput = getByTrait("inputHasUplink:" + oldOaiIdentifier);
+		RecordService recordService = new DefaultRecordService();
+		RecordList linkedToInput = recordService.getByTrait("inputHasUplink:" + oldOaiIdentifier);
 		
 		// For each output record that were processed from records linked to the
 		// record we just processed, add a link from each current processed record to it
@@ -1032,7 +1034,7 @@ public class AggregationService extends MetadataService
 		// processed from the manifestation in the input set
 		for(String linkedManifestation : linkedManifestations)
 		{
-			Record inputManifestationLinked = getInputByOaiId(linkedManifestation);
+			Record inputManifestationLinked = recordService.getInputForServiceByOaiIdentifier(linkedManifestation, service.getId());
 			if(inputManifestationLinked != null)
 			{
 				ManifestationList manifestationsProducedByLinkedManifestation = manifestationService.getByProcessedFrom(inputManifestationLinked);
@@ -1072,7 +1074,7 @@ public class AggregationService extends MetadataService
 
 		// Get the output records that were processed from records linked to the
 		// record we just processed
-		RecordList linkedToInput = getByTrait("inputHasUplink:" + oldOaiIdentifier);
+		RecordList linkedToInput = recordService.getByTrait("inputHasUplink:" + oldOaiIdentifier);
 		
 		// For each output record that were processed from records linked to the
 		// record we just processed, add a link from each current processed record to it
@@ -1119,7 +1121,7 @@ public class AggregationService extends MetadataService
 		// processed from the holdings in the input set
 		for(String linkedHolding : linkedHoldings)
 		{
-			Record inputHoldingsLinked = getInputByOaiId(linkedHolding);
+			Record inputHoldingsLinked = recordService.getInputForServiceByOaiIdentifier(linkedHolding, service.getId());
 			if(inputHoldingsLinked != null)
 			{
 				HoldingsList holdingsProducedByLinkedHoldings = holdingsService.getByProcessedFrom(inputHoldingsLinked);
@@ -1765,11 +1767,6 @@ public class AggregationService extends MetadataService
 		}
 	} // end method getFRBRLevelIdentifier(Document)
 
-	@Override
-	protected String getOrganizationCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	//###############################################################
 	// Methods for building pyramids based on a Work.

@@ -1,5 +1,6 @@
 package xc.mst.services.transformation.bo;
 
+
 /**
  * Represents XC holding record and its linked manifestation record
  * 
@@ -108,5 +109,32 @@ public class XCHoldingRecord {
 		this.id = id;
 	}
 	
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o) return true;
+        if (!(o instanceof XCHoldingRecord)) return false;
 
+		final XCHoldingRecord other = (XCHoldingRecord)o;
+
+        if( ( holdingRecordOAIID!= null && !holdingRecordOAIID.equals(other.getHoldingRecordOAIID()) ) ||
+                ( holdingRecordOAIID == null && other.getHoldingRecordOAIID() != null ) ) return false;
+        
+        if( ( manifestationOAIId!= null && !manifestationOAIId.equals(other.getManifestationOAIId()) ) ||
+                ( manifestationOAIId == null && other.getManifestationOAIId() != null ) ) return false;
+        
+         return true;
+
+	} // end method equals(Object)
+	
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode()
+    {
+            int value = 0;
+            value += holdingRecordOAIID == null ? 0 : holdingRecordOAIID.hashCode();
+            value += manifestationOAIId == null ? 0 : manifestationOAIId.hashCode();
+            return value;
+    }
 }

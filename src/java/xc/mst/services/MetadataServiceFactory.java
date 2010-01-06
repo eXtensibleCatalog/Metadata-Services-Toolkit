@@ -1,17 +1,25 @@
 package xc.mst.services;
 
 import java.io.File;
+import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.service.Service;
+import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.email.Emailer;
+import xc.mst.manager.user.DefaultGroupService;
+import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.GroupService;
+import xc.mst.manager.user.UserService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.ServiceUtil;
 
@@ -78,7 +86,7 @@ public class MetadataServiceFactory {
 		}// end try(run the service through reflection)
 		catch (DatabaseConfigException e) {
 			log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e);
-			ServiceUtil.getInstance().sendEmail("Cannot connect to the database with the parameters supplied in the configuration file.");
+			ServiceUtil.getInstance().sendEmail("Service cannot be started. Unable to connect to the database with the parameters supplied in the configuration file.", null);
 			return null;
 		}
 		catch(ClassNotFoundException e)
@@ -87,7 +95,7 @@ public class MetadataServiceFactory {
 			// Update database with status of service
 			service.setStatus(Constants.STATUS_SERVICE_ERROR);
 			
-			// TODO runningService will be null. Use different send email for this			ServiceUtil.getInstance().sendEmail("The java class " + service.getClassName() + " could not be found.");
+			ServiceUtil.getInstance().sendEmail("The java class " + service.getClassName() + " could not be found.", service.getName());
 
 			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + service.getClassName() + " could not be found.");
 
@@ -111,8 +119,8 @@ public class MetadataServiceFactory {
 
 			// Update database with status of service
 			service.setStatus(Constants.STATUS_SERVICE_ERROR);
-			// TODO runningService will be null. Use different send email for this
-			serviceInstance.sendReportEmail("The java class " + service.getClassName() + " could not be found.");
+			
+			ServiceUtil.getInstance().sendEmail("The java class " + service.getClassName() + " could not be found.", service.getName());
 
 			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + service.getClassName() + " could not be found.");
 
@@ -148,8 +156,8 @@ public class MetadataServiceFactory {
 
 			// Update database with status of service
 			service.setStatus(Constants.STATUS_SERVICE_ERROR);
-			// TODO runningService will be null. Use different send email for this
-			serviceInstance.sendReportEmail("The java class " + service.getClassName() + "'s processRecords method could not be accessed.");
+
+			ServiceUtil.getInstance().sendEmail("The java class " + service.getClassName() + "'s processRecords method could not be accessed.", service.getName());
 
 			LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + service.getClassName() + "'s processRecords method could not be accessed.");
 
@@ -185,8 +193,8 @@ public class MetadataServiceFactory {
 
 			// Update database with status of service
 			service.setStatus(Constants.STATUS_SERVICE_ERROR);
-			// TODO runningService will be null. Use different send email for this
-			serviceInstance.sendReportEmail("Exception occurred while invoking the service's processRecords method.");
+
+			ServiceUtil.getInstance().sendEmail("Exception occurred while invoking the service's processRecords method.", service.getName());
 			
 			LogWriter.addError(service.getServicesLogFileName(), "An internal error occurred while trying to start the " + service.getName() + " Service.");
 

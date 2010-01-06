@@ -84,4 +84,28 @@ public class HeldHoldingRecord {
 		this.id = id;
 	}
 
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o) return true;
+        if (!(o instanceof XCHoldingRecord)) return false;
+
+		final XCHoldingRecord other = (XCHoldingRecord)o;
+
+        if( ( holdingRecordOAIID!= null && !holdingRecordOAIID.equals(other.getHoldingRecordOAIID()) ) ||
+                ( holdingRecordOAIID == null && other.getHoldingRecordOAIID() != null ) ) return false;
+        
+         return true;
+
+	} // end method equals(Object)
+	
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode()
+    {
+            int value = 0;
+            value += holdingRecordOAIID == null ? 0 : holdingRecordOAIID.hashCode();
+            return value;
+    }
 }

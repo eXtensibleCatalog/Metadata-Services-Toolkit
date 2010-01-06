@@ -32,12 +32,13 @@ import org.jdom.Namespace;
 import org.jdom.output.XMLOutputter;
 import org.jdom.transform.JDOMSource;
 
+import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
-import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.repository.DefaultFormatService;
 import xc.mst.services.MetadataService;
+import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
 
 
 
@@ -149,6 +150,8 @@ public class XCRecord
 	 * The xc:recordID's type followed by its value
 	 */
 	private String xcRecordId = null;
+	
+	private Format xcFormat = null;
 
 	/**
 	 * Gets the xc:recordID's type followed by its value
@@ -180,6 +183,11 @@ public class XCRecord
 	 */
 	public XCRecord()
 	{
+		try {
+			xcFormat = new DefaultFormatService().getFormatByName("xc");
+		} catch(DatabaseConfigException dce) {
+			log.error("Unable to connect to database using the parameters in configuration file.");
+		}
 	} // end constructor
 
 	/**
@@ -192,6 +200,12 @@ public class XCRecord
 	{
 		// True if we've set the main work element, false otherwise
 		boolean workSet = false;
+		
+		try {
+			xcFormat = new DefaultFormatService().getFormatByName("xc");
+		} catch(DatabaseConfigException dce) {
+			log.error("Unable to connect to database using the parameters in configuration file.");
+		}
 
 		// An artifical linking field for adding extra work elements
 		int artLinkingField = 1;
@@ -888,7 +902,7 @@ public class XCRecord
 		
 		Record xcRecord = new Record();
 		xcRecord.setOaiXml(writer.toString());
-		xcRecord.setFormat(new DefaultFormatService().getFormatByName("xc"));
+		xcRecord.setFormat(xcFormat);
 		xcRecord.setType(recordType);
 		xcRecord.setOaiIdentifier(document.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("id"));
 		
