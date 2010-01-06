@@ -318,7 +318,6 @@ public abstract class MetadataService
 			
 			// If the record processing info is present in DB
 			if(recordTypes.size() != 0){
-				log.info("Record types exist in DB");
 			
 				// Process the records which have record_type info
 				for (int i = 0; i < recordTypes.size(); i++) {
@@ -326,8 +325,6 @@ public abstract class MetadataService
 					RecordType recordType = recordTypes.get(i);
 					Records inputRecords = recordService.getByInputToServiceAndRecordType(service.getId(), recordType.getName());
 					if (inputRecords != null && inputRecords.size() >0) {
-						log.info("Number of Records:" + inputRecords.size());
-						log.info("Executing Record type :" + recordType.getName());
 						processRecordBatch(inputRecords);
 						
 						// Commit the records so that next record type can use that for processing 

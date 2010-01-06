@@ -145,7 +145,6 @@ public class TransformationService extends MetadataService
 
 	@Override
 	public void  processRecord(Record processMe) throws Exception {
-		log.info("Record OAI id : " + processMe.getOaiIdentifier());
 
 		// Get the results of processing the record
 		List<Record> results = convertRecord(processMe);
