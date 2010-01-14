@@ -48,6 +48,7 @@ import xc.mst.services.ServiceValidationException;
 import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
 import xc.mst.services.transformation.bo.BibliographicManifestationMapping;
 import xc.mst.services.transformation.bo.HeldHoldingRecord;
+import xc.mst.services.transformation.bo.MarcXmlRecord;
 import xc.mst.services.transformation.bo.XCHoldingRecord;
 import xc.mst.services.transformation.bo.XCRecord;
 import xc.mst.services.transformation.dao.BibliographicManifestationMappingDAO;
@@ -56,7 +57,6 @@ import xc.mst.services.transformation.dao.DefaultHeldHoldingRecordDAO;
 import xc.mst.services.transformation.dao.DefaultXCHoldingDAO;
 import xc.mst.services.transformation.dao.HeldHoldingRecordDAO;
 import xc.mst.services.transformation.dao.XCHoldingDAO;
-import xc.mst.utils.MarcXmlRecord;
 
 /**
  * A Metadata Service which for each unprocessed marcxml record creates an XC schema
@@ -284,16 +284,11 @@ public class TransformationService extends MetadataService
 
 
 			// Get the ORG code from the 035 field
-			if(originalRecord.getControlField("003") != null) {
-				orgCode = originalRecord.getControlField("003");
-			} else if(originalRecord.getControlField("035") != null) {
-				orgCode = originalRecord.getControlField("035");
-			} else {
-				orgCode = "";
+			orgCode = originalRecord.getOrgCode();
+			if (orgCode.equals("")) {
 				// Add error
 				record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
 			}
-			
 			
 			
 			// Get the Leader 06.  This will allow us to determine the record's type
@@ -1579,7 +1574,7 @@ public class TransformationService extends MetadataService
 			// If any target fields were found
 			if(titleOfExpressionBuilder.length() > 0)
 			{
-				String value = titleOfExpressionBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
+				String value = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
 
 				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
 			}
@@ -1702,11 +1697,13 @@ public class TransformationService extends MetadataService
 					}
 				}
 
-				if(targetTitleOfWorkBuilderSubfields.contains(subfieldCode))
+				if(targetTitleOfWorkBuilderSubfields.contains(subfieldCode)) {
 					titleOfWorkBuilder.append(subfield.getText() + " ");
+				}
 				
-				if(targetTitleOfExpressionBuilderSubfields.contains(subfieldCode))
+				if(targetTitleOfExpressionBuilderSubfields.contains(subfieldCode)) {
 					titleOfExpressionBuilder.append(subfield.getText() + " ");
+				}
 
 			}
 
@@ -1718,12 +1715,12 @@ public class TransformationService extends MetadataService
 				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
 				
 			}
-			
+
 			// If any target fields were found
 			if(titleOfExpressionBuilder.length() > 0)
 			{
-				String value = titleOfExpressionBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
-
+				String value = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
+			
 				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
 			}
 		}
@@ -1837,7 +1834,7 @@ public class TransformationService extends MetadataService
 			// If any target fields were found
 			if(titleOfExpressionBuilder.length() > 0)
 			{
-				String value = titleOfExpressionBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
+				String value = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
 
 				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
 			}
@@ -4646,7 +4643,7 @@ public class TransformationService extends MetadataService
 			}
 			
 			// If $5 is not present
-			if(process)
+			if(process) {
 				// Add each subfield to the specified level with the specified tag
 				// and attribute
 				for (Element subfield : subfields) {
@@ -4660,8 +4657,6 @@ public class TransformationService extends MetadataService
 					if (targetLocationDisplaySubfields.contains(subfieldCode))
 						locationDisplayBuilder.append(subfield.getText() + " ");
 					
-					if (targetAudienceSubfields.contains(subfieldCode))
-						audienceBuilder.append(subfield.getText() + " ");
 				}
 
 				ArrayList<Element> holdingsElements = new ArrayList<Element>();
@@ -4683,10 +4678,24 @@ public class TransformationService extends MetadataService
 
 				transformInto.addHoldingsElement(holdingsElements);
 				
+			} else {
+				// Add each subfield to the specified level with the specified tag
+				// and attribute
+				for (Element subfield : subfields) {
+	
+					// Get the subfield's code
+					String subfieldCode = subfield.getAttribute("code").getValue();
+					
+					if (targetAudienceSubfields.contains(subfieldCode))
+						audienceBuilder.append(subfield.getText() + " ");
+				}
+
 				if(audienceBuilder.length() > 0)
 				{
 					transformInto.addElement("audience", audienceBuilder.toString().trim(), XCRecord.DCTERMS_NAMESPACE, new ArrayList<Attribute>(), FrbrLevel.WORK);
 				}
+				
+			}
 				
 		}
 
@@ -5176,7 +5185,7 @@ public class TransformationService extends MetadataService
 	{
 		// Get the target subfields MARC XML record
 		List<String> subfields = transformMe.getSubfield(field, subfield);
-
+		
 		// If there were no matching subfields return the unmodified XC record
 		if(subfields == null || subfields.size() == 0)
 			return transformInto;
@@ -5191,7 +5200,7 @@ public class TransformationService extends MetadataService
 			ArrayList<Attribute> attributes = new ArrayList<Attribute>();
 			if(elementAttribute != null)
 				attributes.add((Attribute)elementAttribute.clone());
-
+		
 			// Add the element to the XC record
 			transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
 		}
@@ -5719,11 +5728,13 @@ public class TransformationService extends MetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord processFieldWithAuthorityAttributeFromIndicator(MarcXmlRecord transformMe, XCRecord transformInto, String field, String targetSubfields, String subfieldsToDash, String elementName, Namespace elementNamespace, String targetIndicator, HashMap<String, Attribute> indicatorToValue, FrbrLevel level)
+	private XCRecord processFieldWithAuthorityAttributeFromIndicator(MarcXmlRecord transformMe, XCRecord transformInto, 
+			String field, String targetSubfields, String subfieldsToDash, String elementName, Namespace elementNamespace, 
+			String targetIndicator, HashMap<String, Attribute> indicatorToValue, FrbrLevel level)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields(field);
-
+		
 		// If there were matching elements, return the unmodified XC record
 		if(elements.size() == 0)
 			return transformInto;
@@ -5733,7 +5744,6 @@ public class TransformationService extends MetadataService
 		{
 			// Get the requested indicator
 			String indicator = MarcXmlRecord.getIndicatorOfField(element, targetIndicator);
-
 			// If the requested subfield or indicator were not found, continue to the next element
 			// Also continue to the next element if there was no attribute value for the value of the indicator
 			if(indicator == null || indicator.length() <= 0 || !indicatorToValue.containsKey(indicator))
@@ -5762,7 +5772,6 @@ public class TransformationService extends MetadataService
 			{
 				// Get the subfield's code
 				String subfieldCode = subfield.getAttribute("code").getValue();
-
 				if(targetSubfields.contains(subfieldCode))
 				{
 					if(subfieldsToDash.contains(subfieldCode))
@@ -5772,8 +5781,9 @@ public class TransformationService extends MetadataService
 						}
 						builder.append(subfield.getText() + " ");
 					}
-					else
+					else {
 						builder.append(subfield.getText() + " ");
+					}
 				}
 			}
 

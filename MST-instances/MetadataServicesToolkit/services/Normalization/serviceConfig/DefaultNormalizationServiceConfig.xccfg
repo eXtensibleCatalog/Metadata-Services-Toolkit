@@ -1,5 +1,5 @@
 MARCNormalization Service # The name of the service
-0.2.6 # The version of the service
+0.2.7 # The version of the service
 NormalizationService.jar # The .jar file containing the service
 xc.mst.services.normalization.NormalizationService # The class within the .jar file that represents the service.  This class must extend xc.mst.services.MetadataService
 MARCNormalization # The service's identifier which will be used in constructing 'local-identifier' part in record's OAI identifier. This should NOT be changed once service is added. Change to this will result in inconsistent record identifiers. Make sure it is unique within a MST instance.
@@ -207,6 +207,10 @@ BibLocationName = 0
 # 1 to replace location codes left by 
 # III with the actual location. 
 IIILocationName = 0
+
+# 1 to remove 945 field if it's  
+# $5 does not match organization code 
+remove945Field = 1
 
 # 1 to copy 600, 610, 611, 700, 710, 711, 800, 810, and 811 fields
 # containing a $t subfield into a 9xx field.  This will facilitate 

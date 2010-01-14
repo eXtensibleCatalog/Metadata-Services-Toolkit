@@ -2153,4 +2153,43 @@ public class MarcXmlManager
 			log.error("An error occurred getting control field " + targetField);
 		}
 	}
+	
+	/**
+	 * Gets data field 945. Separate method is used for 945 because it needs to return 
+	 * field 945 irrespective of $5 subfield value being organization code.
+	 *
+	 * @return A list of all data fields with the requested tag
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Element> getField945()
+	{
+		if(log.isDebugEnabled())
+			log.debug("Getting the " + 945 + " fields.");
+
+		try
+		{
+			// An XPATH expression to get the requested control field
+			XPath xpath = XPath.newInstance("//marc:datafield[@tag='" + 945 + "']");
+			xpath.addNamespace(marcNamespace);
+
+			return xpath.selectNodes(marcXml);
+		}
+		catch(JDOMException e)
+		{
+			log.error("An error occurred getting the " + 945 + " fields.", e);
+			return new ArrayList<Element>();
+		}
+	}
+	
+	public void remove945(Element element) {
+		
+//		List<Element> children = marcXml.getRootElement().getChildren();
+//		Element entityElement = ((Element)(children.get(0)));
+//		entityElement.getChildren().remove(element);
+		
+		// Remove the control field
+		marcXml.getRootElement().removeContent(element);
+		
+	}
+	
 } // end class MarcXmlManager

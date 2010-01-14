@@ -9,25 +9,22 @@
 
 package xc.mst.manager.test;
 
-import java.sql.Date;
-
 import org.apache.solr.client.solrj.SolrQuery;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
-import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.user.User;
 import xc.mst.dao.DataException;
 import xc.mst.harvester.HarvestRunner;
 import xc.mst.harvester.ValidateRepository;
+import xc.mst.helper.TestHelper;
 import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.DefaultBrowseRecordService;
-import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.repository.DefaultFormatService;
 import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.DefaultSetService;
@@ -38,7 +35,6 @@ import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
-import xc.mst.helper.TestHelper;
 
 
 /**

@@ -411,6 +411,9 @@ public class NormalizationService extends MetadataService
 
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_III_LOCATION_NAME, "0").equals("1"))
 					normalizedXml = IIILocationName(normalizedXml);
+				
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_REMOVE_945_FIELD, "0").equals("1"))
+					normalizedXml = remove945Field(normalizedXml);
 
 			}
 
@@ -2100,6 +2103,47 @@ public class NormalizationService extends MetadataService
 
 			// Set the 945 $l value to the location we found for the location code.
 			marcXml.setMarcXmlSubfield("945", "l", location, field945subfieldL);
+	    }
+
+		return marcXml;
+	}
+	
+	/**
+	 * Removes 945 field if there is no $5 field with organization code
+	 *
+	 * @param marcXml The original MARCXML record
+	 * @return The MARCXML record after performing this normalization step.
+	 */
+	private MarcXmlManager remove945Field(MarcXmlManager marcXml)
+	{
+		if(log.isDebugEnabled())
+			log.debug("Entering remove945Field normalization step.");
+		
+		// The 945 $l value
+		List<Element> field945s = marcXml.getField945();
+
+	    for(Element field945 : field945s)
+	    {
+	    	// Get the subfields of the current element
+			List<Element> subfields = field945.getChildren("subfield",marcNamespace);
+
+			boolean remove945 = true;
+			
+			// Check if $5 is present as a subfield with institution code
+			for (Element subfield : subfields) {
+				
+				if(subfield.getAttribute("code").getValue().equals("5") &&
+						subfield.getText().equals(getOrganizationCode())) {
+				
+					// Remove this field
+					remove945 = false;
+				}
+			}
+			
+			if (remove945) {
+				marcXml.remove945(field945);
+				
+			}
 	    }
 
 		return marcXml;

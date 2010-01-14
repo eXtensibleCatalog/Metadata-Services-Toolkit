@@ -318,8 +318,6 @@ public class XCRecord
 
 				}
 			}
-
-
 		}
 
 		xcRootElement.addContent("\t")

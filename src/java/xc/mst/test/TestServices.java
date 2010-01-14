@@ -95,7 +95,7 @@ public class TestServices
 
 		try
 		{
-//			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
+			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
 			Thread.sleep(2000);
 			SolrIndexManager.getInstance().commitIndex();
 			Thread.sleep(2000);
@@ -111,11 +111,9 @@ public class TestServices
 			RecordList records = recordService.getByServiceId(serviceId);
 			for(Record record: records)
 			{
-			//	if(record.getService() != null && record.getService().getId() == serviceId) {
-//					saveRecordToFile(processedRecordsDir, record);
-			//	}
+					saveRecordToFile(processedRecordsDir, record);
 
-//				recordService.delete(record);
+				recordService.delete(record);
 			}
 		}
 		catch(Exception e)

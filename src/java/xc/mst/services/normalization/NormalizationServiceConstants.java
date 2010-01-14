@@ -227,6 +227,11 @@ public class NormalizationServiceConstants
 	public static final String CONFIG_ENABLED_III_LOCATION_NAME = "IIILocationName";
 	
 	/**
+	 * Parameter for looking up the whether or not the remove945Field normalization step is enabled.
+	 */
+	public static final String CONFIG_ENABLED_REMOVE_945_FIELD = "remove945Field";
+	
+	/**
 	 * Parameter for looking up the whether or not the SeperateName normalization step is enabled.
 	 */
 	public static final String CONFIG_ENABLED_SEPERATE_NAME = "SeperateName";

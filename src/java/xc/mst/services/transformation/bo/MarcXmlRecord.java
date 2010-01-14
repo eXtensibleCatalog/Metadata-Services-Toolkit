@@ -7,7 +7,7 @@
   *
   */
 
-package xc.mst.utils;
+package xc.mst.services.transformation.bo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +24,7 @@ import org.jdom.Namespace;
 import org.jdom.xpath.XPath;
 
 import xc.mst.constants.Constants;
+import xc.mst.utils.MSTConfiguration;
 
 
 /**
@@ -52,6 +53,9 @@ public class MarcXmlRecord
 	 * The value of the leader field
 	 */
 	protected String leader = null;
+	
+	/** Organization code */
+	protected String orgCode;
 
 	/**
 	 * A map whose keys are MARCXML tags and whose values are a list of elements with a given tag
@@ -90,13 +94,22 @@ public class MarcXmlRecord
 	public MarcXmlRecord(Document marcXml)
 	{
 		this.marcXml = marcXml;
-
 		// Get the MARC XML's leader
 		leader = this.marcXml.getRootElement().getChildText("leader", marcNamespace);
 
 		if(log.isDebugEnabled())
 			log.debug("Found the value of the leader to be " + leader + ".");
 
+		
+		// Get the ORG code from the 035 field
+		if(getControlField("003") != null) {
+			orgCode = getControlField("003");
+		} else if(getControlField("035") != null) {
+			orgCode = getControlField("035");
+		} else {
+			orgCode = "";
+		}
+		
 		initializeMarcDataFields();
 
 		// Get the 880 fields so we can set up the tag to 880 map.
@@ -215,16 +228,15 @@ public class MarcXmlRecord
 					xpath.addNamespace(marcNamespace);
 					potentialResults = xpath.selectNodes(marcXml);
 				}
-
 				ArrayList<Element> results = new ArrayList<Element>();
 
 				// Get the 880 fields that match the requested tag
 				if(tagTo880s.containsKey(targetField)) {
 					potentialResults.addAll(tagTo880s.get(targetField));
 				}
-
+				
 				for(Element potentialResult : potentialResults) {
-					if(getSubfieldOfField(potentialResult, '5').contains(MSTConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE))) {
+					if(getSubfieldOfField(potentialResult, '5').contains(orgCode)) {
 						results.add(potentialResult);
 					}
 				}
@@ -276,7 +288,6 @@ public class MarcXmlRecord
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the " + targetField + " $" + targetSubfield + " subfields' values.");
-
 		return tagSubfieldsToValues.get(targetField + "$" + targetSubfield);
 	}
 
@@ -499,8 +510,6 @@ public class MarcXmlRecord
 		// Get the data fields
 		List<Element> fields = marcXml.getRootElement().getChildren("datafield", marcNamespace);
 
-		// The organization code from the configuration file
-		String orgCode = MSTConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE);
 		// Iterate over the fields and find the one with the correct tag
 		for(Element field : fields)
 		{
@@ -541,4 +550,12 @@ public class MarcXmlRecord
 			}
 		} // end loop over data fields
 	} // end method initializeMarcDataFields
+
+	public String getOrgCode() {
+		return orgCode;
+	}
+
+	public void setOrgCode(String orgCode) {
+		this.orgCode = orgCode;
+	}
 }
