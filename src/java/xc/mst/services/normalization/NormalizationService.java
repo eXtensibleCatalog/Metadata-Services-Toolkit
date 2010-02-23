@@ -814,7 +814,23 @@ public class NormalizationService extends MetadataService
 		// Create the new 035 field
 		if(moveAllOrgCodes || control003.equalsIgnoreCase(getOrganizationCode()))
 		{
-			String new035 = "(" + control003 + ")" + control001;
+			String new035 = null;
+			
+			if (Character.isLetter(control001.charAt(0))) {
+				int index = 0;
+				StringBuffer s = new StringBuffer();
+				while (Character.isLetter(control001.charAt(index))) {
+					s.append(control001.charAt(index));
+					index++;
+				}
+				String new003 = s.toString();
+				
+				control001 = control001.substring(new003.length());
+				
+				new035 = "(" + new003 + ")" + control001;
+			} else {
+				new035 = "(" + control003 + ")" + control001;
+			}
 
 			if(log.isDebugEnabled())
 				log.debug("Moving the record's organization code to a new 035 field with value " + new035 + ".");
@@ -1075,7 +1091,7 @@ public class NormalizationService extends MetadataService
 		// Add the languages in 041 $a to the list of languages assuming doing so wouldn't create duplicates
 		for(String field041a : fields041a)
 		{
-			// Every group of three characters should be treated as a seperate language code.
+			// Every group of three characters should be treated as a separate language code.
 			// So characters 1-3 are one language, 4-6 are another, etc.
 			for(int counter = 0; counter + 3 <= field041a.length(); counter += 3)
 			{
@@ -1344,9 +1360,23 @@ public class NormalizationService extends MetadataService
 
 			return marcXml;
 		}
+		
+		String new003 = null;
 
-		// Add an 003 to thee header
-		String new003 = getOrganizationCode();
+		if (Character.isLetter(control001.charAt(0))) {
+			int index = 0;
+			StringBuffer s = new StringBuffer();
+			while (Character.isLetter(control001.charAt(index))) {
+				s.append(control001.charAt(index));
+				index++;
+			}
+			new003 = s.toString();
+			
+			control001 = control001.substring(new003.length());
+		} else {
+			// Add an 003 to thee header
+			new003 = getOrganizationCode();
+		}
 
 		if(log.isDebugEnabled())
 			log.debug("Supplying the record's organization code to a new 003 field with value " + new003 + ".");
