@@ -77,7 +77,7 @@ public class TestServices
 	private static File unprocessedRecordsDir = new File("C:\\NormalizationTestData\\input");
 	private static File processedRecordsDir = new File("C:\\NormalizationTestData\\output");
 
-	private static int serviceId = 2;
+	private static int serviceId = 8;
 
 	/**
 	 * Builds the XML Document based on the record's OAI XML
@@ -95,7 +95,8 @@ public class TestServices
 
 		try
 		{
-			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
+//			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
+			addUnprocessedRecordFromFilesForAggregation(unprocessedRecordsDir);
 			Thread.sleep(2000);
 			SolrIndexManager.getInstance().commitIndex();
 			Thread.sleep(2000);
@@ -109,6 +110,7 @@ public class TestServices
 			Thread.sleep(2000);
 			//RecordList records = recordService.getAll();
 			RecordList records = recordService.getByServiceId(serviceId);
+			System.out.println("O/P records ="+ records);
 			for(Record record: records)
 			{
 					saveRecordToFile(processedRecordsDir, record);
@@ -160,11 +162,75 @@ public class TestServices
 
 			record.setOaiXml(readUnicodeFile(currentRecord));
 			record.setOaiIdentifier(currentRecord.getName().substring(0, currentRecord.getName().lastIndexOf('.')).replaceAll(" ", "/").replaceAll("-", ":"));
-			record.setFormat(formatDao.getById(3));
+			record.setFormat(formatDao.getById(3));  // For Normalization & transformation
 			record.setProvider(providerDao.getById(1));
 			record.addInputForService(serviceDao.getById(serviceId));
+			System.out.println("currentRecord.getName()="+ currentRecord.getName());
+			
+//			record.setDeleted(true);
 			
 			
+			
+			if(recordService.insert(record) == false)
+				System.out.println("FAIL! " + currentRecord.getAbsolutePath());
+		}
+	}
+	
+	public static void addUnprocessedRecordFromFilesForAggregation(File inputDirectory) throws DataException, IOException, IndexException
+	{
+		ProviderDAO providerDao = new DefaultProviderDAO();
+		FormatDAO formatDao = new DefaultFormatDAO();
+		ServiceDAO serviceDao = new DefaultServiceDAO();
+		RecordService recordService = new DefaultRecordService();
+
+		File[] testRecords = inputDirectory.listFiles();
+
+		for(int counter = 0; counter < testRecords.length; counter++)
+		{
+			File currentRecord = testRecords[counter];
+
+			Record record = new Record();
+
+			record.setOaiXml(readUnicodeFile(currentRecord));
+			record.setFormat(formatDao.getById(6));  // For aggregation
+			record.setProvider(providerDao.getById(1));
+			record.addInputForService(serviceDao.getById(serviceId));
+			System.out.println("currentRecord.getName()="+ currentRecord.getName());
+			
+			if (currentRecord.getName().equals("1.xml")) {
+				record.setType("XC-Work");
+				record.setOaiIdentifier("oai:mst.rochester.edu:MST/MARCToXCTransformation/10000");
+
+			}
+			if (currentRecord.getName().equals("2.xml")) {
+				record.setType("XC-Expression");
+				record.setOaiIdentifier("oai:mst.rochester.edu:MST/MARCToXCTransformation/10001");
+				record.addUpLink("oai:mst.rochester.edu:MST/MARCToXCTransformation/10000");
+			}
+			if (currentRecord.getName().equals("3.xml")) {
+				record.setType("XC-Manifestation");
+				record.setOaiIdentifier("oai:mst.rochester.edu:MST/MARCToXCTransformation/10002");
+				record.addUpLink("oai:mst.rochester.edu:MST/MARCToXCTransformation/10001");
+			}
+			if (currentRecord.getName().equals("4.xml")) {
+				record.setType("XC-Work");
+				record.setOaiIdentifier("oai:mst.rochester.edu:MST/MARCToXCTransformation/10003");
+			}
+			if (currentRecord.getName().equals("5.xml")) {
+				record.setType("XC-Expression");
+				record.setOaiIdentifier("oai:mst.rochester.edu:MST/MARCToXCTransformation/10004");
+				record.addUpLink("oai:mst.rochester.edu:MST/MARCToXCTransformation/10003");
+			}
+			if (currentRecord.getName().equals("6.xml")) {
+				record.setType("XC-Manifestation");
+				record.setOaiIdentifier("oai:mst.rochester.edu:MST/MARCToXCTransformation/10005");
+				record.addUpLink("oai:mst.rochester.edu:MST/MARCToXCTransformation/10004");
+			}
+			if (currentRecord.getName().equals("7.xml")) {
+				record.setType("XC-Holding");
+				record.setOaiIdentifier("oai:mst.rochester.edu:MST/MARCToXCTransformation/10006");
+				record.addUpLink("oai:mst.rochester.edu:MST/MARCToXCTransformation/10005");
+			}
 //			record.setDeleted(true);
 			
 			
