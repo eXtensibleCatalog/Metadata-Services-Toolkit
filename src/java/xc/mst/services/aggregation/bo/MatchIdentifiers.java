@@ -16,6 +16,8 @@ package xc.mst.services.aggregation.bo;
  */
 public class MatchIdentifiers {
 	
+	private int id = -1;
+	
 	private String oaiId;
 	
 	private String oclcValue;
@@ -25,6 +27,8 @@ public class MatchIdentifiers {
 	private String isbnValue;
 	
 	private String issnValue;
+	
+	public MatchIdentifiers(){}
 	
 	public MatchIdentifiers(String oaiId) {
 		this.oaiId = oaiId;
@@ -68,6 +72,14 @@ public class MatchIdentifiers {
 
 	public void setIsbnValue(String isbnValue) {
 		this.isbnValue = isbnValue;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

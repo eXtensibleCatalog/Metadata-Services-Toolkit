@@ -66,3 +66,20 @@ WORK MERGE FIELDS
 
 # 1 to merge works with the same identifierForTheWork
 merge_identifierForTheWork = 1
+
+#-----------------------------------------
+MANIFESTATION BASE RECORD TO MERGE INTO
+#-----------------------------------------
+
+# 1 to choose record with maximum number of elements 
+Number_of_elements = 1
+	
+# 1 to choose record with maximum number of characters
+Record_Length = 1
+	
+# 1 to choose record with high priority institution code	
+Provenance = 1
+
+# Priority based on institution code
+Provenance_Priority =  NRU, DLC, CUL, *	
+

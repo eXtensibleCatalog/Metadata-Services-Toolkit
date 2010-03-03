@@ -768,6 +768,7 @@ public class DefaultRecordService extends RecordService
 		// Get only fields OAI header & OAI XML
 		query.addField(FIELD_OAI_HEADER);
 		query.addField(FIELD_OAI_XML);
+		query.addField(FIELD_DELETED);
 		query.setQuery(queryBuffer.toString());
 		if(from != null && until != null) {
 			query.addFilterQuery(FIELD_UPDATED_AT + ":[" + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)) + " TO " + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)) + "]");
@@ -975,6 +976,7 @@ public class DefaultRecordService extends RecordService
 
 		record.setOaiHeader((String)doc.getFieldValue(FIELD_OAI_HEADER));
 		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
+		record.setDeleted(Boolean.parseBoolean((String)doc.getFieldValue(FIELD_DELETED)));
 		
 		// Return the record we parsed from the document
 		return record;

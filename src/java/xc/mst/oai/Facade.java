@@ -11,9 +11,7 @@ package xc.mst.oai;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -837,12 +835,21 @@ public class Facade
 				// Otherwise, we're just supposed to get the identifiers, so
 				// append the record's OAI header
 				if(getRecords) {
-					xml.append("<record>\n")
-					          .append(record.getOaiHeader().replaceAll("<\\?xml.*\\?>", ""))
-					          .append("\n<metadata>\n")
-					          .append(record.getOaiXml().replaceAll("<\\?xml.*\\?>", ""))
-					          .append("\n</metadata>\n")
-					          .append("\n</record>\n");
+					
+					if (record.getDeleted()) {
+						String header = record.getOaiHeader();
+						header = header.replaceAll("<header>", "<header status=\"deleted\">");
+						xml.append("<record>\n")
+				          .append(header.replaceAll("<\\?xml.*\\?>", ""))
+				          .append("\n</record>\n");
+					} else {
+						xml.append("<record>\n")
+						          .append(record.getOaiHeader().replaceAll("<\\?xml.*\\?>", ""))
+						          .append("\n<metadata>\n")
+						          .append(record.getOaiXml().replaceAll("<\\?xml.*\\?>", ""))
+						          .append("\n</metadata>\n")
+						          .append("\n</record>\n");
+					}
 				} else {
 			    	xml.append(record.getOaiHeader().replaceAll("<\\?xml.*\\?>", "")).append("\n");
 				}

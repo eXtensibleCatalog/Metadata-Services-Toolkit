@@ -8,6 +8,8 @@
   */
 package xc.mst.services.aggregation.bo;
 
+import java.util.List;
+
 /**
  * Represents the output record created by aggregation
  * 
@@ -16,21 +18,25 @@ package xc.mst.services.aggregation.bo;
  */
 public class OutputRecord {
 	
+	private int id = -1;
+	
 	private String oaiId;
 	
 	private String xml;
 	
 	private boolean updated = false;
 	
-	private String predecessorOaiId;
+	private List<String> predecessorOaiIds;
+	
+	public OutputRecord() {}
 
 	public OutputRecord(String oaiId, String xml, boolean updated,
-			String predecessorOaiId) {
+			List<String> predecessorOaiIds) {
 
 		this.oaiId = oaiId;
 		this.xml = xml;
 		this.updated = updated;
-		this.predecessorOaiId = predecessorOaiId;
+		this.predecessorOaiIds = predecessorOaiIds;
 	}
 
 	public String getOaiId() {
@@ -57,12 +63,28 @@ public class OutputRecord {
 		this.updated = updated;
 	}
 
-	public String getPredecessorOaiId() {
-		return predecessorOaiId;
+	public List<String> getPredecessorOaiIds() {
+		return predecessorOaiIds;
 	}
 
-	public void setPredecessorOaiId(String predecessorOaiId) {
-		this.predecessorOaiId = predecessorOaiId;
+	public void setPredecessorOaiId(List<String> predecessorOaiIds) {
+		this.predecessorOaiIds = predecessorOaiIds;
+	}
+	
+	public void addPredecessor(String oaiId) {
+		predecessorOaiIds.add(oaiId);
+	}
+	
+	public void removePredecessor(String oaiId) {
+		predecessorOaiIds.remove(oaiId);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

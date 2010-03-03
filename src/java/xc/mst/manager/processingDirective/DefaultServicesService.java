@@ -987,12 +987,12 @@ public class DefaultServicesService implements ServicesService
 	    	//Execute the commands
 			stmt = dbConnectionManager.createStatement();
 			for (String sql : commands) {
-					stmt.execute(sql);	
-				}
+				stmt.execute(sql);	
+			}
 				
-			} catch (Exception e) {
-				log.error("An exception occured while executing the sql scripts.");
-				throw new DataException("An exception occured while executing the sql scripts.");
+		} catch (Exception e) {
+			log.error("An exception occured while executing the sql scripts." + e);
+			throw new DataException("An exception occured while executing the sql scripts.");
 		}
 		finally {
 			if(br!=null) {

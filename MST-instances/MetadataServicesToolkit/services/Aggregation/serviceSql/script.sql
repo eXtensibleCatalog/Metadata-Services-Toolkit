@@ -3,7 +3,7 @@
 -- -------------------------------------------------------------
 
 -- -------------------------------------------------------------
--- Table structure for in_processed_identifier_values
+-- Table structure for in_processed_identifiers
 -- -------------------------------------------------------------
 
 DROP TABLE IF EXISTS in_processed_identifiers;
@@ -18,33 +18,36 @@ CREATE TABLE in_processed_identifiers
   PRIMARY KEY(in_processed_identifiers_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 -- -------------------------------------------------------------
--- Table structure for input_output_records
+-- Table structure for output_record
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS input_output_records;
-CREATE TABLE input_output_records
+DROP TABLE IF EXISTS output_record;
+CREATE TABLE output_record
 (
-  input_output_records_id INT(11) NOT NULL AUTO_INCREMENT,
-  input_oai_id TEXT NOT NULL,
-  output_oai_id TEXT NOT NULL,
-  PRIMARY KEY(input_output_records_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- -------------------------------------------------------------
--- Table structure for output_records
--- -------------------------------------------------------------
-
-DROP TABLE IF EXISTS output_records;
-CREATE TABLE output_records
-(
-  output_records_id  INT(11) NOT NULL AUTO_INCREMENT,
+  output_record_id  INT(11) NOT NULL AUTO_INCREMENT,
   oai_id TEXT NOT NULL,
   XML TEXT NOT NULL,
   updated boolean NOT NULL,
-  PRIMARY KEY(output_records_id)
+  PRIMARY KEY(output_record_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -------------------------------------------------------------
+-- Table structure for predecessor_record
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS predecessor_record;
+CREATE TABLE predecessor_record
+(
+  predecessor_record_id INT(11) NOT NULL AUTO_INCREMENT,
+  predecessor_oai_id TEXT NOT NULL,
+  output_record_id INT(11) NOT NULL,
+  PRIMARY KEY(predecessor_record_id),
+  FOREIGN KEY(output_record_id) REFERENCES output_record(output_record_id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 -- -------------------------------------------------------------
 -- Table structure for held_records
@@ -55,6 +58,6 @@ CREATE TABLE held_records
 (
   held_records_id  INT(11) NOT NULL AUTO_INCREMENT,
   held_oai_id TEXT NOT NULL,
-  waiting_for_parent_oai_id TEXT NOT NULL,
+  parent_oai_id TEXT NOT NULL,
   PRIMARY KEY(held_records_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

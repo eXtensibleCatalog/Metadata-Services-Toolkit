@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.StringTokenizer;
 
 import org.jdom.Attribute;
 import org.jdom.Document;
@@ -35,17 +36,16 @@ import xc.mst.bo.record.Item;
 import xc.mst.bo.record.Manifestation;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
+import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultExpressionService;
 import xc.mst.manager.record.DefaultHoldingsService;
 import xc.mst.manager.record.DefaultItemService;
 import xc.mst.manager.record.DefaultManifestationService;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.DefaultWorkService;
-import xc.mst.manager.record.ExpressionService;
 import xc.mst.manager.record.HoldingsService;
 import xc.mst.manager.record.ItemService;
 import xc.mst.manager.record.ManifestationService;
@@ -55,14 +55,20 @@ import xc.mst.manager.repository.DefaultFormatService;
 import xc.mst.manager.repository.FormatService;
 import xc.mst.services.MetadataService;
 import xc.mst.services.ServiceValidationException;
+import xc.mst.services.aggregation.bo.HeldRecord;
+import xc.mst.services.aggregation.bo.MatchIdentifiers;
+import xc.mst.services.aggregation.bo.OutputRecord;
+import xc.mst.services.aggregation.dao.DefaultHeldRecordDAO;
+import xc.mst.services.aggregation.dao.DefaultMatchIdentifierDAO;
+import xc.mst.services.aggregation.dao.DefaultOutputRecordDAO;
+import xc.mst.services.aggregation.dao.HeldRecordDAO;
+import xc.mst.services.aggregation.dao.MatchIdentifierDAO;
+import xc.mst.services.aggregation.dao.OutputRecordDAO;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.XcRecordSplitter;
-import xc.mst.utils.index.ExpressionList;
 import xc.mst.utils.index.HoldingsList;
 import xc.mst.utils.index.ItemList;
 import xc.mst.utils.index.ManifestationList;
-import xc.mst.utils.index.RecordList;
-import xc.mst.utils.index.Records;
 import xc.mst.utils.index.WorkList;
 
 /**
@@ -82,11 +88,6 @@ public class AggregationService extends MetadataService
 	private static WorkService workService = new DefaultWorkService();
 
 	/**
-	 * Manager for getting, inserting and updating expressions
-	 */
-	private static ExpressionService expressionService = new DefaultExpressionService();
-
-	/**
 	 * Manager for getting, inserting and updating manifestations
 	 */
 	private static ManifestationService manifestationService = new DefaultManifestationService();
@@ -100,7 +101,12 @@ public class AggregationService extends MetadataService
 	 * Manager for getting, inserting and updating item
 	 */
 	private static ItemService itemService = new DefaultItemService();
-
+	
+	/**
+	 * DAO to manage held record
+	 */
+	private HeldRecordDAO heldRecordDAO = new DefaultHeldRecordDAO();
+	
 	/**
 	 * The Properties file with information on which fields necessitate merging work elements
 	 */
@@ -110,6 +116,11 @@ public class AggregationService extends MetadataService
 	 * The Properties file with information on which fields necessitate merging manifestation elements
 	 */
 	private Properties manifestationMerge = null;
+	
+	/**
+	 * The Properties file with information on which determines the base record to merge into 
+	 */
+	private Properties manifestationMergeBase = null;
 
 	/**
 	 * Data access object for getting FRBR level IDs
@@ -228,6 +239,12 @@ public class AggregationService extends MetadataService
 	    				manifestationMerge = new Properties();
 	    			current = manifestationMerge;
 	    		}
+	    		else if(line.equals("MANIFESTATION BASE RECORD TO MERGE INTO"))
+	    		{
+	    			if(manifestationMergeBase == null)
+	    				manifestationMergeBase = new Properties();
+	    			current = manifestationMergeBase;
+	    		}
 	    	}
 	    }
 	}
@@ -257,7 +274,7 @@ public class AggregationService extends MetadataService
 			// Handle reprocessing of successors
 			for(Record successor : successors)
 			{
-				// Set the successors ad deleted
+				// Set the successors as deleted
 				successor.setDeleted(true);
 			
 				// Schedule the services
@@ -276,60 +293,72 @@ public class AggregationService extends MetadataService
 		List<Record> results = convertRecord(processMe);
 		
 		boolean updatedInputRecord = false;
-		for(Record outgoingRecord : results)
-		{
-			// Mark the output record as a successor of the input record
-			if(!processMe.getSuccessors().contains(outgoingRecord))
-				processMe.addSuccessor(outgoingRecord);
-
-			// Mark the input record as a predecessor of the output record
-			outgoingRecord.addProcessedFrom(processMe);
-			
-			// Mark the record as not coming from a provider
-			outgoingRecord.setProvider(null);
-
-			// Add all sets the outgoing record belongs to to the service's list of output sets
-			for(Set outputSet : outgoingRecord.getSets())
-				service.addOutputSet(outputSet);
-
-			if(outputSet != null)
-				outgoingRecord.addSet(outputSet);
-
-			// Check whether or not this record already exists in the database
-			Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
-
-			// If the current record is a new record, insert it
-			if(oldRecord == null) {
-				insertNewRecord(outgoingRecord);
-			}
-			// Otherwise we've seen the record before.  Update it as appropriate
-			// If outgoingRecord's deleted flag is set to true, the record will
-			// be deleted.
-			else {
-				updateExistingRecord(outgoingRecord, oldRecord);
-				
-				// If output record exist then it means that the incoming record is an updated record
-				// So we set updatedInputRecord to true. This will be used to determine whether the input
-				// record is new record or updated record.
-				updatedInputRecord = true;
-			}
-		} // end loop over processed records
 		
-		// Mark the input record as done(processed by this service) only when its results are not empty.
-		// If results are empty then it means some exception occurred and no output records created
-		if (results.size() > 0) { 
+		// If results is not null, then record is processed. If results is null, then the record is held 
+		if (results != null) {
+			for(Record outgoingRecord : results)
+			{
+				// Mark the output record as a successor of the input record
+				if(!processMe.getSuccessors().contains(outgoingRecord))
+					processMe.addSuccessor(outgoingRecord);
+	
+				// Mark the input record as a predecessor of the output record
+				outgoingRecord.addProcessedFrom(processMe);
+				
+				// Mark the record as not coming from a provider
+				outgoingRecord.setProvider(null);
+				
+				outgoingRecord.setFormat(xcSchemaFormat);
+	
+				// Add all sets the outgoing record belongs to to the service's list of output sets
+				for(Set outputSet : outgoingRecord.getSets())
+					service.addOutputSet(outputSet);
+	
+				if(outputSet != null)
+					outgoingRecord.addSet(outputSet);
+	
+				// Check whether or not this record already exists in the database
+				Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
+	
+				// If the current record is a new record, insert it
+				if(oldRecord == null) {
+					insertNewRecord(outgoingRecord);
+				}
+				// Otherwise we've seen the record before.  Update it as appropriate
+				// If outgoingRecord's deleted flag is set to true, the record will
+				// be deleted.
+				else {
+					updateExistingRecord(outgoingRecord, oldRecord);
+					
+					// If output record exist then it means that the incoming record is an updated record
+					// So we set updatedInputRecord to true. This will be used to determine whether the input
+					// record is new record or updated record.
+					updatedInputRecord = true;
+				}
+			} // end loop over processed records
+			
+			// Mark the input record as done(processed by this service) only when its results are not empty.
+			// If results are empty then it means some exception occurred and no output records created
+			if (results.size() > 0) { 
+				// Mark the record as having been processed by this service
+				processMe.addProcessedByService(service);
+				processMe.removeInputForService(service);
+				recordService.update(processMe);
+			} else if (!processMe.getDeleted()) {
+				unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
+			}
+
+		} else { // If results = null then it means the record is held.
 			// Mark the record as having been processed by this service
 			processMe.addProcessedByService(service);
 			processMe.removeInputForService(service);
 			recordService.update(processMe);
-		} else if (!processMe.getDeleted()) {
-			unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
 		}
 		
-		// If the input record is a new record then increment the processed record count
-		if (!updatedInputRecord  && !processMe.getDeleted() && results.size() > 0) {
-			inputRecordCount++;
-		}
+//		// If the input record is a new record then increment the processed record count
+//		if (!updatedInputRecord  && !processMe.getDeleted() && results.size() > 0) {
+//			inputRecordCount++;
+//		}
 		
 		processedRecordCount++;
 	
@@ -339,7 +368,6 @@ public class AggregationService extends MetadataService
 	{
 		try
 		{
-			refreshIndex();
 			
 			// A list of new or updated records resulting form processing the passed record
 			List<Record> results = new ArrayList<Record>();
@@ -375,51 +403,65 @@ public class AggregationService extends MetadataService
 			// The OAI identifiers of the records that the record we're processing has uplinks to
 			List<String> uplinks = new ArrayList<String>();
 			
-			// Iterate over each of the components in the passed record, and add them to
-			// the correct FRBR component list.
-			List<Element> components = xml.getRootElement().getChildren();
-			for(Element component : components)
-			{
-				String level = component.getAttributeValue("type"); // Get the type of the element, which will
-				                                                    // be the FRBR level it belongs to
-				// Add the component to the appropriate list, parsing out the key fields
-				if(level.equals("work") && component.getChildren().size() > 0)
-				{	
-					Work work = buildWork(component, record);
-					results.addAll(processWork(work, xml));
-				}
-				else if(level.equals("expression") && component.getChildren().size() > 0)
+			if (record.getType().equals("XC-Work")) {
+				results = processWork(record, xml);
+			} else if (record.getType().equals("XC-Expression")) {
+				results = processExpression(record, xml);
+			} else if (record.getType().equals("XC-Manifestation")) {
+				buildManifestation(xml, record);
+				results = processManifestation(record, xml);
+			} else if (record.getType().equals("XC-Holding")) {
+				results = processHoldings(record, xml);
+			} else { // If type is not available then parse the XML and find the type
+				
+				// Iterate over each of the components in the passed record, and add them to
+				// the correct FRBR component list.
+				List<Element> components = xml.getRootElement().getChildren();
+				for(Element component : components)
 				{
-					uplinks = getLinks(xml, "workExpressed");
-					Expression expression = buildExpression(component, record);
-					results.addAll(processExpression(expression, xml));
-				}
-				else if(level.equals("manifestation") && component.getChildren().size() > 0)
-				{
-					uplinks = getLinks(xml, "expressionManifested");
-					Manifestation manifestation = buildManifestation(component, record);
-					results.addAll(processManifestation(manifestation, xml));
-				}
-				else if(level.equals("holdings") && component.getChildren().size() > 0)
-				{
-					uplinks = getLinks(xml, "manifestationHeld");
-					Holdings holdings = buildHoldings(component, record);
-					results.addAll(processHoldings(holdings, xml));
-				}
-				else if(level.equals("item") && component.getChildren().size() > 0)
-				{
-					uplinks = getLinks(xml, "holdingsExemplified");
-					Item item = buildItem(component, record);
-					results.addAll(processItem(item, xml));
-				}
-			} // end loop over components
-			
-			// Add the uplinks from the input as traits on the output
-			// indicating that the record the output was processed from
-			// had an uplink to those input records
-			for(Record outrecord : results)
-				for(String uplink : uplinks)
-					outrecord.addTrait("inputHasUplink:" + uplink);
+					String level = component.getAttributeValue("type"); // Get the type of the element, which will
+					                                                    // be the FRBR level it belongs to
+					// Add the component to the appropriate list, parsing out the key fields
+					if(level.equals("work") && component.getChildren().size() > 0)
+					{	
+						record.setType("XC-Work");
+						//Work work = buildWork(component, record);
+						results = processWork(record, xml);
+					}
+					else if(level.equals("expression") && component.getChildren().size() > 0)
+					{
+						if (record.getUpLinks() == null) {
+							uplinks = getLinks(xml, "workExpressed");
+							record.setUpLinks(uplinks);
+						}
+						
+						results = processExpression(record, xml);
+						break;
+					}
+					else if(level.equals("manifestation") && component.getChildren().size() > 0)
+					{
+						if (record.getUpLinks() == null) {
+							uplinks = getLinks(xml, "expressionManifested");
+							record.setUpLinks(uplinks);
+						}
+						
+						buildManifestation(xml, record);
+						results = processManifestation(record, xml);
+							
+						break;
+					}
+					else if(level.equals("holdings") && component.getChildren().size() > 0)
+					{
+						if (record.getUpLinks() == null) {
+							uplinks = getLinks(xml, "manifestationHeld");
+							record.setUpLinks(uplinks);
+						}
+						
+						results = processHoldings(record, xml);	
+						break;
+					}
+				} // end loop over components
+			}
 			
 			// Return the list of FRBR components to be added or updated in the Lucene index
 			return results;
@@ -530,7 +572,7 @@ public class AggregationService extends MetadataService
 		expression.setXcExpressionId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_EXPRESSION));
 	
 		expression.setOaiXml(outputter.outputString(((Element)expressionElement.getParent().clone())
-													               .setContent(new Text("\n\t"))
+													              .setContent(new Text("\n\t"))
 													   			  .addContent(((Element)expressionElement.clone()))
 													   			  .addContent("\n\t")));
 	
@@ -549,42 +591,47 @@ public class AggregationService extends MetadataService
 	 * @return The Manifestation element
 	 */
 	@SuppressWarnings("unchecked")
-	private Manifestation buildManifestation(Element manifestationElement, Record record)
+	private void buildManifestation(Document manifestationElement, Record record)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Creating a new Manifestation element from a manifestation component of the record with ID " + record.getId() + ".");
 	
-		// Create a Work Object for the passed work element
-		Manifestation manifestation = new Manifestation();
-		manifestation.setFormat(xcSchemaFormat);
-		manifestation.setService(service); // Mark the Manifestation as being from no service since it shouldn't be output
+//		// Create a Work Object for the passed work element
+//		Manifestation manifestation = new Manifestation();
+//		manifestation.setFormat(xcSchemaFormat);
+//		manifestation.setService(service); // Mark the Manifestation as being from no service since it shouldn't be output
+//	
+//		try
+//		{
+//			manifestation.setXcManifestationId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_MANIFESTATION));
+//	
+//			manifestation.setOaiXml(outputter.outputString(((Element)manifestationElement.getParent().clone())
+//		                                                   .setContent(new Text("\n\t"))
+//		                                                   .addContent(((Element)manifestationElement.clone()))
+//		                                                   .addContent("\n\t")));
 	
-		try
-		{
-			manifestation.setXcManifestationId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_MANIFESTATION));
-	
-			manifestation.setOaiXml(outputter.outputString(((Element)manifestationElement.getParent().clone())
-		                                                   .setContent(new Text("\n\t"))
-		                                                   .addContent(((Element)manifestationElement.clone()))
-		                                                   .addContent("\n\t")));
-	
+		try {
 			// An XPATH expression to get the recordId elements
-			XPath xpath = XPath.newInstance("./xc:recordID");
+			XPath xpath = XPath.newInstance("/xc:frbr/xc:entity/xc:recordID");
 			xpath.addNamespace(XC_NAMESPACE);
 	
 			// Get the subfields.
 			List<Element> elements = xpath.selectNodes(manifestationElement);
 	
+			MatchIdentifiers matchIdentifiers = new MatchIdentifiers();
+			matchIdentifiers.setOaiId(record.getOaiIdentifier());
+						
 			// Loop over the recordId elements and add value of each to the manifestation
 			for(Element element : elements)
 			{
 				String value = element.getText();
 				String type = element.getAttributeValue("type");
-	
-				if(log.isDebugEnabled())
-					log.debug("Found a recordId element with a value of " + value + " and a type of " + type + ".");
-	
-				manifestation.addXcRecordId(type, value);
+				
+				if (type.equalsIgnoreCase("OCoLC")) {
+					matchIdentifiers.setOclcValue(value);
+				} else if (type.equalsIgnoreCase("LCCN")) {
+					matchIdentifiers.setLccnValue(value);
+				}
 			} // end loop over recordId elements
 	
 			// An XPATH expression to get the recordId elements
@@ -600,19 +647,25 @@ public class AggregationService extends MetadataService
 				String value = element.getText();
 				String type = element.getAttributeValue("type");
 	
-				if(log.isDebugEnabled())
-					log.debug("Found an identifier element with a value of " + value + " and a type of " + type + ".");
-	
-				manifestation.addXcRecordId(type, value);
+				if (type.equalsIgnoreCase("ISBN")) {
+					matchIdentifiers.setIsbnValue(value);
+				} else if (type.equalsIgnoreCase("ISSN")) {
+					matchIdentifiers.setIssnValue(value);
+				}
+
 			} // end loop over recordId elements
 			
-			return manifestation;
+			MatchIdentifierDAO matchIdentifierDAO = new DefaultMatchIdentifierDAO();
+			matchIdentifierDAO.insert(matchIdentifiers);
+			
 		} // end try
 		catch(JDOMException e)
 		{
 			log.error("An error occurred getting the recordId elements from the passed Manifestation element.", e);
-			return manifestation; // don't return null since we set up the IDs
 		} // end catch(JDOMException)
+		catch (DataException de) {
+			log.error("Exception occured when adding the match identifiers to database.", de);
+		}
 	} // end method buildManifestation(Element)
 
 	/**
@@ -766,7 +819,7 @@ public class AggregationService extends MetadataService
 	 * @return A list of records that need to be added or updated after processing the works
 	 * @throws IndexException If an error occurred connecting to the Solr index
 	 */
-	private List<Record> processWork(Work work, Document recordxml) throws IndexException
+	private List<Record> processWork(Record work, Document recordxml) throws IndexException
 	{
 		// A list of new or updated records resulting form processing the passed record
 		List<Record> results = new ArrayList<Record>();
@@ -774,50 +827,39 @@ public class AggregationService extends MetadataService
 		// Create a new copy of the xml Document to avoid a ConcurrentModificationException
 		Document xml = (Document)recordxml.clone();
 		
-		// Get the id of the unprocessed record
-		String oldOaiIdentifier = getFRBRLevelIdentifier(xml);
-		
 		// Generate a new id for the processed record
 		String newOaiIdentifier = getNextOaiId();
 		
+		Record newWork = new Record();
 		// Set the new id on the xml and the processed record
-		work.setOaiIdentifier(newOaiIdentifier);
+		newWork.setOaiIdentifier(newOaiIdentifier);
 		setFRBRLevelIdentifier(xml, newOaiIdentifier);
 		
-		List<Work> matches = matchWorks(work);
+		// Remove the ID so a new one gets generated
+		newWork.setId(-1);
+		
+		newWork.setOaiXml(outputter.outputString(xml));
 
-		// A list of work IDs that the current work merged with
-		List<Work> newWorks= new ArrayList<Work>();
-
-		// If there were no matches add the work to the list of results
-		if(matches.size() == 0)
-		{
-			// Remove the ID so a new one gets generated
-			work.setId(-1);
+		newWork.setType("XC-Work");
+		
+		results.add(newWork);
+		
+		OutputRecordDAO outputRecordDAO = new DefaultOutputRecordDAO();
+		
+		for (Record result: results) {
+			List<String> predecessorOAIIds = new ArrayList<String>();
+			predecessorOAIIds.add(work.getOaiIdentifier());
 			
-			work.setOaiXml(outputter.outputString(xml));
+			try {
+				OutputRecord outputRecord = new OutputRecord(result.getOaiIdentifier(),
+						result.getOaiXml(), true, predecessorOAIIds);
+				outputRecordDAO.insert(outputRecord);
+			} catch (DataException de) {
+				log.error("Exception occured while inserting output record.", de);
+			}
 			
-			results.add(work);
 		}
 
-		// Iterate over the matches and merge them as appropriate
-		for(Work match : matches)
-		{
-			mergeWorks(match, work);
-			newWorks.add(match);
-			results.add(match);
-		} // end loop over matches
-		
-		// Get the output records that were processed from records linked to the
-		// record we just processed
-		RecordService recordService = new DefaultRecordService();
-		RecordList linkedToInput = recordService.getByTrait("inputHasUplink:" + oldOaiIdentifier);
-		
-		// For each output record that were processed from records linked to the
-		// record we just processed, add a link from each current processed record to it
-		for(Record linked : linkedToInput)
-			updateRecord(Expression.buildExpressionFromRecord(addLinkToRecordXml(linked, results, "workExpressed")));
-		
 		return results;
 	} // end method processWork(Work work)
 
@@ -831,71 +873,71 @@ public class AggregationService extends MetadataService
 	 * @throws IndexException 
 	 * @throws DatabaseConfigException 
 	 */
-	private List<Record> processExpression(Expression expression, Document recordxml) throws DatabaseConfigException, IndexException
+	private List<Record> processExpression(Record expression, Document recordxml) throws DataException, IndexException
 	{
+	
 		// A list of new or updated records resulting form processing the passed record
 		List<Record> results = new ArrayList<Record>();
 		
 		// Create a new copy of the xml Document to avoid a ConcurrentModificationException
 		Document xml = (Document)recordxml.clone();
-		
-		// Get the id of the unprocessed record
-		String oldOaiIdentifier = getFRBRLevelIdentifier(xml);
-		
+
+		Record newExpression = new Record();
+				
+		// Update the old OAI identifier found in input record's uplink with the new identifier
+		OutputRecordDAO outputRecordDAO = new DefaultOutputRecordDAO();
+		for (String uplink :expression.getUpLinks()) {
+			List<String> succesorOAIIds = outputRecordDAO.getSuccessorByOaiId(uplink);
+			
+			// If the parents are not yet processed, then hold this record.
+			if (succesorOAIIds == null || succesorOAIIds.size() == 0) {
+				HeldRecord heldRecord = new HeldRecord(expression.getOaiIdentifier(), expression.getUpLinks());
+				heldRecordDAO.insert(heldRecord);
+				
+				return null;
+			} else {
+				removeLinks(xml, "workExpressed");
+			
+				for (String newOAIId: succesorOAIIds) {
+					addLink(xml, "workExpressed", newOAIId);
+					newExpression.addUpLink(newOAIId);
+				}
+				
+			}
+			
+		}
+
 		// Generate a new id for the processed record
 		String newOaiIdentifier = getNextOaiId();
 		
 		// Set the new id on the xml and the processed record
-		expression.setOaiIdentifier(newOaiIdentifier);
+		newExpression.setOaiIdentifier(newOaiIdentifier);
 		setFRBRLevelIdentifier(xml, newOaiIdentifier);
 		
-		// Get the works from the input record set that the
-		// expression we're processing was linked to
-		List<String> linkedWorks = getLinks(xml, "workExpressed");
+		// Remove the ID so a new one gets generated
+		newExpression.setId(-1);
 		
-		// Remove all linked works from the XML since the output record
-		// will have different links
-		xml = removeLinks(xml, "workExpressed");
+		newExpression.setOaiXml(outputter.outputString(xml));
+		newExpression.setType("XC-Expression");
+
+		results.add(newExpression);
 		
-		// For each work in the input set that the expression was linked to,
-		// add a link from the expression we're creating to the works 
-		// processed from the work in the input set
-		for(String linkedWork : linkedWorks)
-		{
-			Record inputWorkLinked = recordService.getInputForServiceByOaiIdentifier(linkedWork, service.getId());
-			if(inputWorkLinked != null)
-			{
-				WorkList worksProducedByLinkedWork = workService.getByProcessedFrom(inputWorkLinked);
-				
-				for(Work linkToMe : worksProducedByLinkedWork)
-				{
-					xml = addLink(xml, "workExpressed", linkToMe.getOaiIdentifier());
-					expression.addLinkToWork(linkToMe);
-				}
+		for (Record result: results) {
+			List<String> predecessorOAIIds = new ArrayList<String>();
+			predecessorOAIIds.add(expression.getOaiIdentifier());
+			
+			try {
+				OutputRecord outputRecord = new OutputRecord(result.getOaiIdentifier(),
+						result.getOaiXml(), true, predecessorOAIIds);
+				outputRecordDAO.insert(outputRecord);
+			} catch (DataException de) {
+				log.error("Exception occured while inserting output record.", de);
 			}
+			
 		}
 		
-		// Remove the ID so a new one gets generated
-		expression.setId(-1);
-		
-		expression.setOaiXml(outputter.outputString(xml));
-		
-		// Add the expression to the list of results since its identifiers and linked works 
-		// have been updated.  Expressions currently don't have aggregation rules matching
-		// them with other expressions or other FRBR levels so no further processing is required.
-		results.add(expression);
-
-		// Get the output records that were processed from records linked to the
-		// record we just processed
-		RecordList linkedToInput = recordService.getByTrait("inputHasUplink:" + oldOaiIdentifier);
-		
-		// For each output record that were processed from records linked to the
-		// record we just processed, add a link from each current processed record to it
-		for(Record linked : linkedToInput)
-			updateRecord(addLinkToRecordXml(linked, results, "expressionManifested"));
-		
 		return results;
-	} // end method processExpressions(XcRecordSplitter)
+	} // end method processExpressions(Record, Document)
 
 	/**
 	 * Processes the Manifestation elements as determined by an XcRecordSplitter that
@@ -907,7 +949,7 @@ public class AggregationService extends MetadataService
 	 * @throws IndexException If an error occurred while connecting to the Solr index
 	 * @throws DatabaseConfigException 
 	 */
-	private List<Record> processManifestation(Manifestation manifestation, Document recordxml) throws IndexException, DatabaseConfigException
+	private List<Record> processManifestation(Record manifestation, Document recordxml) throws IndexException, DataException
 	{
 		// A list of new or updated records resulting form processing the passed record
 		List<Record> results = new ArrayList<Record>();
@@ -915,84 +957,103 @@ public class AggregationService extends MetadataService
 		// Create a new copy of the xml Document to avoid a ConcurrentModificationException
 		Document xml = (Document)recordxml.clone();
 		
-		// Get the id of the unprocessed record
-		String oldOaiIdentifier = getFRBRLevelIdentifier(xml);
+		// Update the old OAI identifier found in input record's uplink with the new identifier
+		OutputRecordDAO outputRecordDAO = new DefaultOutputRecordDAO();
+		for (String uplink :manifestation.getUpLinks()) {
+			List<String> succesorOAIIds = outputRecordDAO.getSuccessorByOaiId(uplink);
+			
+			// If the parents are not yet processed, then hold this record.
+			if (succesorOAIIds == null || succesorOAIIds.size() == 0) {
+				HeldRecord heldRecord = new HeldRecord(manifestation.getOaiIdentifier(), manifestation.getUpLinks());
+				heldRecordDAO.insert(heldRecord);
+				return null;
+			} 			
+		}
+		Record newManifestation = new Record();
 		
 		// Generate a new id for the processed record
 		String newOaiIdentifier = getNextOaiId();
 		
 		// Set the new id on the xml and the processed record
-		manifestation.setOaiIdentifier(newOaiIdentifier);
+		newManifestation.setOaiIdentifier(newOaiIdentifier);
 		setFRBRLevelIdentifier(xml, newOaiIdentifier);
 		
-		// Get the works from the input record set that the
-		// expression we're processing was linked to
-		List<String> linkedExpressions = getLinks(xml, "expressionManifested");
+		// Remove the ID so a new one gets generated
+		newManifestation.setId(-1);
 		
-		// Remove all linked works from the XML since the output record
-		// will have different links
-		xml = removeLinks(xml, "expressionManifested");
+		List<Record> matches = matchManifestations(manifestation);
+		List<String> matchedOaiIds = new ArrayList<String>();
 		
-		// For each work in the input set that the expression was linked to,
-		// add a link from the manifestation we're creating to the expressions 
-		// processed from the expression in the input set
-		for(String linkedExpression : linkedExpressions)
-		{
-			Record inputExpressionLinked = recordService.getInputForServiceByOaiIdentifier(linkedExpression, service.getId());
-			if(inputExpressionLinked != null)
+		// If there were no matches add the manifestation to the list of results. 
+		// If no matches it returns 1 match which is a match with its own record
+		if(matches.size() == 1) {
+			newManifestation.setOaiXml(outputter.outputString(xml));
+			results.add(newManifestation);
+			matchedOaiIds.add(manifestation.getOaiIdentifier());
+		} else {
+			Record baseRecord = getBaseRecord(matches);
+	
+			// Iterate over the matches and merge them as appropriate
+			for(Record match : matches)
 			{
-				ExpressionList expressionsProducedByLinkedExpression = expressionService.getByProcessedFrom(inputExpressionLinked);
+				if (!match.equals(baseRecord)) {
+					mergeManifestations(baseRecord, match);
+				}
+				matchedOaiIds.add(match.getOaiIdentifier());
 				
-				for(Expression linkToMe : expressionsProducedByLinkedExpression)
-				{
-					xml = addLink(xml, "expressionManifested", linkToMe.getOaiIdentifier());
-					manifestation.addLinkToExpression(linkToMe);
+				// Check if matched records already have output record
+				List<String> outputRecordOAIIds = outputRecordDAO.getSuccessorByOaiId(match.getOaiIdentifier());
+				
+				// Delete the output records created earlier for this matched input record.
+				for (String outputRecordOAIId : outputRecordOAIIds) {
+					outputRecordDAO.deleteByOAIId(outputRecordOAIId);
+				}
+				
+			} // end loop over matches
+			newManifestation.setOaiXml(baseRecord.getOaiXml());
+			results.add(newManifestation);
+		}
+
+		for(Record result : results) {
+
+			try {
+				xml = builder.build(new InputSource(new StringReader(result.getOaiXml())));
+			
+			} // end try
+			catch(IOException e) {
+				log.error("An error occurred while parsing the record's XML.", e);
+			} catch(JDOMException e) {
+				log.error("An error occurred while parsing the record's XML.", e);
+			} // end catch JDOMException
+			
+			List<String> uplinks = getLinks(xml, "expressionManifested");
+			removeLinks(xml, "expressionManifested");
+			for (String uplink :uplinks) {
+				List<String> succesorOAIIds = outputRecordDAO.getSuccessorByOaiId(uplink);
+				
+				for (String newOAIId: succesorOAIIds) {
+					addLink(xml, "expressionManifested", newOAIId);
+					result.addUpLink(newOAIId);
 				}
 			}
+			
+			result.setOaiXml(outputter.outputString(xml));
 		}
-		
-		// Remove the ID so a new one gets generated
-		manifestation.setId(-1);
-		
-		manifestation.setOaiXml(outputter.outputString(xml));
-		
-		List<Manifestation> matches = matchManifestations(manifestation);
-		
-		// If there were no matches add the manifestation to the list of results
-		if(matches.size() == 0)
-			results.add(manifestation);
 
-		// Iterate over the matches and merge them as appropriate
-		for(Manifestation match : matches)
-		{
-			mergeManifestations(match, manifestation);
-			results.add(match);
-		} // end loop over matches
 		
-		// Get the output records that were processed from records linked to the
-		// record we just processed
-		RecordService recordService = new DefaultRecordService();
-		RecordList linkedToInput = recordService.getByTrait("inputHasUplink:" + oldOaiIdentifier);
-		
-		// For each output record that were processed from records linked to the
-		// record we just processed, add a link from each current processed record to it
-		for(Record linked : linkedToInput)
-			updateRecord(addLinkToRecordXml(linked, results, "manifestationHeld"));
-		
-		refreshIndex();
-		
-		// Check the database for any holdings elements that need to be linked to
-		// the  manifestations, and add the links as appropriate
-		List<Holdings> holdings = getHoldingsMatchingManifestation(manifestation);
-		for(Holdings holdingsElement : holdings)
-		{
-			addLinkToRecordXml(holdingsElement, results, "manifestationHeld");
-
-			results.add(holdingsElement);
-		} // end loop over matched holdings
-		
+		for (Record result: results) {
+			
+			try {
+				OutputRecord outputRecord = new OutputRecord(result.getOaiIdentifier(),
+						result.getOaiXml(), true, matchedOaiIds);
+				outputRecordDAO.insert(outputRecord);
+			} catch (DataException de) {
+				log.error("Exception occured while inserting output record.", de);
+			}
+			
+		}
 		return results;
-	} // end method processManifestations(XcRecordSplitter)
+	} // end method processManifestations(Record, Document)
 
 	/**
 	 * Processes the Holdings elements as determined by an XcRecordSplitter that
@@ -1003,7 +1064,7 @@ public class AggregationService extends MetadataService
 	 * @throws IndexException 
 	 * @throws DatabaseConfigException 
 	 */
-	private List<Record> processHoldings(Holdings holdings, Document recordxml) throws DatabaseConfigException, IndexException
+	private List<Record> processHoldings(Record holding, Document recordxml) throws DataException, IndexException
 	{
 		// A list of new or updated records resulting form processing the passed record
 		List<Record> results = new ArrayList<Record>();
@@ -1011,76 +1072,58 @@ public class AggregationService extends MetadataService
 		// Create a new copy of the xml Document to avoid a ConcurrentModificationException
 		Document xml = (Document)recordxml.clone();
 		
-		// Get the id of the unprocessed record
-		String oldOaiIdentifier = getFRBRLevelIdentifier(xml);
+		Record newHolding = new Record();
+		
+		// Update the old OAI identifier found in input record's uplink with the new identifier
+		OutputRecordDAO outputRecordDAO = new DefaultOutputRecordDAO();
+		for (String uplink :holding.getUpLinks()) {
+			List<String> succesorOAIIds = outputRecordDAO.getSuccessorByOaiId(uplink);
+			
+			// If the parents are not yet processed, then hold this record.
+			if (succesorOAIIds == null || succesorOAIIds.size() == 0) {
+				HeldRecord heldRecord = new HeldRecord(holding.getOaiIdentifier(), holding.getUpLinks());
+				heldRecordDAO.insert(heldRecord);
+				return null;
+			} else {
+				removeLinks(xml, "manifestationHeld");
+				for (String newOAIId: succesorOAIIds) {
+					addLink(xml, "manifestationHeld", newOAIId);
+					newHolding.addUpLink(newOAIId);
+				}
+			}
+			
+		}
 		
 		// Generate a new id for the processed record
 		String newOaiIdentifier = getNextOaiId();
 		
 		// Set the new id on the xml and the processed record
-		holdings.setOaiIdentifier(newOaiIdentifier);
+		newHolding.setOaiIdentifier(newOaiIdentifier);
 		setFRBRLevelIdentifier(xml, newOaiIdentifier);
 		
-		// Get the manifestations from the input record set that the
-		// holdings we're processing was linked to
-		List<String> linkedManifestations = getLinks(xml, "manifestationHeld");
-		
-		// Remove all linked works from the XML since the output record
-		// will have different links
-		xml = removeLinks(xml, "manifestationHeld");
-		
-		// For each manifestation in the input set that the holdings was linked to,
-		// add a link from the holdings we're creating to the manifestations 
-		// processed from the manifestation in the input set
-		for(String linkedManifestation : linkedManifestations)
-		{
-			Record inputManifestationLinked = recordService.getInputForServiceByOaiIdentifier(linkedManifestation, service.getId());
-			if(inputManifestationLinked != null)
-			{
-				ManifestationList manifestationsProducedByLinkedManifestation = manifestationService.getByProcessedFrom(inputManifestationLinked);
-				
-				for(Manifestation linkToMe : manifestationsProducedByLinkedManifestation)
-				{
-					xml = addLink(xml, "manifestationHeld", linkToMe.getOaiIdentifier());
-					holdings.addLinkToManifestation(linkToMe);
-				}
-			}
-		}
-		
-		refreshIndex();
-		
-		// Check the database for any manifestation elements that need to be linked to
-		// the  holdings, and add the links as appropriate
-		List<Manifestation> manifestations = getManifestationsMatchingHoldings(holdings);
-		for(Manifestation manifestation : manifestations)
-		{
-			holdings.addLinkToManifestation(manifestation);
-			xml = addLink(xml, "manifestationHeld", manifestation.getOaiIdentifier());
-		}
-		
 		// Remove the ID so a new one gets generated
-		holdings.setId(-1);
+		newHolding.setId(-1);
 		
-		holdings.setOaiXml(outputter.outputString(xml));
+		newHolding.setOaiXml(outputter.outputString(xml));
+		newHolding.setType("XC-Holding");
 		
 		// Add the holdings to the list of records to insert
-		results.add(holdings);
-
-		// Check the database for any item elements that need to be linked to
-		// the  holdings, and add the links as appropriate
-		List<Item> items = getItemsMatchingHoldings(holdings); 
-		for(Item item : items)
-			updateRecord(addLinkToRecordXml(item, results, "holdingsExemplified"));
-
-		// Get the output records that were processed from records linked to the
-		// record we just processed
-		RecordList linkedToInput = recordService.getByTrait("inputHasUplink:" + oldOaiIdentifier);
+		results.add(newHolding);
 		
-		// For each output record that were processed from records linked to the
-		// record we just processed, add a link from each current processed record to it
-		for(Record linked : linkedToInput)
-			updateRecord(addLinkToRecordXml(linked, results, "holdingsExemplified"));
-		
+		for (Record result: results) {
+			List<String> predecessorOAIIds = new ArrayList<String>();
+			predecessorOAIIds.add(holding.getOaiIdentifier());
+			
+			try {
+				OutputRecord outputRecord = new OutputRecord(result.getOaiIdentifier(),
+						result.getOaiXml(), true, predecessorOAIIds);
+				outputRecordDAO.insert(outputRecord);
+			} catch (DataException de) {
+				log.error("Exception occured while inserting output record.", de);
+			}
+			
+		}
+
 		return results;
 	} // end method processHoldings(XcRecordSplitter)
 
@@ -1200,85 +1243,76 @@ public class AggregationService extends MetadataService
 	 * @param matchMe The Manifestation to match
 	 * @return A list of records matching the passed Manifestation.
 	 */
-	private List<Manifestation> matchManifestations(Manifestation matchMe)
+	private List<Record> matchManifestations(Record matchMe)
 	{
-		List<Manifestation> results = new ArrayList<Manifestation>();
+		List<Record> results = new ArrayList<Record>();
 
 		try 
 		{
 			// For each recordID, add all matches to that recordID to the list of results
 			// if we're configured to match on that record ID type
-			for(String xcRecordId : matchMe.getXcRecordIds())
+			MatchIdentifierDAO matchIdentifierDAO = new DefaultMatchIdentifierDAO();
+			
+			MatchIdentifiers matchIdentifiers = matchIdentifierDAO.getByOaiId(matchMe.getOaiIdentifier());
+
+			
+			// If we're configured to match on the type of recordID we're checking,
+			// add all matches to that recordID
+			if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_OCOLC, "0").equals("1"))
 			{
-				String type = xcRecordId.substring(xcRecordId.indexOf('(')+1, xcRecordId.indexOf(')'));
-	
-				// If we're configured to match on the type of recordID we're checking,
-				// add all matches to that recordID
-				if(type.equals("OCoLC"))
-				{
-					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_OCOLC, "0").equals("1"))
+				List<String> matchedManifestiationOaiIds = matchIdentifierDAO.getByOCLCValue(matchIdentifiers.getOclcValue());
+				if (matchedManifestiationOaiIds != null && matchedManifestiationOaiIds.size() > 0) {
+					for(String matchedManifestiationOaiId : matchedManifestiationOaiIds)
 					{
-						ManifestationList matchedManifestiations = manifestationService.getByXcRecordId(xcRecordId);
-						for(Manifestation matchedManifestiation : matchedManifestiations)
-						{
-							logInfo("Merging manifestations with OAI identifiers " + matchedManifestiation.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an xcRecordId field with a value of " + xcRecordId);
-							results.add(matchedManifestiation);
-						}
+						logInfo("Matched manifestations with OAI identifiers " + matchedManifestiationOaiId+ " and " + matchMe.getOaiIdentifier() + " because they both contained an OCoLC field with a value of " + matchIdentifiers.getOclcValue());
+						results.add(recordService.getByOaiIdentifier(matchedManifestiationOaiId));
 					}
-				} // end if (recordID is an OCoLC ID)
-				else if(type.equals("LCCN"))
-				{
-					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_LCCN, "0").equals("1"))
+					return results;
+				} 
+			}
+			if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_LCCN, "0").equals("1"))
+			{
+				List<String> matchedManifestiationOaiIds = matchIdentifierDAO.getByLCCNValue(matchIdentifiers.getLccnValue());
+				if (matchedManifestiationOaiIds != null && matchedManifestiationOaiIds.size() > 0) {
+					for(String matchedManifestiationOaiId : matchedManifestiationOaiIds)
 					{
-						ManifestationList matchedManifestiations = manifestationService.getByXcRecordId(xcRecordId);
-						for(Manifestation matchedManifestiation : matchedManifestiations)
-						{
-							logInfo("Merging manifestations with OAI identifiers " + matchedManifestiation.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an xcRecordId field with a value of " + xcRecordId);
-							results.add(matchedManifestiation);
-						}
+						logInfo("Matched manifestations with OAI identifiers " + matchedManifestiationOaiId+ " and " + matchMe.getOaiIdentifier() + " because they both contained an LCCN field with a value of " + matchIdentifiers.getLccnValue());
+						results.add(recordService.getByOaiIdentifier(matchedManifestiationOaiId));
 					}
-				} // end if (recordID is an LCCN ID)
-				else if(type.equals("ISBN"))
-				{
-					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_ISBN, "0").equals("1"))
+					return results;
+				} 
+			}
+			if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_ISBN, "0").equals("1"))
+			{
+				List<String> matchedManifestiationOaiIds = matchIdentifierDAO.getByISBNValue(matchIdentifiers.getIsbnValue());
+				if (matchedManifestiationOaiIds != null && matchedManifestiationOaiIds.size() > 0) {
+					for(String matchedManifestiationOaiId : matchedManifestiationOaiIds)
 					{
-						ManifestationList matchedManifestiations = manifestationService.getByXcRecordId(xcRecordId);
-						for(Manifestation matchedManifestiation : matchedManifestiations)
-						{
-							logInfo("Merging manifestations with OAI identifiers " + matchedManifestiation.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an xcRecordId field with a value of " + xcRecordId);
-							results.add(matchedManifestiation);
-						}
+						logInfo("Matched manifestations with OAI identifiers " + matchedManifestiationOaiId+ " and " + matchMe.getOaiIdentifier() + " because they both contained an ISBN field with a value of " + matchIdentifiers.getIsbnValue());
+						results.add(recordService.getByOaiIdentifier(matchedManifestiationOaiId));
 					}
-				} // end if (recordID is an ISBN ID)
-				else if(type.equals("ISSN"))
-				{
-					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_ISSN, "0").equals("1"))
+					return results;
+				} 
+			}
+			if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_ISSN, "0").equals("1"))
+			{
+				List<String> matchedManifestiationOaiIds = matchIdentifierDAO.getByLCCNValue(matchIdentifiers.getLccnValue());
+				if (matchedManifestiationOaiIds != null && matchedManifestiationOaiIds.size() > 0) {
+					for(String matchedManifestiationOaiId : matchedManifestiationOaiIds)
 					{
-						ManifestationList matchedManifestiations = manifestationService.getByXcRecordId(xcRecordId);
-						for(Manifestation matchedManifestiation : matchedManifestiations)
-						{
-							logInfo("Merging manifestations with OAI identifiers " + matchedManifestiation.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an xcRecordId field with a value of " + xcRecordId);
-							results.add(matchedManifestiation);
-						}
+						logInfo("Matched manifestations with OAI identifiers " + matchedManifestiationOaiId+ " and " + matchMe.getOaiIdentifier() + " because they both contained an ISSN field with a value of " + matchIdentifiers.getIssnValue());
+						results.add(recordService.getByOaiIdentifier(matchedManifestiationOaiId));
 					}
-				} // end if (recordID is an ISSN ID)
-				else
-				{
-					if(manifestationMerge.getProperty(AggregationServiceConstants.CONFIG_MERGE_RECORD_ID, "0").equals("1"))
-					{
-						ManifestationList matchedManifestiations = manifestationService.getByXcRecordId(xcRecordId);
-						for(Manifestation matchedManifestiation : matchedManifestiations)
-						{
-							logInfo("Merging manifestations with OAI identifiers " + matchedManifestiation.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an xcRecordId field with a value of " + xcRecordId);
-							results.add(matchedManifestiation);
-						}
-					}
-				} // end if (recordID is an unrecognized ID)
-			} // end loop over recordID elements
+					return results;
+				} 
+			}
+			
 		} 
 		catch (IndexException ie) 
 		{
 			log.error("Index exception occured.", ie);
+		} catch (DatabaseConfigException dce) {
+			log.error("Exception occurred while matching the manifestation record", dce);
 		}
 		return results;
 	} // end method matchManifestations(Manifestation)
@@ -1290,30 +1324,30 @@ public class AggregationService extends MetadataService
 	 * @param matchMe The Manifestation to match
 	 * @return A list of holdings elements matching the passed Manifestation.
 	 */
-	private List<Holdings> getHoldingsMatchingManifestation(Manifestation matchMe)
-	{
-		List<Holdings> results = new ArrayList<Holdings>();
-
-		try 
-		{
-			// For each record ID a holdings could match on
-			// add all holdings that match on it
-			for(String xcRecordId : matchMe.getXcRecordIds())
-			{
-				HoldingsList matchedHoldings = holdingsService.getByManifestationHeld(xcRecordId);
-				for(Holdings matchedHolding : matchedHoldings)
-				{
-					logInfo("Linking the manifestation with OAI identifier " + matchMe.getOaiIdentifier() + " with the holdings with OAI identifier " + matchedHolding.getOaiIdentifier() + " because the manifestation's xcRecordId field had the same value as the holdings's manifestationHeld field.  This value was " + xcRecordId);
-					results.add(matchedHolding);
-				}
-			}
-		} 
-		catch (IndexException ie) 
-		{
-			log.error("Index exception occured.", ie);
-		}
-		return results;
-	} // end method getHoldingsMatchingManifestation(Manifestation)
+//	private List<Holdings> getHoldingsMatchingManifestation(Record matchMe)
+//	{
+//		List<Holdings> results = new ArrayList<Holdings>();
+//
+//		try 
+//		{
+//			// For each record ID a holdings could match on
+//			// add all holdings that match on it
+//			for(String xcRecordId : matchMe.getXcRecordIds())
+//			{
+//				HoldingsList matchedHoldings = holdingsService.getByManifestationHeld(xcRecordId);
+//				for(Holdings matchedHolding : matchedHoldings)
+//				{
+//					logInfo("Linking the manifestation with OAI identifier " + matchMe.getOaiIdentifier() + " with the holdings with OAI identifier " + matchedHolding.getOaiIdentifier() + " because the manifestation's xcRecordId field had the same value as the holdings's manifestationHeld field.  This value was " + xcRecordId);
+//					results.add(matchedHolding);
+//				}
+//			}
+//		} 
+//		catch (IndexException ie) 
+//		{
+//			log.error("Index exception occured.", ie);
+//		}
+//		return results;
+//	} // end method getHoldingsMatchingManifestation(Manifestation)
 
 	/**
 	 * Checks the passed Holdings element against elements in the lucene index for
@@ -1495,6 +1529,150 @@ public class AggregationService extends MetadataService
 		return base;
 	} // end method mergeWorks(Work, Work)
 
+	/*
+	 * Returns the base record to merge the other matched records
+	 */
+	private Record getBaseRecord(List<Record> records) {
+		
+		Record baseRecord = null;
+		
+		if (manifestationMergeBase.getProperty(AggregationServiceConstants.CONFIG_RECORD_LENGTH, "0").equals("1")) {
+			baseRecord = getBaseRecordByRecordLength(records);
+		} else 	if (manifestationMergeBase.getProperty(AggregationServiceConstants.CONFIG_NUMBER_OF_ELEMENTS, "0").equals("1")) {
+			baseRecord = getBaseRecordByNumberOfElements(records);
+		} else	if (manifestationMergeBase.getProperty(AggregationServiceConstants.CONFIG_PROVENANCE, "0").equals("1")) {
+			baseRecord = getBaseRecordByProvenance(records);
+		} else {
+			if (records != null && records.size() > 0) {
+				baseRecord = records.get(0);
+			}
+		}
+			
+		return baseRecord;
+	}
+
+	/*
+	 * Gets the base record based on the record length. Returns the record with maximum record length as base record.
+	 */
+	private Record getBaseRecordByRecordLength(List<Record> records) {
+		
+		Record baseRecord = null;
+		int currentRecordLength = 0;
+		int maxRecordLength = 0;
+		
+		for (Record record: records) {
+			currentRecordLength = record.getOaiXml().length();
+			
+			if (currentRecordLength > maxRecordLength) {
+				baseRecord = record;
+				maxRecordLength = currentRecordLength;
+			}
+		}
+
+		return baseRecord;
+	}
+
+	/*
+	 * Gets the base record based on the number of elements. Returns the record with maximum number 
+	 * of non empty elements as base record.
+	 */
+	private Record getBaseRecordByNumberOfElements(List<Record> records) {
+		
+		Record baseRecord = null;
+		int currentRecordElementsCount = 0;
+		int maxRecordElementsCount = 0;
+		
+		
+		for (Record record: records) {
+			
+			// The XML after normalizing the record
+			Document marcXml = null;
+
+			// Parse the XML from the record
+			try
+			{
+				marcXml = builder.build(new InputSource(new StringReader(record.getOaiXml())));
+			}
+			catch(IOException e)
+			{
+				log.error("An error occurred while parsing the record's XML.", e);
+
+				return null;
+			}
+			catch(JDOMException e)
+			{
+				log.error("An error occurred while parsing the record's XML.\n" + record.getOaiXml(), e);
+
+				return null;
+			}
+			
+			currentRecordElementsCount = marcXml.getRootElement().getContentSize();
+			
+			if (currentRecordElementsCount > maxRecordElementsCount) {
+				baseRecord = record;
+				maxRecordElementsCount = currentRecordElementsCount;
+			}
+		}
+
+		return baseRecord;
+	}
+	
+
+	/*
+	 * Gets the base record based on the provenance. Returns the record with high priority institution code as base record.
+	 */
+	@SuppressWarnings("unchecked")
+	private Record getBaseRecordByProvenance(List<Record> records) {
+		
+		Record baseRecord = null;
+		
+		String provenancePriority = manifestationMergeBase.getProperty(AggregationServiceConstants.CONFIG_PROVENANCE);
+		
+		int currentPriority = 0;
+		int maxPriority = 0;
+		List<Element> elements = null;
+		for (Record record: records) {
+			
+			try {
+				XPath xpath = XPath.newInstance("//xc:recordID");
+				xpath.addNamespace("xc", "http://www.extensiblecatalog.info/Elements");
+				elements = xpath.selectNodes(record.getOaiXml());
+			} catch (JDOMException je) {
+				log.error("JDOM Exception occured when parsing XML for recordID", je);
+				continue;
+			}
+
+			ArrayList<String> institutionCodes = new ArrayList<String>();
+			
+			for(Element element : elements) {
+				institutionCodes.add(element.getAttributeValue("type"));
+			}
+			
+			StringTokenizer tokens = new StringTokenizer(provenancePriority, ",");
+			
+			int index = 1;
+			
+			while (tokens.hasMoreTokens()) {
+				
+				if (institutionCodes.contains(tokens.nextToken())) {
+					if (currentPriority == 0 || currentPriority > index) {
+						currentPriority = index;
+					}
+				}
+				
+				index++;
+			}
+			
+			if (maxPriority == 0 || currentPriority < maxPriority) {
+				baseRecord = record;
+				maxPriority = currentPriority;
+			}
+
+		}
+
+		return baseRecord;
+	}
+	
 	/**
 	 * Merges two manifestation elements
 	 *
@@ -1503,10 +1681,8 @@ public class AggregationService extends MetadataService
 	 * @return The merged manifestation element.  It's manifestation ID will be the base's manifestation ID.
 	 */
 	@SuppressWarnings("unchecked")
-	private Manifestation mergeManifestations(Manifestation base, Manifestation mergeIntoBase)
+	private Record mergeManifestations(Record base, Record mergeIntoBase)
 	{
-		cacheForMerging.clear();
-	
 		// The XML for the XC record
 		Document baseXml = null;
 		Document mergeIntoBaseXml = null;
@@ -1533,42 +1709,54 @@ public class AggregationService extends MetadataService
 			return null;
 		} // end catch JDOMException
 	
+		// Merge xc:expressionManifested
 		// Add each element in the base to the cache of used elements
-		List<Element> baseElements = baseXml.getRootElement().getChild("entity", XcRecordSplitter.XC_NAMESPACE).getChildren();
-		for(Element baseElement : baseElements)
+		List<Element> baseExpressionManifestedElements = baseXml.getRootElement().getChild("entity", XcRecordSplitter.XC_NAMESPACE).getChildren("expressionManifested", XcRecordSplitter.XC_NAMESPACE);
+		
+		for(Element baseElement : baseExpressionManifestedElements)
 		{
-			StringBuilder builder = new StringBuilder();
-			builder.append(baseElement.getName()).append("|").append(baseElement.getText());
-	
-			List<Attribute> atts = baseElement.getAttributes();
-			for(Attribute att : atts)
-				builder.append("|").append(att.getName()).append("|").append(att.getValue());
-	
-			cacheForMerging.add(builder.toString());
+			cacheForMerging.add(baseElement.getText());
 		} // end loop over base record's elements
 	
 		// Add each element in the base to the cache of used elements
-		List<Element> mergeIntoElements = mergeIntoBaseXml.getRootElement().getChild("entity", XcRecordSplitter.XC_NAMESPACE).getChildren();
-		for(Element mergeIntoElement : mergeIntoElements)
+		List<Element> mergeIntoExpressionManifestedElements = mergeIntoBaseXml.getRootElement().getChild("entity", XcRecordSplitter.XC_NAMESPACE).getChildren("expressionManifested", XcRecordSplitter.XC_NAMESPACE);
+
+		for(Element mergeIntoElement : mergeIntoExpressionManifestedElements)
 		{
-			StringBuilder builder = new StringBuilder();
-			builder.append(mergeIntoElement.getName()).append("|").append(mergeIntoElement.getText());
-	
-			List<Attribute> atts = mergeIntoElement.getAttributes();
-			for(Attribute att : atts)
-				builder.append("|").append(att.getName()).append("|").append(att.getValue());
-	
 			// Add the element to the base if doing so wouldn't cause a duplicate
-			if(!cacheForMerging.contains(builder.toString()))
+			if(!cacheForMerging.contains(mergeIntoElement.getText()))
+			{
+				addLink(baseXml, "expressionManifested", mergeIntoElement.getText());
+				cacheForMerging.add(mergeIntoElement.getText());
+			} // end if (the element isn't a duplicate of something in the base)
+			
+		} // end loop over base record's elements
+		cacheForMerging.clear();
+		
+		// Merge xc:recordID
+		// Add each element in the base to the cache of used elements
+		List<Element> baseRecordIdElements = baseXml.getRootElement().getChild("entity", XcRecordSplitter.XC_NAMESPACE).getChildren("recordID", XcRecordSplitter.XC_NAMESPACE);
+		for(Element baseElement : baseRecordIdElements)
+		{
+			cacheForMerging.add(baseElement.getText());
+		} // end loop over base record's elements
+
+		// Add each element in the base to the cache of used elements
+		List<Element> mergeIntoRecordIdElements = mergeIntoBaseXml.getRootElement().getChild("entity", XcRecordSplitter.XC_NAMESPACE).getChildren("recordID", XcRecordSplitter.XC_NAMESPACE);
+		
+		for(Element mergeIntoElement : mergeIntoRecordIdElements)
+		{
+			// Add the element to the base if doing so wouldn't cause a duplicate
+			if(!cacheForMerging.contains(mergeIntoElement.getText()))
 			{
 				baseXml.getRootElement().getChild("entity", XcRecordSplitter.XC_NAMESPACE)
 				                                 .addContent("\t")
 				                        		 .addContent((Element)mergeIntoElement.clone())
 				                        		 .addContent("\n\t");
-				cacheForMerging.add(builder.toString());
+				cacheForMerging.add(mergeIntoElement.getText());
 			} // end if (the element isn't a duplicate of something in the base)
 		} // end loop over base record's elements
-	
+		
 		base.setOaiXml(outputter.outputString(baseXml));
 	
 		return base;

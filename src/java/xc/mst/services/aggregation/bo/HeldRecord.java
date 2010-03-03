@@ -8,6 +8,8 @@
   */
 package xc.mst.services.aggregation.bo;
 
+import java.util.List;
+
 /**
  * Represents the held record
  * 
@@ -16,15 +18,23 @@ package xc.mst.services.aggregation.bo;
  */
 public class HeldRecord {
 	
+	/** Id */
+	private int id = -1;
+	
 	/** OAI id of thr record that is held */
 	private String oaiId;
 	
 	/** OAI id of held record's parent */
-	private String parentOaiId;
+	private List<String> parentOaiIds;
 
-	public HeldRecord(String oaiId, String parentOaiId) {
+	/**
+	 * Public Constructor
+	 */
+	public HeldRecord() {}
+	
+	public HeldRecord(String oaiId, List<String> parentOaiIds) {
 		this.oaiId = oaiId;
-		this.parentOaiId = parentOaiId;
+		this.parentOaiIds = parentOaiIds;
 	}
 
 	public String getOaiId() {
@@ -35,12 +45,24 @@ public class HeldRecord {
 		this.oaiId = oaiId;
 	}
 
-	public String getParentOaiId() {
-		return parentOaiId;
+	public List<String> getParentOaiIds() {
+		return parentOaiIds;
 	}
 
-	public void setParentOaiId(String parentOaiId) {
-		this.parentOaiId = parentOaiId;
+	public void setParentOaiIds(List<String> parentOaiIds) {
+		this.parentOaiIds = parentOaiIds;
+	}
+	
+	public void addParentOaiId(String parentOaiId) {
+		this.parentOaiIds.add(parentOaiId);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

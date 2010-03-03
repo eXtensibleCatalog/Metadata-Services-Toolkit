@@ -99,6 +99,15 @@ public abstract class MatchIdentifierDAO
 	public abstract  List<String> getByISBNValue(String isbnValue) throws DatabaseConfigException;
 	
 	/**
+	 * Get the match identifiers by given Oai id
+	 *
+	 * @param oaiId The OAI id
+	 * @return Match identifier
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
+	 */
+	public abstract MatchIdentifiers getByOaiId(String oaiId) throws DatabaseConfigException;
+	
+	/**
 	 * Gets list of OAI identifiers that match the given ISSN value
 	 *
 	 * @param issnValue The issn Value

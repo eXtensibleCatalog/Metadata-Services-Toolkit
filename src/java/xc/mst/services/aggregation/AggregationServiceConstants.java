@@ -50,6 +50,26 @@ public class AggregationServiceConstants
 	 * Parameter for looking up the whether or not to merge manifestations with matching record ID elements of unknown types
 	 */
 	public static final String CONFIG_MERGE_RECORD_ID = "merge_recordID";
+	
+	/**
+	 * Parameter for looking up the whether or not to choose merge base record based on number of elements
+	 */
+	public static final String CONFIG_NUMBER_OF_ELEMENTS = "Number_of_elements";
+	
+	/**
+	 * Parameter for looking up the whether or not to choose merge base record based on record length
+	 */
+	public static final String CONFIG_RECORD_LENGTH = "Record_Length";
+	
+	/**
+	 * Parameter for looking up the whether or or not to choose merge base record based on institution priority
+	 */
+	public static final String CONFIG_PROVENANCE = "Provenance";
+	
+	/**
+	 * Parameter for looking up the priority of institution codes
+	 */
+	public static final String CONFIG_PROVENANCE_PRIORITY = "Provenance_Priority";
 
 	//*******************************************************************
 	// Properties files
