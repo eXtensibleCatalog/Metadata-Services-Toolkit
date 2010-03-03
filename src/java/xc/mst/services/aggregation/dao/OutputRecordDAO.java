@@ -88,15 +88,6 @@ public abstract class OutputRecordDAO
 	 */
 	public abstract boolean update(OutputRecord outputRecord) throws DataException;
 
-//	/**
-//	 * Deletes output record from the database
-//	 *
-//	 * @param outputRecord The mapping to delete
-//	 * @return True on success, false on failure
-//	 * @throws DataException if the passed output record was not valid for deleting
-//	 */
-//	public abstract boolean delete(OutputRecord outputRecord) throws DataException;
-
 	/**
 	 * Deletes output record from the database for given OAI id
 	 *

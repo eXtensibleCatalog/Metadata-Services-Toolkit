@@ -41,19 +41,6 @@ public class DefaultPredecessorUtilDAO extends PredecessorUtilDAO {
 	 * Lock to synchronize access to the PreparedStatement to delete a predecessors from the database
 	 */
 	private static Object psDeleteLock = new Object();
-	
-//	/**
-//	 * Gets list of predecessor OAI identifiers that match the given output OAI id
-//	 *
-//	 * @param outputOaiId The output OAI Id
-//	 * @return list of predecessor OAI identifiers that match the given OAI identifier
-//	 * @throws DatabaseConfigException if there was a problem connecting to the database
-//	 */
-//	public List<String> getByOutputOaiId(String outputOaiId) throws DatabaseConfigException {
-//		List<String> oaiIds = new ArrayList<String>();
-//		
-//		return oaiIds;
-//	}
 
 	/**
 	 * Gets list of predecessor OAI identifiers that match the given output record id
@@ -128,18 +115,6 @@ public class DefaultPredecessorUtilDAO extends PredecessorUtilDAO {
 
 	}
 
-//	/**
-//	 * Gets list of output OAI identifiers that match the given predecessor OAI id
-//	 *
-//	 * @param predecessorOaiId The predecessor OAI Id
-//	 * @return Output OAI identifier that match the given predecessor OAI identifier
-//	 * @throws DatabaseConfigException if there was a problem connecting to the database
-//	 */
-//	public String getByPredecessorOaiId(String predecessorOaiId) throws DatabaseConfigException {
-//		
-//		return null;
-//	}
-
 	/**
 	 * Inserts predecessor record into the database
 	 *
@@ -209,18 +184,6 @@ public class DefaultPredecessorUtilDAO extends PredecessorUtilDAO {
 		
 
 	}
-//
-//	/**
-//	 * Updates output record in the database
-//	 *
-//	 * @param outputRecordId The output record id
-//	 * @param predecessorOAIId Predecessor OAI id
-//	 * @return True on success, false on failure
-//	 * @throws DataException if the passed values are not valid for updating
-//	 */
-//	public boolean update(int outputRecordId, String predecessorOAIId) throws DataException {
-//		return true;
-//	}
 
 	/**
 	 * Deletes the predecessors of given output record id 

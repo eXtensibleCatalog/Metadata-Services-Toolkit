@@ -55,24 +55,6 @@ public abstract class PredecessorUtilDAO
 	 */
 	public final static String COL_OUTPUT_RECORD_ID = "output_record_id";
 
-//	/**
-//	 * Gets list of predecessor OAI identifiers that match the given output OAI id
-//	 *
-//	 * @param outputOaiId The output OAI Id
-//	 * @return list of predecessor OAI identifiers that match the given OAI identifier
-//	 * @throws DatabaseConfigException if there was a problem connecting to the database
-//	 */
-//	public abstract  List<String> getByOutputOaiId(String outputOaiId) throws DatabaseConfigException;
-//
-//	/**
-//	 * Gets list of output OAI identifiers that match the given predecessor OAI id
-//	 *
-//	 * @param predecessorOaiId The predecessor OAI Id
-//	 * @return Output OAI identifier that match the given predecessor OAI identifier
-//	 * @throws DatabaseConfigException if there was a problem connecting to the database
-//	 */
-//	public abstract  String getByPredecessorOaiId(String predecessorOaiId) throws DatabaseConfigException;
-
 	/**
 	 * Gets list of predecessor OAI identifiers that match the given output reclord id
 	 *
@@ -92,16 +74,6 @@ public abstract class PredecessorUtilDAO
 	 */
 	public abstract boolean insert(int outputRecordId, String predecessorOAIId) throws DataException;
 
-//	/**
-//	 * Updates output record in the database
-//	 *
-//	 * @param outputRecordId The output record id
-//	 * @param predecessorOAIId Predecessor OAI id
-//	 * @return True on success, false on failure
-//	 * @throws DataException if the passed values are not valid for updating
-//	 */
-//	public abstract boolean update(int outputRecordId, String predecessorOAIId) throws DataException;
-	
 	/**
 	 * Deletes the predecessors of given output record id 
 	 *
