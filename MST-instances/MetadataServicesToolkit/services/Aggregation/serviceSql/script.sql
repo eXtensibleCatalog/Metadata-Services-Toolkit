@@ -39,6 +39,22 @@ CREATE TABLE output_record
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -------------------------------------------------------------
+-- Table structure for output_record_uplinks
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS output_record_uplinks;
+CREATE TABLE output_record_uplinks
+(
+  output_record_uplinks_id  INT(11) NOT NULL AUTO_INCREMENT,
+  output_record_id INT(11) NOT NULL,
+  uplink_oai_id VARCHAR(255) NOT NULL,
+  PRIMARY KEY(output_record_uplinks_id),
+  FOREIGN KEY(output_record_id) REFERENCES output_record(output_record_id) ON DELETE CASCADE ON 
+	UPDATE CASCADE,
+  INDEX idx_uplink_oai_id (uplink_oai_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -------------------------------------------------------------
 -- Table structure for predecessor_record
 -- -------------------------------------------------------------
 

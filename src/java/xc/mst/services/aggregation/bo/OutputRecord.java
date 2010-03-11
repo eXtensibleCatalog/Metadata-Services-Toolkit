@@ -33,6 +33,9 @@ public class OutputRecord {
 	/* OAI Ids of Predecessor record */
 	private List<String> predecessorOaiIds;
 	
+	/* Uplinks of record */
+	private List<String> uplinks;
+	
 	/** 
 	 * Default constructor
 	 */
@@ -161,6 +164,14 @@ public class OutputRecord {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<String> getUplinks() {
+		return uplinks;
+	}
+
+	public void setUplinks(List<String> uplinks) {
+		this.uplinks = uplinks;
 	}
 
 }

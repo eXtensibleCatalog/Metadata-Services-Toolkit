@@ -403,6 +403,46 @@ public class AggregationService extends MetadataService
 			// The OAI identifiers of the records that the record we're processing has uplinks to
 			List<String> uplinks = new ArrayList<String>();
 			
+			
+			// Get any records which were processed from the record we're processing
+			// If there are any (there should be at most 1) we need to delete them
+			List<Record> existingRecords = recordService.getSuccessorsCreatedByServiceId(record.getId(), service.getId());
+
+			boolean updatedInputRecord = false;
+			
+			// If the record was deleted, delete and reprocess all records that were processed from it
+			if(record.getDeleted())
+			{
+
+				// If there are successors then the record exist and needs to be deleted. Since we are
+				// deleting the record, we need to decrement the count.
+				if (existingRecords != null && existingRecords.size() > 0) {
+					inputRecordCount--;
+					deleteSuccessorRecords(record, existingRecords);
+				}
+				
+				// Mark the record as having been processed by this service
+				record.addProcessedByService(service);
+				record.removeInputForService(service);
+				recordService.update(record);
+				
+				return new ArrayList<Record>();
+			
+			} 		
+
+			// If there was already a processed record for the record we just processed, delete it
+			if(existingRecords.size() > 0)
+			{
+				updatedInputRecord = true;
+
+				if(log.isDebugEnabled())
+					log.debug("Updating the record which was processed from an older version of the record we just processed.");
+				
+				deleteSuccessorRecords(record, existingRecords);
+
+			}
+
+			
 			if (record.getType().equals("XC-Work")) {
 				results = processWork(record, xml);
 			} else if (record.getType().equals("XC-Expression")) {
@@ -484,6 +524,82 @@ public class AggregationService extends MetadataService
 		}
 	} // end method processRecord(Record)
 
+	/*
+	 * Delete the successor records for incoming updated/deleted record
+	 */
+	private void deleteSuccessorRecords(Record record, List<Record> successors) {
+		
+		OutputRecordDAO outputRecordDAO = new DefaultOutputRecordDAO(); 
+		
+		RecordService recordService = new DefaultRecordService();
+		
+		// Delete all the successor
+		for (Record successor: successors) {
+			try {
+				// Delete the records that has uplink to the successor record to be deleted
+				for(String uplink : successor.getUpLinks()) {
+					List<String> linkedOaiIds = outputRecordDAO.getByUplink(uplink);
+					
+					// Delete linked records
+					for (String linkedOaiId: linkedOaiIds) {
+						deleteRecord(linkedOaiId);
+					}
+					
+					
+				}
+				// Delete the successor
+				outputRecordDAO.deleteByOAIId(successor.getOaiIdentifier());
+				
+				// Remove successor from input record
+				record.removeSucessor(successor);
+				
+				recordService.update(record);
+				
+			} catch(DataException de) {
+				log.error("Data exception occured while deleting the successor record " + successor, de);
+			} catch(IndexException ie) {
+				log.error("Index exception occured while updating the record " + record, ie);
+			}
+			
+		}
+		
+	}
+	
+	private void deleteRecord(String oaiId) {
+		OutputRecordDAO outputRecordDAO = new DefaultOutputRecordDAO(); 
+		
+		try {
+			OutputRecord outputRecord = outputRecordDAO.getByOaiId(oaiId);
+			
+			RecordService recordService = new DefaultRecordService();
+			
+			// Remove this record from its predecessor
+			for (String predecessorOaiId: outputRecord.getPredecessorOaiIds()) {
+				Record predecessor = recordService.getByOaiIdentifier(predecessorOaiId);
+				predecessor.removeSucessor(recordService.getByOaiIdentifier(oaiId));
+				recordService.update(predecessor);
+			}
+	
+			// Delete the records that has uplink to the this record to be deleted
+			for(String uplink : outputRecord.getUplinks()) {
+				List<String> linkedOaiIds = outputRecordDAO.getByUplink(uplink);
+				
+				// Delete linked records
+				for (String linkedOaiId: linkedOaiIds) {
+					deleteRecord(linkedOaiId);
+				}
+			}
+			
+			// Delete the record
+			outputRecordDAO.deleteByOAIId(oaiId);
+			
+		} catch (DataException de) {
+			log.error("Data exception occured while deleting the record with OAI id " + oaiId, de);
+		} catch (IndexException ie) {
+			log.error("Index exception occured while updating the predecessor record " , ie);
+		}
+	}
+	
 	//###############################################################
 	// Methods for creating a FRBR level specific record
 	// from a generic record.

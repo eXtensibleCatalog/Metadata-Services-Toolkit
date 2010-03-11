@@ -210,7 +210,7 @@
                                                                         </c:if>
                                                                         <td class="${classColumn}">
 
-                                                                                <a href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${repository.id}" />"><c:out value="${repository.name}" /></a>
+                                                                                <a href="viewRepository.action?RepositoryId=<c:out value="${repository.id}" />"><c:out value="${repository.name}" /></a>
 
                                                                         </td>
                                                                         <c:set var="classColumn" value="plainColumn"/>
@@ -256,7 +256,7 @@
                                                                         </c:if>
                                                                         <td class ="${classColumn}">
 
-                                                                                <a href="/MetadataServicesToolkit/viewRepository.action?RepositoryId=<c:out value="${repository.id}" />"><c:out value="${repository.name}" /></a>
+                                                                                <a href="viewRepository.action?RepositoryId=<c:out value="${repository.id}" />"><c:out value="${repository.name}" /></a>
 
                                                                         </td>
                                                                         <c:set var="classColumn" value="errorColumn"/>

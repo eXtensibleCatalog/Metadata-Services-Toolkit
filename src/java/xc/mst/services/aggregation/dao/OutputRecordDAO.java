@@ -68,7 +68,7 @@ public abstract class OutputRecordDAO
 	 * @return list of records that match the given OAI identifier
 	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public abstract  List<OutputRecord> getByOaiId(String oaiId) throws DatabaseConfigException;
+	public abstract  OutputRecord getByOaiId(String oaiId) throws DatabaseConfigException;
 	
 	/**
 	 * Inserts output record into the database
@@ -105,6 +105,15 @@ public abstract class OutputRecordDAO
 	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
 	public abstract List<String> getSuccessorByOaiId(String oaiId) throws DatabaseConfigException;
+	
+	/**
+	 * Gets list of output records that match the given uplink OAI id
+	 *
+	 * @param uplinkOaiId Uplink OAI Id
+	 * @return list of records that match the given uplink
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
+	 */
+	public abstract List<String> getByUplink(String uplinkOaiId) throws DatabaseConfigException;
 	
 	/**
 	 * Validates the fields on the passed output record Object

@@ -291,7 +291,6 @@ public class DefaultMatchIdentifierDAO extends MatchIdentifierDAO {
 				{
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_OAI_ID  + " " +
-				                                  
 	                                   "FROM " + IN_PROCESSED_IDENTIFIERS_TABLE_NAME + " " +
 	                                   "WHERE " + COL_ISBN_VALUE+ "=?";
 

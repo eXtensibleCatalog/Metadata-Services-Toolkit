@@ -9,21 +9,18 @@
 
 package xc.mst.services.aggregation.dao;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
-import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
- * Accesses output record in the database
+ * Accesses uplinks of output record in the database
  *
  * @author Sharmila Ranganathan
  */
-public abstract class PredecessorUtilDAO
+public abstract class UplinksUtilDAO
 {
 	/**
 	 * A reference to the logger for this class
@@ -38,49 +35,40 @@ public abstract class PredecessorUtilDAO
 	/**
 	 * The name of the database table we're interacting with
 	 */
-	public final static String PREDECESSOR_RECORD_TABLE_NAME = "predecessor_record";
+	public final static String UPLINK_TABLE_NAME = "output_record_uplinks";
 	
 	/**
 	 * The name of the ID column
 	 */
-	public final static String PREDECESSOR_RECORD_ID = "predecessor_record_id";
+	public final static String UPLINK_ID = "output_record_uplinks_id";
 
 	/**
-	 * The name of the predecessor oai ID column
+	 * The name of the uplink oai ID column
 	 */
-	public final static String COL_PREDECESSOR_OAI_ID = "predecessor_oai_id";
+	public final static String COL_UPLINK_OAI_ID = "uplink_oai_id";
 
 	/**
-	 * The name of the output record id column
+	 * The name of the output records id column
 	 */
 	public final static String COL_OUTPUT_RECORD_ID = "output_record_id";
-
-	/**
-	 * Gets list of predecessor OAI identifiers that match the given output reclord id
-	 *
-	 * @param outputRecordId The output record Id
-	 * @return list of predecessor OAI identifiers that match the given output record id
-	 * @throws DatabaseConfigException if there was a problem connecting to the database
-	 */
-	public abstract List<String> getByOutputRecordId(int outputRecordId) throws DatabaseConfigException;
 		
 	/**
-	 * Inserts predecessor record into the database
+	 * Inserts uplinks into the database
 	 *
 	 * @param outputRecordId The output record id
-	 * @param predecessorOAIId Predecessor OAI id
+	 * @param uplinkOAIId Uplink OAI id
 	 * @return True on success, false on failure
 	 * @throws DataException if the passed values are not valid for inserting
 	 */
-	public abstract boolean insert(int outputRecordId, String predecessorOAIId) throws DataException;
+	public abstract boolean insert(int outputRecordId, String uplinkOAIId) throws DataException;
 
 	/**
-	 * Deletes the predecessors of given output record id 
+	 * Deletes uplinks for given output record id 
 	 *
 	 * @param outputRecordId The output record id
 	 * @return True on success, false on failure
 	 * @throws DataException if the passed values are not valid for deleting
 	 */
-	public abstract boolean deletePredecessorsForOutputRecordId(int outputRecordId) throws DataException;
+	public abstract boolean deleteUplinksByOutputRecordId(int outputRecordId) throws DataException;
 	
 } 

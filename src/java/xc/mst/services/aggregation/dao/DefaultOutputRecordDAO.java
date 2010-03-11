@@ -167,7 +167,7 @@ public class DefaultOutputRecordDAO extends OutputRecordDAO
 	 * @return list of records that match the given OAI identifier
 	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
-	public List<OutputRecord> getByOaiId(String oaiId) throws DatabaseConfigException {
+	public OutputRecord getByOaiId(String oaiId) throws DatabaseConfigException {
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
@@ -206,12 +206,10 @@ public class DefaultOutputRecordDAO extends OutputRecordDAO
 
 				// Execute the query
 				results = dbConnectionManager.executeQuery(psGetByOAIId);
-				
-				List<OutputRecord> outputRecords = new ArrayList<OutputRecord>();
+
+				OutputRecord outputRecord = new OutputRecord();
 				
 				while(results.next()) {
-					
-					OutputRecord outputRecord = new OutputRecord();
 					
 					outputRecord.setId(results.getInt(1));
 					outputRecord.setOaiId(results.getString(2));
@@ -220,21 +218,93 @@ public class DefaultOutputRecordDAO extends OutputRecordDAO
 					
 					outputRecord.setPredecessorOaiId(predecessorUtilDAO.getByOutputRecordId(outputRecord.getId()));
 			
-					outputRecords.add(outputRecord);
 				}
 
 				// Return the output records
-				return outputRecords;
+				return outputRecord;
 			} 
 			catch(SQLException e)
 			{
-				log.error("A SQLException occurred while getting the OAI id with oclc value " + oaiId, e);
+				log.error("A SQLException occurred while getting the output record with OAI id " + oaiId, e);
 
 				return null;
 			} // end catch(SQLException)
 			catch (DBConnectionResetException e){
 				log.info("Re executing the query that failed " + e.getMessage());
 				return getByOaiId(oaiId);
+			}
+			finally
+			{
+				dbConnectionManager.closeResultSet(results);
+			} // end finally(close ResultSet)
+		} // end synchronized
+
+	}
+	
+	/**
+	 * Gets list of output records that match the given uplink OAI id
+	 *
+	 * @param uplinkOaiId Uplink OAI Id
+	 * @return list of records that match the given uplink
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
+	 */
+	public List<String> getByUplink(String uplinkOaiId) throws DatabaseConfigException {
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnectionManager.getDbConnection() == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
+		synchronized(psGetByOAIIdLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Getting the output record with Uplink value " + uplinkOaiId);
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			try
+			{
+				// Create the PreparedStatment to get a output record by Uplink if it hasn't already been created
+				if(psGetByOAIId == null || dbConnectionManager.isClosed(psGetByOAIId))
+				{
+					// SQL to get the row
+					String selectSql = "SELECT " + OUTPUT_RECORD_TABLE_NAME + "." + COL_OAI_ID +  
+					                    " FROM " + OUTPUT_RECORD_TABLE_NAME + ", " + UplinksUtilDAO.UPLINK_TABLE_NAME +  " " +
+					                    " WHERE " + OUTPUT_RECORD_TABLE_NAME + "." +OUTPUT_RECORD_ID + "=" + UplinksUtilDAO.UPLINK_TABLE_NAME + "." + UplinksUtilDAO.COL_OUTPUT_RECORD_ID + 
+					                    " AND " + UplinksUtilDAO.UPLINK_TABLE_NAME + "." + UplinksUtilDAO.COL_UPLINK_OAI_ID+ "=?";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get output record by Uplink \" PreparedStatement from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetByOAIId = dbConnectionManager.prepareStatement(selectSql, psGetByOAIId);
+				} // end if(get by ID PreparedStatement not defined)
+
+				// Set the parameters on the update statement
+				psGetByOAIId.setString(1, uplinkOaiId);
+
+				// Execute the query
+				results = dbConnectionManager.executeQuery(psGetByOAIId);
+				
+				List<String> oaiIds = new ArrayList<String>();
+				
+				while(results.next()) {
+					oaiIds.add(results.getString(1));
+				}
+
+
+				// Return the output records
+				return oaiIds;
+			} 
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the record with Uplink " + uplinkOaiId, e);
+
+				return null;
+			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed " + e.getMessage());
+				return getByUplink(uplinkOaiId);
 			}
 			finally
 			{
