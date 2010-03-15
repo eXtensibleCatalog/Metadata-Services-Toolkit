@@ -465,7 +465,6 @@ public class AggregationService extends MetadataService
 					if(level.equals("work") && component.getChildren().size() > 0)
 					{	
 						record.setType("XC-Work");
-						//Work work = buildWork(component, record);
 						results = processWork(record, xml);
 					}
 					else if(level.equals("expression") && component.getChildren().size() > 0)
@@ -544,16 +543,14 @@ public class AggregationService extends MetadataService
 					for (String linkedOaiId: linkedOaiIds) {
 						deleteRecord(linkedOaiId);
 					}
-					
-					
 				}
-				// Delete the successor
-				outputRecordDAO.deleteByOAIId(successor.getOaiIdentifier());
-				
 				// Remove successor from input record
 				record.removeSucessor(successor);
 				
 				recordService.update(record);
+				
+				// Delete the successor
+				outputRecordDAO.deleteByOAIId(successor.getOaiIdentifier());
 				
 			} catch(DataException de) {
 				log.error("Data exception occured while deleting the successor record " + successor, de);
@@ -565,6 +562,9 @@ public class AggregationService extends MetadataService
 		
 	}
 	
+	/*
+	 * Deletes the output record
+	 */
 	private void deleteRecord(String oaiId) {
 		OutputRecordDAO outputRecordDAO = new DefaultOutputRecordDAO(); 
 		
@@ -579,15 +579,12 @@ public class AggregationService extends MetadataService
 				predecessor.removeSucessor(recordService.getByOaiIdentifier(oaiId));
 				recordService.update(predecessor);
 			}
+			
+			List<String> linkedOaiIds = outputRecordDAO.getByUplink(outputRecord.getOaiId());
 	
 			// Delete the records that has uplink to the this record to be deleted
-			for(String uplink : outputRecord.getUplinks()) {
-				List<String> linkedOaiIds = outputRecordDAO.getByUplink(uplink);
-				
-				// Delete linked records
-				for (String linkedOaiId: linkedOaiIds) {
+			for(String linkedOaiId : linkedOaiIds) {
 					deleteRecord(linkedOaiId);
-				}
 			}
 			
 			// Delete the record
@@ -1122,6 +1119,15 @@ public class AggregationService extends MetadataService
 				
 				// Delete the output records created earlier for this matched input record.
 				for (String outputRecordOAIId : outputRecordOAIIds) {
+					// Delete from index
+					OutputRecord outputRecord = outputRecordDAO.getByOaiId(outputRecordOAIId);
+					Record record = new Record();
+					record.setOaiIdentifier(outputRecord.getOaiId());
+					// TODO remove record id from solr index. Make OAI identifier unique key
+					record.setId(-1);
+					record.setDeleted(true);
+					recordService.update(record);
+
 					outputRecordDAO.deleteByOAIId(outputRecordOAIId);
 				}
 				
