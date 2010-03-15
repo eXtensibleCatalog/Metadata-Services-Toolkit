@@ -991,7 +991,7 @@ public class DefaultServicesService implements ServicesService
 			}
 				
 		} catch (Exception e) {
-			log.error("An exception occured while executing the sql scripts." + e);
+			log.error("An exception occured while executing the sql scripts.", e);
 			throw new DataException("An exception occured while executing the sql scripts.");
 		}
 		finally {

@@ -10,6 +10,7 @@
 
 	<!-- Use the build.properties file for user specific settings -->
 	<property file="build.properties"/>
+	<property file="local.properties"/>
 
 	<!-- Allow users to see their properties and how they are set -->
 	<target name="echo-properties"
@@ -149,6 +150,31 @@
 			debug="on"
 			deprecation="on"
 			debuglevel="lines,vars,source"/>
+	</target>
+
+	<target name="hotswap" depends="init">
+		<taskdef name="hotswap" classname="dak.ant.taskdefs.Hotswap"/>
+		<tstamp>
+			<format property="class.tstamp" pattern="MM/dd/yyyy kk:mm:ss" />
+		</tstamp>
+
+		<javac srcdir="${sourcedir}"
+				destdir="${targetdir}/classes"
+				target="${java.target}"
+				classpathref="libraries"
+				debug="on"
+				deprecation="on"
+				debuglevel="lines,vars,source"/>
+
+		<copy todir="${tomcat.dir}\webapps\MetadataServicesToolkit\WEB-INF\classes">
+			<fileset dir="${targetdir}/classes"/>
+		</copy>
+
+		<hotswap verbose="true" port="9000">
+			<fileset dir="${targetdir}/classes" includes="**/*.class">
+			<date datetime="${class.tstamp}" pattern="MM/dd/yyyy kk:mm:ss" when="after" granularity="0"/>
+			</fileset>
+		</hotswap>
 	</target>
 
 	<!-- build the distribution jar -->
