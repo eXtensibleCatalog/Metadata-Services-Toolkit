@@ -70,6 +70,8 @@ import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.SolrIndexManager;
 
 import org.apache.xml.serialize.OutputFormat;
@@ -520,9 +522,12 @@ public class Harvester implements ErrorHandler
 		try
 		{
 			// Validate that the repository conforms to the OAI protocol
+			TimingLogger.log("about to validate repo");
 			ValidateRepository validator = new ValidateRepository();
 			validator.validate(schedule.getProvider().getId(), currentHarvest.getId());
 
+			TimingLogger.log("validated repo");
+			
 			granularity = validator.getGranularity();
 			deletedRecord = validator.getDeletedRecordSupport();
 
@@ -635,6 +640,7 @@ public class Harvester implements ErrorHandler
 			{
 				// Abort the harvest if the harvester was killed
 				checkSignal(baseURL);
+				TimingLogger.log("checked if killed");
 
 				request = baseURL;
 				String reqMessage;
@@ -650,8 +656,10 @@ public class Harvester implements ErrorHandler
 					if (setSpec != null && setSpec.length() > 0)
 						request += "&set=" + setSpec;
 
-					if (from != null)
-						request += "&from=" + formatDate(granularity, from);
+					if (!MSTConfiguration.isPerformanceTestingMode()) {
+						if (from != null)
+							request += "&from=" + formatDate(granularity, from);						
+					}
 
 					if (until != null)
 						request += "&until=" + formatDate(granularity, until);
@@ -693,8 +701,10 @@ public class Harvester implements ErrorHandler
 
 				// Perform the harvest
 			    Document doc = getDoc(request);
+			    TimingLogger.log("getDoc complete");
 
                 resumption = extractRecords(metadataPrefix, doc, baseURL);
+                TimingLogger.log("extractRecords complete");
 			} while(resumption != null); // Repeat as long as we get a resumption token
 
 		} // end try(run the harvest)
@@ -765,7 +775,9 @@ public class Harvester implements ErrorHandler
 				frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD);
 
 				// Reopen the reader so it can see the record inputs we inserted for this harvest
+				TimingLogger.log("before commit to solr");
 				SolrIndexManager.getInstance().commitIndex();
+				TimingLogger.log("committed to solr");
 				
 				endTime = new Date().getTime();
     			timeDiff = endTime - startTime;
@@ -1067,6 +1079,7 @@ public class Harvester implements ErrorHandler
 
 				break;
 			} // end if(record contained a resumptionToken)
+			//TimingLogger.log("end of record");
 		} // end loop over record elements
 
 		resTokEndTime = System.currentTimeMillis();
@@ -1350,6 +1363,7 @@ public class Harvester implements ErrorHandler
 	        if(statusCode == 200)
 	        {
 	        	InputStream istm = getOaiResponse.getResponseBodyAsStream();
+	        	TimingLogger.log("messagereceived");
 	        	finishOaiRequest = System.currentTimeMillis();
 
 	            log.info("Time taken to get a response from the server " + (finishOaiRequest-startOaiRequest));

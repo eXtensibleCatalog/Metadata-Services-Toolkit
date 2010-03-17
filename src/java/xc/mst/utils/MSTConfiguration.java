@@ -155,5 +155,13 @@ public class MSTConfiguration {
 		MSTConfiguration.instanceName = instanceName;
 	}
 
+	public static boolean isPerformanceTestingMode() {
+		String ptMode = getProperty("PerformanceTestingMode");
+		if (ptMode != null && "true".equals(ptMode)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }

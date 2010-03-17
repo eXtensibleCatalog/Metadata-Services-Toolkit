@@ -11,8 +11,10 @@ package xc.mst.scheduling;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 import org.apache.log4j.Logger;
@@ -27,6 +29,7 @@ import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestScheduleDAO;
 import xc.mst.manager.processingDirective.DefaultJobService;
 import xc.mst.manager.processingDirective.JobService;
+import xc.mst.utils.TimingLogger;
 
 /**
  * A Thread which runs in the background and checks every minute to see
@@ -61,6 +64,7 @@ public class Scheduler extends Thread
 	 * The WorkerThread that is currently running harvests/services
 	 */
 	private static WorkerThread runningJob;
+	protected Job previousJob = null;
 	
 	/**
 	 * Manager for getting, inserting and updating jobs
@@ -102,7 +106,7 @@ public class Scheduler extends Thread
 	 * The Thread's run method.  This checks the database every minute
 	 * for harvests which are scheduled to be run, and invokes the
 	 * harvester on all steps for that schedule.  Steps invoked in this
-	 * manner are queued such that we don't have too many simultaniously
+	 * manner are queued such that we don't have too many simultaneously
 	 * running harvests or services.
 	 *
 	 * This method also runs MetadataServices when the Harvester or another Service
@@ -110,7 +114,9 @@ public class Scheduler extends Thread
 	 */
 	public void run()
 	{
-
+		
+		Map<Integer, Long> lastRunDate = new HashMap<Integer, Long>();
+		
 		while(!killed)
 		{
 			// Get the current time
@@ -139,7 +145,19 @@ public class Scheduler extends Thread
 			// Run each scheduled harvest
 			for(HarvestSchedule scheduleToRun : schedulesToRun)
 			{
-				if(!scheduleToRun.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) && !scheduleToRun.getStatus().equals(Constants.STATUS_SERVICE_PAUSED))
+				boolean alreadyRanThisMinute = false;
+				if (lastRunDate.containsKey(scheduleToRun.getId())) {
+					if (System.currentTimeMillis() - lastRunDate.get(scheduleToRun.getId()) < 60000) {
+						alreadyRanThisMinute = true;
+					}
+				}
+				// BDA: The Scheduler was tied to looping every 60 seconds.  I like to test faster
+				//      than that so I changed it to loop every 3 seconds.  This added check is necessary
+				//      because the 60 second loop assured that a job would not be started twice.  Instead
+				//      I'll keep track of the last start time for each job.
+				if(!alreadyRanThisMinute &&
+						!scheduleToRun.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) && 
+						!scheduleToRun.getStatus().equals(Constants.STATUS_SERVICE_PAUSED))
 				{
 					if(log.isDebugEnabled())
 						log.debug("Creating a Thread to run HarvestSchedule with id " + scheduleToRun.getId());
@@ -149,22 +167,30 @@ public class Scheduler extends Thread
 						Job job = new Job(scheduleToRun, Constants.THREAD_REPOSITORY);
 						job.setOrder(jobService.getMaxOrder() + 1); 
 						jobService.insertJob(job);
+						lastRunDate.put(scheduleToRun.getId(), System.currentTimeMillis());
 					} catch (DatabaseConfigException dce) {
 						log.error("DatabaseConfig exception occured when ading jobs to database", dce);
 					}
 				}
 			} // end loop over schedules to be run
 
-			if(runningJob == null)
+			if (runningJob == null || !runningJob.isAlive())
 			{
-				
 				try {
 					// Get next job to run
-					Job jobToStart = jobService.getNextJobToExecute(); 
+					if (previousJob != null) {
+						TimingLogger.log("finished job: "+previousJob.getJobType());
+						TimingLogger.log("runningJob: "+runningJob);
+					}
+					Job jobToStart = jobService.getNextJobToExecute();
+					previousJob = jobToStart;
 
 					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
 					if(jobToStart != null)
 					{
+						TimingLogger.reset();
+						TimingLogger.log("starting job: "+jobToStart.getJobType());
+						
 						// Start a new Thread to run the Harvester component for the schedule
 						if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
 							HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
@@ -172,6 +198,7 @@ public class Scheduler extends Thread
 							harvestThread.start();
 							runningJob = harvestThread;
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
+							TimingLogger.log("service : "+jobToStart.getService().getClassName());
 							ServiceWorkerThread serviceThread = new ServiceWorkerThread();
 							serviceThread.setServiceId(jobToStart.getService().getId());
 							serviceThread.setOutputSetId(jobToStart.getOutputSetId());
@@ -200,54 +227,6 @@ public class Scheduler extends Thread
 				} catch(DatabaseConfigException dce) {
 					log.error("DatabaseConfigException occured when getting job from database", dce);
 				}
-					
-			}
-			else {
-				if(!runningJob.isAlive()){
-					
-					try {
-						// Get next job to run
-						Job jobToStart = jobService.getNextJobToExecute(); 
-
-						// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
-						if(jobToStart != null)
-						{
-							// Start a new Thread to run the Harvester component for the schedule
-							if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-								HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
-								harvestThread.setHarvestScheduleId(jobToStart.getHarvestSchedule().getId());
-								harvestThread.start();
-								runningJob = harvestThread;
-							} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
-								ServiceWorkerThread serviceThread = new ServiceWorkerThread();
-								serviceThread.setServiceId(jobToStart.getService().getId());
-								serviceThread.setOutputSetId(jobToStart.getOutputSetId());
-								serviceThread.start();
-								runningJob = serviceThread;
-							} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE)) {
-								ProcessingDirectiveWorkerThread processingDirectiveThread = new ProcessingDirectiveWorkerThread();
-								processingDirectiveThread.setProcessingDirective(jobToStart.getProcessingDirective());
-								processingDirectiveThread.start();
-								runningJob = processingDirectiveThread;
-							} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
-								ServiceReprocessWorkerThread serviceReprocessWorkerThread = new ServiceReprocessWorkerThread();
-								serviceReprocessWorkerThread.setServiceId(jobToStart.getService().getId());
-								serviceReprocessWorkerThread.start();
-								runningJob = serviceReprocessWorkerThread;
-							} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
-								DeleteServiceWorkerThread deleteServiceWorkerThread = new DeleteServiceWorkerThread();
-								deleteServiceWorkerThread.setServiceId(jobToStart.getService().getId());
-								deleteServiceWorkerThread.start();
-								runningJob = deleteServiceWorkerThread;
-							}
-
-							// Delete the job from database once its scheduled to run
-							jobService.deleteJob(jobToStart);
-						} // end if(the service job queue was empty)
-					} catch(DatabaseConfigException dce) {
-						log.error("DatabaseConfigException occured when getting job from database", dce);
-					}
-				}
 			}
 
 			// Sleep until the next hour begins
@@ -255,14 +234,17 @@ public class Scheduler extends Thread
 			{
 				if(log.isDebugEnabled())
 					log.debug("Scheduler Thread sleeping for 1 minute.");
-
-				Thread.sleep(60 * 1000);
+				Thread.sleep(3 * 1000);
 			} // end try(sleep for 1 minute)
 			catch(InterruptedException e)
 			{
 				if(log.isDebugEnabled())
 					log.debug("Caught InteruptedException while sleeping in Scheduler Thread.");
 			} // end catch(InterruptedException)
+			catch(Throwable t)
+			{
+				log.error("", t);
+			}
 		} // end main loop
 	} // end method run()
 
@@ -312,6 +294,7 @@ public class Scheduler extends Thread
 	 * Sets the currentJob reference to null after completion of the job.
 	 */
 	public static void setJobCompletion(){
+		TimingLogger.log("setJobCompletion()");
 		runningJob = null;
 	}
 
