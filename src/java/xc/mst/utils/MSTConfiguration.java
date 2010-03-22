@@ -17,6 +17,7 @@ import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 import org.jconfig.ConfigurationManagerException;
 import org.jconfig.handler.XMLFileHandler;
+import org.springframework.context.ApplicationContext;
 
 import xc.mst.constants.Constants;
 
@@ -28,6 +29,7 @@ import xc.mst.constants.Constants;
  */
 public class MSTConfiguration {
 
+	protected static ApplicationContext applicationContext = null;
 
 	/*  The instance of the MST configuration	 */
 	private static MSTConfiguration instance = null;
@@ -109,6 +111,18 @@ public class MSTConfiguration {
         } catch (ConfigurationManagerException cme) {
         	log.error("Exception occured while loading the Configuration", cme);
         }
+	}
+	
+	public static ApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
+
+	public static void setApplicationContext(ApplicationContext applicationContext) {
+		MSTConfiguration.applicationContext = applicationContext;
+	}
+	
+	public static Object getBean(String name) {
+		return MSTConfiguration.applicationContext.getBean(name);
 	}
 	
 	/**

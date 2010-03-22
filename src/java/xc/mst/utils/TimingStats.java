@@ -148,6 +148,7 @@ public class TimingStats {
 	}
 	
 	public void reset() {
+		LOG.debug("reset()");
 		reset(true);
 	}
 	

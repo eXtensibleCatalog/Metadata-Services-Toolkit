@@ -12,6 +12,7 @@ package xc.mst.utils;
 import javax.servlet.http.HttpServlet;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import xc.mst.constants.Constants;
 
@@ -45,6 +46,8 @@ public class InitializeConfiguration  extends HttpServlet {
 	    
 	    // Initialize MST configuration.
 	    MSTConfiguration.getInstance(path);
+	    
+	    MSTConfiguration.setApplicationContext(WebApplicationContextUtils.getWebApplicationContext(getServletContext()));
 	    
 		
 	}

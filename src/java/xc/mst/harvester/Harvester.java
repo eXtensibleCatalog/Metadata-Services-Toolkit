@@ -9,7 +9,6 @@
 package xc.mst.harvester;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
@@ -33,6 +32,8 @@ import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.log4j.Logger;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
@@ -70,15 +71,12 @@ import xc.mst.email.Emailer;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.processingDirective.DefaultJobService;
 import xc.mst.manager.processingDirective.JobService;
-import xc.mst.manager.record.DefaultRecordService;
+import xc.mst.manager.record.DBRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.SolrIndexManager;
-
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
 
 /**
  *  Harvests metadata from an <a href="http://www.openarchives.org/">OAI</a> data provider, saving the results
@@ -141,7 +139,7 @@ public class Harvester implements ErrorHandler
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private static RecordService recordService = new DefaultRecordService();
+	private static RecordService recordService = new DBRecordService();
 	
 	/**
 	 * Manager for getting, inserting and updating jobs
@@ -712,6 +710,9 @@ public class Harvester implements ErrorHandler
                 TimingLogger.reset("serialize");
 			//} while(resumption != null); // Repeat as long as we get a resumption token
 			} while(false); // I only want to run the 5,000 for now
+			if (recordService instanceof DBRecordService) {
+				((DBRecordService)recordService).commit();
+			}
 
 		} // end try(run the harvest)
 		catch (Hexception he)
@@ -1383,11 +1384,13 @@ public class Harvester implements ErrorHandler
 	        	InputStream istm = getOaiResponse.getResponseBodyAsStream();
 	        	
 	        	String line;
+	        	/*
 	        	StringBuilder sb = new StringBuilder();
 	        	BufferedReader reader = new BufferedReader(new InputStreamReader(istm, "UTF-8"));
         	    while ((line = reader.readLine()) != null) {
         	        sb.append(line).append("\n");
         	    }
+        	    */
 	        	//System.out.println(sb.toString());
 	        	
 	        	TimingLogger.log("messagereceived");
@@ -1416,7 +1419,7 @@ public class Harvester implements ErrorHandler
 				xmlerrors = "";
 				xmlwarnings = "";
 				docbuilder.setErrorHandler(this);
-				doc = docbuilder.parse(sb.toString());
+				doc = docbuilder.parse(istm);
 				istm.close();
 
 				if (xmlerrors.length() > 0 || xmlwarnings.length() > 0)
