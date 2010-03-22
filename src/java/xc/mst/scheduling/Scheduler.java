@@ -116,11 +116,6 @@ public class Scheduler extends Thread
 			// Get the current time
 			Calendar now = Calendar.getInstance();
 
-			if(log.isDebugEnabled())
-				log.debug("Harvest Scheduler checking for harvests scheduled to run now.  The time is " +
-						  now.get(Calendar.MINUTE) + " minutes, " + now.get(Calendar.HOUR_OF_DAY) + " hours, and " +
-						  now.get(Calendar.DAY_OF_WEEK) + " day of the week.");
-
 			// Get a list of harvest schedules which need to be run now
 			List<HarvestSchedule> schedulesToRun = null;
 
@@ -253,9 +248,6 @@ public class Scheduler extends Thread
 			// Sleep until the next hour begins
 			try
 			{
-				if(log.isDebugEnabled())
-					log.debug("Scheduler Thread sleeping for 1 minute.");
-
 				Thread.sleep(60 * 1000);
 			} // end try(sleep for 1 minute)
 			catch(InterruptedException e)

@@ -1032,7 +1032,7 @@ public class Harvester implements ErrorHandler
 				processedRecordCount++;
 			} // end try(insert the record)
 			catch(Hexception hex){
-				
+				log.error("Hexception occured.", hex);
 				throw hex;
 			}
 			catch (Exception e)

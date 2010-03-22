@@ -46,7 +46,6 @@ public class UserInterceptor extends AbstractInterceptor implements StrutsStatic
 		final Object action = invocation.getAction();
 		User user = (User) invocation.getInvocationContext().getSession().get("user");
 
-		log.debug("Logged In User :"  +  user);
 		// If user is not in session then it means the user has not logged in. So forward the user to login page.
 		if (user == null) {
 			return "user-login";

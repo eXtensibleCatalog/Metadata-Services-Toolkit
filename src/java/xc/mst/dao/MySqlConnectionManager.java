@@ -48,7 +48,7 @@ public class MySqlConnectionManager
 	 * The singleton MySqlConnectionManager
 	 */
 	private static MySqlConnectionManager instance = null;
-	
+
 	/**
 	 * The Connection to the database
 	 */
@@ -57,45 +57,43 @@ public class MySqlConnectionManager
 	/**
 	 * A set containing all PreparedStatements known to the connection manager.  If
 	 * connection to the database is lost each of these is set to null to signal the
-	 * DAOs.  If the connection is later restored the DAOs will know to recreate the 
+	 * DAOs.  If the connection is later restored the DAOs will know to recreate the
 	 * PreparedStatements.
 	 */
 	private Set<PreparedStatement> registeredPreparedStatements = new HashSet<PreparedStatement>();
-	
+
 	/**
 	 * A set containing all PreparedStatements known to the connection manager that
 	 * have been closed.
 	 */
 	private Set<PreparedStatement> closedPreparedStatements = new HashSet<PreparedStatement>();
-	
+
 	/**
 	 * Constructor for MySqlConnectionManager
 	 */
 	private MySqlConnectionManager()
-	{		
+	{
 	} // end constructor
-	
+
 	/**
 	 * Gets the singleton instance of the MySqlConnectionManager
-	 * 
+	 *
 	 * @return The singleton MySqlConnectionManager
-	 */	
+	 */
 	public static MySqlConnectionManager getInstance()
 	{
 		if(instance == null)
 			instance = new MySqlConnectionManager();
-		
+
 		return instance;
 	} // end method getInstance()
-	
+
 	/**
 	 * Sets up and returns a connection to the MST database whose location is
 	 * defined in the configuration file.
 	 */
 	public Connection getDbConnection()
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering getDbConnection()");
 
 		// If there is an open connection, return it,
 		// otherwise open a new connection and return the new one
@@ -180,17 +178,17 @@ public class MySqlConnectionManager
 	 * Registers a PreparedStatement to the connection manager.  If the connection to the database
 	 * is lost the registered PreparedStatements will be closed and set to null so code trying to
 	 * reuse them will know they are no longer valid.
-	 * 
+	 *
 	 * @param statement The PreparedStatement to register
 	 */
 	public void registerStatement(PreparedStatement statement)
 	{
 		registeredPreparedStatements.add(statement);
 	} // end method registerStatement(PreparedStatement)
-	
+
 	/**
 	 * Unregisters a PreparedStatement from the connection manager.
-	 * 
+	 *
 	 * @param statement The PreparedStatement to unregister
 	 */
 	public void unregisterStatement(PreparedStatement statement)
@@ -198,10 +196,10 @@ public class MySqlConnectionManager
 		registeredPreparedStatements.remove(statement);
 		closedPreparedStatements.remove(statement);
 	} // end method registerStatement(PreparedStatement)
-	
+
 	/**
 	 * Returns true if the passed statement is registered and has been closed
-	 * 
+	 *
 	 * @param statement The statement to check
 	 * @return True if the passed statement is registered and has been closed
 	 */
@@ -209,7 +207,7 @@ public class MySqlConnectionManager
 	{
 		return closedPreparedStatements.contains(statement);
 	}
-	
+
 	/**
 	 * Closes a ResultSet and logs any errors which occurred
 	 *
@@ -231,10 +229,10 @@ public class MySqlConnectionManager
 			return false;
 		} // end catch(SQLException)
 	} // end method closeResultSet(ResultSet)
-	
+
 	/**
 	 * Creates and registers a PreparedStatement based on the SQL query.
-	 * 
+	 *
 	 * @param sql The SQL for the PreparedStatement to create
 	 * @param replaces The PreparedStatement Object that is being replaced, or null if nothing is replaced
 	 * @return The PreparedStatement for the passed sql string
@@ -258,10 +256,10 @@ public class MySqlConnectionManager
 			return result;
 		}
 	}
-	
+
 	/**
 	 * Creates a Statement on the database connection
-	 * 
+	 *
 	 * @return The Statement created for the database connection
 	 * @throws SQLException If the Statement could not be created
 	 */
@@ -281,11 +279,11 @@ public class MySqlConnectionManager
 	/**
 	 * Runs a query against the database.  If it fails, attempts to reconnect to
 	 * the database.
-	 * 
+	 *
 	 * @param query The query to run
 	 * @return The result of running the query
 	 * @throws SQLException If the query failed twice
-	 * @throws DBConnectionResetException 
+	 * @throws DBConnectionResetException
 	 */
 	public ResultSet executeQuery(PreparedStatement query) throws SQLException, DBConnectionResetException
 	{
@@ -293,30 +291,30 @@ public class MySqlConnectionManager
 		//       we can't reset it on a failure.
 		if(!registeredPreparedStatements.contains(query))
 			log.warn("Running a query that was not registered: " + query);
-		
+
 		try
 		{
 			return query.executeQuery();
 		}
 		catch(SQLException e)
-		{	
-			// Possibly the connection timed out. Hence try a reconnect to DB. 
-			//If reconnect fails then don't re executed query 
+		{
+			// Possibly the connection timed out. Hence try a reconnect to DB.
+			//If reconnect fails then don't re executed query
 			resetConnection();
 
-			// Propagate the connection reset so that DAO's will re-execute 
+			// Propagate the connection reset so that DAO's will re-execute
 			throw new DBConnectionResetException();
 		}
 	}
-	
+
 	/**
 	 * Runs a query against the database.  If it fails, attempts to reconnect to
 	 * the database.
-	 * 
+	 *
 	 * @param query The query to run
 	 * @return The result of running the query
 	 * @throws SQLException If the query failed twice
-	 * @throws DBConnectionResetException 
+	 * @throws DBConnectionResetException
 	 */
 	public int executeUpdate(PreparedStatement query) throws SQLException, DBConnectionResetException
 	{
@@ -324,30 +322,30 @@ public class MySqlConnectionManager
 		//       we can't reset it on a failure.
 		if(!registeredPreparedStatements.contains(query))
 			log.warn("Running a query that was not registered: " + query);
-		
+
 		try
 		{
 			return query.executeUpdate();
 		}
 		catch(SQLException e)
-		{	
-			// Possibly the connection timed out. Hence try a reconnect to DB. 
-			//If reconnect fails then don't re executed query 
+		{
+			// Possibly the connection timed out. Hence try a reconnect to DB.
+			//If reconnect fails then don't re executed query
 			resetConnection();
 
-			// Propagate the connection reset so that DAO's will re-execute 
+			// Propagate the connection reset so that DAO's will re-execute
 			throw new DBConnectionResetException();
 		}
 	}
-	
+
 	/**
 	 * Runs a query against the database.  If it fails, attempts to reconnect to
 	 * the database.
-	 * 
+	 *
 	 * @param query The query to run
 	 * @return The result of running the query
 	 * @throws SQLException If the query failed twice
-	 * @throws DBConnectionResetException 
+	 * @throws DBConnectionResetException
 	 */
 	public boolean execute(PreparedStatement query) throws SQLException, DBConnectionResetException
 	{
@@ -355,25 +353,25 @@ public class MySqlConnectionManager
 		//       we can't reset it on a failure.
 		if(!registeredPreparedStatements.contains(query))
 			log.warn("Running a query that was not registered: " + query);
-		
+
 		try
 		{
 			return query.execute();
 		}
 		catch(SQLException e)
-		{	
-			// Possibly the connection timed out. Hence try a reconnect to DB. 
-			//If reconnect fails then don't re executed query 
+		{
+			// Possibly the connection timed out. Hence try a reconnect to DB.
+			//If reconnect fails then don't re executed query
 			resetConnection();
 
-			// Propagate the connection reset so that DAO's will re-execute 
+			// Propagate the connection reset so that DAO's will re-execute
 			throw new DBConnectionResetException();
 		}
 	}
-	
+
 	/**
 	 * Attempts to reset the connection to the database
-	 * 
+	 *
 	 * @throws SQLException If the connection could not be re-established
 	 */
 	private void resetConnection() throws SQLException
@@ -393,7 +391,7 @@ public class MySqlConnectionManager
 			// Reopen the connection
 			openDbConnection();
 		}
-		
+
 		// Expire the registered PreparedStatements
 		for(PreparedStatement statement : registeredPreparedStatements)
 		{
@@ -410,7 +408,7 @@ public class MySqlConnectionManager
 				log.error("Error trying to close a PreparedStatement.");
 			}
 		}
-		
+
 		registeredPreparedStatements.clear();
 	}
 } // end class MySqlConnectionManager
