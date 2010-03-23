@@ -11,17 +11,18 @@ package xc.mst.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
 import org.apache.log4j.Logger;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
-
-import java.sql.PreparedStatement;
 
 import xc.mst.constants.Constants;
 import xc.mst.utils.MSTConfiguration;
@@ -410,5 +411,19 @@ public class MySqlConnectionManager
 		}
 
 		registeredPreparedStatements.clear();
+	}
+	
+	// BDA: I've added dbcp and wish to eventually get rid of all of the above code.  However,
+	//      for the time being, I'm going to piggyback this class and slowly phase it out.
+	public static Connection getConnection() {
+		try {
+			return ((DataSource)MSTConfiguration.getBean("myDataSource")).getConnection();
+		} catch (Throwable t) {
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			} else {
+				throw new RuntimeException(t);
+			}
+		}
 	}
 } // end class MySqlConnectionManager

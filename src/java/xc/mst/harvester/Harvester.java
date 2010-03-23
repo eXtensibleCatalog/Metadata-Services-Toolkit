@@ -8,7 +8,9 @@
   */
 package xc.mst.harvester;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.URLEncoder;
@@ -30,6 +32,8 @@ import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.log4j.Logger;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
@@ -67,13 +71,13 @@ import xc.mst.email.Emailer;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.processingDirective.DefaultJobService;
 import xc.mst.manager.processingDirective.JobService;
+import xc.mst.manager.record.DBRecordService;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.SolrIndexManager;
-
-import com.sun.org.apache.xml.internal.serialize.OutputFormat;
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 /**
  *  Harvests metadata from an <a href="http://www.openarchives.org/">OAI</a> data provider, saving the results
@@ -136,6 +140,9 @@ public class Harvester implements ErrorHandler
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
+	// BDA: This will eventually be configured through spring, but for now this'll do.  The DBRecordService
+	// is my hacked up version for testing mysql performance  
+	//private static RecordService recordService = new DBRecordService();
 	private static RecordService recordService = new DefaultRecordService();
 	
 	/**
@@ -520,9 +527,12 @@ public class Harvester implements ErrorHandler
 		try
 		{
 			// Validate that the repository conforms to the OAI protocol
+			TimingLogger.log("about to validate repo");
 			ValidateRepository validator = new ValidateRepository();
 			validator.validate(schedule.getProvider().getId(), currentHarvest.getId());
 
+			TimingLogger.log("validated repo");
+			
 			granularity = validator.getGranularity();
 			deletedRecord = validator.getDeletedRecordSupport();
 
@@ -635,6 +645,7 @@ public class Harvester implements ErrorHandler
 			{
 				// Abort the harvest if the harvester was killed
 				checkSignal(baseURL);
+				TimingLogger.log("checked if killed");
 
 				request = baseURL;
 				String reqMessage;
@@ -650,8 +661,10 @@ public class Harvester implements ErrorHandler
 					if (setSpec != null && setSpec.length() > 0)
 						request += "&set=" + setSpec;
 
-					if (from != null)
-						request += "&from=" + formatDate(granularity, from);
+					if (!MSTConfiguration.isPerformanceTestingMode()) {
+						if (from != null)
+							request += "&from=" + formatDate(granularity, from);						
+					}
 
 					if (until != null)
 						request += "&until=" + formatDate(granularity, until);
@@ -693,9 +706,20 @@ public class Harvester implements ErrorHandler
 
 				// Perform the harvest
 			    Document doc = getDoc(request);
+			    TimingLogger.log("getDoc complete");
 
                 resumption = extractRecords(metadataPrefix, doc, baseURL);
+                TimingLogger.log("extractRecords complete");
+                TimingLogger.reset("record");
+                TimingLogger.reset("serialize");
+                
+                if (MSTConfiguration.isPerformanceTestingMode()) {
+                	resumption = null; // I only want to run the 5,000 for now
+                }
 			} while(resumption != null); // Repeat as long as we get a resumption token
+			if (recordService instanceof DBRecordService) {
+				((DBRecordService)recordService).commit();
+			}
 
 		} // end try(run the harvest)
 		catch (Hexception he)
@@ -765,7 +789,9 @@ public class Harvester implements ErrorHandler
 				frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD);
 
 				// Reopen the reader so it can see the record inputs we inserted for this harvest
+				TimingLogger.log("before commit to solr");
 				SolrIndexManager.getInstance().commitIndex();
+				TimingLogger.log("committed to solr");
 				
 				endTime = new Date().getTime();
     			timeDiff = endTime - startTime;
@@ -878,6 +904,7 @@ public class Harvester implements ErrorHandler
 		// Loop over all records in the OAI response
 		while (recordElement != null)
 		{
+			TimingLogger.start("extractRecords loop");
 			// Check to see if the service was paused or canceled
 			checkSignal(baseURL);
 
@@ -905,7 +932,9 @@ public class Harvester implements ErrorHandler
 					oaiDateString = oaiDateString.replaceFirst("Z", "");
 					oaiDateString = oaiDateString.replaceFirst("z", "");
 					
+					TimingLogger.start("sdf");
 					oaiDatestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(oaiDateString);
+					TimingLogger.stop("sdf");
 				}
 			} catch(ParseException pe) {
 				log.error("Parsing exception occured while converting String " + oaiDateString + " to date" );
@@ -940,7 +969,9 @@ public class Harvester implements ErrorHandler
 					deleted = true;
 
 				// Serialize the contents of the OAI header
+				TimingLogger.start("serialize");
 				oaiHeader = serialize((Node)headerElement);
+				TimingLogger.log("serialize", "after serialize", true);
 
 				Record record = new Record();
 				record.setProvider(provider);
@@ -995,7 +1026,9 @@ public class Harvester implements ErrorHandler
 								set.setDisplayName(currentSetSpec);
 								set.setIsProviderSet(false);
 								set.setIsRecordSet(true);
+								TimingLogger.start("setDao.insertForProvider");
 								setDao.insertForProvider(set, providerId);
+								TimingLogger.stop("setDao.insertForProvider");
 							} // end if(the set wasn't found)
 							
 							setsLoaded.put(currentSetSpec, set);
@@ -1017,9 +1050,11 @@ public class Harvester implements ErrorHandler
 				Record oldRecord = (firstHarvest ? null : recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId));
 
 				// If the current record is a new record, insert it
-				if(oldRecord == null)
+				TimingLogger.start("insert to solr");
+				if(oldRecord == null) {
 					insertNewRecord(record);
 				// Otherwise we've seen the record before.  Update or delete it as appropriate
+				}
 				else
 				{
 					if(deleted) {
@@ -1028,7 +1063,7 @@ public class Harvester implements ErrorHandler
 						updateExistingRecord(record, oldRecord);
 					}
 				} // end else(the record already existed it the index)
-				
+				TimingLogger.stop("insert to solr");
 				processedRecordCount++;
 			} // end try(insert the record)
 			catch(Hexception hex){
@@ -1067,6 +1102,8 @@ public class Harvester implements ErrorHandler
 
 				break;
 			} // end if(record contained a resumptionToken)
+			TimingLogger.stop("extractRecords loop");
+			
 		} // end loop over record elements
 
 		resTokEndTime = System.currentTimeMillis();
@@ -1074,7 +1111,7 @@ public class Harvester implements ErrorHandler
 		log.info("Time to clear the resumption token " + (resTokEndTime - resTokStartTime));
 		insertRecordsTime += (resTokEndTime - resTokStartTime);
 		log.info("Total time to clear resumption tokens " + insertRecordsTime);
-
+		TimingLogger.reset(false);
 		return resumption;
 	} // end method extractRecords(String, Document, String)
 
@@ -1090,8 +1127,10 @@ public class Harvester implements ErrorHandler
 		try
 		{
 			// Run the processing directives against the record we're inserting
+			TimingLogger.start("checkProcessingDirectives");
 			checkProcessingDirectives(record);
-
+			TimingLogger.stop("checkProcessingDirectives");
+			
 			if(!recordService.insert(record))
 				log.error("Failed to insert the new record with the OAI Identifier " + record.getOaiIdentifier() + ".");
 			else
@@ -1350,6 +1389,18 @@ public class Harvester implements ErrorHandler
 	        if(statusCode == 200)
 	        {
 	        	InputStream istm = getOaiResponse.getResponseBodyAsStream();
+	        	
+	        	String line;
+	        	/*
+	        	StringBuilder sb = new StringBuilder();
+	        	BufferedReader reader = new BufferedReader(new InputStreamReader(istm, "UTF-8"));
+        	    while ((line = reader.readLine()) != null) {
+        	        sb.append(line).append("\n");
+        	    }
+        	    */
+	        	//System.out.println(sb.toString());
+	        	
+	        	TimingLogger.log("messagereceived");
 	        	finishOaiRequest = System.currentTimeMillis();
 
 	            log.info("Time taken to get a response from the server " + (finishOaiRequest-startOaiRequest));

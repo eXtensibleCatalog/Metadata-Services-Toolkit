@@ -26,6 +26,8 @@
          from an OAI repository before reporting an error -->
     <property name="HarvesterTimeout" value="300000" />
 
+    <property name="PerformanceTestingMode" value="false" />
+
   </category>
   
 </properties>

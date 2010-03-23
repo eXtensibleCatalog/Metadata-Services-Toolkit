@@ -46,6 +46,7 @@ import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
@@ -991,6 +992,8 @@ public class DefaultRecordService extends RecordService
 	{
 		if(log.isDebugEnabled())
 			log.debug("Set Field on Document");
+		
+		boolean throttleSolr = false;
 
 		// If we need to generate an ID, set the record's ID to the next available record ID
 		if(generateNewId) {
@@ -1023,98 +1026,140 @@ public class DefaultRecordService extends RecordService
 
 			record.setOaiHeader(header.toString());
 		} // end if(header needs to be set)
+		
+		//TimingLogger.turnOff();
 
 		// Set the appropriate fields on it.
 		doc.addField(FIELD_RECORD_ID, Long.toString(record.getId()));
 		if (record.getType() != null) {
 			doc.addField(FIELD_RECORD_TYPE, record.getType());
+			TimingLogger.add("SOLR-"+FIELD_RECORD_TYPE, record.getType().length());
 		}
 		
 		doc.addField(FIELD_FRBR_LEVEL_ID, Long.toString(record.getFrbrLevelId()));
+		TimingLogger.add("SOLR-"+FIELD_FRBR_LEVEL_ID, Long.toString(record.getFrbrLevelId()).length());
 		
 		if (record.getCreatedAt() != null) {
 			doc.addField(FIELD_CREATED_AT, record.getCreatedAt());
+			TimingLogger.add("SOLR-"+FIELD_CREATED_AT, 10);
 		}
 
 		doc.addField(FIELD_DELETED, Boolean.toString(record.getDeleted()));
+		TimingLogger.add("SOLR-"+FIELD_DELETED, Boolean.toString(record.getDeleted()).length());
 
 		doc.addField(FIELD_FORMAT_ID, Integer.toString(record.getFormat().getId()));
+		TimingLogger.add("SOLR-"+FIELD_FORMAT_ID, Integer.toString(record.getFormat().getId()).length());
 		doc.addField(FIELD_FORMAT_NAME, record.getFormat().getName());
+		TimingLogger.add("SOLR-"+FIELD_FORMAT_NAME, record.getFormat().getName().length());
 
 		doc.addField(FIELD_PROVIDER_ID, (record.getProvider() == null ? "0" : Integer.toString(record.getProvider().getId())));
+		TimingLogger.add("SOLR-"+FIELD_PROVIDER_ID, (record.getProvider() == null ? "0" : Integer.toString(record.getProvider().getId())).length());
 		if(record.getProvider() != null)
 		{
-			doc.addField(FIELD_PROVIDER_NAME, (record.getProvider().getName() == null ? "" : record.getProvider().getName()));
-			doc.addField(FIELD_PROVIDER_URL, (record.getProvider().getOaiProviderUrl() == null ? "" : record.getProvider().getOaiProviderUrl()));
+			if (!throttleSolr) {
+				doc.addField(FIELD_PROVIDER_NAME, (record.getProvider().getName() == null ? "" : record.getProvider().getName()));
+				TimingLogger.add("SOLR-"+FIELD_PROVIDER_NAME, (record.getProvider().getName() == null ? "" : record.getProvider().getName()).length());
+				doc.addField(FIELD_PROVIDER_URL, (record.getProvider().getOaiProviderUrl() == null ? "" : record.getProvider().getOaiProviderUrl()));
+				TimingLogger.add("SOLR-"+FIELD_PROVIDER_URL, (record.getProvider().getOaiProviderUrl() == null ? "" : record.getProvider().getOaiProviderUrl()).length());
+			}
 		}
 
 		doc.addField(FIELD_HARVEST_ID, (record.getHarvest() == null ? "0" : Integer.toString(record.getHarvest().getId())));
+		TimingLogger.add("SOLR-"+FIELD_HARVEST_ID, (record.getHarvest() == null ? "0" : Integer.toString(record.getHarvest().getId())).length());
 		
 		if (record.getHarvest() != null) 
 		{
 			HarvestSchedule schedule = record.getHarvest().getHarvestSchedule();
 			if(schedule != null) {
 				doc.addField(FIELD_HARVEST_SCHEDULE_NAME, schedule.getScheduleName());
+				TimingLogger.add("SOLR-"+FIELD_HARVEST_SCHEDULE_NAME, schedule.getScheduleName().length());
 			}
 		}
 
 		if (record.getHarvest() != null && record.getProvider() != null) 
 		{
 			doc.addField(FIELD_HARVEST_START_TIME,record.getProvider().getName() + " " + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(record.getHarvest().getStartTime()));
+			TimingLogger.add("SOLR-"+FIELD_HARVEST_START_TIME, record.getProvider().getName().length()+10);
 		}
 		
 		doc.addField(FIELD_SERVICE_ID, (record.getService() == null ? "0" : Integer.toString(record.getService().getId())));
+		TimingLogger.add("SOLR-"+FIELD_SERVICE_ID, (record.getService() == null ? "0" : Integer.toString(record.getService().getId())).length());
 
 		
 		if (record.getService() != null) {
 			doc.addField(FIELD_SERVICE_NAME, record.getService().getName());
+			TimingLogger.add("SOLR-"+FIELD_SERVICE_NAME, record.getService().getName().length());
 		}
 
 		doc.addField(FIELD_OAI_IDENTIFIER, record.getOaiIdentifier());
+		TimingLogger.add("SOLR-"+FIELD_OAI_IDENTIFIER, record.getOaiIdentifier().length());
 		
 		if (record.getOaiDatestamp() != null) {
 			// If the record is output of a harvest then the OAI date stamp is already in UTC format
 			if(record.getProvider() != null) {
 				doc.addField(FIELD_OAI_DATESTAMP, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(record.getOaiDatestamp()));
+				TimingLogger.add("SOLR-"+FIELD_OAI_DATESTAMP, 10);
 			} else {
 				doc.addField(FIELD_OAI_DATESTAMP, record.getOaiDatestamp());
+				TimingLogger.add("SOLR-"+FIELD_OAI_DATESTAMP, 10);
 			}
 		}
 		
-		doc.addField(FIELD_OAI_HEADER, record.getOaiHeader());
-		doc.addField(FIELD_OAI_XML, record.getOaiXml());
+		if (!throttleSolr) {
+			doc.addField(FIELD_OAI_HEADER, record.getOaiHeader());
+			TimingLogger.add("SOLR-"+FIELD_OAI_HEADER, record.getOaiHeader().length());
+			
+			doc.addField(FIELD_OAI_XML, record.getOaiXml());
+			TimingLogger.add("SOLR-"+FIELD_OAI_XML, record.getOaiXml().length());
+			//System.out.println(record.getOaiXml());
+		}
 
 		if(record.getUpdatedAt() != null) {
 			doc.addField(FIELD_UPDATED_AT, record.getUpdatedAt());
+			TimingLogger.add("SOLR-"+FIELD_UPDATED_AT, 10);
 		}
 
-		for(String upLink : record.getUpLinks())
+		for(String upLink : record.getUpLinks()) {
 			doc.addField(FIELD_UP_LINK, upLink);
+			TimingLogger.add("SOLR-"+FIELD_UP_LINK, upLink.length());
+		}
 
-		for(Set set : record.getSets())
-		{
+		for(Set set : record.getSets()) {
 			doc.addField(FIELD_SET_SPEC, set.getSetSpec());
+			TimingLogger.add("SOLR-"+FIELD_SET_SPEC, set.getSetSpec().length());
 			doc.addField(FIELD_SET_NAME, set.getDisplayName());
+			TimingLogger.add("SOLR-"+FIELD_SET_NAME, set.getDisplayName().length());
 		} // end loop over sets
 
-		for(Record processedFrom : record.getProcessedFrom())
+		for(Record processedFrom : record.getProcessedFrom()) {
 			doc.addField(FIELD_PROCESSED_FROM, Long.toString(processedFrom.getId()));
+			TimingLogger.add("SOLR-"+FIELD_PROCESSED_FROM, Long.toString(processedFrom.getId()).length());
+		}
 
-		for(Record successor : record.getSuccessors())
+		for(Record successor : record.getSuccessors()) {
 			doc.addField(FIELD_SUCCESSOR, Long.toString(successor.getId()));
+			TimingLogger.add("SOLR-"+FIELD_SUCCESSOR, Long.toString(successor.getId()).length());
+		}
 		
 		for(Service inputForService : record.getInputForServices()) {
 			doc.addField(FIELD_INPUT_FOR_SERVICE_ID, Long.toString(inputForService.getId()));
+			TimingLogger.add("SOLR-"+FIELD_INPUT_FOR_SERVICE_ID, Long.toString(inputForService.getId()).length());
 		}
 
-		for(Service processedByService : record.getProcessedByServices())
+		for(Service processedByService : record.getProcessedByServices()) {
 			doc.addField(FIELD_PROCESSED_BY_SERVICE_ID, Long.toString(processedByService.getId()));
+			TimingLogger.add("SOLR-"+FIELD_PROCESSED_BY_SERVICE_ID, Long.toString(processedByService.getId()).length());
+		}
 
-		for(String trait : record.getTraits())
+		for(String trait : record.getTraits()) {
 			doc.addField(FIELD_TRAIT, trait.replaceAll(" ", "_"));
+			TimingLogger.add("SOLR-"+FIELD_TRAIT, trait.length());
+		}
 
-		for(String error : record.getErrors())
+		for(String error : record.getErrors()) {
 			doc.addField(FIELD_ERROR, error);
+			TimingLogger.add("SOLR-"+FIELD_ERROR, error.length());
+		}
 
 		StringBuffer all = new StringBuffer();
 		if (record.getFormat() != null) {
@@ -1151,8 +1196,12 @@ public class DefaultRecordService extends RecordService
 		
 		all.append(record.getOaiIdentifier());
 		
-		doc.addField(FIELD_ALL, all.toString());
-
+		if (!throttleSolr) {
+			doc.addField(FIELD_ALL, all.toString());
+			TimingLogger.add("SOLR-"+FIELD_ALL, all.length());
+		}
+		
+		TimingLogger.turnOn();
 
 		return doc;
 	} // end method setFieldsOnDocument(Record, Document, boolean)

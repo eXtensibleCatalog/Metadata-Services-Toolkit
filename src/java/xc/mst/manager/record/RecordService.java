@@ -30,6 +30,7 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
@@ -529,7 +530,10 @@ public abstract class RecordService
 		else
 			doc = setFieldsOnDocument(record, doc, true);
 
-		return indexMgr.addDoc(doc);
+		TimingLogger.start("indexMgr.addDoc");
+		boolean retVal = indexMgr.addDoc(doc);
+		TimingLogger.stop("indexMgr.addDoc");
+		return retVal;
 	} // end method insert(Record)
 
 	/**

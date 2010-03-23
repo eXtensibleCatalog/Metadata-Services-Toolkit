@@ -10,6 +10,7 @@
 
 	<!-- Use the build.properties file for user specific settings -->
 	<property file="build.properties"/>
+	<property file="local.properties"/>
 
 	<!-- Allow users to see their properties and how they are set -->
 	<target name="echo-properties"
@@ -17,7 +18,6 @@
 		<echo message="sourcedir = ${sourcedir}"/>
 		<echo message="distdir = ${distdir}"/>
 		<echo message="dist.project.dir = ${dist.project.dir}"/>
-		<echo message="librarydir = ${librarydir}"/>
 		<echo message="project.name = ${project.name}"/>
 		<echo message="version = ${version}"/>
 	</target>
@@ -26,94 +26,97 @@
 		<!-- Create the time stamp -->
 		<tstamp/>
 		<!-- Create the build directory structure used by compile -->
-		<mkdir dir="${targetdir}"/>
+		<mkdir dir="${targetdir.classes}"/>
+		<mkdir dir="${targetdir.lib}"/>
+		<mkdir dir="${lib.dir}"/>
 		<mkdir dir="${dist.project.dir}"/>
-		<mkdir dir="${targetdir}/classes"/>
-		<mkdir dir="${librarydir}"/>
+
+		<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
+
 	</target>
 
 	
 	<target name="download-ivy" unless="skip.download">
-	       <mkdir dir="${ivy.dir}" />
-	       <!--  download Ivy from web site so that it can be used
-	              even without any special installation -->
-	       <echo message="Please wait this may take a few minutes - installing ivy..." />
-	       <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.version}/ivy-${ivy.version}.jar"
-	           dest="${ivy.jar}" usetimestamp="true" />
-	    </target>
+		<mkdir dir="${ivy.dir}" />
+		<!--  download Ivy from web site so that it can be used
+				even without any special installation -->
+		<echo message="Please wait this may take a few minutes - installing ivy..." />
+		<get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.version}/ivy-${ivy.version}.jar"
+			dest="${ivy.jar}" usetimestamp="true" />
+	</target>
 
-	    <!--  =================================
-	          target: install-ivy
-	         
-	          this target is not necessary if you put ivy.jar in your ant lib directory
-	          if you already have ivy in your ant lib, you can simply remove this
-	          target and the dependency the 'go' target has on it
-	         =================================
-	     -->
+	<!--  =================================
+		  target: install-ivy
+		 
+		  this target is not necessary if you put ivy.jar in your ant lib directory
+		  if you already have ivy in your ant lib, you can simply remove this
+		  target and the dependency the 'go' target has on it
+		 =================================
+	 -->
 
-	    <target name="install-ivy" depends="download-ivy"
-	        description="--> install ivy in classpath for other targets">
-	         <!--   try to load ivy here from local ivy dir, in case the user has not already dropped
-	                it into ant's lib dir (note that the latter copy will always take precedence).
-	                We will not fail as long as local lib dir exists (it may be empty) and
-	                ivy is in at least one of ant's lib dir or the local lib dir.
-	         -->
-	        <path id="ivy.lib.path">
-	             <fileset dir="${ivy.dir}" includes="*.jar" />
-	        </path>
+	<target name="install-ivy" depends="download-ivy"
+		description="--> install ivy in classpath for other targets">
+		 <!--   try to load ivy here from local ivy dir, in case the user has not already dropped
+				it into ant's lib dir (note that the latter copy will always take precedence).
+				We will not fail as long as local lib dir exists (it may be empty) and
+				ivy is in at least one of ant's lib dir or the local lib dir.
+		 -->
+		<path id="ivy.lib.path">
+			 <fileset dir="${ivy.dir}" includes="*.jar" />
+		</path>
 
-	        <taskdef resource="org/apache/ivy/ant/antlib.xml"
-	                uri="antlib:org.apache.ivy.ant"
-	                classpathref="ivy.lib.path" />
-	    </target>
-
-
-	    <!--   =================================
-	           target: clean-ivy
-	           =================================
-	    -->
-	    <target name="clean-ivy" description="--> clean the ivy installation">
-	        <delete dir="${ivy.dir}" />
-	    </target>
-
-	    <!-- clean the ivy cache -->
-	    <target name="clean-cache" depends="install-ivy"
-	       description="--> clean the ivy cache">
-	       <ivy:cleancache />
-	    </target>
-
-	    <!-- Ivy depencency report -->
-	    <target name="ivy-report" depends="resolve"
-	       description="--> report the resolve actions">
-	       <mkdir dir="${ivy.report.dir}" />
-	       <ivy:report todir="${ivy.report.dir}" />
-	    </target>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml"
+				uri="antlib:org.apache.ivy.ant"
+				classpathref="ivy.lib.path" />
+	</target>
 
 
-	    <!-- use ivy to retive the jar files into the repository set by the
-	        ivy configuration settings -->
-	    <target name="resolve"
-	        depends="install-ivy"
-	        description="--> places the files in the ivy repository">
-	        <ivy:resolve />
-	    </target>
+	<!--   =================================
+		   target: clean-ivy
+		   =================================
+	-->
+	<target name="clean-ivy" description="--> clean the ivy installation">
+		<delete dir="${ivy.dir}" />
+	</target>
 
-	    <!-- download and place into the default lib folder -->
-	    <target name="retrieve" depends="ivy-report"
-	       description="-->Place the files in location for project">
-	       <ivy:retrieve sync="true"/>
-	    </target>
+	<!-- clean the ivy cache -->
+	<target name="clean-cache" depends="install-ivy"
+	   description="--> clean the ivy cache">
+	   <ivy:cleancache />
+	</target>
+
+	<!-- Ivy depencency report -->
+	<target name="ivy-report" depends="resolve"
+	   description="--> report the resolve actions">
+	   <mkdir dir="${ivy.report.dir}" />
+	   <ivy:report todir="${ivy.report.dir}" />
+	</target>
+
+
+	<!-- use ivy to retive the jar files into the repository set by the
+		ivy configuration settings -->
+	<target name="resolve"
+		depends="install-ivy"
+		description="--> places the files in the ivy repository">
+		<ivy:resolve />
+	</target>
+
+	<!-- download and place into the default lib folder -->
+	<target name="retrieve" depends="init,ivy-report"
+	   description="-->Place the files in location for project">
+	   <ivy:retrieve sync="true" pattern="${lib.dir}/[artifact].[ext]"/>
+	</target>
 	
-    <!-- Set the location where the libraries this project is dependent -->
-    <path id="libraries">
-          <fileset dir="${lib.dir}" includes="*.jar" />
-    </path>
-    
+	<!-- Set the location where the libraries this project is dependent -->
+	<path id="libraries">
+		  <fileset dir="${lib.dir}" includes="*.jar" />
+	</path>
+	
 	<path id="testLibraries">
 		<path refid="libraries"/>
-		<pathelement location="${targetdir}/classes"/>
+		<pathelement location="${targetdir.classes}"/>
 
-		<fileset dir="${librarydir}">
+		<fileset dir="${lib.dir}">
 			<include name="testng-5.8-jdk15.jar" />
 		</fileset>
 	</path>
@@ -127,13 +130,13 @@
 	<!-- Create the distriubtion file -->
 	<target name="create-jar" depends="compile">
 		<jar destfile="${dist.project.dir}/${project.name}.jar"
-		       basedir="${targetdir}/classes"
-		       excludes="**/*Test.class, **/*testng*" />
+				basedir="${targetdir.classes}"
+				excludes="**/*Test.class, **/*testng*" />
 	</target>
 
 	<!-- Copy non java resources -->
 	<target name="copy-resources">
-		<copy todir="${targetdir}/classes">
+		<copy todir="${targetdir.classes}">
 			<fileset dir="${sourcedir}">
 				<exclude name="**/*.java" />
 			</fileset>
@@ -141,9 +144,9 @@
 	</target>
 
 	<!-- Compile for regular classes -->
-	<target name="compile" depends="retrieve,clean,init,copy-resources" xmlns:ext="http://edu.ur/d1/ext"> 
+	<target name="compile" depends="retrieve,init,copy-resources" xmlns:ext="http://edu.ur/d1/ext"> 
 		<javac srcdir="${sourcedir}"
-			destdir="${targetdir}/classes"
+			destdir="${targetdir.classes}"
 			target="${java.target}"
 			classpathref="libraries"
 			debug="on"
@@ -151,51 +154,74 @@
 			debuglevel="lines,vars,source"/>
 	</target>
 
+	<target name="hotswap" depends="init">
+		<taskdef name="hotswap" classname="dak.ant.taskdefs.Hotswap"/>
+		<tstamp>
+			<format property="class.tstamp" pattern="MM/dd/yyyy kk:mm:ss" />
+		</tstamp>
+
+		<javac srcdir="${sourcedir}"
+				destdir="${targetdir.classes}"
+				target="${java.target}"
+				classpathref="libraries"
+				debug="on"
+				deprecation="on"
+				debuglevel="lines,vars,source"/>
+
+		<copy todir="${tomcat.dir}\webapps\MetadataServicesToolkit\WEB-INF\classes">
+			<fileset dir="${targetdir.classes}"/>
+		</copy>
+
+		<hotswap verbose="true" port="9000">
+			<fileset dir="${targetdir.classes}" includes="**/*.class">
+			<date datetime="${class.tstamp}" pattern="MM/dd/yyyy kk:mm:ss" when="after" granularity="0"/>
+			</fileset>
+		</hotswap>
+	</target>
+
 	<!-- build the distribution jar -->
 	<target name="dist-jar" depends="compile"
-	        description="generate the distribution" >
+			description="generate the distribution" >
 		<!-- Create the distribution directory -->
 		<mkdir dir="${dist.project.dir}/lib"/>
 
 		<!-- Put everything in ${build} into the {project.name}-version.jar file -->
 		<jar jarfile="${dist.project.dir}/${project.name}-${version}.jar"
-			basedir="${targetdir}/classes"/>
+			basedir="${targetdir.classes}"/>
 	</target>
 
 	<!-- build the distribution jar -->
 	<target name="full-dist" depends="compile, dist-jar, javadoc"
-	        description="generate the distribution" >
+			description="generate the distribution" >
 		<zip destfile="${distdir}/${project.name}-${version}.zip"
-		       basedir="${distdir}"/>
+			   basedir="${distdir}"/>
 	</target>
 
-    <fileset id="web.libs" dir="${lib.dir}">
-            <exclude name="testng*"/>
- 	            <exclude name="servlet-api*"/>
-   	            <exclude name="jsp-api*"/> 
+	<fileset id="web.libs" dir="${lib.dir}">
+			<exclude name="testng*"/>
+				<exclude name="servlet-api*"/>
+				<exclude name="jsp-api*"/> 
 	</fileset>
 	
 	<!-- test compiling -->
 	<target name="testCompile" depends="compile">
 		<javac srcdir="${testdir}"
-			destdir="${targetdir}/classes"
+			destdir="${targetdir.classes}"
 			target="${java.target}"
 			debug="on"
-		    debuglevel="lines,vars,source"
+			debuglevel="lines,vars,source"
 			classpathref="testLibraries" />
 	</target>
-
-	<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
 
 	<!-- run the tests -->
 	<target name="run-tests" description="run examples with java" depends="testCompile">
 
 		<echo message="testng-run " />
-        
+		
 		<testng classpathref="testLibraries"
-		        outputDir="${test.output.dir}/output"
-		        haltOnfailure="true"
-			    dumpCommand="true">
+				outputDir="${test.output.dir}/output"
+				haltOnfailure="true"
+				dumpCommand="true">
 
 		   <xmlfileset dir="${testdir}" includes="testng.xml"/>
 		</testng>
@@ -205,83 +231,59 @@
 	<!-- Java Doc the Project -->
 	<target name="javadoc"  description="build the javadocs">
 		<javadoc
-	           destdir="${dist.project.dir}/docs/api"
-	           author="true"
-	           version="true"
-	           use="true"
-	           windowtitle="Metadata Services Toolkit">
+			   destdir="${dist.project.dir}/docs/api"
+			   author="true"
+			   version="true"
+			   use="true"
+			   windowtitle="Metadata Services Toolkit">
 
-	        <fileset dir="src/java" defaultexcludes="yes">
-			    <include name="xc/mst/bo/**"/>
-		    </fileset>
+			<fileset dir="src/java" defaultexcludes="yes">
+				<include name="xc/mst/bo/**"/>
+			</fileset>
 
-		    <doctitle>
+			<doctitle>
 				<![CDATA[<h1>Metadata Services Toolkit Libraries Web Interface</h1>]]>
-		    </doctitle>
-		    <bottom>
-			    <![CDATA[<i>Copyright &#169; 2009 University of Rochester Libraries</i>]]>
-		    </bottom>
-	        <tag name="todo" scope="all" description="To do:"/>
-	        <link offline="true" href="http://java.sun.com/j2se/1.5.0/docs/api/"
-	       	    packagelistLoc="C:\Program Files\Java\jdk1.6.0_12\bin"/>
-        </javadoc>
-    </target>
+			</doctitle>
+			<bottom>
+				<![CDATA[<i>Copyright &#169; 2009 University of Rochester Libraries</i>]]>
+			</bottom>
+			<tag name="todo" scope="all" description="To do:"/>
+			<link offline="true" href="http://java.sun.com/j2se/1.5.0/docs/api/"
+				packagelistLoc="C:\Program Files\Java\jdk1.6.0_12\bin"/>
+		</javadoc>
+	</target>
 
-    <!-- Copy needed files to the web-inf directory
-	     This is so the webapp can point directly
-	     to your jsp files and you can modify them
-	     and view the result by refresing the browser.
-	     You must first tell your web-browser to look
-	     at your webapps directory viewBrowseRecords -->
+	<target name="prepareWebApp" depends="compile">
 
-    <target name="prepareWebApp" depends="compile">
+		<copy todir="${targetdir.webapp}">
+			<fileset dir="${webapp.dir}">
+			</fileset>
+		</copy>
 
-        <!-- Remove the old classes -->
-        <delete dir="${webapp.classes.dir}" />
+		<copy todir="${targetdir.lib}">
+			<fileset dir="${lib.dir}">
+				<exclude name="testng*.jar"/>
+				<exclude name="jsp-api*.jar"/>
+				<exclude name="servlet-api*.jar"/>
+			</fileset>
+		</copy>
 
-        <!-- Remove the old libraries -->
-        <delete dir="${webapp.lib.dir}"/>
+	</target>
 
-        <mkdir dir="${webapp.classes.dir}"/>
-        <mkdir dir="${webapp.lib.dir}"/>
+	<target name="deploy-webapp" depends="prepareWebApp">
+		<copy todir="${tomcat.dir}/webapps/${project.name}">
+			<fileset dir="${targetdir.webapp}">
+			</fileset>
+		</copy>
+	</target>
 
-        <!-- Copy the classes directory into the web classes dir -->
-        <copy todir="${webapp.classes.dir}">
-	       <fileset dir="${targetdir}/classes"/>
-        </copy>
-
-        <copy todir="${webapp.lib.dir}" flatten="true">
-        	<fileset refid="web.libs"/>
-        </copy>
-
-        <copy todir="${webapp.webinf.dir}">
-	        <fileset dir="${conf.dir}/WEB-INF"/>
-        </copy>
-
-        <copy todir="${webapp.webinf.dir}"
-			file="${conf.dir}/web.xml"/>
-     </target>
-
-     <!-- Make the war file for deployment -->
-     <target name="makeWar" depends="compile">
-         <war destfile="${project.name}.war" webxml="${conf.dir}/web.xml">
-	         <webinf dir="${conf.dir}/WEB-INF"/>
-	         <fileset dir="${webapp.dir}">
-		         <exclude name="WEB-INF/**"/>
-	         </fileset>
-	         <classes dir="${targetdir}/classes">
-         		<exclude name="xc/mst/services/aggregation/**"/>
-	         	<exclude name="xc/mst/services/normalization/**"/>
-         		<exclude name="xc/mst/services/transformation/**"/>
-	         </classes>
-
-	         <lib dir="${librarydir}">
-		        <exclude name="testng-4.4.1-jdk15.jar"/>
-	         	<exclude name="jsp-api-6.0.18.jar"/>
-		        <exclude name="servlet-api-6.0.18.jar"/>
-	         </lib>
-        </war>
-    </target>
+	<!-- Make the war file for deployment -->
+	<target name="makeWar" depends="compile">
+		 <jar destfile="${project.name}.war">
+			 <fileset dir="${targetdir.webapp}">
+			 </fileset>
+		 </jar>
+	</target>
 	
 	<target name="dist" depends="makeWar">
 		<delete dir="dist"/>

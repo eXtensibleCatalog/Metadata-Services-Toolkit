@@ -30,6 +30,7 @@ import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.TimingLogger;
 
 /**
  * This class is an interface to the Harvester class which requires only the ID of the harvest schedule
@@ -158,6 +159,20 @@ public class HarvestRunner
 			
 			for(HarvestScheduleStep step : harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()))
 			{
+				StringBuilder sb = new StringBuilder();
+				sb.append("format:");
+				if (step.getFormat() != null) {
+					sb.append(step.getFormat());
+				} else {
+					sb.append("null");
+				}
+				sb.append(" set:");
+				if (step.getSet() != null) {
+					sb.append(step.getSet());
+				} else {
+					sb.append("null");
+				}
+				TimingLogger.log(sb.toString());
 				Harvester.resetProcessedRecordCount();
 				Harvester.resetTotalRecordCount();
 				runHarvestStep(step);
@@ -330,7 +345,7 @@ public class HarvestRunner
 	protected void persistStatus(String status)
 	{
 		try {
-			
+			log.debug("status: "+status);
 			currentHarvest.getHarvestSchedule().setStatus(status);
 			harvestScheduleDao.update(currentHarvest.getHarvestSchedule(), false);
 
