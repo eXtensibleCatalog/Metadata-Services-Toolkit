@@ -278,7 +278,7 @@
 	</target>
 
 	<!-- Make the war file for deployment -->
-	<target name="makeWar" depends="compile">
+	<target name="makeWar" depends="prepareWebApp">
 		 <jar destfile="${project.name}.war">
 			 <fileset dir="${targetdir.webapp}">
 			 </fileset>
