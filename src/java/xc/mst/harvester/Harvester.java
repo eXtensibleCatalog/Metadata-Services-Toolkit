@@ -72,6 +72,7 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.processingDirective.DefaultJobService;
 import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.record.DBRecordService;
+import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
@@ -139,7 +140,10 @@ public class Harvester implements ErrorHandler
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private static RecordService recordService = new DBRecordService();
+	// BDA: This will eventually be configured through spring, but for now this'll do.  The DBRecordService
+	// is my hacked up version for testing mysql performance  
+	//private static RecordService recordService = new DBRecordService();
+	private static RecordService recordService = new DefaultRecordService();
 	
 	/**
 	 * Manager for getting, inserting and updating jobs
@@ -708,8 +712,11 @@ public class Harvester implements ErrorHandler
                 TimingLogger.log("extractRecords complete");
                 TimingLogger.reset("record");
                 TimingLogger.reset("serialize");
-			//} while(resumption != null); // Repeat as long as we get a resumption token
-			} while(false); // I only want to run the 5,000 for now
+                
+                if (MSTConfiguration.isPerformanceTestingMode()) {
+                	resumption = null; // I only want to run the 5,000 for now
+                }
+			} while(resumption != null); // Repeat as long as we get a resumption token
 			if (recordService instanceof DBRecordService) {
 				((DBRecordService)recordService).commit();
 			}
@@ -1060,7 +1067,7 @@ public class Harvester implements ErrorHandler
 				processedRecordCount++;
 			} // end try(insert the record)
 			catch(Hexception hex){
-				
+				log.error("Hexception occured.", hex);
 				throw hex;
 			}
 			catch (Exception e)

@@ -282,7 +282,6 @@ public class TransformationService extends MetadataService
 			// Create a MarcXmlRecord for the record
 			MarcXmlRecord originalRecord = new MarcXmlRecord(marcXml);
 
-
 			// Get the ORG code from the 035 field
 			orgCode = originalRecord.getOrgCode();
 			if (orgCode.equals("")) {

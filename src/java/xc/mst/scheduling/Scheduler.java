@@ -122,11 +122,6 @@ public class Scheduler extends Thread
 			// Get the current time
 			Calendar now = Calendar.getInstance();
 
-			if(log.isDebugEnabled())
-				log.debug("Harvest Scheduler checking for harvests scheduled to run now.  The time is " +
-						  now.get(Calendar.MINUTE) + " minutes, " + now.get(Calendar.HOUR_OF_DAY) + " hours, and " +
-						  now.get(Calendar.DAY_OF_WEEK) + " day of the week.");
-
 			// Get a list of harvest schedules which need to be run now
 			List<HarvestSchedule> schedulesToRun = null;
 

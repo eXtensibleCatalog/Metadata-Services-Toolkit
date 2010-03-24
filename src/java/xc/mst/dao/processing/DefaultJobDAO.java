@@ -665,9 +665,6 @@ public class DefaultJobDAO extends JobDAO
 
 		synchronized(psNextJobToExecuteLock)
 		{
-			if(log.isDebugEnabled())
-				log.debug("Get next job in queue");
-
 			// The ResultSet from the SQL query
 			ResultSet results = null;
 			
@@ -718,7 +715,7 @@ public class DefaultJobDAO extends JobDAO
 					
 				} // end loop over results
 
-				if(log.isDebugEnabled())
+				if(log.isDebugEnabled() && job != null)
 					log.debug("Found job " + job + " in the database.");
 
 				return job;

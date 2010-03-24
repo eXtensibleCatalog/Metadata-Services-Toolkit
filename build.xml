@@ -18,7 +18,6 @@
 		<echo message="sourcedir = ${sourcedir}"/>
 		<echo message="distdir = ${distdir}"/>
 		<echo message="dist.project.dir = ${dist.project.dir}"/>
-		<echo message="librarydir = ${librarydir}"/>
 		<echo message="project.name = ${project.name}"/>
 		<echo message="version = ${version}"/>
 	</target>
@@ -29,8 +28,11 @@
 		<!-- Create the build directory structure used by compile -->
 		<mkdir dir="${targetdir.classes}"/>
 		<mkdir dir="${targetdir.lib}"/>
+		<mkdir dir="${lib.dir}"/>
 		<mkdir dir="${dist.project.dir}"/>
-		<mkdir dir="${librarydir}"/>
+
+		<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
+
 	</target>
 
 	
@@ -100,9 +102,9 @@
 	</target>
 
 	<!-- download and place into the default lib folder -->
-	<target name="retrieve" depends="ivy-report"
+	<target name="retrieve" depends="init,ivy-report"
 	   description="-->Place the files in location for project">
-	   <ivy:retrieve sync="true"/>
+	   <ivy:retrieve sync="true" pattern="${lib.dir}/[artifact].[ext]"/>
 	</target>
 	
 	<!-- Set the location where the libraries this project is dependent -->
@@ -114,7 +116,7 @@
 		<path refid="libraries"/>
 		<pathelement location="${targetdir.classes}"/>
 
-		<fileset dir="${librarydir}">
+		<fileset dir="${lib.dir}">
 			<include name="testng-5.8-jdk15.jar" />
 		</fileset>
 	</path>
@@ -211,8 +213,6 @@
 			classpathref="testLibraries" />
 	</target>
 
-	<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
-
 	<!-- run the tests -->
 	<target name="run-tests" description="run examples with java" depends="testCompile">
 
@@ -261,10 +261,10 @@
 		</copy>
 
 		<copy todir="${targetdir.lib}">
-			<fileset dir="${librarydir}">
-				<exclude name="testng-4.4.1-jdk15.jar"/>
-				<exclude name="jsp-api-6.0.18.jar"/>
-				<exclude name="servlet-api-6.0.18.jar"/>
+			<fileset dir="${lib.dir}">
+				<exclude name="testng*.jar"/>
+				<exclude name="jsp-api*.jar"/>
+				<exclude name="servlet-api*.jar"/>
 			</fileset>
 		</copy>
 
@@ -278,7 +278,7 @@
 	</target>
 
 	<!-- Make the war file for deployment -->
-	<target name="makeWar" depends="compile">
+	<target name="makeWar" depends="prepareWebApp">
 		 <jar destfile="${project.name}.war">
 			 <fileset dir="${targetdir.webapp}">
 			 </fileset>
@@ -299,7 +299,7 @@
 		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
 		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
 		<copy file="MetadataServicesToolkit.war" todir="dist/mst-instances"/>
-		<zip destfile="dist/MetadataServicesToolkit_v_0.2.6.5.zip"  basedir="dist" />
+		<zip destfile="dist/MetadataServicesToolkit_v_0.2.6.6.zip"  basedir="dist" />
 
 		<!-- Create the Normalization Services zip archive -->
 		<zip destfile="Normalization_v_0.2.8.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Normalization/**"/> 

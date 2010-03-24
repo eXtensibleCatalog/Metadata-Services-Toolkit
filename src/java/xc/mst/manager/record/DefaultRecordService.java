@@ -751,20 +751,25 @@ public class DefaultRecordService extends RecordService
 		// True if we're getting the count for a specific metadataPrefix, false if we're getting it for all records
 		boolean useMetadataPrefix = (formatId > 0);
 
-		DateFormat format = DateFormat.getInstance();
-
 		if(log.isDebugEnabled())
-			log.debug("Getting the records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? " in set with setSPec " + set.getSetSpec() : "") + (useMetadataPrefix ? " with format ID " + formatId : "" ));
+			log.debug("Getting the records updated later than " + from + " and earlier than " + until + (useSet ? " in set with setSPec " + set.getSetSpec() : "") + (useMetadataPrefix ? " with format ID " + formatId : "" ));
 
 		// Create a query to get the Documents for unprocessed records
 		SolrQuery query = new SolrQuery();
 		StringBuffer queryBuffer = new StringBuffer();
-		queryBuffer.append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
 		
 		if(useSet)
-			queryBuffer.append(" AND ").append(FIELD_SET_SPEC).append(":").append(set.getSetSpec());
+			queryBuffer.append(FIELD_SET_SPEC).append(":").append(set.getSetSpec());
+		if (useSet && useMetadataPrefix)
+			queryBuffer.append(" AND ");
 		if(useMetadataPrefix)
-			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID + ":").append(Integer.toString(formatId));
+			queryBuffer.append(FIELD_FORMAT_ID + ":").append(Integer.toString(formatId));
+
+		if (useSet || useMetadataPrefix)
+			queryBuffer.append(" AND ");
+
+		queryBuffer.append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
+
 		
 		// Get only fields OAI header & OAI XML
 		query.addField(FIELD_OAI_HEADER);
@@ -785,7 +790,6 @@ public class DefaultRecordService extends RecordService
 		
 		query.setStart(offset);
 		query.setRows(numResults);
-
 		SolrDocumentList docs = solrIndexManager.getDocumentList(query);
 		Iterator<SolrDocument> iteration = docs.iterator();
 		List<Record> records = new ArrayList<Record>();
@@ -801,11 +805,11 @@ public class DefaultRecordService extends RecordService
 		if(result.getTotalNumberOfResults() == 0)
 		{
 			if(log.isDebugEnabled())
-				log.debug("Could not find any records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? " in set with setSPec " + set.getSetSpec() : "") + (useMetadataPrefix ? " with format ID " + formatId : "" ));
+				log.debug("Could not find any records updated later than " + from + " and earlier than " + until + (useSet ? " in set with setSPec " + set.getSetSpec() : "") + (useMetadataPrefix ? " with format ID " + formatId : "" ));
 
 		} else {
 			if(log.isDebugEnabled())
-				log.debug("Found " + records.size() + " records updated later than " + format.format(from) + " and earlier than " + format.format(until) + (useSet ? " in set with setSPec " + set.getSetSpec() : "") + (useMetadataPrefix ? " with format ID " + formatId : "" ));
+				log.debug("Found " + records.size() + " records updated later than " + from + " and earlier than " + until + (useSet ? " in set with setSPec " + set.getSetSpec() : "") + (useMetadataPrefix ? " with format ID " + formatId : "" ));
 		}
 
 		return result;

@@ -963,9 +963,6 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 			// The list of results to return
 			List<HarvestSchedule> harvestSchedules = new ArrayList<HarvestSchedule>();
 
-			if(log.isDebugEnabled())
-				log.debug("Getting all harvest schedules with hour " + hour + " or day of the week " + dayOfWeek + " or minute " + minute);
-
 			// The ResultSet from the SQL query
 			ResultSet results = null;
 
@@ -1050,7 +1047,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedules.add(harvestSchedule);
 				} // end loop over results
 
-				if(log.isDebugEnabled())
+				if(log.isDebugEnabled() && harvestSchedules.size() > 0)
 					log.debug("Found " + harvestSchedules.size() + " harvest schedules with hour " + hour + " or day of the week " + dayOfWeek + " or minute " + minute);
 
 				return harvestSchedules;

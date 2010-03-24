@@ -56,14 +56,12 @@
         <dependency org="jstl" name="jstl" rev="1.1.2" transitive="false">
             <artifact name="jstl" type="jar"/>
         </dependency>
-
-       
-        <!--  struts 2 files and dependencies -->
+        
+         <!--  struts 2 files and dependencies -->
         <dependency org="org.apache.struts" name="struts2-core" rev="2.1.2" transitive="false">
             <artifact name="struts2-core" type="jar"/>
         </dependency>
        
-   
         <dependency org="commons-fileupload" name="commons-fileupload" rev="1.2.1" transitive="false">
             <artifact name="commons-fileupload" type="jar"/>
         </dependency>
