@@ -1,0 +1,1 @@
+echo $TOMCAT_HOME

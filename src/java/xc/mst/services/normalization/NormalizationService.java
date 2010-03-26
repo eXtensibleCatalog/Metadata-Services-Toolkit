@@ -131,8 +131,6 @@ public class NormalizationService extends MetadataService
 	 */
 	private List<String> outputRecordErrors = new ArrayList<String>();
 	
-	private static RecordService recordService = new DefaultRecordService();
-	
 	private SetService setService = new DefaultSetService();
 
     /**
@@ -441,7 +439,7 @@ public class NormalizationService extends MetadataService
 			RecordList existingRecords = recordService.getSuccessorsCreatedByServiceIdIncludingDeletedRecords(record.getId(), service.getId());
 			
 			// If there was already a processed record for the record we just processed, update it
-			if(existingRecords.size() > 0)
+			if(existingRecords != null && existingRecords.size() > 0)
 			{
 				if(log.isDebugEnabled())
 					log.debug("Updating the record which was processed from an older version of the record we just processed.");

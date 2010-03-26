@@ -111,7 +111,7 @@ public abstract class MetadataService
 	/**
 	 * Data access object for getting OAI IDs
 	 */
-	private static OaiIdentifierForServiceDAO oaiIdDao = new DefaultOaiIdentiferForServiceDAO();
+	protected OaiIdentifierForServiceDAO oaiIdDao = new DefaultOaiIdentiferForServiceDAO();
 
 	/**
 	 * Data access object for getting FRBR level IDs
@@ -141,7 +141,7 @@ public abstract class MetadataService
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private static RecordService recordService = new DefaultRecordService();
+	protected RecordService recordService = new DefaultRecordService();
 	
 	/**
 	 * Manager for getting, inserting and updating jobs
@@ -461,7 +461,7 @@ public abstract class MetadataService
 	 * @throws IndexException 
 	 * @throws InterruptedException 
 	 */
-	private void processRecordBatch(Records records) throws IndexException, InterruptedException, Exception{
+	protected void processRecordBatch(Records records) throws IndexException, InterruptedException, Exception{
 		
 		// Iterate over the list of input records and process each.
 		// Then run the processing directives on the results of each and add

@@ -6,10 +6,15 @@ import xc.mst.bo.record.Record;
 import xc.mst.dao.DataException;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.index.Records;
 
 public class DBRecordService extends DefaultRecordService {
 	
-	DefaultRecordDao recordDao = new DefaultRecordDao(); 
+	DBRecordDao recordDao = new DBRecordDao();
+	
+	// actually these should probably go in the dao
+	protected int offset = 0;
+	protected int recordsAtOnce = 5000;
 
 	@Override
 	public boolean insert(Record record) throws DataException, IndexException
@@ -37,9 +42,22 @@ public class DBRecordService extends DefaultRecordService {
 	} // end method insert(Record)
 	
 	public void commit() {
-		TimingLogger.start("recordDao.commit");
+		TimingLogger.log("before recordDao.commit");
 		recordDao.commit();
-		TimingLogger.stop("recordDao.commit");
+		TimingLogger.log("after recordDao.commit");
 	}
 	
+	public Record getByOaiIdentifierAndService(String id, int serviceId) {
+		return null;
+	}
+	
+	public Records getInputForServiceToProcess(int serviceId) {
+		return getInputForServiceToProcess(serviceId, false);
+	}
+	
+	public Records getInputForServiceToProcess(int serviceId, boolean reset) {
+		// implement in dao
+		return null;
+	}
+
 }

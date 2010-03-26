@@ -180,7 +180,8 @@ public class DefaultUserService implements UserService {
             }
 
             byte raw[] = md.digest(); //step 4
-            String hash = new String((new Base64()).encode(raw)); //step 5
+            raw = (new Base64()).encode(raw);
+            String hash = new String(raw, 0, raw.length-2); //step 5
             return hash; //step 6
       }
 

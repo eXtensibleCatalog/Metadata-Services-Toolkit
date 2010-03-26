@@ -1,5 +1,3 @@
-. ./scripts/env.sh
-
 for file in $(ls -1 $TOMCAT_HOME/MST-instances/MetadataServicesToolkit/logs/*.txt) 
 do
 	echo "" > $file

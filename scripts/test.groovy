@@ -12,6 +12,12 @@ for (int i=0; i<proc.length; i++) {
 print proc.text
 */
 
-file = new File('../../../cool2.xml')
-file.eachLine{print it}
+//file = new File('../../../cool2.xml')
+//file.eachLine{print it}
 
+def d0 = new Date();
+d0.setYear(100);
+println d0
+def d1 = new Date();
+def diffInSecs = (d1.getTime()-d0.getTime())/1000;
+println diffInSecs;

@@ -142,8 +142,8 @@ public class Harvester implements ErrorHandler
 	 */
 	// BDA: This will eventually be configured through spring, but for now this'll do.  The DBRecordService
 	// is my hacked up version for testing mysql performance  
-	//private static RecordService recordService = new DBRecordService();
-	private static RecordService recordService = new DefaultRecordService();
+	private static RecordService recordService = new DBRecordService();
+	//private static RecordService recordService = new DefaultRecordService();
 	
 	/**
 	 * Manager for getting, inserting and updating jobs
