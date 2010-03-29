@@ -305,7 +305,7 @@ public abstract class MetadataService
 		try
 		{
 			// Get the list of record inputs for this service
-			Records records = recordService.getInputForServiceToProcess(service.getId());
+			List<Record> records = recordService.getInputForServiceToProcess(service.getId());
 			totalRecordCount = records.size();
 			log.info("Number of records to be processed by service = " + totalRecordCount);
 			
@@ -341,7 +341,7 @@ public abstract class MetadataService
 			}
 
 			// Now process the records with no record_type info
-			Records inputRecords  = recordService.getInputForServiceToProcess(service.getId());
+			List<Record> inputRecords  = recordService.getInputForServiceToProcess(service.getId());
 			processRecordBatch(inputRecords);
 
 			// Reopen the reader so it can see the changes made by running the service
@@ -461,7 +461,7 @@ public abstract class MetadataService
 	 * @throws IndexException 
 	 * @throws InterruptedException 
 	 */
-	protected void processRecordBatch(Records records) throws IndexException, InterruptedException, Exception{
+	protected void processRecordBatch(List<Record> records) throws IndexException, InterruptedException, Exception{
 		
 		// Iterate over the list of input records and process each.
 		// Then run the processing directives on the results of each and add

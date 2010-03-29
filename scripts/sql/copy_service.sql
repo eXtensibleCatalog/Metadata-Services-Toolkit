@@ -25,7 +25,7 @@ insert into services (
 )
 select 
 	3,
-	'dummy service',
+	'db norm service',
 	service_jar,
 	service_configuration,
 	'xc.mst.services.normalization.DBNormalizationService',
@@ -47,3 +47,21 @@ select
 	version,
 	is_deleted
 from services where service_id=1;
+
+delete from services_to_input_formats where service_id=3;
+insert services_to_input_formats (
+	service_id,
+	format_id
+)
+select 3, format_id
+from services_to_input_formats
+where service_id=1;
+
+delete from services_to_output_formats where service_id=3;
+insert services_to_output_formats (
+	service_id,
+	format_id
+)
+select 3, format_id
+from services_to_output_formats
+where service_id=1;

@@ -309,7 +309,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByFormatIdAndServiceId(int, int)
 
 	@Override
-	public Records getInputForServiceToProcess(int serviceId) throws IndexException
+	public List<Record> getInputForServiceToProcess(int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records that are input for the service with service ID " + serviceId);

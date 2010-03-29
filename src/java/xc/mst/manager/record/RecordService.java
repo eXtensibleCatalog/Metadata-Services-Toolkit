@@ -351,7 +351,7 @@ public abstract class RecordService
 	 *
 	 * @return A list of all records that need to be processed for a given service
 	 */
-	public abstract Records getInputForServiceToProcess(int serviceId) throws IndexException;
+	public abstract List<Record> getInputForServiceToProcess(int serviceId) throws IndexException;
 
 	/**
 	 * Gets all record inputs that were not processed for a given Service and Record Type

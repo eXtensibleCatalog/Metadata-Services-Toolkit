@@ -1,20 +1,18 @@
 package xc.mst.manager.record;
 
 import java.util.Date;
+import java.util.List;
 
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DataException;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.TimingLogger;
-import xc.mst.utils.index.Records;
+import xc.mst.utils.index.RecordList;
 
 public class DBRecordService extends DefaultRecordService {
 	
 	DBRecordDao recordDao = new DBRecordDao();
-	
-	// actually these should probably go in the dao
-	protected int offset = 0;
-	protected int recordsAtOnce = 5000;
+
 
 	@Override
 	public boolean insert(Record record) throws DataException, IndexException
@@ -51,13 +49,21 @@ public class DBRecordService extends DefaultRecordService {
 		return null;
 	}
 	
-	public Records getInputForServiceToProcess(int serviceId) {
+	public List<Record> getInputForServiceToProcess(int serviceId) {
 		return getInputForServiceToProcess(serviceId, false);
 	}
 	
-	public Records getInputForServiceToProcess(int serviceId, boolean reset) {
-		// implement in dao
-		return null;
+	public List<Record> getInputForServiceToProcess(int serviceId, boolean reset) {
+		return recordDao.getInputForServiceToProcess(serviceId, reset);
 	}
 
+	@Override
+	public RecordList getSuccessorsCreatedByServiceIdIncludingDeletedRecords(long recordId, long serviceId) throws IndexException {
+		return null;
+	}
+	
+	@Override
+	public boolean update(Record record) throws DataException, IndexException {
+		return true;
+	}
 }

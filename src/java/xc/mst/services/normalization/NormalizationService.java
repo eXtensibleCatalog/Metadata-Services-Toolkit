@@ -28,8 +28,6 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.record.DefaultRecordService;
-import xc.mst.manager.record.RecordService;
 import xc.mst.manager.repository.DefaultFormatService;
 import xc.mst.manager.repository.DefaultSetService;
 import xc.mst.manager.repository.FormatService;
