@@ -140,8 +140,8 @@ public class TimingStats {
 				avgTime = String.format("%.2f", avg);
 				avgTime = StringUtils.leftPad(avgTime, 10);
 			}
-			String longestTime = StringUtils.leftPad(timer.longestTime+"", 6);
-			String num = StringUtils.leftPad(timer.numTimes+"", 6);
+			String longestTime = StringUtils.leftPad(timer.longestTime+"", 7);
+			String num = StringUtils.leftPad(timer.numTimes+"", 7);
 			sb.append("TimingLogger! total: "+totalTime+"    avg:"+avgTime+"    longest:"+longestTime+"    num:"+num+"   "+name);
 			LOG.debug(sb);
 		}
@@ -149,7 +149,9 @@ public class TimingStats {
 	
 	public void reset() {
 		LOG.debug("reset()");
+		LOG.debug("***");
 		reset(true);
+		LOG.debug("***");
 	}
 	
 	public void reset(boolean includeDefault) {

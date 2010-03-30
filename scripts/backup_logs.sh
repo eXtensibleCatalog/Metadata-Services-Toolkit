@@ -1,4 +1,4 @@
-folder="${BASE_DIR}/old_logs/$(date +%Y%m%d_%H%M%S)"
+export folder="${BASE_DIR}/backups/$(date +%Y%m%d_%H%M%S)/logs"
 mkdir -p ${folder}
 
 for file in $(ls -1 $MST_INSTANCE/logs/*.txt*) 

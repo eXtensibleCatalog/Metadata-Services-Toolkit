@@ -569,7 +569,11 @@ CREATE TABLE `processing_directives_to_input_sets` (
 
 LOCK TABLES `processing_directives_to_input_sets` WRITE;
 /*!40000 ALTER TABLE `processing_directives_to_input_sets` DISABLE KEYS */;
-INSERT INTO `processing_directives_to_input_sets` VALUES (27,9,10),(28,9,11),(29,9,12),(30,9,19),(31,9,20),(32,9,21);
+-- BDA
+INSERT INTO `processing_directives_to_input_sets` VALUES 
+( 1,9, 1),( 2,9, 2),( 3,9, 3),( 4,9, 4),( 5,9, 5),( 6,9, 6),( 7,9, 7),( 8,9, 8),( 9,9, 9),(10,9,10),
+(11,9,11),(12,9,12),(13,9,13),(14,9,14),(15,9,15),(16,9,16),(17,9,17),(18,9,18),(19,9,19),(20,9,20),
+(21,9,21),(22,9,22);
 /*!40000 ALTER TABLE `processing_directives_to_input_sets` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -528,6 +528,7 @@ public class DefaultRecordService extends RecordService
 	@Override
 	public Record getByOaiIdentifierAndProvider(String identifier, int providerId) throws DatabaseConfigException, IndexException
 	{
+		TimingLogger.start("getByOaiIdentifierAndProvider");
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with the OAI identifier " + identifier + " and provider ID " + providerId);
 
@@ -551,6 +552,7 @@ public class DefaultRecordService extends RecordService
 		if(log.isDebugEnabled())
 			log.debug("Parcing the record with the OAI identifier " + identifier + " and provider ID " + providerId + " from the Lucene Document it was stored in.");
 
+		TimingLogger.stop("getByOaiIdentifierAndProvider");
 		return records.get(0);
 	} // end method getByOaiIdentifierAndProvider(String, int)
 

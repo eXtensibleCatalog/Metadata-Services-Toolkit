@@ -151,6 +151,7 @@ public class NormalizationService extends MetadataService
 
 	@Override
 	public void  processRecord(Record processMe) throws Exception {
+		TimingLogger.start("processRecord");
 		
 		// If the record was deleted, delete and reprocess all records that were processed from it
 		if(processMe.getDeleted())
@@ -182,7 +183,9 @@ public class NormalizationService extends MetadataService
 		} 
 
 		// Get the results of processing the record
+		TimingLogger.start("convertRecord");
 		List<Record> results = convertRecord(processMe);
+		TimingLogger.stop("convertRecord");
 		
 		boolean updatedInputRecord = false;
 		for(Record outgoingRecord : results)
@@ -248,6 +251,7 @@ public class NormalizationService extends MetadataService
 		
 		processedRecordCount++;
 	
+		TimingLogger.stop("processRecord");
 	}
 	
 	private List<Record> convertRecord(Record record)
@@ -278,7 +282,9 @@ public class NormalizationService extends MetadataService
 				if(log.isDebugEnabled())
 					log.debug("Parsing the record's XML into a Document Object.");
 
+				TimingLogger.start("create dom");
 				marcXml = builder.build(new InputSource(new StringReader(record.getOaiXml())));
+				TimingLogger.stop("create dom");
 			}
 			catch(IOException e)
 			{

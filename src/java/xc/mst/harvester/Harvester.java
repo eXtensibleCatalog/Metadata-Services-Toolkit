@@ -8,9 +8,7 @@
   */
 package xc.mst.harvester;
 
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.URLEncoder;
@@ -72,7 +70,6 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.processingDirective.DefaultJobService;
 import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.record.DBRecordService;
-import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
@@ -645,7 +642,6 @@ public class Harvester implements ErrorHandler
 			{
 				// Abort the harvest if the harvester was killed
 				checkSignal(baseURL);
-				TimingLogger.log("checked if killed");
 
 				request = baseURL;
 				String reqMessage;
@@ -705,13 +701,13 @@ public class Harvester implements ErrorHandler
 				}
 
 				// Perform the harvest
+				TimingLogger.start("getDoc");
 			    Document doc = getDoc(request);
-			    TimingLogger.log("getDoc complete");
+			    TimingLogger.stop("getDoc");
 
+			    TimingLogger.start("extractRecords");
                 resumption = extractRecords(metadataPrefix, doc, baseURL);
-                TimingLogger.log("extractRecords complete");
-                TimingLogger.reset("record");
-                TimingLogger.reset("serialize");
+                TimingLogger.stop("extractRecords");
                 
                 if (MSTConfiguration.isPerformanceTestingMode()) {
                 	resumption = null; // I only want to run the 5,000 for now
@@ -971,9 +967,7 @@ public class Harvester implements ErrorHandler
 					deleted = true;
 
 				// Serialize the contents of the OAI header
-				TimingLogger.start("serialize");
 				oaiHeader = serialize((Node)headerElement);
-				TimingLogger.log("serialize", "after serialize", true);
 
 				Record record = new Record();
 				record.setProvider(provider);
@@ -1377,9 +1371,11 @@ public class Harvester implements ErrorHandler
 
 			startOaiRequest = System.currentTimeMillis();
 
+			TimingLogger.start("http sent and received");
 			synchronized(client)
 			{
 				// Instantiate a GET HTTP method to get the Voyager "first" page
+				
 				getOaiResponse = new GetMethod(request);
 
 				// Execute the get method to get the Voyager "first" page
@@ -1390,6 +1386,7 @@ public class Harvester implements ErrorHandler
 	        if(statusCode == 200)
 	        {
 	        	InputStream istm = getOaiResponse.getResponseBodyAsStream();
+	        	TimingLogger.stop("http sent and received");
 	        	
 	        	String line;
 	        	/*
@@ -1401,8 +1398,8 @@ public class Harvester implements ErrorHandler
         	    */
 	        	//System.out.println(sb.toString());
 	        	
-	        	TimingLogger.log("messagereceived");
 	        	finishOaiRequest = System.currentTimeMillis();
+	        	
 
 	            log.info("Time taken to get a response from the server " + (finishOaiRequest-startOaiRequest));
 	            oaiRepositoryTime += (finishOaiRequest-startOaiRequest);
@@ -1529,6 +1526,7 @@ public class Harvester implements ErrorHandler
 	 */
 	private Element findChild(Element element, String tag)
 	{
+		TimingLogger.start("findChild");
 		Element result = null;
 		Node node = element.getFirstChild();
 
@@ -1546,6 +1544,7 @@ public class Harvester implements ErrorHandler
 			node = node.getNextSibling();
 		} // end loop over the element's children
 
+		TimingLogger.stop("findChild");
 		return result;
 	} // end method findChild(Element, String)
 
@@ -1560,6 +1559,7 @@ public class Harvester implements ErrorHandler
 	 */
 	private Element findSibling(Element element, String tag)
 	{
+		TimingLogger.start("findSibling");
 		Element result = null;
 		Node node = element.getNextSibling();
 
@@ -1575,6 +1575,7 @@ public class Harvester implements ErrorHandler
 			node = node.getNextSibling();
 		} // end loop over siblings
 
+		TimingLogger.stop("findSibling");
 		return result;
 	} // end method findSibling(Element, String)
 
@@ -1590,6 +1591,7 @@ public class Harvester implements ErrorHandler
 	 */
 	private Element findSibling(Element element, String taga, String tagb)
 	{
+		TimingLogger.start("findSibling2");
 		Element result = null;
 		Node node = element.getNextSibling();
 
@@ -1605,6 +1607,7 @@ public class Harvester implements ErrorHandler
 			node = node.getNextSibling();
 		} // end loop over siblings
 
+		TimingLogger.stop("findSibling2");
 		return result;
 	} // end method findSibling(Element, String, String)
 
@@ -1616,9 +1619,12 @@ public class Harvester implements ErrorHandler
 	 */
 	private String getContent(Node node)
 	{
+		TimingLogger.start("getContent");
 		StringBuffer result = new StringBuffer();
 		getContentSub(node, result);
-		return result.toString();
+		String s = result.toString(); 
+		TimingLogger.stop("getContent");
+		return s;
 	} // end method getContent(Node)
 
 	/**
@@ -1629,6 +1635,7 @@ public class Harvester implements ErrorHandler
 	 */
 	private void getContentSub(Node node, StringBuffer resultBuffer)
 	{
+		TimingLogger.start("getContentSub");
 		switch (node.getNodeType())
 		{
 			case Node.TEXT_NODE:
@@ -1646,6 +1653,7 @@ public class Harvester implements ErrorHandler
 				break;
 			default: // ignore all else
 		} // end switch on node type
+		TimingLogger.stop("getContentSub");
 	} // end method getContentSub(Node, StringBuffer)
 
 	/**
@@ -1661,6 +1669,7 @@ public class Harvester implements ErrorHandler
 	 */
 	private String formatDate(int granularity, Date dt)
 	{
+		TimingLogger.start("formatDate");
 		SimpleDateFormat sdf = null;
 
 		if (granularity == ValidateRepository.GRAN_SECOND)
@@ -1673,6 +1682,7 @@ public class Harvester implements ErrorHandler
 
 		String res = sdf.format(dt);
 
+		TimingLogger.stop("formatDate");
 		return res;
 	} // end method formatDate(int, Date)
 
@@ -1684,6 +1694,7 @@ public class Harvester implements ErrorHandler
 	 */
 	private String serialize(Node node)
 	{
+		TimingLogger.start("serialize");
 		try
 		{
 			OutputFormat format = new OutputFormat();
@@ -1708,7 +1719,9 @@ public class Harvester implements ErrorHandler
 	    {
 	        log.error("Error: ", e);
 	        return null;
-	    } // end catch(Exception)
+	    } finally {
+	    	TimingLogger.stop("serialize");
+	    }
 	} // end method serialize(Node)
 
 	/**
