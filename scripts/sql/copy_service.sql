@@ -1,4 +1,4 @@
-delete from services where service_id=3;
+delete from services where service_id=99;
 insert into services (
 	service_id,
 	service_name,
@@ -24,12 +24,12 @@ insert into services (
 	is_deleted
 )
 select 
-	3,
+	99,
 	'db norm service',
 	service_jar,
 	service_configuration,
 	'xc.mst.services.normalization.DBNormalizationService',
-	identifier,
+	'DBMARCNormalization',
 	warnings,
 	errors,
 	input_record_count,
@@ -46,22 +46,27 @@ select
 	xccfg_file_name,
 	version,
 	is_deleted
-from services where service_id=1;
+from services 
+where identifier='MARCNormalization';
 
-delete from services_to_input_formats where service_id=3;
+delete from services_to_input_formats where service_id=99;
 insert services_to_input_formats (
 	service_id,
 	format_id
 )
-select 3, format_id
-from services_to_input_formats
-where service_id=1;
+select 99, s2.format_id
+from services_to_input_formats s2,
+	services s
+where s.identifier='MARCNormalization'
+	and s.service_id = s2.service_id;
 
-delete from services_to_output_formats where service_id=3;
+delete from services_to_output_formats where service_id=99;
 insert services_to_output_formats (
 	service_id,
 	format_id
 )
-select 3, format_id
-from services_to_output_formats
-where service_id=1;
+select 99, s2.format_id
+from services_to_output_formats s2,
+	services s
+where s.identifier='MARCNormalization'
+	and s.service_id = s2.service_id;

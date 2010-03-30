@@ -716,11 +716,13 @@ public class Harvester implements ErrorHandler
                 if (MSTConfiguration.isPerformanceTestingMode()) {
                 	resumption = null; // I only want to run the 5,000 for now
                 }
+    			if (recordService instanceof DBRecordService) {
+    				((DBRecordService)recordService).commit(false);
+    			}
 			} while(resumption != null); // Repeat as long as we get a resumption token
 			if (recordService instanceof DBRecordService) {
-				((DBRecordService)recordService).commit();
+				((DBRecordService)recordService).commit(true);
 			}
-
 		} // end try(run the harvest)
 		catch (Hexception he)
 		{
@@ -1050,7 +1052,7 @@ public class Harvester implements ErrorHandler
 				Record oldRecord = (firstHarvest ? null : recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId));
 
 				// If the current record is a new record, insert it
-				TimingLogger.start("insert to solr");
+				TimingLogger.start("insert record");
 				if(oldRecord == null) {
 					insertNewRecord(record);
 				// Otherwise we've seen the record before.  Update or delete it as appropriate
@@ -1063,7 +1065,7 @@ public class Harvester implements ErrorHandler
 						updateExistingRecord(record, oldRecord);
 					}
 				} // end else(the record already existed it the index)
-				TimingLogger.stop("insert to solr");
+				TimingLogger.stop("insert record");
 				processedRecordCount++;
 			} // end try(insert the record)
 			catch(Hexception hex){
@@ -1111,7 +1113,6 @@ public class Harvester implements ErrorHandler
 		log.info("Time to clear the resumption token " + (resTokEndTime - resTokStartTime));
 		insertRecordsTime += (resTokEndTime - resTokStartTime);
 		log.info("Total time to clear resumption tokens " + insertRecordsTime);
-		TimingLogger.reset(false);
 		return resumption;
 	} // end method extractRecords(String, Document, String)
 

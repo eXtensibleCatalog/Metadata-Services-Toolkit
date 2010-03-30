@@ -18,17 +18,15 @@ public class DBRecordDao {
 	protected Connection conn = null;
 	
 	protected int offset = 0;
-	protected int recordsAtOnce = 5000;
+	protected int readsAtOnce = 50000;
+	protected int insertsAtOnce = 50000;
+	protected int insertTally = 0;
 	
 	public boolean insert(Record record) {
+		TimingLogger.start("DBRecordDao.insert");
 		try {
-			if (conn == null) {
+			if (conn == null || conn.isClosed()) {
 				conn = MySqlConnectionManager.getConnection();
-				//create table records_xml (
-				//id             int         primary key,
-				//xml            varchar(21842)
-
-
 			}
 			if (recordsXmlPS == null) {
 				String sql = 
@@ -82,20 +80,31 @@ public class DBRecordDao {
 				recordsPS.setString(i++, tokens[3]);
 			}
 			recordsPS.addBatch();
-			//recordsPS.setString(i++, record.getO)
+			
+			insertTally++;
+			TimingLogger.stop("DBRecordDao.insert");
 			return true;
 		} catch (SQLException sqe) {
 			throw new RuntimeException(sqe);
 		}
 	}
 	
-	public void commit() {
+	public void commit(boolean force) {
 		try {
-			recordsXmlPS.executeBatch();
-			recordsPS.executeBatch();
-			recordsXmlPS = null;
-			recordsPS = null;
-			conn.close();
+			if (insertTally >= insertsAtOnce) {
+				force = true;
+			}
+			if (force) {
+				TimingLogger.start("DBRecordDao.commit");
+				insertTally = 0;
+				recordsXmlPS.executeBatch();
+				recordsPS.executeBatch();
+				recordsXmlPS = null;
+				recordsPS = null;
+				conn.close();
+				TimingLogger.stop("DBRecordDao.commit");
+				TimingLogger.reset(false);
+			}
 		} catch (SQLException sqe) {
 			throw new RuntimeException(sqe);
 		}
@@ -111,7 +120,7 @@ public class DBRecordDao {
 			"from records r, records_xml rx  "+
 			"where r.id = rx.id "+
 			"and r.service_id = 0 "+
-			"limit "+offset+","+recordsAtOnce;
+			"limit "+offset+","+readsAtOnce;
 		
 		Connection conn = null;
 		try {
@@ -120,7 +129,10 @@ public class DBRecordDao {
 			
 			//ps.setInt(1, serviceId);
 			
+			TimingLogger.start("DBRecordDao ps.executeQuery");
+			TimingLogger.start("DBRecordDao create List");
 			ResultSet rs = ps.executeQuery();
+			TimingLogger.stop("DBRecordDao ps.executeQuery");
 			while (rs.next()) {
 				Record r = new Record();
 				r.setOaiXml(rs.getString("rx.xml"));
@@ -131,8 +143,9 @@ public class DBRecordDao {
 				r.setUpdatedAt(rs.getDate("r.datestamp"));
 				
 				records.add(r);
-				offset += recordsAtOnce;
+				offset += readsAtOnce;
 			}
+			TimingLogger.stop("DBRecordDao create List");
 		} catch (Throwable t) {
 			DefaultRecordService.log.error("", t);
 		} finally {

@@ -6,7 +6,6 @@ import java.util.List;
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DataException;
 import xc.mst.manager.IndexException;
-import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.RecordList;
 
 public class DBRecordService extends DefaultRecordService {
@@ -33,16 +32,12 @@ public class DBRecordService extends DefaultRecordService {
 
 		//doc = setFieldsOnDocument(record, doc, true);
 
-		TimingLogger.start("recordDao.insert");
 		boolean retVal = recordDao.insert(record);
-		TimingLogger.stop("recordDao.insert");
 		return retVal;
 	} // end method insert(Record)
 	
-	public void commit() {
-		TimingLogger.log("before recordDao.commit");
-		recordDao.commit();
-		TimingLogger.log("after recordDao.commit");
+	public void commit(boolean force) {
+		recordDao.commit(force);
 	}
 	
 	public Record getByOaiIdentifierAndService(String id, int serviceId) {

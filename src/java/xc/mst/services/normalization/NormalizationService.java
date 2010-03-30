@@ -34,6 +34,7 @@ import xc.mst.manager.repository.FormatService;
 import xc.mst.manager.repository.SetService;
 import xc.mst.services.MetadataService;
 import xc.mst.services.ServiceValidationException;
+import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.RecordList;
 
 /**
@@ -204,8 +205,11 @@ public class NormalizationService extends MetadataService
 				outgoingRecord.addSet(outputSet);
 
 			// Check whether or not this record already exists in the database
+			TimingLogger.start("getByOaiIdentifierAndService.getByOaiIdentifierAndService");
 			Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
+			TimingLogger.stop("getByOaiIdentifierAndService.getByOaiIdentifierAndService");
 
+			TimingLogger.start("insert record");
 			// If the current record is a new record, insert it
 			if(oldRecord == null) {
 				insertNewRecord(outgoingRecord);
@@ -221,15 +225,18 @@ public class NormalizationService extends MetadataService
 				// record is new record or updated record.
 				updatedInputRecord = true;
 			}
+			TimingLogger.stop("insert record");
 		} // end loop over processed records
 		
 		// Mark the input record as done(processed by this service) only when its results are not empty.
 		// If results are empty then it means some exception occurred and no output records created
 		if (results.size() > 0) { 
 			// Mark the record as having been processed by this service
+			TimingLogger.start("update record");
 			processMe.addProcessedByService(service);
 			processMe.removeInputForService(service);
 			recordService.update(processMe);
+			TimingLogger.stop("update record");
 		} else if (!processMe.getDeleted()) {
 			unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
 		}

@@ -54,6 +54,7 @@ import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
+import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -323,29 +324,38 @@ public abstract class MetadataService
 				for (int i = 0; i < recordTypes.size(); i++) {
 					// First query for records type using record types
 					RecordType recordType = recordTypes.get(i);
+					TimingLogger.start("recordService.getByInputToServiceAndRecordType");
 					Records inputRecords = recordService.getByInputToServiceAndRecordType(service.getId(), recordType.getName());
+					TimingLogger.stop("recordService.getByInputToServiceAndRecordType");
 					if (inputRecords != null && inputRecords.size() >0) {
 						processRecordBatch(inputRecords);
 						
 						// Commit the records so that next record type can use that for processing 
+						TimingLogger.start("331.commitIndex");
 						SolrIndexManager.getInstance().commitIndex();
-						
+						TimingLogger.stop("331.commitIndex");
 						updateServiceStatistics();
 						
 						// Updates the database with latest record id and OAI identifier used.
 						// So that in case of server down, the service will resume correctly.  
+						TimingLogger.start("updateOAIRecordIds");
 						updateOAIRecordIds();
+						TimingLogger.stop("updateOAIRecordIds");
 
 					}
 				}
 			}
 
 			// Now process the records with no record_type info
+			TimingLogger.start("getInputForServiceToProcess");
 			List<Record> inputRecords  = recordService.getInputForServiceToProcess(service.getId());
+			TimingLogger.stop("getInputForServiceToProcess");
 			processRecordBatch(inputRecords);
 
 			// Reopen the reader so it can see the changes made by running the service
+			TimingLogger.start("352.commitIndex");
 			SolrIndexManager.getInstance().commitIndex();
+			TimingLogger.start("352.commitIndex");
 			
 			endTime = new Date().getTime();
 			timeDiff = endTime - startTime;
@@ -477,18 +487,26 @@ public abstract class MetadataService
 			{
 				
 				// Process the record
+				TimingLogger.start("processRecord");
 				processRecord(processMe);
+				TimingLogger.stop("processRecord");
 				
 				// Commit after 100k records
 				if(processedRecordCount != 0 && processedRecordCount % 100000 == 0)
 				{
+					TimingLogger.start("491.commit");
 					SolrIndexManager.getInstance().commitIndex();
+					TimingLogger.stop("491.commit");
 					
+					TimingLogger.start("updateServiceStatistics");
 					updateServiceStatistics();
+					TimingLogger.stop("updateServiceStatistics");
 					
 					// Updates the database with latest record id and OAI identifier used.
 					// So that in case of server down, the service will resume correctly.  
+					TimingLogger.start("updateOAIRecordIds");
 					updateOAIRecordIds();
+					TimingLogger.stop("updateOAIRecordIds");
 					
 					endTime = new Date().getTime();
 					timeDiff = endTime - startTime;
@@ -501,6 +519,8 @@ public abstract class MetadataService
 					);
 					
 					startTime = new Date().getTime();
+					
+					TimingLogger.reset(false);
 				}
 			}
 			else {
