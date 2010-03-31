@@ -95,14 +95,16 @@ public class DBRecordDao {
 				force = true;
 			}
 			if (force) {
-				TimingLogger.start("DBRecordDao.commit");
 				insertTally = 0;
+				TimingLogger.start("DBRecordDao.commit xml");
 				recordsXmlPS.executeBatch();
+				TimingLogger.stop("DBRecordDao.commit xml");
+				TimingLogger.start("DBRecordDao.commit record");
 				recordsPS.executeBatch();
+				TimingLogger.stop("DBRecordDao.commit record");
 				recordsXmlPS = null;
 				recordsPS = null;
 				conn.close();
-				TimingLogger.stop("DBRecordDao.commit");
 				TimingLogger.reset(false);
 			}
 		} catch (SQLException sqe) {

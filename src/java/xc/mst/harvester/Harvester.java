@@ -70,6 +70,7 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.processingDirective.DefaultJobService;
 import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.record.DBRecordService;
+import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
@@ -903,6 +904,7 @@ public class Harvester implements ErrorHandler
 		while (recordElement != null)
 		{
 			TimingLogger.start("extractRecords loop");
+			TimingLogger.start("erl - 1");
 			// Check to see if the service was paused or canceled
 			checkSignal(baseURL);
 
@@ -977,10 +979,12 @@ public class Harvester implements ErrorHandler
 				record.setOaiXml(oaiXml);
 				record.setOaiHeader(oaiHeader);
 				record.setDeleted(deleted);
-
+				
 				// Get the sets in which the record appears
 				Element setSpecElement = findSibling(datestampElement, "setSpec");
-
+				
+				TimingLogger.stop("erl - 1");
+				TimingLogger.start("erl - 2");
 				// Loop over the record's sets and add each to the record BO
 				while (setSpecElement != null)
 				{
@@ -1040,7 +1044,9 @@ public class Harvester implements ErrorHandler
 
 				// Set the harvest which harvested the record
 				record.setHarvest(currentHarvest);
-
+				
+				TimingLogger.stop("erl - 2");
+				TimingLogger.start("erl - 3");
 				// If the provider has been harvested before, check whether or not this
 				// record already exists in the database
 				Record oldRecord = (firstHarvest ? null : recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId));
@@ -1059,6 +1065,7 @@ public class Harvester implements ErrorHandler
 						updateExistingRecord(record, oldRecord);
 					}
 				} // end else(the record already existed it the index)
+				TimingLogger.stop("erl - 3");
 				TimingLogger.stop("insert record");
 				processedRecordCount++;
 			} // end try(insert the record)
@@ -1424,8 +1431,10 @@ public class Harvester implements ErrorHandler
 				xmlerrors = "";
 				xmlwarnings = "";
 				docbuilder.setErrorHandler(this);
+				TimingLogger.start("parse");
 				doc = docbuilder.parse(istm);
 				istm.close();
+				TimingLogger.stop("parse");
 
 				if (xmlerrors.length() > 0 || xmlwarnings.length() > 0)
 				{

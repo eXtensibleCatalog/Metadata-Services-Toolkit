@@ -156,6 +156,7 @@ public class NormalizationService extends MetadataService
 		// If the record was deleted, delete and reprocess all records that were processed from it
 		if(processMe.getDeleted())
 		{
+			TimingLogger.start("processRecord.getDeleted");
 			List<Record> successors = recordService.getSuccessorsCreatedByServiceId(processMe.getId(), service.getId());
 
 			// If there are successors then the record exist and needs to be deleted. Since we are
@@ -179,13 +180,13 @@ public class NormalizationService extends MetadataService
 			processMe.addProcessedByService(service);
 			processMe.removeInputForService(service);
 			recordService.update(processMe);
-		
+			TimingLogger.stop("processRecord.getDeleted");
 		} 
 
 		// Get the results of processing the record
-		TimingLogger.start("convertRecord");
+		TimingLogger.start("processRecord.convertRecord");
 		List<Record> results = convertRecord(processMe);
-		TimingLogger.stop("convertRecord");
+		TimingLogger.stop("processRecord.convertRecord");
 		
 		boolean updatedInputRecord = false;
 		for(Record outgoingRecord : results)
@@ -208,11 +209,11 @@ public class NormalizationService extends MetadataService
 				outgoingRecord.addSet(outputSet);
 
 			// Check whether or not this record already exists in the database
-			TimingLogger.start("getByOaiIdentifierAndService.getByOaiIdentifierAndService");
+			TimingLogger.start("processRecord.getByOaiIdentifierAndService.getByOaiIdentifierAndService");
 			Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
-			TimingLogger.stop("getByOaiIdentifierAndService.getByOaiIdentifierAndService");
+			TimingLogger.stop("processRecord.getByOaiIdentifierAndService.getByOaiIdentifierAndService");
 
-			TimingLogger.start("insert record");
+			TimingLogger.start("processRecord.insert record");
 			// If the current record is a new record, insert it
 			if(oldRecord == null) {
 				insertNewRecord(outgoingRecord);
@@ -228,18 +229,18 @@ public class NormalizationService extends MetadataService
 				// record is new record or updated record.
 				updatedInputRecord = true;
 			}
-			TimingLogger.stop("insert record");
+			TimingLogger.stop("processRecord.insert record");
 		} // end loop over processed records
 		
 		// Mark the input record as done(processed by this service) only when its results are not empty.
 		// If results are empty then it means some exception occurred and no output records created
 		if (results.size() > 0) { 
 			// Mark the record as having been processed by this service
-			TimingLogger.start("update record");
+			TimingLogger.start("processRecord.update record");
 			processMe.addProcessedByService(service);
 			processMe.removeInputForService(service);
 			recordService.update(processMe);
-			TimingLogger.stop("update record");
+			TimingLogger.stop("processRecord.update record");
 		} else if (!processMe.getDeleted()) {
 			unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
 		}

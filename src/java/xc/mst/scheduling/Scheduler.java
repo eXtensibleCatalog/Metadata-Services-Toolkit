@@ -176,6 +176,7 @@ public class Scheduler extends Thread
 					if (previousJob != null) {
 						TimingLogger.log("finished job: "+previousJob.getJobType());
 						TimingLogger.log("runningJob: "+runningJob);
+						TimingLogger.reset();
 					}
 					Job jobToStart = jobService.getNextJobToExecute();
 					previousJob = jobToStart;

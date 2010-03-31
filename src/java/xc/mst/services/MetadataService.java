@@ -303,6 +303,7 @@ public abstract class MetadataService
 	 */
 	public boolean processRecords()
 	{
+		TimingLogger.start("processRecords");
 		try
 		{
 			// Get the list of record inputs for this service
@@ -318,6 +319,7 @@ public abstract class MetadataService
 			List<RecordType> recordTypes = recordTypeDAO.getAll();
 			
 			// If the record processing info is present in DB
+			TimingLogger.start("processRecords.recordTypes.size() != 0");
 			if(recordTypes.size() != 0){
 			
 				// Process the records which have record_type info
@@ -345,6 +347,7 @@ public abstract class MetadataService
 					}
 				}
 			}
+			TimingLogger.start("processRecords.recordTypes.size() != 0");
 
 			// Now process the records with no record_type info
 			TimingLogger.start("getInputForServiceToProcess");
@@ -353,9 +356,9 @@ public abstract class MetadataService
 			processRecordBatch(inputRecords);
 
 			// Reopen the reader so it can see the changes made by running the service
-			TimingLogger.start("352.commitIndex");
+			TimingLogger.start("processRecords.352.commitIndex");
 			SolrIndexManager.getInstance().commitIndex();
-			TimingLogger.start("352.commitIndex");
+			TimingLogger.stop("processRecords.352.commitIndex");
 			
 			endTime = new Date().getTime();
 			timeDiff = endTime - startTime;
@@ -382,13 +385,15 @@ public abstract class MetadataService
 		} // end catch(Exception)
 		finally // Update the error and warning count for the service
 		{
-			
+			TimingLogger.stop("processRecords");
 			if (!updateServiceStatistics()) {
 				return false;
 			}
 			
 			// Updates the database with latest record id and OAI identifier used.
+			TimingLogger.start("updateOAIRecordIds");
 			updateOAIRecordIds();
+			TimingLogger.stop("updateOAIRecordIds");
 		} // end finally(write the next IDs to the database)
 	} // end method processRecords(int)
 
@@ -480,17 +485,18 @@ public abstract class MetadataService
 		// be invoked after this service is finished.  Finally, add the records
 		// resulting from this service.
 
+		TimingLogger.start("processRecordBatch.iter");
 		for(Record processMe : records)
 		{
+			TimingLogger.stop("processRecordBatch.iter");
 			// If the service is not canceled and not paused then continue
 			if(!isCanceled && !isPaused)
 			{
 				
 				// Process the record
-				TimingLogger.start("processRecord");
 				processRecord(processMe);
-				TimingLogger.stop("processRecord");
 				
+				TimingLogger.start("processRecordBatch.iter");
 				// Commit after 100k records
 				if(processedRecordCount != 0 && processedRecordCount % 100000 == 0)
 				{
@@ -566,6 +572,7 @@ public abstract class MetadataService
 						}
 				}
 		} // end loop over records to process
+		TimingLogger.stop("processRecordBatch.iter");
 	}
 	
 	/**

@@ -530,9 +530,7 @@ public abstract class RecordService
 		else
 			doc = setFieldsOnDocument(record, doc, true);
 
-		TimingLogger.start("indexMgr.addDoc");
 		boolean retVal = indexMgr.addDoc(doc);
-		TimingLogger.stop("indexMgr.addDoc");
 		return retVal;
 	} // end method insert(Record)
 
