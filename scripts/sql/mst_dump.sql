@@ -933,7 +933,29 @@ CREATE TABLE `sets` (
 
 LOCK TABLES `sets` WRITE;
 /*!40000 ALTER TABLE `sets` DISABLE KEYS */;
-INSERT INTO `sets` VALUES (1,'MARCXML Bibliographic Records','A set of all MARCXML Bibliographic records in the repository.','MARCXMLbibliographic',0,1,0),(2,'MARCXML Holdings Records','A set of all MARCXML holdings records in the repository.','MARCXMLholdings',0,1,0),(3,'MARCXML Authority Records','A set of all MARCXML Authority records in the repository.','MARCXMLauthority',0,1,0),(4,'Bibliographic records',NULL,'bib',1,0,3),(5,'Authority records',NULL,'auth',1,0,3),(6,'Holdings record',NULL,'hold',1,0,3),(7,'Classification records',NULL,'class',1,0,3),(8,'Community Information records',NULL,'comm',1,0,3),(9,'norm_output_set_name',NULL,'norm_output_set_spec',0,0,0),(10,'137',NULL,'137',0,1,1),(11,'137:bib',NULL,'137:bib',0,1,1),(12,'137:hold',NULL,'137:hold',0,1,1),(13,'MARCXML Holding Records','A set of all MARCXML Holding records in the repository.','MARCXMLholding',0,1,0),(14,'trans_output_set_name',NULL,'trans_output_set_spec',0,0,0),(15,'132---40k',NULL,'132---40k',0,1,2),(16,'132---40k:bib',NULL,'132---40k:bib',0,1,2),(17,'132---40k:hold',NULL,'132---40k:hold',0,1,2),(18,'132_40k_norm_output_set_name',NULL,'132_40k_norm_output_set_spec',0,0,0),(19,'137---175',NULL,'137---175',0,1,1),(20,'137---175:bib',NULL,'137---175:bib',0,1,1),(21,'137---175:hold',NULL,'137---175:hold',0,1,1),(22,'db_norm_service_set',NULL,'db_norm_service_spec',0,0,0);
+INSERT INTO `sets` VALUES 
+(1,'MARCXML Bibliographic Records','A set of all MARCXML Bibliographic records in the repository.','MARCXMLbibliographic',0,1,0),
+(2,'MARCXML Holdings Records','A set of all MARCXML holdings records in the repository.','MARCXMLholdings',0,1,0),
+(3,'MARCXML Authority Records','A set of all MARCXML Authority records in the repository.','MARCXMLauthority',0,1,0),
+(4,'Bibliographic records',NULL,'bib',1,0,3),
+(5,'Authority records',NULL,'auth',1,0,3),
+(6,'Holdings record',NULL,'hold',1,0,3),
+(7,'Classification records',NULL,'class',1,0,3),
+(8,'Community Information records',NULL,'comm',1,0,3),
+(9,'norm_output_set_name',NULL,'norm_output_set_spec',0,0,0),
+(10,'137',NULL,'137',0,1,1),
+(11,'137:bib',NULL,'137:bib',0,1,1),
+(12,'137:hold',NULL,'137:hold',0,1,1),
+(13,'MARCXML Holding Records','A set of all MARCXML Holding records in the repository.','MARCXMLholding',0,1,0),
+(14,'trans_output_set_name',NULL,'trans_output_set_spec',0,0,0),
+(15,'132---40k',NULL,'132---40k',0,1,2),
+(16,'132---40k:bib',NULL,'132---40k:bib',0,1,2),
+(17,'132---40k:hold',NULL,'132---40k:hold',0,1,2),
+(18,'132_40k_norm_output_set_name',NULL,'132_40k_norm_output_set_spec',0,0,0),
+(19,'137---175',NULL,'137---175',0,1,1),
+(20,'137---175:bib',NULL,'137---175:bib',0,1,1),
+(21,'137---175:hold',NULL,'137---175:hold',0,1,1),
+(22,'db_norm_service_set',NULL,'db_norm_service_spec',0,0,0);
 /*!40000 ALTER TABLE `sets` ENABLE KEYS */;
 UNLOCK TABLES;
 
