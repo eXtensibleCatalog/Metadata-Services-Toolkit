@@ -715,6 +715,8 @@ public class Harvester implements ErrorHandler
                 }
     			if (recordService instanceof DBRecordService) {
     				((DBRecordService)recordService).commit(false);
+    			} else if (processedRecordCount % 50000 == 0) {
+    				TimingLogger.reset(false);
     			}
 			} while(resumption != null); // Repeat as long as we get a resumption token
 			if (recordService instanceof DBRecordService) {
