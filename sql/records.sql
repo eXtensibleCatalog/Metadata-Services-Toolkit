@@ -5,6 +5,7 @@ create table records (
 	identifier_1     char(10)    not null,
 	identifier_2     char(10)    not null,
 	identifier_full  char(60),
+	process_complete char(1)     default 'N',
 	datestamp        timestamp   not null,
 	setSpec          char(10)
 ) engine=MyISAM default charset=utf8;

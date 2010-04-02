@@ -258,7 +258,7 @@ CREATE TABLE `harvest_schedules` (
 
 LOCK TABLES `harvest_schedules` WRITE;
 /*!40000 ALTER TABLE `harvest_schedules` DISABLE KEYS */;
-INSERT INTO `harvest_schedules` VALUES (3,'==provider_name==','Hourly',1,'2010-03-23 00:00:00',null,date_format(current_timestamp(),'%i')+1,0,-1,'','NOT_RUNNING','');
+INSERT INTO `harvest_schedules` VALUES (3,'==provider_name==','Hourly',1,'2010-03-23 00:00:00', ==harvest_schedule_end_date==,date_format(current_timestamp(),'%i')+1,0,-1,'','NOT_RUNNING','');
 
 /*!40000 ALTER TABLE `harvest_schedules` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -399,6 +399,9 @@ CREATE TABLE `jobs` (
 
 LOCK TABLES `jobs` WRITE;
 /*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
+==begin_comment_dont_skip_harvest==
+insert into jobs values (1, ==service_id==, 3, 9, 22, 1, 'SERVICE');
+==end_comment_dont_skip_harvest==
 /*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -662,15 +665,15 @@ UNLOCK TABLES;
 -- Table structure for table `records`
 --
 
+==begin_comment_skip_harvest==
 DROP TABLE IF EXISTS `records`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `records` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `service_id` int(11) DEFAULT NULL,
   `identifier_1` char(10) NOT NULL,
   `identifier_2` char(10) NOT NULL,
   `identifier_full` char(60) DEFAULT NULL,
+  `process_complete` char(1)     default 'N',
   `datestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `setSpec` char(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -679,6 +682,7 @@ CREATE TABLE `records` (
   KEY `records_datestamp_idx` (`datestamp`),
   KEY `records_service_id_idx` (`service_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+==end_comment_skip_harvest==
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -694,16 +698,21 @@ UNLOCK TABLES;
 -- Table structure for table `records_xml`
 --
 
+==begin_comment_skip_harvest==
 DROP TABLE IF EXISTS `records_xml`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `records_xml` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `xml` longtext,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+==end_comment_skip_harvest==
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+==begin_comment_dont_skip_harvest==
+delete r, rx from records r, records_xml rx where r.id=rx.id and r.process_complete='N';
+update records set process_complete='Y';
+==end_comment_dont_skip_harvest==
 
 --
 -- Dumping data for table `records_xml`
@@ -955,7 +964,10 @@ INSERT INTO `sets` VALUES
 (19,'137---175',NULL,'137---175',0,1,1),
 (20,'137---175:bib',NULL,'137---175:bib',0,1,1),
 (21,'137---175:hold',NULL,'137---175:hold',0,1,1),
-(22,'db_norm_service_set',NULL,'db_norm_service_spec',0,0,0);
+(22,'db_norm_service_set',NULL,'db_norm_service_spec',0,0,0),
+(23,'132---1M',NULL,'132---1M',0,1,1),
+(24,'132---1M:bib',NULL,'132---1M:bib',0,1,1),
+(25,'132---1M:hold',NULL,'132---1M:hold',0,1,1);
 /*!40000 ALTER TABLE `sets` ENABLE KEYS */;
 UNLOCK TABLES;
 

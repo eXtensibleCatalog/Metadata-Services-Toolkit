@@ -15,12 +15,15 @@ public class DBNormalizationService extends NormalizationService {
 		this.oaiIdDao = new DBOaiIdentiferForServiceDAO();
 	}
 	
+	@Override
 	public boolean processRecords() {
 		try {
 			List<Record> inputRecords  = ((DBRecordService)recordService).getInputForServiceToProcess(service.getId(), true);
 			
 			while (inputRecords != null && inputRecords.size() > 0) {
 				for (Record r : inputRecords) {
+					r.setService(service);
+					recordService.update(r);
 					processRecord(r);
 				}
 				((DBRecordService)recordService).commit(false);
@@ -33,6 +36,7 @@ public class DBNormalizationService extends NormalizationService {
 		return true;
 	}
 	
+	@Override
 	protected void insertNewRecord(Record record) throws DataException, IndexException {
 		recordService.insert(record);
 	}
@@ -40,6 +44,7 @@ public class DBNormalizationService extends NormalizationService {
 	public class DBOaiIdentiferForServiceDAO extends DefaultOaiIdentiferForServiceDAO {
 		protected int id=0;
 		
+		@Override
 		public long getNextOaiIdForService(int serviceId) {
 			return id++;
 		}

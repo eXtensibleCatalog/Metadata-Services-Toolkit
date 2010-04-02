@@ -22,3 +22,15 @@ export provider_url="http:\/\/128.151.244.132:8080\/OAIToolkit_testDataset_40K\/
 
 #dbnorm service
 export service_id=99
+
+#export harvest_schedule_end_date='null'
+#export begin_comment_dont_skip_harvest='\/\*'
+#export end_comment_dont_skip_harvest=
+#export begin_comment_skip_harvest=
+#export end_comment_skip_harvest=
+
+export harvest_schedule_end_date="\'2010-03-24 00:00:00\'"
+export begin_comment_dont_skip_harvest=
+export end_comment_dont_skip_harvest=
+export begin_comment_skip_harvest='\/\*'
+export end_comment_skip_harvest='\*\/'

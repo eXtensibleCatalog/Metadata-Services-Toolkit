@@ -13,8 +13,9 @@ import xc.mst.utils.TimingLogger;
 
 public class DBRecordDao {
 	
-	protected PreparedStatement recordsPS = null;
-	protected PreparedStatement recordsXmlPS = null;
+	protected PreparedStatement recordsInsertPS = null;
+	protected PreparedStatement recordsInsertXmlPS = null;
+	protected PreparedStatement recordsUpdatePS = null;
 	protected Connection conn = null;
 	
 	protected int offset = 0;
@@ -28,22 +29,22 @@ public class DBRecordDao {
 			if (conn == null || conn.isClosed()) {
 				conn = MySqlConnectionManager.getConnection();
 			}
-			if (recordsXmlPS == null) {
+			if (recordsInsertXmlPS == null) {
 				String sql = 
 					"insert into records_xml (xml) values (?)";
-				recordsXmlPS = conn.prepareStatement(sql);				
+				recordsInsertXmlPS = conn.prepareStatement(sql);				
 			}
 
-			if (recordsPS == null) {
+			if (recordsInsertPS == null) {
 				String sql = 
 					"insert into records (service_id, identifier_full, identifier_1, identifier_2, datestamp, setSpec) "+
 						" values (?, ?, ?, ?, current_timestamp, null)";
-				recordsPS = conn.prepareStatement(sql);			
+				recordsInsertPS = conn.prepareStatement(sql);			
 			}
 
 			int i = 1;
-			recordsXmlPS.setString(i++, record.getOaiXml());
-			recordsXmlPS.addBatch();
+			recordsInsertXmlPS.setString(i++, record.getOaiXml());
+			recordsInsertXmlPS.addBatch();
 			
 			i = 1;
 			int serviceId = 0;
@@ -52,7 +53,7 @@ public class DBRecordDao {
 			} catch (Throwable t) {
 				//do nothing
 			}
-			recordsPS.setInt(i++, serviceId);
+			recordsInsertPS.setInt(i++, serviceId);
 			
 			String[] tokens = null;
 			int idx = record.getOaiIdentifier().indexOf("MetadataServicesToolkit"); 
@@ -67,22 +68,46 @@ public class DBRecordDao {
 			
 			if (tokens == null || tokens.length < 4) {
 				if (record.getOaiIdentifier() == null || record.getOaiIdentifier().length() < 60) {
-					recordsPS.setString(i++, record.getOaiIdentifier());
+					recordsInsertPS.setString(i++, record.getOaiIdentifier());
 				} else {
-					recordsPS.setString(i++, null);
+					recordsInsertPS.setString(i++, null);
 					TimingLogger.log("record.getOaiIdentifier(): "+record.getOaiIdentifier());
 				}
-				recordsPS.setString(i++, null);
-				recordsPS.setString(i++, null);
+				recordsInsertPS.setString(i++, null);
+				recordsInsertPS.setString(i++, null);
 			} else {
-				recordsPS.setString(i++, null);
-				recordsPS.setString(i++, tokens[2]);
-				recordsPS.setString(i++, tokens[3]);
+				recordsInsertPS.setString(i++, null);
+				recordsInsertPS.setString(i++, tokens[2]);
+				recordsInsertPS.setString(i++, tokens[3]);
 			}
-			recordsPS.addBatch();
+			recordsInsertPS.addBatch();
 			
 			insertTally++;
 			TimingLogger.stop("DBRecordDao.insert");
+			return true;
+		} catch (SQLException sqe) {
+			throw new RuntimeException(sqe);
+		}
+	}
+	
+	public boolean update(Record record) {
+		TimingLogger.start("DBRecordDao.update");
+		try {
+			if (conn == null || conn.isClosed()) {
+				conn = MySqlConnectionManager.getConnection();
+			}
+			if (recordsUpdatePS == null) {
+				String sql = 
+					"update records set process_complete = ? where id = ? ";
+				recordsUpdatePS = conn.prepareStatement(sql);			
+			}
+
+			int i = 1;
+			recordsUpdatePS.setString(i++, "Y");
+			recordsUpdatePS.setLong(i++, record.getId());
+			recordsUpdatePS.addBatch();
+			
+			TimingLogger.stop("DBRecordDao.update");
 			return true;
 		} catch (SQLException sqe) {
 			throw new RuntimeException(sqe);
@@ -95,15 +120,26 @@ public class DBRecordDao {
 				force = true;
 			}
 			if (force) {
+				TimingLogger.stop("sinceLastCommit");
+				TimingLogger.start("sinceLastCommit");
 				insertTally = 0;
-				TimingLogger.start("DBRecordDao.commit xml");
-				recordsXmlPS.executeBatch();
-				TimingLogger.stop("DBRecordDao.commit xml");
-				TimingLogger.start("DBRecordDao.commit record");
-				recordsPS.executeBatch();
-				TimingLogger.stop("DBRecordDao.commit record");
-				recordsXmlPS = null;
-				recordsPS = null;
+				TimingLogger.start("DBRecordDao.commit.insertRecordXml");
+				recordsInsertXmlPS.executeBatch();
+				TimingLogger.stop("DBRecordDao.commit.insertRecordXml");
+				recordsInsertXmlPS = null;
+				
+				TimingLogger.start("DBRecordDao.commit.insertRecord");
+				recordsInsertPS.executeBatch();
+				TimingLogger.stop("DBRecordDao.commit.insertRecord");
+				recordsInsertPS = null;
+				
+				if (recordsUpdatePS != null ) {
+					TimingLogger.start("DBRecordDao.commit.updateRecord");
+					recordsUpdatePS.executeBatch();
+					TimingLogger.stop("DBRecordDao.commit.updateRecord");
+					recordsUpdatePS = null;
+				}
+				
 				conn.close();
 				TimingLogger.reset(false);
 			}
@@ -118,7 +154,7 @@ public class DBRecordDao {
 		}
 		List<Record> records = new ArrayList<Record>();
 		String sql = 
-			"select rx.xml, r.identifier_1, r.identifier_2, r.datestamp, r.setSpec " +
+			"select rx.xml, r.id, r.identifier_1, r.identifier_2, r.datestamp, r.setSpec " +
 			"from records r, records_xml rx  "+
 			"where r.id = rx.id "+
 			"and r.service_id = 0 "+
@@ -141,6 +177,7 @@ public class DBRecordDao {
 				String id1 = rs.getString("r.identifier_1");
 				String id2 = rs.getString("r.identifier_2");
 				String id = "oai:library.rochester.edu:"+id1+":"+id2;
+				r.setId(rs.getLong("r.id"));
 				r.setOaiIdentifier(id);
 				r.setUpdatedAt(rs.getDate("r.datestamp"));
 				

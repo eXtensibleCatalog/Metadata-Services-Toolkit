@@ -277,6 +277,20 @@
 		</copy>
 	</target>
 
+	<target name="deploy-webapp-quick">
+		<javac srcdir="${sourcedir}"
+			destdir="${targetdir.classes}"
+			target="${java.target}"
+			classpathref="libraries"
+			debug="on"
+			deprecation="on"
+			debuglevel="lines,vars,source"/>
+		<copy todir="${tomcat.dir}/webapps/${project.name}">
+			<fileset dir="${targetdir.webapp}">
+			</fileset>
+		</copy>
+	</target>
+
 	<!-- Make the war file for deployment -->
 	<target name="makeWar" depends="prepareWebApp">
 		 <jar destfile="${project.name}.war">

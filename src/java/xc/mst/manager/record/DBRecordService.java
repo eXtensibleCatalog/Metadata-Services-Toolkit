@@ -59,6 +59,6 @@ public class DBRecordService extends DefaultRecordService {
 	
 	@Override
 	public boolean update(Record record) throws DataException, IndexException {
-		return true;
+		return recordDao.update(record);
 	}
 }
