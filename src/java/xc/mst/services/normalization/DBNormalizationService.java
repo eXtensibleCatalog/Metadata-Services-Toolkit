@@ -7,6 +7,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.service.DefaultOaiIdentiferForServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DBRecordService;
+import xc.mst.utils.TimingLogger;
 
 public class DBNormalizationService extends NormalizationService {
 
@@ -23,10 +24,16 @@ public class DBNormalizationService extends NormalizationService {
 			while (inputRecords != null && inputRecords.size() > 0) {
 				for (Record r : inputRecords) {
 					r.setService(service);
+					try {
+						processRecord(r);
+					} catch (Throwable t) {
+						TimingLogger.log("ouch - problems");
+						log.error("r.getId(): "+r.getId());
+						log.error("t", t);
+					}
 					recordService.update(r);
-					processRecord(r);
 				}
-				((DBRecordService)recordService).commit(false);
+				((DBRecordService)recordService).commit(true);
 				inputRecords  = recordService.getInputForServiceToProcess(service.getId());
 			}
 			((DBRecordService)recordService).commit(true);

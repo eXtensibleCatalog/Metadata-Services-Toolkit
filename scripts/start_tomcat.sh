@@ -1,5 +1,5 @@
 #configure the amount of memory here
-cd /xc/tomcat
+cd ${MST_INSTANCE}/../..
 export JAVA_OPTS="-server -Xms${MEMORY}M -Xmx${MEMORY}M"
-./bin/startup.sh
+${TOMCAT_HOME}/bin/startup.sh
 cd ~-

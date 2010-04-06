@@ -22,6 +22,7 @@ public class DBRecordDao {
 	protected int readsAtOnce = 50000;
 	protected int insertsAtOnce = 50000;
 	protected int insertTally = 0;
+	protected boolean shouldUpdate = false;
 	
 	public boolean insert(Record record) {
 		TimingLogger.start("DBRecordDao.insert");
@@ -91,6 +92,9 @@ public class DBRecordDao {
 	}
 	
 	public boolean update(Record record) {
+		shouldUpdate = true;
+		return true;
+		/*
 		TimingLogger.start("DBRecordDao.update");
 		try {
 			if (conn == null || conn.isClosed()) {
@@ -112,6 +116,7 @@ public class DBRecordDao {
 		} catch (SQLException sqe) {
 			throw new RuntimeException(sqe);
 		}
+		*/
 	}
 	
 	public void commit(boolean force) {
@@ -120,28 +125,44 @@ public class DBRecordDao {
 				force = true;
 			}
 			if (force) {
-				TimingLogger.stop("sinceLastCommit");
-				TimingLogger.start("sinceLastCommit");
 				insertTally = 0;
-				TimingLogger.start("DBRecordDao.commit.insertRecordXml");
-				recordsInsertXmlPS.executeBatch();
-				TimingLogger.stop("DBRecordDao.commit.insertRecordXml");
-				recordsInsertXmlPS = null;
+				TimingLogger.start("DBRecordDao.commit");
+				if (recordsInsertPS != null) {
+					TimingLogger.start("DBRecordDao.commit.insertRecordXml");
+					recordsInsertXmlPS.executeBatch();
+					TimingLogger.stop("DBRecordDao.commit.insertRecordXml");
+					recordsInsertXmlPS = null;
+				}
+				if (recordsInsertPS != null) {
+					TimingLogger.start("DBRecordDao.commit.insertRecord");
+					recordsInsertPS.executeBatch();
+					TimingLogger.stop("DBRecordDao.commit.insertRecord");
+					recordsInsertPS = null;
+				}
 				
-				TimingLogger.start("DBRecordDao.commit.insertRecord");
-				recordsInsertPS.executeBatch();
-				TimingLogger.stop("DBRecordDao.commit.insertRecord");
-				recordsInsertPS = null;
-				
+				if (shouldUpdate) {
+					PreparedStatement ps1 = conn.prepareStatement(
+						"update records set process_complete = 'Y' "+
+						"where r.service_id = 0 "+
+						"and process_complete = 'N' "+
+						"limit "+readsAtOnce
+					);
+					TimingLogger.start("DBRecordDao.commit.updateLimit");
+					ps1.executeUpdate();
+					TimingLogger.stop("DBRecordDao.commit.updateLimit");
+					shouldUpdate = false;
+				}
 				if (recordsUpdatePS != null ) {
 					TimingLogger.start("DBRecordDao.commit.updateRecord");
 					recordsUpdatePS.executeBatch();
 					TimingLogger.stop("DBRecordDao.commit.updateRecord");
 					recordsUpdatePS = null;
 				}
-				
+				TimingLogger.stop("DBRecordDao.commit");
 				conn.close();
+				TimingLogger.stop("sinceLastCommit");
 				TimingLogger.reset(false);
+				TimingLogger.start("sinceLastCommit");
 			}
 		} catch (SQLException sqe) {
 			throw new RuntimeException(sqe);
@@ -158,8 +179,11 @@ public class DBRecordDao {
 			"from records r, records_xml rx  "+
 			"where r.id = rx.id "+
 			"and r.service_id = 0 "+
-			"limit "+offset+","+readsAtOnce;
+			"and process_complete = 'N' "+
+			"limit "+readsAtOnce;
+			//"limit "+offset+","+readsAtOnce;
 		
+		TimingLogger.log("sql: "+sql);
 		Connection conn = null;
 		try {
 			conn = MySqlConnectionManager.getConnection();
@@ -182,8 +206,8 @@ public class DBRecordDao {
 				r.setUpdatedAt(rs.getDate("r.datestamp"));
 				
 				records.add(r);
-				offset += readsAtOnce;
 			}
+			offset += readsAtOnce;
 			TimingLogger.stop("DBRecordDao create List");
 		} catch (Throwable t) {
 			DefaultRecordService.log.error("", t);

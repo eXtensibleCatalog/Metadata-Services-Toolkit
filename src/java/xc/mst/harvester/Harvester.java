@@ -490,6 +490,7 @@ public class Harvester implements ErrorHandler
 		try
 		{
 			firstHarvest = recordService.getCountByProviderId(schedule.getProvider().getId()) == 0;
+			TimingLogger.log("firstHarvest: "+firstHarvest);
 		}
 		catch (IndexException e2)
 		{
@@ -710,7 +711,8 @@ public class Harvester implements ErrorHandler
                 resumption = extractRecords(metadataPrefix, doc, baseURL);
                 TimingLogger.stop("extractRecords");
                 
-                if (MSTConfiguration.isPerformanceTestingMode()) {
+                if (MSTConfiguration.isPerformanceTestingMode() &&
+                		processedRecordCount > 2000000) {
                 	resumption = null; // I only want to run the 5,000 for now
                 }
     			if (recordService instanceof DBRecordService) {

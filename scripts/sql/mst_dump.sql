@@ -680,7 +680,8 @@ CREATE TABLE `records` (
   UNIQUE KEY `id` (`id`),
   KEY `records_identifier_2_idx` (`identifier_2`),
   KEY `records_datestamp_idx` (`datestamp`),
-  KEY `records_service_id_idx` (`service_id`)
+  KEY `records_service_id_idx` (`service_id`),
+  KEY `records_process_complete_idx` (`process_complete`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ==end_comment_skip_harvest==
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -709,9 +710,10 @@ CREATE TABLE `records_xml` (
 ==end_comment_skip_harvest==
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+/* delete r, rx from records r, records_xml rx where r.id=rx.id and r.process_complete='N'; */
 ==begin_comment_dont_skip_harvest==
-delete r, rx from records r, records_xml rx where r.id=rx.id and r.process_complete='N';
-update records set process_complete='Y';
+delete r, rx from records r, records_xml rx where r.service_id===service_id==;
+update records set process_complete='N';
 ==end_comment_dont_skip_harvest==
 
 --

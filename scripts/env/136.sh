@@ -1,9 +1,13 @@
-export TOMCAT_HOME=$(cat local.properties 2> /dev/null | sed 's/^.*=//' 2> /dev/null)
+export TOMCAT_HOME=/usr/local/apache-tomcat-6.0.16
+export PATH=/usr/local/jdk1.6.0_04/bin:$PATH
+export JAVA_HOME=/usr/local/jdk1.6.0_04
 export MYSQL_USER=root
-export MYSQL_DIR=
-export MST_INSTANCE=$TOMCAT_HOME/MST-instances/MetadataServicesToolkit
-export BASE_DIR="${HOME}"
-export JAVA_HOME="C:\dev\java\jdk1.6.0_18"
+export REMOTE_USER=benjamina
+export REMOTE_BOX_NAME=128.151.244.136
+export REMOTE_BASE_DIR="/drive2/data/ben"
+export MYSQL_DIR=/usr/local/mysql/bin/
+export MST_INSTANCE=${REMOTE_BASE_DIR}/MST-instances/MetadataServicesToolkit
+export MEMORY=1356
 
 #export provider_name="137 - 175"
 #export provider_url="http:\/\/128.151.244.137:8080\/OAIToolkit_0.6.1\/oai-request.do"
@@ -25,7 +29,7 @@ export service_id=99
 
 #export harvest_schedule_end_date='null'
 #export begin_comment_dont_skip_harvest='\/\*'
-#export end_comment_dont_skip_harvest=
+#export end_comment_dont_skip_harvest='\*\/'
 #export begin_comment_skip_harvest=
 #export end_comment_skip_harvest=
 

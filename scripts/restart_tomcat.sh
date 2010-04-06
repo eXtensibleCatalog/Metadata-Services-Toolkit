@@ -1,4 +1,8 @@
+. scripts/env/local.sh
+. scripts/env/local.pass.sh
 ant prepareWebApp
+. scripts/env/${1}.sh
+. scripts/env/${1}.pass.sh 2> /dev/null
 
 scripts/remote_1.sh
 

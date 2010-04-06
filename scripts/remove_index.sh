@@ -1,1 +1,1 @@
-rm -fR $TOMCAT_HOME/MST-instances/MetadataServicesToolkit/solr/data
+rm -fR ${MST_INSTANCE}/solr/data

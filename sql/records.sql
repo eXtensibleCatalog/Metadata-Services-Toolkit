@@ -13,6 +13,7 @@ create table records (
 create index records_identifier_2_idx on records(identifier_2);
 create index records_datestamp_idx on records(datestamp);
 create index records_service_id_idx on records(service_id);
+create index records_process_complete on records(process_complete);
 
 /* this may have to change to a blob in the future */
 drop table if exists records_xml;
