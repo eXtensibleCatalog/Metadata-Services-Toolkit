@@ -17,6 +17,7 @@ public class TimingStats {
 	protected Map<String, Timer> namedTimers = new TreeMap<String, Timer>();
 	protected Map<String, Long> namedLastTimes = new TreeMap<String, Long>();
 	protected Map<String, Long> namedBeginTimes = new TreeMap<String, Long>();
+	protected long lastReset = System.currentTimeMillis();
 	
 	public void log(String message) {
 		log(null, message, false);
@@ -156,6 +157,11 @@ public class TimingStats {
 	
 	public void reset(boolean includeDefault) {
 		if (TimingStats.LOG.isDebugEnabled() && !manualShutOff) {
+			if (lastReset != 0) {
+				long timeSinceLastReset = System.currentTimeMillis()-lastReset;
+				lastReset = System.currentTimeMillis();
+				LOG.debug("timeSinceLastReset: "+timeSinceLastReset);
+			}
 			LOG.debug("namedTimers.size(): "+namedTimers.size());
 			LOG.debug("includeDefault: "+includeDefault);
 			for (String key : namedTimers.keySet()) {

@@ -27,7 +27,7 @@ export provider_url="http:\/\/128.151.244.132:8080\/OAIToolkit_testDataset_40K\/
 #dbnorm service
 export service_id=99
 
-#export harvest_schedule_end_date='null'
+#export harvest_schedule_end_date='date_add(current_timestamp, interval 30 minute)'
 #export begin_comment_dont_skip_harvest='\/\*'
 #export end_comment_dont_skip_harvest='\*\/'
 #export begin_comment_skip_harvest=

@@ -19,7 +19,8 @@
 -- Current Database: `MetadataServicesToolkit`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `metadataservicestoolkit` /*!40100 DEFAULT CHARACTER SET utf8 */;
+drop DATABASE IF EXISTS `MetadataServicesToolkit`;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `MetadataServicesToolkit` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `MetadataServicesToolkit`;
 
@@ -258,7 +259,7 @@ CREATE TABLE `harvest_schedules` (
 
 LOCK TABLES `harvest_schedules` WRITE;
 /*!40000 ALTER TABLE `harvest_schedules` DISABLE KEYS */;
-INSERT INTO `harvest_schedules` VALUES (3,'==provider_name==','Hourly',1,'2010-03-23 00:00:00', ==harvest_schedule_end_date==,date_format(current_timestamp(),'%i')+1,0,-1,'','NOT_RUNNING','');
+INSERT INTO `harvest_schedules` VALUES (3,'==provider_name==','Hourly',1,'2010-03-23 00:00:00', ==harvest_schedule_end_date==,date_format(current_timestamp(),'%i')-1,0,-1,'','NOT_RUNNING','');
 
 /*!40000 ALTER TABLE `harvest_schedules` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -402,6 +403,9 @@ LOCK TABLES `jobs` WRITE;
 ==begin_comment_dont_skip_harvest==
 insert into jobs values (1, ==service_id==, 3, 9, 22, 1, 'SERVICE');
 ==end_comment_dont_skip_harvest==
+==begin_comment_skip_harvest==
+insert into jobs values (1, 0, 3, 0, 0, 1, 'REPOSITORY');
+==end_comment_skip_harvest==
 /*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
 UNLOCK TABLES;
 

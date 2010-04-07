@@ -122,7 +122,12 @@ public class MSTConfiguration {
 	}
 	
 	public static Object getBean(String name) {
-		return MSTConfiguration.applicationContext.getBean(name);
+		try {
+			return MSTConfiguration.applicationContext.getBean(name);
+		} catch (Throwable t) {
+			log.error("", t);
+			throw new RuntimeException(t);
+		}
 	}
 	
 	/**

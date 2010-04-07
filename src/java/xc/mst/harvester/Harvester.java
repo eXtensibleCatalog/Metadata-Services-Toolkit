@@ -70,7 +70,6 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.processingDirective.DefaultJobService;
 import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.record.DBRecordService;
-import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
@@ -137,12 +136,9 @@ public class Harvester implements ErrorHandler
 
 	/**
 	 * Manager for getting, inserting and updating records
-	 */
-	// BDA: This will eventually be configured through spring, but for now this'll do.  The DBRecordService
-	// is my hacked up version for testing mysql performance  
-	private static RecordService recordService = new DBRecordService();
-	//private static RecordService recordService = new DefaultRecordService();
-	
+	 */  
+	private RecordService recordService = null;
+
 	/**
 	 * Manager for getting, inserting and updating jobs
 	 */
@@ -373,7 +369,8 @@ public class Harvester implements ErrorHandler
 		try
 		{
 			// Create a Harvester and use it to run the harvest
-			runningHarvester = new Harvester(timeOutMilliseconds, scheduleStep, currentHarvest);
+			runningHarvester = (Harvester)MSTConfiguration.getBean("Harvester");
+			runningHarvester.setup(timeOutMilliseconds, scheduleStep, currentHarvest);
 
 			// Update the status of the harvest schedule
 			//runningHarvester.persistStatus(Constants.STATUS_SERVICE_RUNNING);
@@ -429,6 +426,9 @@ public class Harvester implements ErrorHandler
 		}
 	} // end method harvest(String, String, String, Date, Date, boolean, boolean, int, HarvestScheduleStep, Harvest)
 
+	public Harvester() {	
+	}
+	
 	/**
 	 * Creates a Harvester that runs a given harvest schedule step and records the results
 	 * using the passed <code>Harvest</code> Object.
@@ -442,7 +442,7 @@ public class Harvester implements ErrorHandler
 	 *                       results after the harvest finishes running.
 	 * @throws DatabaseConfigException
 	 */
-	public Harvester(int timeOutMilliseconds, HarvestScheduleStep scheduleStep, Harvest currentHarvest) throws DatabaseConfigException
+	public void setup(int timeOutMilliseconds, HarvestScheduleStep scheduleStep, Harvest currentHarvest) throws DatabaseConfigException
 	{
 		HttpClientParams params = new HttpClientParams();
 		params.setSoTimeout(timeOutMilliseconds);
@@ -1930,6 +1930,14 @@ public class Harvester implements ErrorHandler
 	 */
 	public boolean isKilled() {
 		return killed;
+	}
+	
+	public RecordService getRecordService() {
+		return recordService;
+	}
+
+	public void setRecordService(RecordService recordService) {
+		this.recordService = recordService;
 	}
 
 } // end class Harvester

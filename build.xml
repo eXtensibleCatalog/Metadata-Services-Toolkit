@@ -9,8 +9,7 @@
 <project name="MetadataServicesToolkit" default="dist" xmlns:ivy="antlib:org.apache.ivy.ant">
 
 	<!-- Use the build.properties file for user specific settings -->
-	<property file="build.properties"/>
-	<property file="local.properties"/>
+	<property file="ant_properties/build.properties"/>
 
 	<!-- Allow users to see their properties and how they are set -->
 	<target name="echo-properties"
@@ -22,9 +21,15 @@
 		<echo message="version = ${version}"/>
 	</target>
 
-	<target name="init">
+	<target name="init.default.properties" unless="box">
+		<property name="box" value="local" />
+	</target>
+
+	<target name="init" depends="init.default.properties">
+		<echo>box: ${box}</echo>
 		<!-- Create the time stamp -->
 		<tstamp/>
+		<property file="ant_properties/${box}.properties"/>
 		<!-- Create the build directory structure used by compile -->
 		<mkdir dir="${targetdir.classes}"/>
 		<mkdir dir="${targetdir.lib}"/>
@@ -141,6 +146,9 @@
 				<exclude name="**/*.java" />
 			</fileset>
 		</copy>
+		<copy todir="${targetdir.webapp}">
+			<fileset dir="${webapp.dir}" />
+		</copy>
 	</target>
 
 	<!-- Compile for regular classes -->
@@ -254,11 +262,7 @@
 	</target>
 
 	<target name="prepareWebApp" depends="compile">
-
-		<copy todir="${targetdir.webapp}">
-			<fileset dir="${webapp.dir}">
-			</fileset>
-		</copy>
+		<copy tofile="${targetdir.classes}/custom.properties" file="ant_properties/${box}.properties" />
 
 		<copy todir="${targetdir.lib}">
 			<fileset dir="${lib.dir}">
@@ -277,7 +281,8 @@
 		</copy>
 	</target>
 
-	<target name="deploy-webapp-quick">
+	<target name="deploy-webapp-quick" depends="init, copy-resources">
+		<copy tofile="${targetdir.classes}/custom.properties" file="ant_properties/${box}.properties" />
 		<javac srcdir="${sourcedir}"
 			destdir="${targetdir.classes}"
 			target="${java.target}"
@@ -286,16 +291,14 @@
 			deprecation="on"
 			debuglevel="lines,vars,source"/>
 		<copy todir="${tomcat.dir}/webapps/${project.name}">
-			<fileset dir="${targetdir.webapp}">
-			</fileset>
+			<fileset dir="${targetdir.webapp}" />
 		</copy>
 	</target>
 
 	<!-- Make the war file for deployment -->
 	<target name="makeWar" depends="prepareWebApp">
 		 <jar destfile="${project.name}.war">
-			 <fileset dir="${targetdir.webapp}">
-			 </fileset>
+			 <fileset dir="${targetdir.webapp}" />
 		 </jar>
 	</target>
 	
