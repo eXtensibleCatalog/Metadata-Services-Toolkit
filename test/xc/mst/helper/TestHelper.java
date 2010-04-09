@@ -14,6 +14,8 @@ import org.apache.solr.core.SolrCore;
 import org.jconfig.ConfigurationManager;
 import org.jconfig.ConfigurationManagerException;
 import org.jconfig.handler.XMLFileHandler;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.xml.sax.SAXException;
 
 import xc.mst.bo.log.Log;
@@ -40,6 +42,8 @@ public class TestHelper {
 	 */
 	private static TestHelper instance = null;
 	
+	protected static ApplicationContext applicationContext = null;
+	
 	/** Constructor */
 	private TestHelper() {}
 
@@ -64,26 +68,7 @@ public class TestHelper {
 	 * Loads the MetadataServicesToolkit_config.xml in workspace\MetadataServicesToolkit\MetadataServicesToolkit_config.xml
 	 */
 	public static void loadConfiguration() {
-	    // Initialize MST configuration.
-	    MSTConfiguration.getInstance("MetadataServicesToolkit");
-	    
-		MSTConfiguration.setUrlPath("MetadataServicesToolkit");
-		String externalConfigurationFilePath = System.getProperty("user.dir") + MSTConfiguration.FILE_SEPARATOR+ "MetadataServicesToolkit_config.xml";
-
-		File file = new File(externalConfigurationFilePath);
-	    
-	    XMLFileHandler handler = new XMLFileHandler();
-        handler.setFile(file);
-        
-        ConfigurationManager configurationManager =
-            ConfigurationManager.getInstance();
-        try {
-	        configurationManager.load(handler, "myConfig");
-	        MSTConfiguration.setConfiguration(ConfigurationManager.getConfiguration("myConfig"));
-        } catch (ConfigurationManagerException cme) {
-        	System.out.println("Exception occured while loading the Configuration");
-        }
-		
+		applicationContext = new ClassPathXmlApplicationContext(new String[] {"spring-mst.xml"});
 	}
 	
 	/**

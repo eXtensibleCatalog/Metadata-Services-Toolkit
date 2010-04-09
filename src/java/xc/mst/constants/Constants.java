@@ -273,6 +273,8 @@ public class Constants
 	 */
 	public static final String INSTANCES_FOLDER_NAME = "InstanceFolderName";
 	
+	public static final String INSTANCES_DIR = "InstanceDir";
+	
 	
 	//*******************************************************************
 	// Error Messages

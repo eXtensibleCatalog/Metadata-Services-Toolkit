@@ -1,3 +1,3 @@
-sql_folder=${folder}/../sqldump
-mkdir -p ${sql_folder}
-${MYSQL_DIR}/mysqldump --database MetadataServicesToolkit -u ${MYSQL_USER} --password=${MYSQL_PASS}  > ${sql_folder}/mst_dump.sql
+SQL_FOLDER=${BACKUP_FOLDER}/sqldump
+mkdir -p ${SQL_FOLDER}
+${MYSQL_DIR}/mysqldump --database MetadataServicesToolkit -u ${MYSQL_USER} --password=${MYSQL_PASS}  > ${SQL_FOLDER}/mst_dump.sql

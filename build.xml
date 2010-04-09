@@ -262,7 +262,8 @@
 	</target>
 
 	<target name="prepareWebApp" depends="compile">
-		<copy tofile="${targetdir.classes}/custom.properties" file="ant_properties/${box}.properties" />
+		<copy tofile="${targetdir.classes}/env.properties" file="ant_properties/${box}.properties" />
+		<copy tofolder="${targetdir.classes}" file="ant_properties/default.properties" />
 
 		<copy todir="${targetdir.lib}">
 			<fileset dir="${lib.dir}">
@@ -282,7 +283,8 @@
 	</target>
 
 	<target name="deploy-webapp-quick" depends="init, copy-resources">
-		<copy tofile="${targetdir.classes}/custom.properties" file="ant_properties/${box}.properties" />
+		<copy tofile="${targetdir.classes}/env.properties" file="ant_properties/${box}.properties" />
+		<copy tofolder="${targetdir.classes}" file="ant_properties/default.properties" />
 		<javac srcdir="${sourcedir}"
 			destdir="${targetdir.classes}"
 			target="${java.target}"

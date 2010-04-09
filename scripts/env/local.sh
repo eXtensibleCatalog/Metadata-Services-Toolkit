@@ -1,4 +1,4 @@
-export TOMCAT_HOME=$(cat ant_properties/local.properties | grep tomcat.dir 2> /dev/null | sed 's/^.*=//' 2> /dev/null)
+export TOMCAT_HOME=$(cat ant_properties/local.properties 2> /dev/null | grep tomcat.dir 2> /dev/null | sed 's/^.*=//' 2> /dev/null)
 export MYSQL_USER=root
 export MYSQL_DIR=
 export MST_INSTANCE=$TOMCAT_HOME/MST-instances/MetadataServicesToolkit

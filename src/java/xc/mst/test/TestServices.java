@@ -21,14 +21,12 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.PropertyConfigurator;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import xc.mst.bo.record.Record;
-import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultProviderDAO;
@@ -38,11 +36,9 @@ import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
-import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 import xc.mst.services.MetadataServiceFactory;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -51,27 +47,11 @@ public class TestServices
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
 	 */
-	protected static Configuration configuration = null;
+	protected static ApplicationContext applicationContext = null;
 
 	static
 	{
-		// Load the configuration file
-		configuration = ConfigurationManager.getConfiguration();
-		
-		// Configure the log file location as the value found in the configuration file.
-		String logConfigFileLocation = configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
-		if(logConfigFileLocation != null)
-			PropertyConfigurator.configure(logConfigFileLocation);
-		// Abort if we could not find the configuration file
-		else
-		{
-			System.err.println("The configuration file was invalid or did not exist.");
-			System.exit(1);
-		}
-		
-		MSTConfiguration.getInstance("MetadataServicesToolkit");
-
-		MSTSolrServer.getInstance();
+		applicationContext = new ClassPathXmlApplicationContext(new String[] {"spring-mst.xml"});
 	}
 
 	private static File unprocessedRecordsDir = new File("C:\\NormalizationTestData\\input");

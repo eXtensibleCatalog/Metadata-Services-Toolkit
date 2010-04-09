@@ -259,7 +259,8 @@ CREATE TABLE `harvest_schedules` (
 
 LOCK TABLES `harvest_schedules` WRITE;
 /*!40000 ALTER TABLE `harvest_schedules` DISABLE KEYS */;
-INSERT INTO `harvest_schedules` VALUES (3,'==provider_name==','Hourly',1,'2010-03-23 00:00:00', ==harvest_schedule_end_date==,date_format(current_timestamp(),'%i')-1,0,-1,'','NOT_RUNNING','');
+INSERT INTO `harvest_schedules` VALUES (3,'==provider_name==','Daily',1,'2010-03-23 00:00:00',
+	date_add(current_timestamp, interval 30 minute),0,0,0,'','NOT_RUNNING','');
 
 /*!40000 ALTER TABLE `harvest_schedules` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -973,7 +974,11 @@ INSERT INTO `sets` VALUES
 (22,'db_norm_service_set',NULL,'db_norm_service_spec',0,0,0),
 (23,'132---1M',NULL,'132---1M',0,1,1),
 (24,'132---1M:bib',NULL,'132---1M:bib',0,1,1),
-(25,'132---1M:hold',NULL,'132---1M:hold',0,1,1);
+(25,'132---1M:hold',NULL,'132---1M:hold',0,1,1),
+(26,'137---6M',NULL,'137---6M',0,1,1),
+(27,'137---6M:auth',NULL,'137---6M:auth',0,1,1),
+(28,'137---6M:bib',NULL,'137---6M:bib',0,1,1),
+(29,'137---6M:hold',NULL,'137---6M:hold',0,1,1);
 /*!40000 ALTER TABLE `sets` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -9,52 +9,23 @@
 
 package xc.mst.test;
 
-import java.io.File;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 
-import org.apache.log4j.PropertyConfigurator;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import xc.mst.bo.log.Log;
-import xc.mst.bo.provider.Format;
-import xc.mst.bo.provider.Provider;
-import xc.mst.bo.record.Record;
-import xc.mst.bo.user.Server;
-import xc.mst.bo.user.User;
-import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
-import xc.mst.dao.harvest.DefaultHarvestDAO;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
-import xc.mst.dao.user.DefaultServerDAO;
-import xc.mst.dao.user.DefaultUserDAO;
-import xc.mst.dao.user.ServerDAO;
-import xc.mst.dao.user.UserDAO;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.DefaultProviderDAO;
-import xc.mst.harvester.HarvestRunner;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.record.DefaultRecordService;
-import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.scheduling.SchedulingException;
-import xc.mst.services.MetadataService;
-import xc.mst.utils.LogWriter;
-import xc.mst.utils.MSTConfiguration;
-import xc.mst.utils.index.RecordList;
-import xc.mst.utils.index.SolrIndexManager;
 
 public class EOTests
 {
 	/**
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
 	 */
-	protected static final Configuration configuration;
+	protected static ApplicationContext applicationContext = null;
 
 	/**
 	 * Used to format timestamps for the results of the tests
@@ -63,23 +34,7 @@ public class EOTests
 
 	static
 	{
-		// Load the configuration file
-		configuration = ConfigurationManager.getConfiguration();
-		
-		// Configure the log file location as the value found in the configuration file.
-		String logConfigFileLocation = configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
-		if(logConfigFileLocation != null)
-			PropertyConfigurator.configure(logConfigFileLocation);
-		// Abort if we could not find the configuration file
-		else
-		{
-			System.err.println("The configuration file was invalid or did not exist.");
-			System.exit(1);
-		}
-		
-		MSTConfiguration.getInstance("MetadataServicesToolkit");
-
-		MSTSolrServer.getInstance();
+		applicationContext = new ClassPathXmlApplicationContext(new String[] {"spring-mst.xml"});
 	}
 
 	/**
