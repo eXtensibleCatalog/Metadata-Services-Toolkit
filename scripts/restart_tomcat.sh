@@ -7,5 +7,5 @@ ant -Dbox=${1} prepareWebApp
 scripts/remote_1.sh
 
 ssh ${REMOTE_USER}@${REMOTE_BOX_NAME} "cd ${REMOTE_BASE_DIR}; scripts/go.sh ${1} stop_tomcat"
-scripts/push_code.sh
+scripts/push_code.sh ${1}
 ssh ${REMOTE_USER}@${REMOTE_BOX_NAME} "cd ${REMOTE_BASE_DIR}; scripts/go.sh ${1} start_tomcat"

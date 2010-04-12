@@ -114,7 +114,7 @@ public class MSTSolrServer {
 
 		if (server == null)
 		{
-			String solrHome = System.getProperty("user.dir") + MSTConfiguration.FILE_SEPARATOR + MSTConfiguration.getUrlPath();
+			String solrHome = MSTConfiguration.getUrlPath();
 			solrHome = solrHome + MSTConfiguration.FILE_SEPARATOR + "solr";
 
 			log.info("Opening Solr at " + solrHome);

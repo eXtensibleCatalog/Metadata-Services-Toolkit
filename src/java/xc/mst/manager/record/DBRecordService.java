@@ -36,8 +36,8 @@ public class DBRecordService extends DefaultRecordService {
 		return retVal;
 	} // end method insert(Record)
 	
-	public void commit(boolean force) {
-		recordDao.commit(force);
+	public void commit(int serviceId, boolean force) {
+		recordDao.commit(serviceId, force);
 	}
 	
 	public Record getByOaiIdentifierAndService(String id, int serviceId) {

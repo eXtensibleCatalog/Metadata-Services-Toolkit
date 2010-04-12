@@ -870,7 +870,7 @@ public abstract class MetadataService
 	 *
 	 * @param record The record to match against the processing directives
 	 */
-	private void checkProcessingDirectives(Record record)
+	protected void checkProcessingDirectives(Record record)
 	{
 		// Don't check processing directives for subclasses of Record
 		if(!record.getClass().getName().equals("xc.mst.bo.record.Record"))

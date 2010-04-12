@@ -174,7 +174,7 @@ public class DefaultJobService implements JobService {
 		
 		try{
 		    // Create file 
-		    FileWriter fstream = new FileWriter(System.getProperty("user.dir") + MSTConfiguration.FILE_SEPARATOR + MSTConfiguration.getUrlPath() +  MSTConfiguration.FILE_SEPARATOR  + "JobsInQueue.txt");
+		    FileWriter fstream = new FileWriter(MSTConfiguration.getUrlPath() +  MSTConfiguration.FILE_SEPARATOR  + "JobsInQueue.txt");
 		    BufferedWriter out = new BufferedWriter(fstream);
 		    
 		    out.write("Order\t\t Job Name\t\t\n");

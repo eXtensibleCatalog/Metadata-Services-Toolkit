@@ -1,5 +1,6 @@
 . scripts/env/local.sh
 . scripts/env/local.pass.sh
+echo "ant -Dbox=${1} prepareWebApp"
 ant -Dbox=${1} prepareWebApp
 . scripts/env/${1}.sh
 . scripts/env/${1}.pass.sh 2> /dev/null

@@ -4,92 +4,22 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 		default-init-method="init">
-           
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+
+	<bean name="MSTConfiguration" class="xc.mst.utils.MSTConfiguration" scope="singleton">
 		<property name="locations">
 			<list>
-				<value>classpath:install.properties</value>
-				<value>classpath:env.properties</value>
 				<value>classpath:default.properties</value>
+				<value>classpath:env.properties</value>
+				<value>classpath:install.properties</value>
 			</list>
-		</property>
-		<!--  If you wanted to, you could put defaults in here.  However, I thought it'd
-				      be easier to manage them inside of defaul.properties -->
-		<property name="properties">
-			<props>
-				<prop key="ds.url">jdbc:mysql://localhost:3306/MetadataServicesToolkit</prop>
-				<prop key="ds.user">root</prop>
-				<prop key="ds.password">root</prop>
-				
-				<!-- The name of the OAI repository  -->
-				<prop key="mst.OaiRepoName">University of Rochester</prop>
-    
-				<!-- The email address of the MST administrator for the OAI repositories -->
-				<prop key="mst.OaiRepoAdminEmail">mstadmin@library.rochester.edu</prop>
-    
-				<!-- The domain name identifier. This will be used in OAI identifier. -->
-				<prop key="mst.DomainNameIdentifier">mst.rochester.edu</prop>
-
-				<!-- The number of milliseconds the harvester should wait for a response
-					from an OAI repository before reporting an error -->
-				<prop key="mst.HarvesterTimeout">300000</prop>
-
-				<prop key="mst.PerformanceTestingMode">true</prop>
-
-				<!-- Location of log4j properties for testing -->
-				<prop key="mst.LoggerConfigFileLocation">src\java\log4j.config.txt</prop>
-
-				<!-- Severity level which Solr logs -->
-				<prop key="mst.SolrLogLevel">WARNING</prop>
-    
-    			<!-- Either SingleThreaded or MultiThreaded depending on how the indexer should add records  -->
-				<prop key="mst.SOLRIndexer">SingleThreaded</prop>
-    
-				<!-- The number of Threads a MultiThreaded indexer should use, default 10 -->
-				<prop key="mst.SOLRIndexerMultiThreadCount">20</prop>
-    
-				<!-- The version of OAI that the MST's repositories support  -->
-				<prop key="mst.OaiRepoProtocolVersion">2.0</prop>
-
-				<!-- The MST's OAI repository's support for deleted records  -->
-				<prop key="mst.OaiRepoDeletedRecord">transient</prop>
-    
-				<!-- The granularity at which the MST's OAI repositories track datestamps on records (YYYY-MM-DDThh:mm:ssZ or YYYY-MM-DD) -->
-				<prop key="mst.OaiRepoGranularity">YYYY-MM-DDThh:mm:ssZ</prop>
-    
-				<!-- The compressions supported by the OAI repository (gzip;compress;deflate) -->
-				<prop key="mst.OaiRepoCompression">gzip;compress;deflate</prop>
-    
-				<!-- The delimiter used in OAI identifiers on output records -->
-				<prop key="mst.OaiRepoDelimiter">:</prop>
-    
-				<!-- The scheme of the OAI repository -->
-				<prop key="mst.OaiRepoScheme">oai</prop>
-    
-				<!-- The maximum number of records returned by a ListIdentifiers request  -->
-				<prop key="mst.OaiRepoMaxIdentifiers">50</prop>
-    
-				<!-- The maximum number of records returned by a ListRecords request  -->
-				<prop key="mst.OaiRepoMaxRecords">1000</prop>
-    
-				<!-- The maximum size in bytes of a ListIdentifiers response -->
-				<prop key="mst.OaiRepoMaxIdentifiersLength">1000000</prop>
-    
-				<!-- The maximum size in bytes of a ListRecords response  -->
-				<prop key="mst.OaiRepoMaxRecordsLength">99999999</prop>
-    
-				<!-- The name of folder under which multiple MST configuration folders are placed. This folder resides under tomcat working directory -->
-				<prop key="mst.InstanceFolderName">MST-instances</prop>
-				
-			</props>
 		</property>
 	</bean>
 
 	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="${ds.url}"/>
-		<property name="username" value="${ds.username}"/>
-		<property name="password" value="${ds.password}"/>
+		<property name="url" value="${DatabaseUrl}"/>
+		<property name="username" value="${DatabaseUsername}"/>
+		<property name="password" value="${DatabasePassword}"/>
 		<property name="maxIdle" value="10" />
 		<property name="minIdle" value="5" />
 		<property name="maxActive" value="5" />
@@ -101,40 +31,6 @@
 
 	<bean name="Harvester" class="xc.mst.harvester.Harvester" scope="prototype">
 		<property name="recordService" ref="${record.service}" />
-	</bean>
-	
-	<bean name="MSTConfiguration" class="xc.mst.utils.MSTConfiguration" scope="singleton">
-		<property name="properties">
-			<props>
-				<prop key="OaiRepoName">${mst.OaiRepoName}</prop>
-				<prop key="OaiRepoAdminEmail">${mst.OaiRepoAdminEmail}</prop>
-    			<prop key="DomainNameIdentifier">${mst.DomainNameIdentifier}</prop>
-				<prop key="HarvesterTimeout">${mst.HarvesterTimeout}</prop>
-				<prop key="PerformanceTestingMode">${mst.PerformanceTestingMode}</prop>
-				
-				<prop key="DatabaseUrl">${ds.url}</prop>
-				<prop key="DatabaseUsername">${ds.username}</prop>
-				<prop key="DatabasePassword">${ds.password}</prop>
-				
-				<prop key="LoggerConfigFileLocation">${mst.LoggerConfigFileLocation}</prop>
-				<prop key="SolrLogLevel">${mst.SolrLogLevel}</prop>
-				<prop key="SOLRIndexer">${mst.SOLRIndexer}</prop>
-				<prop key="SOLRIndexerMultiThreadCount">${mst.SOLRIndexerMultiThreadCount}</prop>
-				<prop key="OaiRepoProtocolVersion">${mst.OaiRepoProtocolVersion}</prop>
-				<prop key="OaiRepoDeletedRecord">${mst.OaiRepoDeletedRecord}</prop>
-				<prop key="OaiRepoGranularity">${mst.OaiRepoGranularity}</prop>
-				<prop key="OaiRepoCompression">${mst.OaiRepoCompression}</prop>
-				<prop key="OaiRepoDelimiter">${mst.OaiRepoDelimiter}</prop>
-				<prop key="OaiRepoScheme">${mst.OaiRepoScheme}</prop>
-				<prop key="OaiRepoMaxIdentifiers">${mst.OaiRepoMaxIdentifiers}</prop>
-				<prop key="OaiRepoMaxRecords">${mst.OaiRepoMaxRecords}</prop>
-				<prop key="OaiRepoMaxIdentifiersLength">${mst.OaiRepoMaxIdentifiersLength}</prop>
-				<prop key="OaiRepoMaxRecordsLength">${mst.OaiRepoMaxRecordsLength}</prop>
-				<prop key="InstanceFolderName">${mst.InstanceFolderName}</prop>
-				<prop key="InstanceDir">${mst.InstanceDir}</prop>
-
-			</props>
-		</property>
 	</bean>
 
 </beans>

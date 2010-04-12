@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.context.WebApplicationContext;
@@ -26,7 +27,7 @@ import xc.mst.constants.Constants;
  * @author Sharmila Ranganathan
  *
  */
-public class MSTConfiguration implements ApplicationContextAware {
+public class MSTConfiguration extends PropertyPlaceholderConfigurer implements ApplicationContextAware {
 	
 	protected Properties properties = new Properties();
 
@@ -36,7 +37,9 @@ public class MSTConfiguration implements ApplicationContextAware {
 	private static MSTConfiguration instance = null;
 	
 	/** Name of category */
-	private String urlPath;
+	private static String urlPath;
+	
+	public static String rootDir;
 	
 	/** File separator according to OS. \ for windows  / for unix. */
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
@@ -65,13 +68,31 @@ public class MSTConfiguration implements ApplicationContextAware {
 	{
 		return instance;
 	}
+
+	protected boolean resolvePlaceholderVisited = false;
+	@Override
+	protected String resolvePlaceholder(String placeholder, Properties props, int systemPropertiesMode) {
+		String val = super.resolvePlaceholder(placeholder, props, systemPropertiesMode);
+		if (!resolvePlaceholderVisited) {
+			resolvePlaceholderVisited = true;
+			for (Object key : props.keySet()) {
+				String keyStr = key.toString();
+				String pval = props.getProperty(keyStr);
+				properties.put(keyStr, pval);
+				System.out.println("key: "+key+" val: "+pval);
+			}
+			init2();
+		}
+		return val;
+	}
 	
 	/*
 	 * Creates and initializes configuration for MST
 	 */
-	public void init() {
+	public void init2() {
 		
 		System.out.println("MSTCONfig.init()");
+
 		
 		if (applicationContext instanceof WebApplicationContext) {
 			String urlPath = ((WebApplicationContext)applicationContext).getServletContext().getContextPath();
@@ -80,8 +101,6 @@ public class MSTConfiguration implements ApplicationContextAware {
 		
 			instanceName = urlPath;
 		}
-		
-		System.out.println("instanceName: "+instanceName);
 		
 		File mstInstances = new File(getProperty(Constants.INSTANCES_DIR) + FILE_SEPARATOR + getProperty(Constants.INSTANCES_FOLDER_NAME));
 		if (mstInstances.exists()) {
@@ -92,8 +111,11 @@ public class MSTConfiguration implements ApplicationContextAware {
 		if (currentInstance.exists()) {
 			currentInstanceFolderExist = true;
 		}
-		
-		this.urlPath = getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + instanceName;
+
+		System.out.println("INSTANCES_FOLDER_NAME: "+getProperty(Constants.INSTANCES_FOLDER_NAME));
+		System.out.println("instanceName: "+instanceName);
+		urlPath = rootDir + getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + instanceName;
+		System.out.println("urlPath: "+urlPath);
 	}
 
 	public void setApplicationContext(ApplicationContext applicationContext) {

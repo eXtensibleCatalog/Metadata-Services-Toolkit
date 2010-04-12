@@ -1,32 +1,56 @@
 package xc.mst.servlet;
 
 import java.io.File;
+import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Properties;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.springframework.web.context.ContextLoaderListener;
 
+import xc.mst.utils.MSTConfiguration;
+
 public class MSTContextListener implements ServletContextListener {
 	
 	protected ContextLoaderListener contextLoaderListener = null;
 
     public void contextInitialized(ServletContextEvent sce) {
-    	
-    	String userDir = System.getProperty("user.dir");
-		System.out.println("user.dir: "+userDir);
-		
 		String path =  sce.getServletContext().getContextPath();
 		// Remove the / in '/MetadataServicesToolkit'
 	    path = path.substring(1, path.length());
     	try {
-	    	File workingDir = new File(".");
-	    	String abs = workingDir.getAbsolutePath();
-	    	System.out.println("abs: "+abs);
-	    	String url = "file:/"+abs+"/MST-instances/MetadataServicesToolkit/";
+    		String rootDir = null;
+    		try {
+	    		FileReader reader = new FileReader("webapps/"+path+"/WEB-INF/classes/env.properties");
+	    		Properties props = new Properties();
+	    		props.load(reader);
+	    		reader.close();
+	    		if (props.getProperty("mst.root.dir") != null) {
+	    			rootDir = props.getProperty("mst.root.dir");
+	    		}
+    		} catch (Throwable t) {
+    			t.printStackTrace(System.out);
+    			t.printStackTrace(System.err);
+    		}
+    		if (rootDir == null && System.getenv("MST_ROOT_DIR") != null) {
+    			rootDir = System.getenv("MST_ROOT_DIR");
+    		}
+    		if (rootDir == null) {
+    	    	File workingDir = new File(".");
+    	    	rootDir = workingDir.getAbsolutePath();
+    	    	rootDir += "/";
+    		}
+    		MSTConfiguration.rootDir = rootDir;
+    		System.out.println("rootDir: "+rootDir);
+    		String fileProto = "file:";
+    		if (!rootDir.startsWith("/")) {
+    			fileProto = fileProto+"/";
+    		}
+	    	String url = fileProto+rootDir+"/MST-instances/MetadataServicesToolkit/";
 	    	url = url.replaceAll("\\\\", "/");
 	    	System.out.println("url: "+url);
 	    	addURL(new URL(url));

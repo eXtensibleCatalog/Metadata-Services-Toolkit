@@ -716,7 +716,7 @@ public class Harvester implements ErrorHandler
                 	resumption = null; // I only want to run the 5,000 for now
                 }
     			if (recordService instanceof DBRecordService) {
-    				((DBRecordService)recordService).commit(false);
+    				((DBRecordService)recordService).commit(0, false);
     			} else if (processedRecordCount % 50000 == 0) {
     				TimingLogger.reset(false);
     				TimingLogger.stop("sinceLastCommit");
@@ -724,7 +724,7 @@ public class Harvester implements ErrorHandler
     			}
 			} while(resumption != null); // Repeat as long as we get a resumption token
 			if (recordService instanceof DBRecordService) {
-				((DBRecordService)recordService).commit(true);
+				((DBRecordService)recordService).commit(0, true);
 			}
 		} // end try(run the harvest)
 		catch (Hexception he)
@@ -1371,8 +1371,8 @@ public class Harvester implements ErrorHandler
 	 */
 	private Document getDoc(String request)throws Hexception
 	{
-		if(log.isDebugEnabled())
-			log.debug("Sending the OAI request: " + request);
+		if(log.isInfoEnabled())
+			log.info("Sending the OAI request: " + request);
 
 		Document doc = null;
 

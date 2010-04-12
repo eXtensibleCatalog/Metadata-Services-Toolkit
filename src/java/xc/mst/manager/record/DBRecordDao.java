@@ -119,7 +119,11 @@ public class DBRecordDao {
 		*/
 	}
 	
-	public void commit(boolean force) {
+	public void commit(int serviceId, boolean force) {
+		int oldServiceId = 0;
+		if (serviceId == 199) {
+			oldServiceId = 99;
+		}
 		try {
 			if (insertTally >= insertsAtOnce) {
 				force = true;
@@ -144,7 +148,7 @@ public class DBRecordDao {
 					if (shouldUpdate) {
 						PreparedStatement ps1 = conn.prepareStatement(
 							"update records set process_complete = 'Y' "+
-							"where service_id = 0 "+
+							"where service_id = "+oldServiceId+" "+
 							"and process_complete = 'N' "+
 							"limit "+readsAtOnce
 						);
@@ -176,11 +180,15 @@ public class DBRecordDao {
 			offset = 0;
 		}
 		List<Record> records = new ArrayList<Record>();
+		int previousServiceId = 0;
+		if (serviceId == 199) {
+			previousServiceId = 99;
+		}
 		String sql = 
 			"select rx.xml, r.id, r.identifier_1, r.identifier_2, r.datestamp, r.setSpec " +
 			"from records r, records_xml rx  "+
 			"where r.id = rx.id "+
-			"and r.service_id = 0 "+
+			"and r.service_id = "+previousServiceId+" "+
 			"and process_complete = 'N' "+
 			"limit "+readsAtOnce;
 			//"limit "+offset+","+readsAtOnce;

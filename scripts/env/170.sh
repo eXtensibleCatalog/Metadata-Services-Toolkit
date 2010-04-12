@@ -21,13 +21,12 @@ export provider_name="137 - 6M"
 export provider_url="http:\/\/128.151.244.137:8080\/OAIToolkit\/oai-request.do"
 
 #norm service
-export service_id=1
-
-#trans service
-#export service_id=2
+#export service_id=1
+#export service_id_2=2
 
 #dbnorm service
-#export service_id=99
+export service_id=99
+export service_id_2=199
 
 export harvest_schedule_end_date='date_add(current_timestamp, interval 30 minute)'
 export begin_comment_dont_skip_harvest='\/\*'

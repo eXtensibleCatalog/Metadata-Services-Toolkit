@@ -40,7 +40,7 @@ public class InitializeLog  extends HttpServlet {
 	 */
 	public void init() {
 
-		PropertyConfigurator.configure(System.getProperty("user.dir") + MSTConfiguration.FILE_SEPARATOR + MSTConfiguration.getUrlPath()+ MSTConfiguration.FILE_SEPARATOR + "log4j.config.txt");
+		PropertyConfigurator.configure(MSTConfiguration.getUrlPath()+ MSTConfiguration.FILE_SEPARATOR + "log4j.config.txt");
 		
 	    // Initialize the general MST logs
 	    LogDAO logDao = new DefaultLogDAO();

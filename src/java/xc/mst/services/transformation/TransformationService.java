@@ -41,8 +41,6 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultRecordService;
-import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
@@ -57,6 +55,7 @@ import xc.mst.services.transformation.dao.DefaultHeldHoldingRecordDAO;
 import xc.mst.services.transformation.dao.DefaultXCHoldingDAO;
 import xc.mst.services.transformation.dao.HeldHoldingRecordDAO;
 import xc.mst.services.transformation.dao.XCHoldingDAO;
+import xc.mst.utils.TimingLogger;
 
 /**
  * A Metadata Service which for each unprocessed marcxml record creates an XC schema
@@ -95,8 +94,6 @@ public class TransformationService extends MetadataService
 	// The following HashSets are used to prevent duplicate values from being added to the XC record
 
 	private HashMap<String, Element> linkedCreatorFields = new HashMap<String, Element>();
-	
-	private static RecordService recordService = new DefaultRecordService();
 	
 	/**
 	 * Org code used 
@@ -145,6 +142,7 @@ public class TransformationService extends MetadataService
 
 	@Override
 	public void  processRecord(Record processMe) throws Exception {
+		TimingLogger.start("processRecord");
 
 		// Get the results of processing the record
 		List<Record> results = convertRecord(processMe);
@@ -208,6 +206,7 @@ public class TransformationService extends MetadataService
 		if (!processingHeldRecords && heldHoldingRecords != null && heldHoldingRecords.size() > 0) {
 			processHeldRecord();
 		}
+		TimingLogger.stop("processRecord");
 	}
 	
 	/*
