@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<properties>
+  <variables>
+  </variables>
+  <category name="general">
+    
+    <!-- Database URL --> 
+    <property name="DatabaseUrl" value="jdbc:mysql://localhost:3306/MetadataServicesToolkit" />
+    
+    <!-- Database user name  -->
+    <property name="DatabaseUsername" value="root" />
+    
+    <!-- Database password -->
+    <property name="DatabasePassword" value="admin" />
+    
+    <!-- The name of the OAI repository  -->
+    <property name="OaiRepoName" value="University of Rochester" />
+    
+    <!-- The email address of the MST administrator for the OAI repositories -->
+    <property name="OaiRepoAdminEmail" value="mstadmin@library.rochester.edu" />
+    
+    <!-- The domain name identifier. This will be used in OAI identifier. -->
+    <property name="DomainNameIdentifier" value="mst.rochester.edu" />
+
+    <!-- The number of milliseconds the harvester should wait for a response
+         from an OAI repository before reporting an error -->
+    <property name="HarvesterTimeout" value="300000" />
+
+    <property name="PerformanceTestingMode" value="false" />
+
+  </category>
+  
+</properties>

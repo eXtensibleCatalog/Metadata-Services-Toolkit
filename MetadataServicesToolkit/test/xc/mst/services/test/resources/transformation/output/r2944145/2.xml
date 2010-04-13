@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work" id="oai:URMST:Transformation Service/15608">
+		<dcterms:subject xsi:type="dcterms:LCC">PG3366</dcterms:subject>
+		<dcterms:subject xsi:type="dcterms:DDC">891.733</dcterms:subject>
+		<rdarole:author>Tolstoy, Leo, graf, 1828-1910.</rdarole:author>
+		<rdvocab:titleOfWork>War and peace /</rdvocab:titleOfWork>
+		<xc:spatial xsi:type="dcterms:LCSH">Russia-History-Alexander I, 1801-1825-Fiction.</xc:spatial>
+		<xc:spatial xsi:type="dcterms:LCSH">Russia-Social conditions-1801-1917-Fiction.</xc:spatial>
+		<rdvocab:natureOfContent>Fiction</rdvocab:natureOfContent>
+		<xc:temporal xsi:type="dcterms:LCSH">Alexander I, 1801-1825</xc:temporal>
+		<xc:temporal xsi:type="dcterms:LCSH">1801-1917</xc:temporal>
+		<xc:subject xsi:type="dcterms:LCSH">History</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Social conditions</xc:subject>
+		<xc:spacial xsi:type="dcterms:LCSH">Russia</xc:spacial>
+		<xc:type xsi:type="dcterms:LCSH">Fiction.</xc:type></xc:entity>
+</xc:frbr>
