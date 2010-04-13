@@ -77,7 +77,7 @@ public class TestServices
 	private static File unprocessedRecordsDir = new File("C:\\NormalizationTestData\\input");
 	private static File processedRecordsDir = new File("C:\\NormalizationTestData\\output");
 
-	private static int serviceId = 8;
+	private static int serviceId = 1;
 
 	/**
 	 * Builds the XML Document based on the record's OAI XML
@@ -95,8 +95,8 @@ public class TestServices
 
 		try
 		{
-//			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
-			addUnprocessedRecordFromFilesForAggregation(unprocessedRecordsDir);
+			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
+//			addUnprocessedRecordFromFilesForAggregation(unprocessedRecordsDir);
 			Thread.sleep(2000);
 			SolrIndexManager.getInstance().commitIndex();
 			Thread.sleep(2000);

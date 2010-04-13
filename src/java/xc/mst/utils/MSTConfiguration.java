@@ -17,7 +17,6 @@ import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 import org.jconfig.ConfigurationManagerException;
 import org.jconfig.handler.XMLFileHandler;
-import org.springframework.context.ApplicationContext;
 
 import xc.mst.constants.Constants;
 
@@ -29,7 +28,6 @@ import xc.mst.constants.Constants;
  */
 public class MSTConfiguration {
 
-	protected static ApplicationContext applicationContext = null;
 
 	/*  The instance of the MST configuration	 */
 	private static MSTConfiguration instance = null;
@@ -113,18 +111,6 @@ public class MSTConfiguration {
         }
 	}
 	
-	public static ApplicationContext getApplicationContext() {
-		return applicationContext;
-	}
-
-	public static void setApplicationContext(ApplicationContext applicationContext) {
-		MSTConfiguration.applicationContext = applicationContext;
-	}
-	
-	public static Object getBean(String name) {
-		return MSTConfiguration.applicationContext.getBean(name);
-	}
-	
 	/**
 	 * Get value of given property
 	 *  
@@ -169,16 +155,5 @@ public class MSTConfiguration {
 		MSTConfiguration.instanceName = instanceName;
 	}
 
-	public static boolean isPerformanceTestingMode() {
-		try {
-			String ptMode = getProperty("PerformanceTestingMode");
-			if (ptMode != null && "true".equals(ptMode)) {
-				return true;
-			}
-		} catch (Throwable t) {
-			//do nothing
-		}
-		return false;
-	}
 
 }

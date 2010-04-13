@@ -26,7 +26,7 @@ import org.apache.log4j.Appender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.RollingFileAppender;
 
-import org.apache.commons.codec.binary.Base64;
+import sun.misc.BASE64Encoder;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
 import xc.mst.bo.user.Server;
@@ -180,7 +180,7 @@ public class DefaultUserService implements UserService {
             }
 
             byte raw[] = md.digest(); //step 4
-            String hash = new String((new Base64()).encode(raw)); //step 5
+            String hash = (new BASE64Encoder()).encode(raw); //step 5
             return hash; //step 6
       }
 
