@@ -22,14 +22,11 @@ export provider_url="http:\/\/128.151.244.137:8080\/OAIToolkit_0.6.1\/oai-reques
 export service_id=99
 export service_id_2=199
 
-export harvest_schedule_end_date='date_add(current_timestamp, interval 30 minute)'
-export begin_comment_dont_skip_harvest='\/\*'
-export end_comment_dont_skip_harvest='\*\/'
-export begin_comment_skip_harvest=
-export end_comment_skip_harvest=
-
-#export harvest_schedule_end_date="\'2010-03-24 00:00:00\'"
-#export begin_comment_dont_skip_harvest=
-#export end_comment_dont_skip_harvest=
-#export begin_comment_skip_harvest='\/\*'
-#export end_comment_skip_harvest='\*\/'
+export begin_comment='\/\*'
+export end_comment='\*\/'
+export begin_comment_run_harvest=${begin_comment}
+export end_comment_run_harvest=${end_comment}
+export begin_comment_run_norm=${begin_comment}
+export end_comment_run_norm=${end_comment}
+export begin_comment_run_trans=
+export end_comment_run_trans=

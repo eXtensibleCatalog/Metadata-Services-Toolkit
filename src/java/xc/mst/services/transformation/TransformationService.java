@@ -150,6 +150,7 @@ public class TransformationService extends MetadataService
 		
 		// If results is not null, then record is processed. If results is null, then the record is held 
 		if (results != null) {
+			TimingLogger.add("outgoingRecords", results.size());
 			for(Record outgoingRecord : results)
 			{
 				// Mark the output record as a successor of the input record
@@ -195,6 +196,7 @@ public class TransformationService extends MetadataService
 			processMe.addProcessedByService(service);
 			processMe.removeInputForService(service);
 			recordService.update(processMe);
+			TimingLogger.add("outgoingRecords", 0);
 		}
 
 		// Increase processed count

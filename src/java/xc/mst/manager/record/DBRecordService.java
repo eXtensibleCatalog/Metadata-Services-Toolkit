@@ -12,7 +12,6 @@ public class DBRecordService extends DefaultRecordService {
 	
 	DBRecordDao recordDao = new DBRecordDao();
 
-
 	@Override
 	public boolean insert(Record record) throws DataException, IndexException
 	{
@@ -60,5 +59,9 @@ public class DBRecordService extends DefaultRecordService {
 	@Override
 	public boolean update(Record record) throws DataException, IndexException {
 		return recordDao.update(record);
+	}
+	
+	public void reset() {
+		recordDao.reset();
 	}
 }

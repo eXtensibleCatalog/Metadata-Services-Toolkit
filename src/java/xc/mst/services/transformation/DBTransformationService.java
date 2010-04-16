@@ -20,8 +20,9 @@ public class DBTransformationService extends TransformationService {
 	public boolean processRecords() {
 		try {
 			List<Record> inputRecords  = ((DBRecordService)recordService).getInputForServiceToProcess(service.getId(), true);
-			
+				
 			while (inputRecords != null && inputRecords.size() > 0) {
+				TimingLogger.log("inputRecords.size(): "+inputRecords.size());
 				for (Record r : inputRecords) {
 					r.setService(service);
 					try {
@@ -37,6 +38,7 @@ public class DBTransformationService extends TransformationService {
 				inputRecords  = recordService.getInputForServiceToProcess(service.getId());
 			}
 			((DBRecordService)recordService).commit(service.getId(), true);
+			((DBRecordService)recordService).reset();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

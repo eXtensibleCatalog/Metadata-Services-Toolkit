@@ -19,7 +19,7 @@
 -- Current Database: `MetadataServicesToolkit`
 --
 
-drop DATABASE IF EXISTS `MetadataServicesToolkit`;
+-- drop DATABASE IF EXISTS `MetadataServicesToolkit`;
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `MetadataServicesToolkit` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `MetadataServicesToolkit`;
@@ -401,12 +401,15 @@ CREATE TABLE `jobs` (
 
 LOCK TABLES `jobs` WRITE;
 /*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
-==begin_comment_dont_skip_harvest==
-insert into jobs values (1, ==service_id==, 3, 9, 22, 1, 'SERVICE');
-==end_comment_dont_skip_harvest==
-==begin_comment_skip_harvest==
+==begin_comment_run_harvest==
 insert into jobs values (1, 0, 3, 0, 0, 1, 'REPOSITORY');
-==end_comment_skip_harvest==
+==end_comment_run_harvest==
+==begin_comment_run_norm==
+insert into jobs values (1, 99, 3, 9, 22, 1, 'SERVICE');
+==end_comment_run_norm==
+==begin_comment_run_trans==
+insert into jobs values (1, 199, 0, 10, 22, 1, 'SERVICE');
+==end_comment_run_trans==
 /*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -675,7 +678,7 @@ UNLOCK TABLES;
 -- Table structure for table `records`
 --
 
-==begin_comment_skip_harvest==
+==begin_comment_run_harvest==
 DROP TABLE IF EXISTS `records`;
 CREATE TABLE `records` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -693,7 +696,7 @@ CREATE TABLE `records` (
   KEY `records_service_id_idx` (`service_id`),
   KEY `records_process_complete_idx` (`process_complete`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-==end_comment_skip_harvest==
+==end_comment_run_harvest==
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -709,7 +712,7 @@ UNLOCK TABLES;
 -- Table structure for table `records_xml`
 --
 
-==begin_comment_skip_harvest==
+==begin_comment_run_harvest==
 DROP TABLE IF EXISTS `records_xml`;
 CREATE TABLE `records_xml` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -717,14 +720,19 @@ CREATE TABLE `records_xml` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-==end_comment_skip_harvest==
+==end_comment_run_harvest==
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /* delete r, rx from records r, records_xml rx where r.id=rx.id and r.process_complete='N'; */
-==begin_comment_dont_skip_harvest==
-delete r, rx from records r, records_xml rx where r.service_id===service_id==;
+==begin_comment_run_norm==
+delete r, rx from records r, records_xml rx where r.service_id===service_id== and r.id=rx.id;
 update records set process_complete='N';
-==end_comment_dont_skip_harvest==
+==end_comment_run_norm==
+
+==begin_comment_run_trans==
+delete r, rx from records r, records_xml rx where r.service_id===service_id_2== and r.id=rx.id;
+update records set process_complete='N' where service_id===service_id==;
+==end_comment_run_trans==
 
 --
 -- Dumping data for table `records_xml`

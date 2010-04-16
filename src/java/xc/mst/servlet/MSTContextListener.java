@@ -24,21 +24,24 @@ public class MSTContextListener implements ServletContextListener {
 	    path = path.substring(1, path.length());
     	try {
     		String rootDir = null;
-    		try {
-	    		FileReader reader = new FileReader("webapps/"+path+"/WEB-INF/classes/env.properties");
-	    		Properties props = new Properties();
-	    		props.load(reader);
-	    		reader.close();
-	    		if (props.getProperty("mst.root.dir") != null) {
-	    			rootDir = props.getProperty("mst.root.dir");
-	    		}
-    		} catch (Throwable t) {
-    			t.printStackTrace(System.out);
-    			t.printStackTrace(System.err);
-    		}
-    		if (rootDir == null && System.getenv("MST_ROOT_DIR") != null) {
+    		if (System.getenv("MST_ROOT_DIR") != null) {
     			rootDir = System.getenv("MST_ROOT_DIR");
     		}
+    		if (rootDir == null) {
+	    		try {
+		    		FileReader reader = new FileReader("webapps/"+path+"/WEB-INF/classes/env.properties");
+		    		Properties props = new Properties();
+		    		props.load(reader);
+		    		reader.close();
+		    		if (props.getProperty("mst.root.dir") != null) {
+		    			rootDir = props.getProperty("mst.root.dir");
+		    		}
+	    		} catch (Throwable t) {
+	    			t.printStackTrace(System.out);
+	    			t.printStackTrace(System.err);
+	    		}
+    		}
+
     		if (rootDir == null) {
     	    	File workingDir = new File(".");
     	    	rootDir = workingDir.getAbsolutePath();

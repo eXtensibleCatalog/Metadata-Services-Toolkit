@@ -24,6 +24,19 @@ public class DBRecordDao {
 	protected int insertTally = 0;
 	protected boolean shouldUpdate = false;
 	
+	public void reset() {
+		recordsInsertPS = null;
+		recordsInsertXmlPS = null;
+		recordsUpdatePS = null;
+		conn = null;
+		
+		offset = 0;
+		readsAtOnce = 50000;
+		insertsAtOnce = 50000;
+		insertTally = 0;
+		shouldUpdate = false;
+	}
+	
 	public boolean insert(Record record) {
 		TimingLogger.start("DBRecordDao.insert");
 		try {
@@ -92,7 +105,10 @@ public class DBRecordDao {
 	}
 	
 	public boolean update(Record record) {
-		shouldUpdate = true;
+		if (!shouldUpdate) {
+			shouldUpdate = true;
+			TimingLogger.log("toggling update");
+		}
 		return true;
 		/*
 		TimingLogger.start("DBRecordDao.update");
@@ -129,46 +145,48 @@ public class DBRecordDao {
 				force = true;
 			}
 			if (force) {
-				if (conn != null && !conn.isClosed()) {
-					insertTally = 0;
-					TimingLogger.start("DBRecordDao.commit");
-					if (recordsInsertPS != null) {
-						TimingLogger.start("DBRecordDao.commit.insertRecordXml");
-						recordsInsertXmlPS.executeBatch();
-						TimingLogger.stop("DBRecordDao.commit.insertRecordXml");
-						recordsInsertXmlPS = null;
-					}
-					if (recordsInsertPS != null) {
-						TimingLogger.start("DBRecordDao.commit.insertRecord");
-						recordsInsertPS.executeBatch();
-						TimingLogger.stop("DBRecordDao.commit.insertRecord");
-						recordsInsertPS = null;
-					}
-					
-					if (shouldUpdate) {
-						PreparedStatement ps1 = conn.prepareStatement(
-							"update records set process_complete = 'Y' "+
-							"where service_id = "+oldServiceId+" "+
-							"and process_complete = 'N' "+
-							"limit "+readsAtOnce
-						);
-						TimingLogger.start("DBRecordDao.commit.updateLimit");
-						ps1.executeUpdate();
-						TimingLogger.stop("DBRecordDao.commit.updateLimit");
-						shouldUpdate = false;
-					}
-					if (recordsUpdatePS != null ) {
-						TimingLogger.start("DBRecordDao.commit.updateRecord");
-						recordsUpdatePS.executeBatch();
-						TimingLogger.stop("DBRecordDao.commit.updateRecord");
-						recordsUpdatePS = null;
-					}
-					TimingLogger.stop("DBRecordDao.commit");
-					conn.close();
-					TimingLogger.stop("sinceLastCommit");
-					TimingLogger.reset(false);
-					TimingLogger.start("sinceLastCommit");
+				if (conn == null || conn.isClosed()) {
+					conn = MySqlConnectionManager.getConnection();
 				}
+				insertTally = 0;
+				TimingLogger.start("DBRecordDao.commit");
+				if (recordsInsertPS != null) {
+					TimingLogger.start("DBRecordDao.commit.insertRecordXml");
+					recordsInsertXmlPS.executeBatch();
+					TimingLogger.stop("DBRecordDao.commit.insertRecordXml");
+					recordsInsertXmlPS = null;
+				}
+				if (recordsInsertPS != null) {
+					TimingLogger.start("DBRecordDao.commit.insertRecord");
+					recordsInsertPS.executeBatch();
+					TimingLogger.stop("DBRecordDao.commit.insertRecord");
+					recordsInsertPS = null;
+				}
+				
+				if (shouldUpdate) {
+					PreparedStatement ps1 = conn.prepareStatement(
+						"update records set process_complete = 'Y' "+
+						"where service_id = "+oldServiceId+" "+
+						"and process_complete = 'N' "+
+						"limit "+readsAtOnce
+					);
+					TimingLogger.start("DBRecordDao.commit.updateLimit");
+					ps1.executeUpdate();
+					TimingLogger.stop("DBRecordDao.commit.updateLimit");
+					shouldUpdate = false;
+				}
+				if (recordsUpdatePS != null ) {
+					TimingLogger.start("DBRecordDao.commit.updateRecord");
+					recordsUpdatePS.executeBatch();
+					TimingLogger.stop("DBRecordDao.commit.updateRecord");
+					recordsUpdatePS = null;
+				}
+				TimingLogger.stop("DBRecordDao.commit");
+				conn.close();
+				TimingLogger.stop("sinceLastCommit");
+				TimingLogger.start("sinceLastCommit");
+
+				TimingLogger.reset(false);
 			}
 		} catch (SQLException sqe) {
 			throw new RuntimeException(sqe);
@@ -216,6 +234,7 @@ public class DBRecordDao {
 				r.setUpdatedAt(rs.getDate("r.datestamp"));
 				
 				records.add(r);
+				shouldUpdate = true;
 			}
 			offset += readsAtOnce;
 			TimingLogger.stop("DBRecordDao create List");

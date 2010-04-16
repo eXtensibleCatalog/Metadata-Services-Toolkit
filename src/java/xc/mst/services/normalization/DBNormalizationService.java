@@ -53,6 +53,7 @@ public class DBNormalizationService extends NormalizationService {
 				checkProcessingDirectives(r2);
 			}
 			((DBRecordService)recordService).commit(service.getId(), true);
+			((DBRecordService)recordService).reset();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
