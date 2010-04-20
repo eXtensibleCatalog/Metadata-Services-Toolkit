@@ -24,9 +24,11 @@ public class MSTContextListener implements ServletContextListener {
 	    path = path.substring(1, path.length());
     	try {
     		String rootDir = null;
+    		/*
     		if (System.getenv("MST_ROOT_DIR") != null) {
     			rootDir = System.getenv("MST_ROOT_DIR");
     		}
+    		*/
     		if (rootDir == null) {
 	    		try {
 		    		FileReader reader = new FileReader("webapps/"+path+"/WEB-INF/classes/env.properties");

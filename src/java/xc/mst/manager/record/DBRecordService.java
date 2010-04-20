@@ -10,8 +10,6 @@ import xc.mst.utils.index.RecordList;
 
 public class DBRecordService extends DefaultRecordService {
 	
-	DBRecordDao recordDao = new DBRecordDao();
-
 	@Override
 	public boolean insert(Record record) throws DataException, IndexException
 	{
@@ -25,15 +23,9 @@ public class DBRecordService extends DefaultRecordService {
 		record.setCreatedAt(now);
 		record.setUpdatedAt(now);
 
-		// Create a Document object and set it's type field
-		//SolrInputDocument doc = new SolrInputDocument();
-		//doc.addField(FIELD_INDEXED_OBJECT_TYPE, record.getIndexedObjectType());
-
-		//doc = setFieldsOnDocument(record, doc, true);
-
 		boolean retVal = recordDao.insert(record);
 		return retVal;
-	} // end method insert(Record)
+	}
 	
 	public void commit(int serviceId, boolean force) {
 		recordDao.commit(serviceId, force);
@@ -58,8 +50,25 @@ public class DBRecordService extends DefaultRecordService {
 	
 	@Override
 	public boolean update(Record record) throws DataException, IndexException {
+		// Check that the fields on the record are valid
+		validateFields(record, true, true);
+
+		if(log.isDebugEnabled())
+			log.debug("Updating the record with ID " + record.getId());
+		
 		return recordDao.update(record);
 	}
+	
+	public boolean delete(Record record) throws DataException {
+		// Check that the ID field on the record are valid
+		validateFields(record, true, false);
+
+		if(log.isDebugEnabled())
+			log.debug("Deleting the record with ID " + record.getId());
+
+		//return recordDao.delete();
+		return true;
+	} // end method delete(Record)
 	
 	public void reset() {
 		recordDao.reset();

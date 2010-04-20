@@ -25,9 +25,13 @@
 		<property name="maxActive" value="5" />
 	</bean>
 	
-	<bean name="DBRecordService" class="xc.mst.manager.record.DBRecordService" scope="prototype" />
+	<bean name="DBRecordDao" class="xc.mst.manager.record.DBRecordDao" />
 	
-	<bean name="DefaultRecordService" class="xc.mst.manager.record.DefaultRecordService" scope="prototype" />
+	<bean name="DBRecordService" class="xc.mst.manager.record.DBRecordService">
+		<property name="recordDao" ref="DBRecordDao" /> 
+	</bean>
+	
+	<bean name="DefaultRecordService" class="xc.mst.manager.record.DefaultRecordService"/>
 
 	<bean name="Harvester" class="xc.mst.harvester.Harvester" scope="prototype">
 		<property name="recordService" ref="${record.service}" />

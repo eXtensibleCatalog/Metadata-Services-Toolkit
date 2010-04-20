@@ -29,6 +29,7 @@ import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.DefaultService;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.IndexManagerFactory;
@@ -41,7 +42,7 @@ import xc.mst.utils.index.SolrIndexManager;
  *
  * @author Eric Osisek
  */
-public abstract class RecordService
+public abstract class RecordService extends DefaultService
 {
 	/**
 	 * A reference to the logger for this class
