@@ -9,19 +9,14 @@
 
 package xc.mst.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
 import org.apache.struts2.StrutsStatics;
-import org.apache.struts2.interceptor.ServletRequestAware;
 
 import xc.mst.action.UserAware;
 import xc.mst.action.user.ChangePassword;
 import xc.mst.action.user.EditMyAccount;
 import xc.mst.bo.user.User;
-import xc.mst.utils.MSTConfiguration;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
@@ -47,36 +42,28 @@ public class UserInterceptor extends AbstractInterceptor implements StrutsStatic
 	 * @see com.opensymphony.xwork2.interceptor.AbstractInterceptor#intercept(com.opensymphony.xwork2.ActionInvocation)
 	 */
 	public String intercept(ActionInvocation invocation) throws Exception {
-		
-        final Object action = invocation.getAction();
-        final ActionContext context = invocation.getInvocationContext();
-        
-        HttpServletRequest request = (HttpServletRequest) context.get(HTTP_REQUEST);
-        String ip = request.getRemoteAddr();
-        String byPassLoginIps = MSTConfiguration.getProperty("bypassLogin.ips");
-        
-        if (byPassLoginIps == null || !byPassLoginIps.contains(ip)) {
-    		User user = (User) invocation.getInvocationContext().getSession().get("user");
 
-    		// If user is not in session then it means the user has not logged in. So forward the user to login page.
-    		if (user == null) {
-    			return "user-login";
-    		}
+		final Object action = invocation.getAction();
+		User user = (User) invocation.getInvocationContext().getSession().get("user");
 
-    		// Check if user has any permissions assigned. If not show error message.
-    		if (user != null && (user.getGroups() == null || user.getGroups().size() == 0)) {
-    			if (!(action instanceof EditMyAccount) && !(action instanceof ChangePassword)) {
-    				return "no-permission";
-    			}
-    		}
+		// If user is not in session then it means the user has not logged in. So forward the user to login page.
+		if (user == null) {
+			return "user-login";
+		}
 
-    		if (action instanceof UserAware) {
-    			if( user != null )
-    			{
-    	            ((UserAware) action).setUser(user);
-    			}
-    	    }
-        }
+		// Check if user has any permissions assigned. If not show error message.
+		if (user != null && (user.getGroups() == null || user.getGroups().size() == 0)) {
+			if (!(action instanceof EditMyAccount) && !(action instanceof ChangePassword)) {
+				return "no-permission";
+			}
+		}
+
+		if (action instanceof UserAware) {
+			if( user != null )
+			{
+	            ((UserAware) action).setUser(user);
+			}
+	    }
 
 		return invocation.invoke();
 	}
