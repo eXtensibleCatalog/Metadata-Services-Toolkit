@@ -14,8 +14,7 @@ import java.util.List;
 import xc.mst.bo.provider.Format;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.FormatDAO;
+import xc.mst.manager.BaseService;
 
 /**
  * Service to access the formats
@@ -23,10 +22,8 @@ import xc.mst.dao.provider.FormatDAO;
  * @author Sharmila Ranganathan
  *
  */
-public class DefaultFormatService implements FormatService {
-
-	private FormatDAO formatDAO = new DefaultFormatDAO();
-
+public class DefaultFormatService extends BaseService implements FormatService {
+	
 	/**
 	 * Get format having the specified format id
 	 *

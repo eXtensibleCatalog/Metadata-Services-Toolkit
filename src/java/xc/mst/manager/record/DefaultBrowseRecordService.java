@@ -28,9 +28,9 @@ import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.service.DefaultErrorCodeDAO;
-import xc.mst.dao.service.ErrorCodeDAO;
+import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Browse for results using solr
@@ -38,15 +38,12 @@ import xc.mst.manager.IndexException;
  * @author Sharmila Ranganathan
  *
  */
-public class DefaultBrowseRecordService implements BrowseRecordService {
+public class DefaultBrowseRecordService extends BaseService implements BrowseRecordService {
 
 	/**
 	 * A reference to the logger for this class
 	 */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-	
-	/** Error code DAO */
-	private ErrorCodeDAO errorCodeDAO = new DefaultErrorCodeDAO(); 
 
 	/**
 	 * Method to search the index for records
@@ -83,7 +80,7 @@ public class DefaultBrowseRecordService implements BrowseRecordService {
 	    // Load the records in the SolrBrowseResilt object
 	    SolrDocumentList docs = rsp.getResults();
 
-	    RecordService recordService = new DefaultRecordService();
+	    RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
 	    Iterator<SolrDocument> iteration = docs.iterator();
 	    List<Record> records = new ArrayList<Record>();
 

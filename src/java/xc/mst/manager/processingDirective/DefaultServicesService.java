@@ -31,17 +31,10 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
-import xc.mst.dao.log.DefaultLogDAO;
-import xc.mst.dao.log.LogDAO;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.FormatDAO;
-import xc.mst.dao.service.DefaultErrorCodeDAO;
 import xc.mst.dao.service.DefaultServiceDAO;
-import xc.mst.dao.service.ErrorCodeDAO;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultRecordService;
-import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
@@ -52,7 +45,7 @@ import xc.mst.utils.ServiceUtil;
  *
  * @author Tejaswi Haramurali
  */
-public class DefaultServicesService implements ServicesService
+public class DefaultServicesService extends BaseService implements ServicesService
 {
 	/**
 	 * The logger object
@@ -61,31 +54,6 @@ public class DefaultServicesService implements ServicesService
 
     /** DAO object for services in the MST */
     private ServiceDAO servicesDao;
-
-    /**
-     * DAO for log data in the MST
-     */
-    private static LogDAO logDao = new DefaultLogDAO();
-
-    /**
-     * DAO for format data in the MST
-     */
-    private static FormatDAO formatDao = new DefaultFormatDAO();
-
-    /**
-     * DAO for error codes in the MST
-     */
-    private static ErrorCodeDAO errorCodeDao = new DefaultErrorCodeDAO();
-
-    /**
-     * Service for records in the MST
-     */
-    private static RecordService recordService = new DefaultRecordService();
-    
-    /**
-     * Manager to insert/delete jobs in the MST
-     */
-    private static JobService jobService = new DefaultJobService();
 
     /**
      * Constant signifying the parser is parsing the service's input formats
@@ -154,7 +122,7 @@ public class DefaultServicesService implements ServicesService
     	{
     		MetadataService mService = null; // An instance of the service we're adding
 
-    		String logFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
+    		String logFileName = getLogDAO().getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 
     		in = new BufferedReader(new FileReader(configFile));
 
@@ -297,7 +265,7 @@ public class DefaultServicesService implements ServicesService
     				String namespace = (line.contains("#") ? line.substring(10, line.indexOf("#")) : line.substring(10)).trim();
 
     				// Get the format from the database
-    				Format format = formatDao.getByName(formatName);
+    				Format format = getFormatDAO().getByName(formatName);
 
     				// If the format was not in the database, get it from the configuration file
     				if(format == null)
@@ -306,7 +274,7 @@ public class DefaultServicesService implements ServicesService
     					format.setName(formatName);
     					format.setSchemaLocation(schemaLoc);
     					format.setNamespace(namespace);
-    					formatDao.insert(format);
+    					getFormatDAO().insert(format);
     				}
     				// Otherwise check whether or not the configuration file provided the same schema location and namespace for the format.
     				// Log a warning if not
@@ -365,7 +333,7 @@ public class DefaultServicesService implements ServicesService
     				String namespace = (line.contains("#") ? line.substring(10, line.indexOf("#")) : line.substring(10)).trim();
 
     				// Get the format from the database
-    				Format format = formatDao.getByName(formatName);
+    				Format format = getFormatDAO().getByName(formatName);
 
     				// If the format was not in the database, get it from the configuration file
     				if(format == null)
@@ -374,7 +342,7 @@ public class DefaultServicesService implements ServicesService
     					format.setName(formatName);
     					format.setSchemaLocation(schemaLoc);
     					format.setNamespace(namespace);
-    					formatDao.insert(format);
+    					getFormatDAO().insert(format);
     				}
     				// Otherwise check whether or not the configuration file provided the same
     				// schema location and namespace for the format. Log a warning if not
@@ -430,7 +398,7 @@ public class DefaultServicesService implements ServicesService
     				errorCode.setErrorDescriptionFile(configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceErrors" + MSTConfiguration.FILE_SEPARATOR + errorDescriptionFile);
     				errorCode.setService(service);
 
-    				errorCodeDao.insert(errorCode);
+    				getErrorCodeDAO().insert(errorCode);
     			}
     			else if(!line.equals(FILE_SERVICE_SPECIFIC))
     			{
@@ -506,7 +474,7 @@ public class DefaultServicesService implements ServicesService
     	{
     		MetadataService mService = null; // An instance of the service we're adding
 
-    		String logFileName = logDao.getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
+    		String logFileName = getLogDAO().getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 
     		in = new BufferedReader(new FileReader(configFile));
 
@@ -648,7 +616,7 @@ public class DefaultServicesService implements ServicesService
     				String namespace = (line.contains("#") ? line.substring(10, line.indexOf("#")) : line.substring(10)).trim();
 
     				// Get the format from the database
-    				Format format = formatDao.getByName(formatName);
+    				Format format = getFormatDAO().getByName(formatName);
 
     				// If the format was not in the database, get it from the configuration file
     				if(format == null)
@@ -657,7 +625,7 @@ public class DefaultServicesService implements ServicesService
     					format.setName(formatName);
     					format.setSchemaLocation(schemaLoc);
     					format.setNamespace(namespace);
-    					formatDao.insert(format);
+    					getFormatDAO().insert(format);
     				}
     				// Otherwise check whether or not the configuration file provided the same schema location and namespace for the format.
     				// Log a warning if not
@@ -716,7 +684,7 @@ public class DefaultServicesService implements ServicesService
     				String namespace = (line.contains("#") ? line.substring(10, line.indexOf("#")) : line.substring(10)).trim();
 
     				// Get the format from the database
-    				Format format = formatDao.getByName(formatName);
+    				Format format = getFormatDAO().getByName(formatName);
 
     				// If the format was not in the database, get it from the configuration file
     				if(format == null)
@@ -725,7 +693,7 @@ public class DefaultServicesService implements ServicesService
     					format.setName(formatName);
     					format.setSchemaLocation(schemaLoc);
     					format.setNamespace(namespace);
-    					formatDao.insert(format);
+    					getFormatDAO().insert(format);
     				}
     				// Otherwise check whether or not the configuration file provided the same
     				// schema location and namespace for the format. Log a warning if not
@@ -773,19 +741,19 @@ public class DefaultServicesService implements ServicesService
 
     				String errorDescriptionFile = (line.contains("#") ? line.substring(23, line.indexOf("#")) : line.substring(23)).trim();
 
-    				ErrorCode errorCode = errorCodeDao.getByErrorCodeAndService(errorCodeStr, service);
+    				ErrorCode errorCode = getErrorCodeDAO().getByErrorCodeAndService(errorCodeStr, service);
     				if(errorCode == null)
     				{
     					errorCode = new ErrorCode();
     					errorCode.setErrorCode(errorCodeStr);
     					errorCode.setErrorDescriptionFile(configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceErrors" + MSTConfiguration.FILE_SEPARATOR + errorDescriptionFile);
     					errorCode.setService(service);
-    					errorCodeDao.insert(errorCode);
+    					getErrorCodeDAO().insert(errorCode);
     				}
     				else
     				{
     					errorCode.setErrorDescriptionFile(configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceErrors" + MSTConfiguration.FILE_SEPARATOR + errorDescriptionFile);
-    					errorCodeDao.update(errorCode);
+    					getErrorCodeDAO().update(errorCode);
     				}
     			}
     			else if(!line.equals(FILE_SERVICE_SPECIFIC))
@@ -826,6 +794,7 @@ public class DefaultServicesService implements ServicesService
     		if(reprocessingRequired)
     		try {
 				Job job = new Job(service, 0, Constants.THREAD_SERVICE_REPROCESS);
+				JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
 				job.setOrder(jobService.getMaxOrder() + 1); 
 				jobService.insertJob(job);
 			} catch (DatabaseConfigException dce) {
@@ -883,6 +852,7 @@ public class DefaultServicesService implements ServicesService
     	servicesDao.update(service);
     	try {
 			Job job = new Job(service, 0, Constants.THREAD_DELETE_SERVICE);
+			JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
 			job.setOrder(jobService.getMaxOrder() + 1); 
 			jobService.insertJob(job);
 		} catch (DatabaseConfigException dce) {

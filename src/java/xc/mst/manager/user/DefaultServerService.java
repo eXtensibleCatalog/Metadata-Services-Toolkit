@@ -11,11 +11,11 @@ package xc.mst.manager.user;
 
 
 import java.util.List;
+
 import xc.mst.bo.user.Server;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.user.DefaultServerDAO;
-import xc.mst.dao.user.ServerDAO;
+import xc.mst.manager.BaseService;
 
 
 /**
@@ -23,10 +23,7 @@ import xc.mst.dao.user.ServerDAO;
  *
  * @author Tejaswi Haramurali
  */
-public class DefaultServerService implements ServerService {
-
-    /** DAO object for servers */
-    private ServerDAO serverDao = new DefaultServerDAO();
+public class DefaultServerService extends BaseService implements ServerService {
 
     /**
      * Return a server object based on the server ID
@@ -37,7 +34,7 @@ public class DefaultServerService implements ServerService {
      */
     public Server getServerById(int serverId) throws DatabaseConfigException {
 
-        return serverDao.getById(serverId);
+        return getServerDAO().getById(serverId);
     }
 
     /**
@@ -49,7 +46,7 @@ public class DefaultServerService implements ServerService {
      */
     public Server getServerByName(String serverName) throws DatabaseConfigException {
 
-        return serverDao.getByName(serverName);
+        return getServerDAO().getByName(serverName);
     }
 
     /**
@@ -59,7 +56,7 @@ public class DefaultServerService implements ServerService {
      */
     public void insertServer(Server server) throws DataException {
 
-        serverDao.insert(server);
+    	getServerDAO().insert(server);
     }
 
     /**
@@ -68,7 +65,7 @@ public class DefaultServerService implements ServerService {
      * @param server The server object to be deleted
      */
     public void deleteServer(Server server) throws DataException{
-        serverDao.delete(server);
+    	getServerDAO().delete(server);
     }
 
     /**
@@ -77,7 +74,7 @@ public class DefaultServerService implements ServerService {
      * @param server The server whose details should be updated
      */
     public void updateServer(Server server) throws DataException{
-        serverDao.update(server);
+    	getServerDAO().update(server);
     }
 
     /**
@@ -87,6 +84,6 @@ public class DefaultServerService implements ServerService {
      * @throws DataException
      */
     public List<Server> getAll() throws DatabaseConfigException {
-    	return serverDao.getAll();
+    	return getServerDAO().getAll();
     }
 }

@@ -1,7 +1,8 @@
 package xc.mst.servlet;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -29,7 +30,9 @@ public class MSTContextListener implements ServletContextListener {
     		}
     		if (rootDir == null) {
 	    		try {
-		    		FileReader reader = new FileReader("webapps/"+path+"/WEB-INF/classes/env.properties");
+	    			BufferedReader reader = new BufferedReader(new InputStreamReader(
+	    					getClass().getClassLoader().getResourceAsStream(
+		    			        "env.properties")));
 		    		Properties props = new Properties();
 		    		props.load(reader);
 		    		reader.close();

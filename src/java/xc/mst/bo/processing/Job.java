@@ -44,7 +44,10 @@ public class Job {
 	}
 	
 	/** Constructor */
-	public Job(Service service, int outputSetId, String jobType) {
+	public Job(Service service, Integer outputSetId, String jobType) {
+		if (outputSetId == null) {
+			outputSetId = 0;
+		}
 		this.service = service;
 		this.outputSetId = outputSetId;
 		this.jobType = jobType;

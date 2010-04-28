@@ -22,11 +22,11 @@ import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Appender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.RollingFileAppender;
 
-import org.apache.commons.codec.binary.Base64;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
 import xc.mst.bo.user.Server;
@@ -34,13 +34,9 @@ import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.user.DefaultPermissionDAO;
-import xc.mst.dao.user.DefaultUserDAO;
-import xc.mst.dao.user.DefaultUserGroupUtilDAO;
-import xc.mst.dao.user.PermissionDAO;
-import xc.mst.dao.user.UserDAO;
-import xc.mst.dao.user.UserGroupUtilDAO;
 import xc.mst.email.Emailer;
+import xc.mst.manager.BaseService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Service class for User to deal with creating, updating
@@ -49,22 +45,10 @@ import xc.mst.email.Emailer;
  * @author Sharmila Ranganathan
  *
  */
-public class DefaultUserService implements UserService {
+public class DefaultUserService extends BaseService implements UserService {
 
 	/** A reference to the logger for this class */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-    /** User DAO object */
-	private UserDAO userDAO = new DefaultUserDAO();
-
-    /** User-Group Util Dao object */
-	private UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
-	
-    /** Permission Dao object */
-	private PermissionDAO permissionDAO = new DefaultPermissionDAO();	
-
-    /** Group DAO Object */
-	private GroupService groupService = new DefaultGroupService();
 
 	/**
 	 * Get User having the specified user id
@@ -418,6 +402,7 @@ public class DefaultUserService implements UserService {
 		adminMessageBody.append("\nPlease login into the system and assign appropriate permissions for the user.");
 		String adminSubject = "Assign permission to new User";
 		
+		GroupService groupService = (GroupService)MSTConfiguration.getBean("GroupService");
 		List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR).getId());
 		
 		boolean emailConfigured = new Emailer().isConfigured();
@@ -481,6 +466,7 @@ public class DefaultUserService implements UserService {
 
             String adminSubject = "MST error";
 
+            GroupService groupService = (GroupService)MSTConfiguration.getBean("GroupService");
             List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR).getId());
 
             boolean emailConfigured = new Emailer().isConfigured();

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import xc.mst.utils.MSTConfiguration;
+
 /**
  * Servlet to start scheduler thread
  *
@@ -24,15 +26,16 @@ public class SchedulerThreadServlet extends HttpServlet {
 	/** Eclipse generated id */
 	private static final long serialVersionUID = 4129403386738067125L;
 
+	private Thread schedulerThread = null;
 	private Scheduler scheduler = null;
 
 	/**
 	 * Start scheduler thread
 	 */
 	public void init() {
-
-		scheduler = new Scheduler();
-		scheduler.start();
+		scheduler = (Scheduler)MSTConfiguration.getBean("Scheduler");
+		schedulerThread = new Thread(scheduler);
+		schedulerThread.start();
 	  }
 
 	  public void doGet(HttpServletRequest req, HttpServletResponse res) {
@@ -40,7 +43,7 @@ public class SchedulerThreadServlet extends HttpServlet {
 
 	  public void destroy()
 	  {
-		  if(scheduler != null && scheduler.isAlive())
+		  if(scheduler != null && schedulerThread.isAlive())
 			  scheduler.kill();
 	  }
 }

@@ -10,8 +10,8 @@
 package xc.mst.manager.user;
 
 import java.util.List;
-import xc.mst.dao.user.DefaultUserGroupUtilDAO;
-import xc.mst.dao.user.UserGroupUtilDAO;
+
+import xc.mst.manager.BaseService;
 
 /*
  * This is the service class that is used to associate users with groups
@@ -19,18 +19,15 @@ import xc.mst.dao.user.UserGroupUtilDAO;
  *
  * @author Tejaswi Haramurali
  */
-public class DefaultUserGroupUtilService implements UserGroupUtilService{
-
-    private UserGroupUtilDAO userGroupUtilDao = new DefaultUserGroupUtilDAO();
-
-
+public class DefaultUserGroupUtilService extends BaseService implements UserGroupUtilService{
+	
     /**
      * returns a list of IDs of the groups that are associated with a user
      * @param userId user ID
      * @return list of group IDs
      */
     public List<Integer> getGroupsForUserId(int userId) {
-        return userGroupUtilDao.getGroupsForUser(userId);
+        return getUserGroupUtilDAO().getGroupsForUser(userId);
     }
 
     /**
@@ -38,7 +35,7 @@ public class DefaultUserGroupUtilService implements UserGroupUtilService{
      * @param userId user ID
      */
     public void deleteGroupsForUserId(int userId) {
-        userGroupUtilDao.deleteGroupsForUser(userId);
+    	getUserGroupUtilDAO().deleteGroupsForUser(userId);
     }
 
     /**
@@ -47,7 +44,7 @@ public class DefaultUserGroupUtilService implements UserGroupUtilService{
      * @param groupId group ID
      */
     public void insertUserGroup(int userId, int groupId) {
-        userGroupUtilDao.insert(userId,groupId);
+    	getUserGroupUtilDAO().insert(userId,groupId);
     }
 
     /**
@@ -56,7 +53,7 @@ public class DefaultUserGroupUtilService implements UserGroupUtilService{
      * @param groupId group ID
      */
      public void deleteUserGroup(int userId, int groupId) {
-        userGroupUtilDao.delete(userId,groupId);
+    	 getUserGroupUtilDAO().delete(userId,groupId);
     }
 
 }

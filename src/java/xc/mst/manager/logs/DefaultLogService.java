@@ -15,8 +15,7 @@ import java.util.List;
 import xc.mst.bo.log.Log;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.log.DefaultLogDAO;
-import xc.mst.dao.log.LogDAO;
+import xc.mst.manager.BaseService;
 
 /**
  *
@@ -24,15 +23,8 @@ import xc.mst.dao.log.LogDAO;
  *
  * @author Tejaswi Haramurali
  */
-public class DefaultLogService implements LogService
+public class DefaultLogService extends BaseService implements LogService
 {
-    /**Log DAO Object */
-    private LogDAO logDao;
-
-    public DefaultLogService()
-    {
-        logDao = new DefaultLogDAO();
-    }
 
     /**
 	 * Gets all logs from the database
@@ -42,7 +34,7 @@ public class DefaultLogService implements LogService
 	 */
 	public List<Log> getAll() throws DatabaseConfigException
     {
-        return logDao.getAll();
+        return getLogDAO().getAll();
     }
 
 	/**
@@ -54,7 +46,7 @@ public class DefaultLogService implements LogService
 	 */
 	public Log getById(int id) throws DatabaseConfigException
     {
-        return logDao.getById(id);
+        return getLogDAO().getById(id);
     }
 
 	/**
@@ -66,7 +58,7 @@ public class DefaultLogService implements LogService
 	 */
 	public void insert(Log log) throws DataException
     {
-        logDao.insert(log);
+		getLogDAO().insert(log);
     }
 
 	/**
@@ -78,7 +70,7 @@ public class DefaultLogService implements LogService
 	 */
 	public void update(Log log) throws DataException
     {
-        logDao.update(log);
+		getLogDAO().update(log);
     }
 
 	/**
@@ -90,7 +82,7 @@ public class DefaultLogService implements LogService
 	 */
 	public void delete(Log log) throws DataException
     {
-        logDao.delete(log);
+		getLogDAO().delete(log);
     }
 
     /**
@@ -103,6 +95,6 @@ public class DefaultLogService implements LogService
 	 */
 	public List<Log> getSorted(boolean asc,String columnName) throws DatabaseConfigException
     {
-        return logDao.getSorted(asc, columnName);
+        return getLogDAO().getSorted(asc, columnName);
     }
 }

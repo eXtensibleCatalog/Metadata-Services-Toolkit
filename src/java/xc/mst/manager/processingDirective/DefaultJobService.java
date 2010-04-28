@@ -21,10 +21,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.processing.DefaultJobDAO;
-import xc.mst.dao.processing.JobDAO;
-import xc.mst.manager.record.DefaultRecordService;
-import xc.mst.manager.record.RecordService;
+import xc.mst.manager.BaseService;
 import xc.mst.manager.repository.DefaultSetService;
 import xc.mst.manager.repository.SetService;
 import xc.mst.utils.MSTConfiguration;
@@ -34,20 +31,12 @@ import xc.mst.utils.MSTConfiguration;
  *
  * @author Sharmila Ranganathan
  */
-public class DefaultJobService implements JobService {
+public class DefaultJobService extends BaseService implements JobService {
 
 	/**
 	 * A reference to the logger for this class
 	 */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-    /** DAO for jobs */
-    private JobDAO jobDAO = new DefaultJobDAO();
-    
-    /**
-	 * Manager for getting, inserting and updating records
-	 */
-	protected static RecordService recordService = new DefaultRecordService();
 
     /**
      * Returns a job with the given ID

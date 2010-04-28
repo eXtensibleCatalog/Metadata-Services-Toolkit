@@ -14,8 +14,6 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Record;
@@ -23,11 +21,12 @@ import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.ExpressionList;
 import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.SolrIndexManager;
-import xc.mst.utils.index.WorkList;
 
 /**
  * Service class to query, add, update and delete records from an index.
@@ -36,7 +35,7 @@ import xc.mst.utils.index.WorkList;
  *
  * @author Eric Osisek
  */
-public abstract class ExpressionService
+public abstract class ExpressionService extends BaseService
 {
 	/**
 	 * A reference to the logger for this class
@@ -44,19 +43,9 @@ public abstract class ExpressionService
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 	/**
-	 * Manager for getting, inserting and updating records
-	 */
-	protected static RecordService recordService = new DefaultRecordService();
-
-	/**
-	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit.
-	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
-
-	/**
 	 * An Object shared by all LuceneObjects which manages the Lucene index
 	 */
-	protected static SolrIndexManager indexMgr = IndexManagerFactory.getIndexManager(configuration.getProperty(Constants.CONFIG_SOLR_INDEXER));
+	protected static SolrIndexManager indexMgr = IndexManagerFactory.getIndexManager(MSTConfiguration.getProperty(Constants.CONFIG_SOLR_INDEXER));
 
 	/**
 	 * The name of the record ID field

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+		default-init-method="init">
+		
+	<bean name="BaseManager" abstract="true" class="xc.mst.manager.BaseManager" parent="BaseService">
+		<!--
+		<property name="emailConfigDAO" ref="EmailConfigDAO" />
+		<property name="harvestDAO" ref="HarvestDAO" />
+		<property name="harvestRecordUtilDAO" ref="HarvestRecordUtilDAO" />
+		<property name="harvestScheduleDAO" ref="HarvestScheduleDAO" />
+		<property name="harvestScheduleStepDAO" ref="HarvestScheduleStepDAO" />
+		<property name="logDAO" ref="LogDAO" />
+		<property name="jobDAO" ref="JobDAO" />
+		<property name="processingDirectiveDAO" ref="ProcessingDirectiveDAO" />
+		<property name="processingDirectiveInputFormatUtilDAO" ref="ProcessingDirectiveInputFormatUtilDAO" />
+		<property name="processingDirectiveInputSetUtilDAO" ref="ProcessingDirectiveInputSetUtilDAO" />
+		<property name="formatDAO" ref="FormatDAO" />
+		<property name="providerDAO" ref="ProviderDAO" />
+		<property name="providerFormatUtilDAO" ref="ProviderFormatUtilDAO" />
+		<property name="setDAO" ref="SetDAO" />
+		<property name="recordTypeDAO" ref="RecordTypeDAO" />
+		<property name="resumptionTokenDAO" ref="ResumptionTokenDAO" />
+		<property name="xcIdentifierForFrbrElementDAO" ref="XcIdentifierForFrbrElementDAO" />
+		<property name="errorCodeDAO" ref="ErrorCodeDAO" />
+		<property name="oaiIdentifierForServiceDAO" ref="OaiIdentifierForServiceDAO" />
+		<property name="serviceDAO" ref="ServiceDAO" />
+		<property name="serviceInputFormatUtilDAO" ref="ServiceInputFormatUtilDAO" />
+		<property name="serviceOutputFormatUtilDAO" ref="ServiceOutputFormatUtilDAO" />
+		<property name="serviceOutputSetUtilDAO" ref="ServiceOutputSetUtilDAO" />
+		<property name="groupDAO" ref="GroupDAO" />
+		<property name="groupPermissionUtilDAO" ref="GroupPermissionUtilDAO" />
+		<property name="permissionDAO" ref="PermissionDAO" />
+		<property name="serverDAO" ref="ServerDAO" />
+		<property name="userDAO" ref="UserDAO" />
+		<property name="userGroupUtilDAO" ref="UserGroupUtilDAO" />
+		<property name="dBRecordDAO" ref="DBRecordDAO" />
+		-->
+		
+		<property name="emailConfigService" ref="EmailConfigService" />
+		<property name="scheduleService" ref="ScheduleService" />
+		<property name="logService" ref="LogService" />
+		<property name="jobService" ref="JobService" />
+		<property name="processingDirectiveService" ref="ProcessingDirectiveService" />
+		<property name="servicesService" ref="ServicesService" />
+		<property name="browseRecordService" ref="BrowseRecordService" />
+		<property name="expressionService" ref="ExpressionService" />
+		<property name="holdingsService" ref="HoldingsService" />
+		<property name="itemService" ref="ItemService" />
+		<property name="manifestationService" ref="ManifestationService" />
+		<property name="workService" ref="WorkService" />
+		<property name="formatService" ref="FormatService" />
+		<property name="providerService" ref="ProviderService" />
+		<property name="setService" ref="SetService" />
+		<property name="groupService" ref="GroupService" />
+		<property name="permissionService" ref="PermissionService" />
+		<property name="serverService" ref="ServerService" />
+		<property name="userGroupUtilService" ref="UserGroupUtilService" />
+		<property name="userService" ref="UserService" />
+		<property name="recordService" ref="RecordService" />
+	
+	</bean>
+	
+	<bean name="Scheduler" class="xc.mst.scheduling.Scheduler" parent="BaseManager" />
+	
+	<bean name="Harvester" class="xc.mst.harvester.Harvester" parent="BaseManager" scope="prototype" />
+		
+</beans>
+		

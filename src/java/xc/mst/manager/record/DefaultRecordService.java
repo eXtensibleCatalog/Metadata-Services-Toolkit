@@ -33,18 +33,8 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.harvest.DefaultHarvestDAO;
-import xc.mst.dao.harvest.HarvestDAO;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.DefaultProviderDAO;
-import xc.mst.dao.provider.DefaultSetDAO;
-import xc.mst.dao.provider.FormatDAO;
-import xc.mst.dao.provider.ProviderDAO;
-import xc.mst.dao.provider.SetDAO;
 import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
-import xc.mst.dao.service.DefaultServiceDAO;
-import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.RecordList;
@@ -59,30 +49,6 @@ import xc.mst.utils.index.SolrIndexManager;
  */
 public class DefaultRecordService extends RecordService
 {
-	/**
-	 * Data access object for getting sets
-	 */
-	private SetDAO setDao = new DefaultSetDAO();
-
-	/**
-	 * Data access object for getting formats
-	 */
-	private FormatDAO formatDao = new DefaultFormatDAO();
-
-	/**
-	 * Data access object for getting providers
-	 */
-	private ProviderDAO providerDao = new DefaultProviderDAO();
-
-	/**
-	 * Data access object for getting harvests
-	 */
-	private HarvestDAO harvestDao = new DefaultHarvestDAO();
-
-	/**
-	 * Data access object for getting services
-	 */
-	private ServiceDAO serviceDao = new DefaultServiceDAO();
 
 	/**
 	 * Data access object for getting FRBR level IDs
@@ -865,16 +831,16 @@ public class DefaultRecordService extends RecordService
 		record.setId(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
 		record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
 		record.setDeleted(Boolean.parseBoolean((String)doc.getFieldValue(FIELD_DELETED)));
-		record.setFormat(formatDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_FORMAT_ID))));
+		record.setFormat(getFormatDAO().getById(Integer.parseInt((String)doc.getFieldValue(FIELD_FORMAT_ID))));
 		if (doc.getFieldValue(FIELD_OAI_DATESTAMP) != null) {
 			record.setOaiDatestamp((Date)doc.getFieldValue(FIELD_OAI_DATESTAMP));
 		}
 		record.setOaiHeader((String)doc.getFieldValue(FIELD_OAI_HEADER));
 		record.setOaiIdentifier(oaiId);
 		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
-		record.setProvider(providerDao.loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
-		record.setService(serviceDao.loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
-		record.setHarvest(harvestDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_HARVEST_ID))));
+		record.setProvider(getProviderDAO().loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
+		record.setService(getServiceDAO().loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
+		record.setHarvest(getHarvestDAO().getById(Integer.parseInt((String)doc.getFieldValue(FIELD_HARVEST_ID))));
 		record.setHarvestScheduleName((String)doc.getFieldValue(FIELD_HARVEST_SCHEDULE_NAME));
 
 		
@@ -885,7 +851,7 @@ public class DefaultRecordService extends RecordService
 		Collection<Object> sets = doc.getFieldValues(FIELD_SET_SPEC);
 		if(sets != null)
 			for(Object set : sets)
-				record.addSet(setDao.getBySetSpec((String)set));
+				record.addSet(getSetDAO().getBySetSpec((String)set));
 
 		Collection<Object> errors = doc.getFieldValues(FIELD_ERROR);
 		if(errors != null)
@@ -918,12 +884,12 @@ public class DefaultRecordService extends RecordService
 		Collection<Object> inputForServices = doc.getFieldValues(FIELD_INPUT_FOR_SERVICE_ID);
 		if(inputForServices != null)
 			for(Object inputForService : inputForServices)
-				record.addInputForService(serviceDao.loadBasicService(Integer.parseInt((String)inputForService)));
+				record.addInputForService(getServiceDAO().loadBasicService(Integer.parseInt((String)inputForService)));
 
 		Collection<Object> processedByServices = doc.getFieldValues(FIELD_PROCESSED_BY_SERVICE_ID);
 		if(processedByServices != null)
 			for(Object processedByService : processedByServices)
-				record.addProcessedByService(serviceDao.loadBasicService(Integer.parseInt((String)processedByService)));
+				record.addProcessedByService(getServiceDAO().loadBasicService(Integer.parseInt((String)processedByService)));
 		
 		Collection<Object> traits = doc.getFieldValues(FIELD_TRAIT);
 		if(traits != null)
@@ -949,9 +915,9 @@ public class DefaultRecordService extends RecordService
 
 		// Set the fields on the record Object and return it
 		record.setId(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
-		record.setFormat(formatDao.getById(Integer.parseInt((String)doc.getFieldValue(FIELD_FORMAT_ID))));
-		record.setProvider(providerDao.loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
-		record.setService(serviceDao.loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
+		record.setFormat(getFormatDAO().getById(Integer.parseInt((String)doc.getFieldValue(FIELD_FORMAT_ID))));
+		record.setProvider(getProviderDAO().loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
+		record.setService(getServiceDAO().loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
 		record.setHarvestScheduleName((String)doc.getFieldValue(FIELD_HARVEST_SCHEDULE_NAME));
 		record.setOaiIdentifier((String)doc.getFieldValue(FIELD_OAI_IDENTIFIER));
 

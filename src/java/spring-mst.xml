@@ -24,17 +24,9 @@
 		<property name="minIdle" value="5" />
 		<property name="maxActive" value="5" />
 	</bean>
-	
-	<bean name="DBRecordDao" class="xc.mst.manager.record.DBRecordDao" />
-	
-	<bean name="DBRecordService" class="xc.mst.manager.record.DBRecordService">
-		<property name="recordDao" ref="DBRecordDao" /> 
-	</bean>
-	
-	<bean name="DefaultRecordService" class="xc.mst.manager.record.DefaultRecordService"/>
 
-	<bean name="Harvester" class="xc.mst.harvester.Harvester" scope="prototype">
-		<property name="recordService" ref="${record.service}" />
-	</bean>
+	<import resource="all-daos.xml"/>
+	<import resource="all-services.xml"/>
+	<import resource="all-managers.xml"/>
 
 </beans>

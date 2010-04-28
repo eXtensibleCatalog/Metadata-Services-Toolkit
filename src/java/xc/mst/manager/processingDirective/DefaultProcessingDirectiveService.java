@@ -18,35 +18,20 @@ import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
-import xc.mst.dao.processing.ProcessingDirectiveDAO;
-import xc.mst.dao.service.DefaultServiceDAO;
-import xc.mst.dao.service.ServiceDAO;
-import xc.mst.manager.record.DefaultRecordService;
-import xc.mst.manager.record.RecordService;
+import xc.mst.manager.BaseService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Service Class that is used for the creation/deletion/updating of Processing Directives.
  *
  * @author Tejaswi Haramurali
  */
-public class DefaultProcessingDirectiveService implements ProcessingDirectiveService{
+public class DefaultProcessingDirectiveService extends BaseService implements ProcessingDirectiveService{
 
 	/**
 	 * A reference to the logger for this class
 	 */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-    /** DAO for processing directives */
-    private ProcessingDirectiveDAO processingDirectiveDao = new DefaultProcessingDirectiveDAO();
-
-    /** DAO for services */
-    private ServiceDAO serviceDao = new DefaultServiceDAO();
-    
-    /**
-	 * Manager for getting, inserting and updating records
-	 */
-	protected static RecordService recordService = new DefaultRecordService();
 
     /**
      * Returns a procesisng directive  with the given ID
@@ -56,7 +41,7 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      * @throws DatabaseConfigException 
      */
     public ProcessingDirective getByProcessingDirectiveId(int processingDirectiveId) throws DatabaseConfigException {
-        return processingDirectiveDao.getById(processingDirectiveId);
+        return getProcessingDirectiveDAO().getById(processingDirectiveId);
     }
 
     /**
@@ -66,7 +51,7 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      */
     public void insertProcessingDirective(ProcessingDirective processingDirective) {
         try {
-			processingDirectiveDao.insert(processingDirective);
+        	getProcessingDirectiveDAO().insert(processingDirective);
 			
 			// If the processing directive has an output set that is not
 			// already in the target service, we need to add it as an input set
@@ -74,7 +59,7 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
 			if(processingDirective.getOutputSet() != null)
 			{
 				processingDirective.getService().addOutputSet(processingDirective.getOutputSet());
-				serviceDao.update(processingDirective.getService());
+				getServiceDAO().update(processingDirective.getService());
 			}
 			
 			runProcessingDirective(processingDirective);
@@ -90,7 +75,7 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      */
     public void deleteProcessingDirective(ProcessingDirective processingDirective) {
         try {
-			processingDirectiveDao.delete(processingDirective);
+        	getProcessingDirectiveDAO().delete(processingDirective);
 		} catch (DataException e) {
 			log.error("Data Exception", e);
 		}
@@ -103,7 +88,7 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      */
     public void updateProcessingDirective(ProcessingDirective processingDirective) {
         try {
-			processingDirectiveDao.update(processingDirective);
+        	getProcessingDirectiveDAO().update(processingDirective);
 			
 			// If the processing directive has an output set that is not
 			// already in the target service, we need to add it as an input set
@@ -111,7 +96,7 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
 			if(processingDirective.getOutputSet() != null)
 			{
 				processingDirective.getService().addOutputSet(processingDirective.getOutputSet());
-				serviceDao.update(processingDirective.getService());
+				getServiceDAO().update(processingDirective.getService());
 			}
 			
 //			runProcessingDirective(processingDirective);
@@ -128,7 +113,7 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      */
     public List<ProcessingDirective> getAllProcessingDirectives() throws DatabaseConfigException
     {
-        return processingDirectiveDao.getAll();
+        return getProcessingDirectiveDAO().getAll();
     }
 
     /**
@@ -140,7 +125,7 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      */
     public List<ProcessingDirective> getBySourceProviderId(int providerId) throws DatabaseConfigException
     {
-        return processingDirectiveDao.getBySourceProviderId(providerId);
+        return getProcessingDirectiveDAO().getBySourceProviderId(providerId);
     }
 
     /**
@@ -152,7 +137,7 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      */
     public List<ProcessingDirective> getBySourceServiceId(int serviceId) throws DatabaseConfigException
     {
-        return processingDirectiveDao.getBySourceServiceId(serviceId);
+        return getProcessingDirectiveDAO().getBySourceServiceId(serviceId);
     }
 
     /**
@@ -164,7 +149,7 @@ public class DefaultProcessingDirectiveService implements ProcessingDirectiveSer
      */
     private void runProcessingDirective(ProcessingDirective pd)
     {
-    	JobService jobService = new DefaultJobService();
+    	JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
     	
     	// Add job to database queue
 		try {

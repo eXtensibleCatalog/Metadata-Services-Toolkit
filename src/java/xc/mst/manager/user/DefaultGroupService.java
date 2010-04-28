@@ -10,12 +10,11 @@
 package xc.mst.manager.user;
 
 import java.util.List;
+
 import xc.mst.bo.user.Group;
-import xc.mst.bo.user.Permission;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.user.DefaultGroupDAO;
-import xc.mst.dao.user.GroupDAO;
+import xc.mst.manager.BaseService;
 
 /*
  * This is the Service Class for adding, deleting and updating groups
@@ -23,10 +22,7 @@ import xc.mst.dao.user.GroupDAO;
  *
  * @author Tejaswi Haramurali
  */
-public class DefaultGroupService implements GroupService {
-
-    /** Group DAO Object */
-    private GroupDAO groupDao = new DefaultGroupDAO();
+public class DefaultGroupService extends BaseService implements GroupService {
 
     /**
      * Returns a group object based on the group ID
@@ -36,7 +32,7 @@ public class DefaultGroupService implements GroupService {
      * @throws DatabaseConfigException 
      */
     public Group getGroupById(int groupId) throws DatabaseConfigException {
-        return groupDao.getById(groupId);
+        return getGroupDAO().getById(groupId);
     }
 
     /**
@@ -46,7 +42,7 @@ public class DefaultGroupService implements GroupService {
      */
     public void insertGroup(Group group) throws DataException{
        
-        groupDao.insert(group);
+    	getGroupDAO().insert(group);
     }
 
     /**
@@ -56,7 +52,7 @@ public class DefaultGroupService implements GroupService {
      */
     public void deleteGroup(Group group) throws DataException{
 
-        groupDao.delete(group);
+    	getGroupDAO().delete(group);
     }
 
     /**
@@ -65,7 +61,7 @@ public class DefaultGroupService implements GroupService {
      * @param group The group whose details are to be updates.
      */
     public void updateGroup(Group group) throws DataException{
-        groupDao.update(group);
+    	getGroupDAO().update(group);
     }
 
     /**
@@ -76,7 +72,7 @@ public class DefaultGroupService implements GroupService {
      */
     public List<Group> getAllGroups() throws DatabaseConfigException
     {
-        return groupDao.getAll();
+        return getGroupDAO().getAll();
     }
 
     /**
@@ -89,7 +85,7 @@ public class DefaultGroupService implements GroupService {
      */
     public List<Group> getAllGroupsSorted(boolean isAscendingOrder,String columnSorted) throws DatabaseConfigException
     {
-        return groupDao.getAllSorted(isAscendingOrder, columnSorted);
+        return getGroupDAO().getAllSorted(isAscendingOrder, columnSorted);
     }
 
     /**
@@ -100,7 +96,7 @@ public class DefaultGroupService implements GroupService {
      * @throws DatabaseConfigException 
      */
     public Group getGroupByName(String groupName) throws DatabaseConfigException {
-    	return groupDao.getByName(groupName);
+    	return getGroupDAO().getByName(groupName);
     }
 
    

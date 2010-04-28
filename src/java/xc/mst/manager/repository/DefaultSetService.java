@@ -14,8 +14,7 @@ import java.util.List;
 import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.provider.DefaultSetDAO;
-import xc.mst.dao.provider.SetDAO;
+import xc.mst.manager.BaseService;
 
 /**
  * Service to access the sets
@@ -23,10 +22,7 @@ import xc.mst.dao.provider.SetDAO;
  * @author Sharmila Ranganathan
  *
  */
-public class DefaultSetService implements SetService {
-
-    /** Set DAP object */
-	private SetDAO setDAO = new DefaultSetDAO();
+public class DefaultSetService extends BaseService implements SetService {
 
 	/**
 	 * Get set having the specified set id

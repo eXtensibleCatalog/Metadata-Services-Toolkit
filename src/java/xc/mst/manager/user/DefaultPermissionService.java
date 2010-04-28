@@ -12,20 +12,17 @@
 package xc.mst.manager.user;
 
 import java.util.List;
+
 import xc.mst.bo.user.Permission;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.user.DefaultPermissionDAO;
-import xc.mst.dao.user.PermissionDAO;
+import xc.mst.manager.BaseService;
 
 /**
  * Service class that provides implementation for methods which interact with permissions
  *
  * @author Tejaswi Haramurali
  */
-public class DefaultPermissionService implements PermissionService
-{
-    /** DAO Object for permissions (top level tabs) */
-    private PermissionDAO permissionDao = new DefaultPermissionDAO();
+public class DefaultPermissionService extends BaseService implements PermissionService {
     
     /**
 	 * Gets the permissions belonging to a group.
@@ -36,7 +33,7 @@ public class DefaultPermissionService implements PermissionService
 	 */
 	public List<Permission> getPermissionsForGroup(int groupId) throws DatabaseConfigException
     {
-        return permissionDao.getPermissionsForGroup(groupId);
+        return getPermissionDAO().getPermissionsForGroup(groupId);
     }
 
      /**
@@ -47,7 +44,7 @@ public class DefaultPermissionService implements PermissionService
      */
     public Permission getPermissionById(int permissionId) throws DatabaseConfigException
     {
-        return permissionDao.getPermissionById(permissionId);
+        return getPermissionDAO().getPermissionById(permissionId);
     }
 
     /**
@@ -58,6 +55,6 @@ public class DefaultPermissionService implements PermissionService
      */
     public List<Permission> getAllPermissions() throws DatabaseConfigException
     {
-        return permissionDao.getAll();
+        return getPermissionDAO().getAll();
     }
 }

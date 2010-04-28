@@ -18,17 +18,14 @@ import java.util.Map;
 import java.util.Queue;
 
 import org.apache.log4j.Logger;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.Job;
+import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
-import xc.mst.dao.harvest.HarvestScheduleDAO;
-import xc.mst.manager.processingDirective.DefaultJobService;
-import xc.mst.manager.processingDirective.JobService;
+import xc.mst.manager.BaseManager;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
 /**
@@ -43,18 +40,8 @@ import xc.mst.utils.TimingLogger;
  *
  * @author Eric Osisek
  */
-public class Scheduler extends Thread
+public class Scheduler extends BaseManager implements Runnable
 {
-	/**
-	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
-	 */
-	protected static final Configuration configuration;
-
-	/**
-	 * The DAO for getting and inserting harvest schedules
-	 */
-	HarvestScheduleDAO harvestScheduleDao = new DefaultHarvestScheduleDAO();
-
 	/**
 	 * A queue of WorkerThreads that are waiting to run harvests/services
 	 */
@@ -65,11 +52,6 @@ public class Scheduler extends Thread
 	 */
 	private static WorkerThread runningJob;
 	protected Job previousJob = null;
-	
-	/**
-	 * Manager for getting, inserting and updating jobs
-	 */
-	private static JobService jobService = new DefaultJobService();
 
 	/**
 	 * Gets the currently running job
@@ -85,11 +67,8 @@ public class Scheduler extends Thread
 
 	static
 	{
-		// Load the configuration file
-		configuration = ConfigurationManager.getConfiguration();
-
 		// Abort if we could not find the configuration file.
-		String logConfigFileLocation = configuration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
+		String logConfigFileLocation = MSTConfiguration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
 		if(logConfigFileLocation == null)
 		{
 			System.err.println("The configuration file was invalid or did not exist.");
@@ -128,7 +107,7 @@ public class Scheduler extends Thread
 			// Get the schedules to run
 			try
 			{
-				schedulesToRun = harvestScheduleDao.getSchedulesToRun(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.DAY_OF_WEEK), now.get(Calendar.MINUTE));
+				schedulesToRun = getHarvestScheduleDAO().getSchedulesToRun(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.DAY_OF_WEEK), now.get(Calendar.MINUTE));
 			}
 			catch (DatabaseConfigException e1)
 			{
@@ -160,7 +139,7 @@ public class Scheduler extends Thread
 					// Add job to database queue
 					try {
 						Job job = new Job(scheduleToRun, Constants.THREAD_REPOSITORY);
-						job.setOrder(jobService.getMaxOrder() + 1); 
+						job.setOrder(getJobService().getMaxOrder() + 1); 
 						jobService.insertJob(job);
 						lastRunDate.put(scheduleToRun.getId(), System.currentTimeMillis());
 					} catch (DatabaseConfigException dce) {
@@ -188,11 +167,25 @@ public class Scheduler extends Thread
 						TimingLogger.log("starting job: "+jobToStart.getJobType());
 						
 						// Start a new Thread to run the Harvester component for the schedule
+						// BDA_TODO what's next after this job starts?  Stick that in the jobs table.
+						
 						if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
 							HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
 							harvestThread.setHarvestScheduleId(jobToStart.getHarvestSchedule().getId());
 							harvestThread.start();
 							runningJob = harvestThread;
+							
+							List<ProcessingDirective> processingDirectives = getProcessingDirectiveDAO().getBySourceProviderId(
+									jobToStart.getHarvestSchedule().getProvider().getId());
+							try {
+								for (ProcessingDirective pd : processingDirectives) {
+									Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
+									job.setOrder(jobService.getMaxOrder() + 1); 
+									jobService.insertJob(job);	
+								}
+							} catch (DatabaseConfigException dce) {
+								log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+							}
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
 							TimingLogger.log("service : "+jobToStart.getService().getClassName());
 							ServiceWorkerThread serviceThread = new ServiceWorkerThread();
@@ -200,11 +193,18 @@ public class Scheduler extends Thread
 							serviceThread.setOutputSetId(jobToStart.getOutputSetId());
 							serviceThread.start();
 							runningJob = serviceThread;
-						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE)) {
-							ProcessingDirectiveWorkerThread processingDirectiveThread = new ProcessingDirectiveWorkerThread();
-							processingDirectiveThread.setProcessingDirective(jobToStart.getProcessingDirective());
-							processingDirectiveThread.start();
-							runningJob = processingDirectiveThread;
+							
+							List<ProcessingDirective> processingDirectives = getProcessingDirectiveDAO().getBySourceServiceId(
+									jobToStart.getService().getId());
+							try {
+								for (ProcessingDirective pd : processingDirectives) {
+									Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
+									job.setOrder(jobService.getMaxOrder() + 1); 
+									jobService.insertJob(job);	
+								}
+							} catch (DatabaseConfigException dce) {
+								log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+							}
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
 							ServiceReprocessWorkerThread serviceReprocessWorkerThread = new ServiceReprocessWorkerThread();
 							serviceReprocessWorkerThread.setServiceId(jobToStart.getService().getId());

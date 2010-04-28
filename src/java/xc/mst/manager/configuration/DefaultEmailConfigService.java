@@ -13,23 +13,16 @@ package xc.mst.manager.configuration;
 import xc.mst.bo.emailconfig.EmailConfig;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.emailconfig.DefaultEmailConfigDAO;
-import xc.mst.dao.emailconfig.EmailConfigDAO;
+import xc.mst.manager.BaseService;
 
 /**
  *  The service method that is used to set the details of an Email server
  *
  * @author Tejaswi Haramurali
  */
-public class DefaultEmailConfigService implements EmailConfigService
+public class DefaultEmailConfigService extends BaseService implements EmailConfigService
 {
-    /** The email config DAO object */
-    private EmailConfigDAO emailConfigDao;
 
-    public DefaultEmailConfigService()
-    {
-        emailConfigDao = new DefaultEmailConfigDAO();
-    }
     /**
 	 * Gets the Email Configuration
 	 *
@@ -38,7 +31,7 @@ public class DefaultEmailConfigService implements EmailConfigService
 	 */
 	public EmailConfig getEmailConfiguration() throws DatabaseConfigException
     {
-        return emailConfigDao.getConfiguration();
+        return getEmailConfigDAO().getConfiguration();
     }
 
 	/**
@@ -50,6 +43,6 @@ public class DefaultEmailConfigService implements EmailConfigService
 	 */
 	public void setEmailConfiguration(EmailConfig emailconfig) throws DataException
     {
-        this.emailConfigDao.setConfiguration(emailconfig);
+        getEmailConfigDAO().setConfiguration(emailconfig);
     }
 }

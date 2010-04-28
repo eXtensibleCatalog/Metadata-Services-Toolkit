@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+		default-init-method="init">
+
+	<bean name="EmailConfigDAO" class="xc.mst.dao.emailconfig.DefaultEmailConfigDAO" />
+	<bean name="HarvestDAO" class="xc.mst.dao.harvest.DefaultHarvestDAO" />
+	<bean name="HarvestRecordUtilDAO" class="xc.mst.dao.harvest.DefaultHarvestRecordUtilDAO" />
+	<bean name="HarvestScheduleDAO" class="xc.mst.dao.harvest.DefaultHarvestScheduleDAO" />
+	<bean name="HarvestScheduleStepDAO" class="xc.mst.dao.harvest.DefaultHarvestScheduleStepDAO" />
+	<bean name="LogDAO" class="xc.mst.dao.log.DefaultLogDAO" />
+	<bean name="JobDAO" class="xc.mst.dao.processing.DefaultJobDAO" />
+	<bean name="ProcessingDirectiveDAO" class="xc.mst.dao.processing.DefaultProcessingDirectiveDAO" />
+	<bean name="ProcessingDirectiveInputFormatUtilDAO" class="xc.mst.dao.processing.DefaultProcessingDirectiveInputFormatUtilDAO" />
+	<bean name="ProcessingDirectiveInputSetUtilDAO" class="xc.mst.dao.processing.DefaultProcessingDirectiveInputSetUtilDAO" />
+	<bean name="FormatDAO" class="xc.mst.dao.provider.DefaultFormatDAO" />
+	<bean name="ProviderDAO" class="xc.mst.dao.provider.DefaultProviderDAO" />
+	<bean name="SetDAO" class="xc.mst.dao.provider.DefaultSetDAO" />
+	<bean name="ProviderFormatUtilDAO" class="xc.mst.dao.provider.DefaultProviderFormatUtilDAO" />
+	<bean name="RecordTypeDAO" class="xc.mst.dao.record.DefaultRecordTypeDAO" />
+	<bean name="ResumptionTokenDAO" class="xc.mst.dao.record.DefaultResumptionTokenDAO" />
+	<bean name="XcIdentifierForFrbrElementDAO" class="xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO" />
+	<bean name="ErrorCodeDAO" class="xc.mst.dao.service.DefaultErrorCodeDAO" />
+	<bean name="OaiIdentifierForServiceDAO" class="xc.mst.dao.service.DefaultOaiIdentiferForServiceDAO" />
+	<bean name="ServiceDAO" class="xc.mst.dao.service.DefaultServiceDAO" />
+	<bean name="ServiceInputFormatUtilDAO" class="xc.mst.dao.service.DefaultServiceInputFormatUtilDAO" />
+	<bean name="ServiceOutputFormatUtilDAO" class="xc.mst.dao.service.DefaultServiceOutputFormatUtilDAO" />
+	<bean name="ServiceOutputSetUtilDAO" class="xc.mst.dao.service.DefaultServiceOutputSetUtilDAO" />
+	<bean name="GroupDAO" class="xc.mst.dao.user.DefaultGroupDAO" />
+	<bean name="GroupPermissionUtilDAO" class="xc.mst.dao.user.DefaultGroupPermissionUtilDAO" />
+	<bean name="PermissionDAO" class="xc.mst.dao.user.DefaultPermissionDAO" />
+	<bean name="ServerDAO" class="xc.mst.dao.user.DefaultServerDAO" />
+	<bean name="UserDAO" class="xc.mst.dao.user.DefaultUserDAO" />
+	<bean name="UserGroupUtilDAO" class="xc.mst.dao.user.DefaultUserGroupUtilDAO" />
+	
+	<!-- 
+	<bean name="HeldRecordDAO" class="xc.mst.services.aggregation.dao.DefaultHeldRecordDAO" />
+	<bean name="MatchIdentifierDAO" class="xc.mst.services.aggregation.dao.DefaultMatchIdentifierDAO" />
+	<bean name="OutputRecordDAO" class="xc.mst.services.aggregation.dao.DefaultOutputRecordDAO" />
+	<bean name="UplinksUtilDAO" class="xc.mst.services.aggregation.dao.DefaultUplinksUtilDAO" />
+	<bean name="PredecessorUtilDAO" class="xc.mst.services.aggregation.dao.DefaultPredecessorUtilDAO" />
+	<bean name="BibliographicManifestationMappingDAO" class="xc.mst.services.transformation.dao.DefaultBibliographicManifestationMappingDAO" />
+	<bean name="HeldHoldingRecordDAO" class="xc.mst.services.transformation.dao.DefaultHeldHoldingRecordDAO" />
+	<bean name="XCHoldingDAO" class="xc.mst.services.transformation.dao.DefaultXCHoldingDAO" />
+	 -->
+
+</beans>

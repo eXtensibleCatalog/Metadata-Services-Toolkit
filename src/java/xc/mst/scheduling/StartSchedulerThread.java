@@ -9,6 +9,8 @@
 
 package xc.mst.scheduling;
 
+import xc.mst.utils.MSTConfiguration;
+
 /**
  * A program which starts the Scheduler Thread.  This will
  * cause the harvests to be run according to the schedule, which
@@ -27,7 +29,8 @@ public class StartSchedulerThread
 	 */
 	public static void main(String[] args)
 	{
-		Scheduler scheduler = new Scheduler();
-		scheduler.start();
+		Scheduler scheduler = (Scheduler)MSTConfiguration.getBean("Scheduler");
+		Thread schedulerThread = new Thread(scheduler);
+		schedulerThread.start();
 	} // end main method
 } // end class StartSchedulerThread

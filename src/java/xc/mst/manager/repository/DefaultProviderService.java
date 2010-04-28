@@ -17,8 +17,7 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.provider.DefaultProviderDAO;
-import xc.mst.dao.provider.ProviderDAO;
+import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
@@ -35,10 +34,7 @@ import xc.mst.utils.MSTConfiguration;
  *
  * @author Tejaswi Haramurali
  */
-public class DefaultProviderService implements ProviderService{
-
-    /** The provider DAO object */
-    ProviderDAO providerDao = new DefaultProviderDAO();
+public class DefaultProviderService extends BaseService implements ProviderService{
 
     /**
      * Returns a provider by its name
@@ -48,7 +44,7 @@ public class DefaultProviderService implements ProviderService{
      * @throws DatabaseConfigException
      */
     public Provider getProviderByName(String providerName) throws DatabaseConfigException{
-       return providerDao.getByName(providerName);
+       return getProviderDAO().getByName(providerName);
     }
 
     /**
@@ -59,7 +55,7 @@ public class DefaultProviderService implements ProviderService{
      * @throws DatabaseConfigException
      */
     public Provider getProviderById(int providerId) throws DatabaseConfigException{
-       return providerDao.getById(providerId);
+       return getProviderDAO().getById(providerId);
     }
 
     /**
@@ -70,7 +66,7 @@ public class DefaultProviderService implements ProviderService{
      * @throws DatabaseConfigException
      */
     public Provider getProviderByURL(String providerUrl) throws DatabaseConfigException {
-        return providerDao.getByURL(providerUrl);
+        return getProviderDAO().getByURL(providerUrl);
     }
 
     /**
@@ -82,7 +78,7 @@ public class DefaultProviderService implements ProviderService{
     public void insertProvider(Provider provider) throws DataException{
 
     	provider.setLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
-        providerDao.insert(provider);
+    	getProviderDAO().insert(provider);
         LogWriter.addInfo(provider.getLogFileName(), "Beginning logging for " + provider.getName());
     }
 
@@ -131,7 +127,7 @@ public class DefaultProviderService implements ProviderService{
     	}
 
     	// Delete provider
-        providerDao.delete(provider);
+    	getProviderDAO().delete(provider);
     }
 
     /**
@@ -142,7 +138,7 @@ public class DefaultProviderService implements ProviderService{
      */
     public void updateProvider(Provider provider) throws DataException{
     	provider.setLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
-        providerDao.update(provider);
+    	getProviderDAO().update(provider);
     }
 
     /**
@@ -153,7 +149,7 @@ public class DefaultProviderService implements ProviderService{
      */
     public List<Provider> getAllProviders() throws DatabaseConfigException
     {
-        return providerDao.getAll();
+        return getProviderDAO().getAll();
     }
 
     /**
@@ -166,6 +162,6 @@ public class DefaultProviderService implements ProviderService{
    */
     public List<Provider> getAllProvidersSorted(boolean sort,String columnSorted) throws DatabaseConfigException
     {
-        return providerDao.getSorted(sort, columnSorted);
+        return getProviderDAO().getSorted(sort, columnSorted);
     }
 }

@@ -17,10 +17,7 @@ import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Provider;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.harvest.DefaultHarvestDAO;
-import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
-import xc.mst.dao.harvest.HarvestDAO;
-import xc.mst.dao.harvest.HarvestScheduleDAO;
+import xc.mst.manager.BaseService;
 
 /**
  * Service to access Schedules
@@ -28,14 +25,7 @@ import xc.mst.dao.harvest.HarvestScheduleDAO;
  * @author Sharmila Ranganathan
  *
  */
-public class DefaultScheduleService implements ScheduleService {
-
-    /** DAO object for harvest schedules*/
-	private HarvestScheduleDAO harvestScheduleDAO = new DefaultHarvestScheduleDAO();
-
-    /** DAO object for harvests */
-	private HarvestDAO harvestDAO = new DefaultHarvestDAO();
-
+public class DefaultScheduleService extends BaseService implements ScheduleService {
 
 	/**
 	 * Get schedule having the specified schedule id
