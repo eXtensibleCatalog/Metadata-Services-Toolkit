@@ -9,23 +9,21 @@
 
 package xc.mst.action.user;
 
-import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.GroupService;
-import xc.mst.manager.user.UserService;
 
 /**
  * Removes the association between a user and a group
  *
  * @author Tejaswi Haramurali
  */
-public class RemoveMember extends ActionSupport
+@SuppressWarnings("serial")
+public class RemoveMember extends BaseActionSupport
 {
     /** The ID of the user who has to be removed from the group */
     private int userId;
@@ -35,12 +33,6 @@ public class RemoveMember extends ActionSupport
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-    /** User Service Object */
-    private UserService userService = new DefaultUserService();
-
-    /** Group Service Object */
-    private GroupService groupService = new DefaultGroupService();
 
     /**Error Type */
     private String errorType;
@@ -56,9 +48,9 @@ public class RemoveMember extends ActionSupport
         try
         {
             
-            User user = userService.getUserById(userId);
-            user.removeGroup(groupService.getGroupById(groupId));
-            userService.updateUser(user);
+            User user = getUserService().getUserById(userId);
+            user.removeGroup(getGroupService().getGroupById(groupId));
+            getUserService().updateUser(user);
             setGroupId(groupId);
             return SUCCESS;
         }
@@ -73,7 +65,7 @@ public class RemoveMember extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("removeMemberError","Error in removing a member from a group. An email has been sent to the administrator");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return ERROR;
         }

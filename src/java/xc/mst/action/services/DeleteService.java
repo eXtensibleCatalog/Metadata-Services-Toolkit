@@ -11,40 +11,24 @@ package xc.mst.action.services;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ServicesService;
-import xc.mst.manager.record.DefaultRecordService;
-import xc.mst.manager.record.RecordService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Deletes a service from the MST
  *
  * @author Tejaswi Haramurali
  */
-public class DeleteService extends ActionSupport
+public class DeleteService extends BaseActionSupport
 {
     /** Serial Id	 */
 	private static final long serialVersionUID = -650419286679050797L;
 
 	/** The ID of the service to be deleted */
     private int serviceId;
-
-    /** The service object for services */
-    private ServicesService serviceService = new DefaultServicesService();
-
-    /** The record service */
-    private RecordService recordService = new DefaultRecordService();
-    
-    /** The user service */
-    private UserService userService = new DefaultUserService();
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -76,9 +60,9 @@ public class DeleteService extends ActionSupport
     	Service service = null;
     	try
         {
-            service = serviceService.getServiceById(serviceId);
+            service = getServicesService().getServiceById(serviceId);
 
-            long numberOfRecordsHarvested = recordService.getNumberOfRecordsByServiceId(serviceId);
+            long numberOfRecordsHarvested = getRecordService().getNumberOfRecordsByServiceId(serviceId);
             // Delete service only if it is not harvested.
             if (service.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) || service.getStatus().equals(Constants.STATUS_SERVICE_PAUSED)) {
             	message = service.getName() + " cannot be deleted when it is currently running or paused.";
@@ -88,7 +72,7 @@ public class DeleteService extends ActionSupport
                 message = "Deleting the " + service.getName() + " will result in deletion of " + numberOfRecordsHarvested + " records created by the service and the processing rules that deliver records to and from this service.";
                 deleted = false;
             } else {
-            	serviceService.deleteService(service);
+            	getServicesService().deleteService(service);
             	deleted = true;
             }
         
@@ -97,14 +81,14 @@ public class DeleteService extends ActionSupport
         {
             log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), e);
             this.addFieldError("viewRepositoryError", "Error occured while deleting service. Email has been sent to the administrator regarding the error.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             return INPUT;
         }
         catch(IndexException ie)
         {
         	log.error("Exception occured while deleting the service " + ((service != null)?service.getName():"") + " and index. Check the path to solr folder.", ie);
             this.addFieldError("viewRepositoryError", "Error occured while deleting the service " + ((service != null)?service.getName():"") + ".Email has been sent to the administrator regarding the error.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }
@@ -123,17 +107,17 @@ public class DeleteService extends ActionSupport
 
     	try
         {
-    		service = serviceService.getServiceById(serviceId);
+    		service = getServicesService().getServiceById(serviceId);
     		
     		// Delete service
-   	    	serviceService.deleteServiceAndRecordsByJob(service);
+   	    	getServicesService().deleteServiceAndRecordsByJob(service);
             return SUCCESS;
         }
         catch(DataException e)
         {
             log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), e);
             this.addFieldError("viewRepositoryError", "Error occured while deleting service. Email has been sent to the administrator regarding the error.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }

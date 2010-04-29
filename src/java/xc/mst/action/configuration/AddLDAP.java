@@ -11,17 +11,18 @@ package xc.mst.action.configuration;
 
 import java.util.Iterator;
 import java.util.List;
-import xc.mst.bo.user.Server;
-import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.ServerService;
-import com.opensymphony.xwork2.ActionSupport;
-import org.apache.log4j.FileAppender;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.bo.user.Server;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.user.DefaultUserService;
+import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
+import xc.mst.utils.MSTConfiguration;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This class is used to add a new LDAP server to the system
@@ -37,12 +38,6 @@ public class AddLDAP extends ActionSupport
 
     /** A reference to the logger for this class */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-	/**Creates a service object for Servers */
-    private ServerService serverService = new DefaultServerService();
-
-    /** User Service Object */
-    private UserService userService = new DefaultUserService();
 
     /**The display name used for the LDAP server **/
     private String displayName;
@@ -85,7 +80,7 @@ public class AddLDAP extends ActionSupport
     {
         try
         {
-                
+                ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
                 List<Server> serverList = serverService.getAll();
                 Iterator<Server> iter = serverList.iterator();
 
@@ -121,6 +116,7 @@ public class AddLDAP extends ActionSupport
         {
             boolean serverExists = false;
          
+            ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
             List<Server> serverList = serverService.getAll();
             Iterator<Server> iter = serverList.iterator();
 
@@ -206,6 +202,7 @@ public class AddLDAP extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("addLDAPError", "Error occurred while adding LDAP Server. An email has been sent to the administrator");
+            UserService userService = (UserService)MSTConfiguration.getBean("UserService");
             userService.sendEmailErrorReport();
             errorType = "error";
             return INPUT;

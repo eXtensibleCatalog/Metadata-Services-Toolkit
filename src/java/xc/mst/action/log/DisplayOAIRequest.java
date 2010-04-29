@@ -11,21 +11,16 @@ package xc.mst.action.log;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.constants.Constants;
-import xc.mst.manager.harvest.DefaultScheduleService;
-import xc.mst.manager.harvest.ScheduleService;
-import xc.mst.manager.repository.DefaultProviderService;
-import xc.mst.manager.repository.ProviderService;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Displays the OAI request that was actually sent
  *
  * @author Tejaswi Haramurali
  */
-public class DisplayOAIRequest extends ActionSupport
+public class DisplayOAIRequest extends BaseActionSupport
 {
     /** Serial id */
 	private static final long serialVersionUID = 3209874357092858611L;
@@ -53,9 +48,7 @@ public class DisplayOAIRequest extends ActionSupport
     {
         try
         {
-            ScheduleService scheduleService = new DefaultScheduleService();
-            ProviderService providerService = new DefaultProviderService();
-            HarvestSchedule schedule = scheduleService.getScheduleForProvider(providerService.getProviderById(providerId));
+            HarvestSchedule schedule = getScheduleService().getScheduleForProvider(getProviderService().getProviderById(providerId));
 
             if(schedule!=null)
             {

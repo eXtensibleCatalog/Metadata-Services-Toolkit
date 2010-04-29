@@ -11,15 +11,14 @@ import xc.mst.utils.TimingLogger;
 
 public class DBTransformationService extends TransformationService {
 	
-	public DBTransformationService() {
-		this.recordService = new DBRecordService();
-		this.oaiIdDao = new DBOaiIdentiferForServiceDAO();
+	public void init() {
+		setOaiIdentifierForServiceDAO(new DBOaiIdentiferForServiceDAO());
 	}
 	
 	@Override
 	public boolean processRecords() {
 		try {
-			List<Record> inputRecords  = ((DBRecordService)recordService).getInputForServiceToProcess(service.getId(), true);
+			List<Record> inputRecords  = ((DBRecordService)getRecordService()).getInputForServiceToProcess(service.getId(), true);
 				
 			while (inputRecords != null && inputRecords.size() > 0) {
 				TimingLogger.log("inputRecords.size(): "+inputRecords.size());
@@ -32,13 +31,13 @@ public class DBTransformationService extends TransformationService {
 						log.error("r.getId(): "+r.getId());
 						log.error("t", t);
 					}
-					recordService.update(r);
+					getRecordService().update(r);
 				}
-				((DBRecordService)recordService).commit(service.getId(), true);
-				inputRecords  = recordService.getInputForServiceToProcess(service.getId());
+				((DBRecordService)getRecordService()).commit(service.getId(), true);
+				inputRecords  = getRecordService().getInputForServiceToProcess(service.getId());
 			}
-			((DBRecordService)recordService).commit(service.getId(), true);
-			((DBRecordService)recordService).reset();
+			((DBRecordService)getRecordService()).commit(service.getId(), true);
+			((DBRecordService)getRecordService()).reset();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -48,7 +47,7 @@ public class DBTransformationService extends TransformationService {
 	@Override
 	protected void insertNewRecord(Record record) throws DataException, IndexException {
 		record.setService(service);
-		recordService.insert(record);
+		getRecordService().insert(record);
 	}
 	
 	public class DBOaiIdentiferForServiceDAO extends DefaultOaiIdentiferForServiceDAO {

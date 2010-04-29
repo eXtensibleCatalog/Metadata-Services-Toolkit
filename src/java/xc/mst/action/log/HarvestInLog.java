@@ -9,15 +9,15 @@
 
 package xc.mst.action.log;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.ProviderDAO;
-import xc.mst.manager.repository.DefaultProviderService;
-import xc.mst.manager.repository.ProviderService;
 
 /**
  * This action method is used to display Logs associated with providers from which the MST harvests data.
@@ -25,16 +25,14 @@ import xc.mst.manager.repository.ProviderService;
  *
  * @author Tejaswi Haramurali
  */
-public class HarvestInLog extends ActionSupport
+@SuppressWarnings("serial")
+public class HarvestInLog extends BaseActionSupport
 {
     /** determines the column name on which sorting should be performed */
     private String columnSorted="RepositoryName";
 
     /** determines if the rows are to be ordered in ascending or descending order */
     private boolean isAscendingOrder=true;
-
-    /**Creates a service object for providers */
-    private ProviderService providerService = new DefaultProviderService();
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -59,29 +57,29 @@ public class HarvestInLog extends ActionSupport
             {
                 if(columnSorted.equalsIgnoreCase("RepositoryName"))
                 {
-                    setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME));
+                    setProviderList(getProviderService().getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME));
                 }
                 else if(columnSorted.equalsIgnoreCase("LastHarvestEndTime"))
                 {
-                    setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_HARVEST_END_TIME));
+                    setProviderList(getProviderService().getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_HARVEST_END_TIME));
                 }
                 else if(columnSorted.equalsIgnoreCase("RecordsAdded"))
                 {
-                    setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_RECORDS_ADDED));
+                    setProviderList(getProviderService().getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_RECORDS_ADDED));
                 }
                 else if(columnSorted.equalsIgnoreCase("RecordsReplaced"))
                 {
-                    setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_RECORDS_REPLACED));
+                    setProviderList(getProviderService().getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_RECORDS_REPLACED));
                 }
                 else
                 {
-                    setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_LOG_RESET));
+                    setProviderList(getProviderService().getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_LOG_RESET));
                 }
                
             }
             else
             {
-                setProviderList(providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME));
+                setProviderList(getProviderService().getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME));
             }
 
             setIsAscendingOrder(isAscendingOrder);

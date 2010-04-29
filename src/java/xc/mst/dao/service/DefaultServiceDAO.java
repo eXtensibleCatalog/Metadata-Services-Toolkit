@@ -24,44 +24,10 @@ import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
-import xc.mst.dao.log.LogDAO;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.DefaultSetDAO;
-import xc.mst.dao.provider.FormatDAO;
-import xc.mst.dao.provider.SetDAO;
 import xc.mst.utils.LogWriter;
 
 public class DefaultServiceDAO extends ServiceDAO
 {
-	/**
-	 * Data access object for getting formats
-	 */
-	private FormatDAO formatDao = new DefaultFormatDAO();
-
-	/**
-	 * Data access object for getting sets
-	 */
-	private SetDAO setDao = new DefaultSetDAO();
-	
-	/**
-	 * Data access object for getting input formats for a service
-	 */
-	private ServiceInputFormatUtilDAO serviceInputFormatDAO = new DefaultServiceInputFormatUtilDAO();
-
-	/**
-	 * Data access object for getting input sets for a service
-	 */
-	private ServiceOutputSetUtilDAO serviceInputSetDAO = new DefaultServiceOutputSetUtilDAO();
-	
-	/**
-	 * Data access object for getting output formats for a service
-	 */
-	private ServiceOutputFormatUtilDAO serviceOutputFormatDAO = new DefaultServiceOutputFormatUtilDAO();
-
-	/**
-	 * Data access object for managing general logs
-	 */
-	private LogDAO logDao = new DefaultLogDAO();
 
 	/**
 	 * The repository management log file name
@@ -77,11 +43,6 @@ public class DefaultServiceDAO extends ServiceDAO
 	 * A PreparedStatement to get a service from the database by its ID
 	 */
 	private static PreparedStatement psGetById = null;
-
-	/**
-	 * A PreparedStatement to get a service from the database by its port
-	 */
-	private static PreparedStatement psGetByPort = null;
 
 	/**
 	 * A PreparedStatement to get a service from the database by its name
@@ -118,11 +79,6 @@ public class DefaultServiceDAO extends ServiceDAO
 	 * Lock to synchronize access to the get by ID PreparedStatement
 	 */
 	private static Object psGetByIdLock = new Object();
-
-	/**
-	 * Lock to synchronize access to the get by port PreparedStatement
-	 */
-	private static Object psGetByPortLock = new Object();
 
 	/**
 	 * Lock to synchronize access to the get by name PreparedStatement
@@ -252,14 +208,14 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setDeleted(results.getBoolean(21));
 					service.setIdentifier(results.getString(22));
 
-					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
-						service.addInputFormat(formatDao.getById(inputFormatId));
+					for(Integer inputFormatId : getServiceInputFormatUtilDAO().getInputFormatsForService(service.getId()))
+						service.addInputFormat(getFormatDAO().getById(inputFormatId));
 
-					for(Integer inputSetId : serviceInputSetDAO.getOutputSetsForService(service.getId()))
-						service.addOutputSet(setDao.getById(inputSetId));
+					for(Integer inputSetId : getServiceOutputSetUtilDAO().getOutputSetsForService(service.getId()))
+						service.addOutputSet(getSetDAO().getById(inputSetId));
 					
-					for(Integer outputFormatId : serviceOutputFormatDAO.getOutputFormatsForService(service.getId()))
-						service.addOutputFormat(formatDao.getById(outputFormatId));
+					for(Integer outputFormatId : getServiceOutputFormatUtilDAO().getOutputFormatsForService(service.getId()))
+						service.addOutputFormat(getFormatDAO().getById(outputFormatId));
 
 					// Add the service to the list
 					services.add(service);
@@ -390,14 +346,14 @@ public class DefaultServiceDAO extends ServiceDAO
 				service.setDeleted(results.getBoolean(21));
 				service.setIdentifier(results.getString(22));
 
-				for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
-					service.addInputFormat(formatDao.getById(inputFormatId));
+				for(Integer inputFormatId : getServiceInputFormatUtilDAO().getInputFormatsForService(service.getId()))
+					service.addInputFormat(getFormatDAO().getById(inputFormatId));
 
-				for(Integer inputSetId : serviceInputSetDAO.getOutputSetsForService(service.getId()))
-					service.addOutputSet(setDao.getById(inputSetId));
+				for(Integer inputSetId : getServiceOutputSetUtilDAO().getOutputSetsForService(service.getId()))
+					service.addOutputSet(getSetDAO().getById(inputSetId));
 
-				for(Integer outputFormatId : serviceOutputFormatDAO.getOutputFormatsForService(service.getId()))
-					service.addOutputFormat(formatDao.getById(outputFormatId));
+				for(Integer outputFormatId : getServiceOutputFormatUtilDAO().getOutputFormatsForService(service.getId()))
+					service.addOutputFormat(getFormatDAO().getById(outputFormatId));
 
 				// Add the service to the list
 				services.add(service);
@@ -522,14 +478,14 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setDeleted(results.getBoolean(21));
 					service.setIdentifier(results.getString(22));
 
-					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
-						service.addInputFormat(formatDao.getById(inputFormatId));
+					for(Integer inputFormatId : getServiceInputFormatUtilDAO().getInputFormatsForService(service.getId()))
+						service.addInputFormat(getFormatDAO().getById(inputFormatId));
 
-					for(Integer inputSetId : serviceInputSetDAO.getOutputSetsForService(service.getId()))
-						service.addOutputSet(setDao.getById(inputSetId));
+					for(Integer inputSetId : getServiceOutputSetUtilDAO().getOutputSetsForService(service.getId()))
+						service.addOutputSet(getSetDAO().getById(inputSetId));
 
-					for(Integer outputFormatId : serviceOutputFormatDAO.getOutputFormatsForService(service.getId()))
-						service.addOutputFormat(formatDao.getById(outputFormatId));
+					for(Integer outputFormatId : getServiceOutputFormatUtilDAO().getOutputFormatsForService(service.getId()))
+						service.addOutputFormat(getFormatDAO().getById(outputFormatId));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the service with ID " + serviceId + " in the database.");
@@ -775,14 +731,14 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setDeleted(results.getBoolean(21));
 					service.setIdentifier(results.getString(22));
 
-					for(Integer inputFormatId : serviceInputFormatDAO.getInputFormatsForService(service.getId()))
-						service.addInputFormat(formatDao.getById(inputFormatId));
+					for(Integer inputFormatId : getServiceInputFormatUtilDAO().getInputFormatsForService(service.getId()))
+						service.addInputFormat(getFormatDAO().getById(inputFormatId));
 
-					for(Integer inputSetId : serviceInputSetDAO.getOutputSetsForService(service.getId()))
-						service.addOutputSet(setDao.getById(inputSetId));
+					for(Integer inputSetId : getServiceOutputSetUtilDAO().getOutputSetsForService(service.getId()))
+						service.addOutputSet(getSetDAO().getById(inputSetId));
 
-					for(Integer outputFormatId : serviceOutputFormatDAO.getOutputFormatsForService(service.getId()))
-						service.addOutputFormat(formatDao.getById(outputFormatId));
+					for(Integer outputFormatId : getServiceOutputFormatUtilDAO().getOutputFormatsForService(service.getId()))
+						service.addOutputFormat(getFormatDAO().getById(outputFormatId));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the service with the name " + name + " in the database.");
@@ -900,15 +856,15 @@ public class DefaultServiceDAO extends ServiceDAO
 
 				    // Insert the input format assignments
 				    for(Format inputFormat : service.getInputFormats())
-				    	success = serviceInputFormatDAO.insert(service.getId(), inputFormat.getId()) && success;
+				    	success = getServiceInputFormatUtilDAO().insert(service.getId(), inputFormat.getId()) && success;
 
 				    // Insert the input set assignments
 				    for(xc.mst.bo.provider.Set inputSet : service.getOutputSets())
-				    	success = serviceInputSetDAO.insert(service.getId(), inputSet.getId()) && success;
+				    	success = getServiceOutputSetUtilDAO().insert(service.getId(), inputSet.getId()) && success;
 				    
 				    // Insert the output format assignments
 				    for(Format outputFormat : service.getOutputFormats())
-				    	success = serviceOutputFormatDAO.insert(service.getId(), outputFormat.getId()) && success;
+				    	success = getServiceOutputFormatUtilDAO().insert(service.getId(), outputFormat.getId()) && success;
 
 				    if(success)
 				    {
@@ -922,7 +878,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				    	LogWriter.addWarning(logObj.getLogFileLocation(), "Added a new service with the name " + service.getName() + ", but failed to mark which formats it inputs and outputs");
 				    	
 				    	logObj.setWarnings(logObj.getWarnings() + 1);
-				    	logDao.update(logObj);
+				    	getLogDAO().update(logObj);
 				    }
 				    
 					return success;
@@ -932,7 +888,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					LogWriter.addError(logObj.getLogFileLocation(), "Failed to add a new service with the name " + service.getName());
 					
 					logObj.setErrors(logObj.getErrors() + 1);
-			    	logDao.update(logObj);
+					getLogDAO().update(logObj);
 			    	
 					return false;
 				}
@@ -944,7 +900,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "Failed to add a new service with the name " + service.getName());
 				
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+				getLogDAO().update(logObj);
 		    	
 				return false;
 			} // end catch(SQLException)
@@ -1037,22 +993,22 @@ public class DefaultServiceDAO extends ServiceDAO
 					boolean success = true;
 
 					// Delete the old input and output format assignments for the service
-					serviceInputFormatDAO.deleteInputFormatsForService(service.getId());
-					serviceInputSetDAO.deleteOutputSetsForService(service.getId());
-					serviceOutputFormatDAO.deleteOutputFormatsForService(service.getId());
+					getServiceInputFormatUtilDAO().deleteInputFormatsForService(service.getId());
+					getServiceOutputSetUtilDAO().deleteOutputSetsForService(service.getId());
+					getServiceOutputFormatUtilDAO().deleteOutputFormatsForService(service.getId());
 
 					// Insert the input format assignments
 				    for(Format inputFormat : service.getInputFormats())
-				    	success = serviceInputFormatDAO.insert(service.getId(), inputFormat.getId()) && success;
+				    	success = getServiceInputFormatUtilDAO().insert(service.getId(), inputFormat.getId()) && success;
 
 				    // Insert the output format assignments
 				    for(Format outputFormat : service.getOutputFormats())
-				    	success = serviceOutputFormatDAO.insert(service.getId(), outputFormat.getId()) && success;
+				    	success = getServiceOutputFormatUtilDAO().insert(service.getId(), outputFormat.getId()) && success;
 
 				    // Insert the input set assignments
 				    for(xc.mst.bo.provider.Set inputSet : service.getOutputSets())
 				    	if(inputSet != null)
-				    		success = serviceInputSetDAO.insert(service.getId(), inputSet.getId()) && success;
+				    		success = getServiceOutputSetUtilDAO().insert(service.getId(), inputSet.getId()) && success;
 				    
 				    if(success)
 				    	LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the service with the name " + service.getName());
@@ -1061,7 +1017,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				    	LogWriter.addWarning(logObj.getLogFileLocation(), "Updated the service with the name " + service.getName() + ", but failed to update the formats it inputs and outputs");
 				    
 				    	logObj.setWarnings(logObj.getWarnings() + 1);
-				    	logDao.update(logObj);
+				    	getLogDAO().update(logObj);
 				    }
 				    
 					return success;
@@ -1070,7 +1026,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "Failed to update the service with the name " + service.getName());
 				
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+				getLogDAO().update(logObj);
 		    	
 				// If we got here, the update failed
 				return false;
@@ -1082,7 +1038,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "Failed to update the service with the name " + service.getName());
 				
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+				getLogDAO().update(logObj);
 		    	
 				return false;
 			} // end catch(SQLException)
@@ -1136,7 +1092,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "Failed to delete the service with the name " + service.getName());
 				
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+				getLogDAO().update(logObj);
 		    	
 				return false;
 			} // end catch(SQLException)

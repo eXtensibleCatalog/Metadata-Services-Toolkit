@@ -10,34 +10,28 @@
 
 package xc.mst.action.log;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ServicesService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
 
 /**
  * Resets all the 'Harvest-Out log' files relating to a Service
  *
  * @author Tejaswi Haramurali
  */
-public class HarvestOutReset extends ActionSupport
+@SuppressWarnings("serial")
+public class HarvestOutReset extends BaseActionSupport
 {
-    /** Creates a service object for Services */
-    private ServicesService servicesService = new DefaultServicesService();
-
-    /** User Service Object */
-    private UserService userService = new DefaultUserService();
 
     /**The name of the log file which needs to be reset **/
     private String harvestOutLogFileName;
@@ -61,11 +55,11 @@ public class HarvestOutReset extends ActionSupport
     {
         try
         {
-            Service tempService = servicesService.getServiceById(serviceId);
+            Service tempService = getServicesService().getServiceById(serviceId);
             if(tempService==null)
             {
                 this.addFieldError("HarvestOutLogReset", "Error Occurred while resetting harvest-out log. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return SUCCESS;
             }
@@ -73,7 +67,7 @@ public class HarvestOutReset extends ActionSupport
             tempService.setHarvestOutWarnings(0);
             tempService.setHarvestOutErrors(0);
             tempService.setNumberOfHarvests(0);
-            servicesService.updateService(tempService);
+            getServicesService().updateService(tempService);
             String filename = harvestOutLogFileName;
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
@@ -90,7 +84,7 @@ public class HarvestOutReset extends ActionSupport
         {
             log.error(de.getMessage(),de);            
             this.addFieldError("HarvestOutLogReset", "Error Occurred while resetting harvest-out log. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -98,7 +92,7 @@ public class HarvestOutReset extends ActionSupport
         {
             log.error(fe.getMessage(),fe);           
             this.addFieldError("HarvestOutLogReset", "Error Occurred while resetting harvest-out log. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -113,7 +107,7 @@ public class HarvestOutReset extends ActionSupport
     {
         try
         {
-            List<Service> serviceList = servicesService.getAllServices();
+            List<Service> serviceList = getServicesService().getAllServices();
             Iterator<Service> harvIter = serviceList.iterator();
             while(harvIter.hasNext())
             {
@@ -123,7 +117,7 @@ public class HarvestOutReset extends ActionSupport
                 tempService.setHarvestOutWarnings(0);
                 tempService.setHarvestOutErrors(0);
                 tempService.setNumberOfHarvests(0);
-                servicesService.updateService(tempService);
+                getServicesService().updateService(tempService);
                 String filename = tempService.getHarvestOutLogFileName();
                 PrintWriter printWriter = new PrintWriter(filename);
                 printWriter.close();
@@ -142,7 +136,7 @@ public class HarvestOutReset extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("HarvestOutLogReset", "Error Occurred while resetting all harvest-out logs. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -150,7 +144,7 @@ public class HarvestOutReset extends ActionSupport
         {
             log.error(fe.getMessage(),fe);
             this.addFieldError("HarvestOutLogReset", "Error Occurred while resetting all harvest-out logs. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }

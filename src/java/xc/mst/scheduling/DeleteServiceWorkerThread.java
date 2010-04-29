@@ -2,7 +2,6 @@ package xc.mst.scheduling;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -14,12 +13,10 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.processingDirective.DefaultJobService;
-import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.processingDirective.ServicesService;
-import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -63,17 +60,17 @@ public class DeleteServiceWorkerThread extends WorkerThread
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private static RecordService recordService = new DefaultRecordService();
+	private static RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
 	
 	/**
 	 * Manager for getting, inserting and updating jobs
 	 */
-	private static JobService jobService = new DefaultJobService();
+	private static JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
 	
 	/**
 	 * Manager for getting, inserting and updating service
 	 */
-	private static ServicesService serviceManager = new DefaultServicesService();
+	private static ServicesService serviceManager = (ServicesService)MSTConfiguration.getBean("ServicesService");
 	
 	@Override
 	public void run() 

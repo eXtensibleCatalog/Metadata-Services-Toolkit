@@ -10,39 +10,32 @@
 
 package xc.mst.action.processingDirective;
 
-import com.opensymphony.xwork2.ActionSupport;
-import java.util.*;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
-import xc.mst.bo.service.*;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ServicesService;
-import xc.mst.manager.repository.DefaultProviderService;
-import xc.mst.manager.repository.ProviderService;
 
 /**
  * This action method is the first step in adding a new processing directive
  *
  * @author Tejaswi Haramurali
  */
-public class AddProcessingDirective extends ActionSupport implements ServletRequestAware
+public class AddProcessingDirective extends BaseActionSupport implements ServletRequestAware
 {
 	 /** Serial ID*/
 	private static final long serialVersionUID = 6410442216158839046L;
 
 	/**This String value denotes whether the Processing Directive session variable needs to be reset */
     private String refreshSession;
-
-    /** Creates a service object for Services */
-    private ServicesService servService = new DefaultServicesService();
-
-    /** Creates a service object for Providers */
-    private ProviderService providerService = new DefaultProviderService();
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -80,8 +73,8 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
     {
         try
         {
-            setProviderList(providerService.getAllProviders());
-            setServiceList(servService.getAllServices());
+            setProviderList(getProviderService().getAllProviders());
+            setServiceList(getServicesService().getAllServices());
             if(refreshSession==null)
             {
 
@@ -122,8 +115,8 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
                 temporaryProcessingDirective = new ProcessingDirective();
             }
 
-            Provider tempProvider = providerService.getProviderByName(source);
-            Service tempService = servService.getServiceByName(source);
+            Provider tempProvider = getProviderService().getProviderByName(source);
+            Service tempService = getServicesService().getServiceByName(source);
 
             if(tempProvider!=null) //source is a provider
             {
@@ -137,7 +130,7 @@ public class AddProcessingDirective extends ActionSupport implements ServletRequ
                  temporaryProcessingDirective.setSourceProvider(null);
                  request.getSession().setAttribute("sourceType", "service");
             }
-            temporaryProcessingDirective.setService(servService.getServiceById(Integer.parseInt(service)));
+            temporaryProcessingDirective.setService(getServicesService().getServiceById(Integer.parseInt(service)));
             request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
             return SUCCESS;
         }

@@ -15,19 +15,14 @@ import org.apache.log4j.Logger;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.email.Emailer;
-import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.ServerService;
-import xc.mst.manager.user.UserService;
 import xc.mst.utils.MSTConfiguration;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Action to register a user
@@ -35,7 +30,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Sharmila Ranganathan
  *
  */
-public class UserRegistration extends ActionSupport {
+public class UserRegistration extends BaseActionSupport {
 
 	/** Generated id  */
 	private static final long serialVersionUID = 5946519493525167816L;
@@ -48,12 +43,6 @@ public class UserRegistration extends ActionSupport {
 
 	/** List of servers */
 	private List<Server> servers;
-
-	/** Server service */
-	private ServerService serverService =  new DefaultServerService();
-
-	/** User service */
-	private UserService userService =  new DefaultUserService();
 
 	/** Comments entered by user */
 	private String comments;
@@ -78,7 +67,7 @@ public class UserRegistration extends ActionSupport {
 	public String execute() {
     	
     	try {
-    		servers =  serverService.getAll();
+    		servers =  getServerService().getAll();
     	} catch (DatabaseConfigException dce) {
     		if (!MSTConfiguration.mstInstanceFolderExist) {
     			addFieldError("instancesFolderError", defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
@@ -109,23 +98,23 @@ public class UserRegistration extends ActionSupport {
 	public String registerUser() {
 
 		try {
-			Server server = serverService.getServerByName(serverName);
+			Server server = getServerService().getServerByName(serverName);
 			newUser.setServer(server);
 			
 			// Check if user name already exist
-			User otherUser = userService.getUserByUserName(newUser.getUsername().trim(), server);			
+			User otherUser = getUserService().getUserByUserName(newUser.getUsername().trim(), server);			
 			if (otherUser == null) {
 				// Check if email id already exist
-				User otherUserWithSameEmail = userService.getUserByEmail(newUser.getEmail().trim(), server);
+				User otherUserWithSameEmail = getUserService().getUserByEmail(newUser.getEmail().trim(), server);
 
 				if (otherUserWithSameEmail == null) {
 					
 					// Check if user entered password for LDAP server is valid.
 					if (!server.getName().equalsIgnoreCase("local")) {
-						if (!userService.authenticateLDAPUser(newUser, newUser.getPassword(), server)) {
+						if (!getUserService().authenticateLDAPUser(newUser, newUser.getPassword(), server)) {
 							addFieldError("authenticationError",  "Password entered did not match the password in " + server.getName() + " account.");
 							errorType = "error";
-							servers =  serverService.getAll();
+							servers =  getServerService().getAll();
 							return INPUT;
 						}
 						// LDAP user's password need not be stored.
@@ -145,7 +134,7 @@ public class UserRegistration extends ActionSupport {
 					emailSent = emailer.sendEmail(newUser.getEmail().trim(), subject, messageBody.toString());
 
 					if (!emailSent) {
-						servers =  serverService.getAll();
+						servers =  getServerService().getAll();
 						StringBuffer errorMessage = new StringBuffer();
 						errorMessage.append("E-mail is not configured for the application. E-mail should be setup for user registeration.");
 						addFieldError("emailError",  errorMessage.toString());
@@ -154,27 +143,27 @@ public class UserRegistration extends ActionSupport {
 					}
 
 					// Insert only after email verification is sent
-					userService.insertUser(newUser);
+					getUserService().insertUser(newUser);
 
 					// Email the admin to assign permissions for new user
-					boolean permissionEmailSent = userService.sendEmailForUserPermission(newUser.getUsername().trim(), comments);
+					boolean permissionEmailSent = getUserService().sendEmailForUserPermission(newUser.getUsername().trim(), comments);
 					if (!permissionEmailSent) {
 						StringBuffer errorMessage = new StringBuffer();
 						errorMessage.append("E-mail is not configured for the application. E-mail should be setup for user registeration.");
 						addFieldError("emailError",  errorMessage.toString());
 						errorType = "error";
-						servers =  serverService.getAll();
+						servers =  getServerService().getAll();
 						return INPUT;
 					}
 				} else {
-					servers =  serverService.getAll();
+					servers =  getServerService().getAll();
 					addFieldError("userEmailExist", "This email address already exists in the system.- " + newUser.getEmail().trim());
 					errorType = "error";
 					return INPUT;
 				}
 
 			} else {
-				servers =  serverService.getAll();
+				servers =  getServerService().getAll();
 				addFieldError("userNameExist", "User name already exists - " + newUser.getUsername().trim());
 				errorType = "error";
 				return INPUT;

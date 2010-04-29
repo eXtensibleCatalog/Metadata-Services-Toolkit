@@ -13,26 +13,20 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
-import xc.mst.manager.processingDirective.ProcessingDirectiveService;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This class is used to display the list of processing directives that have been set up
  *
  * @author Tejaswi Haramurali
  */
-public class ListProcessingDirectives extends ActionSupport
+public class ListProcessingDirectives extends BaseActionSupport
 {
     /** Serial id */
 	private static final long serialVersionUID = 8908002900698813282L;
-
-	/** creates service object for processing directives */
-    private ProcessingDirectiveService proDirService = new DefaultProcessingDirectiveService();
 
     /** The list of processing directives that have been set up by the user */
     private List<ProcessingDirective> processingDirectives;
@@ -54,7 +48,7 @@ public class ListProcessingDirectives extends ActionSupport
         try
         {
                      
-           processingDirectives = proDirService.getAllProcessingDirectives();
+           processingDirectives = getProcessingDirectiveService().getAllProcessingDirectives();
            setProcessingDirectives(processingDirectives);
 
            return SUCCESS;

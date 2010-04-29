@@ -10,25 +10,22 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.service.DefaultOaiIdentiferForServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DBRecordService;
-import xc.mst.manager.repository.DefaultFormatService;
-import xc.mst.manager.repository.DefaultSetService;
 import xc.mst.utils.TimingLogger;
 
 public class DBNormalizationService extends NormalizationService {
 
-	public DBNormalizationService() {
-		this.recordService = new DBRecordService();
-		this.oaiIdDao = new DBOaiIdentiferForServiceDAO();
+	public void init() {
+		setOaiIdentifierForServiceDAO(new DBOaiIdentiferForServiceDAO());
 	}
 	
 	@Override
 	public boolean processRecords() {
 		
 		try {
-			List<Record> inputRecords  = ((DBRecordService)recordService).getInputForServiceToProcess(service.getId(), true);
+			List<Record> inputRecords  = ((DBRecordService)getRecordService()).getInputForServiceToProcess(service.getId(), true);
 			Record r2 = null;
-			Format f = new DefaultFormatService().getFormatByName("marcxml");
-			Set s = new DefaultSetService().getSetBySetSpec("norm_output_set_spec");
+			Format f = getFormatService().getFormatByName("marcxml");
+			Set s = getSetService().getSetBySetSpec("norm_output_set_spec");
 			List<Set> sets = new ArrayList<Set>();
 			sets.add(s);
 			while (inputRecords != null && inputRecords.size() > 0) {
@@ -43,17 +40,17 @@ public class DBNormalizationService extends NormalizationService {
 						log.error("r.getId(): "+r.getId());
 						log.error("t", t);
 					}
-					recordService.update(r);
+					getRecordService().update(r);
 					r2 = r;
 				}
-				((DBRecordService)recordService).commit(service.getId(), true);
-				inputRecords  = recordService.getInputForServiceToProcess(service.getId());
+				((DBRecordService)getRecordService()).commit(service.getId(), true);
+				inputRecords  = getRecordService().getInputForServiceToProcess(service.getId());
 			}
 			if (r2 != null) {
 				checkProcessingDirectives(r2);
 			}
-			((DBRecordService)recordService).commit(service.getId(), true);
-			((DBRecordService)recordService).reset();
+			((DBRecordService)getRecordService()).commit(service.getId(), true);
+			((DBRecordService)getRecordService()).reset();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -62,7 +59,7 @@ public class DBNormalizationService extends NormalizationService {
 	
 	@Override
 	protected void insertNewRecord(Record record) throws DataException, IndexException {
-		recordService.insert(record);
+		getRecordService().insert(record);
 	}
 	
 	public class DBOaiIdentiferForServiceDAO extends DefaultOaiIdentiferForServiceDAO {

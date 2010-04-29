@@ -16,14 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.ServiceDAO;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ServicesService;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This action is used to display all the services that are part of the MST
@@ -31,7 +28,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Tejaswi Haramurali
  */
 
-public class ListServices extends ActionSupport implements ServletRequestAware
+public class ListServices extends BaseActionSupport implements ServletRequestAware
 {
        
     /** Serial id */
@@ -69,14 +66,13 @@ public class ListServices extends ActionSupport implements ServletRequestAware
         try
         {
            baseURL = "http://" + servletRequest.getServerName() + ":" +  servletRequest.getServerPort() + servletRequest.getContextPath() + "/" + "SERVICE_NAME" + "/oaiRepository";
-           ServicesService servService = new DefaultServicesService();
            if(columnSorted.equalsIgnoreCase("ServiceName"))
             {
-                    ServicesList = servService.getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_SERVICE_NAME);
+                    ServicesList = getServicesService().getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_SERVICE_NAME);
             }
             else
             {
-               ServicesList = servService.getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_SERVICE_NAME);
+               ServicesList = getServicesService().getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_SERVICE_NAME);
             }
             setServices(ServicesList);
             setIsAscendingOrder(isAscendingOrder);

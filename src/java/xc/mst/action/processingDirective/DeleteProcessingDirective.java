@@ -11,22 +11,19 @@
 
 package xc.mst.action.processingDirective;
 
-import com.opensymphony.xwork2.ActionSupport;
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
-import xc.mst.manager.processingDirective.ProcessingDirectiveService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
 
 /**
  * This action method deletes a Processing Directive
  *
  * @author Tejaswi Haramurali
  */
-public class DeleteProcessingDirective extends ActionSupport
+public class DeleteProcessingDirective extends BaseActionSupport
 {
 	 /** Serial ID*/
 	private static final long serialVersionUID = -3203721703516486193L;
@@ -39,12 +36,6 @@ public class DeleteProcessingDirective extends ActionSupport
     
 	/** Error type */
 	private String errorType;
-
-    /** Processing Directive Service */
-    private ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();
-
-    /** User Service object */
-    private UserService userService = new DefaultUserService();
 
     /**
      * Sets the Processing directive ID
@@ -77,15 +68,15 @@ public class DeleteProcessingDirective extends ActionSupport
     {
         try
         {
-            ProcessingDirective tempProcDir = processingDirectiveService.getByProcessingDirectiveId(processingDirectiveId);
+            ProcessingDirective tempProcDir = getProcessingDirectiveService().getByProcessingDirectiveId(processingDirectiveId);
             if(tempProcDir==null)
             {
                 this.addFieldError("DeleteDirectiveError", "Error Deleting Processing Rule. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return SUCCESS;
             }
-            processingDirectiveService.deleteProcessingDirective(tempProcDir);
+            getProcessingDirectiveService().deleteProcessingDirective(tempProcDir);
             return SUCCESS;
         }
         catch(DatabaseConfigException e)

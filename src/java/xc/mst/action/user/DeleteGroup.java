@@ -16,16 +16,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
-import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.GroupService;
-import xc.mst.manager.user.UserService;
-
-import com.opensymphony.xwork2.ActionSupport;
 import xc.mst.dao.DatabaseConfigException;
 
 /**
@@ -33,16 +28,11 @@ import xc.mst.dao.DatabaseConfigException;
  *
  * @author Tejaswi Haramurali
  */
-public class DeleteGroup extends ActionSupport
+@SuppressWarnings("serial")
+public class DeleteGroup extends BaseActionSupport
 {
     /** ID of the group to be deleted**/
     private int groupId;
-
-    /** creates a service object for groups */
-    private GroupService groupService = new DefaultGroupService();
-
-    /** creates a service object for users */
-    private UserService userService = new DefaultUserService();
 
 	/** Error type */
 	private String errorType; 
@@ -61,11 +51,11 @@ public class DeleteGroup extends ActionSupport
         try
         {
                         
-            Group tempGroup = groupService.getGroupById(groupId);
+            Group tempGroup = getGroupService().getGroupById(groupId);
                     
             boolean flag = true;
 
-            List<User> users = userService.getAllUsersSorted(false,"username");
+            List<User> users = getUserService().getAllUsersSorted(false,"username");
             Iterator<User> userIter = users.iterator();
             while(userIter.hasNext())
             {
@@ -92,7 +82,7 @@ public class DeleteGroup extends ActionSupport
             if(flag)
             {
                 tempGroup.removeAllPermissions();
-                groupService.deleteGroup(tempGroup);
+                getGroupService().deleteGroup(tempGroup);
             }
             else
             {
@@ -114,7 +104,7 @@ public class DeleteGroup extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("allGroupsError", "Error occurred while deleting group. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }
@@ -168,14 +158,14 @@ public class DeleteGroup extends ActionSupport
     {
     	List<Group> finalList = new ArrayList<Group>();
     	try {
-	        List<Group> tempList = groupService.getAllGroups();
+	        List<Group> tempList = getGroupService().getAllGroups();
 	        
 	
 	        Iterator<Group> iter = tempList.iterator();
 	        while(iter.hasNext())
 	        {
 	            Group group = (Group)iter.next();
-	            group.setMemberCount(userService.getUsersForGroup(group.getId()).size());
+	            group.setMemberCount(getUserService().getUsersForGroup(group.getId()).size());
 	            finalList.add(group);
 	        }
     	} catch  (DataException e) {

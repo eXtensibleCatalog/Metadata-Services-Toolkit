@@ -10,29 +10,26 @@
 
 package xc.mst.action.user;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.DefaultPermissionService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.GroupService;
-import xc.mst.manager.user.PermissionService;
-import xc.mst.manager.user.UserService;
 
 /**
  * This action method is used to edit the details of a group of users
  *
  * @author Tejaswi Haramurali
  */
-public class EditGroup extends ActionSupport
+@SuppressWarnings("serial")
+public class EditGroup extends BaseActionSupport
 {
     /** The ID of the group whose details are to be edited */
     private int groupId;
@@ -50,7 +47,8 @@ public class EditGroup extends ActionSupport
     private Group temporaryGroup;
 
     /** A List that is used to store permissions that have been selected by the user*/
-    private List selectedPermissions = new ArrayList();
+    @SuppressWarnings("unchecked")
+	private List selectedPermissions = new ArrayList();
 
     /** The list of all the tab names */
     private List<Permission> tabNames = new ArrayList<Permission>();
@@ -61,31 +59,23 @@ public class EditGroup extends ActionSupport
 	/** Error type */
 	private String errorType;
 
-    /** Group Service object which interacts with group objects */
-    private GroupService groupService = new DefaultGroupService();
-
-    /**Permission Service object with provides methods to interact with permissions */
-    private PermissionService permissionService = new DefaultPermissionService();
-
-    /** User Service object */
-    private UserService userService = new DefaultUserService();
-
      /**
      * Overrides default implementation to view the edit group page.
       *
      * @return {@link #SUCCESS}
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public String execute()
     {
         try
         {
             
-            Group group = groupService.getGroupById(groupId);
+            Group group = getGroupService().getGroupById(groupId);
             if(group==null)
             {
                 this.addFieldError("editGroupError", "Error Occurred while viewing edit group page. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
@@ -98,7 +88,7 @@ public class EditGroup extends ActionSupport
                 selectedPermissions.add(permission.getTabId());
             }
            
-            setTabNames(permissionService.getAllPermissions());
+            setTabNames(getPermissionService().getAllPermissions());
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -115,22 +105,23 @@ public class EditGroup extends ActionSupport
      *
      * @return {@link #SUCCESS}
      */
-    public String editGroup()
+    @SuppressWarnings("unchecked")
+	public String editGroup()
     {
         try
         {
-            Group group = groupService.getGroupById(getGroupId());
+            Group group = getGroupService().getGroupById(getGroupId());
             if(group==null)
             {
                 this.addFieldError("editGroupError", "Error Occurred while editing group details. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
             group.setDescription(getGroupDescription());
             group.setName(getGroupName());
 
-            Group tempGroup = groupService.getGroupByName(groupName);
+            Group tempGroup = getGroupService().getGroupByName(groupName);
 
            
             if(tempGroup.getId()!=groupId)
@@ -140,7 +131,7 @@ public class EditGroup extends ActionSupport
                    
                         setTemporaryGroup(group);
                        
-                        setTabNames(permissionService.getAllPermissions());
+                        setTabNames(getPermissionService().getAllPermissions());
                         for(int i=0;i<permissionsSelected.length;i++)
                         {
                             selectedPermissions.add(permissionsSelected[i]);
@@ -158,10 +149,10 @@ public class EditGroup extends ActionSupport
             {
                
                 int permissionId = Integer.parseInt(permissionsSelected[i]);
-                group.addPermission(permissionService.getPermissionById(permissionId));
+                group.addPermission(getPermissionService().getPermissionById(permissionId));
             }
 
-            groupService.updateGroup(group);
+            getGroupService().updateGroup(group);
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -175,7 +166,7 @@ public class EditGroup extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("editGroupError", "Error Occurred while editing group. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }
@@ -294,7 +285,8 @@ public class EditGroup extends ActionSupport
      *
      * @return selected permissions List
      */
-    public List<Permission> getSelectedPermissions()
+    @SuppressWarnings("unchecked")
+	public List<Permission> getSelectedPermissions()
     {
         return this.selectedPermissions;
     }

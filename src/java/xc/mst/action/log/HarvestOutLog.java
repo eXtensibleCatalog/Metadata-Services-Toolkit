@@ -15,21 +15,18 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
-import xc.mst.dao.service.ServiceDAO;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ServicesService;
-
-import com.opensymphony.xwork2.ActionSupport;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.dao.service.ServiceDAO;
 
 /**
  * This action method is used to display the Service logs
  *
  * @author Tejaswi Haramurali
  */
-public class HarvestOutLog extends ActionSupport
+public class HarvestOutLog extends BaseActionSupport
 {
     /** Serial id */
 	private static final long serialVersionUID = -3510624101788171450L;
@@ -39,9 +36,6 @@ public class HarvestOutLog extends ActionSupport
 
     /** boolean parameter determines if the rows are to sorted in ascending or descending order */
     private boolean isAscendingOrder=true;
-
-    /** Creates a service object for Services */
-    private ServicesService servicesService = new DefaultServicesService();
 
     /** Sets the list of all services */
     private List<Service> services = new ArrayList<Service>();
@@ -66,33 +60,33 @@ public class HarvestOutLog extends ActionSupport
             {
                 if(columnSorted.equalsIgnoreCase("ServiceName"))
                 {
-                	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
+                	services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
                 }
                 else if(columnSorted.equalsIgnoreCase("Warnings"))
                 {
-                	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_WARNINGS);
+                	services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_WARNINGS);
                 }
                 else if(columnSorted.equalsIgnoreCase("Errors"))
                 {
-                	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_ERRORS);
+                	services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_ERRORS);
                 }
                 else if(columnSorted.equalsIgnoreCase("RecordsAvailable"))
                 {
-                	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_RECORDS_AVAILABLE);
+                	services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_RECORDS_AVAILABLE);
                 }
                 else if(columnSorted.equalsIgnoreCase("RecordsHarvested"))
                 {
-                	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_RECORDS_HARVESTED);
+                	services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_RECORDS_HARVESTED);
                 }
                 else
                 {
-                	services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_LAST_LOG_RESET);
+                	services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_LAST_LOG_RESET);
                 }
 
             }
             else
             {
-                services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
+                services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
             }
              setIsAscendingOrder(isAscendingOrder);
              setColumnSorted(columnSorted);

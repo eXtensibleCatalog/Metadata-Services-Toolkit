@@ -16,23 +16,18 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.Group;
 import xc.mst.constants.Constants;
-import xc.mst.dao.user.GroupDAO;
-import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.GroupService;
-import xc.mst.manager.user.UserService;
-
-import com.opensymphony.xwork2.ActionSupport;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.dao.user.GroupDAO;
 
 /**
  * This action method diplays all groups
  *
  * @author Tejaswi Haramurali
  */
-public class AllGroups extends ActionSupport
+public class AllGroups extends BaseActionSupport
 {
     /** Serial id */
 	private static final long serialVersionUID = -6634790751181787459L;
@@ -62,19 +57,17 @@ public class AllGroups extends ActionSupport
     {
         try
         {
-            GroupService groupService = new DefaultGroupService();
-            UserService userService = new DefaultUserService();
             List<Group> tempList = new ArrayList<Group>();
 
             if(columnSorted.equalsIgnoreCase("GroupName")||(columnSorted.equalsIgnoreCase("GroupDescription")))
             {
                 if(columnSorted.equalsIgnoreCase("GroupName"))
                 {
-                     tempList = groupService.getAllGroupsSorted(isAscendingOrder, GroupDAO.COL_NAME);
+                     tempList = getGroupService().getAllGroupsSorted(isAscendingOrder, GroupDAO.COL_NAME);
                 }
                 else
                 {
-                     tempList = groupService.getAllGroupsSorted(isAscendingOrder, GroupDAO.COL_DESCRIPTION);
+                     tempList = getGroupService().getAllGroupsSorted(isAscendingOrder, GroupDAO.COL_DESCRIPTION);
                 }
                
                 List<Group> finalList = new ArrayList<Group>();
@@ -83,7 +76,7 @@ public class AllGroups extends ActionSupport
                 while(iter.hasNext())
                 {
                     Group group = (Group)iter.next();
-                    group.setMemberCount(userService.getUserCountForGroup(group.getId()));
+                    group.setMemberCount(getUserService().getUserCountForGroup(group.getId()));
                     finalList.add(group);
                 }
                 setGroupList(finalList);

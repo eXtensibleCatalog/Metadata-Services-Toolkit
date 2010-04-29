@@ -12,17 +12,14 @@ package xc.mst.action.user;
 
 import java.util.Date;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
-import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.GroupService;
-import xc.mst.manager.user.UserService;
-import com.opensymphony.xwork2.ActionSupport;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
@@ -31,17 +28,11 @@ import xc.mst.dao.DatabaseConfigException;
  *
  * @author Tejaswi Haramurali
  */
-public class AddLocalUser extends ActionSupport
+public class AddLocalUser extends BaseActionSupport
 {
     /** Serial id */
 	private static final long serialVersionUID = 8341069230872861667L;
-
-	/** creates service object for users */
-    private UserService userService = new DefaultUserService();
-
-    /** creates service object for groups */
-    private GroupService groupService = new DefaultGroupService();
-
+	
     /**The email ID of the user */
     private String email;
 
@@ -85,7 +76,7 @@ public class AddLocalUser extends ActionSupport
     {
         try
         {
-            setGroupList(groupService.getAllGroups());
+            setGroupList(getGroupService().getAllGroups());
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -114,18 +105,18 @@ public class AddLocalUser extends ActionSupport
             user.setAccountCreated(new Date());
             user.setFailedLoginAttempts(0);
             user.setUsername(userName);
-            Server localServer = new DefaultServerService().getServerByName("Local");
+            Server localServer = getServerService().getServerByName("Local");
             user.setServer(localServer);
 
-            User similarUserName = userService.getUserByUserName(user.getUsername(), localServer);
-            User similarEmail = userService.getUserByEmail(email, localServer);
+            User similarUserName = getUserService().getUserByUserName(user.getUsername(), localServer);
+            User similarEmail = getUserService().getUserByEmail(email, localServer);
             if(similarUserName!=null)
             {
                 if(similarUserName.getServer().getName().equalsIgnoreCase("Local"))
                 {
                     this.addFieldError("addLocalUserError","Username already exists");
                     errorType = "error";
-                    setGroupList(groupService.getAllGroups());
+                    setGroupList(getGroupService().getAllGroups());
                     setTemporaryUser(user);
                     setSelectedGroups(groupsSelected);
                     return INPUT;
@@ -137,7 +128,7 @@ public class AddLocalUser extends ActionSupport
                 {
                     this.addFieldError("addLocalUserError","Email ID already exists");
                     errorType = "error";
-                    setGroupList(groupService.getAllGroups());
+                    setGroupList(getGroupService().getAllGroups());
                     setTemporaryUser(user);
                     setSelectedGroups(groupsSelected);
                     return INPUT;
@@ -147,10 +138,10 @@ public class AddLocalUser extends ActionSupport
 
             for(int i=0;i<groupsSelected.length;i++)
             {
-                Group tempGroup = groupService.getGroupById(Integer.parseInt(groupsSelected[i]));
+                Group tempGroup = getGroupService().getGroupById(Integer.parseInt(groupsSelected[i]));
                 user.addGroup(tempGroup);
             }
-            userService.insertUser(user);
+            getUserService().insertUser(user);
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -164,7 +155,7 @@ public class AddLocalUser extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("addLDAPUserError","Error in adding local user. An email has been sent to the administrator");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return ERROR;
         }

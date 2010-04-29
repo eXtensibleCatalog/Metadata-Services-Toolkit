@@ -29,7 +29,29 @@ import xc.mst.dao.user.PermissionDAO;
 import xc.mst.dao.user.ServerDAO;
 import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.user.UserGroupUtilDAO;
-import xc.mst.manager.record.DBRecordDAO;
+import xc.mst.dao.record.DBRecordDAO;
+import xc.mst.manager.configuration.EmailConfigService;
+import xc.mst.manager.harvest.ScheduleService;
+import xc.mst.manager.logs.LogService;
+import xc.mst.manager.processingDirective.JobService;
+import xc.mst.manager.processingDirective.ProcessingDirectiveService;
+import xc.mst.manager.processingDirective.ServicesService;
+import xc.mst.manager.record.BrowseRecordService;
+import xc.mst.manager.record.ExpressionService;
+import xc.mst.manager.record.HoldingsService;
+import xc.mst.manager.record.ItemService;
+import xc.mst.manager.record.ManifestationService;
+import xc.mst.manager.record.RecordService;
+import xc.mst.manager.record.WorkService;
+import xc.mst.manager.repository.FormatService;
+import xc.mst.manager.repository.ProviderService;
+import xc.mst.manager.repository.SetService;
+import xc.mst.manager.user.GroupService;
+import xc.mst.manager.user.PermissionService;
+import xc.mst.manager.user.ServerService;
+import xc.mst.manager.user.UserGroupUtilService;
+import xc.mst.manager.user.UserService;
+import xc.mst.utils.MSTConfiguration;
 
 public class BaseService {
 
@@ -315,13 +337,67 @@ public class BaseService {
 		this.recordDAO = recordDAO;
 	}
 
-	public DBRecordDAO getRecordDao() {
-		return recordDao;
+	public EmailConfigService getEmailConfigService() {
+		return (EmailConfigService)MSTConfiguration.getBean("EmailConfigService");
 	}
-
-	public void setRecordDao(DBRecordDAO recordDao) {
-		this.recordDao = recordDao;
+	public ScheduleService getScheduleService() {
+		return (ScheduleService)MSTConfiguration.getBean("ScheduleService");
 	}
-
-
+	public LogService getLogService() {
+		return (LogService)MSTConfiguration.getBean("LogService");
+	}
+	public JobService getJobService() {
+		return (JobService)MSTConfiguration.getBean("JobService");
+	}
+	public ProcessingDirectiveService getProcessingDirectiveService() {
+		return (ProcessingDirectiveService)MSTConfiguration.getBean("ProcessingDirectiveService");
+	}
+	public ServicesService getServicesService() {
+		return (ServicesService)MSTConfiguration.getBean("ServicesService");
+	}
+	public BrowseRecordService getBrowseRecordService() {
+		return (BrowseRecordService)MSTConfiguration.getBean("BrowseRecordService");
+	}
+	public ExpressionService getExpressionService() {
+		return (ExpressionService)MSTConfiguration.getBean("ExpressionService");
+	}
+	public HoldingsService getHoldingsService() {
+		return (HoldingsService)MSTConfiguration.getBean("HoldingsService");
+	}
+	public ItemService getItemService() {
+		return (ItemService)MSTConfiguration.getBean("ItemService");
+	}
+	public ManifestationService getManifestationService() {
+		return (ManifestationService)MSTConfiguration.getBean("ManifestationService");
+	}
+	public WorkService getWorkService() {
+		return (WorkService)MSTConfiguration.getBean("WorkService");
+	}
+	public FormatService getFormatService() {
+		return (FormatService)MSTConfiguration.getBean("FormatService");
+	}
+	public ProviderService getProviderService() {
+		return (ProviderService)MSTConfiguration.getBean("ProviderService");
+	}
+	public SetService getSetService() {
+		return (SetService)MSTConfiguration.getBean("SetService");
+	}
+	public GroupService getGroupService() {
+		return (GroupService)MSTConfiguration.getBean("GroupService");
+	}
+	public PermissionService getPermissionService() {
+		return (PermissionService)MSTConfiguration.getBean("PermissionService");
+	}
+	public ServerService getServerService() {
+		return (ServerService)MSTConfiguration.getBean("ServerService");
+	}
+	public UserGroupUtilService getUserGroupUtilService() {
+		return (UserGroupUtilService)MSTConfiguration.getBean("UserGroupUtilService");
+	}
+	public UserService getUserService() {
+		return (UserService)MSTConfiguration.getBean("UserService");
+	}
+	public RecordService getRecordService() {
+		return (RecordService)MSTConfiguration.getBean("RecordService");
+	}
 }

@@ -17,35 +17,24 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.processingDirective.ConfigFileException;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ServicesService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
 import xc.mst.utils.MSTConfiguration;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Edits the details of a service
  *
  * @author Tejaswi Haramurali
  */
-public class EditService extends ActionSupport
+public class EditService extends BaseActionSupport
 {
     /** serial id */
 	private static final long serialVersionUID = -6594114196228418111L;
-
-	/** Service object to interact with the services in the MST */
-    private ServicesService servicesService = new DefaultServicesService();
-
-    /** User Service Object */
-    private UserService userService = new DefaultUserService();
 
     /** Denotes the type of error */
     private String errorType;
@@ -80,7 +69,7 @@ public class EditService extends ActionSupport
         {
         	reprocessRecords = true;
         	
-            temporaryService = servicesService.getServiceById(serviceId);
+            temporaryService = getServicesService().getServiceById(serviceId);
             if(temporaryService==null)
             {
                 this.addFieldError("viewEditServiceError", "Error loading edit-service page. An email has been sent to the administrator.");
@@ -181,15 +170,15 @@ public class EditService extends ActionSupport
     {
         try
         {
-            Service tempService = servicesService.getServiceById(serviceId);
+            Service tempService = getServicesService().getServiceById(serviceId);
             if(tempService==null)
             {
                 this.addFieldError("EditServiceError", "Error occurred while editing service. An email has been sent to the administrator");
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 return INPUT;
             }
             File file = new File(getSelectedLocation());
-            servicesService.updateService(file,tempService,reprocessRecords);
+            getServicesService().updateService(file,tempService,reprocessRecords);
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -205,7 +194,7 @@ public class EditService extends ActionSupport
             log.error(de.getMessage(),de);
             errorType = "error";
             this.addFieldError("editServiceError","Error occurred while editing service. An email has been sent to the administrator");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             populateListBox();
             return INPUT;
         }
@@ -214,7 +203,7 @@ public class EditService extends ActionSupport
             log.error(ie.getMessage(),ie);
             errorType = "error";
             this.addFieldError("editServiceError","Error occurred while editing service. An email has been sent to the administrator");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             populateListBox();
             return INPUT;
         }
@@ -223,7 +212,7 @@ public class EditService extends ActionSupport
             log.error(ie.getMessage(),ie);      
             errorType = "error";
             this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             populateListBox();
             return INPUT;
         }
@@ -232,7 +221,7 @@ public class EditService extends ActionSupport
             log.error(cfe.getMessage(),cfe);
             errorType = "error";
             this.addFieldError("editServiceError","Error occurred while editing service. An email has been sent to the administrator");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             populateListBox();
             return INPUT;
         }

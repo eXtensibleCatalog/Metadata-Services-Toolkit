@@ -147,7 +147,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	 * @return path to MST configuration folder
 	 */
 	public static String getUrlPath() {
-		return instance.urlPath;
+		return urlPath;
 	}
 
 	public static String getInstanceName() {

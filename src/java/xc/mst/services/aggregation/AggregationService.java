@@ -38,19 +38,10 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultHoldingsService;
-import xc.mst.manager.record.DefaultItemService;
-import xc.mst.manager.record.DefaultManifestationService;
 import xc.mst.manager.record.DefaultRecordService;
-import xc.mst.manager.record.DefaultWorkService;
-import xc.mst.manager.record.HoldingsService;
-import xc.mst.manager.record.ItemService;
-import xc.mst.manager.record.ManifestationService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.manager.record.WorkService;
 import xc.mst.manager.repository.DefaultFormatService;
 import xc.mst.manager.repository.FormatService;
 import xc.mst.services.MetadataService;
@@ -83,26 +74,6 @@ import xc.mst.utils.index.WorkList;
 public class AggregationService extends MetadataService
 {
 	/**
-	 * Manager for getting, inserting and updating works
-	 */
-	private static WorkService workService = new DefaultWorkService();
-
-	/**
-	 * Manager for getting, inserting and updating manifestations
-	 */
-	private static ManifestationService manifestationService = new DefaultManifestationService();
-
-	/**
-	 * Manager for getting, inserting and updating holdings
-	 */
-	private static HoldingsService holdingsService = new DefaultHoldingsService();
-
-	/**
-	 * Manager for getting, inserting and updating item
-	 */
-	private static ItemService itemService = new DefaultItemService();
-	
-	/**
 	 * DAO to manage held record
 	 */
 	private HeldRecordDAO heldRecordDAO = new DefaultHeldRecordDAO();
@@ -121,11 +92,6 @@ public class AggregationService extends MetadataService
 	 * The Properties file with information on which determines the base record to merge into 
 	 */
 	private Properties manifestationMergeBase = null;
-
-	/**
-	 * Data access object for getting FRBR level IDs
-	 */
-	protected static XcIdentifierForFrbrElementDAO frbrLevelIdDao = new DefaultXcIdentifierForFrbrElementDAO();
 	
 	/**
 	 * The namespace for XML Schema Instance
@@ -183,8 +149,6 @@ public class AggregationService extends MetadataService
 	 * Used to convert between jdom Objects and Strings
 	 */
 	private static final XMLOutputter outputter = new XMLOutputter();
-	
-	private static RecordService recordService = new DefaultRecordService();
 
 	/**
 	 * Construct a NormalizationService Object
@@ -263,7 +227,7 @@ public class AggregationService extends MetadataService
 		// If the record was deleted, delete and reprocess all records that were processed from it
 		if(processMe.getDeleted())
 		{
-			List<Record> successors =  recordService.getSuccessorsCreatedByServiceId(processMe.getId(), service.getId());
+			List<Record> successors =  getRecordService().getSuccessorsCreatedByServiceId(processMe.getId(), service.getId());
 
 			// If there are successors then the record exist and needs to be deleted. Since we are
 			// deleting the record, we need to decrement the count.
@@ -279,13 +243,13 @@ public class AggregationService extends MetadataService
 			
 				// Schedule the services
 				reprocessRecord(successor);
-				recordService.update(successor);
+				getRecordService().update(successor);
 			}
 			
 			// Mark the record as having been processed by this service
 			processMe.addProcessedByService(service);
 			processMe.removeInputForService(service);
-			recordService.update(processMe);
+			getRecordService().update(processMe);
 		
 		} 
 
@@ -318,7 +282,7 @@ public class AggregationService extends MetadataService
 					outgoingRecord.addSet(outputSet);
 	
 				// Check whether or not this record already exists in the database
-				Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
+				Record oldRecord = getRecordService().getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
 	
 				// If the current record is a new record, insert it
 				if(oldRecord == null) {
@@ -343,7 +307,7 @@ public class AggregationService extends MetadataService
 				// Mark the record as having been processed by this service
 				processMe.addProcessedByService(service);
 				processMe.removeInputForService(service);
-				recordService.update(processMe);
+				getRecordService().update(processMe);
 			} else if (!processMe.getDeleted()) {
 				unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
 			}
@@ -352,7 +316,7 @@ public class AggregationService extends MetadataService
 			// Mark the record as having been processed by this service
 			processMe.addProcessedByService(service);
 			processMe.removeInputForService(service);
-			recordService.update(processMe);
+			getRecordService().update(processMe);
 		}
 		
 //		// If the input record is a new record then increment the processed record count
@@ -406,7 +370,7 @@ public class AggregationService extends MetadataService
 			
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to delete them
-			List<Record> existingRecords = recordService.getSuccessorsCreatedByServiceId(record.getId(), service.getId());
+			List<Record> existingRecords = getRecordService().getSuccessorsCreatedByServiceId(record.getId(), service.getId());
 
 			boolean updatedInputRecord = false;
 			
@@ -424,7 +388,7 @@ public class AggregationService extends MetadataService
 				// Mark the record as having been processed by this service
 				record.addProcessedByService(service);
 				record.removeInputForService(service);
-				recordService.update(record);
+				getRecordService().update(record);
 				
 				return new ArrayList<Record>();
 			
@@ -625,7 +589,7 @@ public class AggregationService extends MetadataService
 	
 		try
 		{
-			work.setXcWorkId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_WORK));
+			work.setXcWorkId(getXcIdentifierForFrbrElementDAO().getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_WORK));
 	
 			work.setOaiXml(outputter.outputString(((Element)workElement.getParent().clone())
 	                                             .setContent(new Text("\n\t"))
@@ -682,7 +646,7 @@ public class AggregationService extends MetadataService
 		expression.setFormat(xcSchemaFormat);
 		expression.setService(service); // Mark the Expression as being from no service since it shouldn't be output
 	
-		expression.setXcExpressionId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_EXPRESSION));
+		expression.setXcExpressionId(getXcIdentifierForFrbrElementDAO().getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_EXPRESSION));
 	
 		expression.setOaiXml(outputter.outputString(((Element)expressionElement.getParent().clone())
 													              .setContent(new Text("\n\t"))
@@ -805,7 +769,7 @@ public class AggregationService extends MetadataService
 	
 		try
 		{
-			holdings.setXcHoldingsId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_HOLDINGS));
+			holdings.setXcHoldingsId(getXcIdentifierForFrbrElementDAO().getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_HOLDINGS));
 	
 			holdings.setOaiXml(outputter.outputString(((Element)holdingsElement.getParent().clone())
 	                                                 .setContent(new Text("\n\t"))
@@ -882,7 +846,7 @@ public class AggregationService extends MetadataService
 	
 		try
 		{
-			item.setXcItemId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_ITEM));
+			item.setXcItemId(getXcIdentifierForFrbrElementDAO().getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_ITEM));
 	
 			item.setOaiXml(outputter.outputString(((Element)itemElement.getParent().clone())
 					                             .setContent(new Text("\n\t"))
@@ -1126,7 +1090,7 @@ public class AggregationService extends MetadataService
 					// TODO remove record id from solr index. Make OAI identifier unique key
 					record.setId(-1);
 					record.setDeleted(true);
-					recordService.update(record);
+					getRecordService().update(record);
 
 					outputRecordDAO.deleteByOAIId(outputRecordOAIId);
 				}
@@ -1286,10 +1250,10 @@ public class AggregationService extends MetadataService
 		// processed from the holdings in the input set
 		for(String linkedHolding : linkedHoldings)
 		{
-			Record inputHoldingsLinked = recordService.getInputForServiceByOaiIdentifier(linkedHolding, service.getId());
+			Record inputHoldingsLinked = getRecordService().getInputForServiceByOaiIdentifier(linkedHolding, service.getId());
 			if(inputHoldingsLinked != null)
 			{
-				HoldingsList holdingsProducedByLinkedHoldings = holdingsService.getByProcessedFrom(inputHoldingsLinked);
+				HoldingsList holdingsProducedByLinkedHoldings = getHoldingsService().getByProcessedFrom(inputHoldingsLinked);
 				
 				for(Holdings linkToMe : holdingsProducedByLinkedHoldings)
 				{
@@ -1342,7 +1306,7 @@ public class AggregationService extends MetadataService
 				// For each identifierForTheWork, add all matches to that identifierForTheWork to the list of results
 				for(String identifierForTheWork : matchMe.getIdentifierForTheWorks())
 				{
-					WorkList matchedWorks = workService.getByIdentifierForTheWork(identifierForTheWork);
+					WorkList matchedWorks = getWorkService().getByIdentifierForTheWork(identifierForTheWork);
 					for(Work matchedWork : matchedWorks)
 					{
 						logInfo("Merging works with OAI identifiers " + matchedWork.getOaiIdentifier() + " and " + matchMe.getOaiIdentifier() + " because they both contained an identifierForTheWork field with a value of " + identifierForTheWork);
@@ -1387,7 +1351,7 @@ public class AggregationService extends MetadataService
 					for(String matchedManifestiationOaiId : matchedManifestiationOaiIds)
 					{
 						logInfo("Matched manifestations with OAI identifiers " + matchedManifestiationOaiId+ " and " + matchMe.getOaiIdentifier() + " because they both contained an OCoLC field with a value of " + matchIdentifiers.getOclcValue());
-						results.add(recordService.getByOaiIdentifier(matchedManifestiationOaiId));
+						results.add(getRecordService().getByOaiIdentifier(matchedManifestiationOaiId));
 					}
 					return results;
 				} 
@@ -1399,7 +1363,7 @@ public class AggregationService extends MetadataService
 					for(String matchedManifestiationOaiId : matchedManifestiationOaiIds)
 					{
 						logInfo("Matched manifestations with OAI identifiers " + matchedManifestiationOaiId+ " and " + matchMe.getOaiIdentifier() + " because they both contained an LCCN field with a value of " + matchIdentifiers.getLccnValue());
-						results.add(recordService.getByOaiIdentifier(matchedManifestiationOaiId));
+						results.add(getRecordService().getByOaiIdentifier(matchedManifestiationOaiId));
 					}
 					return results;
 				} 
@@ -1411,7 +1375,7 @@ public class AggregationService extends MetadataService
 					for(String matchedManifestiationOaiId : matchedManifestiationOaiIds)
 					{
 						logInfo("Matched manifestations with OAI identifiers " + matchedManifestiationOaiId+ " and " + matchMe.getOaiIdentifier() + " because they both contained an ISBN field with a value of " + matchIdentifiers.getIsbnValue());
-						results.add(recordService.getByOaiIdentifier(matchedManifestiationOaiId));
+						results.add(getRecordService().getByOaiIdentifier(matchedManifestiationOaiId));
 					}
 					return results;
 				} 
@@ -1423,7 +1387,7 @@ public class AggregationService extends MetadataService
 					for(String matchedManifestiationOaiId : matchedManifestiationOaiIds)
 					{
 						logInfo("Matched manifestations with OAI identifiers " + matchedManifestiationOaiId+ " and " + matchMe.getOaiIdentifier() + " because they both contained an ISSN field with a value of " + matchIdentifiers.getIssnValue());
-						results.add(recordService.getByOaiIdentifier(matchedManifestiationOaiId));
+						results.add(getRecordService().getByOaiIdentifier(matchedManifestiationOaiId));
 					}
 					return results;
 				} 
@@ -1487,7 +1451,7 @@ public class AggregationService extends MetadataService
 			// add all manifestations that match on it
 			for(String manifestationHeld : matchMe.getManifestationsHeld())
 			{
-				ManifestationList matchedManifestiations = manifestationService.getByXcRecordId(manifestationHeld);
+				ManifestationList matchedManifestiations = getManifestationService().getByXcRecordId(manifestationHeld);
 				for(Manifestation matchedManifestiation : matchedManifestiations)
 				{
 					logInfo("Linking the manifestation with OAI identifier " + matchedManifestiation.getOaiIdentifier() + " and the holdings with OAI identifier " + matchMe.getOaiIdentifier() + " because the manifestation's xcRecordId field had the same value as the holdings's manifestationHeld field.  This value was " + manifestationHeld);
@@ -1519,7 +1483,7 @@ public class AggregationService extends MetadataService
 			// add all holdings that match on it
 			for(String xcRecordId : matchMe.getXcRecordIds())
 			{
-				ItemList matchedItems = itemService.getByHoldingsExemplified(xcRecordId);
+				ItemList matchedItems = getItemService().getByHoldingsExemplified(xcRecordId);
 				for(Item matchedItem : matchedItems)
 				{
 					logInfo("Linking the holdings with OAI identifier " + matchMe.getOaiIdentifier() + " with the item with OAI identifier " + matchedItem.getOaiIdentifier() + " because the holdings's xcRecordId field had the same value as the item's holdingsExemplified field.  This value was " + xcRecordId);
@@ -1552,7 +1516,7 @@ public class AggregationService extends MetadataService
 			// add all holdings that match on it
 			for(String holdingsExemplified : matchMe.getHoldingsExemplified())
 			{
-				HoldingsList matchedHoldings = holdingsService.getByXcRecordId(holdingsExemplified);
+				HoldingsList matchedHoldings = getHoldingsService().getByXcRecordId(holdingsExemplified);
 				for(Holdings matchedHolding : matchedHoldings)
 				{
 					logInfo("Linking the holdings with OAI identifier " + matchedHolding.getOaiIdentifier() + " and the item with OAI identifier " + matchMe.getOaiIdentifier() + " because the holdings's xcRecordId field had the same value as the item's holdingsExemplified field.  This value was " + holdingsExemplified);

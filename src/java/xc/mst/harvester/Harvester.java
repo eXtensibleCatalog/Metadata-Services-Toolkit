@@ -51,24 +51,11 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.harvest.DefaultHarvestDAO;
-import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
-import xc.mst.dao.harvest.HarvestDAO;
-import xc.mst.dao.harvest.HarvestScheduleDAO;
-import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
-import xc.mst.dao.processing.ProcessingDirectiveDAO;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.DefaultProviderDAO;
-import xc.mst.dao.provider.DefaultSetDAO;
-import xc.mst.dao.provider.FormatDAO;
-import xc.mst.dao.provider.ProviderDAO;
-import xc.mst.dao.provider.SetDAO;
 import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.email.Emailer;
+import xc.mst.manager.BaseManager;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.processingDirective.DefaultJobService;
-import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.record.DBRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
@@ -102,48 +89,8 @@ import xc.mst.utils.index.SolrIndexManager;
  * @author     Steve Sullivan, John Weatherley
  * @version    $Id: Harvester.java,v 1.49 2007/01/17 16:18:24 jweather Exp $
  */
-public class Harvester implements ErrorHandler
+public class Harvester extends BaseManager implements ErrorHandler
 {
-	/**
-	 * Data access object for getting and updating providers
-	 */
-	private static ProviderDAO providerDao = new DefaultProviderDAO();
-
-	/**
-	 * Data access object for getting processing directives
-	 */
-	private static ProcessingDirectiveDAO processingDirectiveDao = new DefaultProcessingDirectiveDAO();
-
-	/**
-	 * Data access object for getting formats
-	 */
-	private static FormatDAO formatDao = new DefaultFormatDAO();
-
-	/**
-	 * Data access object for getting sets
-	 */
-	private static SetDAO setDao = new DefaultSetDAO();
-
-	/**
-	 * Data access object for updating harvests
-	 */
-	private static HarvestDAO harvestDao = new DefaultHarvestDAO();
-
-	/**
-	 * Data access object for updating schedules
-	 */
-	private static HarvestScheduleDAO harvestScheduleDao = new DefaultHarvestScheduleDAO();
-
-	/**
-	 * Manager for getting, inserting and updating records
-	 */  
-	private RecordService recordService = null;
-
-	/**
-	 * Manager for getting, inserting and updating jobs
-	 */
-	private static JobService jobService = new DefaultJobService();
-
 	/**
 	 * Data access object for getting FRBR level IDs
 	 */
@@ -409,7 +356,7 @@ public class Harvester implements ErrorHandler
 			try
 			{
 				// Load the provider again in case it was updated during the harvest
-				Provider provider = providerDao.getById(scheduleStep.getSchedule().getProvider().getId());
+				Provider provider = runningHarvester.getProviderDAO().getById(scheduleStep.getSchedule().getProvider().getId());
 
 				// Increase the warning and error counts as appropriate, then update the provider
 				provider.setWarnings(provider.getWarnings() + runningHarvester.warningCount);
@@ -417,7 +364,7 @@ public class Harvester implements ErrorHandler
 				provider.setRecordsAdded(provider.getRecordsAdded() + runningHarvester.addedCount);
 				provider.setRecordsReplaced(provider.getRecordsReplaced() + runningHarvester.updatedCount);
 
-				providerDao.update(provider);
+				runningHarvester.getProviderDAO().update(provider);
 			}
 			catch (DataException e)
 			{
@@ -452,7 +399,7 @@ public class Harvester implements ErrorHandler
 		this.provider = schedule.getProvider();
 
 		// Get the ProcessingDirectives which could match records harvested from the provider we're harvesting
-		processingDirectives = processingDirectiveDao.getBySourceProviderId(provider.getId());
+		processingDirectives = getProcessingDirectiveDAO().getBySourceProviderId(provider.getId());
 	} // end constructor Harvester(int, HarvestScheduleStep, Harvest)
 
 	/**
@@ -537,11 +484,11 @@ public class Harvester implements ErrorHandler
 
 			// Get the provider from the repository so we know the formats and sets it
 			// supports according to the validation we just performed
-			schedule.setProvider(providerDao.getById(schedule.getProvider().getId()));
+			schedule.setProvider(getProviderDAO().getById(schedule.getProvider().getId()));
 			provider = schedule.getProvider();
 
 			// Get the format we're to harvest
-			format = formatDao.getByName(metadataPrefix);
+			format = getFormatDAO().getByName(metadataPrefix);
 
 			// If the provider no longer supports the requested format we can't harvest it
 			if(!schedule.getProvider().getFormats().contains(format))
@@ -559,7 +506,7 @@ public class Harvester implements ErrorHandler
 			} // end if(format no longer supported)
 
 			// If the provider no longer contains the requested set we can't harvest it
-			if(setSpec != null && !schedule.getProvider().getSets().contains(setDao.getBySetSpec(setSpec)))
+			if(setSpec != null && !schedule.getProvider().getSets().contains(getSetDAO().getBySetSpec(setSpec)))
 			{
 				errorMsg = "The harvest could not be run because the Set " + setSpec + " is no longer supported by the OAI repository " + baseURL + ".";
 
@@ -670,7 +617,7 @@ public class Harvester implements ErrorHandler
 					LogWriter.addInfo(schedule.getProvider().getLogFileName(), "The OAI request is " + request);
 
 					currentHarvest.setRequest(request);
-					harvestDao.update(currentHarvest);
+					getHarvestDAO().update(currentHarvest);
 
 					reqMessage = "A request for ListRecords has been made. Establishing connection with the data provider...";
 				} // end if(this is the first request)
@@ -1022,7 +969,7 @@ public class Harvester implements ErrorHandler
 							set = setsLoaded.get(currentSetSpec);
 						else
 						{
-							set = setDao.getBySetSpec(currentSetSpec);
+							set = getSetDAO().getBySetSpec(currentSetSpec);
 	
 							// Add the set if there wasn't already one in the database
 							if(set == null)
@@ -1033,7 +980,7 @@ public class Harvester implements ErrorHandler
 								set.setIsProviderSet(false);
 								set.setIsRecordSet(true);
 								TimingLogger.start("setDao.insertForProvider");
-								setDao.insertForProvider(set, providerId);
+								getSetDAO().insertForProvider(set, providerId);
 								TimingLogger.stop("setDao.insertForProvider");
 							} // end if(the set wasn't found)
 							
@@ -1400,9 +1347,9 @@ public class Harvester implements ErrorHandler
 	        {
 	        	InputStream istm = getOaiResponse.getResponseBodyAsStream();
 	        	TimingLogger.stop("http sent and received");
-	        	
-	        	String line;
+
 	        	/*
+	        	String line = null;
 	        	StringBuilder sb = new StringBuilder();
 	        	BufferedReader reader = new BufferedReader(new InputStreamReader(istm, "UTF-8"));
         	    while ((line = reader.readLine()) != null) {
@@ -1801,7 +1748,7 @@ public class Harvester implements ErrorHandler
 		log.info("Changing the status to " + status);
 		schedule.setStatus(status);
 		try {
-			harvestScheduleDao.update(schedule, false);
+			getHarvestScheduleDAO().update(schedule, false);
 		} catch (DataException e) {
 			log.error("Error during updating status of harvest_schedule to database.", e);
 		}

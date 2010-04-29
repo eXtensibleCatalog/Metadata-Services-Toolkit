@@ -10,21 +10,17 @@
 
 package xc.mst.action.repository;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.Date;
-import org.apache.log4j.FileAppender;
+
 import org.apache.log4j.Logger;
-import org.apache.log4j.RollingFileAppender;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
-import xc.mst.manager.repository.DefaultProviderService;
-import xc.mst.manager.repository.ProviderService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
 
 /**
  * This method is used to edit the details of a repository
@@ -32,7 +28,8 @@ import xc.mst.manager.user.UserService;
  * @author Tejaswi Haramurali
  */
 
-public class EditRepository extends ActionSupport
+@SuppressWarnings("serial")
+public class EditRepository extends BaseActionSupport
 {
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -49,9 +46,6 @@ public class EditRepository extends ActionSupport
 	/** Error type */
 	private String errorType;
 
-    /** User Service object **/
-    private UserService userService = new DefaultUserService();
-
    /**
      * Overrides default implementation to edit the details of a repository.
     *
@@ -63,12 +57,12 @@ public class EditRepository extends ActionSupport
         try
         {
             
-            Provider provider = new DefaultProviderService().getProviderById(repositoryId);
+            Provider provider = getProviderService().getProviderById(repositoryId);
            
             if(provider==null)
             {                
                 errorType = "error";
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 this.addFieldError("viewRepositoryError","There was a problem displaying the edit Repository page. An email has been sent to the administrator.");
                 return INPUT;
             }
@@ -83,15 +77,6 @@ public class EditRepository extends ActionSupport
             this.addFieldError("dbConfigError","Unable to access the database. There may be a problem with database configuration.");
             return SUCCESS;
         }
-        catch(DataException e)
-        {
-            log.error(e.getMessage(),e);
-            errorType = "error";
-            userService.sendEmailErrorReport();
-            this.addFieldError("dbConfigError","Error occurred while editing repository. An email has been sent to the administrator");
-            return SUCCESS;
-        }
-       
 
     }
 
@@ -104,12 +89,11 @@ public class EditRepository extends ActionSupport
     {
         try
         {
-            ProviderService providerService = new DefaultProviderService();
-            Provider provider = providerService.getProviderById(repositoryId);
+            Provider provider = getProviderService().getProviderById(repositoryId);
             if(provider==null)
             {
                 errorType = "error";
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 this.addFieldError("editRepository","Error occurred while editing repository. An email has been sent to the administrator.");
                 return INPUT;
             }
@@ -128,8 +112,8 @@ public class EditRepository extends ActionSupport
             provider.setOaiProviderUrl(getRepositoryURL());
 
 
-            Provider repositorySameName = providerService.getProviderByName(repositoryName);
-            Provider repositorySameURL = providerService.getProviderByURL(repositoryURL);
+            Provider repositorySameName = getProviderService().getProviderByName(repositoryName);
+            Provider repositorySameURL = getProviderService().getProviderByURL(repositoryURL);
             if(repositorySameName!=null||repositorySameURL!=null) //repository with the same details already exists
             {
 
@@ -166,13 +150,13 @@ public class EditRepository extends ActionSupport
                                 provider.removeAllFormats();
                                 provider.removeAllSets();
                                 provider.setLastValidationDate(new Date());
-                                providerService.updateProvider(provider);
+                                getProviderService().updateProvider(provider);
                                 ValidateRepository vr = new ValidateRepository();
                                 vr.validate(provider.getId());
                             }
                             else //just update Repository details without revalidation
                             {
-                                providerService.updateProvider(provider);
+                            	getProviderService().updateProvider(provider);
                             }
                         }
 
@@ -202,13 +186,13 @@ public class EditRepository extends ActionSupport
                             provider.removeAllFormats();
                             provider.removeAllSets();
                             provider.setLastValidationDate(new Date());
-                            providerService.updateProvider(provider);
+                            getProviderService().updateProvider(provider);
                             ValidateRepository vr = new ValidateRepository();
                             vr.validate(provider.getId());
                         }
                         else
                         {
-                             providerService.updateProvider(provider);
+                        	getProviderService().updateProvider(provider);
                         }
 
                         return SUCCESS;
@@ -228,13 +212,13 @@ public class EditRepository extends ActionSupport
                     provider.removeAllFormats();
                     provider.removeAllSets();
                     provider.setLastValidationDate(new Date());
-                    providerService.updateProvider(provider);
+                    getProviderService().updateProvider(provider);
                     ValidateRepository vr = new ValidateRepository();
                     vr.validate(provider.getId());
                 }
                 else
                 {
-                     providerService.updateProvider(provider);
+                	getProviderService().updateProvider(provider);
                 }
 
                 return SUCCESS;

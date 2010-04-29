@@ -33,12 +33,10 @@ import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.record.BrowseRecordService;
-import xc.mst.manager.record.DefaultBrowseRecordService;
-import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Browse records
@@ -53,9 +51,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	
 	/** A reference to the logger for this class */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-	
-	/** Service to search record */
-	private BrowseRecordService browseRecordService = new DefaultBrowseRecordService();
 	
 	/** Browse result */
 	private SolrBrowseResult result;
@@ -131,6 +126,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	 * Search for records
 	 */
 	public String browse() {
+		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
 		if (log.isDebugEnabled()){
 			log.debug("User entered query::"+query);
 		}
@@ -248,6 +244,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 				solrQuery.setStart(rowStart);
 				solrQuery.setRows(numberOfResultsToShow);
 			}
+			BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getBean("BrowseRecordService");
 		    result = browseRecordService.search(solrQuery);   
 		    
 		    if (log.isDebugEnabled()) {
@@ -264,11 +261,10 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			    for(int i = 0; i < facetNamesList.size(); i++) {
 				    // Get successor/predecessor of the record to display its information
 			    	if (facetNamesList.get(i).equalsIgnoreCase("successor")) {
-			    		RecordService recordService = new DefaultRecordService();
 			    		successorRecord = recordService.getById(Long.parseLong(facetValuesList.get(i)));
 			    	}
 			    	if (facetNamesList.get(i).equalsIgnoreCase("processed_from")) {
-			    		RecordService recordService = new DefaultRecordService();
+			    		
 			    		predecessorRecord = recordService.getById(Long.parseLong(facetValuesList.get(i)));
 			    	}
 	
@@ -301,7 +297,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		}
 		
 		try {
-			RecordService recordService = new DefaultRecordService();
+			RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
 			record = recordService.getById(recordId);
 			recordXML = record.getOaiXml();
 	
@@ -376,12 +372,13 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		}
 
 		try {
-			ServicesService servicesService = new DefaultServicesService();
+			ServicesService servicesService = (ServicesService)MSTConfiguration.getBean("ServicesService");
 			int indexOfHypen = error.indexOf("-");
 			Service service = servicesService.getServiceById(Integer.parseInt(error.substring(0, indexOfHypen)));
 			
 			// Get service id
 			String errorCode = error.substring(indexOfHypen + 1, error.indexOf(":"));
+			BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getBean("BrowseRecordService");
 			ErrorCode error = browseRecordService.getError(errorCode, service);
 	
 			// Get error code

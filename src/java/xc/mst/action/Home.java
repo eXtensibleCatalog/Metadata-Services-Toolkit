@@ -10,10 +10,6 @@
 package xc.mst.action;
 
 import xc.mst.bo.user.User;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This is home action.
@@ -21,7 +17,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Sharmila Ranganathan
  *
  */
-public class Home extends ActionSupport {
+public class Home extends BaseActionSupport {
 
 	/**
 	 * Generated id
@@ -37,9 +33,6 @@ public class Home extends ActionSupport {
 	/** Test message */
 	private String test = "Login Success full";
 
-	/** User service */
-	private UserService userService = new DefaultUserService();
-
 	/**
      * A default implementation that does nothing and returns "success".
      *
@@ -48,7 +41,7 @@ public class Home extends ActionSupport {
     public String execute() throws Exception
     {
 
-    	user = userService.getUserById(userId);
+    	user = getUserService().getUserById(userId);
 
         return SUCCESS;
     }

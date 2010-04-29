@@ -18,32 +18,21 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ServicesService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Resets all the 'Service log' files relating to a Service
  *
  * @author Tejaswi Haramurali
  */
-public class ServiceReset extends ActionSupport
+public class ServiceReset extends BaseActionSupport
 {
     /** Serial id */
 	private static final long serialVersionUID = -2829550192988572522L;
-
-	/**Creates a service object for Services */
-    private ServicesService servicesService = new DefaultServicesService();
-
-    /** User Service object */
-    private UserService userService = new DefaultUserService();
 
     /**The name of the log file which needs to be reset **/
     private String serviceLogFileName;
@@ -68,18 +57,18 @@ public class ServiceReset extends ActionSupport
         try
         {
             
-            Service tempService = servicesService.getServiceById(serviceId);
+            Service tempService = getServicesService().getServiceById(serviceId);
             if(tempService==null)
             {
                 this.addFieldError("ServiceLogReset", "Error Occurred while resetting service log. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return SUCCESS;
             }
             tempService.setServicesLastLogReset(new Date());
             tempService.setServicesWarnings(0);
             tempService.setServicesErrors(0);
-            servicesService.updateService(tempService);
+            getServicesService().updateService(tempService);
             String filename = serviceLogFileName;
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
@@ -97,7 +86,7 @@ public class ServiceReset extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("ServiceLogReset", "Error Occurred while resetting service log. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -105,7 +94,7 @@ public class ServiceReset extends ActionSupport
         {
             log.error(fe.getMessage(),fe);
             this.addFieldError("ServiceLogReset", "Error Occurred while resetting service log. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -120,7 +109,7 @@ public class ServiceReset extends ActionSupport
     {
         try
         {
-            List<Service> servicesList = servicesService.getAllServices();
+            List<Service> servicesList = getServicesService().getAllServices();
             Iterator<Service> servIter = servicesList.iterator();
             while(servIter.hasNext())
             {
@@ -128,7 +117,7 @@ public class ServiceReset extends ActionSupport
                 tempService.setServicesLastLogReset(new Date());
                 tempService.setServicesWarnings(0);
                 tempService.setServicesErrors(0);
-                servicesService.updateService(tempService);
+                getServicesService().updateService(tempService);
                 String filename = tempService.getServicesLogFileName();
                 PrintWriter printWriter = new PrintWriter(filename);
                 printWriter.close();
@@ -146,7 +135,7 @@ public class ServiceReset extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("ServiceLogReset", "Error Occurred while resetting all service logs. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -154,7 +143,7 @@ public class ServiceReset extends ActionSupport
         {
             log.error(fe.getMessage(),fe);
             this.addFieldError("ServiceLogReset", "Error Occurred while resetting all service logs. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }

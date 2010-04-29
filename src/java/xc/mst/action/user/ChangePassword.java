@@ -10,14 +10,14 @@
 package xc.mst.action.user;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.action.UserAware;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Action to handle forgot password
@@ -25,7 +25,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Sharmila Ranganathan
  *
  */
-public class ChangePassword extends ActionSupport implements  UserAware, ServletRequestAware {
+public class ChangePassword extends BaseActionSupport implements  UserAware, ServletRequestAware {
 
 	/** Eclipse generated Id */
 	private static final long serialVersionUID = -5266408129646334987L;
@@ -45,9 +45,6 @@ public class ChangePassword extends ActionSupport implements  UserAware, Servlet
     /** Request */
     private HttpServletRequest request;
 
-	/** User service */
-	private UserService userService = new DefaultUserService();
-
 	/** Error type */
 	private String errorType; 
 	
@@ -61,10 +58,10 @@ public class ChangePassword extends ActionSupport implements  UserAware, Servlet
 			log.debug("Change password for user with user name:" + user.getUsername());
 		}
 		
-		if (user.getPassword().equals(userService.encryptPassword(oldPassword)))
+		if (user.getPassword().equals(getUserService().encryptPassword(oldPassword)))
 		{
-			user.setPassword(userService.encryptPassword(newPassword));
-			userService.updateUser(user);
+			user.setPassword(getUserService().encryptPassword(newPassword));
+			getUserService().updateUser(user);
 			request.getSession().setAttribute("user", user);
 		} else {
 			addFieldError("passwordDoesnotMatch",

@@ -17,32 +17,21 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.manager.processingDirective.ConfigFileException;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ServicesService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
 import xc.mst.utils.MSTConfiguration;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This is the service class for adding a new service in the MST
  *
  * @author Tejaswi Haramurali
  */
-public class AddService extends ActionSupport
+public class AddService extends BaseActionSupport
 {
     /** Serial Id */
 	private static final long serialVersionUID = -6656889195768543265L;
-
-	/** Service object to ineract with the services in the MST */
-    private ServicesService servicesService = new DefaultServicesService();
-
-    /** User Service Object **/
-    UserService userService = new DefaultUserService();
 
     /** Denotes the type of error */
     private String errorType;
@@ -189,7 +178,7 @@ public class AddService extends ActionSupport
         try
         {
             File file = new File(getSelectedLocation());
-            servicesService.addNewService(file);
+            getServicesService().addNewService(file);
             return SUCCESS;
         }
         catch(DataException de)
@@ -197,7 +186,7 @@ public class AddService extends ActionSupport
             log.error(de.getMessage(),de);
             errorType = "error";
             this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             populateListBox();
             return INPUT;
         }
@@ -206,7 +195,7 @@ public class AddService extends ActionSupport
             log.error(ie.getMessage(),ie);           
             errorType = "error";
             this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             populateListBox();
             return INPUT;
         }
@@ -215,7 +204,7 @@ public class AddService extends ActionSupport
             log.error(cfe.getMessage(),cfe);           
             errorType = "error";
             this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             populateListBox();
             return INPUT;
         }

@@ -10,20 +10,16 @@
 
 package xc.mst.action.user;
 
-import com.opensymphony.xwork2.ActionSupport;
-import java.util.*;
+import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.DefaultPermissionService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.GroupService;
-import xc.mst.manager.user.PermissionService;
-import xc.mst.manager.user.UserService;
 
 
 /**
@@ -31,7 +27,7 @@ import xc.mst.manager.user.UserService;
  *
  * @author Tejaswi Haramurali
  */
-public class AddGroup extends ActionSupport
+public class AddGroup extends BaseActionSupport
 {
     /** Serial id */
 	private static final long serialVersionUID = -1479234838280649053L;
@@ -60,26 +56,18 @@ public class AddGroup extends ActionSupport
 	/** Error type */
 	private String errorType;
 
-    /**Group Service object */
-    private GroupService groupService = new DefaultGroupService();
-
-    /** Permission Service object */
-    private PermissionService permissionService = new DefaultPermissionService();
-
-    /**User Service object */
-    private UserService userService = new DefaultUserService();
-
      /**
      * Overrides default implementation to view the add group page.
       *
      * @return {@link #SUCCESS}
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public String execute()
     {
         try
         {
-            setTabNames(permissionService.getAllPermissions());
+            setTabNames(getPermissionService().getAllPermissions());
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -96,7 +84,8 @@ public class AddGroup extends ActionSupport
      *
      * @return {@link #SUCCESS}
      */
-    public String addGroup()
+    @SuppressWarnings("unchecked")
+	public String addGroup()
     {
         try
         {
@@ -105,12 +94,12 @@ public class AddGroup extends ActionSupport
             group.setName(groupName);
             group.setDescription(groupDescription);
             
-            Group tempGroup = groupService.getGroupByName(groupName);
+            Group tempGroup = getGroupService().getGroupByName(groupName);
             if(tempGroup!=null)
             {
                 
                 setTemporaryGroup(group);
-                setTabNames(permissionService.getAllPermissions());
+                setTabNames(getPermissionService().getAllPermissions());
                 this.addFieldError("addGroupError", "A group with the same name already exists");
                 errorType = "error";
                 return INPUT;
@@ -123,12 +112,12 @@ public class AddGroup extends ActionSupport
                 
                 int permissionId = Integer.parseInt(permissionsSelected[i]);
                 
-                Permission tempPermission = permissionService.getPermissionById(permissionId);
+                Permission tempPermission = getPermissionService().getPermissionById(permissionId);
                 
                 group.addPermission(tempPermission);
             }
 
-            groupService.insertGroup(group);
+            getGroupService().insertGroup(group);
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -142,7 +131,7 @@ public class AddGroup extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("addGroupError", "Error Occurred while adding group. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }

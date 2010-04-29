@@ -10,15 +10,16 @@
 
 package xc.mst.action.log;
 
-import com.opensymphony.xwork2.ActionSupport;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.log.Log;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.LogDAO;
-import xc.mst.manager.logs.DefaultLogService;
-import xc.mst.manager.logs.LogService;
 
 
 /**
@@ -27,7 +28,8 @@ import xc.mst.manager.logs.LogService;
  *
  * @author Tejaswi Haramurali
  */
-public class GeneralLog extends ActionSupport
+@SuppressWarnings("serial")
+public class GeneralLog extends BaseActionSupport
 {
     /** The column on which the rows are to be sorted */
     private String columnSorted = "LogFileName";
@@ -55,33 +57,31 @@ public class GeneralLog extends ActionSupport
     {
         try
         {
-
-            LogService logService = new DefaultLogService();
             List<Log> fullList = new ArrayList<Log>();
 
             if(columnSorted.equalsIgnoreCase("LogFileName")||(columnSorted.equalsIgnoreCase("Warnings"))||(columnSorted.equalsIgnoreCase("Errors"))||(columnSorted.equalsIgnoreCase("LastLogReset")))
             {
                 if(columnSorted.equalsIgnoreCase("LogFileName"))
                 {
-                    fullList  = logService.getSorted(isAscendingOrder, LogDAO.COL_LOG_FILE_NAME);
+                    fullList  = getLogService().getSorted(isAscendingOrder, LogDAO.COL_LOG_FILE_NAME);
                 }
                 else if(columnSorted.equalsIgnoreCase("Warnings"))
                 {
-                    fullList = logService.getSorted(isAscendingOrder, LogDAO.COL_WARNINGS);
+                    fullList = getLogService().getSorted(isAscendingOrder, LogDAO.COL_WARNINGS);
                 }
                 else if(columnSorted.equalsIgnoreCase("Errors"))
                 {
-                    fullList = logService.getSorted(isAscendingOrder, LogDAO.COL_ERRORS);
+                    fullList = getLogService().getSorted(isAscendingOrder, LogDAO.COL_ERRORS);
                 }
                 else
                 {
-                    fullList = logService.getSorted(isAscendingOrder, LogDAO.COL_LAST_LOG_RESET);
+                    fullList = getLogService().getSorted(isAscendingOrder, LogDAO.COL_LAST_LOG_RESET);
                 }
                
             }
             else
             {
-               fullList  = logService.getSorted(isAscendingOrder, LogDAO.COL_LOG_FILE_NAME);
+               fullList  = getLogService().getSorted(isAscendingOrder, LogDAO.COL_LOG_FILE_NAME);
             }
             setLogList(fullList);
             setIsAscendingOrder(isAscendingOrder);

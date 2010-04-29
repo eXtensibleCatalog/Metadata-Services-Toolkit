@@ -19,10 +19,6 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.harvest.DefaultScheduleService;
-import xc.mst.manager.harvest.ScheduleService;
-import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
-import xc.mst.manager.processingDirective.ProcessingDirectiveService;
 import xc.mst.scheduling.HarvesterWorkerThread;
 import xc.mst.scheduling.ProcessingDirectiveWorkerThread;
 import xc.mst.scheduling.Scheduler;
@@ -113,17 +109,15 @@ public class DefaultProviderService extends BaseService implements ProviderServi
         	}
         }
         
-    	ScheduleService scheduleService = new DefaultScheduleService();
-    	HarvestSchedule harvestSchedule = scheduleService.getScheduleForProvider(provider);
+    	HarvestSchedule harvestSchedule = getScheduleService().getScheduleForProvider(provider);
     	if (harvestSchedule != null) {
-    		scheduleService.deleteSchedule(harvestSchedule);
+    		getScheduleService().deleteSchedule(harvestSchedule);
     	}
 
     	// Delete processing directive for this repository
-    	ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();
-    	List<ProcessingDirective> directives =  processingDirectiveService.getBySourceProviderId(provider.getId());
+    	List<ProcessingDirective> directives =  getProcessingDirectiveService().getBySourceProviderId(provider.getId());
     	for (ProcessingDirective directive:directives) {
-    		processingDirectiveService.deleteProcessingDirective(directive);
+    		getProcessingDirectiveService().deleteProcessingDirective(directive);
     	}
 
     	// Delete provider

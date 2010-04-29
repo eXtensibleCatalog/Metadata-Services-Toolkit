@@ -29,28 +29,10 @@ import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.processing.DefaultProcessingDirectiveDAO;
-import xc.mst.dao.processing.ProcessingDirectiveDAO;
-import xc.mst.dao.provider.DefaultSetDAO;
-import xc.mst.dao.provider.SetDAO;
-import xc.mst.dao.record.DefaultRecordTypeDAO;
-import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
-import xc.mst.dao.record.RecordTypeDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
-import xc.mst.dao.service.DefaultOaiIdentiferForServiceDAO;
-import xc.mst.dao.service.DefaultServiceDAO;
-import xc.mst.dao.service.OaiIdentifierForServiceDAO;
-import xc.mst.dao.service.ServiceDAO;
-import xc.mst.dao.user.DefaultGroupDAO;
-import xc.mst.dao.user.DefaultUserGroupUtilDAO;
-import xc.mst.dao.user.GroupDAO;
-import xc.mst.dao.user.UserGroupUtilDAO;
 import xc.mst.email.Emailer;
+import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.processingDirective.DefaultJobService;
-import xc.mst.manager.processingDirective.JobService;
-import xc.mst.manager.record.DefaultRecordService;
-import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
@@ -67,7 +49,7 @@ import xc.mst.utils.index.SolrIndexManager;
  * @author Eric Osisek
  */
 
-public abstract class MetadataService
+public abstract class MetadataService extends BaseService
 {
 	/**
 	 * The logger object
@@ -98,56 +80,6 @@ public abstract class MetadataService
 	 * The number of errors in running the current service per commit
 	 */
 	private int errorCountPerCommit = 0;
-
-	/**
-	 * Data access object for getting services
-	 */
-	private static ServiceDAO serviceDao = new DefaultServiceDAO();
-
-	/**
-	 * Data access object for getting sets
-	 */
-	private static SetDAO setDao = new DefaultSetDAO();
-
-	/**
-	 * Data access object for getting OAI IDs
-	 */
-	protected OaiIdentifierForServiceDAO oaiIdDao = new DefaultOaiIdentiferForServiceDAO();
-
-	/**
-	 * Data access object for getting FRBR level IDs
-	 */
-	private static XcIdentifierForFrbrElementDAO frbrLevelIdDao = new DefaultXcIdentifierForFrbrElementDAO();
-
-	/**
-	 * Data access object for getting user info from groups
-	 */
-	UserGroupUtilDAO userGroupUtilDAO = new DefaultUserGroupUtilDAO();
-	
-	/**
-	 * Data access object for getting processing directives
-	 */
-	private static ProcessingDirectiveDAO processingDirectiveDao = new DefaultProcessingDirectiveDAO();
-	
-	/**
-	 * Data access object for getting groups
-	 */
-	GroupDAO groupDAO = new DefaultGroupDAO();
-
-	/**
-	 * Data access object for getting groups
-	 */
-	RecordTypeDAO recordTypeDAO = new DefaultRecordTypeDAO();
-		
-	/**
-	 * Manager for getting, inserting and updating records
-	 */
-	protected RecordService recordService = new DefaultRecordService();
-	
-	/**
-	 * Manager for getting, inserting and updating jobs
-	 */
-	private static JobService jobService = new DefaultJobService();
 
 	/**
 	 * Used to send email reports
@@ -208,13 +140,13 @@ public abstract class MetadataService
 		try {
 			
 			// Set the service's ID and name
-			service = serviceDao.getById(serviceId);
+			service = getServiceDAO().getById(serviceId);
 			
 			// Load the service's configuration
 			loadConfiguration(service.getServiceConfig());
 	
 			// Create the list of ProcessingDirectives which could be run on records processed from this service
-			setProcessingDirectives(processingDirectiveDao.getBySourceServiceId(serviceId));
+			setProcessingDirectives(getProcessingDirectiveDAO().getBySourceServiceId(serviceId));
 	
 			if(log.isDebugEnabled())
 				log.debug("Constructed the MetadataService Object, running its processRecords() method.");
@@ -229,7 +161,7 @@ public abstract class MetadataService
 			if(log.isDebugEnabled())
 				log.debug("Running the Metadata Service with ID " + serviceId + ".");
 	
-			setOutputSet(setDao.getById(outputSetId));
+			setOutputSet(getSetDAO().getById(outputSetId));
 			
 			// Run the service's processRecords method
 			boolean success = processRecords();
@@ -254,7 +186,7 @@ public abstract class MetadataService
 				// Load the provider again in case it was updated during the harvest
 				try
 				{
-					service = serviceDao.getById(service.getId());
+					service = getServiceDAO().getById(service.getId());
 				}
 				catch (DatabaseConfigException e1){
 					
@@ -267,7 +199,7 @@ public abstract class MetadataService
 
 				try
 				{
-					serviceDao.update(service);
+					getServiceDAO().update(service);
 				}
 				catch (DataException e2)
 				{
@@ -307,7 +239,7 @@ public abstract class MetadataService
 		try
 		{
 			// Get the list of record inputs for this service
-			List<Record> records = recordService.getInputForServiceToProcess(service.getId());
+			List<Record> records = getRecordService().getInputForServiceToProcess(service.getId());
 			totalRecordCount = records.size();
 			log.info("Number of records to be processed by service = " + totalRecordCount);
 			
@@ -327,7 +259,7 @@ public abstract class MetadataService
 					// First query for records type using record types
 					RecordType recordType = recordTypes.get(i);
 					TimingLogger.start("recordService.getByInputToServiceAndRecordType");
-					Records inputRecords = recordService.getByInputToServiceAndRecordType(service.getId(), recordType.getName());
+					Records inputRecords = getRecordService().getByInputToServiceAndRecordType(service.getId(), recordType.getName());
 					TimingLogger.stop("recordService.getByInputToServiceAndRecordType");
 					if (inputRecords != null && inputRecords.size() >0) {
 						processRecordBatch(inputRecords);
@@ -351,7 +283,7 @@ public abstract class MetadataService
 
 			// Now process the records with no record_type info
 			TimingLogger.start("getInputForServiceToProcess");
-			List<Record> inputRecords  = recordService.getInputForServiceToProcess(service.getId());
+			List<Record> inputRecords  = getRecordService().getInputForServiceToProcess(service.getId());
 			TimingLogger.stop("getInputForServiceToProcess");
 			processRecordBatch(inputRecords);
 
@@ -403,15 +335,15 @@ public abstract class MetadataService
 	 */
 	private void updateOAIRecordIds() {
 		// Update the next OAI ID for this service in the database
-		oaiIdDao.writeNextOaiId(service.getId());
+		getOaiIdentifierForServiceDAO().writeNextOaiId(service.getId());
 
 		// Update the next XC ID for all elements in the database
-		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_WORK);
-		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_EXPRESSION);
-		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_MANIFESTATION);
-		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_HOLDINGS);
-		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_ITEM);
-		frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD);
+		getXcIdentifierForFrbrElementDAO().writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_WORK);
+		getXcIdentifierForFrbrElementDAO().writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_EXPRESSION);
+		getXcIdentifierForFrbrElementDAO().writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_MANIFESTATION);
+		getXcIdentifierForFrbrElementDAO().writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_HOLDINGS);
+		getXcIdentifierForFrbrElementDAO().writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_ITEM);
+		getXcIdentifierForFrbrElementDAO().writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD);
 	}
 	
 	/**
@@ -422,7 +354,7 @@ public abstract class MetadataService
 		Service service = null;
 		try
 		{
-			service = serviceDao.getById(this.service.getId());
+			service = getServiceDAO().getById(this.service.getId());
 		}
 		catch (DatabaseConfigException e1)
 		{
@@ -436,7 +368,7 @@ public abstract class MetadataService
 		service.setServicesErrors(service.getServicesErrors() + errorCountPerCommit);
 		service.setInputRecordCount(service.getInputRecordCount() + inputRecordCount);
 		try {
-			long harvestOutRecordsAvailable = recordService.getCount(null, null, null, -1, service.getId());
+			long harvestOutRecordsAvailable = getRecordService().getCount(null, null, null, -1, service.getId());
 			service.setHarvestOutRecordsAvailable(harvestOutRecordsAvailable);
 			service.setOutputRecordCount((int) harvestOutRecordsAvailable);
 
@@ -455,7 +387,7 @@ public abstract class MetadataService
 		
 		try
 		{
-			serviceDao.update(service);
+			getServiceDAO().update(service);
 		}
 		catch (DataException e)
 		{
@@ -687,7 +619,7 @@ public abstract class MetadataService
 		try
 		{
 			record.setUpdatedAt(new Date());
-			recordService.update(record);
+			getRecordService().update(record);
 		}
 		catch (IndexException e)
 		{
@@ -706,7 +638,9 @@ public abstract class MetadataService
 	 */
 	public final String getNextOaiId()
 	{
-		return "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + MSTConfiguration.getInstanceName() + "/" + service.getIdentifier().replace(" ", "_") + "/" + oaiIdDao.getNextOaiIdForService(service.getId());
+		return "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + 
+				MSTConfiguration.getInstanceName() + "/" + service.getIdentifier().replace(" ", "_") + "/" + 
+				getOaiIdentifierForServiceDAO().getNextOaiIdForService(service.getId());
 	}
 		
 	/**
@@ -724,7 +658,7 @@ public abstract class MetadataService
 		set.setDisplayName(setName);
 		set.setIsRecordSet(true);
 		set.setIsProviderSet(false);
-		setDao.insert(set);
+		getSetDAO().insert(set);
 		return set;
 	}
 
@@ -776,7 +710,7 @@ public abstract class MetadataService
 			// Run the processing directives against the record we're inserting
 			checkProcessingDirectives(record);
 
-			if(!recordService.insert(record))
+			if(!getRecordService().insert(record))
 				log.error("Failed to insert the new record with the OAI Identifier " + record.getOaiIdentifier() + ".");
 		} // end try(insert the record)
 		catch (DataException e)
@@ -811,7 +745,7 @@ public abstract class MetadataService
 			checkProcessingDirectives(newRecord);
 
 			// Update the record.  
-			if(!recordService.update(newRecord)) {
+			if(!getRecordService().update(newRecord)) {
 				log.error("The update failed for the record with ID " + newRecord.getId() + ".");
 			}
 			
@@ -837,10 +771,10 @@ public abstract class MetadataService
 		Service service = null;
 		try
 		{
-			service = serviceDao.getById(this.service.getId());
+			service = getServiceDAO().getById(this.service.getId());
 			LogWriter.addInfo(service.getServicesLogFileName(), "Setting the status of the service " +service.getName() +" as:" +status);
 			service.setStatus(status);
-			serviceDao.update(service);
+			getServiceDAO().update(service);
 		}
 		catch (DatabaseConfigException e1)
 		{
@@ -929,8 +863,8 @@ public abstract class MetadataService
 				// Add jobs to database
 				try {
 					Job job = new Job(matchedProcessingDirective.getService(), outputSetId, Constants.THREAD_SERVICE);
-					job.setOrder(jobService.getMaxOrder() + 1); 
-					jobService.insertJob(job);
+					job.setOrder(getJobService().getMaxOrder() + 1); 
+					getJobService().insertJob(job);
 				} catch (DatabaseConfigException dce) {
 					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
 				}
@@ -958,8 +892,8 @@ public abstract class MetadataService
 				// Add jobs to database
 				try {
 					Job job = new Job(processingService, 0, Constants.THREAD_SERVICE);
-					job.setOrder(jobService.getMaxOrder() + 1); 
-					jobService.insertJob(job);
+					job.setOrder(getJobService().getMaxOrder() + 1); 
+					getJobService().insertJob(job);
 				} catch (DatabaseConfigException dce) {
 					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
 				}

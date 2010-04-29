@@ -27,13 +27,7 @@ import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.ServerService;
-import xc.mst.manager.user.UserService;
 import xc.mst.utils.MSTConfiguration;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Action class for user login
@@ -41,7 +35,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Sharmila Ranganathan
  *
  */
-public class Login extends ActionSupport implements ServletRequestAware {
+public class Login extends BaseActionSupport implements ServletRequestAware {
 
 	/**
 	 * Generated id
@@ -59,12 +53,6 @@ public class Login extends ActionSupport implements ServletRequestAware {
 
     /** Request */
     private HttpServletRequest request;
-
-	/** User service */
-	private UserService userService = new DefaultUserService();
-
-	/** Server service */
-	private ServerService serverService = new DefaultServerService();
 
     /**The first page that the user has permission to access */
     private String forwardLink;
@@ -96,7 +84,7 @@ public class Login extends ActionSupport implements ServletRequestAware {
     @Override
 	public String execute() throws DataException {
     	try {
-    		servers = serverService.getAll();
+    		servers = getServerService().getAll();
     	}  catch (DatabaseConfigException dce) {
     		if (!MSTConfiguration.mstInstanceFolderExist) {
     			addFieldError("instancesFolderError", defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
@@ -125,7 +113,7 @@ public class Login extends ActionSupport implements ServletRequestAware {
 		// If user exist in session then forward to page for which user has permission
 		if (sessionUser != null) {
 
-            List<Permission> permissions = userService.getPermissionsForUserByTabOrderAsc(sessionUser);
+            List<Permission> permissions = getUserService().getPermissionsForUserByTabOrderAsc(sessionUser);
 
             if (permissions != null) {
             	if (permissions.size() == 0) {
@@ -168,25 +156,25 @@ public class Login extends ActionSupport implements ServletRequestAware {
 		if (log.isDebugEnabled()) {
 			log.debug("Trying to login username :" + userName);
 		}
-		Server server = serverService.getServerByName(serverName);
-        user = userService.getUserByUserName(userName, server);
+		Server server = getServerService().getServerByName(serverName);
+        user = getUserService().getUserByUserName(userName, server);
 
 		boolean result = false;
 		String resultName = INPUT;
 
 		if (user != null) {
 			if (server.getName().equalsIgnoreCase("local")) {
-				result = userService.authenticateUser(user, password);
+				result = getUserService().authenticateUser(user, password);
 			} else {
-				result = userService.authenticateLDAPUser(user, password, server);
+				result = getUserService().authenticateLDAPUser(user, password, server);
 			}
 
-			User completeUserData = userService.getUserById(user.getId());
+			User completeUserData = getUserService().getUserById(user.getId());
 			if (result) {
 				// Place the user object in session
 				request.getSession().setAttribute("user", completeUserData);
 				user.setLastLogin(new Date());
-				userService.updateUser(user);
+				getUserService().updateUser(user);
 
                 //get Calendar instance
                 Calendar now = Calendar.getInstance();
@@ -195,7 +183,7 @@ public class Login extends ActionSupport implements ServletRequestAware {
                 //display current TimeZone using getDisplayName() method of TimeZone class
                 request.getSession().setAttribute("timeZone",timeZone.getDisplayName());
 
-				List<Permission> permissions = userService.getPermissionsForUserByTabOrderAsc(completeUserData);
+				List<Permission> permissions = getUserService().getPermissionsForUserByTabOrderAsc(completeUserData);
 
                 if (permissions != null) {
                 	if (permissions.size() == 0) {
@@ -225,13 +213,13 @@ public class Login extends ActionSupport implements ServletRequestAware {
 
 				resultName = SUCCESS;
 			} else {
-				servers = serverService.getAll();
+				servers = getServerService().getAll();
 				addFieldError("loginError", "Invalid username / password. Please try again");
 				errorType = "error";
 				resultName = INPUT;
 			}
 		} else {
-			servers = serverService.getAll();
+			servers = getServerService().getAll();
 			addFieldError("loginError", "Invalid username / password. Please try again");
 			errorType = "error";
 			resultName = INPUT;

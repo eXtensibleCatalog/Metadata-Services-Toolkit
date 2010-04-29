@@ -1,4 +1,4 @@
-package xc.mst.manager.record;
+package xc.mst.dao.record;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +9,7 @@ import java.util.List;
 
 import xc.mst.bo.record.Record;
 import xc.mst.dao.MySqlConnectionManager;
+import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.utils.TimingLogger;
 
 public class DBRecordDAO {

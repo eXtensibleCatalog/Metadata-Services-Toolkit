@@ -11,14 +11,11 @@ package xc.mst.action.user;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.action.UserAware;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Action to edit user account
@@ -26,7 +23,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Sharmila Ranganathan
  *
  */
-public class EditMyAccount extends ActionSupport implements UserAware {
+public class EditMyAccount extends BaseActionSupport implements UserAware {
 
 	/** Generated id  */
 	private static final long serialVersionUID = 1117303971697447644L;
@@ -36,9 +33,6 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 
 	/** New user registering with the system */
 	private User user;
-
-	/** User service */
-	private UserService userService =  new DefaultUserService();
 
 	/** First name of user */
 	private String firstName;
@@ -77,13 +71,13 @@ public class EditMyAccount extends ActionSupport implements UserAware {
 		log.debug(EditMyAccount.class + ":" + "saveMyAccount()" );
 
 		try {
-				User userWithEmail = userService.getUserByEmail(email, user.getServer());
+				User userWithEmail = getUserService().getUserByEmail(email, user.getServer());
 				if (userWithEmail == null || userWithEmail.getId() == user.getId()) {
 					user.setFirstName(firstName);
 					user.setLastName(lastName);
 					user.setEmail(email);
 
-					userService.updateUser(user);
+					getUserService().updateUser(user);
 					errorType = "info";
 					message = "Account information saved.";
 				} else {

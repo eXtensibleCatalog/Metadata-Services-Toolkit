@@ -9,24 +9,23 @@
 
 package xc.mst.action.user;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.user.UserDAO;
-import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.GroupService;
-import xc.mst.manager.user.UserService;
 
 /**
  * Displays all the members of a particular group of users
  *
  * @author Tejaswi Haramurali
  */
-public class ShowGroupMembers extends ActionSupport
+@SuppressWarnings("serial")
+public class ShowGroupMembers extends BaseActionSupport
 {
     /** The group whose members are to be displayed */
     private int groupId;
@@ -39,12 +38,6 @@ public class ShowGroupMembers extends ActionSupport
 
     /** The list of users who are members of the specified group */
     private List<User> membershipList;
-
-    /** The group service object */
-    private GroupService groupService = new DefaultGroupService();
-
-    /** The service object for users */
-    private UserService userService = new DefaultUserService();
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -59,22 +52,22 @@ public class ShowGroupMembers extends ActionSupport
     {
         try
         {
-            Group tempGroup = groupService.getGroupById(groupId);
+            Group tempGroup = getGroupService().getGroupById(groupId);
             if(tempGroup!=null)
             {
                 if(columnSorted.equalsIgnoreCase("UserName")||columnSorted.equalsIgnoreCase("FirstName")||columnSorted.equalsIgnoreCase("LastName"))
                 {
                     if(columnSorted.equalsIgnoreCase("UserName"))
                     {
-                         membershipList = userService.getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_USERNAME);
+                         membershipList = getUserService().getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_USERNAME);
                     }
                     else if(columnSorted.equalsIgnoreCase("FirstName"))
                     {
-                         membershipList = userService.getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_FIRST_NAME);
+                         membershipList = getUserService().getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_FIRST_NAME);
                     }
                     else
                     {
-                         membershipList = userService.getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_LAST_NAME);
+                         membershipList = getUserService().getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_LAST_NAME);
                     }
                    
                     setMembershipList(membershipList);

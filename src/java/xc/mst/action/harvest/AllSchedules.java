@@ -17,10 +17,9 @@ import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestScheduleDAO;
-import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
+import xc.mst.utils.MSTConfiguration;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -51,10 +50,7 @@ public class AllSchedules extends ActionSupport
 	private int scheduleId;
 
 	/** Schedule service */
-	private ScheduleService scheduleService = new DefaultScheduleService();
-	
-    /** Harvest schedule DAO */
-    private HarvestScheduleDAO scheduleDao = new DefaultHarvestScheduleDAO();
+	private ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getBean("ScheduleService");
 
 	/** Error type */
 	private String errorType; 
@@ -74,15 +70,15 @@ public class AllSchedules extends ActionSupport
             {
                 if(columnSorted.equalsIgnoreCase("ScheduleName"))
                 {
-                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_SCHEDULE_NAME);
+                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_SCHEDULE_NAME);
                 }
                 else if(columnSorted.equalsIgnoreCase("Recurrence"))
                 {
-                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_RECURRENCE);
+                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_RECURRENCE);
                 }
                 else if(columnSorted.equalsIgnoreCase("Status"))
                 {
-                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_STATUS);
+                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_STATUS);
                 }
                 else
                 {
@@ -91,7 +87,7 @@ public class AllSchedules extends ActionSupport
             }
             else
             {
-                 schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_SCHEDULE_NAME);
+                 schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_SCHEDULE_NAME);
             }
             return SUCCESS;
         }
@@ -144,18 +140,18 @@ public class AllSchedules extends ActionSupport
                 {
                     if(columnSorted.equalsIgnoreCase("ScheduleName"))
                     {
-                        schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_SCHEDULE_NAME);
+                        schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_SCHEDULE_NAME);
                     }
                     else
                     {
-                        schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,scheduleDao.COL_RECURRENCE);
+                        schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_RECURRENCE);
                     }
 
                 }
                 else
                 {
                      this.addFieldError("allSchedulesError", "The column "+columnSorted+" cannot be matched");
-                     schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, scheduleDao.COL_SCHEDULE_NAME);
+                     schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, HarvestScheduleDAO.COL_SCHEDULE_NAME);
                 }
                 setIsAscendingOrder(isAscendingOrder);
               

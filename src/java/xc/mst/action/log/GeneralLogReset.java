@@ -1,25 +1,26 @@
 package xc.mst.action.log;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.log.Log;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.logs.DefaultLogService;
-import xc.mst.manager.logs.LogService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
 
 /**
  * Resets the details of the General log files.
  *
  * @author Tejaswi Haramurali
  */
-public class GeneralLogReset extends ActionSupport
+@SuppressWarnings("serial")
+public class GeneralLogReset extends BaseActionSupport
 {
     /** A reference to the logger for this class */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -27,14 +28,8 @@ public class GeneralLogReset extends ActionSupport
     /**The ID of the general Log file */
     private int logId;
 
-    /**Service object created for interaction with general log files */
-    private LogService logService = new DefaultLogService();
-
     /** Error Type */
     private String errorType;
-
-    /**User service object */
-    private UserService userService = new DefaultUserService();
 
     /**
      * Resets the general log file corresponding to the given log ID
@@ -46,18 +41,18 @@ public class GeneralLogReset extends ActionSupport
     {
         try
         {
-            Log logs = logService.getById(logId);
+            Log logs = getLogService().getById(logId);
             if(logs==null)
             {
                 this.addFieldError("generalLogReset", "Error Occurred while resetting general log. An email has been sent to the administrator");
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return SUCCESS;
             }
             logs.setErrors(0);
             logs.setLastLogReset(new Date());
             logs.setWarnings(0);
-            logService.update(logs);
+            getLogService().update(logs);
             String filename = logs.getLogFileLocation();
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
@@ -74,7 +69,7 @@ public class GeneralLogReset extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("generalLogReset", "Error Occurred while resetting general log. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -82,7 +77,7 @@ public class GeneralLogReset extends ActionSupport
         {
             log.error(fe.getMessage(),fe);
             this.addFieldError("generalLogReset", "Error Occurred while resetting general log. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -97,7 +92,7 @@ public class GeneralLogReset extends ActionSupport
     {
         try
         {
-            List<Log> logList = logService.getAll();
+            List<Log> logList = getLogService().getAll();
             Iterator<Log> logIter = logList.iterator();
             while(logIter.hasNext())
             {
@@ -105,7 +100,7 @@ public class GeneralLogReset extends ActionSupport
                 logs.setErrors(0);
                 logs.setLastLogReset(new Date());
                 logs.setWarnings(0);
-                logService.update(logs);
+                getLogService().update(logs);
                 String filename = logs.getLogFileLocation();
                 PrintWriter printWriter = new PrintWriter(filename);
                 printWriter.close();
@@ -123,7 +118,7 @@ public class GeneralLogReset extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("generalLogReset", "Error Occurred while resetting all general logs. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }
@@ -131,7 +126,7 @@ public class GeneralLogReset extends ActionSupport
         {
             log.error(fe.getMessage(),fe);
             this.addFieldError("generalLogReset", "Error Occurred while resetting all general logs. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
         }

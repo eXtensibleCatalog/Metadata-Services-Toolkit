@@ -10,25 +10,22 @@
 package xc.mst.action.repository;
 
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.action.UserAware;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
-import xc.mst.harvester.ValidateRepository;
-import xc.mst.manager.repository.DefaultProviderService;
-import com.opensymphony.xwork2.ActionSupport;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.Hexception;
-import xc.mst.manager.repository.ProviderService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
+import xc.mst.harvester.ValidateRepository;
 
 /**
  * This method is used to View the properties of a Repository in the system
  *
  * @author Tejaswi Haramurali
  */
-public class ViewRepository extends ActionSupport implements UserAware
+public class ViewRepository extends BaseActionSupport implements UserAware
 {
     /** Serial id	 */
 	private static final long serialVersionUID = -6162901340410964175L;
@@ -60,13 +57,6 @@ public class ViewRepository extends ActionSupport implements UserAware
 	  /** Error messgae */
 	  private String message;
 
-      /** Provider Service object **/
-      private ProviderService providerService = new DefaultProviderService();
-
-      /** User Service object **/
-      UserService userService = new DefaultUserService();
-     
-
      /**
      * Overrides default implementation to view the details of a repository.
       *
@@ -77,10 +67,10 @@ public class ViewRepository extends ActionSupport implements UserAware
       {
           try
           {
-                provider = providerService.getProviderById(repositoryId);
+                provider = getProviderService().getProviderById(repositoryId);
                 if(provider==null)
                 {
-                    userService.sendEmailErrorReport();
+                    getUserService().sendEmailErrorReport();
                     this.addFieldError("allRepositoryError", "Error occurred while displaying repository details. An email has been sent to the administrator.");
                     errorType = "error";
                     return SUCCESS;

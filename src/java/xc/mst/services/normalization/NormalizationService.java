@@ -28,12 +28,10 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.repository.DefaultFormatService;
-import xc.mst.manager.repository.DefaultSetService;
 import xc.mst.manager.repository.FormatService;
-import xc.mst.manager.repository.SetService;
 import xc.mst.services.MetadataService;
 import xc.mst.services.ServiceValidationException;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.RecordList;
 
@@ -129,8 +127,6 @@ public class NormalizationService extends MetadataService
 	 * A list of errors to add to the output record
 	 */
 	private List<String> outputRecordErrors = new ArrayList<String>();
-	
-	private SetService setService = new DefaultSetService();
 
     /**
 	 * Construct a NormalizationService Object
@@ -140,7 +136,7 @@ public class NormalizationService extends MetadataService
 		// Initialize the XC format
 		try 
 		{
-			FormatService formatService = new DefaultFormatService();
+			FormatService formatService = (FormatService)MSTConfiguration.getBean("FormatService");
 			marcxmlFormat = formatService.getFormatByName("marcxml");
 		} 
 		catch (DatabaseConfigException e) 
@@ -157,7 +153,7 @@ public class NormalizationService extends MetadataService
 		if(processMe.getDeleted())
 		{
 			TimingLogger.start("processRecord.getDeleted");
-			List<Record> successors = recordService.getSuccessorsCreatedByServiceId(processMe.getId(), service.getId());
+			List<Record> successors = getRecordService().getSuccessorsCreatedByServiceId(processMe.getId(), service.getId());
 
 			// If there are successors then the record exist and needs to be deleted. Since we are
 			// deleting the record, we need to decrement the count.
@@ -173,13 +169,13 @@ public class NormalizationService extends MetadataService
 			
 				// Schedule the services
 				reprocessRecord(successor);
-				recordService.update(successor);
+				getRecordService().update(successor);
 			}
 			
 			// Mark the record as having been processed by this service
 			processMe.addProcessedByService(service);
 			processMe.removeInputForService(service);
-			recordService.update(processMe);
+			getRecordService().update(processMe);
 			TimingLogger.stop("processRecord.getDeleted");
 		} 
 
@@ -210,7 +206,7 @@ public class NormalizationService extends MetadataService
 
 			// Check whether or not this record already exists in the database
 			TimingLogger.start("processRecord.getByOaiIdentifierAndService.getByOaiIdentifierAndService");
-			Record oldRecord = recordService.getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
+			Record oldRecord = getRecordService().getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
 			TimingLogger.stop("processRecord.getByOaiIdentifierAndService.getByOaiIdentifierAndService");
 
 			TimingLogger.start("processRecord.insert record");
@@ -239,7 +235,7 @@ public class NormalizationService extends MetadataService
 			TimingLogger.start("processRecord.update record");
 			processMe.addProcessedByService(service);
 			processMe.removeInputForService(service);
-			recordService.update(processMe);
+			getRecordService().update(processMe);
 			TimingLogger.stop("processRecord.update record");
 		} else if (!processMe.getDeleted()) {
 			unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
@@ -448,7 +444,7 @@ public class NormalizationService extends MetadataService
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to update them
 			// instead of inserting a new Record
-			RecordList existingRecords = recordService.getSuccessorsCreatedByServiceIdIncludingDeletedRecords(record.getId(), service.getId());
+			RecordList existingRecords = getRecordService().getSuccessorsCreatedByServiceIdIncludingDeletedRecords(record.getId(), service.getId());
 			
 			// If there was already a processed record for the record we just processed, update it
 			if(existingRecords != null && existingRecords.size() > 0)
@@ -531,7 +527,7 @@ public class NormalizationService extends MetadataService
 				if(setSpec != null)
 				{
 					// Get the set for the provider
-					Set recordTypeSet = setService.getSetBySetSpec(setSpec);
+					Set recordTypeSet = getSetService().getSetBySetSpec(setSpec);
 					
 					// Add the set if it doesn't already exist
 					if(recordTypeSet == null)
@@ -2154,6 +2150,7 @@ public class NormalizationService extends MetadataService
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
 	 */
+	@SuppressWarnings("unchecked")
 	private MarcXmlManager remove945Field(MarcXmlManager marcXml)
 	{
 		if(log.isDebugEnabled())

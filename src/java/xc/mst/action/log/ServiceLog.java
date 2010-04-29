@@ -10,22 +10,22 @@
 
 package xc.mst.action.log;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.service.ServiceDAO;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ServicesService;
 
 /**
  * This action method is used to display the Service logs
  *
  * @author Tejaswi Haramurali
  */
-public class ServiceLog extends ActionSupport
+public class ServiceLog extends BaseActionSupport
 {
     /** Serial id */
 	private static final long serialVersionUID = -5518728481476078414L;
@@ -35,9 +35,6 @@ public class ServiceLog extends ActionSupport
     
     /** Boolena parameter determines if the rows are to be sorted in ascending or descending order */
     private boolean isAscendingOrder=true;
-
-    /** Creates a service object for Services */
-    private ServicesService servicesService = new DefaultServicesService();
 
     /** Sets the list of all services */
     private List<Service> services = new ArrayList<Service>();
@@ -63,27 +60,27 @@ public class ServiceLog extends ActionSupport
             {
                 if(columnSorted.equalsIgnoreCase("ServiceName"))
                 {
-                    services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
+                    services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
                 }
                 else if(columnSorted.equalsIgnoreCase("Warnings"))
                 {
-                    services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_WARNINGS);
+                    services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_WARNINGS);
                 }
                 else if(columnSorted.equalsIgnoreCase("Errors"))
                 {
-                    services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_ERRORS);
+                    services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_ERRORS);
                 }
                 else if(columnSorted.equalsIgnoreCase("InputRecords"))
                 {
-                    services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_INPUT_RECORD_COUNT);
+                    services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_INPUT_RECORD_COUNT);
                 }
                 else if(columnSorted.equalsIgnoreCase("OutputRecords"))
                 {
-                    services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_OUTPUT_RECORD_COUNT);
+                    services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_OUTPUT_RECORD_COUNT);
                 }
                 else
                 {
-                    services = servicesService.getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_LAST_LOG_RESET);
+                    services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_LAST_LOG_RESET);
                 }
 
                 setIsAscendingOrder(isAscendingOrder);

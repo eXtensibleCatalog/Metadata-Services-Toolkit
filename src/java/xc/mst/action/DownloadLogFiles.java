@@ -9,22 +9,24 @@
 
 package xc.mst.action;
 
-import com.opensymphony.xwork2.ActionSupport;
+import java.io.FileInputStream;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
+import org.apache.struts2.interceptor.ServletResponseAware;
+
 import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.Service;
-import xc.mst.manager.logs.DefaultLogService;
-import xc.mst.manager.logs.LogService;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ServicesService;
-import xc.mst.manager.repository.DefaultProviderService;
-import xc.mst.manager.repository.ProviderService;
-import javax.servlet.ServletOutputStream;
-import org.apache.struts2.interceptor.*;
 import xc.mst.constants.Constants;
-import javax.servlet.http.*;
-import java.io.*;
+import xc.mst.manager.logs.LogService;
+import xc.mst.manager.processingDirective.ServicesService;
+import xc.mst.manager.repository.ProviderService;
+import xc.mst.utils.MSTConfiguration;
+
+import com.opensymphony.xwork2.ActionSupport;
 /**
  *  Downloads a log file
  *
@@ -51,26 +53,27 @@ public class DownloadLogFiles extends ActionSupport implements ServletResponseAw
     {
         try
         {
+        	ServicesService servicesService = (ServicesService)MSTConfiguration.getBean("ServicesService");
+        	
             String filename = "";
             String fullpath = "";
 
             if(logType.equalsIgnoreCase("Service"))
             {
-                ServicesService servicesService = new DefaultServicesService();
+                
                 Service service = servicesService.getServiceById(id);
                 fullpath = service.getServicesLogFileName();
                 filename = service.getName()+"ServiceLog";
             }
             else if(logType.equalsIgnoreCase("HarvestOut"))
             {
-                ServicesService servicesService = new DefaultServicesService();
                 Service service = servicesService.getServiceById(id);
                 fullpath = service.getHarvestOutLogFileName();
                 filename = service.getName()+"HarvestOutLog";
             }
             else if(logType.equalsIgnoreCase("HarvestIn"))
             {
-                ProviderService providerService = new DefaultProviderService();
+                ProviderService providerService = (ProviderService)MSTConfiguration.getBean("ProviderService");
                 Provider provider = providerService.getProviderById(id);
                 fullpath = provider.getLogFileName();
                 filename = provider.getName();
@@ -78,7 +81,7 @@ public class DownloadLogFiles extends ActionSupport implements ServletResponseAw
             }
             else
             {
-                LogService logService = new DefaultLogService();
+                LogService logService = (LogService)MSTConfiguration.getBean("LogService");
                 Log log = logService.getById(id);
                 fullpath = log.getLogFileLocation();
                 filename = log.getLogFileName();

@@ -829,12 +829,11 @@ public class DefaultServicesService extends BaseService implements ServicesServi
     public void deleteService(Service service) throws DataException
     {
     	// Get all Processing Directives that has this service as source service
-    	ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();
-    	List<ProcessingDirective> processingDirectives = processingDirectiveService.getBySourceServiceId(service.getId());
+    	List<ProcessingDirective> processingDirectives = getProcessingDirectiveService().getBySourceServiceId(service.getId());
     	
     	// Delete Processing Directive that has this service as source service
     	for (ProcessingDirective processingDirective : processingDirectives) {
-    		processingDirectiveService.deleteProcessingDirective(processingDirective);
+    		getProcessingDirectiveService().deleteProcessingDirective(processingDirective);
     	}
     	
     	// Delete service

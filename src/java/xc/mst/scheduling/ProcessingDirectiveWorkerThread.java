@@ -10,10 +10,9 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.processingDirective.DefaultJobService;
 import xc.mst.manager.processingDirective.JobService;
-import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -52,12 +51,12 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private static RecordService recordService = new DefaultRecordService();
+	private static RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
 	
 	/**
 	 * Manager for getting, inserting and updating jobs
 	 */
-	private static JobService jobService = new DefaultJobService();
+	private static JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
 	
 	/**
 	 * Sets the processing directive to check

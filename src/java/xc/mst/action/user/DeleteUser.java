@@ -13,33 +13,24 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.user.DefaultUserGroupUtilService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserGroupUtilService;
-import xc.mst.manager.user.UserService;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This action method is used to delete a user from the system
  *
  * @author Tejaswi Haramurali
  */
-public class DeleteUser extends ActionSupport
+public class DeleteUser extends BaseActionSupport
 {
     /** Serial id */
 	private static final long serialVersionUID = 2276027380221702568L;
 
 	/**The ID of the user to be deleted */
     private int userId;
-
-    /** creates service object for users */
-    private UserService userService = new DefaultUserService();
-
 
 	/** Error type */
 	private String errorType;
@@ -58,11 +49,10 @@ public class DeleteUser extends ActionSupport
         try
         {
 
-            User tempUser = userService.getUserById(userId);
+            User tempUser = getUserService().getUserById(userId);
 
-            userService.deleteUser(tempUser);
-            UserGroupUtilService UGUtilService = new DefaultUserGroupUtilService();
-            UGUtilService.deleteGroupsForUserId(userId);
+            getUserService().deleteUser(tempUser);
+            getUserGroupUtilService().deleteGroupsForUserId(userId);
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -76,7 +66,7 @@ public class DeleteUser extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("allGroupsError", "Error occurred while deleting user. An email has been sent to the administrator.");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }
@@ -127,7 +117,7 @@ public class DeleteUser extends ActionSupport
      */
     public List<User> getUserList() throws DatabaseConfigException
     {
-        return userService.getAllUsersSorted(false,"username");
+        return getUserService().getAllUsersSorted(false,"username");
     }
 
 

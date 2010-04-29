@@ -13,16 +13,11 @@ import org.apache.log4j.Logger;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
-import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.ServerService;
-import xc.mst.manager.user.UserService;
 import xc.mst.utils.MSTConfiguration;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Action to handle forgot password
@@ -30,7 +25,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Sharmila Ranganathan
  *
  */
-public class ForgotPassword extends ActionSupport {
+public class ForgotPassword extends BaseActionSupport {
 
 	/** Eclipse generated Id */
 	private static final long serialVersionUID = 7491973408867996093L;
@@ -40,12 +35,6 @@ public class ForgotPassword extends ActionSupport {
 
 	/** Email id to send the password details */
 	private String email;
-
-	/** User service */
-	private UserService userService = new DefaultUserService();
-
-	/** Server service */
-	private ServerService serverService = new DefaultServerService();
 
 	/** Indicates whether the password reset is success or not. */
 	private boolean resetSuccess= false;
@@ -90,8 +79,8 @@ public class ForgotPassword extends ActionSupport {
 	public String resetPassword() throws Exception {
 		log.debug("Execute called email:" + email );
 
-		Server server = serverService.getServerByName("Local");
-		User user = userService.getUserByEmail(email, server);
+		Server server = getServerService().getServerByName("Local");
+		User user = getUserService().getUserByEmail(email, server);
 
 		if (user == null)
 		{
@@ -100,10 +89,10 @@ public class ForgotPassword extends ActionSupport {
 			errorType = "error";
 			return INPUT;
 		} else {
-			String newPassword = userService.createRandomPassword();
-			user.setPassword(userService.encryptPassword(newPassword));
+			String newPassword = getUserService().createRandomPassword();
+			user.setPassword(getUserService().encryptPassword(newPassword));
 			
-			boolean emailSent = userService.sendEmailForForgotPassword(newPassword, user);
+			boolean emailSent = getUserService().sendEmailForForgotPassword(newPassword, user);
 			
 			if (!emailSent) {
 				StringBuffer errorMessage = new StringBuffer();
@@ -112,7 +101,7 @@ public class ForgotPassword extends ActionSupport {
 				errorType = "error";
 				return INPUT;
 			}
-			userService.updateUser(user);
+			getUserService().updateUser(user);
 			resetSuccess = true;
 		}
 

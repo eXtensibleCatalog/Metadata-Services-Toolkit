@@ -34,6 +34,7 @@
 	<bean name="ServerDAO" class="xc.mst.dao.user.DefaultServerDAO" />
 	<bean name="UserDAO" class="xc.mst.dao.user.DefaultUserDAO" />
 	<bean name="UserGroupUtilDAO" class="xc.mst.dao.user.DefaultUserGroupUtilDAO" />
+	<bean name="DBRecordDAO" class="xc.mst.dao.record.DBRecordDAO" />
 	
 	<!-- 
 	<bean name="HeldRecordDAO" class="xc.mst.services.aggregation.dao.DefaultHeldRecordDAO" />

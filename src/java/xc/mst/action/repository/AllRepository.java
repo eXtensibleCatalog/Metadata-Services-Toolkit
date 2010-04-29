@@ -11,25 +11,21 @@
 package xc.mst.action.repository;
 
 import java.util.List;
-import com.opensymphony.xwork2.ActionSupport;
-import org.apache.log4j.FileAppender;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
-import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.provider.ProviderDAO;
-import xc.mst.manager.repository.DefaultProviderService;
-import xc.mst.manager.repository.ProviderService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
 
 /**
  * This Action Class is used for displaying all repositories
  *
  * @author Tejaswi Haramurali
  */
-public class AllRepository extends ActionSupport
+public class AllRepository extends BaseActionSupport
 {
    
    /** A reference to the logger for this class */
@@ -54,9 +50,6 @@ public class AllRepository extends ActionSupport
      /** Error type */
       private String errorType;
 
-    /** User Service object **/
-      private UserService userService = new DefaultUserService();
-
     /**
      * Overrides default implementation to view all the repositories.
      * 
@@ -67,29 +60,27 @@ public class AllRepository extends ActionSupport
     {
        try
        {
-            
-            ProviderService providerService = new DefaultProviderService();
 
             if(columnSorted.equalsIgnoreCase("RepositoryName")||(columnSorted.equalsIgnoreCase("RepositoryURL"))||(columnSorted.equalsIgnoreCase("LastHarvestEndTime")))
             {
                 if(columnSorted.equalsIgnoreCase("RepositoryName"))
                 {
-                    repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME);
+                    repositories = getProviderService().getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME);
                 }
                 else if(columnSorted.equalsIgnoreCase("RepositoryURL"))
                 {
-                    repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_OAI_PROVIDER_URL);
+                    repositories = getProviderService().getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_OAI_PROVIDER_URL);
                 }
                 else
                 {
-                    repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_HARVEST_END_TIME);
+                    repositories = getProviderService().getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_HARVEST_END_TIME);
                 }
 
                
             }
             else //remove this and do by repo name
             {
-                repositories = providerService.getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME);
+                repositories = getProviderService().getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_NAME);
             }
             setIsAscendingOrder(isAscendingOrder);
             setColumnSorted(columnSorted);
@@ -101,14 +92,6 @@ public class AllRepository extends ActionSupport
            log.error(dce.getMessage(),dce);
            errorType = "error";
            this.addFieldError("dbConfigError","Unable to access the database. There may be a problem with database configuration.");
-           return INPUT;
-       }
-       catch(DataException e)
-       {
-           log.error(e.getMessage(),e);
-           errorType = "error";
-           userService.sendEmailErrorReport();
-           addFieldError("dbConfigError", "Error in displaying all repositories. An email has been sent to the administrator regarding this issue.");
            return INPUT;
        }
     }

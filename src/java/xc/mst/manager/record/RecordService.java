@@ -45,7 +45,7 @@ public abstract class RecordService extends BaseService
 	/**
 	 * A reference to the logger for this class
 	 */
-	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+	public static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 	/**
 	 * An Object shared by all LuceneObjects which manages the Lucene index
@@ -512,15 +512,15 @@ public abstract class RecordService extends BaseService
 
 		// Set up the fields for the specific type of indexed object
 		if(record instanceof Work)
-			doc = new DefaultWorkService().setFieldsOnDocument((Work)record, doc, true);
+			doc = getWorkService().setFieldsOnDocument((Work)record, doc, true);
 		else if(record instanceof Expression)
-			doc = new DefaultExpressionService().setFieldsOnDocument((Expression)record, doc, true);
+			doc = getExpressionService().setFieldsOnDocument((Expression)record, doc, true);
 		else if(record instanceof Manifestation)
-			doc = new DefaultManifestationService().setFieldsOnDocument((Manifestation)record, doc, true);
+			doc = getManifestationService().setFieldsOnDocument((Manifestation)record, doc, true);
 		else if(record instanceof Holdings)
-			doc = new DefaultHoldingsService().setFieldsOnDocument((Holdings)record, doc, true);
+			doc = getHoldingsService().setFieldsOnDocument((Holdings)record, doc, true);
 		else if(record instanceof Item)
-			doc = new DefaultItemService().setFieldsOnDocument((Item)record, doc, true);
+			doc = getItemService().setFieldsOnDocument((Item)record, doc, true);
 		else
 			doc = setFieldsOnDocument(record, doc, true);
 

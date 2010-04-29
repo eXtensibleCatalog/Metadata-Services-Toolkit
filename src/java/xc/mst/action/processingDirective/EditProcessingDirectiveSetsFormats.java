@@ -19,47 +19,26 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
-import xc.mst.manager.processingDirective.ProcessingDirectiveService;
-import xc.mst.manager.repository.DefaultFormatService;
-import xc.mst.manager.repository.DefaultSetService;
-import xc.mst.manager.repository.FormatService;
-import xc.mst.manager.repository.SetService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This action method is the second and last step in editing a processing directive
  *
  * @author Tejaswi Haramurali
  */
-public class EditProcessingDirectiveSetsFormats extends ActionSupport implements ServletRequestAware
+public class EditProcessingDirectiveSetsFormats extends BaseActionSupport implements ServletRequestAware
 {
 	 /** Serial ID*/
 	private static final long serialVersionUID = -4669427548096070810L;
 
 	/** Temporary Processing Directive Object that is used to display details on the JSP */
     private ProcessingDirective temporaryProcessingDirective;
-
-    /** creates service object for sets  */
-    private SetService setService = new DefaultSetService();
-
-    /** creates service object for formats  */
-    private FormatService formatService = new DefaultFormatService();
-
-    /** creates service object for Processing Directives  */
-    private ProcessingDirectiveService PDService = new DefaultProcessingDirectiveService();
-
-    /** User Service object */
-    private UserService userService = new DefaultUserService();
 
     /** The complete list of sets in the system */
     private List<Set> setList;
@@ -304,7 +283,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
             if((tempProcDir==null)||(sourceType==null))
             {
                 this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred while displaying Step-2 of edit processing rules. An email has been sent to the administrator.");
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
@@ -394,7 +373,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
     		if((temporaryProcessingDirective==null)||(sourceType==null))
     		{
     			this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred while editing processing rule. An email has been sent to the administrator.");
-    			userService.sendEmailErrorReport();
+    			getUserService().sendEmailErrorReport();
     			errorType = "error";
     			return INPUT;
     		}
@@ -408,7 +387,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
     		{
     			for(int i=0;i<FormatIdList.length;i++)
     			{
-    				Format format = formatService.getFormatById(Integer.parseInt(FormatIdList[i]));
+    				Format format = getFormatService().getFormatById(Integer.parseInt(FormatIdList[i]));
     				tempFormatList.add(format);
     			}
     		}
@@ -419,7 +398,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
     			{
     				if(Integer.parseInt(SetIdList[i])!=0)
     				{
-    					Set set = setService.getSetById(Integer.parseInt(SetIdList[i]));
+    					Set set = getSetService().getSetById(Integer.parseInt(SetIdList[i]));
     					tempSetList.add(set);
     				}
     				else
@@ -438,19 +417,19 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
     		temporaryProcessingDirective.setTriggeringSets(tempSetList);
     		request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
 
-    		Set setExists = setService.getSetBySetSpec(outputSetSpec);
+    		Set setExists = getSetService().getSetBySetSpec(outputSetSpec);
     		if((setExists==null)&&(outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase(""))) //output set doesnt already exist
     		{
     			Set tempSet = new Set();
     			tempSet.setDisplayName(outputSetName);
     			tempSet.setSetSpec(outputSetSpec);
-    			setService.insertSet(tempSet);
+    			getSetService().insertSet(tempSet);
     			temporaryProcessingDirective.setOutputSet(tempSet);
     		}
     		else
     			temporaryProcessingDirective.setOutputSet(setExists);
                         
-    		PDService.updateProcessingDirective(temporaryProcessingDirective);
+    		getProcessingDirectiveService().updateProcessingDirective(temporaryProcessingDirective);
 
     		request.getSession().setAttribute("temporaryProcessingDirective",null);
     		return SUCCESS;
@@ -466,7 +445,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
     	{
     		log.error(de.getMessage(),de);
     		this.addFieldError("editProcessingDirectives2Error", "Error occurred while editing processing rule. An email has been sent to the administrator.");
-    		userService.sendEmailErrorReport();
+    		getUserService().sendEmailErrorReport();
     		errorType = "error";
     		return ERROR;
     	}
@@ -486,7 +465,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
             if((tempProcDir==null))
                 {
                     this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred returning to step-1 of editing processing rule . An email has been sent to the administrator.");
-                    userService.sendEmailErrorReport();
+                    getUserService().sendEmailErrorReport();
                     errorType = "error";
                     return INPUT;
                 }
@@ -510,7 +489,7 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
                 {
                     for(int i=0;i<FormatIdList.length;i++)
                     {
-                       Format format = formatService.getFormatById(Integer.parseInt(FormatIdList[i]));
+                       Format format = getFormatService().getFormatById(Integer.parseInt(FormatIdList[i]));
                        tempFormatList.add(format);
                     }
                 }
@@ -521,14 +500,14 @@ public class EditProcessingDirectiveSetsFormats extends ActionSupport implements
                 {
                     for(int i=0;i<SetIdList.length;i++)
                     {
-                       Set set = setService.getSetById(Integer.parseInt(SetIdList[i]));
+                       Set set = getSetService().getSetById(Integer.parseInt(SetIdList[i]));
                        tempSetList.add(set);
                     }
                 }
 
                
                 tempProcDir.setTriggeringSets(tempSetList);
-                Set setExists = setService.getSetBySetSpec(outputSetSpec);
+                Set setExists = getSetService().getSetBySetSpec(outputSetSpec);
                 if(setExists==null)
                 {
                     if((outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))

@@ -10,35 +10,31 @@
 
 package xc.mst.action.configuration;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.log4j.FileAppender;
+
 import org.apache.log4j.Logger;
+
 import xc.mst.bo.user.Server;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
+import xc.mst.utils.MSTConfiguration;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Deletes the LDAP Server
  *
  * @author Tejaswi Haramurali
  */
+@SuppressWarnings("serial")
 public class DeleteLDAP extends ActionSupport
 {
     /** A reference to the logger for this class */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-    /**Creates a service for Servers*/
-    private ServerService serverService = new DefaultServerService();
-
-    /**Creates service object for Users */
-    private UserService userService = new DefaultUserService();
 
 	/** Error type */
 	private String errorType; 
@@ -51,6 +47,7 @@ public class DeleteLDAP extends ActionSupport
      */
     public Server getTemporaryServer() throws DataException
     {
+    	ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
         List<Server> serverList = serverService.getAll();
         Iterator<Server> iter = serverList.iterator();
         Server finalServer = null;
@@ -73,9 +70,11 @@ public class DeleteLDAP extends ActionSupport
     @Override
     public String execute()
     {
+    	UserService userService = (UserService)MSTConfiguration.getBean("UserService");
         try
         {
 
+        	ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
             List<Server> serverlist = serverService.getAll();
             Iterator<Server> serverIter = serverlist.iterator();
             

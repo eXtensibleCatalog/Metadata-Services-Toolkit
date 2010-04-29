@@ -26,14 +26,11 @@ import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
-import xc.mst.manager.repository.DefaultFormatService;
-import xc.mst.manager.repository.DefaultProviderService;
-import xc.mst.manager.repository.DefaultSetService;
 import xc.mst.manager.repository.FormatService;
 import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.repository.SetService;
+import xc.mst.utils.MSTConfiguration;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -110,16 +107,16 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 	private String startDateDisplayFormat;
 
 	/** Schedule service */
-	private ScheduleService scheduleService = new DefaultScheduleService();
+	private ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getBean("ScheduleService");
 
 	/** Provider service */
-	private ProviderService providerService = new DefaultProviderService();
+	private ProviderService providerService = (ProviderService)MSTConfiguration.getBean("ProviderService");
 
 	/** Set service */
-	private SetService setService = new DefaultSetService();
+	private SetService setService = (SetService)MSTConfiguration.getBean("SetService");
 
 	/** Format service */
-	private FormatService formatService = new DefaultFormatService();
+	private FormatService formatService = (FormatService)MSTConfiguration.getBean("FormatService");
 
 	/** Error type */
 	private String errorType; 

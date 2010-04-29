@@ -10,31 +10,26 @@
 
 package xc.mst.action.processingDirective;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
-import xc.mst.bo.service.*;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.processingDirective.DefaultProcessingDirectiveService;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ProcessingDirectiveService;
-import xc.mst.manager.processingDirective.ServicesService;
-import xc.mst.manager.repository.DefaultProviderService;
-import xc.mst.manager.repository.ProviderService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
 
 /**
  * The first step in editing a processing directive
  *
  * @author Tejaswi Haramurali
  */
-public class EditProcessingDirective extends ActionSupport implements ServletRequestAware
+public class EditProcessingDirective extends BaseActionSupport implements ServletRequestAware
 {
 	 /** Serial ID*/
 	private static final long serialVersionUID = -4075467154916214233L;
@@ -65,18 +60,6 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
 
     /** Ther service associated with the processing directive */
     private String service;
-
-    /**Creates a service object for processing directives */
-    private ServicesService servService = new DefaultServicesService();
-
-    /** creates a service object for providers */
-    private ProviderService provService = new DefaultProviderService();
-
-    /** User service object */
-    private UserService userService = new DefaultUserService();
-
-    /** creates a service object for processing directives */
-    private ProcessingDirectiveService processingDirectiveService = new DefaultProcessingDirectiveService();
     
 	/** Error type */
 	private String errorType; 
@@ -243,7 +226,7 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
         try
         {
             
-            temporaryProcessingDirective = processingDirectiveService.getByProcessingDirectiveId(processingDirectiveId);
+            temporaryProcessingDirective = getProcessingDirectiveService().getByProcessingDirectiveId(processingDirectiveId);
             if(temporaryProcessingDirective==null)
             {
                 temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
@@ -254,7 +237,7 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
             if(temporaryProcessingDirective==null)
             {
                 this.addFieldError("editProcessingDirectiveEror", "Error occurred while displaying edit processing directives page. An email has been sent to the administrator. ");
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
@@ -271,8 +254,8 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
 
             }
 
-            setProviderList(provService.getAllProviders());
-            setServiceList(servService.getAllServices());
+            setProviderList(getProviderService().getAllProviders());
+            setServiceList(getServicesService().getAllServices());
             setTemporaryProcessingDirective(temporaryProcessingDirective);
             return SUCCESS;
         }
@@ -298,18 +281,18 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
 
             if(temporaryProcessingDirective==null)
             {
-                 temporaryProcessingDirective = processingDirectiveService.getByProcessingDirectiveId(processingDirectiveId);
+                 temporaryProcessingDirective = getProcessingDirectiveService().getByProcessingDirectiveId(processingDirectiveId);
             }
             
             if(temporaryProcessingDirective==null)
             {
                 this.addFieldError("editProcessingDirectiveEror", "Error occurred while editing processing directive. An email has been sent to the administrator. ");
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
-            Provider tempProvider = provService.getProviderByName(source);
-            Service tempService = servService.getServiceByName(source);
+            Provider tempProvider = getProviderService().getProviderByName(source);
+            Service tempService = getServicesService().getServiceByName(source);
             
             if(tempProvider!=null) //source is a provider
             {
@@ -326,7 +309,7 @@ public class EditProcessingDirective extends ActionSupport implements ServletReq
 
             }
             request.getSession().setAttribute("service",getService());
-            temporaryProcessingDirective.setService(servService.getServiceById(Integer.parseInt(getService())));
+            temporaryProcessingDirective.setService(getServicesService().getServiceById(Integer.parseInt(getService())));
 
             request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
             return SUCCESS;

@@ -10,42 +10,29 @@
 
 package xc.mst.action.user;
 
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.GroupService;
-import xc.mst.manager.user.ServerService;
-import xc.mst.manager.user.UserService;
 
 /**
  * This action method is used to edit the details of an LDAP user
  *
  * @author Tejaswi Haramurali
  */
-public class EditLDAPUser extends ActionSupport
+public class EditLDAPUser extends BaseActionSupport
 {
     /** Serial id */
 	private static final long serialVersionUID = -4469959520693478750L;
-
-	/** creates service object for servers */
-    private  ServerService serverService = new DefaultServerService();
-
-    /** creates service object for groups */
-    private GroupService groupService = new DefaultGroupService();
-
-    /** creates service object for users */
-    private UserService userService = new DefaultUserService();
 
     /**ID of the LDAP User to be edited */
     private int userId;
@@ -87,9 +74,9 @@ public class EditLDAPUser extends ActionSupport
     {
         try
         {
-            User user = userService.getUserById(userId);
+            User user = getUserService().getUserById(userId);
             setTemporaryUser(user);
-            setGroupList(groupService.getAllGroups());            
+            setGroupList(getGroupService().getAllGroups());            
             return SUCCESS;
         }
          catch(DatabaseConfigException dce)
@@ -110,11 +97,11 @@ public class EditLDAPUser extends ActionSupport
     {
         try
         {            
-            User user = userService.getUserById(userId);
+            User user = getUserService().getUserById(userId);
             if(user==null)
             {
                 this.addFieldError("editLDAPUserError","Error in editing LDAP user. An email has been sent to the administrator");
-                userService.sendEmailErrorReport();
+                getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return ERROR;
             }
@@ -125,7 +112,7 @@ public class EditLDAPUser extends ActionSupport
             user.setAccountCreated(new Date());
             user.setFailedLoginAttempts(0);
 
-            List<Server> serverList = serverService.getAll();
+            List<Server> serverList = getServerService().getAll();
             boolean serverExists = false;
             Server tempServer = null;
             Iterator<Server> iter = serverList.iterator();
@@ -157,11 +144,11 @@ public class EditLDAPUser extends ActionSupport
             user.removeAllGroups();
             for(int i=0;i<groupsSelected.length;i++)
             {
-                Group group = groupService.getGroupById(Integer.parseInt(groupsSelected[i]));
+                Group group = getGroupService().getGroupById(Integer.parseInt(groupsSelected[i]));
                 user.addGroup(group);
             }
 
-            User similarEmail = userService.getUserByEmail(email, tempServer);
+            User similarEmail = getUserService().getUserByEmail(email, tempServer);
             if(similarEmail!=null)
             {
                 if(similarEmail.getId()!=userId)
@@ -170,18 +157,18 @@ public class EditLDAPUser extends ActionSupport
                     {
                         this.addFieldError("editLDAPUserError","Email ID already exists");
                         errorType = "error";
-                        setGroupList(groupService.getAllGroups());
+                        setGroupList(getGroupService().getAllGroups());
                         setTemporaryUser(user);
                         setSelectedGroups(groupsSelected);
                         return INPUT;
                     }
                 }
             }
-            userService.updateUser(user);
+            getUserService().updateUser(user);
             
             // Email user that permissions has been added.
             if (!hasPermission) {
-            	userService.sendEmailToUserWithPermissions(user);
+            	getUserService().sendEmailToUserWithPermissions(user);
             }
 
 
@@ -198,7 +185,7 @@ public class EditLDAPUser extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("editLDAPUserError","Error in editing LDAP user. An email has been sent to the administrator");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return ERROR;
         }

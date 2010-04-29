@@ -8,31 +8,29 @@
   */
 
 package xc.mst.action.user;
-import com.opensymphony.xwork2.ActionSupport;
-import java.util.*;
+import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.user.UserDAO;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
 
 /**
  *  This action method is user to display all the users in the system
  *
  * @author Tejaswi Haramurali
  */
-public class AllUsers extends ActionSupport
+@SuppressWarnings("serial")
+public class AllUsers extends BaseActionSupport
 {
     /** The column on which the rows are to be sorted */
     private String columnSorted = "UserName";
 
     /** boolean value which determines of the rows have to be sorted in ascending order */
     private boolean isAscendingOrder=true;
-    
-    /** creates a service object for users  */
-    private UserService userService = new DefaultUserService();
 
     /**stores the list of users */
     private List<User> userList;
@@ -54,25 +52,25 @@ public class AllUsers extends ActionSupport
             {
                 if(columnSorted.equalsIgnoreCase("UserName"))
                 {
-                    setUserList(userService.getAllUsersSorted(isAscendingOrder, UserDAO.COL_USERNAME));
+                    setUserList(getUserService().getAllUsersSorted(isAscendingOrder, UserDAO.COL_USERNAME));
                 }
                 else if(columnSorted.equalsIgnoreCase("LastLogin"))
                 {
-                    setUserList(userService.getAllUsersSorted(isAscendingOrder,UserDAO.COL_LAST_LOGIN));
+                    setUserList(getUserService().getAllUsersSorted(isAscendingOrder,UserDAO.COL_LAST_LOGIN));
                 }
                 else if(columnSorted.equalsIgnoreCase("FirstName"))
                 {
-                    setUserList(userService.getAllUsersSorted(isAscendingOrder,UserDAO.COL_FIRST_NAME));
+                    setUserList(getUserService().getAllUsersSorted(isAscendingOrder,UserDAO.COL_FIRST_NAME));
                 }
                 else
                 {
-                    setUserList(userService.getAllUsersSorted(isAscendingOrder,UserDAO.COL_LAST_NAME));
+                    setUserList(getUserService().getAllUsersSorted(isAscendingOrder,UserDAO.COL_LAST_NAME));
                 }
                
             }
             else
             {
-                setUserList(userService.getAllUsersSorted(isAscendingOrder, UserDAO.COL_USERNAME));
+                setUserList(getUserService().getAllUsersSorted(isAscendingOrder, UserDAO.COL_USERNAME));
             }
             setIsAscendingOrder(isAscendingOrder);
             setColumnSorted(columnSorted);

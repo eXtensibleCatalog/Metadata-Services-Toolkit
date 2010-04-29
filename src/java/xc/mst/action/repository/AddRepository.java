@@ -15,18 +15,13 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
-import xc.mst.manager.repository.DefaultProviderService;
-import xc.mst.manager.repository.ProviderService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.UserService;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This method is for adding a new repository to the database.
@@ -34,7 +29,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author  Tejaswi Haramurali
  */
 
-public class AddRepository extends ActionSupport 
+public class AddRepository extends BaseActionSupport 
 {
 
     /** Serial id */
@@ -56,9 +51,6 @@ public class AddRepository extends ActionSupport
 	/** Error type */
 	private String errorType;
 
-    /** User service object **/
-    private UserService userService = new DefaultUserService();
-
     /**
      * The method is used to add a repository
      *
@@ -70,11 +62,9 @@ public class AddRepository extends ActionSupport
         {
 
             Provider pr = new Provider();
-        
-            ProviderService providerService = new DefaultProviderService();
 
-            Provider repositorySameName = providerService.getProviderByName(repositoryName);
-            Provider repositorySameURL = providerService.getProviderByURL(repositoryURL);
+            Provider repositorySameName = getProviderService().getProviderByName(repositoryName);
+            Provider repositorySameURL = getProviderService().getProviderByURL(repositoryURL);
             if(repositorySameName!=null)
             {
 
@@ -97,7 +87,7 @@ public class AddRepository extends ActionSupport
                 pr.setLastValidationDate(new Date());
                 pr.setOaiProviderUrl(getRepositoryURL());
 
-                providerService.insertProvider(pr);
+                getProviderService().insertProvider(pr);
 
                 ValidateRepository vr = new ValidateRepository();
                 vr.validate(pr.getId());
@@ -118,7 +108,7 @@ public class AddRepository extends ActionSupport
             log.error(e.getMessage(),e);
             this.addFieldError("addRepositoryError", "Error occurred while adding repository. An email has been sent to the administrator");
             errorType = "error";
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             return INPUT;
         }
         catch(Hexception e)

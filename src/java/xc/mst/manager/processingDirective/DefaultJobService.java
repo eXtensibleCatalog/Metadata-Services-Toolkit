@@ -22,7 +22,6 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
-import xc.mst.manager.repository.DefaultSetService;
 import xc.mst.manager.repository.SetService;
 import xc.mst.utils.MSTConfiguration;
 
@@ -159,7 +158,7 @@ public class DefaultJobService extends BaseService implements JobService {
 	public void writeToFile() throws DatabaseConfigException
 	{
 		List<Job> jobs = getAllJobs();
-		SetService setService = new DefaultSetService();
+		SetService setService = (SetService)MSTConfiguration.getBean("SetService");
 		
 		try{
 		    // Create file 

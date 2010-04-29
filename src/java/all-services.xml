@@ -35,7 +35,7 @@
 		<property name="serverDAO" ref="ServerDAO" />
 		<property name="userDAO" ref="UserDAO" />
 		<property name="userGroupUtilDAO" ref="UserGroupUtilDAO" />
-		<property name="dBRecordDAO" ref="DBRecordDAO" />
+		<property name="recordDAO" ref="DBRecordDAO" />
 	</bean>
 
 	<bean name="EmailConfigService" class="xc.mst.manager.configuration.DefaultEmailConfigService" parent="BaseService" />

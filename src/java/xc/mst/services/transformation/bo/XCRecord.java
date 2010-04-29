@@ -36,9 +36,10 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.repository.DefaultFormatService;
+import xc.mst.manager.repository.FormatService;
 import xc.mst.services.MetadataService;
 import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
+import xc.mst.utils.MSTConfiguration;
 
 
 
@@ -184,7 +185,7 @@ public class XCRecord
 	public XCRecord()
 	{
 		try {
-			xcFormat = new DefaultFormatService().getFormatByName("xc");
+			xcFormat = ((FormatService)MSTConfiguration.getBean("FormatService")).getFormatByName("xc");
 		} catch(DatabaseConfigException dce) {
 			log.error("Unable to connect to database using the parameters in configuration file.");
 		}
@@ -202,7 +203,7 @@ public class XCRecord
 		boolean workSet = false;
 		
 		try {
-			xcFormat = new DefaultFormatService().getFormatByName("xc");
+			xcFormat = ((FormatService)MSTConfiguration.getBean("FormatService")).getFormatByName("xc");
 		} catch(DatabaseConfigException dce) {
 			log.error("Unable to connect to database using the parameters in configuration file.");
 		}

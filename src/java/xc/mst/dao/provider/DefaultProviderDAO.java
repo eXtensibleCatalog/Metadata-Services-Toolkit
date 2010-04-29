@@ -29,8 +29,6 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultRecordService;
-import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -60,11 +58,6 @@ public class DefaultProviderDAO extends ProviderDAO
 	 * Data access object for managing general logs
 	 */
 	private LogDAO logDao = new DefaultLogDAO();
-	
-	/**
-	 * Manager for getting, inserting and updating records
-	 */
-	private static RecordService recordService = new DefaultRecordService();
 
 	/**
 	 * The repository management log file name
@@ -1299,12 +1292,12 @@ public class DefaultProviderDAO extends ProviderDAO
 					for(Set set : setDao.getRecordSetsForProvider(provider.getId()))
 						success = setDao.removeFromProvider(set, provider.getId()) && success;
 	
-					for(Record record : recordService.getByProviderId(provider.getId()))
+					for(Record record : getRecordService().getByProviderId(provider.getId()))
 						success = markAsDeleted(record) && success;
 					
 					// TODO performance issue
 					for(Set set : setDao.getAll())
-						if(recordService.getBySetSpec(set.getSetSpec()).size() == 0)
+						if(getRecordService().getBySetSpec(set.getSetSpec()).size() == 0)
 							setDao.delete(set);
 					
 					SolrIndexManager.getInstance().commitIndex();
@@ -1354,7 +1347,7 @@ public class DefaultProviderDAO extends ProviderDAO
 		// Mark the record as deleted
 		record.setDeleted(true);
 		record.setUpdatedAt(new Date());
-		success = recordService.update(record);
+		success = getRecordService().update(record);
 		
 		// TODO changed from getProcessedFrom to getSuccessors. needs to be tested
 		// If there were no records processed from this record, we're done
