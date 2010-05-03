@@ -8,11 +8,11 @@
   -->
 <project name="MetadataServicesToolkit" default="help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
+	<property file="build.properties"/>
+
 	<path id="ivy.lib.path">
 		 <fileset dir="${ivy.dir}" includes="*.jar" />
 	</path>
-
-	<property file="build.properties"/>
 
 	<include file="${mst-common}/build.xml" />
 	<!--

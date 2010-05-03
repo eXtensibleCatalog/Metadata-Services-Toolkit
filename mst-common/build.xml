@@ -8,51 +8,57 @@
   -->
 <project name="mst-common" default="mst-common-help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
-	<dirname property="mst-common.dir" file="${ant.file.mst-common}" />
+	<dirname property="mc.dir" file="${ant.file.mst-common}" />
 	
-	<property file="${mst-common.dir}/build.properties" prefix="mst-common" />
-	<property file="${mst-common.dir}/build.properties" />
+	<property file="${mc.dir}/build.properties" />
+
+	<path id="mc.classpath">
+		<fileset dir="${mc.build.lib}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean">
+		<delete dir="${mc.build.dir}" />
+	</target>
 
 	<target name="help">
 		<echo>
 			mst-common help
-			${src.dir}
+			mc.src.dir: ${mc.src.dir}
+			mc.src.java: ${mc.src.java}
+			mc.build.dir: ${mc.build.dir}
+			mc.build.ivy.report: ${mc.build.ivy.report}
 		</echo>
 	</target>
 
 	<target name="init">
-		<mkdir dir="${mst-common.build.test.classes}" />
-		<mkdir dir="${mst-common.build.classes}" />
-		<mkdir dir="${mst-common.build.lib}" />
-		<mkdir dir="${mst-common.build.ivy.report}" />
+		<mkdir dir="${mc.build.test.classes}" />
+		<mkdir dir="${mc.build.classes}" />
+		<mkdir dir="${mc.build.lib}" />
 		<taskdef resource="org/apache/ivy/ant/antlib.xml"
 				uri="antlib:org.apache.ivy.ant"
 				classpathref="ivy.lib.path" />
 	</target>
 
-	<!-- Ivy depencency report -->
+	<target name="resolve" depends="init">
+		<ivy:resolve file="${mc.dir}/ivy.xml"/>
+	</target>
+
 	<target name="ivy-report" depends="resolve"
-	   description="--> report the resolve actions">
-	   <mkdir dir="${ivy.report.dir}" />
-	   <ivy:report todir="${mst-common.build.ivy.report}" />
+			description="--> report the resolve actions">
+		<mkdir dir="${mc.build.ivy.report}" />
+		<ivy:report todir="${mc.build.ivy.report}" />
 	</target>
 
-	<!-- use ivy to retive the jar files into the repository set by the
-		ivy configuration settings -->
-	<target name="resolve"
-		depends="init"
-		description="--> places the files in the ivy repository">
-		<ivy:resolve file="${mst-common.dir}/ivy.xml"/>
-	</target>
-
-	<target name="clean">
-		<delete dir="${mst-common.build.dir}" />
+	<target name="retrieve" depends="ivy-report">
+		<ivy:retrieve sync="true" pattern="${mc.build.lib}/[artifact].[ext]"/>
 	</target>
 
 	<target name="compile">
-		<javac srcdir="${mst-common.src.dir}"
-			destdir="${mst-common.build.classes}"
-			classpathref="mst-common.classpath"
+		<javac srcdir="${mc.src.dir}"
+			destdir="${mc.build.classes}"
+			classpathref="mc.classpath"
 			debug="on"
 			deprecation="on"
 			debuglevel="lines,vars,source"/>
