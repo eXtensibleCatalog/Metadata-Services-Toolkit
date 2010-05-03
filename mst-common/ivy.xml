@@ -10,7 +10,7 @@
   -->
 
 <ivy-module version="2.0">
-    <info organisation="MST" module="mst-common"/>
+    <info organisation="xc" module="mst-common"/>
     <dependencies>
 
         <!-- javax mail libaries -->

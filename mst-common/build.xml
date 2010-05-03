@@ -6,9 +6,9 @@
   * website http://www.extensiblecatalog.org/.
   *
   -->
-<project name="mst-common" default="mst-common-help" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="mc" default="help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
-	<dirname property="mc.dir" file="${ant.file.mst-common}" />
+	<dirname property="mc.dir" file="${ant.file.mc}" />
 	
 	<property file="${mc.dir}/build.properties" />
 
@@ -18,11 +18,11 @@
 		</fileset>
 	</path>
 
-	<target name="clean">
+	<target name="mc.clean">
 		<delete dir="${mc.build.dir}" />
 	</target>
 
-	<target name="help">
+	<target name="mc.help">
 		<echo>
 			mst-common help
 			mc.src.dir: ${mc.src.dir}
@@ -32,30 +32,27 @@
 		</echo>
 	</target>
 
-	<target name="init">
+	<target name="mc.init" depends="init">
 		<mkdir dir="${mc.build.test.classes}" />
 		<mkdir dir="${mc.build.classes}" />
 		<mkdir dir="${mc.build.lib}" />
-		<taskdef resource="org/apache/ivy/ant/antlib.xml"
-				uri="antlib:org.apache.ivy.ant"
-				classpathref="ivy.lib.path" />
 	</target>
 
-	<target name="resolve" depends="init">
+	<target name="mc.resolve" depends="mc.init">
 		<ivy:resolve file="${mc.dir}/ivy.xml"/>
 	</target>
 
-	<target name="ivy-report" depends="resolve"
+	<target name="mc.ivy-report" depends="mc.resolve"
 			description="--> report the resolve actions">
 		<mkdir dir="${mc.build.ivy.report}" />
 		<ivy:report todir="${mc.build.ivy.report}" />
 	</target>
 
-	<target name="retrieve" depends="ivy-report">
+	<target name="mc.retrieve" depends="mc.ivy-report">
 		<ivy:retrieve sync="true" pattern="${mc.build.lib}/[artifact].[ext]"/>
 	</target>
 
-	<target name="compile">
+	<target name="mc.compile" depends="mc.init">
 		<javac srcdir="${mc.src.dir}"
 			destdir="${mc.build.classes}"
 			classpathref="mc.classpath"
@@ -64,12 +61,26 @@
 			debuglevel="lines,vars,source"/>
 	</target>
 
-	<!--
-	ivy
-	setup up classpath
-	copy resources
-	compile
-	jar
-	-->
+	<target name="mc.copy-resources" depends="mc.compile">
+		<copy todir="${mc.build.classes}">
+			<fileset dir="${mc.src.java}">
+				<exclude name="**/*.java" />
+				<exclude name="*.properties" />
+				<include name="default.properties" />
+			</fileset>
+		</copy>
+		<copy tofile="${mc.build.classes}/env.properties" file="${mc.src.java}/${box}.properties" overwrite="true" />
+	</target>
+
+	<target name="mc.jar" depends="mc.copy-resources">
+		<jar destfile="${mc.build.dir}/${mc.project-name}-${mc.version}.jar"
+			basedir="${mc.build.classes}" />
+	</target>
+
+	<target name="mc.publish" depends="mc.jar, mc.resolve">
+		<ivy:publish resolver="local" pubrevision="${mc.version}" overwrite="true">
+			<artifacts pattern="${mc.build.dir}/${mc.project-name}-${mc.version}.[ext]" />
+		</ivy:publish>
+	</target>
 
 </project>

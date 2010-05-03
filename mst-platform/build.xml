@@ -6,118 +6,92 @@
   * website http://www.extensiblecatalog.org/.
   *
   -->
-<project name="mst-platform" default="help" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="mp" default="help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
-	<dirname property="mst-platform.dir" file="${ant.file.mst-platform}" />
+	<dirname property="mp.dir" file="${ant.file.mp}" />
 	
-	<property file="${mst-platform.dir}/build.properties" prefix="mst-platform" />
-	<property file="${mst-platform.dir}/build.properties" />
+	<property file="${mp.dir}/build.properties" />
 
-	<target name="help">
-		<echo>
-			mst-platform help
-			${src.dir}
-		</echo>
-	</target>
-
-	<target name="init" depends="init.default.properties">
-		<echo>box: ${box}</echo>
-		<!-- Create the time stamp -->
-		<tstamp/>
-		<property file="ant_properties/${box}.properties"/>
-		<!-- Create the build directory structure used by compile -->
-		<mkdir dir="${targetdir.classes}"/>
-		<mkdir dir="${targetdir.lib}"/>
-		<mkdir dir="${lib.dir}"/>
-		<mkdir dir="${dist.project.dir}"/>
-
-		<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
-
-	</target>
-
-	
-
-
-	<!--   =================================
-		   target: clean-ivy
-		   =================================
-	-->
-	<target name="clean-ivy" description="--> clean the ivy installation">
-		<delete dir="${ivy.dir}" />
-	</target>
-
-	<!-- Ivy depencency report -->
-	<target name="ivy-report" depends="resolve"
-	   description="--> report the resolve actions">
-	   <mkdir dir="${ivy.report.dir}" />
-	   <ivy:report todir="${ivy.report.dir}" />
-	</target>
-
-
-	<!-- use ivy to retive the jar files into the repository set by the
-		ivy configuration settings -->
-	<target name="resolve"
-		depends="install-ivy"
-		description="--> places the files in the ivy repository">
-		<ivy:resolve />
-	</target>
-
-	<!-- download and place into the default lib folder -->
-	<target name="retrieve" depends="init,ivy-report"
-	   description="-->Place the files in location for project">
-	   <ivy:retrieve sync="true" pattern="${lib.dir}/[artifact].[ext]"/>
-	</target>
-	
-	<!-- Set the location where the libraries this project is dependent -->
-	<path id="libraries">
-		  <fileset dir="${lib.dir}" includes="*.jar" />
-	</path>
-	
-	<path id="testLibraries">
-		<path refid="libraries"/>
-		<pathelement location="${targetdir.classes}"/>
-
-		<fileset dir="${lib.dir}">
-			<include name="testng-5.8-jdk15.jar" />
+	<path id="mp.classpath">
+		<fileset dir="${mp.build.lib}">
+			<include name="*.jar" />
 		</fileset>
 	</path>
 
-	<!-- Clean up the build -->
-	<target name="clean">
-		<delete dir="${targetdir}" />
-		<delete dir="${distdir}" />
+	<target name="mp.clean">
+		<delete dir="${mp.build.dir}" />
 	</target>
 
-	<!-- Create the distriubtion file -->
-	<target name="create-jar" depends="compile">
-		<jar destfile="${dist.project.dir}/${project.name}.jar"
-				basedir="${targetdir.classes}"
-				excludes="**/*Test.class, **/*testng*" />
+	<target name="mp.help">
+		<echo>
+			mp help
+			${mp.src.dir}
+		</echo>
 	</target>
 
-	<!-- Copy non java resources -->
-	<target name="copy-resources">
-		<copy todir="${targetdir.classes}">
-			<fileset dir="${sourcedir}">
-				<exclude name="**/*.java" />
-			</fileset>
-		</copy>
-		<copy todir="${targetdir.webapp}">
-			<fileset dir="${webapp.dir}" />
-		</copy>
+	<target name="mp.init" depends="init">
+		<mkdir dir="${mp.build.classes}" />
+		<mkdir dir="${mp.build.lib}" />
 	</target>
 
-	<!-- Compile for regular classes -->
-	<target name="compile" depends="retrieve,init,copy-resources" xmlns:ext="http://edu.ur/d1/ext"> 
-		<javac srcdir="${sourcedir}"
-			destdir="${targetdir.classes}"
-			target="${java.target}"
-			classpathref="libraries"
+	<target name="mp.resolve" depends="mp.init">
+		<ivy:resolve file="${mp.dir}/ivy.xml"/>
+	</target>
+
+	<target name="mp.ivy-report" depends="mp.resolve"
+			description="--> report the resolve actions">
+		<mkdir dir="${mp.build.ivy.report}" />
+		<ivy:report todir="${mp.build.ivy.report}" />
+	</target>
+
+	<target name="mp.retrieve" depends="mp.ivy-report">
+		<ivy:retrieve sync="true" pattern="${mp.build.lib}/[artifact]-[revision].[ext]"/>
+	</target>
+
+	<target name="mp.compile" depends="mp.init">
+		<javac srcdir="${mp.src.java}"
+			destdir="${mp.build.classes}"
+			classpathref="mp.classpath"
 			debug="on"
 			deprecation="on"
 			debuglevel="lines,vars,source"/>
 	</target>
 
+	<!-- Copy non java resources -->
+	<target name="mp.copy-resources">
+		<copy todir="${mp.build.classes}">
+			<fileset dir="${mp.src.java}">
+				<exclude name="**/*.java" />
+				<exclude name="*.properties" />
+				<include name="default.properties" />
+			</fileset>
+		</copy>
+		<copy todir="${mp.build.webapp}">
+			<fileset dir="${mp.src.webapp}" />
+		</copy>
+	</target>
+
+	<target name="mp.war" depends="mp.compile, mp.copy-resources, mc.jar">
+		<jar destfile="${mp.build.dir}/${mp.project-name}-${mp.version}.war" >
+			 <fileset dir="${mp.build.webapp}">
+				<exclude name="testng*.jar"/>
+				<exclude name="jsp-api*.jar"/>
+				<exclude name="servlet-api*.jar"/>
+			 </fileset>
+		 </jar>
+	</target>
+
+	<!--
+	<target name="publish" depends="resolve,war">
+		<ivy:publish resolver="local" pubrevision="${mp.version}" overwrite="true">
+			<artifacts pattern="${mp.build.dir}/${mp.project-name}-${mp.version}.[ext]">
+				<artifact type="war" />
+			</artifacts>
+		</ivy:publish>
+	</target>
+	-->
+
+	<!--
 	<target name="hotswap" depends="init">
 		<taskdef name="hotswap" classname="dak.ant.taskdefs.Hotswap"/>
 		<tstamp>
@@ -143,31 +117,6 @@
 		</hotswap>
 	</target>
 
-	<!-- build the distribution jar -->
-	<target name="dist-jar" depends="compile"
-			description="generate the distribution" >
-		<!-- Create the distribution directory -->
-		<mkdir dir="${dist.project.dir}/lib"/>
-
-		<!-- Put everything in ${build} into the {project.name}-version.jar file -->
-		<jar jarfile="${dist.project.dir}/${project.name}-${version}.jar"
-			basedir="${targetdir.classes}"/>
-	</target>
-
-	<!-- build the distribution jar -->
-	<target name="full-dist" depends="compile, dist-jar, javadoc"
-			description="generate the distribution" >
-		<zip destfile="${distdir}/${project.name}-${version}.zip"
-			   basedir="${distdir}"/>
-	</target>
-
-	<fileset id="web.libs" dir="${lib.dir}">
-			<exclude name="testng*"/>
-				<exclude name="servlet-api*"/>
-				<exclude name="jsp-api*"/> 
-	</fileset>
-	
-	<!-- test compiling -->
 	<target name="testCompile" depends="compile">
 		<javac srcdir="${testdir}"
 			destdir="${targetdir.classes}"
@@ -177,7 +126,6 @@
 			classpathref="testLibraries" />
 	</target>
 
-	<!-- run the tests -->
 	<target name="run-tests" description="run examples with java" depends="testCompile">
 
 		<echo message="testng-run " />
@@ -192,7 +140,6 @@
 	</target>
 
 
-	<!-- Java Doc the Project -->
 	<target name="javadoc"  description="build the javadocs">
 		<javadoc
 			   destdir="${dist.project.dir}/docs/api"
@@ -217,20 +164,6 @@
 		</javadoc>
 	</target>
 
-	<target name="prepareWebApp" depends="compile">
-		<copy tofile="${targetdir.classes}/env.properties" file="ant_properties/${box}.properties" overwrite="true" />
-		<copy todir="${targetdir.classes}" file="ant_properties/default.properties" />
-
-		<copy todir="${targetdir.lib}">
-			<fileset dir="${lib.dir}">
-				<exclude name="testng*.jar"/>
-				<exclude name="jsp-api*.jar"/>
-				<exclude name="servlet-api*.jar"/>
-			</fileset>
-		</copy>
-
-	</target>
-
 	<target name="deploy-webapp" depends="prepareWebApp">
 		<copy todir="${tomcat.dir}/webapps/${project.name}">
 			<fileset dir="${targetdir.webapp}">
@@ -252,44 +185,6 @@
 			<fileset dir="${targetdir.webapp}" />
 		</copy>
 	</target>
-
-	<!-- Make the war file for deployment -->
-	<target name="makeWar" depends="prepareWebApp">
-		 <jar destfile="${project.name}.war">
-			 <fileset dir="${targetdir.webapp}" />
-		 </jar>
-	</target>
-	
-	<target name="dist" depends="makeWar">
-		<delete dir="dist"/>
-		<!-- Create the MST zip archive -->
-		<mkdir dir="dist/MST-instances/MetadataServicesToolkit"/>
-		<copy todir="dist/MST-instances/MetadataServicesToolkit/solr">
-			<fileset dir="MST-instances/MetadataServicesToolkit/solr"/>
-		</copy>
-		<delete dir="dist/MST-instances/MetadataServicesToolkit/solr/data"/>
-		<copy todir="dist/MST-instances/MetadataServicesToolkit/sql">
-			<fileset dir="sql"/>
-		</copy>
-		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
-		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
-		<copy file="MetadataServicesToolkit.war" todir="dist/mst-instances"/>
-		<zip destfile="dist/MetadataServicesToolkit_v_0.2.6.6.zip"  basedir="dist" />
-
-		<!-- Create the Normalization Services zip archive -->
-		<zip destfile="Normalization_v_0.2.8.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Normalization/**"/> 
-		<move file="Normalization_v_0.2.8.zip" todir="dist" />
-		
-		<!-- Create the Transformation Services zip archive -->
-		<zip destfile="Transformation_v_0.1.9.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Transformation/**" /> 
-		<move file="Transformation_v_0.1.9.zip" todir="dist" />
-
-		<!-- Create the Aggregation Services zip archive -->
-		<zip destfile="Aggregationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Aggregation/**" /> 
-		<move file="Aggregationv1.0.zip" todir="dist" />
-			
-		<delete dir="dist/MST-instances" />
-	</target>
-
+	-->
 
 </project>

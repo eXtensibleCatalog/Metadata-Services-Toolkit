@@ -14,16 +14,19 @@
 		 <fileset dir="${ivy.dir}" includes="*.jar" />
 	</path>
 
-	<include file="${mst-common}/build.xml" />
-	<!--
-	<include file="${mst-platform}/build.xml" />
-	-->
+	<taskdef resource="org/apache/ivy/ant/antlib.xml"
+			onerror="report"
+			uri="antlib:org.apache.ivy.ant"
+			classpathref="ivy.lib.path" />
+
+	<import file="${mst-common}/build.xml" />
+	<import file="${mst-platform}/build.xml" />
 
 	<target name="help">
 		<echo>
 			${ant.project.name} help
 			${src.dir}
-			${mst-common.src.dir}
+			${mc.src.dir}
 		</echo>
 	</target>
 
@@ -40,7 +43,9 @@
 	<target name="init" depends="init.default.properties">
 		<echo>box: ${box}</echo>
 		<tstamp/>
+		<!--
 		<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
+		-->
 	</target>
 	
 	<target name="download-ivy" unless="skip.download">
@@ -71,12 +76,48 @@
 	</target>
 
 	<!-- Clean up the build -->
-	<target name="clean">
+	<target name="clean" depends="mc.clean,mp.clean">
 		<delete dir="${build.dir}" />
 	</target>
 
 	<!-- Create the distriubtion file -->
 	<target name="dist-zip">
 	</target>
+
+	<!--
+	<target name="full-dist" depends="compile, dist-jar, javadoc"
+			description="generate the distribution" >
+		<zip destfile="${distdir}/${project.name}-${version}.zip"
+			   basedir="${distdir}"/>
+	</target>
+
+	<target name="dist" depends="makeWar">
+		<delete dir="dist"/>
+		<mkdir dir="dist/MST-instances/MetadataServicesToolkit"/>
+		<copy todir="dist/MST-instances/MetadataServicesToolkit/solr">
+			<fileset dir="MST-instances/MetadataServicesToolkit/solr"/>
+		</copy>
+		<delete dir="dist/MST-instances/MetadataServicesToolkit/solr/data"/>
+		<copy todir="dist/MST-instances/MetadataServicesToolkit/sql">
+			<fileset dir="sql"/>
+		</copy>
+		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
+		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
+		<copy file="MetadataServicesToolkit.war" todir="dist/mst-instances"/>
+		<zip destfile="dist/MetadataServicesToolkit_v_0.2.6.6.zip"  basedir="dist" />
+
+		<zip destfile="Normalization_v_0.2.8.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Normalization/**"/> 
+		<move file="Normalization_v_0.2.8.zip" todir="dist" />
+		
+		<zip destfile="Transformation_v_0.1.9.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Transformation/**" /> 
+		<move file="Transformation_v_0.1.9.zip" todir="dist" />
+
+		<zip destfile="Aggregationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Aggregation/**" /> 
+		<move file="Aggregationv1.0.zip" todir="dist" />
+			
+		<delete dir="dist/MST-instances" />
+	</target>
+	-->
+	
 
 </project>
