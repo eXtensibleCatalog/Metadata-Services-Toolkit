@@ -1,26 +1,16 @@
 package xc.mst.services;
 
-import java.io.File;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.net.UnknownHostException;
-
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.service.Service;
-import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
-import xc.mst.email.Emailer;
-import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.DefaultUserService;
-import xc.mst.manager.user.GroupService;
-import xc.mst.manager.user.UserService;
+import xc.mst.manager.services.ServicesManager;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
 
 /**
@@ -60,6 +50,7 @@ public class MetadataServiceFactory {
 			// Get the service details from the DB
 			service = serviceDao.getById(serviceId);
 			
+			/*
 			// The name of the class for the service specified in the configuration file.
 			String targetClassName = service.getClassName();
 			
@@ -81,6 +72,8 @@ public class MetadataServiceFactory {
 			if(log.isDebugEnabled())
 				log.debug("Found the MetadataService class named " + targetClassName + ", getting its constructor.");
 
+			*/
+			serviceInstance = ((ServicesManager)MSTConfiguration.getBean("ServicesManager")).getService(service.getName());
 			return serviceInstance;
 			
 		}// end try(run the service through reflection)
@@ -89,6 +82,7 @@ public class MetadataServiceFactory {
 			ServiceUtil.getInstance().sendEmail("Service cannot be started. Unable to connect to the database with the parameters supplied in the configuration file.", null);
 			return null;
 		}
+		/*
 		catch(ClassNotFoundException e)
 		{
 			log.error("Could not find class " + service.getClassName(), e);
@@ -113,6 +107,7 @@ public class MetadataServiceFactory {
 			return null;
 
 		} // end if(service is not user defined
+		 */
 		catch(NoClassDefFoundError e)
 		{
 			log.error("Could not find class " + service.getClassName(), e);
@@ -150,6 +145,7 @@ public class MetadataServiceFactory {
 
 			return null;
 		} // end catch(NoClassDefFoundError)
+		/*
 		catch(IllegalAccessException e)
 		{
 			log.error("IllegalAccessException occurred while invoking the service's processRecords method.", e);
@@ -187,6 +183,7 @@ public class MetadataServiceFactory {
 
 			return null;
 		} // end catch(IllegalAccessException)
+		*/
 		catch(Exception e)
 		{
 			log.error("Exception occurred while invoking the service's processRecords method.", e);

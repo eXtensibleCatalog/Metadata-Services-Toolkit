@@ -14,9 +14,18 @@
 <ivysettings>
  <settings defaultResolver="default" />
  <include url="${ivy.default.settings.dir}/ivysettings-shared.xml"/>
- <include url="${ivy.default.settings.dir}/ivysettings-local.xml"/>
+ <property name="ivy.local.default.root"             value="${ivy.default.ivy.user.dir}/local" override="false"/>
+ <property name="ivy.local.default.ivy.pattern"      value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" override="false"/>
+ <property name="ivy.local.default.artifact.pattern" value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" override="false"/>
+	<resolvers>
+	</resolvers>
+ 
 
  <resolvers>
+     <filesystem name="local" checkmodified="true">
+         <ivy pattern="${ivy.local.default.root}/${ivy.local.default.ivy.pattern}" />
+         <artifact pattern="${ivy.local.default.root}/${ivy.local.default.artifact.pattern}" />
+     </filesystem>
      <chain name="public">
          <!-- official maven2 repo -->
          <ibiblio name="maven2" m2compatible="true" />

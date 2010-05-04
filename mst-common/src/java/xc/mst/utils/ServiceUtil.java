@@ -16,10 +16,7 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.email.Emailer;
-import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.UserService;
 import xc.mst.services.MetadataService;
@@ -45,7 +42,7 @@ public class ServiceUtil {
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private RecordService recordService = new DefaultRecordService();
+	private RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
 
 	/**
 	 * Used to send email reports
@@ -339,8 +336,8 @@ public class ServiceUtil {
 	public void sendEmail(String message, String serviceName) {
 
 		try {
-			UserService userService = new DefaultUserService();
-			GroupService groupService = new DefaultGroupService();
+			UserService userService = (UserService)MSTConfiguration.getBean("UserService");
+			GroupService groupService = (GroupService)MSTConfiguration.getBean("GroupService");
 
 			if (mailer.isConfigured()) {
 				

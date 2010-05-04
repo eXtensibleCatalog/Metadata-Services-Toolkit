@@ -64,9 +64,12 @@
 	<target name="mc.copy-resources" depends="mc.compile">
 		<copy todir="${mc.build.classes}">
 			<fileset dir="${mc.src.java}">
+				<include name="default.properties" />
+				<include name="*.xml" />
+				<!--
 				<exclude name="**/*.java" />
 				<exclude name="*.properties" />
-				<include name="default.properties" />
+				-->
 			</fileset>
 		</copy>
 		<copy tofile="${mc.build.classes}/env.properties" file="${mc.src.java}/${box}.properties" overwrite="true" />
@@ -78,22 +81,10 @@
 	</target>
 
 	<target name="mc.publish" depends="mc.jar, mc.resolve">
-		<ivy:publish resolver="local" pubrevision="${mc.version}" overwrite="true">
+		<ivy:publish resolver="local" pubrevision="${mc.version}" overwrite="true" update="true" forcedeliver="true">
 			<artifacts pattern="${mc.build.dir}/${mc.project-name}-${mc.version}.[ext]" />
 		</ivy:publish>
 	</target>
 
-	<target name="mc.test-copy">
-	</target>
-
-	<target name="mc.copy-example">
-		<copy todir="${mc.build.classes}">
-			<fileset dir="${mc.src.java}">
-				<exclude name="**/*.java" />
-				<exclude name="*.properties" />
-				<include name="default.properties" />
-			</fileset>
-		</copy>
-	</target>
 
 </project>

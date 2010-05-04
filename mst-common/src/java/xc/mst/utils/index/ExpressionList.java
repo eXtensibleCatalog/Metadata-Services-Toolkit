@@ -20,8 +20,8 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultExpressionService;
 import xc.mst.manager.record.ExpressionService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * A list of Records resulting from a Lucene query.  This class maps Lucene's
@@ -62,7 +62,7 @@ public class ExpressionList extends AbstractList<Expression>
 	/**
 	 * The service used to get a record from a Lucene document
 	 */
-	private static ExpressionService service = new DefaultExpressionService();
+	private static ExpressionService service = (ExpressionService)MSTConfiguration.getBean("ExpressionService");
 	
 	/**
 	 * The number of elements in the list

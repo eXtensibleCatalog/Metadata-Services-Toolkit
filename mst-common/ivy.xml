@@ -169,6 +169,10 @@
             <artifact name="spring-core" type="jar"/>
 		</dependency>
 
+		<dependency org="org.springframework" name="spring-aop" rev="3.0.1.RELEASE" transitive="false">
+            <artifact name="spring-aop" type="jar"/>
+		</dependency>
+
 		<dependency org="org.springframework" name="spring-asm" rev="3.0.1.RELEASE" transitive="false">
             <artifact name="spring-asm" type="jar"/>
 		</dependency>

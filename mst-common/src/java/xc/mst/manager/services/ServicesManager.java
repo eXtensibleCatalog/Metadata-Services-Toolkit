@@ -16,6 +16,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseManager;
+import xc.mst.services.MetadataService;
 import xc.mst.utils.MSTConfiguration;
 
 public class ServicesManager extends BaseManager implements ApplicationListener<ApplicationEvent> {
@@ -31,22 +32,37 @@ public class ServicesManager extends BaseManager implements ApplicationListener<
 	        		List<URL> urls = new ArrayList<URL>();
 	        		String metaInfFolderStr = serviceFolder+"/META-INF";
 	        		File libFolder = new File(metaInfFolderStr+"/lib");
-	        		for (File f : libFolder.listFiles()) {
-	        			if (f.getName().endsWith(".jar")) {
-	        				urls.add(f.toURI().toURL());
+	        		if (libFolder != null) {
+	        			System.out.println("serviceFolder: "+serviceFolder);
+	        			if (libFolder.listFiles() != null) {
+			        		for (File f : libFolder.listFiles()) {
+			        			if (f.getName().endsWith(".jar")) {
+			        				urls.add(f.toURI().toURL());
+			        			}
+			        		}
 	        			}
+		        		urls.add(new File(metaInfFolderStr+"/classes").toURI().toURL());
+		        		URL[] urlsArr = urls.toArray(new URL[]{});
+		        		URLClassLoader loader = new URLClassLoader(urlsArr, getClass().getClassLoader());
+		        		ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext();
+		        		ac.setClassLoader(loader);
+		        		ac.setConfigLocation("spring-service.xml");
+		        		
+		        		servicesApplicationContexts.put(s.getName(), ac);
 	        		}
-	        		urls.add(new File(metaInfFolderStr+"/classes").toURI().toURL());
-	        		URL[] urlsArr = urls.toArray(new URL[]{});
-	        		URLClassLoader loader = new URLClassLoader(urlsArr, getClass().getClassLoader());
-	        		ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext();
-	        		ac.setClassLoader(loader);
-	        		ac.setConfigLocation("spring-service.xml");
 	        	}
 	        }
 		} catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
     }
+	
+	public MetadataService getService(String name) {
+		if (servicesApplicationContexts.containsKey(name)) {
+			ApplicationContext ac = servicesApplicationContexts.get(name);
+			return (MetadataService)ac.getBean("Service");
+		}
+		return null;
+	}
 
 }

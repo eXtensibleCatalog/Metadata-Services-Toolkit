@@ -20,8 +20,8 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultManifestationService;
 import xc.mst.manager.record.ManifestationService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * A list of Records resulting from a Lucene query.  This class maps Lucene's
@@ -62,7 +62,7 @@ public class ManifestationList extends AbstractList<Manifestation>
 	/**
 	 * The service used to get a record from a Lucene document
 	 */
-	private static ManifestationService service = new DefaultManifestationService();
+	private static ManifestationService service = (ManifestationService)MSTConfiguration.getBean("ManifestationService");
 	
 	/**
 	 * The number of elements in the list

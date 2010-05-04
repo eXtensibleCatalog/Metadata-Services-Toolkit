@@ -22,8 +22,8 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultHoldingsService;
 import xc.mst.manager.record.HoldingsService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * A list of Records resulting from a Lucene query.  This class maps Lucene's
@@ -64,7 +64,7 @@ public class HoldingsList extends AbstractList<Holdings>
 	/**
 	 * The service used to get a record from a Lucene document
 	 */
-	private static HoldingsService service = new DefaultHoldingsService();
+	private static HoldingsService service = (HoldingsService)MSTConfiguration.getBean("HoldingsService");
 	
 	/**
 	 * The number of elements in the list

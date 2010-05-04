@@ -117,24 +117,28 @@ public class MSTSolrServer {
 			String solrHome = MSTConfiguration.getUrlPath();
 			solrHome = solrHome + MSTConfiguration.FILE_SEPARATOR + "solr";
 
-			log.info("Opening Solr at " + solrHome);
+			log.info("Opening Solr at 3" + solrHome);
 			
 			java.util.logging.Level logLevel = getLogLevel(configuration.getProperty(Constants.CONFIG_SOLR_LOG_LEVEL));
-
+			log.info("1");
+			
 			try
 			{
 				java.util.logging.Logger logg = java.util.logging.Logger.getLogger("org.apache.solr");
 			    logg.setUseParentHandlers(false);
 			    logg.log(java.util.logging.Level.INFO, "Changing log level to " + logLevel);
 			    logg.setLevel(logLevel);
+			    log.info("2");
 
 				CoreContainer container = new CoreContainer();
 				CoreDescriptor descriptor = new CoreDescriptor(container, "core1", solrHome);
+				log.info("3");
 				SolrCore core = container.create(descriptor);
 				container.register("core1", core, false);
 
 				server = new EmbeddedSolrServer(container, "core1");
 				LogWriter.addInfo(logObj.getLogFileLocation(), "The Solr server instance was successfully using the configuration in " + solrHome);
+				log.info("successfully opened solr: "+server);
 			}
 			catch (IOException ioe)
 			{

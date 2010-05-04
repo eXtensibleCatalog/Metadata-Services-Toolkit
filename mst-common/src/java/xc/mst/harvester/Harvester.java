@@ -51,7 +51,6 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.email.Emailer;
 import xc.mst.manager.BaseManager;
@@ -91,11 +90,6 @@ import xc.mst.utils.index.SolrIndexManager;
  */
 public class Harvester extends BaseManager implements ErrorHandler
 {
-	/**
-	 * Data access object for getting FRBR level IDs
-	 */
-	private static XcIdentifierForFrbrElementDAO frbrLevelIdDao = new DefaultXcIdentifierForFrbrElementDAO();
-
 	/**
 	 * Stores sets that we got from the database so we don't need to repeat queries
 	 */
@@ -738,7 +732,7 @@ public class Harvester extends BaseManager implements ErrorHandler
 			try
 			{
 				// Write the next XC ID for raw Records
-				frbrLevelIdDao.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD);
+				getXcIdentifierForFrbrElementDAO().writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD);
 
 				// Reopen the reader so it can see the record inputs we inserted for this harvest
 				TimingLogger.log("before commit to solr");

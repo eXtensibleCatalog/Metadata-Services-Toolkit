@@ -84,8 +84,15 @@
 	<target name="dist-zip">
 	</target>
 
-	<target name="deploy-service" depends="ms.copy-example">
-		<ant dir="${mst-service}/custom/${service}" target="zip" inheritAll="false"/>
+	<target name="deploy-webapp" depends="mc.publish,mp.deploy-webapp">
+	</target>
+
+	<target name="deploy-service" depends="init,ms.copy-example">
+		<ant dir="${mst-service}/custom/${sname}" target="zip" inheritAll="false"/>
+		<copy file="${mst-service}/custom/${sname}/build/${sname}-${sversion}.zip" 
+			todir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services" />
+		<unzip src="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services/${sname}-${sversion}.zip"
+			dest="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services" />
 	</target>
 
 	<!--

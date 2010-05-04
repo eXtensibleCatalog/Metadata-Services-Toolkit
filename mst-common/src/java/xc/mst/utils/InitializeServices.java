@@ -39,9 +39,7 @@ import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.OaiIdentifierForServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.processingDirective.DefaultJobService;
 import xc.mst.manager.processingDirective.JobService;
-import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 
@@ -135,8 +133,8 @@ public class InitializeServices  extends HttpServlet {
 	     */ 
 	    try {
 		    List<Service> allServices = serviceDao.getAll();
-    		RecordService recordService = new DefaultRecordService();
-			JobService jobService = new DefaultJobService();
+    		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+			JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
 		    
 		    for(Service service:allServices) {
 	    		if (service.getStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_RUNNING)) {
@@ -193,7 +191,7 @@ public class InitializeServices  extends HttpServlet {
 	   */
 	  private void updateRecordAndOAIIds(int serviceId) throws IndexException, DatabaseConfigException {
 		  
-		  RecordService recordService = new DefaultRecordService();
+		  RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
 		  Record record = recordService.getLastCreatedRecord(serviceId);
 		  
 		  if (record != null) {

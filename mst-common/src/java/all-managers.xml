@@ -66,6 +66,8 @@
 	<bean name="Scheduler" class="xc.mst.scheduling.Scheduler" parent="BaseManager" />
 	
 	<bean name="Harvester" class="xc.mst.harvester.Harvester" parent="BaseManager" scope="prototype" />
+	
+	<bean name="ServicesManager" class="xc.mst.manager.services.ServicesManager" parent="BaseManager" scope="prototype" />
 		
 </beans>
 		

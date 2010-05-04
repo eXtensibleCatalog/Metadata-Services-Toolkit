@@ -25,9 +25,11 @@ public class MSTContextListener implements ServletContextListener {
 	    path = path.substring(1, path.length());
     	try {
     		String rootDir = null;
+    		/*
     		if (System.getenv("MST_ROOT_DIR") != null) {
     			rootDir = System.getenv("MST_ROOT_DIR");
     		}
+    		*/
     		if (rootDir == null) {
 	    		try {
 	    			BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -72,6 +74,7 @@ public class MSTContextListener implements ServletContextListener {
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	public static void addURL(URL u) {
 
 		URLClassLoader sysloader = (URLClassLoader) ClassLoader.getSystemClassLoader();

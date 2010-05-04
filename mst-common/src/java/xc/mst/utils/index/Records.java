@@ -19,11 +19,9 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.scheduling.ServiceWorkerThread;
-import xc.mst.services.MetadataService;
-import xc.mst.services.MetadataServiceFactory;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * List of Records retrieved from Solr.
@@ -65,7 +63,7 @@ public class Records extends AbstractList<Record>
 	/**
 	 * The service used to get a record from a Lucene document
 	 */
-	private static RecordService service = new DefaultRecordService();
+	private static RecordService service = (RecordService)MSTConfiguration.getBean("RecordService");
 	
 	/**
 	 * The number of elements in the list

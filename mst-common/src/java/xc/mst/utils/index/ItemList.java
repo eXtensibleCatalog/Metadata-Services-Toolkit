@@ -20,8 +20,8 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultItemService;
 import xc.mst.manager.record.ItemService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * A list of Records resulting from a Lucene query.  This class maps Lucene's
@@ -62,7 +62,7 @@ public class ItemList extends AbstractList<Item>
 	/**
 	 * The service used to get a record from a Lucene document
 	 */
-	private static ItemService service = new DefaultItemService();
+	private static ItemService service = (ItemService)MSTConfiguration.getBean("ItemService");
 	
 	/**
 	 * The number of elements in the list

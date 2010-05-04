@@ -33,7 +33,6 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.TimingLogger;
@@ -49,12 +48,6 @@ import xc.mst.utils.index.SolrIndexManager;
  */
 public class DefaultRecordService extends RecordService
 {
-
-	/**
-	 * Data access object for getting FRBR level IDs
-	 */
-	protected static XcIdentifierForFrbrElementDAO frbrLevelIdDao = new DefaultXcIdentifierForFrbrElementDAO();
-
 	/**
 	 * The FRBR level ID term
 	 */
@@ -965,7 +958,7 @@ public class DefaultRecordService extends RecordService
 
 		// If we need to generate an ID, set the record's ID to the next available record ID
 		if(generateNewId) {
-			record.setId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD));
+			record.setId(getXcIdentifierForFrbrElementDAO().getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD));
 		}
 
 		// If the oaiDatestamp is null, set it to the current time

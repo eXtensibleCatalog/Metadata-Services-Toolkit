@@ -13,8 +13,8 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 import xc.mst.bo.harvest.HarvestSchedule;
-import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Tag to get latest harvest end time
@@ -31,8 +31,7 @@ public class HarvestUtil {
 		 */
 		public static String latestHarvest(HarvestSchedule harvestSchedule) throws Exception
 		{
-			ScheduleService scheduleService = new DefaultScheduleService();
-			
+			ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getBean("ScheduleService");
 			
 			Timestamp latestRun = null;
 			

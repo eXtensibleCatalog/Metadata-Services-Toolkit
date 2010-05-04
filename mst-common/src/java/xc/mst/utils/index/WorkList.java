@@ -20,8 +20,8 @@ import xc.mst.bo.record.Work;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultWorkService;
 import xc.mst.manager.record.WorkService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * A list of Records resulting from a Lucene query.  This class maps Lucene's
@@ -62,7 +62,7 @@ public class WorkList extends AbstractList<Work>
 	/**
 	 * The service used to get a record from a Lucene document
 	 */
-	private static WorkService service = new DefaultWorkService();
+	private static WorkService service = (WorkService)MSTConfiguration.getBean("WorkService");
 	
 	/**
 	 * The number of elements in the list
