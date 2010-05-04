@@ -1,0 +1,102 @@
+<!--
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  -->
+<project name="ms" default="help" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<dirname property="ms.dir" file="${ant.file.ms}" />
+	
+	<property file="${ms.dir}/build.properties" />
+
+	<path id="ms.classpath">
+		<fileset dir="${ms.build.lib}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="ms.clean">
+		<delete dir="${ms.build.dir}" />
+	</target>
+
+	<target name="ms.help">
+		<echo>
+			mst-common help
+			ms.src.dir: ${ms.src.dir}
+			ms.src.java: ${ms.src.java}
+			ms.build.dir: ${ms.build.dir}
+			ms.build.ivy.report: ${ms.build.ivy.report}
+		</echo>
+	</target>
+
+	<target name="ms.init" depends="init">
+		<mkdir dir="${ms.build.test.classes}" />
+		<mkdir dir="${ms.build.classes}" />
+		<mkdir dir="${ms.build.lib}" />
+	</target>
+
+	<target name="ms.resolve" depends="ms.init">
+		<ivy:resolve file="${ms.dir}/ivy.xml"/>
+	</target>
+
+	<target name="ms.ivy-report" depends="ms.resolve"
+			description="--> report the resolve actions">
+		<mkdir dir="${ms.build.ivy.report}" />
+		<ivy:report todir="${ms.build.ivy.report}" />
+	</target>
+
+	<target name="ms.retrieve" depends="ms.ivy-report">
+		<ivy:retrieve sync="true" pattern="${ms.build.lib}/[artifact]-[revision].[ext]"/>
+	</target>
+
+	<target name="ms.compile" depends="ms.init">
+		<javac srcdir="${ms.src.dir}"
+			destdir="${ms.build.classes}"
+			classpathref="ms.classpath"
+			debug="on"
+			deprecation="on"
+			debuglevel="lines,vars,source"/>
+	</target>
+
+	<target name="ms.copy-resources" depends="ms.compile">
+		<copy todir="${ms.build.classes}">
+			<fileset dir="${ms.src.java}">
+				<exclude name="**/*.java" />
+				<exclude name="*.properties" />
+				<include name="default.properties" />
+			</fileset>
+		</copy>
+		<!--
+		<copy tofile="${ms.build.classes}/env.properties" file="${ms.src.java}/${box}.properties" overwrite="true" />
+		-->
+	</target>
+
+	<target name="ms.jar" depends="ms.copy-resources">
+		<jar destfile="${ms.build.dir}/${ms.project-name}-${ms.version}.jar"
+			basedir="${ms.build.classes}" />
+	</target>
+
+	<target name="ms.publish" depends="ms.jar, ms.resolve">
+		<ivy:publish resolver="local" pubrevision="${ms.version}" overwrite="true">
+			<artifacts pattern="${ms.build.dir}/${ms.project-name}-${ms.version}.[ext]" />
+		</ivy:publish>
+	</target>
+
+	<target name="ms.copy-example">
+		<copy todir="${ms.custom}">
+			<fileset dir="${ms.example}">
+				<include name="**/*.xml" />
+				<include name="**/*.properties" />
+			</fileset>
+			<scriptmapper language="javascript">
+			  self.addMappedName("normalization/"+source);
+			  self.addMappedName("transformation/"+source);
+			  self.addMappedName("aggregation/"+source);
+			</scriptmapper>
+		</copy>
+	</target>
+
+</project>

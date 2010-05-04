@@ -49,7 +49,7 @@
 	</target>
 
 	<target name="mc.retrieve" depends="mc.ivy-report">
-		<ivy:retrieve sync="true" pattern="${mc.build.lib}/[artifact].[ext]"/>
+		<ivy:retrieve sync="true" pattern="${mc.build.lib}/[artifact]-[revision].[ext]"/>
 	</target>
 
 	<target name="mc.compile" depends="mc.init">
@@ -81,6 +81,19 @@
 		<ivy:publish resolver="local" pubrevision="${mc.version}" overwrite="true">
 			<artifacts pattern="${mc.build.dir}/${mc.project-name}-${mc.version}.[ext]" />
 		</ivy:publish>
+	</target>
+
+	<target name="mc.test-copy">
+	</target>
+
+	<target name="mc.copy-example">
+		<copy todir="${mc.build.classes}">
+			<fileset dir="${mc.src.java}">
+				<exclude name="**/*.java" />
+				<exclude name="*.properties" />
+				<include name="default.properties" />
+			</fileset>
+		</copy>
 	</target>
 
 </project>
