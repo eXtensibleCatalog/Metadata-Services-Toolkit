@@ -235,6 +235,7 @@ public abstract class MetadataService extends BaseService
 	 */
 	public boolean processRecords()
 	{
+		SolrIndexManager solrIndexManager = ((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager"));
 		TimingLogger.start("processRecords");
 		try
 		{
@@ -266,7 +267,7 @@ public abstract class MetadataService extends BaseService
 						
 						// Commit the records so that next record type can use that for processing 
 						TimingLogger.start("331.commitIndex");
-						SolrIndexManager.getInstance().commitIndex();
+						((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
 						TimingLogger.stop("331.commitIndex");
 						updateServiceStatistics();
 						
@@ -289,7 +290,7 @@ public abstract class MetadataService extends BaseService
 
 			// Reopen the reader so it can see the changes made by running the service
 			TimingLogger.start("processRecords.352.commitIndex");
-			SolrIndexManager.getInstance().commitIndex();
+			solrIndexManager.commitIndex();
 			TimingLogger.stop("processRecords.352.commitIndex");
 			
 			endTime = new Date().getTime();
@@ -305,7 +306,7 @@ public abstract class MetadataService extends BaseService
 			
 			try {
 				// Commit processed records to index
-				SolrIndexManager.getInstance().commitIndex();
+				solrIndexManager.commitIndex();
 			} catch (IndexException ie) {
 				log.error("Exception occured when commiting " + service.getName() + " records to index", e);
 			}
@@ -433,7 +434,7 @@ public abstract class MetadataService extends BaseService
 				if(processedRecordCount != 0 && processedRecordCount % 100000 == 0)
 				{
 					TimingLogger.start("491.commit");
-					SolrIndexManager.getInstance().commitIndex();
+					((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
 					TimingLogger.stop("491.commit");
 					
 					TimingLogger.start("updateServiceStatistics");
@@ -601,8 +602,9 @@ public abstract class MetadataService extends BaseService
 	{
 		try
 		{
-			SolrIndexManager.getInstance().waitForJobCompletion(5000);
-			SolrIndexManager.getInstance().commitIndex();
+			SolrIndexManager solrIndexManager = ((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager"));
+			solrIndexManager.waitForJobCompletion(5000);
+			solrIndexManager.commitIndex();
 		}
 		catch (IndexException e)
 		{

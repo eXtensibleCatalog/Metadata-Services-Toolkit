@@ -13,7 +13,6 @@ import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.email.Emailer;
 import xc.mst.manager.record.RecordService;
@@ -37,7 +36,7 @@ public class ServiceUtil {
 	/**
 	 * Data access object for getting services
 	 */
-	private ServiceDAO serviceDao = new DefaultServiceDAO();
+	private ServiceDAO serviceDao = (ServiceDAO)MSTConfiguration.getBean("ServiceDAO");
 
 	/**
 	 * Manager for getting, inserting and updating records

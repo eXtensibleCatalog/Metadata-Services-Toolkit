@@ -23,10 +23,6 @@ import xc.mst.dao.DatabaseConfigException;
 
 public class DefaultErrorCodeDAO extends ErrorCodeDAO 
 {
-	/**
-	 * Data Access Object for getting error codes
-	 */
-	private ServiceDAO serviceDao = new DefaultServiceDAO();
 	
 	/**
 	 * A PreparedStatement to get all error codes in the database
@@ -141,7 +137,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 					errorCode.setId(results.getInt(1));
 					errorCode.setErrorCode(results.getString(2));
 					errorCode.setErrorDescriptionFile(results.getString(3));
-					errorCode.setService(serviceDao.getById(results.getInt(4)));
+					errorCode.setService(getServiceDAO().getById(results.getInt(4)));
 					
 					// Add the service to the list
 					errorCodes.add(errorCode);
@@ -223,7 +219,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 					errorCode.setId(results.getInt(1));
 					errorCode.setErrorCode(results.getString(2));
 					errorCode.setErrorDescriptionFile(results.getString(3));
-					errorCode.setService(serviceDao.getById(results.getInt(4)));
+					errorCode.setService(getServiceDAO().getById(results.getInt(4)));
 				
 					if(log.isDebugEnabled())
 						log.debug("Found the error code with ID " + id + " in the database.");
@@ -394,7 +390,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
 					errorCodeObj.setId(results.getInt(1));
 					errorCodeObj.setErrorCode(results.getString(2));
 					errorCodeObj.setErrorDescriptionFile(results.getString(3));
-					errorCodeObj.setService(serviceDao.getById(results.getInt(4)));
+					errorCodeObj.setService(getServiceDAO().getById(results.getInt(4)));
 				
 					if(log.isDebugEnabled())
 						log.debug("Found the error code with error code " + errorCode + " and service ID" + service.getId() + " in the database.");

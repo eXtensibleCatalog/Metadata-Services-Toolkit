@@ -21,6 +21,7 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.HoldingsList;
+import xc.mst.utils.index.SolrIndexManager;
 
 /**
  * Lucene implementation of the service class to query, add, update and
@@ -45,7 +46,8 @@ public class DefaultHoldingsService extends HoldingsService
 
 		// Get the result of the query
 		SolrDocumentList doc = null;
-		doc = indexMgr.getDocumentList(query);
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		doc = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the holdings with the correct XC holdings ID
 		if(doc == null)

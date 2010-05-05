@@ -20,14 +20,7 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.harvest.DefaultHarvestDAO;
-import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
-import xc.mst.dao.harvest.DefaultHarvestScheduleStepDAO;
-import xc.mst.dao.harvest.HarvestDAO;
-import xc.mst.dao.harvest.HarvestScheduleDAO;
-import xc.mst.dao.harvest.HarvestScheduleStepDAO;
-import xc.mst.dao.provider.DefaultProviderDAO;
-import xc.mst.dao.provider.ProviderDAO;
+import xc.mst.manager.BaseManager;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
@@ -38,27 +31,8 @@ import xc.mst.utils.TimingLogger;
  *
  * @author ShreyanshV
  */
-public class HarvestRunner
+public class HarvestRunner extends BaseManager
 {
-	/**
-	 * Data access object for getting provider
-	 */
-	private static ProviderDAO providerDao = new DefaultProviderDAO();
-
-	/**
-	 * Data access object for getting harvests
-	 */
-	private static HarvestDAO harvestDao = new DefaultHarvestDAO();
-
-	/**
-	 * Data access object for getting harvest schedules
-	 */
-	private static HarvestScheduleDAO harvestScheduleDao = new DefaultHarvestScheduleDAO();
-
-	/**
-	 * Data access object for getting harvest schedule steps
-	 */
-	private static HarvestScheduleStepDAO harvestScheduleStepDao = new DefaultHarvestScheduleStepDAO();
 
 	/**
 	 * A reference to the logger which writes to the HarvestIn log file
@@ -137,10 +111,10 @@ public class HarvestRunner
 	 * @throws Hexception If a serious error occurred which prevented the harvest from being completed
 	 * @throws DatabaseConfigException
 	 */
-	public HarvestRunner(int harvestScheduleId) throws OAIErrorException, Hexception, DatabaseConfigException
+	public void setScheduleId(int harvestScheduleId) throws OAIErrorException, Hexception, DatabaseConfigException
 	{
 		// Set the parameters for the harvest based on the harvest schedule step ID
-		harvestSchedule = harvestScheduleDao.getById(harvestScheduleId);
+		harvestSchedule = getHarvestScheduleDAO().getById(harvestScheduleId);
 		provider = harvestSchedule.getProvider();
 		baseURL = provider.getOaiProviderUrl();
 	} // end constructor(int)
@@ -151,13 +125,13 @@ public class HarvestRunner
 		try
 		{
 
-			log.info("Found "+ harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()).size() + " steps.");
+			log.info("Found "+ getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId()).size() + " steps.");
 			
 			harvestSchedule.setStatus(Constants.STATUS_SERVICE_RUNNING);
-			harvestScheduleDao.update(harvestSchedule, false);
+			getHarvestScheduleDAO().update(harvestSchedule, false);
 
 			
-			for(HarvestScheduleStep step : harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()))
+			for(HarvestScheduleStep step : getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId()))
 			{
 				StringBuilder sb = new StringBuilder();
 				sb.append("format:");
@@ -183,21 +157,21 @@ public class HarvestRunner
 					requests.append("\n").append(request);
 			}
 
-			harvestSchedule = harvestScheduleDao.getById(harvestSchedule.getId());
+			harvestSchedule = getHarvestScheduleDAO().getById(harvestSchedule.getId());
 			
 			harvestSchedule.setRequest(requests.toString());
 			harvestSchedule.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
 
-			harvestScheduleDao.update(harvestSchedule, false);
+			getHarvestScheduleDAO().update(harvestSchedule, false);
 
 			// Set the current harvest's end time
 			currentHarvest.setEndTime(new Date());
-			harvestDao.update(currentHarvest);
+			getHarvestDAO().update(currentHarvest);
 
 			// Set the provider's last harvest time
-			provider = providerDao.getById(provider.getId());
+			provider = getProviderDAO().getById(provider.getId());
 			provider.setLastHarvestEndTime(new Date());
-			providerDao.update(provider);
+			getProviderDAO().update(provider);
 
 			LogWriter.addInfo(provider.getLogFileName(), "Finished harvest of " + baseURL);
 		}
@@ -207,20 +181,20 @@ public class HarvestRunner
 			try
 			{
 				
-				harvestSchedule = harvestScheduleDao.getById(harvestSchedule.getId());
+				harvestSchedule = getHarvestScheduleDAO().getById(harvestSchedule.getId());
 				
 				harvestSchedule.setRequest(requests.toString());
 
-				harvestScheduleDao.update(harvestSchedule, false);
+				getHarvestScheduleDAO().update(harvestSchedule, false);
 				
 				// Set the current harvest's end time
 				currentHarvest.setEndTime(new Date());
-				harvestDao.update(currentHarvest);
+				getHarvestDAO().update(currentHarvest);
 
 				// Set the provider's last harvest time
-				provider = providerDao.getById(provider.getId());
+				provider = getProviderDAO().getById(provider.getId());
 				provider.setLastHarvestEndTime(new Date());
-				providerDao.update(provider);
+				getProviderDAO().update(provider);
 
 			}
 			catch(DatabaseConfigException e2)
@@ -282,7 +256,7 @@ public class HarvestRunner
 			currentHarvest.setStartTime(startTime);
 			currentHarvest.setProvider(provider);
 			currentHarvest.setHarvestSchedule(harvestScheduleStep.getSchedule());
-			harvestDao.insert(currentHarvest);
+			getHarvestDAO().insert(currentHarvest);
 
 			String timeout = MSTConfiguration.getProperty(Constants.CONFIG_HARVESTER_TIMEOUT_URL);
 			if(timeout != null)
@@ -312,12 +286,12 @@ public class HarvestRunner
 					 currentHarvest);
 
 			// Set the request used to run the harvest
-			currentHarvest = harvestDao.getById(currentHarvest.getId());
+			currentHarvest = getHarvestDAO().getById(currentHarvest.getId());
 			request = currentHarvest.getRequest();
 
 			// Set the harvest schedule step's last run date to the time when we started the harvest.
 			harvestScheduleStep.setLastRan(startTime);
-			harvestScheduleStepDao.update(harvestScheduleStep, harvestScheduleStep.getSchedule().getId());
+			getHarvestScheduleStepDAO().update(harvestScheduleStep, harvestScheduleStep.getSchedule().getId());
 		} // end try(run the harvest)
 		catch (Exception e) {
 
@@ -347,7 +321,7 @@ public class HarvestRunner
 		try {
 			log.debug("status: "+status);
 			currentHarvest.getHarvestSchedule().setStatus(status);
-			harvestScheduleDao.update(currentHarvest.getHarvestSchedule(), false);
+			getHarvestScheduleDAO().update(currentHarvest.getHarvestSchedule(), false);
 
 		} catch (DataException e) {
 			log.error("Error during updating status of harvest_schedule to database.");

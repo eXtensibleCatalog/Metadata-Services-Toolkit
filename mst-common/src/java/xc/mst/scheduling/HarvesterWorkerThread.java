@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import xc.mst.constants.Constants;
 import xc.mst.harvester.HarvestRunner;
 import xc.mst.harvester.Harvester;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * A Thread which runs a harvest
@@ -57,7 +58,9 @@ public class HarvesterWorkerThread extends WorkerThread
 				log.debug("Invoking the harvester on harvest schedule with ID " + harvestScheduleId + ".");
 
 			// Construct the XC_Harvester object.  This will automatically run the harvester
-			HarvestRunner harvester = new HarvestRunner(harvestScheduleId);
+			
+			HarvestRunner harvester = (HarvestRunner)MSTConfiguration.getBean("HarvestRunner"); 
+			harvester.setScheduleId(harvestScheduleId);
 			harvester.runHarvest();
 		} // end try(run the harvest)
 		catch(Exception e)

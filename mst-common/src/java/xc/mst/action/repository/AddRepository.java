@@ -22,6 +22,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * This method is for adding a new repository to the database.
@@ -89,7 +90,7 @@ public class AddRepository extends BaseActionSupport
 
                 getProviderService().insertProvider(pr);
 
-                ValidateRepository vr = new ValidateRepository();
+                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
                 vr.validate(pr.getId());
 
             }

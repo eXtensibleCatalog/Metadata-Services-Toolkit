@@ -11,6 +11,7 @@ package xc.mst.action;
 
 import xc.mst.dao.DataException;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.SolrIndexManager;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -42,7 +43,7 @@ public class IndexOptimization extends ActionSupport  {
 	public String execute() throws DataException {
     	
     	try {
-    		SolrIndexManager.getInstance().optimizeIndex();
+    		((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).optimizeIndex();
     	}  catch (IndexException ie) {
         	this.addFieldError("optimizeError", "Optimization of Solr index failed due to some problem.");
             errorType = "error";

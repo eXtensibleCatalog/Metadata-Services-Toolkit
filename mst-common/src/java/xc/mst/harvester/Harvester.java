@@ -60,7 +60,6 @@ import xc.mst.manager.record.RecordService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
-import xc.mst.utils.index.SolrIndexManager;
 
 /**
  *  Harvests metadata from an <a href="http://www.openarchives.org/">OAI</a> data provider, saving the results
@@ -468,7 +467,7 @@ public class Harvester extends BaseManager implements ErrorHandler
 		{
 			// Validate that the repository conforms to the OAI protocol
 			TimingLogger.log("about to validate repo");
-			ValidateRepository validator = new ValidateRepository();
+			ValidateRepository validator = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
 			validator.validate(schedule.getProvider().getId(), currentHarvest.getId());
 
 			TimingLogger.log("validated repo");
@@ -736,7 +735,7 @@ public class Harvester extends BaseManager implements ErrorHandler
 
 				// Reopen the reader so it can see the record inputs we inserted for this harvest
 				TimingLogger.log("before commit to solr");
-				SolrIndexManager.getInstance().commitIndex();
+				getSolrIndexManager().commitIndex();
 				TimingLogger.log("committed to solr");
 				
 				endTime = new Date().getTime();

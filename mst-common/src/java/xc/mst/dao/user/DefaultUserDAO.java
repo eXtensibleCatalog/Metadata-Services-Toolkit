@@ -24,8 +24,6 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.log.DefaultLogDAO;
-import xc.mst.dao.log.LogDAO;
 import xc.mst.utils.LogWriter;
 
 /**
@@ -35,26 +33,6 @@ import xc.mst.utils.LogWriter;
  */
 public class DefaultUserDAO extends UserDAO
 {
-	/**
-	 * Data access object to get servers from the database
-	 */
-	private ServerDAO serverDao = new DefaultServerDAO();
-	
-	/**
-	 * Data access object to get groups from the database
-	 */
-	private GroupDAO groupDao = new DefaultGroupDAO();
-	
-	/**
-	 * Data access object to get groups for a user from the database
-	 */
-	private UserGroupUtilDAO userGroupDao = new DefaultUserGroupUtilDAO();
-	
-	/**
-	 * Data access object for managing general logs
-	 */
-	private LogDAO logDao = new DefaultLogDAO();
-
 	/**
 	 * The repository management log file name
 	 */
@@ -150,13 +128,12 @@ public class DefaultUserDAO extends UserDAO
 	 */
 	private static Object psDeleteLock = new Object();
 	
-	public DefaultUserDAO()
+	public void init()
 	{
-		super();
 		
 		try
 		{
-			logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_USER_MANAGEMENT);
+			logObj = getLogDAO().getById(Constants.LOG_ID_USER_MANAGEMENT);
 		}
 		catch(DatabaseConfigException e)
 		{
@@ -226,14 +203,14 @@ public class DefaultUserDAO extends UserDAO
 					user.setLastName(results.getString(4));
 					user.setPassword(results.getString(5));
 					user.setEmail(results.getString(6));
-					user.setServer(serverDao.getById(results.getInt(7)));
+					user.setServer(getServerDAO().getById(results.getInt(7)));
 					user.setLastLogin(results.getDate(8));
 					user.setAccountCreated(results.getDate(9));
 					user.setFailedLoginAttempts(results.getInt(10));
 					
 					// Get the groups for the user
-					for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
-						user.addGroup(groupDao.getById(groupId));
+					for(Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
+						user.addGroup(getGroupDAO().getById(groupId));
 									
 					// Return the user
 					users.add(user);
@@ -397,14 +374,14 @@ public class DefaultUserDAO extends UserDAO
 				user.setLastName(results.getString(4));
 				user.setPassword(results.getString(5));
 				user.setEmail(results.getString(6));
-				user.setServer(serverDao.getById(results.getInt(7)));
+				user.setServer(getServerDAO().getById(results.getInt(7)));
 				user.setLastLogin(results.getDate(8));
 				user.setAccountCreated(results.getDate(9));
 				user.setFailedLoginAttempts(results.getInt(10));
 				
 				// Get the groups for the user
-				for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
-					user.addGroup(groupDao.getById(groupId));
+				for(Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
+					user.addGroup(getGroupDAO().getById(groupId));
 								
 				// Return the user
 				users.add(user);
@@ -448,8 +425,8 @@ public class DefaultUserDAO extends UserDAO
 		User user = loadBasicUser(userId);
 		
 		// Get the groups for the user
-		for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
-			user.addGroup(groupDao.getById(groupId));
+		for(Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
+			user.addGroup(getGroupDAO().getById(groupId));
 		
 		// Return the result
 		return user;
@@ -518,7 +495,7 @@ public class DefaultUserDAO extends UserDAO
 					user.setLastName(results.getString(4));
 					user.setPassword(results.getString(5));
 					user.setEmail(results.getString(6));
-					user.setServer(serverDao.getById(results.getInt(7)));
+					user.setServer(getServerDAO().getById(results.getInt(7)));
 					user.setLastLogin(results.getDate(8));
 					user.setAccountCreated(results.getDate(9));
 					user.setFailedLoginAttempts(results.getInt(10));
@@ -617,14 +594,14 @@ public class DefaultUserDAO extends UserDAO
 					user.setLastName(results.getString(4));
 					user.setPassword(results.getString(5));
 					user.setEmail(results.getString(6));
-					user.setServer(serverDao.getById(results.getInt(7)));
+					user.setServer(getServerDAO().getById(results.getInt(7)));
 					user.setLastLogin(results.getDate(8));
 					user.setAccountCreated(results.getDate(9));
 					user.setFailedLoginAttempts(results.getInt(10));
 					
 					// Get the groups for the user
-					for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
-						user.addGroup(groupDao.getById(groupId));
+					for(Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
+						user.addGroup(getGroupDAO().getById(groupId));
 					
 					if(log.isDebugEnabled())
 						log.debug("Found the user with name " + userName + " in the database.");
@@ -721,14 +698,14 @@ public class DefaultUserDAO extends UserDAO
 					user.setLastName(results.getString(4));
 					user.setPassword(results.getString(5));
 					user.setEmail(results.getString(6));
-					user.setServer(serverDao.getById(results.getInt(7)));
+					user.setServer(getServerDAO().getById(results.getInt(7)));
 					user.setLastLogin(results.getDate(8));
 					user.setAccountCreated(results.getDate(9));
 					user.setFailedLoginAttempts(results.getInt(10));
 					
 					// Get the groups for the user
-					for(Integer groupId : userGroupDao.getGroupsForUser(user.getId()))
-						user.addGroup(groupDao.getById(groupId));
+					for(Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
+						user.addGroup(getGroupDAO().getById(groupId));
 					
 					if(log.isDebugEnabled())
 						log.debug("Found the user with name " + userName + " in the database.");
@@ -825,7 +802,7 @@ public class DefaultUserDAO extends UserDAO
 					user.setLastName(results.getString(4));
 					user.setPassword(results.getString(5));
 					user.setEmail(results.getString(6));
-					user.setServer(serverDao.getById(results.getInt(7)));
+					user.setServer(getServerDAO().getById(results.getInt(7)));
 					user.setLastLogin(results.getDate(8));
 					user.setAccountCreated(results.getDate(9));
 					user.setFailedLoginAttempts(results.getInt(10));
@@ -873,7 +850,7 @@ public class DefaultUserDAO extends UserDAO
 		
 		// insert the server if it hasn't already been inserted
 		if(user.getServer().getId() < 0)
-			serverDao.insert(user.getServer());
+			getServerDAO().insert(user.getServer());
 		
 		synchronized(psInsertLock)
 		{
@@ -930,7 +907,7 @@ public class DefaultUserDAO extends UserDAO
 					
 					// Add the user to the correct groups
 					for(Group group : user.getGroups())
-						userGroupDao.insert(user.getId(), group.getId());
+						getUserGroupUtilDAO().insert(user.getId(), group.getId());
 					
 					LogWriter.addInfo(logObj.getLogFileLocation(), "Added a new user with the username " + user.getUsername());
 				    
@@ -941,7 +918,7 @@ public class DefaultUserDAO extends UserDAO
 					LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while adding a new user with the username " + user.getUsername());
 					
 					logObj.setErrors(logObj.getErrors() + 1);
-			    	logDao.update(logObj);
+			    	getLogDAO().update(logObj);
 			    	
 					return false;
 				}
@@ -953,7 +930,7 @@ public class DefaultUserDAO extends UserDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while adding a new user with the username " + user.getUsername());
 				
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+				getLogDAO().update(logObj);
 		    	
 				return false;
 			} // end catch(SQLException)
@@ -1024,11 +1001,11 @@ public class DefaultUserDAO extends UserDAO
 				boolean success = dbConnectionManager.executeUpdate(psUpdate) > 0;
 				
 				// Delete the old groups for the user
-				userGroupDao.deleteGroupsForUser(user.getId());
+				getUserGroupUtilDAO().deleteGroupsForUser(user.getId());
 				
 				// Add the user to the correct groups
 				for(Group group : user.getGroups())
-					success = userGroupDao.insert(user.getId(), group.getId()) && success;
+					success = getUserGroupUtilDAO().insert(user.getId(), group.getId()) && success;
 				
 				if(success)
 					LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the user with the username " + user.getUsername());
@@ -1037,7 +1014,7 @@ public class DefaultUserDAO extends UserDAO
 					LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while updating the user with the username " + user.getUsername());
 					
 					logObj.setErrors(logObj.getErrors() + 1);
-			    	logDao.update(logObj);
+			    	getLogDAO().update(logObj);
 				}
 				
 				return success;
@@ -1049,7 +1026,7 @@ public class DefaultUserDAO extends UserDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while updating the user with the username " + user.getUsername());
 				
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+				getLogDAO().update(logObj);
 		    	
 				return false;
 			} // end catch(SQLException
@@ -1105,7 +1082,7 @@ public class DefaultUserDAO extends UserDAO
 					LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while deleting the user with the username " + user.getUsername());
 				
 					logObj.setErrors(logObj.getErrors() + 1);
-			    	logDao.update(logObj);
+					getLogDAO().update(logObj);
 				}
 				
 				return success;
@@ -1117,7 +1094,7 @@ public class DefaultUserDAO extends UserDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while deleting the user with the username " + user.getUsername());
 				
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+				getLogDAO().update(logObj);
 		    	
 				return false;
 			} // end catch(SQLException

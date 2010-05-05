@@ -22,9 +22,9 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -45,11 +45,6 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 
 	/** Response */
 	private HttpServletResponse response;
-
-	/**
-	 * Data access object for getting services
-	 */
-	private static ServiceDAO serviceDao = new DefaultServiceDAO();
 
 	/** XML output */
 	private String oaiXMLOutput;
@@ -97,7 +92,7 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 				response.getWriter().write("Invalid URL");
 	
 			// Get the service based on the port.
-			Service service = serviceDao.getByServiceName(serviceName.replace("-", " "));
+			Service service = ((ServiceDAO)MSTConfiguration.getBean("ServiceDAO")).getByServiceName(serviceName.replace("-", " "));
 	
 			if(service == null)
 			{

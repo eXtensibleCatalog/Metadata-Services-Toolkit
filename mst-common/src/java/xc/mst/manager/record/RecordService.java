@@ -30,7 +30,6 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.MSTConfiguration;
-import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
@@ -46,11 +45,6 @@ public abstract class RecordService extends BaseService
 	 * A reference to the logger for this class
 	 */
 	public static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-	/**
-	 * An Object shared by all LuceneObjects which manages the Lucene index
-	 */
-	protected static SolrIndexManager indexMgr = IndexManagerFactory.getIndexManager(MSTConfiguration.getProperty(Constants.CONFIG_SOLR_INDEXER));
 
 	/**
 	 * The field name for the indexed object type
@@ -524,7 +518,8 @@ public abstract class RecordService extends BaseService
 		else
 			doc = setFieldsOnDocument(record, doc, true);
 
-		boolean retVal = indexMgr.addDoc(doc);
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		boolean retVal = sim.addDoc(doc);
 		return retVal;
 	} // end method insert(Record)
 
@@ -552,7 +547,8 @@ public abstract class RecordService extends BaseService
 		// Set up the fields for the Record
 		doc = setFieldsOnDocument(record, doc, false);
 
-		return indexMgr.addDoc(doc);
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		return sim.addDoc(doc);
 	} // end method update(Record)
 
 	/**
@@ -573,7 +569,8 @@ public abstract class RecordService extends BaseService
 		                     + FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType;
 
 		// Delete all records with the matching record ID
-		boolean result = indexMgr.deleteByQuery(deleteQuery);
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		boolean result = sim.deleteByQuery(deleteQuery);
 
 		// If the delete was successful, also delete rows in the MySQL tables which reference it
 		//if(result)

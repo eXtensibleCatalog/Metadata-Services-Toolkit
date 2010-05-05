@@ -12,6 +12,14 @@
 	
 	<property file="${mp.dir}/build.properties" />
 
+	<path id="webapp.path">
+		<fileset dir="${mp.build.webapp}">
+			<exclude name="**/testng*.jar"/>
+			<exclude name="**/jsp-api*.jar"/>
+			<exclude name="**/servlet-api*.jar"/>
+		</fileset>
+	</path>
+
 	<path id="mp.classpath">
 		<fileset dir="${mp.build.lib}">
 			<include name="*.jar" />
@@ -72,13 +80,12 @@
 		</copy>
 	</target>
 
+	<!--
 	<target name="mp.war" depends="mp.compile, mp.copy-resources, mc.jar">
-		<jar destfile="${mp.build.dir}/${mp.project-name}-${mp.version}.war" >
-			 <fileset dir="${mp.build.webapp}">
-				<exclude name="testng*.jar"/>
-				<exclude name="jsp-api*.jar"/>
-				<exclude name="servlet-api*.jar"/>
-			 </fileset>
+		-->
+	<target name="mp.war">
+		<jar destfile="${mp.build.dir}/${mp.project-name}.war" >
+			<path refid="webapp.path" />
 		 </jar>
 	</target>
 
@@ -154,12 +161,13 @@
 				packagelistLoc="C:\Program Files\Java\jdk1.6.0_12\bin"/>
 		</javadoc>
 	</target>
-	-->
 
 	<target name="mp.deploy-webapp" depends="mp.copy-resources">
+	-->
+
+	<target name="mp.deploy-webapp" depends="mp.init">
 		<copy todir="${tomcat.dir}/webapps/${mp.project-name}">
-			<fileset dir="${mp.build.webapp}">
-			</fileset>
+			<path refid="webapp.path" />
 		</copy>
 	</target>
 

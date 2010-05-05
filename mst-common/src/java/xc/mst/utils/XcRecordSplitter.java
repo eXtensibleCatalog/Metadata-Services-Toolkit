@@ -35,9 +35,7 @@ import xc.mst.bo.record.Work;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.FormatDAO;
-import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 
 /**
@@ -70,12 +68,12 @@ public class XcRecordSplitter
 	/**
 	 * Data access object for getting formats
 	 */
-	private static FormatDAO formatDao = new DefaultFormatDAO();
+	private static FormatDAO formatDao = (FormatDAO)MSTConfiguration.getBean("FormatDAO");
 
 	/**
 	 * Data access object for getting FRBR level IDs
 	 */
-	protected static XcIdentifierForFrbrElementDAO frbrLevelIdDao = new DefaultXcIdentifierForFrbrElementDAO();
+	protected static XcIdentifierForFrbrElementDAO frbrLevelIdDao = (XcIdentifierForFrbrElementDAO)MSTConfiguration.getBean("XcIdentifierForFrbrElementDAO");
 
 	/**
 	 * A list of Work FRBR components contained in the original XC record

@@ -109,7 +109,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	{
 		try 
 		{
-			logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SERVICE_MANAGEMENT);
+			logObj = getLogDAO().getById(Constants.LOG_ID_SERVICE_MANAGEMENT);
 		} catch (DatabaseConfigException e) 
 		{
 			log.error("Unable to connect to the database using the parameters from the configuration file.", e);

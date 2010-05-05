@@ -31,8 +31,6 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
-import xc.mst.dao.service.DefaultServiceDAO;
-import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
 import xc.mst.services.MetadataService;
@@ -51,9 +49,6 @@ public class DefaultServicesService extends BaseService implements ServicesServi
 	 * The logger object
 	 */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-    /** DAO object for services in the MST */
-    private ServiceDAO servicesDao;
 
     /**
      * Constant signifying the parser is parsing the service's input formats
@@ -75,11 +70,6 @@ public class DefaultServicesService extends BaseService implements ServicesServi
      */
     private static final String FILE_SERVICE_SPECIFIC = "SERVICE CONFIG";
 
-    public DefaultServicesService()
-    {
-        servicesDao = new DefaultServiceDAO();
-    }
-
     /**
      * Returns a list of all services
      *
@@ -88,7 +78,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
      */
     public List<Service> getAllServices() throws DatabaseConfigException
     {
-        return servicesDao.getAll();
+        return getServiceDAO().getAll();
     }
 
     /**
@@ -101,7 +91,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
      */
     public List<Service> getAllServicesSorted(boolean sort,String columnSorted) throws DatabaseConfigException
     {
-        return servicesDao.getSorted(sort, columnSorted);
+        return getServiceDAO().getSorted(sort, columnSorted);
     }
 
     /**
@@ -136,7 +126,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
     		}
 
     		// Verify that the name is unique
-    		Service oldService = servicesDao.getByServiceName(name);
+    		Service oldService = getServiceDAO().getByServiceName(name);
     		if(oldService != null)
     		{
     			LogWriter.addError(logFileName, "Error adding a new service: The service's name was not unique.");
@@ -372,7 +362,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
     		} while(!line.equals(FILE_ERROR_MESSAGES));
 
     		// Insert the service
-    		servicesDao.insert(service);
+    		getServiceDAO().insert(service);
 
     		// Parse and add the error codes
     		do
@@ -421,7 +411,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
 
     		// Set the configuration on the service
     		service.setServiceConfig(buffer.toString());
-    		servicesDao.update(service);
+    		getServiceDAO().update(service);
 
     		// Execute DB scripts
     		executeServiceDBScripts(configFolderPath + File.separator + "serviceSql");
@@ -460,7 +450,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
     {
     	// Reload the service and confirm that it's not currently running.
     	// Throw an error if it is
-    	service = servicesDao.getById(service.getId());
+    	service = getServiceDAO().getById(service.getId());
     	if(service.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) || service.getStatus().equals(Constants.STATUS_SERVICE_PAUSED)) {
     		throw new DataException("Cannot update a service while it is running.");
     		// TODO propagate to UI
@@ -488,7 +478,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
     		}
 
     		// Verify that the name is unique
-    		Service oldService = servicesDao.getByServiceName(name);
+    		Service oldService = getServiceDAO().getByServiceName(name);
     		if(!service.getName().equals(name) && oldService != null)
     		{
     			LogWriter.addError(logFileName, "Error updating service: The service's name was not unique.");
@@ -778,7 +768,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
 
     		// Set the configuration on the service
     		service.setServiceConfig(buffer.toString());
-    		servicesDao.update(service);
+    		getServiceDAO().update(service);
 
        		// Execute DB scripts
     		try {
@@ -817,7 +807,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
      */
     public void insertService(Service service) throws DataException
     {
-        servicesDao.insert(service);
+    	getServiceDAO().insert(service);
     }
 
     /**
@@ -837,7 +827,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
     	}
     	
     	// Delete service
-        servicesDao.delete(service);
+    	getServiceDAO().delete(service);
     }
     
     /**
@@ -848,7 +838,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
     public void deleteServiceAndRecordsByJob(Service service) throws DataException
     {
     	service.setDeleted(true);
-    	servicesDao.update(service);
+    	getServiceDAO().update(service);
     	try {
 			Job job = new Job(service, 0, Constants.THREAD_DELETE_SERVICE);
 			JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
@@ -868,7 +858,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
      */
     public void updateService(Service service) throws DataException
     {
-        servicesDao.update(service);
+    	getServiceDAO().update(service);
     }
 
     /**
@@ -880,7 +870,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
      */
     public Service getServiceById(int serviceId) throws DatabaseConfigException
     {
-        return servicesDao.getById(serviceId);
+        return getServiceDAO().getById(serviceId);
     }
 
     /**
@@ -892,7 +882,7 @@ public class DefaultServicesService extends BaseService implements ServicesServi
      */
     public Service getServiceByName(String serviceName) throws DatabaseConfigException
     {
-        return servicesDao.getByServiceName(serviceName);
+        return getServiceDAO().getByServiceName(serviceName);
     }
 
     /**

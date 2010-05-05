@@ -32,12 +32,7 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.DefaultProviderDAO;
-import xc.mst.dao.provider.DefaultSetDAO;
-import xc.mst.dao.provider.FormatDAO;
-import xc.mst.dao.provider.ProviderDAO;
-import xc.mst.dao.provider.SetDAO;
+import xc.mst.manager.BaseService;
 import xc.mst.utils.LogWriter;
 
 /**
@@ -46,22 +41,8 @@ import xc.mst.utils.LogWriter;
  *
  * @author Eric Osisek
  */
-public class ValidateRepository implements ErrorHandler
+public class ValidateRepository extends BaseService implements ErrorHandler
 {
-	/**
-	 * Data access object for getting and updating providers
-	 */
-	private static ProviderDAO providerDao = new DefaultProviderDAO();
-
-	/**
-	 * Data access object for getting formats
-	 */
-	private static FormatDAO formatDao = new DefaultFormatDAO();
-
-	/**
-	 * Data access object for getting sets
-	 */
-	private static SetDAO setDao = new DefaultSetDAO();
 
 	/**
 	 * A list of XML errors in the OAI response
@@ -156,7 +137,7 @@ public class ValidateRepository implements ErrorHandler
 	{
 		this.providerId = providerId;
 
-		provider = providerDao.getById(providerId);
+		provider = getProviderDAO().getById(providerId);
 
 		if(provider == null)
 			throw new Hexception("Cannot find the provider with ID " + providerId);
@@ -207,7 +188,7 @@ public class ValidateRepository implements ErrorHandler
 
 		try
 		{
-			providerDao.update(provider);
+			getProviderDAO().update(provider);
 		} // end try(update the provider)
 		catch(DataException e)
 		{
@@ -231,7 +212,7 @@ public class ValidateRepository implements ErrorHandler
 	{
 		this.providerId = providerId;
 
-		provider = providerDao.getById(providerId);
+		provider = getProviderDAO().getById(providerId);
 
 		if(provider == null)
 			throw new Hexception("Cannot find the provider with ID " + providerId);
@@ -282,7 +263,7 @@ public class ValidateRepository implements ErrorHandler
 
 		try
 		{
-			providerDao.update(provider);
+			getProviderDAO().update(provider);
 		} // end try(update the provider)
 		catch(DataException e)
 		{
@@ -428,7 +409,7 @@ public class ValidateRepository implements ErrorHandler
 			throw new Hexception("Provider shows an invalid deleted record support according to the OAI protocol. Invalid response: " + deletedRecordString);
 		}
 
-		provider = providerDao.getById(providerId);
+		provider = getProviderDAO().getById(providerId);
 		
 		// Check the protocol version
 		try
@@ -492,7 +473,7 @@ public class ValidateRepository implements ErrorHandler
 		List<Set> currentSets = getSets(baseUrl);
 
 		// Get the set IDs that were supported by the repository the last time we checked
-		List<Set> oldSets = setDao.getSetsForProvider(providerId);
+		List<Set> oldSets = getSetDAO().getSetsForProvider(providerId);
 
 		// Loop over the current sets and add them to the provider
 		for(Set currentSet : currentSets)
@@ -788,10 +769,10 @@ public class ValidateRepository implements ErrorHandler
 
 			try
 			{
-				Provider provider = providerDao.getById(providerId);
+				Provider provider = getProviderDAO().getById(providerId);
 				provider.setService(false);
 				provider.setListFormats(false);
-				providerDao.update(provider);
+				getProviderDAO().update(provider);
 			}
 			catch(DataException e)
 			{
@@ -810,7 +791,7 @@ public class ValidateRepository implements ErrorHandler
 		{
 			String formatName = getContent(mustFindChild(pfxele, "metadataPrefix")).replaceAll(":", "/");
 
-			Format format = formatDao.getByName(formatName);
+			Format format = getFormatDAO().getByName(formatName);
 
 			if(format == null)
 			{
@@ -822,7 +803,7 @@ public class ValidateRepository implements ErrorHandler
 
 				try
 				{
-					formatDao.insert(format);
+					getFormatDAO().insert(format);
 				}
 				catch(DataException e)
 				{
@@ -865,7 +846,7 @@ public class ValidateRepository implements ErrorHandler
 
 		List<Set> reslist = new ArrayList<Set>();
 
-		Provider provider = providerDao.getById(providerId);
+		Provider provider = getProviderDAO().getById(providerId);
 
 		do
 		{
@@ -890,7 +871,7 @@ public class ValidateRepository implements ErrorHandler
 				{
 					provider.setService(false);
 					provider.setListSets(false);
-					providerDao.update(provider);
+					getProviderDAO().update(provider);
 				}
 				catch(DataException e)
 				{
@@ -912,7 +893,7 @@ public class ValidateRepository implements ErrorHandler
 				String setSpec = getContent(mustFindChild(setele, "setSpec"));
 				String setName = getContent(mustFindChild(setele, "setName"));
 
-				Set set = setDao.getBySetSpec(setSpec);
+				Set set = getSetDAO().getBySetSpec(setSpec);
 
 				if(set == null)
 				{
@@ -923,7 +904,7 @@ public class ValidateRepository implements ErrorHandler
 
 					try
 					{
-						setDao.insertForProvider(set, providerId);
+						getSetDAO().insertForProvider(set, providerId);
 					}
 					catch(DataException e)
 					{

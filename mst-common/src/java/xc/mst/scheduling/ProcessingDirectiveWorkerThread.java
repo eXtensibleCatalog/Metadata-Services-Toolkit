@@ -84,7 +84,7 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 			for(Record checkMe : recordsToCheck)
 				checkProcessingDirective(checkMe);
 			
-			SolrIndexManager.getInstance().commitIndex();
+			((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
 			
 			if (recordsToCheck != null && recordsToCheck.size() > 0) {
 				try {

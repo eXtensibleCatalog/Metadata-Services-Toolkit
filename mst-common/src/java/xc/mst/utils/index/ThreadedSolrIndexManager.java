@@ -8,14 +8,12 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrInputDocument;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
 
 import xc.mst.dao.DataException;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Multi-Threaded extension of SolrIndexManager. Overrides the addDoc method of SolrIndexManager
@@ -29,61 +27,35 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 	/**
 	 * Service for pipelining and executing tasks.
 	 */
-	private ExecutorService threadPool;
-
-	/**
-	 * Service for pipelining and executing tasks.
-	 */
-	private static Configuration configuration = ConfigurationManager.getConfiguration();
+	protected ExecutorService threadPool;
 
 	/**
 	 * The number of Jobs which have been scheduled to run but have not been completed
 	 */
-	private int numQueuedJobs = 0;
-
-	/**
-	 * Private default constructor
-	 */
-	private ThreadedSolrIndexManager() {}
-
-	/**
-	 * Creates a new instance of ThreadedSolrIndexManager with the given initial parameters.
-	 * @param numThreads Size of the pool of threads
-	 * @param maxQueueSize Size of the queue for waiting threads
-	 */
-	private ThreadedSolrIndexManager(int numThreads, int maxQueueSize)
-	{
-
-		log.info("SolrIndexManager Thread Pool Initialized");
-
-		/* Initialize the thread pool*/
-		threadPool = new ThreadPoolExecutor(numThreads,
-											numThreads,
-											Long.MAX_VALUE,
-											TimeUnit.NANOSECONDS,
-											new ArrayBlockingQueue<Runnable>(maxQueueSize, false),
-											new ThreadPoolExecutor.CallerRunsPolicy());
-	}
+	protected int numQueuedJobs = 0;
 	
 	/**
 	 * Gets the singleton instance of the LuceneIndexManager
 	 */
-	public static SolrIndexManager getInstance()
+	public void init()
 	{
-		if(instance != null)
-		{
-			return instance;
-		}
-
+		super.init();
 		log.info("Initializing the SolrIndexManager instance.");
 
 		// Get the queue size and pool size for threads
-		int poolSize = Integer.parseInt(configuration.getProperty("SOLRIndexerMultiThreadCount")) == 0 ? 20 : Integer.parseInt(configuration.getProperty("SOLRIndexerMultiThreadCount")) ;
+		int poolSize = Integer.parseInt(
+				MSTConfiguration.getProperty("SOLRIndexerMultiThreadCount")) == 0 ? 20 : Integer.parseInt(MSTConfiguration.getProperty("SOLRIndexerMultiThreadCount")) ;
 
-		server = MSTSolrServer.getServer();
 
-		instance = new ThreadedSolrIndexManager(poolSize, poolSize);
-		return instance;
+		log.info("SolrIndexManager Thread Pool Initialized");
+
+		/* Initialize the thread pool*/
+		threadPool = new ThreadPoolExecutor(poolSize,
+											poolSize,
+											Long.MAX_VALUE,
+											TimeUnit.NANOSECONDS,
+											new ArrayBlockingQueue<Runnable>(poolSize, false),
+											new ThreadPoolExecutor.CallerRunsPolicy());
 	}
 
 	/**
@@ -97,7 +69,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 		log.debug("Add index to Solr - begin");
 
 		// Check if solr server is null
-		if (server == null)
+		if (getMstSolrServer().getServer() == null)
 		{
 			log.error("Solr server is null");
 
@@ -171,7 +143,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 		{
 			try 
 			{
-				server.add(doc);
+				getMstSolrServer().getServer() .add(doc);
 			}
 			catch (SolrServerException se)
 			{
@@ -183,7 +155,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 
 				try
 				{
-					logDao.update(logObj);
+					getLogDAO().update(logObj);
 					Scheduler.getRunningJob().cancel();
 				}
 				catch(DataException e)
@@ -203,7 +175,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 
 				try
 				{
-					logDao.update(logObj);
+					getLogDAO().update(logObj);
 				}
 				catch(DataException e)
 				{

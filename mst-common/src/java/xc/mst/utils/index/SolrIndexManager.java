@@ -14,7 +14,6 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
@@ -24,10 +23,8 @@ import xc.mst.bo.log.Log;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.log.DefaultLogDAO;
-import xc.mst.dao.log.LogDAO;
+import xc.mst.manager.BaseManager;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.utils.LogWriter;
 
 /**
@@ -36,62 +33,28 @@ import xc.mst.utils.LogWriter;
  * @author Sharmila Ranganathan
  *
  */
-public class SolrIndexManager {
+public class SolrIndexManager extends BaseManager {
 
 	/**
 	 * The logger object
 	 */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Solr server */
-	protected static SolrServer server = null;
-
-	/**
-	 * The singleton instance of the LuceneIndexManager
-	 */
-	protected static SolrIndexManager instance = null;
-
-	/**
-	 * Data access object for managing general logs
-	 */
-	protected static LogDAO logDao = new DefaultLogDAO();
-
 	/**
 	 * The repository management log file name
 	 */
 	protected static Log logObj = null;
-	
-	/*
-	 * Private default constructor
-	 */
-	protected SolrIndexManager() 
+
+	public void init() 
 	{
 		try
 		{
-			logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SOLR_INDEX);
+			logObj = getLogDAO().getById(Constants.LOG_ID_SOLR_INDEX);
 		}
 		catch(DatabaseConfigException e)
 		{
 			log.error("Cannot connect to the database with the parameters from the config file.", e);
 		}
-	}
-	
-	/**
-	 * Gets the singleton instance of the LuceneIndexManager
-	 */
-	public static SolrIndexManager getInstance()
-	{
-		if(instance != null) {
-			return instance;
-		}
-
-		if(log.isDebugEnabled()) {
-			log.debug("Initializing the SolrIndexManager instance.");
-		}
-		
-		server = MSTSolrServer.getServer();
-		instance = new SolrIndexManager();
-		return instance;
 	}
 
 	/**
@@ -107,13 +70,13 @@ public class SolrIndexManager {
 		}
 		
 		// Check if solr server is null
-		if (server == null) {
+		if (getMstSolrServer() == null) {
 			log.error("Solr server is null");
 			return false;
 		}
 		
 		try {
-			server.add(doc);
+			getMstSolrServer().getServer().add(doc);
 		} catch (SolrServerException se) {
 			log.error("Solr server exception occured when adding document to the index. Check the path to solr folder.", se);
 			
@@ -122,7 +85,7 @@ public class SolrIndexManager {
 			
 			logObj.setErrors(logObj.getErrors()+1);
 			try{
-				logDao.update(logObj);
+				getLogDAO().update(logObj);
 			}catch(DataException e){
 				log.error("DataExcepiton while updating the log's error count.", e);
 			}
@@ -136,7 +99,7 @@ public class SolrIndexManager {
 			
 			logObj.setErrors(logObj.getErrors()+1);
 			try{
-				logDao.update(logObj);
+				getLogDAO().update(logObj);
 			}catch(DataException e){
 				log.error("DataExcepiton while updating the log's error count.", e);
 			}
@@ -154,7 +117,7 @@ public class SolrIndexManager {
 	{
 		try 
 		{
-			server.deleteByQuery(query);
+			getMstSolrServer().getServer().deleteByQuery(query);
 			return true;
 		} 
 		catch (SolrServerException se) 
@@ -166,7 +129,7 @@ public class SolrIndexManager {
 			
 			logObj.setErrors(logObj.getErrors()+1);
 			try{
-				logDao.update(logObj);
+				getLogDAO().update(logObj);
 			}catch(DataException e){
 				log.error("DataExcepiton while updating the log's error count.", e);
 			}
@@ -182,7 +145,7 @@ public class SolrIndexManager {
 			
 			logObj.setErrors(logObj.getErrors()+1);
 			try{
-				logDao.update(logObj);
+				getLogDAO().update(logObj);
 			}catch(DataException e){
 				log.error("DataExcepiton while updating the log's error count.", e);
 			}
@@ -212,13 +175,13 @@ public class SolrIndexManager {
 		}
 
 		// Check if solr server is null
-		if (server == null) {
+		if (getMstSolrServer().getServer() == null) {
 			log.error("Solr server is null");
 			return false;
 		}
 		try {
 			LogWriter.addInfo(logObj.getLogFileLocation(), "Committing changes to the Solr index");
-			server.commit();
+			getMstSolrServer().getServer().commit();
 			LogWriter.addInfo(logObj.getLogFileLocation(), "Commited changes to the Solr index");
 		} catch (SolrServerException se) {
 			log.error("Solr server exception occured when commiting to the index. Check the path to solr folder.", se);
@@ -227,7 +190,7 @@ public class SolrIndexManager {
 					+ se.getMessage());
 			logObj.setErrors(logObj.getErrors()+1);
 			try {
-				logDao.update(logObj);
+				getLogDAO().update(logObj);
 			} catch(DataException e){
 				log.error("DataExcepiton while updating the log's error count.");
 			}
@@ -241,7 +204,7 @@ public class SolrIndexManager {
 			
 			logObj.setErrors(logObj.getErrors()+1);
 			try{
-				logDao.update(logObj);
+				getLogDAO().update(logObj);
 			}catch(DataException e){
 				log.error("DataExcepiton while updating the log's error count.");
 			}
@@ -264,13 +227,13 @@ public class SolrIndexManager {
 	{
 
 		// Check if solr server is null
-		if (server == null) {
+		if (getMstSolrServer().getServer() == null) {
 			log.error("Solr server is null");
 			return false;
 		}
 		try {
 			LogWriter.addInfo(logObj.getLogFileLocation(), "Start optimizing Solr index");
-			server.optimize(true, true);
+			getMstSolrServer().getServer().optimize(true, true);
 			LogWriter.addInfo(logObj.getLogFileLocation(), "Finished optimizing Solr index");
 		} catch (SolrServerException se) {
 			log.error("Solr server exception occured when optimizing index. Check the path to solr folder.", se);
@@ -279,7 +242,7 @@ public class SolrIndexManager {
 					+ se.getMessage());
 			logObj.setErrors(logObj.getErrors()+1);
 			try {
-				logDao.update(logObj);
+				getLogDAO().update(logObj);
 			} catch(DataException e){
 				log.error("DataExcepiton while updating the log's error count.");
 			}
@@ -293,7 +256,7 @@ public class SolrIndexManager {
 			
 			logObj.setErrors(logObj.getErrors()+1);
 			try{
-				logDao.update(logObj);
+				getLogDAO().update(logObj);
 			}catch(DataException e){
 				log.error("DataExcepiton while updating the log's error count.");
 			}
@@ -315,7 +278,7 @@ public class SolrIndexManager {
 		SolrDocumentList docs = null;
 		
 		// Check if solr server is null
-		if (server == null) {
+		if (getMstSolrServer().getServer() == null) {
 			log.error("Solr server is null");
 			return docs;
 		}
@@ -324,7 +287,7 @@ public class SolrIndexManager {
 			if (log.isDebugEnabled()) {
 				log.debug("Executing Solr Query : " + query);
 			}
-		    QueryResponse rsp = server.query( query );
+		    QueryResponse rsp = getMstSolrServer().getServer().query( query );
 		    docs = rsp.getResults();
 
 		} catch (SolrServerException e) {
@@ -335,7 +298,7 @@ public class SolrIndexManager {
 				
 				logObj.setErrors(logObj.getErrors()+1);
 				try{
-					logDao.update(logObj);
+					getLogDAO().update(logObj);
 				}catch(DataException e2){
 					log.error("DataExcepiton while updating the log's error count.");
 				}

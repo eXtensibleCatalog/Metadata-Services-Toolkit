@@ -146,7 +146,7 @@ public class DeleteServiceWorkerThread extends WorkerThread
 				recordService.update(updatedPredecessor);				
 			}
 			
-			SolrIndexManager.getInstance().commitIndex();
+			((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
 
 			// Schedule subsequent services to process that the record was deleted
 			for(Service nextSerivce : affectedServices)

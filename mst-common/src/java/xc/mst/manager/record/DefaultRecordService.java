@@ -35,6 +35,7 @@ import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
@@ -62,9 +63,6 @@ public class DefaultRecordService extends RecordService
 	 * The trait term
 	 */
 	protected final static Term TERM_TRAIT = new Term(FIELD_TRAIT, "");
-	
-	/** Solr manager */
-	private SolrIndexManager solrIndexManager = SolrIndexManager.getInstance();
 
 	@Override
 	public RecordList getAll() throws IndexException
@@ -91,7 +89,8 @@ public class DefaultRecordService extends RecordService
 
 		// Get the result of the query
 		SolrDocumentList docs = null;
-		docs = indexMgr.getDocumentList(query);
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		docs = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the record with the correct ID
 		if(docs == null || docs.size() == 0)
@@ -120,7 +119,8 @@ public class DefaultRecordService extends RecordService
 
 		// Get the result of the query
 		SolrDocumentList docs = null;
-		docs = indexMgr.getDocumentList(query);
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		docs = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the record with the correct ID
 		if(docs == null || docs.size() == 0)
@@ -195,7 +195,8 @@ public class DefaultRecordService extends RecordService
 		
 		// Get the result of the query
 		SolrDocumentList docs = null;
-		docs = indexMgr.getDocumentList(query);
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		docs = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the record with the correct ID
 		if(docs == null || docs.size() == 0)
@@ -751,7 +752,7 @@ public class DefaultRecordService extends RecordService
 		
 		query.setStart(offset);
 		query.setRows(numResults);
-		SolrDocumentList docs = solrIndexManager.getDocumentList(query);
+		SolrDocumentList docs = ((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).getDocumentList(query);
 		Iterator<SolrDocument> iteration = docs.iterator();
 		List<Record> records = new ArrayList<Record>();
 

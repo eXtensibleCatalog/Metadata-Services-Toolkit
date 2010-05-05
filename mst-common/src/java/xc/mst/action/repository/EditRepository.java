@@ -21,6 +21,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * This method is used to edit the details of a repository
@@ -151,7 +152,7 @@ public class EditRepository extends BaseActionSupport
                                 provider.removeAllSets();
                                 provider.setLastValidationDate(new Date());
                                 getProviderService().updateProvider(provider);
-                                ValidateRepository vr = new ValidateRepository();
+                                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
                                 vr.validate(provider.getId());
                             }
                             else //just update Repository details without revalidation
@@ -187,7 +188,7 @@ public class EditRepository extends BaseActionSupport
                             provider.removeAllSets();
                             provider.setLastValidationDate(new Date());
                             getProviderService().updateProvider(provider);
-                            ValidateRepository vr = new ValidateRepository();
+                            ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
                             vr.validate(provider.getId());
                         }
                         else
@@ -213,7 +214,7 @@ public class EditRepository extends BaseActionSupport
                     provider.removeAllSets();
                     provider.setLastValidationDate(new Date());
                     getProviderService().updateProvider(provider);
-                    ValidateRepository vr = new ValidateRepository();
+                    ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
                     vr.validate(provider.getId());
                 }
                 else

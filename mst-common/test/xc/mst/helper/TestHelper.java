@@ -119,8 +119,6 @@ public class TestHelper {
 	 */
 	public static void initializeSolr() {
 		
-		MSTSolrServer.getInstance();
-		
 		/*
 		 * Loads the solr in  in workspace\MetadataServicesToolkit\MST-instances\MetadataServicesToolkit\solr.
 		 * Data(index) will be created under workspace\MetadataServicesToolkit\MST-instances\MetadataServicesToolkit\solr\data
@@ -135,7 +133,7 @@ public class TestHelper {
 			SolrCore core = container.create(descriptor);
 			container.register("core1", core, false);
 
-			MSTSolrServer.setServer(new EmbeddedSolrServer(container, "core1"));
+			((MSTSolrServer)MSTConfiguration.getBean("MSTSolrServer")).setServer(new EmbeddedSolrServer(container, "core1"));
 		}
 		catch (IOException ioe)
 		{

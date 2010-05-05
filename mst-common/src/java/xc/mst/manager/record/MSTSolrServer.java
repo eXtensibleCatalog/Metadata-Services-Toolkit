@@ -19,16 +19,13 @@ import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.core.CoreContainer;
 import org.apache.solr.core.CoreDescriptor;
 import org.apache.solr.core.SolrCore;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
 import org.xml.sax.SAXException;
 
 import xc.mst.bo.log.Log;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.log.DefaultLogDAO;
-import xc.mst.dao.log.LogDAO;
+import xc.mst.manager.BaseService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 
@@ -38,71 +35,44 @@ import xc.mst.utils.MSTConfiguration;
  * @author Sharmila Ranganathan
  *
  */
-public class MSTSolrServer {
+public class MSTSolrServer extends BaseService {
 
 	/**
 	 * The logger object
 	 */
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/**
-	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
-	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
-
 	/** Solr server */
-	private static SolrServer server = null;
-
-	/**
-	 * The singleton instance of the LuceneIndexManager
-	 */
-	private static MSTSolrServer instance = null;
-
-	/**
-	 * Data access object for managing general logs
-	 */
-	private static LogDAO logDao = new DefaultLogDAO();
+	protected SolrServer server = null;
 
 	/**
 	 * The repository management log file name
 	 */
-	private static Log logObj = null;
+	protected Log logObj = null;
 
-	static
+	public void init()
 	{
 		try
 		{
-			logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_SOLR_INDEX);
+			logObj = getLogDAO().getById(Constants.LOG_ID_SOLR_INDEX);
 		}
 		catch (DatabaseConfigException e)
 		{
 			log.error("Cannot connect to the database with the parameters in the configuration file.", e);
 		}
-	}
-
-	/**
-	 * Default constructor
-	 */
-	private MSTSolrServer()
-	{
-
-	}
-
-	/**
-	 * Gets the singleton instance of the LuceneIndexManager
-	 */
-	public static MSTSolrServer getInstance()
-	{
-		if(instance != null) {
-			return instance;
-		}
-
+		
 		if(log.isDebugEnabled()) {
 			log.debug("Initializing the MSTSolrServer instance.");
 		}
 		server = createSolrServer();
-		instance = new MSTSolrServer();
-		return instance;
+	}
+	
+	public SolrServer getServer() {
+		return server;
+	}
+	
+	public void setServer(SolrServer server) {
+		this.server = server;
 	}
 
 	/**
@@ -110,7 +80,7 @@ public class MSTSolrServer {
 	 *
 	 * @return
 	 */
-	private static SolrServer createSolrServer() {
+	private SolrServer createSolrServer() {
 
 		if (server == null)
 		{
@@ -119,7 +89,7 @@ public class MSTSolrServer {
 
 			log.info("Opening Solr at 3" + solrHome);
 			
-			java.util.logging.Level logLevel = getLogLevel(configuration.getProperty(Constants.CONFIG_SOLR_LOG_LEVEL));
+			java.util.logging.Level logLevel = getLogLevel(MSTConfiguration.getProperty(Constants.CONFIG_SOLR_LOG_LEVEL));
 			log.info("1");
 			
 			try
@@ -149,7 +119,7 @@ public class MSTSolrServer {
 				logObj.setErrors(logObj.getErrors()+1);
 				try
 				{
-					logDao.update(logObj);
+					getLogDAO().update(logObj);
 				}
 				catch(DataException e)
 				{
@@ -165,7 +135,7 @@ public class MSTSolrServer {
 				logObj.setErrors(logObj.getErrors()+1);
 				try
 				{
-					logDao.update(logObj);
+					getLogDAO().update(logObj);
 				}
 				catch(DataException e)
 				{
@@ -181,7 +151,7 @@ public class MSTSolrServer {
 				logObj.setErrors(logObj.getErrors()+1);
 				try
 				{
-					logDao.update(logObj);
+					getLogDAO().update(logObj);
 				}
 				catch(DataException e)
 				{
@@ -197,7 +167,7 @@ public class MSTSolrServer {
 				logObj.setErrors(logObj.getErrors()+1);
 				try
 				{
-					logDao.update(logObj);
+					getLogDAO().update(logObj);
 				}
 				catch(DataException e1)
 				{
@@ -239,11 +209,4 @@ public class MSTSolrServer {
 		return java.util.logging.Level.WARNING;
 	}
 
-	public  static SolrServer getServer() {
-		return server;
-	}
-
-	public static void setServer(SolrServer server) {
-		MSTSolrServer.server = server;
-	}
 }

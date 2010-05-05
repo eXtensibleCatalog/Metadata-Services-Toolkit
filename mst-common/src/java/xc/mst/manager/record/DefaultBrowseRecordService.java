@@ -54,7 +54,7 @@ public class DefaultBrowseRecordService extends BaseService implements BrowseRec
 	 */
 	public SolrBrowseResult search(SolrQuery query) throws IndexException, DatabaseConfigException {
 
-		SolrServer server = MSTSolrServer.getServer();
+		SolrServer server = getMstSolrServer().getServer();
 		SolrBrowseResult result = null;
 		
 		// Discard deleted records

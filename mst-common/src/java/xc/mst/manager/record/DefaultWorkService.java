@@ -19,6 +19,7 @@ import xc.mst.bo.record.Work;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.index.SolrIndexManager;
 import xc.mst.utils.index.WorkList;
 
 /**
@@ -46,7 +47,8 @@ public class DefaultWorkService extends WorkService
 		// Get the result of the query
 		SolrDocumentList docs = null;
 
-		docs = indexMgr.getDocumentList(query);
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		docs = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the work with the correct XC work ID
 		if(docs == null)
@@ -140,7 +142,7 @@ public class DefaultWorkService extends WorkService
 	} // end method getBasicWorkFromDocument(Document)
 
 	@Override
-	protected SolrInputDocument setFieldsOnDocument(Work work, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
+	public SolrInputDocument setFieldsOnDocument(Work work, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record
 		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");

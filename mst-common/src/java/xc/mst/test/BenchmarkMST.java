@@ -21,6 +21,7 @@ import xc.mst.harvester.HarvestRunner;
 import xc.mst.harvester.Hexception;
 import xc.mst.harvester.OAIErrorException;
 import xc.mst.scheduling.SchedulingException;
+import xc.mst.utils.MSTConfiguration;
 
 
 /**
@@ -99,7 +100,8 @@ public class BenchmarkMST
 		System.out.println(formatter.format(System.currentTimeMillis()) + " Starting harvester.");
 
 		// Construct the XC_Harvester object.  This will automatically run the harvester
-		HarvestRunner harvester = new HarvestRunner(1);//HarvestSchedule.getRunOnceScheduleId(provider.getProviderId()));
+		HarvestRunner harvester = (HarvestRunner)MSTConfiguration.getBean("HarvestRunner");
+		harvester.setScheduleId(1);//HarvestSchedule.getRunOnceScheduleId(provider.getProviderId()));
 		harvester.runHarvest();
 
 		// Print the end time

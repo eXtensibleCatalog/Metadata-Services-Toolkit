@@ -35,6 +35,7 @@ import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
+import xc.mst.utils.MSTConfiguration;
 
 
 /**
@@ -106,7 +107,8 @@ public class BrowseRecordServiceTest {
             schedule.setStartDate(java.sql.Date.valueOf("2009-05-01"));
 
             scheduleService.insertSchedule(schedule);
-            HarvestRunner harvestRunner = new HarvestRunner(schedule.getId());
+            HarvestRunner harvestRunner = (HarvestRunner)MSTConfiguration.getBean("HarvestRunner"); 
+            harvestRunner.setScheduleId(schedule.getId());
             harvestRunner.runHarvest();
             
             SolrQuery query = new SolrQuery();

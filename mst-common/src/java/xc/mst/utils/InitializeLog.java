@@ -19,7 +19,6 @@ import org.apache.log4j.PropertyConfigurator;
 
 import xc.mst.bo.log.Log;
 import xc.mst.dao.DataException;
-import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
 
 /**
@@ -43,7 +42,7 @@ public class InitializeLog  extends HttpServlet {
 		PropertyConfigurator.configure(MSTConfiguration.getUrlPath()+ MSTConfiguration.FILE_SEPARATOR + "log4j.config.txt");
 		
 	    // Initialize the general MST logs
-	    LogDAO logDao = new DefaultLogDAO();
+	    LogDAO logDao = (LogDAO)MSTConfiguration.getBean("LogDAO");
 	    List<Log> logs = null;
 		try 
 		{

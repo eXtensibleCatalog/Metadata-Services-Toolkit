@@ -186,7 +186,7 @@ public class TransformationService extends MetadataService
 				// Mark the record as having been processed by this service
 				processMe.addProcessedByService(service);
 				processMe.removeInputForService(service);
-				recordService.update(processMe);
+				getRecordService().update(processMe);
 			} else if (!processMe.getDeleted()) {
 				unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
 			}
@@ -195,7 +195,7 @@ public class TransformationService extends MetadataService
 			// Mark the record as having been processed by this service
 			processMe.addProcessedByService(service);
 			processMe.removeInputForService(service);
-			recordService.update(processMe);
+			getRecordService().update(processMe);
 			TimingLogger.add("outgoingRecords", 0);
 		}
 
@@ -220,7 +220,7 @@ public class TransformationService extends MetadataService
 		try {
 			
 			for (HeldHoldingRecord heldHoldingRecord: heldHoldingRecords) {
-				Record heldRecord = recordService.getByOaiIdentifier(heldHoldingRecord.getHoldingRecordOAIID());
+				Record heldRecord = getRecordService().getByOaiIdentifier(heldHoldingRecord.getHoldingRecordOAIID());
 
 				// delete held record from table
 				heldHoldingRecordDAO.delete(heldHoldingRecord);
@@ -394,7 +394,7 @@ public class TransformationService extends MetadataService
 					oaiIdsToGetFromSolr.add(h.getHoldingRecordOAIID());
 				}
 			}
-			holdingRecordsToRemoveLink.addAll(recordService.getByOaiIdentifiers(oaiIdsToGetFromSolr));
+			holdingRecordsToRemoveLink.addAll(getRecordService().getByOaiIdentifiers(oaiIdsToGetFromSolr));
 			
 			// Remove manifestation link in holding record in Solr
 			for (Record holdingRecord : holdingRecordsToRemoveLink) {
@@ -419,7 +419,7 @@ public class TransformationService extends MetadataService
 					// Remove XC holding from its predecessor MARC holding
 					List<Record> predecessors = holdingRecord.getProcessedFrom();
 					for (Record predecessor : predecessors) {
-						predecessor = recordService.getById(predecessor.getId());
+						predecessor = getRecordService().getById(predecessor.getId());
 						predecessor.removeSucessor(holdingRecord);
 						List<String> errors =  predecessor.getErrors();
 						
@@ -467,7 +467,7 @@ public class TransformationService extends MetadataService
 		
 		// Get any records which were processed from the record we're processing
 		// If there are any (there should be at most 1) we need to delete them
-		List<Record> existingRecords = recordService.getSuccessorsCreatedByServiceId(record.getId(), service.getId());
+		List<Record> existingRecords = getRecordService().getSuccessorsCreatedByServiceId(record.getId(), service.getId());
 
 		boolean updatedInputRecord = false;
 		
@@ -485,7 +485,7 @@ public class TransformationService extends MetadataService
 			// Mark the record as having been processed by this service
 			record.addProcessedByService(service);
 			record.removeInputForService(service);
-			recordService.update(record);
+			getRecordService().update(record);
 			
 			return new ArrayList<Record>();
 		
@@ -720,7 +720,7 @@ public class TransformationService extends MetadataService
 		
 		// Get any records which were processed from the record we're processing
 		// If there are any (there should be at most 1) we need to delete them
-		List<Record> existingRecords = recordService.getSuccessorsCreatedByServiceId(record.getId(), service.getId());
+		List<Record> existingRecords = getRecordService().getSuccessorsCreatedByServiceId(record.getId(), service.getId());
 		
 		boolean updatedInputRecord = false;
 		
@@ -753,7 +753,7 @@ public class TransformationService extends MetadataService
 			// Mark the record as having been processed by this service
 			record.addProcessedByService(service);
 			record.removeInputForService(service);
-			recordService.update(record);
+			getRecordService().update(record);
 			
 			return new ArrayList<Record>();
 		
@@ -925,7 +925,7 @@ public class TransformationService extends MetadataService
 			// Get holding records from Solr
 			if (oaiIdsToGetFromSolr.size() > 0) {
 			
-				completeSetOfRecords.addAll(recordService.getByOaiIdentifiers(xcHoldingOaiIds));
+				completeSetOfRecords.addAll(getRecordService().getByOaiIdentifiers(xcHoldingOaiIds));
 			}
 			
 			// Link manifestation to holding records

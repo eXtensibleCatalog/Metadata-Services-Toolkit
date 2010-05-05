@@ -19,10 +19,6 @@ import xc.mst.bo.processing.Job;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
-import xc.mst.dao.harvest.HarvestScheduleDAO;
-import xc.mst.dao.service.DefaultServiceDAO;
-import xc.mst.dao.service.ServiceDAO;
 
 /**
  * MySQL implementation of the data access object for the job table
@@ -31,20 +27,6 @@ import xc.mst.dao.service.ServiceDAO;
  */
 public class DefaultJobDAO extends JobDAO
 {
-	/**
-	 * The DAO for inserting and deleting harvest schedule
-	 */
-	private HarvestScheduleDAO harvestScheduleDao = new DefaultHarvestScheduleDAO();
-
-	/**
-	 * The DAO for inserting and deleting services
-	 */
-	private ServiceDAO serviceDao = new DefaultServiceDAO();
-	
-	/**
-	 * The DAO for inserting and deleting Processing Directive
-	 */
-	private ProcessingDirectiveDAO processingDirectiveDao = new DefaultProcessingDirectiveDAO();
 
 	/**
 	 * A PreparedStatement to get all jobs in the database
@@ -191,9 +173,9 @@ public class DefaultJobDAO extends JobDAO
 
 					// Set the fields on the job
 					job.setId(results.getInt(1));
-					job.setHarvestSchedule(harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(2)));
-					job.setService(serviceDao.loadBasicService(results.getInt(3)));
-					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.loadBasicProcessingDirective(results.getInt(4)));
+					job.setHarvestSchedule(getHarvestScheduleDAO().loadBasicHarvestSchedule(results.getInt(2)));
+					job.setService(getServiceDAO().loadBasicService(results.getInt(3)));
+					job.setProcessingDirective(results.getInt(4) == 0 ? null : getProcessingDirectiveDAO().loadBasicProcessingDirective(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
 					job.setJobType(results.getString(7));
@@ -281,9 +263,9 @@ public class DefaultJobDAO extends JobDAO
 
 					// Set the fields on the job
 					job.setId(results.getInt(1));
-					job.setHarvestSchedule(results.getInt(2) == 0 ? null : harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(2)));
-					job.setService(results.getInt(3) == 0 ? null : serviceDao.loadBasicService(results.getInt(3)));
-					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.loadBasicProcessingDirective(results.getInt(4)));
+					job.setHarvestSchedule(results.getInt(2) == 0 ? null : getHarvestScheduleDAO().loadBasicHarvestSchedule(results.getInt(2)));
+					job.setService(results.getInt(3) == 0 ? null : getServiceDAO().loadBasicService(results.getInt(3)));
+					job.setProcessingDirective(results.getInt(4) == 0 ? null : getProcessingDirectiveDAO().loadBasicProcessingDirective(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
 					job.setJobType(results.getString(7));
@@ -372,9 +354,9 @@ public class DefaultJobDAO extends JobDAO
 
 					// Set the fields on the job
 					job.setId(results.getInt(1));
-					job.setHarvestSchedule(results.getInt(2) == 0 ? null : harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(2)));
-					job.setService(results.getInt(3) == 0 ? null : serviceDao.loadBasicService(results.getInt(3)));
-					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.loadBasicProcessingDirective(results.getInt(4)));
+					job.setHarvestSchedule(results.getInt(2) == 0 ? null : getHarvestScheduleDAO().loadBasicHarvestSchedule(results.getInt(2)));
+					job.setService(results.getInt(3) == 0 ? null : getServiceDAO().loadBasicService(results.getInt(3)));
+					job.setProcessingDirective(results.getInt(4) == 0 ? null : getProcessingDirectiveDAO().loadBasicProcessingDirective(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
 					job.setJobType(results.getString(7));
@@ -466,9 +448,9 @@ public class DefaultJobDAO extends JobDAO
 
 					// Set the fields on the job
 					job.setId(results.getInt(1));
-					job.setHarvestSchedule(results.getInt(2) == 0 ? null : harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(2)));
-					job.setService(results.getInt(3) == 0 ? null : serviceDao.loadBasicService(results.getInt(3)));
-					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.loadBasicProcessingDirective(results.getInt(4)));
+					job.setHarvestSchedule(results.getInt(2) == 0 ? null : getHarvestScheduleDAO().loadBasicHarvestSchedule(results.getInt(2)));
+					job.setService(results.getInt(3) == 0 ? null : getServiceDAO().loadBasicService(results.getInt(3)));
+					job.setProcessingDirective(results.getInt(4) == 0 ? null : getProcessingDirectiveDAO().loadBasicProcessingDirective(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
 					job.setJobType(results.getString(7));
@@ -557,9 +539,9 @@ public class DefaultJobDAO extends JobDAO
 
 					// Set the fields on the job
 					job.setId(results.getInt(1));
-					job.setHarvestSchedule(results.getInt(2) == 0 ? null : harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(2)));
-					job.setService(results.getInt(3) == 0 ? null : serviceDao.loadBasicService(results.getInt(3)));
-					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.loadBasicProcessingDirective(results.getInt(4)));
+					job.setHarvestSchedule(results.getInt(2) == 0 ? null : getHarvestScheduleDAO().loadBasicHarvestSchedule(results.getInt(2)));
+					job.setService(results.getInt(3) == 0 ? null : getServiceDAO().loadBasicService(results.getInt(3)));
+					job.setProcessingDirective(results.getInt(4) == 0 ? null : getProcessingDirectiveDAO().loadBasicProcessingDirective(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
 					job.setJobType(results.getString(7));
@@ -706,9 +688,9 @@ public class DefaultJobDAO extends JobDAO
 					job = new Job();
 					// Set the fields on the job
 					job.setId(results.getInt(1));
-					job.setHarvestSchedule(results.getInt(2) == 0 ? null : harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(2)));
-					job.setService(results.getInt(3) == 0 ? null : serviceDao.loadBasicService(results.getInt(3)));
-					job.setProcessingDirective(results.getInt(4) == 0 ? null : processingDirectiveDao.getById(results.getInt(4)));
+					job.setHarvestSchedule(results.getInt(2) == 0 ? null : getHarvestScheduleDAO().loadBasicHarvestSchedule(results.getInt(2)));
+					job.setService(results.getInt(3) == 0 ? null : getServiceDAO().loadBasicService(results.getInt(3)));
+					job.setProcessingDirective(results.getInt(4) == 0 ? null : getProcessingDirectiveDAO().getById(results.getInt(4)));
 					job.setOutputSetId(results.getInt(5));
 					job.setOrder(results.getInt(6));
 					job.setJobType(results.getString(7));

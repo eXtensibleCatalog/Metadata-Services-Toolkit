@@ -24,7 +24,6 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.MSTConfiguration;
-import xc.mst.utils.index.IndexManagerFactory;
 import xc.mst.utils.index.ItemList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -41,11 +40,6 @@ public abstract class ItemService extends BaseService
 	 * A reference to the logger for this class
 	 */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-	/**
-	 * An Object shared by all LuceneObjects which manages the Lucene index
-	 */
-	protected static SolrIndexManager indexMgr = IndexManagerFactory.getIndexManager(MSTConfiguration.getProperty(Constants.CONFIG_SOLR_INDEXER));
 
 	/**
 	 * The name of the record ID field
@@ -124,7 +118,8 @@ public abstract class ItemService extends BaseService
 		// Set up the fields for the specific type of indexed object
 		doc = setFieldsOnDocument(item, doc, true);
 
-		return indexMgr.addDoc(doc);
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		return sim.addDoc(doc);
 	} // end method insert(Item)
 
 	/**
@@ -153,7 +148,8 @@ public abstract class ItemService extends BaseService
 		// Set up the fields for the Item
 		doc = setFieldsOnDocument(item, doc, false);
 
-		return indexMgr.addDoc(doc);
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		return sim.addDoc(doc);
 	} // end method update(Item)
 
 	/**

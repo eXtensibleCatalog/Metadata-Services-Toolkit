@@ -61,5 +61,8 @@
 	<bean name="UserGroupUtilService" class="xc.mst.manager.user.DefaultUserGroupUtilService" parent="BaseService" />
 	<bean name="UserService" class="xc.mst.manager.user.DefaultUserService" parent="BaseService" />
 	
+	<bean name="ValidateRepository" class="xc.mst.harvester.ValidateRepository" parent="BaseService" />
+	<bean name="MSTSolrServer" class="xc.mst.manager.record.MSTSolrServer" parent="BaseService" />
+	
 	<alias name="${record.service}" alias="RecordService" />
 </beans>

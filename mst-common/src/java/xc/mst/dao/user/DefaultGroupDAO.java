@@ -24,16 +24,6 @@ import xc.mst.dao.DatabaseConfigException;
 public class DefaultGroupDAO extends GroupDAO
 {
 	/**
-	 * Data access object for getting permissions
-	 */
-	private PermissionDAO permissionDao = new DefaultPermissionDAO();
-
-	/**
-	 * Data access object for managing permissions for a group
-	 */
-	private GroupPermissionUtilDAO groupPermissionDao = new DefaultGroupPermissionUtilDAO();
-
-	/**
 	 * A PreparedStatement to get all groups in the database
 	 */
 	private static PreparedStatement psGetAll = null;
@@ -157,7 +147,7 @@ public class DefaultGroupDAO extends GroupDAO
 					group.setDescription(results.getString(3));
 
 					// Set the correct permissions on the group
-					group.setPermissions(permissionDao.getPermissionsForGroup(group.getId()));
+					group.setPermissions(getPermissionDAO().getPermissionsForGroup(group.getId()));
 
 					// Return the group
 					groups.add(group);
@@ -237,7 +227,7 @@ public class DefaultGroupDAO extends GroupDAO
 					group.setDescription(results.getString(3));
 
 					// Set the correct permissions on the group
-					group.setPermissions(permissionDao.getPermissionsForGroup(group.getId()));
+					group.setPermissions(getPermissionDAO().getPermissionsForGroup(group.getId()));
 
 					// Return the group
 					groups.add(group);
@@ -277,7 +267,7 @@ public class DefaultGroupDAO extends GroupDAO
 
 		// If we found the group, set up its permissions
 		if(group != null)
-			group.setPermissions(permissionDao.getPermissionsForGroup(group.getId()));
+			group.setPermissions(getPermissionDAO().getPermissionsForGroup(group.getId()));
 
 		// return the result
 		return group;
@@ -341,7 +331,7 @@ public class DefaultGroupDAO extends GroupDAO
 						log.debug("Found the group with name " + groupName + " in the database.");
 
 					// set up its permissions
-					group.setPermissions(permissionDao.getPermissionsForGroup(group.getId()));
+					group.setPermissions(getPermissionDAO().getPermissionsForGroup(group.getId()));
 
 					// Return the page
 					return group;
@@ -507,7 +497,7 @@ public class DefaultGroupDAO extends GroupDAO
 				    for(Permission permission : group.getPermissions())
                     {
                         
-				    	success = groupPermissionDao.insert(group.getId(), permission.getTabId()) && success;
+				    	success = getGroupPermissionUtilDAO().insert(group.getId(), permission.getTabId()) && success;
                     }
 
 					return success;
@@ -570,11 +560,11 @@ public class DefaultGroupDAO extends GroupDAO
 				if(dbConnectionManager.executeUpdate(psUpdate) > 0)
 				{
 					// Remove the old permissions for the group
-					boolean success = groupPermissionDao.deletePermissionsForGroup(group.getId());
+					boolean success = getGroupPermissionUtilDAO().deletePermissionsForGroup(group.getId());
 
 				    // Add the permissions to the group
 				    for(Permission permission : group.getPermissions())
-				    	success = groupPermissionDao.insert(group.getId(), permission.getTabId()) && success;
+				    	success = getGroupPermissionUtilDAO().insert(group.getId(), permission.getTabId()) && success;
 
 					return success;
 				} // end if(update successful)

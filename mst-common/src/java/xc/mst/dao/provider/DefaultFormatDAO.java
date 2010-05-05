@@ -27,10 +27,6 @@ import xc.mst.dao.DatabaseConfigException;
  */
 public class DefaultFormatDAO extends FormatDAO
 {
-	/**
-	 * Data access object for adding and removing formats from a provider
-	 */
-	ProviderFormatUtilDAO providerFormatDao = new DefaultProviderFormatUtilDAO();
 
 	/**
 	 * A PreparedStatement to get all formats in the database
@@ -352,7 +348,7 @@ public class DefaultFormatDAO extends FormatDAO
 		
 		List<Format> formats = new ArrayList<Format>();
 
-		for(Integer formatId : providerFormatDao.getFormatsForProvider(providerId))
+		for(Integer formatId : getProviderFormatUtilDAO().getFormatsForProvider(providerId))
 			formats.add(getById(formatId.intValue()));
 
 		return formats;

@@ -21,6 +21,7 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.ManifestationList;
+import xc.mst.utils.index.SolrIndexManager;
 
 /**
  * Lucene implementation of the service class to query, add, update and
@@ -47,7 +48,8 @@ public class DefaultManifestationService extends ManifestationService
 		// Get the result of the query
 		SolrDocumentList docs = null;
 
-		docs = indexMgr.getDocumentList(query);
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		docs = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the work with the correct XC manifestation ID
 		if(docs == null)
@@ -129,7 +131,7 @@ public class DefaultManifestationService extends ManifestationService
 	} // end method getBasicManifestationFromDocument(Document)
 
 	@Override
-	protected SolrInputDocument setFieldsOnDocument(Manifestation manifestation, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
+	public SolrInputDocument setFieldsOnDocument(Manifestation manifestation, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record
 		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");

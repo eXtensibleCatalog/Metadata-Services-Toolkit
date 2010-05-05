@@ -20,20 +20,9 @@ import xc.mst.bo.harvest.Harvest;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.provider.DefaultProviderDAO;
-import xc.mst.dao.provider.ProviderDAO;
 
 public class DefaultHarvestDAO extends HarvestDAO
 {
-	/**
-	 * The DAO for getting and inserting harvest schedules
-	 */
-	HarvestScheduleDAO harvestScheduleDao = new DefaultHarvestScheduleDAO();
-
-	/**
-	 * The DAO for getting and inserting providers
-	 */
-	ProviderDAO providerDao = new DefaultProviderDAO();
 	
 	/**
 	 * A PreparedStatement to get all harvests in the database
@@ -163,8 +152,8 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTime(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestSchedule(harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(6)));
-					harvest.setProvider(providerDao.getById(results.getInt(7)));
+					harvest.setHarvestSchedule(getHarvestScheduleDAO().loadBasicHarvestSchedule(results.getInt(6)));
+					harvest.setProvider(getProviderDAO().getById(results.getInt(7)));
 
 					// Add the harvest to the list
 					harvests.add(harvest);
@@ -252,8 +241,8 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTimestamp(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestSchedule(harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(6)));
-					harvest.setProvider(providerDao.getById(results.getInt(7)));
+					harvest.setHarvestSchedule(getHarvestScheduleDAO().loadBasicHarvestSchedule(results.getInt(6)));
+					harvest.setProvider(getProviderDAO().getById(results.getInt(7)));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the harvest with ID " + harvestId + " in the database.");
@@ -343,8 +332,8 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTime(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestSchedule(harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(6)));
-					harvest.setProvider(providerDao.getById(results.getInt(7)));
+					harvest.setHarvestSchedule(getHarvestScheduleDAO().loadBasicHarvestSchedule(results.getInt(6)));
+					harvest.setProvider(getProviderDAO().getById(results.getInt(7)));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the harvest with ID " + harvestId + " in the database.");
@@ -437,8 +426,8 @@ public class DefaultHarvestDAO extends HarvestDAO
 					harvest.setEndTime(results.getTimestamp(3));
 					harvest.setRequest(results.getString(4));
 					harvest.setResult(results.getString(5));
-					harvest.setHarvestSchedule(harvestScheduleDao.loadBasicHarvestSchedule(results.getInt(6)));
-					harvest.setProvider(providerDao.getById(results.getInt(7)));
+					harvest.setHarvestSchedule(getHarvestScheduleDAO().loadBasicHarvestSchedule(results.getInt(6)));
+					harvest.setProvider(getProviderDAO().getById(results.getInt(7)));
 
 					// Add the harvest to the list
 					harvests.add(harvest);

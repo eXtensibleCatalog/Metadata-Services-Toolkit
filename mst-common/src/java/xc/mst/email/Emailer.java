@@ -24,16 +24,15 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-
 import javax.mail.internet.MimeMultipart;
+
 import org.apache.log4j.Logger;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
 
 import xc.mst.bo.emailconfig.EmailConfig;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
-import xc.mst.dao.emailconfig.DefaultEmailConfigDAO;
+import xc.mst.dao.emailconfig.EmailConfigDAO;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * This class can be used to send emails based on parameters in the configuration file
@@ -62,7 +61,7 @@ public class Emailer
 	{
 		try
 		{
-			config = new DefaultEmailConfigDAO().getConfiguration();
+			config =((EmailConfigDAO)MSTConfiguration.getBean("EmailConfigDAO")).getConfiguration();
 		}
 		catch (DataException e)
 		{

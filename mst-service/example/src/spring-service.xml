@@ -16,7 +16,7 @@
 	
 	<import resource="spring-custom.xml"/>
 	
-	<bean id="Service" class="${service.classname}" scope="singleton">
+	<bean id="Service" class="${service.classname}" parent="BaseService">
 	</bean>
 		
 </beans>

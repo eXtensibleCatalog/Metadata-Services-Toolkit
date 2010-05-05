@@ -38,7 +38,7 @@ public class Records extends AbstractList<Record>
 	/**
 	 * An Object which manages the Solr index
 	 */
-	protected static SolrIndexManager indexMgr = SolrIndexManager.getInstance();
+	protected SolrIndexManager indexMgr = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
 	
 	/**
 	 * The current offset into the results of the query that are in the document list

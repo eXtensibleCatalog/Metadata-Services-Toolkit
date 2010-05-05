@@ -40,6 +40,7 @@ import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.ExpressionService;
 import xc.mst.manager.record.HoldingsService;
 import xc.mst.manager.record.ItemService;
+import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.record.ManifestationService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
@@ -399,5 +400,8 @@ public class BaseService {
 	}
 	public RecordService getRecordService() {
 		return (RecordService)MSTConfiguration.getBean("RecordService");
+	}
+	public MSTSolrServer getMstSolrServer() {
+		return (MSTSolrServer)MSTConfiguration.getBean("MSTSolrServer");
 	}
 }

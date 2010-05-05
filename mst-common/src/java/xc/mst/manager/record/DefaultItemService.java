@@ -21,6 +21,7 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.ItemList;
+import xc.mst.utils.index.SolrIndexManager;
 
 /**
  * Lucene implementation of the service class to query, add, update and
@@ -46,7 +47,8 @@ public class DefaultItemService extends ItemService
 
 		// Get the result of the query
 		SolrDocumentList doc = null;
-		doc = indexMgr.getDocumentList(query);
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		doc = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the item with the correct XC item ID
 		if(doc == null)
@@ -133,7 +135,7 @@ public class DefaultItemService extends ItemService
 	} // end method getBasicItemFromDocument(Document)
 
 	@Override
-	protected SolrInputDocument setFieldsOnDocument(Item item, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
+	public SolrInputDocument setFieldsOnDocument(Item item, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record
 		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");

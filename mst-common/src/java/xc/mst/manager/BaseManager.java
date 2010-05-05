@@ -1,5 +1,6 @@
 package xc.mst.manager;
 
+import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.configuration.EmailConfigService;
 import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.logs.LogService;
@@ -10,6 +11,7 @@ import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.ExpressionService;
 import xc.mst.manager.record.HoldingsService;
 import xc.mst.manager.record.ItemService;
+import xc.mst.manager.record.MSTSolrServer;
 import xc.mst.manager.record.ManifestationService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
@@ -21,6 +23,8 @@ import xc.mst.manager.user.PermissionService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
+import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.index.SolrIndexManager;
 
 public class BaseManager extends BaseService {
 	
@@ -45,6 +49,8 @@ public class BaseManager extends BaseService {
 	protected UserGroupUtilService userGroupUtilService = null;
 	protected UserService userService = null;
 	protected RecordService recordService = null;
+	protected ValidateRepository validateRepository = null;
+	protected MSTSolrServer mstSolrServer = null;
 	
 	public EmailConfigService getEmailConfigService() {
 		return emailConfigService;
@@ -173,5 +179,20 @@ public class BaseManager extends BaseService {
 	public void setRecordService(RecordService recordService) {
 		this.recordService = recordService;
 	}
-
+	public ValidateRepository getValidateRepository() {
+		return validateRepository;
+	}
+	public void setValidateRepository(ValidateRepository validateRepository) {
+		this.validateRepository = validateRepository;
+	}
+	public MSTSolrServer getMstSolrServer() {
+		return mstSolrServer;
+	}
+	public void setMstSolrServer(MSTSolrServer mstSolrServer) {
+		this.mstSolrServer = mstSolrServer;
+	}
+	
+	public SolrIndexManager getSolrIndexManager() {
+		return (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+	}
 }

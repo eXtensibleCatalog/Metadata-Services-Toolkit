@@ -28,14 +28,9 @@ import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.harvest.DefaultHarvestScheduleDAO;
 import xc.mst.dao.harvest.HarvestScheduleDAO;
-import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
-import xc.mst.dao.record.DefaultXcIdentifierForFrbrElementDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
-import xc.mst.dao.service.DefaultOaiIdentiferForServiceDAO;
-import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.OaiIdentifierForServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
@@ -63,14 +58,14 @@ public class InitializeServices  extends HttpServlet {
 	 */
 	public void init() 
 	{
-	    LogDAO logDao = new DefaultLogDAO();
-	    ServiceDAO serviceDao = new DefaultServiceDAO();
+	    LogDAO logDao = (LogDAO)MSTConfiguration.getBean("LogDAO");
+	    ServiceDAO serviceDao = (ServiceDAO)MSTConfiguration.getBean("ServiceDAO");
 	    
 	    // Load the services
 	    List<Service> services = null;
 	    String servicesLogFileName = null;
 	    List<HarvestSchedule> schedules = null;
-		HarvestScheduleDAO scheduleDao = new DefaultHarvestScheduleDAO();
+		HarvestScheduleDAO scheduleDao = (HarvestScheduleDAO)MSTConfiguration.getBean("HarvestScheduleDAO");
 		
 		try 
 		{
@@ -197,11 +192,11 @@ public class InitializeServices  extends HttpServlet {
 		  if (record != null) {
 			  
 			  // Update last record ID
-			  XcIdentifierForFrbrElementDAO xcIdentifierDAO = new DefaultXcIdentifierForFrbrElementDAO();
+			  XcIdentifierForFrbrElementDAO xcIdentifierDAO = (XcIdentifierForFrbrElementDAO)MSTConfiguration.getBean("XcIdentifierForFrbrElementDAO");
 			  xcIdentifierDAO.writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD, record.getId());
 			  
 			  // Update last OAI Identifier
-			  OaiIdentifierForServiceDAO oaiIdentifierDAO = new DefaultOaiIdentiferForServiceDAO();
+			  OaiIdentifierForServiceDAO oaiIdentifierDAO = (OaiIdentifierForServiceDAO)MSTConfiguration.getBean("OaiIdentifierForServiceDAO");
 			  String oaiIdentifier = record.getOaiIdentifier();
 			  int indexOfSlash = oaiIdentifier.lastIndexOf("/");
 			  int identifier = Integer.valueOf(oaiIdentifier.substring(indexOfSlash + 1));

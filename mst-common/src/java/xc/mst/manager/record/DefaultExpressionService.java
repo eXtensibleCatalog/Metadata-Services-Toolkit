@@ -21,6 +21,7 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.ExpressionList;
+import xc.mst.utils.index.SolrIndexManager;
 
 /**
  * Lucene implementation of the service class to query, add, update and
@@ -36,6 +37,8 @@ public class DefaultExpressionService extends ExpressionService
 	@Override
 	public Expression getByXcExpressionId(long expressionId) throws DatabaseConfigException, IndexException
 	{
+		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with XC expression ID " + expressionId);
 
@@ -47,7 +50,7 @@ public class DefaultExpressionService extends ExpressionService
 		// Get the result of the query
 		SolrDocumentList doc = null;
 
-		doc = indexMgr.getDocumentList(query);
+		doc = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the expression with the correct XC expression ID
 		if(doc == null)

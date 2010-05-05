@@ -10,10 +10,10 @@
 package xc.mst.dao.harvest;
 
 import java.sql.Date;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +25,6 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.provider.DefaultProviderDAO;
-import xc.mst.dao.provider.ProviderDAO;
 
 /**
  * MySQL implementation of the Data Access Object for the harvest schedules table
@@ -35,15 +33,6 @@ import xc.mst.dao.provider.ProviderDAO;
  */
 public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 {
-	/**
-	 * The DAO for getting and inserting providers
-	 */
-	private static ProviderDAO providerDao = new DefaultProviderDAO();
-
-	/**
-	 * The DAO for getting and inserting harvest schedule steps
-	 */
-	private static HarvestScheduleStepDAO harvestScheduleStepDao = new DefaultHarvestScheduleStepDAO();
 
 	/**
 	 * A PreparedStatement to get all harvest schedules in the database
@@ -186,7 +175,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setId(results.getInt(1));
 					harvestSchedule.setScheduleName(results.getString(2));
 					harvestSchedule.setRecurrence(results.getString(3));
-					harvestSchedule.setProvider(providerDao.loadBasicProvider(results.getInt(4)));
+					harvestSchedule.setProvider(getProviderDAO().loadBasicProvider(results.getInt(4)));
 					harvestSchedule.setStartDate(results.getDate(5));
 					harvestSchedule.setEndDate(results.getDate(6));
 					harvestSchedule.setMinute(results.getInt(7));
@@ -289,7 +278,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                     harvestSchedule.setId(results.getInt(1));
                     harvestSchedule.setScheduleName(results.getString(2));
                     harvestSchedule.setRecurrence(results.getString(3));
-                    harvestSchedule.setProvider(providerDao.loadBasicProvider(results.getInt(4)));
+                    harvestSchedule.setProvider(getProviderDAO().loadBasicProvider(results.getInt(4)));
                     harvestSchedule.setStartDate(results.getDate(5));
                     harvestSchedule.setEndDate(results.getDate(6));
                     harvestSchedule.setMinute(results.getInt(7));
@@ -371,7 +360,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                     harvestSchedule.setId(results.getInt(1));
                     harvestSchedule.setScheduleName(results.getString(2));
                     harvestSchedule.setRecurrence(results.getString(3));
-                    harvestSchedule.setProvider(providerDao.getByName(results.getString(4)));
+                    harvestSchedule.setProvider(getProviderDAO().getByName(results.getString(4)));
                     harvestSchedule.setStartDate(results.getDate(5));
                     harvestSchedule.setEndDate(results.getDate(6));
                     harvestSchedule.setMinute(results.getInt(7));
@@ -475,7 +464,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setId(results.getInt(1));
 					harvestSchedule.setScheduleName(results.getString(2));
 					harvestSchedule.setRecurrence(results.getString(3));
-					harvestSchedule.setProvider(providerDao.getById(results.getInt(4)));
+					harvestSchedule.setProvider(getProviderDAO().getById(results.getInt(4)));
 					harvestSchedule.setStartDate(results.getDate(5));
 					harvestSchedule.setEndDate(results.getDate(6));
 					harvestSchedule.setMinute(results.getInt(7));
@@ -484,7 +473,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setNotifyEmail(results.getString(10));
 					harvestSchedule.setStatus(results.getString(11));
 					harvestSchedule.setRequest(results.getString(12));
-					harvestSchedule.setSteps(harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()));
+					harvestSchedule.setSteps(getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId()));
 
 					// Get the sets and formats for the schedule based on its steps
 					for(HarvestScheduleStep step : harvestSchedule.getSteps())
@@ -586,7 +575,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setId(results.getInt(1));
 					harvestSchedule.setScheduleName(results.getString(2));
 					harvestSchedule.setRecurrence(results.getString(3));
-					harvestSchedule.setProvider(providerDao.getById(results.getInt(4)));
+					harvestSchedule.setProvider(getProviderDAO().getById(results.getInt(4)));
 					harvestSchedule.setStartDate(results.getDate(5));
 					harvestSchedule.setEndDate(results.getDate(6));
 					harvestSchedule.setMinute(results.getInt(7));
@@ -696,7 +685,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setId(results.getInt(1));
 					harvestSchedule.setScheduleName(results.getString(2));
 					harvestSchedule.setRecurrence(results.getString(3));
-					harvestSchedule.setProvider(providerDao.getById(results.getInt(4)));
+					harvestSchedule.setProvider(getProviderDAO().getById(results.getInt(4)));
 					harvestSchedule.setStartDate(results.getDate(5));
 					harvestSchedule.setEndDate(results.getDate(6));
 					harvestSchedule.setMinute(results.getInt(7));
@@ -705,7 +694,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setNotifyEmail(results.getString(10));
 					harvestSchedule.setStatus(results.getString(11));
 					harvestSchedule.setRequest(results.getString(12));
-					harvestSchedule.setSteps(harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()));
+					harvestSchedule.setSteps(getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId()));
 
 					// Get the sets and formats for the schedule based on its steps
 					for(HarvestScheduleStep step : harvestSchedule.getSteps())
@@ -807,7 +796,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setId(results.getInt(1));
 					harvestSchedule.setScheduleName(results.getString(2));
 					harvestSchedule.setRecurrence(results.getString(3));
-					harvestSchedule.setProvider(providerDao.loadBasicProvider(results.getInt(4)));
+					harvestSchedule.setProvider(getProviderDAO().loadBasicProvider(results.getInt(4)));
 					harvestSchedule.setStartDate(results.getDate(5));
 					harvestSchedule.setEndDate(results.getDate(6));
 					harvestSchedule.setMinute(results.getInt(7));
@@ -1025,7 +1014,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setId(results.getInt(1));
 					harvestSchedule.setScheduleName(results.getString(2));
 					harvestSchedule.setRecurrence(results.getString(3));
-					harvestSchedule.setProvider(providerDao.getById(results.getInt(4)));
+					harvestSchedule.setProvider(getProviderDAO().getById(results.getInt(4)));
 					harvestSchedule.setStartDate(results.getDate(5));
 					harvestSchedule.setEndDate(results.getDate(6));
 					harvestSchedule.setMinute(results.getInt(7));
@@ -1034,7 +1023,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setNotifyEmail(results.getString(10));
 					harvestSchedule.setStatus(results.getString(11));
 					harvestSchedule.setRequest(results.getString(12));
-					harvestSchedule.setSteps(harvestScheduleStepDao.getStepsForSchedule(harvestSchedule.getId()));
+					harvestSchedule.setSteps(getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId()));
 
 					// Get the sets and formats for the schedule based on its steps
 					for(HarvestScheduleStep step : harvestSchedule.getSteps())
@@ -1082,7 +1071,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 		// Insert the provider if it hasn't already been inserted
 		if(harvestSchedule.getProvider().getId() <= 0)
-			if(!providerDao.insert(harvestSchedule.getProvider()))
+			if(!getProviderDAO().insert(harvestSchedule.getProvider()))
 				return false;
 
 		synchronized(psInsertLock)
@@ -1154,7 +1143,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				    	for(Format format : harvestSchedule.getFormats())
 				    	{
 				    		step.setFormat(format);
-				    		success = harvestScheduleStepDao.insert(step, harvestSchedule.getId()) && success;
+				    		success = getHarvestScheduleStepDAO().insert(step, harvestSchedule.getId()) && success;
 				    	} // end loop over formats
 				    } // end if(the schedule had no sets)
 
@@ -1168,7 +1157,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				    		for(Set set : harvestSchedule.getSets())
 				    		{
 				    			step.setSet(set);
-				    			success = harvestScheduleStepDao.insert(step, harvestSchedule.getId()) && success;
+				    			success = getHarvestScheduleStepDAO().insert(step, harvestSchedule.getId()) && success;
 				    		}
 				    	} // end loop over formats
 				    } // end else (the schedule had steps)
@@ -1207,7 +1196,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 
 		// Insert the provider if it hasn't already been inserted
 		if(harvestSchedule.getProvider().getId() <= 0)
-			if(!providerDao.insert(harvestSchedule.getProvider()))
+			if(!getProviderDAO().insert(harvestSchedule.getProvider()))
 				return false;
 
 		synchronized(psUpdateLock)
@@ -1264,7 +1253,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					HarvestSchedule oldHarvestSchedule = getById(harvestSchedule.getId());
 					
 					// Delete all steps from before we updated the schedule
-					harvestScheduleStepDao.deleteStepsForSchedule(harvestSchedule.getId());
+					getHarvestScheduleStepDAO().deleteStepsForSchedule(harvestSchedule.getId());
 	
 					// A step in the schedule we just inserted
 				    HarvestScheduleStep step = new HarvestScheduleStep();
@@ -1285,7 +1274,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				    				break;
 				    			}
 			    			}	
-				    		success = harvestScheduleStepDao.insert(step, harvestSchedule.getId()) && success;
+				    		success = getHarvestScheduleStepDAO().insert(step, harvestSchedule.getId()) && success;
 				    	} // end loop over formats
 				    } // end if(the schedule had no sets)
 	
@@ -1320,7 +1309,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					    			}
 				    			}				 
 				    			
-				    			success = harvestScheduleStepDao.insert(step, harvestSchedule.getId()) && success;
+				    			success = getHarvestScheduleStepDAO().insert(step, harvestSchedule.getId()) && success;
 				    		}
 				    	} // end loop over formats
 				    } // end else (the schedule had steps)

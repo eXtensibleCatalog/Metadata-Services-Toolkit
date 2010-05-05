@@ -86,14 +86,14 @@
 	</target>
 
 	<target name="ms.copy-example">
-		<copy todir="${ms.custom}">
+		<copy todir="${ms.custom}" enablemultiplemappings="true">
 			<fileset dir="${ms.example}">
 				<include name="**/*.xml" />
 				<include name="**/*.properties" />
 			</fileset>
 			<scriptmapper language="javascript">
-			  self.addMappedName("normalization/"+source);
-			  self.addMappedName("transformation/"+source);
+			  self.addMappedName("MARCNormalization/"+source);
+			  self.addMappedName("MARCToXCTransformation/"+source);
 			  self.addMappedName("aggregation/"+source);
 			</scriptmapper>
 		</copy>

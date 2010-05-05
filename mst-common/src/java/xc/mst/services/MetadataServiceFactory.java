@@ -6,7 +6,6 @@ import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.services.ServicesManager;
 import xc.mst.utils.LogWriter;
@@ -26,11 +25,6 @@ public class MetadataServiceFactory {
 	protected static Logger log = Logger.getLogger(Constants.LOGGER_PROCESSING);
 	
 	/**
-	 * Data access object for getting services
-	 */
-	private static ServiceDAO serviceDao = new DefaultServiceDAO();
-	
-	/**
 	 * Runs the service with the passed ID
 	 *
 	 * @param serviceId The ID of the MetadataService to run
@@ -40,6 +34,8 @@ public class MetadataServiceFactory {
 	{
 		if(log.isDebugEnabled())
 			log.debug("EnteringServiceFactoryegetnService for the service with ID " + serviceId + ".");
+		
+		ServiceDAO serviceDAO = (ServiceDAO)MSTConfiguration.getBean("ServiceDAO");
 
 		// Get the service
 		Service service = null;
@@ -48,7 +44,7 @@ public class MetadataServiceFactory {
 		try {
 		
 			// Get the service details from the DB
-			service = serviceDao.getById(serviceId);
+			service = serviceDAO.getById(serviceId);
 			
 			/*
 			// The name of the class for the service specified in the configuration file.
@@ -122,7 +118,7 @@ public class MetadataServiceFactory {
 			// Load the provider again in case it was updated during the harvest
 			try
 			{
-				service = serviceDao.getById(service.getId());
+				service = serviceDAO.getById(service.getId());
 			}
 			catch (DatabaseConfigException e1)
 			{
@@ -136,7 +132,7 @@ public class MetadataServiceFactory {
 
 			try
 			{
-				serviceDao.update(service);
+				serviceDAO.update(service);
 			}
 			catch (DataException e2)
 			{
@@ -198,7 +194,7 @@ public class MetadataServiceFactory {
 			// Load the provider again in case it was updated during the harvest
 			try
 			{
-				service = serviceDao.getById(service.getId());
+				service = serviceDAO.getById(service.getId());
 			}
 			catch (DatabaseConfigException e1)
 			{
@@ -212,7 +208,7 @@ public class MetadataServiceFactory {
 
 			try
 			{
-				serviceDao.update(service);
+				serviceDAO.update(service);
 			}
 			catch (DataException e2)
 			{

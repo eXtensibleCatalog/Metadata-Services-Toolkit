@@ -26,10 +26,9 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.log.DefaultLogDAO;
-import xc.mst.dao.log.LogDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.SolrIndexManager;
 
 /**
@@ -39,25 +38,6 @@ import xc.mst.utils.index.SolrIndexManager;
  */
 public class DefaultProviderDAO extends ProviderDAO
 {
-	/**
-	 * Data access object for getting sets
-	 */
-	private SetDAO setDao = new DefaultSetDAO();
-
-	/**
-	 * Data access object for getting formats
-	 */
-	private FormatDAO formatDao = new DefaultFormatDAO();
-	
-	/**
-	 * Data access object for managing formats for a provider
-	 */
-	private ProviderFormatUtilDAO providerFormatDao = new DefaultProviderFormatUtilDAO();
-
-	/**
-	 * Data access object for managing general logs
-	 */
-	private LogDAO logDao = new DefaultLogDAO();
 
 	/**
 	 * The repository management log file name
@@ -140,7 +120,7 @@ public class DefaultProviderDAO extends ProviderDAO
 		
 		try
 		{
-			logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_REPOSITORY_MANAGEMENT);
+			logObj = getLogDAO().getById(Constants.LOG_ID_REPOSITORY_MANAGEMENT);
 		}
 		catch(DatabaseConfigException e)
 		{
@@ -263,10 +243,10 @@ public class DefaultProviderDAO extends ProviderDAO
 					provider.setLastLogReset(results.getDate(33));
 					provider.setLogFileName(results.getString(34));
 
-					provider.setSets(setDao.getSetsForProvider(provider.getId()));
+					provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
 
-					provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
-					provider.setHarvestedRecordSets(setDao.getRecordSetsForProvider(provider.getId()));
+					provider.setFormats(getFormatDAO().getFormatsForProvider(provider.getId()));
+					provider.setHarvestedRecordSets(getSetDAO().getRecordSetsForProvider(provider.getId()));
 
 					// Add the provider to the list
 					providers.add(provider);
@@ -415,10 +395,10 @@ public class DefaultProviderDAO extends ProviderDAO
 				provider.setLastLogReset(results.getDate(33));
 				provider.setLogFileName(results.getString(34));
 
-				provider.setSets(setDao.getSetsForProvider(provider.getId()));
+				provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
 
-				provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
-				provider.setHarvestedRecordSets(setDao.getRecordSetsForProvider(provider.getId()));
+				provider.setFormats(getFormatDAO().getFormatsForProvider(provider.getId()));
+				provider.setHarvestedRecordSets(getSetDAO().getRecordSetsForProvider(provider.getId()));
 
 				// Add the provider to the list
 				providers.add(provider);
@@ -463,9 +443,9 @@ public class DefaultProviderDAO extends ProviderDAO
 		// If we found the provider, set up its sets and formats
 		if(provider != null)
 		{
-			provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
-			provider.setSets(setDao.getSetsForProvider(provider.getId()));
-			provider.setHarvestedRecordSets(setDao.getRecordSetsForProvider(provider.getId()));
+			provider.setFormats(getFormatDAO().getFormatsForProvider(provider.getId()));
+			provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
+			provider.setHarvestedRecordSets(getSetDAO().getRecordSetsForProvider(provider.getId()));
 		} // end if(provider found)
 
 		return provider;
@@ -587,9 +567,9 @@ public class DefaultProviderDAO extends ProviderDAO
 					provider.setLastLogReset(results.getDate(33));
 					provider.setLogFileName(results.getString(34));
 
-					provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
-					provider.setSets(setDao.getSetsForProvider(provider.getId()));
-					provider.setHarvestedRecordSets(setDao.getRecordSetsForProvider(provider.getId()));
+					provider.setFormats(getFormatDAO().getFormatsForProvider(provider.getId()));
+					provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
+					provider.setHarvestedRecordSets(getSetDAO().getRecordSetsForProvider(provider.getId()));
 					if(log.isDebugEnabled())
 						log.debug("Found the provider with URL " + providerURL + " in the database.");
 
@@ -735,9 +715,9 @@ public class DefaultProviderDAO extends ProviderDAO
 					provider.setLastLogReset(results.getDate(33));
 					provider.setLogFileName(results.getString(34));
 
-					provider.setFormats(formatDao.getFormatsForProvider(provider.getId()));
-					provider.setSets(setDao.getSetsForProvider(provider.getId()));
-					provider.setHarvestedRecordSets(setDao.getRecordSetsForProvider(provider.getId()));
+					provider.setFormats(getFormatDAO().getFormatsForProvider(provider.getId()));
+					provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
+					provider.setHarvestedRecordSets(getSetDAO().getRecordSetsForProvider(provider.getId()));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the provider with the name " + name + " in the database.");
@@ -1031,11 +1011,11 @@ public class DefaultProviderDAO extends ProviderDAO
 
 				    // Add the correct formats for the provider
 				    for(Format format : provider.getFormats())
-				    	success = providerFormatDao.insert(provider.getId(), format.getId()) && success;
+				    	success = getProviderFormatUtilDAO().insert(provider.getId(), format.getId()) && success;
 
 				    // Add the correct sets for the provider
 				    for(Set set : provider.getSets())
-					    success = (set.getId() <= 0 ? setDao.insertForProvider(set, provider.getId()) : setDao.addToProvider(set, provider.getId())) && success;
+					    success = (set.getId() <= 0 ? getSetDAO().insertForProvider(set, provider.getId()) : getSetDAO().addToProvider(set, provider.getId())) && success;
 
 				    if(success)
 				    	LogWriter.addInfo(logObj.getLogFileLocation(), "Added a new repository with the URL " + provider.getOaiProviderUrl());
@@ -1044,7 +1024,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				    	LogWriter.addWarning(logObj.getLogFileLocation(), "Added a new repository with the URL " + provider.getOaiProviderUrl() + ", but failed to mark which sets and formats it outputs");
 				    	
 				    	logObj.setWarnings(logObj.getWarnings() + 1);
-				    	logDao.update(logObj);
+				    	getLogDAO().update(logObj);
 				    }
 				    
 					return success;
@@ -1054,7 +1034,7 @@ public class DefaultProviderDAO extends ProviderDAO
 					LogWriter.addError(logObj.getLogFileLocation(), "Failed to add a new repository with the URL " + provider.getOaiProviderUrl());
 					
 					logObj.setErrors(logObj.getErrors() + 1);
-			    	logDao.update(logObj);
+			    	getLogDAO().update(logObj);
 			    	
 					return false;
 				}
@@ -1066,7 +1046,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while trying to add a new repository with the URL " + provider.getOaiProviderUrl());
 
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+		    	getLogDAO().update(logObj);
 		    	
 				return false;
 			} // end catch(SQLException)
@@ -1184,20 +1164,20 @@ public class DefaultProviderDAO extends ProviderDAO
 				if(dbConnectionManager.executeUpdate(psUpdate) > 0)
 				{
 					// Remove the old permissions for the group
-					boolean success = providerFormatDao.deleteFormatsForProvider(provider.getId());
+					boolean success = getProviderFormatUtilDAO().deleteFormatsForProvider(provider.getId());
 
 					// Remove all sets from this provider that used to belong to it but no longer do
-				    for(Set set : setDao.getSetsForProvider(provider.getId()))
+				    for(Set set : getSetDAO().getSetsForProvider(provider.getId()))
 					    if(!provider.getSets().contains(set))
-					    	success = setDao.removeFromProvider(set, provider.getId()) && success;
+					    	success = getSetDAO().removeFromProvider(set, provider.getId()) && success;
 
 				    // Add the correct sets for the provider
 				    for(Set set : provider.getSets())
-				    	success = (set.getId() <= 0 ? setDao.insertForProvider(set, provider.getId()) : setDao.addToProvider(set, provider.getId())) && success;
+				    	success = (set.getId() <= 0 ? getSetDAO().insertForProvider(set, provider.getId()) : getSetDAO().addToProvider(set, provider.getId())) && success;
 
 				    // Add the permissions to the group
 				    for(Format format : provider.getFormats())
-				    	success = providerFormatDao.insert(provider.getId(), format.getId()) && success;
+				    	success = getProviderFormatUtilDAO().insert(provider.getId(), format.getId()) && success;
 
 				    if(success)
 				    	LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the repository with the URL " + provider.getOaiProviderUrl());
@@ -1206,7 +1186,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				    	LogWriter.addWarning(logObj.getLogFileLocation(), "Updated the repository with the URL " + provider.getOaiProviderUrl() + ", but failed to update the sets and formats it outputs");
 				    
 				    	logObj.setWarnings(logObj.getWarnings() + 1);
-				    	logDao.update(logObj);
+				    	getLogDAO().update(logObj);
 				    }
 				    
 					return success;
@@ -1216,7 +1196,7 @@ public class DefaultProviderDAO extends ProviderDAO
 					LogWriter.addError(logObj.getLogFileLocation(), "Failed to update the repository with the URL " + provider.getOaiProviderUrl());
 					
 					logObj.setErrors(logObj.getErrors() + 1);
-			    	logDao.update(logObj);
+			    	getLogDAO().update(logObj);
 			    	
 					return false;
 				}
@@ -1228,7 +1208,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while trying to update the repository with the URL " + provider.getOaiProviderUrl());
 				
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+		    	getLogDAO().update(logObj);
 		    	
 				return false;
 			} // end catch(SQLException)
@@ -1285,22 +1265,22 @@ public class DefaultProviderDAO extends ProviderDAO
 				if(success)
 				{
 					// Remove the reference from provider to the set
-					for(Set set : setDao.getSetsForProvider(provider.getId()))
-						success = setDao.removeFromProvider(set, provider.getId()) && success;
+					for(Set set : getSetDAO().getSetsForProvider(provider.getId()))
+						success = getSetDAO().removeFromProvider(set, provider.getId()) && success;
 					
 					// Remove the reference from provider to the harvested record set
-					for(Set set : setDao.getRecordSetsForProvider(provider.getId()))
-						success = setDao.removeFromProvider(set, provider.getId()) && success;
+					for(Set set : getSetDAO().getRecordSetsForProvider(provider.getId()))
+						success = getSetDAO().removeFromProvider(set, provider.getId()) && success;
 	
 					for(Record record : getRecordService().getByProviderId(provider.getId()))
 						success = markAsDeleted(record) && success;
 					
 					// TODO performance issue
-					for(Set set : setDao.getAll())
+					for(Set set : getSetDAO().getAll())
 						if(getRecordService().getBySetSpec(set.getSetSpec()).size() == 0)
-							setDao.delete(set);
+							getSetDAO().delete(set);
 					
-					SolrIndexManager.getInstance().commitIndex();
+					((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
 				} // end if(delete succeeded)
 
 				if(success)
@@ -1310,7 +1290,7 @@ public class DefaultProviderDAO extends ProviderDAO
 			    	LogWriter.addWarning(logObj.getLogFileLocation(), "Deleted the repository with the URL " + provider.getOaiProviderUrl() + ", but failed to mark its sets and records as deleted");
 			    	
 			    	logObj.setWarnings(logObj.getWarnings() + 1);
-			    	logDao.update(logObj);
+			    	getLogDAO().update(logObj);
 			    }
 				
 			    return success;
@@ -1322,7 +1302,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while trying to delete the repository with the URL " + provider.getOaiProviderUrl());
 				
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+				getLogDAO().update(logObj);
 		    	
 				return false;
 			} // end catch(SQLException)

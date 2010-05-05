@@ -259,16 +259,6 @@ public class Constants
 	public static final String CONFIG_SOLR_INDEXER_MULTI_THREAD_COUNT = "SOLRIndexerMultiThreadCount";
 	
 	/**
-	 * Parameter constant value for Single Threaded indexing in SOLR
-	 */
-	public static final String SOLR_INDEXER_SINGLE_THREADED = "SingleThreaded";
-
-	/**
-	 * Parameter constant value for Single Threaded indexing in SOLR
-	 */
-	public static final String SOLR_INDEXER_MULTI_THREADED = "MultiThreaded";
-	
-	/**
 	 * Parameter constant value for Instances folder name
 	 */
 	public static final String INSTANCES_FOLDER_NAME = "InstanceFolderName";

@@ -39,6 +39,7 @@ import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 import xc.mst.services.MetadataServiceFactory;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -71,14 +72,15 @@ public class TestServices
 
 	public static void main(String[] args) throws DataException, IOException, JDOMException, IndexException
 	{
-		RecordService recordService = new DefaultRecordService();
+		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		SolrIndexManager solrIndexManager = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
 
 		try
 		{
 //			addUnprocessedRecordFromFiles(unprocessedRecordsDir);
 			addUnprocessedRecordFromFilesForAggregation(unprocessedRecordsDir);
 			Thread.sleep(2000);
-			SolrIndexManager.getInstance().commitIndex();
+			solrIndexManager.commitIndex();
 			Thread.sleep(2000);
 			System.out.println(formatter.format(new Date()));
 			MetadataServiceFactory sf = new MetadataServiceFactory();
@@ -86,7 +88,7 @@ public class TestServices
 			ms.runService(serviceId, -1);
 			System.out.println(formatter.format(new Date()));
 			Thread.sleep(2000);
-			SolrIndexManager.getInstance().commitIndex();
+			solrIndexManager.commitIndex();
 			Thread.sleep(2000);
 			//RecordList records = recordService.getAll();
 			RecordList records = recordService.getByServiceId(serviceId);

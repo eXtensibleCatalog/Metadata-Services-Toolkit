@@ -21,16 +21,10 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.log.DefaultLogDAO;
-import xc.mst.dao.log.LogDAO;
 import xc.mst.utils.LogWriter;
 
 public class DefaultServerDAO extends ServerDAO
 {
-	/**
-	 * Data access object for managing general logs
-	 */
-	private LogDAO logDao = new DefaultLogDAO();
 
 	/**
 	 * The repository management log file name
@@ -97,13 +91,11 @@ public class DefaultServerDAO extends ServerDAO
 	 */
 	private static Object psDeleteLock = new Object();
 
-	public DefaultServerDAO()
+	public void init()
 	{
-		super();
-		
 		try
 		{
-			logObj = (new DefaultLogDAO()).getById(Constants.LOG_ID_AUTHENTICATION_SERVER_MANAGEMENT);
+			logObj = getLogDAO().getById(Constants.LOG_ID_AUTHENTICATION_SERVER_MANAGEMENT);
 		}
 		catch(DatabaseConfigException e)
 		{
@@ -509,7 +501,7 @@ public class DefaultServerDAO extends ServerDAO
 					LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while adding a new authentication server with the name " + server.getName());
 					
 					logObj.setErrors(logObj.getErrors() + 1);
-			    	logDao.update(logObj);
+			    	getLogDAO().update(logObj);
 			    	
 					return false;
 				}
@@ -521,7 +513,7 @@ public class DefaultServerDAO extends ServerDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while adding a new authentication server with the name " + server.getName());
 				
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+				getLogDAO().update(logObj);
 		    	
 				return false;
 			} // end catch(SQLException)
@@ -600,7 +592,7 @@ public class DefaultServerDAO extends ServerDAO
 					LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while updating the authentication server with the name " + server.getName());
 					
 					logObj.setErrors(logObj.getErrors() + 1);
-			    	logDao.update(logObj);
+					getLogDAO().update(logObj);
 				}
 				return success;
 			} // end try
@@ -611,7 +603,7 @@ public class DefaultServerDAO extends ServerDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while updating the authentication server with the name " + server.getName());
 				
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+				getLogDAO().update(logObj);
 		    	
 				return false;
 			} // end catch(SQLException)
@@ -667,7 +659,7 @@ public class DefaultServerDAO extends ServerDAO
 					LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while deleting the authentication server with the name " + server.getName());
 					
 					logObj.setErrors(logObj.getErrors() + 1);
-			    	logDao.update(logObj);
+					getLogDAO().update(logObj);
 				}
 				
 				return success;
@@ -679,7 +671,7 @@ public class DefaultServerDAO extends ServerDAO
 				LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while deleting the authentication server with the name " + server.getName());
 				
 				logObj.setErrors(logObj.getErrors() + 1);
-		    	logDao.update(logObj);
+				getLogDAO().update(logObj);
 		    	
 				return false;
 			} // end catch(SQLException)

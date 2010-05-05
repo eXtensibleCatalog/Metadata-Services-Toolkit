@@ -19,28 +19,9 @@ import xc.mst.bo.harvest.HarvestScheduleStep;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.DefaultSetDAO;
-import xc.mst.dao.provider.FormatDAO;
-import xc.mst.dao.provider.SetDAO;
 
 public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 {
-	/**
-	 * The DAO for getting and inserting sets
-	 */
-	private static SetDAO setDao = new DefaultSetDAO();
-
-	/**
-	 * The DAO for getting and inserting formats
-	 */
-	private static FormatDAO formatDao = new DefaultFormatDAO();
-
-	/**
-	 * The DAO for getting and inserting harvest schedules
-	 */
-	private static HarvestScheduleDAO scheduleDao = new DefaultHarvestScheduleDAO();
-
 	/**
 	 * A PreparedStatement to get all harvest schedule steps in the database
 	 */
@@ -163,9 +144,9 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 					// Set the fields on the harvest schedule step
 					harvestScheduleStep.setId(results.getInt(1));
-					harvestScheduleStep.setSchedule(scheduleDao.loadWithoutSteps(results.getInt(2)));
-					harvestScheduleStep.setFormat(formatDao.getById(results.getInt(3)));
-					harvestScheduleStep.setSet(results.getInt(4) == 0 ? null : setDao.loadBasicSet(results.getInt(4)));
+					harvestScheduleStep.setSchedule(getHarvestScheduleDAO().loadWithoutSteps(results.getInt(2)));
+					harvestScheduleStep.setFormat(getFormatDAO().getById(results.getInt(3)));
+					harvestScheduleStep.setSet(results.getInt(4) == 0 ? null : getSetDAO().loadBasicSet(results.getInt(4)));
 					harvestScheduleStep.setLastRan(results.getTimestamp(5));
 
 					// Add the harvest schedule step to the list
@@ -247,9 +228,9 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 					// Set the fields on the harvest schedule step
 					harvestScheduleStep.setId(results.getInt(1));
-					harvestScheduleStep.setSchedule(scheduleDao.loadWithoutSteps(results.getInt(2)));
-					harvestScheduleStep.setFormat(formatDao.getById(results.getInt(3)));
-					harvestScheduleStep.setSet(results.getInt(4) == 0 ? null : setDao.loadBasicSet(results.getInt(4)));
+					harvestScheduleStep.setSchedule(getHarvestScheduleDAO().loadWithoutSteps(results.getInt(2)));
+					harvestScheduleStep.setFormat(getFormatDAO().getById(results.getInt(3)));
+					harvestScheduleStep.setSet(results.getInt(4) == 0 ? null : getSetDAO().loadBasicSet(results.getInt(4)));
 					harvestScheduleStep.setLastRan(results.getTimestamp(5));
 
 					if(log.isDebugEnabled())
@@ -337,9 +318,9 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 					// Set the fields on the harvest schedule step
 					harvestScheduleStep.setId(results.getInt(1));
-					harvestScheduleStep.setSchedule(scheduleDao.loadWithoutSteps(results.getInt(2)));
-					harvestScheduleStep.setFormat(formatDao.getById(results.getInt(3)));
-					harvestScheduleStep.setSet(results.getInt(4) == 0 ? null : setDao.loadBasicSet(results.getInt(4)));
+					harvestScheduleStep.setSchedule(getHarvestScheduleDAO().loadWithoutSteps(results.getInt(2)));
+					harvestScheduleStep.setFormat(getFormatDAO().getById(results.getInt(3)));
+					harvestScheduleStep.setSet(results.getInt(4) == 0 ? null : getSetDAO().loadBasicSet(results.getInt(4)));
 					harvestScheduleStep.setLastRan(results.getTimestamp(5));
 
 					// Add the harvest schedule step to the list
@@ -380,12 +361,12 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 		// Insert the format if it hasn't already been inserted
 		if(harvestScheduleStep.getFormat().getId() <= 0)
-			if(!formatDao.insert(harvestScheduleStep.getFormat()))
+			if(!getFormatDAO().insert(harvestScheduleStep.getFormat()))
 				return false;
 
 		// Insert the set if it hasn't already been inserted
 		if(harvestScheduleStep.getSet() != null && harvestScheduleStep.getSet().getId() <= 0)
-			if(!setDao.insert(harvestScheduleStep.getSet()))
+			if(!getSetDAO().insert(harvestScheduleStep.getSet()))
 				return false;
 
 		synchronized(psInsertLock)
@@ -465,12 +446,12 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 
 		// Insert the format if it hasn't already been inserted
 		if(harvestScheduleStep.getFormat().getId() <= 0)
-			if(!formatDao.insert(harvestScheduleStep.getFormat()))
+			if(!getFormatDAO().insert(harvestScheduleStep.getFormat()))
 				return false;
 
 		// Insert the set if it hasn't already been inserted
 		if(harvestScheduleStep.getSet() != null && harvestScheduleStep.getSet().getId() <= 0)
-			if(!setDao.insert(harvestScheduleStep.getSet()))
+			if(!getSetDAO().insert(harvestScheduleStep.getSet()))
 				return false;
 
 		synchronized(psUpdateLock)

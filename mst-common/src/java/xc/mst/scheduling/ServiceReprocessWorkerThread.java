@@ -134,7 +134,7 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 				recordService.update(updatedRecord);				
 			}
 			
-    		SolrIndexManager.getInstance().commitIndex();
+			((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
 
     		for(Service runMe : servicesToRun)
     		{

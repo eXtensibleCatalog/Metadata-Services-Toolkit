@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -19,7 +20,13 @@ import xc.mst.manager.BaseManager;
 import xc.mst.services.MetadataService;
 import xc.mst.utils.MSTConfiguration;
 
-public class ServicesManager extends BaseManager implements ApplicationListener<ApplicationEvent> {
+public class ServicesManager extends BaseManager implements ApplicationListener<ApplicationEvent>, ApplicationContextAware {
+	
+	protected ApplicationContext applicationContext = null;
+	
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 	
 	protected Map<String, ApplicationContext> servicesApplicationContexts = new HashMap<String, ApplicationContext>();
     
@@ -44,7 +51,7 @@ public class ServicesManager extends BaseManager implements ApplicationListener<
 		        		urls.add(new File(metaInfFolderStr+"/classes").toURI().toURL());
 		        		URL[] urlsArr = urls.toArray(new URL[]{});
 		        		URLClassLoader loader = new URLClassLoader(urlsArr, getClass().getClassLoader());
-		        		ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext();
+		        		ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext(this.applicationContext);
 		        		ac.setClassLoader(loader);
 		        		ac.setConfigLocation("spring-service.xml");
 		        		
