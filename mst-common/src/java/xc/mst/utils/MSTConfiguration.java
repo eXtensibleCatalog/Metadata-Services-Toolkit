@@ -100,6 +100,8 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 			urlPath = urlPath.substring(1, urlPath.length());
 		
 			instanceName = urlPath;
+		} else {
+			instanceName = "MetadataServicesToolkit";
 		}
 		
 		File mstInstances = new File(getProperty(Constants.INSTANCES_DIR) + FILE_SEPARATOR + getProperty(Constants.INSTANCES_FOLDER_NAME));

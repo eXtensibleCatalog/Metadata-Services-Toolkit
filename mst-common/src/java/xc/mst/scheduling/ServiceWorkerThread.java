@@ -12,8 +12,10 @@ package xc.mst.scheduling;
 import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
+import xc.mst.manager.services.ServicesManager;
 import xc.mst.services.MetadataService;
 import xc.mst.services.MetadataServiceFactory;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * A Thread which runs a service
@@ -29,6 +31,8 @@ public class ServiceWorkerThread extends WorkerThread
 	
 	/** Type of thread */
 	public static final String type = Constants.THREAD_SERVICE;
+	
+	protected ServicesManager servicesManager = (ServicesManager)MSTConfiguration.getBean("ServicesManager");
 
 	/**
 	 * The ID of the service to run
@@ -80,11 +84,9 @@ public class ServiceWorkerThread extends WorkerThread
 			runningService.runService(serviceId, outputSetId);
 		} // end try(run the service)
 		catch(Exception e){
-			
 			log.error("An error occurred while running the service with ID " + serviceId, e);
 			runningService.setStatus(Constants.STATUS_SERVICE_ERROR);
 			runningService.sendReportEmail("An error occurred while running the service with ID " + serviceId);
-			
 		} // end catch(Exception)
 		finally {
 			Scheduler.setJobCompletion();

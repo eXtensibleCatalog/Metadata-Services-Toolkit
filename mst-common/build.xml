@@ -12,10 +12,25 @@
 	
 	<property file="${mc.dir}/build.properties" />
 
-	<path id="mc.classpath">
+	<path id="mc.classpath.compile">
 		<fileset dir="${mc.build.lib}">
 			<include name="*.jar" />
 		</fileset>
+	</path>
+
+	<path id="mc.classpath.test.compile">
+		<fileset dir="${mc.build.lib}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="${mc.build.classes}" />
+	</path>
+
+	<path id="mc.classpath.test.run">
+		<fileset dir="${mc.build.lib}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="${mc.build.classes}" />
+		<pathelement path="${mc.build.test.classes}" />
 	</path>
 
 	<target name="mc.clean">
@@ -52,16 +67,20 @@
 		<ivy:retrieve sync="true" pattern="${mc.build.lib}/[artifact]-[revision].[ext]"/>
 	</target>
 
-	<target name="mc.compile" depends="mc.init">
+	<target name="mc.compile" depends="mc.retrieve, mc.compile.nodep" />
+
+	<target name="mc.compile.nodep" depends="init">
 		<javac srcdir="${mc.src.dir}"
 			destdir="${mc.build.classes}"
-			classpathref="mc.classpath"
+			classpathref="mc.classpath.compile"
 			debug="on"
 			deprecation="on"
 			debuglevel="lines,vars,source"/>
 	</target>
 
-	<target name="mc.copy-resources" depends="mc.compile">
+	<target name="mc.copy-resources" depends="mc.compile, mc.copy-resources.nodep" />
+
+	<target name="mc.copy-resources.nodep" depends="mc.compile.nodep">
 		<copy todir="${mc.build.classes}">
 			<fileset dir="${mc.src.java}">
 				<include name="default.properties" />
@@ -75,16 +94,46 @@
 		<copy tofile="${mc.build.classes}/env.properties" file="${mc.src.java}/${box}.properties" overwrite="true" />
 	</target>
 
-	<target name="mc.jar" depends="mc.copy-resources">
+	<target name="mc.jar" depends="mc.copy-resources, mc.copy-resources.nodep"/>
+
+	<target name="mc.jar.nodep" depends="mc.copy-resources.nodep">
 		<jar destfile="${mc.build.dir}/${mc.project-name}-${mc.version}.jar"
 			basedir="${mc.build.classes}" />
 	</target>
 
-	<target name="mc.publish" depends="mc.jar, mc.resolve">
+	<target name="mc.publish" depends="mc.jar, mc.publish.nodep"/>
+
+	<target name="mc.publish.nodep" depends="mc.jar.nodep">
 		<ivy:publish resolver="local" pubrevision="${mc.version}" overwrite="true" update="true" forcedeliver="true">
 			<artifacts pattern="${mc.build.dir}/${mc.project-name}-${mc.version}.[ext]" />
 		</ivy:publish>
 	</target>
 
+	<target name="mc.deploy" depends="mc.jar.nodep">
+		<copy todir="${tomcat.dir}/webapps/${mp.project-name}/WEB-INF/lib" 
+			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
+	</target>
+
+	<target name="mc.compile.test" depends="mc.compile.nodep">
+		<javac srcdir="${mc.test.dir}"
+			destdir="${mc.build.test.classes}"
+			classpathref="mc.classpath.test.compile"
+			debug="on"
+			deprecation="on"
+			debuglevel="lines,vars,source"/>
+	</target>
+
+	<target name="init.test" unless="${test}">
+		<property name="test" value="" />
+	</target>
+
+	<target name="mc.test" depends="mc.compile.test, init.test">
+		<taskdef name="testng" classpathref="mc.classpath.compile"
+			classname="org.testng.TestNGAntTask" />
+
+		<testng classpathref="mc.classpath.test.run">
+			<classfileset dir="${mc.build.test.classes}" includes="**/${test}*.class"/>
+		</testng>
+	</target>
 
 </project>

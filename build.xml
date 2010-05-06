@@ -95,6 +95,11 @@
 			dest="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services" />
 	</target>
 
+	<target name="subcall">
+		<ant dir="${dir}" target="${target}" inheritAll="false" />
+	</target>
+
+
 	<!--
 	<target name="full-dist" depends="compile, dist-jar, javadoc"
 			description="generate the distribution" >

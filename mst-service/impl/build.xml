@@ -12,10 +12,25 @@
 	
 	<property file="${ms.dir}/build.properties" />
 
-	<path id="ms.classpath">
+	<path id="ms.classpath.compile">
 		<fileset dir="${ms.build.lib}">
 			<include name="*.jar" />
 		</fileset>
+	</path>
+
+	<path id="ms.classpath.test.compile">
+		<fileset dir="${ms.build.lib}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="${ms.build.classes}" />
+	</path>
+
+	<path id="ms.classpath.test.run">
+		<fileset dir="${ms.build.lib}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="${ms.build.classes}" />
+		<pathelement path="${ms.build.test.classes}" />
 	</path>
 
 	<target name="ms.clean">
@@ -52,10 +67,12 @@
 		<ivy:retrieve sync="true" pattern="${ms.build.lib}/[artifact]-[revision].[ext]"/>
 	</target>
 
-	<target name="ms.compile" depends="ms.init">
+	<target name="ms.compile" depends="ms.retrieve, ms.compile.nodep" />
+
+	<target name="ms.compile.nodep" depends="ms.init">
 		<javac srcdir="${ms.src.dir}"
 			destdir="${ms.build.classes}"
-			classpathref="ms.classpath"
+			classpathref="ms.classpath.compile"
 			debug="on"
 			deprecation="on"
 			debuglevel="lines,vars,source"/>
@@ -98,5 +115,28 @@
 			</scriptmapper>
 		</copy>
 	</target>
+
+	<target name="ms.compile.test" depends="ms.compile.nodep">
+		<javac srcdir="${ms.test.dir}"
+			destdir="${ms.build.test.classes}"
+			classpathref="ms.classpath.test.compile"
+			debug="on"
+			deprecation="on"
+			debuglevel="lines,vars,source"/>
+	</target>
+
+	<target name="ms.init.test" unless="${test}">
+		<property name="test" value="" />
+	</target>
+
+	<target name="ms.test" depends="ms.compile.test, ms.init.test">
+		<taskdef name="testng" classpathref="ms.classpath.compile"
+			classname="org.testng.TestNGAntTask" />
+
+		<testng classpathref="ms.classpath.test.run">
+			<classfileset dir="${ms.build.test.classes}" includes="**/${test}*.class"/>
+		</testng>
+	</target>
+	
 
 </project>

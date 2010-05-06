@@ -51,10 +51,25 @@
 		 <fileset dir="ivy" includes="*.jar" />
 	</path>
 
-	<path id="classpath">
+	<path id="classpath.compile">
 		<fileset dir="${build.lib}">
 			<include name="*.jar" />
 		</fileset>
+	</path>
+
+	<path id="classpath.test.compile">
+		<fileset dir="${build.lib}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="${build.classes}" />
+	</path>
+
+	<path id="classpath.test.run">
+		<fileset dir="${build.lib}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="${build.classes}" />
+		<pathelement path="${build.test.classes}" />
 	</path>
 
 	<target name="clean">
@@ -83,10 +98,12 @@
 		<ivy:retrieve sync="true" pattern="${build.lib}/[artifact]-[revision].[ext]"/>
 	</target>
 
-	<target name="compile" depends="retrieve">
+	<target name="compile" depends="retrieve, compile.nodep" />
+
+	<target name="compile.nodep" depends="init">
 		<javac srcdir="${src.dir}"
 			destdir="${build.classes}"
-			classpathref="classpath"
+			classpathref="classpath.compile"
 			debug="on"
 			deprecation="on"
 			debuglevel="lines,vars,source"/>
@@ -115,6 +132,28 @@
 		<zip destfile="${build.dir}/${service.name}-${service.version}.zip">
 			<zipfileset  dir="${build.zip}" prefix="${service.name}"/>
 		</zip>
+	</target>
+
+	<target name="compile.test" depends="compile.nodep">
+		<javac srcdir="${test.dir}"
+			destdir="${build.test.classes}"
+			classpathref="classpath.test.compile"
+			debug="on"
+			deprecation="on"
+			debuglevel="lines,vars,source"/>
+	</target>
+
+	<target name="init.test" unless="${test}">
+		<property name="test" value="" />
+	</target>
+
+	<target name="test" depends="compile.test, init.test">
+		<taskdef name="testng" classpathref="classpath.compile"
+			classname="org.testng.TestNGAntTask" />
+
+		<testng classpathref="classpath.test.run">
+			<classfileset dir="${build.test.classes}" includes="**/${test}*.class"/>
+		</testng>
 	</target>
 
 </project>

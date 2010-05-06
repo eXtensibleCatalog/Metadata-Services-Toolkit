@@ -81,9 +81,9 @@
 	</target>
 
 	<!--
-	<target name="mp.war" depends="mp.compile, mp.copy-resources, mc.jar">
-		-->
 	<target name="mp.war">
+		-->
+	<target name="mp.war" depends="mp.compile, mp.copy-resources, mc.jar">
 		<jar destfile="${mp.build.dir}/${mp.project-name}.war" >
 			<path refid="webapp.path" />
 		 </jar>
@@ -162,10 +162,9 @@
 		</javadoc>
 	</target>
 
-	<target name="mp.deploy-webapp" depends="mp.copy-resources">
 	-->
 
-	<target name="mp.deploy-webapp" depends="mp.init">
+	<target name="mp.deploy-webapp" depends="mp.copy-resources">
 		<copy todir="${tomcat.dir}/webapps/${mp.project-name}">
 			<path refid="webapp.path" />
 		</copy>
