@@ -135,6 +135,7 @@
 
 		<testng classpathref="ms.classpath.test.run">
 			<classfileset dir="${ms.build.test.classes}" includes="**/${test}*.class"/>
+			<jvmarg value="-XX:MaxPermSize=128m" />
 		</testng>
 	</target>
 	

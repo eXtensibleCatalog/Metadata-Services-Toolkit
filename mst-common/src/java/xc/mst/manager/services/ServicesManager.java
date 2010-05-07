@@ -26,47 +26,46 @@ import xc.mst.utils.MSTConfiguration;
 
 public class ServicesManager extends BaseManager implements ApplicationListener<ApplicationEvent>, ApplicationContextAware {
 	
-	protected ServicesManager parentServicesManager = null;
-	protected Map<String, ServiceEntry> servicesApplicationContexts = new HashMap<String, ServiceEntry>();
+	protected Map<String, ServiceEntry> serviceEntries = new HashMap<String, ServiceEntry>();
 	protected Semaphore semaphore = new Semaphore(1);
-	protected ServiceEntry initializingService = null;
 	protected ApplicationContext applicationContext = null;
+	protected static int loopCount = 0;
 	
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
-	public void setParentServicesManager(ServicesManager parentServicesManager) {
-		this.parentServicesManager = parentServicesManager;
-	}
 	
 	public boolean isRootAC() {
-		return this.parentServicesManager == null;
-		/*
-		try {
-			Object o = this.applicationContext.getBean("Service");
-			if (o != null) {
-				return false;
-			}
-		} catch (Throwable t) {
+		boolean acquired = this.semaphore.tryAcquire();
+		if (acquired) {
+			this.semaphore.release();
 		}
-		return true;
-		*/
+		return acquired;
 	}
 
 	public void onApplicationEvent(ApplicationEvent event) {
 		try {
+			System.out.println("onApplicationEvent event2: "+event);
 	        if (event instanceof ContextRefreshedEvent) {
-	        	if (isRootAC()) {
+	        	boolean b1 = this.applicationContext.getParent() == null;
+	        	System.out.println("b1: "+b1);
+	        	boolean b = isRootAC();
+	        	System.out.println("b3: "+b);
+	        	if (b) {
 		            // load all service application contexts
-		        	for (Service s : getServiceDAO().getAll()) {
-		        		initializingService = new ServiceEntry(s.getIdentifier());
-		        		initializingService.start();
+	        		List<Service> services = getServiceDAO().getAll();
+	        		System.out.println("services.size(): "+services.size());
+		        	for (Service s : services) {
+		        		if (loopCount++ > 10) {
+		        			break;
+		        		}
+		        		System.out.println("in for loop");
+		        		new ServiceEntry(s.getIdentifier()).start();
 		        	}
 	        	} else {
-	        		servicesApplicationContexts.put(
-	        				parentServicesManager.initializingService.id, parentServicesManager.initializingService);
+
 	        		System.out.println("before oae release");
-	        		parentServicesManager.semaphore.release();
+	        		this.semaphore.release();
 	        		System.out.println("after oae release");
 	        	}
 	        }
@@ -76,8 +75,11 @@ public class ServicesManager extends BaseManager implements ApplicationListener<
     }
 	
 	public MetadataService getService(String name) {
-		if (servicesApplicationContexts.containsKey(name)) {
-			ServiceEntry se = servicesApplicationContexts.get(name);
+		System.out.println("name: "+name);
+		if (serviceEntries.containsKey(name)) {
+			ServiceEntry se = serviceEntries.get(name);
+			System.out.println("se: "+se);
+			System.out.println("se.ac: "+se.ac);
 			return (MetadataService)se.ac.getBean("Service");
 		}
 		return null;
@@ -87,12 +89,14 @@ public class ServicesManager extends BaseManager implements ApplicationListener<
 		public Thread t = null;
 		public ClassPathXmlApplicationContext ac = null;
 		public String id = null;
+		public ServiceEntry thisthis = null;
 		
 		public ServiceEntry(String id) {
 			this.id = id;
 		}
 		
 		public void start() {
+			thisthis = this;
 			try {
 				this.t = new Thread() {
 					public void run() {
@@ -118,14 +122,21 @@ public class ServicesManager extends BaseManager implements ApplicationListener<
 			        			URL url = uri.toURL();
 			        			url = new URL(url.toString()+"/");
 			        			//URL url2 = new URL(classesFolderStr);
-			        			System.out.println("url.toString(): "+url.toString());
+			        			System.out.println("url.toString2(): "+url.toString());
 				        		urls.add(url);
 				        		URL[] urlsArr = urls.toArray(new URL[]{});
 				        		URLClassLoader loader = new URLClassLoader(urlsArr, getClass().getClassLoader());
 				        		ac = new ClassPathXmlApplicationContext();
 				        		ac.setClassLoader(loader);
 				        		ac.setConfigLocation("spring-service.xml");
-				        		BufferedReader br = new BufferedReader(new InputStreamReader(loader.getResourceAsStream("spring-service.xml")));
+				        		ac.setParent(applicationContext);
+				        		BufferedReader br = null;
+				        		try {
+				        			br = new BufferedReader(new InputStreamReader(loader.getResourceAsStream("spring-service.xml")));
+				        		} catch (Throwable t) {
+				        			semaphore.release();
+				        			return;
+				        		}
 				        		StringBuilder sb = new StringBuilder();
 				        		String line = null;
 				        		while ((line = br.readLine()) != null) {
@@ -133,12 +144,9 @@ public class ServicesManager extends BaseManager implements ApplicationListener<
 				        		}
 				        		br.close();
 				        		System.out.println(sb.toString());
-				        		
-				        		//System.out.println("before ac.start");
-				        		//Class c = loader.loadClass("xc.mst.services.MetadataService");
-				        		//System.out.println("c: "+c);
-				        		//ac = new ClassPathXmlApplicationContext(new String[] {"spring-service.xml"}, c, applicationContext);
 				        		System.out.println("before thread start");
+				        		System.out.println("putting in key: "+id+" value:"+thisthis);
+				        		serviceEntries.put(id, thisthis);
 				        		ac.refresh();
 				        		System.out.println("after thread start");
 			        		}
@@ -147,8 +155,8 @@ public class ServicesManager extends BaseManager implements ApplicationListener<
 						}
 					}
 				};
-				t.start();
 				semaphore.acquire();
+				t.start();
 				semaphore.acquire();
 				semaphore.release();
 				System.out.println("after ServiceEntry.start");

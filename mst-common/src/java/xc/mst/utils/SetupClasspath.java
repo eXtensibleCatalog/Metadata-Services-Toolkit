@@ -18,6 +18,9 @@ public class SetupClasspath {
     		String rootDir = null;
     		if (System.getenv("MST_ROOT_DIR") != null) {
     			rootDir = System.getenv("MST_ROOT_DIR");
+    			if (rootDir.indexOf("beluga") != -1) {
+    				rootDir = null;
+    			}
     		}
     		if (rootDir == null) {
 	    		try {

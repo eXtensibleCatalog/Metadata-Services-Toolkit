@@ -109,7 +109,9 @@
 			debuglevel="lines,vars,source"/>
 	</target>
 
-	<target name="copy-resources" depends="compile, copy-custom-libs">
+	<target name="copy-resources" depends="copy-custom-libs, compile, copy-resources.nodep" />
+
+	<target name="copy-resources.nodep" depends="compile.nodep">
 		<copy todir="${build.classes}">
 			<fileset dir="${src.java}">
 				<exclude name="**/*.java" />
@@ -123,12 +125,16 @@
 		</copy>
 	</target>
 
-	<target name="jar" depends="copy-resources">
+	<target name="jar" depends="copy-resources, jar.nodep" />
+
+	<target name="jar.nodep" depends="copy-resources.nodep">
 		<jar destfile="${build.dir}/${service.name}-${service.version}.jar"
 			basedir="${build.classes}" />
 	</target>
 
-	<target name="zip" depends="jar">
+	<target name="zip" depends="jar, zip.nodep" />
+
+	<target name="zip.nodep" depends="jar.nodep">
 		<zip destfile="${build.dir}/${service.name}-${service.version}.zip">
 			<zipfileset  dir="${build.zip}" prefix="${service.name}"/>
 		</zip>
