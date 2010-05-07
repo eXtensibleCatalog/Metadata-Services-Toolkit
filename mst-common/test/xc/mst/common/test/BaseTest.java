@@ -1,4 +1,4 @@
-package xc.mst.service.impl.test;
+package xc.mst.common.test;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

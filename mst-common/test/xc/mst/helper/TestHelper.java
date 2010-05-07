@@ -90,10 +90,12 @@ public class TestHelper {
 			for(Log log : logs) {
 				// add the path if its not added previously. In case of server restart, the path need not be added since it would have been
 				// addeed the fisrt time server was restarted.
+				/* BDA 2010-05-07 I have no idea why you would want to do this
 				if (log.getLogFileLocation().indexOf(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR) == -1) {
 					log.setLogFileLocation(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + log.getLogFileLocation());
 			    	logDao.update(log);
 				}
+				*/
 			}
 			
 			logs = logDao.getAll();

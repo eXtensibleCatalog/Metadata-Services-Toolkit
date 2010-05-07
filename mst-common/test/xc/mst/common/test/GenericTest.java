@@ -1,20 +1,20 @@
 package xc.mst.common.test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.testng.annotations.Test;
 
-public class GenericTest {
+import xc.mst.manager.record.RecordService;
+import xc.mst.utils.MSTConfiguration;
+
+public class GenericTest extends BaseTest {
 	
 	@Test
 	public void goTest() {
+		
 		try {
+			RecordService rs = (RecordService)MSTConfiguration.getBean("RecordService");
+			System.out.println("rs.getRecordDAO(): "+rs.getRecordDAO());
+		
+			/*
 			List<URL> urls = new ArrayList<URL>();
 
 			System.out.println("hello");
@@ -36,7 +36,9 @@ public class GenericTest {
     		}
     		br.close();
     		System.out.println(sb.toString());
+    		*/
 		} catch (Throwable t) {
+			t.printStackTrace(System.out);
 			throw new RuntimeException(t);
 		}
 	}

@@ -60,7 +60,6 @@ public class BaseService {
 	protected HarvestDAO harvestDAO = null;
 	protected HarvestRecordUtilDAO harvestRecordUtilDAO = null;
 	protected HarvestScheduleDAO harvestScheduleDAO = null;
-	protected DBRecordDAO recordDao = null;
 	protected HarvestScheduleStepDAO harvestScheduleStepDAO = null;
 	protected LogDAO logDAO = null;
 	protected JobDAO jobDAO = null;

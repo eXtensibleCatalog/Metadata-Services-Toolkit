@@ -69,9 +69,10 @@
 	<target name="mp.copy-resources" depends="mp.compile">
 		<copy todir="${mp.build.classes}">
 			<fileset dir="${mp.src.java}">
+				<include name="**/*" />
+				<include name="default.properties" />
 				<exclude name="**/*.java" />
 				<exclude name="*.properties" />
-				<include name="default.properties" />
 			</fileset>
 		</copy>
 		<copy todir="${mp.build.webapp}">
@@ -163,7 +164,7 @@
 
 	-->
 
-	<target name="mp.deploy-webapp" depends="mp.copy-resources">
+	<target name="mp.deploy" depends="mp.copy-resources">
 		<copy todir="${tomcat.dir}/webapps/${mp.project-name}">
 			<path refid="webapp.path" />
 		</copy>

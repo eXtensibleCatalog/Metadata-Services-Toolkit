@@ -23,12 +23,12 @@ public class DBRecordService extends DefaultRecordService {
 		record.setCreatedAt(now);
 		record.setUpdatedAt(now);
 
-		boolean retVal = recordDao.insert(record);
+		boolean retVal = getRecordDAO().insert(record);
 		return retVal;
 	}
 	
 	public void commit(int serviceId, boolean force) {
-		recordDao.commit(serviceId, force);
+		getRecordDAO().commit(serviceId, force);
 	}
 	
 	public Record getByOaiIdentifierAndService(String id, int serviceId) {
@@ -40,7 +40,7 @@ public class DBRecordService extends DefaultRecordService {
 	}
 	
 	public List<Record> getInputForServiceToProcess(int serviceId, boolean reset) {
-		return recordDao.getInputForServiceToProcess(serviceId, reset);
+		return getRecordDAO().getInputForServiceToProcess(serviceId, reset);
 	}
 
 	@Override
@@ -51,12 +51,12 @@ public class DBRecordService extends DefaultRecordService {
 	@Override
 	public boolean update(Record record) throws DataException, IndexException {
 		// Check that the fields on the record are valid
-		validateFields(record, true, true);
+		// validateFields(record, true, true);
 
 		if(log.isDebugEnabled())
 			log.debug("Updating the record with ID " + record.getId());
 		
-		return recordDao.update(record);
+		return getRecordDAO().update(record);
 	}
 	
 	public boolean delete(Record record) throws DataException {
@@ -71,6 +71,6 @@ public class DBRecordService extends DefaultRecordService {
 	} // end method delete(Record)
 	
 	public void reset() {
-		recordDao.reset();
+		getRecordDAO().reset();
 	}
 }

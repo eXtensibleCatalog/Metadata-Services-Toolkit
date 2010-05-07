@@ -84,7 +84,7 @@
 	<target name="dist-zip">
 	</target>
 
-	<target name="deploy-webapp" depends="mc.publish,mp.deploy-webapp">
+	<target name="deploy-webapp" depends="mc.publish,mp.deploy">
 	</target>
 
 	<target name="deploy-service.nodep" depends="init,ms.copy-example">
@@ -95,7 +95,17 @@
 			dest="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services" />
 	</target>
 
-	<target name="deploy-service" depends="init,ms.copy-example">
+	<target name="change-service-name" if="alt-name">
+		<move todir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services/${alt-name}" >
+			<fileset dir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services/${sname}"/>
+		</move>
+		<delete dir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services/${sname}" />
+	</target>
+
+	<target name="deploy-service" depends="deploy-service-itl, change-service-name">
+	</target>
+
+	<target name="deploy-service-itl" depends="init,ms.copy-example">
 		<ant dir="${mst-service}/custom/${sname}" target="zip.nodep" inheritAll="false"/>
 		<copy file="${mst-service}/custom/${sname}/build/${sname}-${sversion}.zip" 
 			todir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services" />
