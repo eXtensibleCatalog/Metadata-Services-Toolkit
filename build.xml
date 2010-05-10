@@ -76,7 +76,7 @@
 	</target>
 
 	<!-- Clean up the build -->
-	<target name="clean" depends="mc.clean,mp.clean">
+	<target name="clean" depends="mc.clean,mp.clean,ms.clean">
 		<delete dir="${build.dir}" />
 	</target>
 
