@@ -44,6 +44,7 @@
 			mc.src.java: ${mc.src.java}
 			mc.build.dir: ${mc.build.dir}
 			mc.build.ivy.report: ${mc.build.ivy.report}
+			env.java.home: ${env.JAVA_HOME}
 		</echo>
 	</target>
 
@@ -51,6 +52,7 @@
 		<mkdir dir="${mc.build.test.classes}" />
 		<mkdir dir="${mc.build.classes}" />
 		<mkdir dir="${mc.build.lib}" />
+		<mkdir dir="${mc.build.javadoc}" />
 	</target>
 
 	<target name="mc.resolve" depends="mc.init">
@@ -125,6 +127,30 @@
 
 	<target name="init.test" unless="${test}">
 		<property name="test" value="" />
+	</target>
+
+	<target name="mc.javadoc" depends="mc.compile">
+		<javadoc
+			   destdir="${mc.build.javadoc}"
+			   author="true"
+			   version="true"
+			   use="true"
+			   windowtitle="Metadata Services Toolkit">
+
+			<fileset dir="${mc.src.java}" defaultexcludes="yes">
+				<include name="xc/mst/bo/**"/>
+			</fileset>
+
+			<doctitle>
+				<![CDATA[<h1>Metadata Services Toolkit Libraries Web Interface</h1>]]>
+			</doctitle>
+			<bottom>
+				<![CDATA[<i>Copyright &#169; 2009 University of Rochester Libraries</i>]]>
+			</bottom>
+			<tag name="todo" scope="all" description="To do:"/>
+			<link offline="true" href="http://java.sun.com/j2se/1.5.0/docs/api/"
+				packagelistLoc="${env.JAVA_HOME}\bin"/>
+		</javadoc>
 	</target>
 
 	<target name="mc.test" depends="mc.compile.test, init.test">

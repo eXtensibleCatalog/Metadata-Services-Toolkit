@@ -80,9 +80,6 @@
 		</copy>
 	</target>
 
-	<!--
-	<target name="mp.war">
-		-->
 	<target name="mp.war" depends="mp.compile, mp.copy-resources, mc.jar">
 		<jar destfile="${mp.build.dir}/${mp.project-name}.war" >
 			<path refid="webapp.path" />
@@ -114,54 +111,6 @@
 			</fileset>
 		</hotswap>
 	</target>
-
-	<target name="testCompile" depends="compile">
-		<javac srcdir="${testdir}"
-			destdir="${targetdir.classes}"
-			target="${java.target}"
-			debug="on"
-			debuglevel="lines,vars,source"
-			classpathref="testLibraries" />
-	</target>
-
-	<target name="run-tests" description="run examples with java" depends="testCompile">
-
-		<echo message="testng-run " />
-		
-		<testng classpathref="testLibraries"
-				outputDir="${test.output.dir}/output"
-				haltOnfailure="true"
-				dumpCommand="true">
-
-		   <xmlfileset dir="${testdir}" includes="testng.xml"/>
-		</testng>
-	</target>
-
-
-	<target name="javadoc"  description="build the javadocs">
-		<javadoc
-			   destdir="${dist.project.dir}/docs/api"
-			   author="true"
-			   version="true"
-			   use="true"
-			   windowtitle="Metadata Services Toolkit">
-
-			<fileset dir="src/java" defaultexcludes="yes">
-				<include name="xc/mst/bo/**"/>
-			</fileset>
-
-			<doctitle>
-				<![CDATA[<h1>Metadata Services Toolkit Libraries Web Interface</h1>]]>
-			</doctitle>
-			<bottom>
-				<![CDATA[<i>Copyright &#169; 2009 University of Rochester Libraries</i>]]>
-			</bottom>
-			<tag name="todo" scope="all" description="To do:"/>
-			<link offline="true" href="http://java.sun.com/j2se/1.5.0/docs/api/"
-				packagelistLoc="C:\Program Files\Java\jdk1.6.0_12\bin"/>
-		</javadoc>
-	</target>
-
 	-->
 
 	<target name="mp.deploy" depends="mp.copy-resources">
