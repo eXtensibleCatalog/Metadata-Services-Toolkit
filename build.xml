@@ -80,6 +80,11 @@
 		<delete dir="${build.dir}" />
 	</target>
 
+	<target name="retrieve" depends="mc.retrieve,mp.retrieve,ms.retrieve">
+		<ant dir="${mst-service}/custom/MARCNormalization" target="retrieve" inheritAll="false" />
+		<ant dir="${mst-service}/custom/MARCToXCTransformation" target="retrieve" inheritAll="false" />
+	</target>
+
 	<!-- Create the distriubtion file -->
 	<target name="dist-zip">
 	</target>

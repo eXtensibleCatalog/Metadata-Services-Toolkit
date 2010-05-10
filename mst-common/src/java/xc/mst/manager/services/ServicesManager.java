@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
@@ -25,6 +26,8 @@ import xc.mst.services.MetadataService;
 import xc.mst.utils.MSTConfiguration;
 
 public class ServicesManager extends BaseManager implements ApplicationListener<ApplicationEvent>, ApplicationContextAware {
+	
+	public static final Logger LOG = Logger.getLogger(ServicesManager.class);
 	
 	protected Map<String, ServiceEntry> serviceEntries = new HashMap<String, ServiceEntry>();
 	protected Semaphore semaphore = new Semaphore(1);
@@ -151,7 +154,8 @@ public class ServicesManager extends BaseManager implements ApplicationListener<
 				        		System.out.println("after thread start");
 			        		}
 						} catch (Throwable t) {
-							throw new RuntimeException(t);
+							semaphore.release();
+							t.printStackTrace(System.out);
 						}
 					}
 				};

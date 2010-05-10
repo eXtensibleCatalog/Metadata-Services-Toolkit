@@ -10,12 +10,14 @@
 package xc.mst.manager.test;
 
 import java.util.Date;
+
+import org.testng.annotations.Test;
+
 import xc.mst.bo.log.Log;
 import xc.mst.dao.DataException;
-import xc.mst.manager.logs.DefaultLogService;
-import xc.mst.manager.logs.LogService;
-import org.testng.annotations.Test;
 import xc.mst.helper.TestHelper;
+import xc.mst.manager.logs.LogService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Tests for General Logs
@@ -31,7 +33,7 @@ public class GeneralLogsTest {
       	 TestHelper helper = TestHelper.getInstance();
         try
         {
-            LogService logService = new DefaultLogService();
+            LogService logService = (LogService)MSTConfiguration.getBean("LogService");
             Log log = new Log();
             log.setErrors(0);
             log.setLastLogReset(new Date());

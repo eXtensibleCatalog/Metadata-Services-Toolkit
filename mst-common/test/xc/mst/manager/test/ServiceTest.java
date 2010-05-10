@@ -12,8 +12,10 @@ package xc.mst.manager.test;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.Date;
 
+import org.springframework.core.io.ClassPathResource;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.service.Service;
@@ -22,6 +24,7 @@ import xc.mst.helper.TestHelper;
 import xc.mst.manager.processingDirective.ConfigFileException;
 import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Test class for testing services
@@ -37,7 +40,7 @@ public class ServiceTest {
       	 TestHelper helper = TestHelper.getInstance();
         try
         {
-            ServicesService servicesService = new DefaultServicesService();
+            ServicesService servicesService = (ServicesService)MSTConfiguration.getBean("ServicesService");
             Service service = new Service();
             service.setHarvestOutErrors(0);
             service.setHarvestOutLastLogReset(new Date());
@@ -49,8 +52,8 @@ public class ServiceTest {
             service.setServicesLastLogReset(new Date());
             service.setServicesLogFileName("serviceLogFileName");
             service.setServicesWarnings(0);
-            service.setXccfgFileName("MST-instances/MetadataServicesToolkit/services/Normalization/serviceConfig/DefaultNormalizationServiceConfig.xccfg");
-            File configFile = new File("MST-instances/MetadataServicesToolkit/services/Normalization/serviceConfig/DefaultNormalizationServiceConfig.xccfg");
+            service.setXccfgFileName("MST-instances/MetadataServicesToolkit/services/MARCNormalization/META-INF/classes/DefaultNormalizationServiceConfig.xccfg");
+            File configFile = new File(MSTConfiguration.getUrlPath()+"/services/MARCNormalization/META-INF/classes/DefaultNormalizationServiceConfig.xccfg");
             BufferedReader in = new BufferedReader(new FileReader(configFile));
 
                 // The name of the service, which must appear in the first line of the configuration file

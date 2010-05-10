@@ -22,6 +22,7 @@ import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
+import xc.mst.utils.MSTConfiguration;
 
 
 /**
@@ -46,8 +47,8 @@ public class ProviderServiceTest
    	 TestHelper helper = TestHelper.getInstance();
         try
         {
-                ServerService serverService = new DefaultServerService();
-            ProviderService providerService = new DefaultProviderService();
+        	ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
+            ProviderService providerService = (ProviderService)MSTConfiguration.getBean("ProviderService");
             Provider provider = new Provider();
             provider.setName("repositoryname");
             provider.setDescription("description");

@@ -59,21 +59,21 @@ public class BrowseRecordServiceTest {
    	 TestHelper helper = TestHelper.getInstance();
 	 
 	 		
-	 		 ProviderService providerService = new DefaultProviderService();
+	 		 ProviderService providerService = (ProviderService)MSTConfiguration.getBean("ProviderService");
 
-	 		 BrowseRecordService browseRecordService = new DefaultBrowseRecordService();
+	 		 BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getBean("BrowseRecordService");
 	 		 
-	 		 ScheduleService scheduleService = new DefaultScheduleService();
+	 		 ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getBean("ScheduleService");
 
-	 		 FormatService formatService = new DefaultFormatService();
+	 		 FormatService formatService = (FormatService)MSTConfiguration.getBean("FormatService");
 
-	 		 SetService setService = new DefaultSetService();
+	 		 SetService setService = (SetService)MSTConfiguration.getBean("SetService");
 
-	 		 UserService userService = new DefaultUserService();
+	 		 UserService userService = (UserService)MSTConfiguration.getBean("UserService");
 
-	 
-	  		ServerService serverService = new DefaultServerService();
-            User user = new DefaultUserService().getUserByUserName("admin", serverService.getServerByName("Local"));
+	  		ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
+	  		
+            User user = userService.getUserByUserName("admin", serverService.getServerByName("Local"));
 
             Provider provider = new Provider();
 

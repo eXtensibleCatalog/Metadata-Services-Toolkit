@@ -12,12 +12,14 @@ package xc.mst.manager.test;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.testng.annotations.Test;
+
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
-import xc.mst.manager.user.DefaultGroupService;
-import xc.mst.manager.user.GroupService;
 import xc.mst.helper.TestHelper;
+import xc.mst.manager.user.GroupService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Tests for Groups
@@ -37,7 +39,7 @@ public class GroupsTest
       	 TestHelper helper = TestHelper.getInstance();
         try
         {
-            GroupService groupService = new DefaultGroupService();
+            GroupService groupService = (GroupService)MSTConfiguration.getBean("GroupService");
             Group group = new Group();
             group.setDescription("New Group Description");
             group.setName("New Group Name");

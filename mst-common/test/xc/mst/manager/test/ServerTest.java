@@ -13,8 +13,10 @@ package xc.mst.manager.test;
 import org.testng.annotations.Test;
 import xc.mst.bo.user.Server;
 import xc.mst.bo.user.Server.ServerType;
+import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.user.DefaultServerService;
 import xc.mst.manager.user.ServerService;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.helper.TestHelper;
 
 /**
@@ -36,7 +38,7 @@ public class ServerTest
       	 TestHelper helper = TestHelper.getInstance();
         try
         {
-            ServerService serverService = new DefaultServerService();
+            ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
             Server server = new Server();
             server.setForgotPasswordLabel("Forgot Password Label");
             server.setForgotPasswordUrl("Forgot Password Url");

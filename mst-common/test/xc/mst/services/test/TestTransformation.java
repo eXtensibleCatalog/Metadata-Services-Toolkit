@@ -99,7 +99,7 @@ public class TestTransformation {
 		   	 TestHelper helper = TestHelper.getInstance(); 
 
 			// Initialize Record Service
-			recordService = new DefaultRecordService();
+			recordService = (RecordService)MSTConfiguration.getBean("RecordService");
 
 			// List of all test records
 			recordList.add("1048559");
@@ -277,10 +277,10 @@ public class TestTransformation {
 	 */
 	public void addUnprocessedRecordFromFiles() throws DataException, IOException, IndexException
 	{
-		ProviderDAO providerDao = new DefaultProviderDAO();
-		FormatDAO formatDao = new DefaultFormatDAO();
-		ServiceDAO serviceDao = new DefaultServiceDAO();
-		RecordService recordService = new DefaultRecordService();
+		ProviderDAO providerDao = (ProviderDAO)MSTConfiguration.getBean("ProviderDAO");
+		FormatDAO formatDao = (FormatDAO)MSTConfiguration.getBean("FormatDAO");
+		ServiceDAO serviceDao = (ServiceDAO)MSTConfiguration.getBean("ServiceDAO");
+		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
 
 		for (String file : inputRecords.keySet()) {
 

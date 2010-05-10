@@ -1,6 +1,5 @@
 package xc.mst.helper;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,15 +10,11 @@ import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.core.CoreContainer;
 import org.apache.solr.core.CoreDescriptor;
 import org.apache.solr.core.SolrCore;
-import org.jconfig.ConfigurationManager;
-import org.jconfig.ConfigurationManagerException;
-import org.jconfig.handler.XMLFileHandler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.xml.sax.SAXException;
 
 import xc.mst.bo.log.Log;
-import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
@@ -78,7 +73,7 @@ public class TestHelper {
 	 */
 	public  static void initializeLog() {
 
-		PropertyConfigurator.configure(System.getProperty("user.dir") + MSTConfiguration.FILE_SEPARATOR + "src" + MSTConfiguration.FILE_SEPARATOR + "java" + MSTConfiguration.FILE_SEPARATOR + "log4j.config.txt");
+		PropertyConfigurator.configure(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "log4j.config.txt");
 		
 	    // Initialize the general MST logs
 	    LogDAO logDao = new DefaultLogDAO();
@@ -125,8 +120,7 @@ public class TestHelper {
 		 * Loads the solr in  in workspace\MetadataServicesToolkit\MST-instances\MetadataServicesToolkit\solr.
 		 * Data(index) will be created under workspace\MetadataServicesToolkit\MST-instances\MetadataServicesToolkit\solr\data
 		 */
-		String solrHome = System.getProperty("user.dir") + MSTConfiguration.FILE_SEPARATOR + "MST-instances" +  MSTConfiguration.FILE_SEPARATOR + MSTConfiguration.getUrlPath();
-		solrHome = solrHome + MSTConfiguration.FILE_SEPARATOR + "solr";
+		String solrHome = MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "solr";
 
 		try
 		{

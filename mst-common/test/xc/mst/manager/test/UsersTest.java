@@ -12,13 +12,14 @@ package xc.mst.manager.test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.testng.annotations.Test;
+
 import xc.mst.bo.user.User;
-import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserService;
+import xc.mst.helper.TestHelper;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
-import xc.mst.helper.TestHelper;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Tests for Users
@@ -39,8 +40,8 @@ public class UsersTest
         try
         {
             List groupList = new ArrayList();
-            UserService userService = new DefaultUserService();
-            ServerService serverService = new DefaultServerService();
+            UserService userService = (UserService)MSTConfiguration.getBean("UserService");
+            ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
             User user = new User();
             user.setAccountCreated(new Date(2009,1,1));
             user.setEmail("JohnDoe@gmail.com");

@@ -19,18 +19,13 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
 import xc.mst.helper.TestHelper;
-import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
-import xc.mst.manager.repository.DefaultFormatService;
-import xc.mst.manager.repository.DefaultProviderService;
-import xc.mst.manager.repository.DefaultSetService;
 import xc.mst.manager.repository.FormatService;
 import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.repository.SetService;
-import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
+import xc.mst.utils.MSTConfiguration;
 
 
 /**
@@ -53,18 +48,18 @@ public class ScheduleServiceTest {
    	 // Initialize Solr, database, log before testing
    	 TestHelper helper = TestHelper.getInstance();  
    	 
-   	 ProviderService providerService = new DefaultProviderService();
+   	 ProviderService providerService = (ProviderService)MSTConfiguration.getBean("ProviderService");
 
-   	 ScheduleService scheduleService = new DefaultScheduleService();
+   	 ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getBean("ScheduleService");
 
-   	 FormatService formatService = new DefaultFormatService();
+   	 FormatService formatService = (FormatService)MSTConfiguration.getBean("FormatService");
 
-   	 SetService setService = new DefaultSetService();
+   	 SetService setService = (SetService)MSTConfiguration.getBean("SetService");
 
-   	 UserService userService = new DefaultUserService();
+   	 UserService userService = (UserService)MSTConfiguration.getBean("UserService");
   try
         {
-	  	    ServerService serverService = new DefaultServerService();
+	  	    ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
 
             Provider provider = new Provider();
 

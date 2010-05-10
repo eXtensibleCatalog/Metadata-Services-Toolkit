@@ -315,7 +315,8 @@ public class TestNormalizationService
 			ms.runService(1, -1);
 			System.out.println(formatter.format(System.currentTimeMillis()));
 
-			RecordList records = new DefaultRecordService().getAll();
+			RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+			RecordList records = recordService.getAll();
 			for(Record record: records)
 			{
 				System.out.println("Found record:\n" + record.getOaiXml() + "\n\n\n\n");
