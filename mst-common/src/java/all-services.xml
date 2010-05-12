@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  -->
+
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 		default-init-method="init">
 
+	<!-- 
 	<bean name="BaseService" abstract="true" class="xc.mst.manager.BaseService" >
 		<property name="emailConfigDAO" ref="EmailConfigDAO" />
 		<property name="harvestDAO" ref="HarvestDAO" />
@@ -36,8 +46,10 @@
 		<property name="userDAO" ref="UserDAO" />
 		<property name="userGroupUtilDAO" ref="UserGroupUtilDAO" />
 		<property name="recordDAO" ref="DBRecordDAO" />
+		<property name="repositoryDAO" ref="RepositoryDAO" />
 	</bean>
 
+	
 	<bean name="EmailConfigService" class="xc.mst.manager.configuration.DefaultEmailConfigService" parent="BaseService" />
 	<bean name="ScheduleService" class="xc.mst.manager.harvest.DefaultScheduleService" parent="BaseService" />
 	<bean name="LogService" class="xc.mst.manager.logs.DefaultLogService" parent="BaseService" />
@@ -63,6 +75,7 @@
 	
 	<bean name="ValidateRepository" class="xc.mst.harvester.ValidateRepository" parent="BaseService" />
 	<bean name="MSTSolrServer" class="xc.mst.manager.record.MSTSolrServer" parent="BaseService" />
+	 -->
 	
 	<alias name="${record.service}" alias="RecordService" />
 </beans>

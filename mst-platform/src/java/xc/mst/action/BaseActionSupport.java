@@ -1,3 +1,12 @@
+/**
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  */
+
 package xc.mst.action;
 
 import xc.mst.dao.emailconfig.EmailConfigDAO;
@@ -14,7 +23,7 @@ import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.provider.ProviderFormatUtilDAO;
 import xc.mst.dao.provider.SetDAO;
-import xc.mst.dao.record.DBRecordDAO;
+import xc.mst.dao.record.RecordDAO;
 import xc.mst.dao.record.RecordTypeDAO;
 import xc.mst.dao.record.ResumptionTokenDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
@@ -208,7 +217,7 @@ public class BaseActionSupport extends ActionSupport {
 	public UserGroupUtilDAO getUserGroupUtilDAO() {
 		return (UserGroupUtilDAO)MSTConfiguration.getBean("UserGroupUtilDAO");
 	}
-	public DBRecordDAO getRecordDAO() {
-		return (DBRecordDAO)MSTConfiguration.getBean("DBRecordDAO");
+	public RecordDAO getRecordDAO() {
+		return (RecordDAO)MSTConfiguration.getBean("DBRecordDAO");
 	}
 }

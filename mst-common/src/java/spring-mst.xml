@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  -->
+
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd"
 		default-init-method="init">
 
 	<bean name="MSTConfiguration" class="xc.mst.utils.MSTConfiguration" scope="singleton">
@@ -15,7 +27,7 @@
 		</property>
 	</bean>
 
-	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<bean id="DataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 		<property name="url" value="${DatabaseUrl}"/>
 		<property name="username" value="${DatabaseUsername}"/>
@@ -25,8 +37,30 @@
 		<property name="maxActive" value="5" />
 	</bean>
 
+	<context:component-scan base-package="xc.mst"
+			use-default-filters="false"
+			name-generator="xc.mst.spring.MSTBeanNameGenerator"
+			scope-resolver="xc.mst.spring.MSTScopeMetadataResolver">
+		<context:include-filter type="custom" expression="xc.mst.spring.DAOTypeFilter" />
+	</context:component-scan>
+	
+	<context:component-scan base-package="xc.mst"
+			use-default-filters="false"
+			name-generator="xc.mst.spring.MSTBeanNameGenerator"
+			scope-resolver="xc.mst.spring.MSTScopeMetadataResolver">
+		<context:include-filter type="custom" expression="xc.mst.spring.ServiceTypeFilter" />
+	</context:component-scan>
+	
+	
+	<!--
+	 
 	<import resource="all-daos.xml"/>
 	<import resource="all-services.xml"/>
+	-->
+	<alias name="${record.service}" alias="RecordService" />
+	
 	<import resource="all-managers.xml"/>
+	
+	<bean class="xc.mst.spring.MSTBeanPostProcessor"/>
 
 </beans>

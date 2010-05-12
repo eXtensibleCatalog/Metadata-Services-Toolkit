@@ -417,7 +417,7 @@ public class MySqlConnectionManager
 	//      for the time being, I'm going to piggyback this class and slowly phase it out.
 	public static Connection getConnection() {
 		try {
-			return ((DataSource)MSTConfiguration.getBean("myDataSource")).getConnection();
+			return ((DataSource)MSTConfiguration.getBean("DataSource")).getConnection();
 		} catch (Throwable t) {
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;

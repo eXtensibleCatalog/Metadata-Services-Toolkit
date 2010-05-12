@@ -158,6 +158,9 @@ public class Record
 	 * Number of Successor
 	 */
 	private int numberOfSuccessors;
+
+	protected boolean processComplete = false;
+	protected boolean held = false;
 	
 	/**
 	 * Get's the indexed object type of this class.  This is used to differentiate between
@@ -903,4 +906,20 @@ public class Record
 	public static void setIndexedObjectType(String indexedObjectType) {
 		Record.indexedObjectType = indexedObjectType;
 	}
-} // end class Record
+	
+	public boolean isProcessComplete() {
+		return processComplete;
+	}
+
+	public void setProcessComplete(boolean processComplete) {
+		this.processComplete = processComplete;
+	}
+
+	public boolean isHeld() {
+		return held;
+	}
+
+	public void setHeld(boolean held) {
+		this.held = held;
+	}
+}

@@ -1,10 +1,19 @@
+/**
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  */
+
 package xc.mst.services.transformation;
 
 import java.util.List;
 
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DataException;
-import xc.mst.dao.service.DefaultOaiIdentiferForServiceDAO;
+import xc.mst.dao.service.DefaultOaiIdentifierForServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DBRecordService;
 import xc.mst.utils.TimingLogger;
@@ -12,7 +21,7 @@ import xc.mst.utils.TimingLogger;
 public class DBTransformationService extends TransformationService {
 	
 	public void init() {
-		setOaiIdentifierForServiceDAO(new DBOaiIdentiferForServiceDAO());
+		setOaiIdentifierForServiceDAO(new DBOaiIdentifierForServiceDAO());
 	}
 	
 	@Override
@@ -50,7 +59,7 @@ public class DBTransformationService extends TransformationService {
 		getRecordService().insert(record);
 	}
 	
-	public class DBOaiIdentiferForServiceDAO extends DefaultOaiIdentiferForServiceDAO {
+	public class DBOaiIdentifierForServiceDAO extends DefaultOaiIdentifierForServiceDAO {
 		protected int id=0;
 		
 		@Override

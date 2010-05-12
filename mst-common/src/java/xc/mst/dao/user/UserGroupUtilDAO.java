@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.dao.BaseDAO;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
@@ -23,7 +24,7 @@ import xc.mst.dao.MySqlConnectionManager;
  *
  * @author Eric Osisek
  */
-public abstract class UserGroupUtilDAO
+public abstract class UserGroupUtilDAO extends BaseDAO
 {
 	/**
 	 * A reference to the logger for this class

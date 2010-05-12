@@ -1,3 +1,11 @@
+/**
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  */
 package xc.mst.manager;
 
 import xc.mst.dao.emailconfig.EmailConfigDAO;
@@ -29,7 +37,7 @@ import xc.mst.dao.user.PermissionDAO;
 import xc.mst.dao.user.ServerDAO;
 import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.user.UserGroupUtilDAO;
-import xc.mst.dao.record.DBRecordDAO;
+import xc.mst.dao.record.RecordDAO;
 import xc.mst.manager.configuration.EmailConfigService;
 import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.logs.LogService;
@@ -45,6 +53,7 @@ import xc.mst.manager.record.ManifestationService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
 import xc.mst.manager.repository.FormatService;
+
 import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.repository.SetService;
 import xc.mst.manager.user.GroupService;
@@ -52,6 +61,7 @@ import xc.mst.manager.user.PermissionService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
+import xc.mst.repo.RepositoryDAO;
 import xc.mst.utils.MSTConfiguration;
 
 public class BaseService {
@@ -85,7 +95,8 @@ public class BaseService {
 	protected ServerDAO serverDAO = null;
 	protected UserDAO userDAO = null;
 	protected UserGroupUtilDAO userGroupUtilDAO = null;
-	protected DBRecordDAO recordDAO = null;
+	protected RecordDAO recordDAO = null;
+	protected RepositoryDAO repositoryDAO = null;
 
 	public EmailConfigDAO getEmailConfigDAO() {
 		return emailConfigDAO;
@@ -329,12 +340,19 @@ public class BaseService {
 		this.userGroupUtilDAO = userGroupUtilDAO;
 	}
 
-	public DBRecordDAO getRecordDAO() {
+	public RecordDAO getRecordDAO() {
 		return recordDAO;
 	}
 
-	public void setRecordDAO(DBRecordDAO recordDAO) {
+	public void setRecordDAO(RecordDAO recordDAO) {
 		this.recordDAO = recordDAO;
+	}
+	
+	public RepositoryDAO getRepositoryDAO() {
+		return repositoryDAO;
+	}
+	public void setRepositoryDAO(RepositoryDAO repositoryDAO) {
+		this.repositoryDAO = repositoryDAO;
 	}
 
 	public EmailConfigService getEmailConfigService() {

@@ -11,6 +11,7 @@ package xc.mst.dao.user;
 
 import java.util.List;
 
+import xc.mst.dao.BaseDAO;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
@@ -18,7 +19,7 @@ import xc.mst.dao.MySqlConnectionManager;
  *
  * @author Eric Osisek
  */
-public abstract class GroupPermissionUtilDAO
+public abstract class GroupPermissionUtilDAO extends BaseDAO
 {
 	/**
 	 * The Object managing the database connection

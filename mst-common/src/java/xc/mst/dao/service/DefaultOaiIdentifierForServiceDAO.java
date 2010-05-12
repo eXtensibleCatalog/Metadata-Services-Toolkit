@@ -23,7 +23,7 @@ import xc.mst.dao.DBConnectionResetException;
  *
  * @author Eric Osisek
  */
-public class DefaultOaiIdentiferForServiceDAO extends OaiIdentifierForServiceDAO
+public class DefaultOaiIdentifierForServiceDAO extends OaiIdentifierForServiceDAO
 {
 	/**
 	 * A PreparedStatement to insert a service/next OAI ID pair into the database

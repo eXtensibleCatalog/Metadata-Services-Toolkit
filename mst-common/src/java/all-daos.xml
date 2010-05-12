@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  -->
+
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 		default-init-method="init">
+
+	<bean name="BaseDAO" abstract="true" class="xc.mst.dao.BaseDAO" >
+		<property name="dataSource" ref="DataSource"/>
+	</bean>
 
 	<bean name="EmailConfigDAO" class="xc.mst.dao.emailconfig.DefaultEmailConfigDAO" />
 	<bean name="HarvestDAO" class="xc.mst.dao.harvest.DefaultHarvestDAO" />
@@ -35,6 +48,7 @@
 	<bean name="UserDAO" class="xc.mst.dao.user.DefaultUserDAO" />
 	<bean name="UserGroupUtilDAO" class="xc.mst.dao.user.DefaultUserGroupUtilDAO" />
 	<bean name="DBRecordDAO" class="xc.mst.dao.record.DBRecordDAO" />
+	<bean name="RepositoryDAO" class="xc.mst.dao.repo.RepositoryDAO" />
 	
 	<!-- 
 	<bean name="HeldRecordDAO" class="xc.mst.services.aggregation.dao.DefaultHeldRecordDAO" />

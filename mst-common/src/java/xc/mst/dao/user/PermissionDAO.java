@@ -12,6 +12,7 @@ package xc.mst.dao.user;
 import java.util.List;
 
 import xc.mst.bo.user.Permission;
+import xc.mst.dao.BaseDAO;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
@@ -21,7 +22,7 @@ import xc.mst.dao.MySqlConnectionManager;
  *
  * @author Eric Osisek
  */
-public abstract class PermissionDAO
+public abstract class PermissionDAO extends BaseDAO
 {
 	/**
 	 * The Object managing the database connection

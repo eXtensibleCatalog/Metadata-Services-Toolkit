@@ -116,7 +116,7 @@
 			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
 	</target>
 
-	<target name="mc.compile.test" depends="mc.compile.nodep">
+	<target name="mc.compile.test" depends="mc.copy-resources.nodep">
 		<javac srcdir="${mc.test.dir}"
 			destdir="${mc.build.test.classes}"
 			classpathref="mc.classpath.test.compile"
