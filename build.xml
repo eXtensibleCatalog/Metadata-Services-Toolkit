@@ -80,9 +80,15 @@
 	<!-- Clean up the build -->
 	<target name="clean" depends="mc.clean,mp.clean,ms.clean">
 		<delete dir="${build.dir}" />
+		<ant dir="${mst-service}/example" target="clean" inheritAll="false" />
+		<ant dir="${mst-service}/custom/aggregation" target="clean" inheritAll="false" />
+		<ant dir="${mst-service}/custom/MARCNormalization" target="clean" inheritAll="false" />
+		<ant dir="${mst-service}/custom/MARCToXCTransformation" target="clean" inheritAll="false" />
 	</target>
 
 	<target name="retrieve" depends="mc.retrieve,mp.retrieve,ms.retrieve">
+		<ant dir="${mst-service}/example" target="retrieve" inheritAll="false" />
+		<ant dir="${mst-service}/custom/aggregation" target="retrieve" inheritAll="false" />
 		<ant dir="${mst-service}/custom/MARCNormalization" target="retrieve" inheritAll="false" />
 		<ant dir="${mst-service}/custom/MARCToXCTransformation" target="retrieve" inheritAll="false" />
 	</target>

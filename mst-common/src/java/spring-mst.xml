@@ -50,13 +50,7 @@
 			scope-resolver="xc.mst.spring.MSTScopeMetadataResolver">
 		<context:include-filter type="custom" expression="xc.mst.spring.ServiceTypeFilter" />
 	</context:component-scan>
-	
-	
-	<!--
-	 
-	<import resource="all-daos.xml"/>
-	<import resource="all-services.xml"/>
-	-->
+
 	<alias name="${record.service}" alias="RecordService" />
 	
 	<import resource="all-managers.xml"/>
