@@ -1,5 +1,6 @@
 package xc.mst.repo;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import xc.mst.dao.BaseDAO;
@@ -35,34 +36,31 @@ public class RepositoryDAO extends BaseDAO {
 	public void dropTables(String name) {
 		for (String table : ALL_TABLES) {
 			try {
-				this.jdbcTemplate.execute("drop table "+getTableName(name, table));
+				String sql = "drop table "+getTableName(name, table);
+				this.jdbcTemplate.execute(sql);
 			} catch (Throwable t) {
 				LOG.error("", t);
 			}
 		}
 	}
 	
+	public void createOaiIdTable() {
+		
+	}
+	
 	public void createTables(String name) {
-		// oai ids
-		String sql =
-			"create table "+getTableName(name, RECORDS_TABLE)+"("+
-				"\t\n record_id        int        NOT NULL    AUTO_INCREMENT,"+
-				"\t\n oai_pmh_id_4     char(35)                             ,"+
-				"\t\n oai_pmh_id_3     char(35)                             ,"+
-				"\t\n oai_pmh_id_2     char(35)                             ,"+
-				"\t\n oai_pmh_id_1     char(35)                             ,"+
-				"\t\n date_created     datetime                             ,"+
-				"\t\n status           char(1)                              ,"+
-				"\t\n format_id        int                                  ,"+
-			"\n PRIMARY KEY (record_id)                                     ,"+
-			"\n KEY idx_"+RECORDS_TABLE+"_oai_pmh_id_4 (oai_pmh_id_4)       ,"+
-			"\n KEY idx_"+RECORDS_TABLE+"_date_created (date_created)       ,"+
-			"\n KEY idx_"+RECORDS_TABLE+"_status (status)                   ,"+
-			"\n KEY idx_"+RECORDS_TABLE+"_format_id (format_id)              "+
-			") ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;";
-		System.out.println("sql: "+sql);
-		LOG.error(sql);
-		this.jdbcTemplate.execute(sql);
+		String createTablesContents = getUtil().slurp("xc/mst/repo/sql/create_tables.sql");
+		createTablesContents = createTablesContents.replaceAll("REPO_NAME", name);
+		String[] tokens = createTablesContents.split(";");
+		for (String sql : tokens) {
+			if (StringUtils.isEmpty(StringUtils.trim(sql))) {
+				continue;
+			}
+			// oai ids
+			sql = sql + ";";
+			LOG.info(sql);
+			this.jdbcTemplate.execute(sql);
+		}
 	}
 
 }

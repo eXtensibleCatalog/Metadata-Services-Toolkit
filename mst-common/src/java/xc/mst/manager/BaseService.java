@@ -63,9 +63,11 @@ import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
 import xc.mst.repo.RepositoryDAO;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.Util;
 
 public class BaseService {
 
+	protected Util util = null;
 	protected EmailConfigDAO emailConfigDAO = null;
 	protected HarvestDAO harvestDAO = null;
 	protected HarvestRecordUtilDAO harvestRecordUtilDAO = null;
@@ -97,6 +99,13 @@ public class BaseService {
 	protected UserGroupUtilDAO userGroupUtilDAO = null;
 	protected RecordDAO recordDAO = null;
 	protected RepositoryDAO repositoryDAO = null;
+	
+	public Util getUtil() {
+		return util;
+	}
+	public void setUtil(Util util) {
+		this.util = util;
+	}
 
 	public EmailConfigDAO getEmailConfigDAO() {
 		return emailConfigDAO;

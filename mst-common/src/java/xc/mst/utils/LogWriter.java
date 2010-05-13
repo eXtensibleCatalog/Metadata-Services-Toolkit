@@ -42,7 +42,7 @@ public class LogWriter
 		{
 			// Create a new file appender to write to the requested file
 			FileAppender appender = new FileAppender();
-			appender.setFile(logFileLocation);
+			appender.setFile(MSTConfiguration.getUrlPath()+"/"+logFileLocation);
 			appender.setName(logFileLocation);
 			appender.setLayout(new PatternLayout("%d{DATE} %5p [%t] - %m%n"));
 			appender.activateOptions();

@@ -36,6 +36,8 @@
 		<property name="minIdle" value="5" />
 		<property name="maxActive" value="5" />
 	</bean>
+	
+	<bean name="Util" class="xc.mst.utils.Util" scope="singleton" />
 
 	<context:component-scan base-package="xc.mst"
 			use-default-filters="false"

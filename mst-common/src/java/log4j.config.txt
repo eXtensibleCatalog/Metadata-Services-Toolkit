@@ -73,4 +73,4 @@ log4j.appender.file.MaxBackupIndex=30
 
 # Pattern to output the caller's file name and line number.
 log4j.appender.file.layout=org.apache.log4j.PatternLayout
-log4j.appender.file.layout.ConversionPattern=%d{DATE} %C %5p [%t] - %m%n
+log4j.appender.file.layout.ConversionPattern=%d{DATE} %C:%L %5p [%t] - %m%n

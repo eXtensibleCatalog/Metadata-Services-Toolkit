@@ -87,7 +87,8 @@
 		<copy todir="${mc.build.classes}">
 			<fileset dir="${mc.src.java}">
 				<include name="default.properties" />
-				<include name="*.xml" />
+				<include name="**/*.xml" />
+				<include name="**/*.sql" />
 				<!--
 				<exclude name="**/*.java" />
 				<exclude name="*.properties" />

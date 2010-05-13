@@ -11,6 +11,7 @@ package xc.mst.dao;
 
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -45,18 +46,30 @@ import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.user.UserGroupUtilDAO;
 import xc.mst.manager.record.RecordService;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.Util;
 
 public class BaseDAO {
+	
+	private final static Logger LOG = Logger.getLogger(BaseDAO.class);
 	
 	protected DataSource dataSource = null;
 	
 	protected NamedParameterJdbcTemplate namedParameterJdbcTemplate = null;
 	protected JdbcTemplate jdbcTemplate = null;
-	
+	protected Util util = null;
+
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 		this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+	
+	public Util getUtil() {
+		return util;
+	}
+	public void setUtil(Util util) {
+		LOG.info("util: "+util);
+		this.util = util;
 	}
 	
 	public RecordService getRecordService() {

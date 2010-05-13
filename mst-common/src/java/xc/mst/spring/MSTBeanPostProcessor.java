@@ -23,6 +23,7 @@ import org.springframework.context.ApplicationContextAware;
 import xc.mst.dao.BaseDAO;
 import xc.mst.manager.BaseManager;
 import xc.mst.manager.BaseService;
+import xc.mst.utils.Util;
 
 public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationContextAware {
 	
@@ -56,7 +57,9 @@ public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationConte
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		if (bean instanceof BaseDAO) {
 			((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("DataSource"));
+			((BaseDAO)bean).setUtil((Util)this.applicationContext.getBean("Util"));
 		} else if (bean instanceof BaseService) {
+			((BaseService)bean).setUtil((Util)this.applicationContext.getBean("Util"));
 			for (String s : serviceSetters.keySet()) {
 				Object o = this.applicationContext.getBean(s);
 				Method m = this.serviceSetters.get(s);
