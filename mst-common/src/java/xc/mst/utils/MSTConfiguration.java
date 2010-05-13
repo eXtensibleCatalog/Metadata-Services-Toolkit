@@ -93,31 +93,25 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 		
 		System.out.println("MSTCONfig.init()");
 
-		
 		if (applicationContext instanceof WebApplicationContext) {
 			String urlPath = ((WebApplicationContext)applicationContext).getServletContext().getContextPath();
 			// Remove the / in '/MetadataServicesToolkit'
 			urlPath = urlPath.substring(1, urlPath.length());
-		
 			instanceName = urlPath;
 		} else {
 			instanceName = "MetadataServicesToolkit";
 		}
 		
-		File mstInstances = new File(getProperty(Constants.INSTANCES_DIR) + FILE_SEPARATOR + getProperty(Constants.INSTANCES_FOLDER_NAME));
+		File mstInstances = new File(rootDir+"/"+getProperty(Constants.INSTANCES_FOLDER_NAME));
 		if (mstInstances.exists()) {
 			mstInstanceFolderExist = true;
 		}
 		
-		File currentInstance = new File(getProperty(Constants.INSTANCES_DIR) + FILE_SEPARATOR + getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + urlPath);
+		File currentInstance = new File(rootDir+"/"+getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + instanceName);
 		if (currentInstance.exists()) {
 			currentInstanceFolderExist = true;
 		}
-
-		System.out.println("INSTANCES_FOLDER_NAME: "+getProperty(Constants.INSTANCES_FOLDER_NAME));
-		System.out.println("instanceName: "+instanceName);
 		urlPath = rootDir + getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + instanceName;
-		System.out.println("urlPath: "+urlPath);
 	}
 
 	public void setApplicationContext(ApplicationContext applicationContext) {

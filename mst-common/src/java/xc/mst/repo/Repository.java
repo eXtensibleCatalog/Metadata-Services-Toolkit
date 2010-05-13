@@ -8,6 +8,7 @@ import xc.mst.bo.record.Record;
 public interface Repository {
 	
 	public String getName();
+	public void setName(String name);
 	
 	public void installOrUpdateIfNecessary(); 
 

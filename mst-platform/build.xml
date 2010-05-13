@@ -56,7 +56,9 @@
 		<ivy:retrieve sync="true" pattern="${mp.build.lib}/[artifact]-[revision].[ext]"/>
 	</target>
 
-	<target name="mp.compile" depends="mp.retrieve">
+	<target name="mp.compile" depends="mp.retrieve, mp.compile.nodep" />
+
+	<target name="mp.compile.nodep" depends="mp.init">
 		<javac srcdir="${mp.src.java}"
 			destdir="${mp.build.classes}"
 			classpathref="mp.classpath"

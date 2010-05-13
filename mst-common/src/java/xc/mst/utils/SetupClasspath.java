@@ -17,6 +17,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Properties;
 
+import org.apache.log4j.PropertyConfigurator;
+
 public class SetupClasspath {
 	
 	public static void setupClasspath(String dir) {
@@ -63,6 +65,10 @@ public class SetupClasspath {
 	    	url = url.replaceAll("\\\\", "/");
 	    	System.out.println("url: "+url);
 	    	addURL(new URL(url));
+	    	
+	    	System.setProperty("mst.root.dir", rootDir);
+	    	
+	    	PropertyConfigurator.configure(rootDir+"MST-instances/"+dir+"/log4j.config.txt");
     	} catch (Throwable t) {
     		throw new RuntimeException(t);
     	}

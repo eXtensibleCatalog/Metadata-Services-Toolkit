@@ -11,6 +11,7 @@ package xc.mst.dao;
 
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import xc.mst.dao.harvest.HarvestDAO;
@@ -49,11 +50,13 @@ public class BaseDAO {
 	
 	protected DataSource dataSource = null;
 	
-	protected NamedParameterJdbcTemplate jdbcTemplate = null;
+	protected NamedParameterJdbcTemplate namedParameterJdbcTemplate = null;
+	protected JdbcTemplate jdbcTemplate = null;
 	
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
-		this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+		this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
 	public RecordService getRecordService() {
