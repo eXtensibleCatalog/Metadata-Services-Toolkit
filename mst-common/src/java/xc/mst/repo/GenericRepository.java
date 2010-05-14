@@ -33,31 +33,33 @@ public class GenericRepository extends BaseManager implements Repository {
 		this.name = name;
 	}
 
-	@Override
 	public void addRecords(List<Record> records) {
-		// TODO Auto-generated method stub
-		
+		getRepositoryDAO().addRecords(name, records);
+	}
+	
+	public void beginBatch() {
+		getRepositoryDAO().beginBatch();
+	}
+	
+	public void endBatch() {
+		getRepositoryDAO().endBatch();
 	}
 
-	@Override
 	public List<Record> getPredecessors(Record r) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Record getRecord(String oaiId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Record getRecord(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public List<Record> getRecords(Date from, Date until, Integer startingId) {
 		// TODO Auto-generated method stub
 		return null;

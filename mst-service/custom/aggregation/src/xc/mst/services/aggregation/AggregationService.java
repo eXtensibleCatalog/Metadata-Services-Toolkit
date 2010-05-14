@@ -44,7 +44,7 @@ import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.repository.DefaultFormatService;
 import xc.mst.manager.repository.FormatService;
-import xc.mst.services.MetadataService;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.services.aggregation.bo.HeldRecord;
 import xc.mst.services.aggregation.bo.MatchIdentifiers;
@@ -71,7 +71,7 @@ import xc.mst.utils.index.WorkList;
  *
  * @author Eric Osisek
  */
-public class AggregationService extends MetadataService
+public class AggregationService extends GenericMetadataService
 {
 	/**
 	 * DAO to manage held record

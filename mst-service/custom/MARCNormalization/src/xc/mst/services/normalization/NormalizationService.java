@@ -29,7 +29,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.repository.FormatService;
-import xc.mst.services.MetadataService;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
@@ -41,7 +41,7 @@ import xc.mst.utils.index.RecordList;
  *
  * @author Eric Osisek
  */
-public class NormalizationService extends MetadataService
+public class NormalizationService extends GenericMetadataService
 {
 	/**
 	 * Builds the XML Document based on the record's OAI XML

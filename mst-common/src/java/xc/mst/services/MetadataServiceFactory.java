@@ -39,7 +39,7 @@ public class MetadataServiceFactory {
 	 * @param serviceId The ID of the MetadataService to run
 	 * @param outputSetId The ID of the set that records processed by this service should be added to
 	 */
-	public static MetadataService getService(int serviceId )
+	public static GenericMetadataService getService(int serviceId )
 	{
 		if(log.isDebugEnabled())
 			log.debug("EnteringServiceFactoryegetnService for the service with ID " + serviceId + ".");
@@ -48,7 +48,7 @@ public class MetadataServiceFactory {
 
 		// Get the service
 		Service service = null;
-		MetadataService serviceInstance = null;
+		GenericMetadataService serviceInstance = null;
 		// Get the class for the service specified in the configuration file
 		try {
 		

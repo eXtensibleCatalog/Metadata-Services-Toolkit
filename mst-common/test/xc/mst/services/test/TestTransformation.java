@@ -38,7 +38,7 @@ import xc.mst.helper.TestHelper;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.services.MetadataService;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.services.MetadataServiceFactory;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
@@ -159,7 +159,7 @@ public class TestTransformation {
 		{
 
 			// Run Transformation Service
-			MetadataService ms  = new MetadataServiceFactory().getService(transformationServiceId);
+			GenericMetadataService ms  = new MetadataServiceFactory().getService(transformationServiceId);
 			ms.runService(transformationServiceId, -1);;
 			((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
 			Thread.sleep(1000);

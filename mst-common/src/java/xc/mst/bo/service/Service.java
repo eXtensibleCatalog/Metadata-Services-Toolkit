@@ -16,6 +16,7 @@ import java.util.List;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
+import xc.mst.services.MetadataService;
 
 /**
  * Represents a service in the MST
@@ -24,6 +25,8 @@ import xc.mst.constants.Constants;
  */
 public class Service
 {
+	protected MetadataService metadataService = null; 
+
 	/**
 	 * The service's ID
 	 */
@@ -150,6 +153,13 @@ public class Service
 	private boolean deleted = false;
 	
 	
+	public MetadataService getMetadataService() {
+		return metadataService;
+	}
+
+	public void setMetadataService(MetadataService metadataService) {
+		this.metadataService = metadataService;
+	}
 
 	/**
 	 * Gets the service's ID

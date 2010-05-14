@@ -37,7 +37,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.repository.FormatService;
-import xc.mst.services.MetadataService;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
 import xc.mst.utils.MSTConfiguration;
 
@@ -602,7 +602,7 @@ public class XCRecord
 	 * @param transformationService 
 	 * @return
 	 */
-	public List<Record> getSplitXCRecordXML(MetadataService transformationService) throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
+	public List<Record> getSplitXCRecordXML(GenericMetadataService transformationService) throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 
 		List<Document> documents = new ArrayList<Document>();
 		List<Record> records = new ArrayList<Record>();
@@ -844,7 +844,7 @@ public class XCRecord
 	 * @param transformationService 
 	 * @return
 	 */
-	public List<Record> getSplitXCRecordXMLForHoldingRecord(MetadataService transformationService, List<BibliographicManifestationMapping> bibliographicManifestationMappings) throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
+	public List<Record> getSplitXCRecordXMLForHoldingRecord(GenericMetadataService transformationService, List<BibliographicManifestationMapping> bibliographicManifestationMappings) throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 
 		List<Record> records = new ArrayList<Record>();
 		

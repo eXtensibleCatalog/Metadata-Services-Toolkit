@@ -27,7 +27,7 @@ import xc.mst.email.Emailer;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.UserService;
-import xc.mst.services.MetadataService;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.utils.index.RecordList;
 
 /**
@@ -109,7 +109,7 @@ public class ServiceUtil {
 
 			// Get the class specified in the configuration file
 			// The class loader for the MetadataService class
-			ClassLoader serviceLoader = MetadataService.class.getClassLoader();
+			ClassLoader serviceLoader = GenericMetadataService.class.getClassLoader();
 
 			// Load the class from the .jar file
 			// TODO: Don't reload the class file each time.  Instead, load it into

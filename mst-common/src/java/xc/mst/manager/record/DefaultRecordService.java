@@ -64,6 +64,15 @@ public class DefaultRecordService extends RecordService
 	 */
 	protected final static Term TERM_TRAIT = new Term(FIELD_TRAIT, "");
 
+	public Record createSuccessor(Record pred, Service s) {
+		Record succ = new Record();
+		succ.setPredecessor(pred);
+		succ.setService(s);
+		getRepositoryDAO().injectId(succ);
+		succ.setOaiIdentifier("oai:"+MSTConfiguration.getProperty("DomainNameIdentifier")+":"+s.getName()+":"+succ.getId());
+		return succ;
+	}
+	
 	@Override
 	public RecordList getAll() throws IndexException
 	{

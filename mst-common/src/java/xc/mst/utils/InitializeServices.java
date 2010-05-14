@@ -36,7 +36,7 @@ import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.services.MetadataService;
+import xc.mst.services.GenericMetadataService;
 
 /**
  * Initialize services
@@ -88,7 +88,7 @@ public class InitializeServices  extends HttpServlet {
     		try 
     		{
     			// The class loader for the MetadataService class
-    			ClassLoader serviceLoader = MetadataService.class.getClassLoader();
+    			ClassLoader serviceLoader = GenericMetadataService.class.getClassLoader();
     			
     			// Load the class from the .jar file
     			URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);

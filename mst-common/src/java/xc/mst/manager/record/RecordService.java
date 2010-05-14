@@ -29,6 +29,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
@@ -202,6 +203,8 @@ public abstract class RecordService extends BaseService
 	 */
 	public final static String FIELD_ALL = "all";
 
+	public abstract Record createSuccessor(Record record, GenericMetadataService s);
+	
 	/**
 	 * Gets all records from the index
 	 *

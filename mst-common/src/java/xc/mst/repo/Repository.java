@@ -10,6 +10,10 @@ public interface Repository {
 	public String getName();
 	public void setName(String name);
 	
+	public void beginBatch();
+	
+	public void endBatch();
+	
 	public void installOrUpdateIfNecessary(); 
 
 	public void addRecords(List<Record> records);

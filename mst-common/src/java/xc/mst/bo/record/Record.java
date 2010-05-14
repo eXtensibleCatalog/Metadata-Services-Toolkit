@@ -26,6 +26,11 @@ import xc.mst.bo.service.Service;
  */
 public class Record
 {
+	
+	public static final char PROCESS_COMPLETE = 'C';
+	public static final char HELD = 'H';
+	public static final char DELETED = 'D';
+	
 	/**
 	 * The type of indexed Object this is
 	 */
@@ -35,6 +40,8 @@ public class Record
 	 * The record's ID
 	 */
 	private long id = -1;
+	
+	protected Record predecessor = null;
 
 	/**
 	 * The record's type
@@ -88,6 +95,7 @@ public class Record
 	 * The record's OAI identifier
 	 */
 	private String oaiIdentifier = null;
+	protected String[] oaiIds = null;
 
 	/**
 	 * The record's OAI datestamp
@@ -159,8 +167,15 @@ public class Record
 	 */
 	private int numberOfSuccessors;
 
-	protected boolean processComplete = false;
-	protected boolean held = false;
+	protected char status = 0;
+
+	public Record getPredecessor() {
+		return predecessor;
+	}
+
+	public void setPredecessor(Record predecessor) {
+		this.predecessor = predecessor;
+	}
 	
 	/**
 	 * Get's the indexed object type of this class.  This is used to differentiate between
@@ -371,7 +386,17 @@ public class Record
 	public void setOaiIdentifier(String oaiIdentifier)
 	{
 		this.oaiIdentifier = oaiIdentifier.replaceAll(" ", "_");
+		String[] oais = this.oaiIdentifier.split(":");
+		int i=0;
+		oaiIds = new String[4];
+		for (int j=oaiIds.length-1; j>=0; j--) {
+			oaiIds[i++] = oais[j];
+		}
 	} // end method setOaiIdentifier(String)
+	
+	public String[] getOaiIds() {
+		return this.oaiIds;
+	}
 
 	/**
 	 * Gets the record's OAI datestamp
@@ -907,19 +932,11 @@ public class Record
 		Record.indexedObjectType = indexedObjectType;
 	}
 	
-	public boolean isProcessComplete() {
-		return processComplete;
+	public char getStatus() {
+		return status;
 	}
 
-	public void setProcessComplete(boolean processComplete) {
-		this.processComplete = processComplete;
-	}
-
-	public boolean isHeld() {
-		return held;
-	}
-
-	public void setHeld(boolean held) {
-		this.held = held;
+	public void setStatus(char status) {
+		this.status = status;
 	}
 }

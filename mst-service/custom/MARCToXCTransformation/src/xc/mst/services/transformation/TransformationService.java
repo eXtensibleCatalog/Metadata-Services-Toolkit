@@ -41,7 +41,7 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.services.MetadataService;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
 import xc.mst.services.transformation.bo.BibliographicManifestationMapping;
@@ -63,7 +63,7 @@ import xc.mst.utils.TimingLogger;
  *
  * @author Eric Osisek
  */
-public class TransformationService extends MetadataService
+public class TransformationService extends GenericMetadataService
 {
 	/**
 	 * Builds the XML Document based on the record's OAI XML

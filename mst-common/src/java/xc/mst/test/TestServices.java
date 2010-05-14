@@ -37,7 +37,7 @@ import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.services.MetadataService;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.services.MetadataServiceFactory;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
@@ -84,7 +84,7 @@ public class TestServices
 			Thread.sleep(2000);
 			System.out.println(formatter.format(new Date()));
 			MetadataServiceFactory sf = new MetadataServiceFactory();
-			MetadataService ms = sf.getService(serviceId);
+			GenericMetadataService ms = sf.getService(serviceId);
 			ms.runService(serviceId, -1);
 			System.out.println(formatter.format(new Date()));
 			Thread.sleep(2000);

@@ -56,12 +56,13 @@ public class BaseDAO {
 	
 	protected NamedParameterJdbcTemplate namedParameterJdbcTemplate = null;
 	protected JdbcTemplate jdbcTemplate = null;
+	
 	protected Util util = null;
 
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
-		this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
 	}
 	
 	public Util getUtil() {

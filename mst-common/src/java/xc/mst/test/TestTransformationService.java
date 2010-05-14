@@ -22,7 +22,7 @@ import xc.mst.dao.DataException;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.services.MetadataService;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.services.MetadataServiceFactory;
 import xc.mst.utils.index.RecordList;
 
@@ -221,7 +221,7 @@ public class TestTransformationService
 
 			System.out.println(System.currentTimeMillis());
 			MetadataServiceFactory sf = new MetadataServiceFactory();
-			MetadataService ms = sf.getService(2);
+			GenericMetadataService ms = sf.getService(2);
 			ms.runService(2, -1);
 			System.out.println(System.currentTimeMillis());
 
