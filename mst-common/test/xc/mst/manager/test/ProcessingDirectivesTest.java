@@ -61,7 +61,6 @@ public class ProcessingDirectivesTest
          service.setServicesLastLogReset(new Date());
          service.setServicesLogFileName("serviceLogFileName");
          service.setServicesWarnings(0);
-         service.setXccfgFileName("MST-instances/MetadataServicesToolkit/services/Normalization/serviceConfig/DefaultNormalizationServiceConfig.xccfg");
          File configFile = new File("MST-instances/MetadataServicesToolkit/services/Normalization/serviceConfig/DefaultNormalizationServiceConfig.xccfg");
          BufferedReader in = new BufferedReader(new FileReader(configFile));
 
@@ -119,7 +118,6 @@ public class ProcessingDirectivesTest
                  throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
              }
          
-         service.setServiceJar(jar);
          service.setName(name);
          service.setClassName(className);
          service.setVersion(version);

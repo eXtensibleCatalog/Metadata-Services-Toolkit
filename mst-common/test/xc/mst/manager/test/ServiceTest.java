@@ -52,7 +52,6 @@ public class ServiceTest {
             service.setServicesLastLogReset(new Date());
             service.setServicesLogFileName("serviceLogFileName");
             service.setServicesWarnings(0);
-            service.setXccfgFileName("MST-instances/MetadataServicesToolkit/services/MARCNormalization/META-INF/classes/DefaultNormalizationServiceConfig.xccfg");
             File configFile = new File(MSTConfiguration.getUrlPath()+"/services/MARCNormalization/META-INF/classes/DefaultNormalizationServiceConfig.xccfg");
             BufferedReader in = new BufferedReader(new FileReader(configFile));
 
@@ -109,7 +108,6 @@ public class ServiceTest {
 
                     throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
                 }
-                service.setServiceJar(jar);
                 service.setName(name);
                 service.setClassName(className);
                 service.setVersion(version);

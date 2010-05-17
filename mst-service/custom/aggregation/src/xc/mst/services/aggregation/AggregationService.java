@@ -162,7 +162,7 @@ public class AggregationService extends GenericMetadataService
 		} 
 		catch (DatabaseConfigException e) 
 		{
-			log.error("Could not connect to the database with the parameters in the configuration file.", e);
+			LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
 		}
 	} // end constructor
 
@@ -342,14 +342,14 @@ public class AggregationService extends GenericMetadataService
 			// Parse the XML from the record
 			try
 			{
-				if(log.isDebugEnabled())
-					log.debug("Parsing the record's XML into a Document Object.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Parsing the record's XML into a Document Object.");
 	
 				xml = builder.build(new InputSource(new StringReader(record.getOaiXml())));
 			} // end try
 			catch(IOException e)
 			{
-				log.error("An error occurred while parsing the record's XML.", e);
+				LOG.error("An error occurred while parsing the record's XML.", e);
 	
 				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
 	
@@ -357,7 +357,7 @@ public class AggregationService extends GenericMetadataService
 			} // end catch IOException
 			catch(JDOMException e)
 			{
-				log.error("An error occurred while parsing the record's XML.", e);
+				LOG.error("An error occurred while parsing the record's XML.", e);
 	
 				LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
 	
@@ -399,8 +399,8 @@ public class AggregationService extends GenericMetadataService
 			{
 				updatedInputRecord = true;
 
-				if(log.isDebugEnabled())
-					log.debug("Updating the record which was processed from an older version of the record we just processed.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Updating the record which was processed from an older version of the record we just processed.");
 				
 				deleteSuccessorRecords(record, existingRecords);
 
@@ -471,7 +471,7 @@ public class AggregationService extends GenericMetadataService
 		}
 		catch(IndexException e)
 		{
-			log.error("An error occurred connecting to the Solr index.", e);
+			LOG.error("An error occurred connecting to the Solr index.", e);
 			
 			LogWriter.addWarning(service.getServicesLogFileName(), "An error occurred connecting to the Solr index.");
 
@@ -479,7 +479,7 @@ public class AggregationService extends GenericMetadataService
 		}
 		catch(Exception e)
 		{
-			log.error("An error occurred while processing the record.", e);
+			LOG.error("An error occurred while processing the record.", e);
 			
 			LogWriter.addWarning(service.getServicesLogFileName(), "An internal error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
 
@@ -517,9 +517,9 @@ public class AggregationService extends GenericMetadataService
 				outputRecordDAO.deleteByOAIId(successor.getOaiIdentifier());
 				
 			} catch(DataException de) {
-				log.error("Data exception occured while deleting the successor record " + successor, de);
+				LOG.error("Data exception occured while deleting the successor record " + successor, de);
 			} catch(IndexException ie) {
-				log.error("Index exception occured while updating the record " + record, ie);
+				LOG.error("Index exception occured while updating the record " + record, ie);
 			}
 			
 		}
@@ -555,9 +555,9 @@ public class AggregationService extends GenericMetadataService
 			outputRecordDAO.deleteByOAIId(oaiId);
 			
 		} catch (DataException de) {
-			log.error("Data exception occured while deleting the record with OAI id " + oaiId, de);
+			LOG.error("Data exception occured while deleting the record with OAI id " + oaiId, de);
 		} catch (IndexException ie) {
-			log.error("Index exception occured while updating the predecessor record " , ie);
+			LOG.error("Index exception occured while updating the predecessor record " , ie);
 		}
 	}
 	
@@ -579,8 +579,8 @@ public class AggregationService extends GenericMetadataService
 	@SuppressWarnings("unchecked")
 	private Work buildWork(Element workElement, Record record)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Creating a new Work element from the record with ID " + record.getId() + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Creating a new Work element from the record with ID " + record.getId() + ".");
 		
 		// Create a Work Object for the passed work element
 		Work work = new Work();
@@ -610,8 +610,8 @@ public class AggregationService extends GenericMetadataService
 				String value = element.getText();
 				String type = element.getAttributeValue("type");
 	
-				if(log.isDebugEnabled())
-					log.debug("Found an identifierForTheWork element with a value of " + value + " and a type of " + type + ".");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Found an identifierForTheWork element with a value of " + value + " and a type of " + type + ".");
 	
 				work.addIdentifierForTheWork(type, value);
 			} // end loop over identifierForTheWork elements
@@ -620,7 +620,7 @@ public class AggregationService extends GenericMetadataService
 		} // end try
 		catch(JDOMException e)
 		{
-			log.error("An error occurred getting the identifierForTheWork elements from the passed Work element.", e);
+			LOG.error("An error occurred getting the identifierForTheWork elements from the passed Work element.", e);
 			return work; // don't return null since we set up the IDs
 		} // end catch(JDOMException)
 	} // end method buildWork(Element)
@@ -638,8 +638,8 @@ public class AggregationService extends GenericMetadataService
 	 */
 	private Expression buildExpression(Element expressionElement, Record record)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Creating a new Expression element from an expression component of the record with ID " + record.getId() + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Creating a new Expression element from an expression component of the record with ID " + record.getId() + ".");
 		
 		// Create an Expression Object for the passed expression element
 		Expression expression = new Expression();
@@ -670,8 +670,8 @@ public class AggregationService extends GenericMetadataService
 	@SuppressWarnings("unchecked")
 	private void buildManifestation(Document manifestationElement, Record record)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Creating a new Manifestation element from a manifestation component of the record with ID " + record.getId() + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Creating a new Manifestation element from a manifestation component of the record with ID " + record.getId() + ".");
 	
 //		// Create a Work Object for the passed work element
 //		Manifestation manifestation = new Manifestation();
@@ -738,10 +738,10 @@ public class AggregationService extends GenericMetadataService
 		} // end try
 		catch(JDOMException e)
 		{
-			log.error("An error occurred getting the recordId elements from the passed Manifestation element.", e);
+			LOG.error("An error occurred getting the recordId elements from the passed Manifestation element.", e);
 		} // end catch(JDOMException)
 		catch (DataException de) {
-			log.error("Exception occured when adding the match identifiers to database.", de);
+			LOG.error("Exception occured when adding the match identifiers to database.", de);
 		}
 	} // end method buildManifestation(Element)
 
@@ -759,8 +759,8 @@ public class AggregationService extends GenericMetadataService
 	@SuppressWarnings("unchecked")
 	private Holdings buildHoldings(Element holdingsElement, Record record)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Creating a new Holdings element from a holdings component of the record with ID " + record.getId() + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Creating a new Holdings element from a holdings component of the record with ID " + record.getId() + ".");
 	
 		// Create a Work Object for the passed work element
 		Holdings holdings = new Holdings();
@@ -789,8 +789,8 @@ public class AggregationService extends GenericMetadataService
 				String value = element.getText();
 				String type = element.getAttributeValue("type");
 	
-				if(log.isDebugEnabled())
-					log.debug("Found a recordId element with a value of " + value + " and a type of " + type + ".");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Found a recordId element with a value of " + value + " and a type of " + type + ".");
 	
 				holdings.addXcRecordId(type, value);
 			} // end loop over recordId elements
@@ -808,8 +808,8 @@ public class AggregationService extends GenericMetadataService
 				String value = element.getText();
 				String type = element.getAttributeValue("type");
 	
-				if(log.isDebugEnabled())
-					log.debug("Found a manifestationHeld element with a value of " + value + " and a type of " + type + ".");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Found a manifestationHeld element with a value of " + value + " and a type of " + type + ".");
 	
 				holdings.addManifestationHeld(type, value);
 			} // end loop over manifestationHeld elements
@@ -818,7 +818,7 @@ public class AggregationService extends GenericMetadataService
 		} // end try
 		catch(JDOMException e)
 		{
-			log.error("An error occurred getting the recordId and manifestationHeld elements from the passed Holdings element.", e);
+			LOG.error("An error occurred getting the recordId and manifestationHeld elements from the passed Holdings element.", e);
 			return holdings; // don't return null since we set up the IDs
 		} // end catch(JDOMException)
 	} // end method buildHoldings(Element)
@@ -836,8 +836,8 @@ public class AggregationService extends GenericMetadataService
 	@SuppressWarnings("unchecked")
 	private Item buildItem(Element itemElement, Record record)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Creating a new Item element from an item component of the record with ID " + record.getId() + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Creating a new Item element from an item component of the record with ID " + record.getId() + ".");
 		
 		// Create a Item Object for the passed work element
 		Item item = new Item();
@@ -867,8 +867,8 @@ public class AggregationService extends GenericMetadataService
 				String value = element.getText();
 				String type = element.getAttributeValue("type");
 	
-				if(log.isDebugEnabled())
-					log.debug("Found a holdingsExemplified element with a value of " + value + " and a type of " + type + ".");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Found a holdingsExemplified element with a value of " + value + " and a type of " + type + ".");
 	
 				item.addHoldingsExemplified(type, value);
 			} // end loop over holdingsExemplified elements
@@ -877,7 +877,7 @@ public class AggregationService extends GenericMetadataService
 		} // end try
 		catch(JDOMException e)
 		{
-			log.error("An error occurred getting the holdingsExemplified elements from the passed Item element.", e);
+			LOG.error("An error occurred getting the holdingsExemplified elements from the passed Item element.", e);
 			return item; // don't return null since we set up the IDs
 		} // end catch(JDOMException)
 	} // end method buildItem(Element)
@@ -932,7 +932,7 @@ public class AggregationService extends GenericMetadataService
 						result.getOaiXml(), true, predecessorOAIIds);
 				outputRecordDAO.insert(outputRecord);
 			} catch (DataException de) {
-				log.error("Exception occured while inserting output record.", de);
+				LOG.error("Exception occured while inserting output record.", de);
 			}
 			
 		}
@@ -1008,7 +1008,7 @@ public class AggregationService extends GenericMetadataService
 						result.getOaiXml(), true, predecessorOAIIds);
 				outputRecordDAO.insert(outputRecord);
 			} catch (DataException de) {
-				log.error("Exception occured while inserting output record.", de);
+				LOG.error("Exception occured while inserting output record.", de);
 			}
 			
 		}
@@ -1107,9 +1107,9 @@ public class AggregationService extends GenericMetadataService
 			
 			} // end try
 			catch(IOException e) {
-				log.error("An error occurred while parsing the record's XML.", e);
+				LOG.error("An error occurred while parsing the record's XML.", e);
 			} catch(JDOMException e) {
-				log.error("An error occurred while parsing the record's XML.", e);
+				LOG.error("An error occurred while parsing the record's XML.", e);
 			} // end catch JDOMException
 			
 			List<String> uplinks = getLinks(xml, "expressionManifested");
@@ -1134,7 +1134,7 @@ public class AggregationService extends GenericMetadataService
 						result.getOaiXml(), true, matchedOaiIds);
 				outputRecordDAO.insert(outputRecord);
 			} catch (DataException de) {
-				log.error("Exception occured while inserting output record.", de);
+				LOG.error("Exception occured while inserting output record.", de);
 			}
 			
 		}
@@ -1205,7 +1205,7 @@ public class AggregationService extends GenericMetadataService
 						result.getOaiXml(), true, predecessorOAIIds);
 				outputRecordDAO.insert(outputRecord);
 			} catch (DataException de) {
-				log.error("Exception occured while inserting output record.", de);
+				LOG.error("Exception occured while inserting output record.", de);
 			}
 			
 		}
@@ -1317,7 +1317,7 @@ public class AggregationService extends GenericMetadataService
 		} 
 		catch(IndexException ie) 
 		{
-			log.error("Indexing exception occured.", ie);
+			LOG.error("Indexing exception occured.", ie);
 		}
 		return results;
 	} // end method matchWorks(Work)
@@ -1396,9 +1396,9 @@ public class AggregationService extends GenericMetadataService
 		} 
 		catch (IndexException ie) 
 		{
-			log.error("Index exception occured.", ie);
+			LOG.error("Index exception occured.", ie);
 		} catch (DatabaseConfigException dce) {
-			log.error("Exception occurred while matching the manifestation record", dce);
+			LOG.error("Exception occurred while matching the manifestation record", dce);
 		}
 		return results;
 	} // end method matchManifestations(Manifestation)
@@ -1461,7 +1461,7 @@ public class AggregationService extends GenericMetadataService
 		} 
 		catch (IndexException ie) 
 		{
-			log.error("Index exception occured.", ie);
+			LOG.error("Index exception occured.", ie);
 		}
 		return results;
 	} // end method getManifestationsMatchingHoldings(Holdings)
@@ -1493,7 +1493,7 @@ public class AggregationService extends GenericMetadataService
 		} 
 		catch (IndexException ie) 
 		{
-			log.error("Index exception occured.", ie);
+			LOG.error("Index exception occured.", ie);
 		}
 		
 		return results;
@@ -1526,7 +1526,7 @@ public class AggregationService extends GenericMetadataService
 		} 
 		catch (IndexException ie) 
 		{
-			log.error("Index exception occured.", ie);
+			LOG.error("Index exception occured.", ie);
 		}
 		
 		return results;
@@ -1555,21 +1555,21 @@ public class AggregationService extends GenericMetadataService
 		// Parse the XML from the record
 		try
 		{
-			if(log.isDebugEnabled())
-				log.debug("Parsing the record's XML into a Document Object.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Parsing the record's XML into a Document Object.");
 	
 			baseXml = builder.build(new InputSource(new StringReader(base.getOaiXml())));
 			mergeIntoBaseXml = builder.build(new InputSource(new StringReader(mergeIntoBase.getOaiXml())));
 		} // end try
 		catch(IOException e)
 		{
-			log.error("An error occurred while parsing the work's XML.", e);
+			LOG.error("An error occurred while parsing the work's XML.", e);
 	
 			return null;
 		} // end catch IOException
 		catch(JDOMException e)
 		{
-			log.error("An error occurred while parsing the work's XML.", e);
+			LOG.error("An error occurred while parsing the work's XML.", e);
 	
 			return null;
 		} // end catch JDOMException
@@ -1681,13 +1681,13 @@ public class AggregationService extends GenericMetadataService
 			}
 			catch(IOException e)
 			{
-				log.error("An error occurred while parsing the record's XML.", e);
+				LOG.error("An error occurred while parsing the record's XML.", e);
 
 				return null;
 			}
 			catch(JDOMException e)
 			{
-				log.error("An error occurred while parsing the record's XML.\n" + record.getOaiXml(), e);
+				LOG.error("An error occurred while parsing the record's XML.\n" + record.getOaiXml(), e);
 
 				return null;
 			}
@@ -1724,7 +1724,7 @@ public class AggregationService extends GenericMetadataService
 				xpath.addNamespace("xc", "http://www.extensiblecatalog.info/Elements");
 				elements = xpath.selectNodes(record.getOaiXml());
 			} catch (JDOMException je) {
-				log.error("JDOM Exception occured when parsing XML for recordID", je);
+				LOG.error("JDOM Exception occured when parsing XML for recordID", je);
 				continue;
 			}
 
@@ -1776,21 +1776,21 @@ public class AggregationService extends GenericMetadataService
 		// Parse the XML from the record
 		try
 		{
-			if(log.isDebugEnabled())
-				log.debug("Parsing the record's XML into a Document Object.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Parsing the record's XML into a Document Object.");
 	
 			baseXml = builder.build(new InputSource(new StringReader(base.getOaiXml())));
 			mergeIntoBaseXml = builder.build(new InputSource(new StringReader(mergeIntoBase.getOaiXml())));
 		} // end try
 		catch(IOException e)
 		{
-			log.error("An error occurred while parsing the work's XML.", e);
+			LOG.error("An error occurred while parsing the work's XML.", e);
 	
 			return null;
 		} // end catch IOException
 		catch(JDOMException e)
 		{
-			log.error("An error occurred while parsing the work's XML.", e);
+			LOG.error("An error occurred while parsing the work's XML.", e);
 	
 			return null;
 		} // end catch JDOMException
@@ -1921,14 +1921,14 @@ public class AggregationService extends GenericMetadataService
 		// Parse the XML from the record
 		try
 		{
-			if(log.isDebugEnabled())
-				log.debug("Parsing the record's XML into a Document Object.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Parsing the record's XML into a Document Object.");
 
 			xml = builder.build(new InputSource(new StringReader(from.getOaiXml())));
 		} // end try
 		catch(IOException e)
 		{
-			log.error("An error occurred while parsing the record's XML.", e);
+			LOG.error("An error occurred while parsing the record's XML.", e);
 
 			LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + from.getOaiIdentifier() + ".");
 
@@ -1936,7 +1936,7 @@ public class AggregationService extends GenericMetadataService
 		} // end catch IOException
 		catch(JDOMException e)
 		{
-			log.error("An error occurred while parsing the record's XML.", e);
+			LOG.error("An error occurred while parsing the record's XML.", e);
 
 			LogWriter.addWarning(service.getServicesLogFileName(), "An XML parse error occurred while processing the record with OAI Identifier " + from.getOaiIdentifier() + ".");
 

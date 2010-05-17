@@ -37,8 +37,8 @@ public class DBTransformationService extends TransformationService {
 						processRecord(r);
 					} catch (Throwable t) {
 						TimingLogger.log("ouch - problems");
-						log.error("r.getId(): "+r.getId());
-						log.error("t", t);
+						LOG.error("r.getId(): "+r.getId());
+						LOG.error("t", t);
 					}
 					getRecordService().update(r);
 				}

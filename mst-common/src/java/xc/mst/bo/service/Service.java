@@ -38,21 +38,6 @@ public class Service
 	private String serviceName = null;
 
 	/**
-	 * The service's jar
-	 */
-	private String serviceJar = null;
-
-	/**
-	 * The service's identifier which will be used in constructing 'local-identifier' part in OAI identifier
-	 */
-	private String identifier = null;
-	
-	/**
-	 * The service's service specific configuration parameters
-	 */
-	private String serviceConfig = null;
-
-	/**
 	 * The service's class name
 	 */
 	private String className = null;
@@ -136,12 +121,7 @@ public class Service
 	 * The current status of the service.
 	 */
 	private String status = Constants.STATUS_SERVICE_NOT_RUNNING;
-	
-	/**
-	 * The name of the .xccfg file defining the service
-	 */
-	private String xccfgFileName = null;
-	
+
 	/**
 	 * The version of the service
 	 */
@@ -200,46 +180,6 @@ public class Service
 	{
 		this.serviceName = serviceName;
 	} // end method setName(String)
-
-	/**
-	 * Gets the service's jar file
-	 *
-	 * @return The service's jar file
-	 */
-	public String getServiceJar()
-	{
-		return serviceJar;
-	} // end method getServiceJar()
-
-	/**
-	 * Sets the service's jar file
-	 *
-	 * @param serviceJar The service's new jar file
-	 */
-	public void setServiceJar(String serviceJar)
-	{
-		this.serviceJar = serviceJar;
-	} // end method setServiceJar(String)
-	
-	/**
-	 * Gets the service's service specific configuration parameters
-	 *
-	 * @return The service's service specific configuration parameters
-	 */
-	public String getServiceConfig()
-	{
-		return serviceConfig;
-	} // end method getServiceConfig()
-
-	/**
-	 * Sets the service's service specific configuration parameters
-	 *
-	 * @param serviceConfig The service's new service specific configuration parameters
-	 */
-	public void setServiceConfig(String serviceConfig)
-	{
-		this.serviceConfig = serviceConfig;
-	} // end method setServiceConfig(String)
 
 	/**
 	 * Gets the service's class name
@@ -625,26 +565,6 @@ public class Service
 	}
 	
 	/**
-	 * Gets the name of the .xccfg file defining the service
-	 * 
-	 * @return The name of the .xccfg file defining the service
-	 */
-	public String getXccfgFileName() 
-	{
-		return xccfgFileName;
-	}
-
-	/**
-	 * Sets the name of the .xccfg file defining the service
-	 * 
-	 * @param xccfgFileName The new name of the .xccfg file defining the service
-	 */
-	public void setXccfgFileName(String xccfgFileName) 
-	{
-		this.xccfgFileName = xccfgFileName;
-	}
-	
-	/**
 	 * Gets the version of the service
 	 * 
 	 * @return The version of the service
@@ -706,14 +626,6 @@ public class Service
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
-	}
-
-	public String getIdentifier() {
-		return identifier;
-	}
-
-	public void setIdentifier(String identifier) {
-		this.identifier = identifier;
 	}
 
 } // end class Service

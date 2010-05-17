@@ -141,7 +141,7 @@ public class NormalizationService extends GenericMetadataService
 		} 
 		catch (DatabaseConfigException e) 
 		{
-			log.error("Could not connect to the database with the parameters in the configuration file.", e);
+			LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
 		}
 	}
 
@@ -267,8 +267,8 @@ public class NormalizationService extends GenericMetadataService
 		
 		try
 		{
-			if(log.isDebugEnabled())
-				log.debug("Normalizing record with ID " + record.getId() + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Normalizing record with ID " + record.getId() + ".");
 
 			// The XML after normalizing the record
 			Document marcXml = null;
@@ -276,8 +276,8 @@ public class NormalizationService extends GenericMetadataService
 			// Parse the XML from the record
 			try
 			{
-				if(log.isDebugEnabled())
-					log.debug("Parsing the record's XML into a Document Object.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Parsing the record's XML into a Document Object.");
 
 				TimingLogger.start("create dom");
 				marcXml = builder.build(new InputSource(new StringReader(record.getOaiXml())));
@@ -285,7 +285,7 @@ public class NormalizationService extends GenericMetadataService
 			}
 			catch(IOException e)
 			{
-				log.error("An error occurred while parsing the record's XML.", e);
+				LOG.error("An error occurred while parsing the record's XML.", e);
 
 				logWarning("An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
 				
@@ -295,7 +295,7 @@ public class NormalizationService extends GenericMetadataService
 			}
 			catch(JDOMException e)
 			{
-				log.error("An error occurred while parsing the record's XML.\n" + record.getOaiXml(), e);
+				LOG.error("An error occurred while parsing the record's XML.\n" + record.getOaiXml(), e);
 
 				logWarning("An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
 				
@@ -433,13 +433,13 @@ public class NormalizationService extends GenericMetadataService
 					normalizedXml = locationLimitName(normalizedXml);
 			}
 			
-			if(log.isDebugEnabled())
-				log.debug("Adding errors to the record.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Adding errors to the record.");
 			
 			record.setErrors(errors);
 			
-			if(log.isDebugEnabled())
-				log.debug("Creating the normalized record.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Creating the normalized record.");
 
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to update them
@@ -449,8 +449,8 @@ public class NormalizationService extends GenericMetadataService
 			// If there was already a processed record for the record we just processed, update it
 			if(existingRecords != null && existingRecords.size() > 0)
 			{
-				if(log.isDebugEnabled())
-					log.debug("Updating the record which was processed from an older version of the record we just processed.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Updating the record which was processed from an older version of the record we just processed.");
 
 				// Get the record which was processed from the record we just processed
 				// (there should only be one)
@@ -475,8 +475,8 @@ public class NormalizationService extends GenericMetadataService
 			// Do this only if the record we're processing is not deleted
 			else
 			{
-				if(log.isDebugEnabled())
-					log.debug("Inserting the record since it was not processed from an older version of the record we just processed.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Inserting the record since it was not processed from an older version of the record we just processed.");
 
 				// Create the normalized record
 				Record normalizedRecord = Record.copyRecord(record);
@@ -541,18 +541,18 @@ public class NormalizationService extends GenericMetadataService
 				// incoming record
 				results.add(normalizedRecord);
 				
-				if(log.isDebugEnabled())
-					log.debug("Created normalized record from unnormalized record with ID " + record.getId());
+				if(LOG.isDebugEnabled())
+					LOG.debug("Created normalized record from unnormalized record with ID " + record.getId());
 				return results;
 			}
 		}
 		catch(Exception e)
 		{
-			log.error("An error occurred while normalizing the record with ID " + record.getId(), e);
+			LOG.error("An error occurred while normalizing the record with ID " + record.getId(), e);
 			logError("An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
 
-			if(log.isDebugEnabled())
-				log.debug("Adding errors to the record.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Adding errors to the record.");
 			
 			record.setErrors(errors);
 			
@@ -568,8 +568,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager removeOcolc003(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering RemoveOCoLC003 normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering RemoveOCoLC003 normalization step.");
 
 		// Check if the 003 is "OCoLC"
 		String field003 = marcXml.getField003();
@@ -587,8 +587,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager dcmiType06(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering DCMIType06 normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering DCMIType06 normalization step.");
 
 		// The character at offset 6 of the leader field
 		char leader06 = marcXml.getLeader().charAt(6);
@@ -599,13 +599,13 @@ public class NormalizationService extends GenericMetadataService
 		// If there was no mapping for the provided leader 06, we can't create the field.  In this case return the unmodified MARCXML
 		if(dcmiType == null)
 		{
-			if(log.isDebugEnabled())
-				log.debug("Cannot find a DCMI Type mapping for the leader 06 value of " + leader06 + ", returning the unmodified MARCXML.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Cannot find a DCMI Type mapping for the leader 06 value of " + leader06 + ", returning the unmodified MARCXML.");
 		}
 		else
 		{
-			if(log.isDebugEnabled())
-				log.debug("Found the DCMI Type " + dcmiType + " for the leader 06 value of " + leader06 + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Found the DCMI Type " + dcmiType + " for the leader 06 value of " + leader06 + ".");
 
 			// Add a MARCXML field to store the DCMI Type
 			marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_DCMI_TYPE, dcmiType);
@@ -623,14 +623,14 @@ public class NormalizationService extends GenericMetadataService
 			// If there was no mapping for the provided leader 06, we can't create the field.  In this case return the unmodified MARCXML
 			if(dcmiType006_0 == null)
 			{
-				if(log.isDebugEnabled())
-					log.debug("Cannot find a DCMI Type mapping for the 006 offset 0 value of " + dcmiType006_0 + ".");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Cannot find a DCMI Type mapping for the 006 offset 0 value of " + dcmiType006_0 + ".");
 			}
 
 			else
 			{
-				if(log.isDebugEnabled())
-					log.debug("Found the DCMI Type " + dcmiType006_0 + " for the 006 offset 0 value of " + field006_0 + ".");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Found the DCMI Type " + dcmiType006_0 + " for the 006 offset 0 value of " + field006_0 + ".");
 
 				// Add a MARCXML field to store the DCMI Type
 				marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_DCMI_TYPE, dcmiType006_0);
@@ -649,8 +649,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager leader06MarcVocab(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering Leader06Vocab normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering Leader06Vocab normalization step.");
 
 		// The character at offset 6 of the leader field
 		char leader06 = marcXml.getLeader().charAt(6);
@@ -661,8 +661,8 @@ public class NormalizationService extends GenericMetadataService
 		// If there was no mapping for the provided leader 06, we can't create the field.  In this case return the unmodified MARCXML
 		if(marcVocab == null)
 		{
-			if(log.isDebugEnabled())
-				log.debug("Cannot find a MARC vocabulary mapping for the leader 06 value of " + leader06 + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Cannot find a MARC vocabulary mapping for the leader 06 value of " + leader06 + ".");
 			
 			if(leader06 != ' ') {
 				errors.add(service.getId() + "-102: Invalid leader 06 value: " + leader06);
@@ -671,8 +671,8 @@ public class NormalizationService extends GenericMetadataService
 		}
 		else
 		{
-			if(log.isDebugEnabled())
-				log.debug("Found the MARC vocabulary " + marcVocab + " for the leader 06 value of " + leader06 + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Found the MARC vocabulary " + marcVocab + " for the leader 06 value of " + leader06 + ".");
 
 			// Add a MARCXML field to store the SMD Vocab
 			marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_MARC_VOCAB, marcVocab);
@@ -690,14 +690,14 @@ public class NormalizationService extends GenericMetadataService
 			// If there was no mapping for the provided leader 06, we can't create the field.  In this case return the unmodified MARCXML
 			if(marcVocab006_0 == null)
 			{
-				if(log.isDebugEnabled())
-					log.debug("Cannot find a MARC vocabulary mapping for the 006 offset 0 value of " + marcVocab006_0 + ".");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Cannot find a MARC vocabulary mapping for the 006 offset 0 value of " + marcVocab006_0 + ".");
 			}
 
 			else
 			{
-				if(log.isDebugEnabled())
-					log.debug("Found the MARC vocabulary " + marcVocab006_0 + " for the 006 offset 0 value of " + marcVocab006_0 + ".");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Found the MARC vocabulary " + marcVocab006_0 + " for the 006 offset 0 value of " + marcVocab006_0 + ".");
 
 				// Add a MARCXML field to store the SMD Vocab
 				marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_MARC_VOCAB, marcVocab006_0);
@@ -716,8 +716,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager vocab06(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering 007Vocab06 normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering 007Vocab06 normalization step.");
 
 		char leader06 = ' ';
 		// The character at offset 6 of the leader field
@@ -731,14 +731,14 @@ public class NormalizationService extends GenericMetadataService
 		// If there was no mapping for the provided leader 06, we can't create the field.  In this case return the unmodified MARCXML
 		if(marcVocab == null)
 		{
-			if(log.isDebugEnabled())
-				log.debug("Cannot find a vocab mapping for the leader 06 value of " + leader06 + ", returning the unmodified MARCXML.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Cannot find a vocab mapping for the leader 06 value of " + leader06 + ", returning the unmodified MARCXML.");
 
 			return marcXml;
 		}
 
-		if(log.isDebugEnabled())
-			log.debug("Found the vocab " + marcVocab + " for the leader 06 value of " + leader06 + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Found the vocab " + marcVocab + " for the leader 06 value of " + leader06 + ".");
 
 		// Add a MARCXML field to store the SMD Vocab
 		marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_VOCAB, marcVocab);
@@ -756,8 +756,8 @@ public class NormalizationService extends GenericMetadataService
 	private MarcXmlManager modeOfIssuance(MarcXmlManager marcXml)
 	{
 		
-		if(log.isDebugEnabled())
-			log.debug("Entering ModeOfIssuance normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering ModeOfIssuance normalization step.");
 
 		// The character at offset 7 of the leader field
 		char leader07 = marcXml.getLeader().charAt(7);
@@ -767,8 +767,8 @@ public class NormalizationService extends GenericMetadataService
 		// If there was no mapping for the provided leader 07, we can't create the field.  In this case return the unmodified MARCXML
 		if(modeOfIssuance == null)
 		{
-			if(log.isDebugEnabled())
-				log.debug("Cannot find a mode of issuance mapping for the leader 07 value of " + leader07 + ", returning the unmodified MARCXML.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Cannot find a mode of issuance mapping for the leader 07 value of " + leader07 + ", returning the unmodified MARCXML.");
 
 			errors.add(service.getId() + "-103: Invalid leader 07 value: " + leader07);
 			outputRecordErrors.add(service.getId() + "-103: Invalid leader 07 value: " + leader07);
@@ -776,8 +776,8 @@ public class NormalizationService extends GenericMetadataService
 			return marcXml;
 		}
 
-		if(log.isDebugEnabled())
-			log.debug("Found the mode of issuance " + modeOfIssuance + " for the leader 07 value of " + leader07 + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Found the mode of issuance " + modeOfIssuance + " for the leader 07 value of " + leader07 + ".");
 
 		// Add a MARCXML field to store the mode of issuance
 		marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_MODE_OF_ISSUANCE, modeOfIssuance);
@@ -794,8 +794,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager moveMarcOrgCode(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering MoveMarcOrgCode normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering MoveMarcOrgCode normalization step.");
 
 		// Get the 001 and 003 control fields
 		String control001 = marcXml.getField001();
@@ -809,8 +809,8 @@ public class NormalizationService extends GenericMetadataService
 		// If either control field didn't exist, we don't have to do anything
 		if(control001 == null || control003 == null)
 		{
-			if(log.isDebugEnabled())
-				log.debug("The record was missing either an 001 or an 003 control field, so we do not have to move the old marc organization code into a new 035 field.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("The record was missing either an 001 or an 003 control field, so we do not have to move the old marc organization code into a new 035 field.");
 
 			return marcXml;
 		}
@@ -838,8 +838,8 @@ public class NormalizationService extends GenericMetadataService
 				new035 = "(" + control003 + ")" + control001;
 			}
 
-			if(log.isDebugEnabled())
-				log.debug("Moving the record's organization code to a new 035 field with value " + new035 + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Moving the record's organization code to a new 035 field with value " + new035 + ".");
 
 			// Add the new 035 field
 			marcXml.addMarcXmlField("035", new035);
@@ -856,8 +856,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager dcmiType0007(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering DCMIType0007 normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering DCMIType0007 normalization step.");
 
 		// The value of field 007
 		String field007 = marcXml.getField007();
@@ -871,14 +871,14 @@ public class NormalizationService extends GenericMetadataService
 		// If there was no mapping for the provided 007 offset 00, we can't create the field.  In this case return the unmodified MARCXML
 		if(dcmiType == null)
 		{
-			if(log.isDebugEnabled())
-				log.debug("Cannot find a DCMI Type mapping for the 007 offset 00 value of " + field007offset00 + ", returning the unmodified MARCXML.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Cannot find a DCMI Type mapping for the 007 offset 00 value of " + field007offset00 + ", returning the unmodified MARCXML.");
 
 			return marcXml;
 		}
 
-		if(log.isDebugEnabled())
-			log.debug("Found the DCMI Type " + dcmiType + " for the 007 offset 00 value of " + field007offset00 + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Found the DCMI Type " + dcmiType + " for the 007 offset 00 value of " + field007offset00 + ".");
 
 		// Add a MARCXML field to store the DCMI Type
 		marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_DCMI_TYPE, dcmiType);
@@ -895,8 +895,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager vocab007(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering 007Vocab normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering 007Vocab normalization step.");
 
 		// The value of field 007
 		String field007 = marcXml.getField007();
@@ -912,8 +912,8 @@ public class NormalizationService extends GenericMetadataService
 			// If there was no mapping for the provided 007 offset 00, we can't create the field.  In this case return the unmodified MARCXML
 			if(smdVocab == null)
 			{
-				if(log.isDebugEnabled())
-					log.debug("Cannot find an 007 Vocab mapping for the 007 offset 00 value of " + field007offset00 + ", returning the unmodified MARCXML.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Cannot find an 007 Vocab mapping for the 007 offset 00 value of " + field007offset00 + ", returning the unmodified MARCXML.");
 	
 				errors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00);
 				outputRecordErrors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00);
@@ -921,8 +921,8 @@ public class NormalizationService extends GenericMetadataService
 				return marcXml;
 			}
 	
-			if(log.isDebugEnabled())
-				log.debug("Found the 007 Vocab " + smdVocab + " for the 007 offset 00 value of " + field007offset00 + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Found the 007 Vocab " + smdVocab + " for the 007 offset 00 value of " + field007offset00 + ".");
 	
 			// Add a MARCXML field to store the SMD Vocab
 			marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_VOCAB, smdVocab);
@@ -940,8 +940,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager smdType007(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering 007SMDVocab normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering 007SMDVocab normalization step.");
 
 		// The value of field 007
 		String field007 = marcXml.getField007();
@@ -956,8 +956,8 @@ public class NormalizationService extends GenericMetadataService
 			// If there was no mapping for the provided 007 offset 00, we can't create the field.  In this case return the unmodified MARCXML
 			if(smdVocab == null)
 			{
-				if(log.isDebugEnabled())
-					log.debug("Cannot find a SMD Vocab mapping for the 007 offset 00 and 01 values of " + field007offset00and01 + ", returning the unmodified MARCXML.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Cannot find a SMD Vocab mapping for the 007 offset 00 and 01 values of " + field007offset00and01 + ", returning the unmodified MARCXML.");
 				
 				errors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00and01);
 				outputRecordErrors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00and01);
@@ -965,8 +965,8 @@ public class NormalizationService extends GenericMetadataService
 	
 				return marcXml;
 			}
-			if(log.isDebugEnabled())
-				log.debug("Found the SMD type " + smdVocab + " for the 007 offset 00 and 01 values of " + field007offset00and01 + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Found the SMD type " + smdVocab + " for the 007 offset 00 and 01 values of " + field007offset00and01 + ".");
 
 			// Add a MARCXML field to store the SMD Vocab
 			marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_SMD_VOCAB, smdVocab);
@@ -988,8 +988,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager fictionOrNonfiction(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering FictionOrNonfiction normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering FictionOrNonfiction normalization step.");
 
 		// The character at offset 6 of the leader field
 		char leader06 = marcXml.getLeader().charAt(6);
@@ -1004,8 +1004,8 @@ public class NormalizationService extends GenericMetadataService
 		// The character at offset 33 of the 008 field
 		char field008offset33 = ((field008 != null && field008.length() >= 34) ? field008.charAt(33) : ' ');
 
-		if(log.isDebugEnabled())
-			log.debug("Leader 06 = " + leader06 + " and 008 offset 33 is " + field008offset33 + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Leader 06 = " + leader06 + " and 008 offset 33 is " + field008offset33 + ".");
 
 		// Add the fiction or nonfiction field
 		if(field008offset33 == '1' || field008offset33 == 'd' || field008offset33 == 'j' || field008offset33 == 'f' || field008offset33 == 'p')
@@ -1026,8 +1026,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager dateRange(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering 008DateRange normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering 008DateRange normalization step.");
 
 		// The value of field 008
 		String field008 = marcXml.getField008();
@@ -1035,8 +1035,8 @@ public class NormalizationService extends GenericMetadataService
 		// If 008 offset 06 is not 'c', 'd', or 'k' we don't need to do anything.
 		if(field008 == null || (field008.charAt(6) != 'c' && field008.charAt(6) != 'd' && field008.charAt(6) != 'k'))
 		{
-			if(log.isDebugEnabled())
-				log.debug("008 offset 6 was not 'c', 'd' or 'k' so we will not add a field with the date range.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("008 offset 6 was not 'c', 'd' or 'k' so we will not add a field with the date range.");
 
 			return marcXml;
 		}
@@ -1047,8 +1047,8 @@ public class NormalizationService extends GenericMetadataService
 		// If either date is '9999', replace it with the empty string.  So "1983-9999" becomes "1983-    "
 		dateRange = dateRange.replaceAll("9999", "    ");
 
-		if(log.isDebugEnabled())
-			log.debug("008 offset 6 was 'c', 'd' or 'k' so we will add a field with the date range " + dateRange + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("008 offset 6 was 'c', 'd' or 'k' so we will add a field with the date range " + dateRange + ".");
 
 		// Add the date range field
 		marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_DATE_RANGE, dateRange);
@@ -1066,8 +1066,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager languageSplit(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering LanguageSplit normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering LanguageSplit normalization step.");
 
 		// A list of language fields we're adding as fields.
 		ArrayList<String> languages = new ArrayList<String>();
@@ -1083,8 +1083,8 @@ public class NormalizationService extends GenericMetadataService
 
 			if(isLanguageValid(langFrom008))
 			{
-				if(log.isDebugEnabled())
-					log.debug("Found the valid language " + langFrom008 + " in the 008 field.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Found the valid language " + langFrom008 + " in the 008 field.");
 
 				languages.add(langFrom008.toLowerCase());
 			}
@@ -1107,8 +1107,8 @@ public class NormalizationService extends GenericMetadataService
 				{
 					if(isLanguageValid(language))
 					{
-						if(log.isDebugEnabled())
-							log.debug("Found the valid language " + language + " in the 041 $a field.");
+						if(LOG.isDebugEnabled())
+							LOG.debug("Found the valid language " + language + " in the 041 $a field.");
 
 						languages.add(language.toLowerCase());
 					}
@@ -1129,8 +1129,8 @@ public class NormalizationService extends GenericMetadataService
 				{
 					if(isLanguageValid(language))
 					{
-						if(log.isDebugEnabled())
-							log.debug("Found the valid language " + language + " in the 041 $d field.");
+						if(LOG.isDebugEnabled())
+							LOG.debug("Found the valid language " + language + " in the 041 $d field.");
 
 						languages.add(language.toLowerCase());
 					}
@@ -1156,8 +1156,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager languageTerm(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering LanguageTerm normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering LanguageTerm normalization step.");
 
 		// A list of language code fields we've add.
 		ArrayList<String> languageCodes = marcXml.getAddedLanguageCodes();
@@ -1176,8 +1176,8 @@ public class NormalizationService extends GenericMetadataService
 			// If there was no mapping for the provided language code, we can't create the field.  In this case continue to the next language code
 			if(languageTerm == null)
 			{
-				if(log.isDebugEnabled())
-					log.debug("Cannot find a language term mapping for the language code " + languageCode + ".");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Cannot find a language term mapping for the language code " + languageCode + ".");
 
 				errors.add(service.getId() + "-106: Unrecognized language code: " + languageCode);
 				outputRecordErrors.add(service.getId() + "-106: Unrecognized language code: " + languageCode);
@@ -1185,8 +1185,8 @@ public class NormalizationService extends GenericMetadataService
 				continue;
 			}
 
-			if(log.isDebugEnabled())
-				log.debug("Found the language term " + languageTerm + " for the language code " + languageCode + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Found the language term " + languageTerm + " for the language code " + languageCode + ".");
 
 			// Add a MARCXML field to store the SMD Vocab
 
@@ -1205,8 +1205,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager audienceFrom008(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering 008Audience normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering 008Audience normalization step.");
 
 		// The character at offset 6 of the leader field
 		char leader06 = marcXml.getLeader().charAt(6);
@@ -1227,8 +1227,8 @@ public class NormalizationService extends GenericMetadataService
 			// If there was no mapping for the provided 008 offset 22, we can't create the field.  In this case return the unmodified MARCXML
 			if(audience == null)
 			{
-				if(log.isDebugEnabled())
-					log.debug("Cannot find an audience mapping for the 008 offset 22 value of " + field008offset22 + ", returning the unmodified MARCXML.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Cannot find an audience mapping for the 008 offset 22 value of " + field008offset22 + ", returning the unmodified MARCXML.");
 
 				return marcXml;
 			}
@@ -1237,8 +1237,8 @@ public class NormalizationService extends GenericMetadataService
 				outputRecordErrors.add(service.getId() + "-105: Invalid value in Control Field 008 offset 22: " + field008offset22);
 			}
 
-			if(log.isDebugEnabled())
-				log.debug("Found the audience " + audience + " for the 008 offset 22 value of " + field008offset22 + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Found the audience " + audience + " for the 008 offset 22 value of " + field008offset22 + ".");
 
 			// Add a MARCXML field to store the audience
 			marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_AUDIENCE, audience);
@@ -1255,14 +1255,14 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager thesisFrom008(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering 008Thesis normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering 008Thesis normalization step.");
 
 		// If there is already a 502 field, don't make any changes
 		if(marcXml.getField502() != null && marcXml.getField502().size() > 0)
 		{
-			if(log.isDebugEnabled())
-				log.debug("502 field already exists, so we won't add another.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("502 field already exists, so we won't add another.");
 
 			return marcXml;
 		}
@@ -1273,8 +1273,8 @@ public class NormalizationService extends GenericMetadataService
 		// If the leader 06 is not 'a' return without doing anything
 		if(leader06 != 'a')
 		{
-			if(log.isDebugEnabled())
-				log.debug("The leader 06 is not 'a', so this cannot be a Thesis.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("The leader 06 is not 'a', so this cannot be a Thesis.");
 
 			return marcXml;
 		}
@@ -1285,14 +1285,14 @@ public class NormalizationService extends GenericMetadataService
 		// If the 008 offset 24, 25, 26, or 27 is 'm', add a 502 tag with the value "Thesis."
 		if(field008 != null && field008.substring(24, 28).contains("m"))
 		{
-			if(log.isDebugEnabled())
-				log.debug("Adding 502 field with the value \"Thesis.\"");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Adding 502 field with the value \"Thesis.\"");
 
 			// Add a MARCXML 502 field with the value "Thesis"
 			marcXml.addMarcXmlField("502", "Thesis.");
 		}
-		else if(log.isDebugEnabled())
-			log.debug("Not adding 502 field with the value \"Thesis.\"");
+		else if(LOG.isDebugEnabled())
+			LOG.debug("Not adding 502 field with the value \"Thesis.\"");
 
 		return marcXml;
 	}
@@ -1306,8 +1306,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager isbnCleanup(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering ISBNCleanup normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering ISBNCleanup normalization step.");
 
 		// The 020 $a field
 		ArrayList<String> fields020a = marcXml.getField020();
@@ -1315,8 +1315,8 @@ public class NormalizationService extends GenericMetadataService
 		// Return if there was no 020 $a
 		if(fields020a.size() == 0)
 		{
-			if(log.isDebugEnabled())
-				log.debug("The record did not have an 020 $a field so we don't have to normalize the ISBN number.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("The record did not have an 020 $a field so we don't have to normalize the ISBN number.");
 
 			return marcXml;
 		}
@@ -1331,8 +1331,8 @@ public class NormalizationService extends GenericMetadataService
 			// The cleaned up ISBN number.  This is the 020 $a with everything after the first left parenthesis removed
 			String cleanIsbn = (endIndex >= 0 ? field020a.substring(0, endIndex) : field020a);
 
-			if(log.isDebugEnabled())
-				log.debug("Adding the cleaned up ISBN number " + cleanIsbn + " to the normalized record.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Adding the cleaned up ISBN number " + cleanIsbn + " to the normalized record.");
 
 			// Add the cleaned up ISBN to the MARCXML in a new field
 			marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_CLEAN_ISBN, cleanIsbn);
@@ -1351,8 +1351,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager supplyMARCOrgCode(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering SupplyMARCOrgCode normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering SupplyMARCOrgCode normalization step.");
 
 		// Get the 001 and 003 control fields
 		String control001 = marcXml.getField001();
@@ -1361,8 +1361,8 @@ public class NormalizationService extends GenericMetadataService
 		// If either control field didn't exist, we don't have to do anything
 		if(control003 != null || control001 == null)
 		{
-			if(log.isDebugEnabled())
-				log.debug("The record was missing either an 001 or contained an 003 control field, so we do not have to supply a marc organization code into a new 035 field.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("The record was missing either an 001 or contained an 003 control field, so we do not have to supply a marc organization code into a new 035 field.");
 
 			return marcXml;
 		}
@@ -1384,8 +1384,8 @@ public class NormalizationService extends GenericMetadataService
 			new003 = getOrganizationCode();
 		}
 
-		if(log.isDebugEnabled())
-			log.debug("Supplying the record's organization code to a new 003 field with value " + new003 + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Supplying the record's organization code to a new 003 field with value " + new003 + ".");
 
 		// Add the new 003 field
 		marcXml.addMarcXmlControlField("003", new003);
@@ -1393,8 +1393,8 @@ public class NormalizationService extends GenericMetadataService
 		// Create the new 035 field
 		String new035 = "(" + getOrganizationCode() + ")" + control001;
 
-		if(log.isDebugEnabled())
-			log.debug("Supplying the record's organization code to a new 035 field with value " + new035 + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Supplying the record's organization code to a new 035 field with value " + new035 + ".");
 
 		// Add the new 035 field
 		marcXml.addMarcXmlField("035", new035);
@@ -1412,8 +1412,8 @@ public class NormalizationService extends GenericMetadataService
 	@SuppressWarnings("unchecked")
 	private MarcXmlManager fix035(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering fix035 normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering fix035 normalization step.");
 
 		// Get the original list of 035 elements.  We know that any 035 we
 		// supplied had the correct format, so all incorrect 035 records must
@@ -1564,8 +1564,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager dedup035(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering dedup035 normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering dedup035 normalization step.");
 
 		marcXml.deduplicateMarcXmlField("035");
 
@@ -1581,21 +1581,21 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager roleAuthor(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering RoleAuthor normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering RoleAuthor normalization step.");
 
 		// If leader 06 is 'a', set the $4 subfields of 100, 110 and 111 to "aut" if they're not already set
 		if(marcXml.getLeader().charAt(6) == 'a')
 		{
-			if(log.isDebugEnabled())
-				log.debug("Setting 100, 110, and 111 $4 to \"aut\" if they're not set to something else already.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Setting 100, 110, and 111 $4 to \"aut\" if they're not set to something else already.");
 
 			for(Element field100 : marcXml.getField100Element())
 			{
 				if(marcXml.getSubfieldsOfField(field100, '4').size() <= 0)
 				{
-					if(log.isDebugEnabled())
-						log.debug("Adding $4 to 100 with value aut.");
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding $4 to 100 with value aut.");
 
 					// Add the subfield to the field with the specified value
 					Element newSubfield = new Element("subfield", marcNamespace);
@@ -1609,8 +1609,8 @@ public class NormalizationService extends GenericMetadataService
 			{
 				if(marcXml.getSubfieldsOfField(field110, '4').size() <= 0)
 				{
-					if(log.isDebugEnabled())
-						log.debug("Adding $4 to 110 with value aut.");
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding $4 to 110 with value aut.");
 
 					// Add the subfield to the field with the specified value
 					Element newSubfield = new Element("subfield", marcNamespace);
@@ -1624,8 +1624,8 @@ public class NormalizationService extends GenericMetadataService
 			{
 				if(marcXml.getSubfieldsOfField(field111, '4').size() <= 0)
 				{
-					if(log.isDebugEnabled())
-						log.debug("Adding $4 to 111 with value aut.");
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding $4 to 111 with value aut.");
 
 					// Add the subfield to the field with the specified value
 					Element newSubfield = new Element("subfield", marcNamespace);
@@ -1648,21 +1648,21 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager roleComposer(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering RoleComposer normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering RoleComposer normalization step.");
 
 		// If leader 06 is 'c', set the $4 subfields of 100, 110 and 111 to "cmp" if they're not already set
 		if(marcXml.getLeader().charAt(6) == 'c')
 		{
-			if(log.isDebugEnabled())
-				log.debug("Setting 100, 110, and 111 $4 to \"cmp\" if they're not set to something else already.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Setting 100, 110, and 111 $4 to \"cmp\" if they're not set to something else already.");
 
 			for(Element field100 : marcXml.getField100Element())
 			{
 				if(marcXml.getSubfieldsOfField(field100, '4').size() <= 0)
 				{
-					if(log.isDebugEnabled())
-						log.debug("Adding $4 to 100 with value cmp.");
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding $4 to 100 with value cmp.");
 
 					// Add the subfield to the field with the specified value
 					Element newSubfield = new Element("subfield", marcNamespace);
@@ -1676,8 +1676,8 @@ public class NormalizationService extends GenericMetadataService
 			{
 				if(marcXml.getSubfieldsOfField(field110, '4').size() <= 0)
 				{
-					if(log.isDebugEnabled())
-						log.debug("Adding $4 to 110 with value cmp.");
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding $4 to 110 with value cmp.");
 
 					// Add the subfield to the field with the specified value
 					Element newSubfield = new Element("subfield", marcNamespace);
@@ -1691,8 +1691,8 @@ public class NormalizationService extends GenericMetadataService
 			{
 				if(marcXml.getSubfieldsOfField(field111, '4').size() <= 0)
 				{
-					if(log.isDebugEnabled())
-						log.debug("Adding $4 to 111 with value cmp.");
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding $4 to 111 with value cmp.");
 
 					// Add the subfield to the field with the specified value
 					Element newSubfield = new Element("subfield", marcNamespace);
@@ -1715,8 +1715,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager uniformTitle(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering UniformTitle normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering UniformTitle normalization step.");
 
 		// If 130, 240, and 243 all don't exist and 245 does exist, copy the 245 into a new 240 field.
 		// Only copy subfields afknp.
@@ -1741,8 +1741,8 @@ public class NormalizationService extends GenericMetadataService
 	@SuppressWarnings("unchecked")
 	private MarcXmlManager nruGenre(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering nruGenre normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering nruGenre normalization step.");
 
 		// A list of all the 655 fields in the MARCXML record
 		ArrayList<Element> field655elements = marcXml.getField655Elements();
@@ -1791,8 +1791,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager topicSplit(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering TopicSplit normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering TopicSplit normalization step.");
 
 		// A list of the tags to copy
 		ArrayList<String> tagsToCopy = new ArrayList<String>();
@@ -1827,8 +1827,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager chronSplit(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering ChronSplit normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering ChronSplit normalization step.");
 
 		// A list of the tags to copy
 		ArrayList<String> tagsToCopy = new ArrayList<String>();
@@ -1863,8 +1863,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager geogSplit(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering GeogSplit normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering GeogSplit normalization step.");
 
 		// A list of the tags to copy
 		ArrayList<String> tagsToCopy = new ArrayList<String>();
@@ -1899,8 +1899,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager genreSplit(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering GenreSplit normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering GenreSplit normalization step.");
 
 		// A list of the tags to copy
 		ArrayList<String> tagsToCopy = new ArrayList<String>();
@@ -1935,8 +1935,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager dedupDcmiType(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering DedupDCMIType normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering DedupDCMIType normalization step.");
 
 		marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_DCMI_TYPE);
 
@@ -1951,8 +1951,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager dedup007Vocab(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering Dedup007Vocab normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering Dedup007Vocab normalization step.");
 
 		marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_VOCAB);
 
@@ -1967,8 +1967,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager bibLocationName(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering bibLocationName normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering bibLocationName normalization step.");
 
 		// The 852 $l value
 		ArrayList<String> field852subfieldBs = marcXml.getField852subfieldBs();
@@ -1981,14 +1981,14 @@ public class NormalizationService extends GenericMetadataService
 			// If there was no mapping for the provided 852 $b, we can't create the field.  In this case return the unmodified MARCXML
 			if(location == null)
 			{
-				if(log.isDebugEnabled())
-					log.debug("Cannot find a location mapping for the 852 $b value of " + field852subfieldB + ", returning the unmodified MARCXML.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Cannot find a location mapping for the 852 $b value of " + field852subfieldB + ", returning the unmodified MARCXML.");
 
 				return marcXml;
 			}
 
-			if(log.isDebugEnabled())
-				log.debug("Found the location " + location + " for the 852 $b value of " + field852subfieldB + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Found the location " + location + " for the 852 $b value of " + field852subfieldB + ".");
 
 			// Set the 852 $l value to the location we found for the location code.
 			marcXml.setMarcXmlSubfield("852", "b", location, field852subfieldB);
@@ -2005,8 +2005,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager holdingsLocationName(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering holdingsLocationName normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering holdingsLocationName normalization step.");
 
 		// Get dataFiled with tag=852
 		List<Element> dataFields = marcXml.getDataFields("852");
@@ -2028,8 +2028,8 @@ public class NormalizationService extends GenericMetadataService
 					continue;
 				}
 
-				if(log.isDebugEnabled())
-					log.debug("Found the location " + limitName + " for the 852 $b value of " + subFieldB.getText() + ".");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Found the location " + limitName + " for the 852 $b value of " + subFieldB.getText() + ".");
 
 				// Add the $c subfield to the MARC XML field 852
 				Element newSubfieldC = new Element("subfield", marcNamespace);
@@ -2053,8 +2053,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager locationLimitName(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering locationLimitName normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering locationLimitName normalization step.");
 
 		// Get dataFiled with tag=852
 		List<Element> dataFields = marcXml.getDataFields("852");
@@ -2075,8 +2075,8 @@ public class NormalizationService extends GenericMetadataService
 					continue;
 				}
 
-				if(log.isDebugEnabled())
-					log.debug("Found the location " + limitNames + " for the 852 $b value of " + subFieldB.getText() + ".");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Found the location " + limitNames + " for the 852 $b value of " + subFieldB.getText() + ".");
 
 				// Limit names are delimited by |
 				StringTokenizer tokenizer = new StringTokenizer(limitNames, "|");
@@ -2114,8 +2114,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager IIILocationName(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering IIILocationName normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering IIILocationName normalization step.");
 
 		// The 945 $l value
 		ArrayList<String> field945subfieldLs = marcXml.getField945subfieldLs();
@@ -2128,14 +2128,14 @@ public class NormalizationService extends GenericMetadataService
 			// If there was no mapping for the provided 945 $l, we can't create the field.  In this case return the unmodified MARCXML
 			if(location == null)
 			{
-				if(log.isDebugEnabled())
-					log.debug("Cannot find a location mapping for the 945 $l value of " + field945subfieldL + ", returning the unmodified MARCXML.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Cannot find a location mapping for the 945 $l value of " + field945subfieldL + ", returning the unmodified MARCXML.");
 
 				return marcXml;
 			}
 
-			if(log.isDebugEnabled())
-				log.debug("Found the location " + location + " for the 945 $l value of " + field945subfieldL + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Found the location " + location + " for the 945 $l value of " + field945subfieldL + ".");
 
 			// Set the 945 $l value to the location we found for the location code.
 			marcXml.setMarcXmlSubfield("945", "l", location, field945subfieldL);
@@ -2153,8 +2153,8 @@ public class NormalizationService extends GenericMetadataService
 	@SuppressWarnings("unchecked")
 	private MarcXmlManager remove945Field(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering remove945Field normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering remove945Field normalization step.");
 		
 		// The 945 $l value
 		List<Element> field945s = marcXml.getField945();
@@ -2194,8 +2194,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager seperateName(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering SeperateName normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering SeperateName normalization step.");
 
 		// A list of the tags to copy
 		ArrayList<String> tagsToCopy = new ArrayList<String>();
@@ -2217,8 +2217,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager titleArticle(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering TitleArticle normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering TitleArticle normalization step.");
 
 		// Get dataFiled with tag=245
 		List<Element> dataFields = marcXml.getDataFields("245");
@@ -2247,8 +2247,8 @@ public class NormalizationService extends GenericMetadataService
 	 */
 	private MarcXmlManager dedup9XX(MarcXmlManager marcXml)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Entering Dedup9XX normalization step.");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Entering Dedup9XX normalization step.");
 
 		marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_CHRON_SPLIT);
 		marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_TOPIC_SPLIT);

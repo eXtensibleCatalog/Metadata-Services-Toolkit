@@ -383,7 +383,7 @@ public class Facade
 		oaiIdentifier.addContent(XMLUtil.xmlEl("scheme", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_SCHEME)));
 		oaiIdentifier.addContent(XMLUtil.xmlEl("repositoryIdentifier", MSTConfiguration.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER)));
 		oaiIdentifier.addContent(XMLUtil.xmlEl("delimiter", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_DELIMITER)));
-		oaiIdentifier.addContent(XMLUtil.xmlEl("sampleIdentifier", "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + MSTConfiguration.getInstanceName() + "/" + service.getIdentifier().replace(" ", "_") + "/1"));
+		oaiIdentifier.addContent(XMLUtil.xmlEl("sampleIdentifier", "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + MSTConfiguration.getInstanceName() + "/" + service.getName().replace(" ", "_") + "/1"));
 
 		// Add a description element with the oai-identifier element we just created
 		root.addContent(XMLUtil.xmlEl("description", null).addContent(oaiIdentifier));

@@ -230,19 +230,19 @@ public class TransformationService extends GenericMetadataService
 			
 			processingHeldRecords =  false;
 		}  catch(DataException de) {
-			log.error("Exception occured while processing held holding records", de);
+			LOG.error("Exception occured while processing held holding records", de);
 		} catch(IndexException ie) {
-			log.error("Exception occured while processing held holding records", ie);
+			LOG.error("Exception occured while processing held holding records", ie);
 		} catch(Exception e) {
-			log.error("Exception occured while processing held holding records", e);
+			LOG.error("Exception occured while processing held holding records", e);
 		} 
 	}
 	
 	private List<Record> convertRecord(Record record)
 	{
 		
-		if(log.isDebugEnabled())
-			log.debug("Transforming record with ID " + record.getId() + ".");
+		if(LOG.isDebugEnabled())
+			LOG.debug("Transforming record with ID " + record.getId() + ".");
 		
 		// Empty the lists of errors because we're beginning to process a new record
 		errors.clear();
@@ -258,14 +258,14 @@ public class TransformationService extends GenericMetadataService
 			// Parse the XML from the record
 			try
 			{
-				if(log.isDebugEnabled())
-					log.debug("Parsing the record's XML into a Document Object.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Parsing the record's XML into a Document Object.");
 
 				marcXml = builder.build(new InputSource(new StringReader(record.getOaiXml())));
 			}
 			catch(IOException e)
 			{
-				log.error("An error occurred while parsing the record's XML.", e);
+				LOG.error("An error occurred while parsing the record's XML.", e);
 
 				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
 				
@@ -273,7 +273,7 @@ public class TransformationService extends GenericMetadataService
 			}
 			catch(JDOMException e)
 			{
-				log.error("An error occurred while parsing the record's XML.", e);
+				LOG.error("An error occurred while parsing the record's XML.", e);
 
 				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
 				
@@ -310,12 +310,12 @@ public class TransformationService extends GenericMetadataService
 		catch(Exception e)
 		{
 			
-			log.error("An error occurred while Transforming the record with ID " + record.getId(), e);
+			LOG.error("An error occurred while Transforming the record with ID " + record.getId(), e);
 
 			logError("An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
 
-			if(log.isDebugEnabled())
-				log.debug("Adding warnings and errors to the record.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Adding warnings and errors to the record.");
 			
 			record.setErrors(errors);
 			return results;
@@ -496,8 +496,8 @@ public class TransformationService extends GenericMetadataService
 		{
 			updatedInputRecord = true;
 
-			if(log.isDebugEnabled())
-				log.debug("Updating the record which was processed from an older version of the record we just processed.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Updating the record which was processed from an older version of the record we just processed.");
 			
 			removeExistingBibRecords(record, existingRecords);
 
@@ -876,13 +876,13 @@ public class TransformationService extends GenericMetadataService
 			holdingRecord.setOaiXml(writer.toString());
 			
 		} catch(JDOMException je) {
-			log.error("An error occurred when removing manifestationHeld link from holding record " + holdingRecord.getOaiIdentifier(), je);
+			LOG.error("An error occurred when removing manifestationHeld link from holding record " + holdingRecord.getOaiIdentifier(), je);
 		}  catch(IOException ioe) {
-			log.error("An error occurred when removing manifestationHeld link from holding record " + holdingRecord.getOaiIdentifier(), ioe );
+			LOG.error("An error occurred when removing manifestationHeld link from holding record " + holdingRecord.getOaiIdentifier(), ioe );
 		}  catch(TransformerConfigurationException tce) {
-			log.error("TransformerConfigurationException occured when removing manifestationHeld link from holding record " + holdingRecord.getOaiIdentifier() + tce);
+			LOG.error("TransformerConfigurationException occured when removing manifestationHeld link from holding record " + holdingRecord.getOaiIdentifier() + tce);
 		} catch (TransformerException te) {
-			log.error("TransformerException occured when removing manifestationHeld link from holding record " + holdingRecord.getOaiIdentifier() + te);
+			LOG.error("TransformerException occured when removing manifestationHeld link from holding record " + holdingRecord.getOaiIdentifier() + te);
 		}
 		
 		
@@ -957,17 +957,17 @@ public class TransformationService extends GenericMetadataService
 				xcHoldingDAO.insert(holdingRecord);
 			}
 		} catch(IndexException ie) {
-			log.error("Index exception occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + ie);
+			LOG.error("Index exception occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + ie);
 		} catch (JDOMException je) {
-			log.error("JDOMException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + je);
+			LOG.error("JDOMException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + je);
 		} catch (IOException ioe) {
-			log.error("IOException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + ioe);
+			LOG.error("IOException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + ioe);
 		} catch(TransformerConfigurationException tce) {
-			log.error("TransformerConfigurationException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + tce);
+			LOG.error("TransformerConfigurationException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + tce);
 		} catch (TransformerException te) {
-			log.error("TransformerException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + te);
+			LOG.error("TransformerException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + te);
 		} catch (DataException de) {
-			log.error("DataException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + de);
+			LOG.error("DataException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + de);
 		}
 	}
 
@@ -1122,15 +1122,15 @@ public class TransformationService extends GenericMetadataService
 			}
 			else
 			{
-				if(log.isDebugEnabled())
-					log.debug("Unrecognized ind1 " + ind1 + " for an 028 field, skipping the field.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Unrecognized ind1 " + ind1 + " for an 028 field, skipping the field.");
 
 				// Continue to the next 028.
 				continue;
 			}
 
-			if(log.isDebugEnabled())
-				log.debug("Adding a manifestation level " + name + " with a type of \"" + type + "\" based on the 028 $a value, which is " + subfieldA);
+			if(LOG.isDebugEnabled())
+				LOG.debug("Adding a manifestation level " + name + " with a type of \"" + type + "\" based on the 028 $a value, which is " + subfieldA);
 
 			// Setup the attribute list for the new field
 			ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -1193,8 +1193,8 @@ public class TransformationService extends GenericMetadataService
 			String value = controlNumber.substring(controlNumber.indexOf(')') + 1);
 			String type = controlNumber.substring(controlNumber.indexOf('(')+1, controlNumber.indexOf(')'));
 
-			if(log.isDebugEnabled())
-				log.debug("Adding a " + FrbrLevel.MANIFESTATION + " level xc:recordID of type " + type + " based on the 035 $a value, which is " + value);
+			if(LOG.isDebugEnabled())
+				LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level xc:recordID of type " + type + " based on the 035 $a value, which is " + value);
 
 			// Setup the attribute list for the xc:recordID
 			ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -1249,8 +1249,8 @@ public class TransformationService extends GenericMetadataService
 				Attribute elementAttribute = new Attribute("type", "GPO");
 				attributes.add(elementAttribute);
 
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + FrbrLevel.MANIFESTATION + " level " + "identifier with a type of \"GPO\" based on the 037 $a value, which is " + value);
+				if(LOG.isDebugEnabled())
+					LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level " + "identifier with a type of \"GPO\" based on the 037 $a value, which is " + value);
 
 				// Add the element to the XC record
 				transformInto.addElement("identifier", value.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
@@ -1289,8 +1289,8 @@ public class TransformationService extends GenericMetadataService
 			if(!value.matches("^..\\d.*$"))
 				continue;
 
-			if(log.isDebugEnabled())
-				log.debug("Adding a " + FrbrLevel.WORK + " level " + "subject with a type of \"dcterms:LCC\" based on the 050 $a value, which is " + value);
+			if(LOG.isDebugEnabled())
+				LOG.debug("Adding a " + FrbrLevel.WORK + " level " + "subject with a type of \"dcterms:LCC\" based on the 050 $a value, which is " + value);
 
 			// Setup the attribute list
 			ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -1529,7 +1529,7 @@ public class TransformationService extends GenericMetadataService
 					// If it isn't, we can't build an authority Attribute, so return null
 					if(!valueOf0.contains("(") || !valueOf0.contains(")"))
 					{
-						log.warn("Encountered a $0 subfield in a format which did not contain a prefix, so we can't build an authortiy Attribute for it.  Ignoring the malformed $0, which had a value of " + valueOf0);
+						LOG.warn("Encountered a $0 subfield in a format which did not contain a prefix, so we can't build an authortiy Attribute for it.  Ignoring the malformed $0, which had a value of " + valueOf0);
 
 						continue;
 					}
@@ -1671,7 +1671,7 @@ public class TransformationService extends GenericMetadataService
 					// If it isn't, we can't build an authority Attribute, so return null
 					if(!valueOf0.contains("(") || !valueOf0.contains(")"))
 					{
-						log.warn("Encountered a $0 subfield in a format which did not contain a prefix, so we can't build an authortiy Attribute for it.  Ignoring the malformed $0, which had a value of " + valueOf0);
+						LOG.warn("Encountered a $0 subfield in a format which did not contain a prefix, so we can't build an authortiy Attribute for it.  Ignoring the malformed $0, which had a value of " + valueOf0);
 
 						continue;
 					}
@@ -1788,7 +1788,7 @@ public class TransformationService extends GenericMetadataService
 					// If it isn't, we can't build an authority Attribute, so return null
 					if(!valueOf0.contains("(") || !valueOf0.contains(")"))
 					{
-						log.warn("Encountered a $0 subfield in a format which did not contain a prefix, so we can't build an authortiy Attribute for it.  Ignoring the malformed $0, which had a value of " + valueOf0);
+						LOG.warn("Encountered a $0 subfield in a format which did not contain a prefix, so we can't build an authortiy Attribute for it.  Ignoring the malformed $0, which had a value of " + valueOf0);
 
 						continue;
 					}
@@ -1927,16 +1927,16 @@ public class TransformationService extends GenericMetadataService
 				// If the 2nd indicator is 1,
 				if(ind2 != null && ind2.equals("1"))
 				{
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.MANIFESTATION + " level title based on the concatination of the 246's subfields' value, which is " + value);
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level title based on the concatination of the 246's subfields' value, which is " + value);
 
 					// Create an dc:title based on the 246 abfnp values
 					transformInto.addElement("title", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 				}
 				else
 				{
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.MANIFESTATION + " level alternative based on the concatination of the 246's subfields' value, which is " + value);
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level alternative based on the concatination of the 246's subfields' value, which is " + value);
 
 					// Create a dcterms:alternative based on the 246 abfnp values
 					transformInto.addElement("alternative", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
@@ -2916,8 +2916,8 @@ public class TransformationService extends GenericMetadataService
 						if(authorityAttribute != null)
 							attributes.add(authorityAttribute);
 
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
+						if(LOG.isDebugEnabled())
+							LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 						// Add the element to the XC record
 						transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
@@ -2944,8 +2944,8 @@ public class TransformationService extends GenericMetadataService
 							if(authorityAttribute != null)
 								attributes.add((Attribute)authorityAttribute.clone());
 
-							if(log.isDebugEnabled())
-								log.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
+							if(LOG.isDebugEnabled())
+								LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 							// Add the element to the XC record
 							transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -2963,8 +2963,8 @@ public class TransformationService extends GenericMetadataService
 							if(authorityAttribute != null)
 								attributes.add((Attribute)authorityAttribute.clone());
 
-							if(log.isDebugEnabled())
-								log.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
+							if(LOG.isDebugEnabled())
+								LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 							// Add the element to the XC record
 							transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
@@ -3013,8 +3013,8 @@ public class TransformationService extends GenericMetadataService
 					{
 						String value = titleBuilder.substring(0, titleBuilder.length()-1); // The value is everything except the last space
 
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 700's subfields' value, which is " + value);
+						if(LOG.isDebugEnabled())
+							LOG.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 700's subfields' value, which is " + value);
 
 						// Add an xc:title based on the 700 subfields' values
 						// Add to the non-default work element for this 700 field
@@ -3083,8 +3083,8 @@ public class TransformationService extends GenericMetadataService
 					{
 						String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.WORK + " level " + elementName + (authorityAttribute == null ? "" : " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
+						if(LOG.isDebugEnabled())
+							LOG.debug("Adding a " + FrbrLevel.WORK + " level " + elementName + (authorityAttribute == null ? "" : " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 						// Setup the attribute list
 						ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -3181,8 +3181,8 @@ public class TransformationService extends GenericMetadataService
 						if(authorityAttribute != null)
 							attributes.add(authorityAttribute);
 
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
+						if(LOG.isDebugEnabled())
+							LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 						// Add the element to the XC record
 						transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
@@ -3209,8 +3209,8 @@ public class TransformationService extends GenericMetadataService
 							if(authorityAttribute != null)
 								attributes.add((Attribute)authorityAttribute.clone());
 
-							if(log.isDebugEnabled())
-								log.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
+							if(LOG.isDebugEnabled())
+								LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 							// Add the element to the XC record
 							transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -3228,8 +3228,8 @@ public class TransformationService extends GenericMetadataService
 							if(authorityAttribute != null)
 								attributes.add((Attribute)authorityAttribute.clone());
 
-							if(log.isDebugEnabled())
-								log.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
+							if(LOG.isDebugEnabled())
+								LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 							// Add the element to the XC record
 							transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
@@ -3275,8 +3275,8 @@ public class TransformationService extends GenericMetadataService
 					{
 						String value = titleBuilder.substring(0, titleBuilder.length()-1); // The value is everything except the last space
 
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 700's subfields' value, which is " + value);
+						if(LOG.isDebugEnabled())
+							LOG.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 700's subfields' value, which is " + value);
 
 						// Add an xc:title based on the 700 subfields' values
 						// Add to the non-default work element for this 700 field
@@ -3345,8 +3345,8 @@ public class TransformationService extends GenericMetadataService
 					{
 						String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.WORK + " level " + elementName + (authorityAttribute == null ? "" : " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 710's subfields' value, which is " + value);
+						if(LOG.isDebugEnabled())
+							LOG.debug("Adding a " + FrbrLevel.WORK + " level " + elementName + (authorityAttribute == null ? "" : " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 710's subfields' value, which is " + value);
 
 						// Setup the attribute list
 						ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -3441,8 +3441,8 @@ public class TransformationService extends GenericMetadataService
 						if(authorityAttribute != null)
 							attributes.add(authorityAttribute);
 
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
+						if(LOG.isDebugEnabled())
+							LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 						// Add the element to the XC record
 						transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
@@ -3469,8 +3469,8 @@ public class TransformationService extends GenericMetadataService
 							if(authorityAttribute != null)
 								attributes.add((Attribute)authorityAttribute.clone());
 
-							if(log.isDebugEnabled())
-								log.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
+							if(LOG.isDebugEnabled())
+								LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 							// Add the element to the XC record
 							transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -3488,8 +3488,8 @@ public class TransformationService extends GenericMetadataService
 							if(authorityAttribute != null)
 								attributes.add((Attribute)authorityAttribute.clone());
 
-							if(log.isDebugEnabled())
-								log.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
+							if(LOG.isDebugEnabled())
+								LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 							// Add the element to the XC record
 							transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
@@ -3535,8 +3535,8 @@ public class TransformationService extends GenericMetadataService
 					{
 						String value = titleBuilder.substring(0, titleBuilder.length()-1); // The value is everything except the last space
 
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 700's subfields' value, which is " + value);
+						if(LOG.isDebugEnabled())
+							LOG.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 700's subfields' value, which is " + value);
 
 						// Add an xc:title based on the 700 subfields' values
 						// Add to the non-default work element for this 700 field
@@ -3605,8 +3605,8 @@ public class TransformationService extends GenericMetadataService
 					{
 						String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + FrbrLevel.WORK + " level " + elementName + (authorityAttribute == null ? "" : " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 711's subfields' value, which is " + value);
+						if(LOG.isDebugEnabled())
+							LOG.debug("Adding a " + FrbrLevel.WORK + " level " + elementName + (authorityAttribute == null ? "" : " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 711's subfields' value, which is " + value);
 
 						// Setup the attribute list
 						ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -3701,8 +3701,8 @@ public class TransformationService extends GenericMetadataService
 					String workTitleValue = titleOfWorkBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
 					String expressionTitleValue = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
 
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 730's subfields' value, which is " + workTitleValue);
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding a " + FrbrLevel.WORK + " level title based on the concatination of the 730's subfields' value, which is " + workTitleValue);
 
 				
 					Hashtable<String , Element>  workSubElements = new Hashtable<String, Element>();
@@ -3784,8 +3784,8 @@ public class TransformationService extends GenericMetadataService
 				{
 					String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.WORK + " level " + elementName + (authorityAttribute == null ? "" : " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 730's subfields' value, which is " + value);
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding a " + FrbrLevel.WORK + " level " + elementName + (authorityAttribute == null ? "" : " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 730's subfields' value, which is " + value);
 
 					// Setup the attribute list
 					ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -4382,24 +4382,24 @@ public class TransformationService extends GenericMetadataService
 				// If 2nd indicator is 2, map to expression level dc:relation
 				if(ind2 == null || ind2.equals("0") || ind2.equals(" ") || ind2.equals("8"))
 				{
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.MANIFESTATION + " level identifier based on the concatination of the 856's subfields' value, which is " + value);
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level identifier based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create an dcterms:identifier based on the 856 abcdfhijklmnopqrstuvwxyz23 values
 					transformInto.addElement("identifier", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 				}
 				else if(ind2 != null && ind2.equals("1"))
 				{
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.EXPRESSION + " level alternative based on the concatination of the 856's subfields' value, which is " + value);
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level alternative based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create a dcterms:hasVersion based on the 856 abcdfhijklmnopqrstuvwxyz23 values
 					transformInto.addElement("hasVersion", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
 				}
 				else if(ind2 != null && ind2.equals("2"))
 				{
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.EXPRESSION + " level alternative based on the concatination of the 856's subfields' value, which is " + value);
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level alternative based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create a dc:relation based on the 856 abcdfhijklmnopqrstuvwxyz23 values
 					transformInto.addElement("relation", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
@@ -4786,8 +4786,8 @@ public class TransformationService extends GenericMetadataService
 						attributes.add(new Attribute("agentID", "xcauth:" + authValue));
 				}
 
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + FrbrLevel.WORK + " level creator with an agentID of \"" + attributeValue + "\" based on the $a subfields' value, which is " + value);
+				if(LOG.isDebugEnabled())
+					LOG.debug("Adding a " + FrbrLevel.WORK + " level creator with an agentID of \"" + attributeValue + "\" based on the $a subfields' value, which is " + value);
 
 				// Add the element to the XC record
 				// Add to each non-default work element for which we found a linking field in the 959 element
@@ -4920,8 +4920,8 @@ public class TransformationService extends GenericMetadataService
 		if(field003 == null)
 			field003 = getOrganizationCode();
 
-		if(log.isDebugEnabled())
-			log.debug("Adding a " + FrbrLevel.MANIFESTATION + " level recordId with a type of \"" + field003 + "\" and a value of " + field001);
+		if(LOG.isDebugEnabled())
+			LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level recordId with a type of \"" + field003 + "\" and a value of " + field001);
 
 		// Setup the attribute list
 		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -4930,8 +4930,8 @@ public class TransformationService extends GenericMetadataService
 		// Add the element to the XC record
 		//transformInto.addElement("recordID", field001.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 
-		if(log.isDebugEnabled())
-			log.debug("Adding a " + FrbrLevel.HOLDINGS + " level recordId with a type of \"" + field003 + "\" and a value of " + field001);
+		if(LOG.isDebugEnabled())
+			LOG.debug("Adding a " + FrbrLevel.HOLDINGS + " level recordId with a type of \"" + field003 + "\" and a value of " + field001);
 
 		// Setup the attribute list
 		attributes = new ArrayList<Attribute>();
@@ -5125,8 +5125,8 @@ public class TransformationService extends GenericMetadataService
 				// If 2nd indicator is 0, blank, or 8, map to manifestation level dcterms:identifier
 				if(ind2 == null || ind2.equals("0") || ind2.equals(" ") || ind2.equals("8"))
 				{
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + FrbrLevel.HOLDINGS + " level identifier based on the concatination of the 856's subfields' value, which is " + value);
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding a " + FrbrLevel.HOLDINGS + " level identifier based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create an dcterms:identifier based on the 856 abcdfhijklmnopqrstuvwxyz23 values
 					transformInto.addElement("identifier", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.HOLDINGS);
@@ -5152,8 +5152,8 @@ public class TransformationService extends GenericMetadataService
 	 */
 	private XCRecord processFieldBasic(XCRecord transformInto, String value, String elementName, Namespace elementNamespace, Attribute elementAttribute, FrbrLevel level)
 	{
-		if(log.isDebugEnabled())
-			log.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " with a value of " + value);
+		if(LOG.isDebugEnabled())
+			LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " with a value of " + value);
 
 		// Setup the attribute list
 		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -5193,8 +5193,8 @@ public class TransformationService extends GenericMetadataService
 		// Add each subfield to the specified level with the specified tag and attribute
 		for(String value : subfields)
 		{
-			if(log.isDebugEnabled())
-				log.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the " + field + " $" + subfield + " value, which is " + value);
+			if(LOG.isDebugEnabled())
+				LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the " + field + " $" + subfield + " value, which is " + value);
 
 			// Setup the attribute list
 			ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -5260,8 +5260,8 @@ public class TransformationService extends GenericMetadataService
 			{
 				String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+				if(LOG.isDebugEnabled())
+					LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Setup the attribute list
 				ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -5326,8 +5326,8 @@ public class TransformationService extends GenericMetadataService
 			{
 				String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+				if(LOG.isDebugEnabled())
+					LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Setup the attribute list
 				ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -5392,8 +5392,8 @@ public class TransformationService extends GenericMetadataService
 				if(elementAttribute != null && attributeValue != null)
 					attributes.add(((Attribute)elementAttribute.clone()).setValue(attributeValue));
 
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + attributeValue + "\"") + " based on the " + field + " $" + subfield + " value, which is " + value);
+				if(LOG.isDebugEnabled())
+					LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + attributeValue + "\"") + " based on the " + field + " $" + subfield + " value, which is " + value);
 
 				// Add the element to the XC record
 				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -5462,8 +5462,8 @@ public class TransformationService extends GenericMetadataService
 			{
 				String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+				if(LOG.isDebugEnabled())
+					LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Setup the attribute list for the XC record field
 				ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -5545,8 +5545,8 @@ public class TransformationService extends GenericMetadataService
 			{
 				String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+				if(LOG.isDebugEnabled())
+					LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Setup the attribute list for the XC record field
 				ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -5624,8 +5624,8 @@ public class TransformationService extends GenericMetadataService
 			{
 				String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + level + " level " + elementName + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+				if(LOG.isDebugEnabled())
+					LOG.debug("Adding a " + level + " level " + elementName + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Add the element to the XC record
 				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -5701,8 +5701,8 @@ public class TransformationService extends GenericMetadataService
 				if(authorityAttribute != null)
 					attributes.add(authorityAttribute);
 
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+				if(LOG.isDebugEnabled())
+					LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Add the element to the XC record
 				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -5815,8 +5815,8 @@ public class TransformationService extends GenericMetadataService
 				if(authorityAttribute != null)
 					attributes.add(authorityAttribute);
 
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + level + " level " + elementName + (attributeToUse != null ? " with a " + attributeToUse.getName() + " of \"" + attributeToUse.getValue() + "\"" : "") + (authorityAttribute != null ? " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"" : "") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+				if(LOG.isDebugEnabled())
+					LOG.debug("Adding a " + level + " level " + elementName + (attributeToUse != null ? " with a " + attributeToUse.getName() + " of \"" + attributeToUse.getValue() + "\"" : "") + (authorityAttribute != null ? " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"" : "") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Add the element to the XC record
 				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -5905,8 +5905,8 @@ public class TransformationService extends GenericMetadataService
 				if(authorityAttribute != null)
 					attributes.add(authorityAttribute);
 
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + level + " level " + elementName + (attributeToUse != null ? " with a " + attributeToUse.getName() + " of \"" + attributeToUse.getValue() + "\"" : "") + (authorityAttribute != null ? " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"" : "") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+				if(LOG.isDebugEnabled())
+					LOG.debug("Adding a " + level + " level " + elementName + (attributeToUse != null ? " with a " + attributeToUse.getName() + " of \"" + attributeToUse.getValue() + "\"" : "") + (authorityAttribute != null ? " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"" : "") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Add the element to the XC record
 				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -5990,8 +5990,8 @@ public class TransformationService extends GenericMetadataService
 					if(authorityAttribute != null)
 						attributes.add(authorityAttribute);
 
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 					// Add the element to the XC record
 					transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -6017,8 +6017,8 @@ public class TransformationService extends GenericMetadataService
 						if(authorityAttribute != null)
 							attributes.add((Attribute)authorityAttribute.clone());
 
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+						if(LOG.isDebugEnabled())
+							LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 						// Add the element to the XC record
 						transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -6036,8 +6036,8 @@ public class TransformationService extends GenericMetadataService
 						if(authorityAttribute != null)
 							attributes.add((Attribute)authorityAttribute.clone());
 
-						if(log.isDebugEnabled())
-							log.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+						if(LOG.isDebugEnabled())
+							LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 						// Add the element to the XC record
 						transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -6108,8 +6108,8 @@ public class TransformationService extends GenericMetadataService
 				if(attributeToUse != null)
 					attributes.add(attributeToUse);
 
-				if(log.isDebugEnabled())
-					log.debug("Adding a " + level + " level " + elementName + (attributeToUse == null ? "" : " with a " + attributeToUse.getName() + " of \"" + attributeToUse.getValue() + "\"") + " based on the " + field + " $" + subfield + " value, which is " + value);
+				if(LOG.isDebugEnabled())
+					LOG.debug("Adding a " + level + " level " + elementName + (attributeToUse == null ? "" : " with a " + attributeToUse.getName() + " of \"" + attributeToUse.getValue() + "\"") + " based on the " + field + " $" + subfield + " value, which is " + value);
 
 				// Add the element to the XC record
 				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -6198,8 +6198,8 @@ public class TransformationService extends GenericMetadataService
 				{
 					String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 	
-					if(log.isDebugEnabled())
-						log.debug("Adding a " + level + " level " + elementName + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+					if(LOG.isDebugEnabled())
+						LOG.debug("Adding a " + level + " level " + elementName + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 	
 					// Add the element to the XC record
 					transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
@@ -6224,7 +6224,7 @@ public class TransformationService extends GenericMetadataService
 		// If it isn't, we can't build an authority Attribute, so return null
 		if(!valueOf0.contains("(") || !valueOf0.contains(")"))
 		{
-			log.warn("Encountered a $0 subfield in a format which did not contain a prefix, so we can't build an authortiy Attribute for it.  Ignoring the malformed $0, which had a value of " + valueOf0);
+			LOG.warn("Encountered a $0 subfield in a format which did not contain a prefix, so we can't build an authortiy Attribute for it.  Ignoring the malformed $0, which had a value of " + valueOf0);
 
 			return null;
 		}
@@ -6313,7 +6313,7 @@ public class TransformationService extends GenericMetadataService
 		// If it isn't, we can't build an authority Attribute, so return null
 		if(!valueOf0.contains("(") || !valueOf0.contains(")"))
 		{
-			log.warn("Encountered a $0 subfield in a format which did not contain a prefix, so we can't build an authortiy Attribute for it.  Ignoring the malformed $0, which had a value of " + valueOf0);
+			LOG.warn("Encountered a $0 subfield in a format which did not contain a prefix, so we can't build an authortiy Attribute for it.  Ignoring the malformed $0, which had a value of " + valueOf0);
 
 			return null;
 		}
@@ -6369,7 +6369,7 @@ public class TransformationService extends GenericMetadataService
 		// If it isn't, we can't build an authority Attribute, so return null
 		if(!valueOf0.contains("(") || !valueOf0.contains(")"))
 		{
-			log.warn("Encountered a $0 subfield in a format which did not contain a prefix, so we can't build an authortiy Attribute for it.  Ignoring the malformed $0, which had a value of " + valueOf0);
+			LOG.warn("Encountered a $0 subfield in a format which did not contain a prefix, so we can't build an authortiy Attribute for it.  Ignoring the malformed $0, which had a value of " + valueOf0);
 
 			return transformInto;
 		}

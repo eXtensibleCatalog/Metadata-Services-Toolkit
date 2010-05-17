@@ -10,7 +10,6 @@
 package xc.mst.action.services;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,9 +76,6 @@ public class EditService extends BaseActionSupport
             }
             setTemporaryService(temporaryService);
             File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services");
-
-            FileFilter fileFilter =  new XCCGFileFilter();
-
             File[] fileList = dir.listFiles();
             
             if (fileList == null) 
@@ -97,6 +93,7 @@ public class EditService extends BaseActionSupport
             	if(!xccfgFolder.exists() || !xccfgFolder.isDirectory())
             		continue;
             	
+            	/*
             	File[] xccfgFolderList = xccfgFolder.listFiles(fileFilter);
                 
                 if (xccfgFolderList == null) 
@@ -111,6 +108,7 @@ public class EditService extends BaseActionSupport
         			XccFgFile configFile = new XccFgFile(xccfgFile.getName(), xccfgFile.getPath());
         			serviceFiles.add(configFile);
         		}
+        		*/
             }
             
             setServiceFiles(serviceFiles);
@@ -186,7 +184,6 @@ public class EditService extends BaseActionSupport
             log.error(dce.getMessage(),dce);
             errorType = "error";
             this.addFieldError("editServiceError","Unable to connect to the database. Database configuration may be incorrect");
-            populateListBox();
             return INPUT;
         }
         catch(DataException de)
@@ -195,7 +192,6 @@ public class EditService extends BaseActionSupport
             errorType = "error";
             this.addFieldError("editServiceError","Error occurred while editing service. An email has been sent to the administrator");
             getUserService().sendEmailErrorReport();
-            populateListBox();
             return INPUT;
         }
         catch(IndexException ie)
@@ -204,7 +200,6 @@ public class EditService extends BaseActionSupport
             errorType = "error";
             this.addFieldError("editServiceError","Error occurred while editing service. An email has been sent to the administrator");
             getUserService().sendEmailErrorReport();
-            populateListBox();
             return INPUT;
         }
         catch(IOException ie)
@@ -213,7 +208,6 @@ public class EditService extends BaseActionSupport
             errorType = "error";
             this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
             getUserService().sendEmailErrorReport();
-            populateListBox();
             return INPUT;
         }
          catch(ConfigFileException cfe)
@@ -222,7 +216,6 @@ public class EditService extends BaseActionSupport
             errorType = "error";
             this.addFieldError("editServiceError","Error occurred while editing service. An email has been sent to the administrator");
             getUserService().sendEmailErrorReport();
-            populateListBox();
             return INPUT;
         }
     }
@@ -323,48 +316,6 @@ public class EditService extends BaseActionSupport
     public String getSelectedLocation()
     {
         return this.selectedLocation;
-    }
-
-
-    private void populateListBox()
-    {
-    	File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services");
-
-        FileFilter fileFilter =  new XCCGFileFilter();
-
-        File[] fileList = dir.listFiles();
-        
-        if (fileList == null) 
-        {
-       	 	errorType = "error";
-       	 	log.error("Problem with service configuration. Check the path of service folder.");
-       	 	this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
-        }
-        
-        for(File file : fileList)
-        {
-        	String xccfgFolderLocation = file.getPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig";
-        	File xccfgFolder = new File(xccfgFolderLocation);
-        	
-        	if(!xccfgFolder.exists() || !xccfgFolder.isDirectory())
-        		continue;
-        	
-        	File[] xccfgFolderList = xccfgFolder.listFiles(fileFilter);
-            
-            if (xccfgFolderList == null) 
-            {
-           	 	errorType = "error";
-           	 	log.error("Problem with service configuration. Check the path of service folder.");
-           	 	this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
-                
-            }
-            
-            for(File xccfgFile : xccfgFolderList) {
-    			XccFgFile configFile = new XccFgFile(xccfgFile.getName(), xccfgFile.getPath());
-    			serviceFiles.add(configFile);
-    		}
-        }
-
     }
 
 	public boolean isReprocessRecords() {

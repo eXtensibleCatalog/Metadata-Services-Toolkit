@@ -24,12 +24,12 @@ import xc.mst.bo.record.Manifestation;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.record.Work;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
-import xc.mst.services.GenericMetadataService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
@@ -203,7 +203,7 @@ public abstract class RecordService extends BaseService
 	 */
 	public final static String FIELD_ALL = "all";
 
-	public abstract Record createSuccessor(Record record, GenericMetadataService s);
+	public abstract Record createSuccessor(Record record, Service s);
 	
 	/**
 	 * Gets all records from the index

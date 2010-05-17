@@ -10,8 +10,13 @@
 package xc.mst.services;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,6 +26,7 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
+import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordType;
@@ -29,10 +35,12 @@ import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.email.Emailer;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
+import xc.mst.repo.Repository;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
@@ -54,7 +62,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 	/**
 	 * The logger object
 	 */
-	protected static Logger log = Logger.getLogger(Constants.LOGGER_PROCESSING);
+	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_PROCESSING);
 
 	/**
 	 * The service representing this service in the database
@@ -143,23 +151,23 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 			service = getServiceDAO().getById(serviceId);
 			
 			// Load the service's configuration
-			loadConfiguration(service.getServiceConfig());
+			loadConfiguration(getUtil().slurp("service.xccfg"));
 	
 			// Create the list of ProcessingDirectives which could be run on records processed from this service
 			setProcessingDirectives(getProcessingDirectiveDAO().getBySourceServiceId(serviceId));
 	
-			if(log.isDebugEnabled())
-				log.debug("Constructed the MetadataService Object, running its processRecords() method.");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Constructed the MetadataService Object, running its processRecords() method.");
 	
 			LogWriter.addInfo(service.getServicesLogFileName(), "Starting the " + service.getName() + " Service.");
 	
-			if(log.isDebugEnabled())
-				log.debug("Validating the Metadata Service with ID " + serviceId + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Validating the Metadata Service with ID " + serviceId + ".");
 	
 			ServiceUtil.getInstance().checkService(service,Constants.STATUS_SERVICE_RUNNING, true);
 	
-			if(log.isDebugEnabled())
-				log.debug("Running the Metadata Service with ID " + serviceId + ".");
+			if(LOG.isDebugEnabled())
+				LOG.debug("Running the Metadata Service with ID " + serviceId + ".");
 	
 			setOutputSet(getSetDAO().getById(outputSetId));
 			
@@ -175,7 +183,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 			sendReportEmail(null);
 			
 		} catch (DatabaseConfigException dce) {
-				log.error("Exception occurred while invoking the service's processRecords method.", dce);
+				LOG.error("Exception occurred while invoking the service's processRecords method.", dce);
 
 				// Update database with status of service
 				service.setStatus(Constants.STATUS_SERVICE_ERROR);
@@ -190,7 +198,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 				}
 				catch (DatabaseConfigException e1){
 					
-					log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+					LOG.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
 
 				}
 
@@ -203,7 +211,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 				}
 				catch (DataException e2)
 				{
-					log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
+					LOG.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
 				}
 
 		}
@@ -242,7 +250,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 			// Get the list of record inputs for this service
 			List<Record> records = getRecordService().getInputForServiceToProcess(service.getId());
 			totalRecordCount = records.size();
-			log.info("Number of records to be processed by service = " + totalRecordCount);
+			LOG.info("Number of records to be processed by service = " + totalRecordCount);
 			
 			startTime = new Date().getTime();
 			endTime = 0;
@@ -302,13 +310,13 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 		} // end try(process the records)
 		catch(Exception e)
 		{
-			log.error("An error occurred while running the service with ID " + service.getId() + ".", e);
+			LOG.error("An error occurred while running the service with ID " + service.getId() + ".", e);
 			
 			try {
 				// Commit processed records to index
 				solrIndexManager.commitIndex();
 			} catch (IndexException ie) {
-				log.error("Exception occured when commiting " + service.getName() + " records to index", e);
+				LOG.error("Exception occured when commiting " + service.getName() + " records to index", e);
 			}
 			
 			// Update database with status of service
@@ -359,7 +367,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 		}
 		catch (DatabaseConfigException e1)
 		{
-			log.error("DatabaseConfig exception occured when getting service from database to update error, warning count.", e1);
+			LOG.error("DatabaseConfig exception occured when getting service from database to update error, warning count.", e1);
 
 			return false;
 		}
@@ -382,7 +390,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 			}
 
 		} catch (IndexException ie) {
-			log.error("Index exception occured while querying Solr for number of output records in service " + service.getName() + ".", ie);
+			LOG.error("Index exception occured while querying Solr for number of output records in service " + service.getName() + ".", ie);
 			return false;
 		}
 		
@@ -392,7 +400,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 		}
 		catch (DataException e)
 		{
-			log.error("Unable to update the service's warning and error counts due to a Data Exception.", e);
+			LOG.error("Unable to update the service's warning and error counts due to a Data Exception.", e);
 			return false;
 		}
 		
@@ -608,7 +616,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 		}
 		catch (IndexException e)
 		{
-			log.error("An error occurred while commiting new records to the Solr index.", e);
+			LOG.error("An error occurred while commiting new records to the Solr index.", e);
 		}
 	}
 
@@ -625,11 +633,11 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 		}
 		catch (IndexException e)
 		{
-			log.error("An error occurred while updating a record in the Solr index.", e);
+			LOG.error("An error occurred while updating a record in the Solr index.", e);
 		}
 		catch (DataException e)
 		{
-			log.error("An error occurred while updating a record in the Solr index.", e);
+			LOG.error("An error occurred while updating a record in the Solr index.", e);
 		}
 	}
 	
@@ -641,7 +649,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 	public final String getNextOaiId()
 	{
 		return "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + 
-				MSTConfiguration.getInstanceName() + "/" + service.getIdentifier().replace(" ", "_") + "/" + 
+				MSTConfiguration.getInstanceName() + "/" + service.getName().replace(" ", "_") + "/" + 
 				getOaiIdentifierForServiceDAO().getNextOaiIdForService(service.getId());
 	}
 		
@@ -713,15 +721,15 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 			checkProcessingDirectives(record);
 
 			if(!getRecordService().insert(record))
-				log.error("Failed to insert the new record with the OAI Identifier " + record.getOaiIdentifier() + ".");
+				LOG.error("Failed to insert the new record with the OAI Identifier " + record.getOaiIdentifier() + ".");
 		} // end try(insert the record)
 		catch (DataException e)
 		{
-			log.error("An exception occurred while inserting the record into the Lucene index.", e);
+			LOG.error("An exception occurred while inserting the record into the Lucene index.", e);
 			throw e;
 		} // end catch(DataException)
 		catch (IndexException ie) {
-			log.error("An exception occurred while inserting the record into the index.", ie);
+			LOG.error("An exception occurred while inserting the record into the index.", ie);
 			throw ie;
 		}
 	} // end method insertNewRecord(Record)
@@ -748,17 +756,17 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 
 			// Update the record.  
 			if(!getRecordService().update(newRecord)) {
-				log.error("The update failed for the record with ID " + newRecord.getId() + ".");
+				LOG.error("The update failed for the record with ID " + newRecord.getId() + ".");
 			}
 			
 		} // end try(update the record)
 		catch (DataException e)
 		{
-			log.error("An exception occurred while updating the record into the index.", e);
+			LOG.error("An exception occurred while updating the record into the index.", e);
 			throw e;
 		} // end catch(DataException)
 		catch (IndexException ie) {
-			log.error("An exception occurred while updating the record into the index.", ie);
+			LOG.error("An exception occurred while updating the record into the index.", ie);
 			throw ie;
 		}
 	} // end method updateExistingRecord(Record, Record)
@@ -780,11 +788,11 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 		}
 		catch (DatabaseConfigException e1)
 		{
-			log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+			LOG.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
 
 		} catch(DataException e)
 		{
-			log.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e);
+			LOG.error("An error occurred while updating service status to database for service with ID" + service.getId() + ".", e);
 		}
 	}
 
@@ -868,7 +876,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 					job.setOrder(getJobService().getMaxOrder() + 1); 
 					getJobService().insertJob(job);
 				} catch (DatabaseConfigException dce) {
-					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+					LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
 				}
 
 			}
@@ -897,7 +905,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 					job.setOrder(getJobService().getMaxOrder() + 1); 
 					getJobService().insertJob(job);
 				} catch (DatabaseConfigException dce) {
-					log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+					LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
 				}
 			}
 
@@ -950,15 +958,15 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 
 		}
 		catch (UnknownHostException exp) {
-			log.error("Host name query failed. Error sending notification email.",exp);
+			LOG.error("Host name query failed. Error sending notification email.",exp);
 			return false;
 		}
 		catch (DatabaseConfigException e) {
-			log.error("Database connection exception. Error sending notification email.");
+			LOG.error("Database connection exception. Error sending notification email.");
 			return false;
 		}
 		catch (Exception e) {
-			log.error("Error sending notification email.");
+			LOG.error("Error sending notification email.");
 			return false;
 		}
 	} // end method sendReportEmail
@@ -979,9 +987,82 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 	public void setOutputSet(Set outputSet) {
 		this.outputSet = outputSet;
 	}
+	
+	public void install() {
+		try {
+			executeServiceDBScripts("install.sql");
+		} catch (Throwable t) {
+			LOG.error("", t);
+		}
+	}
+	
+    
+    /**
+     * Executes the sql scripts in the folder provided
+     * @param sqlFolderName Path of the folder that contains the sql scripts
+     * @throws IOException 
+     */
+    private void executeServiceDBScripts(String fileName) throws DataException {
+    	ArrayList<String> commands = new ArrayList<String>();
+    	StringBuilder command = new StringBuilder();
+
+    	MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
+    	Statement stmt = null;
+		BufferedReader br = null;
+    	// Read the files
+    	try {
+			br = new BufferedReader(new StringReader(getUtil().slurp(fileName)));
+			String line = null;
+			while((line = br.readLine()) != null){
+				if(line.trim().startsWith("--"))
+					continue;				
+				command.append(line);
+				if(line.endsWith(";")){
+					commands.add(command.toString());
+					command.setLength(0);
+				}
+					
+			}
+    	
+	    	//Execute the commands
+			stmt = dbConnectionManager.createStatement();
+			for (String sql : commands) {
+				stmt.execute(sql);	
+			}
+				
+		} catch (Exception e) {
+			LOG.error("An exception occured while executing the sql scripts.", e);
+			throw new DataException("An exception occured while executing the sql scripts.");
+		}
+		finally {
+			if(br!=null) {
+				try {
+					br.close();
+				} catch(IOException ioe) {
+					LOG.error("An IO Exception occured while closing the buffered Reader");
+					throw new DataException("An IO Exception occured while closing the buffered Reader");
+				}
+			}
+			if(stmt!=null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					LOG.error("An exception occured while closing a connection.");
+				}
+		}
+  	
+    }
 
 	public abstract void setInputRecordCount(int inputRecordCount);
+
+	public void uninstall() {}
 	
+	public void update() {}
 	
+	public void process() {}
+	
+	public void getRepository() {}
+	
+	public void process(Repository repo, Format format, Set set) {}
 
 }

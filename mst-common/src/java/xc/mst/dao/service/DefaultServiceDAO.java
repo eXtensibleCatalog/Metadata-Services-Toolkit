@@ -23,7 +23,6 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.utils.LogWriter;
 
 public class DefaultServiceDAO extends ServiceDAO
@@ -142,8 +141,6 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the rows
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 												   COL_SERVICE_NAME + ", " +
-												   COL_SERVICE_JAR + ", " +
-												   COL_SERVICE_CONFIG + ", " +
 												   COL_CLASS_NAME + ", " +
 												   COL_WARNINGS + ", " +
 												   COL_ERRORS + ", " +
@@ -159,10 +156,8 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_STATUS + " " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_XCCFG_FILE_NAME + ", " +
 												   COL_VERSION + ", " +
-												   COL_DELETED + ", " +
-												   COL_IDENTIFIER + " " +
+												   COL_DELETED + " " +
 								       "FROM " + SERVICES_TABLE_NAME;
 
 					if(log.isDebugEnabled())
@@ -184,29 +179,26 @@ public class DefaultServiceDAO extends ServiceDAO
 					// The Object which will contain data on the service
 					Service service = new Service();
 
+					int i=1;
 					// Set the fields on the service
-					service.setId(results.getInt(1));
-					service.setName(results.getString(2));
-					service.setServiceJar(results.getString(3));
-					service.setServiceConfig(results.getString(4));
-					service.setClassName(results.getString(5));
-					service.setServicesWarnings(results.getInt(6));
-					service.setServicesErrors(results.getInt(7));
-					service.setInputRecordCount(results.getInt(8));
-					service.setOutputRecordCount(results.getInt(9));
-					service.setServicesLastLogReset(results.getDate(10));
-					service.setServicesLogFileName(results.getString(11));
-					service.setHarvestOutWarnings(results.getInt(12));
-					service.setHarvestOutErrors(results.getInt(13));
-					service.setHarvestOutRecordsAvailable(results.getLong(14));
-					service.setNumberOfHarvests(results.getLong(15));
-					service.setHarvestOutLastLogReset(results.getDate(16));
-					service.setHarvestOutLogFileName(results.getString(17));
-					service.setStatus(results.getString(18));
-					service.setXccfgFileName(results.getString(19));
-					service.setVersion(results.getString(20));
-					service.setDeleted(results.getBoolean(21));
-					service.setIdentifier(results.getString(22));
+					service.setId(results.getInt(i++));
+					service.setName(results.getString(i++));
+					service.setClassName(results.getString(i++));
+					service.setServicesWarnings(results.getInt(i++));
+					service.setServicesErrors(results.getInt(i++));
+					service.setInputRecordCount(results.getInt(i++));
+					service.setOutputRecordCount(results.getInt(i++));
+					service.setServicesLastLogReset(results.getDate(i++));
+					service.setServicesLogFileName(results.getString(i++));
+					service.setHarvestOutWarnings(results.getInt(i++));
+					service.setHarvestOutErrors(results.getInt(i++));
+					service.setHarvestOutRecordsAvailable(results.getLong(i++));
+					service.setNumberOfHarvests(results.getLong(i++));
+					service.setHarvestOutLastLogReset(results.getDate(i++));
+					service.setHarvestOutLogFileName(results.getString(i++));
+					service.setStatus(results.getString(i++));
+					service.setVersion(results.getString(i++));
+					service.setDeleted(results.getBoolean(i++));
 
 					for(Integer inputFormatId : getServiceInputFormatUtilDAO().getInputFormatsForService(service.getId()))
 						service.addInputFormat(getFormatDAO().getById(inputFormatId));
@@ -280,8 +272,6 @@ public class DefaultServiceDAO extends ServiceDAO
 			// SQL to get the rows
 			String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 										   COL_SERVICE_NAME + ", " +
-										   COL_SERVICE_JAR + ", " +
-										   COL_SERVICE_CONFIG + ", " +
 										   COL_CLASS_NAME + ", " +
 										   COL_WARNINGS + ", " +
 										   COL_ERRORS + ", " +
@@ -297,10 +287,8 @@ public class DefaultServiceDAO extends ServiceDAO
 										   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 										   COL_STATUS + " " +
 										   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-										   COL_XCCFG_FILE_NAME + ", " +
 										   COL_VERSION + ", " +
-										   COL_DELETED + ", " +
-										   COL_IDENTIFIER + " " +
+										   COL_DELETED + " " +
 						       "FROM " + SERVICES_TABLE_NAME + " " +
 						       "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
 	
@@ -322,29 +310,26 @@ public class DefaultServiceDAO extends ServiceDAO
 				// The Object which will contain data on the service
 				Service service = new Service();
 
+				int i=1;
 				// Set the fields on the service
-				service.setId(results.getInt(1));
-				service.setName(results.getString(2));
-				service.setServiceJar(results.getString(3));
-				service.setServiceConfig(results.getString(4));
-				service.setClassName(results.getString(5));
-				service.setServicesWarnings(results.getInt(6));
-				service.setServicesErrors(results.getInt(7));
-				service.setInputRecordCount(results.getInt(8));
-				service.setOutputRecordCount(results.getInt(9));
-				service.setServicesLastLogReset(results.getDate(10));
-				service.setServicesLogFileName(results.getString(11));
-				service.setHarvestOutWarnings(results.getInt(12));
-				service.setHarvestOutErrors(results.getInt(13));
-				service.setHarvestOutRecordsAvailable(results.getLong(14));
-				service.setNumberOfHarvests(results.getLong(15));
-				service.setHarvestOutLastLogReset(results.getDate(16));
-				service.setHarvestOutLogFileName(results.getString(17));
-				service.setStatus(results.getString(18));
-				service.setXccfgFileName(results.getString(19));
-				service.setVersion(results.getString(20));
-				service.setDeleted(results.getBoolean(21));
-				service.setIdentifier(results.getString(22));
+				service.setId(results.getInt(i++));
+				service.setName(results.getString(i++));
+				service.setClassName(results.getString(i++));
+				service.setServicesWarnings(results.getInt(i++));
+				service.setServicesErrors(results.getInt(i++));
+				service.setInputRecordCount(results.getInt(i++));
+				service.setOutputRecordCount(results.getInt(i++));
+				service.setServicesLastLogReset(results.getDate(i++));
+				service.setServicesLogFileName(results.getString(i++));
+				service.setHarvestOutWarnings(results.getInt(i++));
+				service.setHarvestOutErrors(results.getInt(i++));
+				service.setHarvestOutRecordsAvailable(results.getLong(i++));
+				service.setNumberOfHarvests(results.getLong(i++));
+				service.setHarvestOutLastLogReset(results.getDate(i++));
+				service.setHarvestOutLogFileName(results.getString(i++));
+				service.setStatus(results.getString(i++));
+				service.setVersion(results.getString(i++));
+				service.setDeleted(results.getBoolean(i++));
 
 				for(Integer inputFormatId : getServiceInputFormatUtilDAO().getInputFormatsForService(service.getId()))
 					service.addInputFormat(getFormatDAO().getById(inputFormatId));
@@ -409,8 +394,6 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
-				                                   COL_SERVICE_JAR + ", " +
-				                                   COL_SERVICE_CONFIG + ", " +
 				                                   COL_CLASS_NAME + ", " +
 												   COL_WARNINGS + ", " +
 												   COL_ERRORS+ ", " +
@@ -425,10 +408,8 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_STATUS + ", " +
-												   COL_XCCFG_FILE_NAME + ", " +
 												   COL_VERSION + ", " +
-												   COL_DELETED + ", " +
-												   COL_IDENTIFIER + " " +
+												   COL_DELETED + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_SERVICE_ID + "=?";
 
@@ -454,29 +435,26 @@ public class DefaultServiceDAO extends ServiceDAO
 					// The Object which will contain data on the service
 					Service service = new Service();
 
+					int i=1;
 					// Set the fields on the service
-					service.setId(results.getInt(1));
-					service.setName(results.getString(2));
-					service.setServiceJar(results.getString(3));
-					service.setServiceConfig(results.getString(4));
-					service.setClassName(results.getString(5));
-					service.setServicesWarnings(results.getInt(6));
-					service.setServicesErrors(results.getInt(7));
-					service.setInputRecordCount(results.getInt(8));
-					service.setOutputRecordCount(results.getInt(9));
-					service.setServicesLastLogReset(results.getDate(10));
-					service.setServicesLogFileName(results.getString(11));
-					service.setHarvestOutWarnings(results.getInt(12));
-					service.setHarvestOutErrors(results.getInt(13));
-					service.setHarvestOutRecordsAvailable(results.getLong(14));
-					service.setNumberOfHarvests(results.getLong(15));
-					service.setHarvestOutLastLogReset(results.getDate(16));
-					service.setHarvestOutLogFileName(results.getString(17));
-					service.setStatus(results.getString(18));
-					service.setXccfgFileName(results.getString(19));
-					service.setVersion(results.getString(20));
-					service.setDeleted(results.getBoolean(21));
-					service.setIdentifier(results.getString(22));
+					service.setId(results.getInt(i++));
+					service.setName(results.getString(i++));
+					service.setClassName(results.getString(i++));
+					service.setServicesWarnings(results.getInt(i++));
+					service.setServicesErrors(results.getInt(i++));
+					service.setInputRecordCount(results.getInt(i++));
+					service.setOutputRecordCount(results.getInt(i++));
+					service.setServicesLastLogReset(results.getDate(i++));
+					service.setServicesLogFileName(results.getString(i++));
+					service.setHarvestOutWarnings(results.getInt(i++));
+					service.setHarvestOutErrors(results.getInt(i++));
+					service.setHarvestOutRecordsAvailable(results.getLong(i++));
+					service.setNumberOfHarvests(results.getLong(i++));
+					service.setHarvestOutLastLogReset(results.getDate(i++));
+					service.setHarvestOutLogFileName(results.getString(i++));
+					service.setStatus(results.getString(i++));
+					service.setVersion(results.getString(i++));
+					service.setDeleted(results.getBoolean(i++));
 
 					for(Integer inputFormatId : getServiceInputFormatUtilDAO().getInputFormatsForService(service.getId()))
 						service.addInputFormat(getFormatDAO().getById(inputFormatId));
@@ -539,8 +517,6 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
-				                                   COL_SERVICE_JAR + ", " +
-				                                   COL_SERVICE_CONFIG + ", " +
 				                                   COL_CLASS_NAME + ", " +
 												   COL_WARNINGS + ", " +
 												   COL_ERRORS+ ", " +
@@ -555,10 +531,8 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_STATUS + ", " +
-												   COL_XCCFG_FILE_NAME + ", " +
 												   COL_VERSION + ", " +
-												   COL_DELETED + ", " +
-												   COL_IDENTIFIER + " " +
+												   COL_DELETED + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_SERVICE_ID + "=?";
 
@@ -584,30 +558,26 @@ public class DefaultServiceDAO extends ServiceDAO
 					// The Object which will contain data on the service
 					Service service = new Service();
 
+					int i=1;
 					// Set the fields on the service
-					service.setId(results.getInt(1));
-					service.setName(results.getString(2));
-					service.setServiceJar(results.getString(3));
-					service.setServiceConfig(results.getString(4));
-					service.setClassName(results.getString(5));
-					service.setServicesWarnings(results.getInt(6));
-					service.setServicesErrors(results.getInt(7));
-					service.setInputRecordCount(results.getInt(8));
-					service.setOutputRecordCount(results.getInt(9));
-					service.setServicesLastLogReset(results.getDate(10));
-					service.setServicesLogFileName(results.getString(11));
-					service.setHarvestOutWarnings(results.getInt(12));
-					service.setHarvestOutErrors(results.getInt(13));
-					service.setHarvestOutRecordsAvailable(results.getLong(14));
-					service.setNumberOfHarvests(results.getLong(15));
-					service.setHarvestOutLastLogReset(results.getDate(16));
-					service.setHarvestOutLogFileName(results.getString(17));
-					service.setStatus(results.getString(18));
-					service.setXccfgFileName(results.getString(19));
-					service.setVersion(results.getString(20));
-					service.setDeleted(results.getBoolean(21));
-					service.setIdentifier(results.getString(22));
-
+					service.setId(results.getInt(i++));
+					service.setName(results.getString(i++));
+					service.setClassName(results.getString(i++));
+					service.setServicesWarnings(results.getInt(i++));
+					service.setServicesErrors(results.getInt(i++));
+					service.setInputRecordCount(results.getInt(i++));
+					service.setOutputRecordCount(results.getInt(i++));
+					service.setServicesLastLogReset(results.getDate(i++));
+					service.setServicesLogFileName(results.getString(i++));
+					service.setHarvestOutWarnings(results.getInt(i++));
+					service.setHarvestOutErrors(results.getInt(i++));
+					service.setHarvestOutRecordsAvailable(results.getLong(i++));
+					service.setNumberOfHarvests(results.getLong(i++));
+					service.setHarvestOutLastLogReset(results.getDate(i++));
+					service.setHarvestOutLogFileName(results.getString(i++));
+					service.setStatus(results.getString(i++));
+					service.setVersion(results.getString(i++));
+					service.setDeleted(results.getBoolean(i++));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the service with ID " + serviceId + " in the database.");
@@ -661,8 +631,6 @@ public class DefaultServiceDAO extends ServiceDAO
 					// SQL to get the row
 					String selectSql = "SELECT " + COL_SERVICE_ID + ", " +
 				                                   COL_SERVICE_NAME + ", " +
-				                                   COL_SERVICE_JAR + ", " +
-				                                   COL_SERVICE_CONFIG + ", " +
 				                                   COL_CLASS_NAME + ", " +
 												   COL_WARNINGS + ", " +
 												   COL_ERRORS+ ", " +
@@ -678,10 +646,8 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_STATUS + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_XCCFG_FILE_NAME + ", " +
 												   COL_VERSION + ", " +
-												   COL_DELETED + ", " +
-												   COL_IDENTIFIER + " " +
+												   COL_DELETED + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_SERVICE_NAME + "=?";
 
@@ -707,29 +673,26 @@ public class DefaultServiceDAO extends ServiceDAO
 					// The Object which will contain data on the service
 					Service service = new Service();
 
+					int i=0;
 					// Set the fields on the service
-					service.setId(results.getInt(1));
-					service.setName(results.getString(2));
-					service.setServiceJar(results.getString(3));
-					service.setServiceConfig(results.getString(4));
-					service.setClassName(results.getString(5));
-					service.setServicesWarnings(results.getInt(6));
-					service.setServicesErrors(results.getInt(7));
-					service.setInputRecordCount(results.getInt(8));
-					service.setOutputRecordCount(results.getInt(9));
-					service.setServicesLastLogReset(results.getDate(10));
-					service.setServicesLogFileName(results.getString(11));
-					service.setHarvestOutWarnings(results.getInt(12));
-					service.setHarvestOutErrors(results.getInt(13));
-					service.setHarvestOutRecordsAvailable(results.getLong(14));
-					service.setNumberOfHarvests(results.getLong(15));
-					service.setHarvestOutLastLogReset(results.getDate(16));
-					service.setHarvestOutLogFileName(results.getString(17));
-					service.setStatus(results.getString(18));
-					service.setXccfgFileName(results.getString(19));
-					service.setVersion(results.getString(20));
-					service.setDeleted(results.getBoolean(21));
-					service.setIdentifier(results.getString(22));
+					service.setId(results.getInt(i++));
+					service.setName(results.getString(i++));
+					service.setClassName(results.getString(i++));
+					service.setServicesWarnings(results.getInt(i++));
+					service.setServicesErrors(results.getInt(i++));
+					service.setInputRecordCount(results.getInt(i++));
+					service.setOutputRecordCount(results.getInt(i++));
+					service.setServicesLastLogReset(results.getDate(i++));
+					service.setServicesLogFileName(results.getString(i++));
+					service.setHarvestOutWarnings(results.getInt(i++));
+					service.setHarvestOutErrors(results.getInt(i++));
+					service.setHarvestOutRecordsAvailable(results.getLong(i++));
+					service.setNumberOfHarvests(results.getLong(i++));
+					service.setHarvestOutLastLogReset(results.getDate(i++));
+					service.setHarvestOutLogFileName(results.getString(i++));
+					service.setStatus(results.getString(i++));
+					service.setVersion(results.getString(i++));
+					service.setDeleted(results.getBoolean(i++));
 
 					for(Integer inputFormatId : getServiceInputFormatUtilDAO().getInputFormatsForService(service.getId()))
 						service.addInputFormat(getFormatDAO().getById(inputFormatId));
@@ -790,8 +753,6 @@ public class DefaultServiceDAO extends ServiceDAO
 				{
 					// SQL to insert the new row
 					String insertSql = "INSERT INTO " + SERVICES_TABLE_NAME + " (" + COL_SERVICE_NAME + ", " +
-					                                                                 COL_SERVICE_JAR + ", " +
-	            	      													         COL_SERVICE_CONFIG + ", " +
 	            	      													         COL_CLASS_NAME + ", " +
 	            	      													         COL_WARNINGS + ", " +
 	            	      													         COL_ERRORS + ", " +
@@ -806,10 +767,8 @@ public class DefaultServiceDAO extends ServiceDAO
 	            	      													         COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 	            	      													         COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 	            	      													         COL_STATUS + ", " +
-	            	      													         COL_XCCFG_FILE_NAME + ", " +
 	            	      													         COL_VERSION + ", " +
-	            	      													         COL_DELETED + ", " +
-	            	      													         COL_IDENTIFIER+ ") " +
+	            	      													         COL_DELETED + ") " +
 	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
@@ -822,8 +781,6 @@ public class DefaultServiceDAO extends ServiceDAO
 
 				// Set the parameters on the insert statement
 				psInsert.setString(1, service.getName());
-				psInsert.setString(2, service.getServiceJar());
-				psInsert.setString(3, service.getServiceConfig());
 				psInsert.setString(4, service.getClassName());
 				psInsert.setInt(5, service.getServicesWarnings());
 				psInsert.setInt(6, service.getServicesErrors());
@@ -838,10 +795,8 @@ public class DefaultServiceDAO extends ServiceDAO
 				psInsert.setDate(15, service.getHarvestOutLastLogReset());
 				psInsert.setString(16, service.getHarvestOutLogFileName());
 				psInsert.setString(17, service.getStatus());
-				psInsert.setString(18, service.getXccfgFileName());
 				psInsert.setString(19, service.getVersion());
 				psInsert.setBoolean(20, service.isDeleted());
-				psInsert.setString(21, service.getIdentifier());
 
 				// Execute the insert statement and return the result
 				if(dbConnectionManager.executeUpdate(psInsert) > 0)
@@ -933,8 +888,6 @@ public class DefaultServiceDAO extends ServiceDAO
 				{
 					// SQL to update new row
 					String updateSql = "UPDATE " + SERVICES_TABLE_NAME + " SET " + COL_SERVICE_NAME + "=?, " +
-					                                                      COL_SERVICE_JAR + "=?, " +
-				                                                          COL_SERVICE_CONFIG + "=?, " +
 				                                                          COL_CLASS_NAME + "=?, " +
 				                                                          COL_WARNINGS + "=?, " +
 				                                                          COL_ERRORS + "=?, " +
@@ -949,10 +902,8 @@ public class DefaultServiceDAO extends ServiceDAO
 				                                                          COL_HARVEST_OUT_LAST_LOG_RESET + "=?, " +
 				                                                          COL_HARVEST_OUT_LOG_FILE_NAME + "=?, " +
 				                                                          COL_STATUS + "=?, " +
-				                                                          COL_XCCFG_FILE_NAME + "=?, " +
 				                                                          COL_VERSION + "=?, " +
-				                                                          COL_DELETED + "=?, " +
-				                                                          COL_IDENTIFIER + "=? " +
+				                                                          COL_DELETED + "=? " +
 	                                   "WHERE " + COL_SERVICE_ID + "=?";
 
 					if(log.isDebugEnabled())
@@ -963,29 +914,26 @@ public class DefaultServiceDAO extends ServiceDAO
 					psUpdate = dbConnectionManager.prepareStatement(updateSql, psUpdate);
 				} // end if(update PreparedStatement not defined)
 
+				int i=1;
 				// Set the parameters on the update statement
-				psUpdate.setString(1, service.getName());
-				psUpdate.setString(2, service.getServiceJar());
-				psUpdate.setString(3, service.getServiceConfig());
-				psUpdate.setString(4, service.getClassName());
-				psUpdate.setInt(5, service.getServicesWarnings());
-				psUpdate.setInt(6, service.getServicesErrors());
-				psUpdate.setInt(7, service.getInputRecordCount());
-				psUpdate.setInt(8, service.getOutputRecordCount());
-				psUpdate.setDate(9, service.getServicesLastLogReset());
-				psUpdate.setString(10, service.getServicesLogFileName());
-				psUpdate.setInt(11, service.getHarvestOutWarnings());
-				psUpdate.setInt(12, service.getHarvestOutErrors());
-				psUpdate.setLong(13, service.getHarvestOutRecordsAvailable());
-				psUpdate.setLong(14, service.getNumberOfHarvests());
-				psUpdate.setDate(15, service.getHarvestOutLastLogReset());
-				psUpdate.setString(16, service.getHarvestOutLogFileName());
-				psUpdate.setString(17, service.getStatus());
-				psUpdate.setString(18, service.getXccfgFileName());
-				psUpdate.setString(19, service.getVersion());
-				psUpdate.setBoolean(20, service.isDeleted());
-				psUpdate.setString(21, service.getIdentifier());
-				psUpdate.setInt(22, service.getId());
+				psUpdate.setString(i++, service.getName());
+				psUpdate.setString(i++, service.getClassName());
+				psUpdate.setInt(i++, service.getServicesWarnings());
+				psUpdate.setInt(i++, service.getServicesErrors());
+				psUpdate.setInt(i++, service.getInputRecordCount());
+				psUpdate.setInt(i++, service.getOutputRecordCount());
+				psUpdate.setDate(i++, service.getServicesLastLogReset());
+				psUpdate.setString(i++, service.getServicesLogFileName());
+				psUpdate.setInt(i++, service.getHarvestOutWarnings());
+				psUpdate.setInt(i++, service.getHarvestOutErrors());
+				psUpdate.setLong(i++, service.getHarvestOutRecordsAvailable());
+				psUpdate.setLong(i++, service.getNumberOfHarvests());
+				psUpdate.setDate(i++, service.getHarvestOutLastLogReset());
+				psUpdate.setString(i++, service.getHarvestOutLogFileName());
+				psUpdate.setString(i++, service.getStatus());
+				psUpdate.setString(i++, service.getVersion());
+				psUpdate.setBoolean(i++, service.isDeleted());
+				psUpdate.setInt(i++, service.getId());
 				
 				// Execute the update statement and return the result
 				if(dbConnectionManager.executeUpdate(psUpdate) > 0)

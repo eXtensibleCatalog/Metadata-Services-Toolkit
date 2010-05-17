@@ -51,24 +51,9 @@ public abstract class ServiceDAO extends BaseDAO
 	public final static String COL_SERVICE_NAME = "service_name";
 
 	/**
-	 * The name of the service_jar column
-	 */
-	public final static String COL_SERVICE_JAR = "service_jar";
-	
-	/**
-	 * The name of the service_configuration column
-	 */
-	public final static String COL_SERVICE_CONFIG = "service_configuration";
-
-	/**
 	 * The name of the class_name column
 	 */
 	public final static String COL_CLASS_NAME = "class_name";
-
-	/**
-	 * The name of the identifier column
-	 */
-	public final static String COL_IDENTIFIER = "identifier";
 	
 	/**
 	 * The name of the warnings column
@@ -137,11 +122,6 @@ public abstract class ServiceDAO extends BaseDAO
 	public final static String COL_STATUS = "status";
 	
 	/**
-	 * The name of the xccfg file name column
-	 */
-	public final static String COL_XCCFG_FILE_NAME = "xccfg_file_name";
-	
-	/**
 	 * The version of the service
 	 */
 	public final static String COL_VERSION = "version";
@@ -162,8 +142,6 @@ public abstract class ServiceDAO extends BaseDAO
 	{
 		sortableColumns.add(COL_SERVICE_ID);
 		sortableColumns.add(COL_SERVICE_NAME);
-		sortableColumns.add(COL_SERVICE_JAR);
-		sortableColumns.add(COL_SERVICE_CONFIG);
 		sortableColumns.add(COL_CLASS_NAME);
 		sortableColumns.add(COL_WARNINGS);
 		sortableColumns.add(COL_ERRORS);
@@ -178,7 +156,6 @@ public abstract class ServiceDAO extends BaseDAO
 		sortableColumns.add(COL_HARVEST_OUT_LAST_LOG_RESET);
 		sortableColumns.add(COL_HARVEST_OUT_LOG_FILE_NAME);
 		sortableColumns.add(COL_STATUS);
-		sortableColumns.add(COL_XCCFG_FILE_NAME);
 		sortableColumns.add(COL_VERSION);
 	} // end initialization of sortableColumns
 	
@@ -286,9 +263,6 @@ public abstract class ServiceDAO extends BaseDAO
 			if(service.getName() == null || service.getName().length() <= 0 || service.getName().length() > 63)
 				errorMessage.append("The service name is invalid. ");
 
-			if(service.getServiceJar() == null || service.getServiceJar().length() <= 0 || service.getServiceJar().length() > 255)
-				errorMessage.append("The service jar is invalid. ");
-			
 			if(service.getClassName() == null || service.getClassName().length() <= 0 || service.getClassName().length() > 63)
 				errorMessage.append("The class name is invalid. ");
 
@@ -297,9 +271,7 @@ public abstract class ServiceDAO extends BaseDAO
 
 			if(service.getHarvestOutLogFileName() == null || service.getHarvestOutLogFileName().length() <= 0 || service.getHarvestOutLogFileName().length() > 255)
 				errorMessage.append("The harvest out log file name is invalid. ");
-			
-			if(service.getXccfgFileName() == null || service.getXccfgFileName().length() <= 0 || service.getXccfgFileName().length() > 255)
-				errorMessage.append("The xccfg file name is invalid. ");
+
 		} // end if(we should validate the non-ID fields)
 
 		// Log the error and throw the exception if any fields are invalid

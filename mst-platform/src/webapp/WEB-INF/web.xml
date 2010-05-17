@@ -28,14 +28,7 @@
 
 		<load-on-startup>5</load-on-startup>
 	</servlet>
-  
-	<servlet>
-		<servlet-name>initServices</servlet-name>
-		<servlet-class>xc.mst.utils.InitializeServices</servlet-class>
-    
-		<load-on-startup>4</load-on-startup>
-	</servlet>
-
+	
 	<servlet>
 		<servlet-name>DevAdminServlet</servlet-name>
 		<servlet-class>xc.mst.servlet.DevAdminServlet</servlet-class>

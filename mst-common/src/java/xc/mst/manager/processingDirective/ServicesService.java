@@ -11,6 +11,7 @@ package xc.mst.manager.processingDirective;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 import xc.mst.bo.service.Service;
@@ -111,4 +112,6 @@ public interface ServicesService
      * @throws DatabaseConfigException 
      */
     public List<Service> getAllServicesSorted(boolean sort,String columnSorted) throws DatabaseConfigException;
+    
+    public Collection<String> getServicesAvailableForInstall();
 }

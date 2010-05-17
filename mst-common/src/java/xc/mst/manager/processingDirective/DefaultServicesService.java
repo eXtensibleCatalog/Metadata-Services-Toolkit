@@ -17,12 +17,13 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Semaphore;
 
 import org.apache.log4j.Logger;
@@ -41,7 +42,6 @@ import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
 import xc.mst.services.GenericMetadataService;
@@ -206,7 +206,7 @@ public class DefaultServicesService extends BaseService
 	protected void injectMetadataServices(List<Service> services) {
     	for (Service service : services) {
     		if (service.getMetadataService() == null) {
-    			service.setMetadataService(getMetadataService(service.getIdentifier()));
+    			service.setMetadataService(getMetadataService(service.getName()));
     		}
     	}
 	}
@@ -247,11 +247,11 @@ public class DefaultServicesService extends BaseService
      * @throws java.io.IOException
      * @throws xc.mst.manager.processingDirective.ConfigFileException
      */
-    public void addNewService(String serviceName) throws DataException, IOException, ConfigFileException
+    public void addNewService(String name) throws DataException, IOException, ConfigFileException
     {
     	BufferedReader in = null; // Reads the file
     	
-    	File configFile = new File(MSTConfiguration.getUrlPath()+"/services/"+serviceName+"/META-INF/classes/service.xccfg");
+    	File configFile = new File(MSTConfiguration.getUrlPath()+"/services/"+name+"/META-INF/classes/service.xccfg");
     	
     	try
     	{
@@ -260,23 +260,6 @@ public class DefaultServicesService extends BaseService
     		String logFileName = getLogDAO().getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 
     		in = new BufferedReader(new FileReader(configFile));
-
-    		// The name of the service, which must appear in the first line of the configuration file
-    		String name = in.readLine();
-    		name = (name.indexOf('#') >= 0 ? name.substring(0, name.indexOf('#')).trim() : name.trim());
-    		if(name == null || name.length() == 0)
-    		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The first line of the service configuration file must be the service's name.");
-    			throw new ConfigFileException("The first line of the service configuration file must be the service's name.");
-    		}
-
-    		// Verify that the name is unique
-    		Service oldService = getServiceDAO().getByServiceName(name);
-    		if(oldService != null)
-    		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The service's name was not unique.");
-    			throw new ConfigFileException("Cannot add a service named " + name + " because a service with that name already exists.");
-    		}
 
     		// The version of the service, which must appear in the second line of the configuration file
     		String version = in.readLine();
@@ -288,17 +271,6 @@ public class DefaultServicesService extends BaseService
     			throw new ConfigFileException("The second line of the service configuration file must be the service's version.");
     		}
 
-
-    		// The .jar file containing the service, which must appear in the third line of the configuration file
-    		String jar = in.readLine();
-    		jar = (jar.indexOf('#') >= 0 ? jar.substring(0, jar.indexOf('#')).trim() : jar.trim());
-    		if(jar == null || jar.length() == 0 || !jar.endsWith(".jar"))
-    		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The third line of the service configuration file must be the .jar file containing the service.");
-    			throw new ConfigFileException("The third line of the service configuration file must be the .jar file containing the service.");
-    		}
-    		jar = configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceJar" + MSTConfiguration.FILE_SEPARATOR + jar;
-
     		// The name of the service's class, which must appear in the fourth line of the configuration file
     		String className = in.readLine();
     		className = (className.indexOf('#') >= 0 ? className.substring(0, className.indexOf('#')).trim() : className.trim());
@@ -307,57 +279,15 @@ public class DefaultServicesService extends BaseService
     			LogWriter.addError(logFileName, "Error adding a new service: The fourth line of the service configuration file must be the service's class name.");
     			throw new ConfigFileException("The fourth line of the service configuration file must be the service's class name.");
     		}
-
-    		// The identifier for service, which must appear in the sixth line of the configuration file
-    		String identifier = in.readLine();
-    		identifier = (identifier.indexOf('#') >= 0 ? identifier.substring(0, identifier.indexOf('#')).trim() : identifier.trim());
-    		if(identifier == null || identifier.length() == 0)
-    		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's identifier.");
-    			throw new ConfigFileException("The sixth line of the service configuration file must be the service's identifier.");
-    		}
-
-
-    		// The .jar file we need to load the service from
-    		File jarFile = new File(jar);
-
-    		// The class loader for the MetadataService class
-    		ClassLoader serviceLoader = GenericMetadataService.class.getClassLoader();
-
-    		// Load the class from the .jar file
-    		URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);
-    		try
-    		{
-				Class<?> clazz = loader.loadClass(className);
-				mService = (GenericMetadataService)clazz.newInstance();
-			}
-    		catch (ClassNotFoundException e)
-    		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The class " + className + " could not be found in the .jar file " + jar);
-				throw new ConfigFileException("The class " + className + " could not be found in the .jar file " + jar);
-			}
-    		catch (InstantiationException e)
-			{
-    			LogWriter.addError(logFileName, "Error adding a new service: The class " + className + " could not be found in the .jar file " + jar);
-				throw new ConfigFileException("The class " + className + " could not be found in the .jar file " + jar);
-			}
-			catch (IllegalAccessException e)
-			{
-				LogWriter.addError(logFileName, "Error adding a new service: The class " + className + " could not be found in the .jar file " + jar);
-				throw new ConfigFileException("The class " + className + " could not be found in the .jar file " + jar);
-			}
-
+    		
 	    	// Populate the service BO
     		Service service = new Service();
     		service.setName(name);
     		service.setVersion(version);
-    		service.setServiceJar(jar);
     		service.setClassName(className);
-    		service.setIdentifier(identifier);
-    		service.setHarvestOutLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
-    		service.setServicesLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
+    		service.setHarvestOutLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
+    		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
-    		service.setXccfgFileName(configFile.getAbsolutePath());
 
     		// Consume whitespace and comment lines in the configuration file
     		String line = consumeCommentsAndWhitespace(in);
@@ -530,7 +460,7 @@ public class DefaultServicesService extends BaseService
 
     				ErrorCode errorCode = new ErrorCode();
     				errorCode.setErrorCode(errorCodeStr);
-    				errorCode.setErrorDescriptionFile(configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceErrors" + MSTConfiguration.FILE_SEPARATOR + errorDescriptionFile);
+    				errorCode.setErrorDescriptionFile(errorDescriptionFile);
     				errorCode.setService(service);
 
     				getErrorCodeDAO().insert(errorCode);
@@ -542,24 +472,7 @@ public class DefaultServicesService extends BaseService
     			}
     		} while(!line.equals(FILE_SERVICE_SPECIFIC));
 
-    		// Parse and save the service specific configuration
-
-    		// Contains the service specific configuration
-    		StringBuffer buffer = new StringBuffer();
-
-    		// While there are unread lines in the file
-    		while(in.ready())
-    		{
-    			line = in.readLine(); // A line from the configuration file
-    			buffer.append(line).append("\n");
-    		}
-
-    		// Set the configuration on the service
-    		service.setServiceConfig(buffer.toString());
-    		getServiceDAO().update(service);
-
-    		// Execute DB scripts
-    		executeServiceDBScripts(configFolderPath + File.separator + "serviceSql");
+    		getMetadataService(name).install();
     		
     		ServiceUtil.getInstance().checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
     	}
@@ -622,14 +535,6 @@ public class DefaultServicesService extends BaseService
     			throw new ConfigFileException("The first line of the service configuration file must be the service's name.");
     		}
 
-    		// Verify that the name is unique
-    		Service oldService = getServiceDAO().getByServiceName(name);
-    		if(!service.getName().equals(name) && oldService != null)
-    		{
-    			LogWriter.addError(logFileName, "Error updating service: The service's name was not unique.");
-    			throw new ConfigFileException("Cannot update the service " + name + " because a service with that name already exists.");
-    		}
-
     		// The version of the service, which must appear in the second line of the configuration file
     		String version = in.readLine();
     		version = (version.indexOf('#') >= 0 ? version.substring(0, version.indexOf('#')).trim() : version.trim());
@@ -638,17 +543,6 @@ public class DefaultServicesService extends BaseService
     			LogWriter.addError(logFileName, "Error adding a new service: The second line of the service configuration file must be the service's version.");
     			throw new ConfigFileException("The second line of the service configuration file must be the service's version.");
     		}
-
-    		
-    		// The .jar file containing the service, which must appear in the third line of the configuration file
-    		String jar = in.readLine();
-    		jar = (jar.indexOf('#') >= 0 ? jar.substring(0, jar.indexOf('#')).trim() : jar.trim());
-    		if(jar == null || jar.length() == 0 || !jar.endsWith(".jar"))
-    		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The third line of the service configuration file must be the .jar file containing the service.");
-    			throw new ConfigFileException("The third line of the service configuration file must be the .jar file containing the service.");
-    		}
-    		jar = configFolderPath + MSTConfiguration.FILE_SEPARATOR + "serviceJar" + MSTConfiguration.FILE_SEPARATOR + jar;
 
     		// The name of the service's class, which must appear in the fourth line of the configuration file
     		String className = in.readLine();
@@ -659,54 +553,12 @@ public class DefaultServicesService extends BaseService
     			throw new ConfigFileException("The fourth line of the service configuration file must be the service's class name.");
     		}
 
-    		// The identifier for service, which must appear in the sixth line of the configuration file
-    		String identifier = in.readLine();
-    		identifier = (identifier.indexOf('#') >= 0 ? identifier.substring(0, identifier.indexOf('#')).trim() : identifier.trim());
-    		if(identifier == null || identifier.length() == 0)
-    		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The fifth line of the service configuration file must be the service's identifier.");
-    			throw new ConfigFileException("The sixth line of the service configuration file must be the service's identifier.");
-    		}
-
-    		
-    		// The .jar file we need to load the service from
-    		File jarFile = new File(jar);
-
-    		// The class loader for the MetadataService class
-    		ClassLoader serviceLoader = GenericMetadataService.class.getClassLoader();
-
-    		// Load the class from the .jar file
-    		URLClassLoader loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, serviceLoader);
-    		try
-    		{
-				Class<?> clazz = loader.loadClass(className);
-				mService = (GenericMetadataService)clazz.newInstance();
-			}
-    		catch (ClassNotFoundException e)
-    		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The class " + className + " could not be found in the .jar file " + jar);
-				throw new ConfigFileException("The class " + className + " could not be found in the .jar file " + jar);
-			}
-    		catch (InstantiationException e)
-			{
-    			LogWriter.addError(logFileName, "Error adding a new service: The class " + className + " could not be found in the .jar file " + jar);
-				throw new ConfigFileException("The class " + className + " could not be found in the .jar file " + jar);
-			}
-			catch (IllegalAccessException e)
-			{
-				LogWriter.addError(logFileName, "Error adding a new service: The class " + className + " could not be found in the .jar file " + jar);
-				throw new ConfigFileException("The class " + className + " could not be found in the .jar file " + jar);
-			}
-
 	    	// Populate the service BO
     		service.setName(name);
     		service.setVersion(version);
-    		service.setServiceJar(jar);
     		service.setClassName(className);
-    		service.setIdentifier(identifier);
     		service.setHarvestOutLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
-    		service.setXccfgFileName(configFile.getAbsolutePath());
     		service.getInputFormats().clear();
     		service.getOutputFormats().clear();
 
@@ -898,29 +750,7 @@ public class DefaultServicesService extends BaseService
     			}
     		} while(!line.equals(FILE_SERVICE_SPECIFIC));
 
-    		// Parse and save the service specific configuration
-
-    		// Contains the service specific configuration
-    		StringBuffer buffer = new StringBuffer();
-
-    		// While there are unread lines in the file
-    		line = in.readLine();
-    		while(in.ready())
-    		{
-    			line = in.readLine(); // A line from the configuration file
-    			buffer.append(line).append("\n");
-    		}
-
-    		// Set the configuration on the service
-    		service.setServiceConfig(buffer.toString());
-    		getServiceDAO().update(service);
-
-       		// Execute DB scripts
-    		try {
-				executeServiceDBScripts(configFolderPath + File.separator + "serviceSql");
-			} catch (Exception e) {
-				throw new DataException("Exception during executing DB scripts");
-			}
+    		getMetadataService(name).update();
  
     		// TODO what does below line do? Is it necessary? Should it be here or moved to Service Reprocess thread?
     		ServiceUtil.getInstance().checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
@@ -1053,67 +883,28 @@ public class DefaultServicesService extends BaseService
     	return null;
     }
     
-    /**
-     * Executes the sql scripts in the folder provided
-     * @param sqlFolderName Path of the folder that contains the sql scripts
-     * @throws IOException 
-     */
-    private void executeServiceDBScripts(String sqlFolderPath) throws DataException {
+    public Collection<String> getServicesAvailableForInstall() {
+    	List<String> availableServices = new ArrayList<String>();
+    	File dir = new File(MSTConfiguration.getUrlPath() + "/services");
+    	File[] fileList = dir.listFiles();
     	
-    	File sqlFolder = new File(sqlFolderPath);
-    	ArrayList<String> commands = new ArrayList<String>();
-    	StringBuilder command = new StringBuilder();
-
-    	MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
-    	Statement stmt = null;
-		BufferedReader br = null;
-    	// Read the files
+    	Set<String> allServices = new HashSet<String>();
     	try {
+    		List<Service> services = getAllServices();
+    		for (Service s : services) {
+    			allServices.add(s.getName());
+    		}
+    	} catch (Throwable t) {
+    		LOG.error("", t);
+    	}
 
-    		for (String fileName : sqlFolder.list()) {
-				
-    			if(!fileName.toLowerCase().endsWith(".sql"))
-    				continue;
-				br = new BufferedReader(new FileReader(sqlFolderPath + "/" + fileName));
-				String line = null;
-				while((line = br.readLine()) != null){
-					if(line.trim().startsWith("--"))
-						continue;				
-					command.append(line);
-					if(line.endsWith(";")){
-						commands.add(command.toString());
-						command.setLength(0);
-					}
-						
-				}
-			}
+    	for(File file : fileList) {
+    		if (file.isDirectory() && !allServices.contains(file.getName())) {
+	    		String serviceName = file.getName();
+	    		availableServices.add(serviceName);
+    		}
+    	}
     	
-	    	//Execute the commands
-			stmt = dbConnectionManager.createStatement();
-			for (String sql : commands) {
-				stmt.execute(sql);	
-			}
-				
-		} catch (Exception e) {
-			LOG.error("An exception occured while executing the sql scripts.", e);
-			throw new DataException("An exception occured while executing the sql scripts.");
-		}
-		finally {
-			if(br!=null) {
-				try {
-					br.close();
-				} catch(IOException ioe) {
-					LOG.error("An IO Exception occured while closing the buffered Reader");
-					throw new DataException("An IO Exception occured while closing the buffered Reader");
-				}
-			}
-			if(stmt!=null)
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					LOG.error("An exception occured while closing a connection.");
-				}
-		}
-  	
+    	return availableServices;
     }
 }

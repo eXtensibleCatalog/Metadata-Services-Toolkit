@@ -86,6 +86,9 @@
 		<ant dir="${mst-service}/custom/MARCToXCTransformation" target="clean" inheritAll="false" />
 	</target>
 
+	<target name="publish" depends="mc.publish, ms.publish">
+	</target>
+
 	<target name="retrieve" depends="mc.retrieve,mp.retrieve,ms.retrieve">
 		<ant dir="${mst-service}/example" target="retrieve" inheritAll="false" />
 		<ant dir="${mst-service}/custom/aggregation" target="retrieve" inheritAll="false" />
@@ -130,6 +133,20 @@
 		<ant dir="${dir}" target="${target}" inheritAll="false" />
 	</target>
 
+	<target name="deploy" >
+		<!--
+		<ant target="clean" />
+		<ant target="clean-cache" />
+		<ant target="publish" />
+		<ant target="mc.deploy" />
+		<ant target="mp.deploy" />
+		-->
+		<ant target="ms.copy-example" />
+		<ant target="deploy-service">
+			<property name="sname" value="MARCNormalization"/>
+			<property name="sversion" value="0.3.0"/>
+		</ant>
+	</target>
 
 	<!--
 	<target name="full-dist" depends="compile, dist-jar, javadoc"

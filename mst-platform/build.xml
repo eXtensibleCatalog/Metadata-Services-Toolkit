@@ -68,7 +68,9 @@
 	</target>
 
 	<!-- Copy non java resources -->
-	<target name="mp.copy-resources" depends="mp.compile">
+	<target name="mp.copy-resources" depends="mp.compile, mp.copy-resources.nodep" />
+
+	<target name="mp.copy-resources.nodep" depends="mp.compile.nodep">
 		<copy todir="${mp.build.classes}">
 			<fileset dir="${mp.src.java}">
 				<include name="**/*" />
@@ -115,7 +117,7 @@
 	</target>
 	-->
 
-	<target name="mp.deploy" depends="mp.copy-resources">
+	<target name="mp.deploy" depends="mp.copy-resources.nodep">
 		<copy todir="${tomcat.dir}/webapps/${mp.project-name}">
 			<path refid="webapp.path" />
 		</copy>

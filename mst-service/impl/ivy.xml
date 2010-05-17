@@ -9,7 +9,7 @@
   -->
   
 <ivy-module version="2.0">
-    <info organisation="xc" module="mst-service"/>
+    <info organisation="xc" module="mst-service-impl"/>
     <dependencies>
 		<dependency org="xc" name="mst-common" rev="${mc.version}" changing="true" />
     </dependencies>

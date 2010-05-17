@@ -10,7 +10,6 @@
 package xc.mst.action.services;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,16 +55,6 @@ public class AddService extends BaseActionSupport
     }
 
     /**
-     * Sets the list of XCCFG config files which were found at the hard-coded location (location can be found in documentation/manual)
-     *
-     * @param serviceFileList list of config files
-     */
-    public void setServiceFiles(List<String> serviceFiles)
-    {
-        this.serviceFiles = serviceFiles;
-    }
-
-    /**
      * The XCCFG file that is selected by the user
      *
      * @param selectedLocation config file
@@ -93,21 +82,14 @@ public class AddService extends BaseActionSupport
     @Override
     public String execute()
     {
-    	File dir = new File(MSTConfiguration.getUrlPath() + "/services");
-    	File[] fileList = dir.listFiles();
-    	if (fileList == null) 
-    	{
+    	try {
+    		serviceFiles.addAll(getServicesService().getServicesAvailableForInstall());
+    	} catch (Throwable t) {
     		errorType = "error";
     		log.error("Problem with service configuration. Check the path of service folder.");
     		this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
     		return SUCCESS;
     	}
-    	for(File file : fileList)
-    	{
-    		String serviceName = file.getName();
-			serviceFiles.add(serviceName);
-    	}
-    	
     	return SUCCESS;
     }
     
@@ -120,8 +102,7 @@ public class AddService extends BaseActionSupport
     {
         try
         {
-            File file = new File(getSelectedLocation());
-            getServicesService().addNewService(file);
+            getServicesService().addNewService(getSelectedLocation());
             return SUCCESS;
         }
         catch(DataException de)
@@ -130,7 +111,6 @@ public class AddService extends BaseActionSupport
             errorType = "error";
             this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
             getUserService().sendEmailErrorReport();
-            populateListBox();
             return INPUT;
         }
         catch(IOException ie)
@@ -139,7 +119,6 @@ public class AddService extends BaseActionSupport
             errorType = "error";
             this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
             getUserService().sendEmailErrorReport();
-            populateListBox();
             return INPUT;
         }
         catch(ConfigFileException cfe)
@@ -148,25 +127,9 @@ public class AddService extends BaseActionSupport
             errorType = "error";
             this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
             getUserService().sendEmailErrorReport();
-            populateListBox();
             return INPUT;
         }
-        
-        /*
-        finally
-        {
-            File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig");
-            FileFilter fileFilter =  new XCCGFileFilter();
 
-            File[] fileList = dir.listFiles(fileFilter);
-            for(int i=0;i<fileList.length;i++)
-            {
-                serviceFiles.add(fileList[i].getName());
-            }
-            setServiceFiles(serviceFiles);
-            return INPUT;
-        }
-         * */
     }
 
     /**
@@ -187,43 +150,4 @@ public class AddService extends BaseActionSupport
 		this.errorType = errorType;
 	}
 
-    private void populateListBox()
-    {
-    	File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services");
-    	FileFilter fileFilter =  new XCCGFileFilter();
-
-    	File[] fileList = dir.listFiles();
-    	
-    	if (fileList == null) 
-    	{
-    		errorType = "error";
-    		log.error("Problem with service configuration. Check the path of service folder.");
-    		this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
-    		return;
-    	}
-    	for(File file : fileList)
-    	{
-    		String xccfgFolderLocation = file.getPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig";
-    		File xccfgFolder = new File(xccfgFolderLocation);
-    		
-    		if(!xccfgFolder.exists() || !xccfgFolder.isDirectory())
-    			continue;
-            	
-    		File[] xccfgFolderList = xccfgFolder.listFiles(fileFilter);
-    		
-    		if (xccfgFolderList == null) 
-    		{
-    			errorType = "error";
-    			log.error("Problem with service configuration. Check the path of service folder.");
-    			this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
-    			return;
-    		}
-                
-    		for(File xccfgFile : xccfgFolderList) {
-    			XccFgFile configFile = new XccFgFile(xccfgFile.getName(), xccfgFile.getPath());
-    			serviceFiles.add(configFile);
-    		}
-    	}
-    	setServiceFiles(serviceFiles);
-    }
 }

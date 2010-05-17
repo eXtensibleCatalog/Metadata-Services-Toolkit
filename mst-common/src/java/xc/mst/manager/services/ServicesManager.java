@@ -72,7 +72,7 @@ public class ServicesManager extends BaseManager implements ApplicationListener<
 		        			break;
 		        		}
 		        		System.out.println("in for loop");
-		        		new ServiceEntry(s.getIdentifier()).start();
+		        		new ServiceEntry(s.getName()).start();
 		        	}
 	        	} else {
 	        		System.out.println("before oae release");
