@@ -88,7 +88,7 @@
                       <td>
                           <select id="fileLocation" name ="fileLocation">
                               <c:forEach var="serviceFile" items="${serviceFiles}" varStatus="a">
-                                  <option id="${serviceFile}" value="${serviceFile.path}">${serviceFile.name}
+                                  <option id="${serviceFile}" value="${serviceFile.name}">${serviceFile.name}
                               </c:forEach>
                           </select>
 

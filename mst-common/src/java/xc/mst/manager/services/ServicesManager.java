@@ -75,7 +75,6 @@ public class ServicesManager extends BaseManager implements ApplicationListener<
 		        		new ServiceEntry(s.getIdentifier()).start();
 		        	}
 	        	} else {
-
 	        		System.out.println("before oae release");
 	        		this.semaphore.release();
 	        		System.out.println("after oae release");

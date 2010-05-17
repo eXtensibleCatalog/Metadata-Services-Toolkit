@@ -100,27 +100,12 @@ public class DefaultServicesService extends BaseService
 
 	public void onApplicationEvent(ApplicationEvent event) {
 		try {
-			System.out.println("onApplicationEvent event2: "+event);
 	        if (event instanceof ContextRefreshedEvent) {
-	        	boolean b1 = this.applicationContext.getParent() == null;
-	        	System.out.println("b1: "+b1);
 	        	boolean b = isRootAC();
-	        	System.out.println("b3: "+b);
 	        	if (b) {
-		            // load all service application contexts
-	        		List<Service> services = getServiceDAO().getAll();
-	        		System.out.println("services.size(): "+services.size());
-		        	for (Service s : services) {
-		        		if (loopCount++ > 10) {
-		        			break;
-		        		}
-		        		System.out.println("in for loop");
-		        		new ServiceEntry(s.getIdentifier()).start();
-		        	}
+	        		// do nothing
 	        	} else {
-	        		System.out.println("before oae release");
 	        		this.semaphore.release();
-	        		System.out.println("after oae release");
 	        	}
 	        }
 		} catch (Throwable t) {
@@ -128,15 +113,12 @@ public class DefaultServicesService extends BaseService
 		}
     }
 	
-	public GenericMetadataService getService(String name) {
-		System.out.println("name: "+name);
-		if (serviceEntries.containsKey(name)) {
-			ServiceEntry se = serviceEntries.get(name);
-			System.out.println("se: "+se);
-			System.out.println("se.ac: "+se.ac);
-			return (GenericMetadataService)se.ac.getBean("Service");
+	public GenericMetadataService getMetadataService(String name) {
+		if (!serviceEntries.containsKey(name)) {
+			new ServiceEntry(name).start();	
 		}
-		return null;
+		ServiceEntry se = serviceEntries.get(name);
+		return (GenericMetadataService)se.ac.getBean("Service");
 	}
 	
 	class ServiceEntry {
@@ -220,6 +202,14 @@ public class DefaultServicesService extends BaseService
 			}
 		}
 	}
+	
+	protected void injectMetadataServices(List<Service> services) {
+    	for (Service service : services) {
+    		if (service.getMetadataService() == null) {
+    			service.setMetadataService(getMetadataService(service.getIdentifier()));
+    		}
+    	}
+	}
 
     /**
      * Returns a list of all services
@@ -229,7 +219,9 @@ public class DefaultServicesService extends BaseService
      */
     public List<Service> getAllServices() throws DatabaseConfigException
     {
-        return getServiceDAO().getAll();
+    	List<Service> services = getServiceDAO().getAll();
+    	injectMetadataServices(services);
+        return services;
     }
 
     /**
@@ -242,22 +234,24 @@ public class DefaultServicesService extends BaseService
      */
     public List<Service> getAllServicesSorted(boolean sort,String columnSorted) throws DatabaseConfigException
     {
-        return getServiceDAO().getSorted(sort, columnSorted);
+        List<Service> services = getServiceDAO().getSorted(sort, columnSorted);
+    	injectMetadataServices(services);
+        return services;
     }
 
     /**
      * Adds a new Service whose configuration details are present in the file
      *
-     * @param configFile
+     * @param name
      * @throws xc.mst.dao.DataException
      * @throws java.io.IOException
      * @throws xc.mst.manager.processingDirective.ConfigFileException
      */
-    public void addNewService(File configFile) throws DataException, IOException, ConfigFileException
+    public void addNewService(String serviceName) throws DataException, IOException, ConfigFileException
     {
     	BufferedReader in = null; // Reads the file
     	
-    	String configFolderPath = configFile.getParentFile().getParent();
+    	File configFile = new File(MSTConfiguration.getUrlPath()+"/services/"+serviceName+"/META-INF/classes/service.xccfg");
     	
     	try
     	{

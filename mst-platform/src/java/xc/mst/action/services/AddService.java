@@ -37,7 +37,7 @@ public class AddService extends BaseActionSupport
     private String errorType;
 
     /** List of XCCFG files */
-    private List<XccFgFile> serviceFiles = new ArrayList<XccFgFile>();
+    private List<String> serviceFiles = new ArrayList<String>();
 
     /** The XCCFG file that is selected by the user */
     private String selectedLocation;
@@ -50,7 +50,7 @@ public class AddService extends BaseActionSupport
      *
      * @return list of config files
      */
-    public List<XccFgFile> getServiceFiles()
+    public List<String> getServiceFiles()
     {
         return this.serviceFiles;
     }
@@ -60,7 +60,7 @@ public class AddService extends BaseActionSupport
      *
      * @param serviceFileList list of config files
      */
-    public void setServiceFiles(List<XccFgFile> serviceFiles)
+    public void setServiceFiles(List<String> serviceFiles)
     {
         this.serviceFiles = serviceFiles;
     }
@@ -93,11 +93,8 @@ public class AddService extends BaseActionSupport
     @Override
     public String execute()
     {
-    	File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services");
-    	FileFilter fileFilter =  new XCCGFileFilter();
-
+    	File dir = new File(MSTConfiguration.getUrlPath() + "/services");
     	File[] fileList = dir.listFiles();
-    	
     	if (fileList == null) 
     	{
     		errorType = "error";
@@ -107,65 +104,11 @@ public class AddService extends BaseActionSupport
     	}
     	for(File file : fileList)
     	{
-    		String xccfgFolderLocation = file.getPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig";
-    		File xccfgFolder = new File(xccfgFolderLocation);
-    		
-    		if(!xccfgFolder.exists() || !xccfgFolder.isDirectory())
-    			continue;
-            	
-    		File[] xccfgFolderList = xccfgFolder.listFiles(fileFilter);
-    		
-    		if (xccfgFolderList == null) 
-    		{
-    			errorType = "error";
-    			log.error("Problem with service configuration. Check the path of service folder.");
-    			this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
-    			return SUCCESS;
-    		}
-                
-    		for(File xccfgFile : xccfgFolderList) {
-    			XccFgFile configFile = new XccFgFile(xccfgFile.getName(), xccfgFile.getPath());
-    			serviceFiles.add(configFile);
-    		}
+    		String serviceName = file.getName();
+			serviceFiles.add(serviceName);
     	}
     	
     	return SUCCESS;
-    }
-
-    /**
-     * Class to represent xccfg file
-     * 
-     * @author sharmilar
-     *
-     */
-    public class XccFgFile {
-    	/** Name of file */
-    	private String name;
-    	
-    	/** Path of file */
-    	private String path;
-
-    	/** Constructor */
-    	XccFgFile(String name, String path) {
-    		this.name = name;
-    		this.path = path;
-    		
-    	}
-    	
-    	/** 
-    	 * Get file name 
-    	 */
-		public String getName() {
-			return name;
-		}
-
-		/**
-		 * Get file path
-		 * @return
-		 */
-		public String getPath() {
-			return path;
-		}
     }
     
     /**
@@ -282,20 +225,5 @@ public class AddService extends BaseActionSupport
     		}
     	}
     	setServiceFiles(serviceFiles);
-    }
-}
-
-
-
-/**
- * This class is used to filter out files which dont have the required .xccf extension
- *
- * @author Tejaswi Haramurali
- */
-class XCCGFileFilter implements FileFilter
-{
-    public boolean accept(File file)
-    {
-        return file.getName().contains(".xccfg");
     }
 }
