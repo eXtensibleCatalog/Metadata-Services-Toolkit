@@ -769,7 +769,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	            	      													         COL_STATUS + ", " +
 	            	      													         COL_VERSION + ", " +
 	            	      													         COL_DELETED + ") " +
-	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"insert service\" PreparedStatemnt from the SQL " + insertSql);
@@ -778,25 +778,27 @@ public class DefaultServiceDAO extends ServiceDAO
 					// This should sanitize the SQL and prevent SQL injection
 					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if(insert PreparedStatement not defined)
+				
+				int i=1;
 
 				// Set the parameters on the insert statement
-				psInsert.setString(1, service.getName());
-				psInsert.setString(4, service.getClassName());
-				psInsert.setInt(5, service.getServicesWarnings());
-				psInsert.setInt(6, service.getServicesErrors());
-				psInsert.setInt(7, service.getInputRecordCount());
-				psInsert.setInt(8, service.getOutputRecordCount());
-				psInsert.setDate(9, service.getServicesLastLogReset());
-				psInsert.setString(10, service.getServicesLogFileName());
-				psInsert.setInt(11, service.getHarvestOutWarnings());
-				psInsert.setInt(12, service.getHarvestOutErrors());
-				psInsert.setLong(13, service.getHarvestOutRecordsAvailable());
-				psInsert.setLong(14, service.getNumberOfHarvests());
-				psInsert.setDate(15, service.getHarvestOutLastLogReset());
-				psInsert.setString(16, service.getHarvestOutLogFileName());
-				psInsert.setString(17, service.getStatus());
-				psInsert.setString(19, service.getVersion());
-				psInsert.setBoolean(20, service.isDeleted());
+				psInsert.setString(i++, service.getName());
+				psInsert.setString(i++, service.getClassName());
+				psInsert.setInt(i++, service.getServicesWarnings());
+				psInsert.setInt(i++, service.getServicesErrors());
+				psInsert.setInt(i++, service.getInputRecordCount());
+				psInsert.setInt(i++, service.getOutputRecordCount());
+				psInsert.setDate(i++, service.getServicesLastLogReset());
+				psInsert.setString(i++, service.getServicesLogFileName());
+				psInsert.setInt(i++, service.getHarvestOutWarnings());
+				psInsert.setInt(i++, service.getHarvestOutErrors());
+				psInsert.setLong(i++, service.getHarvestOutRecordsAvailable());
+				psInsert.setLong(i++, service.getNumberOfHarvests());
+				psInsert.setDate(i++, service.getHarvestOutLastLogReset());
+				psInsert.setString(i++, service.getHarvestOutLogFileName());
+				psInsert.setString(i++, service.getStatus());
+				psInsert.setString(i++, service.getVersion());
+				psInsert.setBoolean(i++, service.isDeleted());
 
 				// Execute the insert statement and return the result
 				if(dbConnectionManager.executeUpdate(psInsert) > 0)
@@ -860,12 +862,13 @@ public class DefaultServiceDAO extends ServiceDAO
 				return false;
 			} // end catch(SQLException)
 			catch (DBConnectionResetException e){
-				log.info("Re executing the query that failed ");
-				return insert(service);
+				log.info("Re executing the query that failed ", e);
+				//return insert(service);
 			}
 			finally
 			{
 				dbConnectionManager.closeResultSet(rs);
+				return true;
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method insert(Service)

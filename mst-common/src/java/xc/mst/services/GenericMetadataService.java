@@ -1011,24 +1011,29 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 		BufferedReader br = null;
     	// Read the files
     	try {
-			br = new BufferedReader(new StringReader(getUtil().slurp(fileName)));
-			String line = null;
-			while((line = br.readLine()) != null){
-				if(line.trim().startsWith("--"))
-					continue;				
-				command.append(line);
-				if(line.endsWith(";")){
-					commands.add(command.toString());
-					command.setLength(0);
+    		LOG.info("getUtil(): "+getUtil());
+    		LOG.info("fileName: "+fileName);
+    		LOG.info("getUtil().slurp(fileName): "+getUtil().slurp(fileName));
+    		String str = getUtil().slurp(fileName);
+    		if (str == null) {
+				br = new BufferedReader(new StringReader(str));
+				String line = null;
+				while((line = br.readLine()) != null){
+					if(line.trim().startsWith("--"))
+						continue;				
+					command.append(line);
+					if(line.endsWith(";")){
+						commands.add(command.toString());
+						command.setLength(0);
+					}	
 				}
-					
-			}
-    	
-	    	//Execute the commands
-			stmt = dbConnectionManager.createStatement();
-			for (String sql : commands) {
-				stmt.execute(sql);	
-			}
+	    	
+		    	//Execute the commands
+				stmt = dbConnectionManager.createStatement();
+				for (String sql : commands) {
+					stmt.execute(sql);
+				}
+    		}
 				
 		} catch (Exception e) {
 			LOG.error("An exception occured while executing the sql scripts.", e);

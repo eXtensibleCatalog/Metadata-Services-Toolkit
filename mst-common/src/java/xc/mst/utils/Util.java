@@ -1,6 +1,7 @@
 package xc.mst.utils;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 
 import org.apache.log4j.Logger;
@@ -21,10 +22,12 @@ public class Util {
 			}
 			br.close();
 			return sb.toString();
+		} catch (FileNotFoundException t) {
+			LOG.error(classpathResource+" does not exist");
 		} catch (Throwable t) {
 			LOG.error("", t);
-			return null;
 		}
+		return null;
 	}
 
 }

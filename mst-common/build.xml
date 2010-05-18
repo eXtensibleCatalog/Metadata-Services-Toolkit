@@ -116,6 +116,10 @@
 	<target name="mc.deploy" depends="mc.jar.nodep">
 		<copy todir="${tomcat.dir}/webapps/${mp.project-name}/WEB-INF/lib" 
 			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
+		<copy todir="${mp.build.lib}" 
+			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
+		<copy todir="${ms.build.lib}" 
+			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
 	</target>
 
 	<target name="mc.compile.test" depends="mc.copy-resources.nodep">

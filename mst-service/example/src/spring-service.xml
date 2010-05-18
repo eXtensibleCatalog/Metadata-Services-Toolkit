@@ -23,6 +23,8 @@
 		</property>
 	</bean>
 	
+	<bean class="xc.mst.spring.MSTBeanPostProcessor"/>
+	
 	<import resource="spring-service-custom.xml"/>
 
 	<bean id="Service" class="${service.classname}">

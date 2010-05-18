@@ -134,13 +134,8 @@
 	</target>
 
 	<target name="deploy" >
-		<!--
-		<ant target="clean" />
-		<ant target="clean-cache" />
-		<ant target="publish" />
 		<ant target="mc.deploy" />
 		<ant target="mp.deploy" />
-		-->
 		<ant target="ms.copy-example" />
 		<ant target="deploy-service">
 			<property name="sname" value="MARCNormalization"/>

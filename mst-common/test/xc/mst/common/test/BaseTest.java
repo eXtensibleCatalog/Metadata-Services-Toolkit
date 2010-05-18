@@ -9,6 +9,7 @@
 
 package xc.mst.common.test;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.testng.annotations.AfterSuite;
@@ -17,6 +18,8 @@ import org.testng.annotations.BeforeSuite;
 import xc.mst.utils.SetupClasspath;
 
 public class BaseTest {
+	
+	protected static final Logger LOG = Logger.getLogger(BaseTest.class);
 	
 	protected ApplicationContext applicationContext = null;
 

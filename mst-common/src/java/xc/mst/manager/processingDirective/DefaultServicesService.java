@@ -900,8 +900,11 @@ public class DefaultServicesService extends BaseService
 
     	for(File file : fileList) {
     		if (file.isDirectory() && !allServices.contains(file.getName())) {
-	    		String serviceName = file.getName();
-	    		availableServices.add(serviceName);
+    			File xccfg = new File(file.getAbsoluteFile()+"/META-INF/classes/service.xccfg");
+    			if (xccfg.exists()) {
+		    		String serviceName = file.getName();
+		    		availableServices.add(serviceName);
+    			}
     		}
     	}
     	

@@ -15,6 +15,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
@@ -26,6 +27,8 @@ import xc.mst.manager.BaseService;
 import xc.mst.utils.Util;
 
 public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationContextAware {
+	
+	private static final Logger LOG = Logger.getLogger(MSTBeanPostProcessor.class);
 	
 	protected ApplicationContext applicationContext = null;
 	protected Map<String, Method> serviceSetters = null;
@@ -59,6 +62,7 @@ public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationConte
 			((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("DataSource"));
 			((BaseDAO)bean).setUtil((Util)this.applicationContext.getBean("Util"));
 		} else if (bean instanceof BaseService) {
+			LOG.info("bean: "+bean+" setUtil: "+this.applicationContext.getBean("Util"));
 			((BaseService)bean).setUtil((Util)this.applicationContext.getBean("Util"));
 			for (String s : serviceSetters.keySet()) {
 				Object o = this.applicationContext.getBean(s);

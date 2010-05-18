@@ -335,6 +335,7 @@ public class MySqlConnectionManager
 			resetConnection();
 
 			// Propagate the connection reset so that DAO's will re-execute
+			log.error("", e);
 			throw new DBConnectionResetException();
 		}
 	}
