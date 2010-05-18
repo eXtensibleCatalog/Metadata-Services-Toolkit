@@ -78,7 +78,8 @@
 			debuglevel="lines,vars,source"/>
 	</target>
 
-	<target name="ms.copy-resources" depends="ms.compile">
+	<target name="ms.copy-resources" depends="ms.compile, ms.copy-resources.nodep" />
+	<target name="ms.copy-resources.nodep" depends="ms.compile.nodep">
 		<copy todir="${ms.build.classes}">
 			<fileset dir="${ms.src.java}">
 				<exclude name="**/*.java" />
@@ -91,9 +92,15 @@
 		-->
 	</target>
 
-	<target name="ms.jar" depends="ms.copy-resources">
+	<target name="ms.jar" depends="ms.copy-resources, ms.jar.nodep" />
+	<target name="ms.jar.nodep" depends="ms.copy-resources.nodep">
 		<jar destfile="${ms.build.dir}/${ms.project-name}-${ms.version}.jar"
 			basedir="${ms.build.classes}" />
+	</target>
+
+	<target name="ms.deploy" depends="ms.jar.nodep">
+		<copy todir="${tomcat.dir}/webapps/${mp.project-name}/WEB-INF/lib" 
+			file="${ms.build.dir}/${ms.project-name}-${ms.version}.jar" />
 	</target>
 
 	<target name="ms.publish" depends="ms.jar, ms.resolve">

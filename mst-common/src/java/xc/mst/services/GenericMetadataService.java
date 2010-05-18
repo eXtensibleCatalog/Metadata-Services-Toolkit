@@ -1013,9 +1013,9 @@ public abstract class GenericMetadataService extends BaseService implements Meta
     	try {
     		LOG.info("getUtil(): "+getUtil());
     		LOG.info("fileName: "+fileName);
-    		LOG.info("getUtil().slurp(fileName): "+getUtil().slurp(fileName));
-    		String str = getUtil().slurp(fileName);
-    		if (str == null) {
+    		LOG.info("getUtil().slurp(fileName): "+getUtil().slurp(fileName, getClass().getClassLoader()));
+    		String str = getUtil().slurp(fileName, getClass().getClassLoader());
+    		if (str != null) {
 				br = new BufferedReader(new StringReader(str));
 				String line = null;
 				while((line = br.readLine()) != null){

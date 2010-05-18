@@ -13,12 +13,11 @@ public class TestInstall extends BaseTest {
 		try {
 			ServicesService ss = (ServicesService)MSTConfiguration.getBean("ServicesService");
 			System.out.println("testInstall before");
-			ss.addNewService("MARCNormalization");
+			ss.addNewService("MARCToXCTransformation");
 			System.out.println("testInstall after");
 		} catch (Throwable t) {
 			LOG.error("", t);
 		}
 	}
-	
 
 }

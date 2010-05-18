@@ -296,8 +296,9 @@ public class DefaultServicesService extends BaseService
     		// Reject anything else as an invalid configuration file.
     		if(!line.trim().equals(FILE_INPUT_FORMATS))
     		{
-    			LogWriter.addError(logFileName, "Error adding a new service: The first section in the configuration file after the first three lines must be labeled \"INPUT FORMATS\"");
-    			throw new ConfigFileException("The first section in the configuration file after the first three lines must be labeled \"INPUT FORMATS\"");
+    			String s = "The first section in the configuration file after the first three lines must be labeled \"INPUT FORMATS\", but was\n\t"+line;
+    			LogWriter.addError(logFileName, "Error adding a new service: "+s);
+    			throw new ConfigFileException(s);
     		}
 
 	    	// Parse and add the input formats
@@ -557,8 +558,8 @@ public class DefaultServicesService extends BaseService
     		service.setName(name);
     		service.setVersion(version);
     		service.setClassName(className);
-    		service.setHarvestOutLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
-    		service.setServicesLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
+    		service.setHarvestOutLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
+    		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.getInputFormats().clear();
     		service.getOutputFormats().clear();
 

@@ -12,9 +12,16 @@ public class Util {
 	public final static Logger LOG = Logger.getLogger(Util.class);
 	
 	public String slurp(String classpathResource) {
+		return slurp(classpathResource, null);
+	}
+	
+	public String slurp(String classpathResource, ClassLoader cl) {
+		if (cl == null) {
+			cl = getClass().getClassLoader();
+		}
 		try {
 			BufferedReader br = null;
-			br = new BufferedReader(new InputStreamReader(new ClassPathResource(classpathResource).getInputStream()));
+			br = new BufferedReader(new InputStreamReader(new ClassPathResource(classpathResource, cl).getInputStream()));
 			StringBuilder sb = new StringBuilder();
 			String line = null;
 			while ((line = br.readLine()) != null) {
