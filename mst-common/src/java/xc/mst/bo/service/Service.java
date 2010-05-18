@@ -17,6 +17,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
 import xc.mst.services.MetadataService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Represents a service in the MST
@@ -432,10 +433,16 @@ public class Service
 	 *
 	 * @return The name of the log file for the service
 	 */
-	public String getServicesLogFileName()
-	{
-		return logFileName;
-	} // end method getLogFileName()
+	public String getServicesLogFileName() {
+		return getServicesLogFileName(false);
+	}
+	public String getServicesLogFileName(boolean abs) {
+		if (abs) {
+			return MSTConfiguration.getUrlPath()+"/"+logFileName;
+		} else {
+			return logFileName;
+		}
+	}
 
 	/**
 	 * Sets the name of the log file for the service
@@ -533,10 +540,16 @@ public class Service
 	 *
 	 * @return The name of the harvest out log file for the service
 	 */
-	public String getHarvestOutLogFileName()
-	{
-		return harvestOutLogFileName;
-	} // end method getLogFileName()
+	public String getHarvestOutLogFileName() {
+		return getHarvestOutLogFileName(false);
+	}
+	public String getHarvestOutLogFileName(boolean abs) {
+		if (abs) {
+			return MSTConfiguration.getUrlPath()+"/"+harvestOutLogFileName;
+		} else {
+			return harvestOutLogFileName;	
+		}
+	}
 
 	/**
 	 * Sets the name of the harvest out log file for the service

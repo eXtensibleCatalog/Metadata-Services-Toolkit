@@ -118,7 +118,7 @@ public class ServiceReset extends BaseActionSupport
                 tempService.setServicesWarnings(0);
                 tempService.setServicesErrors(0);
                 getServicesService().updateService(tempService);
-                String filename = tempService.getServicesLogFileName();
+                String filename = tempService.getServicesLogFileName(true);
                 PrintWriter printWriter = new PrintWriter(filename);
                 printWriter.close();
             }

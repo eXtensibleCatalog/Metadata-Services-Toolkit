@@ -118,7 +118,7 @@ public class HarvestOutReset extends BaseActionSupport
                 tempService.setHarvestOutErrors(0);
                 tempService.setNumberOfHarvests(0);
                 getServicesService().updateService(tempService);
-                String filename = tempService.getHarvestOutLogFileName();
+                String filename = tempService.getHarvestOutLogFileName(true);
                 PrintWriter printWriter = new PrintWriter(filename);
                 printWriter.close();
             }

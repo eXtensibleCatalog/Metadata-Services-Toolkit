@@ -11,6 +11,8 @@ package xc.mst.bo.log;
 
 import java.sql.Date;
 
+import xc.mst.utils.MSTConfiguration;
+
 /**
  * Represents a general log file used by the MST
  *
@@ -153,10 +155,16 @@ public class Log
 	 *
 	 * @return The location of the log file
 	 */
-	public String getLogFileLocation()
-	{
-		return logFileLocation;
-	} // end method getLogFileLocation()
+	public String getLogFileLocation() {
+		return getLogFileLocation(false);
+	}
+	public String getLogFileLocation(boolean abs) {
+		if (abs) {
+			return MSTConfiguration.getUrlPath()+"/"+logFileLocation;
+		} else {
+			return logFileLocation;
+		}
+	}
 
 	/**
 	 * Sets the location of the log file

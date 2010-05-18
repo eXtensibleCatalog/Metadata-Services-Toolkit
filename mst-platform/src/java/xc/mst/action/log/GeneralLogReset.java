@@ -62,7 +62,7 @@ public class GeneralLogReset extends BaseActionSupport
             logs.setLastLogReset(new Date());
             logs.setWarnings(0);
             getLogService().update(logs);
-            String filename = logs.getLogFileLocation();
+            String filename = logs.getLogFileLocation(true);
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
             return SUCCESS;
@@ -110,7 +110,7 @@ public class GeneralLogReset extends BaseActionSupport
                 logs.setLastLogReset(new Date());
                 logs.setWarnings(0);
                 getLogService().update(logs);
-                String filename = logs.getLogFileLocation();
+                String filename = logs.getLogFileLocation(true);
                 PrintWriter printWriter = new PrintWriter(filename);
                 printWriter.close();
             }

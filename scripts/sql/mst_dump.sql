@@ -842,10 +842,10 @@ LOCK TABLES `services` WRITE;
 /*!40000 ALTER TABLE `services` DISABLE KEYS */;
 /*
 INSERT INTO `services` VALUES 
-(1,'MARCNormalization','xc.mst.services.normalization.NormalizationService',0,35000,75520,39993,NULL,'MST-instances\\MetadataServicesToolkit\\logs\\service\\MARCNormalization Service.txt',0,0,39993,0,NULL,'MST-instances\\MetadataServicesToolkit\\logs\\harvestOut\\MARCNormalization Service.txt','NOT_RUNNING','0.2.8',0),
-(2,'MARCToXCTransformation','xc.mst.services.transformation.TransformationService',0,1027,33196,60629,NULL,'MST-instances\\MetadataServicesToolkit\\logs\\service\\MARCToXCTransformation Service.txt',0,0,60629,0,NULL,'MST-instances\\MetadataServicesToolkit\\logs\\harvestOut\\MARCToXCTransformation Service.txt','NOT_RUNNING','0.1.9',0),
-(99,'DBMARCNormalization','xc.mst.services.normalization.DBNormalizationService',0,35000,75520,39993,NULL,'MST-instances\\MetadataServicesToolkit\\logs\\service\\MARCNormalization Service.txt',0,0,39993,0,NULL,'MST-instances\\MetadataServicesToolkit\\logs\\harvestOut\\MARCNormalization Service.txt','NOT_RUNNING','0.2.8',0),
-(199,'DBMARCToXCTransformation','xc.mst.services.transformation.DBTransformationService',0,1027,33196,60629,NULL,'MST-instances\\MetadataServicesToolkit\\logs\\service\\MARCToXCTransformation Service.txt',0,0,60629,0,NULL,'MST-instances\\MetadataServicesToolkit\\logs\\harvestOut\\MARCToXCTransformation Service.txt','NOT_RUNNING','0.1.9',0);
+(1,'MARCNormalization','xc.mst.services.normalization.NormalizationService',0,35000,75520,39993,NULL,'logs\\service\\MARCNormalization Service.txt',0,0,39993,0,NULL,'logs\\harvestOut\\MARCNormalization Service.txt','NOT_RUNNING','0.2.8',0),
+(2,'MARCToXCTransformation','xc.mst.services.transformation.TransformationService',0,1027,33196,60629,NULL,'logs\\service\\MARCToXCTransformation Service.txt',0,0,60629,0,NULL,'logs\\harvestOut\\MARCToXCTransformation Service.txt','NOT_RUNNING','0.1.9',0),
+(99,'DBMARCNormalization','xc.mst.services.normalization.DBNormalizationService',0,35000,75520,39993,NULL,'logs\\service\\MARCNormalization Service.txt',0,0,39993,0,NULL,'logs\\harvestOut\\MARCNormalization Service.txt','NOT_RUNNING','0.2.8',0),
+(199,'DBMARCToXCTransformation','xc.mst.services.transformation.DBTransformationService',0,1027,33196,60629,NULL,'logs\\service\\MARCToXCTransformation Service.txt',0,0,60629,0,NULL,'logs\\harvestOut\\MARCToXCTransformation Service.txt','NOT_RUNNING','0.1.9',0);
 */
 /*!40000 ALTER TABLE `services` ENABLE KEYS */;
 UNLOCK TABLES;

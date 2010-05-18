@@ -62,20 +62,20 @@ public class DownloadLogFiles extends ActionSupport implements ServletResponseAw
             {
                 
                 Service service = servicesService.getServiceById(id);
-                fullpath = service.getServicesLogFileName();
+                fullpath = service.getServicesLogFileName(true);
                 filename = service.getName()+"ServiceLog";
             }
             else if(logType.equalsIgnoreCase("HarvestOut"))
             {
                 Service service = servicesService.getServiceById(id);
-                fullpath = service.getHarvestOutLogFileName();
+                fullpath = service.getHarvestOutLogFileName(true);
                 filename = service.getName()+"HarvestOutLog";
             }
             else if(logType.equalsIgnoreCase("HarvestIn"))
             {
                 ProviderService providerService = (ProviderService)MSTConfiguration.getBean("ProviderService");
                 Provider provider = providerService.getProviderById(id);
-                fullpath = provider.getLogFileName();
+                fullpath = provider.getLogFileName(true);
                 filename = provider.getName();
 
             }
@@ -83,7 +83,7 @@ public class DownloadLogFiles extends ActionSupport implements ServletResponseAw
             {
                 LogService logService = (LogService)MSTConfiguration.getBean("LogService");
                 Log log = logService.getById(id);
-                fullpath = log.getLogFileLocation();
+                fullpath = log.getLogFileLocation(true);
                 filename = log.getLogFileName();
             }
 

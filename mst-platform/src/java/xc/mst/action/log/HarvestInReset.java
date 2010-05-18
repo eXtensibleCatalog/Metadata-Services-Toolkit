@@ -68,7 +68,7 @@ public class HarvestInReset extends BaseActionSupport {
             provider.setRecordsReplaced(0);
             provider.setLastLogReset(new Date());
             getProviderService().updateProvider(provider);
-            String filename = provider.getLogFileName();
+            String filename = provider.getLogFileName(true);
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
 
@@ -121,7 +121,7 @@ public class HarvestInReset extends BaseActionSupport {
                 provider.setRecordsReplaced(0);
                 provider.setLastLogReset(new Date());
                 getProviderService().updateProvider(provider);
-                String filename = provider.getLogFileName();
+                String filename = provider.getLogFileName(true);
                 PrintWriter printWriter = new PrintWriter(filename);
                 printWriter.close();
             }

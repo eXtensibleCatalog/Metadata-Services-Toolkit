@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import xc.mst.bo.user.User;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Represents an OAI provider
@@ -974,9 +974,15 @@ public class Provider
 	 *
 	 * @return The name of the log file for the provider
 	 */
-	public String getLogFileName()
-	{
-		return logFileName;
+	public String getLogFileName() {
+		return getLogFileName(false);
+	}
+	public String getLogFileName(boolean abs) {
+		if (abs) {
+			return MSTConfiguration.getUrlPath()+"/"+logFileName;
+		} else {
+			return logFileName;
+		}
 	} // end method getLogFileName()
 
 	/**
