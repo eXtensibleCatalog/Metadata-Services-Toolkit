@@ -8,6 +8,36 @@
   -->
 <project name="MetadataServicesToolkit" default="help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
+	<macrodef name="copy-to-custom-services">
+		<attribute name="subdir" />
+		<element name="macro-file-set" />
+		<sequential>
+			<echo>
+				subdir: @{subdir}
+			</echo>
+			<copy todir="${ms.custom}" enablemultiplemappings="true">
+				<macro-file-set />
+				<scriptmapper language="javascript">
+				  self.addMappedName("MARCNormalization/@{subdir}/"+source);
+				  self.addMappedName("MARCToXCTransformation/@{subdir}/"+source);
+				  self.addMappedName("aggregation/@{subdir}/"+source);
+				</scriptmapper>
+			</copy>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="target-custom-services">
+		<attribute name="target" />
+		<sequential>
+			<echo>
+				target: @{target}
+			</echo>
+			<ant dir="${mst-service}/custom/aggregation" target="@{target}" inheritAll="false" />
+			<ant dir="${mst-service}/custom/MARCNormalization" target="@{target}" inheritAll="false" />
+			<ant dir="${mst-service}/custom/MARCToXCTransformation" target="@{target}" inheritAll="false" />
+		</sequential>
+	</macrodef>
+
 	<property file="build.properties"/>
 
 	<property environment="env"/>
@@ -81,9 +111,7 @@
 	<target name="clean" depends="mc.clean,mp.clean,ms.clean">
 		<delete dir="${build.dir}" />
 		<ant dir="${mst-service}/example" target="clean" inheritAll="false" />
-		<ant dir="${mst-service}/custom/aggregation" target="clean" inheritAll="false" />
-		<ant dir="${mst-service}/custom/MARCNormalization" target="clean" inheritAll="false" />
-		<ant dir="${mst-service}/custom/MARCToXCTransformation" target="clean" inheritAll="false" />
+		<target-custom-services target="clean" />
 	</target>
 
 	<target name="publish" depends="mc.publish, ms.publish">
@@ -91,9 +119,7 @@
 
 	<target name="retrieve" depends="mc.retrieve,mp.retrieve,ms.retrieve">
 		<ant dir="${mst-service}/example" target="retrieve" inheritAll="false" />
-		<ant dir="${mst-service}/custom/aggregation" target="retrieve" inheritAll="false" />
-		<ant dir="${mst-service}/custom/MARCNormalization" target="retrieve" inheritAll="false" />
-		<ant dir="${mst-service}/custom/MARCToXCTransformation" target="retrieve" inheritAll="false" />
+		<target-custom-services target="retrieve" />
 	</target>
 
 	<!-- Create the distriubtion file -->
@@ -125,6 +151,7 @@
 		<ant dir="${mst-service}/custom/${sname}" target="zip.nodep" inheritAll="false"/>
 		<copy file="${mst-service}/custom/${sname}/build/${sname}-${sversion}.zip" 
 			todir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services" />
+		<delete dir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services/${sname}" />
 		<unzip src="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services/${sname}-${sversion}.zip"
 			dest="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services" />
 	</target>

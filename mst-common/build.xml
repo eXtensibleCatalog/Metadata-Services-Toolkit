@@ -113,13 +113,20 @@
 		</ivy:publish>
 	</target>
 
-	<target name="mc.deploy" depends="mc.jar.nodep">
+	<target name="mc.deploy" depends="mc.compile.test,mc.jar.nodep">
 		<copy todir="${tomcat.dir}/webapps/${mp.project-name}/WEB-INF/lib" 
 			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
 		<copy todir="${mp.build.lib}" 
 			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
 		<copy todir="${ms.build.lib}" 
 			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
+		<copy-to-custom-services subdir="build/lib">
+			<macro-file-set>
+				<fileset dir="${mc.build.dir}">
+					<include name="${mc.project-name}-${mc.version}.jar" />
+				</fileset>
+			</macro-file-set>
+		</copy-to-custom-services>
 	</target>
 
 	<target name="mc.compile.test" depends="mc.copy-resources.nodep">

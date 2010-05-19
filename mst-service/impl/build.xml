@@ -99,17 +99,18 @@
 	</target>
 
 	<target name="ms.deploy" depends="ms.jar.nodep">
-		<copy todir="${ms.custom}" enablemultiplemappings="true">
+		<copy todir="${ms.example}/build/lib" enablemultiplemappings="true">
 			<fileset dir="${ms.build.dir}">
 				<include name="${ms.project-name}-${ms.version}.jar" />
 			</fileset>
-			<scriptmapper language="javascript">
-			  self.addMappedName("../example/build/lib/"+source);
-			  self.addMappedName("MARCNormalization/build/lib/"+source);
-			  self.addMappedName("MARCToXCTransformation/build/lib/"+source);
-			  self.addMappedName("aggregation/build/lib/"+source);
-			</scriptmapper>
 		</copy>
+		<copy-to-custom-services subdir="build/lib">
+			<macro-file-set>
+			<fileset dir="${ms.build.dir}">
+				<include name="${ms.project-name}-${ms.version}.jar" />
+			</fileset>
+			</macro-file-set>
+		</copy-to-custom-services>
 	</target>
 
 	<target name="ms.publish" depends="ms.jar, ms.resolve">
@@ -119,17 +120,14 @@
 	</target>
 
 	<target name="ms.copy-example">
-		<copy todir="${ms.custom}" enablemultiplemappings="true">
-			<fileset dir="${ms.example}">
-				<include name="**/*.xml" />
-				<include name="**/*.properties" />
-			</fileset>
-			<scriptmapper language="javascript">
-			  self.addMappedName("MARCNormalization/"+source);
-			  self.addMappedName("MARCToXCTransformation/"+source);
-			  self.addMappedName("aggregation/"+source);
-			</scriptmapper>
-		</copy>
+		<copy-to-custom-services subdir="">
+			<macro-file-set>
+				<fileset dir="${ms.example}">
+					<include name="**/*.xml" />
+					<include name="**/*.properties" />
+				</fileset>
+			</macro-file-set>
+		</copy-to-custom-services>
 	</target>
 
 	<target name="ms.compile.test" depends="ms.compile.nodep">
