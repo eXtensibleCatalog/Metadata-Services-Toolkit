@@ -25,7 +25,7 @@ public interface MetadataService {
 	
 	public void process();
 	
-	public void getRepository();
+	public Repository getRepository();
 	
 	public void process(Repository repo, Format format, Set set);
 	

@@ -56,9 +56,7 @@ import xc.mst.utils.ServiceUtil;
  */
 public class DefaultServicesService extends BaseService 
 	implements ServicesService, ApplicationListener<ApplicationEvent>, ApplicationContextAware {
-	/**
-	 * The logger object
-	 */
+
 	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**
@@ -118,7 +116,8 @@ public class DefaultServicesService extends BaseService
 			new ServiceEntry(name).start();	
 		}
 		ServiceEntry se = serviceEntries.get(name);
-		return (MetadataService)se.ac.getBean("Service");
+		MetadataService ms = (MetadataService)se.ac.getBean("Service");
+		return ms;
 	}
 	
 	class ServiceEntry {
@@ -858,7 +857,10 @@ public class DefaultServicesService extends BaseService
      */
     public Service getServiceByName(String serviceName) throws DatabaseConfigException
     {
-        return getServiceDAO().getByServiceName(serviceName);
+        Service s = getServiceDAO().getByServiceName(serviceName);
+        s.setMetadataService(getMetadataService(serviceName));
+        s.getMetadataService().getRepository().setName(s.getName());
+        return s;
     }
 
     /**

@@ -28,6 +28,7 @@
 	<import resource="spring-service-custom.xml"/>
 
 	<bean id="Service" class="${service.classname}">
+		<property name="repository" ref="Repository" />
 	</bean>
 		
 </beans>

@@ -59,7 +59,7 @@ import xc.mst.utils.index.SolrIndexManager;
  * @author Eric Osisek
  */
 
-public abstract class GenericMetadataService extends BaseService implements MetadataService {
+public class GenericMetadataService extends BaseService implements MetadataService {
 
 	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_PROCESSING);
 
@@ -89,6 +89,8 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 	protected long startTime = new Date().getTime();
 	protected long endTime = 0;
 	protected long timeDiff = 0;
+	
+	protected Repository repository = null;
 
 	/**
 	 * 
@@ -175,7 +177,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 	 *
 	 * @param config The service specific configuration defined in the service's configuration file
 	 */
-	public abstract void loadConfiguration(String config);
+	public void loadConfiguration(String config) {}
 
 	/**
 	 * The MST calls this method to signal the Metadata Service to process the records.  Depending on the
@@ -544,7 +546,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 	 *
 	 * @throws ServiceValidationException When the service is invalid
 	 */
-	protected abstract void validateService() throws ServiceValidationException;
+	protected void validateService() throws ServiceValidationException {}
 
 	/**
 	 * This method processes a single record.
@@ -553,7 +555,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 	 * @return A list of outgoing records that should be added, modified, or deleted
 	 *         as a result of processing the incoming record
 	 */
-	protected abstract void processRecord(Record record) throws Exception ;
+	protected void processRecord(Record record) throws Exception {}
 
 	/**
 	 * Refreshes the index so all records are searchable.
@@ -942,12 +944,11 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 	
 	public void install() {
 		try {
-			executeServiceDBScripts("install.sql");
+			executeServiceDBScripts("xc/mst/services/install.sql");
 		} catch (Throwable t) {
 			LOG.error("", t);
 		}
 	}
-	
     
     /**
      * Executes the sql scripts in the folder provided
@@ -1009,16 +1010,25 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 		}
   	
     }
+    
+	public Repository getRepository() {
+		return this.repository;
+	}
 
-	public abstract void setInputRecordCount(int inputRecordCount);
+	public void setRepository(Repository repository) {
+		this.repository = repository;
+	}
+
+	public void setInputRecordCount(int inputRecordCount) {
+		
+	}
 
 	public void uninstall() {}
 	
 	public void update() {}
 	
 	public void process() {}
-	
-	public void getRepository() {}
+
 	
 	public void process(Repository repo, Format format, Set set) {}
 
