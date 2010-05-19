@@ -9,6 +9,9 @@
 
 package xc.mst.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.repo.Repository;
@@ -26,5 +29,18 @@ public interface MetadataService {
 	public void getRepository();
 	
 	public void process(Repository repo, Format format, Set set);
+	
+	// leftover
+	public void runService(int serviceId, int outputSetId);
+	public void setStatus(String status);
+	public boolean sendReportEmail(String problem);
+	public void setCanceled(boolean isCanceled);
+	public void setPaused(boolean isPaused);
+	public String getServiceName();
+	public String getServiceStatus();
+	public int getProcessedRecordCount();
+	public int getTotalRecordCount();
+	public List<String> getUnprocessedErrorRecordIdentifiers();
+	public void setUnprocessedErrorRecordIdentifiers(List<String> l);
 
 }

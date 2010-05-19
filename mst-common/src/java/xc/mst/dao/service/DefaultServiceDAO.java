@@ -673,7 +673,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					// The Object which will contain data on the service
 					Service service = new Service();
 
-					int i=0;
+					int i=1;
 					// Set the fields on the service
 					service.setId(results.getInt(i++));
 					service.setName(results.getString(i++));

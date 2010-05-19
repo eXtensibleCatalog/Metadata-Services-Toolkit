@@ -44,7 +44,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
-import xc.mst.services.GenericMetadataService;
+import xc.mst.services.MetadataService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
@@ -113,12 +113,12 @@ public class DefaultServicesService extends BaseService
 		}
     }
 	
-	public GenericMetadataService getMetadataService(String name) {
+	public MetadataService getMetadataService(String name) {
 		if (!serviceEntries.containsKey(name)) {
 			new ServiceEntry(name).start();	
 		}
 		ServiceEntry se = serviceEntries.get(name);
-		return (GenericMetadataService)se.ac.getBean("Service");
+		return (MetadataService)se.ac.getBean("Service");
 	}
 	
 	class ServiceEntry {
@@ -255,7 +255,7 @@ public class DefaultServicesService extends BaseService
     	
     	try
     	{
-    		GenericMetadataService mService = null; // An instance of the service we're adding
+    		MetadataService mService = null; // An instance of the service we're adding
 
     		String logFileName = getLogDAO().getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 
@@ -521,7 +521,7 @@ public class DefaultServicesService extends BaseService
     	
     	try
     	{
-    		GenericMetadataService mService = null; // An instance of the service we're adding
+    		MetadataService mService = null; // An instance of the service we're adding
 
     		String logFileName = getLogDAO().getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 

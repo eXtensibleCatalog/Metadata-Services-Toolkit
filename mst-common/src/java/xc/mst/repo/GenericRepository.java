@@ -1,3 +1,12 @@
+/**
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  */
+
 package xc.mst.repo;
 
 import java.util.Date;
@@ -41,8 +50,8 @@ public class GenericRepository extends BaseManager implements Repository {
 		getRepositoryDAO().beginBatch();
 	}
 	
-	public void endBatch() {
-		getRepositoryDAO().endBatch();
+	public void endBatch(String name) {
+		getRepositoryDAO().endBatch(name);
 	}
 
 	public List<Record> getPredecessors(Record r) {
@@ -55,9 +64,8 @@ public class GenericRepository extends BaseManager implements Repository {
 		return null;
 	}
 
-	public Record getRecord(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Record getRecord(long id) {
+		return getRepositoryDAO().getRecord(name, id);
 	}
 
 	public List<Record> getRecords(Date from, Date until, Integer startingId) {

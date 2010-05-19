@@ -13,8 +13,8 @@ import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
 import xc.mst.manager.services.ServicesManager;
-import xc.mst.services.GenericMetadataService;
 import xc.mst.services.MetadataServiceFactory;
+import xc.mst.services.MetadataService;
 import xc.mst.utils.MSTConfiguration;
 
 /**
@@ -47,7 +47,7 @@ public class ServiceWorkerThread extends WorkerThread
 	/**
 	 * Reference to the running service
 	 */
-	private static GenericMetadataService runningService;
+	private static MetadataService runningService;
 	
 	/**
 	 * Sets the ID of the harvest schedule to be run
@@ -161,7 +161,7 @@ public class ServiceWorkerThread extends WorkerThread
 		return runningService.getTotalRecordCount();
 	}	
 	
-	public static GenericMetadataService getRunningService(){
+	public static MetadataService getRunningService(){
 		
 		return runningService;
 	}

@@ -203,6 +203,7 @@ public abstract class RecordService extends BaseService
 	 */
 	public final static String FIELD_ALL = "all";
 
+	public abstract Record createRecord();
 	public abstract Record createSuccessor(Record record, Service s);
 	
 	/**

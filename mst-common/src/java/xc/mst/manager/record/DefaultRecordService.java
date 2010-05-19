@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SimpleTimeZone;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
@@ -35,7 +36,6 @@ import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.manager.IndexException;
-import xc.mst.services.GenericMetadataService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.RecordList;
@@ -50,6 +50,8 @@ import xc.mst.utils.index.SolrIndexManager;
  */
 public class DefaultRecordService extends RecordService
 {
+	private static final Logger LOG = Logger.getLogger(DefaultRecordService.class);
+	
 	/**
 	 * The FRBR level ID term
 	 */
@@ -64,12 +66,21 @@ public class DefaultRecordService extends RecordService
 	 * The trait term
 	 */
 	protected final static Term TERM_TRAIT = new Term(FIELD_TRAIT, "");
+	
+	public Record createRecord() {
+		Record rec = new Record();
+		getRepositoryDAO().injectId(rec);
+		return rec;
+	}
 
 	public Record createSuccessor(Record pred, Service s) {
 		Record succ = new Record();
 		succ.setPredecessor(pred);
 		succ.setService(s);
 		getRepositoryDAO().injectId(succ);
+		LOG.debug("MSTConfiguration.getProperty(DomainNameIdentifier): "+MSTConfiguration.getProperty("DomainNameIdentifier"));
+		LOG.debug("s.getName(): "+s.getName());
+		LOG.debug("succ.getId(): "+succ.getId());
 		succ.setOaiIdentifier("oai:"+MSTConfiguration.getProperty("DomainNameIdentifier")+":"+s.getName()+":"+succ.getId());
 		return succ;
 	}

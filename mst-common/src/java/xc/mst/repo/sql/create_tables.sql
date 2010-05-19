@@ -19,14 +19,16 @@ create table repo_name_record_updates (
 	id                    int        NOT NULL    AUTO_INCREMENT,
 	record_id             int,
 	date_updated          datetime,
+	PRIMARY KEY (id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 create table repo_name_records_xml (
-	record_id      int         primary key,
-	xml            longtext
+	record_id      int         not null,
+	xml            longtext,
+	PRIMARY KEY (record_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-create table repo_name_record_set (
+create table repo_name_record_sets (
 	record_id             int,
 	set_id                int,
 	PRIMARY KEY (record_id, set_id),

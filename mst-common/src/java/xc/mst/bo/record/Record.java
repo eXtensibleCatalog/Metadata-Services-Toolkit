@@ -376,7 +376,7 @@ public class Record
 	public String getOaiIdentifier()
 	{
 		return oaiIdentifier;
-	} // end method getOaiIdentifier()
+	}
 
 	/**
 	 * Sets the record's OAI identifier
@@ -392,7 +392,21 @@ public class Record
 		for (int j=oaiIds.length-1; j>=0; j--) {
 			oaiIds[i++] = oais[j];
 		}
-	} // end method setOaiIdentifier(String)
+	}
+	
+	public void setOaiIdentifier(String[] oaiIds) {
+		StringBuilder sb = new StringBuilder();
+		this.oaiIds = oaiIds;
+		for (int i=0; i>=0; i--) {
+			if (oaiIds[i] != null) {
+				sb.append(oaiIds[i]);
+				if (i != 0) {
+					sb.append(":");
+				}
+			}
+		}
+		this.oaiIdentifier = sb.toString();
+	}
 	
 	public String[] getOaiIds() {
 		return this.oaiIds;

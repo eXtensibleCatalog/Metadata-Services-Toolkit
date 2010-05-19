@@ -28,17 +28,13 @@ import org.testng.annotations.Test;
 
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DataException;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.DefaultProviderDAO;
 import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.ProviderDAO;
-import xc.mst.dao.service.DefaultServiceDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.helper.TestHelper;
 import xc.mst.manager.IndexException;
-import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.services.GenericMetadataService;
+import xc.mst.services.MetadataService;
 import xc.mst.services.MetadataServiceFactory;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
@@ -159,7 +155,7 @@ public class TestTransformation {
 		{
 
 			// Run Transformation Service
-			GenericMetadataService ms  = new MetadataServiceFactory().getService(transformationServiceId);
+			MetadataService ms  = new MetadataServiceFactory().getService(transformationServiceId);
 			ms.runService(transformationServiceId, -1);;
 			((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
 			Thread.sleep(1000);

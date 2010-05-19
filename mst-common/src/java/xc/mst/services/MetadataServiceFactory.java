@@ -17,6 +17,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.services.ServicesManager;
+import xc.mst.services.MetadataService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
@@ -39,7 +40,7 @@ public class MetadataServiceFactory {
 	 * @param serviceId The ID of the MetadataService to run
 	 * @param outputSetId The ID of the set that records processed by this service should be added to
 	 */
-	public static GenericMetadataService getService(int serviceId )
+	public static MetadataService getService(int serviceId )
 	{
 		if(log.isDebugEnabled())
 			log.debug("EnteringServiceFactoryegetnService for the service with ID " + serviceId + ".");
@@ -48,7 +49,7 @@ public class MetadataServiceFactory {
 
 		// Get the service
 		Service service = null;
-		GenericMetadataService serviceInstance = null;
+		MetadataService serviceInstance = null;
 		// Get the class for the service specified in the configuration file
 		try {
 		

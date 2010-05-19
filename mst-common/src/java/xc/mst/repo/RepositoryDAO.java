@@ -1,16 +1,31 @@
+/**
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  */
+
 package xc.mst.repo;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 import xc.mst.bo.record.Record;
@@ -36,8 +51,9 @@ public class RepositoryDAO extends BaseDAO {
 	protected boolean inBatch = false;
 	protected List<Record> recordsToAdd = null;
 	
-	public RepositoryDAO() {
-		super();
+	@Override
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 		this.getNextOaiId = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_next_oai_id");
 	}
 	
@@ -53,7 +69,8 @@ public class RepositoryDAO extends BaseDAO {
 		inBatch = true;
 	}
 	
-	public void endBatch() {
+	public void endBatch(String name) {
+		addRecords(name, null, true);
 		inBatch = false;
 	}
 	
@@ -69,6 +86,10 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public void addRecords(String name, List<Record> records) {
+		addRecords(name, records, false);
+	}
+	
+	public void addRecords(String name, List<Record> records, boolean force) {
 		if (inBatch) {
 			if (recordsToAdd == null) {
 				recordsToAdd = new ArrayList<Record>();
@@ -77,9 +98,12 @@ public class RepositoryDAO extends BaseDAO {
 			if (MSTConfiguration.getProperty("batchSize") != null) {
 				batchSize = Integer.parseInt(MSTConfiguration.getProperty("batchSize"));
 			}
-			recordsToAdd.addAll(records);
-			if (batchSize >= recordsToAdd.size()) {
-        		String sql = 
+			if (records != null) {
+				recordsToAdd.addAll(records);
+			}
+			if (force || batchSize >= recordsToAdd.size()) {
+				final Date d = new Date();
+				String sql = 
         			"insert into "+getTableName(name, RECORDS_TABLE)+
         			" (record_id, oai_pmh_id_1, oai_pmh_id_2, oai_pmh_id_3, oai_pmh_id_4,"+
         			"  date_created, status, format_id ) "+
@@ -88,19 +112,18 @@ public class RepositoryDAO extends BaseDAO {
         				"status=?, "+
         				"format_id=? "+
         			";";
-        		final Date d = new Date();
 		        int[] updateCounts = jdbcTemplate.batchUpdate(
 		        		sql,
 		                new BatchPreparedStatementSetter() {
 		                    public void setValues(PreparedStatement ps, int j) throws SQLException {
-		                    	int i=0;
+		                    	int i=1;
 		                    	Record r = recordsToAdd.get(j);
 		                        ps.setLong(i++, r.getId());
 		                        ps.setString(i++, r.getOaiIds()[0]);
 		                        ps.setString(i++, r.getOaiIds()[1]);
 		                        ps.setString(i++, r.getOaiIds()[2]);
 		                        ps.setString(i++, r.getOaiIds()[3]);
-		                        ps.setDate(i++, new java.sql.Date(d.getTime()));
+		                        ps.setTimestamp(i++, new Timestamp(d.getTime()));
 		                        for (int k=0; k<2; k++) {
 			                        ps.setString(i++, String.valueOf(r.getStatus()));
 			                        if (r.getFormat() != null) {
@@ -115,10 +138,34 @@ public class RepositoryDAO extends BaseDAO {
 		                        return recordsToAdd.size();
 		                    }
 		                } );
+				sql = 
+        			"insert into "+getTableName(name, RECORDS_XML_TABLE)+
+        			" (record_id, xml) "+
+        			"values (?,?) "+
+        			"on duplicate key update "+
+        				"xml=? "+
+        			";";
+		        updateCounts = jdbcTemplate.batchUpdate(
+		        		sql,
+		                new BatchPreparedStatementSetter() {
+		                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+		                    	int i=1;
+		                    	Record r = recordsToAdd.get(j);
+		                        ps.setLong(i++, r.getId());
+		                        ps.setString(i++, r.getOaiXml());
+		                        ps.setString(i++, r.getOaiXml());
+		                    }
+	
+		                    public int getBatchSize() {
+		                        return recordsToAdd.size();
+		                    }
+		                } );
 		        recordsToAdd = null;
 			}
 		} else {
-			LOG.error("unsupported");
+			beginBatch();
+			addRecords(name, records);
+			endBatch(name);
 		}
 	}
 
@@ -161,6 +208,50 @@ public class RepositoryDAO extends BaseDAO {
 			LOG.info(sql);
 			this.jdbcTemplate.execute(sql);
 		}
+	}
+	
+	public Record getRecord(String name, long id) {
+		String sql = 
+			"select r.record_id, "+
+				"r.oai_pmh_id_1, "+
+				"r.oai_pmh_id_2, "+
+				"r.oai_pmh_id_3, "+
+				"r.oai_pmh_id_4, "+
+				"r.date_created, "+
+				"r.status, "+
+				"x.xml "+
+			"from "+getTableName(name, RECORDS_TABLE)+" r, "+
+				getTableName(name, RECORDS_XML_TABLE)+" x "+
+			"where r.record_id=? "+
+				"and r.record_id = x.record_id";
+		Record r = null;
+		try {
+			r = this.jdbcTemplate.queryForObject(sql, new RecordMapper(), id);
+		} catch (EmptyResultDataAccessException e) {
+			LOG.info("record not found for id: "+id);
+		}
+		return r;
+	}
+	
+	private static final class RecordMapper implements RowMapper<Record> {
+
+	    public Record mapRow(ResultSet rs, int rowNum) throws SQLException {
+	        Record r = new Record();
+	        r.setId(rs.getLong("r.record_id"));
+	        String[] oaiIds = new String[4];
+	        oaiIds[0] = rs.getString("r.oai_pmh_id_1");
+	        oaiIds[1] = rs.getString("r.oai_pmh_id_2");
+	        oaiIds[2] = rs.getString("r.oai_pmh_id_3");
+	        oaiIds[3] = rs.getString("r.oai_pmh_id_4");
+	        r.setOaiIdentifier(oaiIds);
+	        r.setCreatedAt(rs.getTimestamp("r.date_created"));
+	        String status = rs.getString("r.status");
+	        if (status != null && status.length() == 1) {
+	        	r.setStatus(status.charAt(0));
+	        }
+	        r.setOaiXml(rs.getString("x.xml"));
+	        return r;
+	    }        
 	}
 
 }

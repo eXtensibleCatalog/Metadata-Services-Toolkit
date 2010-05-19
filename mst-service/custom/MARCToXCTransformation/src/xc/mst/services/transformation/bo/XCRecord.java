@@ -37,7 +37,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.repository.FormatService;
-import xc.mst.services.GenericMetadataService;
+import xc.mst.services.impl.GenericMetadataService;
 import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
 import xc.mst.utils.MSTConfiguration;
 

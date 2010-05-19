@@ -7,7 +7,7 @@
   *
   */
 
-package xc.mst.services;
+package xc.mst.services.impl;
 
 
 import java.io.BufferedReader;
@@ -41,6 +41,8 @@ import xc.mst.email.Emailer;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
 import xc.mst.repo.Repository;
+import xc.mst.services.MetadataService;
+import xc.mst.services.ServiceValidationException;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
@@ -132,7 +134,7 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 	protected Set outputSet;
 
 	/** Stores the unprocessed record identifiers */
-	protected ArrayList<String> unprocessedErrorRecordIdentifiers = new ArrayList<String>();
+	protected List<String> unprocessedErrorRecordIdentifiers = new ArrayList<String>();
 	
 	private long startTime = new Date().getTime();
 	private long endTime = 0;
@@ -971,12 +973,12 @@ public abstract class GenericMetadataService extends BaseService implements Meta
 		}
 	} // end method sendReportEmail
 
-	public ArrayList<String> getUnprocessedErrorRecordIdentifiers() {
+	public List<String> getUnprocessedErrorRecordIdentifiers() {
 		return unprocessedErrorRecordIdentifiers;
 	}
 
 	public void setUnprocessedErrorRecordIdentifiers(
-			ArrayList<String> unprocessedErrorRecordIdentifiers) {
+			List<String> unprocessedErrorRecordIdentifiers) {
 		this.unprocessedErrorRecordIdentifiers = unprocessedErrorRecordIdentifiers;
 	}
 

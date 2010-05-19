@@ -31,7 +31,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseManager;
-import xc.mst.services.GenericMetadataService;
+import xc.mst.services.MetadataService;
 import xc.mst.utils.MSTConfiguration;
 
 public class ServicesManager extends BaseManager implements ApplicationListener<ApplicationEvent>, ApplicationContextAware {
@@ -85,13 +85,13 @@ public class ServicesManager extends BaseManager implements ApplicationListener<
 		}
     }
 	
-	public GenericMetadataService getService(String name) {
+	public MetadataService getService(String name) {
 		System.out.println("name: "+name);
 		if (serviceEntries.containsKey(name)) {
 			ServiceEntry se = serviceEntries.get(name);
 			System.out.println("se: "+se);
 			System.out.println("se.ac: "+se.ac);
-			return (GenericMetadataService)se.ac.getBean("Service");
+			return (MetadataService)se.ac.getBean("Service");
 		}
 		return null;
 	}

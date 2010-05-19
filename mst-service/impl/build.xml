@@ -99,8 +99,14 @@
 	</target>
 
 	<target name="ms.deploy" depends="ms.jar.nodep">
-		<copy todir="${tomcat.dir}/webapps/${mp.project-name}/WEB-INF/lib" 
-			file="${ms.build.dir}/${ms.project-name}-${ms.version}.jar" />
+		<copy todir="${ms.custom}" enablemultiplemappings="true" file="${ms.build.dir}/${ms.project-name}-${ms.version}.jar">
+			<scriptmapper language="javascript">
+			  self.addMappedName("../example/build/lib/"+source);
+			  self.addMappedName("MARCNormalization/build/lib/"+source);
+			  self.addMappedName("MARCToXCTransformation/build/lib/"+source);
+			  self.addMappedName("aggregation/build/lib/"+source);
+			</scriptmapper>
+		</copy>
 	</target>
 
 	<target name="ms.publish" depends="ms.jar, ms.resolve">
