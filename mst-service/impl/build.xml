@@ -99,7 +99,10 @@
 	</target>
 
 	<target name="ms.deploy" depends="ms.jar.nodep">
-		<copy todir="${ms.custom}" enablemultiplemappings="true" file="${ms.build.dir}/${ms.project-name}-${ms.version}.jar">
+		<copy todir="${ms.custom}" enablemultiplemappings="true">
+			<fileset dir="${ms.build.dir}">
+				<include name="${ms.project-name}-${ms.version}.jar" />
+			</fileset>
 			<scriptmapper language="javascript">
 			  self.addMappedName("../example/build/lib/"+source);
 			  self.addMappedName("MARCNormalization/build/lib/"+source);

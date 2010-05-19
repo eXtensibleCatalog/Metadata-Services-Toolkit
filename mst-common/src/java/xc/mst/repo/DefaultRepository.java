@@ -13,10 +13,10 @@ import java.util.Date;
 import java.util.List;
 
 import xc.mst.bo.record.Record;
-import xc.mst.manager.BaseManager;
+import xc.mst.manager.BaseService;
 import xc.mst.utils.MSTConfiguration;
 
-public class GenericRepository extends BaseManager implements Repository {
+public class DefaultRepository extends BaseService implements Repository {
 	
 	protected String name = null;
 

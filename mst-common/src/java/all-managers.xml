@@ -25,7 +25,6 @@
 	 -->
 	<bean name="SingleThreaded" class="xc.mst.utils.index.SolrIndexManager" parent="BaseManager" scope="singleton" />
 	<bean name="MultiThreaded" class="xc.mst.utils.index.ThreadedSolrIndexManager" parent="BaseManager" scope="singleton" />
-	<bean name="Repository" class="xc.mst.repo.GenericRepository" parent="BaseManager" scope="prototype" />
 	
 	<alias name="${SOLRIndexer}" alias="SolrIndexManager" />
 		

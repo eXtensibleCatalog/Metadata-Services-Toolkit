@@ -9,20 +9,35 @@
 
 package xc.mst.spring;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ScopeMetadata;
 import org.springframework.context.annotation.ScopeMetadataResolver;
 
 import xc.mst.dao.BaseDAO;
 import xc.mst.manager.BaseService;
+import xc.mst.repo.DefaultRepository;
 
 public class MSTScopeMetadataResolver implements ScopeMetadataResolver {
+	
+	@SuppressWarnings("unchecked")
+	protected List<Class> prototypeScopes = null;
+	
+	@SuppressWarnings("unchecked")
+	public MSTScopeMetadataResolver() {
+		prototypeScopes = new ArrayList<Class>();
+		prototypeScopes.add(DefaultRepository.class);
+	}
 
-	 @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public ScopeMetadata resolveScopeMetadata(BeanDefinition definition) {
 		 ScopeMetadata scopeMetadata = new ScopeMetadata();
 		 Class c = definition.getClass();
-		 if (BaseDAO.class.isAssignableFrom(c)) {
+		 if (prototypeScopes.contains(c)) {
+			 scopeMetadata.setScopeName("prototype");
+		 } else if (BaseDAO.class.isAssignableFrom(c)) {
 			 scopeMetadata.setScopeName("singleton");
 		 } else if (BaseService.class.isAssignableFrom(c)) {
 			 scopeMetadata.setScopeName("singleton");

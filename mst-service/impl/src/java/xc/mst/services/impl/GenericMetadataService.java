@@ -59,86 +59,36 @@ import xc.mst.utils.index.SolrIndexManager;
  * @author Eric Osisek
  */
 
-public abstract class GenericMetadataService extends BaseService implements MetadataService
-{
-	/**
-	 * The logger object
-	 */
+public abstract class GenericMetadataService extends BaseService implements MetadataService {
+
 	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_PROCESSING);
 
-	/**
-	 * The service representing this service in the database
-	 */
 	protected Service service = null;
 
-	/**
-	 * The processing directives for this service
-	 */
-	private List<ProcessingDirective> processingDirectives = null;
-
-	/**
-	 * The number of warnings in running the current service
-	 */
-	private int warningCount = 0;
-
-	/**
-	 * The number of errors in running the current service
-	 */
-	private int errorCount = 0;
-	
-	/**
-	 * The number of errors in running the current service per commit
-	 */
-	private int errorCountPerCommit = 0;
-
-	/**
-	 * Used to send email reports
-	 */
-	private Emailer mailer = new Emailer();
+	protected List<ProcessingDirective> processingDirectives = null;
+	protected int warningCount = 0;
+	protected int errorCount = 0;
+	protected int errorCountPerCommit = 0;
+	protected Emailer mailer = new Emailer();
 
 	/**
 	 * A list of services to run after this service's processing completes
 	 * The keys are the service IDs and the values are the IDs of the sets
 	 * that service's records should get added to
 	 */
-	private HashMap<Integer, Integer> servicesToRun = new HashMap<Integer, Integer>();
+	protected HashMap<Integer, Integer> servicesToRun = new HashMap<Integer, Integer>();
 
-	/**
-	 * The flag for indicating cancel service operation.
-	 */
-	private boolean isCanceled;
-
-	/**
-	 * The flag for indicating service operation pause.
-	 */
-	private boolean isPaused;
-
-	/**
-	 * The number of records processed by the service so far
-	 */
+	protected boolean isCanceled;
+	protected boolean isPaused;
 	protected int processedRecordCount = 0;
-	
-	/**
-	 * The number of records the service needs to process
-	 */
-	private int totalRecordCount = 0;
-
-	/**
-	 * The number of input records 
-	 */
+	protected int totalRecordCount = 0;
 	protected int inputRecordCount = 0;
-	
-	/**
-	 * The output set id 
-	 */
 	protected Set outputSet;
-
-	/** Stores the unprocessed record identifiers */
 	protected List<String> unprocessedErrorRecordIdentifiers = new ArrayList<String>();
 	
-	private long startTime = new Date().getTime();
-	private long endTime = 0;
-	private long timeDiff = 0;
+	protected long startTime = new Date().getTime();
+	protected long endTime = 0;
+	protected long timeDiff = 0;
 
 	/**
 	 * 
