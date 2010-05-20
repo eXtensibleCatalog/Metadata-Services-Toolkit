@@ -43,6 +43,7 @@ public class BaseTest {
 			t.printStackTrace(System.out);
 		}
 		repo = (Repository)MSTConfiguration.getBean("Repository");
+		repo.setName("r1");
 		repositoryDAO = (RepositoryDAO)MSTConfiguration.getBean("RepositoryDAO");
 		recordService = (RecordService)MSTConfiguration.getBean("RecordService");
 		servicesService = (ServicesService)MSTConfiguration.getBean("ServicesService");

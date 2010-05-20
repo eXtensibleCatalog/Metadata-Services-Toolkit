@@ -11,6 +11,7 @@ package xc.mst.spring;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.springframework.core.type.ClassMetadata;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
@@ -19,6 +20,8 @@ import org.springframework.core.type.filter.TypeFilter;
 import xc.mst.dao.BaseDAO;
 
 public class DAOTypeFilter implements TypeFilter {
+	
+	private static final Logger LOG = Logger.getLogger(DAOTypeFilter.class);
 
 	@SuppressWarnings("unchecked")
 	public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) 
@@ -29,7 +32,7 @@ public class DAOTypeFilter implements TypeFilter {
 			Class c = getClass().getClassLoader().loadClass(className);
 			//Class c = classMetadata.getClass();
 			if (BaseDAO.class.isAssignableFrom(c) && !BaseDAO.class.equals(c)) {
-				System.out.println("c: "+c.getName());
+				LOG.debug("c: "+c.getName());
 				return true;
 			} else {
 				return false;

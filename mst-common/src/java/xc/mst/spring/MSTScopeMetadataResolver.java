@@ -12,15 +12,18 @@ package xc.mst.spring;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ScopeMetadata;
 import org.springframework.context.annotation.ScopeMetadataResolver;
 
 import xc.mst.dao.BaseDAO;
 import xc.mst.manager.BaseService;
-import xc.mst.repo.DefaultRepository;
+import xc.mst.repo.Repository;
 
 public class MSTScopeMetadataResolver implements ScopeMetadataResolver {
+	
+	private static final Logger LOG = Logger.getLogger(MSTScopeMetadataResolver.class);
 	
 	@SuppressWarnings("unchecked")
 	protected List<Class> prototypeScopes = null;
@@ -28,20 +31,34 @@ public class MSTScopeMetadataResolver implements ScopeMetadataResolver {
 	@SuppressWarnings("unchecked")
 	public MSTScopeMetadataResolver() {
 		prototypeScopes = new ArrayList<Class>();
-		prototypeScopes.add(DefaultRepository.class);
+		prototypeScopes.add(Repository.class);
 	}
 
 	@SuppressWarnings("unchecked")
 	public ScopeMetadata resolveScopeMetadata(BeanDefinition definition) {
-		 ScopeMetadata scopeMetadata = new ScopeMetadata();
-		 Class c = definition.getClass();
-		 if (prototypeScopes.contains(c)) {
-			 scopeMetadata.setScopeName("prototype");
-		 } else if (BaseDAO.class.isAssignableFrom(c)) {
-			 scopeMetadata.setScopeName("singleton");
-		 } else if (BaseService.class.isAssignableFrom(c)) {
-			 scopeMetadata.setScopeName("singleton");
-		 }
-		 return scopeMetadata;
+		try {
+			ScopeMetadata scopeMetadata = new ScopeMetadata();
+			String className = definition.getBeanClassName();
+			Class c = getClass().getClassLoader().loadClass(className);
+			boolean prototype = false;
+			for (Class pc : prototypeScopes) {
+				if (pc.isAssignableFrom(c)) {
+					prototype = true;
+					break;
+				}
+			}
+			LOG.debug("checking scope for c:"+c);
+			if (prototype) {
+				LOG.debug("prototype for "+c);
+				scopeMetadata.setScopeName("prototype");
+			} else if (BaseDAO.class.isAssignableFrom(c)) {
+				scopeMetadata.setScopeName("singleton");
+			} else if (BaseService.class.isAssignableFrom(c)) {
+				scopeMetadata.setScopeName("singleton");
+			}
+			return scopeMetadata;
+		} catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	 }
 }

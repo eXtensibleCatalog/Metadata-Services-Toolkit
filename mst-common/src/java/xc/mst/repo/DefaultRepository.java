@@ -50,7 +50,7 @@ public class DefaultRepository extends BaseService implements Repository {
 		getRepositoryDAO().beginBatch();
 	}
 	
-	public void endBatch(String name) {
+	public void endBatch() {
 		getRepositoryDAO().endBatch(name);
 	}
 
@@ -68,9 +68,8 @@ public class DefaultRepository extends BaseService implements Repository {
 		return getRepositoryDAO().getRecord(name, id);
 	}
 
-	public List<Record> getRecords(Date from, Date until, Integer startingId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Record> getRecords(Date from, Date until, Long startingId) {
+		return getRepositoryDAO().getRecords(name, from, until, startingId);
 	}
 
 }

@@ -48,6 +48,15 @@ public class RepositoryDAO extends BaseDAO {
 	protected final static String RECORDS_SETS_TABLE = "RECORD_SETS";
 	protected final static String RECORD_PREDECESSORS_TABLE = "RECORD_PREDECESSORS";
 	
+	protected final static String RECORDS_TABLE_COLUMNS = 
+			"r.record_id, \n"+
+			"r.oai_pmh_id_1, \n"+
+			"r.oai_pmh_id_2, \n"+
+			"r.oai_pmh_id_3, \n"+
+			"r.oai_pmh_id_4, \n"+
+			"r.date_created, \n"+
+			"r.status, \n";
+	
 	protected boolean inBatch = false;
 	protected List<Record> recordsToAdd = null;
 	
@@ -212,13 +221,7 @@ public class RepositoryDAO extends BaseDAO {
 	
 	public Record getRecord(String name, long id) {
 		String sql = 
-			"select r.record_id, "+
-				"r.oai_pmh_id_1, "+
-				"r.oai_pmh_id_2, "+
-				"r.oai_pmh_id_3, "+
-				"r.oai_pmh_id_4, "+
-				"r.date_created, "+
-				"r.status, "+
+			"select "+RECORDS_TABLE_COLUMNS+
 				"x.xml "+
 			"from "+getTableName(name, RECORDS_TABLE)+" r, "+
 				getTableName(name, RECORDS_XML_TABLE)+" x "+
@@ -231,6 +234,32 @@ public class RepositoryDAO extends BaseDAO {
 			LOG.info("record not found for id: "+id);
 		}
 		return r;
+	}
+	
+	public List<Record> getRecords(String name, Date from, Date until, Long startingId) {
+		String sql = 
+			"select "+RECORDS_TABLE_COLUMNS+
+				"x.xml "+
+			"from "+getTableName(name, RECORDS_TABLE)+" r, "+
+				getTableName(name, RECORDS_XML_TABLE)+" x "+
+			"where r.record_id = x.record_id "+
+				"and r.date_created >= ? "+
+				"and r.date_created < ? ";
+		if (startingId != null) {
+			sql += " and r.record_id > ? ";
+		}
+		sql += " order by r.record_id limit 3";
+		List<Record> records = null;
+		try {
+			if (startingId != null) {
+				records = this.jdbcTemplate.query(sql, new Object[]{from, until, startingId}, new RecordMapper());	
+			} else {
+				records = this.jdbcTemplate.query(sql, new Object[]{from, until}, new RecordMapper());
+			}
+		} catch (EmptyResultDataAccessException e) {
+			LOG.info("no records found for from: "+from+" until: "+until+" startingId: "+startingId);
+		}
+		return records;
 	}
 	
 	private static final class RecordMapper implements RowMapper<Record> {

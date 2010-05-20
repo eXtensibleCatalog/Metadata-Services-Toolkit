@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.core.type.ClassMetadata;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
@@ -22,6 +23,8 @@ import xc.mst.manager.BaseManager;
 import xc.mst.manager.BaseService;
 
 public class ServiceTypeFilter implements TypeFilter {
+	
+	private static final Logger LOG = Logger.getLogger(ServiceTypeFilter.class);
 	
 	public static Map<String, String> serviceBeans = null;
 	
@@ -40,7 +43,7 @@ public class ServiceTypeFilter implements TypeFilter {
 			String className = classMetadata.getClassName();
 			Class c = getClass().getClassLoader().loadClass(className);
 			if (BaseService.class.isAssignableFrom(c) && !BaseManager.class.isAssignableFrom(c) && !BaseService.class.equals(c)) {
-				System.out.println("c: "+c.getName());
+				LOG.debug("c: "+c.getName());
 				return true;	
 			} else if (serviceBeans.containsKey(className)) {
 				return true;

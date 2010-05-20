@@ -9,18 +9,21 @@
 
 package xc.mst.spring;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanNameGenerator;
 
 public class MSTBeanNameGenerator implements BeanNameGenerator {
+	
+	private static final Logger LOG = Logger.getLogger(MSTBeanNameGenerator.class);
 
 	//@SuppressWarnings("unchecked")
 	public String generateBeanName(BeanDefinition definition,
             BeanDefinitionRegistry registry) {
 		String className = definition.getBeanClassName();
 		//Class c = definition.getClass();
-		System.out.println("className: "+className);
+		LOG.debug("className: "+className);
 		if (ServiceTypeFilter.serviceBeans.containsKey(className)) {
 			return ServiceTypeFilter.serviceBeans.get(className);
 		}
@@ -32,7 +35,7 @@ public class MSTBeanNameGenerator implements BeanNameGenerator {
 		if (idx0 != -1) {
 			className = className.substring(idx0+"Default".length());
 		}
-		System.out.println("className: "+className);
+		LOG.debug("className: "+className);
 		return className;
 	}
 }

@@ -13,6 +13,7 @@ import java.util.List;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
+import xc.mst.bo.service.Service;
 import xc.mst.repo.Repository;
 
 public interface MetadataService {
@@ -23,7 +24,7 @@ public interface MetadataService {
 	
 	public void update();
 	
-	public void process();
+	//public void process(Record r);
 	
 	public Repository getRepository();
 	
@@ -35,6 +36,8 @@ public interface MetadataService {
 	public boolean sendReportEmail(String problem);
 	public void setCanceled(boolean isCanceled);
 	public void setPaused(boolean isPaused);
+	public Service getService();
+	public void setService(Service service);
 	public String getServiceName();
 	public String getServiceStatus();
 	public int getProcessedRecordCount();

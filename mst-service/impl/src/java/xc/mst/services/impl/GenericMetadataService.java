@@ -64,7 +64,6 @@ public class GenericMetadataService extends BaseService implements MetadataServi
 	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_PROCESSING);
 
 	protected Service service = null;
-
 	protected List<ProcessingDirective> processingDirectives = null;
 	protected int warningCount = 0;
 	protected int errorCount = 0;
@@ -91,6 +90,14 @@ public class GenericMetadataService extends BaseService implements MetadataServi
 	protected long timeDiff = 0;
 	
 	protected Repository repository = null;
+
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
+	}
 
 	/**
 	 * 
@@ -941,14 +948,6 @@ public class GenericMetadataService extends BaseService implements MetadataServi
 	public void setOutputSet(Set outputSet) {
 		this.outputSet = outputSet;
 	}
-	
-	public void install() {
-		try {
-			executeServiceDBScripts("xc/mst/services/install.sql");
-		} catch (Throwable t) {
-			LOG.error("", t);
-		}
-	}
     
     /**
      * Executes the sql scripts in the folder provided
@@ -1020,16 +1019,52 @@ public class GenericMetadataService extends BaseService implements MetadataServi
 	}
 
 	public void setInputRecordCount(int inputRecordCount) {
-		
+	}
+	
+	public void install() {
+		try {
+			executeServiceDBScripts("xc/mst/services/install.sql");
+		} catch (Throwable t) {
+			LOG.error("", t);
+		}
 	}
 
-	public void uninstall() {}
+	public void uninstall() {
+		
+	}
 	
 	public void update() {}
 	
-	public void process() {}
+	public List<Record> process(Record r) {
+		List<Record> records = new ArrayList<Record>();
+		Record out = getRecordService().createSuccessor(r, getService());
+		out.setOaiXml("<bye>"+out.getId()+"</bye>");
+		records.add(out);
+		return records;
+	}
 
 	
-	public void process(Repository repo, Format format, Set set) {}
+	public void process(Repository repo, Format format, Set set) {
+		//TODO - create tables
+		//   one of which is a list of when the last "harvest" was
+		Date from = new Date(System.currentTimeMillis()-(1000*60*60*24*500));
+		Date until = new Date();
+		
+		List<Record> records = repo.getRecords(from, until, null);
+		
+		getRepository().beginBatch();
+		Long highestId = null;
+		while (records != null && records.size() > 0) {
+			for (Record in : records) {
+				List<Record> out = process(in);
+				if (out != null) {
+					getRepository().addRecords(out);
+				}
+				highestId = in.getId();
+			}
+			records = repo.getRecords(from, until, highestId);
+		}
+		getRepository().endBatch();
+	}
 
 }

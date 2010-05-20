@@ -21,13 +21,13 @@ public interface Repository {
 	
 	public void beginBatch();
 	
-	public void endBatch(String name);
+	public void endBatch();
 	
 	public void installOrUpdateIfNecessary(); 
 
 	public void addRecords(List<Record> records);
 	
-	public List<Record> getRecords(Date from, Date until, Integer startingId);
+	public List<Record> getRecords(Date from, Date until, Long startingId);
 	
 	public Record getRecord(String oaiId);
 	

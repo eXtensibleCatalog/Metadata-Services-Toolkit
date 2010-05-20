@@ -860,6 +860,7 @@ public class DefaultServicesService extends BaseService
         Service s = getServiceDAO().getByServiceName(serviceName);
         s.setMetadataService(getMetadataService(serviceName));
         s.getMetadataService().getRepository().setName(s.getName());
+        s.getMetadataService().setService(s);
         return s;
     }
 
