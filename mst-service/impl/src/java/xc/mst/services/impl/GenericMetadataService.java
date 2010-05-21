@@ -38,7 +38,7 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.email.Emailer;
-import xc.mst.manager.BaseService;
+import xc.mst.manager.BaseManager;
 import xc.mst.manager.IndexException;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataService;
@@ -59,7 +59,7 @@ import xc.mst.utils.index.SolrIndexManager;
  * @author Eric Osisek
  */
 
-public class GenericMetadataService extends BaseService implements MetadataService {
+public class GenericMetadataService extends BaseManager implements MetadataService {
 
 	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_PROCESSING);
 
@@ -1038,7 +1038,7 @@ public class GenericMetadataService extends BaseService implements MetadataServi
 	public List<Record> process(Record r) {
 		List<Record> records = new ArrayList<Record>();
 		Record out = getRecordService().createSuccessor(r, getService());
-		out.setOaiXml("<bye>"+out.getId()+"</bye>");
+		out.setOaiXml("<foo>"+out.getId()+"</foo>");
 		records.add(out);
 		return records;
 	}

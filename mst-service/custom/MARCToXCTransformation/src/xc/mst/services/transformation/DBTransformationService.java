@@ -11,6 +11,8 @@ package xc.mst.services.transformation;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DataException;
 import xc.mst.dao.service.DefaultOaiIdentifierForServiceDAO;
@@ -19,6 +21,8 @@ import xc.mst.manager.record.DBRecordService;
 import xc.mst.utils.TimingLogger;
 
 public class DBTransformationService extends TransformationService {
+	
+	private static final Logger LOG = Logger.getLogger(DBTransformationService.class);
 	
 	public void init() {
 		setOaiIdentifierForServiceDAO(new DBOaiIdentifierForServiceDAO());

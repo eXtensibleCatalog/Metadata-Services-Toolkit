@@ -26,7 +26,7 @@ public class ServiceTest extends BaseTest {
 	
 	public void process() {
 		try {
-			Service s = servicesService.getServiceByName("MARCNormalization");
+			Service s = servicesService.getServiceByName("MARCToXCTransformation");
 			MetadataService ms = s.getMetadataService();
 			LOG.debug("ms: "+ms);
 			Repository srepo = ms.getRepository();

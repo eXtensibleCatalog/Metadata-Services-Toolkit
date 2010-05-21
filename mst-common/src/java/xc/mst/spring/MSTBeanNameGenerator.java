@@ -14,7 +14,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanNameGenerator;
 
-public class MSTBeanNameGenerator implements BeanNameGenerator {
+public class MSTBeanNameGenerator extends MSTAutoBeanHelper implements BeanNameGenerator {
 	
 	private static final Logger LOG = Logger.getLogger(MSTBeanNameGenerator.class);
 

@@ -48,6 +48,7 @@ import xc.mst.services.MetadataService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
+import xc.mst.utils.Util;
 
 /**
  * Provides implementation for service methods to interact with the services in the MST
@@ -112,6 +113,7 @@ public class DefaultServicesService extends BaseService
     }
 	
 	public MetadataService getMetadataService(String name) {
+		LOG.debug("entering getMetadataService "+System.currentTimeMillis());
 		if (!serviceEntries.containsKey(name)) {
 			new ServiceEntry(name).start();	
 		}
@@ -182,7 +184,10 @@ public class DefaultServicesService extends BaseService
 				        		System.out.println("before thread start");
 				        		System.out.println("putting in key: "+id+" value:"+thisthis);
 				        		serviceEntries.put(id, thisthis);
+				        		Util util = (Util)MSTConfiguration.getBean("Util");
+				        		util.setClassLoader(loader);
 				        		ac.refresh();
+				        		util.setClassLoader(null);
 				        		System.out.println("after thread start");
 			        		}
 						} catch (Throwable t) {

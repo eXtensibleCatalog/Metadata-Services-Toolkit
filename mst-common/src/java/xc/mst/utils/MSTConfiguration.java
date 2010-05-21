@@ -122,7 +122,6 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 		try {
 			return MSTConfiguration.instance.applicationContext.getBean(name);
 		} catch (Throwable t) {
-			log.error("", t);
 			throw new RuntimeException(t);
 		}
 	}

@@ -31,27 +31,6 @@ public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationConte
 	private static final Logger LOG = Logger.getLogger(MSTBeanPostProcessor.class);
 	
 	protected ApplicationContext applicationContext = null;
-	protected Map<String, Method> serviceSetters = null;
-	protected Map<String, Method> managerSetters = null;
-	
-	public MSTBeanPostProcessor() {
-		serviceSetters = new HashMap<String, Method>();
-		for (Method m : BaseService.class.getMethods()) {
-			String mname = m.getName();
-			if (mname.startsWith("set") && mname.endsWith("DAO")) {
-				String beanName = mname.substring("set".length());
-				serviceSetters.put(beanName, m);
-			}
-		}
-		managerSetters = new HashMap<String, Method>();
-		for (Method m : BaseManager.class.getMethods()) {
-			String mname = m.getName();
-			if (mname.startsWith("set") && mname.endsWith("Service")) {
-				String beanName = mname.substring("set".length());
-				managerSetters.put(beanName, m);
-			}
-		}
-	}
 	
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
@@ -64,24 +43,46 @@ public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationConte
 		} else if (bean instanceof BaseService) {
 			LOG.info("bean: "+bean+" setUtil: "+this.applicationContext.getBean("Util"));
 			((BaseService)bean).setUtil((Util)this.applicationContext.getBean("Util"));
+			
+			Map<String, Method> serviceSetters = new HashMap<String, Method>();
+			for (Method m : bean.getClass().getMethods()) {
+				String mname = m.getName();
+				if (mname.startsWith("set") && mname.endsWith("DAO")) {
+					String bn = mname.substring("set".length());
+					serviceSetters.put(bn, m);
+				}
+			}
 			for (String s : serviceSetters.keySet()) {
-				Object o = this.applicationContext.getBean(s);
-				Method m = this.serviceSetters.get(s);
+				Object o = null;
+				Method m = null;
 				try {
+					m = serviceSetters.get(s);
+					o = this.applicationContext.getBean(s);
 					m.invoke(bean, o);
 				} catch (Throwable t) {
-					throw new RuntimeException(t);
+					LOG.error(t.getMessage()+"error calling "+bean.getClass()+"."+m.getName());
 				}
 			}
 		}
+		
 		if (bean instanceof BaseManager) {
+			Map<String, Method> managerSetters = new HashMap<String, Method>();
+			for (Method m : bean.getClass().getMethods()) {
+				String mname = m.getName();
+				if (mname.startsWith("set") && mname.endsWith("Service")) {
+					String bn = mname.substring("set".length());
+					managerSetters.put(bn, m);
+				}
+			}
 			for (String s : managerSetters.keySet()) {
-				Object o = this.applicationContext.getBean(s);
-				Method m = this.managerSetters.get(s);
+				Object o = null;
+				Method m = null;
 				try {
+					m = managerSetters.get(s);
+					o = this.applicationContext.getBean(s);
 					m.invoke(bean, o);
 				} catch (Throwable t) {
-					throw new RuntimeException(t);
+					LOG.error(t.getMessage()+"error calling "+bean.getClass()+"."+m.getName());
 				}
 			}	
 		}

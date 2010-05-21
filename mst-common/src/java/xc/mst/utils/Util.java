@@ -11,6 +11,8 @@ public class Util {
 	
 	public final static Logger LOG = Logger.getLogger(Util.class);
 	
+	protected ThreadLocal<ClassLoader> currentClassLoader = new ThreadLocal<ClassLoader>();
+	
 	public String slurp(String classpathResource) {
 		return slurp(classpathResource, null);
 	}
@@ -36,5 +38,12 @@ public class Util {
 		}
 		return null;
 	}
-
+	
+	public ClassLoader getClassLoader() {
+		return currentClassLoader.get();
+	}
+	
+	public void setClassLoader(ClassLoader cl) {
+		currentClassLoader.set(cl);
+	}
 }
