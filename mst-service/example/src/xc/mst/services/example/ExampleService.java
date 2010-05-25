@@ -1,5 +1,8 @@
 package xc.mst.services.example;
 
-public class ExampleService {
+import xc.mst.services.impl.GenericMetadataService;
+
+public class ExampleService extends GenericMetadataService {
+
 
 }
