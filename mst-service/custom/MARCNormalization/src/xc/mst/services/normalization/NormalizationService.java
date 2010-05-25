@@ -27,6 +27,7 @@ import org.xml.sax.InputSource;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.service.ErrorCode;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.repository.FormatService;
 import xc.mst.services.ServiceValidationException;
@@ -143,6 +144,75 @@ public class NormalizationService extends GenericMetadataService
 		{
 			LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
 		}
+	}
+	
+	@Override
+	public void getInputFormats(List<Format> formats) {
+		Format f = new Format();
+		f.setName("marcxml");
+		f.setSchemaLocation("http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd");
+		f.setNamespace("http://www.loc.gov/MARC21/slim");
+		formats.add(f);
+		
+		f = new Format();
+		f.setName("marc21");
+		f.setSchemaLocation("http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd");
+		f.setNamespace("http://www.loc.gov/MARC21/slim");
+		formats.add(f);
+	}
+	
+	@Override
+	public void getOutputFormats(List<Format> formats) {
+		Format f = new Format();
+		f.setName("marcxml");
+		f.setSchemaLocation("http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd");
+		f.setNamespace("http://www.loc.gov/MARC21/slim");
+		formats.add(f);
+	}
+	
+	@Override
+	public void getErrorCodes(List<ErrorCode> codes) {
+		ErrorCode code = new ErrorCode();
+		code.setErrorCode("100");
+		code.setErrorDescriptionFile("100.html");
+		codes.add(code);
+		
+		code = new ErrorCode();
+		code.setErrorCode("101");
+		code.setErrorDescriptionFile("101.html");
+		codes.add(code);
+		
+		code = new ErrorCode();
+		code.setErrorCode("102");
+		code.setErrorDescriptionFile("102.html");
+		codes.add(code);
+		
+		code = new ErrorCode();
+		code.setErrorCode("103");
+		code.setErrorDescriptionFile("103.html");
+		codes.add(code);
+		
+		code = new ErrorCode();
+		code.setErrorCode("104");
+		code.setErrorDescriptionFile("104.html");
+		codes.add(code);
+		
+		code = new ErrorCode();
+		code.setErrorCode("105");
+		code.setErrorDescriptionFile("105.html");
+		codes.add(code);
+		
+		code = new ErrorCode();
+		code.setErrorCode("106");
+		code.setErrorDescriptionFile("106.html");
+		
+		code = new ErrorCode();
+		code.setErrorCode("107");
+		code.setErrorDescriptionFile("107.html");
+		
+		code = new ErrorCode();
+		code.setErrorCode("109");
+		code.setErrorDescriptionFile("109.html");
 	}
 
 	@Override

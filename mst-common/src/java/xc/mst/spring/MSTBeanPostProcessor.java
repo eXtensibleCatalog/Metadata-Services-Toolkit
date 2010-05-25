@@ -69,7 +69,7 @@ public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationConte
 			Map<String, Method> managerSetters = new HashMap<String, Method>();
 			for (Method m : bean.getClass().getMethods()) {
 				String mname = m.getName();
-				if (mname.startsWith("set") && mname.endsWith("Service")) {
+				if (mname.startsWith("set") && mname.endsWith("Service") && !mname.equals("setService")) {
 					String bn = mname.substring("set".length());
 					managerSetters.put(bn, m);
 				}
@@ -82,7 +82,7 @@ public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationConte
 					o = this.applicationContext.getBean(s);
 					m.invoke(bean, o);
 				} catch (Throwable t) {
-					LOG.error(t.getMessage()+"error calling "+bean.getClass()+"."+m.getName());
+					LOG.error(t.getMessage()+" error calling "+bean.getClass()+"."+m.getName());
 				}
 			}	
 		}

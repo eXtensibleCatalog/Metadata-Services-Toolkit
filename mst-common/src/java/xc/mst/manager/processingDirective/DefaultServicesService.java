@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
 
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -251,23 +252,20 @@ public class DefaultServicesService extends BaseService
      * @throws java.io.IOException
      * @throws xc.mst.manager.processingDirective.ConfigFileException
      */
-    public void addNewService(String name) throws DataException, IOException, ConfigFileException
-    {
-    	BufferedReader in = null; // Reads the file
-    	
-    	File configFile = new File(MSTConfiguration.getUrlPath()+"/services/"+name+"/META-INF/classes/service.xccfg");
+    public void addNewService(String name) throws DataException, IOException, ConfigFileException {
+    	PropertiesConfiguration props = null; 
     	
     	try
     	{
-    		MetadataService mService = null; // An instance of the service we're adding
+    		props = new PropertiesConfiguration(MSTConfiguration.getUrlPath()+"/services/"+name+"/META-INF/classes/service-custom.properties");
 
     		String logFileName = getLogDAO().getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 
-    		in = new BufferedReader(new FileReader(configFile));
-
     		// The version of the service, which must appear in the second line of the configuration file
-    		String version = in.readLine();
-    		version = (version.indexOf('#') >= 0 ? version.substring(0, version.indexOf('#')).trim() : version.trim());
+    		String version = props.getString("service.version");
+    		if (!name.equals(props.getString("service.name"))) {
+    			throw new RuntimeException("service folder name must match the name in the properties file.");
+    		}
     		
     		if(version == null || version.length() == 0)
     		{
@@ -276,8 +274,7 @@ public class DefaultServicesService extends BaseService
     		}
 
     		// The name of the service's class, which must appear in the fourth line of the configuration file
-    		String className = in.readLine();
-    		className = (className.indexOf('#') >= 0 ? className.substring(0, className.indexOf('#')).trim() : className.trim());
+    		String className = props.getString("service.classname");
     		if(className == null || className.length() == 0)
     		{
     			LogWriter.addError(logFileName, "Error adding a new service: The fourth line of the service configuration file must be the service's class name.");
@@ -293,202 +290,80 @@ public class DefaultServicesService extends BaseService
     		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
 
-    		// Consume whitespace and comment lines in the configuration file
-    		String line = consumeCommentsAndWhitespace(in);
+    		String[] temp = new String[] {"input", "output"};
+    		for (int j=0; j<temp.length; j++) {
+        		
+        		String[] formatNames = props.getStringArray(temp[j]+".format.name");
+        		String[] formatSchemas = props.getStringArray(temp[j]+".format.schemaLocation");
+        		String[] formatNamespaces = props.getStringArray(temp[j]+".format.namespace");
+        		
+        		if (getUtil().arraysEqualInLength(formatNames, formatSchemas, formatNames)) {
+    				for (int i=0; i<formatNames.length; i++) {
+        				Format format = getFormatDAO().getByName(formatNames[i]);
 
-    		// The next line is expected to be the header for the input formats.
-    		// Reject anything else as an invalid configuration file.
-    		if(!line.trim().equals(FILE_INPUT_FORMATS))
-    		{
-    			String s = "The first section in the configuration file after the first three lines must be labeled \"INPUT FORMATS\", but was\n\t"+line;
-    			LogWriter.addError(logFileName, "Error adding a new service: "+s);
-    			throw new ConfigFileException(s);
+        				// If the format was not in the database, get it from the configuration file
+        				if(format == null)
+        				{
+        					format = new Format();
+        					format.setName(formatNames[i]);
+        					format.setSchemaLocation(formatSchemas[i]);
+        					format.setNamespace(formatNamespaces[i]);
+        					getFormatDAO().insert(format);
+        				}
+        				// Otherwise check whether or not the configuration file provided the same schema location and namespace for the format.
+        				// Log a warning if not
+        				else
+        				{
+        					if(!format.getSchemaLocation().equals(formatSchemas[i]))
+        						LogWriter.addWarning(logFileName, "The configuration file specified a schema location for the " +
+        								formatNames[i] + " format that differed from the one in the database. " +
+    									"The current schema location of " + format.getSchemaLocation() + " will be used " +
+    									"and the schema location " + formatSchemas[i] + " from the configuration file will be ignored.");
+
+        					if(!format.getNamespace().equals(formatNamespaces[i]))
+        						LogWriter.addWarning(logFileName, "The configuration file specified a namespace for the " +
+        								formatNames[i] + " format that differed from the one in the database. " +
+        								"The current namespace of " + format.getNamespace() + " will be used " +
+        								"and the namespace " + formatNamespaces[i] + " from the configuration file will be ignored.");
+        				}
+
+        				// Add the format we just parsed as an input format for the new service
+        				if (temp[i].equals("input")) {
+        					service.addInputFormat(format);	
+        				} else if (temp[i].equals("output")) {
+        					service.addOutputFormat(format);
+        				}
+    				}
+        		} else {
+        			throw new ConfigFileException(temp[j]+".formats don't match in length");
+        		}   						
     		}
-
-	    	// Parse and add the input formats
-    		do
-    		{
-    			// This line should either be the name of a format or the OUPUT FORMATS heading
-    			line = consumeCommentsAndWhitespace(in);
-    			if(line.startsWith("name:"))
-    			{
-    				String formatName = (line.contains("#") ? line.substring(5, line.indexOf("#")) : line.substring(5)).trim();
-
-    				// Get the format's schema
-    				line = consumeCommentsAndWhitespace(in);
-    				if(!line.startsWith("schema location:"))
-    				{
-    					LogWriter.addError(logFileName, "Error adding a new service: Invalid line in the configuration file: " + line + ".  Expected format schema location.");
-        				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected format schema location.");
-    				}
-
-    				String schemaLoc = (line.contains("#") ? line.substring(16, line.indexOf("#")) : line.substring(16)).trim();
-
-    				// Get the format's namespace
-    				line = consumeCommentsAndWhitespace(in);
-    				if(!line.startsWith("namespace:"))
-    				{
-    					LogWriter.addError(logFileName, "Error adding a new service: Invalid line in the configuration file: " + line + ".  Expected format namspace.");
-        				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected format namespace.");
-    				}
-
-    				String namespace = (line.contains("#") ? line.substring(10, line.indexOf("#")) : line.substring(10)).trim();
-
-    				// Get the format from the database
-    				Format format = getFormatDAO().getByName(formatName);
-
-    				// If the format was not in the database, get it from the configuration file
-    				if(format == null)
-    				{
-    					format = new Format();
-    					format.setName(formatName);
-    					format.setSchemaLocation(schemaLoc);
-    					format.setNamespace(namespace);
-    					getFormatDAO().insert(format);
-    				}
-    				// Otherwise check whether or not the configuration file provided the same schema location and namespace for the format.
-    				// Log a warning if not
-    				else
-    				{
-    					if(!format.getSchemaLocation().equals(schemaLoc))
-    						LogWriter.addWarning(logFileName, "The configuration file specified a schema location for the " +
-    								             formatName + " format that differed from the one in the database. " +
-    								             "The current schema location of " + format.getSchemaLocation() + " will be used " +
-							             		 "and the schema location " + schemaLoc + " from the configuration file will be ignored.");
-
-    					if(!format.getNamespace().equals(namespace))
-    						LogWriter.addWarning(logFileName, "The configuration file specified a namespace for the " +
-    								             formatName + " format that differed from the one in the database. " +
-    								             "The current namespace of " + format.getNamespace() + " will be used " +
-							             		 "and the namespace " + namespace + " from the configuration file will be ignored.");
-    				}
-
-    				// Add the format we just parsed as an input format for the new service
-    				service.addInputFormat(format);
-    			}
-    			else if(!line.equals(FILE_OUTPUT_FORMATS))
-    			{
-    				LogWriter.addError(logFileName, "Error adding a new service: Invalid line in the configuration file: " + line + ".  Expected format name.");
-    				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected format name.");
-    			}
-    		} while(!line.equals(FILE_OUTPUT_FORMATS));
-
-    		// Parse and add the output formats
-    		do
-    		{
-    			// This line should either be the name of a format or the ERROR MESSAGES heading
-    			line = consumeCommentsAndWhitespace(in);
-    			if(line.startsWith("name:"))
-    			{
-    				String formatName = (line.contains("#") ? line.substring(5, line.indexOf("#")) : line.substring(5)).trim();
-
-    				// Get the format's schema
-    				line = consumeCommentsAndWhitespace(in);
-    				if(!line.startsWith("schema location:"))
-    				{
-    					LogWriter.addError(logFileName, "Error adding a new service: Invalid line in the configuration file: " + line + ".  Expected format schema location.");
-        				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected format schema location.");
-    				}
-
-    				String schemaLoc = (line.contains("#") ? line.substring(16, line.indexOf("#")) : line.substring(16)).trim();
-
-    				// Get the format's namespace
-    				line = consumeCommentsAndWhitespace(in);
-    				if(!line.startsWith("namespace:"))
-    				{
-    					LogWriter.addError(logFileName, "Error adding a new service: Invalid line in the configuration file: " + line + ".  Expected format namspace.");
-        				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected format namespace.");
-    				}
-
-    				String namespace = (line.contains("#") ? line.substring(10, line.indexOf("#")) : line.substring(10)).trim();
-
-    				// Get the format from the database
-    				Format format = getFormatDAO().getByName(formatName);
-
-    				// If the format was not in the database, get it from the configuration file
-    				if(format == null)
-    				{
-    					format = new Format();
-    					format.setName(formatName);
-    					format.setSchemaLocation(schemaLoc);
-    					format.setNamespace(namespace);
-    					getFormatDAO().insert(format);
-    				}
-    				// Otherwise check whether or not the configuration file provided the same
-    				// schema location and namespace for the format. Log a warning if not
-    				else
-    				{
-    					if(!format.getSchemaLocation().equals(schemaLoc))
-    						LogWriter.addWarning(logFileName, "The configuration file specified a schema location for the " +
-    								             formatName + " format that differed from the one in the database. " +
-    								             "The current schema location of " + format.getSchemaLocation() + " will be used " +
-							             		 "and the schema location " + schemaLoc + " from the configuration file will be ignored.");
-
-    					if(!format.getNamespace().equals(namespace))
-    						LogWriter.addWarning(logFileName, "The configuration file specified a namespace for the " +
-    								             formatName + " format that differed from the one in the database. " +
-    								             "The current namespace of " + format.getNamespace() + " will be used " +
-							             		 "and the namespace " + namespace + " from the configuration file will be ignored.");
-    				}
-
-    				// Add the format we just parsed as an output format for the new service
-    				service.addOutputFormat(format);
-    			}
-    			else if(!line.equals(FILE_ERROR_MESSAGES))
-    			{
-    				LogWriter.addError(logFileName, "Error adding a new service: Invalid line in the configuration file: " + line + ".  Expected format name.");
-    				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected format name.");
-    			}
-    		} while(!line.equals(FILE_ERROR_MESSAGES));
 
     		// Insert the service
     		getServiceDAO().insert(service);
-
-    		// Parse and add the error codes
-    		do
-    		{
-    			// This line should either be an error code or the SERVICE CONFIG heading
-    			line = consumeCommentsAndWhitespace(in);
-    			if(line.startsWith("error code:"))
-    			{
-    				String errorCodeStr = (line.contains("#") ? line.substring(11, line.indexOf("#")) : line.substring(11)).trim();
-
-    				// Get the format's schema
-    				line = consumeCommentsAndWhitespace(in);
-    				if(!line.startsWith("error description file:"))
-    				{
-    					LogWriter.addError(logFileName, "Error adding a new service: Invalid line in the configuration file: " + line + ".  Expected error description file.");
-        				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected error description file.");
-    				}
-
-    				String errorDescriptionFile = (line.contains("#") ? line.substring(23, line.indexOf("#")) : line.substring(23)).trim();
-
+    		
+    		String[] errorCodes = props.getStringArray("error.code");
+    		String[] errorDescriptionFiles = props.getStringArray("error.descriptionFile");
+    		
+    		if (getUtil().arraysEqualInLength(errorCodes, errorDescriptionFiles)) {
+    			for (int i=0; i<errorCodes.length; i++) {
     				ErrorCode errorCode = new ErrorCode();
-    				errorCode.setErrorCode(errorCodeStr);
-    				errorCode.setErrorDescriptionFile(errorDescriptionFile);
+    				errorCode.setErrorCode(errorCodes[i]);
+    				errorCode.setErrorDescriptionFile(errorDescriptionFiles[i]);
     				errorCode.setService(service);
 
     				getErrorCodeDAO().insert(errorCode);
     			}
-    			else if(!line.equals(FILE_SERVICE_SPECIFIC))
-    			{
-    				LogWriter.addError(logFileName, "Error adding a new service: Invalid line in the configuration file: " + line + ".  Expected error code.");
-    				throw new ConfigFileException("Invalid line in the configuration file: " + line + ".  Expected error code.");
-    			}
-    		} while(!line.equals(FILE_SERVICE_SPECIFIC));
+    		} else {
+    			throw new ConfigFileException("error codes don't match in length");
+    		}
 
     		getMetadataService(name).install();
-    		
-    		ServiceUtil.getInstance().checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
+
     	}
     	catch(DataException e)
     	{
     		LOG.error("DataException while adding a service: ", e);
-    		throw e;
-    	}
-    	catch(IOException e)
-    	{
-    		LOG.error("IOException while adding a service: ", e);
     		throw e;
     	}
     	catch(ConfigFileException e)
@@ -500,12 +375,6 @@ public class DefaultServicesService extends BaseService
     	{
     		LOG.error("Exception while adding a service: ", e);
     	}
-    	finally
-    	{
-    		// Close the configuration file
-    		if(in != null)
-    			in.close();
-	    }
     }
 
 
@@ -755,7 +624,7 @@ public class DefaultServicesService extends BaseService
     			}
     		} while(!line.equals(FILE_SERVICE_SPECIFIC));
 
-    		getMetadataService(name).update();
+    		//getMetadataService(name).update(null);
  
     		// TODO what does below line do? Is it necessary? Should it be here or moved to Service Reprocess thread?
     		ServiceUtil.getInstance().checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);

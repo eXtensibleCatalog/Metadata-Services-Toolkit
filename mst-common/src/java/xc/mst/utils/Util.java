@@ -46,4 +46,27 @@ public class Util {
 	public void setClassLoader(ClassLoader cl) {
 		currentClassLoader.set(cl);
 	}
+	
+	public boolean arraysEqualInLength(String[]... arrs) {
+		boolean anyNulls = false;
+		boolean allNulls = true;
+		int length = -1;
+		for (int i=0; i<arrs.length; i++) {
+			if (arrs[i] == null) {
+				anyNulls = true;
+			} else {
+				allNulls = false;
+				if (length == -1 || length == arrs[i].length) {
+					length = arrs[i].length;
+				} else {
+					return false;
+				}
+			}
+		}
+		if (anyNulls && !allNulls) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

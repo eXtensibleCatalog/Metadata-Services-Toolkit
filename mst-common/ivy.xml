@@ -65,6 +65,10 @@
         <dependency org="commons-fileupload" name="commons-fileupload" rev="1.2.1" transitive="false">
             <artifact name="commons-fileupload" type="jar"/>
         </dependency>
+
+        <dependency org="commons-configuration" name="commons-configuration" rev="1.4" transitive="false">
+            <artifact name="commons-configuration" type="jar"/>
+        </dependency>
        
         <dependency org="org.freemarker" name="freemarker" rev="2.3.14">
             <artifact name="freemarker" type="jar"/>

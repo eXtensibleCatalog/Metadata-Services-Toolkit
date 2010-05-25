@@ -27,7 +27,12 @@ public class UpdateVersionTest extends BaseTest  {
 			fileNames.add("update.0.3.sql");
 			fileNames.add("update.0.3.0.sql");
 			fileNames.add("update.0.3.1.sql");
-			((GenericMetadataService)norm.getMetadataService()).update("0.2.1", "0.3", fileNames);
+			List<String> files2run = ((GenericMetadataService)norm.getMetadataService()).internalUpdate("0.2.1", "0.3", fileNames);
+			
+			assert files2run.get(0).equals("update.0.2.1.1.1.1.1.sql");
+			assert files2run.get(1).equals("update.0.2.2.sql");
+			assert files2run.get(2).equals("update.0.3.sql");
+			assert files2run.get(3).equals("update.0.3.0.sql");
 		} catch (Throwable t) {
 			LOG.error("", t);
 			throw new RuntimeException(t);

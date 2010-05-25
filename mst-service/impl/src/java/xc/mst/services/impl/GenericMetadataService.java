@@ -1081,6 +1081,19 @@ public abstract class GenericMetadataService extends BaseManager implements Meta
 	}
 	
 	public void update(String pvStr, String cvStr, List<String> fileNames) {
+		List<String> orderedFileNames2run = internalUpdate(pvStr, cvStr, fileNames);
+		for (String fn : orderedFileNames2run) {
+			try {
+				executeServiceDBScripts(fn);
+			} catch (Throwable t) {
+				LOG.error("", t);
+			}
+		}
+		
+		postUpdate();
+	}
+	
+	public List<String> internalUpdate(String pvStr, String cvStr, List<String> fileNames) {
 		List<Integer> pvs = getSubversions(pvStr);
 		List<Integer> cvs = getSubversions(cvStr);
 		
@@ -1088,7 +1101,6 @@ public abstract class GenericMetadataService extends BaseManager implements Meta
 		
 		String update = "update.";
 		for (String file : fileNames) {
-			LOG.debug("file: "+file);
 			int idx = file.indexOf(update);
 			String fileVers = file.substring(idx+update.length());
 			fileVers = fileVers.substring(0, fileVers.length()-4);
@@ -1114,10 +1126,6 @@ public abstract class GenericMetadataService extends BaseManager implements Meta
 		List<List<Integer>> updates2run = new ArrayList<List<Integer>>();
 		for (int i=0; i<fileVersions.size(); i++) {
 			List<Integer> fv = fileVersions.get(i);
-			LOG.debug("");
-			LOG.debug("");
-			LOG.debug("filename: "+fileNames.get(i));
-			LOG.debug("fv: "+fv);
 			boolean greaterThanPrevious = false;
 			boolean lessThanCurrent = false;
 			for (int j=0; j<fv.size(); j++) {
@@ -1125,15 +1133,7 @@ public abstract class GenericMetadataService extends BaseManager implements Meta
 				Integer csv = cvs.get(j);
 				Integer psv = pvs.get(j);
 				
-				//LOG.debug("");
-				//LOG.debug("fsv: "+fsv);
-				//LOG.debug("csv: "+csv);
-				//LOG.debug("psv: "+psv);
-				//LOG.debug("j: "+j);
-				//LOG.debug("fv.size(): "+fv.size());
-				
 				boolean isFinalSubversion = j+1==fv.size();
-				//LOG.debug("isFinalSubversion: "+isFinalSubversion);
 				boolean stillValid = false;
 				if (fsv > psv) {
 					greaterThanPrevious = true;
@@ -1157,27 +1157,18 @@ public abstract class GenericMetadataService extends BaseManager implements Meta
 				}
 				if (stillValid && isFinalSubversion) {
 					updates2run.add(fv);
-					LOG.debug("updates2run.add( "+fv);
 				}
 			}
 		}
-		
-		
-		//this much is correct
+
 		List<String> orderedFileNames2run = new ArrayList<String>();
 		while (updates2run.size() > 0) {
-			LOG.debug("updates2run: "+updates2run);
-			LOG.debug("");
 			int minVersionIdx = 0;
 			for (int i=1; i<updates2run.size(); i++) {
 				List<Integer> isv = updates2run.get(i);
 				List<Integer> msv = updates2run.get(minVersionIdx);
-				LOG.debug("msv: "+msv);
-				LOG.debug("isv: "+isv);
 				boolean newMin = true;
 				for (int j=0; j<isv.size(); j++) {
-					LOG.debug("msv.get(j): "+msv.get(j));
-					LOG.debug("isv.get(j): "+isv.get(j));
 					if (msv.get(j) < isv.get(j)) {
 						newMin = false;
 						break;
@@ -1190,7 +1181,6 @@ public abstract class GenericMetadataService extends BaseManager implements Meta
 					minVersionIdx = i;
 				}
 			}
-			LOG.debug("minVersionIdx: "+minVersionIdx);
 			int i=0;
 			SortedMap<Integer, String> files = new TreeMap<Integer, String>();
 			List<Integer> minVers = updates2run.get(minVersionIdx);
@@ -1207,16 +1197,8 @@ public abstract class GenericMetadataService extends BaseManager implements Meta
 			}
 		}
 		
-		for (String fn : orderedFileNames2run) {
-			try {
-				LOG.debug("fn: "+fn);
-				//executeServiceDBScripts(fn);
-			} catch (Throwable t) {
-				LOG.error("", t);
-			}
-		}
-		
-		postUpdate();
+		return orderedFileNames2run;
+
 	}
 	
 	protected List<Integer> getSubversions(String s) {
@@ -1224,7 +1206,6 @@ public abstract class GenericMetadataService extends BaseManager implements Meta
 		for (String v : s.split("\\.")) {
 			versions.add(Integer.parseInt(v));
 		}
-		LOG.debug("subversions from "+s+": "+versions);
 		return versions;
 	}
 	
