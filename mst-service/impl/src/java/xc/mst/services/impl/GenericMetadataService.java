@@ -11,6 +11,7 @@ package xc.mst.services.impl;
 
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.InetAddress;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 
@@ -30,6 +33,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordType;
+import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
@@ -59,7 +63,7 @@ import xc.mst.utils.index.SolrIndexManager;
  * @author Eric Osisek
  */
 
-public class GenericMetadataService extends BaseManager implements MetadataService {
+public abstract class GenericMetadataService extends BaseManager implements MetadataService {
 
 	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_PROCESSING);
 
@@ -97,6 +101,21 @@ public class GenericMetadataService extends BaseManager implements MetadataServi
 
 	public void setService(Service service) {
 		this.service = service;
+	}
+	
+	public void getOutputFormats(List<Format> formats) {
+		Format f = new Format();
+		f.setName("marcxml");
+		f.setSchemaLocation("http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd");
+		f.setNamespace("http://www.loc.gov/MARC21/slim");
+		formats.add(f);
+	}
+	
+	public void getErrorCodes(List<ErrorCode> codes) {
+	}
+	
+	public String getFolder() {
+		return MSTConfiguration.getUrlPath()+"/services/"+getServiceName();
 	}
 
 	/**
@@ -1024,16 +1043,193 @@ public class GenericMetadataService extends BaseManager implements MetadataServi
 	public void install() {
 		try {
 			executeServiceDBScripts("xc/mst/services/install.sql");
+			postInstall();
 		} catch (Throwable t) {
 			LOG.error("", t);
 		}
 	}
+	
+	public void postInstall() {
+	}
 
 	public void uninstall() {
-		
+		try {
+			executeServiceDBScripts("xc/mst/services/uninstall.sql");
+			postInstall();
+		} catch (Throwable t) {
+			LOG.error("", t);
+		}
+		postUninstall();
 	}
 	
-	public void update() {}
+	public void postUninstall() {
+	}
+	
+	public void update(String cvStr) {
+		update(cvStr, getService().getVersion());
+	}
+	
+	public void update(String pvStr, String cvStr) {
+		List<String> fileNames = new ArrayList<String>();
+		File dir = new File(getFolder()+"/sql/");
+		for (String file : dir.list()) {
+			if (file.contains("update.") && file.endsWith(".sql")) {
+				fileNames.add(file);
+			}
+		}
+		update(pvStr, cvStr, fileNames);
+	}
+	
+	public void update(String pvStr, String cvStr, List<String> fileNames) {
+		List<Integer> pvs = getSubversions(pvStr);
+		List<Integer> cvs = getSubversions(cvStr);
+		
+		List<List<Integer>> fileVersions = new ArrayList<List<Integer>>();
+		
+		String update = "update.";
+		for (String file : fileNames) {
+			LOG.debug("file: "+file);
+			int idx = file.indexOf(update);
+			String fileVers = file.substring(idx+update.length());
+			fileVers = fileVers.substring(0, fileVers.length()-4);
+			fileVersions.add(getSubversions(fileVers));
+		}
+		
+		int mostSubVersions = 0;
+		List<List<Integer>> allSubVersions = new ArrayList<List<Integer>>();
+		allSubVersions.addAll(fileVersions);
+		allSubVersions.add(pvs);
+		allSubVersions.add(cvs);
+		for (List<Integer> v : allSubVersions) {
+			if (v.size() > mostSubVersions) {
+				mostSubVersions = v.size();
+			}
+		}
+		for (List<Integer> v : allSubVersions) {
+			while (mostSubVersions != v.size()) {
+				v.add(0);
+			}
+		}
+		
+		List<List<Integer>> updates2run = new ArrayList<List<Integer>>();
+		for (int i=0; i<fileVersions.size(); i++) {
+			List<Integer> fv = fileVersions.get(i);
+			LOG.debug("");
+			LOG.debug("");
+			LOG.debug("filename: "+fileNames.get(i));
+			LOG.debug("fv: "+fv);
+			boolean greaterThanPrevious = false;
+			boolean lessThanCurrent = false;
+			for (int j=0; j<fv.size(); j++) {
+				Integer fsv = fv.get(j);
+				Integer csv = cvs.get(j);
+				Integer psv = pvs.get(j);
+				
+				//LOG.debug("");
+				//LOG.debug("fsv: "+fsv);
+				//LOG.debug("csv: "+csv);
+				//LOG.debug("psv: "+psv);
+				//LOG.debug("j: "+j);
+				//LOG.debug("fv.size(): "+fv.size());
+				
+				boolean isFinalSubversion = j+1==fv.size();
+				//LOG.debug("isFinalSubversion: "+isFinalSubversion);
+				boolean stillValid = false;
+				if (fsv > psv) {
+					greaterThanPrevious = true;
+				}
+				if (fsv < csv) {
+					lessThanCurrent = true;
+				}
+				if (!isFinalSubversion && 
+						(fsv >= psv || greaterThanPrevious) && 
+						(fsv <= csv || lessThanCurrent)) {
+					stillValid = true;
+				}
+				if (isFinalSubversion && 
+						(fsv > psv || greaterThanPrevious) && 
+						(fsv <= csv || lessThanCurrent)) {
+					stillValid = true;
+				}
+				
+				if (!stillValid) {
+					break;
+				}
+				if (stillValid && isFinalSubversion) {
+					updates2run.add(fv);
+					LOG.debug("updates2run.add( "+fv);
+				}
+			}
+		}
+		
+		
+		//this much is correct
+		List<String> orderedFileNames2run = new ArrayList<String>();
+		while (updates2run.size() > 0) {
+			LOG.debug("updates2run: "+updates2run);
+			LOG.debug("");
+			int minVersionIdx = 0;
+			for (int i=1; i<updates2run.size(); i++) {
+				List<Integer> isv = updates2run.get(i);
+				List<Integer> msv = updates2run.get(minVersionIdx);
+				LOG.debug("msv: "+msv);
+				LOG.debug("isv: "+isv);
+				boolean newMin = true;
+				for (int j=0; j<isv.size(); j++) {
+					LOG.debug("msv.get(j): "+msv.get(j));
+					LOG.debug("isv.get(j): "+isv.get(j));
+					if (msv.get(j) < isv.get(j)) {
+						newMin = false;
+						break;
+					} else if (isv.get(j) < msv.get(j)) {
+						newMin = true;
+						break;
+					}
+				}
+				if (newMin) {
+					minVersionIdx = i;
+				}
+			}
+			LOG.debug("minVersionIdx: "+minVersionIdx);
+			int i=0;
+			SortedMap<Integer, String> files = new TreeMap<Integer, String>();
+			List<Integer> minVers = updates2run.get(minVersionIdx);
+			for (List<Integer> fv : fileVersions) {
+				if (fv.equals(minVers)) {
+					String fileName = fileNames.get(i);
+					files.put(fileName.length(), fileName);
+					updates2run.remove(minVers);
+				}
+				i++;
+			}
+			for (String filename : files.values()) {
+				orderedFileNames2run.add(filename);
+			}
+		}
+		
+		for (String fn : orderedFileNames2run) {
+			try {
+				LOG.debug("fn: "+fn);
+				//executeServiceDBScripts(fn);
+			} catch (Throwable t) {
+				LOG.error("", t);
+			}
+		}
+		
+		postUpdate();
+	}
+	
+	protected List<Integer> getSubversions(String s) {
+		List<Integer> versions = new ArrayList<Integer>();
+		for (String v : s.split("\\.")) {
+			versions.add(Integer.parseInt(v));
+		}
+		LOG.debug("subversions from "+s+": "+versions);
+		return versions;
+	}
+	
+	public void postUpdate() {
+	}
 	
 	public List<Record> process(Record r) {
 		List<Record> records = new ArrayList<Record>();
