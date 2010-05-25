@@ -36,10 +36,8 @@ import org.jdom.transform.JDOMSource;
 import org.jdom.xpath.XPath;
 import org.xml.sax.InputSource;
 
-import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
-import xc.mst.bo.service.ErrorCode;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -166,20 +164,6 @@ public class TransformationService extends GenericMetadataService
 
 	public void setXCHoldingDAO(XCHoldingDAO xcHoldingDAO) {
 		this.xcHoldingDAO = xcHoldingDAO;
-	}
-	
-	@Override
-	public void getInputFormats(List<Format> formats) {
-	}
-	
-	@Override
-	public void getOutputFormats(List<Format> formats) {
-		
-	}
-	
-	@Override
-	public void getErrorCodes(List<ErrorCode> codes) {
-		
 	}
 	
 	public List<Record> process(Record r) {

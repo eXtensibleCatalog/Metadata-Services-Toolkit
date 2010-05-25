@@ -20,8 +20,8 @@
 	<bean name="PropertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" scope="singleton">
 		<property name="locations">
 			<list>
-				<value>classpath:spring.properties</value>
-				<value>classpath:spring-custom.properties</value>
+				<value>classpath:xc/mst/services/spring.properties</value>
+				<value>classpath:xc/mst/services/custom.properties</value>
 			</list>
 		</property>
 	</bean>

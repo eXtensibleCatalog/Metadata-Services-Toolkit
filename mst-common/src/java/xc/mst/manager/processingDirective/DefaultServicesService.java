@@ -170,7 +170,8 @@ public class DefaultServicesService extends BaseService
 				        		ac.setParent(applicationContext);
 				        		BufferedReader br = null;
 				        		try {
-				        			br = new BufferedReader(new InputStreamReader(loader.getResourceAsStream("spring-service.xml")));
+				        			br = new BufferedReader(new InputStreamReader(loader.getResourceAsStream(
+				        					"xc/mst/services/spring-service.xml")));
 				        		} catch (Throwable t) {
 				        			semaphore.release();
 				        			return;

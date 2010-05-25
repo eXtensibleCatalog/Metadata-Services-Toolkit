@@ -13,7 +13,6 @@ import java.util.List;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
-import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.repo.Repository;
 
@@ -30,10 +29,6 @@ public interface MetadataService {
 	public Repository getRepository();
 	
 	public void process(Repository repo, Format format, Set set);
-	
-	public void getInputFormats(List<Format> formats);
-	public void getOutputFormats(List<Format> formats);
-	public void getErrorCodes(List<ErrorCode> codes);
 	
 	// leftover
 	public void runService(int serviceId, int outputSetId);

@@ -10,11 +10,11 @@
 
 	<import file="build-custom.xml" />
 	<property file="build.properties" />
-	<property file="build-custom.properties" />
+	<property file="custom.properties" />
 
 	<target name="init">
 		<mkdir dir="${build.test.classes}" />
-		<mkdir dir="${build.classes}" />
+		<mkdir dir="${build.classes.services}" />
 		<mkdir dir="${build.lib}" />
 		<mkdir dir="${build.zip.lib}" />
 		<mkdir dir="${ivy.dir}" />
@@ -123,6 +123,12 @@
 				<include name="errors/**/*" />
 			</fileset>
 		</copy>
+		<copy todir="${build.classes.services}">
+			<fileset dir="config">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${build.classes.services}" file="custom.properties" />
 	</target>
 
 	<target name="jar" depends="copy-resources, jar.nodep" />
