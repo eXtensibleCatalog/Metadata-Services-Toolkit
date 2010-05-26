@@ -18,7 +18,6 @@
 		<mkdir dir="${build.lib}" />
 		<mkdir dir="${build.zip.lib}" />
 		<mkdir dir="${ivy.dir}" />
-		<mkdir dir="mst.logs.dir" />
 	</target>
 
 	<target name="download-ivy" unless="skip.download" depends="init">
@@ -130,12 +129,9 @@
 				<include name="**/*.properties" />
 			</fileset>
 		</copy>
-		<copy todir="${mst.instance.dir}">
-			<fileset dir="conf">
-				<include name="**/*.txt" />
-			</fileset>
-		</copy>
 		<copy todir="${build.classes.services}" file="custom.properties" />
+		<copy tofile="${build.mst-instance.dir}/install.properties" 
+			file="custom.properties" overwrite="true"/>
 	</target>
 
 	<target name="jar" depends="copy-resources, jar.nodep" />
@@ -172,6 +168,19 @@
 			<arg value="test.internal" />
 			<env key="MST_ROOT_DIR" value="${build.dir}/" />
 		</exec>
+	</target>
+
+	<target name="install-mst">
+		<delete dir="${build.mst-instances.dir}" />
+		<unzip src="${build.lib}/MST-instances-${mst-instances.version}.jar"
+			dest="${build.dir}" />
+		<sql
+			classpathref="classpath.compile"
+			driver="com.mysql.jdbc.Driver"
+			url="${DatabaseUrl}"
+			userid="${DatabaseUsername}"
+			password="${DatabasePassword}"
+			src="${build.mst-instance.dir}/sql/mst_dump.sql" />
 	</target>
 
 	<target name="test.internal" depends="compile.test">
