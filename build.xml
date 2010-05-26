@@ -51,6 +51,7 @@
 			uri="antlib:org.apache.ivy.ant"
 			classpathref="ivy.lib.path" />
 
+	<import file="${mst-instances}/build.xml" />
 	<import file="${mst-common}/build.xml" />
 	<import file="${mst-platform}/build.xml" />
 	<import file="${mst-service.impl}/build.xml" />
@@ -76,6 +77,7 @@
 	<target name="init" depends="init.default.properties">
 		<echo>box: ${box}</echo>
 		<tstamp/>
+		<mkdir dir="${build.dir}" />
 		<copy tofile="local.properties" file="local.properties.example" />
 		<property file="local.properties"/>
 		<!--

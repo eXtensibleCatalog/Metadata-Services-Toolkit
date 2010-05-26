@@ -12,6 +12,11 @@
 <ivy-module version="2.0">
     <info organisation="xc" module="mst-common"/>
     <dependencies>
+		<dependency org="xc" name="mst-instances" rev="${mi.version}" changing="true"/>
+
+        <dependency org="javax.mail" name="mail" rev="1.4.1" transitive="false">
+            <artifact name="mail" type="jar"/>
+        </dependency>
 
         <!-- javax mail libaries -->
         <dependency org="javax.mail" name="mail" rev="1.4.1" transitive="false">
