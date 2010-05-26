@@ -166,7 +166,7 @@ public class DefaultServicesService extends BaseService
 				        		URLClassLoader loader = new URLClassLoader(urlsArr, getClass().getClassLoader());
 				        		ac = new ClassPathXmlApplicationContext();
 				        		ac.setClassLoader(loader);
-				        		ac.setConfigLocation("spring-service.xml");
+				        		ac.setConfigLocation("xc/mst/services/spring-service.xml");
 				        		ac.setParent(applicationContext);
 				        		BufferedReader br = null;
 				        		try {
@@ -258,7 +258,8 @@ public class DefaultServicesService extends BaseService
     	
     	try
     	{
-    		props = new PropertiesConfiguration(MSTConfiguration.getUrlPath()+"/services/"+name+"/META-INF/classes/service-custom.properties");
+    		props = new PropertiesConfiguration(MSTConfiguration.getUrlPath()+"/services/"+name+
+    				"/META-INF/classes/xc/mst/services/custom.properties");
 
     		String logFileName = getLogDAO().getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 

@@ -120,6 +120,8 @@
 			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
 		<copy todir="${ms.build.lib}" 
 			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
+		<copy todir="${mst-service}/example/build/lib" 
+			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
 		<copy-to-custom-services subdir="build/lib">
 			<macro-file-set>
 				<fileset dir="${mc.build.dir}">

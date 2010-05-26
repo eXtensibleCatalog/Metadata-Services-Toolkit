@@ -104,6 +104,9 @@
 				<include name="${ms.project-name}-${ms.version}.jar" />
 			</fileset>
 		</copy>
+		<copy todir="${mst-service}/example/build/lib" 
+				file="${ms.build.dir}/${ms.project-name}-${ms.version}.jar">
+		</copy>
 		<copy-to-custom-services subdir="build/lib">
 			<macro-file-set>
 			<fileset dir="${ms.build.dir}">

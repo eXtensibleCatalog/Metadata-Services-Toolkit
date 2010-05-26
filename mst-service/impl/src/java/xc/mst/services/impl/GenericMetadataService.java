@@ -1212,13 +1212,7 @@ public abstract class GenericMetadataService extends BaseManager implements Meta
 	public void postUpdate() {
 	}
 	
-	public List<Record> process(Record r) {
-		List<Record> records = new ArrayList<Record>();
-		Record out = getRecordService().createSuccessor(r, getService());
-		out.setOaiXml("<foo>"+out.getId()+"</foo>");
-		records.add(out);
-		return records;
-	}
+	public abstract List<Record> process(Record r);
 
 	
 	public void process(Repository repo, Format format, Set set) {

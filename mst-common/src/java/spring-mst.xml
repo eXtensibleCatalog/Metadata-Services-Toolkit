@@ -25,6 +25,7 @@
 				<value>classpath:install.properties</value>
 			</list>
 		</property>
+		<property name="ignoreResourceNotFound" value="true" />
 	</bean>
 
 	<bean id="DataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
