@@ -82,7 +82,7 @@ public class SetupClasspath {
 		Class sysclass = URLClassLoader.class;
 		
 		for (URL u2 : sysloader.getURLs()) {
-			System.out.println("u: "+u2);
+			//System.out.println("u: "+u2);
 		}
 
 		try {

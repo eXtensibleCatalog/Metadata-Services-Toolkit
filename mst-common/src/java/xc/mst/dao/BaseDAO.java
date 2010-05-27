@@ -69,7 +69,6 @@ public class BaseDAO {
 		return util;
 	}
 	public void setUtil(Util util) {
-		LOG.info("util: "+util);
 		this.util = util;
 	}
 	

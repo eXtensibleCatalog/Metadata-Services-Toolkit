@@ -1043,6 +1043,8 @@ public abstract class GenericMetadataService extends BaseManager implements Meta
 	public void install() {
 		try {
 			executeServiceDBScripts("xc/mst/services/install.sql");
+			//TODO create repo
+			getRepository().installOrUpdateIfNecessary();
 			postInstall();
 		} catch (Throwable t) {
 			LOG.error("", t);

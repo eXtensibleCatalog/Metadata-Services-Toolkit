@@ -35,7 +35,7 @@ public class BaseTest {
 
 	@BeforeSuite
 	public void startup() {
-		System.out.println("startup");
+		LOG.debug("startup");
 		try {
 			SetupClasspath.setupClasspath(null);
 			applicationContext = new ClassPathXmlApplicationContext("spring-mst.xml");
@@ -47,12 +47,12 @@ public class BaseTest {
 		repositoryDAO = (RepositoryDAO)MSTConfiguration.getBean("RepositoryDAO");
 		recordService = (RecordService)MSTConfiguration.getBean("RecordService");
 		servicesService = (ServicesService)MSTConfiguration.getBean("ServicesService");
-		System.out.println("startup complete");
+		LOG.debug("startup complete");
 	}
 	
 	@AfterSuite
 	public void shutdown() {
-		System.out.println("shutdown");
+		LOG.debug("shutdown");
 	}
 	
 }

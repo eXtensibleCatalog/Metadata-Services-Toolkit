@@ -10,9 +10,7 @@
 
 package xc.mst.utils;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -81,7 +79,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 				String keyStr = key.toString();
 				String pval = props.getProperty(keyStr);
 				properties.put(keyStr, pval);
-				System.out.println("key: "+key+" val: "+pval);
+				log.info("key: "+key+" val: "+pval);
 			}
 			init2();
 		}
@@ -92,52 +90,25 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	 * Creates and initializes configuration for MST
 	 */
 	public void init2() {
-		
-		System.out.println("MSTCONfig.init()");
-		
-		/*
-		if (System.getenv("MST_URL_PATH") != null) {
-			urlPath = System.getenv("MST_URL_PATH");
+		if (applicationContext instanceof WebApplicationContext) {
+			String urlPath = ((WebApplicationContext)applicationContext).getServletContext().getContextPath();
+			// Remove the / in '/MetadataServicesToolkit'
+			urlPath = urlPath.substring(1, urlPath.length());
+			instanceName = urlPath;
+		} else {
+			instanceName = "MetadataServicesToolkit";
 		}
-		if (urlPath == null) {
-    		try {
-    			BufferedReader reader = new BufferedReader(new InputStreamReader(
-    					SetupClasspath.class.getClassLoader().getResourceAsStream(
-	    			        "env.properties")));
-	    		Properties props = new Properties();
-	    		props.load(reader);
-	    		reader.close();
-	    		if (props.getProperty("mst.url.path") != null) {
-	    			rootDir = props.getProperty("mst.url.path");
-	    		}
-    		} catch (Throwable t) {
-    			t.printStackTrace(System.out);
-    			t.printStackTrace(System.err);
-    		}
-		}
-		*/
 		
-		if (urlPath == null) {
-			if (applicationContext instanceof WebApplicationContext) {
-				String urlPath = ((WebApplicationContext)applicationContext).getServletContext().getContextPath();
-				// Remove the / in '/MetadataServicesToolkit'
-				urlPath = urlPath.substring(1, urlPath.length());
-				instanceName = urlPath;
-			} else {
-				instanceName = "MetadataServicesToolkit";
-			}
-			
-			File mstInstances = new File(rootDir+"/"+getProperty(Constants.INSTANCES_FOLDER_NAME));
-			if (mstInstances.exists()) {
-				mstInstanceFolderExist = true;
-			}
-			
-			File currentInstance = new File(rootDir+"/"+getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + instanceName);
-			if (currentInstance.exists()) {
-				currentInstanceFolderExist = true;
-			}
-			urlPath = rootDir + getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + instanceName;
+		File mstInstances = new File(rootDir+"/"+getProperty(Constants.INSTANCES_FOLDER_NAME));
+		if (mstInstances.exists()) {
+			mstInstanceFolderExist = true;
 		}
+		
+		File currentInstance = new File(rootDir+"/"+getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + instanceName);
+		if (currentInstance.exists()) {
+			currentInstanceFolderExist = true;
+		}
+		urlPath = rootDir + getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + instanceName;
 	}
 
 	public void setApplicationContext(ApplicationContext applicationContext) {

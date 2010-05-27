@@ -41,7 +41,6 @@ public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationConte
 			((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("DataSource"));
 			((BaseDAO)bean).setUtil((Util)this.applicationContext.getBean("Util"));
 		} else if (bean instanceof BaseService) {
-			LOG.info("bean: "+bean+" setUtil: "+this.applicationContext.getBean("Util"));
 			((BaseService)bean).setUtil((Util)this.applicationContext.getBean("Util"));
 			
 			Map<String, Method> serviceSetters = new HashMap<String, Method>();

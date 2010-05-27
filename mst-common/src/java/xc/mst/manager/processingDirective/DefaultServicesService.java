@@ -120,6 +120,9 @@ public class DefaultServicesService extends BaseService
 		}
 		ServiceEntry se = serviceEntries.get(name);
 		MetadataService ms = (MetadataService)se.ac.getBean("Service");
+		if (ms.getRepository().getName() == null) {
+			ms.getRepository().setName(name);
+		}
 		return ms;
 	}
 	
@@ -144,13 +147,10 @@ public class DefaultServicesService extends BaseService
 			        		String metaInfFolderStr = serviceFolder+"/META-INF";
 			        		File libFolder = new File(metaInfFolderStr+"/lib");
 			        		String classesFolderStr = metaInfFolderStr+"/classes/";
-			        		System.out.println("classesFolderStr: "+classesFolderStr);
 			        		if (libFolder != null) {
-			        			System.out.println("serviceFolder: "+serviceFolder);
 			        			if (libFolder.listFiles() != null) {
 					        		for (File f : libFolder.listFiles()) {
 					        			if (f.getName().endsWith(".jar")) {
-					        				System.out.println("f.getAbsolutePath(): "+f.getAbsolutePath());
 					        				urls.add(f.toURI().toURL());
 					        			}
 					        		}
@@ -159,8 +159,6 @@ public class DefaultServicesService extends BaseService
 			        			URI uri = f.toURI();
 			        			URL url = uri.toURL();
 			        			url = new URL(url.toString()+"/");
-			        			//URL url2 = new URL(classesFolderStr);
-			        			System.out.println("url.toString2(): "+url.toString());
 				        		urls.add(url);
 				        		URL[] urlsArr = urls.toArray(new URL[]{});
 				        		URLClassLoader loader = new URLClassLoader(urlsArr, getClass().getClassLoader());
@@ -182,15 +180,11 @@ public class DefaultServicesService extends BaseService
 				        		sb.append(line + "\n");
 				        		}
 				        		br.close();
-				        		System.out.println(sb.toString());
-				        		System.out.println("before thread start");
-				        		System.out.println("putting in key: "+id+" value:"+thisthis);
 				        		serviceEntries.put(id, thisthis);
 				        		Util util = (Util)MSTConfiguration.getBean("Util");
 				        		util.setClassLoader(loader);
 				        		ac.refresh();
 				        		util.setClassLoader(null);
-				        		System.out.println("after thread start");
 			        		}
 						} catch (Throwable t) {
 							semaphore.release();
@@ -202,7 +196,6 @@ public class DefaultServicesService extends BaseService
 				t.start();
 				semaphore.acquire();
 				semaphore.release();
-				System.out.println("after ServiceEntry.start");
 			} catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
@@ -735,7 +728,6 @@ public class DefaultServicesService extends BaseService
     {
         Service s = getServiceDAO().getByServiceName(serviceName);
         s.setMetadataService(getMetadataService(serviceName));
-        s.getMetadataService().getRepository().setName(s.getName());
         s.getMetadataService().setService(s);
         return s;
     }

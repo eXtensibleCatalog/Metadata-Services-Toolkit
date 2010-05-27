@@ -12,18 +12,22 @@ package xc.mst.repo;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import xc.mst.bo.record.Record;
 import xc.mst.manager.BaseService;
 import xc.mst.utils.MSTConfiguration;
 
 public class DefaultRepository extends BaseService implements Repository {
 	
+	private static final Logger LOG = Logger.getLogger(DefaultRepository.class);
+	
 	protected String name = null;
 
 	public void installOrUpdateIfNecessary() {
 		if ("0.3.0".equals(MSTConfiguration.getProperty("version"))) {
 			boolean exists = getRepositoryDAO().exists(name);
-			System.out.println("exists: "+exists);
+			LOG.debug("exists: "+exists);
 			if (!exists) {
 				getRepositoryDAO().createTables(name);
 			}

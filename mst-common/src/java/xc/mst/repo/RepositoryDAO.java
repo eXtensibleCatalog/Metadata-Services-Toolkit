@@ -189,13 +189,16 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public void dropTables(String name) {
-		for (String table : ALL_TABLES) {
-			try {
-				String sql = "drop table "+getTableName(name, table);
-				this.jdbcTemplate.execute(sql);
-			} catch (Throwable t) {
-				LOG.error("", t);
+		try {
+			List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
+			LOG.debug("allTables: "+allTables);
+			for (String table : allTables) {
+				if (table.startsWith(name+"_")) {
+					this.jdbcTemplate.execute("drop table "+table);
+				}
 			}
+		} catch (Throwable t) {
+			LOG.error("", t);
 		}
 	}
 	

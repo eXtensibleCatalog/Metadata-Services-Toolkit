@@ -14,7 +14,6 @@ public class MSTAutoBeanHelper {
 		try {
 			Util util = (Util)MSTConfiguration.getBean("Util");
 			cl = util.getClassLoader();
-			LOG.error("found classloader");
 		} catch (Throwable t) {
 			//LOG.error("", t);
 		}

@@ -420,10 +420,7 @@ CREATE TABLE services
 (
   service_id INT(11) NOT NULL AUTO_INCREMENT,
   service_name VARCHAR(255) NOT NULL,
-  service_jar VARCHAR(255) NOT NULL,
-  service_configuration   MEDIUMTEXT,
   class_name VARCHAR(155),
-  identifier VARCHAR(255) NOT NULL,
   warnings INT(11) NOT NULL DEFAULT 0,
   errors INT(11) NOT NULL DEFAULT 0,
   input_record_count INT(11) NOT NULL DEFAULT 0,
@@ -437,7 +434,6 @@ CREATE TABLE services
   harvest_out_last_log_reset DATETIME,
   harvest_out_log_file_name VARCHAR(255) NOT NULL,
   status VARCHAR(20),
-  xccfg_file_name VARCHAR(255) NOT NULL,
   version VARCHAR(10),
   is_deleted boolean DEFAULT FALSE,
   PRIMARY KEY(service_id)
