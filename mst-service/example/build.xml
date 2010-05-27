@@ -155,7 +155,7 @@
 	</target>
 
 	<target name="compile.test" depends="copy-resources.nodep">
-		<javac srcdir="${test.dir}"
+		<javac srcdir="${test.java}"
 			destdir="${build.test.classes}"
 			classpathref="classpath.test.compile"
 			debug="on"

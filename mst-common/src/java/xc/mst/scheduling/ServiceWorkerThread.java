@@ -12,10 +12,8 @@ package xc.mst.scheduling;
 import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
-import xc.mst.manager.services.ServicesManager;
-import xc.mst.services.MetadataServiceFactory;
 import xc.mst.services.MetadataService;
-import xc.mst.utils.MSTConfiguration;
+import xc.mst.services.MetadataServiceFactory;
 
 /**
  * A Thread which runs a service
@@ -31,8 +29,6 @@ public class ServiceWorkerThread extends WorkerThread
 	
 	/** Type of thread */
 	public static final String type = Constants.THREAD_SERVICE;
-	
-	protected ServicesManager servicesManager = (ServicesManager)MSTConfiguration.getBean("ServicesManager");
 
 	/**
 	 * The ID of the service to run

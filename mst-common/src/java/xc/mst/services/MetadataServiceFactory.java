@@ -16,8 +16,7 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.ServiceDAO;
-import xc.mst.manager.services.ServicesManager;
-import xc.mst.services.MetadataService;
+import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
@@ -79,7 +78,7 @@ public class MetadataServiceFactory {
 				log.debug("Found the MetadataService class named " + targetClassName + ", getting its constructor.");
 
 			*/
-			serviceInstance = ((ServicesManager)MSTConfiguration.getBean("ServicesManager")).getService(service.getName());
+			serviceInstance = ((ServicesService)MSTConfiguration.getBean("ServicesService")).getServiceByName(service.getName()).getMetadataService();
 			return serviceInstance;
 			
 		}// end try(run the service through reflection)
