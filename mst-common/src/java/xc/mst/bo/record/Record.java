@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jdom.Element;
+
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
@@ -31,6 +33,9 @@ public class Record
 	public static final char HELD = 'H';
 	public static final char DELETED = 'D';
 	
+	protected Element recordEl = null;
+	protected Element oaiXmlEl = null;
+
 	/**
 	 * The type of indexed Object this is
 	 */
@@ -168,6 +173,54 @@ public class Record
 	private int numberOfSuccessors;
 
 	protected char status = 0;
+	
+	public Record() {
+	}
+	
+	public Record(Element record) {
+		setRecordEl(record);
+
+	}
+	
+	public String getRecordXml() {
+		return getRecordEl().getText();
+	}
+	
+	public Element getRecordEl() {
+		if (recordEl == null) {
+			recordEl = new Element("record");
+			Element header = new Element("header");
+			Element identifier = new Element("identifier");
+			identifier.setText(getOaiXml());
+			header.addContent(identifier);
+			recordEl.addContent(header);
+			recordEl.addContent(getOaiXmlEl());
+		}
+		return recordEl;
+	}
+
+	public void setRecordEl(Element recordEl) {
+		this.recordEl = recordEl;
+		Element header = recordEl.getChild("header");
+		Element identifier = header.getChild("identifier");
+		Element metadata = recordEl.getChild("metadata");
+		setOaiIdentifier(identifier.getText());
+		setOaiXmlEl(metadata);
+	}
+	
+	public Element getOaiXmlEl() {
+		if (this.oaiXmlEl == null) {
+			Element oaiXmlEl = new Element("metadata");
+			if (this.oaiXml != null) {
+				oaiXmlEl.setText(this.oaiXml);
+			}
+		}
+		return oaiXmlEl;
+	}
+
+	public void setOaiXmlEl(Element oaiXmlEl) {
+		this.oaiXmlEl = oaiXmlEl;
+	}
 
 	public Record getPredecessor() {
 		return predecessor;
@@ -459,8 +512,11 @@ public class Record
 	 */
 	public String getOaiXml()
 	{
+		if (oaiXml == null && oaiXmlEl != null) {
+			this.oaiXml = oaiXmlEl.getText();
+		}
 		return oaiXml;
-	} // end method getOaiXml()
+	}
 
 	/**
 	 * Sets the record's OAI XML
@@ -470,7 +526,7 @@ public class Record
 	public void setOaiXml(String oaiXml)
 	{
 		this.oaiXml = oaiXml;
-	} // end method setOaiXml(String)
+	}
 
 	/**
 	 * Gets the sets the record belongs to

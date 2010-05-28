@@ -60,18 +60,37 @@ public class RepositoryDAO extends BaseDAO {
 	protected boolean inBatch = false;
 	protected List<Record> recordsToAdd = null;
 	
+	public void init() {
+		if (!tableExists("repositories")) {
+			String createTablesContents = getUtil().slurp("xc/mst/repo/sql/create_tables.sql");
+			String[] tokens = createTablesContents.split(";");
+			for (String sql : tokens) {
+				if (StringUtils.isEmpty(StringUtils.trim(sql))) {
+					continue;
+				}
+				// oai ids
+				sql = sql + ";";
+				LOG.info(sql);
+				this.jdbcTemplate.execute(sql);
+			}
+		} else {
+			// getversion and update if necessary
+			// you should update all the tables here so that you can do it in a transaction 
+		}
+	}
+	
 	@Override
 	public void setDataSource(DataSource dataSource) {
 		super.setDataSource(dataSource);
 		this.getNextOaiId = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_next_oai_id");
 	}
 	
-	protected final static String[] ALL_TABLES = new String[] {
-		RECORDS_TABLE, RECORD_UPDATES_TABLE, RECORDS_XML_TABLE, RECORDS_SETS_TABLE, RECORD_PREDECESSORS_TABLE
-	};
+	protected String getPrefix(String repoName) {
+		return "repo_"+repoName;
+	}
 	
 	protected String getTableName(String repoName, String tableName) {
-		return " "+repoName+"_"+tableName+" ";
+		return " "+getPrefix(repoName)+"_"+tableName+" ";
 	}
 	
 	public void beginBatch() {
@@ -189,16 +208,8 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public void dropTables(String name) {
-		try {
-			List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
-			LOG.debug("allTables: "+allTables);
-			for (String table : allTables) {
-				if (table.startsWith(name+"_")) {
-					this.jdbcTemplate.execute("drop table "+table);
-				}
-			}
-		} catch (Throwable t) {
-			LOG.error("", t);
+		for (String table : getTablesWithPrefix(getPrefix(name))) {
+			this.jdbcTemplate.execute("drop table "+table);
 		}
 	}
 	
@@ -208,8 +219,8 @@ public class RepositoryDAO extends BaseDAO {
 	
 	public void createTables(String name) {
 		String createTablesContents = getUtil().slurp("xc/mst/repo/sql/create_tables.sql");
-		createTablesContents = createTablesContents.replaceAll("REPO_NAME", name);
-		createTablesContents = createTablesContents.replaceAll("repo_name", name);
+		createTablesContents = createTablesContents.replaceAll("REPO_NAME", getPrefix(name));
+		createTablesContents = createTablesContents.replaceAll("repo_name", getPrefix(name));
 		String[] tokens = createTablesContents.split(";");
 		for (String sql : tokens) {
 			if (StringUtils.isEmpty(StringUtils.trim(sql))) {

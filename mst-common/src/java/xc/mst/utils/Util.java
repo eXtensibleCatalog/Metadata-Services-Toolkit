@@ -1,7 +1,10 @@
 package xc.mst.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.log4j.Logger;
@@ -13,17 +16,25 @@ public class Util {
 	
 	protected ThreadLocal<ClassLoader> currentClassLoader = new ThreadLocal<ClassLoader>();
 	
+	public String slurp(File file) {
+		try {
+			return slurp(new FileInputStream(file));
+		} catch (FileNotFoundException t) {
+			LOG.error(file.getAbsolutePath()+" does not exist");
+		} catch (Throwable t) {
+			LOG.error("", t);
+		}
+		return null;
+	}
+	
 	public String slurp(String classpathResource) {
 		return slurp(classpathResource, null);
 	}
 	
-	public String slurp(String classpathResource, ClassLoader cl) {
-		if (cl == null) {
-			cl = getClass().getClassLoader();
-		}
+	public String slurp(InputStream is) {
 		try {
 			BufferedReader br = null;
-			br = new BufferedReader(new InputStreamReader(new ClassPathResource(classpathResource, cl).getInputStream()));
+			br = new BufferedReader(new InputStreamReader(is));
 			StringBuilder sb = new StringBuilder();
 			String line = null;
 			while ((line = br.readLine()) != null) {
@@ -31,6 +42,18 @@ public class Util {
 			}
 			br.close();
 			return sb.toString();
+		} catch (Throwable t) {
+			LOG.error("", t);
+		}
+		return null;
+	}
+	
+	public String slurp(String classpathResource, ClassLoader cl) {
+		if (cl == null) {
+			cl = getClass().getClassLoader();
+		}
+		try {
+			return slurp(new ClassPathResource(classpathResource, cl).getInputStream());
 		} catch (FileNotFoundException t) {
 			LOG.error(classpathResource+" does not exist");
 		} catch (Throwable t) {

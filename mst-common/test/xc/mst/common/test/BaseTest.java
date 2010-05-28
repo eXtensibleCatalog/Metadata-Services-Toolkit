@@ -21,6 +21,7 @@ import xc.mst.repo.Repository;
 import xc.mst.repo.RepositoryDAO;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.SetupClasspath;
+import xc.mst.utils.Util;
 
 public class BaseTest {
 	
@@ -28,6 +29,7 @@ public class BaseTest {
 	
 	protected ApplicationContext applicationContext = null;
 	
+	protected Util util = null;
 	protected Repository repo = null;
 	protected RepositoryDAO repositoryDAO = null;
 	protected RecordService recordService = null;
@@ -42,6 +44,7 @@ public class BaseTest {
 		} catch (Throwable t) {
 			t.printStackTrace(System.out);
 		}
+		util = (Util)MSTConfiguration.getBean("Util");
 		repo = (Repository)MSTConfiguration.getBean("Repository");
 		repo.setName("r1");
 		repositoryDAO = (RepositoryDAO)MSTConfiguration.getBean("RepositoryDAO");

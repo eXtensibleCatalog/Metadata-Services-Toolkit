@@ -9,6 +9,9 @@
 
 package xc.mst.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
@@ -58,6 +61,28 @@ public class BaseDAO {
 	protected JdbcTemplate jdbcTemplate = null;
 	
 	protected Util util = null;
+	
+	protected boolean tableExists(String name) {
+		List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
+		return allTables.contains(name);
+	}
+	
+	public List<String> getTablesWithPrefix(String prefix) {
+		List<String> tablesWithPrefix = new ArrayList<String>();
+		try {
+			prefix = prefix.toUpperCase();
+			List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
+			for (String table : allTables) {
+				String upperTable = table.toUpperCase();
+				if (upperTable.startsWith(prefix+"_")) {
+					tablesWithPrefix.add(table);
+				}
+			}
+		} catch (Throwable t) {
+			LOG.error("", t);
+		}
+		return tablesWithPrefix;
+	}
 
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;

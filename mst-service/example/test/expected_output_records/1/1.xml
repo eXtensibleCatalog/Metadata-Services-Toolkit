@@ -1,0 +1,10 @@
+<records>
+	<record>
+		<header>
+			<identifier>oai:extensiblecatalog.info:example:1</identifier>
+		</header>
+		<metadata>
+			<bar>1</bar>
+		</metadata>
+	</record>
+</records>

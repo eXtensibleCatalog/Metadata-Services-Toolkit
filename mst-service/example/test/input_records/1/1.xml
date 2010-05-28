@@ -1,0 +1,10 @@
+<records>
+	<record>
+		<header>
+			<identifier>oai:extensiblecatalog.info:bib:1</identifier>
+		</header>
+		<metadata>
+			<foo>1</foo>
+		</metadata>
+	</record>
+</records>

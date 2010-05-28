@@ -93,7 +93,7 @@
 	</target>
 
 	<target name="ms.jar" depends="ms.copy-resources, ms.jar.nodep" />
-	<target name="ms.jar.nodep" depends="ms.copy-resources.nodep">
+	<target name="ms.jar.nodep" depends="ms.copy-resources.nodep, ms.compile.test">
 		<jar destfile="${ms.build.dir}/${ms.project-name}-${ms.version}.jar"
 			basedir="${ms.build.classes}" />
 	</target>
