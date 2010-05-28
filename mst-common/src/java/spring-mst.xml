@@ -30,12 +30,16 @@
 
 	<bean id="DataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="${DatabaseUrl}"/>
+		<property name="url" value="${DatabaseUrl}?useUnicode=yes&characterEncoding=UTF-8"/>
 		<property name="username" value="${DatabaseUsername}"/>
 		<property name="password" value="${DatabasePassword}"/>
 		<property name="maxIdle" value="10" />
 		<property name="minIdle" value="5" />
 		<property name="maxActive" value="5" />
+	</bean>
+	
+	<bean id="TransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="DataSource"/>
 	</bean>
 	
 	<bean name="Util" class="xc.mst.utils.Util" scope="singleton" />

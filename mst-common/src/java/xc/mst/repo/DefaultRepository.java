@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
 import xc.mst.bo.record.Record;
 import xc.mst.manager.BaseService;
@@ -25,13 +27,22 @@ public class DefaultRepository extends BaseService implements Repository {
 	protected String name = null;
 
 	public void installOrUpdateIfNecessary() {
-		if ("0.3.0".equals(MSTConfiguration.getProperty("version"))) {
-			boolean exists = getRepositoryDAO().exists(name);
-			LOG.debug("exists: "+exists);
-			if (!exists) {
-				getRepositoryDAO().createTables(name);
+		this.transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
+				try {
+					if ("0.3.0".equals(MSTConfiguration.getProperty("version"))) {
+						boolean exists = getRepositoryDAO().exists(name);
+						LOG.debug("exists: "+exists);
+						if (!exists) {
+							getRepositoryDAO().createRepo(name);
+						}
+					}
+				} catch (Throwable t) {
+					LOG.error("", t);
+					status.setRollbackOnly();
+				}
 			}
-		}
+		});
 	}
 	
 	protected boolean exists() {

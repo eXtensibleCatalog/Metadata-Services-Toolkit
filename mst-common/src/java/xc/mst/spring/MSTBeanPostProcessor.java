@@ -20,6 +20,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import xc.mst.dao.BaseDAO;
 import xc.mst.manager.BaseManager;
@@ -42,6 +43,7 @@ public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationConte
 			((BaseDAO)bean).setUtil((Util)this.applicationContext.getBean("Util"));
 		} else if (bean instanceof BaseService) {
 			((BaseService)bean).setUtil((Util)this.applicationContext.getBean("Util"));
+			((BaseService)bean).setTransactionManager((PlatformTransactionManager)this.applicationContext.getBean("TransactionManager"));
 			
 			Map<String, Method> serviceSetters = new HashMap<String, Method>();
 			for (Method m : bean.getClass().getMethods()) {

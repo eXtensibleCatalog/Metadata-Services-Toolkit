@@ -183,16 +183,6 @@
 				</fileset>
 			</path>
 		</sql>
-		<!--
-		<exec executable="mysql">
-			<arg value="--user=${DatabaseUsername}" />
-			<arg value="--password=${DatabasePassword}" />
-			<arg value="--database=${Database}" />
-
-${MYSQL_DIR}mysql -u ${MYSQL_USER} --password=${MYSQL_PASS} -D MetadataServicesToolkit < ./scripts/sql/${1}
-			
-		</exec>
-		-->
 	</target>
 
 	<target name="testy">

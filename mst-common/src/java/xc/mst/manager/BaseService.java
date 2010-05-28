@@ -8,6 +8,9 @@
   */
 package xc.mst.manager;
 
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
+
 import xc.mst.dao.emailconfig.EmailConfigDAO;
 import xc.mst.dao.harvest.HarvestDAO;
 import xc.mst.dao.harvest.HarvestRecordUtilDAO;
@@ -67,6 +70,8 @@ import xc.mst.utils.Util;
 
 public class BaseService {
 
+	protected TransactionTemplate transactionTemplate;
+
 	protected Util util = null;
 	protected EmailConfigDAO emailConfigDAO = null;
 	protected HarvestDAO harvestDAO = null;
@@ -99,6 +104,10 @@ public class BaseService {
 	protected UserGroupUtilDAO userGroupUtilDAO = null;
 	protected RecordDAO recordDAO = null;
 	protected RepositoryDAO repositoryDAO = null;
+
+	public void setTransactionManager(PlatformTransactionManager transactionManager) {
+		this.transactionTemplate = new TransactionTemplate(transactionManager);
+	}
 	
 	public Util getUtil() {
 		return util;

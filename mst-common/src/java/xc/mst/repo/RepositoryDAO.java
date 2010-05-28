@@ -36,17 +36,18 @@ public class RepositoryDAO extends BaseDAO {
 	
 	private static Logger LOG = Logger.getLogger(RepositoryDAO.class);
 	
-	protected Lock oaiIdLock = new ReentrantLock();
-	protected int nextId = -1;
-	protected int nextIdInDB = -1;
-	
-	protected SimpleJdbcCall getNextOaiId = null;
-	
 	protected final static String RECORDS_TABLE = "RECORDS";
 	protected final static String RECORD_UPDATES_TABLE = "RECORD_UPDATES";
 	protected final static String RECORDS_XML_TABLE = "RECORDS_XML";
 	protected final static String RECORDS_SETS_TABLE = "RECORD_SETS";
 	protected final static String RECORD_PREDECESSORS_TABLE = "RECORD_PREDECESSORS";
+	protected final static String REPOS_TABLE = "REPOS_TABLE";
+	
+	protected Lock oaiIdLock = new ReentrantLock();
+	protected int nextId = -1;
+	protected int nextIdInDB = -1;
+	
+	protected SimpleJdbcCall getNextOaiId = null;
 	
 	protected final static String RECORDS_TABLE_COLUMNS = 
 			"r.record_id, \n"+
@@ -62,16 +63,19 @@ public class RepositoryDAO extends BaseDAO {
 	
 	public void init() {
 		if (!tableExists("repositories")) {
-			String createTablesContents = getUtil().slurp("xc/mst/repo/sql/create_tables.sql");
-			String[] tokens = createTablesContents.split(";");
-			for (String sql : tokens) {
-				if (StringUtils.isEmpty(StringUtils.trim(sql))) {
-					continue;
-				}
-				// oai ids
-				sql = sql + ";";
-				LOG.info(sql);
-				this.jdbcTemplate.execute(sql);
+			for (String file : new String[] {"xc/mst/repo/sql/create_repo_platform.sql", 
+						"xc/mst/repo/sql/create_oai_id_seq.sql"}) {
+				String createTablesContents = getUtil().slurp(file);
+				String[] tokens = createTablesContents.split(";");
+				for (String sql : tokens) {
+					if (StringUtils.isEmpty(StringUtils.trim(sql))) {
+						continue;
+					}
+					// oai ids
+					sql = sql + ";";
+					LOG.info(sql);
+					this.jdbcTemplate.execute(sql);
+				}	
 			}
 		} else {
 			// getversion and update if necessary
@@ -217,8 +221,12 @@ public class RepositoryDAO extends BaseDAO {
 		
 	}
 	
-	public void createTables(String name) {
-		String createTablesContents = getUtil().slurp("xc/mst/repo/sql/create_tables.sql");
+	public void createRepo(String name) {
+		this.jdbcTemplate.update(
+				"insert into "+REPOS_TABLE+" (repo_name, service_id, provider_id) "+
+					"values (?, ?, ?) ",
+				name, null, null);
+		String createTablesContents = getUtil().slurp("xc/mst/repo/sql/create_repo.sql");
 		createTablesContents = createTablesContents.replaceAll("REPO_NAME", getPrefix(name));
 		createTablesContents = createTablesContents.replaceAll("repo_name", getPrefix(name));
 		String[] tokens = createTablesContents.split(";");
