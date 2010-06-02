@@ -21,7 +21,7 @@ public class TestInstall extends BaseMetadataServiceTest {
 			LOG.debug("testInstall after");
 			ss.addNewService(repoName);
 			Service s = ss.getServiceByName(repoName);
-			processRecords((GenericMetadataService)s.getMetadataService());
+			//processRecords((GenericMetadataService)s.getMetadataService());
 			repositoryDAO.dropTables(repoName);
 			LOG.debug("testinstall after");
 		} catch (Throwable t) {

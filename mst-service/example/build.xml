@@ -192,14 +192,29 @@
 		</echo>
 	</target>
 
-	<target name="test" depends="install-mst, init.test, compile.test">
+	<target name="unzip-base-tests">
+		<echo>build.test.classes: ${build.test.classes}</echo>
+		<unzip dest="${build.test.classes}">
+			<fileset dir="${build.lib}">
+				<include name="**/mst-service-impl-*.jar"/>
+			</fileset>
+		</unzip>
+		<delete>
+			<!-- change the name from service to services -->
+			<fileset dir="${build.test.classes}/xc/mst/service/impl/test">
+				<exclude name="**/ProcessFilesTest.class" />
+			</fileset>
+			<fileset dir="${build.test.classes}/xc/mst/services/impl" />
+		</delete>
+	</target>
+
+	<target name="test" depends="install-mst, init.test, compile.test, unzip-base-tests">
 		<property name="abs.build.dir" location="${build.dir}" />
 		<exec executable="${ant.executable}">
 			<arg value="-Dtest=${test}" />
 			<arg value="test.internal" />
 			<env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
 			<env key="MST_SERVICE_TEST_FOLDER" value="${test.folder}" />
-			<env key="MST_SERVICE_TEST_FILE" value="${test.file}" />
 		</exec>
 	</target>
 

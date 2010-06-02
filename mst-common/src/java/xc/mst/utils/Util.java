@@ -16,6 +16,10 @@ public class Util {
 	
 	protected ThreadLocal<ClassLoader> currentClassLoader = new ThreadLocal<ClassLoader>();
 	
+	public static Util getUtil() {
+		return (Util)MSTConfiguration.getBean("Util");
+	}
+	
 	public String slurp(File file) {
 		try {
 			return slurp(new FileInputStream(file));
@@ -92,4 +96,13 @@ public class Util {
 			return true;
 		}
 	}
+	
+	public void throwIt(Throwable t) {
+		if (t instanceof RuntimeException) {
+			throw (RuntimeException)t;
+		} else {
+			throw new RuntimeException(t);
+		}
+	}
+
 }

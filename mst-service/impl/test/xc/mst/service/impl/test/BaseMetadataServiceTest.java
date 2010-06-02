@@ -1,5 +1,7 @@
 package xc.mst.service.impl.test;
 
+import gnu.trove.TLongObjectHashMap;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import org.apache.commons.lang.StringUtils;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.DOMBuilder;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 
 import xc.mst.bo.record.Record;
 import xc.mst.common.test.BaseTest;
@@ -28,45 +32,74 @@ public class BaseMetadataServiceTest extends BaseTest {
 	protected DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	
 	protected void processRecords(GenericMetadataService service) {
-		String folderStr = System.getenv("MST_SERVICE_TEST_FOLDER");
-		String fileStr = System.getenv("MST_SERVICE_TEST_FILE");
+		Map<String, List<Record>> outputFiles = new HashMap<String, List<Record>>();
+		TLongObjectHashMap repo = new TLongObjectHashMap();
 		
-		LOG.debug("folderStr: "+folderStr);
-		LOG.debug("fileStr: "+fileStr);
+		long id = repositoryDAO.restIdSequence(1);
+		String inFolderStr = System.getenv("MST_SERVICE_TEST_FOLDER");
+		LOG.debug("folderStr: "+inFolderStr);
 		
 		File inputRecordsDir = new File(INPUT_RECORDS_DIR);
-		//File expectedOutputRecordsDir = new File(EXPECTED_OUTPUT_RECORDS);
-		//File actualOutputRecordsDir = new File(ACTUAL_OUTPUT_RECORDS);
+		
+		List<String> folderStrs = new ArrayList<String>();
+		
+		if (!StringUtils.isEmpty(inFolderStr)) {
+			folderStrs.add(inFolderStr);
+		} else {
+			for (String folderStr2 : inputRecordsDir.list()) {
+				LOG.debug("folderStr2: "+folderStr2);
+				if (!folderStr2.contains(".svn")) {
+					folderStr2 = new File(folderStr2).getName();
+					folderStrs.add(folderStr2);
+				}
+			}
+		}
 		
 		Map<String, List<File>> folderFilesMap = new HashMap<String, List<File>>();
-		
-		if (!StringUtils.isEmpty(folderStr)) {
+		for (String folderStr : folderStrs) {
 			List<File> files2process = new ArrayList<File>();
-			if (!StringUtils.isEmpty(fileStr)) {
-				files2process.add(new File(INPUT_RECORDS_DIR+"/"+folderStr+"/"+fileStr));
-			} else {
-				File folder = new File(INPUT_RECORDS_DIR+"/"+folderStr);
-				for (String fileStr2 : folder.list()) {
+			File folder = new File(INPUT_RECORDS_DIR+"/"+folderStr);
+			for (String fileStr2 : folder.list()) {
+				if (!fileStr2.contains(".svn")) {
 					fileStr2 = new File(fileStr2).getName();
-					files2process.add(new File(INPUT_RECORDS_DIR+"/"+folderStr+"/"+fileStr2));	
+					files2process.add(new File(INPUT_RECORDS_DIR+"/"+folderStr+"/"+fileStr2));
 				}
 			}
 			folderFilesMap.put(folderStr, files2process);
-		} else if (!StringUtils.isEmpty(fileStr)) {
-			throw new RuntimeException("you can't specific a file without a folder");
-		} else {
-			for (String folderStr2 : inputRecordsDir.list()) {
-				folderStr2 = new File(folderStr2).getName();
-				LOG.debug("folderStr2: "+folderStr2);
-				File folder = new File(INPUT_RECORDS_DIR+"/"+folderStr2);
-				List<File> files2process = new ArrayList<File>();
-				for (String fileStr2 : folder.list()) {
-					fileStr2 = new File(fileStr2).getName();
-					LOG.debug("fileStr2: "+fileStr2);
-					files2process.add(new File(INPUT_RECORDS_DIR+"/"+folderStr2+"/"+fileStr2));	
+		}
+		
+		Format format = Format.getPrettyFormat();
+		XMLOutputter xmlOutputter = new XMLOutputter(format);
+		
+		LOG.debug("dbf.getClass(): "+dbf.getClass());
+		for (String folderStr2 : folderFilesMap.keySet()) {
+			LOG.debug("folderStr2: "+folderStr2);
+			for (File file2process : folderFilesMap.get(folderStr2)) {
+				LOG.debug("file2process.getName(): "+file2process.getName());
+				List<Record> recordsInFile = new ArrayList<Record>();
+				outputFiles.put(ACTUAL_OUTPUT_RECORDS+"/"+folderStr2+"/"+file2process.getName(), recordsInFile);
+				try {
+					DocumentBuilder db = dbf.newDocumentBuilder();
+					DOMBuilder domBuilder = new DOMBuilder();
+					Document doc = domBuilder.build(db.parse(file2process));
+					
+					Element records = doc.getRootElement();
+					for (Object recordObj : records.getChildren("record")) {
+						Element record = (Element)recordObj;
+						Record in = new Record(record);
+						
+						List<Record> outs = service.process(in);
+						for (Record out : outs) {
+							recordsInFile.add(out);
+							LOG.debug("out: "+out);
+						}
+					}
+				} catch (Throwable t) {
+					LOG.error("file failed: "+file2process.getAbsolutePath());
+					LOG.error("", t);
 				}
-				folderFilesMap.put(folderStr2, files2process);
 			}
+			
 		}
 		
 		LOG.debug("dbf.getClass(): "+dbf.getClass());
@@ -77,10 +110,17 @@ public class BaseMetadataServiceTest extends BaseTest {
 				File outFile = null;
 				PrintWriter pw = null;
 				try {
+					
+					
+					
 					LOG.debug("outfolder: "+ACTUAL_OUTPUT_RECORDS+"/"+folderStr2);
 					File outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderStr2);
 					if (!outFolder.exists()) {
 						outFolder.mkdir();
+					} else {
+						for (String prevOutFile : outFolder.list()) {
+							new File(prevOutFile).delete();
+						}
 					}
 					outFile = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderStr2+"/"+file2process.getName());
 					pw = new PrintWriter(outFile);
@@ -98,7 +138,9 @@ public class BaseMetadataServiceTest extends BaseTest {
 						
 						List<Record> outs = service.process(in);
 						for (Record out : outs) {
-							pw.println(out.getRecordXml());
+							LOG.debug("out: "+out);
+							pw.println(xmlOutputter.outputString(out.getRecordEl()));
+							//pw.println(out.getRecordXml());
 						}
 					}
 					pw.println("</records>");
@@ -107,6 +149,7 @@ public class BaseMetadataServiceTest extends BaseTest {
 					LOG.error("", t);
 				} finally {
 					try {
+						
 						pw.close();
 					} catch (Throwable t) {
 						LOG.error("file close failed: "+file2process.getAbsolutePath());
@@ -114,8 +157,12 @@ public class BaseMetadataServiceTest extends BaseTest {
 					}
 				}
 			}
+			
 		}
-
+		
+		repositoryDAO.restIdSequence(id);
+		
+		//TODO now check for equality
 	}
 
 }

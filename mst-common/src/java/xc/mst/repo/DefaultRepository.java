@@ -74,17 +74,23 @@ public class DefaultRepository extends BaseService implements Repository {
 		return null;
 	}
 
+	// TODO: you need to check the cache as well
 	public Record getRecord(String oaiId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	// TODO: you need to check the cache as well
 	public Record getRecord(long id) {
 		return getRepositoryDAO().getRecord(name, id);
 	}
 
 	public List<Record> getRecords(Date from, Date until, Long startingId) {
 		return getRepositoryDAO().getRecords(name, from, until, startingId);
+	}
+	
+	public void injectSuccessors(Record r) {
+		// TODO
 	}
 
 }

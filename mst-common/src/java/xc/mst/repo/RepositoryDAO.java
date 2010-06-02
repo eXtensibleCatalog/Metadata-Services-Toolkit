@@ -41,7 +41,7 @@ public class RepositoryDAO extends BaseDAO {
 	protected final static String RECORDS_XML_TABLE = "RECORDS_XML";
 	protected final static String RECORDS_SETS_TABLE = "RECORD_SETS";
 	protected final static String RECORD_PREDECESSORS_TABLE = "RECORD_PREDECESSORS";
-	protected final static String REPOS_TABLE = "REPOS_TABLE";
+	protected final static String REPOS_TABLE = "REPOS";
 	
 	protected Lock oaiIdLock = new ReentrantLock();
 	protected int nextId = -1;
@@ -51,10 +51,6 @@ public class RepositoryDAO extends BaseDAO {
 	
 	protected final static String RECORDS_TABLE_COLUMNS = 
 			"r.record_id, \n"+
-			"r.oai_pmh_id_1, \n"+
-			"r.oai_pmh_id_2, \n"+
-			"r.oai_pmh_id_3, \n"+
-			"r.oai_pmh_id_4, \n"+
 			"r.date_created, \n"+
 			"r.status, \n";
 	
@@ -62,24 +58,28 @@ public class RepositoryDAO extends BaseDAO {
 	protected List<Record> recordsToAdd = null;
 	
 	public void init() {
-		if (!tableExists("repositories")) {
-			for (String file : new String[] {"xc/mst/repo/sql/create_repo_platform.sql", 
-						"xc/mst/repo/sql/create_oai_id_seq.sql"}) {
-				String createTablesContents = getUtil().slurp(file);
-				String[] tokens = createTablesContents.split(";");
-				for (String sql : tokens) {
-					if (StringUtils.isEmpty(StringUtils.trim(sql))) {
-						continue;
+		try {
+			if (!tableExists(REPOS_TABLE)) {
+				for (String file : new String[] {"xc/mst/repo/sql/create_repo_platform.sql", 
+							"xc/mst/repo/sql/create_oai_id_seq.sql"}) {
+					String createTablesContents = getUtil().slurp(file);
+					String[] tokens = createTablesContents.split("\n\n");
+					for (String sql : tokens) {
+						if (StringUtils.isEmpty(StringUtils.trim(sql))) {
+							continue;
+						}
+						// oai ids
+						//sql = sql + ";";
+						this.jdbcTemplate.execute(sql);
 					}
-					// oai ids
-					sql = sql + ";";
-					LOG.info(sql);
-					this.jdbcTemplate.execute(sql);
-				}	
+				}
+			} else {
+				// getversion and update if necessary
+				// you should update all the tables here so that you can do it in a transaction 
 			}
-		} else {
-			// getversion and update if necessary
-			// you should update all the tables here so that you can do it in a transaction 
+		} catch (Throwable t) {
+			LOG.debug("", t);
+			getUtil().throwIt(t);
 		}
 	}
 	
@@ -104,6 +104,14 @@ public class RepositoryDAO extends BaseDAO {
 	public void endBatch(String name) {
 		addRecords(name, null, true);
 		inBatch = false;
+	}
+	
+	public long restIdSequence(long id) {
+		oaiIdLock.lock();
+		long retId = this.jdbcTemplate.queryForLong("select id from oai_id_sequence");
+		this.jdbcTemplate.update("update oai_id_sequence set id=?", id);
+		oaiIdLock.unlock();
+		return retId;
 	}
 	
 	public void injectId(Record r) {
@@ -137,9 +145,8 @@ public class RepositoryDAO extends BaseDAO {
 				final Date d = new Date();
 				String sql = 
         			"insert into "+getTableName(name, RECORDS_TABLE)+
-        			" (record_id, oai_pmh_id_1, oai_pmh_id_2, oai_pmh_id_3, oai_pmh_id_4,"+
-        			"  date_created, status, format_id ) "+
-        			"values (?,?,?,?,?,?,?,?) "+
+        			" (record_id, date_created, status, format_id ) "+
+        			"values (?,?,?,?) "+
         			"on duplicate key update "+
         				"status=?, "+
         				"format_id=? "+
@@ -151,10 +158,6 @@ public class RepositoryDAO extends BaseDAO {
 		                    	int i=1;
 		                    	Record r = recordsToAdd.get(j);
 		                        ps.setLong(i++, r.getId());
-		                        ps.setString(i++, r.getOaiIds()[0]);
-		                        ps.setString(i++, r.getOaiIds()[1]);
-		                        ps.setString(i++, r.getOaiIds()[2]);
-		                        ps.setString(i++, r.getOaiIds()[3]);
 		                        ps.setTimestamp(i++, new Timestamp(d.getTime()));
 		                        for (int k=0; k<2; k++) {
 			                        ps.setString(i++, String.valueOf(r.getStatus()));
@@ -202,13 +205,7 @@ public class RepositoryDAO extends BaseDAO {
 	}
 
 	public boolean exists(String name) {
-		try {
-			this.jdbcTemplate.queryForInt("select count(*) from "+getTableName(name, RECORDS_TABLE));
-			return true;
-		} catch (Throwable t) {
-			LOG.error("", t);
-			return false;
-		}
+		return tableExists(getTableName(name, RECORDS_TABLE));
 	}
 	
 	public void dropTables(String name) {
@@ -289,12 +286,6 @@ public class RepositoryDAO extends BaseDAO {
 	    public Record mapRow(ResultSet rs, int rowNum) throws SQLException {
 	        Record r = new Record();
 	        r.setId(rs.getLong("r.record_id"));
-	        String[] oaiIds = new String[4];
-	        oaiIds[0] = rs.getString("r.oai_pmh_id_1");
-	        oaiIds[1] = rs.getString("r.oai_pmh_id_2");
-	        oaiIds[2] = rs.getString("r.oai_pmh_id_3");
-	        oaiIds[3] = rs.getString("r.oai_pmh_id_4");
-	        r.setOaiIdentifier(oaiIds);
 	        r.setCreatedAt(rs.getTimestamp("r.date_created"));
 	        String status = rs.getString("r.status");
 	        if (status != null && status.length() == 1) {

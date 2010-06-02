@@ -28,6 +28,14 @@ public interface MetadataService {
 	
 	public Repository getRepository();
 	
+	/**
+	 * This method not only creates new records (inserts), but it can
+	 * also update records and delete records.
+	 * 
+	 * @param repo
+	 * @param format
+	 * @param set
+	 */
 	public void process(Repository repo, Format format, Set set);
 	
 	// leftover

@@ -19,7 +19,7 @@ log4j.logger.com.opensymphony.xwork2.ognl.OgnlValueStack=ERROR
 
 # Setup the Harvest In appender
 log4j.appender.harvestIn=org.apache.log4j.RollingFileAppender
-log4j.appender.harvestIn.File=${mst.root.dir}/}MST-instances/MetadataServicesToolkit/logs/MST_HarvestIn_log.txt
+log4j.appender.harvestIn.File=${mst.root.dir}/MST-instances/MetadataServicesToolkit/logs/MST_HarvestIn_log.txt
 log4j.appender.harvestIn.MaxFileSize=100MB
 log4j.appender.harvestIn.Threshold=INFO
 log4j.appender.harvestIn.MaxBackupIndex=20

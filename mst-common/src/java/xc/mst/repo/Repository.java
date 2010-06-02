@@ -34,5 +34,7 @@ public interface Repository {
 	public Record getRecord(long id);
 	
 	public List<Record> getPredecessors(Record r);
+	
+	public void injectSuccessors(Record r);
 
 }

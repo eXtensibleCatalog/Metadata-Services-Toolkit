@@ -1,1 +1,10 @@
-<foo>2</foo>
+<records>
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:bib:2</identifier>
+    </header>
+    <metadata>
+      <foo>2</foo>
+    </metadata>
+  </record>
+</records>

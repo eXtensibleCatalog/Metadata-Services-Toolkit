@@ -75,7 +75,7 @@ public class DefaultRecordService extends RecordService
 
 	public Record createSuccessor(Record pred, Service s) {
 		Record succ = new Record();
-		succ.setPredecessor(pred);
+		succ.getPredecessors().add(pred);
 		succ.setService(s);
 		getRepositoryDAO().injectId(succ);
 		LOG.debug("MSTConfiguration.getProperty(DomainNameIdentifier): "+MSTConfiguration.getProperty("DomainNameIdentifier"));

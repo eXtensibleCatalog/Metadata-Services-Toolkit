@@ -1,10 +1,10 @@
 <records>
-	<record>
-		<header>
-			<identifier>oai:extensiblecatalog.info:example:1</identifier>
-		</header>
-		<metadata>
-			<bar>1</bar>
-		</metadata>
-	</record>
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:example:1</identifier>
+    </header>
+    <metadata>
+      <bar>1</bar>
+    </metadata>
+  </record>
 </records>

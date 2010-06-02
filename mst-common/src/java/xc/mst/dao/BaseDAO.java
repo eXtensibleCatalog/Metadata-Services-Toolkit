@@ -64,7 +64,15 @@ public class BaseDAO {
 	
 	protected boolean tableExists(String name) {
 		List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
-		return allTables.contains(name);
+		List<String> allTablesUpper = new ArrayList<String>();
+		for (String table : allTables) {
+			allTablesUpper.add(table.toUpperCase());
+		}
+		boolean ret = allTablesUpper.contains(name.toUpperCase());
+		LOG.debug("allTablesUpper: "+allTablesUpper);
+		LOG.debug("name: "+name);
+		LOG.debug(ret+":tableExists("+name+")");
+		return ret;
 	}
 	
 	public List<String> getTablesWithPrefix(String prefix) {

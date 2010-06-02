@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 import xc.mst.bo.harvest.Harvest;
@@ -20,18 +21,23 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
+import xc.mst.utils.XmlHelper;
 
 /**
  * Represents a record
  *
  * @author Eric Osisek
  */
-public class Record
-{
+public class Record {
 	
-	public static final char PROCESS_COMPLETE = 'C';
+	private static final Logger LOG = Logger.getLogger(Record.class);
+	
+	public static final char ACTIVE = 'A';
 	public static final char HELD = 'H';
 	public static final char DELETED = 'D';
+	public static final char UPDATE_REPLACE = 'U';
+	
+	protected XmlHelper xmlHelper = new XmlHelper();
 	
 	protected Element recordEl = null;
 	protected Element oaiXmlEl = null;
@@ -46,7 +52,7 @@ public class Record
 	 */
 	private long id = -1;
 	
-	protected Record predecessor = null;
+	protected List<Record> predecessors = new ArrayList<Record>();
 
 	/**
 	 * The record's type
@@ -99,8 +105,8 @@ public class Record
 	/**
 	 * The record's OAI identifier
 	 */
-	private String oaiIdentifier = null;
-	protected String[] oaiIds = null;
+	protected String oaiIdentifier = null;
+	protected String oaiIdentifierMostSpecificToken = null;
 
 	/**
 	 * The record's OAI datestamp
@@ -175,15 +181,30 @@ public class Record
 	protected char status = 0;
 	
 	public Record() {
+		super();
 	}
 	
 	public Record(Element record) {
+		this();
 		setRecordEl(record);
-
+	}
+	
+	public Record clone() {
+		Record dupe = new Record();
+		dupe.createdAt = this.createdAt;
+		dupe.deleted = this.deleted;
+		dupe.id = this.id;
+		dupe.oaiHeader = this.oaiHeader;
+		dupe.oaiIdentifier = this.oaiIdentifier;
+		dupe.oaiXml = this.oaiXml;
+		dupe.oaiXmlEl = this.oaiXmlEl;
+		dupe.recordEl = this.recordEl;
+		dupe.predecessors = this.predecessors;
+		return dupe;
 	}
 	
 	public String getRecordXml() {
-		return getRecordEl().getText();
+		return xmlHelper.getString(getRecordEl());
 	}
 	
 	public Element getRecordEl() {
@@ -191,7 +212,7 @@ public class Record
 			recordEl = new Element("record");
 			Element header = new Element("header");
 			Element identifier = new Element("identifier");
-			identifier.setText(getOaiXml());
+			identifier.setText(getOaiIdentifier());
 			header.addContent(identifier);
 			recordEl.addContent(header);
 			recordEl.addContent(getOaiXmlEl());
@@ -210,9 +231,9 @@ public class Record
 	
 	public Element getOaiXmlEl() {
 		if (this.oaiXmlEl == null) {
-			Element oaiXmlEl = new Element("metadata");
+			oaiXmlEl = new Element("metadata");
 			if (this.oaiXml != null) {
-				oaiXmlEl.setText(this.oaiXml);
+				oaiXmlEl.addContent(xmlHelper.getJDomDocument(this.oaiXml).detachRootElement());
 			}
 		}
 		return oaiXmlEl;
@@ -220,14 +241,6 @@ public class Record
 
 	public void setOaiXmlEl(Element oaiXmlEl) {
 		this.oaiXmlEl = oaiXmlEl;
-	}
-
-	public Record getPredecessor() {
-		return predecessor;
-	}
-
-	public void setPredecessor(Record predecessor) {
-		this.predecessor = predecessor;
 	}
 	
 	/**
@@ -438,33 +451,18 @@ public class Record
 	 */
 	public void setOaiIdentifier(String oaiIdentifier)
 	{
-		this.oaiIdentifier = oaiIdentifier.replaceAll(" ", "_");
-		String[] oais = this.oaiIdentifier.split(":");
-		int i=0;
-		oaiIds = new String[4];
-		for (int j=oaiIds.length-1; j>=0; j--) {
-			oaiIds[i++] = oais[j];
-		}
-	}
-	
-	public void setOaiIdentifier(String[] oaiIds) {
-		StringBuilder sb = new StringBuilder();
-		this.oaiIds = oaiIds;
-		for (int i=0; i>=0; i--) {
-			if (oaiIds[i] != null) {
-				sb.append(oaiIds[i]);
-				if (i != 0) {
-					sb.append(":");
-				}
-			}
-		}
-		this.oaiIdentifier = sb.toString();
-	}
-	
-	public String[] getOaiIds() {
-		return this.oaiIds;
+		this.oaiIdentifier = oaiIdentifier;
 	}
 
+	public String getOaiIdentifierMostSpecificToken() {
+		return oaiIdentifierMostSpecificToken;
+	}
+
+	public void setOaiIdentifierMostSpecificToken(
+			String oaiIdentifierMostSpecificToken) {
+		this.oaiIdentifierMostSpecificToken = oaiIdentifierMostSpecificToken;
+	}
+	
 	/**
 	 * Gets the record's OAI datestamp
 	 *
@@ -990,6 +988,15 @@ public class Record
 	public void removeSucessor(Record successor){
 		this.successors.remove(successor);
 	}
+
+	public List<Record> getPredecessors() {
+		return predecessors;
+	}
+
+	public void setPredecessors(List<Record> predecessors) {
+		this.predecessors = predecessors;
+	}
+	
 	public String getType() {
 		return type;
 	}
