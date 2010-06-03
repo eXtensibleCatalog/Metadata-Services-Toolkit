@@ -353,6 +353,7 @@ public class DefaultServicesService extends BaseService
     			throw new ConfigFileException("error codes don't match in length");
     		}
 
+    		getRepositoryDAO().createSchema(name);
     		getMetadataService(name).install();
 
     	}
@@ -672,6 +673,10 @@ public class DefaultServicesService extends BaseService
     	
     	// Delete service
     	getServiceDAO().delete(service);
+    	ServiceEntry se = serviceEntries.get(service.getName());
+    	se.ac.destroy();
+    	serviceEntries.remove(service.getName());
+    	getRepositoryDAO().deleteSchema(service.getName());
     }
     
     /**
@@ -727,8 +732,10 @@ public class DefaultServicesService extends BaseService
     public Service getServiceByName(String serviceName) throws DatabaseConfigException
     {
         Service s = getServiceDAO().getByServiceName(serviceName);
-        s.setMetadataService(getMetadataService(serviceName));
-        s.getMetadataService().setService(s);
+        if (s != null) {
+        	s.setMetadataService(getMetadataService(serviceName));
+            s.getMetadataService().setService(s);	
+        }
         return s;
     }
 

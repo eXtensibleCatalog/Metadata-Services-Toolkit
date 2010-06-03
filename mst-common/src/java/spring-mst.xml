@@ -30,7 +30,7 @@
 
 	<bean id="DataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="${DatabaseUrl}?useUnicode=yes&amp;characterEncoding=UTF-8"/>
+		<property name="url" value="${DatabaseUrl}/${Database}?useUnicode=yes&amp;characterEncoding=UTF-8"/>
 		<property name="username" value="${DatabaseUsername}"/>
 		<property name="password" value="${DatabasePassword}"/>
 		<property name="maxIdle" value="10" />

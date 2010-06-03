@@ -157,23 +157,6 @@ public class Constants
 	 */
 	public static final String CONFIG_LUCENE_INDEX_DIRECTORY = "LuceneIndexDirectory";
 
-	// Database parameters
-
-	/**
-	 * Parameter for looking up the URL of the database from the configuration file
-	 */
-	public static final String CONFIG_DATABASE_URL = "DatabaseUrl";
-
-	/**
-	 * Parameter for looking up the username to log into the database from the configuration file
-	 */
-	public static final String CONFIG_DATABASE_USERNAME = "DatabaseUsername";
-
-	/**
-	 * Parameter for looking up the password to log into the database from the configuration file
-	 */
-	public static final String CONFIG_DATABASE_PASSWORD = "DatabasePassword";
-
 	// OAI Repository parameters
 
 	/**

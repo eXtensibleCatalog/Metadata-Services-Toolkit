@@ -62,6 +62,29 @@ public class BaseDAO {
 	
 	protected Util util = null;
 	
+	public void createSchema(String name) {
+		this.jdbcTemplate.execute("create database "+name+" character set=utf8;");
+	}
+	
+	public void deleteSchema(String name) {
+		this.jdbcTemplate.execute("drop database "+name);
+	}
+	
+	public List<String> getSchemas() {
+		return this.jdbcTemplate.queryForList("show databases", String.class);
+	}
+	
+	public boolean schemasExists(String name) {
+		name = name.toUpperCase();
+		List<String> dbs = getSchemas();
+		for (String db : dbs) {
+			if (name.equals(db.toUpperCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	protected boolean tableExists(String name) {
 		List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
 		List<String> allTablesUpper = new ArrayList<String>();

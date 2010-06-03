@@ -10,7 +10,6 @@
 package xc.mst.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -101,53 +100,24 @@ public class MySqlConnectionManager
         return (dbConnection != null ? dbConnection : openDbConnection());
 	} // end method getDbConnection()
 
-	private Connection openDbConnection()
-	{
+	private Connection openDbConnection() {
 		if(log.isDebugEnabled())
 			log.debug("Entering openDbConnection()");
 
-	    try
-	    {
-	        // Load the JDBC driver for MySQL
-	        Class.forName("com.mysql.jdbc.Driver");
-
-	        // Get the URL, username and password to log into the database from the configuration file
-	        String url = MSTConfiguration.getProperty(Constants.CONFIG_DATABASE_URL);
-	        String username = MSTConfiguration.getProperty(Constants.CONFIG_DATABASE_USERNAME);
-	        String password = MSTConfiguration.getProperty(Constants.CONFIG_DATABASE_PASSWORD);
-
-	        if(log.isDebugEnabled())
-				log.debug("Building a connection to the database at " + url + " with the username " + username);
-
-	        // Create a connection to the database
-	        dbConnection = DriverManager.getConnection(url, username, password);
-	        return dbConnection;
-	    } // end try (open and return connection)
-	    catch (ClassNotFoundException e) // Could not find the database driver
-	    {
-	        log.warn("Could not find the MySQL database driver.", e);
-
-	        return null;
-	    } // end catch(ClassNotFoundException)
-	    catch (SQLException e) // Could not connect to the database
-	    {
+	    try {
+	    	// BDA:  This is so horribly wrong and needs to be fixed at some point.
+	    	dbConnection = ((DataSource)MSTConfiguration.getBean("DataSource")).getConnection();
+	    	return dbConnection;
+	    } catch (SQLException e) {
 	    	log.warn("Could not connect to the database specified in the configuration file.", e);
-
-	        return null;
-	    } // end catch(SQLException)
-	    catch(UnsatisfiedLinkError e) // Something was wrong with the URL
-	    {
+	    } catch(UnsatisfiedLinkError e) {
 	    	log.warn("Could not connect to the database specified in the configuration file.", e);
-
-	        return null;
-	    } // end catch(UnsatisfiedLinkError)
-        catch(Exception e) //any other error
-        {
+	    } catch(Exception e) {
             log.error("An Exception occurred while connecting to the database.", e);
-
-            return null;
         }
-	} // end method openDbConnection()
+	    
+        return null;
+	}
 
 	/**
 	 * Closes the connection to the database

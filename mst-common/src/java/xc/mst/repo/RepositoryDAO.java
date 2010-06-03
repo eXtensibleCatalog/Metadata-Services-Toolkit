@@ -68,9 +68,7 @@ public class RepositoryDAO extends BaseDAO {
 						if (StringUtils.isEmpty(StringUtils.trim(sql))) {
 							continue;
 						}
-						// oai ids
-						//sql = sql + ";";
-						this.jdbcTemplate.execute(sql);
+						jdbcTemplate.execute(sql);
 					}
 				}
 			} else {

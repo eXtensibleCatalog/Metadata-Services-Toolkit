@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -27,7 +28,7 @@ import xc.mst.manager.BaseManager;
 import xc.mst.manager.BaseService;
 import xc.mst.utils.Util;
 
-public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationContextAware {
+public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostProcessor, ApplicationContextAware {
 	
 	private static final Logger LOG = Logger.getLogger(MSTBeanPostProcessor.class);
 	
@@ -39,11 +40,19 @@ public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationConte
 	
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		if (bean instanceof BaseDAO) {
-			((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("DataSource"));
+			try {
+				((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("MetadataServiceDataSource"));	
+			} catch (NoSuchBeanDefinitionException nsbde) {
+				((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("DataSource"));
+			}
 			((BaseDAO)bean).setUtil((Util)this.applicationContext.getBean("Util"));
 		} else if (bean instanceof BaseService) {
 			((BaseService)bean).setUtil((Util)this.applicationContext.getBean("Util"));
-			((BaseService)bean).setTransactionManager((PlatformTransactionManager)this.applicationContext.getBean("TransactionManager"));
+			try {
+				((BaseService)bean).setTransactionManager((PlatformTransactionManager)this.applicationContext.getBean("MetadataServiceTransactionManager"));
+			} catch (NoSuchBeanDefinitionException nsbde) {
+				((BaseService)bean).setTransactionManager((PlatformTransactionManager)this.applicationContext.getBean("TransactionManager"));
+			}
 			
 			Map<String, Method> serviceSetters = new HashMap<String, Method>();
 			for (Method m : bean.getClass().getMethods()) {
@@ -61,7 +70,8 @@ public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationConte
 					o = this.applicationContext.getBean(s);
 					m.invoke(bean, o);
 				} catch (Throwable t) {
-					LOG.error(t.getMessage()+"error calling "+bean.getClass()+"."+m.getName());
+					LOG.error(bean.getClass()+"."+m.getName());
+					LOG.error("", t);
 				}
 			}
 		}

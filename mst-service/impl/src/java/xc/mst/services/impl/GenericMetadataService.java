@@ -36,6 +36,7 @@ import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataService;
+import xc.mst.services.impl.dao.GenericMetadataDAO;
 
 /**
  * A copy of the MST is designed to interface with one or more Metadata Services depending on how it's configured.
@@ -50,6 +51,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 
 	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_PROCESSING);
 
+	protected GenericMetadataDAO genericMetadataDAO = null;
 	protected Service service = null;
 	protected List<ProcessingDirective> processingDirectives = null;
 	protected int warningCount = 0;
@@ -84,6 +86,14 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 
 	public void setService(Service service) {
 		this.service = service;
+	}
+	
+	public GenericMetadataDAO getGenericMetadataDAO() {
+		return genericMetadataDAO;
+	}
+
+	public void setGenericMetadataDAO(GenericMetadataDAO genericMetadataDAO) {
+		this.genericMetadataDAO = genericMetadataDAO;
 	}
 
 	public Set getOutputSet() {
@@ -169,7 +179,6 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	public void install() {
 		try {
 			executeServiceDBScripts("xc/mst/services/install.sql");
-			//TODO create repo
 			getRepository().installOrUpdateIfNecessary();
 			postInstall();
 		} catch (Throwable t) {
@@ -342,7 +351,6 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	
 	public abstract List<Record> process(Record r);
 
-	
 	public void process(Repository repo, Format format, Set set) {
 		//TODO - create tables
 		//   one of which is a list of when the last "harvest" was

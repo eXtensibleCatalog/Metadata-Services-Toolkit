@@ -20,10 +20,28 @@
 	<bean name="PropertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" scope="singleton">
 		<property name="locations">
 			<list>
+				<value>classpath:default.properties</value>
+				<value>classpath:env.properties</value>
+				<value>classpath:install.properties</value>
 				<value>classpath:xc/mst/services/spring.properties</value>
 				<value>classpath:xc/mst/services/custom.properties</value>
 			</list>
 		</property>
+		<property name="ignoreResourceNotFound" value="true" />
+	</bean>
+
+	<bean id="MetadataServiceDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="${DatabaseUrl}/${Database}?useUnicode=yes&amp;characterEncoding=UTF-8"/>
+		<property name="username" value="${DatabaseUsername}"/>
+		<property name="password" value="${DatabasePassword}"/>
+		<property name="maxIdle" value="10" />
+		<property name="minIdle" value="5" />
+		<property name="maxActive" value="5" />
+	</bean>
+	
+	<bean id="MetadataServiceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="DataSource"/>
 	</bean>
 	
 	<context:component-scan base-package="xc.mst"
