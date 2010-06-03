@@ -88,11 +88,11 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	protected String getPrefix(String repoName) {
-		return "repo_"+repoName;
+		return repoName;
 	}
 	
 	protected String getTableName(String repoName, String tableName) {
-		return " "+getPrefix(repoName)+"_"+tableName+" ";
+		return " "+getPrefix(repoName)+"."+tableName+" ";
 	}
 	
 	public void beginBatch() {

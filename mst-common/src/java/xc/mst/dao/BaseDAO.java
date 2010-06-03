@@ -63,6 +63,10 @@ public class BaseDAO {
 	protected Util util = null;
 	
 	public void createSchema(String name) {
+		// this is potentially dangerous, but necessary for now
+		if (schemasExists(name)) {
+			deleteSchema(name);
+		}
 		this.jdbcTemplate.execute("create database "+name+" character set=utf8;");
 	}
 	

@@ -104,67 +104,6 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 		this.outputSet = outputSet;
 	}
     
-    /**
-     * Executes the sql scripts in the folder provided
-     * @param sqlFolderName Path of the folder that contains the sql scripts
-     * @throws IOException 
-     */
-    private void executeServiceDBScripts(String fileName) throws DataException {
-    	ArrayList<String> commands = new ArrayList<String>();
-    	StringBuilder command = new StringBuilder();
-
-    	MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
-    	Statement stmt = null;
-		BufferedReader br = null;
-    	// Read the files
-    	try {
-    		LOG.info("getUtil(): "+getUtil());
-    		LOG.info("fileName: "+fileName);
-    		LOG.info("getUtil().slurp(fileName): "+getUtil().slurp(fileName, getClass().getClassLoader()));
-    		String str = getUtil().slurp(fileName, getClass().getClassLoader());
-    		if (str != null) {
-				br = new BufferedReader(new StringReader(str));
-				String line = null;
-				while((line = br.readLine()) != null){
-					if(line.trim().startsWith("--"))
-						continue;				
-					command.append(line);
-					if(line.endsWith(";")){
-						commands.add(command.toString());
-						command.setLength(0);
-					}	
-				}
-	    	
-		    	//Execute the commands
-				stmt = dbConnectionManager.createStatement();
-				for (String sql : commands) {
-					stmt.execute(sql);
-				}
-    		}
-				
-		} catch (Exception e) {
-			LOG.error("An exception occured while executing the sql scripts.", e);
-			throw new DataException("An exception occured while executing the sql scripts.");
-		}
-		finally {
-			if(br!=null) {
-				try {
-					br.close();
-				} catch(IOException ioe) {
-					LOG.error("An IO Exception occured while closing the buffered Reader");
-					throw new DataException("An IO Exception occured while closing the buffered Reader");
-				}
-			}
-			if(stmt!=null)
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					LOG.error("An exception occured while closing a connection.");
-				}
-		}
-  	
-    }
-    
 	public Repository getRepository() {
 		return this.repository;
 	}
@@ -178,7 +117,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	
 	public void install() {
 		try {
-			executeServiceDBScripts("xc/mst/services/install.sql");
+			getGenericMetadataDAO().executeServiceDBScripts("xc/mst/services/install.sql");
 			getRepository().installOrUpdateIfNecessary();
 			postInstall();
 		} catch (Throwable t) {
@@ -191,7 +130,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 
 	public void uninstall() {
 		try {
-			executeServiceDBScripts("xc/mst/services/uninstall.sql");
+			getGenericMetadataDAO().executeServiceDBScripts("xc/mst/services/uninstall.sql");
 			postInstall();
 		} catch (Throwable t) {
 			LOG.error("", t);
@@ -221,7 +160,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 		List<String> orderedFileNames2run = internalUpdate(pvStr, cvStr, fileNames);
 		for (String fn : orderedFileNames2run) {
 			try {
-				executeServiceDBScripts(fn);
+				getGenericMetadataDAO().executeServiceDBScripts(fn);
 			} catch (Throwable t) {
 				LOG.error("", t);
 			}

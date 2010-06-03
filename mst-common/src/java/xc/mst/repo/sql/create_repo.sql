@@ -1,4 +1,4 @@
-create table repo_name_records (
+create table repo_name.records (
 	record_id        int        NOT NULL,
 	date_created     datetime,
 	status           char(1),
@@ -10,20 +10,20 @@ create table repo_name_records (
 	KEY idx_REPO_NAME_records_format_id (format_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-create table repo_name_record_updates (
+create table repo_name.record_updates (
 	id                    int        NOT NULL    AUTO_INCREMENT,
 	record_id             int,
 	date_updated          datetime,
 	PRIMARY KEY (id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-create table repo_name_records_xml (
+create table repo_name.records_xml (
 	record_id      int         not null,
 	xml            longtext,
 	PRIMARY KEY (record_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-create table repo_name_record_sets (
+create table repo_name.record_sets (
 	record_id             int,
 	set_id                int,
 	PRIMARY KEY (record_id, set_id),
@@ -31,7 +31,7 @@ create table repo_name_record_sets (
 	KEY idx_REPO_NAME_records_set_set_id(set_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-create table repo_name_record_predecessors (
+create table repo_name.record_predecessors (
 	id                    int        NOT NULL    AUTO_INCREMENT,
 	record_id             int,
 	pred_record_id        int,

@@ -42,6 +42,9 @@ public class ServiceTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 			ClassMetadata classMetadata = metadataReader.getClassMetadata();
 			String className = classMetadata.getClassName();
 			Class c = getClassLoader().loadClass(className);
+			if (blackListed(className)) {
+				return false;
+			}
 			if (BaseService.class.isAssignableFrom(c) && !BaseManager.class.isAssignableFrom(c) && !BaseService.class.equals(c)) {
 				LOG.debug("c: "+c.getName());
 				return true;	

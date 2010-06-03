@@ -24,6 +24,7 @@ import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 
 public class DefaultServiceDAO extends ServiceDAO
 {
@@ -651,8 +652,10 @@ public class DefaultServiceDAO extends ServiceDAO
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
 	                                   "WHERE " + COL_SERVICE_NAME + "=?";
 
-					if(log.isDebugEnabled())
+					if(log.isDebugEnabled()) {
 						log.debug("Creating the \"get service by name\" PreparedStatement from the SQL " + selectSql);
+						log.debug("Database: "+MSTConfiguration.getProperty("Database"));
+					}
 
 					// A prepared statement to run the select SQL
 					// This should sanitize the SQL and prevent SQL injection
