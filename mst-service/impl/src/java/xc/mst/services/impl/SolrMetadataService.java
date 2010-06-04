@@ -66,10 +66,6 @@ public abstract class SolrMetadataService extends BaseManager {
 	protected long startTime = new Date().getTime();
 	protected long endTime = 0;
 	protected long timeDiff = 0;
-	
-	public String getFolder() {
-		return MSTConfiguration.getUrlPath()+"/services/"+getServiceName();
-	}
 
 	/**
 	 * 

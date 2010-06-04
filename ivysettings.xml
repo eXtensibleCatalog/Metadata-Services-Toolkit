@@ -53,6 +53,9 @@
 
          <!-- restlet maven 2 repo -->
          <ibiblio name="restlet" m2compatible="true" root="http://maven.restlet.org/" />
+
+         <ibiblio name="xcmetadataservicestoolkit" m2compatible="true"  
+			 root="http://xcmetadataservicestoolkit.googlecode.com/svn/dist/maven2/" />
          
      </chain>
 

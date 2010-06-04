@@ -30,7 +30,12 @@ public class ExampleMetadataService extends GenericMetadataService {
 		Element metadataEl = r.getOaiXmlEl();
 		Element foo = metadataEl.getChild("foo");
 		getFooService().fooFound(foo.getText());
-		out.setOaiXml("<bar>you've been barred: "+foo.getText()+"</bar>");
+		// you could do this 
+		// out.setOaiXml("<bar>you've been barred: "+StringEscapeUtils.escapeXml(foo.getText())+"</bar>");
+		// or you could do this
+		Element barEl = new Element("bar");
+		barEl.setText("you've been barred: "+foo.getText());
+		out.setOaiXmlEl(barEl);
 		records.add(out);
 		return records;
 	}

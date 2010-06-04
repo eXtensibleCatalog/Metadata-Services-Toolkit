@@ -89,9 +89,6 @@
 
 	<target name="resolve" depends="download-ivy">
 		<ivy:resolve file="ivy.xml"/>
-		<!--
-		<ivy:resolve file="ivy-custom.xml"/>
-		-->
 	</target>
 
 	<target name="ivy-report" depends="resolve">
@@ -156,10 +153,24 @@
 	</target>
 
 	<target name="zip" depends="jar, zip.nodep" />
-
 	<target name="zip.nodep" depends="jar.nodep">
 		<zip destfile="${build.dir}/${service.name}-${service.version}.zip">
 			<zipfileset  dir="${build.zip}" prefix="${service.name}"/>
+		</zip>
+	</target>
+
+	<target name="zip-dev-env">
+		<zip destfile="${build.dir}/${service.name}-${service.version}-dev-env.zip">
+			<zipfileset  dir="." >
+				<exclude name="build" />
+				<exclude name="build/**/*" />
+				<exclude name="bin" />
+				<exclude name="bin/**/*" />
+				<exclude name="ivy" />
+				<exclude name="ivy/**/*" />
+				<exclude name=".classpath" />
+				<exclude name=".project" />
+			</zipfileset>
 		</zip>
 	</target>
 
