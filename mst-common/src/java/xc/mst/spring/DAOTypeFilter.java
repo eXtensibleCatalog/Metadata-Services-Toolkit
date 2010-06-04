@@ -18,6 +18,7 @@ import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.TypeFilter;
 
 import xc.mst.dao.BaseDAO;
+import xc.mst.utils.MSTConfiguration;
 
 public class DAOTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 	
@@ -29,6 +30,13 @@ public class DAOTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 		try {
 			ClassMetadata classMetadata = metadataReader.getClassMetadata();
 			String className = classMetadata.getClassName();
+			try {
+				if (MSTConfiguration.getBean(getBeanName(className)) != null) {
+					return false;
+				}
+			} catch (Throwable t) {
+				//do nothing
+			}
 			Class c = getClassLoader().loadClass(className);
 			if (blackListed(className)) {
 				return false;

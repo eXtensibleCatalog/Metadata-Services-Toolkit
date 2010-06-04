@@ -21,6 +21,7 @@ import org.springframework.core.type.filter.TypeFilter;
 
 import xc.mst.manager.BaseManager;
 import xc.mst.manager.BaseService;
+import xc.mst.utils.MSTConfiguration;
 
 public class ServiceTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 	
@@ -42,6 +43,13 @@ public class ServiceTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 			ClassMetadata classMetadata = metadataReader.getClassMetadata();
 			String className = classMetadata.getClassName();
 			Class c = getClassLoader().loadClass(className);
+			try {
+				if (MSTConfiguration.getBean(getBeanName(className)) != null) {
+					return false;
+				}
+			} catch (Throwable t) {
+				//do nothing
+			}
 			if (blackListed(className)) {
 				return false;
 			}

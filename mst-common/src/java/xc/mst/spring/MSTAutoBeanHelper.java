@@ -30,7 +30,6 @@ public class MSTAutoBeanHelper {
 			Util util = (Util)MSTConfiguration.getBean("Util");
 			cl = util.getClassLoader();
 			if (cl != null) {
-				LOG.debug("cl: "+cl);
 				return false;
 			}
 			// This part checks whether a service ac has been loaded and we're in the context
@@ -51,6 +50,23 @@ public class MSTAutoBeanHelper {
 		} else {
 			return false;
 		}
+	}
+	
+	protected String getBeanName(String className) {
+		LOG.debug("className: "+className);
+		if (ServiceTypeFilter.serviceBeans.containsKey(className)) {
+			return ServiceTypeFilter.serviceBeans.get(className);
+		}
+		int idx0 = className.lastIndexOf(".");
+		if (idx0 != -1) {
+			className = className.substring(idx0+1);
+		}
+		idx0 = className.lastIndexOf("Default");
+		if (idx0 != -1) {
+			className = className.substring(idx0+"Default".length());
+		}
+		LOG.debug("className: "+className);
+		return className;
 	}
 
 }

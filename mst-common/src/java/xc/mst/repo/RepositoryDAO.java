@@ -58,18 +58,12 @@ public class RepositoryDAO extends BaseDAO {
 	protected List<Record> recordsToAdd = null;
 	
 	public void init() {
+		LOG.debug("RepositoryDAO.init()");
 		try {
 			if (!tableExists(REPOS_TABLE)) {
 				for (String file : new String[] {"xc/mst/repo/sql/create_repo_platform.sql", 
 							"xc/mst/repo/sql/create_oai_id_seq.sql"}) {
-					String createTablesContents = getUtil().slurp(file);
-					String[] tokens = createTablesContents.split("\n\n");
-					for (String sql : tokens) {
-						if (StringUtils.isEmpty(StringUtils.trim(sql))) {
-							continue;
-						}
-						jdbcTemplate.execute(sql);
-					}
+					executeServiceDBScripts(file);
 				}
 			} else {
 				// getversion and update if necessary

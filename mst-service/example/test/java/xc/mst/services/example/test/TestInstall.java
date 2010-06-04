@@ -25,8 +25,8 @@ public class TestInstall extends BaseMetadataServiceTest {
 			ss.addNewService(repoName);
 			LOG.debug("repoName: "+repoName);
 			s = ss.getServiceByName(repoName);
-			GenericMetadataDAO genericMetadataDAO = (GenericMetadataDAO) ss.getBean(repoName, "GenericMetadataDAO");
-			genericMetadataDAO.executeServiceDBScripts("xc/mst/repo/sql/create_oai_id_seq.sql");
+			//GenericMetadataDAO genericMetadataDAO = (GenericMetadataDAO) ss.getBean(repoName, "GenericMetadataDAO");
+			//genericMetadataDAO.executeServiceDBScripts("xc/mst/repo/sql/create_oai_id_seq.sql");
 		} catch (Throwable t) {
 			LOG.error("", t);
 		}
