@@ -13,22 +13,19 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.harvest.HarvestScheduleDAO;
-import xc.mst.manager.harvest.ScheduleService;
-import xc.mst.utils.MSTConfiguration;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Action to view all schedules
  *
  * @author Sharmila Ranganathan
  */
-public class AllSchedules extends ActionSupport
+public class AllSchedules extends BaseActionSupport
 {
     
     /** determines the column by which the rows are to be sorted */
@@ -49,9 +46,6 @@ public class AllSchedules extends ActionSupport
 	/** Id of schedule to be deleted. */
 	private int scheduleId;
 
-	/** Schedule service */
-	private ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getBean("ScheduleService");
-
 	/** Error type */
 	private String errorType; 
 
@@ -70,24 +64,24 @@ public class AllSchedules extends ActionSupport
             {
                 if(columnSorted.equalsIgnoreCase("ScheduleName"))
                 {
-                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_SCHEDULE_NAME);
+                    schedules = getScheduleService().getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_SCHEDULE_NAME);
                 }
                 else if(columnSorted.equalsIgnoreCase("Recurrence"))
                 {
-                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_RECURRENCE);
+                    schedules = getScheduleService().getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_RECURRENCE);
                 }
                 else if(columnSorted.equalsIgnoreCase("Status"))
                 {
-                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_STATUS);
+                    schedules = getScheduleService().getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_STATUS);
                 }
                 else
                 {
-                    schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,"ProviderName");
+                    schedules = getScheduleService().getAllSchedulesSorted(isAscendingOrder,"ProviderName");
                 }
             }
             else
             {
-                 schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_SCHEDULE_NAME);
+                 schedules = getScheduleService().getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_SCHEDULE_NAME);
             }
             return SUCCESS;
         }
@@ -113,7 +107,7 @@ public class AllSchedules extends ActionSupport
     	
     	HarvestSchedule schedule = null;
     	try {
-    		schedule = scheduleService.getScheduleById(scheduleId);
+    		schedule = getScheduleService().getScheduleById(scheduleId);
     	} catch (DatabaseConfigException dce) {
     		log.error(dce.getMessage(), dce);
     		addFieldError("scheduleDeleteFailed", "Problems with retrieving and deleting the schedule.");
@@ -125,7 +119,7 @@ public class AllSchedules extends ActionSupport
         {
 	    	try
             {
-	    		scheduleService.deleteSchedule(schedule);
+	    		getScheduleService().deleteSchedule(schedule);
             } catch (DataException e)
             {
 	    		log.error("Deleting the schedule failed",  e);
@@ -140,18 +134,18 @@ public class AllSchedules extends ActionSupport
                 {
                     if(columnSorted.equalsIgnoreCase("ScheduleName"))
                     {
-                        schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_SCHEDULE_NAME);
+                        schedules = getScheduleService().getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_SCHEDULE_NAME);
                     }
                     else
                     {
-                        schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_RECURRENCE);
+                        schedules = getScheduleService().getAllSchedulesSorted(isAscendingOrder,HarvestScheduleDAO.COL_RECURRENCE);
                     }
 
                 }
                 else
                 {
                      this.addFieldError("allSchedulesError", "The column "+columnSorted+" cannot be matched");
-                     schedules = scheduleService.getAllSchedulesSorted(isAscendingOrder, HarvestScheduleDAO.COL_SCHEDULE_NAME);
+                     schedules = getScheduleService().getAllSchedulesSorted(isAscendingOrder, HarvestScheduleDAO.COL_SCHEDULE_NAME);
                 }
                 setIsAscendingOrder(isAscendingOrder);
               

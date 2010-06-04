@@ -15,8 +15,8 @@ public class TestInstall extends BaseMetadataServiceTest {
 	@Test
 	public void testIntall() {
 		try {
-			String repoName = MSTConfiguration.getProperty("service.name");
-			ServicesService ss = (ServicesService)MSTConfiguration.getBean("ServicesService");
+			String repoName = MSTConfiguration.getInstance().getProperty("service.name");
+			ServicesService ss = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
 			Service s = ss.getServiceByName(repoName);
 			if (s != null) {
 				ss.deleteService(s);

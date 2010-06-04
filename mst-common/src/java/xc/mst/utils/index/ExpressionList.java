@@ -42,7 +42,7 @@ public class ExpressionList extends AbstractList<Expression>
 	/**
 	 * An Object which manages the Solr index
 	 */
-	protected SolrIndexManager indexMgr = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+	protected SolrIndexManager indexMgr = (SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager");
 	
 	/**
 	 * The current offset into the results of the query that are in the document list
@@ -62,7 +62,7 @@ public class ExpressionList extends AbstractList<Expression>
 	/**
 	 * The service used to get a record from a Lucene document
 	 */
-	private static ExpressionService service = (ExpressionService)MSTConfiguration.getBean("ExpressionService");
+	private static ExpressionService service = (ExpressionService)MSTConfiguration.getInstance().getBean("ExpressionService");
 	
 	/**
 	 * The number of elements in the list

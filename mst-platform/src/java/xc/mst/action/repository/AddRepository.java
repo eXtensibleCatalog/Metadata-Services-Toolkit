@@ -90,7 +90,7 @@ public class AddRepository extends BaseActionSupport
 
                 getProviderService().insertProvider(pr);
 
-                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
+                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
                 vr.validate(pr.getId());
 
             }

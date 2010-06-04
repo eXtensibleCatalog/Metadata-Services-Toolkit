@@ -70,19 +70,19 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private static RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+	private static RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
 	
 	/**
 	 * Manager for getting, inserting and updating jobs
 	 */
-	private static JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
+	private static JobService jobService = (JobService)MSTConfiguration.getInstance().getBean("JobService");
 	
 	@Override
 	public void run() 
 	{
 		try
 		{
-			ServicesService serviceManager = (ServicesService)MSTConfiguration.getBean("ServicesService");
+			ServicesService serviceManager = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
 			service = serviceManager.getServiceById(serviceId);
 			
 			log.info("Starting thread to reprocess service " + service);
@@ -143,7 +143,7 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 				recordService.update(updatedRecord);				
 			}
 			
-			((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
+			((SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager")).commitIndex();
 
     		for(Service runMe : servicesToRun)
     		{

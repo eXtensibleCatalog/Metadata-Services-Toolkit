@@ -22,7 +22,6 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseManager;
 import xc.mst.utils.LogWriter;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
 /**
@@ -258,7 +257,7 @@ public class HarvestRunner extends BaseManager
 			currentHarvest.setHarvestSchedule(harvestScheduleStep.getSchedule());
 			getHarvestDAO().insert(currentHarvest);
 
-			String timeout = MSTConfiguration.getProperty(Constants.CONFIG_HARVESTER_TIMEOUT_URL);
+			String timeout = config.getProperty(Constants.CONFIG_HARVESTER_TIMEOUT_URL);
 			if(timeout != null)
 			{
 				try

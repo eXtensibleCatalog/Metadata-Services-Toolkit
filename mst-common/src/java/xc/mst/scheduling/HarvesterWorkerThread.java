@@ -59,7 +59,7 @@ public class HarvesterWorkerThread extends WorkerThread
 
 			// Construct the XC_Harvester object.  This will automatically run the harvester
 			
-			HarvestRunner harvester = (HarvestRunner)MSTConfiguration.getBean("HarvestRunner"); 
+			HarvestRunner harvester = (HarvestRunner)MSTConfiguration.getInstance().getBean("HarvestRunner"); 
 			harvester.setScheduleId(harvestScheduleId);
 			harvester.runHarvest();
 		} // end try(run the harvest)

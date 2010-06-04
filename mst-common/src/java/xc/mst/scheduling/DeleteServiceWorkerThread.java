@@ -69,17 +69,17 @@ public class DeleteServiceWorkerThread extends WorkerThread
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private static RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+	private static RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
 	
 	/**
 	 * Manager for getting, inserting and updating jobs
 	 */
-	private static JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
+	private static JobService jobService = (JobService)MSTConfiguration.getInstance().getBean("JobService");
 	
 	/**
 	 * Manager for getting, inserting and updating service
 	 */
-	private static ServicesService serviceManager = (ServicesService)MSTConfiguration.getBean("ServicesService");
+	private static ServicesService serviceManager = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
 	
 	@Override
 	public void run() 
@@ -155,7 +155,7 @@ public class DeleteServiceWorkerThread extends WorkerThread
 				recordService.update(updatedPredecessor);				
 			}
 			
-			((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
+			((SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager")).commitIndex();
 
 			// Schedule subsequent services to process that the record was deleted
 			for(Service nextSerivce : affectedServices)

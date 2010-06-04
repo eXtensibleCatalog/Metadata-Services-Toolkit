@@ -68,12 +68,12 @@ public class XcRecordSplitter
 	/**
 	 * Data access object for getting formats
 	 */
-	private static FormatDAO formatDao = (FormatDAO)MSTConfiguration.getBean("FormatDAO");
+	private static FormatDAO formatDao = (FormatDAO)MSTConfiguration.getInstance().getBean("FormatDAO");
 
 	/**
 	 * Data access object for getting FRBR level IDs
 	 */
-	protected static XcIdentifierForFrbrElementDAO frbrLevelIdDao = (XcIdentifierForFrbrElementDAO)MSTConfiguration.getBean("XcIdentifierForFrbrElementDAO");
+	protected static XcIdentifierForFrbrElementDAO frbrLevelIdDao = (XcIdentifierForFrbrElementDAO)MSTConfiguration.getInstance().getBean("XcIdentifierForFrbrElementDAO");
 
 	/**
 	 * A list of Work FRBR components contained in the original XC record

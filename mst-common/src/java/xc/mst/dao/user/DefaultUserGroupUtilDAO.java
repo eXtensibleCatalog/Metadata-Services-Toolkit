@@ -19,7 +19,6 @@ import xc.mst.bo.user.User;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.user.UserService;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * MySQL implementation of the utility class for manipulating the groups assigned to a user
@@ -363,7 +362,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 				// Execute the query
 				results = dbConnectionManager.executeQuery(psGetUsersForGroup);
 
-				UserService userService = (UserService)MSTConfiguration.getBean("UserService");
+				UserService userService = (UserService)config.getBean("UserService");
 				// For each result returned, add the group ID object to the list with the returned data
 				while(results.next())
 					users.add(userService.getUserById(results.getInt(1)));
@@ -505,7 +504,7 @@ public class DefaultUserGroupUtilDAO extends UserGroupUtilDAO
 				// Execute the query
 				results = dbConnectionManager.executeQuery(psGetUsersForGroupSorted);
 
-				UserService userService = (UserService)MSTConfiguration.getBean("UserService");
+				UserService userService = (UserService)config.getBean("UserService");
 				// For each result returned, add the group ID object to the list with the returned data
 				while(results.next())
 					users.add(userService.getUserById(results.getInt(1)));

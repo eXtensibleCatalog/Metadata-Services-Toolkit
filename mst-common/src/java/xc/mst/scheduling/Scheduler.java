@@ -68,7 +68,7 @@ public class Scheduler extends BaseManager implements Runnable
 	static
 	{
 		// Abort if we could not find the configuration file.
-		String logConfigFileLocation = MSTConfiguration.getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
+		String logConfigFileLocation = MSTConfiguration.getInstance().getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
 		if(logConfigFileLocation == null)
 		{
 			System.err.println("The configuration file was invalid or did not exist.");

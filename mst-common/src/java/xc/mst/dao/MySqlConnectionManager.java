@@ -106,7 +106,7 @@ public class MySqlConnectionManager
 
 	    try {
 	    	// BDA:  This is so horribly wrong and needs to be fixed at some point.
-	    	dbConnection = ((DataSource)MSTConfiguration.getBean("DataSource")).getConnection();
+	    	dbConnection = ((DataSource)MSTConfiguration.getInstance().getBean("DataSource")).getConnection();
 	    	return dbConnection;
 	    } catch (SQLException e) {
 	    	log.warn("Could not connect to the database specified in the configuration file.", e);
@@ -388,7 +388,7 @@ public class MySqlConnectionManager
 	//      for the time being, I'm going to piggyback this class and slowly phase it out.
 	public static Connection getConnection() {
 		try {
-			return ((DataSource)MSTConfiguration.getBean("DataSource")).getConnection();
+			return ((DataSource)MSTConfiguration.getInstance().getBean("DataSource")).getConnection();
 		} catch (Throwable t) {
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;

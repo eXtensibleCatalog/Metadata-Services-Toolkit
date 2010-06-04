@@ -100,7 +100,7 @@ public class BenchmarkMST
 		System.out.println(formatter.format(System.currentTimeMillis()) + " Starting harvester.");
 
 		// Construct the XC_Harvester object.  This will automatically run the harvester
-		HarvestRunner harvester = (HarvestRunner)MSTConfiguration.getBean("HarvestRunner");
+		HarvestRunner harvester = (HarvestRunner)MSTConfiguration.getInstance().getBean("HarvestRunner");
 		harvester.setScheduleId(1);//HarvestSchedule.getRunOnceScheduleId(provider.getProviderId()));
 		harvester.runHarvest();
 

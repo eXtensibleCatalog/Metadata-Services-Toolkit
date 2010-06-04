@@ -1,7 +1,6 @@
 package xc.mst.services.impl;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.InetAddress;
@@ -12,18 +11,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
-import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordType;
-import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
@@ -34,8 +29,6 @@ import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.email.Emailer;
 import xc.mst.manager.BaseManager;
 import xc.mst.manager.IndexException;
-import xc.mst.repo.Repository;
-import xc.mst.services.MetadataService;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
@@ -183,7 +176,7 @@ public abstract class SolrMetadataService extends BaseManager {
 	 */
 	public boolean processRecords()
 	{
-		SolrIndexManager solrIndexManager = ((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager"));
+		SolrIndexManager solrIndexManager = ((SolrIndexManager)config.getBean("SolrIndexManager"));
 		TimingLogger.start("processRecords");
 		try
 		{
@@ -215,7 +208,7 @@ public abstract class SolrMetadataService extends BaseManager {
 						
 						// Commit the records so that next record type can use that for processing 
 						TimingLogger.start("331.commitIndex");
-						((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
+						((SolrIndexManager)config.getBean("SolrIndexManager")).commitIndex();
 						TimingLogger.stop("331.commitIndex");
 						updateServiceStatistics();
 						
@@ -382,7 +375,7 @@ public abstract class SolrMetadataService extends BaseManager {
 				if(processedRecordCount != 0 && processedRecordCount % 100000 == 0)
 				{
 					TimingLogger.start("491.commit");
-					((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
+					((SolrIndexManager)config.getBean("SolrIndexManager")).commitIndex();
 					TimingLogger.stop("491.commit");
 					
 					TimingLogger.start("updateServiceStatistics");
@@ -550,7 +543,7 @@ public abstract class SolrMetadataService extends BaseManager {
 	{
 		try
 		{
-			SolrIndexManager solrIndexManager = ((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager"));
+			SolrIndexManager solrIndexManager = ((SolrIndexManager)config.getBean("SolrIndexManager"));
 			solrIndexManager.waitForJobCompletion(5000);
 			solrIndexManager.commitIndex();
 		}
@@ -588,7 +581,7 @@ public abstract class SolrMetadataService extends BaseManager {
 	 */
 	public final String getNextOaiId()
 	{
-		return "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + 
+		return "oai:" + config.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + 
 				MSTConfiguration.getInstanceName() + "/" + service.getName().replace(" ", "_") + "/" + 
 				getOaiIdentifierForServiceDAO().getNextOaiIdForService(service.getId());
 	}

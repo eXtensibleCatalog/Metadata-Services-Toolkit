@@ -18,7 +18,6 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
 import xc.mst.bo.record.Record;
 import xc.mst.manager.BaseService;
-import xc.mst.utils.MSTConfiguration;
 
 public class DefaultRepository extends BaseService implements Repository {
 	
@@ -30,7 +29,7 @@ public class DefaultRepository extends BaseService implements Repository {
 		this.transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				try {
-					if ("0.3.0".equals(MSTConfiguration.getProperty("version"))) {
+					if ("0.3.0".equals(config.getProperty("version"))) {
 						boolean exists = getRepositoryDAO().exists(name);
 						LOG.debug("exists: "+exists);
 						if (!exists) {

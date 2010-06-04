@@ -31,7 +31,7 @@ public class HarvestUtil {
 		 */
 		public static String latestHarvest(HarvestSchedule harvestSchedule) throws Exception
 		{
-			ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getBean("ScheduleService");
+			ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getInstance().getBean("ScheduleService");
 			
 			Timestamp latestRun = null;
 			

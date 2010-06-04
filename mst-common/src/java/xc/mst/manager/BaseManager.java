@@ -32,7 +32,6 @@ import xc.mst.manager.user.PermissionService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.SolrIndexManager;
 
 public class BaseManager extends BaseService {
@@ -202,7 +201,7 @@ public class BaseManager extends BaseService {
 	}
 	
 	public SolrIndexManager getSolrIndexManager() {
-		return (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		return (SolrIndexManager)config.getBean("SolrIndexManager");
 	}
 	
 }

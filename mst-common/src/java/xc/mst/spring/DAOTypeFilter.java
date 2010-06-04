@@ -31,7 +31,7 @@ public class DAOTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 			ClassMetadata classMetadata = metadataReader.getClassMetadata();
 			String className = classMetadata.getClassName();
 			try {
-				if (MSTConfiguration.getBean(getBeanName(className)) != null) {
+				if (MSTConfiguration.getInstance().getBean(getBeanName(className)) != null) {
 					return false;
 				}
 			} catch (Throwable t) {

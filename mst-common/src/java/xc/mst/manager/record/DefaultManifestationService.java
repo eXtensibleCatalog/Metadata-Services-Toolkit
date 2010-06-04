@@ -19,7 +19,6 @@ import xc.mst.bo.record.Manifestation;
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.ManifestationList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -48,7 +47,7 @@ public class DefaultManifestationService extends ManifestationService
 		// Get the result of the query
 		SolrDocumentList docs = null;
 
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		docs = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the work with the correct XC manifestation ID
@@ -69,7 +68,7 @@ public class DefaultManifestationService extends ManifestationService
 	@Override
 	public ManifestationList getByXcRecordId(String xcRecordId) throws IndexException
 	{
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		String trait = recordService.escapeString(Manifestation.TRAIT_RECORD_ID + ":" + xcRecordId);
 
 		if(log.isDebugEnabled())
@@ -118,7 +117,7 @@ public class DefaultManifestationService extends ManifestationService
 	public Manifestation getManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
 		// Return the Record in the document as a Manifestation
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		return Manifestation.buildManifestationFromRecord(recordService.getRecordFromDocument(doc));
 	} // end method getManifestationFromDocument(Document)
 
@@ -126,7 +125,7 @@ public class DefaultManifestationService extends ManifestationService
 	public Manifestation getBasicManifestationFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
 		// Return the Record in the document as a Manifestation
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		return Manifestation.buildManifestationFromRecord(recordService.getRecordFromDocument(doc));
 	} // end method getBasicManifestationFromDocument(Document)
 
@@ -134,7 +133,7 @@ public class DefaultManifestationService extends ManifestationService
 	public SolrInputDocument setFieldsOnDocument(Manifestation manifestation, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		return recordService.setFieldsOnDocument(manifestation, doc, generateNewId);
 	} // end method setFieldsOnDocument(Manifestation, Document, boolean)
 }// end class DefaultManifestationService

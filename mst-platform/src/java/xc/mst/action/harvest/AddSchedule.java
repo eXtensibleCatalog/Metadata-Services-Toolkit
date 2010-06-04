@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
@@ -26,13 +27,6 @@ import xc.mst.bo.provider.Set;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.harvest.ScheduleService;
-import xc.mst.manager.repository.FormatService;
-import xc.mst.manager.repository.ProviderService;
-import xc.mst.manager.repository.SetService;
-import xc.mst.utils.MSTConfiguration;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 
 
@@ -41,7 +35,7 @@ import com.opensymphony.xwork2.ActionSupport;
  *
  * @author Sharmila Ranganathan
  */
-public class AddSchedule extends ActionSupport implements ServletRequestAware 
+public class AddSchedule extends BaseActionSupport implements ServletRequestAware 
 {
     /** Eclipse generated id */
 	private static final long serialVersionUID = 4317442764979283556L;
@@ -106,18 +100,6 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 	/** Start date for schedule */
 	private String startDateDisplayFormat;
 
-	/** Schedule service */
-	private ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getBean("ScheduleService");
-
-	/** Provider service */
-	private ProviderService providerService = (ProviderService)MSTConfiguration.getBean("ProviderService");
-
-	/** Set service */
-	private SetService setService = (SetService)MSTConfiguration.getBean("SetService");
-
-	/** Format service */
-	private FormatService formatService = (FormatService)MSTConfiguration.getBean("FormatService");
-
 	/** Error type */
 	private String errorType; 
 	
@@ -136,7 +118,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     		log.debug("In Add schedule Execute()");
     	}
     	try {
-	        repositories = providerService.getAllProviders();
+	        repositories = getProviderService().getAllProviders();
 	        
 	        schedule = new HarvestSchedule();
 	        request.getSession().setAttribute("schedule", schedule);
@@ -167,7 +149,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 
     	schedule = (HarvestSchedule) request.getSession().getAttribute("schedule");
     	
-    	repository = providerService.getProviderById(repositoryId);
+    	repository = getProviderService().getProviderById(repositoryId);
 
     	schedule.setProvider(repository);
     	if (scheduleName == null)
@@ -210,7 +192,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	} catch (ParseException pe) {
     		addFieldError("invalidStartDate", "Invalid format for start date. Please enter in the format mm/dd/yyyy");
     		errorType = "error";
-    		repositories = providerService.getAllProviders();
+    		repositories = getProviderService().getAllProviders();
    			endDateDisplayFormat = endDate;
         	startDateDisplayFormat = startDate;
     		return INPUT;
@@ -225,7 +207,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	} catch (ParseException pe) {
     		addFieldError("invalidEndDate", "Invalid format for end date. Please enter in the format mm/dd/yyyy");
     		errorType = "error";
-    		repositories = providerService.getAllProviders();
+    		repositories = getProviderService().getAllProviders();
    			endDateDisplayFormat = endDate;
         	startDateDisplayFormat = startDate;
     		return INPUT;
@@ -233,7 +215,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 
     	// Check if schedule exist for this provider
     	HarvestSchedule otherSchedule = null;
-    	List<HarvestSchedule> schedules = scheduleService.getAllSchedules();
+    	List<HarvestSchedule> schedules = getScheduleService().getAllSchedules();
     	for(HarvestSchedule harvestSchedule:schedules) {
     		if (harvestSchedule.getProvider().getId() == repositoryId) {
     			otherSchedule = harvestSchedule;
@@ -247,7 +229,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	} else {
     		addFieldError("providerExist", "Harvest schedule for repository - " + repository.getName() + " already exists. There can only be one schedule for a repository. ");
     		errorType = "error";
-    		repositories = providerService.getAllProviders();
+    		repositories = getProviderService().getAllProviders();
     		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
     		if (schedule.getEndDate() != null) {
     			endDateDisplayFormat = format.format(schedule.getEndDate());
@@ -280,7 +262,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	} catch (ParseException pe) {
     		addFieldError("invalidStartDate", "Invalid format for start date. Please enter in the format mm/dd/yyyy");
     		errorType = "error";
-    		repositories = providerService.getAllProviders();
+    		repositories = getProviderService().getAllProviders();
    			endDateDisplayFormat = endDate;
     		startDateDisplayFormat = startDate;
     		return INPUT;
@@ -295,7 +277,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	} catch (ParseException pe) {
     		addFieldError("invalidEndDate", "Invalid format for end date. Please enter in the format mm/dd/yyyy");
     		errorType = "error";
-    		repositories = providerService.getAllProviders();
+    		repositories = getProviderService().getAllProviders();
    			endDateDisplayFormat = endDate;
     		startDateDisplayFormat = startDate;
     		return INPUT;
@@ -329,12 +311,12 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 			}
     	}
 
-    	repository = providerService.getProviderById(repositoryId);
+    	repository = getProviderService().getProviderById(repositoryId);
     	schedule.setProvider(repository);
 
     	// Check if schedule exist for this provider
     	HarvestSchedule otherSchedule = null;
-    	List<HarvestSchedule> schedules = scheduleService.getAllSchedules();
+    	List<HarvestSchedule> schedules = getScheduleService().getAllSchedules();
     	for(HarvestSchedule harvestSchedule:schedules) {
     		if (harvestSchedule.getProvider().getId() == repositoryId) {
     			otherSchedule = harvestSchedule;
@@ -349,7 +331,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	} else {
     		addFieldError("providerExist", "Harvest schedule for repository - " + repository.getName() + " already exists. There can only be one schedule for a repository. ");
     		errorType = "error";
-    		repositories = providerService.getAllProviders();
+    		repositories = getProviderService().getAllProviders();
     		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
     		if (schedule.getEndDate() != null) {
     			endDateDisplayFormat = format.format(schedule.getEndDate());
@@ -386,7 +368,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     			schedule.setSets(new ArrayList<Set>());
     		} else {
 		    	for (int setId:selectedSetIds) {
-		    		Set set = setService.getSetById(setId);
+		    		Set set = getSetService().getSetById(setId);
 		    		schedule.addSet(set);
 		    	}
     		}
@@ -394,23 +376,23 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 
     	if (selectedFormatIds != null) {
 	    	for (int formatId:selectedFormatIds) {
-	    		Format format = formatService.getFormatById(formatId);
+	    		Format format = getFormatService().getFormatById(formatId);
 	    		schedule.addFormat(format);
 	    	}
     	}
 
     	
     	// CHeck if a schedule with same name exist
-    	HarvestSchedule otherSchedule = scheduleService.getScheduleByName(scheduleName);
+    	HarvestSchedule otherSchedule = getScheduleService().getScheduleByName(scheduleName);
     	
     	if (otherSchedule == null || otherSchedule.getId() == schedule.getId()) {
 
 
         	if (schedule.getId() > 0) {
     	    	// Add schedule
-    	    	scheduleService.updateSchedule(schedule);
+    	    	getScheduleService().updateSchedule(schedule);
         	} else {
-        		scheduleService.insertSchedule(schedule);
+        		getScheduleService().insertSchedule(schedule);
         	}
 
     	} else {
@@ -451,7 +433,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     			schedule.setSets(new ArrayList<Set>());
     		} else {
 		    	for (int setId:selectedSetIds) {
-		    		Set set = setService.getSetById(setId);
+		    		Set set = getSetService().getSetById(setId);
 		    		schedule.addSet(set);
 		    	}
     		}
@@ -459,14 +441,14 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 
     	if (selectedFormatIds != null) {
 	    	for (int formatId:selectedFormatIds) {
-	    		Format format = formatService.getFormatById(formatId);
+	    		Format format = getFormatService().getFormatById(formatId);
 	    		schedule.addFormat(format);
 	    	}
     	}
 
     	
     	// CHeck if a schedule with same name exist
-    	HarvestSchedule otherSchedule = scheduleService.getScheduleByName(scheduleName);
+    	HarvestSchedule otherSchedule = getScheduleService().getScheduleByName(scheduleName);
     	
     	if (otherSchedule == null || otherSchedule.getId() == schedule.getId()) {
 
@@ -479,7 +461,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
         	}
         	startDateDisplayFormat = format.format(schedule.getStartDate());
 
-        	repositories = providerService.getAllProviders();
+        	repositories = getProviderService().getAllProviders();
 
 
     	} else {
@@ -505,7 +487,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
     	}
     	
     	try {
-	    	schedule = scheduleService.getScheduleById(scheduleId);
+	    	schedule = getScheduleService().getScheduleById(scheduleId);
 	
 	    	if (schedule != null) {
 	    		request.getSession().setAttribute("schedule", schedule);
@@ -516,7 +498,7 @@ public class AddSchedule extends ActionSupport implements ServletRequestAware
 		    	}
 		    	startDateDisplayFormat = format.format(schedule.getStartDate());
 	
-		    	repositories = providerService.getAllProviders();
+		    	repositories = getProviderService().getAllProviders();
 	    	} else {
 	    		addFieldError("scheduleNotExist", "Schedule does not exist.");
 	    		errorType = "error";

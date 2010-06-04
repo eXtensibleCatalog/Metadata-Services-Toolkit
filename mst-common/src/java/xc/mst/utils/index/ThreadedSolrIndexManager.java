@@ -53,7 +53,8 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 
 		// Get the queue size and pool size for threads
 		int poolSize = Integer.parseInt(
-				MSTConfiguration.getProperty("SOLRIndexerMultiThreadCount")) == 0 ? 20 : Integer.parseInt(MSTConfiguration.getProperty("SOLRIndexerMultiThreadCount")) ;
+				MSTConfiguration.getInstance().getProperty("SOLRIndexerMultiThreadCount")) == 0 ? 20 : 
+					Integer.parseInt(MSTConfiguration.getInstance().getProperty("SOLRIndexerMultiThreadCount")) ;
 
 
 		log.info("SolrIndexManager Thread Pool Initialized");

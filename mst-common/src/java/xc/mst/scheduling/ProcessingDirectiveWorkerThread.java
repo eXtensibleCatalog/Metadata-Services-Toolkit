@@ -60,12 +60,12 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private static RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+	private static RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
 	
 	/**
 	 * Manager for getting, inserting and updating jobs
 	 */
-	private static JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
+	private static JobService jobService = (JobService)MSTConfiguration.getInstance().getBean("JobService");
 	
 	/**
 	 * Sets the processing directive to check
@@ -93,7 +93,7 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 			for(Record checkMe : recordsToCheck)
 				checkProcessingDirective(checkMe);
 			
-			((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
+			((SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager")).commitIndex();
 			
 			if (recordsToCheck != null && recordsToCheck.size() > 0) {
 				try {

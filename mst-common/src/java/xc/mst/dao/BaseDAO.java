@@ -176,93 +176,93 @@ public class BaseDAO {
 	}
 	
 	public RecordService getRecordService() {
-		return (RecordService)MSTConfiguration.getBean("RecordService");
+		return (RecordService)config.getBean("RecordService");
 	}
 	public HarvestDAO getHarvestDAO() {
-		return (HarvestDAO)MSTConfiguration.getBean("HarvestDAO");
+		return (HarvestDAO)config.getBean("HarvestDAO");
 	}
 	public HarvestRecordUtilDAO getHarvestRecordUtilDAO() {
-		return (HarvestRecordUtilDAO)MSTConfiguration.getBean("HarvestRecordUtilDAO");
+		return (HarvestRecordUtilDAO)config.getBean("HarvestRecordUtilDAO");
 	}
 	public HarvestScheduleDAO getHarvestScheduleDAO() {
-		return (HarvestScheduleDAO)MSTConfiguration.getBean("HarvestScheduleDAO");
+		return (HarvestScheduleDAO)config.getBean("HarvestScheduleDAO");
 	}
 	public HarvestScheduleStepDAO getHarvestScheduleStepDAO() {
-		return (HarvestScheduleStepDAO)MSTConfiguration.getBean("HarvestScheduleStepDAO");
+		return (HarvestScheduleStepDAO)config.getBean("HarvestScheduleStepDAO");
 	}
 	public LogDAO getLogDAO() {
-		return (LogDAO)MSTConfiguration.getBean("LogDAO");
+		return (LogDAO)config.getBean("LogDAO");
 	}
 	public JobDAO getJobDAO() {
-		return (JobDAO)MSTConfiguration.getBean("JobDAO");
+		return (JobDAO)config.getBean("JobDAO");
 	}
 	public ProcessingDirectiveDAO getProcessingDirectiveDAO() {
-		return (ProcessingDirectiveDAO)MSTConfiguration.getBean("ProcessingDirectiveDAO");
+		return (ProcessingDirectiveDAO)config.getBean("ProcessingDirectiveDAO");
 	}
 	public ProcessingDirectiveInputFormatUtilDAO getProcessingDirectiveInputFormatUtilDAO() {
-		return (ProcessingDirectiveInputFormatUtilDAO)MSTConfiguration.getBean("ProcessingDirectiveInputFormatUtilDAO");
+		return (ProcessingDirectiveInputFormatUtilDAO)config.getBean("ProcessingDirectiveInputFormatUtilDAO");
 	}
 	public ProcessingDirectiveInputSetUtilDAO getProcessingDirectiveInputSetUtilDAO() {
-		return (ProcessingDirectiveInputSetUtilDAO)MSTConfiguration.getBean("ProcessingDirectiveInputSetUtilDAO");
+		return (ProcessingDirectiveInputSetUtilDAO)config.getBean("ProcessingDirectiveInputSetUtilDAO");
 	}
 	public FormatDAO getFormatDAO() {
-		return (FormatDAO)MSTConfiguration.getBean("FormatDAO");
+		return (FormatDAO)config.getBean("FormatDAO");
 	}
 	public ProviderDAO getProviderDAO() {
-		return (ProviderDAO)MSTConfiguration.getBean("ProviderDAO");
+		return (ProviderDAO)config.getBean("ProviderDAO");
 	}
 	public ProviderFormatUtilDAO getProviderFormatUtilDAO() {
-		return (ProviderFormatUtilDAO)MSTConfiguration.getBean("ProviderFormatUtilDAO");
+		return (ProviderFormatUtilDAO)config.getBean("ProviderFormatUtilDAO");
 	}
 	public SetDAO getSetDAO() {
-		return (SetDAO)MSTConfiguration.getBean("SetDAO");
+		return (SetDAO)config.getBean("SetDAO");
 	}
 	public RecordTypeDAO getRecordTypeDAO() {
-		return (RecordTypeDAO)MSTConfiguration.getBean("RecordTypeDAO");
+		return (RecordTypeDAO)config.getBean("RecordTypeDAO");
 	}
 	public ResumptionTokenDAO getResumptionTokenDAO() {
-		return (ResumptionTokenDAO)MSTConfiguration.getBean("ResumptionTokenDAO");
+		return (ResumptionTokenDAO)config.getBean("ResumptionTokenDAO");
 	}
 	public XcIdentifierForFrbrElementDAO getXcIdentifierForFrbrElementDAO() {
-		return (XcIdentifierForFrbrElementDAO)MSTConfiguration.getBean("XcIdentifierForFrbrElementDAO");
+		return (XcIdentifierForFrbrElementDAO)config.getBean("XcIdentifierForFrbrElementDAO");
 	}
 	public ErrorCodeDAO getErrorCodeDAO() {
-		return (ErrorCodeDAO)MSTConfiguration.getBean("ErrorCodeDAO");
+		return (ErrorCodeDAO)config.getBean("ErrorCodeDAO");
 	}
 	public OaiIdentifierForServiceDAO getOaiIdentifierForServiceDAO() {
-		return (OaiIdentifierForServiceDAO)MSTConfiguration.getBean("OaiIdentifierForServiceDAO");
+		return (OaiIdentifierForServiceDAO)config.getBean("OaiIdentifierForServiceDAO");
 	}
 	public ServiceDAO getServiceDAO() {
-		return (ServiceDAO)MSTConfiguration.getBean("ServiceDAO");
+		return (ServiceDAO)config.getBean("ServiceDAO");
 	}
 	public ServiceInputFormatUtilDAO getServiceInputFormatUtilDAO() {
-		return (ServiceInputFormatUtilDAO)MSTConfiguration.getBean("ServiceInputFormatUtilDAO");
+		return (ServiceInputFormatUtilDAO)config.getBean("ServiceInputFormatUtilDAO");
 	}
 	public ServiceOutputFormatUtilDAO getServiceOutputFormatUtilDAO() {
-		return (ServiceOutputFormatUtilDAO)MSTConfiguration.getBean("ServiceOutputFormatUtilDAO");
+		return (ServiceOutputFormatUtilDAO)config.getBean("ServiceOutputFormatUtilDAO");
 	}
 	public ServiceOutputSetUtilDAO getServiceOutputSetUtilDAO() {
-		return (ServiceOutputSetUtilDAO)MSTConfiguration.getBean("ServiceOutputSetUtilDAO");
+		return (ServiceOutputSetUtilDAO)config.getBean("ServiceOutputSetUtilDAO");
 	}
 	public GroupDAO getGroupDAO() {
-		return (GroupDAO)MSTConfiguration.getBean("GroupDAO");
+		return (GroupDAO)config.getBean("GroupDAO");
 	}
 	public GroupPermissionUtilDAO getGroupPermissionUtilDAO() {
-		return (GroupPermissionUtilDAO)MSTConfiguration.getBean("GroupPermissionUtilDAO");
+		return (GroupPermissionUtilDAO)config.getBean("GroupPermissionUtilDAO");
 	}
 	public PermissionDAO getPermissionDAO() {
-		return (PermissionDAO)MSTConfiguration.getBean("PermissionDAO");
+		return (PermissionDAO)config.getBean("PermissionDAO");
 	}
 	public ServerDAO getServerDAO() {
-		return (ServerDAO)MSTConfiguration.getBean("ServerDAO");
+		return (ServerDAO)config.getBean("ServerDAO");
 	}
 	public UserDAO getUserDAO() {
-		return (UserDAO)MSTConfiguration.getBean("UserDAO");
+		return (UserDAO)config.getBean("UserDAO");
 	}
 	public UserGroupUtilDAO getUserGroupUtilDAO() {
-		return (UserGroupUtilDAO)MSTConfiguration.getBean("UserGroupUtilDAO");
+		return (UserGroupUtilDAO)config.getBean("UserGroupUtilDAO");
 	}
 	public RecordDAO getRecordDAO() {
-		return (RecordDAO)MSTConfiguration.getBean("DBRecordDAO");
+		return (RecordDAO)config.getBean("DBRecordDAO");
 	}
 }

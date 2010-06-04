@@ -189,7 +189,7 @@ public class DefaultServicesService extends BaseService
 				        		}
 				        		br.close();
 				        		serviceEntries.put(id, thisthis);
-				        		Util util = (Util)MSTConfiguration.getBean("Util");
+				        		Util util = (Util)config.getBean("Util");
 				        		util.setClassLoader(loader);
 				        		ac.refresh();
 				        		util.setClassLoader(null);
@@ -637,7 +637,7 @@ public class DefaultServicesService extends BaseService
     		if(reprocessingRequired)
     		try {
 				Job job = new Job(service, 0, Constants.THREAD_SERVICE_REPROCESS);
-				JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
+				JobService jobService = (JobService)config.getBean("JobService");
 				job.setOrder(jobService.getMaxOrder() + 1); 
 				jobService.insertJob(job);
 			} catch (DatabaseConfigException dce) {
@@ -698,7 +698,7 @@ public class DefaultServicesService extends BaseService
     	getServiceDAO().update(service);
     	try {
 			Job job = new Job(service, 0, Constants.THREAD_DELETE_SERVICE);
-			JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
+			JobService jobService = (JobService)config.getBean("JobService");
 			job.setOrder(jobService.getMaxOrder() + 1); 
 			jobService.insertJob(job);
 		} catch (DatabaseConfigException dce) {

@@ -36,7 +36,6 @@ import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.manager.IndexException;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
@@ -78,10 +77,10 @@ public class DefaultRecordService extends RecordService
 		succ.getPredecessors().add(pred);
 		succ.setService(s);
 		getRepositoryDAO().injectId(succ);
-		LOG.debug("MSTConfiguration.getProperty(DomainNameIdentifier): "+MSTConfiguration.getProperty("DomainNameIdentifier"));
+		LOG.debug("MSTConfiguration.getProperty(DomainNameIdentifier): "+config.getProperty("DomainNameIdentifier"));
 		LOG.debug("s.getName(): "+s.getName());
 		LOG.debug("succ.getId(): "+succ.getId());
-		succ.setOaiIdentifier("oai:"+MSTConfiguration.getProperty("DomainNameIdentifier")+":"+s.getName()+":"+succ.getId());
+		succ.setOaiIdentifier("oai:"+config.getProperty("DomainNameIdentifier")+":"+s.getName()+":"+succ.getId());
 		return succ;
 	}
 	
@@ -110,7 +109,7 @@ public class DefaultRecordService extends RecordService
 
 		// Get the result of the query
 		SolrDocumentList docs = null;
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		docs = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the record with the correct ID
@@ -140,7 +139,7 @@ public class DefaultRecordService extends RecordService
 
 		// Get the result of the query
 		SolrDocumentList docs = null;
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		docs = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the record with the correct ID
@@ -216,7 +215,7 @@ public class DefaultRecordService extends RecordService
 		
 		// Get the result of the query
 		SolrDocumentList docs = null;
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		docs = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the record with the correct ID
@@ -773,7 +772,7 @@ public class DefaultRecordService extends RecordService
 		
 		query.setStart(offset);
 		query.setRows(numResults);
-		SolrDocumentList docs = ((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).getDocumentList(query);
+		SolrDocumentList docs = ((SolrIndexManager)config.getBean("SolrIndexManager")).getDocumentList(query);
 		Iterator<SolrDocument> iteration = docs.iterator();
 		List<Record> records = new ArrayList<Record>();
 

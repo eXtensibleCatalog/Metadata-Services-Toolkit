@@ -126,7 +126,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	 * Search for records
 	 */
 	public String browse() {
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
 		if (log.isDebugEnabled()){
 			log.debug("User entered query::"+query);
 		}
@@ -244,7 +244,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 				solrQuery.setStart(rowStart);
 				solrQuery.setRows(numberOfResultsToShow);
 			}
-			BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getBean("BrowseRecordService");
+			BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getInstance().getBean("BrowseRecordService");
 		    result = browseRecordService.search(solrQuery);   
 		    
 		    if (log.isDebugEnabled()) {
@@ -297,7 +297,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		}
 		
 		try {
-			RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+			RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
 			record = recordService.getById(recordId);
 			recordXML = record.getOaiXml();
 	
@@ -372,13 +372,13 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		}
 
 		try {
-			ServicesService servicesService = (ServicesService)MSTConfiguration.getBean("ServicesService");
+			ServicesService servicesService = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
 			int indexOfHypen = error.indexOf("-");
 			Service service = servicesService.getServiceById(Integer.parseInt(error.substring(0, indexOfHypen)));
 			
 			// Get service id
 			String errorCode = error.substring(indexOfHypen + 1, error.indexOf(":"));
-			BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getBean("BrowseRecordService");
+			BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getInstance().getBean("BrowseRecordService");
 			ErrorCode error = browseRecordService.getError(errorCode, service);
 	
 			// Get error code

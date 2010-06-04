@@ -72,8 +72,8 @@ public class TestServices
 
 	public static void main(String[] args) throws DataException, IOException, JDOMException, IndexException
 	{
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
-		SolrIndexManager solrIndexManager = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
+		SolrIndexManager solrIndexManager = (SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager");
 
 		try
 		{

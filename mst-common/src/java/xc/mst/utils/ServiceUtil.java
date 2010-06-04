@@ -41,12 +41,12 @@ public class ServiceUtil {
 	/**
 	 * Data access object for getting services
 	 */
-	private ServiceDAO serviceDao = (ServiceDAO)MSTConfiguration.getBean("ServiceDAO");
+	private ServiceDAO serviceDao = (ServiceDAO)MSTConfiguration.getInstance().getBean("ServiceDAO");
 
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+	private RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
 
 	/**
 	 * Used to send email reports
@@ -139,8 +139,8 @@ public class ServiceUtil {
 	public void sendEmail(String message, String serviceName) {
 
 		try {
-			UserService userService = (UserService)MSTConfiguration.getBean("UserService");
-			GroupService groupService = (GroupService)MSTConfiguration.getBean("GroupService");
+			UserService userService = (UserService)MSTConfiguration.getInstance().getBean("UserService");
+			GroupService groupService = (GroupService)MSTConfiguration.getInstance().getBean("GroupService");
 
 			if (mailer.isConfigured()) {
 				

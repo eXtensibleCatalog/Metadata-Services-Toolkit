@@ -116,10 +116,10 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
-	
-	public static Object getBean(String name) {
+
+	public Object getBean(String name) {
 		try {
-			return MSTConfiguration.instance.applicationContext.getBean(name);
+			return applicationContext.getBean(name);
 		} catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
@@ -131,8 +131,8 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	 * @param name name of property
 	 * @return value of property
 	 */
-	public static String getProperty(String name) {
-		return instance.properties.getProperty(name);
+	public String getProperty(String name) {
+		return getProperty(name);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 		this.properties = properties;
 	}
 
-	public static boolean isPerformanceTestingMode() {
+	public boolean isPerformanceTestingMode() {
 		try {
 			String ptMode = getProperty("PerformanceTestingMode");
 			if (ptMode != null && "true".equals(ptMode)) {

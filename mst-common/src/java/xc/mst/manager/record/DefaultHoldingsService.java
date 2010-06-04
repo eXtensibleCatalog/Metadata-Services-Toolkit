@@ -19,7 +19,6 @@ import xc.mst.bo.record.Manifestation;
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.HoldingsList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -46,7 +45,7 @@ public class DefaultHoldingsService extends HoldingsService
 
 		// Get the result of the query
 		SolrDocumentList doc = null;
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		doc = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the holdings with the correct XC holdings ID
@@ -67,7 +66,7 @@ public class DefaultHoldingsService extends HoldingsService
 	@Override
 	public HoldingsList getByXcRecordId(String recordId) throws IndexException
 	{
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		String trait = recordService.escapeString(Holdings.TRAIT_RECORD_ID + ":" + recordId);
 
 		if(log.isDebugEnabled())
@@ -84,7 +83,7 @@ public class DefaultHoldingsService extends HoldingsService
 	@Override
 	public HoldingsList getByManifestationHeld(String manifestationHeld) throws IndexException
 	{
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		String trait = recordService.escapeString(Holdings.TRAIT_MANIFESTATION_HELD + ":" + manifestationHeld);
 
 		if(log.isDebugEnabled())
@@ -132,7 +131,7 @@ public class DefaultHoldingsService extends HoldingsService
 	public Holdings getHoldingsFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
 		// Create a Holdings object to store the result
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		Holdings holdings = Holdings.buildHoldingsFromRecord(recordService.getRecordFromDocument(doc));
 
 		// Return the holdings we parsed from the document
@@ -143,7 +142,7 @@ public class DefaultHoldingsService extends HoldingsService
 	public Holdings getBasicHoldingsFromDocument(SolrDocument doc)
 	{
 		// Create a Holdings object to store the result
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		Holdings holdings = Holdings.buildHoldingsFromRecord(recordService.getBasicRecordFromDocument(doc));
 
 		// Return the holdings we parsed from the document
@@ -154,7 +153,7 @@ public class DefaultHoldingsService extends HoldingsService
 	protected SolrInputDocument setFieldsOnDocument(Holdings holdings, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		return recordService.setFieldsOnDocument(holdings, doc, generateNewId);
 	} // end method setFieldsOnDocument(Holdings, Document, boolean)
 } // end class DefaultHoldingsService

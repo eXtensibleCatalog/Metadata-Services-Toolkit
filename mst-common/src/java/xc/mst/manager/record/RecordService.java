@@ -30,7 +30,6 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
@@ -522,7 +521,7 @@ public abstract class RecordService extends BaseService
 		else
 			doc = setFieldsOnDocument(record, doc, true);
 
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		boolean retVal = sim.addDoc(doc);
 		return retVal;
 	} // end method insert(Record)
@@ -551,7 +550,7 @@ public abstract class RecordService extends BaseService
 		// Set up the fields for the Record
 		doc = setFieldsOnDocument(record, doc, false);
 
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		return sim.addDoc(doc);
 	} // end method update(Record)
 
@@ -573,7 +572,7 @@ public abstract class RecordService extends BaseService
 		                     + FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType;
 
 		// Delete all records with the matching record ID
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		boolean result = sim.deleteByQuery(deleteQuery);
 
 		// If the delete was successful, also delete rows in the MySQL tables which reference it

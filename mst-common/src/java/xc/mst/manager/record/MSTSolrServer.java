@@ -90,7 +90,7 @@ public class MSTSolrServer extends BaseService {
 
 			log.info("Opening Solr at 3" + solrHome);
 			
-			java.util.logging.Level logLevel = getLogLevel(MSTConfiguration.getProperty(Constants.CONFIG_SOLR_LOG_LEVEL));
+			java.util.logging.Level logLevel = getLogLevel(config.getProperty(Constants.CONFIG_SOLR_LOG_LEVEL));
 			log.info("1");
 			
 			try

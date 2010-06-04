@@ -21,18 +21,12 @@ import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
-import xc.mst.manager.logs.LogService;
-import xc.mst.manager.processingDirective.ServicesService;
-import xc.mst.manager.repository.ProviderService;
-import xc.mst.utils.MSTConfiguration;
-
-import com.opensymphony.xwork2.ActionSupport;
 /**
  *  Downloads a log file
  *
  * @author Tejaswi Haramurali
  */
-public class DownloadLogFiles extends ActionSupport implements ServletResponseAware
+public class DownloadLogFiles extends BaseActionSupport implements ServletResponseAware
 {
     /** Serial id*/
 	private static final long serialVersionUID = -2716024718026119266L;
@@ -53,7 +47,6 @@ public class DownloadLogFiles extends ActionSupport implements ServletResponseAw
     {
         try
         {
-        	ServicesService servicesService = (ServicesService)MSTConfiguration.getBean("ServicesService");
         	
             String filename = "";
             String fullpath = "";
@@ -61,28 +54,26 @@ public class DownloadLogFiles extends ActionSupport implements ServletResponseAw
             if(logType.equalsIgnoreCase("Service"))
             {
                 
-                Service service = servicesService.getServiceById(id);
+                Service service = getServicesService().getServiceById(id);
                 fullpath = service.getServicesLogFileName(true);
                 filename = service.getName()+"ServiceLog";
             }
             else if(logType.equalsIgnoreCase("HarvestOut"))
             {
-                Service service = servicesService.getServiceById(id);
+                Service service = getServicesService().getServiceById(id);
                 fullpath = service.getHarvestOutLogFileName(true);
                 filename = service.getName()+"HarvestOutLog";
             }
             else if(logType.equalsIgnoreCase("HarvestIn"))
             {
-                ProviderService providerService = (ProviderService)MSTConfiguration.getBean("ProviderService");
-                Provider provider = providerService.getProviderById(id);
+                Provider provider = getProviderService().getProviderById(id);
                 fullpath = provider.getLogFileName(true);
                 filename = provider.getName();
 
             }
             else
             {
-                LogService logService = (LogService)MSTConfiguration.getBean("LogService");
-                Log log = logService.getById(id);
+                Log log = getLogService().getById(id);
                 fullpath = log.getLogFileLocation(true);
                 filename = log.getLogFileName();
             }

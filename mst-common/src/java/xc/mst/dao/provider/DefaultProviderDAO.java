@@ -28,7 +28,6 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.LogWriter;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.SolrIndexManager;
 
 /**
@@ -1280,7 +1279,7 @@ public class DefaultProviderDAO extends ProviderDAO
 						if(getRecordService().getBySetSpec(set.getSetSpec()).size() == 0)
 							getSetDAO().delete(set);
 					
-					((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
+					((SolrIndexManager)config.getBean("SolrIndexManager")).commitIndex();
 				} // end if(delete succeeded)
 
 				if(success)

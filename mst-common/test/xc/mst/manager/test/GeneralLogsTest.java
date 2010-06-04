@@ -14,10 +14,10 @@ import java.util.Date;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.log.Log;
+import xc.mst.common.test.BaseTest;
 import xc.mst.dao.DataException;
 import xc.mst.helper.TestHelper;
 import xc.mst.manager.logs.LogService;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * Tests for General Logs
@@ -25,7 +25,7 @@ import xc.mst.utils.MSTConfiguration;
  * @author Tejaswi Haramurali
  */
 @Test(groups = { "baseTests" }, enabled = true)
-public class GeneralLogsTest {
+public class GeneralLogsTest extends BaseTest {
 
     public void generalLogsTest() throws DataException
     {
@@ -33,7 +33,7 @@ public class GeneralLogsTest {
       	 TestHelper helper = TestHelper.getInstance();
         try
         {
-            LogService logService = (LogService)MSTConfiguration.getBean("LogService");
+            LogService logService = (LogService)getBean("LogService");
             Log log = new Log();
             log.setErrors(0);
             log.setLastLogReset(new Date());

@@ -12,22 +12,18 @@ package xc.mst.action.configuration;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.emailconfig.EmailConfig;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.configuration.EmailConfigService;
-import xc.mst.manager.user.UserService;
-import xc.mst.utils.MSTConfiguration;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  *  The action method that is used to add/edit an email Server
  *
  * @author Tejaswi Haramurali
  */
-public class EmailConfiguration extends ActionSupport
+public class EmailConfiguration extends BaseActionSupport
 {
 
     /**  Serial id */
@@ -77,8 +73,7 @@ public class EmailConfiguration extends ActionSupport
     {
         try
         {
-            EmailConfigService emailConfigService = (EmailConfigService)MSTConfiguration.getBean("EmailConfigService");
-            emailConfig = emailConfigService.getEmailConfiguration();
+            emailConfig = getEmailConfigService().getEmailConfiguration();
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -106,8 +101,7 @@ public class EmailConfiguration extends ActionSupport
             emailConfig.setPassword(password);
             emailConfig.setPortNumber(port);
             emailConfig.setTimeout(timeout);
-            EmailConfigService emailConfigService = (EmailConfigService)MSTConfiguration.getBean("EmailConfigService");
-            emailConfigService.setEmailConfiguration(emailConfig);
+            getEmailConfigService().setEmailConfiguration(emailConfig);
             message = "Email Configuration details saved.";
             errorType = "info";
             return SUCCESS;
@@ -116,8 +110,7 @@ public class EmailConfiguration extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("changeEmailConfigError", "Error occurred while updating email configuration. An email has been sent to the administrator.");
-            UserService userService = (UserService)MSTConfiguration.getBean("UserService");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }

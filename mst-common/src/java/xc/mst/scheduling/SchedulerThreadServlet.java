@@ -33,7 +33,7 @@ public class SchedulerThreadServlet extends HttpServlet {
 	 * Start scheduler thread
 	 */
 	public void init() {
-		scheduler = (Scheduler)MSTConfiguration.getBean("Scheduler");
+		scheduler = (Scheduler)MSTConfiguration.getInstance().getBean("Scheduler");
 		schedulerThread = new Thread(scheduler);
 		schedulerThread.start();
 	  }

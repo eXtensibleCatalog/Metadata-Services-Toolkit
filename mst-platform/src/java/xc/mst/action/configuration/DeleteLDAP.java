@@ -15,15 +15,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.Server;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.user.ServerService;
-import xc.mst.manager.user.UserService;
-import xc.mst.utils.MSTConfiguration;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Deletes the LDAP Server
@@ -31,7 +27,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Tejaswi Haramurali
  */
 @SuppressWarnings("serial")
-public class DeleteLDAP extends ActionSupport
+public class DeleteLDAP extends BaseActionSupport
 {
     /** A reference to the logger for this class */
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -47,8 +43,7 @@ public class DeleteLDAP extends ActionSupport
      */
     public Server getTemporaryServer() throws DataException
     {
-    	ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
-        List<Server> serverList = serverService.getAll();
+        List<Server> serverList = getServerService().getAll();
         Iterator<Server> iter = serverList.iterator();
         Server finalServer = null;
         while(iter.hasNext())
@@ -70,22 +65,19 @@ public class DeleteLDAP extends ActionSupport
     @Override
     public String execute()
     {
-    	UserService userService = (UserService)MSTConfiguration.getBean("UserService");
         try
         {
-
-        	ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
-            List<Server> serverlist = serverService.getAll();
+            List<Server> serverlist = getServerService().getAll();
             Iterator<Server> serverIter = serverlist.iterator();
             
-            if(userService.getLDAPUserCount()==0)
+            if(getUserService().getLDAPUserCount()==0)
             {
                 while(serverIter.hasNext())
                 {
                     Server server = (Server)serverIter.next();
                     if(server.getType()!=Server.ServerType.LOCAL)
                     {
-                        serverService.deleteServer(server);
+                        getServerService().deleteServer(server);
                     }
                 }
 
@@ -109,7 +101,7 @@ public class DeleteLDAP extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("deleteLDAPError", "Error occurred while deleting LDAP Server. An email has been sent to the administrator");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }

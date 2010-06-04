@@ -12,17 +12,15 @@ package xc.mst.manager.test;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.InputStreamReader;
 import java.util.Date;
 
-import org.springframework.core.io.ClassPathResource;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.service.Service;
+import xc.mst.common.test.BaseTest;
 import xc.mst.dao.DataException;
 import xc.mst.helper.TestHelper;
 import xc.mst.manager.processingDirective.ConfigFileException;
-import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.utils.MSTConfiguration;
 
@@ -32,7 +30,7 @@ import xc.mst.utils.MSTConfiguration;
  * @author Tejaswi Haramurali
  */
 @Test(groups = { "baseTests" }, enabled = true)
-public class ServiceTest {
+public class ServiceTest extends BaseTest {
 
     public void serviceTest() throws DataException
     {
@@ -40,7 +38,7 @@ public class ServiceTest {
       	 TestHelper helper = TestHelper.getInstance();
         try
         {
-            ServicesService servicesService = (ServicesService)MSTConfiguration.getBean("ServicesService");
+            ServicesService servicesService = (ServicesService)getBean("ServicesService");
             Service service = new Service();
             service.setHarvestOutErrors(0);
             service.setHarvestOutLastLogReset(new Date());

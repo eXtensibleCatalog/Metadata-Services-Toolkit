@@ -17,7 +17,7 @@ public class Util {
 	protected ThreadLocal<ClassLoader> currentClassLoader = new ThreadLocal<ClassLoader>();
 	
 	public static Util getUtil() {
-		return (Util)MSTConfiguration.getBean("Util");
+		return (Util)MSTConfiguration.getInstance().getBean("Util");
 	}
 	
 	public String slurp(File file) {

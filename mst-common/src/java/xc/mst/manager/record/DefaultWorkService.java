@@ -18,7 +18,6 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.SolrIndexManager;
 import xc.mst.utils.index.WorkList;
 
@@ -47,7 +46,7 @@ public class DefaultWorkService extends WorkService
 		// Get the result of the query
 		SolrDocumentList docs = null;
 
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		docs = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the work with the correct XC work ID
@@ -68,7 +67,7 @@ public class DefaultWorkService extends WorkService
 	@Override
 	public WorkList getByIdentifierForTheWork(String identifierForTheWork) throws IndexException
 	{
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		String trait = recordService.escapeString(Work.TRAIT_IDENTIFIER_FOR_THE_WORK + ":" + identifierForTheWork);
 
 		if(log.isDebugEnabled())
@@ -117,7 +116,7 @@ public class DefaultWorkService extends WorkService
 	public Work getWorkFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
 		// Create a Work object to store the result
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		Work work = Work.buildWorkFromRecord(recordService.getRecordFromDocument(doc));
 
 		// Get whether or not the work was processed
@@ -131,7 +130,7 @@ public class DefaultWorkService extends WorkService
 	public Work getBasicWorkFromDocument(SolrDocument doc)
 	{
 		// Create a Work object to store the result
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		Work work = Work.buildWorkFromRecord(recordService.getBasicRecordFromDocument(doc));
 
 		// Get whether or not the work was processed
@@ -145,7 +144,7 @@ public class DefaultWorkService extends WorkService
 	public SolrInputDocument setFieldsOnDocument(Work work, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		doc = recordService.setFieldsOnDocument(work, doc, generateNewId);
 
 		// Set whether or not the work was processed

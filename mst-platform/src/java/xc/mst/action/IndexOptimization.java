@@ -14,15 +14,13 @@ import xc.mst.manager.IndexException;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.SolrIndexManager;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 /**
  * Action class for optimizing Solr index
  *
  * @author Sharmila Ranganathan
  *
  */
-public class IndexOptimization extends ActionSupport  {
+public class IndexOptimization extends BaseActionSupport  {
 
 	/** Generated id  */
 	private static final long serialVersionUID = 1316812472174881465L;
@@ -43,7 +41,7 @@ public class IndexOptimization extends ActionSupport  {
 	public String execute() throws DataException {
     	
     	try {
-    		((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).optimizeIndex();
+    		((SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager")).optimizeIndex();
     	}  catch (IndexException ie) {
         	this.addFieldError("optimizeError", "Optimization of Solr index failed due to some problem.");
             errorType = "error";

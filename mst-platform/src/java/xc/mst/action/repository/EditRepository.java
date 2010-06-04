@@ -152,7 +152,7 @@ public class EditRepository extends BaseActionSupport
                                 provider.removeAllSets();
                                 provider.setLastValidationDate(new Date());
                                 getProviderService().updateProvider(provider);
-                                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
+                                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
                                 vr.validate(provider.getId());
                             }
                             else //just update Repository details without revalidation
@@ -188,7 +188,7 @@ public class EditRepository extends BaseActionSupport
                             provider.removeAllSets();
                             provider.setLastValidationDate(new Date());
                             getProviderService().updateProvider(provider);
-                            ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
+                            ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
                             vr.validate(provider.getId());
                         }
                         else
@@ -214,7 +214,7 @@ public class EditRepository extends BaseActionSupport
                     provider.removeAllSets();
                     provider.setLastValidationDate(new Date());
                     getProviderService().updateProvider(provider);
-                    ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
+                    ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
                     vr.validate(provider.getId());
                 }
                 else

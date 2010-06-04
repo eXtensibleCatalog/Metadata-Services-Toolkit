@@ -99,7 +99,7 @@ public class ViewRepository extends BaseActionSupport implements UserAware
       {
           try
           {
-                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
+                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
                 vr.validate(getRepositoryId());
                 message = "Repository revalidated!";
                 errorType = "info";

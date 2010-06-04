@@ -30,7 +30,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 import xc.mst.bo.record.Record;
 import xc.mst.dao.BaseDAO;
-import xc.mst.utils.MSTConfiguration;
 
 public class RepositoryDAO extends BaseDAO {
 	
@@ -127,8 +126,8 @@ public class RepositoryDAO extends BaseDAO {
 				recordsToAdd = new ArrayList<Record>();
 			}
 			int batchSize = 50000;
-			if (MSTConfiguration.getProperty("batchSize") != null) {
-				batchSize = Integer.parseInt(MSTConfiguration.getProperty("batchSize"));
+			if (config.getProperty("batchSize") != null) {
+				batchSize = Integer.parseInt(config.getProperty("batchSize"));
 			}
 			if (records != null) {
 				recordsToAdd.addAll(records);

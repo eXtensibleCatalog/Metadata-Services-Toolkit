@@ -44,7 +44,7 @@ public class MetadataServiceFactory {
 		if(log.isDebugEnabled())
 			log.debug("EnteringServiceFactoryegetnService for the service with ID " + serviceId + ".");
 		
-		ServiceDAO serviceDAO = (ServiceDAO)MSTConfiguration.getBean("ServiceDAO");
+		ServiceDAO serviceDAO = (ServiceDAO)MSTConfiguration.getInstance().getBean("ServiceDAO");
 
 		// Get the service
 		Service service = null;
@@ -78,7 +78,7 @@ public class MetadataServiceFactory {
 				log.debug("Found the MetadataService class named " + targetClassName + ", getting its constructor.");
 
 			*/
-			serviceInstance = ((ServicesService)MSTConfiguration.getBean("ServicesService")).getServiceByName(service.getName()).getMetadataService();
+			serviceInstance = ((ServicesService)MSTConfiguration.getInstance().getBean("ServicesService")).getServiceByName(service.getName()).getMetadataService();
 			return serviceInstance;
 			
 		}// end try(run the service through reflection)

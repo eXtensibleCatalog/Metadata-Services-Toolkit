@@ -36,7 +36,6 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.email.Emailer;
 import xc.mst.manager.BaseService;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * Service class for User to deal with creating, updating
@@ -402,7 +401,7 @@ public class DefaultUserService extends BaseService implements UserService {
 		adminMessageBody.append("\nPlease login into the system and assign appropriate permissions for the user.");
 		String adminSubject = "Assign permission to new User";
 		
-		GroupService groupService = (GroupService)MSTConfiguration.getBean("GroupService");
+		GroupService groupService = (GroupService)config.getBean("GroupService");
 		List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR).getId());
 		
 		boolean emailConfigured = new Emailer().isConfigured();
@@ -466,7 +465,7 @@ public class DefaultUserService extends BaseService implements UserService {
 
             String adminSubject = "MST error";
 
-            GroupService groupService = (GroupService)MSTConfiguration.getBean("GroupService");
+            GroupService groupService = (GroupService)config.getBean("GroupService");
             List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR).getId());
 
             boolean emailConfigured = new Emailer().isConfigured();

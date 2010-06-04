@@ -309,7 +309,7 @@ public class Harvester extends BaseManager implements ErrorHandler
 		try
 		{
 			// Create a Harvester and use it to run the harvest
-			runningHarvester = (Harvester)MSTConfiguration.getBean("Harvester");
+			runningHarvester = (Harvester)MSTConfiguration.getInstance().getBean("Harvester");
 			runningHarvester.setup(timeOutMilliseconds, scheduleStep, currentHarvest);
 
 			// Update the status of the harvest schedule
@@ -467,7 +467,7 @@ public class Harvester extends BaseManager implements ErrorHandler
 		{
 			// Validate that the repository conforms to the OAI protocol
 			TimingLogger.log("about to validate repo");
-			ValidateRepository validator = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
+			ValidateRepository validator = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
 			validator.validate(schedule.getProvider().getId(), currentHarvest.getId());
 
 			TimingLogger.log("validated repo");
@@ -599,7 +599,7 @@ public class Harvester extends BaseManager implements ErrorHandler
 					if (setSpec != null && setSpec.length() > 0)
 						request += "&set=" + setSpec;
 
-					if (!MSTConfiguration.isPerformanceTestingMode()) {
+					if (!MSTConfiguration.getInstance().isPerformanceTestingMode()) {
 						if (from != null)
 							request += "&from=" + formatDate(granularity, from);						
 					}
@@ -651,7 +651,7 @@ public class Harvester extends BaseManager implements ErrorHandler
                 resumption = extractRecords(metadataPrefix, doc, baseURL);
                 TimingLogger.stop("extractRecords");
                 
-                if (MSTConfiguration.isPerformanceTestingMode() &&
+                if (MSTConfiguration.getInstance().isPerformanceTestingMode() &&
                 		processedRecordCount > 2000000) {
                 	resumption = null; // I only want to run the 5,000 for now
                 }

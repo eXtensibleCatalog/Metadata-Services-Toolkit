@@ -18,6 +18,7 @@ import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
+import xc.mst.common.test.BaseTest;
 import xc.mst.dao.DataException;
 import xc.mst.dao.provider.DefaultFormatDAO;
 import xc.mst.dao.provider.DefaultSetDAO;
@@ -31,7 +32,6 @@ import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.repository.SetService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 
 /**
@@ -40,7 +40,7 @@ import xc.mst.utils.index.RecordList;
  * @author Eric Osisek
  */
 @Test(groups = { "baseTests" }, enabled = true)
-public class HarvesterTest 
+public class HarvesterTest extends BaseTest
 {
 	/**
 	 * Test validating a repository and running a harvest
@@ -54,17 +54,17 @@ public class HarvesterTest
 	   	 // Initialize Solr, database, log before testing
 	   	 TestHelper helper = TestHelper.getInstance();
 		
-		ProviderService providerService = (ProviderService)MSTConfiguration.getBean("ProviderService");
+		ProviderService providerService = (ProviderService)getBean("ProviderService");
 		
-		ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getBean("ScheduleService");
+		ScheduleService scheduleService = (ScheduleService)getBean("ScheduleService");
 		
-		FormatService formatService = (FormatService)MSTConfiguration.getBean("FormatService");
+		FormatService formatService = (FormatService)getBean("FormatService");
 		
-		SetService setService = (SetService)MSTConfiguration.getBean("SetService");
+		SetService setService = (SetService)getBean("SetService");
 		 		 
-		UserService userService = (UserService)MSTConfiguration.getBean("UserService");	 	
+		UserService userService = (UserService)getBean("UserService");	 	
 		 
-		ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
+		ServerService serverService = (ServerService)getBean("ServerService");
 		
 		User user = userService.getUserByUserName("admin", serverService.getServerByName("Local"));
 	            
@@ -121,11 +121,11 @@ public class HarvesterTest
 
         scheduleService.insertSchedule(schedule);
         
-        HarvestRunner harvestRunner = (HarvestRunner)MSTConfiguration.getBean("HarvestRunner"); 
+        HarvestRunner harvestRunner = (HarvestRunner)getBean("HarvestRunner"); 
         harvestRunner.setScheduleId(schedule.getId());
         harvestRunner.runHarvest();
         
-        RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+        RecordService recordService = (RecordService)getBean("RecordService");
         RecordList records = recordService.getByProviderId(provider.getId());
         
         assert records.size() == 3333 : "Total number of records should be 3333. But it is " + records.size();

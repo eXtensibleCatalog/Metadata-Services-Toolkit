@@ -23,11 +23,11 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 	public void testFiles() {
 		try {
 			//String serviceClassName = System.getenv("TEST_SERVICE_CLASS_NAME");
-			String serviceName = MSTConfiguration.getProperty("service.name");
+			String serviceName = MSTConfiguration.getInstance().getProperty("service.name");
 			String inFolderStr = System.getenv("MST_SERVICE_TEST_FOLDER");
 			LOG.debug("folderStr: "+inFolderStr);
 			
-			ServicesService ss = (ServicesService)MSTConfiguration.getBean("ServicesService");
+			ServicesService ss = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
 	
 			ss.addNewService(serviceName);
 			Service s = ss.getServiceByName(serviceName);

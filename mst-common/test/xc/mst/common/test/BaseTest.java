@@ -44,13 +44,17 @@ public class BaseTest {
 		} catch (Throwable t) {
 			t.printStackTrace(System.out);
 		}
-		util = (Util)MSTConfiguration.getBean("Util");
-		repo = (Repository)MSTConfiguration.getBean("Repository");
+		util = (Util)MSTConfiguration.getInstance().getBean("Util");
+		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
 		repo.setName("r1");
-		repositoryDAO = (RepositoryDAO)MSTConfiguration.getBean("RepositoryDAO");
-		recordService = (RecordService)MSTConfiguration.getBean("RecordService");
-		servicesService = (ServicesService)MSTConfiguration.getBean("ServicesService");
+		repositoryDAO = (RepositoryDAO)getBean("RepositoryDAO");
+		recordService = (RecordService)getBean("RecordService");
+		servicesService = (ServicesService)getBean("ServicesService");
 		LOG.debug("startup complete");
+	}
+	
+	protected Object getBean(String name) {
+		return MSTConfiguration.getInstance().getBean(name);
 	}
 	
 	@AfterSuite

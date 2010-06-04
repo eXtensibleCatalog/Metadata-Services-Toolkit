@@ -38,7 +38,7 @@ public class Records extends AbstractList<Record>
 	/**
 	 * An Object which manages the Solr index
 	 */
-	protected SolrIndexManager indexMgr = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+	protected SolrIndexManager indexMgr = (SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager");
 	
 	/**
 	 * The current offset into the results of the query that are in the document list
@@ -63,7 +63,7 @@ public class Records extends AbstractList<Record>
 	/**
 	 * The service used to get a record from a Lucene document
 	 */
-	private static RecordService service = (RecordService)MSTConfiguration.getBean("RecordService");
+	private static RecordService service = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
 	
 	/**
 	 * The number of elements in the list

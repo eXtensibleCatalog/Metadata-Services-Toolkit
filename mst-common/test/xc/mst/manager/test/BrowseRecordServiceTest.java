@@ -17,25 +17,18 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.user.User;
+import xc.mst.common.test.BaseTest;
 import xc.mst.dao.DataException;
 import xc.mst.harvester.HarvestRunner;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.helper.TestHelper;
-import xc.mst.manager.harvest.DefaultScheduleService;
 import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.record.BrowseRecordService;
-import xc.mst.manager.record.DefaultBrowseRecordService;
-import xc.mst.manager.repository.DefaultFormatService;
-import xc.mst.manager.repository.DefaultProviderService;
-import xc.mst.manager.repository.DefaultSetService;
 import xc.mst.manager.repository.FormatService;
 import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.repository.SetService;
-import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
-import xc.mst.utils.MSTConfiguration;
 
 
 /**
@@ -45,7 +38,7 @@ import xc.mst.utils.MSTConfiguration;
  *
  */
 @Test(groups = { "baseTests" }, enabled = true)
-public class BrowseRecordServiceTest {
+public class BrowseRecordServiceTest extends BaseTest {
 
 
  /**
@@ -59,19 +52,19 @@ public class BrowseRecordServiceTest {
    	 TestHelper helper = TestHelper.getInstance();
 	 
 	 		
-	 		 ProviderService providerService = (ProviderService)MSTConfiguration.getBean("ProviderService");
+	 		 ProviderService providerService = (ProviderService)getBean("ProviderService");
 
-	 		 BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getBean("BrowseRecordService");
+	 		 BrowseRecordService browseRecordService = (BrowseRecordService)getBean("BrowseRecordService");
 	 		 
-	 		 ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getBean("ScheduleService");
+	 		 ScheduleService scheduleService = (ScheduleService)getBean("ScheduleService");
 
-	 		 FormatService formatService = (FormatService)MSTConfiguration.getBean("FormatService");
+	 		 FormatService formatService = (FormatService)getBean("FormatService");
 
-	 		 SetService setService = (SetService)MSTConfiguration.getBean("SetService");
+	 		 SetService setService = (SetService)getBean("SetService");
 
-	 		 UserService userService = (UserService)MSTConfiguration.getBean("UserService");
+	 		 UserService userService = (UserService)getBean("UserService");
 
-	  		ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
+	  		ServerService serverService = (ServerService)getBean("ServerService");
 	  		
             User user = userService.getUserByUserName("admin", serverService.getServerByName("Local"));
 
@@ -107,7 +100,7 @@ public class BrowseRecordServiceTest {
             schedule.setStartDate(java.sql.Date.valueOf("2009-05-01"));
 
             scheduleService.insertSchedule(schedule);
-            HarvestRunner harvestRunner = (HarvestRunner)MSTConfiguration.getBean("HarvestRunner"); 
+            HarvestRunner harvestRunner = (HarvestRunner)getBean("HarvestRunner"); 
             harvestRunner.setScheduleId(schedule.getId());
             harvestRunner.runHarvest();
             

@@ -19,7 +19,6 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.Work;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.ExpressionList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -37,7 +36,7 @@ public class DefaultExpressionService extends ExpressionService
 	@Override
 	public Expression getByXcExpressionId(long expressionId) throws DatabaseConfigException, IndexException
 	{
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with XC expression ID " + expressionId);
@@ -100,7 +99,7 @@ public class DefaultExpressionService extends ExpressionService
 	public Expression getExpressionFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
 		// Create a Expression object to store the result
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		Expression expression = Expression.buildExpressionFromRecord(recordService.getRecordFromDocument(doc));
 
 		// Return the expression we parsed from the document
@@ -111,7 +110,7 @@ public class DefaultExpressionService extends ExpressionService
 	public Expression getBasicExpressionFromDocument(SolrDocument doc)
 	{
 		// Create a Expression object to store the result
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		Expression expression = Expression.buildExpressionFromRecord(recordService.getBasicRecordFromDocument(doc));
 
 		// Return the Expression we parsed from the document
@@ -122,7 +121,7 @@ public class DefaultExpressionService extends ExpressionService
 	protected SolrInputDocument setFieldsOnDocument(Expression expression, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record and return the results
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		return recordService.setFieldsOnDocument(expression, doc, generateNewId);
 	} // end method setFieldsOnDocument(Expression, Document, boolean)
 } // end class DefaultExpressionService

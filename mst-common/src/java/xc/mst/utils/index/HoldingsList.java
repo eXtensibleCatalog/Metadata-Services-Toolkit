@@ -44,7 +44,7 @@ public class HoldingsList extends AbstractList<Holdings>
 	/**
 	 * An Object which manages the Solr index
 	 */
-	protected SolrIndexManager indexMgr = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+	protected SolrIndexManager indexMgr = (SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager");
 	
 	/**
 	 * The current offset into the results of the query that are in the document list
@@ -64,7 +64,7 @@ public class HoldingsList extends AbstractList<Holdings>
 	/**
 	 * The service used to get a record from a Lucene document
 	 */
-	private static HoldingsService service = (HoldingsService)MSTConfiguration.getBean("HoldingsService");
+	private static HoldingsService service = (HoldingsService)MSTConfiguration.getInstance().getBean("HoldingsService");
 	
 	/**
 	 * The number of elements in the list
