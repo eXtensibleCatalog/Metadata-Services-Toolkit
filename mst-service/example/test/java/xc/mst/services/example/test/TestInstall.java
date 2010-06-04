@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import xc.mst.bo.service.Service;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.service.impl.test.BaseMetadataServiceTest;
-import xc.mst.services.impl.dao.GenericMetadataDAO;
 import xc.mst.utils.MSTConfiguration;
 
 public class TestInstall extends BaseMetadataServiceTest {

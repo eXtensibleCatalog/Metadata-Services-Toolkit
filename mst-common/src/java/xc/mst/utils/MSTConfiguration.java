@@ -58,7 +58,9 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 
 	/** Default constructor */
 	public MSTConfiguration() {
-		MSTConfiguration.instance = this;
+		if (MSTConfiguration.instance == null) {
+			MSTConfiguration.instance = this;
+		}
 	}
 	
 	/**
@@ -164,6 +166,10 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 			//do nothing
 		}
 		return false;
+	}
+	
+	public String getServicePath() {
+		return getUrlPath()+"/"+getProperty("service.name");
 	}
 
 }

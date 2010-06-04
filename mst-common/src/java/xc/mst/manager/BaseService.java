@@ -71,6 +71,7 @@ import xc.mst.utils.Util;
 public class BaseService {
 
 	protected TransactionTemplate transactionTemplate;
+	protected MSTConfiguration config;
 
 	protected Util util = null;
 	protected EmailConfigDAO emailConfigDAO = null;
@@ -107,6 +108,10 @@ public class BaseService {
 
 	public void setTransactionManager(PlatformTransactionManager transactionManager) {
 		this.transactionTemplate = new TransactionTemplate(transactionManager);
+	}
+
+	public void setConfig(MSTConfiguration config) {
+		this.config = config;
 	}
 	
 	public Util getUtil() {

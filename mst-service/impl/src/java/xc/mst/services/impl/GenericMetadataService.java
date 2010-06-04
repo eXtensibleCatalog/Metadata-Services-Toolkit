@@ -10,12 +10,7 @@
 package xc.mst.services.impl;
 
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +19,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
@@ -31,12 +28,11 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
-import xc.mst.dao.DataException;
-import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataService;
 import xc.mst.services.impl.dao.GenericMetadataDAO;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * A copy of the MST is designed to interface with one or more Metadata Services depending on how it's configured.
@@ -47,10 +43,12 @@ import xc.mst.services.impl.dao.GenericMetadataDAO;
  * @author Eric Osisek
  */
 
-public abstract class GenericMetadataService extends SolrMetadataService implements MetadataService {
+public abstract class GenericMetadataService extends SolrMetadataService implements MetadataService, ApplicationContextAware {
 
 	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_PROCESSING);
-
+	
+	protected MSTConfiguration mstConfiguration = null;
+	protected ApplicationContext applicationContext = null;
 	protected GenericMetadataDAO genericMetadataDAO = null;
 	protected Service service = null;
 	protected List<ProcessingDirective> processingDirectives = null;
@@ -79,6 +77,26 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	protected long timeDiff = 0;
 	
 	protected Repository repository = null;
+	
+	static {
+		LOG.debug("GenericMetadataService class loaded!!!");
+	}
+	
+	public MSTConfiguration getConfig() {
+		return mstConfiguration;
+	}
+
+	public void setConfig(MSTConfiguration mstConfiguration) {
+		this.mstConfiguration = mstConfiguration;
+	}
+	
+	public ApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
+
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 
 	public Service getService() {
 		return service;

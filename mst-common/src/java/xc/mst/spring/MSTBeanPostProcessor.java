@@ -26,6 +26,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import xc.mst.dao.BaseDAO;
 import xc.mst.manager.BaseManager;
 import xc.mst.manager.BaseService;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 
 public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostProcessor, ApplicationContextAware {
@@ -45,6 +46,11 @@ public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostP
 			} catch (NoSuchBeanDefinitionException nsbde) {
 				((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("DataSource"));
 			}
+			try {
+				((BaseDAO)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MetadataServiceMSTConfiguration"));	
+			} catch (NoSuchBeanDefinitionException nsbde) {
+				((BaseDAO)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MSTConfiguration"));
+			}
 			((BaseDAO)bean).setUtil((Util)this.applicationContext.getBean("Util"));
 		} else if (bean instanceof BaseService) {
 			((BaseService)bean).setUtil((Util)this.applicationContext.getBean("Util"));
@@ -52,6 +58,11 @@ public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostP
 				((BaseService)bean).setTransactionManager((PlatformTransactionManager)this.applicationContext.getBean("MetadataServiceTransactionManager"));
 			} catch (NoSuchBeanDefinitionException nsbde) {
 				((BaseService)bean).setTransactionManager((PlatformTransactionManager)this.applicationContext.getBean("TransactionManager"));
+			}
+			try {
+				((BaseService)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MetadataServiceMSTConfiguration"));	
+			} catch (NoSuchBeanDefinitionException nsbde) {
+				((BaseService)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MSTConfiguration"));
 			}
 			
 			Map<String, Method> serviceSetters = new HashMap<String, Method>();

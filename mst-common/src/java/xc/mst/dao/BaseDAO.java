@@ -57,11 +57,16 @@ public class BaseDAO {
 	private final static Logger LOG = Logger.getLogger(BaseDAO.class);
 	
 	protected DataSource dataSource = null;
+	protected MSTConfiguration config;
 	
 	protected NamedParameterJdbcTemplate namedParameterJdbcTemplate = null;
 	protected JdbcTemplate jdbcTemplate = null;
 	
 	protected Util util = null;
+	
+	public void setConfig(MSTConfiguration config) {
+		this.config = config;
+	}
 	
 	public void createSchema(String name) {
 		// this is potentially dangerous, but necessary for now

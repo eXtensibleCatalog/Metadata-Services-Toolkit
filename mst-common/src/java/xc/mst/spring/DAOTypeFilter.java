@@ -37,10 +37,10 @@ public class DAOTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 			} catch (Throwable t) {
 				//do nothing
 			}
-			Class c = getClassLoader().loadClass(className);
 			if (blackListed(className)) {
 				return false;
 			}
+			Class c = getClassLoader().loadClass(className);
 			if (BaseDAO.class.isAssignableFrom(c) && !BaseDAO.class.equals(c)) {
 				LOG.debug("c: "+c.getName());
 				return true;

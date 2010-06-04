@@ -53,7 +53,6 @@ public class MSTAutoBeanHelper {
 	}
 	
 	protected String getBeanName(String className) {
-		LOG.debug("className: "+className);
 		if (ServiceTypeFilter.serviceBeans.containsKey(className)) {
 			return ServiceTypeFilter.serviceBeans.get(className);
 		}
@@ -65,7 +64,6 @@ public class MSTAutoBeanHelper {
 		if (idx0 != -1) {
 			className = className.substring(idx0+"Default".length());
 		}
-		LOG.debug("className: "+className);
 		return className;
 	}
 

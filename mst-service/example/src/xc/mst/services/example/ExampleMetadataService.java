@@ -8,16 +8,28 @@ import org.jdom.Element;
 
 import xc.mst.bo.record.Record;
 import xc.mst.services.impl.GenericMetadataService;
+import xc.mst.services.service.FooService;
 
 public class ExampleMetadataService extends GenericMetadataService {
 	
 	private static final Logger LOG = Logger.getLogger(ExampleMetadataService.class);
 	
+	protected FooService fooService = null;
+	
+	public FooService getFooService() {
+		return fooService;
+	}
+
+	public void setFooService(FooService fooService) {
+		this.fooService = fooService;
+	}
+
 	public List<Record> process(Record r) {
 		List<Record> records = new ArrayList<Record>();
 		Record out = getRecordService().createSuccessor(r, getService());
 		Element metadataEl = r.getOaiXmlEl();
 		Element foo = metadataEl.getChild("foo");
+		getFooService().fooFound(foo.getText());
 		out.setOaiXml("<bar>you've been barred: "+foo.getText()+"</bar>");
 		records.add(out);
 		return records;

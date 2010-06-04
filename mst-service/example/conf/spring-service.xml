@@ -17,7 +17,7 @@
            http://www.springframework.org/schema/context/spring-context-3.0.xsd"
 		default-init-method="init">
 
-	<bean name="PropertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" scope="singleton">
+	<bean name="MetadataServiceMSTConfiguration" class="xc.mst.utils.MSTConfiguration" scope="singleton">
 		<property name="locations">
 			<list>
 				<value>classpath:default.properties</value>
