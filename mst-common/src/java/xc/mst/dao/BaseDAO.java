@@ -64,6 +64,8 @@ public class BaseDAO {
 	
 	protected Util util = null;
 	
+	public void init() {}
+	
 	public void setConfig(MSTConfiguration config) {
 		this.config = config;
 	}

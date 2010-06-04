@@ -32,7 +32,12 @@ public class Util {
 	}
 	
 	public String slurp(String classpathResource) {
-		return slurp(classpathResource, null);
+		File f = new File(classpathResource);
+		if (f.exists()) {
+			return slurp(f);
+		} else {
+			return slurp(classpathResource, null);
+		}
 	}
 	
 	public String slurp(InputStream is) {

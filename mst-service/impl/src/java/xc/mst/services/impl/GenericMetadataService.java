@@ -32,7 +32,6 @@ import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataService;
 import xc.mst.services.impl.dao.GenericMetadataDAO;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * A copy of the MST is designed to interface with one or more Metadata Services depending on how it's configured.
@@ -46,8 +45,7 @@ import xc.mst.utils.MSTConfiguration;
 public abstract class GenericMetadataService extends SolrMetadataService implements MetadataService, ApplicationContextAware {
 
 	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_PROCESSING);
-	
-	protected MSTConfiguration mstConfiguration = null;
+
 	protected ApplicationContext applicationContext = null;
 	protected GenericMetadataDAO genericMetadataDAO = null;
 	protected Service service = null;
@@ -80,14 +78,6 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	
 	static {
 		LOG.debug("GenericMetadataService class loaded!!!");
-	}
-	
-	public MSTConfiguration getConfig() {
-		return mstConfiguration;
-	}
-
-	public void setConfig(MSTConfiguration mstConfiguration) {
-		this.mstConfiguration = mstConfiguration;
 	}
 	
 	public ApplicationContext getApplicationContext() {
@@ -135,7 +125,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	
 	public void install() {
 		try {
-			getGenericMetadataDAO().executeServiceDBScripts("xc/mst/services/install.sql");
+			getGenericMetadataDAO().executeServiceDBScripts(getFolder()+"/sql/install.sql");
 			getRepository().installOrUpdateIfNecessary();
 			postInstall();
 		} catch (Throwable t) {
@@ -148,7 +138,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 
 	public void uninstall() {
 		try {
-			getGenericMetadataDAO().executeServiceDBScripts("xc/mst/services/uninstall.sql");
+			getGenericMetadataDAO().executeServiceDBScripts(getFolder()+"/sql/uninstall.sql");
 			postInstall();
 		} catch (Throwable t) {
 			LOG.error("", t);

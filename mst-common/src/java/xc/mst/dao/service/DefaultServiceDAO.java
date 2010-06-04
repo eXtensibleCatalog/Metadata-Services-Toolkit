@@ -104,8 +104,9 @@ public class DefaultServiceDAO extends ServiceDAO
 	 */
 	private static Object psLoadBasicServiceLock = new Object();
 	
-	public DefaultServiceDAO()
+	public void init()
 	{
+		super.init();
 		try 
 		{
 			logObj = getLogDAO().getById(Constants.LOG_ID_SERVICE_MANAGEMENT);

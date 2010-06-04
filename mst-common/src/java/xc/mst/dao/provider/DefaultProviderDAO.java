@@ -113,9 +113,9 @@ public class DefaultProviderDAO extends ProviderDAO
 	 */
 	private static Object psDeleteLock = new Object();
 
-	public DefaultProviderDAO()
+	public void init()
 	{
-		super();
+		super.init();
 		
 		try
 		{

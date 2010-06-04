@@ -132,7 +132,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	 * @return value of property
 	 */
 	public String getProperty(String name) {
-		return getProperty(name);
+		return properties.getProperty(name);
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	}
 	
 	public String getServicePath() {
-		return getUrlPath()+"/"+getProperty("service.name");
+		return getUrlPath()+"/services/"+getProperty("service.name");
 	}
 
 }
