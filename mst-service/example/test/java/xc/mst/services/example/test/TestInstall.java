@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import xc.mst.bo.service.Service;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.service.impl.test.BaseMetadataServiceTest;
+import xc.mst.services.impl.dao.GenericMetadataDAO;
 import xc.mst.utils.MSTConfiguration;
 
 public class TestInstall extends BaseMetadataServiceTest {
@@ -17,16 +18,15 @@ public class TestInstall extends BaseMetadataServiceTest {
 		try {
 			String repoName = MSTConfiguration.getProperty("service.name");
 			ServicesService ss = (ServicesService)MSTConfiguration.getBean("ServicesService");
-			LOG.debug("repoName: "+repoName);
 			Service s = ss.getServiceByName(repoName);
 			if (s != null) {
 				ss.deleteService(s);
 			}
 			ss.addNewService(repoName);
+			LOG.debug("repoName: "+repoName);
 			s = ss.getServiceByName(repoName);
-			//processRecords((GenericMetadataService)s.getMetadataService());
-			//repositoryDAO.dropTables(repoName);
-			LOG.debug("testinstall after");
+			GenericMetadataDAO genericMetadataDAO = (GenericMetadataDAO) ss.getBean(repoName, "GenericMetadataDAO");
+			genericMetadataDAO.executeServiceDBScripts("xc/mst/repo/sql/create_oai_id_seq.sql");
 		} catch (Throwable t) {
 			LOG.error("", t);
 		}

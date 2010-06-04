@@ -113,17 +113,25 @@ public class DefaultServicesService extends BaseService
 		}
     }
 	
-	public MetadataService getMetadataService(String name) {
+	public ServiceEntry getServiceEntry(String name) {
 		LOG.debug("entering getMetadataService "+System.currentTimeMillis());
 		if (!serviceEntries.containsKey(name)) {
 			new ServiceEntry(name).start();	
 		}
 		ServiceEntry se = serviceEntries.get(name);
-		MetadataService ms = (MetadataService)se.ac.getBean("Service");
+		return se;
+	}
+	
+	public MetadataService getMetadataService(String name) {
+		MetadataService ms = (MetadataService)getServiceEntry(name).ac.getBean("Service");
 		if (ms.getRepository().getName() == null) {
 			ms.getRepository().setName(name);
 		}
 		return ms;
+	}
+	
+	public Object getBean(String serviceName, String beanName) {
+		return getServiceEntry(serviceName).ac.getBean(beanName);
 	}
 	
 	class ServiceEntry {

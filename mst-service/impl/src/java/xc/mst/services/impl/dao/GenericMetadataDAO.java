@@ -16,8 +16,28 @@ public class GenericMetadataDAO extends BaseDAO {
 		LOG.debug("allTables: "+allTables);
 		String createTablesContents = getUtil().slurp(fileName);
 		if (createTablesContents != null) {
-			String[] tokens = createTablesContents.split("\n\n");
-			for (String sql : tokens) {
+			StringBuilder replacedContents = new StringBuilder();
+			String[] tokens = createTablesContents.split("\n");
+			String currentDelimiter = ";";
+			for (String line : tokens) {
+				if (line.matches("^[dD][eE][lL][iI][mM][iI][tT][eE][rR].*")) {
+					LOG.debug("matches");
+					currentDelimiter = StringUtils.trim(line.split(" ")[1]);
+					if (currentDelimiter.equals(";")) {
+						replacedContents.append("\nEND_OF_STMT");
+					}
+					continue;
+				}
+				String replaceWith = ";\nEND_OF_STMT";
+				if (!currentDelimiter.equals(";")) {
+					replaceWith = ";";
+				}
+				replacedContents.append(line.replaceAll(currentDelimiter, replaceWith));
+				replacedContents.append("\n");
+			}
+			LOG.debug("replacedContents: "+replacedContents);
+			String[] stmts = replacedContents.toString().split("END_OF_STMT");
+			for (String sql : stmts) {
 				if (StringUtils.isEmpty(StringUtils.trim(sql))) {
 					continue;
 				}

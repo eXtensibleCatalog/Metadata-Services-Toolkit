@@ -103,6 +103,8 @@ public interface ServicesService
      * @throws DatabaseConfigException 
      */
     public Service getServiceByName(String serviceName) throws DatabaseConfigException;
+    
+    public Object getBean(String serviceName, String beanName);
 
     /**
      * returns a list of soervices sorted by name
