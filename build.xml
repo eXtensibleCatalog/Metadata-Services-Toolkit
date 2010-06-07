@@ -116,7 +116,7 @@
 		<target-custom-services target="clean" />
 	</target>
 
-	<target name="publish" depends="mc.publish, ms.publish">
+	<target name="publish" depends="mi.publish, mc.publish, ms.publish">
 	</target>
 
 	<target name="retrieve" depends="mc.retrieve,mp.retrieve,ms.retrieve">
