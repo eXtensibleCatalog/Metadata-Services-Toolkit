@@ -1627,7 +1627,7 @@ public class Harvester extends BaseManager implements ErrorHandler
 		TimingLogger.start("formatDate");
 		SimpleDateFormat sdf = null;
 
-		if (granularity == ValidateRepository.GRAN_SECOND)
+		if (granularity == ValidateRepository.GRANULARITY_SECOND)
 		{
 			sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 			sdf.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));

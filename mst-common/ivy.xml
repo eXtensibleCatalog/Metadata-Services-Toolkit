@@ -227,6 +227,10 @@
             <artifact name="trove" type="jar"/>
 		</dependency>
 
+		<dependency org="joda-time" name="joda-time" rev="1.6" transitive="true">
+            <artifact name="joda-time" type="jar"/>
+		</dependency>
+
     </dependencies>
 </ivy-module>
 

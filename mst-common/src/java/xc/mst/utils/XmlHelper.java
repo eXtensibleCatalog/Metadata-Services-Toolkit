@@ -1,6 +1,7 @@
 package xc.mst.utils;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -52,11 +53,9 @@ public class XmlHelper {
 		return getXMLOutputter().outputString(el);
 	}
 	
-	public org.jdom.Document getJDomDocument(String str) {
+	public org.jdom.Document getJDomDocument(InputStream is) {
 		try {
-			return getDOMBuilder().build(getDocumentBuilder().parse(
-					new ByteArrayInputStream(str.getBytes())));
-			
+			return getDOMBuilder().build(getDocumentBuilder().parse(is));
 		} catch (Throwable t) {
 			LOG.error("", t);
 			Util.getUtil().throwIt(t);
@@ -64,5 +63,8 @@ public class XmlHelper {
 		return null;
 	}
 	
+	public org.jdom.Document getJDomDocument(String str) {
+		return getJDomDocument(new ByteArrayInputStream(str.getBytes()));
+	}
 
 }

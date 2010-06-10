@@ -401,7 +401,11 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 				psInsert.setInt(1, harvestScheduleId);
 				psInsert.setInt(2, harvestScheduleStep.getFormat().getId());
 				psInsert.setInt(3, (harvestScheduleStep.getSet() == null ? 0 : harvestScheduleStep.getSet().getId()));
-				psInsert.setTimestamp(4, harvestScheduleStep.getLastRan());
+				if (harvestScheduleStep.getLastRan() != null) {
+					psInsert.setDate(4, new java.sql.Date(harvestScheduleStep.getLastRan().getTime()));
+				} else {
+					psInsert.setDate(4, null);
+				}
 
 				// Execute the insert statement and return the result
 				if(dbConnectionManager.executeUpdate(psInsert) > 0)
@@ -482,7 +486,11 @@ public class DefaultHarvestScheduleStepDAO extends HarvestScheduleStepDAO
 				psUpdate.setInt(1, harvestScheduleId);
 				psUpdate.setInt(2, harvestScheduleStep.getFormat().getId());
 				psUpdate.setInt(3, (harvestScheduleStep.getSet() == null ? 0 : harvestScheduleStep.getSet().getId()));
-				psUpdate.setTimestamp(4, harvestScheduleStep.getLastRan());
+				if (harvestScheduleStep.getLastRan() != null) {
+					psInsert.setDate(4, new java.sql.Date(harvestScheduleStep.getLastRan().getTime()));
+				} else {
+					psInsert.setDate(4, null);
+				}
 				psUpdate.setInt(5, harvestScheduleStep.getId());
 
 				// Execute the update statement and return the result

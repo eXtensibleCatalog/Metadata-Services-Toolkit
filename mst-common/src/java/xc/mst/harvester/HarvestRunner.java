@@ -276,11 +276,6 @@ public class HarvestRunner extends BaseManager
 					 baseURL,
 					 metadataPrefix,
 					 setSpec,
-					 from,
-					 until,
-					 harvestAll,
-					 harvestAllIfNoDeletedRecord,
-					 timeOutMilliseconds,
 					 harvestScheduleStep,
 					 currentHarvest);
 

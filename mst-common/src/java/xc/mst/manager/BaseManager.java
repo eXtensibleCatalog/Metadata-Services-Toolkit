@@ -9,6 +9,7 @@
 
 package xc.mst.manager;
 
+import xc.mst.harvester.HttpService;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.configuration.EmailConfigService;
 import xc.mst.manager.harvest.ScheduleService;
@@ -59,6 +60,7 @@ public class BaseManager extends BaseService {
 	protected RecordService recordService = null;
 	protected ValidateRepository validateRepository = null;
 	protected MSTSolrServer mstSolrServer = null;
+	protected HttpService httpService = null;
 	
 	public EmailConfigService getEmailConfigService() {
 		return emailConfigService;
@@ -202,6 +204,13 @@ public class BaseManager extends BaseService {
 	
 	public SolrIndexManager getSolrIndexManager() {
 		return (SolrIndexManager)config.getBean("SolrIndexManager");
+	}
+	
+	public HttpService getHttpService() {
+		return httpService;
+	}
+	public void setHttpService(HttpService httpService) {
+		this.httpService = httpService;
 	}
 	
 }

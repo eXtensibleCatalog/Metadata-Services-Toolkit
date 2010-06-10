@@ -9,8 +9,7 @@
 
 package xc.mst.bo.harvest;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
@@ -45,7 +44,7 @@ public class HarvestScheduleStep
 	/**
 	 * The timestamp when this step was last ran
 	 */
-	private Timestamp lastRan = null;
+	private Date lastRan = null;
 
 	/**
 	 * Gets the harvest schedule step's ID
@@ -132,7 +131,7 @@ public class HarvestScheduleStep
 	 *
 	 * @return The timestamp when this step was last ran
 	 */
-	public Timestamp getLastRan()
+	public Date getLastRan()
 	{
 		return lastRan;
 	} // end method getLastRan()
@@ -142,17 +141,7 @@ public class HarvestScheduleStep
 	 *
 	 * @param lastRan The new timestamp when this step was last ran
 	 */
-	public void setLastRan(java.util.Date lastRan)
-	{
-		this.lastRan = (lastRan == null ? null :  new Timestamp(lastRan.getTime()));
-	} // end method setNextListSetsListFormat(Date)
-
-	/**
-	 * Sets the timestamp when this step was last ran
-	 *
-	 * @param lastRan The new timestamp when this step was last ran
-	 */
-	public void setLastRan(Timestamp lastRan)
+	public void setLastRan(Date lastRan)
 	{
 		this.lastRan = lastRan;
 	} // end method setNextListSetsListFormat(Date)

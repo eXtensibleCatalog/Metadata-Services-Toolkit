@@ -132,7 +132,14 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	 * @return value of property
 	 */
 	public String getProperty(String name) {
-		return properties.getProperty(name);
+		return getProperty(name, null);
+	}
+	public String getProperty(String name, String def) {
+		String value = properties.getProperty(name);
+		if (value == null) {
+			value = def;
+		}
+		return value;
 	}
 
 	/**
