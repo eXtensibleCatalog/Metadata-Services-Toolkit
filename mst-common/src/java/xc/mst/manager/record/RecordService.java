@@ -15,7 +15,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
+import org.jdom.Element;
 
+import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Holdings;
@@ -646,8 +648,11 @@ public abstract class RecordService extends BaseService
 	 * @throws DatabaseConfigException
 	 */
 	public abstract Record getRecordFieldsForBrowseFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
-
-
+	
+	public abstract Record parse(Element e);
+	public abstract Record parse(Element recordEl, Provider provider);
+	
+	public abstract Element createJDomElement(Record r);
 
 	/**
 	 * Validates the fields on the passed Record Object

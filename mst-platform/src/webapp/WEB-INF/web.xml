@@ -21,13 +21,6 @@
 	</listener>
 
 	<display-name>Metadata Services Toolkit</display-name>
-
-	<servlet>
-		<servlet-name>startScheduler</servlet-name>
-		<servlet-class>xc.mst.scheduling.SchedulerThreadServlet</servlet-class>
-
-		<load-on-startup>5</load-on-startup>
-	</servlet>
 	
 	<servlet>
 		<servlet-name>DevAdminServlet</servlet-name>

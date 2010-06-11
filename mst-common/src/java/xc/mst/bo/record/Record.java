@@ -13,12 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Element;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.provider.Format;
@@ -36,25 +32,19 @@ public class Record {
 	
 	private static final Logger LOG = Logger.getLogger(Record.class);
 	
+	public static final String STRING_MODE = "Record.STRING_MODE";
+	public static final String JDOM_MODE = "Record.JDOM_MODE";
+	
 	public static final char ACTIVE = 'A';
 	public static final char HELD = 'H';
 	public static final char DELETED = 'D';
 	public static final char UPDATE_REPLACE = 'U';
 	
-	// yes, this is thread safe.  There's a bunch of these:
-	// http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTimeParser()
-	// you may need to have 2 of these, one for parsing and one for formatting.
-	protected static final DateTimeFormatter UTC_FORMATTER = ISODateTimeFormat.dateTimeParser();
+	protected String mode = JDOM_MODE;
 
 	protected XmlHelper xmlHelper = new XmlHelper();
-	
-	protected Element recordEl = null;
-	protected Element headerEl = null;
+
 	protected Element oaiXmlEl = null;
-	protected Element identifierEl = null;
-	protected Element dateStampEl = null;
-	protected Element setSpecEl = null;
-	protected Element predecessorsEl = null;
 
 	/**
 	 * The type of indexed Object this is
@@ -90,11 +80,6 @@ public class Record {
 	 * The time when the record was last updated
 	 */
 	protected Date updatedAt = null;
-
-	/**
-	 * True if the record has been deleted, false otherwise
-	 */
-	protected boolean deleted = false;
 
 	/**
 	 * The record's format
@@ -197,127 +182,50 @@ public class Record {
 	public Record() {
 		super();
 	}
-	
-	public Record(Element record) {
-		this();
-		setRecordEl(record);
-	}
-	
+
 	public Record clone() {
 		Record dupe = new Record();
 		dupe.createdAt = this.createdAt;
-		dupe.deleted = this.deleted;
+		dupe.status = this.status;
 		dupe.id = this.id;
 		dupe.oaiHeader = this.oaiHeader;
 		dupe.oaiIdentifier = this.oaiIdentifier;
 		dupe.oaiXml = this.oaiXml;
 		dupe.oaiXmlEl = this.oaiXmlEl;
-		dupe.recordEl = this.recordEl;
 		dupe.predecessors = this.predecessors;
 		return dupe;
 	}
 	
-	public String getRecordXml() {
-		return xmlHelper.getString(getRecordEl());
-	}
-	
-	public Element getRecordEl() {
-		if (recordEl == null) {
-			recordEl = new Element("record");
-			recordEl.addContent(getHeaderEl());
-			recordEl.addContent(getOaiXmlEl());
-		}
-		return recordEl;
+	public String getMode() {
+		return mode;
 	}
 
-	public void setRecordEl(Element recordEl) {
-		this.recordEl = recordEl;
-		setHeaderEl(recordEl.getChild("header"));
-		setOaiXmlEl(recordEl.getChild("metadata"));
-	}
-	
-	public Element getHeaderEl() {
-		if (this.headerEl == null) {
-			this.headerEl = new Element("header");
-			this.headerEl.addContent(getIdentifierEl());
-			this.headerEl.addContent(getDateStampEl());
-			this.headerEl.addContent(getSetSpecEl());
-			this.headerEl.addContent(getPredecessorsEl());
+	public void setMode(String mode) {
+		if (mode.equals(STRING_MODE)) {
+			this.oaiXml = xmlHelper.getString(this.oaiXmlEl);
+		} else if (mode.equals(STRING_MODE)) {
+			this.oaiXmlEl = xmlHelper.getJDomDocument(this.oaiXml).detachRootElement();
+		} else {
+			throw new RuntimeException("invalid mode!!!");
 		}
-		return this.headerEl;
-	}
-
-	public void setHeaderEl(Element headerEl) {
-		this.headerEl = headerEl;
-		setIdentifierEl(headerEl.getChild("identifier"));
-		setSetSpecEl(headerEl.getChild("setSpec"));
-		String dtStr = headerEl.getChildText("datestamp");
-		if (!StringUtils.isEmpty(dtStr)) {
-			DateTime dt = UTC_FORMATTER.parseDateTime(dtStr);
-			setOaiDatestamp(new Date(dt.getMillis()));
-		}
-	}
-
-	public Element getIdentifierEl() {
-		if (this.identifierEl == null) {
-			this.identifierEl = new Element("identifier");
-		}
-		this.identifierEl.setText(getOaiIdentifier());
-		return this.identifierEl;
-	}
-
-	public void setIdentifierEl(Element identifierEl) {
-		this.identifierEl = identifierEl;
-		setOaiIdentifier(identifierEl.getText());
-	}
-	
-	public Element getDateStampEl() {
-		if (this.dateStampEl == null) {
-			this.dateStampEl = new Element("datestamp");
-		}
-		this.dateStampEl.setText(UTC_FORMATTER.print(oaiDatestamp.getTime()));
-		return this.dateStampEl;
-	}
-	
-	public Element getPredecessorsEl() {
-		if (this.predecessorsEl == null) {
-			this.predecessorsEl = new Element("predecessors");
-		}
-		for (Object eObj : this.predecessorsEl.getChildren()) {
-			this.predecessorsEl.removeContent((Element)eObj);
-		}
-		for (Record p : this.predecessors) {
-			Element predEl = new Element("predecessor");
-			predEl.setAttribute("id", p.getOaiIdentifier());
-			predecessorsEl.addContent(predEl);
-		}
-		return this.predecessorsEl;
-	}
-
-	public Element getSetSpecEl() {
-		if (this.setSpecEl == null) {
-			this.setSpecEl = new Element("setSpec");
-		}
-		this.setSpecEl.setText(getSetSpec());
-		return this.setSpecEl;
-	}
-
-	public void setSetSpecEl(Element setSpecEl) {
-		this.setSpecEl = setSpecEl;
-		setSetSpec(setSpecEl.getText());
+		this.mode = mode;
 	}
 	
 	public Element getOaiXmlEl() {
-		if (this.oaiXmlEl == null) {
-			oaiXmlEl = new Element("metadata");
-			if (this.oaiXml != null) {
-				oaiXmlEl.addContent(xmlHelper.getJDomDocument(this.oaiXml).detachRootElement());
-			}
+		if (this.mode.equals(STRING_MODE)) {
+			throw new RuntimeException(
+					"This record is set to STRING_MODE.  You must explicitly "+
+					"call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
 		}
-		return oaiXmlEl;
+		return this.oaiXmlEl;
 	}
 
 	public void setOaiXmlEl(Element oaiXmlEl) {
+		if (this.mode.equals(STRING_MODE)) {
+			throw new RuntimeException(
+					"This record is set to STRING_MODE.  You must explicitly "+
+					"call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
+		}
 		this.oaiXmlEl = oaiXmlEl;
 	}
 	
@@ -412,25 +320,13 @@ public class Record {
 		this.updatedAt = updatedAt;
 	} // end method setUpdatedAt(Date)
 
-	/**
-	 * Gets whether or not the record has been deleted
-	 *
-	 * @return True if the record has been deleted, false otherwise
-	 */
-	public boolean getDeleted()
-	{
-		return deleted;
-	} // end method getDeleted()
+	public boolean getDeleted() {
+		return this.status == Record.DELETED;
+	}
 
-	/**
-	 * Sets the value of the deleted field
-	 *
-	 * @param deleted True to mark record has been deleted, false to mark it as live
-	 */
-	public void setDeleted(boolean deleted)
-	{
-		this.deleted = deleted;
-	} // end method setDeleted(boolean)
+	public void setDeleted(boolean deleted) {
+		this.status = Record.DELETED;
+	}
 
 	/**
 	 * Gets the record's format
@@ -517,15 +413,6 @@ public class Record {
 
 	public void setOaiIdentifier(String oaiIdentifier) {
 		this.oaiIdentifier = oaiIdentifier;
-		getIdentifierEl();
-	}
-
-	public String getSetSpec() {
-		return getSetSpecEl().getText();
-	}
-
-	public void setSetSpec(String setSpecEl) {
-		getSetSpecEl().setText(setSpecEl);
 	}
 
 	public String getOaiIdentifierMostSpecificToken() {
@@ -553,7 +440,6 @@ public class Record {
 	 */
 	public void setOaiDatestamp(Date oaiDatestamp) {
 		this.oaiDatestamp = oaiDatestamp;
-		getDateStampEl();
 	}
 
 	/**
@@ -988,7 +874,7 @@ public class Record {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("Id=" + id);
 		buffer.append(" createdAt=" + createdAt);
-		buffer.append(" deleted=" + deleted);
+		buffer.append(" deleted=" + getDeleted());
 		if (format != null) {
 			buffer.append(" format=" + format.getName());
 		}
@@ -1065,12 +951,14 @@ public class Record {
 	
 	public void removePredecessor(Record r) {
 		predecessors.remove(r);
-		getPredecessorsEl();
 	}
 	
 	public void addPredecessor(Record r) {
 		predecessors.add(r);
-		getPredecessorsEl();
+	}
+	
+	public List<Record> getPredecessor() {
+		return predecessors;
 	}
 	
 	public String getType() {

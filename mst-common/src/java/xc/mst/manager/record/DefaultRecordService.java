@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SimpleTimeZone;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -27,8 +28,12 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
+import org.jdom.Element;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 import xc.mst.bo.harvest.HarvestSchedule;
+import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SolrBrowseResult;
@@ -66,6 +71,10 @@ public class DefaultRecordService extends RecordService
 	 */
 	protected final static Term TERM_TRAIT = new Term(FIELD_TRAIT, "");
 	
+	// yes, these are thread safe.
+	protected static final DateTimeFormatter UTC_PARSER = ISODateTimeFormat.dateTimeParser();
+	protected static final DateTimeFormatter UTC_FORMATTER = ISODateTimeFormat.dateTime();
+	
 	public Record createRecord() {
 		Record rec = new Record();
 		getRepositoryDAO().injectId(rec);
@@ -74,7 +83,7 @@ public class DefaultRecordService extends RecordService
 
 	public Record createSuccessor(Record pred, Service s) {
 		Record succ = new Record();
-		succ.getPredecessors().add(pred);
+		succ.addPredecessor(pred);
 		succ.setService(s);
 		getRepositoryDAO().injectId(succ);
 		LOG.debug("MSTConfiguration.getProperty(DomainNameIdentifier): "+config.getProperty("DomainNameIdentifier"));
@@ -1197,5 +1206,149 @@ public class DefaultRecordService extends RecordService
 				  .replaceAll("!", "\\\\!");
 	}
 
+	public Record parse(Element recordEl) {
+		return parse(recordEl, null);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Record parse(Element recordEl, Provider provider) {
+		Record r = new Record();
+		{
+			Element headerEl = recordEl.getChild("header");
+			Element identifierElement = headerEl.getChild("identifier");
+			if (identifierElement != null) {
+				r.setOaiIdentifier(identifierElement.getText());
+			}
+			Element datestampElement = headerEl.getChild("datestamp");
+			if (datestampElement != null && !StringUtils.isEmpty(datestampElement.getText())) {
+				r.setOaiDatestamp(new Date(UTC_PARSER.parseDateTime(datestampElement.getText()).getMillis()));
+			}
+			
+			/*
+			 * I think this isn't really necessary
+			 * 
+			Element predecessorEl = headerEl.getChild("predecessors");
+			if (predecessorEl != null) {
+				List children = predecessorEl.getChildren("predecessor");
+				if (children != null) {
+					for (Object predObj : children) {
+						Element predEl = (Element)predObj;
+						r.addPredecessor(predEl.getText());
+					}	
+				}
+			}
+			*/
+			
+			List setSpecList = headerEl.getChildren("setSpec");
+			if (setSpecList != null) {
+				for (Object setSpecObj : setSpecList) {
+					Element setSpecEl = (Element)setSpecObj;
+
+					String setSpec = provider.getName().replace(' ', '-') + ":" + setSpecEl.getText();
+
+					// Split the set into its components
+					String[] setSpecLevels = setSpec.split(":");
+
+					// This will build the setSpecs to which the record belongs
+					StringBuilder setSpecAtLevel = new StringBuilder();
+
+					// Loop over all levels in the set spec
+					for(String setSpecLevel : setSpecLevels)
+					{
+						try {
+							// Append the set at the current level to the setSpec at the previous level to
+							// get the setSpec for the current level. Append colons as needed
+							setSpecAtLevel.append(setSpecAtLevel.length() <= 0 ? setSpecLevel : ":" + setSpecLevel);
 	
-} // end class DefaultRecordService
+							String currentSetSpec = setSpecAtLevel.toString();
+							
+							// If the set's already in the index, get it
+							Set set = getSetDAO().getBySetSpec(currentSetSpec);
+	
+							// Add the set if there wasn't already one in the database
+							if(set == null) {
+								set = new Set();
+								set.setSetSpec(currentSetSpec);
+								set.setDisplayName(currentSetSpec);
+								set.setIsProviderSet(false);
+								set.setIsRecordSet(true);
+								TimingLogger.start("setDao.insertForProvider");
+								getSetDAO().insertForProvider(set, provider.getId());
+								TimingLogger.stop("setDao.insertForProvider");
+							}
+							// Add the set's ID to the list of sets to which the record belongs
+							r.addSet(set);
+						} catch (Throwable t) {
+							LOG.error("", t);
+						}
+					} 
+				}
+			}
+
+			String status = headerEl.getAttributeValue("status");
+			if (!StringUtils.isEmpty(status) && "DELETED".equals(status.toUpperCase())) {
+				if ("DELETED".equals(status.toUpperCase()) || "D".equals(status.toUpperCase())) {
+					r.setStatus(Record.DELETED);
+				} else if ("ACTIVE".equals(status.toUpperCase()) || "A".equals(status.toUpperCase())) {
+					r.setStatus(Record.ACTIVE);
+				} else if ("HELD".equals(status.toUpperCase()) || "H".equals(status.toUpperCase())) {
+					r.setStatus(Record.HELD);
+				} else if ("UPDATE_REPLACE".equals(status.toUpperCase()) || "U".equals(status.toUpperCase())) {
+					r.setStatus(Record.UPDATE_REPLACE);
+				}
+			}
+		}
+		r.setOaiXmlEl(recordEl.getChild("metadata"));
+		return r;
+	}
+	
+	public Element createJDomElement(Record r) {
+		Element recordEl = new Element("record");
+		Element headerEl = new Element("header");
+		recordEl.addContent(headerEl);
+		Element identifierElement = new Element("identifier");
+		headerEl.addContent(identifierElement);
+		identifierElement.setText(r.getOaiIdentifier());
+		Element datestampElement = headerEl.getChild("datestamp");
+		datestampElement.setText(UTC_FORMATTER.print(r.getOaiDatestamp().getTime()));
+		 
+		Element predsrEl = new Element("predecessors");
+		headerEl.addContent(predsrEl);
+		
+		for (Record p : r.getPredecessor()) {
+			Element predEl = new Element("predecessor");
+			predsrEl.addContent(predEl);
+			predEl.setText(p.getOaiIdentifier());
+		}
+		
+		if (r.getSets() != null) {
+			for (Set s : r.getSets()) {
+				Element setSpecEl = new Element("setSpec");
+				headerEl.addContent(setSpecEl);
+				setSpecEl.setText(s.getDisplayName());
+			}
+		}
+		
+		if (r.getStatus() != 0) {
+			Element statusEl = new Element("status");
+			if (r.getStatus() == Record.ACTIVE) {
+				//statusEl.setText("active");
+			} else if (r.getStatus() == Record.DELETED) {
+				statusEl.setText("deleted");
+				headerEl.addContent(statusEl);
+			} else if (r.getStatus() == Record.HELD) {
+				statusEl.setText("held");
+				headerEl.addContent(statusEl);
+			} else if (r.getStatus() == Record.UPDATE_REPLACE) {
+				statusEl.setText("update_replace");
+				headerEl.addContent(statusEl);
+			}
+		}
+		if (r.getMode().equals(Record.STRING_MODE)) {
+			r.setMode(Record.JDOM_MODE);
+		}
+		recordEl.addContent(r.getOaiXmlEl());
+		return recordEl;
+	}
+	
+}

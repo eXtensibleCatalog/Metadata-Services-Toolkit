@@ -120,78 +120,87 @@ public class RepositoryDAO extends BaseDAO {
 		addRecords(name, records, false);
 	}
 	
+	public void addRecord(String name, Record r) {
+		if (recordsToAdd == null) {
+			recordsToAdd = new ArrayList<Record>();
+		}
+		recordsToAdd.add(r);
+		commitIfNecessary(name, false);
+	}
+	
 	public void addRecords(String name, List<Record> records, boolean force) {
 		if (inBatch) {
 			if (recordsToAdd == null) {
 				recordsToAdd = new ArrayList<Record>();
 			}
-			int batchSize = 50000;
-			if (config.getProperty("batchSize") != null) {
-				batchSize = Integer.parseInt(config.getProperty("batchSize"));
-			}
 			if (records != null) {
 				recordsToAdd.addAll(records);
 			}
-			if (force || batchSize >= recordsToAdd.size()) {
-				final Date d = new Date();
-				String sql = 
-        			"insert into "+getTableName(name, RECORDS_TABLE)+
-        			" (record_id, date_created, status, format_id ) "+
-        			"values (?,?,?,?) "+
-        			"on duplicate key update "+
-        				"status=?, "+
-        				"format_id=? "+
-        			";";
-		        int[] updateCounts = jdbcTemplate.batchUpdate(
-		        		sql,
-		                new BatchPreparedStatementSetter() {
-		                    public void setValues(PreparedStatement ps, int j) throws SQLException {
-		                    	int i=1;
-		                    	Record r = recordsToAdd.get(j);
-		                        ps.setLong(i++, r.getId());
-		                        ps.setTimestamp(i++, new Timestamp(d.getTime()));
-		                        for (int k=0; k<2; k++) {
-			                        ps.setString(i++, String.valueOf(r.getStatus()));
-			                        if (r.getFormat() != null) {
-			                        	ps.setInt(i++, r.getFormat().getId());
-			                        } else { 
-			                        	ps.setObject(i++, null);
-			                        }
-		                        }
-		                    }
-	
-		                    public int getBatchSize() {
-		                        return recordsToAdd.size();
-		                    }
-		                } );
-				sql = 
-        			"insert into "+getTableName(name, RECORDS_XML_TABLE)+
-        			" (record_id, xml) "+
-        			"values (?,?) "+
-        			"on duplicate key update "+
-        				"xml=? "+
-        			";";
-		        updateCounts = jdbcTemplate.batchUpdate(
-		        		sql,
-		                new BatchPreparedStatementSetter() {
-		                    public void setValues(PreparedStatement ps, int j) throws SQLException {
-		                    	int i=1;
-		                    	Record r = recordsToAdd.get(j);
-		                        ps.setLong(i++, r.getId());
-		                        ps.setString(i++, r.getOaiXml());
-		                        ps.setString(i++, r.getOaiXml());
-		                    }
-	
-		                    public int getBatchSize() {
-		                        return recordsToAdd.size();
-		                    }
-		                } );
-		        recordsToAdd = null;
-			}
+			commitIfNecessary(name, force);
 		} else {
 			beginBatch();
-			addRecords(name, records);
+			addRecords(name, records, force);
 			endBatch(name);
+		}
+	}
+	
+	protected void commitIfNecessary(String name, boolean force) {
+		int batchSize = 50000;
+		if (force || batchSize >= recordsToAdd.size()) {
+			final Date d = new Date();
+			String sql = 
+    			"insert into "+getTableName(name, RECORDS_TABLE)+
+    			" (record_id, date_created, status, format_id ) "+
+    			"values (?,?,?,?) "+
+    			"on duplicate key update "+
+    				"status=?, "+
+    				"format_id=? "+
+    			";";
+	        int[] updateCounts = jdbcTemplate.batchUpdate(
+	        		sql,
+	                new BatchPreparedStatementSetter() {
+	                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+	                    	int i=1;
+	                    	Record r = recordsToAdd.get(j);
+	                        ps.setLong(i++, r.getId());
+	                        ps.setTimestamp(i++, new Timestamp(d.getTime()));
+	                        for (int k=0; k<2; k++) {
+		                        ps.setString(i++, String.valueOf(r.getStatus()));
+		                        if (r.getFormat() != null) {
+		                        	ps.setInt(i++, r.getFormat().getId());
+		                        } else { 
+		                        	ps.setObject(i++, null);
+		                        }
+	                        }
+	                    }
+
+	                    public int getBatchSize() {
+	                        return recordsToAdd.size();
+	                    }
+	                } );
+			sql = 
+    			"insert into "+getTableName(name, RECORDS_XML_TABLE)+
+    			" (record_id, xml) "+
+    			"values (?,?) "+
+    			"on duplicate key update "+
+    				"xml=? "+
+    			";";
+	        updateCounts = jdbcTemplate.batchUpdate(
+	        		sql,
+	                new BatchPreparedStatementSetter() {
+	                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+	                    	int i=1;
+	                    	Record r = recordsToAdd.get(j);
+	                        ps.setLong(i++, r.getId());
+	                        ps.setString(i++, r.getOaiXml());
+	                        ps.setString(i++, r.getOaiXml());
+	                    }
+
+	                    public int getBatchSize() {
+	                        return recordsToAdd.size();
+	                    }
+	                } );
+	        recordsToAdd = null;
 		}
 	}
 

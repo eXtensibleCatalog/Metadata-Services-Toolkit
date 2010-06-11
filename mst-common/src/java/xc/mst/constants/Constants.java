@@ -320,23 +320,7 @@ public class Constants
 	 * The closing tag for the OAI response element
 	 */
 	public static final String OAI_RESPONSE_FOOTER = "</OAI-PMH>";
-	
-	
-	//*******************************************************************
-	// MST Service Status Constants
-	//*******************************************************************
 
-	public static final String STATUS_SERVICE_RUNNING = "RUNNING";
-	
-	public static final String STATUS_SERVICE_NOT_RUNNING = "NOT_RUNNING";
-	
-	public static final String STATUS_SERVICE_PAUSED = "PAUSED";
-	
-	public static final String STATUS_SERVICE_ERROR = "ERROR";
-	
-	public static final String STATUS_SERVICE_CANCELED = "CANCELED";
-
-	
 	//*******************************************************************
 	// XC Element Name Constants
 	//*******************************************************************

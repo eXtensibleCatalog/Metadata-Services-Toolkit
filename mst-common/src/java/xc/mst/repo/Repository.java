@@ -25,6 +25,7 @@ public interface Repository {
 	
 	public void installOrUpdateIfNecessary(); 
 
+	public void addRecord(Record record);
 	public void addRecords(List<Record> records);
 	
 	public List<Record> getRecords(Date from, Date until, Long startingId);

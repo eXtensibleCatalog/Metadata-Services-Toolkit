@@ -8,33 +8,20 @@
   */
 package xc.mst.harvester;
 
-import java.io.InputStream;
-import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.SimpleTimeZone;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 import xc.mst.bo.harvest.Harvest;
 import xc.mst.bo.harvest.HarvestSchedule;
@@ -46,197 +33,147 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.email.Emailer;
 import xc.mst.manager.BaseManager;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DBRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.repo.Repository;
+import xc.mst.scheduling.WorkDelegate;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
 
-public class HarvestManager extends BaseManager {
-	/**
-	 * Stores sets that we got from the database so we don't need to repeat queries
-	 */
-	private Map<String, Set> setsLoaded = new HashMap<String, Set>();
+public class HarvestManager extends BaseManager implements WorkDelegate {
 	
 	/**
-	 * The number of records inserted for the current harvest
+	 * A reference to the logger which writes to the HarvestIn log file
 	 */
-	private int recordsFound = 0;
+	private static Logger log = Logger.getLogger("harvestIn");
+	
+	protected static final DateTimeFormatter UTC_FORMATTER = ISODateTimeFormat.dateTime();
+	
+	protected Status status = Status.STOPPED;
 
-	/**
-	 * The total amount of time we've spent waiting for the OAI Toolkit (used for debugging)
-	 */
-	private long oaiRepositoryTime = 0;
-
-	/**
-	 * The total amount of time we've spent parsing and inserting records from an OAI response
-	 */
-	private long insertRecordsTime = 0;
-
-	/**
-	 * Timestamp before an OAI request is placed.  This is used to calculate the amount of time spent waiting for a response from the server.
-	 */
-	private long startOaiRequest = 0;
-
-	/**
-	 * Timestamp after an OAI response is received.  This is used to calculate the amount of time spent waiting for a response from the server.
-	 */
-	private long finishOaiRequest = 0;
-
-	/**
-	 * Timestamp before processing of the OAI response is begun.  This is used to calculate the amount of time spent processing the response
-	 */
-    private long resTokStartTime = 0;
-
-	/**
-	 * Timestamp after processing of the OAI response is finished.  This is used to calculate the amount of time spent processing the response
-	 */
-    private long resTokEndTime = 0;
-
+	protected Repository repo = null;
+	
+	protected Harvest currentHarvest = null;
+	
 	/**
 	 * The granularity of the OAI repository we're harvesting (either GRAN_DAY or GRAN_SECOND)
 	 */
-	private int granularity = -1;
+	protected int granularity = -1;
 
 	/**
 	 * The policy for tracking deleted records that the OAI repository uses (either DELETED_RECORD_NO, DELETED_RECORD_TRANSIENT, or DELETED_RECORD_PERSISTENT)
 	 */
-	private int deletedRecord = -1;
+	protected int deletedRecord = -1;
+	
+	protected HarvestSchedule schedule = null;
+	protected Provider provider = null;
+	protected Format format = null;
+	
 
-	/**
-	 * True if this Harvester has received the kill command
-	 */
-	private boolean killed = false;
-
-	/**
-	 * True if this Harvester has received the pause command
-	 */
-	private boolean isPaused = false;
-
-	/**
-     * The harvest schedule being run
-     */
-	private HarvestSchedule schedule = null;
-
-	/**
-     * The harvest being run
-     */
-	private Harvest currentHarvest = null;
-
-	/**
-	 * Reference to the current running harvester
-	 */
-	private static Harvester runningHarvester;
-
-	/**
-	 * The provider being harvested
-	 */
-	private Provider provider = null;
-
-	/**
-	 * The ID of the Format entry with the metadataPrefix we're harvesting
-	 */
-	private Format format = null;
-
-	/**
-	 * True once we've logged an Exception
-	 */
-	private boolean loggedException = false;
-
-	/**
-	 * The number of records that could not be inserted correctly
-	 */
-	private int failedInserts = 0;
-
-	/**
-	 * The processing directives for the repository we're harvesting
-	 */
-	private List<ProcessingDirective> processingDirectives = null;
+	// TODO: processingDirectives is going to be pulled out of here.  I'm leaving
+	// it here for now so that I don't lose the code, but it definitely should be moved
+	protected List<ProcessingDirective> processingDirectives = null;
 
 	/**
 	 * A list of services to run after this service's processing completes
 	 * The keys are the service IDs and the values are the IDs of the sets
 	 * that service's records should get added to
 	 */
-	private HashMap<Integer, Integer> servicesToRun = new HashMap<Integer, Integer>();
+	protected HashMap<Integer, Integer> servicesToRun = new HashMap<Integer, Integer>();
 
-	/**
-	 * Used to send email reports
-	 */
-	private Emailer mailer = new Emailer();
+	protected Emailer mailer = new Emailer();
 
-	/**
-	 * A list of warnings that occurred during the harvest
-	 */
-	private StringBuilder warnings = new StringBuilder();
+	protected StringBuilder warnings = new StringBuilder();
 
-	/**
-	 * A list of errors that occurred during the harvest
-	 */
-	private StringBuilder errors = new StringBuilder();
+	protected StringBuilder errors = new StringBuilder();
 
-	/**
-	 * A reference to the logger which writes to the HarvestIn log file
-	 */
-	private static Logger log = Logger.getLogger("harvestIn");
-
-	/**
-	 * The number of records added by the current harvest
-	 */
-	private int addedCount = 0;
-
-	/**
-	 * The number of records updated by the current harvest
-	 */
-	private int updatedCount = 0;
-
-	/**
-	 * The number of warnings in the current harvest
-	 */
-	private int warningCount = 0;
-
-	/**
-	 * The number of errors in the current harvest
-	 */
-	private int errorCount = 0;
-
-	/**
-	 * HttpClient used for making OAI requests
-	 */
-	private HttpClient client = null;
-
-	/**
-	 * True iff there have not yet been any records harvested from the provider we're harvesting
-	 */
-	private boolean firstHarvest = false;
-
-	/**
-	 * Count of the records processed yet
-	 */
-	private static int processedRecordCount = 0;
+	protected boolean firstHarvest = false;
+	protected int recordsFound = 0;
+	protected int failedInserts = 0;
+	protected int addedCount = 0;
+	protected int updatedCount = 0;
+	protected int warningCount = 0;
+	protected int errorCount = 0;
+	protected int processedRecordCount = 0;
+	protected int totalRecordCount = 0;
 	
-	/**
-	 * Count of the total records processed
-	 */
-	private static int totalRecordCount = 0;
+	protected long totalPartTime = 0;
+	protected long startPartTime = 0;
+	protected long endPartTime = 0;
 	
-	
-	long totalPartTime = 0;
-	long startPartTime = 0;
-	long endPartTime = 0;
-	
-	long harvestStartTime = 0;
-	long startTime = 0;
-	long endTime = 0;
-	long timeDiff = 0;
+	protected long harvestStartTime = 0;
+	protected long startTime = 0;
+	protected long endTime = 0;
+	protected long timeDiff = 0;
 
+	protected void runHarvestStep(HarvestScheduleStep harvestScheduleStep) throws Exception {
+		try {
+			metadataPrefix = harvestScheduleStep.getFormat().getName();
+
+			// If there was a set, set up the setSpec
+			if(harvestScheduleStep.getSet() != null)
+				setSpec = harvestScheduleStep.getSet().getSetSpec();
+
+			// Set the from field to the time when we last harvested the provider
+			if (harvestScheduleStep.getLastRan() != null) {
+				from = new Date(harvestScheduleStep.getLastRan().getTime());
+			}
+
+			// The time when we started the harvest
+			Date startTime = new Date();
+
+			// Setup the harvest we're currently running
+			currentHarvest = new Harvest();
+			currentHarvest.setStartTime(startTime);
+			currentHarvest.setProvider(provider);
+			currentHarvest.setHarvestSchedule(harvestScheduleStep.getSchedule());
+			getHarvestDAO().insert(currentHarvest);
+
+			String timeout = config.getProperty(Constants.CONFIG_HARVESTER_TIMEOUT_URL);
+			if(timeout != null)
+			{
+				try
+				{
+					timeOutMilliseconds = Integer.parseInt(timeout);
+				}
+				catch(NumberFormatException e)
+				{
+					log.warn("The HarvesterTimeout in the configuration file was not an integer.");
+				}
+			}
+			
+			
+			// Run the harvest
+			HarvestManager harvestManager = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
+			harvestManager.harvest(
+					 baseURL,
+					 metadataPrefix,
+					 setSpec,
+					 harvestScheduleStep);
+
+			// Set the request used to run the harvest
+			currentHarvest = getHarvestDAO().getById(currentHarvest.getId());
+			request = currentHarvest.getRequest();
+
+			// Set the harvest schedule step's last run date to the time when we started the harvest.
+			harvestScheduleStep.setLastRan(startTime);
+			getHarvestScheduleStepDAO().update(harvestScheduleStep, harvestScheduleStep.getSchedule().getId());
+		} // end try(run the harvest)
+		catch (Exception e) {
+
+			log.error("An error occurred while harvesting " + baseURL, e);
+			throw e;
+
+		}
+	}
 	
 	/**
 	 * Creates a Harvester that runs a given harvest schedule step and records the results
@@ -260,7 +197,7 @@ public class HarvestManager extends BaseManager {
 
 	public void kill() {
 		log.debug("HarvestManager.kill() called");
-		killed = true;
+		status = Status.KILLED;
 	}
 
 	public void harvest(String baseURL, String metadataPrefix, String setSpec,
@@ -272,10 +209,8 @@ public class HarvestManager extends BaseManager {
 			// Create a Harvester and use it to run the harvest
 			setup(scheduleStep, currentHarvest);
 
-			// Update the status of the harvest schedule
-			//runningHarvester.persistStatus(Constants.STATUS_SERVICE_RUNNING);
-			
-			//BEGINNING_OF_ORIG_doHarvest_METHOD
+			// Update the Status of the harvest schedule
+			persistStatus();
 			
 			String errorMsg = null;
 			String request = null;
@@ -292,7 +227,8 @@ public class HarvestManager extends BaseManager {
 				errorCount++;
 	
 				sendReportEmail(errorMsg);
-				persistStatus(Constants.STATUS_SERVICE_ERROR);
+				setStatus(Status.ERROR);
+				persistStatus();
 				throw new RuntimeException(errorMsg);
 			}
 
@@ -313,6 +249,8 @@ public class HarvestManager extends BaseManager {
 				// supports according to the validation we just performed
 				schedule.setProvider(getProviderDAO().getById(schedule.getProvider().getId()));
 				provider = schedule.getProvider();
+            	repo = (Repository)config.getBean("Repository");
+            	repo.setName(schedule.getProvider().getName());
 	
 				// Get the format we're to harvest
 				format = getFormatDAO().getByName(metadataPrefix);
@@ -323,8 +261,6 @@ public class HarvestManager extends BaseManager {
 	
 					LogWriter.addError(schedule.getProvider().getLogFileName(), errorMsg);
 					errorCount++;
-	
-					loggedException = true;
 	
 					sendReportEmail(errorMsg);
 	
@@ -338,8 +274,6 @@ public class HarvestManager extends BaseManager {
 					LogWriter.addError(schedule.getProvider().getLogFileName(), errorMsg);
 					errorCount++;
 	
-					loggedException = true;
-	
 					sendReportEmail(errorMsg);
 	
 					throw new RuntimeException(errorMsg);
@@ -350,15 +284,14 @@ public class HarvestManager extends BaseManager {
 				LogWriter.addError(schedule.getProvider().getLogFileName(), e.getMessage());
 				errorCount++;
 	
-				loggedException = true;
-	
 				sendReportEmail(e.getMessage());
-				persistStatus(Constants.STATUS_SERVICE_ERROR);
-				throw e;
+				setStatus(Status.ERROR);
+				persistStatus();
+				getUtil().throwIt(e);
 			}
 	
 			try {
-				killed = false;
+				setStatus(Status.RUNNING);
 	
 				String verb = "ListRecords";
 				String resumption = null;
@@ -370,8 +303,6 @@ public class HarvestManager extends BaseManager {
 	
 					LogWriter.addError(schedule.getProvider().getLogFileName(), errorMsg);
 					errorCount++;
-	
-					loggedException = true;
 	
 					sendReportEmail(errorMsg);
 	
@@ -403,10 +334,10 @@ public class HarvestManager extends BaseManager {
 						//TODO check harvest schedule
 						Date from = scheduleStep.getLastRan();
 						if (from != null) {
-							request += "&from=" + formatDate(granularity, from);						
+							request += "&from=" + UTC_FORMATTER.print(from.getTime());						
 						}
 	
-						request += "&until=" + formatDate(granularity, startDate);
+						request += "&until=" + UTC_FORMATTER.print(startDate.getTime());
 					} else {
 						// Try to encode the resumption token to include it in the URL.
 						// Don't worry if encoding it failed because the OAI request may work anyway
@@ -455,125 +386,42 @@ public class HarvestManager extends BaseManager {
 				if (recordService instanceof DBRecordService) {
 					((DBRecordService)recordService).commit(0, true);
 				}
-			} // end try(run the harvest)
-			catch (Hexception he)
-			{
-				if(!killed)
-					persistStatus(Constants.STATUS_SERVICE_ERROR);
-				
-				log.error("A Hexeption occurred while harvesting " + baseURL, he);
-	
-				// Log the error for the user and send them a report email if we didn't already
-				if(!loggedException)
-				{
-					LogWriter.addError(schedule.getProvider().getLogFileName(), "An internal error occurred while executing the harvest: " + he.getMessage());
-					errorCount++;
-	
-					sendReportEmail("An internal error occurred while executing the harvest.");
-				} // end if(we didn't already log the error)
-	
-	
-				// Throw the Exception so the calling code knows something went wrong
-				throw new Hexception(he.getMessage() + "\n, request was " + request);
-			} // end catch(Hexception)
-			catch (OAIErrorException oaie)
-			{
-				if(oaie.getOAIErrorCode().contains("noRecordsMatch"))
-					return;
-	
-				log.error("An OAIErrorExeption occurred while harvesting " + baseURL, oaie);
-	
-				if(!killed)
-					persistStatus(Constants.STATUS_SERVICE_ERROR);
-	
-				// Log the error for the user and send them a report email
-				LogWriter.addError(schedule.getProvider().getLogFileName(), "The OAI provider returned the following error: " + oaie.getOAIErrorCode() + "," + oaie.getOAIErrorMessage());
-				errorCount++;
-	
-				sendReportEmail("The OAI provider returned the following error: " + oaie.getOAIErrorCode() + ", " + oaie.getOAIErrorMessage());
-	
-				// Throw the Exception so the calling code knows something went wrong
-				throw new OAIErrorException(oaie.getOAIErrorCode(), oaie.getOAIErrorMessage());
-			} // end catch(OAIErrorException)
-			catch (Throwable e)
-			{
-				if(!killed)
-					persistStatus(Constants.STATUS_SERVICE_ERROR);
+			} catch (Throwable e) {
+				if(!isKilled())
+					setStatus(Status.ERROR);
+					persistStatus();
 	
 				log.error("An error occurred while harvesting " + baseURL, e);
 	
 				LogWriter.addError(schedule.getProvider().getLogFileName(), "An internal error occurred while executing the harvest: " + e.getMessage());
 				errorCount++;
 	
-	
 				// Throw the error so the calling code knows something went wrong
-				throw new Hexception("Internal harvester error: " + e);
+				throw new RuntimeException("Internal harvester error: " + e);
 	
-			} // end catch(Throwable)
-			finally
-			{
-				
-				if(killed)
-					persistStatus(Constants.STATUS_SERVICE_CANCELED);
-				
-				// Process the records we harvested
-				try
-				{
-					// Write the next XC ID for raw Records
-					getXcIdentifierForFrbrElementDAO().writeNextXcId(XcIdentifierForFrbrElementDAO.ELEMENT_ID_RECORD);
-	
-					// Reopen the reader so it can see the record inputs we inserted for this harvest
-					TimingLogger.log("before commit to solr");
-					getSolrIndexManager().commitIndex();
-					TimingLogger.log("committed to solr");
-					
-					endTime = new Date().getTime();
-	    			timeDiff = endTime - startTime;
-	            	LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Indexed " + recordsFound + " records so far. Finished commiting to index. Time taken = " + (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " + (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " + (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  ");
-	            	timeDiff = endTime - harvestStartTime;
-	            	LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Total time taken for harvest = " + (timeDiff / (1000*60*60)) + "hrs  " + ((timeDiff % (1000*60*60)) / (1000*60)) + "mins  " + (((timeDiff % (1000*60*60)) % (1000*60)) / 1000) + "sec  " + (((timeDiff % (1000*60*60)) % (1000*60)) % 1000) + "ms  ");
-	
-	    			
-	
-				} // end try(schedule the services that the records triggered)
-				catch(IndexException e)
-				{
-					persistStatus(Constants.STATUS_SERVICE_ERROR);
-					
-					log.error("An error occurred while managing the Index", e);
-	
-					LogWriter.addError(schedule.getProvider().getLogFileName(), "An internal error occurred while managing the Index.");
-					errorCount++;
-				} // end catch(IOException)
-			} // end finally(reopen the index and schedule the triggered services)
+			} finally {
+				if (isKilled()) {
+					persistStatus();
+				}
+			}
 			
 			//END_OF_ORIG_doHarvest_METHOD
 			
-			log.info("Records harvested " + runningHarvester.recordsFound + ", failed inserts " + runningHarvester.failedInserts);
+			log.info("Records harvested " + recordsFound + ", failed inserts " + failedInserts);
 	
 	
-			LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL + ", " + runningHarvester.recordsFound + " new records were returned by the OAI provider.");
+			LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL + ", " + recordsFound + " new records were returned by the OAI provider.");
 	
 			// Report the number of records which could not be added to the index due to an error
-			if(runningHarvester.failedInserts > 0)
+			if(failedInserts > 0)
 			{
-				LogWriter.addWarning(scheduleStep.getSchedule().getProvider().getLogFileName(), runningHarvester.failedInserts + " records were not able to be added or updated in the index.");
-				runningHarvester.warningCount++;
+				LogWriter.addWarning(scheduleStep.getSchedule().getProvider().getLogFileName(), failedInserts + " records were not able to be added or updated in the index.");
+				warningCount++;
 			}
 	
 			// Send an Email report on the results of the harvest TODO
-			runningHarvester.sendReportEmail(null);
-		}
-		catch (Hexception e) {
-	
-			throw e;
-		}
-		catch (OAIErrorException e) {
-			throw e;
-			
-		}
-		catch(DatabaseConfigException e)
-		{
+			sendReportEmail(null);
+		} catch(DatabaseConfigException e) {
 			log.error("Unable to connect to the database with the parameters defined in the configuration file.", e);
 		}
 		finally // Update the error and warning count for the provider
@@ -581,15 +429,15 @@ public class HarvestManager extends BaseManager {
 			try
 			{
 				// Load the provider again in case it was updated during the harvest
-				Provider provider = runningHarvester.getProviderDAO().getById(scheduleStep.getSchedule().getProvider().getId());
+				Provider provider = getProviderDAO().getById(scheduleStep.getSchedule().getProvider().getId());
 	
 				// Increase the warning and error counts as appropriate, then update the provider
-				provider.setWarnings(provider.getWarnings() + runningHarvester.warningCount);
-				provider.setErrors(provider.getErrors() + runningHarvester.errorCount);
-				provider.setRecordsAdded(provider.getRecordsAdded() + runningHarvester.addedCount);
-				provider.setRecordsReplaced(provider.getRecordsReplaced() + runningHarvester.updatedCount);
+				provider.setWarnings(provider.getWarnings() + warningCount);
+				provider.setErrors(provider.getErrors() + errorCount);
+				provider.setRecordsAdded(provider.getRecordsAdded() + addedCount);
+				provider.setRecordsReplaced(provider.getRecordsReplaced() + updatedCount);
 	
-				runningHarvester.getProviderDAO().update(provider);
+				getProviderDAO().update(provider);
 			}
 			catch (DataException e)
 			{
@@ -598,6 +446,7 @@ public class HarvestManager extends BaseManager {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	protected String parseRecords(String prefix, Document doc, String baseURL) {
 		
 		String resumption = null;
@@ -633,7 +482,6 @@ public class HarvestManager extends BaseManager {
 			// If the response contained the URL, report the error "no records found"
 			if (requestUrlElement != null) {
 				LogWriter.addInfo(schedule.getProvider().getLogFileName(), "The OAI provider did not return any records");
-				loggedException = true;
 				sendReportEmail("The OAI provider did not return any records");
 				// Return null to show that there were no records returned
 				return null;
@@ -643,182 +491,40 @@ public class HarvestManager extends BaseManager {
 			// case report the error as "invalid OAI response"
 			LogWriter.addError(schedule.getProvider().getLogFileName(), "The OAI provider retured an invalid response to the ListRecords request.");
 			errorCount++;
-			loggedException = true;
 			sendReportEmail("The OAI provider retured an invalid response to the ListRecords request.");
 			throw new RuntimeException("The data provider returned an invalid response to the ListRecords request: " + e.getMessage());
 		}
 
-		resTokStartTime = System.currentTimeMillis();
-		log.info("Time taken between placing the request and begining to process the reply " + (resTokStartTime-finishOaiRequest));
-
 		// Loop over all records in the OAI response
-		while (recordEl != null) {
+		List recordsEl = listRecordsEl.getChildren("record");
+		
+		for (Object recordElObj : recordsEl) {
+			recordEl = (Element)recordElObj;
 			TimingLogger.start("parseRecords loop");
 			TimingLogger.start("erl - 1");
 			// Check to see if the service was paused or canceled
 			checkSignal(baseURL);
 
-            // If the schedule is null set the provider_id to 1,
-            // otherwise set it to the provider_id associated with
-            // the provider.
-            int providerId = (schedule == null ? 1 : schedule.getProvider().getId());
-            String oaiIdentifier="";
-            Date oaiDatestamp = null;
-            
-            Element oaiXmlEl = null;
-
-            // Get the identifier and the datestamp from the header
-            Element headerEl = recordEl.getChild("header");
-			Element identifierElement = headerEl.getChild("identifier");
-			Element datestampElement = headerEl.getChild("datestamp");
-			oaiIdentifier = identifierElement.getText();
-
-			String oaiDateString = datestampElement.getText();
-			try {
-				if (oaiDateString != null && oaiDateString.length() > 0) {
-					oaiDateString = oaiDateString.replace('T', ' ');
-					oaiDateString = oaiDateString.replaceFirst("Z", "");
-					oaiDateString = oaiDateString.replaceFirst("z", "");
-					
-					TimingLogger.start("sdf");
-					oaiDatestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(oaiDateString);
-					TimingLogger.stop("sdf");
-				}
-			} catch(ParseException pe) {
-				log.error("Parsing exception occured while converting String " + oaiDateString + " to date" );
-			}
-
-			// Try to insert the record
-			try {
-				// Get the XML from the record
-				Element metadataEl = recordEl.getChild("metadata");
-
-				// If we found the metadata Node, get the OAI XML from it
-				if (metadataEl != null) {
-					if (metadataEl.getChildren() != null) {
-						oaiXmlEl = (Element)metadataEl.getChildren().get(0);
-					} else {
-						throw new RuntimeException("metadata has no children");
-					}	
-				}
-
-				// Get the status of the record
-				String status = headerEl.getAttributeValue("status");
-
-				// Check whether or not the record is deleted
-				boolean deleted = false;
-				if (status != null && status.equalsIgnoreCase("deleted"))
-					deleted = true;
-
-				Record record = new Record();
-				record.setProvider(provider);
-				record.setFormat(format);
-				record.setOaiIdentifier(oaiIdentifier);
-				record.setOaiDatestamp(oaiDatestamp);
-				record.setOaiXmlEl(oaiXmlEl);
-				record.setOaiHeaderEl(headerEl);
-				record.setDeleted(deleted);
-				
-				// Get the sets in which the record appears
-				Element setSpecElement = findSibling(datestampElement, "setSpec");
-				
-				TimingLogger.stop("erl - 1");
-				TimingLogger.start("erl - 2");
-				// Loop over the record's sets and add each to the record BO
-				while (setSpecElement != null)
-				{
-
-					// Check to see if the service was paused or canceled
-					checkSignal(baseURL);
-
-					String setSpec = provider.getName().replace(' ', '-') + ":" + getContent(setSpecElement);
-
-					// Split the set into its components
-					String[] setSpecLevels = setSpec.split(":");
-
-					// This will build the setSpecs to which the record belongs
-					StringBuilder setSpecAtLevel = new StringBuilder();
-
-					// Loop over all levels in the set spec
-					for(String setSpecLevel : setSpecLevels)
-					{
-						// Append the set at the current level to the setSpec at the previous level to
-						// get the setSpec for the current level. Append colons as needed
-						setSpecAtLevel.append(setSpecAtLevel.length() <= 0 ? setSpecLevel : ":" + setSpecLevel);
-
-						String currentSetSpec = setSpecAtLevel.toString();
-						
-						// If the set's already in the index, get it
-						Set set = null;
-						
-						if(setsLoaded.containsKey(currentSetSpec))
-							set = setsLoaded.get(currentSetSpec);
-						else
-						{
-							set = getSetDAO().getBySetSpec(currentSetSpec);
-	
-							// Add the set if there wasn't already one in the database
-							if(set == null)
-							{
-								set = new Set();
-								set.setSetSpec(currentSetSpec);
-								set.setDisplayName(currentSetSpec);
-								set.setIsProviderSet(false);
-								set.setIsRecordSet(true);
-								TimingLogger.start("setDao.insertForProvider");
-								getSetDAO().insertForProvider(set, providerId);
-								TimingLogger.stop("setDao.insertForProvider");
-							} // end if(the set wasn't found)
-							
-							setsLoaded.put(currentSetSpec, set);
-						}
-
-						// Add the set's ID to the list of sets to which the record belongs
-						record.addSet(set);
-					} // end loop over the set levels
-
-					// Get the next setSpec from the OAI response
-					setSpecElement = findSibling(setSpecElement, "setSpec");
-				} // end loop over setSpecs for the record
-
-				// Set the harvest which harvested the record
+            try {
+            	TimingLogger.start("getRecordService().parse(recordEl)");
+            	Record record = getRecordService().parse(recordEl, schedule.getProvider());
+            	TimingLogger.stop("getRecordService().parse(recordEl)");
 				record.setHarvest(currentHarvest);
 				
-				TimingLogger.stop("erl - 2");
-				TimingLogger.start("erl - 3");
 				// If the provider has been harvested before, check whether or not this
 				// record already exists in the database
-				Record oldRecord = (firstHarvest ? null : recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId));
+				// BDA: tell me why I care?
+				//Record oldRecord = (firstHarvest ? null : recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId));
+				
+				repo.addRecord(record);
 
-				// If the current record is a new record, insert it
-				TimingLogger.start("insert record");
-				if(oldRecord == null) {
-					insertNewRecord(record);
-				// Otherwise we've seen the record before.  Update or delete it as appropriate
-				}
-				else
-				{
-					if(deleted) {
-						deleteExistingRecord(oldRecord);
-					} else {
-						updateExistingRecord(record, oldRecord);
-					}
-				} // end else(the record already existed it the index)
 				TimingLogger.stop("erl - 3");
 				TimingLogger.stop("insert record");
 				processedRecordCount++;
-			} // end try(insert the record)
-			catch(Hexception hex){
-				log.error("Hexception occured.", hex);
-				throw hex;
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				failedInserts++;
 				log.error("An error occurred in insertion ", e);
-			} // end catch(Exception)
-
-			recordEl = findSibling(recordEl, "record", "resumptionToken");
+			}
 
             recordsFound++;
             if(recordsFound % 100000 == 0) {
@@ -831,135 +537,22 @@ public class HarvestManager extends BaseManager {
             }
 
             // If the record contained a resumption token, store that resumption token
-			if (recordEl != null && recordEl.getNodeName().equals("resumptionToken"))
-			{
-				resumption = getContent(recordEl);
-				totalRecordCount = Integer.parseInt(recordEl.getAttribute("completeListSize"));
+            resumption = recordEl.getChildText("resumptionToken");
+			if (!StringUtils.isEmpty(resumption)) {
+				totalRecordCount = Integer.parseInt(recordEl.getAttributeValue("completeListSize"));
 				
 				log.debug("The resumption string is " + resumption);
-				
-				
-				if (resumption.length() == 0)
-					resumption = null;
-
 				break;
-			} // end if(record contained a resumptionToken)
+			} else {
+				resumption = null;
+			}
 			TimingLogger.stop("extractRecords loop");
 			
-		} // end loop over record elements
+		}
 
-		resTokEndTime = System.currentTimeMillis();
-
-		log.info("Time to clear the resumption token " + (resTokEndTime - resTokStartTime));
-		insertRecordsTime += (resTokEndTime - resTokStartTime);
-		log.info("Total time to clear resumption tokens " + insertRecordsTime);
 		return resumption;
-	} // end method extractRecords(String, Document, String)
+	}
 
-	/**
-	 * Inserts a record in the Lucene index and sets up RecordInput values
-	 * for any processing directives the record matched so the appropriate
-	 * services process the record
-	 *
-	 * @param record The record to insert
-	 */
-	private void insertNewRecord(Record record)
-	{
-		try
-		{
-			// Run the processing directives against the record we're inserting
-			TimingLogger.start("checkProcessingDirectives");
-			checkProcessingDirectives(record);
-			TimingLogger.stop("checkProcessingDirectives");
-			
-			if(!recordService.insert(record))
-				log.error("Failed to insert the new record with the OAI Identifier " + record.getOaiIdentifier() + ".");
-			else
-				addedCount++;
-		} // end try(insert the record)
-		catch (DataException e)
-		{
-			failedInserts++;
-			log.error("An exception occurred while inserting the record into the Lucene index.", e);
-		} // end catch(DataException)
-		catch (IndexException ie)
-		{
-			failedInserts++;
-			log.error("An exception occurred while inserting the record into the Lucene index.", ie);
-		}
-	} // end method insertNewRecord(Record)
-
-	/**
-	 * Updates a record in the Lucene index and sets up RecordInput values
-	 * for any processing directives the record matched so the appropriate
-	 * services reprocess the record after the update
-	 *
-	 * @param newRecord The record as it should look after the update (the record ID is not set)
-	 * @param oldRecord The record in the Lucene index which needs to be updated
-	 */
-	private void updateExistingRecord(Record newRecord, Record oldRecord)
-	{
-		try
-		{
-			// Set the new record's ID to the old record's ID so when we call update()
-			// on the new record it will update the correct record in the Lucene index
-			newRecord.setId(oldRecord.getId());
-			newRecord.setCreatedAt(oldRecord.getCreatedAt());
-			newRecord.setUpdatedAt(new Date());
-
-			// Run the processing directives against the record we're updating
-			checkProcessingDirectives(newRecord);
-
-			if(!recordService.update(newRecord))
-				log.error("The update failed for the record with ID " + newRecord.getId() + ".");
-			else
-				updatedCount++;
-		} // end try(update the record)
-		catch (DataException e)
-		{
-			failedInserts++;
-			log.error("An exception occurred while updating the record into the Lucene index.", e);
-		} // end catch(DataException)
-		catch (IndexException ie)
-		{
-			failedInserts++;
-			log.error("An exception occurred while updating the record into the Lucene index.", ie);
-		}
-	} // end method updateExistingRecord(Record, Record)
-
-	/**
-	 * Deletes a record in the Lucene index and sets up RecordInput values
-	 * for any processing directives the record matched so the appropriate
-	 * services reprocess the record after the delete
-	 *
-	 * @param deleteMe The record to delete
-	 */
-	private void deleteExistingRecord(Record deleteMe)
-	{
-		try
-		{
-			deleteMe.setDeleted(true);
-			deleteMe.setUpdatedAt(new Date());
-
-			// Run the processing directives against the record we're deleting
-			checkProcessingDirectives(deleteMe);
-
-			if(!recordService.update(deleteMe))
-				log.error("Failed to delete the new record with the ID " + deleteMe.getId() + ".");
-			else
-				updatedCount++;
-		} // end try(delete the record)
-		catch (DataException e)
-		{
-			failedInserts++;
-			log.error("An exception occurred while deleting the record from the Lucene index.", e);
-		} // end catch(DataException)
-		catch (IndexException ie)
-		{
-			failedInserts++;
-			log.error("An exception occurred while deleting the record into the Lucene index.", ie);
-		}
-	} // end method deleteExistingRecord(Record)
 
 	/**
 	 * Runs the processing directives for this harvest against the record.  For all matching
@@ -1077,7 +670,7 @@ public class HarvestManager extends BaseManager {
 				}
 				
 			} 
-			if (runningHarvester.recordsFound == 0) {
+			if (recordsFound == 0) {
 				body.append("There are no records available for harvest. \n");
 			}
 			
@@ -1092,281 +685,19 @@ public class HarvestManager extends BaseManager {
 		} else {
 			return false;
 		}
-	} // end method sendReportEmail
-		
-
-	/**
-	 * Retrieves an OAI XML document via http and parses the XML.
-	 *
-	 * @param request The http request, e.g., "http://www.x.com/..."
-	 * @return The doc value
-	 * @exception Hexception If an error occurs
-	 */
-	private Document getDoc(String request)throws Hexception
-	{
-		if(log.isInfoEnabled())
-			log.info("Sending the OAI request: " + request);
-
-		Document doc = null;
-
-		GetMethod getOaiResponse = null;
-
-		try
-		{
-			int statusCode = 0; // The status code in the HTTP response
-
-			startOaiRequest = System.currentTimeMillis();
-
-			TimingLogger.start("http sent and received");
-			synchronized(client)
-			{
-				// Instantiate a GET HTTP method to get the Voyager "first" page
-				
-				getOaiResponse = new GetMethod(request);
-
-				// Execute the get method to get the Voyager "first" page
-				statusCode = client.executeMethod(getOaiResponse);
-			}
-
-	        // If the get was successful (200 is the status code for success)
-	        if(statusCode == 200)
-	        {
-	        	InputStream istm = getOaiResponse.getResponseBodyAsStream();
-	        	TimingLogger.stop("http sent and received");
-
-	        	/*
-	        	String line = null;
-	        	StringBuilder sb = new StringBuilder();
-	        	BufferedReader reader = new BufferedReader(new InputStreamReader(istm, "UTF-8"));
-        	    while ((line = reader.readLine()) != null) {
-        	        sb.append(line).append("\n");
-        	    }
-        	    */
-	        	//System.out.println(sb.toString());
-	        	
-	        	finishOaiRequest = System.currentTimeMillis();
-	        	
-
-	            log.info("Time taken to get a response from the server " + (finishOaiRequest-startOaiRequest));
-	            oaiRepositoryTime += (finishOaiRequest-startOaiRequest);
-	            log.info("Total time taken to get a response from the server " + oaiRepositoryTime);
-
-				DocumentBuilderFactory docfactory = DocumentBuilderFactory.newInstance();
-				docfactory.setCoalescing(true);
-				docfactory.setExpandEntityReferences(true);
-				docfactory.setIgnoringComments(true);
-				docfactory.setNamespaceAware(true);
-
-				// We must set validation false since jdk1.4 parser
-				// doesn't know about schemas.
-				docfactory.setValidating(false);
-
-				// Ignore whitespace doesn't work unless setValidating(true),
-				// according to javadocs.
-				docfactory.setIgnoringElementContentWhitespace(false);
-
-				DocumentBuilder docbuilder = docfactory.newDocumentBuilder();
-
-				xmlerrors = "";
-				xmlwarnings = "";
-				docbuilder.setErrorHandler(this);
-				TimingLogger.start("parse");
-				doc = docbuilder.parse(istm);
-				istm.close();
-				TimingLogger.stop("parse");
-
-				if (xmlerrors.length() > 0 || xmlwarnings.length() > 0)
-				{
-					String msg = "XML validation failed.\n";
-
-					if (xmlerrors.length() > 0)
-					{
-						msg += "Errors:\n" + xmlerrors;
-						LogWriter.addError(schedule.getProvider().getLogFileName(), "The OAI provider's response had the following XML errors:\n" + xmlerrors);
-						errorCount++;
-					} // end if(error parsing the response)
-					if (xmlwarnings.length() > 0)
-					{
-						msg += "Warnings:\n" + xmlwarnings;
-						LogWriter.addWarning(schedule.getProvider().getLogFileName(), "The OAI provider's response had the following XML warnings:\n" + xmlwarnings);
-						warningCount++;
-					} // end if(warning parsing the response)
-
-					throw new Hexception(msg);
-				} // end if(problem parsing the responses)
-	        } // end if(status code indicates success)
-	        else
-	        {
-	        	String msg = "Error getting the HTML document, the HTTP status code was " + statusCode;
-
-	        	log.error(msg);
-
-	        	LogWriter.addError(schedule.getProvider().getLogFileName(), msg);
-				errorCount++;
-
-				loggedException = true;
-
-				sendReportEmail(msg);
-
-				throw new Hexception(msg);
-	        }
-		} // end try(place the HTTP request)
-		catch (Exception exc)
-		{
-			log.error("Error getting the HTML document.", exc);
-
-			String msg = "";
-
-			if (exc.getMessage().matches(".*respcode.*"))
-				msg = "The request for data resulted in an invalid response from the provider. The baseURL indicated may be incorrect or the service may be unavailable. HTTP response: " + exc.getMessage();
-			else if(exc.getMessage().contains("The markup in the document following the root element must be well-formed"))
-				msg = "The OAI repository did not return valid XML, so it could not be harvested.";
-			else if(exc.getMessage().contains("Read timed out"))
-				msg = "The request for data timed out.";
-			else
-				msg = "The request for data resulted in an invalid response from the provider. Error: " + exc.getMessage();
-
-			LogWriter.addError(schedule.getProvider().getLogFileName(), msg);
-			errorCount++;
-
-			loggedException = true;
-
-			sendReportEmail(msg);
-
-			throw new Hexception(msg);
-		} // end catch(Exception)
-		return doc;
-	} // end method getDoc(String)
-
-	/**
-	 *  Formats a date as specified in section 3.3 of http://www.openarchives.org/OAI/2.0/openarchivesprotocol.htm.
-	 *  <p>
-	 *
-	 *  If granularity is GRAN_DAY, the format is "yyyy-MM-dd". If granularity is GRAN_SECOND, the format is
-	 *  "yyyy-MM-ddTHH:mm:ssZ".
-	 *
-	 * @param granularity GRAN_DAY or GRAN_SECOND
-	 * @param dt The Date
-	 * @return An OAI datestamp
-	 */
-	private String formatDate(int granularity, Date dt)
-	{
-		TimingLogger.start("formatDate");
-		SimpleDateFormat sdf = null;
-
-		if (granularity == ValidateRepository.GRANULARITY_SECOND)
-		{
-			sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-			sdf.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
-		} // end if(second granularity is used)
-		else
-			sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-		String res = sdf.format(dt);
-
-		TimingLogger.stop("formatDate");
-		return res;
-	} // end method formatDate(int, Date)
-
-	/**
-	 * Creates a String from an XML node
-	 *
-	 * @param node The node to serialize
-	 * @return The node in String form
-	 */
-	private String serialize(Node node)
-	{
-		TimingLogger.start("serialize");
-		try
-		{
-			OutputFormat format = new OutputFormat();
-			StringWriter result = new StringWriter();
-			XMLSerializer serializer = new XMLSerializer(result, format);
-	        switch (node.getNodeType())
-	        {
-	        	case Node.DOCUMENT_NODE:
-	               serializer.serialize((Document) node);
-	               break;
-	            case Node.ELEMENT_NODE:
-	               serializer.serialize((Element) node);
-	               break;
-	            case Node.DOCUMENT_FRAGMENT_NODE:
-	               serializer.serialize((DocumentFragment) node);
-	               break;
-	         } // end switch on node type
-
-	        return result.toString();
-	    } // end try(serialize the record)
-	    catch (Exception e)
-	    {
-	        log.error("Error: ", e);
-	        return null;
-	    } finally {
-	    	TimingLogger.stop("serialize");
-	    }
-	} // end method serialize(Node)
-
-	/**
-	 * Handles fatal errors. Part of ErrorHandler interface.
-	 *
-	 * @param  exc  The Exception thrown
-	 */
-	public void fatalError(SAXParseException exc)
-	{
-		xmlerrors += exc;
-	} // end method fatalError(SAXParseException)
-
-	/**
-	 * Handles errors. Part of ErrorHandler interface.
-	 *
-	 * @param  exc  The Exception thrown
-	 */
-	public void error(SAXParseException exc)
-	{
-		xmlerrors += exc;
-	} // end method error(SAXParseException)
-
-	/**
-	 * Handles warnings. Part of ErrorHandler interface.
-	 *
-	 * @param  exc  The Exception thrown
-	 */
-	public void warning(SAXParseException exc)
-	{
-		xmlwarnings += exc;
-	} // end method warning(SAXParseException)
-
-	/**
-	 * Gets the reference to the current running harvester
-	 * @return The reference to the current running harvester
-	 */
-	public static Harvester getRunningHarvester() {
-		return runningHarvester;
+	}
+	
+	public Status getStatus() {
+		return status;
 	}
 
-	/**
-	 * Gets the pause status of the harvester.
-	 */
-	public boolean isPaused() {
-		return isPaused;
+	public void setStatus(Status Status) {
+		this.status = Status;
 	}
 
-	/**
-	 * Sets the pause status of the harvester.
-	 */
-	public void setPaused(boolean isPaused)
-	{
-		this.isPaused = isPaused;
-	}
-
-	/**
-	 * Logs the status of the harvest to the database
-	 * @throws DataException
-	 */
-	protected void persistStatus(String status)
-	{
-		log.info("Changing the status to " + status);
-		schedule.setStatus(status);
+	protected void persistStatus() {
+		log.info("Changing the Status to " + status);
+		schedule.setStatus(getStatus().name());
 		try {
 			getHarvestScheduleDAO().update(schedule, false);
 		} catch (DataException e) {
@@ -1379,12 +710,12 @@ public class HarvestManager extends BaseManager {
 	 * the processing of records is stopped or else if paused,
 	 * then waits until it receives a resume or cancel signal
 	 */
-	private void checkSignal(String baseURL) {
-		if(isPaused) {
+	protected void checkSignal(String baseURL) {
+		if (isPaused()) {
 			// Update the status of the harvest schedule
-			persistStatus(Constants.STATUS_SERVICE_PAUSED);
+			persistStatus();
 
-			while(isPaused && !killed) {
+			while (isPaused() && !isKilled()) {
 				try {
 					log.info("Harvester Paused. Sleeping for 3 secs.");
 					Thread.sleep(3000);
@@ -1392,18 +723,17 @@ public class HarvestManager extends BaseManager {
 					log.info("Harvester Resumed.");
 				}
 			}
-			if (!killed) {
+			if (!isKilled()) {
 				// Harvester is resumed while paused
 				LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been resumed.");
 
 				// Update the status of the harvest schedule
-				persistStatus(Constants.STATUS_SERVICE_RUNNING);				
+				persistStatus();
 			}
 		}
 			
-		if (killed) {
+		if (isKilled()) {
 			LogWriter.addInfo(schedule.getProvider().getLogFileName(), "Harvest of " + baseURL + " has been manually terminated.");
-			loggedException = true;
 			sendReportEmail("Harvest of " + baseURL + " has been manually terminated.");
 			throw new RuntimeException("Harvest received kill signal");
 		}
@@ -1415,65 +745,35 @@ public class HarvestManager extends BaseManager {
 	public Provider getProvider() {
 		return provider;
 	}
-
-	/**
-	 * Gets the status of the job
-	 */
-	public String getHarvesterStatus(){
-		if (killed)
-			return Constants.STATUS_SERVICE_CANCELED;
-		else if (isPaused)
-			return Constants.STATUS_SERVICE_PAUSED;
-		else if (runningHarvester != null)
-			return Constants.STATUS_SERVICE_RUNNING;
-		else
-			return Constants.STATUS_SERVICE_NOT_RUNNING;
-	}
 	
-	/**
-	 * Gets the Processed record count
-	 * @return
-	 */
 	public int getProcessedRecordCount() {
-		
 		return processedRecordCount;
 	}
 
-	/**
-	 * Reset the Processed record count
-	 * @return
-	 */
-	public static void resetProcessedRecordCount() {
-		
+	public void resetProcessedRecordCount() {
 		processedRecordCount = 0;
 	}
 
-	/**
-	 * Gets the total record count
-	 * @return
-	 */
 	public int getTotalRecordCount() {
-		
 		return  totalRecordCount;
 	}
-	
-	/**
-	 * Reset the total record count
-	 * @return
-	 */
-	public static void resetTotalRecordCount() {
-		
+
+	public void resetTotalRecordCount() {
 		totalRecordCount = 0;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public boolean isKilled() {
-		return killed;
+		return Status.KILLED.equals(getStatus());
 	}
 	
+	public boolean isPaused() {
+		return Status.PAUSED.equals(getStatus());
+	}
+	
+	public boolean isRunning() {
+		return Status.RUNNING.equals(getStatus());
+	}
+
 	public RecordService getRecordService() {
 		return recordService;
 	}
@@ -1482,4 +782,4 @@ public class HarvestManager extends BaseManager {
 		this.recordService = recordService;
 	}
 
-} // end class Harvester
+}

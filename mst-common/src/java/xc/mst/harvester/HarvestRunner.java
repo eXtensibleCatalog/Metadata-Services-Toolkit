@@ -18,10 +18,12 @@ import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.harvest.HarvestScheduleStep;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseManager;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
 /**
@@ -110,7 +112,7 @@ public class HarvestRunner extends BaseManager
 	 * @throws Hexception If a serious error occurred which prevented the harvest from being completed
 	 * @throws DatabaseConfigException
 	 */
-	public void setScheduleId(int harvestScheduleId) throws OAIErrorException, Hexception, DatabaseConfigException
+	public void setScheduleId(int harvestScheduleId) throws DatabaseConfigException
 	{
 		// Set the parameters for the harvest based on the harvest schedule step ID
 		harvestSchedule = getHarvestScheduleDAO().getById(harvestScheduleId);
@@ -126,7 +128,7 @@ public class HarvestRunner extends BaseManager
 
 			log.info("Found "+ getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId()).size() + " steps.");
 			
-			harvestSchedule.setStatus(Constants.STATUS_SERVICE_RUNNING);
+			harvestSchedule.setStatus(Status.RUNNING.name());
 			getHarvestScheduleDAO().update(harvestSchedule, false);
 
 			
@@ -173,63 +175,16 @@ public class HarvestRunner extends BaseManager
 			getProviderDAO().update(provider);
 
 			LogWriter.addInfo(provider.getLogFileName(), "Finished harvest of " + baseURL);
-		}
-		catch (Hexception e) 
-		{
-			// If harvest is aborted it throws Hexception. So in catch block set harvest end time
-			try
-			{
-				
-				harvestSchedule = getHarvestScheduleDAO().getById(harvestSchedule.getId());
-				
-				harvestSchedule.setRequest(requests.toString());
-
-				getHarvestScheduleDAO().update(harvestSchedule, false);
-				
-				// Set the current harvest's end time
-				currentHarvest.setEndTime(new Date());
-				getHarvestDAO().update(currentHarvest);
-
-				// Set the provider's last harvest time
-				provider = getProviderDAO().getById(provider.getId());
-				provider.setLastHarvestEndTime(new Date());
-				getProviderDAO().update(provider);
-
-			}
-			catch(DatabaseConfigException e2)
-			{
-				log.error("Unable to connect to the database with the parameters defined in the configuration file.", e2);
-			}
-			catch(DataException e2)
-			{
-				log.error("An error occurred while deleting the aborted harvest.", e2);
-			}
-			
-			if(e.getMessage().contains("Harvest received kill signal"))
-				log.info("Harvest Aborted!");
-			else
-				log.warn("Harvest failed.");
-		}
-		catch(DatabaseConfigException e)
-		{
+		} catch(DatabaseConfigException e) {
 			log.error("Unable to connect to the database with the parameters defined in the configuration file.", e);
-		}
-		catch(DataException e)
-		{
+		} catch(DataException e) {
 			log.error("An error occurred while updating the harvest schedule's request field.", e);
-		}
-		catch (Exception e) {
-
+		} catch (Exception e) {
 			log.error("An error occurred while harvesting", e);
 		}
 	}
 
-	/**
-	 * Runs the harvest
-	 * @throws Hexception 
-	 */
-	private void runHarvestStep(HarvestScheduleStep harvestScheduleStep) throws Hexception, Exception
-	{
+	protected void runHarvestStep(HarvestScheduleStep harvestScheduleStep) throws Exception {
 		try
 		{
 			metadataPrefix = harvestScheduleStep.getFormat().getName();
@@ -272,7 +227,8 @@ public class HarvestRunner extends BaseManager
 			
 			
 			// Run the harvest
-			Harvester.harvest(
+			HarvestManager harvestManager = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
+			harvestManager.harvest(
 					 baseURL,
 					 metadataPrefix,
 					 setSpec,
@@ -293,8 +249,7 @@ public class HarvestRunner extends BaseManager
 			throw e;
 
 		}
-		// end catch(Exception)
-	} // end method runHarvest()
+	}
 
 	/**
 	 * Gets the request used to start the harvest

@@ -23,6 +23,7 @@ import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseManager;
 import xc.mst.utils.MSTConfiguration;
@@ -40,88 +41,43 @@ import xc.mst.utils.TimingLogger;
  *
  * @author Eric Osisek
  */
-public class Scheduler extends BaseManager implements Runnable
-{
-	/**
-	 * A queue of WorkerThreads that are waiting to run harvests/services
-	 */
-	private static Queue<WorkerThread> waitingJobs = new LinkedList<WorkerThread>();
-
-	/**
-	 * The WorkerThread that is currently running harvests/services
-	 */
-	private static WorkerThread runningJob;
+public class Scheduler extends BaseManager implements Runnable {
+	
+	private final static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+	
+	protected boolean killed = false;
+	
+	protected WorkerThread runningJob;
 	protected Job previousJob = null;
 
-	/**
-	 * Gets the currently running job
-	 */
-	public static WorkerThread getRunningJob() {
+	public void init() {
+		new Thread(this).start();
+	}
+	
+	public WorkerThread getRunningJob() {
 		return runningJob;
 	}
-
-	/**
-	 * Whether or not the scheduler has been killed
-	 */
-	boolean killed = false;
-
-	static
-	{
-		// Abort if we could not find the configuration file.
-		String logConfigFileLocation = MSTConfiguration.getInstance().getProperty(Constants.CONFIG_LOGGER_CONFIG_FILE_LOCATION);
-		if(logConfigFileLocation == null)
-		{
-			System.err.println("The configuration file was invalid or did not exist.");
-			System.exit(1);
-		} // end else
-	} // end static initializer
-
-	/**
-	 * A reference to the logger for this class
-	 */
-	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-	/**
-	 * The Thread's run method.  This checks the database every minute
-	 * for harvests which are scheduled to be run, and invokes the
-	 * harvester on all steps for that schedule.  Steps invoked in this
-	 * manner are queued such that we don't have too many simultaneously
-	 * running harvests or services.
-	 *
-	 * This method also runs MetadataServices when the Harvester or another Service
-	 * matches a processing directive requiring the service to be run.
-	 */
-	public void run()
-	{
+	
+	public void run() {		
+		Map<Integer, String> lastRunDate = new HashMap<Integer, String>();
 		
-		Map<Integer, Long> lastRunDate = new HashMap<Integer, Long>();
-		
-		while(!killed)
-		{
-			// Get the current time
+		while(!killed) {
 			Calendar now = Calendar.getInstance();
 
-			// Get a list of harvest schedules which need to be run now
 			List<HarvestSchedule> schedulesToRun = null;
-
-			// Get the schedules to run
-			try
-			{
+			String thisMinute = ""+now.get(Calendar.HOUR_OF_DAY)+now.get(Calendar.DAY_OF_WEEK)+now.get(Calendar.MINUTE);
+			try {
 				schedulesToRun = getHarvestScheduleDAO().getSchedulesToRun(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.DAY_OF_WEEK), now.get(Calendar.MINUTE));
-			}
-			catch (DatabaseConfigException e1)
-			{
+			} catch (DatabaseConfigException e1) {
 				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
 
 				schedulesToRun = new ArrayList<HarvestSchedule>();
 			}
 
-			// Run each scheduled harvest
-			for(HarvestSchedule scheduleToRun : schedulesToRun)
-			{
+			for(HarvestSchedule scheduleToRun : schedulesToRun) {
 				boolean alreadyRanThisMinute = false;
 				if (lastRunDate.containsKey(scheduleToRun.getId())) {
-					if (System.currentTimeMillis() - lastRunDate.get(scheduleToRun.getId()) < 60000) {
+					if (lastRunDate.get(scheduleToRun.getId()).equals(thisMinute)) {
 						alreadyRanThisMinute = true;
 					}
 				}
@@ -130,8 +86,8 @@ public class Scheduler extends BaseManager implements Runnable
 				//      because the 60 second loop assured that a job would not be started twice.  Instead
 				//      I'll keep track of the last start time for each job.
 				if(!alreadyRanThisMinute &&
-						!scheduleToRun.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) && 
-						!scheduleToRun.getStatus().equals(Constants.STATUS_SERVICE_PAUSED))
+						!scheduleToRun.getStatus().equals(Status.RUNNING) && 
+						!scheduleToRun.getStatus().equals(Status.PAUSED))
 				{
 					if(log.isDebugEnabled())
 						log.debug("Creating a Thread to run HarvestSchedule with id " + scheduleToRun.getId());
@@ -141,7 +97,7 @@ public class Scheduler extends BaseManager implements Runnable
 						Job job = new Job(scheduleToRun, Constants.THREAD_REPOSITORY);
 						job.setOrder(getJobService().getMaxOrder() + 1); 
 						jobService.insertJob(job);
-						lastRunDate.put(scheduleToRun.getId(), System.currentTimeMillis());
+						lastRunDate.put(scheduleToRun.getId(), thisMinute);
 					} catch (DatabaseConfigException dce) {
 						log.error("DatabaseConfig exception occured when ading jobs to database", dce);
 					}
@@ -151,32 +107,21 @@ public class Scheduler extends BaseManager implements Runnable
 			if (runningJob == null || !runningJob.isAlive())
 			{
 				try {
-					// Get next job to run
 					if (previousJob != null) {
 						TimingLogger.log("finished job: "+previousJob.getJobType());
 						TimingLogger.log("runningJob: "+runningJob);
 						TimingLogger.reset();
-					}
-					Job jobToStart = jobService.getNextJobToExecute();
-					previousJob = jobToStart;
+						
+						List<ProcessingDirective> processingDirectives = null;
+						if (previousJob.getHarvestSchedule() != null) { // was harvest
+							processingDirectives = getProcessingDirectiveDAO().getBySourceProviderId(
+									previousJob.getHarvestSchedule().getProvider().getId());
 
-					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
-					if(jobToStart != null)
-					{
-						TimingLogger.reset();
-						TimingLogger.log("starting job: "+jobToStart.getJobType());
-						
-						// Start a new Thread to run the Harvester component for the schedule
-						// BDA_TODO what's next after this job starts?  Stick that in the jobs table.
-						
-						if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-							HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
-							harvestThread.setHarvestScheduleId(jobToStart.getHarvestSchedule().getId());
-							harvestThread.start();
-							runningJob = harvestThread;
-							
-							List<ProcessingDirective> processingDirectives = getProcessingDirectiveDAO().getBySourceProviderId(
-									jobToStart.getHarvestSchedule().getProvider().getId());
+						} else if (previousJob.getService() != null) { // was service
+							processingDirectives = getProcessingDirectiveDAO().getBySourceServiceId(
+									previousJob.getService().getId());
+						}
+						if (processingDirectives != null) {
 							try {
 								for (ProcessingDirective pd : processingDirectives) {
 									Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
@@ -186,6 +131,21 @@ public class Scheduler extends BaseManager implements Runnable
 							} catch (DatabaseConfigException dce) {
 								log.error("DatabaseConfig exception occured when ading jobs to database", dce);
 							}
+						}
+					}
+					Job jobToStart = jobService.getNextJobToExecute();
+					previousJob = jobToStart;
+
+					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
+					if(jobToStart != null) {
+						TimingLogger.reset();
+						TimingLogger.log("starting job: "+jobToStart.getJobType());
+						
+						if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+							HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
+							harvestThread.setHarvestScheduleId(jobToStart.getHarvestSchedule().getId());
+							harvestThread.start();
+							runningJob = harvestThread;
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
 							TimingLogger.log("service : "+jobToStart.getService().getClassName());
 							ServiceWorkerThread serviceThread = new ServiceWorkerThread();
@@ -193,18 +153,6 @@ public class Scheduler extends BaseManager implements Runnable
 							serviceThread.setOutputSetId(jobToStart.getOutputSetId());
 							serviceThread.start();
 							runningJob = serviceThread;
-							
-							List<ProcessingDirective> processingDirectives = getProcessingDirectiveDAO().getBySourceServiceId(
-									jobToStart.getService().getId());
-							try {
-								for (ProcessingDirective pd : processingDirectives) {
-									Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
-									job.setOrder(jobService.getMaxOrder() + 1); 
-									jobService.insertJob(job);	
-								}
-							} catch (DatabaseConfigException dce) {
-								log.error("DatabaseConfig exception occured when ading jobs to database", dce);
-							}
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
 							ServiceReprocessWorkerThread serviceReprocessWorkerThread = new ServiceReprocessWorkerThread();
 							serviceReprocessWorkerThread.setServiceId(jobToStart.getService().getId());
@@ -218,6 +166,7 @@ public class Scheduler extends BaseManager implements Runnable
 						}
 
 						// Delete the job from database once its scheduled to run
+						// BDA - hmmm... perhaps we shouldn't delete it until it completes?
 						jobService.deleteJob(jobToStart);
 					} // end if(the service job queue was empty)
 				} catch(DatabaseConfigException dce) {
@@ -226,23 +175,18 @@ public class Scheduler extends BaseManager implements Runnable
 			}
 
 			// Sleep until the next hour begins
-			try
-			{
+			try {
 				if(log.isDebugEnabled())
 					log.debug("Scheduler Thread sleeping for 1 minute.");
 				Thread.sleep(3 * 1000);
-			} // end try(sleep for 1 minute)
-			catch(InterruptedException e)
-			{
+			} catch(InterruptedException e) {
 				if(log.isDebugEnabled())
 					log.debug("Caught InteruptedException while sleeping in Scheduler Thread.");
-			} // end catch(InterruptedException)
-			catch(Throwable t)
-			{
+			} catch(Throwable t) {
 				log.error("", t);
 			}
-		} // end main loop
-	} // end method run()
+		}
+	}
 
 	/**
 	 * Adds a WorkerThread to the queue of Threads to be run.
@@ -294,4 +238,4 @@ public class Scheduler extends BaseManager implements Runnable
 		runningJob = null;
 	}
 
-} // end class Scheduler
+}

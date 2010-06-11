@@ -56,6 +56,10 @@ public class DefaultRepository extends BaseService implements Repository {
 		this.name = name;
 	}
 
+	public void addRecord(Record record) {
+		getRepositoryDAO().addRecord(name, record);
+	}
+	
 	public void addRecords(List<Record> records) {
 		getRepositoryDAO().addRecords(name, records);
 	}

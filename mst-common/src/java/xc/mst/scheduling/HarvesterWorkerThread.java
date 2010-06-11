@@ -12,8 +12,8 @@ package xc.mst.scheduling;
 import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
+import xc.mst.harvester.HarvestManager;
 import xc.mst.harvester.HarvestRunner;
-import xc.mst.harvester.Harvester;
 import xc.mst.utils.MSTConfiguration;
 
 /**
@@ -21,94 +21,54 @@ import xc.mst.utils.MSTConfiguration;
  *
  * @author Eric Osisek
  */
-public class HarvesterWorkerThread extends WorkerThread
-{
-	/**
-	 * A reference to the logger for this class
-	 */
+public class HarvesterWorkerThread extends WorkerThread {
+
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 	
-	/** Type of thread */
 	public static final String type = Constants.THREAD_REPOSITORY;
+	
+	protected HarvestManager harvestManager = null;
 
-	/**
-	 * The ID of the harvest schedule to run
-	 */
 	private int harvestScheduleId = -1;
 
-	/**
-	 * Sets the ID of the harvest schedule step to be run
-	 *
-	 * @param newId The ID of the harvest schedule step to be run
-	 */
-	
-	public void setHarvestScheduleId(int newId)
-	{
+	public void setHarvestScheduleId(int newId) {
 		harvestScheduleId = newId;
-	} // end method setHarvestScheduleStepId(int)
+	}
 
-	/**
-	 * The Thread's run method.  This starts the harvest specified by the harvest schedule step ID
-	 */
-	public void run()
-	{
-		try
-		{
+	public void run() {
+		try {
 			if(log.isDebugEnabled())
 				log.debug("Invoking the harvester on harvest schedule with ID " + harvestScheduleId + ".");
 
 			// Construct the XC_Harvester object.  This will automatically run the harvester
-			
-			HarvestRunner harvester = (HarvestRunner)MSTConfiguration.getInstance().getBean("HarvestRunner"); 
-			harvester.setScheduleId(harvestScheduleId);
-			harvester.runHarvest();
-		} // end try(run the harvest)
-		catch(Exception e)
-		{
+			harvestManager = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager"); 
+			harvestManager.runHarvest(harvestScheduleId);
+		} catch(Exception e) {
 			log.error("An error occurred while running the harvest schedule with ID " + harvestScheduleId, e);
-		} // end catch(Exception)
-		finally{
+		} finally {
 			Scheduler.setJobCompletion();
 		}
-	} // end method run()
-
-	/**
-	 * Cancels the running harvest service
-	 */
+	}
+	
 	public void cancel() {
-		
-		Harvester.getRunningHarvester().kill();
+		harvestManager.kill();
 		log.debug("Cancelling the Harvest" );
 	}
 
-	/**
-	 * Pauses the execution of the currently running harvest service
-	 */
 	public void pause() {
-		Harvester.getRunningHarvester().setPaused(true);
+		harvestManager.pause();
 		log.debug("Pausing the Harvest" );
 	}
 
-
-	/**
-	 * Resumes the currently paused harvest service
-	 */
 	public void proceed() {
-		Harvester.getRunningHarvester().setPaused(false);
+		harvestManager.proceed();
 		log.debug("Resuming the Harvest" );
 	}
 
-	/**
-	 * Gets the name for the job
-	 */
 	public String getJobName() {
-	
-		return Harvester.getRunningHarvester().getProvider().getName();
+		return harvestManager.getProvider().getName();
 	}
 
-	/**
-	 * Gets the status of the job
-	 */
 	public String getJobStatus() {
 		if (Harvester.getRunningHarvester() != null)
 			return Harvester.getRunningHarvester().getHarvesterStatus();
@@ -116,10 +76,6 @@ public class HarvesterWorkerThread extends WorkerThread
 			return Constants.STATUS_SERVICE_NOT_RUNNING;
 	}
 
-	/**
-	 * Gets the thread type
-	 * @return
-	 */
 	public String getType() {
 		return type;
 	}
@@ -137,4 +93,4 @@ public class HarvesterWorkerThread extends WorkerThread
 		 
 	}
 
-} // end class HarvestWorkerThread
+}
