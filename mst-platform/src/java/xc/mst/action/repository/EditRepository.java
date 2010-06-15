@@ -19,7 +19,6 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.utils.MSTConfiguration;
 
@@ -230,13 +229,6 @@ public class EditRepository extends BaseActionSupport
             log.error(e.getMessage(),e);
             errorType = "error";
             this.addFieldError("dbConfigError","Unable to access the database to get Repository information. There may be problem with database configuration.");
-            return INPUT;
-        }
-        catch(Hexception e)
-        {
-            log.error(e.getMessage(),e);
-            errorType = "error";
-            this.addFieldError("dbConfigError","Unable to validate the repository information");
             return INPUT;
         }
     }

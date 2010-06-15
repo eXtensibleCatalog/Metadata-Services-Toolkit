@@ -55,6 +55,10 @@ public class DefaultRepository extends BaseService implements Repository {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public int getSize() {
+		return getRepositoryDAO().getSize(name);
+	}
 
 	public void addRecord(Record record) {
 		getRepositoryDAO().addRecord(name, record);

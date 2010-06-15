@@ -116,11 +116,6 @@ public class Constants
 	 * Parameter for looking up the location of the logger configuration file from the MST's configuration file
 	 */
 	public static final String CONFIG_LOGGER_CONFIG_FILE_LOCATION = "LoggerConfigFileLocation";
-
-	/**
-	 * Parameter for looking up the harvester's timeout from the configuration file
-	 */
-	public static final String CONFIG_HARVESTER_TIMEOUT_URL = "HarvesterTimeout";
 	
 	/**
 	 * Parameter for looking up the location of the solr configuration

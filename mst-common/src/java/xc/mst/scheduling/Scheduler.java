@@ -12,10 +12,8 @@ package xc.mst.scheduling;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 
 import org.apache.log4j.Logger;
 
@@ -23,9 +21,9 @@ import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.constants.Constants;
-import xc.mst.constants.Status;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.BaseManager;
+import xc.mst.harvester.HarvestManager;
+import xc.mst.manager.BaseService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
@@ -41,7 +39,7 @@ import xc.mst.utils.TimingLogger;
  *
  * @author Eric Osisek
  */
-public class Scheduler extends BaseManager implements Runnable {
+public class Scheduler extends BaseService implements Runnable {
 	
 	private final static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 	
@@ -85,10 +83,7 @@ public class Scheduler extends BaseManager implements Runnable {
 				//      than that so I changed it to loop every 3 seconds.  This added check is necessary
 				//      because the 60 second loop assured that a job would not be started twice.  Instead
 				//      I'll keep track of the last start time for each job.
-				if(!alreadyRanThisMinute &&
-						!scheduleToRun.getStatus().equals(Status.RUNNING) && 
-						!scheduleToRun.getStatus().equals(Status.PAUSED))
-				{
+				if(!alreadyRanThisMinute) {
 					if(log.isDebugEnabled())
 						log.debug("Creating a Thread to run HarvestSchedule with id " + scheduleToRun.getId());
 	
@@ -96,7 +91,7 @@ public class Scheduler extends BaseManager implements Runnable {
 					try {
 						Job job = new Job(scheduleToRun, Constants.THREAD_REPOSITORY);
 						job.setOrder(getJobService().getMaxOrder() + 1); 
-						jobService.insertJob(job);
+						getJobService().insertJob(job);
 						lastRunDate.put(scheduleToRun.getId(), thisMinute);
 					} catch (DatabaseConfigException dce) {
 						log.error("DatabaseConfig exception occured when ading jobs to database", dce);
@@ -125,27 +120,34 @@ public class Scheduler extends BaseManager implements Runnable {
 							try {
 								for (ProcessingDirective pd : processingDirectives) {
 									Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
-									job.setOrder(jobService.getMaxOrder() + 1); 
-									jobService.insertJob(job);	
+									job.setOrder(getJobService().getMaxOrder() + 1); 
+									getJobService().insertJob(job);	
 								}
 							} catch (DatabaseConfigException dce) {
 								log.error("DatabaseConfig exception occured when ading jobs to database", dce);
 							}
 						}
 					}
-					Job jobToStart = jobService.getNextJobToExecute();
+					Job jobToStart = getJobService().getNextJobToExecute();
 					previousJob = jobToStart;
 
 					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
 					if(jobToStart != null) {
+						runningJob = null;
 						TimingLogger.reset();
 						TimingLogger.log("starting job: "+jobToStart.getJobType());
 						
 						if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+							runningJob = new WorkerThread();
+							HarvestManager hm = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
+							hm.setHarvestSchedule(jobToStart.getHarvestSchedule());
+							runningJob.setWorkDelegate(hm);
+							/*
 							HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
 							harvestThread.setHarvestScheduleId(jobToStart.getHarvestSchedule().getId());
 							harvestThread.start();
 							runningJob = harvestThread;
+							*/
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
 							TimingLogger.log("service : "+jobToStart.getService().getClassName());
 							ServiceWorkerThread serviceThread = new ServiceWorkerThread();
@@ -154,10 +156,12 @@ public class Scheduler extends BaseManager implements Runnable {
 							serviceThread.start();
 							runningJob = serviceThread;
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
+							/*
 							ServiceReprocessWorkerThread serviceReprocessWorkerThread = new ServiceReprocessWorkerThread();
 							serviceReprocessWorkerThread.setServiceId(jobToStart.getService().getId());
 							serviceReprocessWorkerThread.start();
 							runningJob = serviceReprocessWorkerThread;
+							*/
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
 							DeleteServiceWorkerThread deleteServiceWorkerThread = new DeleteServiceWorkerThread();
 							deleteServiceWorkerThread.setServiceId(jobToStart.getService().getId());
@@ -165,9 +169,12 @@ public class Scheduler extends BaseManager implements Runnable {
 							runningJob = deleteServiceWorkerThread;
 						}
 
+						if (runningJob != null) {
+							runningJob.start();
+						}
 						// Delete the job from database once its scheduled to run
 						// BDA - hmmm... perhaps we shouldn't delete it until it completes?
-						jobService.deleteJob(jobToStart);
+						getJobService().deleteJob(jobToStart);
 					} // end if(the service job queue was empty)
 				} catch(DatabaseConfigException dce) {
 					log.error("DatabaseConfigException occured when getting job from database", dce);
@@ -187,55 +194,20 @@ public class Scheduler extends BaseManager implements Runnable {
 			}
 		}
 	}
-
-	/**
-	 * Adds a WorkerThread to the queue of Threads to be run.
-	 *
-	 * @param scheduleMe The Thread to be run.
-	 */
-	public static void scheduleThread(WorkerThread scheduleMe)
-	{
-		waitingJobs.add(scheduleMe);
-	} // end method scheduleThread(WorkerThread)
 	
-	/**
-	 * Kills the Scheduling Thread
-	 */
-	public void kill()
-	{
+	public void kill() {
 		killed = true;
-	} // end method kill()
+	}
 
-	/**
-	 * Cancels the currently running service / harvest
-	 */
-	public static void cancelRunningJob(){
-
+	public void cancelRunningJob(){
 		runningJob.cancel();
 	}
 
-	/**
-	 * Pauses the currently running service / harvest
-	 */
-	public static void pauseRunningJob(){
-
+	public void pauseRunningJob(){
 		runningJob.pause();
 	}
-
-	/**
-	 * Resumes the currently running service / harvest
-	 */
-	public static void resumePausedJob(){
-
+	
+	public void resumePausedJob(){
 		runningJob.proceed();
 	}
-
-	/**
-	 * Sets the currentJob reference to null after completion of the job.
-	 */
-	public static void setJobCompletion(){
-		TimingLogger.log("setJobCompletion()");
-		runningJob = null;
-	}
-
 }

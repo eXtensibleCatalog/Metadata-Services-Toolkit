@@ -204,6 +204,7 @@ public class DeleteServiceWorkerThread extends WorkerThread
 		return "Deleting service and its records";
 	}
 
+	/*
 	@Override
 	public String getJobStatus() 
 	{
@@ -232,6 +233,7 @@ public class DeleteServiceWorkerThread extends WorkerThread
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	*/
 
 	public Service getService() {
 		return service;

@@ -12,6 +12,7 @@ package xc.mst.harvester;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.httpclient.HttpException;
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -129,7 +130,7 @@ public class ValidateRepository extends HttpService {
 			throw new RuntimeException(errors.toString());
 	}
 
-	public void checkIdentifyInfo() throws DatabaseConfigException {
+	public void checkIdentifyInfo() throws DatabaseConfigException, HttpException {
 		String request = baseUrl + "?verb=Identify";
 
 		LogWriter.addInfo(provider.getLogFileName(),"Making the OAI Identify request.  Request is " + request);
@@ -209,7 +210,7 @@ public class ValidateRepository extends HttpService {
 	 * @exception OAIErrorException If OAI error was returned by the OAI provider
 	 * @throws DatabaseConfigException 
 	 */
-	public List<Format> checkFormats() throws DatabaseConfigException {
+	public List<Format> checkFormats() throws DatabaseConfigException, HttpException {
 		// Get the formats currently supported by the repository
 		List<Format> currentFormats = getMetadataFormats(baseUrl);
 
@@ -238,7 +239,7 @@ public class ValidateRepository extends HttpService {
 	 * @return The current list of metadata sets supported by the OAI provider
 	 * @throws DatabaseConfigException 
 	 */
-	public List<Set> checkSets() throws DatabaseConfigException {
+	public List<Set> checkSets() throws DatabaseConfigException, HttpException {
 		// Get the sets currently supported by the repository
 		List<Set> currentSets = getSets(baseUrl);
 
@@ -273,7 +274,7 @@ public class ValidateRepository extends HttpService {
 	 * @return A list of metadata prefixes
 	 * @throws DatabaseConfigException 
 	 */
-	private List<Format> getMetadataFormats(String baseURL) throws DatabaseConfigException {
+	private List<Format> getMetadataFormats(String baseURL) throws DatabaseConfigException, HttpException {
 		String request = baseURL + "?verb=ListMetadataFormats";
 
 		if (log.isDebugEnabled())
@@ -341,7 +342,7 @@ public class ValidateRepository extends HttpService {
 	 * @throws DatabaseConfigException 
 	 */
 	@SuppressWarnings("unchecked")
-	private List<Set> getSets(String baseURL) throws DatabaseConfigException
+	private List<Set> getSets(String baseURL) throws DatabaseConfigException, HttpException
 	{
 		String request = baseURL + "?verb=ListSets";
 

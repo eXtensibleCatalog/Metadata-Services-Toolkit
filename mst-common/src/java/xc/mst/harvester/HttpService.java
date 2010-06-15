@@ -11,9 +11,9 @@ package xc.mst.harvester;
 import java.io.InputStream;
 
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 
@@ -31,13 +31,14 @@ public class HttpService extends BaseService {
 	protected HttpClient client = null;
 
 	public HttpService() {
-		HttpClientParams params = new HttpClientParams();
-		int timeOutMilliseconds = Integer.parseInt(config.getProperty("harvest.timeout.ms", this.timeOutMilliseconds+""));
-		params.setSoTimeout(timeOutMilliseconds);
-		client = new HttpClient(params, new MultiThreadedHttpConnectionManager());
+		client = new HttpClient(new MultiThreadedHttpConnectionManager());
+		client.getParams().setParameter("http.socket.timeout", 
+				Integer.parseInt(config.getProperty("harvest.socket.timeout", this.timeOutMilliseconds+"")));
+		client.getParams().setParameter("http.connection.timeout", 
+				Integer.parseInt(config.getProperty("harvest.connection.timeout", this.timeOutMilliseconds+"")));
 	}
 
-	public Document sendRequest(String request) {
+	public Document sendRequest(String request) throws HttpException {
 		if(LOG.isDebugEnabled())
 			LOG.debug("Sending the OAI request: " + request);
 
@@ -45,6 +46,7 @@ public class HttpService extends BaseService {
 		
 		GetMethod getOaiResponse = null;
 		InputStream istm = null;
+		Throwable t = null;
 		
 		try {
 			int statusCode = 0; // The status code in the HTTP response
@@ -65,17 +67,21 @@ public class HttpService extends BaseService {
 	        } else {
 				throw new RuntimeException("The HTTP status code was " + statusCode);
 	        }
-		} catch (Throwable t) {
-        	String msg = "Error getting the HTML document for the request: "+request;
-			LOG.error(msg, t);
+		} catch (Throwable t2) {
+			t = t2;
 		} finally {
 			if (istm != null) {
 				try {
 					istm.close();
-				} catch (Throwable t) {
-					LOG.error("could not close connection.", t);
+				} catch (Throwable t2) {
+					LOG.error("could not close connection.", t2);
 				}
 			}
+		}
+		if (t != null) {
+        	String msg = "Error getting the HTML document for the request: "+request;
+			LOG.error(msg, t);
+			throw new HttpException(msg);
 		}
 		return doc;
 	}

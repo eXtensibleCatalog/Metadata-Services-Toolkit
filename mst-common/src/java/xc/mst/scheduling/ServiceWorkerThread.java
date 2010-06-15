@@ -69,6 +69,7 @@ public class ServiceWorkerThread extends WorkerThread
 	 * The Thread's run method.  This runs the Metadata Service whose service ID
 	 * matches the service ID set on this ServiceWorkerThread.
 	 */
+	/*
 	public void run()
 	{
 		try {
@@ -88,6 +89,7 @@ public class ServiceWorkerThread extends WorkerThread
 			Scheduler.setJobCompletion();
 		}
 	} // end method run()
+	*/
 
 	/**
 	 * Cancels the currently running service
@@ -128,6 +130,7 @@ public class ServiceWorkerThread extends WorkerThread
 	/**
 	 * Gets the status of the job
 	 */
+	/*
 	public String getJobStatus() {
 
 		if (runningService != null)
@@ -136,6 +139,7 @@ public class ServiceWorkerThread extends WorkerThread
 			return Constants.STATUS_SERVICE_NOT_RUNNING;
 
 	}
+	*/
 	
 	/**
 	 * Gets the thread type
@@ -145,6 +149,7 @@ public class ServiceWorkerThread extends WorkerThread
 		return type;
 	}
 
+	/*
 	@Override
 	public int getProcessedRecordCount() {
 	
@@ -156,6 +161,7 @@ public class ServiceWorkerThread extends WorkerThread
 		
 		return runningService.getTotalRecordCount();
 	}	
+	*/
 	
 	public static MetadataService getRunningService(){
 		

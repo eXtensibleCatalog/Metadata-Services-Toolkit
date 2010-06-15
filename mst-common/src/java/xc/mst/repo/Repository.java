@@ -19,6 +19,8 @@ public interface Repository {
 	public String getName();
 	public void setName(String name);
 	
+	public int getSize();
+	
 	public void beginBatch();
 	
 	public void endBatch();

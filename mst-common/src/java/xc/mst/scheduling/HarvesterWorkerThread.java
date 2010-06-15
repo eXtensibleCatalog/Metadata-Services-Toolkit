@@ -9,12 +9,6 @@
 
 package xc.mst.scheduling;
 
-import org.apache.log4j.Logger;
-
-import xc.mst.constants.Constants;
-import xc.mst.harvester.HarvestManager;
-import xc.mst.harvester.HarvestRunner;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * A Thread which runs a harvest
@@ -23,6 +17,7 @@ import xc.mst.utils.MSTConfiguration;
  */
 public class HarvesterWorkerThread extends WorkerThread {
 
+	/*
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 	
 	public static final String type = Constants.THREAD_REPOSITORY;
@@ -92,5 +87,6 @@ public class HarvesterWorkerThread extends WorkerThread {
 		return Harvester.getRunningHarvester().getTotalRecordCount();
 		 
 	}
+	*/
 
 }

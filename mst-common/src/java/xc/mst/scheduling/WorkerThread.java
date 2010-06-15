@@ -9,28 +9,75 @@
 
 package xc.mst.scheduling;
 
-/**
- * An abstract Thread class representing a Job that the Scheduler can run
- *
- * @author Eric Osisek
- */
-public abstract class WorkerThread extends Thread
-{
-	public abstract void run();
+import org.apache.log4j.Logger;
+
+import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
+
+public class WorkerThread extends Thread {
+
+	private static final Logger LOG = Logger.getLogger(Constants.LOGGER_GENERAL);
 	
-	public abstract void cancel();
+	public static final String type = null;
+
+	protected Status status = null;
 	
-	public abstract void pause();
+	protected WorkDelegate workDelegate = null;
 	
-	public abstract void proceed();
+
+	public void setWorkDelegate(WorkDelegate workDelegate) {
+		this.workDelegate = workDelegate;
+	}
+
+	public void run() {
+		try {
+			this.workDelegate.setup();
+			boolean keepGoing = true;
+			while (keepGoing) {
+				LOG.debug("workDelegate.getName(): "+workDelegate.getName());
+				LOG.debug("status: "+status);
+				if (this.status == Status.RUNNING) {
+					keepGoing = this.workDelegate.doSomeWork();
+				} else if (this.status == Status.CANCELED) {
+					this.workDelegate.cancel();
+				} else if (this.status == Status.PAUSED) {
+					sleep(5000);
+				}
+			}
+		} catch(Exception e) {
+			this.status = Status.ERROR;
+		} finally {
+			this.workDelegate.finish();
+			this.status = Status.NOT_RUNNING;
+		}
+	}
 	
-	public abstract String getJobName();
-	
-	public abstract String getJobStatus();
-	
-	public abstract String getType();
-	
-	public abstract int getProcessedRecordCount();
-	
-	public abstract int getTotalRecordCount();
-} // end class WorkerThread
+	public void cancel() {
+		this.status = Status.CANCELED;
+	}
+
+	public void pause() {
+		this.status = Status.PAUSED;
+	}
+
+	public void proceed() {
+		this.status = Status.RUNNING;
+	}
+
+	public String getJobName() {
+		if (this.workDelegate != null) {
+			return this.workDelegate.getName();
+		} else {
+			return "";
+		}
+	}
+
+	public String getJobStatus() {
+		return this.workDelegate != null ? this.workDelegate.getDetailedStatus() : "";
+	}
+
+	public String getType() {
+		return type;
+	}
+
+}

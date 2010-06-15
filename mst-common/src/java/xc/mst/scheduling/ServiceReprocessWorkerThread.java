@@ -200,6 +200,7 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 		return "Deleting old service records and preparing for service reprocess.";
 	}
 
+	/*
 	@Override
 	public String getJobStatus() 
 	{
@@ -240,4 +241,5 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 	public void setServiceId(int serviceId) {
 		this.serviceId = serviceId;
 	}
+	*/
 }

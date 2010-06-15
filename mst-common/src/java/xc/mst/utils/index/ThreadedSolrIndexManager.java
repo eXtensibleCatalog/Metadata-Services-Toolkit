@@ -20,7 +20,6 @@ import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.dao.DataException;
 import xc.mst.manager.IndexException;
-import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 
@@ -166,7 +165,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 				try
 				{
 					getLogDAO().update(logObj);
-					Scheduler.getRunningJob().cancel();
+					getScheduler().getRunningJob().cancel();
 				}
 				catch(DataException e)
 				{

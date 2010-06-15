@@ -65,6 +65,7 @@ import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
 import xc.mst.repo.RepositoryDAO;
+import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 
@@ -443,5 +444,8 @@ public class BaseService {
 	}
 	public MSTSolrServer getMstSolrServer() {
 		return (MSTSolrServer)config.getBean("MSTSolrServer");
+	}
+	public Scheduler getScheduler() {
+		return (Scheduler)config.getBean("Scheduler");
 	}
 }

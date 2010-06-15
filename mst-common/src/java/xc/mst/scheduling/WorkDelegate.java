@@ -10,4 +10,8 @@ public interface WorkDelegate {
 	
 	public void finish();
 	
+	public String getName();
+	
+	public String getDetailedStatus();
+	
 }

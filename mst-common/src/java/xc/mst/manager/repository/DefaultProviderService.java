@@ -21,7 +21,6 @@ import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
 import xc.mst.scheduling.HarvesterWorkerThread;
 import xc.mst.scheduling.ProcessingDirectiveWorkerThread;
-import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 
@@ -89,22 +88,22 @@ public class DefaultProviderService extends BaseService implements ProviderServi
     	// Delete schedule for this repository
     	
     	// Check if any harvest is running 
-        if(Scheduler.getRunningJob()!=null)
+        if(getScheduler().getRunningJob()!=null)
         {
         	// Check if this repository is being harvested 
-        	if (Scheduler.getRunningJob().getType().equals(Constants.THREAD_REPOSITORY)) {
-        		HarvesterWorkerThread harvesterWorkerThread = (HarvesterWorkerThread)Scheduler.getRunningJob();
+        	if (getScheduler().getRunningJob().getType().equals(Constants.THREAD_REPOSITORY)) {
+        		HarvesterWorkerThread harvesterWorkerThread = (HarvesterWorkerThread)getScheduler().getRunningJob();
         		if (harvesterWorkerThread.getJobName().equals(provider.getName())) {
-        			Scheduler.cancelRunningJob();
+        			getScheduler().cancelRunningJob();
         		}
         	}
         	
         	// Check if this repository is being processed by processing directive
-        	if (Scheduler.getRunningJob().getType().equals(Constants.THREAD_PROCESSING_DIRECTIVE)) {
-        		ProcessingDirectiveWorkerThread processingDirectiveWorkerThread = (ProcessingDirectiveWorkerThread)Scheduler.getRunningJob();
+        	if (getScheduler().getRunningJob().getType().equals(Constants.THREAD_PROCESSING_DIRECTIVE)) {
+        		ProcessingDirectiveWorkerThread processingDirectiveWorkerThread = (ProcessingDirectiveWorkerThread)getScheduler().getRunningJob();
         		Provider sourceProvider = processingDirectiveWorkerThread.getProcessingDirective().getSourceProvider();
         		if (sourceProvider != null && sourceProvider.getName().equals(provider.getName())) {
-        			Scheduler.cancelRunningJob();
+        			getScheduler().cancelRunningJob();
         		}
         	}
         }

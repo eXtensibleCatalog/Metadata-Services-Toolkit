@@ -141,6 +141,7 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 		return "Processing Directive";
 	}
 
+	/*
 	@Override
 	public String getJobStatus() 
 	{
@@ -151,7 +152,8 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 		else
 			return Constants.STATUS_SERVICE_RUNNING;
 	}
-
+	 */
+	
 	@Override
 	public String getType() 
 	{
@@ -214,6 +216,7 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 		return processingDirective;
 	}
 
+	/*
 	@Override
 	public int getProcessedRecordCount() {
 		// TODO Auto-generated method stub
@@ -225,4 +228,5 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	*/
 }

@@ -88,6 +88,10 @@ public class RepositoryDAO extends BaseDAO {
 		return " "+getPrefix(repoName)+"."+tableName+" ";
 	}
 	
+	public int getSize(String name) {
+		return this.jdbcTemplate.queryForInt("select count(*) from "+getTableName(name, RECORDS_TABLE));
+	}
+	
 	public void beginBatch() {
 		inBatch = true;
 	}
