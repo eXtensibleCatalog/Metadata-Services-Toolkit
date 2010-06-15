@@ -110,6 +110,11 @@ public abstract class HarvestScheduleDAO extends BaseDAO
 	protected static Set<String> sortableColumns = new HashSet<String>();
 	
 	/**
+	 * The current status of the harvest.
+	 */
+	public final static String COL_STATUS = "status";
+	
+	/**
 	 * The current request of the harvest.
 	 */
 	public final static String COL_REQUEST = "request";
@@ -127,6 +132,7 @@ public abstract class HarvestScheduleDAO extends BaseDAO
 		sortableColumns.add(COL_DAY_OF_WEEK);
 		sortableColumns.add(COL_HOUR);
 		sortableColumns.add(COL_NOTIFY_EMAIL);
+		sortableColumns.add(COL_STATUS);
 		sortableColumns.add(COL_REQUEST);
 	} // end initialization of sortableColumns
 	
