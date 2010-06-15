@@ -75,11 +75,6 @@ public class HarvestSchedule
 	private String notifyEmail = null;
 	
 	/**
-	 * The current status of the harvest.
-	 */
-	private String status = null;
-	
-	/**
 	 * The OAI requests placed when the harvest schedule was run
 	 */
 	private String request = null;
@@ -298,22 +293,6 @@ public class HarvestSchedule
 	{
 		this.notifyEmail = notifyEmail;
 	} // end method setNotifyEmail(String)
-
-	/**
-	 * Gets the current status of the harvest.
-	 * @return The current status of the harvest.
-	 */
-	public String getStatus() {
-		return status;
-	}
-
-	/**
-	 * Sets the current status of the harvest.
-	 * @param status The status of the harvest.
-	 */
-	public void setStatus(String status) {
-		this.status = status;
-	}
 	
 	/**
 	 * Gets the harvest schedule's request

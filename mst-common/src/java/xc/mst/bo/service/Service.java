@@ -15,7 +15,6 @@ import java.util.List;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
-import xc.mst.constants.Constants;
 import xc.mst.services.MetadataService;
 import xc.mst.utils.MSTConfiguration;
 
@@ -117,12 +116,7 @@ public class Service
 	 * The name of the harvest out log file for this service
 	 */
 	private String harvestOutLogFileName = null;
-
-	/**
-	 * The current status of the service.
-	 */
-	private String status = Constants.STATUS_SERVICE_NOT_RUNNING;
-
+	
 	/**
 	 * The version of the service
 	 */
@@ -560,22 +554,6 @@ public class Service
 	{
 		this.harvestOutLogFileName = harvestOutLogFileName;
 	} // end method setHarvestOutLogFileName(String)
-
-	/**
-	 * Gets the current status of the service.
-	 * @return The current status of the service.
-	 */
-	public String getStatus() {
-		return status;
-	}
-
-	/**
-	 * Sets the current status of the service.
-	 * @param status The status of the service.
-	 */
-	public void setStatus(String status) {
-		this.status = status;
-	}
 	
 	/**
 	 * Gets the version of the service

@@ -155,8 +155,6 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_STATUS + " " +
-												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_VERSION + ", " +
 												   COL_DELETED + " " +
 								       "FROM " + SERVICES_TABLE_NAME;
@@ -197,7 +195,6 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setNumberOfHarvests(results.getLong(i++));
 					service.setHarvestOutLastLogReset(results.getDate(i++));
 					service.setHarvestOutLogFileName(results.getString(i++));
-					service.setStatus(results.getString(i++));
 					service.setVersion(results.getString(i++));
 					service.setDeleted(results.getBoolean(i++));
 
@@ -286,8 +283,6 @@ public class DefaultServiceDAO extends ServiceDAO
 										   COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
 										   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 										   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-										   COL_STATUS + " " +
-										   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 										   COL_VERSION + ", " +
 										   COL_DELETED + " " +
 						       "FROM " + SERVICES_TABLE_NAME + " " +
@@ -328,7 +323,6 @@ public class DefaultServiceDAO extends ServiceDAO
 				service.setNumberOfHarvests(results.getLong(i++));
 				service.setHarvestOutLastLogReset(results.getDate(i++));
 				service.setHarvestOutLogFileName(results.getString(i++));
-				service.setStatus(results.getString(i++));
 				service.setVersion(results.getString(i++));
 				service.setDeleted(results.getBoolean(i++));
 
@@ -408,7 +402,6 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_STATUS + ", " +
 												   COL_VERSION + ", " +
 												   COL_DELETED + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
@@ -453,7 +446,6 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setNumberOfHarvests(results.getLong(i++));
 					service.setHarvestOutLastLogReset(results.getDate(i++));
 					service.setHarvestOutLogFileName(results.getString(i++));
-					service.setStatus(results.getString(i++));
 					service.setVersion(results.getString(i++));
 					service.setDeleted(results.getBoolean(i++));
 
@@ -531,7 +523,6 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_STATUS + ", " +
 												   COL_VERSION + ", " +
 												   COL_DELETED + " " +
 	                                   "FROM " + SERVICES_TABLE_NAME + " " +
@@ -576,7 +567,6 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setNumberOfHarvests(results.getLong(i++));
 					service.setHarvestOutLastLogReset(results.getDate(i++));
 					service.setHarvestOutLogFileName(results.getString(i++));
-					service.setStatus(results.getString(i++));
 					service.setVersion(results.getString(i++));
 					service.setDeleted(results.getBoolean(i++));
 
@@ -645,7 +635,6 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
 												   COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-												   COL_STATUS + ", " +
 												   COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
 												   COL_VERSION + ", " +
 												   COL_DELETED + " " +
@@ -693,7 +682,6 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setNumberOfHarvests(results.getLong(i++));
 					service.setHarvestOutLastLogReset(results.getDate(i++));
 					service.setHarvestOutLogFileName(results.getString(i++));
-					service.setStatus(results.getString(i++));
 					service.setVersion(results.getString(i++));
 					service.setDeleted(results.getBoolean(i++));
 
@@ -769,7 +757,6 @@ public class DefaultServiceDAO extends ServiceDAO
 	            	      													         COL_HARVEST_OUT_RECORDS_HARVESTED + ", " +
 	            	      													         COL_HARVEST_OUT_LAST_LOG_RESET + ", " +
 	            	      													         COL_HARVEST_OUT_LOG_FILE_NAME + ", " +
-	            	      													         COL_STATUS + ", " +
 	            	      													         COL_VERSION + ", " +
 	            	      													         COL_DELETED + ") " +
 	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -799,7 +786,6 @@ public class DefaultServiceDAO extends ServiceDAO
 				psInsert.setLong(i++, service.getNumberOfHarvests());
 				psInsert.setDate(i++, service.getHarvestOutLastLogReset());
 				psInsert.setString(i++, service.getHarvestOutLogFileName());
-				psInsert.setString(i++, service.getStatus());
 				psInsert.setString(i++, service.getVersion());
 				psInsert.setBoolean(i++, service.isDeleted());
 
@@ -907,7 +893,6 @@ public class DefaultServiceDAO extends ServiceDAO
 				                                                          COL_HARVEST_OUT_RECORDS_HARVESTED + "=?, " +
 				                                                          COL_HARVEST_OUT_LAST_LOG_RESET + "=?, " +
 				                                                          COL_HARVEST_OUT_LOG_FILE_NAME + "=?, " +
-				                                                          COL_STATUS + "=?, " +
 				                                                          COL_VERSION + "=?, " +
 				                                                          COL_DELETED + "=? " +
 	                                   "WHERE " + COL_SERVICE_ID + "=?";
@@ -936,7 +921,6 @@ public class DefaultServiceDAO extends ServiceDAO
 				psUpdate.setLong(i++, service.getNumberOfHarvests());
 				psUpdate.setDate(i++, service.getHarvestOutLastLogReset());
 				psUpdate.setString(i++, service.getHarvestOutLogFileName());
-				psUpdate.setString(i++, service.getStatus());
 				psUpdate.setString(i++, service.getVersion());
 				psUpdate.setBoolean(i++, service.isDeleted());
 				psUpdate.setInt(i++, service.getId());

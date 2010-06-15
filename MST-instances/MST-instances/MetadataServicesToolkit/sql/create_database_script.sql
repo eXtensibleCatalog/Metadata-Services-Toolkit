@@ -134,7 +134,6 @@ CREATE TABLE harvest_schedules
   day_of_week INT(11),
   hour INT(11),
   notify_email VARCHAR(255),
-  status VARCHAR(20),
   request TEXT,
 
   PRIMARY KEY (harvest_schedule_id),
@@ -433,7 +432,6 @@ CREATE TABLE services
   harvest_out_records_harvested BIGINT(11) NOT NULL DEFAULT 0,
   harvest_out_last_log_reset DATETIME,
   harvest_out_log_file_name VARCHAR(255) NOT NULL,
-  status VARCHAR(20),
   version VARCHAR(10),
   is_deleted boolean DEFAULT FALSE,
   PRIMARY KEY(service_id)

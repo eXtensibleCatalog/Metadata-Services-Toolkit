@@ -116,12 +116,6 @@ public abstract class ServiceDAO extends BaseDAO
 	public final static String COL_HARVEST_OUT_LOG_FILE_NAME = "harvest_out_log_file_name";
 	
 	/**
-	 * The current status of the service.
-	 */
-
-	public final static String COL_STATUS = "status";
-	
-	/**
 	 * The version of the service
 	 */
 	public final static String COL_VERSION = "version";
@@ -155,7 +149,6 @@ public abstract class ServiceDAO extends BaseDAO
 		sortableColumns.add(COL_HARVEST_OUT_RECORDS_HARVESTED);
 		sortableColumns.add(COL_HARVEST_OUT_LAST_LOG_RESET);
 		sortableColumns.add(COL_HARVEST_OUT_LOG_FILE_NAME);
-		sortableColumns.add(COL_STATUS);
 		sortableColumns.add(COL_VERSION);
 	} // end initialization of sortableColumns
 	
