@@ -71,11 +71,17 @@ public class BaseDAO {
 	}
 	
 	public void createSchema(String name) {
+		createSchema(name, false);
+	}
+	
+	public void createSchema(String name, boolean dropIfExists) {
+		name = name.toLowerCase().replaceAll(" ", "_");
 		// this is potentially dangerous, but necessary for now
-		if (schemasExists(name)) {
+		if (dropIfExists && schemasExists(name)) {
 			deleteSchema(name);
 		}
-		this.jdbcTemplate.execute("create database "+name+" character set=utf8;");
+		if (!schemasExists(name))
+			this.jdbcTemplate.execute("create database "+name+" character set=utf8;");
 	}
 	
 	public void deleteSchema(String name) {

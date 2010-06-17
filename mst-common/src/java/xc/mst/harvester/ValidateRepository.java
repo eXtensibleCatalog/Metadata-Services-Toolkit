@@ -23,6 +23,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.XmlHelper;
 
 /**
  * This class contains methods for validating a repository's adherence to the OAI protocol using
@@ -32,7 +33,7 @@ import xc.mst.utils.LogWriter;
  */
 public class ValidateRepository extends HttpService {
 	
-	private static Logger log = Logger.getLogger("harvestIn");
+	private static Logger LOG = Logger.getLogger("harvestIn");
 	
 	/**
 	 * Signifies that the OAI repository uses yyyy-mm-dd granularity in its timestamps
@@ -82,6 +83,7 @@ public class ValidateRepository extends HttpService {
 	public void validate(int providerId) throws DatabaseConfigException {
 		this.providerId = providerId;
 
+		LOG.error("getProviderDAO(): "+getProviderDAO());
 		provider = getProviderDAO().getById(providerId);
 
 		if(provider == null)
@@ -97,6 +99,7 @@ public class ValidateRepository extends HttpService {
 			provider.setIdentify(true);
 		} catch(Exception e) {
 			provider.setIdentify(false);
+			LOG.error("", e);
 			errors.append(e.getMessage()).append("\n");
 		} 
 		
@@ -105,6 +108,7 @@ public class ValidateRepository extends HttpService {
 			provider.setListSets(true);
 		} catch(Exception e) {
 			provider.setListSets(false);
+			LOG.error("", e);
 			errors.append(e.getMessage()).append("\n");
 		}
 		
@@ -113,6 +117,7 @@ public class ValidateRepository extends HttpService {
 			provider.setListFormats(true);
 		} catch(Exception e) {
 			provider.setListFormats(false);
+			LOG.error("", e);
 			errors.append(e.getMessage()).append("\n");
 		}
 
@@ -123,6 +128,7 @@ public class ValidateRepository extends HttpService {
 		try {
 			getProviderDAO().update(provider);
 		} catch(DataException e) {
+			LOG.error("", e);
 			errors.append("Error updating the provider in the database.\n");
 		}
 
@@ -138,23 +144,26 @@ public class ValidateRepository extends HttpService {
 		Document doc = sendRequest(request);
 
 		Element root = doc.getRootElement();
-		Element errorElement = root.getChild("error");
+		Element errorElement = root.getChild("error", root.getNamespace());
 
 		if (errorElement != null) {
 			String oaiErrCode = errorElement.getAttribute("code").getValue();
 			throw new RuntimeException(oaiErrCode+": "+errorElement.getText());
 		}
 		
-		Element identifyEl = root.getChild("Identify");
+		LOG.debug(new XmlHelper().getString(root));
+		Element identifyEl = root.getChild("Identify", root.getNamespace());
+		LOG.debug("identifyEl: "+identifyEl);
+		LOG.debug("root.getChildren(): "+root.getChildren());
 		
-		Element protocolVersionEl = identifyEl.getChild("protocolVersion");
+		Element protocolVersionEl = identifyEl.getChild("protocolVersion", root.getNamespace());
 		if (protocolVersionEl != null) {
 			provider.setProtocolVersion(protocolVersionEl.getText());
 		} else {
 			throw new RuntimeException("The data provider did not specific protocolVersion.");
 		}
 
-		Element granularityEl = identifyEl.getChild("granularity");
+		Element granularityEl = identifyEl.getChild("granularity", root.getNamespace());
 		if (granularityEl != null) {
 			String granText = granularityEl.getText().toLowerCase();
 	
@@ -174,7 +183,7 @@ public class ValidateRepository extends HttpService {
 			granularity = GRANULARITY_DAY;
 		}
 
-		Element deletedRecordEl = identifyEl.getChild("deletedRecord");
+		Element deletedRecordEl = identifyEl.getChild("deletedRecord", root.getNamespace());
 		if (deletedRecordEl != null) {
 			String deletedRecordText = deletedRecordEl.getText();
 
@@ -274,16 +283,17 @@ public class ValidateRepository extends HttpService {
 	 * @return A list of metadata prefixes
 	 * @throws DatabaseConfigException 
 	 */
+	@SuppressWarnings("unchecked")
 	private List<Format> getMetadataFormats(String baseURL) throws DatabaseConfigException, HttpException {
 		String request = baseURL + "?verb=ListMetadataFormats";
 
-		if (log.isDebugEnabled())
-			log.debug("sending request: "+request);
+		if (LOG.isDebugEnabled())
+			LOG.debug("sending request: "+request);
 
 		Document doc = sendRequest(request);
 
 		Element root = doc.getRootElement();
-		Element errorEl = root.getChild("error");
+		Element errorEl = root.getChild("error", root.getNamespace());
 		if (errorEl != null) {
 			String errorCode = errorEl.getAttribute("code").getValue();
 
@@ -293,19 +303,21 @@ public class ValidateRepository extends HttpService {
 				provider.setListFormats(false);
 				getProviderDAO().update(provider);
 			} catch(DataException e) {
-				log.error("Error updating the provider object.", e);
+				LOG.error("Error updating the provider object.", e);
 			}
 
 			throw new RuntimeException("oaiErrCode: "+errorCode+" "+errorEl.getText());
 		}
 
-		Element listMetadataFormatsEl = root.getChild("ListMetadataFormats");
+		Element listMetadataFormatsEl = root.getChild("ListMetadataFormats", root.getNamespace());
 
 		ArrayList<Format> metadataFormats = new ArrayList<Format>();
-		Element metadataFormatEl = listMetadataFormatsEl.getChild("metadataFormat");
+		
+		List listMetadataFormatsEls = listMetadataFormatsEl.getChildren("metadataFormat", root.getNamespace());
 
-		while (metadataFormatEl != null) {
-			String formatName = metadataFormatEl.getChildText("metadataPrefix");
+		for (Object listMetadataFormatsElObj : listMetadataFormatsEls) {
+			Element metadataFormatEl = (Element)listMetadataFormatsElObj;
+			String formatName = metadataFormatEl.getChildText("metadataPrefix", root.getNamespace());
 
 			Format format = getFormatDAO().getByName(formatName);
 
@@ -313,13 +325,13 @@ public class ValidateRepository extends HttpService {
 				format = new Format();
 
 				format.setName(formatName);
-				format.setSchemaLocation(metadataFormatEl.getChildText("schema"));
-				format.setNamespace(metadataFormatEl.getChildText("metadataNamespace"));
+				format.setSchemaLocation(metadataFormatEl.getChildText("schema", root.getNamespace()));
+				format.setNamespace(metadataFormatEl.getChildText("metadataNamespace", root.getNamespace()));
 
 				try {
 					getFormatDAO().insert(format);
 				} catch(DataException e) {
-					log.error("A data exception occurred while inserting a new Format.", e);
+					LOG.error("A data exception occurred while inserting a new Format.", e);
 					throw new RuntimeException(e);
 				}
 			}
@@ -327,8 +339,6 @@ public class ValidateRepository extends HttpService {
 			LogWriter.addInfo(provider.getLogFileName(), "Found the MetadataPrefix " + format.getName());
 
 			metadataFormats.add(format);
-
-			metadataFormatEl = metadataFormatEl.getParentElement().getChild("metadataFormat");
 		}
 
 		return metadataFormats;
@@ -359,7 +369,7 @@ public class ValidateRepository extends HttpService {
 			Document doc = sendRequest(request + (resumptionToken == null ? "" : "&resumptionToken=" + resumptionToken));
 
 			Element root = doc.getRootElement();
-			Element errorEl = root.getChild("error");
+			Element errorEl = root.getChild("error", root.getNamespace());
 			if (errorEl != null) {
 				String oaiErrCode = errorEl.getAttributeValue("code");
 				String errorText = errorEl.getText();
@@ -374,22 +384,22 @@ public class ValidateRepository extends HttpService {
 					provider.setListSets(false);
 					getProviderDAO().update(provider);
 				} catch(DataException e) {
-					log.error("Error updating the provider object.", e);
+					LOG.error("Error updating the provider object.", e);
 				}
 
 				throw new RuntimeException("oaiErrCode: "+oaiErrCode+" "+errorText);
 			}
 
-			Element listSetsEl = root.getChild("ListSets");
-			List<Element> setEls = listSetsEl.getChildren("set");
+			Element listSetsEl = root.getChild("ListSets", root.getNamespace());
+			List<Element> setEls = listSetsEl.getChildren("set", root.getNamespace());
 
-			Element resumptionTokenEle = listSetsEl.getChild("resumptionToken");
+			Element resumptionTokenEle = listSetsEl.getChild("resumptionToken", root.getNamespace());
 			if(resumptionTokenEle != null)
 				resumptionToken = resumptionTokenEle.getText();
 
 			for (Element setEl : setEls) {
-				String setSpec = setEl.getChildText("setSpec");
-				String setName = setEl.getChildText("setName");
+				String setSpec = setEl.getChildText("setSpec", root.getNamespace());
+				String setName = setEl.getChildText("setName", root.getNamespace());
 
 				Set set = getSetDAO().getBySetSpec(setSpec);
 
@@ -402,7 +412,7 @@ public class ValidateRepository extends HttpService {
 					try {
 						getSetDAO().insertForProvider(set, providerId);
 					} catch(DataException e) {
-						log.error("A data exception occurred while inserting a new Set.", e);
+						LOG.error("A data exception occurred while inserting a new Set.", e);
 						throw new RuntimeException(e);
 					}
 				}

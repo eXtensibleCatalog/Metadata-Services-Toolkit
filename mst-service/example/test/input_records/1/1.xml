@@ -1,10 +1,10 @@
-<records>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
   <record>
     <header>
       <identifier>oai:mst.rochester.edu:bib:1</identifier>
     </header>
     <metadata>
-      <foo>pb&amp;j</foo>
+      <foo xmlns="foo:bar">pb&amp;j</foo>
     </metadata>
   </record>
 </records>

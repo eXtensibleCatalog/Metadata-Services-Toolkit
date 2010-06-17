@@ -18,7 +18,8 @@ public class XmlHelper {
 	protected static DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	
 	protected Format xmlFormat = null;
-	protected XMLOutputter xmlOutputter = null;
+	protected XMLOutputter xmlOutputterPretty = null;
+	protected XMLOutputter xmlOutputterCompact = null;
 	protected DocumentBuilder documentBuilder = null;
 	protected DOMBuilder domBuilder = null;
 	
@@ -41,16 +42,28 @@ public class XmlHelper {
 		return this.domBuilder;
 	}
 	
-	public XMLOutputter getXMLOutputter() {
-		if (xmlOutputter == null) {
+	public XMLOutputter getXMLOutputterPretty() {
+		if (xmlOutputterPretty == null) {
 			xmlFormat = org.jdom.output.Format.getPrettyFormat();
-			xmlOutputter = new XMLOutputter(xmlFormat);
+			xmlOutputterPretty = new XMLOutputter(xmlFormat);
 		}
-		return xmlOutputter;
+		return xmlOutputterPretty;
+	}
+	
+	public XMLOutputter getXMLOutputterCompact() {
+		if (xmlOutputterCompact == null) {
+			xmlFormat = org.jdom.output.Format.getCompactFormat();
+			xmlOutputterCompact = new XMLOutputter(xmlFormat);
+		}
+		return xmlOutputterCompact;
+	}
+	
+	public String getStringPretty(Element el) {
+		return getXMLOutputterPretty().outputString(el);
 	}
 	
 	public String getString(Element el) {
-		return getXMLOutputter().outputString(el);
+		return getXMLOutputterCompact().outputString(el);
 	}
 	
 	public org.jdom.Document getJDomDocument(InputStream is) {

@@ -29,6 +29,7 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.jdom.Element;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
@@ -73,7 +74,11 @@ public class DefaultRecordService extends RecordService
 	
 	// yes, these are thread safe.
 	protected static final DateTimeFormatter UTC_PARSER = ISODateTimeFormat.dateTimeParser();
-	protected static final DateTimeFormatter UTC_FORMATTER = ISODateTimeFormat.dateTime();
+	protected static DateTimeFormatter UTC_FORMATTER = null;
+	static {
+		UTC_FORMATTER = ISODateTimeFormat.dateTime();
+		UTC_FORMATTER = UTC_FORMATTER.withZone(DateTimeZone.UTC);
+	}
 	
 	public Record createRecord() {
 		Record rec = new Record();
@@ -94,7 +99,7 @@ public class DefaultRecordService extends RecordService
 	}
 	
 	@Override
-	public RecordList getAll() throws IndexException
+	public List<Record> getAll() throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records");
@@ -167,7 +172,7 @@ public class DefaultRecordService extends RecordService
 	} // end method loadBasicRecord(long)
 
 	@Override
-	public RecordList getByProviderId(int providerId) throws IndexException
+	public List<Record> getByProviderId(int providerId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with provider ID " + providerId);
@@ -196,7 +201,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getCountByProviderId(int)
 
 	@Override
-	public RecordList getByServiceId(int serviceId) throws IndexException
+	public List<Record> getByServiceId(int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with service ID " + serviceId);
@@ -269,7 +274,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByProcessingServiceId(int)
 	
 	@Override
-	public RecordList getByHarvestId(int harvestId) throws IndexException
+	public List<Record> getByHarvestId(int harvestId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with harvest ID " + harvestId);
@@ -283,7 +288,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByHarvestId(int)
 
 	@Override
-	public RecordList getByFormatIdAndServiceId(int formatId, int serviceId) throws IndexException
+	public List<Record> getByFormatIdAndServiceId(int formatId, int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with format ID " + formatId + " and service ID " + serviceId);
@@ -329,7 +334,7 @@ public class DefaultRecordService extends RecordService
 	}
 	
 	@Override
-	public RecordList getInputForService(int serviceId) throws IndexException
+	public List<Record> getInputForService(int serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records that are input for the service with service ID " + serviceId);
@@ -388,7 +393,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getCountOfRecordsToBeProcessedVyService(int)
 	
 	@Override
-	public RecordList getByProviderName(String providerName) throws IndexException
+	public List<Record> getByProviderName(String providerName) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records harvested from the provider with the name " + providerName);
@@ -402,7 +407,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByProviderName(String)
 
 	@Override
-	public RecordList getByProviderUrl(String providerUrl) throws IndexException
+	public List<Record> getByProviderUrl(String providerUrl) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records harvested from the provider with the URL " + providerUrl);
@@ -416,7 +421,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByProviderUrl(String)
 	
 	@Override
-	public RecordList getBySetName(String setName) throws IndexException
+	public List<Record> getBySetName(String setName) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records from the set with the name " + setName);
@@ -430,7 +435,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getBySetName(String)
 
 	@Override
-	public RecordList getBySetSpec(String setSpec) throws IndexException
+	public List<Record> getBySetSpec(String setSpec) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records from the set with the setSpec " + setSpec);
@@ -444,7 +449,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getBySetSpec(String)
 
 	@Override
-	public RecordList getByFormatName(String formatName) throws IndexException
+	public List<Record> getByFormatName(String formatName) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records from the format with the name " + formatName);
@@ -487,7 +492,7 @@ public class DefaultRecordService extends RecordService
 
 	
 	@Override
-	public RecordList getByOaiIdentifiers(List<String> identifiers) throws  IndexException
+	public List<Record> getByOaiIdentifiers(List<String> identifiers) throws  IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the record with the OAI identifier " + identifiers);
@@ -604,7 +609,7 @@ public class DefaultRecordService extends RecordService
 	}
 
 	@Override
-	public RecordList getByProcessedFrom(long processedFromId) throws IndexException
+	public List<Record> getByProcessedFrom(long processedFromId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records that were processed from the record with ID " + processedFromId);
@@ -618,7 +623,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByProcessedFrom(long)
 	
 	@Override
-	public RecordList getSuccessorsCreatedByServiceId(long recordId, long serviceId) throws IndexException
+	public List<Record> getSuccessorsCreatedByServiceId(long recordId, long serviceId) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting successor of record Id " + recordId + " that were created by service id" + serviceId);
@@ -646,7 +651,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByProcessedFrom(long)
 
 	@Override
-	public RecordList getByTrait(String trait) throws IndexException
+	public List<Record> getByTrait(String trait) throws IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with the trait " + trait);
@@ -1214,12 +1219,12 @@ public class DefaultRecordService extends RecordService
 	public Record parse(Element recordEl, Provider provider) {
 		Record r = new Record();
 		{
-			Element headerEl = recordEl.getChild("header");
-			Element identifierElement = headerEl.getChild("identifier");
+			Element headerEl = recordEl.getChild("header", recordEl.getNamespace());
+			Element identifierElement = headerEl.getChild("identifier", recordEl.getNamespace());
 			if (identifierElement != null) {
 				r.setOaiIdentifier(identifierElement.getText());
 			}
-			Element datestampElement = headerEl.getChild("datestamp");
+			Element datestampElement = headerEl.getChild("datestamp", recordEl.getNamespace());
 			if (datestampElement != null && !StringUtils.isEmpty(datestampElement.getText())) {
 				r.setOaiDatestamp(new Date(UTC_PARSER.parseDateTime(datestampElement.getText()).getMillis()));
 			}
@@ -1239,7 +1244,7 @@ public class DefaultRecordService extends RecordService
 			}
 			*/
 			
-			List setSpecList = headerEl.getChildren("setSpec");
+			List setSpecList = headerEl.getChildren("setSpec", recordEl.getNamespace());
 			if (setSpecList != null) {
 				for (Object setSpecObj : setSpecList) {
 					Element setSpecEl = (Element)setSpecObj;
@@ -1285,7 +1290,7 @@ public class DefaultRecordService extends RecordService
 				}
 			}
 
-			String status = headerEl.getAttributeValue("status");
+			String status = headerEl.getAttributeValue("status", recordEl.getNamespace());
 			if (!StringUtils.isEmpty(status) && "DELETED".equals(status.toUpperCase())) {
 				if ("DELETED".equals(status.toUpperCase()) || "D".equals(status.toUpperCase())) {
 					r.setStatus(Record.DELETED);
@@ -1298,39 +1303,45 @@ public class DefaultRecordService extends RecordService
 				}
 			}
 		}
-		r.setOaiXmlEl(recordEl.getChild("metadata"));
+		r.setOaiXmlEl((Element)recordEl.getChild("metadata", recordEl.getNamespace()).getChildren().get(0));
 		return r;
 	}
 	
 	public Element createJDomElement(Record r) {
-		Element recordEl = new Element("record");
-		Element headerEl = new Element("header");
+		return createJDomElement(r, OAI_NS_2_0);
+	}
+	
+	public Element createJDomElement(Record r, String namespace) {
+		Element recordEl = new Element("record", namespace);
+		Element headerEl = new Element("header", namespace);
 		recordEl.addContent(headerEl);
-		Element identifierElement = new Element("identifier");
+		Element identifierElement = new Element("identifier", namespace);
 		headerEl.addContent(identifierElement);
 		identifierElement.setText(r.getOaiIdentifier());
-		Element datestampElement = headerEl.getChild("datestamp");
-		datestampElement.setText(UTC_FORMATTER.print(r.getOaiDatestamp().getTime()));
+		Element datestampElement = new Element("datestamp", namespace);
+		headerEl.addContent(datestampElement);
+		if (r.getOaiDatestamp() != null)
+			datestampElement.setText(UTC_FORMATTER.print(r.getOaiDatestamp().getTime()));
 		 
-		Element predsrEl = new Element("predecessors");
+		Element predsrEl = new Element("predecessors", namespace);
 		headerEl.addContent(predsrEl);
 		
-		for (Record p : r.getPredecessor()) {
-			Element predEl = new Element("predecessor");
+		for (Record p : r.getPredecessors()) {
+			Element predEl = new Element("predecessor", namespace);
 			predsrEl.addContent(predEl);
 			predEl.setText(p.getOaiIdentifier());
 		}
 		
 		if (r.getSets() != null) {
 			for (Set s : r.getSets()) {
-				Element setSpecEl = new Element("setSpec");
+				Element setSpecEl = new Element("setSpec", namespace);
 				headerEl.addContent(setSpecEl);
 				setSpecEl.setText(s.getDisplayName());
 			}
 		}
 		
 		if (r.getStatus() != 0) {
-			Element statusEl = new Element("status");
+			Element statusEl = new Element("status", namespace);
 			if (r.getStatus() == Record.ACTIVE) {
 				//statusEl.setText("active");
 			} else if (r.getStatus() == Record.DELETED) {
@@ -1347,7 +1358,9 @@ public class DefaultRecordService extends RecordService
 		if (r.getMode().equals(Record.STRING_MODE)) {
 			r.setMode(Record.JDOM_MODE);
 		}
-		recordEl.addContent(r.getOaiXmlEl());
+		Element metadataEl = new Element("metadata", namespace);
+		recordEl.addContent(metadataEl);
+		metadataEl.addContent(r.getOaiXmlEl());
 		return recordEl;
 	}
 	

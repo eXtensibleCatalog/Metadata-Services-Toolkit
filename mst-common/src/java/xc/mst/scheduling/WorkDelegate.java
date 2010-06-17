@@ -14,4 +14,8 @@ public interface WorkDelegate {
 	
 	public String getDetailedStatus();
 	
+	public int getRecordsProcessed();
+
+	public int getTotalRecords();
+	
 }

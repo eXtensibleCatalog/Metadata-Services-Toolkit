@@ -9,19 +9,20 @@
 
 package xc.mst.action.services;
 
-import com.opensymphony.xwork2.ActionSupport;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
+
+import xc.mst.action.BaseActionSupport;
 import xc.mst.constants.Constants;
-import xc.mst.scheduling.Scheduler;
 
 /**
  * This action class defines method which are used to abort, pause and resume service processes which are being run by the MST
  *
  * @author Tejaswi Haramurali
  */
-public class ServiceInteract extends ActionSupport implements ServletRequestAware
+public class ServiceInteract extends BaseActionSupport implements ServletRequestAware
 {
     /** Request object */
     private HttpServletRequest request;
@@ -42,9 +43,9 @@ public class ServiceInteract extends ActionSupport implements ServletRequestAwar
     {
         try
         {
-            if(Scheduler.getRunningJob()!=null)
+            if(getScheduler().getRunningJob()!=null)
             {
-                Scheduler.cancelRunningJob();
+            	getScheduler().cancelRunningJob();
                 request.getSession().setAttribute("serviceBarDisplay", "abort");
             }
             else
@@ -71,9 +72,9 @@ public class ServiceInteract extends ActionSupport implements ServletRequestAwar
     {
         try
         {
-            if(Scheduler.getRunningJob()!=null)
+            if(getScheduler().getRunningJob()!=null)
             {
-                Scheduler.pauseRunningJob();
+            	getScheduler().pauseRunningJob();
                 request.getSession().setAttribute("serviceBarDisplay", "resume");
             }
             else
@@ -101,9 +102,9 @@ public class ServiceInteract extends ActionSupport implements ServletRequestAwar
     {
         try
         {
-            if(Scheduler.getRunningJob()!=null)
+            if(getScheduler().getRunningJob()!=null)
             {
-                Scheduler.resumePausedJob();
+            	getScheduler().resumePausedJob();
                 request.getSession().setAttribute("serviceBarDisplay", "pause");
             }
             else

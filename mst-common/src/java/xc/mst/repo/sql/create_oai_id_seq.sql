@@ -22,10 +22,3 @@ end
 
 delimiter ;
 
-select get_next_oai_id(50);
-
-select get_next_oai_id(50);
-
-select get_next_oai_id(50);
-/*
-*/

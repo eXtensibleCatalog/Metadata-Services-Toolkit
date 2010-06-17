@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -316,7 +317,7 @@ public class TestNormalizationService
 			System.out.println(formatter.format(System.currentTimeMillis()));
 
 			RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
-			RecordList records = recordService.getAll();
+			List<Record> records = recordService.getAll();
 			for(Record record: records)
 			{
 				System.out.println("Found record:\n" + record.getOaiXml() + "\n\n\n\n");
@@ -329,7 +330,7 @@ public class TestNormalizationService
 		{
 			e.printStackTrace();
 
-			RecordList records = recordService.getAll();
+			List<Record> records = recordService.getAll();
 			for(Record record: records)
 			{
 				System.out.println("Found record:\n" + record.getOaiXml() + "\n\n\n\n");

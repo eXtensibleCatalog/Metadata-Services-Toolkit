@@ -41,6 +41,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
@@ -291,7 +292,7 @@ public class DefaultServicesService extends BaseService
     		service.setClassName(className);
     		service.setHarvestOutLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
-    		service.setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
+    		service.setStatus(Status.NOT_RUNNING);
 
     		String[] temp = new String[] {"input", "output"};
     		for (int j=0; j<temp.length; j++) {
@@ -361,7 +362,7 @@ public class DefaultServicesService extends BaseService
     			throw new ConfigFileException("error codes don't match in length");
     		}
 
-    		getRepositoryDAO().createSchema(name);
+    		getRepositoryDAO().createSchema(name, true);
     		getMetadataService(name).install();
 
     	}
@@ -387,7 +388,7 @@ public class DefaultServicesService extends BaseService
     	// Reload the service and confirm that it's not currently running.
     	// Throw an error if it is
     	service = getServiceDAO().getById(service.getId());
-    	if(service.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) || service.getStatus().equals(Constants.STATUS_SERVICE_PAUSED)) {
+    	if(service.getStatus().equals(Status.RUNNING) || service.getStatus().equals(Status.PAUSED)) {
     		throw new DataException("Cannot update a service while it is running.");
     		// TODO propagate to UI
     	}
@@ -631,7 +632,7 @@ public class DefaultServicesService extends BaseService
     		//getMetadataService(name).update(null);
  
     		// TODO what does below line do? Is it necessary? Should it be here or moved to Service Reprocess thread?
-    		ServiceUtil.getInstance().checkService(service.getId(), Constants.STATUS_SERVICE_NOT_RUNNING, true);
+    		ServiceUtil.getInstance().checkService(service.getId(), Status.NOT_RUNNING, true);
 
     		// Schedule a job to reprocess records through new service
     		if(reprocessingRequired)

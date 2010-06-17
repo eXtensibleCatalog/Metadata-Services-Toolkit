@@ -20,6 +20,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.Namespace;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
@@ -33,11 +35,13 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.email.Emailer;
 import xc.mst.manager.BaseManager;
+import xc.mst.manager.record.RecordService;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkDelegate;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.XmlHelper;
 
 
 public class HarvestManager extends BaseManager implements WorkDelegate {
@@ -47,7 +51,11 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	 */
 	private static Logger log = Logger.getLogger("harvestIn");
 	
-	protected static final DateTimeFormatter UTC_FORMATTER = ISODateTimeFormat.dateTime();
+	protected static DateTimeFormatter UTC_FORMATTER = null;
+	static {
+		UTC_FORMATTER = ISODateTimeFormat.dateTime();
+		UTC_FORMATTER = UTC_FORMATTER.withZone(DateTimeZone.UTC);
+	}
 	
 	protected HarvestSchedule harvestSchedule = null;
 	protected List<HarvestScheduleStep> harvestScheduleSteps = null;
@@ -59,6 +67,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	protected String resumptionToken = null;
 	protected int numErrorsToTolerate = 0;
 	protected int numErrorsTolerated = 0;
+	protected int requestsSent4Step = 0;
 	
 	/**
 	 * The granularity of the OAI repository we're harvesting (either GRAN_DAY or GRAN_SECOND)
@@ -73,9 +82,9 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	protected Emailer mailer = new Emailer();
 
 	protected boolean firstHarvest = false;
-	protected int recordsFound = 0;
-	protected int totalRecordCount = 0;
-	
+	protected int recordsProcessed = 0;
+	protected int totalRecords = 0;
+
 	public void cancel() {
 	}
 	
@@ -87,7 +96,15 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	}
 	
 	public String getDetailedStatus() {
-		return "processed "+recordsFound+" of "+totalRecordCount;
+		return "processed "+recordsProcessed+" of "+totalRecords;
+	}
+	
+	public int getRecordsProcessed() {
+		return recordsProcessed;
+	}
+
+	public int getTotalRecords() {
+		return totalRecords;
 	}
 
 	public void setHarvestSchedule(HarvestSchedule harvestSchedule) {
@@ -99,8 +116,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			harvestScheduleSteps = getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId());
 			harvestScheduleStepIndex = 0;
 			startDate = new Date();
-			recordsFound = 0;
-			totalRecordCount = 0;
+			recordsProcessed = 0;
+			totalRecords = 0;
 			numErrorsTolerated = Integer.parseInt(config.getProperty("harvester.numErrorsToTolerate", "0"));
 			repo = (Repository)config.getBean("Repository");
 	    	repo.setName(harvestSchedule.getProvider().getName());
@@ -176,6 +193,13 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	}
 	
 	public boolean doSomeWork() {
+		String testHarvestMaxRequests = config.getProperty("test.harvest.maxRequests");
+		if (testHarvestMaxRequests != null) {
+			if (Integer.parseInt(testHarvestMaxRequests) == requestsSent4Step) {
+				return false;
+			}
+		}
+		requestsSent4Step++;
 		if (harvestScheduleStepIndex >= 0 && harvestScheduleStepIndex < harvestScheduleSteps.size()) {
 			String resumption = null;
 			try {
@@ -192,10 +216,11 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					// Setup the harvest we're currently running
 					currentHarvest = new Harvest();
 					currentHarvest.setStartTime(startDate);
-					currentHarvest.setProvider(currentHarvest.getProvider());
+					currentHarvest.setProvider(scheduleStep.getSchedule().getProvider());
 					currentHarvest.setHarvestSchedule(scheduleStep.getSchedule());
 					getHarvestDAO().insert(currentHarvest);
-					
+					log.debug("repo.installOrUpdateIfNecessary()");
+					repo.installOrUpdateIfNecessary();
 					validate(scheduleStep);
 					firstHarvest = repo.getSize() == 0;
 					resumptionToken = null;
@@ -225,9 +250,9 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					//TODO check harvest schedule
 					Date from = scheduleStep.getLastRan();
 					if (from != null) {
-						request += "&from=" + UTC_FORMATTER.print(from.getTime());
+						request += "&from=" + UTC_FORMATTER.print(from.getTime()) +
+							"&until=" + UTC_FORMATTER.print(startDate.getTime());
 					}
-					request += "&until=" + UTC_FORMATTER.print(startDate.getTime());
 				} else {
 					try {
 						resumption = URLEncoder.encode(resumption, "utf-8");
@@ -251,14 +276,18 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 				// Perform the harvest
 				TimingLogger.start("sendRequest");
 			    Document doc = getHttpService().sendRequest(request);
+			    log.debug("doc: ");
+			    if (log.isDebugEnabled())
+			    	log.debug(new XmlHelper().getString(doc.getRootElement()));
 			    TimingLogger.stop("sendRequest");
 
 			    TimingLogger.start("extractRecords");
                 resumption = parseRecords(metadataPrefix, doc, baseURL);
+                log.debug("resumption: "+resumption);
                 TimingLogger.stop("extractRecords");
 
                 repo.endBatch();
-				LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL + ", " + recordsFound + " new records were returned by the OAI provider.");
+				LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL + ", " + recordsProcessed + " new records were returned by the OAI provider.");
 		
 			} catch(DataException de) {
 				logError(de);
@@ -288,7 +317,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 
 		// Check whether or not the response contained an error
 		// If it did, throw an exception describing the error
-		Element errorEl = root.getChild("error");
+		Element errorEl = root.getChild("error", root.getNamespace());
 		if (errorEl != null) {
 			String errorCode = errorEl.getAttributeValue("code");
 			throw new RuntimeException("errorCode: "+errorCode+" "+errorEl.getText());
@@ -298,7 +327,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		// Get the verb (ListRecords) element.  Try to get it as though it were the child of
 		// the root element.  If that doesn't work, assume that it is the root element itself
 		try {
-			listRecordsEl = root.getChild("ListRecords");
+			listRecordsEl = root.getChild("ListRecords", root.getNamespace());
 		} catch (Throwable e){
 			listRecordsEl = root;
 		}
@@ -307,10 +336,10 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		// verb element.
 		Element recordEl = null;
 		try {
-			recordEl = listRecordsEl.getChild("record");
+			recordEl = listRecordsEl.getChild("record", root.getNamespace());
 		} catch (Throwable e) {
 			// Check the response for the request URL
-			Element requestUrlElement = listRecordsEl.getChild("requestURL");
+			Element requestUrlElement = listRecordsEl.getChild("requestURL", root.getNamespace());
 
 			// If the response contained the URL, report the error "no records found"
 			if (requestUrlElement != null) {
@@ -328,7 +357,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		}
 
 		// Loop over all records in the OAI response
-		List recordsEl = listRecordsEl.getChildren("record");
+		List recordsEl = listRecordsEl.getChildren("record", root.getNamespace());
 		
 		for (Object recordElObj : recordsEl) {
 			recordEl = (Element)recordElObj;
@@ -346,6 +375,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 				// BDA: tell me why I care?
 				//Record oldRecord = (firstHarvest ? null : recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId));
 				
+				getRepositoryDAO().injectId(record);
 				repo.addRecord(record);
 
 				TimingLogger.stop("erl - 3");
@@ -353,21 +383,18 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			} catch (Exception e) {
 				log.error("An error occurred in insertion ", e);
 			}
+            recordsProcessed++;
+		}
 
-            recordsFound++;
-
-            // If the record contained a resumption token, store that resumption token
-            resumption = recordEl.getChildText("resumptionToken");
-			if (!StringUtils.isEmpty(resumption)) {
-				totalRecordCount = Integer.parseInt(recordEl.getAttributeValue("completeListSize"));
-				
-				log.debug("The resumption string is " + resumption);
-				break;
-			} else {
-				resumption = null;
-			}
-			TimingLogger.stop("extractRecords loop");
-			
+        // If the record contained a resumption token, store that resumption token
+        Element resumptionEl = listRecordsEl.getChild("resumptionToken", root.getNamespace());
+        resumption = resumptionEl.getText();
+        log.debug("resumption: "+resumption);
+		if (!StringUtils.isEmpty(resumption)) {
+			totalRecords = Integer.parseInt(resumptionEl.getAttributeValue("completeListSize"));
+			log.debug("The resumption string is " + resumption);
+		} else {
+			resumption = null;
 		}
 
 		return resumption;
@@ -396,9 +423,9 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			if(problem != null)
 				body.append("The harvest failed for the following reason: ").append(problem).append("\n\n");
 			
-			if(totalRecordCount!=0) {
-				body.append("Total number of records available for harvest =").append(totalRecordCount).append(" \n");
-				body.append("Number of records harvested =").append(recordsFound).append(" \n");
+			if(totalRecords!=0) {
+				body.append("Total number of records available for harvest =").append(totalRecords).append(" \n");
+				body.append("Number of records harvested =").append(recordsProcessed).append(" \n");
 			} 
 
 			return mailer.sendEmail(harvestSchedule.getNotifyEmail(), subject, body.toString());

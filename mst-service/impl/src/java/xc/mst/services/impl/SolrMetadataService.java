@@ -22,6 +22,7 @@ import xc.mst.bo.record.RecordType;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
@@ -93,7 +94,7 @@ public abstract class SolrMetadataService extends BaseManager {
 			if(LOG.isDebugEnabled())
 				LOG.debug("Validating the Metadata Service with ID " + serviceId + ".");
 	
-			ServiceUtil.getInstance().checkService(service,Constants.STATUS_SERVICE_RUNNING, true);
+			ServiceUtil.getInstance().checkService(service, Status.RUNNING, true);
 	
 			if(LOG.isDebugEnabled())
 				LOG.debug("Running the Metadata Service with ID " + serviceId + ".");
@@ -107,7 +108,7 @@ public abstract class SolrMetadataService extends BaseManager {
 	
 			// Update database with status of service
 			if(!isCanceled && success)
-				setStatus(Constants.STATUS_SERVICE_NOT_RUNNING);
+				setStatus(Status.RUNNING);
 	
 			sendReportEmail(null);
 			
@@ -115,7 +116,7 @@ public abstract class SolrMetadataService extends BaseManager {
 				LOG.error("Exception occurred while invoking the service's processRecords method.", dce);
 
 				// Update database with status of service
-				service.setStatus(Constants.STATUS_SERVICE_ERROR);
+				service.setStatus(Status.ERROR);
 				sendReportEmail("Exception occurred while invoking the service's processRecords method.");
 				
 				LogWriter.addError(service.getServicesLogFileName(), "An internal error occurred while trying to start the " + service.getName() + " Service.");
@@ -249,7 +250,7 @@ public abstract class SolrMetadataService extends BaseManager {
 			}
 			
 			// Update database with status of service
-			setStatus(Constants.STATUS_SERVICE_ERROR);
+			setStatus(Status.ERROR);
 			
 			return false;
 		} // end catch(Exception)
@@ -406,7 +407,7 @@ public abstract class SolrMetadataService extends BaseManager {
 							LogWriter.addInfo(service.getServicesLogFileName(), "Cancelled Service " + service.getName());
 							LogWriter.addInfo(service.getServicesLogFileName(), "Processed " + processedRecordCount + " records so far.");
 							// Update database with status of service
-							setStatus(Constants.STATUS_SERVICE_CANCELED);
+							setStatus(Status.CANCELED);
 							break;
 						}
 					// If paused then wait
@@ -414,7 +415,7 @@ public abstract class SolrMetadataService extends BaseManager {
 						{
 							LogWriter.addInfo(service.getServicesLogFileName(), "Paused Service " + service.getName());
 							// Update database with status of service
-							setStatus(Constants.STATUS_SERVICE_PAUSED);
+							setStatus(Status.PAUSED);
 
 							while(isPaused && !isCanceled)
 								{
@@ -426,7 +427,7 @@ public abstract class SolrMetadataService extends BaseManager {
 							{
 								LogWriter.addInfo(service.getServicesLogFileName(), " Cancelled Service " + service.getName());
 								// Update database with status of service
-								setStatus(Constants.STATUS_SERVICE_CANCELED);
+								setStatus(Status.CANCELED);
 								break;
 
 							}
@@ -435,7 +436,7 @@ public abstract class SolrMetadataService extends BaseManager {
 							{
 								LogWriter.addInfo(service.getServicesLogFileName(), "Resumed Service " + service.getName());
 								// Update database with status of service
-								setStatus(Constants.STATUS_SERVICE_RUNNING);
+								setStatus(Status.RUNNING);
 
 							}
 
@@ -490,14 +491,14 @@ public abstract class SolrMetadataService extends BaseManager {
 	 * Gets the status of the service
 	 * @return This service's status
 	 */
-	public String getServiceStatus(){
+	public Status getServiceStatus(){
 
 		if(isCanceled)
-			return Constants.STATUS_SERVICE_CANCELED;
+			return Status.CANCELED;
 		else if(isPaused)
-			return Constants.STATUS_SERVICE_PAUSED;
+			return Status.PAUSED;
 		else 
-			return Constants.STATUS_SERVICE_RUNNING;
+			return Status.RUNNING;
 	}
 
 	/**
@@ -704,7 +705,7 @@ public abstract class SolrMetadataService extends BaseManager {
 	 * Logs the status of the service to the database
 	 * @throws DataException
 	 */
-	public void setStatus(String status){
+	public void setStatus(Status status){
 
 		// Load the provider again in case it was updated during the harvest
 		Service service = null;

@@ -60,6 +60,7 @@ import xc.mst.manager.user.PermissionService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
+import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.MSTConfiguration;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -144,6 +145,9 @@ public class BaseActionSupport extends ActionSupport {
 	}
 	public HarvestScheduleStepDAO getHarvestScheduleStepDAO() {
 		return (HarvestScheduleStepDAO)MSTConfiguration.getInstance().getBean("HarvestScheduleStepDAO");
+	}
+	public Scheduler getScheduler() {
+		return (Scheduler)MSTConfiguration.getInstance().getBean("Scheduler");
 	}
 	public LogDAO getLogDAO() {
 		return (LogDAO)MSTConfiguration.getInstance().getBean("LogDAO");

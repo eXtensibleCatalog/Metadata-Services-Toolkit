@@ -15,8 +15,18 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import xc.mst.dao.harvest.HarvestScheduleDAO;
+import xc.mst.dao.provider.FormatDAO;
+import xc.mst.dao.provider.SetDAO;
+import xc.mst.harvester.ValidateRepository;
+import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.manager.repository.FormatService;
+import xc.mst.manager.repository.ProviderService;
+import xc.mst.manager.repository.SetService;
+import xc.mst.manager.user.ServerService;
+import xc.mst.manager.user.UserService;
 import xc.mst.repo.Repository;
 import xc.mst.repo.RepositoryDAO;
 import xc.mst.utils.MSTConfiguration;
@@ -34,6 +44,16 @@ public class BaseTest {
 	protected RepositoryDAO repositoryDAO = null;
 	protected RecordService recordService = null;
 	protected ServicesService servicesService = null;
+	protected ProviderService providerService = null;
+	protected ScheduleService scheduleService = null;
+	protected FormatService formatService = null;
+	protected SetService setService = null;
+	protected UserService userService = null;	 	
+	protected ServerService serverService = null;
+	protected ValidateRepository validateRepository = null;
+	protected FormatDAO formatDAO = null;
+	protected SetDAO setDAO = null;
+	protected HarvestScheduleDAO harvestScheduleDAO = null;
 
 	@BeforeSuite
 	public void startup() {
@@ -50,6 +70,16 @@ public class BaseTest {
 		repositoryDAO = (RepositoryDAO)getBean("RepositoryDAO");
 		recordService = (RecordService)getBean("RecordService");
 		servicesService = (ServicesService)getBean("ServicesService");
+		providerService = (ProviderService)getBean("ProviderService");
+		scheduleService = (ScheduleService)getBean("ScheduleService");
+		formatService = (FormatService)getBean("FormatService");
+		setService = (SetService)getBean("SetService");
+		userService = (UserService)getBean("UserService");	 	
+		serverService = (ServerService)getBean("ServerService");
+		validateRepository = (ValidateRepository)getBean("ValidateRepository");
+		formatDAO = (FormatDAO)getBean("FormatDAO");
+		harvestScheduleDAO = (HarvestScheduleDAO)getBean("HarvestScheduleDAO");
+		setDAO = (SetDAO)getBean("SetDAO");  
 		LOG.debug("startup complete");
 	}
 	

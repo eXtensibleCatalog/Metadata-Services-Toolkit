@@ -71,8 +71,7 @@ public class DefaultProviderService extends BaseService implements ProviderServi
      * @throws xc.mst.dao.DataException
      */
     public void insertProvider(Provider provider) throws DataException{
-
-    	provider.setLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
+    	provider.setLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
     	getProviderDAO().insert(provider);
         LogWriter.addInfo(provider.getLogFileName(), "Beginning logging for " + provider.getName());
     }
@@ -130,7 +129,7 @@ public class DefaultProviderService extends BaseService implements ProviderServi
      * @throws xc.mst.dao.DataException
      */
     public void updateProvider(Provider provider) throws DataException{
-    	provider.setLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
+    	provider.setLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
     	getProviderDAO().update(provider);
     }
 

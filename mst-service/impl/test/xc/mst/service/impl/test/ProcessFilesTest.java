@@ -50,7 +50,8 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 
 			for (String folderStr : folderStrs) {
 				long id = repositoryDAO.restIdSequence(1);
-				Repository repo = new TestRepository(folderStr);
+				Repository repo = (TestRepository)MSTConfiguration.getInstance().getBean("TestRepository");
+				repo.setName(folderStr);
 				ms.setRepository(repo);
 				LOG.debug("folderStr2: "+folderStr);
 				ms.process(repo, null, null);

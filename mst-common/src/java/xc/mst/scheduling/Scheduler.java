@@ -20,7 +20,10 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
+import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.HarvestManager;
 import xc.mst.manager.BaseService;
@@ -58,6 +61,23 @@ public class Scheduler extends BaseService implements Runnable {
 	
 	public void run() {		
 		Map<Integer, String> lastRunDate = new HashMap<Integer, String>();
+		
+		try {
+			for (Service s : getServiceDAO().getAll()) {
+				if (s.getStatus().equals(Status.RUNNING)) {
+					s.setStatus(Status.CANCELED);
+					getServiceDAO().update(s);
+				}
+			}
+			for (HarvestSchedule hs : getHarvestScheduleDAO().getAll()) {
+				if (hs.getStatus().equals(Status.RUNNING)) {
+					hs.setStatus(Status.CANCELED);
+					getHarvestScheduleDAO().update(hs, false);
+				}
+			}
+		} catch (DataException de) {
+			throw new RuntimeException(de);
+		}
 		
 		while(!killed) {
 			Calendar now = Calendar.getInstance();
@@ -97,10 +117,9 @@ public class Scheduler extends BaseService implements Runnable {
 						log.error("DatabaseConfig exception occured when ading jobs to database", dce);
 					}
 				}
-			} // end loop over schedules to be run
+			}
 
-			if (runningJob == null || !runningJob.isAlive())
-			{
+			if (runningJob == null || !runningJob.isAlive()) {
 				try {
 					if (previousJob != null) {
 						TimingLogger.log("finished job: "+previousJob.getJobType());
@@ -111,10 +130,13 @@ public class Scheduler extends BaseService implements Runnable {
 						if (previousJob.getHarvestSchedule() != null) { // was harvest
 							processingDirectives = getProcessingDirectiveDAO().getBySourceProviderId(
 									previousJob.getHarvestSchedule().getProvider().getId());
-
+							previousJob.getHarvestSchedule().setStatus(runningJob.getJobStatus());
+							getHarvestScheduleDAO().update(previousJob.getHarvestSchedule(), false);
 						} else if (previousJob.getService() != null) { // was service
 							processingDirectives = getProcessingDirectiveDAO().getBySourceServiceId(
 									previousJob.getService().getId());
+							previousJob.getService().setStatus(runningJob.getJobStatus());
+							getServiceDAO().update(previousJob.getService());
 						}
 						if (processingDirectives != null) {
 							try {
@@ -176,8 +198,8 @@ public class Scheduler extends BaseService implements Runnable {
 						// BDA - hmmm... perhaps we shouldn't delete it until it completes?
 						getJobService().deleteJob(jobToStart);
 					} // end if(the service job queue was empty)
-				} catch(DatabaseConfigException dce) {
-					log.error("DatabaseConfigException occured when getting job from database", dce);
+				} catch(DataException de) {
+					log.error("DataException occured when getting job from database", de);
 				}
 			}
 

@@ -9,6 +9,8 @@
 
 package xc.mst.scheduling;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.processing.Job;
@@ -82,7 +84,7 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 	{
 		try
 		{
-			RecordList recordsToCheck = new RecordList(null);
+			List<Record> recordsToCheck = new RecordList(null);
 			
 			log.info("Starting thread to process processing schedule " + processingDirective);
 			if(processingDirective.getSourceProvider() != null)

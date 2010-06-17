@@ -16,10 +16,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -197,7 +200,12 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setNumberOfHarvests(results.getLong(i++));
 					service.setHarvestOutLastLogReset(results.getDate(i++));
 					service.setHarvestOutLogFileName(results.getString(i++));
-					service.setStatus(results.getString(i++));
+					String statusStr = results.getString(i++);
+					if (StringUtils.isEmpty(statusStr)) {
+						service.setStatus(null);
+					} else {
+						service.setStatus(Status.valueOf(statusStr));
+					}
 					service.setVersion(results.getString(i++));
 					service.setDeleted(results.getBoolean(i++));
 
@@ -328,7 +336,12 @@ public class DefaultServiceDAO extends ServiceDAO
 				service.setNumberOfHarvests(results.getLong(i++));
 				service.setHarvestOutLastLogReset(results.getDate(i++));
 				service.setHarvestOutLogFileName(results.getString(i++));
-				service.setStatus(results.getString(i++));
+				String statusStr = results.getString(i++);
+				if (StringUtils.isEmpty(statusStr)) {
+					service.setStatus(null);
+				} else {
+					service.setStatus(Status.valueOf(statusStr));
+				}
 				service.setVersion(results.getString(i++));
 				service.setDeleted(results.getBoolean(i++));
 
@@ -453,7 +466,12 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setNumberOfHarvests(results.getLong(i++));
 					service.setHarvestOutLastLogReset(results.getDate(i++));
 					service.setHarvestOutLogFileName(results.getString(i++));
-					service.setStatus(results.getString(i++));
+					String statusStr = results.getString(i++);
+					if (StringUtils.isEmpty(statusStr)) {
+						service.setStatus(null);
+					} else {
+						service.setStatus(Status.valueOf(statusStr));
+					}
 					service.setVersion(results.getString(i++));
 					service.setDeleted(results.getBoolean(i++));
 
@@ -576,7 +594,12 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setNumberOfHarvests(results.getLong(i++));
 					service.setHarvestOutLastLogReset(results.getDate(i++));
 					service.setHarvestOutLogFileName(results.getString(i++));
-					service.setStatus(results.getString(i++));
+					String statusStr = results.getString(i++);
+					if (StringUtils.isEmpty(statusStr)) {
+						service.setStatus(null);
+					} else {
+						service.setStatus(Status.valueOf(statusStr));
+					}
 					service.setVersion(results.getString(i++));
 					service.setDeleted(results.getBoolean(i++));
 
@@ -693,7 +716,12 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setNumberOfHarvests(results.getLong(i++));
 					service.setHarvestOutLastLogReset(results.getDate(i++));
 					service.setHarvestOutLogFileName(results.getString(i++));
-					service.setStatus(results.getString(i++));
+					String statusStr = results.getString(i++);
+					if (StringUtils.isEmpty(statusStr)) {
+						service.setStatus(null);
+					} else {
+						service.setStatus(Status.valueOf(statusStr));
+					}
 					service.setVersion(results.getString(i++));
 					service.setDeleted(results.getBoolean(i++));
 
@@ -799,7 +827,11 @@ public class DefaultServiceDAO extends ServiceDAO
 				psInsert.setLong(i++, service.getNumberOfHarvests());
 				psInsert.setDate(i++, service.getHarvestOutLastLogReset());
 				psInsert.setString(i++, service.getHarvestOutLogFileName());
-				psInsert.setString(i++, service.getStatus());
+				if (service.getStatus() == null) {
+					psInsert.setString(i++, null);
+				} else {
+					psInsert.setString(i++, service.getStatus().name());
+				}
 				psInsert.setString(i++, service.getVersion());
 				psInsert.setBoolean(i++, service.isDeleted());
 
@@ -936,7 +968,11 @@ public class DefaultServiceDAO extends ServiceDAO
 				psUpdate.setLong(i++, service.getNumberOfHarvests());
 				psUpdate.setDate(i++, service.getHarvestOutLastLogReset());
 				psUpdate.setString(i++, service.getHarvestOutLogFileName());
-				psUpdate.setString(i++, service.getStatus());
+				if (service.getStatus() == null) {
+					psUpdate.setString(i++, null);
+				} else {
+					psUpdate.setString(i++, service.getStatus().name());
+				}
 				psUpdate.setString(i++, service.getVersion());
 				psUpdate.setBoolean(i++, service.isDeleted());
 				psUpdate.setInt(i++, service.getId());

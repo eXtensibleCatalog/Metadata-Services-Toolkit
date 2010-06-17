@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.ServiceDAO;
@@ -118,7 +119,7 @@ public class MetadataServiceFactory {
 			log.error("Could not find class " + service.getClassName(), e);
 
 			// Update database with status of service
-			service.setStatus(Constants.STATUS_SERVICE_ERROR);
+			service.setStatus(Status.ERROR);
 			
 			ServiceUtil.getInstance().sendEmail("The java class " + service.getClassName() + " could not be found.", service.getName());
 
@@ -194,7 +195,7 @@ public class MetadataServiceFactory {
 			log.error("Exception occurred while invoking the service's processRecords method.", e);
 
 			// Update database with status of service
-			service.setStatus(Constants.STATUS_SERVICE_ERROR);
+			service.setStatus(Status.ERROR);
 
 			ServiceUtil.getInstance().sendEmail("Exception occurred while invoking the service's processRecords method.", service.getName());
 			

@@ -23,14 +23,14 @@ public class WorkerThread extends Thread {
 	protected Status status = null;
 	
 	protected WorkDelegate workDelegate = null;
-	
-
+	 
 	public void setWorkDelegate(WorkDelegate workDelegate) {
 		this.workDelegate = workDelegate;
 	}
 
 	public void run() {
 		try {
+			this.status = Status.RUNNING;
 			this.workDelegate.setup();
 			boolean keepGoing = true;
 			while (keepGoing) {
@@ -71,8 +71,20 @@ public class WorkerThread extends Thread {
 			return "";
 		}
 	}
+	
+	public int getRecordsProcessed() {
+		return this.workDelegate.getRecordsProcessed();
+	}
 
-	public String getJobStatus() {
+	public int getTotalRecords() {
+		return this.workDelegate.getTotalRecords();
+	}
+
+	public Status getJobStatus() {
+		return status;
+	}
+	
+	public String getDetailedStatus() {
 		return this.workDelegate != null ? this.workDelegate.getDetailedStatus() : "";
 	}
 

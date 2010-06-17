@@ -17,11 +17,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.harvest.HarvestScheduleStep;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
-import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -182,7 +184,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setDayOfWeek(results.getInt(8));
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
-					harvestSchedule.setStatus(results.getString(11));
+					String statusStr = results.getString(11);
+					if (StringUtils.isEmpty(statusStr)) {
+						harvestSchedule.setStatus(null);
+					} else {
+						harvestSchedule.setStatus(Status.valueOf(statusStr));
+					}
 					harvestSchedule.setRequest(results.getString(12));
 
 					// Return the harvest schedule
@@ -285,7 +292,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                     harvestSchedule.setDayOfWeek(results.getInt(8));
                     harvestSchedule.setHour(results.getInt(9));
                     harvestSchedule.setNotifyEmail(results.getString(10));
-                    harvestSchedule.setStatus(results.getString(11));
+					String statusStr = results.getString(11);
+					if (StringUtils.isEmpty(statusStr)) {
+						harvestSchedule.setStatus(null);
+					} else {
+						harvestSchedule.setStatus(Status.valueOf(statusStr));
+					}
                     harvestSchedule.setRequest(results.getString(12));
 
                     // Return the harvest schedule
@@ -367,7 +379,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
                     harvestSchedule.setDayOfWeek(results.getInt(8));
                     harvestSchedule.setHour(results.getInt(9));
                     harvestSchedule.setNotifyEmail(results.getString(10));
-                    harvestSchedule.setStatus(results.getString(11));
+					String statusStr = results.getString(11);
+					if (StringUtils.isEmpty(statusStr)) {
+						harvestSchedule.setStatus(null);
+					} else {
+						harvestSchedule.setStatus(Status.valueOf(statusStr));
+					}
                     harvestSchedule.setRequest(results.getString(12));
 
                     // Return the harvest schedule
@@ -471,7 +488,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setDayOfWeek(results.getInt(8));
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
-					harvestSchedule.setStatus(results.getString(11));
+					String statusStr = results.getString(11);
+					if (StringUtils.isEmpty(statusStr)) {
+						harvestSchedule.setStatus(null);
+					} else {
+						harvestSchedule.setStatus(Status.valueOf(statusStr));
+					}
 					harvestSchedule.setRequest(results.getString(12));
 					harvestSchedule.setSteps(getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId()));
 
@@ -582,7 +604,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setDayOfWeek(results.getInt(8));
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
-					harvestSchedule.setStatus(results.getString(11));
+					String statusStr = results.getString(11);
+					if (StringUtils.isEmpty(statusStr)) {
+						harvestSchedule.setStatus(null);
+					} else {
+						harvestSchedule.setStatus(Status.valueOf(statusStr));
+					}
 					harvestSchedule.setRequest(results.getString(12));
 
 					// Get the sets and formats for the schedule based on its steps
@@ -692,7 +719,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setDayOfWeek(results.getInt(8));
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
-					harvestSchedule.setStatus(results.getString(11));
+					String statusStr = results.getString(11);
+					if (StringUtils.isEmpty(statusStr)) {
+						harvestSchedule.setStatus(null);
+					} else {
+						harvestSchedule.setStatus(Status.valueOf(statusStr));
+					}
 					harvestSchedule.setRequest(results.getString(12));
 					harvestSchedule.setSteps(getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId()));
 
@@ -803,7 +835,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setDayOfWeek(results.getInt(8));
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
-					harvestSchedule.setStatus(results.getString(11));
+					String statusStr = results.getString(11);
+					if (StringUtils.isEmpty(statusStr)) {
+						harvestSchedule.setStatus(null);
+					} else {
+						harvestSchedule.setStatus(Status.valueOf(statusStr));
+					}
 					harvestSchedule.setRequest(results.getString(12));
 
 					if(log.isDebugEnabled())
@@ -907,7 +944,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setDayOfWeek(results.getInt(8));
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
-					harvestSchedule.setStatus(results.getString(11));
+					String statusStr = results.getString(11);
+					if (StringUtils.isEmpty(statusStr)) {
+						harvestSchedule.setStatus(null);
+					} else {
+						harvestSchedule.setStatus(Status.valueOf(statusStr));
+					}
 					harvestSchedule.setRequest(results.getString(12));
 
 					if(log.isDebugEnabled()) {
@@ -1021,7 +1063,12 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 					harvestSchedule.setDayOfWeek(results.getInt(8));
 					harvestSchedule.setHour(results.getInt(9));
 					harvestSchedule.setNotifyEmail(results.getString(10));
-					harvestSchedule.setStatus(results.getString(11));
+					String statusStr = results.getString(11);
+					if (StringUtils.isEmpty(statusStr)) {
+						harvestSchedule.setStatus(null);
+					} else {
+						harvestSchedule.setStatus(Status.valueOf(statusStr));
+					}
 					harvestSchedule.setRequest(results.getString(12));
 					harvestSchedule.setSteps(getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId()));
 
@@ -1120,7 +1167,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				psInsert.setInt(7, harvestSchedule.getDayOfWeek());
 				psInsert.setInt(8, harvestSchedule.getHour());
 				psInsert.setString(9, harvestSchedule.getNotifyEmail());
-				psInsert.setString(10, Constants.STATUS_SERVICE_NOT_RUNNING);
+				psInsert.setString(10, Status.NOT_RUNNING.name());
 				psInsert.setString(11, harvestSchedule.getRequest());
 
 				// Execute the insert statement and return the result
@@ -1241,7 +1288,11 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				psUpdate.setInt(7, harvestSchedule.getDayOfWeek());
 				psUpdate.setInt(8, harvestSchedule.getHour());
 				psUpdate.setString(9, harvestSchedule.getNotifyEmail());
-				psUpdate.setString(10, harvestSchedule.getStatus());
+				if (harvestSchedule.getStatus() != null) {
+					psUpdate.setString(10, null);	
+				} else {
+					psUpdate.setString(10, harvestSchedule.getStatus().name());
+				}
 				psUpdate.setString(11, harvestSchedule.getRequest());
 				psUpdate.setInt(12, harvestSchedule.getId());
 

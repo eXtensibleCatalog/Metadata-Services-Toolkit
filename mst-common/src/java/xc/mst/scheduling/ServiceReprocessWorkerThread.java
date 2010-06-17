@@ -88,7 +88,7 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 			log.info("Starting thread to reprocess service " + service);
 			
 			// Reprocess the records processed by the service
-    		RecordList records = recordService.getProcessedByServiceId(service.getId());
+    		List<Record> records = recordService.getProcessedByServiceId(service.getId());
     		
     		// This will hold the records that has to be processed and is same as the re processing
     		// service's record's predecessor.

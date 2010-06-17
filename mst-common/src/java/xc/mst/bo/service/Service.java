@@ -15,7 +15,7 @@ import java.util.List;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
-import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.services.MetadataService;
 import xc.mst.utils.MSTConfiguration;
 
@@ -121,7 +121,7 @@ public class Service
 	/**
 	 * The current status of the service.
 	 */
-	private String status = Constants.STATUS_SERVICE_NOT_RUNNING;
+	private Status status = Status.NOT_RUNNING;
 
 	/**
 	 * The version of the service
@@ -565,7 +565,7 @@ public class Service
 	 * Gets the current status of the service.
 	 * @return The current status of the service.
 	 */
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
@@ -573,7 +573,7 @@ public class Service
 	 * Sets the current status of the service.
 	 * @param status The status of the service.
 	 */
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 	

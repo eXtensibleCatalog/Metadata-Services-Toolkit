@@ -16,6 +16,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 
 import org.jdom.Document;
 import org.jdom.JDOMException;
@@ -37,7 +38,6 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 import xc.mst.services.MetadataServiceFactory;
-import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
 public class TestTransformation extends BaseTest {
@@ -77,7 +77,7 @@ public class TestTransformation extends BaseTest {
 	public HashMap<String,String> processedRecords = new HashMap<String, String>();
 	
 	
-	public Hashtable<String , RecordList> transformedRecords = new Hashtable<String, RecordList>();
+	public Hashtable<String , List<Record>> transformedRecords = new Hashtable<String, List<Record>>();
 	
 	public Hashtable<String , ArrayList<Document>> baseRecords = new Hashtable<String, ArrayList<Document>>();
 	
@@ -164,7 +164,7 @@ public class TestTransformation extends BaseTest {
 			for (String recordNRUID : inputRecordIDMap.keySet()) {
 				
 				Long SOLRID = inputRecordIDMap.get(recordNRUID);
-				RecordList list =  recordService.getByProcessedFrom(SOLRID.longValue());
+				List<Record> list =  recordService.getByProcessedFrom(SOLRID.longValue());
 				transformedRecords.put(recordNRUID, list);
 				
 			}
@@ -175,7 +175,7 @@ public class TestTransformation extends BaseTest {
 			for(String recordNRUID: baseRecords.keySet()){
 				
 				ArrayList<Document> baseRecordList = baseRecords.get(recordNRUID);
-				RecordList transformedRecordList = transformedRecords.get(recordNRUID);
+				List<Record> transformedRecordList = transformedRecords.get(recordNRUID);
 				ArrayList<Document> transformedDocumentList = new ArrayList<Document>();
 
 				StringReader sr = null;

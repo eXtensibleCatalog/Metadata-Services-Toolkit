@@ -81,11 +81,11 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	protected String getPrefix(String repoName) {
-		return repoName;
+		return repoName.replaceAll(" ", "_");
 	}
 	
 	protected String getTableName(String repoName, String tableName) {
-		return " "+getPrefix(repoName)+"."+tableName+" ";
+		return " "+getPrefix(repoName)+"."+tableName.replaceAll(" ", "_")+" ";
 	}
 	
 	public int getSize(String name) {
@@ -195,6 +195,8 @@ public class RepositoryDAO extends BaseDAO {
 	                    public void setValues(PreparedStatement ps, int j) throws SQLException {
 	                    	int i=1;
 	                    	Record r = recordsToAdd.get(j);
+	                    	r.setMode(Record.STRING_MODE);
+	                    	LOG.debug("r.getOaiXml(): "+r.getOaiXml());
 	                        ps.setLong(i++, r.getId());
 	                        ps.setString(i++, r.getOaiXml());
 	                        ps.setString(i++, r.getOaiXml());
@@ -223,6 +225,7 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public void createRepo(String name) {
+		createSchema(name, false);
 		this.jdbcTemplate.update(
 				"insert into "+REPOS_TABLE+" (repo_name, service_id, provider_id) "+
 					"values (?, ?, ?) ",

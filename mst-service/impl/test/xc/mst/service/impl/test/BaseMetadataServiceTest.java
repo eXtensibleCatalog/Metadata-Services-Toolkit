@@ -86,7 +86,7 @@ public class BaseMetadataServiceTest extends BaseTest {
 					Element records = doc.getRootElement();
 					for (Object recordObj : records.getChildren("record")) {
 						Element record = (Element)recordObj;
-						Record in = new Record(record);
+						Record in = recordService.parse(record);
 						
 						List<Record> outs = service.process(in);
 						for (Record out : outs) {
@@ -134,12 +134,12 @@ public class BaseMetadataServiceTest extends BaseTest {
 					Element records = doc.getRootElement();
 					for (Object recordObj : records.getChildren("record")) {
 						Element record = (Element)recordObj;
-						Record in = new Record(record);
+						Record in = recordService.parse(record);
 						
 						List<Record> outs = service.process(in);
 						for (Record out : outs) {
 							LOG.debug("out: "+out);
-							pw.println(xmlOutputter.outputString(out.getRecordEl()));
+							pw.println(xmlOutputter.outputString(recordService.createJDomElement(out)));
 							//pw.println(out.getRecordXml());
 						}
 					}

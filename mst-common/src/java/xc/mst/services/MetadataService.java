@@ -14,6 +14,7 @@ import java.util.List;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
+import xc.mst.constants.Status;
 import xc.mst.repo.Repository;
 
 public interface MetadataService {
@@ -40,14 +41,14 @@ public interface MetadataService {
 	
 	// leftover
 	public void runService(int serviceId, int outputSetId);
-	public void setStatus(String status);
+	public void setStatus(Status status);
 	public boolean sendReportEmail(String problem);
 	public void setCanceled(boolean isCanceled);
 	public void setPaused(boolean isPaused);
 	public Service getService();
 	public void setService(Service service);
 	public String getServiceName();
-	public String getServiceStatus();
+	public Status getServiceStatus();
 	public int getProcessedRecordCount();
 	public int getTotalRecordCount();
 	public List<String> getUnprocessedErrorRecordIdentifiers();

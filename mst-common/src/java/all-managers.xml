@@ -18,8 +18,7 @@
 	</bean>
 	
 	<bean name="Scheduler" class="xc.mst.scheduling.Scheduler" parent="BaseManager" />
-	<bean name="Harvester" class="xc.mst.harvester.Harvester" parent="BaseManager" scope="prototype" />
-	<bean name="HarvestRunner" class="xc.mst.harvester.HarvestRunner" parent="BaseManager" scope="prototype" />
+	<bean name="HarvestManager" class="xc.mst.harvester.HarvestManager" parent="BaseManager" scope="prototype" />
 	<!-- 
 	<bean name="ServicesManager" class="xc.mst.manager.services.ServicesManager" parent="BaseManager" scope="singleton" />
 	 -->

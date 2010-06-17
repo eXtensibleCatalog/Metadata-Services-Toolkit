@@ -17,21 +17,12 @@ import org.testng.annotations.Test;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
-import xc.mst.bo.user.User;
 import xc.mst.common.test.BaseTest;
 import xc.mst.dao.DataException;
-import xc.mst.dao.provider.DefaultFormatDAO;
-import xc.mst.dao.provider.DefaultSetDAO;
-import xc.mst.harvester.ValidateRepository;
-import xc.mst.helper.TestHelper;
-import xc.mst.manager.harvest.ScheduleService;
-import xc.mst.manager.record.RecordService;
-import xc.mst.manager.repository.FormatService;
-import xc.mst.manager.repository.ProviderService;
-import xc.mst.manager.repository.SetService;
-import xc.mst.manager.user.ServerService;
-import xc.mst.manager.user.UserService;
-import xc.mst.utils.index.RecordList;
+import xc.mst.harvester.HarvestManager;
+import xc.mst.repo.Repository;
+import xc.mst.scheduling.WorkerThread;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Tests the harvester
@@ -49,24 +40,7 @@ public class HarvesterTest extends BaseTest
 	public void harvesterTest() throws Exception
 	{
 		System.setProperty("source.encoding", "UTF-8");
-		
-	   	 // Initialize Solr, database, log before testing
-	   	 TestHelper helper = TestHelper.getInstance();
-		
-		ProviderService providerService = (ProviderService)getBean("ProviderService");
-		
-		ScheduleService scheduleService = (ScheduleService)getBean("ScheduleService");
-		
-		FormatService formatService = (FormatService)getBean("FormatService");
-		
-		SetService setService = (SetService)getBean("SetService");
-		 		 
-		UserService userService = (UserService)getBean("UserService");	 	
-		 
-		ServerService serverService = (ServerService)getBean("ServerService");
-		
-		User user = userService.getUserByUserName("admin", serverService.getServerByName("Local"));
-	            
+   
 		Provider provider = new Provider();
 
 		provider.setName("Test Repository");
@@ -74,12 +48,14 @@ public class HarvesterTest extends BaseTest
 		provider.setOaiProviderUrl("http://geolib.geo.auth.gr/digeo/index.php/index/oai");
 		provider.setCreatedAt(new java.util.Date());
 		providerService.insertProvider(provider);
-		
-		ValidateRepository validateRepository = new ValidateRepository();
 		validateRepository.validate(provider.getId());
 		
+		repositoryDAO.createSchema(provider.getName(), true);
+		Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
+        repo.setName(provider.getName());
+		
 		// Make sure we got the correct sets for the repository
-		assert new DefaultSetDAO().getSetsForProvider(provider.getId()).size() == 5 : "Expected 5 sets, but found " + new DefaultSetDAO().getSetsForProvider(provider.getId()).size() + " sets.";
+		assert setDAO.getSetsForProvider(provider.getId()).size() == 5 : "Expected 5 sets, but found " + setDAO.getSetsForProvider(provider.getId()).size() + " sets.";
 
 		// TODO:  Make the following test for sets work without encoding problems.
 		
@@ -95,7 +71,7 @@ public class HarvesterTest extends BaseTest
 		//assert setNames.contains("\u00ce\u2022\u00cf\u2026\u00cf\ufffd\u00ce\u00b5\u00cf\u201e\u00ce\u00ae\u00cf\ufffd\u00ce\u00b9\u00ce\u00b1") : "The set \u00ce\u2022\u00cf\u2026\u00cf\ufffd\u00ce\u00b5\u00cf\u201e\u00ce\u00ae\u00cf\ufffd\u00ce\u00b9\u00ce\u00b1 was expected but not found.";
 		
 		// Make sure we got the correct formats for the repository
-		List<Format> formats = new DefaultFormatDAO().getFormatsForProvider(provider.getId());
+		List<Format> formats = formatDAO.getFormatsForProvider(provider.getId());
 		java.util.Set<String> formatNames = new HashSet<String>();
 		for(Format format : formats)
 			formatNames.add(format.getName());
@@ -109,7 +85,7 @@ public class HarvesterTest extends BaseTest
         schedule.setScheduleName("Test Schedule Name");
         schedule.setDayOfWeek(1);
 
-        schedule.addFormat(new DefaultFormatDAO().getByName("oai_dc"));
+        schedule.addFormat(formatDAO.getByName("oai_dc"));
         
         schedule.setHour(5);
         schedule.setId(111);
@@ -120,18 +96,18 @@ public class HarvesterTest extends BaseTest
 
         scheduleService.insertSchedule(schedule);
         
-        /* TODO: need a new test
-        HarvestRunner harvestRunner = (HarvestRunner)getBean("HarvestRunner"); 
-        harvestRunner.setScheduleId(schedule.getId());
-        harvestRunner.runHarvest();
-        */
+		WorkerThread runningJob = new WorkerThread();
+		HarvestManager hm = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
+		hm.setHarvestSchedule(schedule);
+		runningJob.setWorkDelegate(hm);
+        runningJob.run();
         
-        RecordService recordService = (RecordService)getBean("RecordService");
-        RecordList records = recordService.getByProviderId(provider.getId());
         
-        assert records.size() == 3333 : "Total number of records should be 3333. But it is " + records.size();
+        int recordsSize = repo.getSize();
+        
+        assert recordsSize == 1000 : "Total number of records should be 1000. But it is " + recordsSize;
 
-        providerService.deleteProvider(provider);
+        //providerService.deleteProvider(provider);
         
 	}
 }

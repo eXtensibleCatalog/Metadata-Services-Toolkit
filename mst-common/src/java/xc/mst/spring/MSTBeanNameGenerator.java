@@ -21,6 +21,8 @@ public class MSTBeanNameGenerator extends MSTAutoBeanHelper implements BeanNameG
 	//@SuppressWarnings("unchecked")
 	public String generateBeanName(BeanDefinition definition,
             BeanDefinitionRegistry registry) {
-		return getBeanName(definition.getBeanClassName());
+		String beanName = getBeanName(definition.getBeanClassName());
+		LOG.debug("beanName: "+beanName);
+		return beanName;
 	}
 }

@@ -93,7 +93,7 @@ public class DeleteServiceWorkerThread extends WorkerThread
 	    	
 	    	// Delete the records processed by the service and send the deleted
 	    	// records to subsequent services so they know about the delete
-			RecordList records = recordService.getByServiceId(serviceId);
+			List<Record> records = recordService.getByServiceId(serviceId);
 
 			// A list of services which must be run after this one
 			List<Service> affectedServices = new ArrayList<Service>();

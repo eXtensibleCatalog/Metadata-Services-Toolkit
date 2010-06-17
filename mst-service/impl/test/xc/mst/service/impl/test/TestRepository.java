@@ -24,10 +24,11 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 import xc.mst.bo.record.Record;
+import xc.mst.manager.BaseService;
 import xc.mst.repo.Repository;
 import xc.mst.utils.Util;
 
-public class TestRepository implements Repository {
+public class TestRepository extends BaseService implements Repository {
 	
 	private static final Logger LOG = Logger.getLogger(TestRepository.class);
 	
@@ -48,7 +49,10 @@ public class TestRepository implements Repository {
 	
 	protected DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	
-	public TestRepository(String folderName) {
+	public String getName() {
+		return this.folderName;
+	}
+	public void setName(String folderName) {
 		this.folderName = folderName;
 		basePath = new File(".").getAbsolutePath();
 		
@@ -65,11 +69,8 @@ public class TestRepository implements Repository {
 		}
 	}
 	
-	public String getName() {
-		return this.folderName;
-	}
-	public void setName(String name) {
-		this.folderName = name;
+	public int getSize() {
+		return 0;
 	}
 	
 	public void beginBatch() {
@@ -78,6 +79,15 @@ public class TestRepository implements Repository {
 	public void endBatch() {
 		Format format = Format.getPrettyFormat();
 		XMLOutputter xmlOutputter = new XMLOutputter(format);
+		File outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName);
+		if (!outFolder.exists()) {
+			outFolder.mkdir();
+		} else {
+			for (String prevOutFile : outFolder.list()) {
+				LOG.debug("deleting file: "+ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+prevOutFile);
+				new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+prevOutFile).delete();
+			}
+		}
 		for (Map.Entry<String, List<Record>> me : outputFiles.entrySet()) {
 			String fileName = me.getKey();
 			List<Record> records = me.getValue();
@@ -85,19 +95,12 @@ public class TestRepository implements Repository {
 				File outFile = null;
 				PrintWriter pw = null;
 				try {
-					File outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName);
-					if (!outFolder.exists()) {
-						outFolder.mkdir();
-					} else {
-						for (String prevOutFile : outFolder.list()) {
-							new File(prevOutFile).delete();
-						}
-					}
 					outFile = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+fileName);
+					LOG.debug("writing outFile: "+outFile);
 					pw = new PrintWriter(outFile);
-					pw.println("<records>");
+					pw.println("<records xmlns=\"http://www.openarchives.org/OAI/2.0/\">");
 					for (Record r : records) {
-						pw.println(xmlOutputter.outputString(r.getRecordEl()));
+						pw.println(xmlOutputter.outputString(getRecordService().createJDomElement(r, null)));
 					}
 					pw.println("</records>");
 				} catch (Throwable t) {
@@ -119,26 +122,30 @@ public class TestRepository implements Repository {
 	public void installOrUpdateIfNecessary() {
 		throw new RuntimeException("not implemented");
 	}
-
-	public void addRecords(List<Record> records) {
-		for (Record r : records) {
-			Record previousOutputRecord = (Record)repo.get(r.getId());
-			if (previousOutputRecord != null) {
-				if (Record.DELETED == r.getStatus()) {
-					previousOutputRecord.setStatus(Record.DELETED);
-				} else if (Record.ACTIVE == r.getStatus() || 
-						Record.HELD == r.getStatus()) {
-					previousOutputRecord.setStatus(Record.UPDATE_REPLACE);
-				}
+	
+	public void addRecord(Record r) {
+		Record previousOutputRecord = (Record)repo.get(r.getId());
+		if (previousOutputRecord != null) {
+			if (Record.DELETED == r.getStatus()) {
+				previousOutputRecord.setStatus(Record.DELETED);
+			} else if (Record.ACTIVE == r.getStatus() || 
+					Record.HELD == r.getStatus()) {
+				previousOutputRecord.setStatus(Record.UPDATE_REPLACE);
 			}
-			repo.put(r.getId(), r);
 		}
+		repo.put(r.getId(), r);
 		List<Record> outputRecordsInFile = outputFiles.get(this.currentFile);
 		if (outputRecordsInFile == null) {
 			outputRecordsInFile = new ArrayList<Record>();
 			outputFiles.put(this.currentFile, outputRecordsInFile);
 		}
-		outputRecordsInFile.addAll(records);
+		outputRecordsInFile.add(r);
+	}
+
+	public void addRecords(List<Record> records) {
+		for (Record r : records) {
+			addRecord(r);
+		}
 	}
 	
 	public List<Record> getRecords(Date from, Date until, Long startingId) {
@@ -151,15 +158,16 @@ public class TestRepository implements Repository {
 			try {
 				this.currentFile = fileName;
 				File file2process = new File(INPUT_RECORDS_DIR+"/"+folderName+"/"+fileName);
+				LOG.debug("file2process: "+file2process);
 				
 				DocumentBuilder db = dbf.newDocumentBuilder();
 				DOMBuilder domBuilder = new DOMBuilder();
 				Document doc = domBuilder.build(db.parse(file2process));
 				
 				Element records = doc.getRootElement();
-				for (Object recordObj : records.getChildren("record")) {
+				for (Object recordObj : records.getChildren("record", doc.getRootElement().getNamespace())) {
 					Element record = (Element)recordObj;
-					Record in = new Record(record);
+					Record in = getRecordService().parse(record);
 					inputRecords.add(in);
 					//this.inputRecordFileNames.put(in, fileName);
 				}

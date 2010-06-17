@@ -29,6 +29,7 @@ public class DefaultRepository extends BaseService implements Repository {
 		this.transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				try {
+					LOG.debug("config.getProperty(\"version\"): "+config.getProperty("version"));
 					if ("0.3.0".equals(config.getProperty("version"))) {
 						boolean exists = getRepositoryDAO().exists(name);
 						LOG.debug("exists: "+exists);
@@ -53,7 +54,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name.toLowerCase().replaceAll(" ", "_");
 	}
 	
 	public int getSize() {

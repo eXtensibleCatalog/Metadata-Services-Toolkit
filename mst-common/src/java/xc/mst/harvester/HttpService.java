@@ -30,8 +30,10 @@ public class HttpService extends BaseService {
 	
 	protected HttpClient client = null;
 
-	public HttpService() {
+	public void init() {
 		client = new HttpClient(new MultiThreadedHttpConnectionManager());
+		LOG.debug("client: "+client);
+		LOG.debug("client.getParams(): "+client.getParams());
 		client.getParams().setParameter("http.socket.timeout", 
 				Integer.parseInt(config.getProperty("harvest.socket.timeout", this.timeOutMilliseconds+"")));
 		client.getParams().setParameter("http.connection.timeout", 

@@ -201,29 +201,31 @@ public class Record {
 	}
 
 	public void setMode(String mode) {
-		if (mode.equals(STRING_MODE)) {
-			this.oaiXml = xmlHelper.getString(this.oaiXmlEl);
-		} else if (mode.equals(STRING_MODE)) {
-			this.oaiXmlEl = xmlHelper.getJDomDocument(this.oaiXml).detachRootElement();
-		} else {
-			throw new RuntimeException("invalid mode!!!");
+		if (!mode.equals(this.mode)) {
+			if (mode.equals(STRING_MODE)) {
+				this.oaiXml = xmlHelper.getString(this.oaiXmlEl);
+			} else if (mode.equals(STRING_MODE)) {
+				this.oaiXmlEl = xmlHelper.getJDomDocument(this.oaiXml).detachRootElement();
+			} else {
+				throw new RuntimeException("invalid mode!!!");
+			}
+			this.mode = mode;	
 		}
-		this.mode = mode;
 	}
 	
 	public Element getOaiXmlEl() {
-		if (this.mode.equals(STRING_MODE)) {
+		if (!this.mode.equals(JDOM_MODE)) {
 			throw new RuntimeException(
-					"This record is set to STRING_MODE.  You must explicitly "+
+					"This record is not set to JDOM_MODE.  You must explicitly "+
 					"call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
 		}
 		return this.oaiXmlEl;
 	}
 
 	public void setOaiXmlEl(Element oaiXmlEl) {
-		if (this.mode.equals(STRING_MODE)) {
+		if (!this.mode.equals(JDOM_MODE)) {
 			throw new RuntimeException(
-					"This record is set to STRING_MODE.  You must explicitly "+
+					"This record is not set to JDOM_MODE.  You must explicitly "+
 					"call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
 		}
 		this.oaiXmlEl = oaiXmlEl;
@@ -469,8 +471,10 @@ public class Record {
 	 */
 	public String getOaiXml()
 	{
-		if (oaiXml == null && oaiXmlEl != null) {
-			this.oaiXml = oaiXmlEl.getText();
+		if (!this.mode.equals(STRING_MODE)) {
+			throw new RuntimeException(
+					"This record is not set to STRING_MODE.  You must explicitly "+
+					"call Record.setMode(STRING_MODE) before calling this method.");
 		}
 		return oaiXml;
 	}
@@ -482,8 +486,12 @@ public class Record {
 	 */
 	public void setOaiXml(String oaiXml)
 	{
+		if (!this.mode.equals(STRING_MODE)) {
+			throw new RuntimeException(
+					"This record is not set to STRING_MODE.  You must explicitly "+
+					"call Record.setMode(STRING_MODE) before calling this method.");
+		}
 		this.oaiXml = oaiXml;
-		getOaiXml();
 	}
 
 	/**
@@ -957,7 +965,7 @@ public class Record {
 		predecessors.add(r);
 	}
 	
-	public List<Record> getPredecessor() {
+	public List<Record> getPredecessors() {
 		return predecessors;
 	}
 	

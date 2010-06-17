@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.manager.IndexException;
 
@@ -64,7 +65,7 @@ public class DeleteService extends BaseActionSupport
 
             long numberOfRecordsHarvested = getRecordService().getNumberOfRecordsByServiceId(serviceId);
             // Delete service only if it is not harvested.
-            if (service.getStatus().equals(Constants.STATUS_SERVICE_RUNNING) || service.getStatus().equals(Constants.STATUS_SERVICE_PAUSED)) {
+            if (service.getStatus().equals(Status.RUNNING) || service.getStatus().equals(Status.PAUSED)) {
             	message = service.getName() + " cannot be deleted when it is currently running or paused.";
                 deleted = false;
                 invalidServiceDeleteStatus = true;
