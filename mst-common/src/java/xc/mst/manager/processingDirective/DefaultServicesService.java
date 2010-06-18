@@ -115,12 +115,14 @@ public class DefaultServicesService extends BaseService
     }
 	
 	public ServiceEntry getServiceEntry(String name) {
-		LOG.debug("entering getMetadataService "+System.currentTimeMillis());
-		if (!serviceEntries.containsKey(name)) {
-			new ServiceEntry(name).start();	
+		synchronized (this) {
+			LOG.debug("entering getMetadataService "+name+" "+System.currentTimeMillis());
+			if (!serviceEntries.containsKey(name)) {
+				new ServiceEntry(name).start();	
+			}
+			ServiceEntry se = serviceEntries.get(name);
+			return se;	
 		}
-		ServiceEntry se = serviceEntries.get(name);
-		return se;
 	}
 	
 	public MetadataService getMetadataService(String name) {
@@ -199,6 +201,7 @@ public class DefaultServicesService extends BaseService
 							semaphore.release();
 							t.printStackTrace(System.out);
 						}
+						LOG.debug("done initting ac");
 					}
 				};
 				semaphore.acquire();

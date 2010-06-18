@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
+import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.constants.Status;
@@ -44,7 +45,7 @@ import xc.mst.utils.TimingLogger;
  */
 public class Scheduler extends BaseService implements Runnable {
 	
-	private final static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+	private final static Logger LOG = Logger.getLogger(Constants.LOGGER_GENERAL);
 	
 	protected boolean killed = false;
 	
@@ -87,7 +88,7 @@ public class Scheduler extends BaseService implements Runnable {
 			try {
 				schedulesToRun = getHarvestScheduleDAO().getSchedulesToRun(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.DAY_OF_WEEK), now.get(Calendar.MINUTE));
 			} catch (DatabaseConfigException e1) {
-				log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+				LOG.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
 
 				schedulesToRun = new ArrayList<HarvestSchedule>();
 			}
@@ -104,8 +105,8 @@ public class Scheduler extends BaseService implements Runnable {
 				//      because the 60 second loop assured that a job would not be started twice.  Instead
 				//      I'll keep track of the last start time for each job.
 				if(!alreadyRanThisMinute) {
-					if(log.isDebugEnabled())
-						log.debug("Creating a Thread to run HarvestSchedule with id " + scheduleToRun.getId());
+					if(LOG.isDebugEnabled())
+						LOG.debug("Creating a Thread to run HarvestSchedule with id " + scheduleToRun.getId());
 	
 					// Add job to database queue
 					try {
@@ -114,7 +115,7 @@ public class Scheduler extends BaseService implements Runnable {
 						getJobService().insertJob(job);
 						lastRunDate.put(scheduleToRun.getId(), thisMinute);
 					} catch (DatabaseConfigException dce) {
-						log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+						LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
 					}
 				}
 			}
@@ -122,8 +123,8 @@ public class Scheduler extends BaseService implements Runnable {
 			if (runningJob == null || !runningJob.isAlive()) {
 				try {
 					if (previousJob != null) {
-						TimingLogger.log("finished job: "+previousJob.getJobType());
-						TimingLogger.log("runningJob: "+runningJob);
+						LOG.debug("finished job: "+previousJob.getJobType());
+						LOG.debug("runningJob: "+runningJob);
 						TimingLogger.reset();
 						
 						List<ProcessingDirective> processingDirectives = null;
@@ -141,12 +142,30 @@ public class Scheduler extends BaseService implements Runnable {
 						if (processingDirectives != null) {
 							try {
 								for (ProcessingDirective pd : processingDirectives) {
+									// TODO
+									// match by set
+									// match by format
+									// OR you could run the service and it just won't grab any records
+									/*
+									boolean matched = false;
+									if (pd.getTriggeringFormats() != null) {
+										for (Format f : pd.getTriggeringFormats()) {
+											if (previousJob.getHarvestSchedule().getFormats() != null) {
+												
+											}
+											if (f.getId().equals(previousJob.getHarvestSchedule().getFormats()))
+										}
+									}
+									*/
+
+									
+									LOG.debug("adding to job queue pd.getId(): "+pd.getId());
 									Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
 									job.setOrder(getJobService().getMaxOrder() + 1); 
 									getJobService().insertJob(job);	
 								}
 							} catch (DatabaseConfigException dce) {
-								log.error("DatabaseConfig exception occured when ading jobs to database", dce);
+								LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
 							}
 						}
 					}
@@ -199,20 +218,20 @@ public class Scheduler extends BaseService implements Runnable {
 						getJobService().deleteJob(jobToStart);
 					} // end if(the service job queue was empty)
 				} catch(DataException de) {
-					log.error("DataException occured when getting job from database", de);
+					LOG.error("DataException occured when getting job from database", de);
 				}
 			}
 
 			// Sleep until the next hour begins
 			try {
-				if(log.isDebugEnabled())
-					log.debug("Scheduler Thread sleeping for 1 minute.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Scheduler Thread sleeping for 1 minute.");
 				Thread.sleep(3 * 1000);
 			} catch(InterruptedException e) {
-				if(log.isDebugEnabled())
-					log.debug("Caught InteruptedException while sleeping in Scheduler Thread.");
+				if(LOG.isDebugEnabled())
+					LOG.debug("Caught InteruptedException while sleeping in Scheduler Thread.");
 			} catch(Throwable t) {
-				log.error("", t);
+				LOG.error("", t);
 			}
 		}
 	}

@@ -39,7 +39,7 @@ public class WorkerThread extends Thread {
 				if (this.status == Status.RUNNING) {
 					keepGoing = this.workDelegate.doSomeWork();
 				} else if (this.status == Status.CANCELED) {
-					this.workDelegate.cancel();
+					keepGoing = false;
 				} else if (this.status == Status.PAUSED) {
 					sleep(5000);
 				}
@@ -53,14 +53,17 @@ public class WorkerThread extends Thread {
 	}
 	
 	public void cancel() {
+		this.workDelegate.cancel();
 		this.status = Status.CANCELED;
 	}
 
 	public void pause() {
+		this.workDelegate.pause();
 		this.status = Status.PAUSED;
 	}
 
 	public void proceed() {
+		this.workDelegate.resume();
 		this.status = Status.RUNNING;
 	}
 

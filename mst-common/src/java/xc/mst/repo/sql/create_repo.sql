@@ -14,7 +14,8 @@ create table repo_name.record_updates (
 	id                    int        NOT NULL    AUTO_INCREMENT,
 	record_id             int,
 	date_updated          datetime,
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	KEY idx_REPO_NAME_record_updates_date_updated (date_updated)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 create table repo_name.records_xml (
@@ -36,5 +37,6 @@ create table repo_name.record_predecessors (
 	record_id             int,
 	pred_record_id        int,
 	PRIMARY KEY (id),
-	KEY idx_REPO_NAME_records_set_record_id(record_id)
+	KEY idx_REPO_NAME_records_set_record_id(record_id),
+	KEY idx_REPO_NAME_records_set_pred_record_id(pred_record_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

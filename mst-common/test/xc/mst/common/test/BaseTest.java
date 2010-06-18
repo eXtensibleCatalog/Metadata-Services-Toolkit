@@ -9,6 +9,9 @@
 
 package xc.mst.common.test;
 
+import java.net.URL;
+import java.net.URLClassLoader;
+
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,6 +19,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import xc.mst.dao.harvest.HarvestScheduleDAO;
+import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.SetDAO;
 import xc.mst.harvester.ValidateRepository;
@@ -29,8 +33,10 @@ import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
 import xc.mst.repo.Repository;
 import xc.mst.repo.RepositoryDAO;
+import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.SetupClasspath;
+import xc.mst.utils.TimingLogger;
 import xc.mst.utils.Util;
 
 public class BaseTest {
@@ -54,6 +60,8 @@ public class BaseTest {
 	protected FormatDAO formatDAO = null;
 	protected SetDAO setDAO = null;
 	protected HarvestScheduleDAO harvestScheduleDAO = null;
+	protected ProcessingDirectiveDAO processingDirectiveDAO = null;
+	protected Scheduler scheduler = null;
 
 	@BeforeSuite
 	public void startup() {
@@ -80,6 +88,8 @@ public class BaseTest {
 		formatDAO = (FormatDAO)getBean("FormatDAO");
 		harvestScheduleDAO = (HarvestScheduleDAO)getBean("HarvestScheduleDAO");
 		setDAO = (SetDAO)getBean("SetDAO");  
+		processingDirectiveDAO = (ProcessingDirectiveDAO)getBean("ProcessingDirectiveDAO");
+		scheduler = (Scheduler)getBean("Scheduler");
 		LOG.debug("startup complete");
 	}
 	
@@ -89,7 +99,20 @@ public class BaseTest {
 	
 	@AfterSuite
 	public void shutdown() {
+		TimingLogger.reset(true);
 		LOG.debug("shutdown");
+	}
+	
+	protected void printClassPath() {
+		//Get the System Classloader
+		ClassLoader sysClassLoader = ClassLoader.getSystemClassLoader();
+
+		//Get the URLs
+		URL[] urls = ((URLClassLoader)sysClassLoader).getURLs();
+
+		for(int i=0; i< urls.length; i++) {
+			LOG.debug(urls[i].getFile());
+		} 
 	}
 	
 }

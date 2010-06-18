@@ -1260,6 +1260,7 @@ public class DefaultRecordService extends RecordService
 					// Loop over all levels in the set spec
 					for(String setSpecLevel : setSpecLevels)
 					{
+						LOG.debug("setSpecLevel: "+setSpecLevel);
 						try {
 							// Append the set at the current level to the setSpec at the previous level to
 							// get the setSpec for the current level. Append colons as needed

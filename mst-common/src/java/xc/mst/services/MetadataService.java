@@ -18,7 +18,7 @@ import xc.mst.constants.Status;
 import xc.mst.repo.Repository;
 
 public interface MetadataService {
-	
+
 	public void install();
 	
 	public void uninstall();
@@ -38,16 +38,19 @@ public interface MetadataService {
 	 * @param set
 	 */
 	public void process(Repository repo, Format format, Set set);
+	public void pause();
+	public void resume();
+	public void cancel();
+	public Service getService();
+	public void setService(Service service);
+	public String getServiceName();
 	
-	// leftover
+	// leftover methods that I think can be eventually deleted
 	public void runService(int serviceId, int outputSetId);
 	public void setStatus(Status status);
 	public boolean sendReportEmail(String problem);
 	public void setCanceled(boolean isCanceled);
 	public void setPaused(boolean isPaused);
-	public Service getService();
-	public void setService(Service service);
-	public String getServiceName();
 	public Status getServiceStatus();
 	public int getProcessedRecordCount();
 	public int getTotalRecordCount();

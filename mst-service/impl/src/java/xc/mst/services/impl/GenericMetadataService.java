@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -62,8 +63,9 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	 */
 	protected HashMap<Integer, Integer> servicesToRun = new HashMap<Integer, Integer>();
 
-	protected boolean isCanceled;
-	protected boolean isPaused;
+	protected boolean stopped = false;
+	protected boolean paused = false;
+	protected ReentrantLock running = new ReentrantLock();
 	protected int processedRecordCount = 0;
 	protected int totalRecordCount = 0;
 	protected int inputRecordCount = 0;
@@ -122,6 +124,11 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 
 	public void setInputRecordCount(int inputRecordCount) {
 	}
+	
+	public void cancel() {stopped = true; running.lock(); running.unlock();}
+	public void finish() {running.lock(); running.unlock();}
+	public void pause()  {paused = true; running.lock(); running.unlock();}
+	public void resume() {paused = false;}
 	
 	public void install() {
 		try {
@@ -299,6 +306,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	public abstract List<Record> process(Record r);
 
 	public void process(Repository repo, Format format, Set set) {
+		running.lock();
 		//TODO - create tables
 		//   one of which is a list of when the last "harvest" was
 		Date from = new Date(System.currentTimeMillis()-(1000*60*60*24*500));
@@ -306,11 +314,23 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 		
 		List<Record> records = repo.getRecords(from, until, null);
 		
-		//TODO - you'll want to move the batches inside of the while loop
-		//       although maybe there should be different levels of batches
-		getRepository().beginBatch();
 		Long highestId = null;
-		while (records != null && records.size() > 0) {
+		boolean previouslyPaused = false;
+		while (records != null && records.size() > 0 && !stopped) {
+			if (paused) {
+				previouslyPaused = true;
+				running.unlock();
+				try {
+					Thread.sleep(1000);
+				} catch (Throwable t) {
+					throw new RuntimeException(t);
+				}
+				continue;
+			}
+			if (previouslyPaused) {
+				running.lock();
+			}
+			getRepository().beginBatch();
 			for (Record in : records) {
 				getRepository().injectSuccessors(in);
 				List<Record> out = process(in);
@@ -319,9 +339,12 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 				}
 				highestId = in.getId();
 			}
+			getRepository().endBatch();
 			records = repo.getRecords(from, until, highestId);
 		}
-		getRepository().endBatch();
+		if (!previouslyPaused) {
+			running.unlock();
+		}
 	}
 
 }

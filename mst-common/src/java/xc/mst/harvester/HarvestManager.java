@@ -14,13 +14,13 @@ import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.Namespace;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -35,7 +35,6 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.email.Emailer;
 import xc.mst.manager.BaseManager;
-import xc.mst.manager.record.RecordService;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkDelegate;
 import xc.mst.utils.LogWriter;
@@ -69,6 +68,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	protected int numErrorsTolerated = 0;
 	protected int requestsSent4Step = 0;
 	
+	protected ReentrantLock running = new ReentrantLock();
+	
 	/**
 	 * The granularity of the OAI repository we're harvesting (either GRAN_DAY or GRAN_SECOND)
 	 */
@@ -85,11 +86,10 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	protected int recordsProcessed = 0;
 	protected int totalRecords = 0;
 
-	public void cancel() {
-	}
-	
-	public void finish() {
-	}
+	public void cancel() {running.lock(); running.unlock();}
+	public void finish() {running.lock(); running.unlock();}
+	public void pause()  {running.lock(); running.unlock();}
+	public void resume() {}
 	
 	public String getName() {
 		return "harvest-"+harvestSchedule.getProvider().getName();
@@ -193,14 +193,16 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	}
 	
 	public boolean doSomeWork() {
+		running.lock();
+		boolean retVal = true;
 		String testHarvestMaxRequests = config.getProperty("test.harvest.maxRequests");
 		if (testHarvestMaxRequests != null) {
 			if (Integer.parseInt(testHarvestMaxRequests) == requestsSent4Step) {
-				return false;
+				retVal = false;
 			}
 		}
 		requestsSent4Step++;
-		if (harvestScheduleStepIndex >= 0 && harvestScheduleStepIndex < harvestScheduleSteps.size()) {
+		if (retVal && harvestScheduleStepIndex >= 0 && harvestScheduleStepIndex < harvestScheduleSteps.size()) {
 			String resumption = null;
 			try {
 				HarvestScheduleStep scheduleStep = harvestScheduleSteps.get(harvestScheduleStepIndex);
@@ -291,7 +293,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		
 			} catch(DataException de) {
 				logError(de);
-				return false;
+				retVal = false;
 			} catch(HttpException he) {
 				logError(he);
 			} catch(Throwable t) {
@@ -300,13 +302,15 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			if (resumption == null) {
 				harvestScheduleStepIndex++;
 				if (harvestScheduleStepIndex >= harvestScheduleSteps.size()) {
-					return false;
+					retVal = false;
 				}
 			}
-			return true;
+			retVal = true;
 		} else {
-			return false;
+			retVal = false;
 		}
+		running.unlock();
+		return retVal;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -365,9 +369,11 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			TimingLogger.start("erl - 1");
 
             try {
+            	HarvestScheduleStep scheduleStep = harvestScheduleSteps.get(harvestScheduleStepIndex);
             	TimingLogger.start("getRecordService().parse(recordEl)");
             	Record record = getRecordService().parse(recordEl, currentHarvest.getProvider());
             	TimingLogger.stop("getRecordService().parse(recordEl)");
+            	record.setFormat(scheduleStep.getFormat());
 				record.setHarvest(currentHarvest);
 				
 				// If the provider has been harvested before, check whether or not this

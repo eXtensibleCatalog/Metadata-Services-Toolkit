@@ -6,6 +6,10 @@ public interface WorkDelegate {
 	
 	public boolean doSomeWork();
 	
+	public void pause();
+	
+	public void resume();
+	
 	public void cancel();
 	
 	public void finish();

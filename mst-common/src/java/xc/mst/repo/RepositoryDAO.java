@@ -28,8 +28,10 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
+import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.dao.BaseDAO;
+import xc.mst.utils.TimingLogger;
 
 public class RepositoryDAO extends BaseDAO {
 	
@@ -160,6 +162,7 @@ public class RepositoryDAO extends BaseDAO {
     				"status=?, "+
     				"format_id=? "+
     			";";
+			TimingLogger.start("RECORDS_TABLE.insert");
 	        int[] updateCounts = jdbcTemplate.batchUpdate(
 	        		sql,
 	                new BatchPreparedStatementSetter() {
@@ -182,6 +185,29 @@ public class RepositoryDAO extends BaseDAO {
 	                        return recordsToAdd.size();
 	                    }
 	                } );
+	        TimingLogger.stop("RECORDS_TABLE.insert");
+	        TimingLogger.start("RECORD_UPDATES_TABLE.insert");
+			sql = 
+    			"insert into "+getTableName(name, RECORD_UPDATES_TABLE)+
+    			" (record_id, date_updated) "+
+    			"values (?,?) "+
+    			";";
+	        updateCounts = jdbcTemplate.batchUpdate(
+	        		sql,
+	                new BatchPreparedStatementSetter() {
+	                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+	                    	int i=1;
+	                    	Record r = recordsToAdd.get(j);
+	                        ps.setLong(i++, r.getId());
+	                        ps.setTimestamp(i++, new Timestamp(d.getTime()));
+	                    }
+
+	                    public int getBatchSize() {
+	                        return recordsToAdd.size();
+	                    }
+	                } );
+	        TimingLogger.stop("RECORD_UPDATES_TABLE.insert");
+	        TimingLogger.start("RECORDS_XML_TABLE.insert");
 			sql = 
     			"insert into "+getTableName(name, RECORDS_XML_TABLE)+
     			" (record_id, xml) "+
@@ -196,7 +222,6 @@ public class RepositoryDAO extends BaseDAO {
 	                    	int i=1;
 	                    	Record r = recordsToAdd.get(j);
 	                    	r.setMode(Record.STRING_MODE);
-	                    	LOG.debug("r.getOaiXml(): "+r.getOaiXml());
 	                        ps.setLong(i++, r.getId());
 	                        ps.setString(i++, r.getOaiXml());
 	                        ps.setString(i++, r.getOaiXml());
@@ -206,7 +231,39 @@ public class RepositoryDAO extends BaseDAO {
 	                        return recordsToAdd.size();
 	                    }
 	                } );
+	        TimingLogger.stop("RECORDS_XML_TABLE..insert");
+	        TimingLogger.start("RECORDS_SETS_TABLE.insert");
+			sql = 
+    			"insert ignore into "+getTableName(name, RECORDS_SETS_TABLE)+
+    			" (record_id, set_id) "+
+    			"values (?,?) "+
+    			";";
+	        updateCounts = jdbcTemplate.batchUpdate(
+	        		sql,
+	                new BatchPreparedStatementSetter() {
+	        			int recordSetInserts=0;
+	                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+	                    	int k=0;
+	                    	Record r = recordsToAdd.get(j);
+	                    	if (r.getSets() != null) {
+		                    	int totalSets = r.getSets().size();
+		                    	for (Set s : r.getSets()) {
+			                    	int i=1;
+		                    		recordSetInserts++;
+		                    		ps.setLong(i++, r.getId());
+		                    		ps.setLong(i++, s.getId());
+		                    		if (++k < totalSets) {
+		                    			ps.addBatch();
+		                    		}
+		                    	}
+	                    	}
+	                    }
+	                    public int getBatchSize() {
+	                    	return recordsToAdd.size();
+	                    }
+	                } );
 	        recordsToAdd = null;
+	        TimingLogger.stop("RECORDS_SETS_TABLE.insert");
 		}
 	}
 
@@ -274,7 +331,7 @@ public class RepositoryDAO extends BaseDAO {
 		if (startingId != null) {
 			sql += " and r.record_id > ? ";
 		}
-		sql += " order by r.record_id limit 3";
+		sql += " order by r.record_id limit 200";
 		List<Record> records = null;
 		try {
 			if (startingId != null) {
