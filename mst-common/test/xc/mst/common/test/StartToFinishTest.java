@@ -21,16 +21,23 @@ public class StartToFinishTest extends BaseTest {
 	
 	protected Provider provider = null;
 	protected String serviceName = "example";
+	protected String repoName = "Test Repository";
 	
 	@Test
 	public void startToFinish() throws Exception  {
 		printClassPath();
 		
+		dropOldSchemas();
+		
 		installProvider();
 		installService();
+
 		configureProcessingRules();
 		createHarvestSchedule();
+
 		waitUntilFinished();
+		/*
+		*/
 		// wait until it is finished
 		// walk through all records (put the implementation in a service and repository)
 		//   - 
@@ -43,19 +50,27 @@ public class StartToFinishTest extends BaseTest {
 	    //   - inject successor, predecessor
 	}
 	
+	public void dropOldSchemas() {
+		try {
+			repositoryDAO.deleteSchema(repoName);
+			repositoryDAO.deleteSchema(serviceName);
+		} catch (Throwable t) {
+			
+		}
+	}
+	
 	public void installProvider() throws Exception {
 		System.setProperty("source.encoding", "UTF-8");
 		   
 		provider = new Provider();
 
-		provider.setName("Test Repository");
+		provider.setName(repoName);
 		provider.setDescription("Repository used in TestNG tests");
 		provider.setOaiProviderUrl("http://geolib.geo.auth.gr/digeo/index.php/index/oai");
 		provider.setCreatedAt(new java.util.Date());
 		providerService.insertProvider(provider);
 		validateRepository.validate(provider.getId());
 		
-		repositoryDAO.createSchema(provider.getName(), true);
 		Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(provider.getName());
 		
@@ -92,6 +107,26 @@ public class StartToFinishTest extends BaseTest {
 	}
 
 	public void configureProcessingRules() throws Exception {
+		Format f = new Format();
+		f.setName("oai_dc");
+		f.setNamespace("http://www.openarchives.org/OAI/2.0/oai_dc/");
+		f.setSchemaLocation("http://www.openarchives.org/OAI/2.0/oai_dc.xsd");
+		formatDAO.insert(f);
+		
+		Set s = new Set();
+		s.setDisplayName("Test-Repository");
+		s.setSetSpec("Test-Repository");
+		s.setIsProviderSet(false);
+		s.setIsRecordSet(true);
+		setDAO.insert(s);
+		
+		s = new Set();
+		s.setDisplayName("example-out");
+		s.setSetSpec("example-out");
+		s.setIsProviderSet(false);
+		s.setIsRecordSet(true);
+		setDAO.insert(s);
+		
 		Service service = servicesService.getServiceByName(serviceName);
 		ProcessingDirective pd = new ProcessingDirective();
 		pd.setService(service);
@@ -102,7 +137,7 @@ public class StartToFinishTest extends BaseTest {
 		List<Set> sets = new ArrayList<Set>();
 		sets.add(setDAO.getBySetSpec("Test-Repository"));
 		pd.setTriggeringSets(sets);
-		//pd.setOutputSet(sets);
+		pd.setOutputSet(s);
 		processingDirectiveDAO.insert(pd);
 	}
 	
@@ -125,10 +160,16 @@ public class StartToFinishTest extends BaseTest {
 	}
 	
 	public void waitUntilFinished() {
+		int timesNotRunning = 0;
 		while (true) {
 			try {
-				Thread.sleep(5000);
-				if (Status.RUNNING != scheduler.getRunningJob().getJobStatus()) {
+				Thread.sleep(1000);
+				if (scheduler.getRunningJob() == null || Status.RUNNING != scheduler.getRunningJob().getJobStatus()) {
+					timesNotRunning++;
+				} else {
+					timesNotRunning = 0;
+				}
+				if (timesNotRunning > 5) {
 					break;
 				}
 			} catch (Throwable t) {

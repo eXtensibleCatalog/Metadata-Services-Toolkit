@@ -54,7 +54,7 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 				repo.setName(folderStr);
 				ms.setRepository(repo);
 				LOG.debug("folderStr2: "+folderStr);
-				ms.process(repo, null, null);
+				ms.process(repo, null, null, null);
 				repositoryDAO.restIdSequence(id);
 				//TODO compare
 			}

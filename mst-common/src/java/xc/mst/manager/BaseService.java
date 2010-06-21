@@ -65,6 +65,7 @@ import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
 import xc.mst.repo.RepositoryDAO;
+import xc.mst.repo.RepositoryService;
 import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
@@ -447,5 +448,8 @@ public class BaseService {
 	}
 	public Scheduler getScheduler() {
 		return (Scheduler)config.getBean("Scheduler");
+	}
+	public RepositoryService getRepositoryService() {
+		return (RepositoryService)config.getBean("RepositoryService");
 	}
 }

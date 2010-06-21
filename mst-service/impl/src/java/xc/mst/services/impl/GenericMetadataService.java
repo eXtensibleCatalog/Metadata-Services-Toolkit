@@ -305,7 +305,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	
 	public abstract List<Record> process(Record r);
 
-	public void process(Repository repo, Format format, Set set) {
+	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
 		running.lock();
 		//TODO - create tables
 		//   one of which is a list of when the last "harvest" was
@@ -334,7 +334,10 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			for (Record in : records) {
 				getRepository().injectSuccessors(in);
 				List<Record> out = process(in);
-				if (out != null) {
+				if (out != null && outputSet != null) {
+					for (Record rout : out) {
+						rout.addSet(outputSet);
+					}
 					getRepository().addRecords(out);
 				}
 				highestId = in.getId();

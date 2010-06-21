@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.log4j.Logger;
 import org.jdom.Element;
 
@@ -203,9 +204,32 @@ public class Record {
 	public void setMode(String mode) {
 		if (!mode.equals(this.mode)) {
 			if (mode.equals(STRING_MODE)) {
-				this.oaiXml = xmlHelper.getString(this.oaiXmlEl);
-			} else if (mode.equals(STRING_MODE)) {
-				this.oaiXmlEl = xmlHelper.getJDomDocument(this.oaiXml).detachRootElement();
+				if (this.oaiXmlEl != null) {
+					this.oaiXml = xmlHelper.getString(this.oaiXmlEl);
+				} else {
+					this.oaiXml = null;
+				}
+			} else if (mode.equals(JDOM_MODE)) {
+				if (this.oaiXml != null) {
+					try {
+						this.oaiXmlEl = xmlHelper.getJDomDocument(this.oaiXml).detachRootElement();
+					} catch (Throwable t) {
+						LOG.error("this.oaiXml.getBytes()");
+						LOG.error("", t);
+						System.out.println("error!!!");
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						try {
+							baos.write(this.oaiXml.getBytes("UTF-8"));
+							baos.writeTo(System.out);
+						} catch (Throwable t2) {
+							LOG.error("", t2);
+						}
+						System.out.println("error!!!");
+						this.oaiXmlEl = null;
+					}
+				} else {
+					this.oaiXmlEl = null;
+				}
 			} else {
 				throw new RuntimeException("invalid mode!!!");
 			}

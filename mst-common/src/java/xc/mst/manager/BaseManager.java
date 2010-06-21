@@ -33,6 +33,7 @@ import xc.mst.manager.user.PermissionService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
+import xc.mst.repo.RepositoryService;
 import xc.mst.utils.index.SolrIndexManager;
 
 public class BaseManager extends BaseService {
@@ -61,7 +62,8 @@ public class BaseManager extends BaseService {
 	protected ValidateRepository validateRepository = null;
 	protected MSTSolrServer mstSolrServer = null;
 	protected HttpService httpService = null;
-	
+	protected RepositoryService repositoryService = null;
+
 	public EmailConfigService getEmailConfigService() {
 		return emailConfigService;
 	}
@@ -213,4 +215,10 @@ public class BaseManager extends BaseService {
 		this.httpService = httpService;
 	}
 	
+	public RepositoryService getRepositoryService() {
+		return repositoryService;
+	}
+	public void setRepositoryService(RepositoryService repositoryService) {
+		this.repositoryService = repositoryService;
+	}	
 }

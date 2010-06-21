@@ -29,15 +29,24 @@ public class ExampleMetadataService extends GenericMetadataService {
 	public List<Record> process(Record r) {
 		List<Record> records = new ArrayList<Record>();
 		Record out = getRecordService().createSuccessor(r, getService());
+		r.setMode(Record.JDOM_MODE);
 		Element metadataEl = r.getOaiXmlEl();
 		Element foo = metadataEl.getChild("foo", Namespace.getNamespace(FOO_NS));
-		getFooService().fooFound(foo.getText());
-		// you could do this 
-		// out.setOaiXml("<bar>you've been barred: "+StringEscapeUtils.escapeXml(foo.getText())+"</bar>");
-		// or you could do this
-		Element barEl = new Element("bar", Namespace.getNamespace(FOO_NS));
-		barEl.setText("you've been barred: "+foo.getText());
-		out.setOaiXmlEl(barEl);
+		if (foo != null) {
+			getFooService().fooFound(foo.getText());
+			// you could do this 
+			// out.setOaiXml("<bar>you've been barred: "+StringEscapeUtils.escapeXml(foo.getText())+"</bar>");
+			// or you could do this
+			Element barEl = new Element("bar", Namespace.getNamespace(FOO_NS));
+			barEl.setText("you've been barred: "+foo.getText());
+			out.setOaiXmlEl(barEl);
+		} else {
+			Element barEl = new Element("bar", Namespace.getNamespace(FOO_NS));
+			barEl.setText("you've been foobarred!");
+			metadataEl.addContent(barEl);
+			out.setOaiXmlEl(metadataEl);
+		}
+
 		records.add(out);
 		return records;
 	}

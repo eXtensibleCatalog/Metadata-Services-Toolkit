@@ -82,12 +82,8 @@ public class RepositoryDAO extends BaseDAO {
 		this.getNextOaiId = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_next_oai_id");
 	}
 	
-	protected String getPrefix(String repoName) {
-		return repoName.replaceAll(" ", "_");
-	}
-	
 	protected String getTableName(String repoName, String tableName) {
-		return " "+getPrefix(repoName)+"."+tableName.replaceAll(" ", "_")+" ";
+		return " "+normalizeName(repoName)+"."+tableName;
 	}
 	
 	public int getSize(String name) {
@@ -152,7 +148,7 @@ public class RepositoryDAO extends BaseDAO {
 	
 	protected void commitIfNecessary(String name, boolean force) {
 		int batchSize = 50000;
-		if (force || batchSize >= recordsToAdd.size()) {
+		if (force || batchSize <= recordsToAdd.size()) {
 			final Date d = new Date();
 			String sql = 
     			"insert into "+getTableName(name, RECORDS_TABLE)+
@@ -256,6 +252,9 @@ public class RepositoryDAO extends BaseDAO {
 		                    			ps.addBatch();
 		                    		}
 		                    	}
+	                    	} else {
+	                    		ps.setObject(k++, null);
+	                    		ps.setObject(k++, null);
 	                    	}
 	                    }
 	                    public int getBatchSize() {
@@ -268,11 +267,16 @@ public class RepositoryDAO extends BaseDAO {
 	}
 
 	public boolean exists(String name) {
-		return tableExists(getTableName(name, RECORDS_TABLE));
+		try {
+			this.jdbcTemplate.queryForInt("select count(*) from "+getTableName(name, RECORDS_TABLE));
+			return true;
+		} catch (Throwable t) {
+			return false;
+		}
 	}
 	
 	public void dropTables(String name) {
-		for (String table : getTablesWithPrefix(getPrefix(name))) {
+		for (String table : getTablesWithPrefix(normalizeName(name))) {
 			this.jdbcTemplate.execute("drop table "+table);
 		}
 	}
@@ -288,8 +292,8 @@ public class RepositoryDAO extends BaseDAO {
 					"values (?, ?, ?) ",
 				name, null, null);
 		String createTablesContents = getUtil().slurp("xc/mst/repo/sql/create_repo.sql");
-		createTablesContents = createTablesContents.replaceAll("REPO_NAME", getPrefix(name));
-		createTablesContents = createTablesContents.replaceAll("repo_name", getPrefix(name));
+		createTablesContents = createTablesContents.replaceAll("REPO_NAME", normalizeName(name));
+		createTablesContents = createTablesContents.replaceAll("repo_name", normalizeName(name));
 		String[] tokens = createTablesContents.split(";");
 		for (String sql : tokens) {
 			if (StringUtils.isEmpty(StringUtils.trim(sql))) {
@@ -355,6 +359,7 @@ public class RepositoryDAO extends BaseDAO {
 	        if (status != null && status.length() == 1) {
 	        	r.setStatus(status.charAt(0));
 	        }
+	        r.setMode(Record.STRING_MODE);
 	        r.setOaiXml(rs.getString("x.xml"));
 	        return r;
 	    }        

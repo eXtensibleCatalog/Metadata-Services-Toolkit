@@ -33,7 +33,7 @@ public class ServiceTest extends BaseTest {
 			repositoryDAO.dropTables(srepo.getName());
 			srepo.installOrUpdateIfNecessary();
 			
-			ms.process(repo, null, null);
+			ms.process(repo, null, null, null);
 		} catch (Throwable t) {
 			LOG.error("", t);
 		}

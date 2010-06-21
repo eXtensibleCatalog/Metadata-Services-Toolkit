@@ -14,6 +14,7 @@ log4j.logger.xc.mst.utils.TimingLogger=DEBUG, timing
 log4j.logger.org.springframework=INFO
 log4j.logger.org.springframework.jdbc=DEBUG
 log4j.logger.org.apache.commons.httpclient=INFO
+log4j.logger.org.apache.commons.httpclient.Wire=INFO
 
 # To stop logging struts warning messages - 'Could not find property [org.apache.catalina.jsp_file]'
 log4j.logger.com.opensymphony.xwork2.ognl.OgnlValueStack=ERROR
@@ -70,7 +71,7 @@ log4j.appender.file.File=${mst.root.dir}/MST-instances/MetadataServicesToolkit/l
 
 # At most store 1 backup (older) log files 100MB each.
 # Backup log files will be stored as log.txt.1 - log.txt.10
-log4j.appender.file.MaxFileSize=5MB
+log4j.appender.file.MaxFileSize=100MB
 log4j.appender.file.MaxBackupIndex=30
 
 # Pattern to output the caller's file name and line number.

@@ -126,6 +126,7 @@ public class Set
 		this.setSpec = setSpec;
 	} // end method setSetSpec(String)
 
+	// TODO: BDA - this (providerSet) should be removed - it's not used anywhere.
 	/**
 	 * Checks whether or not the set belongs to a provider
 	 *

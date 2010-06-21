@@ -34,13 +34,15 @@ public interface MetadataService {
 	 * also update records and delete records.
 	 * 
 	 * @param repo
-	 * @param format
-	 * @param set
+	 * @param inputFormat
+	 * @param inputSet
+	 * @param outputSet
 	 */
-	public void process(Repository repo, Format format, Set set);
+	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet);
 	public void pause();
 	public void resume();
 	public void cancel();
+	public void finish();
 	public Service getService();
 	public void setService(Service service);
 	public String getServiceName();

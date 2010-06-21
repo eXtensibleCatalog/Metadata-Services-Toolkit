@@ -1,5 +1,7 @@
 package xc.mst.services;
 
+import java.util.List;
+
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.manager.BaseManager;
@@ -10,9 +12,18 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 	
 	protected MetadataService metadataService = null;
 	protected Repository incomingRepository = null;
-	protected Format format = null;
-	protected Set set = null;
-	
+	protected List<Format> triggeringFormats = null;
+	protected List<Set> triggeringSets = null;
+	protected Set outputSet = null;
+
+	public Set getOutputSet() {
+		return outputSet;
+	}
+
+	public void setOutputSet(Set outputSet) {
+		this.outputSet = outputSet;
+	}
+
 	public MetadataService getMetadataService() {
 		return metadataService;
 	}
@@ -28,34 +39,40 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 	public void setIncomingRepository(Repository incomingRepository) {
 		this.incomingRepository = incomingRepository;
 	}
-	
-	public Format getFormat() {
-		return format;
-	}
-
-	public void setFormat(Format format) {
-		this.format = format;
-	}
-
-	public Set getSet() {
-		return set;
-	}
-
-	public void setSet(Set set) {
-		this.set = set;
-	}
 
 	public void cancel() {
 		metadataService.cancel();
 	}
+	
+	public List<Format> getTriggeringFormats() {
+		return triggeringFormats;
+	}
+
+	public void setTriggeringFormats(List<Format> triggeringFormats) {
+		this.triggeringFormats = triggeringFormats;
+	}
+	
+	public List<Set> getTriggeringSets() {
+		return triggeringSets;
+	}
+
+	public void setTriggeringSets(List<Set> sets) {
+		this.triggeringSets = sets;
+	}
 
 	public boolean doSomeWork() {
-		metadataService.process(incomingRepository, format, set);
+		for (Format f : triggeringFormats) {
+			for (Set s : triggeringSets) {
+				metadataService.process(incomingRepository, f, s, outputSet);
+			}
+		}
 		return false;
 	}
 
 	public void setup() {}
-	public void finish() {}
+	public void finish() {
+		metadataService.finish();
+	}
 
 	public String getDetailedStatus() {
 		return null;

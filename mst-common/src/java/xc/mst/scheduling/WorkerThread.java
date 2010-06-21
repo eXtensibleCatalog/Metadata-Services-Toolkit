@@ -45,6 +45,7 @@ public class WorkerThread extends Thread {
 				}
 			}
 		} catch(Exception e) {
+			LOG.error("", e);
 			this.status = Status.ERROR;
 		} finally {
 			this.workDelegate.finish();

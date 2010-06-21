@@ -2,6 +2,7 @@ package xc.mst.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -77,7 +78,12 @@ public class XmlHelper {
 	}
 	
 	public org.jdom.Document getJDomDocument(String str) {
-		return getJDomDocument(new ByteArrayInputStream(str.getBytes()));
+		try {
+			return getJDomDocument(new ByteArrayInputStream(str.getBytes("utf-8")));
+		} catch (UnsupportedEncodingException uee) {
+			LOG.error("", uee);
+			return null;
+		}
 	}
 
 }

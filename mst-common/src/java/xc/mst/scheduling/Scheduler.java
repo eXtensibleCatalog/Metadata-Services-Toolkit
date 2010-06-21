@@ -20,7 +20,6 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
-import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.constants.Status;
@@ -28,6 +27,8 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.HarvestManager;
 import xc.mst.manager.BaseService;
+import xc.mst.repo.Repository;
+import xc.mst.services.MetadataServiceManager;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
@@ -161,7 +162,8 @@ public class Scheduler extends BaseService implements Runnable {
 									
 									LOG.debug("adding to job queue pd.getId(): "+pd.getId());
 									Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
-									job.setOrder(getJobService().getMaxOrder() + 1); 
+									job.setOrder(getJobService().getMaxOrder() + 1);
+									job.setProcessingDirective(pd);
 									getJobService().insertJob(job);	
 								}
 							} catch (DatabaseConfigException dce) {
@@ -190,12 +192,33 @@ public class Scheduler extends BaseService implements Runnable {
 							runningJob = harvestThread;
 							*/
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
+							runningJob = new WorkerThread();
+							MetadataServiceManager msm = new MetadataServiceManager();
+							runningJob.setWorkDelegate(msm);
+							Service s = getServicesService().getServiceByName(jobToStart.getService().getName());
+							LOG.debug("jobToStart.getService().getMetadataService(): "+s.getMetadataService());
+							msm.setMetadataService(s.getMetadataService());
+							msm.setOutputSet(getSetDAO().getById(jobToStart.getOutputSetId()));
+							Repository incomingRepo = null;
+							if (jobToStart.getProcessingDirective().getSourceProvider() != null) {
+								incomingRepo = 
+									getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider().getName());
+							} else if (jobToStart.getProcessingDirective().getSourceService() != null) {
+								incomingRepo = jobToStart.getProcessingDirective().getSourceService().getMetadataService().getRepository();
+							} else {
+								throw new RuntimeException("error");
+							}
+							msm.setIncomingRepository(incomingRepo);
+							msm.setTriggeringFormats(jobToStart.getProcessingDirective().getTriggeringFormats());
+							msm.setTriggeringSets(jobToStart.getProcessingDirective().getTriggeringSets());
+							/*
 							TimingLogger.log("service : "+jobToStart.getService().getClassName());
 							ServiceWorkerThread serviceThread = new ServiceWorkerThread();
 							serviceThread.setServiceId(jobToStart.getService().getId());
 							serviceThread.setOutputSetId(jobToStart.getOutputSetId());
 							serviceThread.start();
 							runningJob = serviceThread;
+							*/
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
 							/*
 							ServiceReprocessWorkerThread serviceReprocessWorkerThread = new ServiceReprocessWorkerThread();
@@ -226,7 +249,7 @@ public class Scheduler extends BaseService implements Runnable {
 			try {
 				if(LOG.isDebugEnabled())
 					LOG.debug("Scheduler Thread sleeping for 1 minute.");
-				Thread.sleep(3 * 1000);
+				Thread.sleep(1000);
 			} catch(InterruptedException e) {
 				if(LOG.isDebugEnabled())
 					LOG.debug("Caught InteruptedException while sleeping in Scheduler Thread.");

@@ -121,6 +121,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			numErrorsTolerated = Integer.parseInt(config.getProperty("harvester.numErrorsToTolerate", "0"));
 			repo = (Repository)config.getBean("Repository");
 	    	repo.setName(harvestSchedule.getProvider().getName());
+	    	repo.installOrUpdateIfNecessary();
 		} catch (DatabaseConfigException e) {
 			getUtil().throwIt(e);
 		}
@@ -203,7 +204,6 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		}
 		requestsSent4Step++;
 		if (retVal && harvestScheduleStepIndex >= 0 && harvestScheduleStepIndex < harvestScheduleSteps.size()) {
-			String resumption = null;
 			try {
 				HarvestScheduleStep scheduleStep = harvestScheduleSteps.get(harvestScheduleStepIndex);
 					
@@ -257,11 +257,11 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					}
 				} else {
 					try {
-						resumption = URLEncoder.encode(resumption, "utf-8");
+						resumptionToken = URLEncoder.encode(resumptionToken, "utf-8");
 					} catch (UnsupportedEncodingException uee) {
-						log.error("couldn't encode resumption token: "+resumption);
+						log.error("couldn't encode resumption token: "+resumptionToken);
 					}
-					request += "?verb=" + verb + "&resumptionToken=" + resumption;
+					request += "?verb=" + verb + "&resumptionToken=" + resumptionToken;
 				}
 				
 				LogWriter.addInfo(schedule.getProvider().getLogFileName(), "The OAI request is " + request);
@@ -284,8 +284,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			    TimingLogger.stop("sendRequest");
 
 			    TimingLogger.start("extractRecords");
-                resumption = parseRecords(metadataPrefix, doc, baseURL);
-                log.debug("resumption: "+resumption);
+			    resumptionToken = parseRecords(metadataPrefix, doc, baseURL);
+                log.debug("resumptionToken: "+resumptionToken);
                 TimingLogger.stop("extractRecords");
 
                 repo.endBatch();
@@ -299,7 +299,9 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			} catch(Throwable t) {
 				logError(t);
 			}
-			if (resumption == null) {
+			hssFirstTime = false;
+			if (resumptionToken == null) {
+				hssFirstTime = true;
 				harvestScheduleStepIndex++;
 				if (harvestScheduleStepIndex >= harvestScheduleSteps.size()) {
 					retVal = false;

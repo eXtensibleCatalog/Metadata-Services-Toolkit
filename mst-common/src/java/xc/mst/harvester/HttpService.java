@@ -38,6 +38,8 @@ public class HttpService extends BaseService {
 				Integer.parseInt(config.getProperty("harvest.socket.timeout", this.timeOutMilliseconds+"")));
 		client.getParams().setParameter("http.connection.timeout", 
 				Integer.parseInt(config.getProperty("harvest.connection.timeout", this.timeOutMilliseconds+"")));
+		client.getParams().setParameter("http.protocol.content-charset", 
+				config.getProperty("harvest.protocol.content-charset", "utf-16"));
 	}
 
 	public Document sendRequest(String request) throws HttpException {

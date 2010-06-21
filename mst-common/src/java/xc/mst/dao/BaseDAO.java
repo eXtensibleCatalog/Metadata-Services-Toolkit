@@ -70,6 +70,10 @@ public class BaseDAO {
 		this.config = config;
 	}
 	
+	protected String normalizeName(String repoName) {
+		return repoName.replaceAll(" ", "_").toLowerCase();
+	}
+	
 	public void createSchema(String name) {
 		createSchema(name, false);
 	}
@@ -85,7 +89,7 @@ public class BaseDAO {
 	}
 	
 	public void deleteSchema(String name) {
-		this.jdbcTemplate.execute("drop database "+name);
+		this.jdbcTemplate.execute("drop database "+normalizeName(name));
 	}
 	
 	public List<String> getSchemas() {

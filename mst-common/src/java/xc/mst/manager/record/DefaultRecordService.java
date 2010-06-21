@@ -91,9 +91,9 @@ public class DefaultRecordService extends RecordService
 		succ.addPredecessor(pred);
 		succ.setService(s);
 		getRepositoryDAO().injectId(succ);
-		LOG.debug("MSTConfiguration.getProperty(DomainNameIdentifier): "+config.getProperty("DomainNameIdentifier"));
-		LOG.debug("s.getName(): "+s.getName());
-		LOG.debug("succ.getId(): "+succ.getId());
+		//LOG.debug("MSTConfiguration.getProperty(DomainNameIdentifier): "+config.getProperty("DomainNameIdentifier"));
+		//LOG.debug("s.getName(): "+s.getName());
+		//LOG.debug("succ.getId(): "+succ.getId());
 		succ.setOaiIdentifier("oai:"+config.getProperty("DomainNameIdentifier")+":"+s.getName()+":"+succ.getId());
 		return succ;
 	}
@@ -1260,7 +1260,6 @@ public class DefaultRecordService extends RecordService
 					// Loop over all levels in the set spec
 					for(String setSpecLevel : setSpecLevels)
 					{
-						LOG.debug("setSpecLevel: "+setSpecLevel);
 						try {
 							// Append the set at the current level to the setSpec at the previous level to
 							// get the setSpec for the current level. Append colons as needed

@@ -985,6 +985,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	@Override
 	public List<HarvestSchedule> getSchedulesToRun(int hour, int dayOfWeek,	int minute) throws DatabaseConfigException
 	{
+		log.debug("hour:"+hour+ " dayOfWeek:"+dayOfWeek+" minute:"+minute);
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
@@ -1018,9 +1019,9 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	                                   "FROM " + HARVEST_SCHEDULES_TABLE_NAME + " " +
 	                                   "WHERE (" + COL_START_DATE + " IS NULL OR " + COL_START_DATE + "<=?) " +
 	                                   "AND (" + COL_END_DATE + " IS NULL OR " + COL_END_DATE + ">=?) " +
-	                                   "AND " + "((0=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=?)" +
+	                                   "AND ((" + COL_MINUTE + "=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=?)" +
 	                                             "OR (" + COL_MINUTE + "=? AND " + COL_HOUR + "=? AND " + COL_DAY_OF_WEEK + "=0)" +
-	                                             "OR " + COL_MINUTE + "=? AND " + COL_HOUR + "=-1 AND " + COL_DAY_OF_WEEK + "=0)";
+	                                             "OR (" + COL_MINUTE + "=? AND " + COL_HOUR + "=-1 AND " + COL_DAY_OF_WEEK + "=0))";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the PreparedStatement to get a harvest schedule by its time the SQL " + selectSql);
