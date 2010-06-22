@@ -21,6 +21,7 @@ import org.testng.annotations.BeforeSuite;
 import xc.mst.dao.harvest.HarvestScheduleDAO;
 import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.provider.FormatDAO;
+import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.provider.SetDAO;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.harvest.ScheduleService;
@@ -33,6 +34,7 @@ import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
 import xc.mst.repo.Repository;
 import xc.mst.repo.RepositoryDAO;
+import xc.mst.repo.RepositoryService;
 import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.SetupClasspath;
@@ -115,4 +117,12 @@ public class BaseTest {
 		} 
 	}
 	
+	protected ProviderDAO getProviderDAO() {
+		return (ProviderDAO)getBean("ProviderDAO"); 
+	}
+	
+	public RepositoryService getRepositoryService() {
+		return (RepositoryService)getBean("RepositoryService");
+	}
+
 }

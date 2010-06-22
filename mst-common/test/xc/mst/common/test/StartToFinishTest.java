@@ -14,7 +14,10 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Status;
+import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.repo.Repository;
+import xc.mst.scheduling.WorkerThread;
+import xc.mst.services.MetadataServiceManager;
 import xc.mst.utils.MSTConfiguration;
 
 public class StartToFinishTest extends BaseTest {
@@ -36,18 +39,21 @@ public class StartToFinishTest extends BaseTest {
 		createHarvestSchedule();
 
 		waitUntilFinished();
+		
+		indexHarvestedRecords();
+		indexServicedRecords();
+		
 		/*
 		*/
-		// wait until it is finished
 		// walk through all records (put the implementation in a service and repository)
-		//   - 
+	    //   - each harvest schedule step 
 	    //   - each service
-	    //   - each harvest schedule step
 	    // for a record or small set of records (add the interface to MetadataService)
 		//   - at first I thought this wouldn't actually test what we need it to since we have only
 		//     one service, but actually it will.  If you select a record from the harvest, then we'll
 		//     need to ask the example service if it has any successors for that record
 	    //   - inject successor, predecessor
+		
 	}
 	
 	public void dropOldSchemas() {
@@ -177,6 +183,56 @@ public class StartToFinishTest extends BaseTest {
 			}
 			
 		}
+	}
+	
+	public void indexHarvestedRecords() {
+		try {
+			List<Provider> providers = getProviderDAO().getAll();
+			if (providers != null) {
+				for (Provider p : providers) {
+					Repository repo = getRepositoryService().getRepository(p.getName());
+					
+					WorkerThread runningJob = new WorkerThread();
+					MetadataServiceManager msm = new MetadataServiceManager();
+					runningJob.setWorkDelegate(msm);
+					/*
+					Service s = getServicesService().getServiceByName(jobToStart.getService().getName());
+					LOG.debug("jobToStart.getService().getMetadataService(): "+s.getMetadataService());
+					msm.setMetadataService(s.getMetadataService());
+					msm.setOutputSet(getSetDAO().getById(jobToStart.getOutputSetId()));
+					Repository incomingRepo = null;
+					if (jobToStart.getProcessingDirective().getSourceProvider() != null) {
+						incomingRepo = 
+							getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider().getName());
+					} else if (jobToStart.getProcessingDirective().getSourceService() != null) {
+						incomingRepo = jobToStart.getProcessingDirective().getSourceService().getMetadataService().getRepository();
+					} else {
+						throw new RuntimeException("error");
+					}
+					msm.setIncomingRepository(incomingRepo);
+					msm.setTriggeringFormats(jobToStart.getProcessingDirective().getTriggeringFormats());
+					msm.setTriggeringSets(jobToStart.getProcessingDirective().getTriggeringSets());
+					*/
+				}
+			}
+			
+			List<HarvestSchedule> harvestSchedules = harvestScheduleDAO.getAll();
+			if (harvestSchedules != null) {
+				for (HarvestSchedule hs : harvestSchedules) {
+					
+				}
+			}
+		} catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+	
+	public void indexServicedRecords() {
+		
+	}
+	
+	protected void indexRecord() {
+		
 	}
 
 }
