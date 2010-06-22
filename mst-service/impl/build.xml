@@ -11,6 +11,7 @@
 	<dirname property="ms.dir" file="${ant.file.ms}" />
 	
 	<property file="${ms.dir}/build.properties" />
+	<property file="${mc.src.java}/default.properties" />
 
 	<path id="ms.classpath.compile">
 		<fileset dir="${ms.build.lib}">
@@ -142,19 +143,72 @@
 			debuglevel="lines,vars,source"/>
 	</target>
 
+	<target name="ms.install-mst">
+		<delete dir="${ms.build.mst-instances.dir}" />
+		<unzip src="${ms.build.lib}/MST-instances-${mi.version}.jar"
+			dest="${ms.build.dir}" />
+		<copy todir="${ms.build.mst-instance.dir}" overwrite="true">
+			<fileset dir="${ms.test.dir}">
+				<include name="**/log4j.config.txt" />
+				<include name="**/install.properties" />
+			</fileset>
+		</copy>
+		<sql classpathref="ms.classpath.compile"
+				driver="com.mysql.jdbc.Driver"
+				url="${DatabaseUrl}"
+				userid="${DatabaseUsername}"
+				password="${DatabasePassword}">
+			<path>
+				<fileset dir="${ms.build.mst-instance.dir}/sql">
+					<include name="create_database_script.sql"/>
+				</fileset>
+			</path>
+		</sql>
+	</target>
+
 	<target name="ms.init.test" unless="${test}">
 		<property name="test" value="" />
 	</target>
 
-	<target name="ms.test" depends="ms.compile.test, ms.init.test">
-		<taskdef name="testng" classpathref="ms.classpath.compile"
-			classname="org.testng.TestNGAntTask" />
-
-		<testng classpathref="ms.classpath.test.run">
-			<classfileset dir="${ms.build.test.classes}" includes="**/${test}*.class"/>
-			<jvmarg value="-XX:MaxPermSize=128m" />
-		</testng>
+	<target name="ms.test" depends="ms.install-mst, ms.test.nodep" />
+	<target name="ms.test.nodep" depends="ms.compile.test, ms.init.test">
+		<property name="abs.build.dir" location="${ms.build.dir}" />
+		<exec executable="${ant.executable}">
+			<arg value="-Dtest=${test}" />
+			<arg value="ms.test.internal" />
+			<env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
+			<env key="MST_SERVICE_TEST_FOLDER" value="${test.folder}" />
+		</exec>
 	</target>
 	
+	<target name="ms.start2finishtest" depends="ms.deploy, ms.install-mst, ms.compile.test">
+		<ant dir="${mst-service.example}" target="zip.nodep" inheritAll="false" />
+		<copy todir="${ms.build.dir}" 
+			file="${mst-service.example}/build/example-${mst-service.example.version}.zip">
+		</copy>
+		<unzip src="${ms.build.dir}/example-${mst-service.example.version}.zip"
+			dest="${ms.build.mst-services.dir}" />
+		<property name="abs.build.dir" location="${ms.build.dir}" />
+		<exec executable="${ant.executable}">
+			<arg value="-Dtest=StartToFinishTest" />
+			<arg value="ms.test.internal" />
+			<env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
+		</exec>
+	</target>
+
+	<target name="ms.test.internal">
+		<path id="ms.classpath.test.run">
+			<fileset dir="${ms.build.lib}">
+				<include name="*.jar" />
+			</fileset>
+			<pathelement path="${ms.build.classes}" />
+			<pathelement path="${ms.build.test.classes}" />
+		</path>
+		<taskdef name="testng" classpathref="ms.classpath.compile"
+			classname="org.testng.TestNGAntTask" />
+		<testng classpathref="ms.classpath.test.run" outputdir="${ms.build.test}">
+			<classfileset dir="${ms.build.test.classes}" includes="**/${test}*.class"/>
+		</testng>
+	</target>
 
 </project>

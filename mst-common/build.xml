@@ -184,23 +184,6 @@
 		</sql>
 	</target>
 
-	<target name="mc.start2finishtest" depends="ms.deploy, mc.install-mst, mc.compile.test">
-		<ant dir="${mst-service.example}" target="zip.nodep" inheritAll="false" />
-		<copy todir="${mc.build.dir}" 
-			file="${mst-service.example}/build/example-${mst-service.example.version}.zip">
-		</copy>
-		<echo>hello</echo>
-		<unzip src="${mc.build.dir}/example-${mst-service.example.version}.zip"
-			dest="${mc.build.mst-services.dir}" />
-		<property name="abs.build.dir" location="${mc.build.dir}" />
-		<exec executable="${ant.executable}">
-			<arg value="-Dtest=StartToFinishTest" />
-			<arg value="mc.test.internal" />
-			<env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
-		</exec>
-	</target>
-	
-
 	<target name="mc.test" depends="mc.install-mst, mc.test.nodep" />
 	<target name="mc.test.nodep" depends="mc.compile.test, mc.init.test">
 		<property name="abs.build.dir" location="${mc.build.dir}" />
@@ -219,9 +202,6 @@
 			</fileset>
 			<pathelement path="${mc.build.classes}" />
 			<pathelement path="${mc.build.test.classes}" />
-			<fileset dir="${ms.build.dir}">
-				<include name="${ms.project-name}-${ms.version}.jar" />
-			</fileset>
 		</path>
 		<taskdef name="testng" classpathref="mc.classpath.compile"
 			classname="org.testng.TestNGAntTask" />

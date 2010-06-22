@@ -1,4 +1,4 @@
-package xc.mst.common.test;
+package xc.mst.service.impl.test;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,6 +13,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
+import xc.mst.common.test.BaseTest;
 import xc.mst.constants.Status;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.repo.Repository;
