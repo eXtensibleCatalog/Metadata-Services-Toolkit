@@ -15,6 +15,7 @@ log4j.logger.org.springframework=INFO
 log4j.logger.org.springframework.jdbc=DEBUG
 log4j.logger.org.apache.commons.httpclient=INFO
 log4j.logger.org.apache.commons.httpclient.Wire=INFO
+log4j.logger.httpclient.wire=INFO
 
 # To stop logging struts warning messages - 'Could not find property [org.apache.catalina.jsp_file]'
 log4j.logger.com.opensymphony.xwork2.ognl.OgnlValueStack=ERROR
@@ -77,3 +78,7 @@ log4j.appender.file.MaxBackupIndex=30
 # Pattern to output the caller's file name and line number.
 log4j.appender.file.layout=org.apache.log4j.PatternLayout
 log4j.appender.file.layout.ConversionPattern=%d{DATE} %C:%L %5p [%t] - %m%n
+
+log4j.logger.org.apache.commons.httpclient=INFO
+log4j.logger.org.apache.commons.httpclient.Wire=INFO
+log4j.logger.httpclient.wire=INFO

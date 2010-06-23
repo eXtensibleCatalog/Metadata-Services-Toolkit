@@ -34,8 +34,8 @@ create table repo_name.record_sets (
 
 create table repo_name.record_predecessors (
 	id                    int        NOT NULL    AUTO_INCREMENT,
-	record_id             int        not null,
-	pred_record_id        int        not null,
+	record_id             int,
+	pred_record_id        int,
 	PRIMARY KEY (id),
 	KEY idx_REPO_NAME_records_set_record_id(record_id),
 	KEY idx_REPO_NAME_records_set_pred_record_id(pred_record_id)

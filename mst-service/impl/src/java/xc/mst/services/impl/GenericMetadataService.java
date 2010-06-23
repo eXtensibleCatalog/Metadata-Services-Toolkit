@@ -329,9 +329,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			if (previouslyPaused) {
 				running.lock();
 			}
-			if (getRepository() != null) {
-				getRepository().beginBatch();
-			}
+			getRepository().beginBatch();
 			for (Record in : records) {
 				if (getRepository() != null) {
 					// TODO:  This is sort of different than the current implementation
@@ -345,15 +343,11 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 					for (Record rout : out) {
 						rout.addSet(outputSet);
 					}
-					if (getRepository() != null) {
-						getRepository().addRecords(out);
-					}
+					getRepository().addRecords(out);
 				}
 				highestId = in.getId();
 			}
-			if (getRepository() != null) {
-				getRepository().endBatch();
-			}
+			getRepository().endBatch();
 			records = repo.getRecords(from, until, highestId, inputFormat, inputSet);
 		}
 		if (!previouslyPaused) {

@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -98,7 +99,8 @@ public class RepositoryDAO extends BaseDAO {
 			"where rp.pred_record_id = ? "+
 				"and rp.record_id = r.record_id "+
 				"and x.record_id = r.record_id";
-		return this.jdbcTemplate.query(sql, new Object[] {id}, new RecordMapper());
+		return this.jdbcTemplate.query(sql, new Object[] {id}, 
+				new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}));
 	}
 	
 	public List<Long> getPredecessors(String name, long id) {
@@ -384,7 +386,8 @@ public class RepositoryDAO extends BaseDAO {
 				"and r.record_id = x.record_id";
 		Record r = null;
 		try {
-			r = this.jdbcTemplate.queryForObject(sql, new RecordMapper(), id);
+			r = this.jdbcTemplate.queryForObject(sql, 
+					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}));
 		} catch (EmptyResultDataAccessException e) {
 			LOG.info("record not found for id: "+id);
 		}
@@ -408,14 +411,66 @@ public class RepositoryDAO extends BaseDAO {
 		List<Record> records = null;
 		try {
 			if (startingId != null) {
-				records = this.jdbcTemplate.query(sql, new Object[]{from, until, startingId}, new RecordMapper());	
+				records = this.jdbcTemplate.query(sql, new Object[]{from, until, startingId}, 
+						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}));	
 			} else {
-				records = this.jdbcTemplate.query(sql, new Object[]{from, until}, new RecordMapper());
+				records = this.jdbcTemplate.query(sql, new Object[]{from, until}, 
+						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}));
 			}
 		} catch (EmptyResultDataAccessException e) {
 			LOG.info("no records found for from: "+from+" until: "+until+" startingId: "+startingId);
 		}
 		return records;
+	}
+	
+	public List<Record> getRecordsWSets(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+		List<Record> recs = getRecords(name, from, until, startingId, inputFormat, inputSet);
+		if (recs != null && recs.size() > 0) {
+			long endingId = recs.get(recs.size()-1).getId();
+			//TODO add inputFormat and inputSet to the query
+			String sql = 
+				"select "+RECORDS_TABLE_COLUMNS+
+					"s.set_id, "+
+					"s.set_spec, "+
+					"s.display_name "+
+				"from "+getTableName(name, RECORDS_TABLE)+" r, "+
+					getTableName(name, RECORDS_SETS_TABLE)+" rs, "+
+					"sets s "+
+				"where r.record_id = rs.record_id "+
+					"and s.set_id = rs.set_id "+
+					"and r.record_id <= ? "+
+					"and r.date_created >= ? "+
+					"and r.date_created < ? ";
+			if (startingId != null) {
+				sql += " and r.record_id > ? ";
+			}
+			sql += " order by r.record_id";
+			List<Record> recordsWSets = null;
+			try {
+				if (startingId != null) {
+					recordsWSets = this.jdbcTemplate.query(
+							sql, 
+							new Object[]{endingId, from, until, startingId},
+							new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}));	
+				} else {
+					recordsWSets = this.jdbcTemplate.query(
+							sql,
+							new Object[]{endingId, from, until}, 
+							new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}));
+				}
+				int recIdx = 0;
+				Record currentRecord = recs.get(recIdx);
+				for (Record rws : recordsWSets) {
+					while (currentRecord.getId() != rws.getId()) {
+						currentRecord = recs.get(++recIdx);		
+					}
+					currentRecord.addSet(rws.getSets().get(0));
+				}
+			} catch (EmptyResultDataAccessException e) {
+				LOG.info("no records found for from: "+from+" until: "+until+" startingId: "+startingId);
+			}	
+		}
+		return recs;
 	}
 	
 	private static final class RepoMapper implements RowMapper<Repository> {
@@ -427,18 +482,41 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	private static final class RecordMapper implements RowMapper<Record> {
+		protected List<String> tables = null;
+		public RecordMapper(String[] tables) {
+			this.tables = Arrays.asList(tables);
+		}
 	    public Record mapRow(ResultSet rs, int rowNum) throws SQLException {
 	        Record r = new Record();
-	        r.setId(rs.getLong("r.record_id"));
-	        r.setCreatedAt(rs.getTimestamp("r.date_created"));
-	        String status = rs.getString("r.status");
-	        if (status != null && status.length() == 1) {
-	        	r.setStatus(status.charAt(0));
+	        if (tables.contains(RECORDS_TABLE)) {
+	        	r.setId(rs.getLong("r.record_id"));
+		        r.setCreatedAt(rs.getTimestamp("r.date_created"));
+		        String status = rs.getString("r.status");
+		        if (status != null && status.length() == 1) {
+		        	r.setStatus(status.charAt(0));
+		        }
 	        }
-	        r.setMode(Record.STRING_MODE);
-	        r.setOaiXml(rs.getString("x.xml"));
+	        if (tables.contains(RECORDS_XML_TABLE)) {
+	        	r.setMode(Record.STRING_MODE);
+		        r.setOaiXml(rs.getString("x.xml"));
+	        }
+	        
+	        // These wouldn't work here since they are one-to-many relationships
+	        // I don't think we care because I don't know that we'll ever really
+	        // need to query these in this way.
+	        if (tables.contains(RECORD_UPDATES_TABLE)) {
+	        }
+	        if (tables.contains(RECORDS_SETS_TABLE)) {
+	        	r.setId(rs.getLong("r.record_id"));
+	        	Set s = new Set();
+	        	s.setId(rs.getInt("s.set_id"));
+	        	s.setSetSpec(rs.getString("s.set_spec"));
+	        	s.setDisplayName(rs.getString("s.display_name"));
+	        	r.addSet(s);
+	        }
+	        if (tables.contains(RECORD_PREDECESSORS_TABLE)) {
+	        }
 	        return r;
 	    }        
 	}
-
 }

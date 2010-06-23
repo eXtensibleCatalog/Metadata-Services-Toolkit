@@ -57,6 +57,9 @@ public class StartToFinishTest extends BaseTest {
 		
 		Record r = getRepositoryService().getRecord(1999);
 		assert r.getPredecessors().get(0).getId() == 999;
+		
+		r = getRepositoryService().getRecord(999);
+		assert r.getSuccessors().get(0).getId() == 1999;
 	}
 	
 	public void dropOldSchemas() {

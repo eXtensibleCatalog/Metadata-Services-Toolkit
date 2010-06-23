@@ -98,6 +98,10 @@ public class DefaultRepository extends BaseService implements Repository {
 		return getRepositoryDAO().getRecords(name, from, until, startingId, inputFormat, inputSet);
 	}
 	
+	public List<Record> getRecordsWSets(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+		return getRepositoryDAO().getRecordsWSets(name, from, until, startingId, inputFormat, inputSet);
+	}
+	
 	public void injectSuccessors(Record r) {
 		List<Record> succs = getRepositoryDAO().getSuccessors(name, r.getId());
 		if (succs != null) {
