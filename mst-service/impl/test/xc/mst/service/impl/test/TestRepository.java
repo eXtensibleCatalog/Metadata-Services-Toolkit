@@ -148,7 +148,8 @@ public class TestRepository extends BaseService implements Repository {
 		}
 	}
 	
-	public List<Record> getRecords(Date from, Date until, Long startingId) {
+	public List<Record> getRecords(Date from, Date until, Long startingId, 
+			xc.mst.bo.provider.Format inputFormat,  xc.mst.bo.provider.Set inputSet) {
 		if (inputFilesIterator == null) {
 			inputFilesIterator = inputFileNames.iterator();
 		}

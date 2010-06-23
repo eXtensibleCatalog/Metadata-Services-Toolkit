@@ -51,7 +51,6 @@ public class BaseTest {
 	protected Repository repo = null;
 	protected RepositoryDAO repositoryDAO = null;
 	protected RecordService recordService = null;
-	protected ServicesService servicesService = null;
 	protected ProviderService providerService = null;
 	protected ScheduleService scheduleService = null;
 	protected FormatService formatService = null;
@@ -79,7 +78,6 @@ public class BaseTest {
 		repo.setName("r1");
 		repositoryDAO = (RepositoryDAO)getBean("RepositoryDAO");
 		recordService = (RecordService)getBean("RecordService");
-		servicesService = (ServicesService)getBean("ServicesService");
 		providerService = (ProviderService)getBean("ProviderService");
 		scheduleService = (ScheduleService)getBean("ScheduleService");
 		formatService = (FormatService)getBean("FormatService");
@@ -124,5 +122,8 @@ public class BaseTest {
 	public RepositoryService getRepositoryService() {
 		return (RepositoryService)getBean("RepositoryService");
 	}
-
+	
+	public ServicesService getServicesService() {
+		return (ServicesService)getBean("ServicesService");
+	}
 }

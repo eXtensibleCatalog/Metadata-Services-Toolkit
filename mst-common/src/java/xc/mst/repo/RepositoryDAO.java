@@ -28,6 +28,7 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
+import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.dao.BaseDAO;
@@ -51,9 +52,9 @@ public class RepositoryDAO extends BaseDAO {
 	protected SimpleJdbcCall getNextOaiId = null;
 	
 	protected final static String RECORDS_TABLE_COLUMNS = 
-			"r.record_id, \n"+
-			"r.date_created, \n"+
-			"r.status, \n";
+			"r.record_id, "+
+			"r.date_created, "+
+			"r.status, ";
 	
 	protected boolean inBatch = false;
 	protected List<Record> recordsToAdd = null;
@@ -80,6 +81,32 @@ public class RepositoryDAO extends BaseDAO {
 	public void setDataSource(DataSource dataSource) {
 		super.setDataSource(dataSource);
 		this.getNextOaiId = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_next_oai_id");
+	}
+	
+	public List<Repository> getAll() {
+		List<Repository> repos = new ArrayList<Repository>();
+		repos = this.jdbcTemplate.query("select r.repo_name from repos r", new RepoMapper());
+		return repos;
+	}
+	
+	public List<Record> getSuccessors(String name, long id) {
+		String sql = 
+			"select "+RECORDS_TABLE_COLUMNS+" x.xml "+
+			"from "+getTableName(name, RECORDS_TABLE)+" r, "+
+				getTableName(name, RECORDS_XML_TABLE)+" x, "+
+				getTableName(name, RECORD_PREDECESSORS_TABLE)+" rp "+
+			"where rp.pred_record_id = ? "+
+				"and rp.record_id = r.record_id "+
+				"and x.record_id = r.record_id";
+		return this.jdbcTemplate.query(sql, new Object[] {id}, new RecordMapper());
+	}
+	
+	public List<Long> getPredecessors(String name, long id) {
+		String sql = 
+			"select rp.pred_record_id "+
+			"from "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" rp "+
+			"where rp.record_id = ? ";
+		return this.jdbcTemplate.queryForList(sql, Long.class, id);
 	}
 	
 	protected String getTableName(String repoName, String tableName) {
@@ -227,7 +254,7 @@ public class RepositoryDAO extends BaseDAO {
 	                        return recordsToAdd.size();
 	                    }
 	                } );
-	        TimingLogger.stop("RECORDS_XML_TABLE..insert");
+	        TimingLogger.stop("RECORDS_XML_TABLE.insert");
 	        TimingLogger.start("RECORDS_SETS_TABLE.insert");
 			sql = 
     			"insert ignore into "+getTableName(name, RECORDS_SETS_TABLE)+
@@ -261,10 +288,51 @@ public class RepositoryDAO extends BaseDAO {
 	                    	return recordsToAdd.size();
 	                    }
 	                } );
-	        recordsToAdd = null;
 	        TimingLogger.stop("RECORDS_SETS_TABLE.insert");
+	        TimingLogger.start("RECORD_PREDECESSORS_TABLE.insert");
+	        // TODO: Delete previous predecessors that are no longer there.
+			sql = 
+    			"insert ignore into "+getTableName(name, RECORD_PREDECESSORS_TABLE)+
+    			" (record_id, pred_record_id) "+
+    			"values (?,?) "+
+    			";";
+
+	        List<long[]> recordPreds = new ArrayList<long[]>();
+	        for (Record r : recordsToAdd) {
+	        	if (r.getPredecessors() != null) {
+		        	for (Record p : r.getPredecessors()) {
+		        		long[] recPredRow = new long[2];
+		        		recPredRow[0] = r.getId();
+		        		recPredRow[1] = p.getId();
+		        		recordPreds.add(recPredRow);
+		        	}
+	        	}
+	        }
+
+	        updateCounts = jdbcTemplate.batchUpdate(
+	        		sql,
+	                new RecPredBatchPreparedStatementSetter(recordPreds));
+	        TimingLogger.stop("RECORD_PREDECESSORS_TABLE.insert");
+	        recordsToAdd = null;
 		}
 	}
+	
+    private final static class RecPredBatchPreparedStatementSetter implements BatchPreparedStatementSetter {
+    	protected List<long[]> recPreds = null;
+		public RecPredBatchPreparedStatementSetter(List<long[]> recPreds) {
+			this.recPreds = recPreds;
+		}
+        public void setValues(PreparedStatement ps, int j) throws SQLException {
+        	int i=1;
+        	LOG.debug("this.recPreds.get("+j+")[0]: "+this.recPreds.get(j)[0]);
+    		ps.setLong(i++, this.recPreds.get(j)[0]);
+    		LOG.debug("this.recPreds.get("+j+")[1]: "+this.recPreds.get(j)[1]);
+    		ps.setLong(i++, this.recPreds.get(j)[1]);
+        }
+        public int getBatchSize() {
+        	return this.recPreds.size();
+        }
+    }
 
 	public boolean exists(String name) {
 		try {
@@ -323,7 +391,8 @@ public class RepositoryDAO extends BaseDAO {
 		return r;
 	}
 	
-	public List<Record> getRecords(String name, Date from, Date until, Long startingId) {
+	public List<Record> getRecords(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+		//TODO add inputFormat and inputSet to the query
 		String sql = 
 			"select "+RECORDS_TABLE_COLUMNS+
 				"x.xml "+
@@ -349,8 +418,15 @@ public class RepositoryDAO extends BaseDAO {
 		return records;
 	}
 	
+	private static final class RepoMapper implements RowMapper<Repository> {
+	    public Repository mapRow(ResultSet rs, int rowNum) throws SQLException {
+	    	Repository r = new DefaultRepository();
+	        r.setName(rs.getString("r.repo_name"));
+	        return r;
+	    }        
+	}
+	
 	private static final class RecordMapper implements RowMapper<Record> {
-
 	    public Record mapRow(ResultSet rs, int rowNum) throws SQLException {
 	        Record r = new Record();
 	        r.setId(rs.getLong("r.record_id"));

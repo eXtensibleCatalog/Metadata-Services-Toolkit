@@ -44,12 +44,15 @@ public class MSTAutoBeanHelper {
 	}
 	
 	protected boolean blackListed(String className) {
+		return false;
+		/*
 		if (isRootContext() && className.startsWith("xc.mst.services.impl")) {
 			LOG.debug("blackListed: "+className);
 			return true;
 		} else {
 			return false;
 		}
+		*/
 	}
 	
 	protected String getBeanName(String className) {

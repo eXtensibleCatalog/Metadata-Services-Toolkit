@@ -16,6 +16,8 @@ import org.apache.log4j.Logger;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
+import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.manager.BaseService;
 
@@ -77,9 +79,8 @@ public class DefaultRepository extends BaseService implements Repository {
 		getRepositoryDAO().endBatch(name);
 	}
 
-	public List<Record> getPredecessors(Record r) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Long> getPredecessorIds(Record r) {
+		return getRepositoryDAO().getPredecessors(name, r.getId());
 	}
 
 	// TODO: you need to check the cache as well
@@ -93,12 +94,15 @@ public class DefaultRepository extends BaseService implements Repository {
 		return getRepositoryDAO().getRecord(name, id);
 	}
 
-	public List<Record> getRecords(Date from, Date until, Long startingId) {
-		return getRepositoryDAO().getRecords(name, from, until, startingId);
+	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+		return getRepositoryDAO().getRecords(name, from, until, startingId, inputFormat, inputSet);
 	}
 	
 	public void injectSuccessors(Record r) {
-		// TODO
+		List<Record> succs = getRepositoryDAO().getSuccessors(name, r.getId());
+		if (succs != null) {
+			r.getSuccessors().addAll(succs);
+		}
 	}
 
 }

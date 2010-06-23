@@ -12,6 +12,8 @@ package xc.mst.repo;
 import java.util.Date;
 import java.util.List;
 
+import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 
 public interface Repository {
@@ -30,13 +32,13 @@ public interface Repository {
 	public void addRecord(Record record);
 	public void addRecords(List<Record> records);
 	
-	public List<Record> getRecords(Date from, Date until, Long startingId);
+	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet);
 	
 	public Record getRecord(String oaiId);
 	
 	public Record getRecord(long id);
 	
-	public List<Record> getPredecessors(Record r);
+	public List<Long> getPredecessorIds(Record r);
 	
 	public void injectSuccessors(Record r);
 

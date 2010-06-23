@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.harvest.HarvestSchedule;
@@ -12,16 +13,19 @@ import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
+import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.common.test.BaseTest;
 import xc.mst.constants.Status;
-import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
+import xc.mst.services.MetadataService;
 import xc.mst.services.MetadataServiceManager;
 import xc.mst.utils.MSTConfiguration;
 
 public class StartToFinishTest extends BaseTest {
+	
+	private static final Logger LOG = Logger.getLogger(StartToFinishTest.class);
 	
 	protected Provider provider = null;
 	protected String serviceName = "example";
@@ -32,29 +36,27 @@ public class StartToFinishTest extends BaseTest {
 		printClassPath();
 		
 		dropOldSchemas();
-		
+		LOG.debug("after dropOldSchemas");
 		installProvider();
+		LOG.debug("after installProvider");
 		installService();
+		LOG.debug("after installService");
 
 		configureProcessingRules();
+		LOG.debug("after configureProcessingRules");
 		createHarvestSchedule();
+		LOG.debug("after createHarvestSchedule");
 
 		waitUntilFinished();
+		LOG.debug("after waitUntilFinished");
 		
 		indexHarvestedRecords();
+		LOG.debug("after indexHarvestedRecords");
 		indexServicedRecords();
+		LOG.debug("after indexServicedRecords");
 		
-		/*
-		*/
-		// walk through all records (put the implementation in a service and repository)
-	    //   - each harvest schedule step 
-	    //   - each service
-	    // for a record or small set of records (add the interface to MetadataService)
-		//   - at first I thought this wouldn't actually test what we need it to since we have only
-		//     one service, but actually it will.  If you select a record from the harvest, then we'll
-		//     need to ask the example service if it has any successors for that record
-	    //   - inject successor, predecessor
-		
+		Record r = getRepositoryService().getRecord(1999);
+		assert r.getPredecessors().get(0).getId() == 999;
 	}
 	
 	public void dropOldSchemas() {
@@ -110,7 +112,7 @@ public class StartToFinishTest extends BaseTest {
 	}
 	
 	public void installService() throws Exception {
-		servicesService.addNewService(serviceName);
+		getServicesService().addNewService(serviceName);
 	}
 
 	public void configureProcessingRules() throws Exception {
@@ -134,7 +136,7 @@ public class StartToFinishTest extends BaseTest {
 		s.setIsRecordSet(true);
 		setDAO.insert(s);
 		
-		Service service = servicesService.getServiceByName(serviceName);
+		Service service = getServicesService().getServiceByName(serviceName);
 		ProcessingDirective pd = new ProcessingDirective();
 		pd.setService(service);
 		pd.setSourceProvider(provider);
@@ -192,35 +194,16 @@ public class StartToFinishTest extends BaseTest {
 			if (providers != null) {
 				for (Provider p : providers) {
 					Repository repo = getRepositoryService().getRepository(p.getName());
-					
 					WorkerThread runningJob = new WorkerThread();
 					MetadataServiceManager msm = new MetadataServiceManager();
 					runningJob.setWorkDelegate(msm);
-					/*
-					Service s = getServicesService().getServiceByName(jobToStart.getService().getName());
-					LOG.debug("jobToStart.getService().getMetadataService(): "+s.getMetadataService());
-					msm.setMetadataService(s.getMetadataService());
-					msm.setOutputSet(getSetDAO().getById(jobToStart.getOutputSetId()));
-					Repository incomingRepo = null;
-					if (jobToStart.getProcessingDirective().getSourceProvider() != null) {
-						incomingRepo = 
-							getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider().getName());
-					} else if (jobToStart.getProcessingDirective().getSourceService() != null) {
-						incomingRepo = jobToStart.getProcessingDirective().getSourceService().getMetadataService().getRepository();
-					} else {
-						throw new RuntimeException("error");
-					}
-					msm.setIncomingRepository(incomingRepo);
-					msm.setTriggeringFormats(jobToStart.getProcessingDirective().getTriggeringFormats());
-					msm.setTriggeringSets(jobToStart.getProcessingDirective().getTriggeringSets());
-					*/
-				}
-			}
-			
-			List<HarvestSchedule> harvestSchedules = harvestScheduleDAO.getAll();
-			if (harvestSchedules != null) {
-				for (HarvestSchedule hs : harvestSchedules) {
-					
+					MetadataService solrIndexService = (MetadataService)MSTConfiguration.getInstance().getBean("SolrIndexService");
+					Service s = new Service();
+					s.setName(p.getName()+"-solr-indexer");
+					solrIndexService.setService(s);
+					msm.setMetadataService(solrIndexService);
+					msm.setIncomingRepository(repo);
+					runningJob.run();
 				}
 			}
 		} catch (Throwable t) {
@@ -229,11 +212,25 @@ public class StartToFinishTest extends BaseTest {
 	}
 	
 	public void indexServicedRecords() {
-		
+		try {
+			List<Service> services = getServicesService().getAllServices();
+			if (services != null) {
+				for (Service s : services) {
+					Repository repo = getRepositoryService().getRepository(s.getName());
+					WorkerThread runningJob = new WorkerThread();
+					MetadataServiceManager msm = new MetadataServiceManager();
+					runningJob.setWorkDelegate(msm);
+					MetadataService solrIndexService = (MetadataService)MSTConfiguration.getInstance().getBean("SolrIndexService");
+					Service s2 = new Service();
+					s.setName(s.getName()+"-solr-indexer");
+					solrIndexService.setService(s2);
+					msm.setMetadataService(solrIndexService);
+					msm.setIncomingRepository(repo);
+					runningJob.run();
+				}
+			}
+		} catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-	
-	protected void indexRecord() {
-		
-	}
-
 }

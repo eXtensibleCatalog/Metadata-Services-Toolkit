@@ -56,7 +56,7 @@ public class RepositoryTest extends BaseTest {
 			
 			Record previousRecord = recordService.createRecord();
 			for (int i=0; i<10; i++) {
-				Service norm = servicesService.getServiceByName("MARCNormalization");
+				Service norm = getServicesService().getServiceByName("MARCNormalization");
 				LOG.debug("norm: "+norm);
 				Record record = recordService.createSuccessor(previousRecord, norm);
 				record.setOaiXml("<hello>"+i+"</hello>");

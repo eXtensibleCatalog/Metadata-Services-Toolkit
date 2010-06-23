@@ -51,6 +51,10 @@
 		<context:include-filter type="custom" expression="xc.mst.spring.DAOTypeFilter" />
 	</context:component-scan>
 	
+	<bean name="HarvestManager" class="xc.mst.harvester.HarvestManager" scope="prototype" />
+	<bean name="SingleThreaded" class="xc.mst.utils.index.SolrIndexManager" scope="singleton" />
+	<bean name="MultiThreaded" class="xc.mst.utils.index.ThreadedSolrIndexManager" scope="singleton" />
+	
 	<context:component-scan base-package="xc.mst"
 			use-default-filters="false"
 			name-generator="xc.mst.spring.MSTBeanNameGenerator"
@@ -59,8 +63,8 @@
 	</context:component-scan>
 
 	<alias name="${record.service}" alias="RecordService" />
-	
-	<import resource="all-managers.xml"/>
+
+	<alias name="${SOLRIndexer}" alias="SolrIndexManager" />
 	
 	<bean class="xc.mst.spring.MSTBeanPostProcessor"/>
 

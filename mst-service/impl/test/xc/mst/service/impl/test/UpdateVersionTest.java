@@ -17,7 +17,7 @@ public class UpdateVersionTest extends BaseTest  {
 	@Test
 	public void test() {
 		try {	
-			Service norm = servicesService.getServiceByName("MARCNormalization");
+			Service norm = getServicesService().getServiceByName("MARCNormalization");
 			List<String> fileNames = new ArrayList<String>();
 			fileNames.add("update.1.0.sql");
 			fileNames.add("update.0.2.sql");

@@ -307,12 +307,11 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
 		running.lock();
-		//TODO - create tables
-		//   one of which is a list of when the last "harvest" was
+		//TODO - check and store tables of when the last "harvest" was
 		Date from = new Date(System.currentTimeMillis()-(1000*60*60*24*500));
 		Date until = new Date();
 		
-		List<Record> records = repo.getRecords(from, until, null);
+		List<Record> records = repo.getRecords(from, until, null, inputFormat, inputSet);
 		
 		Long highestId = null;
 		boolean previouslyPaused = false;
@@ -330,20 +329,32 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			if (previouslyPaused) {
 				running.lock();
 			}
-			getRepository().beginBatch();
+			if (getRepository() != null) {
+				getRepository().beginBatch();
+			}
 			for (Record in : records) {
-				getRepository().injectSuccessors(in);
+				if (getRepository() != null) {
+					// TODO:  This is sort of different than the current implementation
+					//        Although, it does about the same thing.  Perhaps it'll 
+					//        work as long as you configure the cache correctly
+					// NOTE: successor records need to have predecessors injected into them
+					//getRepository().injectSuccessors(in);
+				}
 				List<Record> out = process(in);
 				if (out != null && outputSet != null) {
 					for (Record rout : out) {
 						rout.addSet(outputSet);
 					}
-					getRepository().addRecords(out);
+					if (getRepository() != null) {
+						getRepository().addRecords(out);
+					}
 				}
 				highestId = in.getId();
 			}
-			getRepository().endBatch();
-			records = repo.getRecords(from, until, highestId);
+			if (getRepository() != null) {
+				getRepository().endBatch();
+			}
+			records = repo.getRecords(from, until, highestId, inputFormat, inputSet);
 		}
 		if (!previouslyPaused) {
 			running.unlock();

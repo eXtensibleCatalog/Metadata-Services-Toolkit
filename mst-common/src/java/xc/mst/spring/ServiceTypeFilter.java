@@ -53,9 +53,9 @@ public class ServiceTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 				return false;
 			}
 			Class c = getClassLoader().loadClass(className);
-			if (BaseService.class.isAssignableFrom(c) && !BaseManager.class.isAssignableFrom(c) && !BaseService.class.equals(c)) {
+			if (BaseService.class.isAssignableFrom(c) && !BaseManager.class.equals(c) && !BaseService.class.equals(c)) {
 				LOG.debug("c: "+c.getName());
-				return true;	
+				return true;
 			} else if (serviceBeans.containsKey(className)) {
 				return true;
 			} else {
