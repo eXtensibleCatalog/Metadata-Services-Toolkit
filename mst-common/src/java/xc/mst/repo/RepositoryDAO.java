@@ -387,7 +387,8 @@ public class RepositoryDAO extends BaseDAO {
 		Record r = null;
 		try {
 			r = this.jdbcTemplate.queryForObject(sql, 
-					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}));
+					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}),
+					id);
 		} catch (EmptyResultDataAccessException e) {
 			LOG.info("record not found for id: "+id);
 		}

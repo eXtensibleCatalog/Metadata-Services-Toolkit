@@ -215,8 +215,6 @@ public class ValidateRepository extends HttpService {
 	 * is no longer supported
 	 *
 	 * @return The current list of metadata formats supported by the OAI provider
-	 * @exception Hexception If an error occurred while validating the Identify verb
-	 * @exception OAIErrorException If OAI error was returned by the OAI provider
 	 * @throws DatabaseConfigException 
 	 */
 	public List<Format> checkFormats() throws DatabaseConfigException, HttpException {

@@ -283,10 +283,10 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			    	log.debug(new XmlHelper().getString(doc.getRootElement()));
 			    TimingLogger.stop("sendRequest");
 
-			    TimingLogger.start("extractRecords");
+			    TimingLogger.start("parseRecords");
 			    resumptionToken = parseRecords(metadataPrefix, doc, baseURL);
                 log.debug("resumptionToken: "+resumptionToken);
-                TimingLogger.stop("extractRecords");
+                TimingLogger.stop("parseRecords");
 
                 repo.endBatch();
 				LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL + ", " + recordsProcessed + " new records were returned by the OAI provider.");
