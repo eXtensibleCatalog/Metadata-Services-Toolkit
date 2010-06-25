@@ -28,7 +28,7 @@ import xc.mst.common.test.BaseTest;
 import xc.mst.dao.DataException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
-import xc.mst.manager.record.MSTSolrServer;
+import xc.mst.manager.record.MSTSolrService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
  
@@ -139,7 +139,7 @@ public class TestHelper extends BaseTest {
 			SolrCore core = container.create(descriptor);
 			container.register("core1", core, false);
 
-			((MSTSolrServer)MSTConfiguration.getInstance().getBean("MSTSolrServer")).setServer(new EmbeddedSolrServer(container, "core1"));
+			((MSTSolrService)MSTConfiguration.getInstance().getBean("MSTSolrServer")).setServer(new EmbeddedSolrServer(container, "core1"));
 		}
 		catch (IOException ioe)
 		{

@@ -51,7 +51,7 @@ import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.ExpressionService;
 import xc.mst.manager.record.HoldingsService;
 import xc.mst.manager.record.ItemService;
-import xc.mst.manager.record.MSTSolrServer;
+import xc.mst.manager.record.MSTSolrService;
 import xc.mst.manager.record.ManifestationService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
@@ -443,8 +443,8 @@ public class BaseService {
 	public RecordService getRecordService() {
 		return (RecordService)config.getBean("RecordService");
 	}
-	public MSTSolrServer getMstSolrServer() {
-		return (MSTSolrServer)config.getBean("MSTSolrServer");
+	public MSTSolrService getMSTSolrService() {
+		return (MSTSolrService)config.getBean("MSTSolrService");
 	}
 	public Scheduler getScheduler() {
 		return (Scheduler)config.getBean("Scheduler");

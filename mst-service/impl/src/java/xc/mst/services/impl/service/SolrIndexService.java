@@ -4,10 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.manager.IndexException;
 import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
 import xc.mst.services.impl.GenericMetadataService;
@@ -55,6 +57,11 @@ public class SolrIndexService extends GenericMetadataService  {
 			records = 
 				((DefaultRepository)repo).getRecordsWSets(from, until, highestId, inputFormat, inputSet);
 		}
+		try {
+			getSolrIndexManager().commitIndex();
+		} catch (IndexException ie) {
+			throw new RuntimeException(ie);
+		}
 		if (!previouslyPaused) {
 			running.unlock();
 		}
@@ -63,6 +70,15 @@ public class SolrIndexService extends GenericMetadataService  {
 	public List<Record> process(Record r) {
 		LOG.debug("r.getSets(): "+r.getSets());
 		LOG.debug("r.getId(): "+r.getId());
+		SolrInputDocument doc = new SolrInputDocument();
+		doc.addField("record_id", r.getId());
+		r.setMode(Record.STRING_MODE);
+		doc.addField("oai_xml", r.getOaiXml());
+		try {
+			getSolrIndexManager().addDoc(doc);
+		} catch (IndexException ie) {
+			throw new RuntimeException(ie);
+		}
 		return null;
 	}
 

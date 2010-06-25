@@ -35,7 +35,7 @@ import xc.mst.utils.MSTConfiguration;
  * @author Sharmila Ranganathan
  *
  */
-public class MSTSolrServer extends BaseService {
+public class MSTSolrService extends BaseService {
 
 	/**
 	 * The logger object

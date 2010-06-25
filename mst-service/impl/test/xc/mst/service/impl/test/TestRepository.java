@@ -200,5 +200,10 @@ public class TestRepository extends BaseService implements Repository {
 			r.getSuccessors().addAll(succs);
 		}
 	}
+	@Override
+	public List<Long> getPredecessorIds(Record r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

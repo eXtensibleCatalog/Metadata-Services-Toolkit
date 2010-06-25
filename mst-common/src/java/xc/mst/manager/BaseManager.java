@@ -21,7 +21,7 @@ import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.ExpressionService;
 import xc.mst.manager.record.HoldingsService;
 import xc.mst.manager.record.ItemService;
-import xc.mst.manager.record.MSTSolrServer;
+import xc.mst.manager.record.MSTSolrService;
 import xc.mst.manager.record.ManifestationService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
@@ -60,7 +60,7 @@ public class BaseManager extends BaseService {
 	protected UserService userService = null;
 	protected RecordService recordService = null;
 	protected ValidateRepository validateRepository = null;
-	protected MSTSolrServer mstSolrServer = null;
+	protected MSTSolrService MSTSolrService = null;
 	protected HttpService httpService = null;
 	protected RepositoryService repositoryService = null;
 
@@ -197,11 +197,11 @@ public class BaseManager extends BaseService {
 	public void setValidateRepository(ValidateRepository validateRepository) {
 		this.validateRepository = validateRepository;
 	}
-	public MSTSolrServer getMstSolrServer() {
-		return mstSolrServer;
+	public MSTSolrService getMSTSolrService() {
+		return MSTSolrService;
 	}
-	public void setMstSolrServer(MSTSolrServer mstSolrServer) {
-		this.mstSolrServer = mstSolrServer;
+	public void setMSTSolrService(MSTSolrService MSTSolrService) {
+		this.MSTSolrService = MSTSolrService;
 	}
 	
 	public SolrIndexManager getSolrIndexManager() {

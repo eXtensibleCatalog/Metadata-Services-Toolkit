@@ -78,7 +78,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 		log.debug("Add index to Solr - begin");
 
 		// Check if solr server is null
-		if (getMstSolrServer().getServer() == null)
+		if (getMSTSolrService().getServer() == null)
 		{
 			log.error("Solr server is null");
 
@@ -152,7 +152,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 		{
 			try 
 			{
-				getMstSolrServer().getServer() .add(doc);
+				getMSTSolrService().getServer() .add(doc);
 			}
 			catch (SolrServerException se)
 			{
