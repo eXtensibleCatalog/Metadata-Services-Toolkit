@@ -11,6 +11,6 @@
 <ivy-module version="2.0">
     <info organisation="xc" module="mst-platform"/>
     <dependencies>
-		<dependency org="xc" name="mst-common" rev="${mc.version}" changing="true"/>
+		<dependency org="xc" name="mst-service-impl" rev="${ms.version}" changing="true"/>
     </dependencies>
 </ivy-module>

@@ -87,6 +87,7 @@ public class MSTSolrServer extends BaseService {
 			String solrHome = MSTConfiguration.getUrlPath();
 			solrHome = solrHome + MSTConfiguration.FILE_SEPARATOR + "solr";
 			System.setProperty("solr.home", solrHome);
+			System.setProperty("solr.solr.home", solrHome);
 
 			log.info("Opening Solr at 3" + solrHome);
 			

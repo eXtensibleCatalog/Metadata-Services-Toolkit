@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
   * Copyright (c) 2009 University of Rochester
   *
@@ -8,6 +9,9 @@
   *
   -->
 
+<!-- 
+<web-app>
+ -->
 
 <web-app id="WebApp_9" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
@@ -15,39 +19,101 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:spring-mst.xml</param-value>
 	</context-param>
-	
-	<listener>
-		<listener-class>xc.mst.servlet.MSTContextListener</listener-class>
-	</listener>
-
-	<display-name>Metadata Services Toolkit</display-name>
-	
-	<servlet>
-		<servlet-name>DevAdminServlet</servlet-name>
-		<servlet-class>xc.mst.servlet.DevAdminServlet</servlet-class>
-	</servlet>
-
+	 
 	<filter>
 		<filter-name>struts2</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
 	</filter>
+	
+	<filter>
+		<filter-name>SolrRequestFilter</filter-name>
+		<filter-class>org.apache.solr.servlet.SolrDispatchFilter</filter-class>
+	</filter>
 
-	<!--
-	--> 
 	<filter-mapping>
 		<filter-name>struts2</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>SolrRequestFilter</filter-name>
+		<url-pattern>/solr/*</url-pattern>
+	</filter-mapping>
+	 
+	<listener>
+		<listener-class>xc.mst.servlet.MSTContextListener</listener-class>
+	</listener>
+ 	
+	<servlet>
+		<servlet-name>DevAdminServlet</servlet-name>
+		<servlet-class>xc.mst.servlet.DevAdminServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>SolrServer</servlet-name>
+		<servlet-class>org.apache.solr.servlet.SolrServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>SolrUpdate</servlet-name>
+		<servlet-class>org.apache.solr.servlet.SolrUpdateServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>Logging</servlet-name>
+		<servlet-class>org.apache.solr.servlet.LogLevelSelection</servlet-class>
+	</servlet>
+	
+	<!-- @Deprecated -->
+	<servlet>
+		<servlet-name>ping</servlet-name>
+		<jsp-file>/solr/admin/ping.jsp</jsp-file>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>jsp</servlet-name>
 		<url-pattern>/pages/js/*</url-pattern>
 	</servlet-mapping>
-	
+ 
 	<servlet-mapping>
 		<servlet-name>DevAdminServlet</servlet-name>
 		<url-pattern>/devAdmin/*</url-pattern>
 	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>SolrServer</servlet-name>
+		<url-pattern>/solr/select/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>SolrUpdate</servlet-name>
+		<url-pattern>/solr/update/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Logging</servlet-name>
+		<url-pattern>/admin/logging</url-pattern>
+	</servlet-mapping>
+
+	<!-- @Deprecated -->
+	<servlet-mapping>
+		<servlet-name>ping</servlet-name>
+		<url-pattern>/solr/admin/ping</url-pattern>
+	</servlet-mapping>
+
+	<!-- @Deprecated -->
+	<servlet-mapping>
+		<servlet-name>Logging</servlet-name>
+		<url-pattern>/solr/admin/logging.jsp</url-pattern>
+	</servlet-mapping>
+  
+	<mime-mapping>
+		<extension>.xsl</extension>
+		<!-- per http://www.w3.org/TR/2006/PR-xslt20-20061121/ -->
+		<mime-type>application/xslt+xml</mime-type>
+	</mime-mapping>
 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

@@ -66,13 +66,13 @@ public class Scheduler extends BaseService implements Runnable {
 		
 		try {
 			for (Service s : getServiceDAO().getAll()) {
-				if (s.getStatus().equals(Status.RUNNING)) {
+				if (Status.RUNNING.equals(s.getStatus())) {
 					s.setStatus(Status.CANCELED);
 					getServiceDAO().update(s);
 				}
 			}
 			for (HarvestSchedule hs : getHarvestScheduleDAO().getAll()) {
-				if (hs.getStatus().equals(Status.RUNNING)) {
+				if (Status.RUNNING.equals(hs.getStatus())) {
 					hs.setStatus(Status.CANCELED);
 					getHarvestScheduleDAO().update(hs, false);
 				}
@@ -248,7 +248,7 @@ public class Scheduler extends BaseService implements Runnable {
 			// Sleep until the next hour begins
 			try {
 				if(LOG.isDebugEnabled())
-					LOG.debug("Scheduler Thread sleeping for 1 minute.");
+					//LOG.debug("Scheduler Thread sleeping for 1 minute.");
 				Thread.sleep(1000);
 			} catch(InterruptedException e) {
 				if(LOG.isDebugEnabled())

@@ -985,7 +985,6 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 	@Override
 	public List<HarvestSchedule> getSchedulesToRun(int hour, int dayOfWeek,	int minute) throws DatabaseConfigException
 	{
-		log.debug("hour:"+hour+ " dayOfWeek:"+dayOfWeek+" minute:"+minute);
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");

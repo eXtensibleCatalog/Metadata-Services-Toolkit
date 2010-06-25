@@ -82,13 +82,8 @@
 				<include name="default.properties" />
 				<include name="**/*.xml" />
 				<include name="**/*.sql" />
-				<!--
-				<exclude name="**/*.java" />
-				<exclude name="*.properties" />
-				-->
 			</fileset>
 		</copy>
-		<copy tofile="${mc.build.classes}/env.properties" file="${mc.src.java}/${box}.properties" overwrite="true" />
 	</target>
 
 	<target name="mc.jar" depends="mc.copy-resources, mc.copy-resources.nodep"/>
