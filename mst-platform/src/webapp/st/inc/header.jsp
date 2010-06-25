@@ -29,7 +29,7 @@
  
                
 	<div class="header_logo">
-                        <img  src="/MetadataServicesToolkit/page-resources/img/Logo.jpg">
+                        <img  src="page-resources/img/Logo.jpg">
                           <c:if test="${user!=null}">
                        		
 		<span class="headerMessage"> <B><img style="position:relative;top:-4px;"  src="page-resources/img/user_logo.jpg" > Hi ${user.username}</B> &nbsp;&nbsp; | <a href="viewMyAccount.action">My Account</a>   &nbsp;&nbsp;  |  &nbsp;&nbsp;<a href="logout.action">Logout</a></span>

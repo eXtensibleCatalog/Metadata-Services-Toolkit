@@ -7,4 +7,4 @@
   *
   -->
 
-<%response.sendRedirect(request.getContextPath() + "/viewLogin.action");%>
+<%response.sendRedirect(request.getContextPath() + "/st/viewLogin.action");%>

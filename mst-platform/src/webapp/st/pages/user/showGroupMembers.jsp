@@ -185,10 +185,10 @@
                                  <tr>
                                      <c:choose>
                                          <c:when test="${n.server.name=='Local'}">
-                                             <c:set var="url" value="/MetadataServicesToolkit/viewEditLocalUser.action?userId=${n.id}"/>
+                                             <c:set var="url" value="viewEditLocalUser.action?userId=${n.id}"/>
                                          </c:when>
                                          <c:otherwise>
-                                              <c:set var="url" value="/MetadataServicesToolkit/viewEditLDAPUser.action?userId=${n.id}"/>
+                                              <c:set var="url" value="viewEditLDAPUser.action?userId=${n.id}"/>
                                          </c:otherwise>
                                     </c:choose>
 
