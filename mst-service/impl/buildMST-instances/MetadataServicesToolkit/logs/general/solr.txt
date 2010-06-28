@@ -1,1 +1,0 @@
-25 Jun 2010 10:07:59,562 ERROR [Thread-2] - Failed to create Solr server instance using the configuration in c:/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/impl/buildMST-instances\MetadataServicesToolkit\solr
