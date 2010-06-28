@@ -22,8 +22,8 @@
                    <div id="repository" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/allRepository.action" />" >List Repositories</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewAddRepository.action" />" >Add Repository</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="allRepository.action" />" >List Repositories</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="viewAddRepository.action" />" >Add Repository</a></li>
                            </ul>
                         </div>
                     </div>
@@ -35,8 +35,8 @@
                    <div id="schedule" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/allSchedules.action" />" >List Scheduled Harvests</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewAddSchedule.action" />" >Add Scheduled Harvests</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="allSchedules.action" />" >List Scheduled Harvests</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="viewAddSchedule.action" />" >Add Scheduled Harvests</a></li>
                            </ul>
                         </div>
                     </div>
@@ -48,8 +48,8 @@
                    <div id="Services" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/listServices.action" />" >List Services</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewAddService.action" />" >Add Service</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="listServices.action" />" >List Services</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="viewAddService.action" />" >Add Service</a></li>
                            </ul>
                         </div>
                     </div>
@@ -61,8 +61,8 @@
                    <div id="Processing Rules" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/listProcessingDirectives.action" />" >List Processing Rules</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewAddProcessingDirectives.action?refreshSession=yes" />" >Add Processing Rules</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="listProcessingDirectives.action" />" >List Processing Rules</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="viewAddProcessingDirectives.action?refreshSession=yes" />" >Add Processing Rules</a></li>
                            </ul>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
 
 
        			<mst:checkUserPermission permission="Browse Records">
-                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewBrowseRecords.action"/>">Browse Records</a>
+                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000" href="<c:url value="viewBrowseRecords.action"/>">Browse Records</a>
                     </li>
                  </mst:checkUserPermission>
 
@@ -95,10 +95,10 @@
                    <div id="UsersGroups" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/allUsers.action" />" >List Users</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewAddLocalUser.action" />" >Add Local User</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/allGroups.action" />" >List Groups</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewAddGroup.action" />" >Add Group</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="allUsers.action" />" >List Users</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="viewAddLocalUser.action" />" >Add Local User</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="allGroups.action" />" >List Groups</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="viewAddGroup.action" />" >Add Group</a></li>
                            </ul>
                         </div>
                     </div>
@@ -110,8 +110,8 @@
                    <div id="configuration" class="yuimenu">
                        <div class="bd">
                             <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewEmailConfig.action" />" >Email Configuration</a></li>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="/viewAddLDAP.action" />" >LDAP Configuration</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="viewEmailConfig.action" />" >Email Configuration</a></li>
+                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="viewAddLDAP.action" />" >LDAP Configuration</a></li>
 
                            </ul>
                         </div>

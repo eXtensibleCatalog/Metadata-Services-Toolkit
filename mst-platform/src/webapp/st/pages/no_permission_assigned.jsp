@@ -12,12 +12,12 @@
 <%@ taglib prefix="mst" uri="mst-tags"%>
 
 <!--  document type -->
-<c:import url="/inc/doctype-frag.jsp"/>
+<c:import url="/st/inc/doctype-frag.jsp"/>
 
 <html>
     <head>
         <title>User Registration</title>
-        <c:import url="/inc/meta-frag.jsp"/>
+        <c:import url="/st/inc/meta-frag.jsp"/>
         
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/yui/assets/skins/sam/skin.css" rel="stylesheet" type="text/css" >
@@ -47,7 +47,7 @@
 		<!-- page header - this uses the yahoo page styling -->
 		<div id="hd">
 		    <!--  this is the header of the page -->
-		    <c:import url="/inc/header.jsp"/>
+		    <c:import url="/st/inc/header.jsp"/>
 		      <div id="mainMenu" class="yuimenubar yuimenubarnav">
 			<div class="bd">
 			    <ul class="first-of-type">
@@ -77,7 +77,7 @@
  		</div>
 		<!--  end body -->		
             <!--  this is the footer of the page -->
-            <c:import url="/inc/footer.jsp"/>              
+            <c:import url="/st/inc/footer.jsp"/>              
         </div>
         <!-- end doc -->
     </body>

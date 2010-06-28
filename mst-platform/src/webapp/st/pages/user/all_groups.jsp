@@ -11,14 +11,14 @@
 <%@ taglib prefix="mst" uri="mst-tags"%>
 
 <!--  document type -->
-<c:import url="/inc/doctype-frag.jsp"/>
+<c:import url="/st/inc/doctype-frag.jsp"/>
 
 <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 
 <html>
     <head>
         <title>All Groups</title>
-        <c:import url="/inc/meta-frag.jsp"/>
+        <c:import url="/st/inc/meta-frag.jsp"/>
 
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/base-mst.css" rel="stylesheet" type="text/css" >
@@ -49,11 +49,11 @@
 		<div id="hd">
 
             <!--  this is the header of the page -->
-            <c:import url="/inc/header.jsp"/>
+            <c:import url="/st/inc/header.jsp"/>
 
             <!--  this is the header of the page -->
-            <c:import url="/inc/menu.jsp"/>
-            <jsp:include page="/inc/breadcrumb.jsp">
+            <c:import url="/st/inc/menu.jsp"/>
+            <jsp:include page="/st/inc/breadcrumb.jsp">
 
                     <jsp:param name="bread" value="Users & Groups | All Groups" />
 
@@ -191,7 +191,7 @@
             </form>
         </div>
             <!--  this is the footer of the page -->
-            <c:import url="/inc/footer.jsp"/>          
+            <c:import url="/st/inc/footer.jsp"/>          
    </div>
 
 </body>

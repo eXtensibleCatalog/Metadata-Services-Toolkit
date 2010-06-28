@@ -12,12 +12,12 @@
 <%@ taglib prefix="mst" uri="mst-tags"%>
 
 <!--  document type -->
-<c:import url="/inc/doctype-frag.jsp"/>
+<c:import url="/st/inc/doctype-frag.jsp"/>
 
 <html>
     <head>
         <title>Access Denied</title>
-        <c:import url="/inc/meta-frag.jsp"/>
+        <c:import url="/st/inc/meta-frag.jsp"/>
         
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/base-mst.css" rel="stylesheet" type="text/css" >
@@ -45,10 +45,10 @@
 		<!-- page header - this uses the yahoo page styling -->
 		<div id="hd">
 		     <!--  this is the header of the page -->
-			<c:import url="/inc/header.jsp"/>
+			<c:import url="/st/inc/header.jsp"/>
 
 			<!--  this is the header of the page -->
-    			<c:import url="/inc/menu.jsp"/>
+    			<c:import url="/st/inc/menu.jsp"/>
 
  		</div>
 		<!--  end header -->
@@ -66,7 +66,7 @@
  		</div>
 		<!--  end body -->		
             <!--  this is the footer of the page -->
-            <c:import url="/inc/footer.jsp"/>              
+            <c:import url="/st/inc/footer.jsp"/>              
         </div>
         <!-- end doc -->
     </body>

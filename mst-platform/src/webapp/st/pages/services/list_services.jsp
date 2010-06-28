@@ -12,7 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="mst" uri="mst-tags"%>
 
-<c:import url="/inc/doctype-frag.jsp"/>
+<c:import url="/st/inc/doctype-frag.jsp"/>
 
 <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
 
@@ -20,7 +20,7 @@
 <html>
     <head>
         <title>List Services</title>
-        <c:import url="/inc/meta-frag.jsp"/>
+        <c:import url="/st/inc/meta-frag.jsp"/>
 
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/yui/assets/skins/sam/skin.css"  rel="stylesheet" type="text/css" >
@@ -55,11 +55,11 @@
             <div id="hd">
 
                 <!--  this is the header of the page -->
-                <c:import url="/inc/header.jsp"/>
+                <c:import url="/st/inc/header.jsp"/>
 
                 <!--  this is the header of the page -->
-                <c:import url="/inc/menu.jsp"/>
-                <jsp:include page="/inc/breadcrumb.jsp">
+                <c:import url="/st/inc/menu.jsp"/>
+                <jsp:include page="/st/inc/breadcrumb.jsp">
 
                     <jsp:param name="bread" value="Services | List Services" />
 
@@ -254,7 +254,7 @@
 	      </div>	      
 	       <div class="clear">&nbsp;</div>
             <!--  this is the footer of the page -->
-            <c:import url="/inc/footer.jsp"/>  
+            <c:import url="/st/inc/footer.jsp"/>  
 
         </div>
 </body>
