@@ -50,7 +50,7 @@ public class HarvesterTest extends BaseTest
 		providerService.insertProvider(provider);
 		validateRepository.validate(provider.getId());
 		
-		repositoryDAO.createSchema(provider.getName(), true);
+		repositoryDAO.createRepository(provider);
 		Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(provider.getName());
 		

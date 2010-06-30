@@ -63,12 +63,7 @@ public class SolrIndexManager extends BaseManager {
 	 * @param doc The document to add
 	 * @return true on success, false on failure
 	 */
-	public boolean addDoc(SolrInputDocument doc) throws IndexException
-	{
-		if (log.isDebugEnabled()) {
-			log.debug("Add index to Solr - begin");
-		}
-		
+public boolean addDoc(SolrInputDocument doc) throws IndexException {
 		// Check if solr server is null
 		if (getMSTSolrService() == null) {
 			log.error("Solr server is null");
@@ -106,10 +101,7 @@ public class SolrIndexManager extends BaseManager {
 			
 			throw new IndexException(ioe.getMessage());
 		}
-		
-		if (log.isDebugEnabled()) {
-			log.debug("Add index to Solr - end");
-		}
+
 		return true;
 	}
 

@@ -20,6 +20,10 @@ public class Util {
 		return (Util)MSTConfiguration.getInstance().getBean("Util");
 	}
 	
+	public String normalizeName(String name) {
+		return name.replaceAll(" ", "_").toLowerCase();
+	}
+	
 	public String slurp(File file) {
 		try {
 			return slurp(new FileInputStream(file));

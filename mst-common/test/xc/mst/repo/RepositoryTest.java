@@ -19,6 +19,7 @@ import org.testng.annotations.Test;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.common.test.BaseTest;
+import xc.mst.utils.MSTConfiguration;
 
 public class RepositoryTest extends BaseTest {
 	
@@ -44,7 +45,7 @@ public class RepositoryTest extends BaseTest {
 	public void install() {
 		try {
 			repositoryDAO.dropTables(repoName);
-			repo.installOrUpdateIfNecessary();
+			repo.installOrUpdateIfNecessary(null, MSTConfiguration.getInstance().getProperty("version"));
 		} catch (Throwable t) {
 			t.printStackTrace(System.out);
 		}

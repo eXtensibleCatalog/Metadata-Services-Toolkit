@@ -125,10 +125,11 @@ public class DefaultServicesService extends BaseService
 		}
 	}
 	
-	public MetadataService getMetadataService(String name) {
-		MetadataService ms = (MetadataService)getServiceEntry(name).ac.getBean("Service");
+	protected MetadataService getMetadataService(Service s) {
+		MetadataService ms = (MetadataService)getServiceEntry(s.getName()).ac.getBean("Service");
 		if (ms.getRepository().getName() == null) {
-			ms.getRepository().setName(name);
+			ms.getRepository().setName(s.getName());
+			ms.getRepository().setService(s);
 		}
 		return ms;
 	}
@@ -216,10 +217,14 @@ public class DefaultServicesService extends BaseService
 	
 	protected void injectMetadataServices(List<Service> services) {
     	for (Service service : services) {
-    		if (service.getMetadataService() == null) {
-    			service.setMetadataService(getMetadataService(service.getName()));
-    		}
+    		injectMetadataService(service);
     	}
+	}
+	
+	protected void injectMetadataService(Service service) {
+		if (service.getMetadataService() == null) {
+			service.setMetadataService(getMetadataService(service));
+		}
 	}
 
     /**
@@ -365,9 +370,10 @@ public class DefaultServicesService extends BaseService
     			throw new ConfigFileException("error codes don't match in length");
     		}
 
-    		getRepositoryDAO().createSchema(name, true);
-    		getMetadataService(name).install();
-
+    		getRepositoryDAO().createRepository(service);
+    		MetadataService ms = getMetadataService(service);
+    		ms.getRepository().installOrUpdateIfNecessary(null, version);
+    		ms.install();
     	}
     	catch(DataException e)
     	{
@@ -731,7 +737,9 @@ public class DefaultServicesService extends BaseService
      */
     public Service getServiceById(int serviceId) throws DatabaseConfigException
     {
-        return getServiceDAO().getById(serviceId);
+        Service s = getServiceDAO().getById(serviceId);
+        injectMetadataService(s);
+        return s;
     }
 
     /**
@@ -745,7 +753,7 @@ public class DefaultServicesService extends BaseService
     {
         Service s = getServiceDAO().getByServiceName(serviceName);
         if (s != null) {
-        	s.setMetadataService(getMetadataService(serviceName));
+        	s.setMetadataService(getMetadataService(s));
             s.getMetadataService().setService(s);	
         }
         return s;

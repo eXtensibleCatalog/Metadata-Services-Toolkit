@@ -13,8 +13,10 @@ import java.util.Date;
 import java.util.List;
 
 import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.service.Service;
 
 public interface Repository {
 	
@@ -27,7 +29,7 @@ public interface Repository {
 	
 	public void endBatch();
 	
-	public void installOrUpdateIfNecessary(); 
+	public void installOrUpdateIfNecessary(String previousVersion, String currentVersion); 
 
 	public void addRecord(Record record);
 	public void addRecords(List<Record> records);
@@ -41,5 +43,10 @@ public interface Repository {
 	public List<Long> getPredecessorIds(Record r);
 	
 	public void injectSuccessors(Record r);
+	
+	public Provider getProvider();
+	public Service getService();
+	public void setProvider(Provider p);
+	public void setService(Service s);
 
 }

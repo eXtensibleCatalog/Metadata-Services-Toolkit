@@ -31,7 +31,7 @@ public class ServiceTest extends BaseTest {
 			LOG.debug("ms: "+ms);
 			Repository srepo = ms.getRepository();
 			repositoryDAO.dropTables(srepo.getName());
-			srepo.installOrUpdateIfNecessary();
+			srepo.installOrUpdateIfNecessary(null, s.getVersion());
 			
 			ms.process(repo, null, null, null);
 		} catch (Throwable t) {

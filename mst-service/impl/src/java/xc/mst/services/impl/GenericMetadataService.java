@@ -133,7 +133,6 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	public void install() {
 		try {
 			getGenericMetadataDAO().executeServiceDBScripts(config.getServicePath()+"/sql/install.sql");
-			getRepository().installOrUpdateIfNecessary();
 			postInstall();
 		} catch (Throwable t) {
 			LOG.error("", t);

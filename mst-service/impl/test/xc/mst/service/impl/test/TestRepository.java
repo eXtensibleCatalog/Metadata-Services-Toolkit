@@ -23,7 +23,9 @@ import org.jdom.input.DOMBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
+import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
 import xc.mst.repo.Repository;
 import xc.mst.utils.Util;
@@ -204,6 +206,32 @@ public class TestRepository extends BaseService implements Repository {
 	public List<Long> getPredecessorIds(Record r) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public Provider getProvider() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Service getService() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void installOrUpdateIfNecessary(String previousVersion,
+			String currentVersion) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setProvider(Provider p) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setService(Service s) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

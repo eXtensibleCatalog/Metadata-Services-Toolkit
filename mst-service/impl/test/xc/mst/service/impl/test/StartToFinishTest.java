@@ -21,6 +21,7 @@ import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
 import xc.mst.services.MetadataService;
 import xc.mst.services.MetadataServiceManager;
+import xc.mst.services.impl.service.SolrIndexService;
 import xc.mst.utils.MSTConfiguration;
 
 public class StartToFinishTest extends BaseTest {
@@ -196,7 +197,7 @@ public class StartToFinishTest extends BaseTest {
 			List<Provider> providers = getProviderDAO().getAll();
 			if (providers != null) {
 				for (Provider p : providers) {
-					Repository repo = getRepositoryService().getRepository(p.getName());
+					Repository repo = getRepositoryService().getRepository(p);
 					WorkerThread runningJob = new WorkerThread();
 					MetadataServiceManager msm = new MetadataServiceManager();
 					runningJob.setWorkDelegate(msm);
@@ -206,6 +207,8 @@ public class StartToFinishTest extends BaseTest {
 					solrIndexService.setService(s);
 					msm.setMetadataService(solrIndexService);
 					msm.setIncomingRepository(repo);
+					((SolrIndexService)solrIndexService).setProvider2index(p);
+					((SolrIndexService)solrIndexService).setService2index(null);
 					runningJob.run();
 				}
 			}
@@ -219,16 +222,18 @@ public class StartToFinishTest extends BaseTest {
 			List<Service> services = getServicesService().getAllServices();
 			if (services != null) {
 				for (Service s : services) {
-					Repository repo = getRepositoryService().getRepository(s.getName());
+					Repository repo = s.getMetadataService().getRepository();
 					WorkerThread runningJob = new WorkerThread();
 					MetadataServiceManager msm = new MetadataServiceManager();
 					runningJob.setWorkDelegate(msm);
 					MetadataService solrIndexService = (MetadataService)MSTConfiguration.getInstance().getBean("SolrIndexService");
 					Service s2 = new Service();
-					s.setName(s.getName()+"-solr-indexer");
+					s2.setName(s.getName()+"-solr-indexer");
 					solrIndexService.setService(s2);
 					msm.setMetadataService(solrIndexService);
 					msm.setIncomingRepository(repo);
+					((SolrIndexService)solrIndexService).setProvider2index(null);
+					((SolrIndexService)solrIndexService).setService2index(s);
 					runningJob.run();
 				}
 			}

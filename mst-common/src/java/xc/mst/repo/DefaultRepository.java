@@ -17,8 +17,10 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
 import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
 
 public class DefaultRepository extends BaseService implements Repository {
@@ -26,18 +28,34 @@ public class DefaultRepository extends BaseService implements Repository {
 	private static final Logger LOG = Logger.getLogger(DefaultRepository.class);
 	
 	protected String name = null;
+	
+	protected Provider provider = null;
+	protected Service service = null;
 
-	public void installOrUpdateIfNecessary() {
+	public Provider getProvider() {
+		return provider;
+	}
+
+	public void setProvider(Provider provider) {
+		this.provider = provider;
+	}
+
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
+	}
+
+	public void installOrUpdateIfNecessary(final String previousVersion, final String currentVersion) {
+		final Repository thisthis = this;
 		this.transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				try {
 					LOG.debug("config.getProperty(\"version\"): "+config.getProperty("version"));
-					if ("0.3.0".equals(config.getProperty("version"))) {
-						boolean exists = getRepositoryDAO().exists(name);
-						LOG.debug("exists: "+exists);
-						if (!exists) {
-							getRepositoryDAO().createRepo(name);
-						}
+					if (previousVersion == null && "0.3.0".equals(currentVersion)) {
+						getRepositoryDAO().createTables(thisthis);
 					}
 				} catch (Throwable t) {
 					LOG.error("", t);
@@ -90,12 +108,19 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 
 	// TODO: you need to check the cache as well
-	public Record getRecord(long id) {
+	public Record getRecord(long id) {	
 		return getRepositoryDAO().getRecord(name, id);
 	}
 
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
-		return getRepositoryDAO().getRecords(name, from, until, startingId, inputFormat, inputSet);
+		LOG.debug("from:"+from+" until:"+until+ " startingId:"+startingId+" inputFormat:"+inputFormat+" inputSet:"+inputSet);
+		List<Record> records = getRepositoryDAO().getRecords(name, from, until, startingId, inputFormat, inputSet);
+		if (records == null) {
+			LOG.debug("no records found");
+		} else { 
+			LOG.debug("records.size(): "+records.size());
+		}
+		return records;
 	}
 	
 	public List<Record> getRecordsWSets(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {

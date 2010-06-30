@@ -30,8 +30,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.service.Service;
 import xc.mst.dao.BaseDAO;
 import xc.mst.utils.TimingLogger;
 
@@ -55,6 +57,7 @@ public class RepositoryDAO extends BaseDAO {
 	protected final static String RECORDS_TABLE_COLUMNS = 
 			"r.record_id, "+
 			"r.date_created, "+
+			"r.format_id, "+
 			"r.status, ";
 	
 	protected boolean inBatch = false;
@@ -78,6 +81,21 @@ public class RepositoryDAO extends BaseDAO {
 		}
 	}
 	
+	public Repository createRepository(Provider provider) {
+		Repository r = (Repository)config.getBean("Repository");
+		r.setProvider(provider);
+		r.setName(provider.getName());
+		createRepo(r);
+		return r;
+	}
+	
+	public void createRepository(Service service) {
+		Repository r = (Repository)config.getBean("Repository");
+		r.setService(service);
+		r.setName(service.getName());
+		createRepo(r);
+	}
+	
 	@Override
 	public void setDataSource(DataSource dataSource) {
 		super.setDataSource(dataSource);
@@ -85,8 +103,19 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public List<Repository> getAll() {
-		List<Repository> repos = new ArrayList<Repository>();
-		repos = this.jdbcTemplate.query("select r.repo_name from repos r", new RepoMapper());
+		List<Repository> repos = 
+			this.jdbcTemplate.query(
+				"select r.repo_name, p.provider_id, p.name "+
+				"from repos r, providers p "+
+				"where p.provider_id = r.provider_id", new RepoMapper());
+		List<Repository> tempRepos =
+			this.jdbcTemplate.query(
+					"select r.repo_name, s.service_id, s.service_name "+
+					"from repos r, services s "+
+					"where s.service_id = r.service_id", new RepoMapper());
+		if (tempRepos != null) {
+			repos.addAll(tempRepos);
+		}
 		return repos;
 	}
 	
@@ -100,7 +129,7 @@ public class RepositoryDAO extends BaseDAO {
 				"and rp.record_id = r.record_id "+
 				"and x.record_id = r.record_id";
 		return this.jdbcTemplate.query(sql, new Object[] {id}, 
-				new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}));
+				new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}, this));
 	}
 	
 	public List<Long> getPredecessors(String name, long id) {
@@ -112,7 +141,7 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	protected String getTableName(String repoName, String tableName) {
-		return " "+normalizeName(repoName)+"."+tableName;
+		return " "+getUtil().normalizeName(repoName)+"."+tableName;
 	}
 	
 	public int getSize(String name) {
@@ -326,9 +355,9 @@ public class RepositoryDAO extends BaseDAO {
 		}
         public void setValues(PreparedStatement ps, int j) throws SQLException {
         	int i=1;
-        	LOG.debug("this.recPreds.get("+j+")[0]: "+this.recPreds.get(j)[0]);
+        	//LOG.debug("this.recPreds.get("+j+")[0]: "+this.recPreds.get(j)[0]);
     		ps.setLong(i++, this.recPreds.get(j)[0]);
-    		LOG.debug("this.recPreds.get("+j+")[1]: "+this.recPreds.get(j)[1]);
+    		//LOG.debug("this.recPreds.get("+j+")[1]: "+this.recPreds.get(j)[1]);
     		ps.setLong(i++, this.recPreds.get(j)[1]);
         }
         public int getBatchSize() {
@@ -346,7 +375,7 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public void dropTables(String name) {
-		for (String table : getTablesWithPrefix(normalizeName(name))) {
+		for (String table : getTablesWithPrefix(getUtil().normalizeName(name))) {
 			this.jdbcTemplate.execute("drop table "+table);
 		}
 	}
@@ -355,15 +384,28 @@ public class RepositoryDAO extends BaseDAO {
 		
 	}
 	
-	public void createRepo(String name) {
-		createSchema(name, false);
+	protected void createRepo(Repository repo) {
+		String name = repo.getName();
+		createSchema(name);
+		Integer serviceId = null;
+		if (repo.getService() != null) {
+			serviceId = repo.getService().getId();
+		}
+		Integer providerId = null;
+		if (repo.getProvider() != null) {
+			providerId = repo.getProvider().getId();
+		}
 		this.jdbcTemplate.update(
 				"insert into "+REPOS_TABLE+" (repo_name, service_id, provider_id) "+
 					"values (?, ?, ?) ",
-				name, null, null);
+				name, serviceId, providerId);
+	}
+	
+	public void createTables(Repository repo) {
+		String name = repo.getName();
 		String createTablesContents = getUtil().slurp("xc/mst/repo/sql/create_repo.sql");
-		createTablesContents = createTablesContents.replaceAll("REPO_NAME", normalizeName(name));
-		createTablesContents = createTablesContents.replaceAll("repo_name", normalizeName(name));
+		createTablesContents = createTablesContents.replaceAll("REPO_NAME", getUtil().normalizeName(name));
+		createTablesContents = createTablesContents.replaceAll("repo_name", getUtil().normalizeName(name));
 		String[] tokens = createTablesContents.split(";");
 		for (String sql : tokens) {
 			if (StringUtils.isEmpty(StringUtils.trim(sql))) {
@@ -387,7 +429,7 @@ public class RepositoryDAO extends BaseDAO {
 		Record r = null;
 		try {
 			r = this.jdbcTemplate.queryForObject(sql, 
-					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}),
+					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}, this),
 					id);
 		} catch (EmptyResultDataAccessException e) {
 			LOG.info("record not found for id: "+id);
@@ -413,10 +455,10 @@ public class RepositoryDAO extends BaseDAO {
 		try {
 			if (startingId != null) {
 				records = this.jdbcTemplate.query(sql, new Object[]{from, until, startingId}, 
-						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}));	
+						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}, this));	
 			} else {
 				records = this.jdbcTemplate.query(sql, new Object[]{from, until}, 
-						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}));
+						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}, this));
 			}
 		} catch (EmptyResultDataAccessException e) {
 			LOG.info("no records found for from: "+from+" until: "+until+" startingId: "+startingId);
@@ -452,12 +494,12 @@ public class RepositoryDAO extends BaseDAO {
 					recordsWSets = this.jdbcTemplate.query(
 							sql, 
 							new Object[]{endingId, from, until, startingId},
-							new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}));	
+							new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}, this));	
 				} else {
 					recordsWSets = this.jdbcTemplate.query(
 							sql,
 							new Object[]{endingId, from, until}, 
-							new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}));
+							new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}, this));
 				}
 				int recIdx = 0;
 				Record currentRecord = recs.get(recIdx);
@@ -478,14 +520,29 @@ public class RepositoryDAO extends BaseDAO {
 	    public Repository mapRow(ResultSet rs, int rowNum) throws SQLException {
 	    	Repository r = new DefaultRepository();
 	        r.setName(rs.getString("r.repo_name"));
+	        try {
+	        	Provider p = new Provider();
+	        	p.setName(rs.getString("p.name"));
+	        	p.setId(rs.getInt("p.provider_id"));
+	        	r.setProvider(p);
+	        } catch (SQLException t) {
+	        	//LOG.debug("", t);
+	        	Service s = new Service();
+	        	s.setName(rs.getString("s.service_name"));
+	        	s.setId(rs.getInt("s.service_id"));
+	        	r.setService(s);
+	        }
 	        return r;
 	    }        
 	}
 	
 	private static final class RecordMapper implements RowMapper<Record> {
 		protected List<String> tables = null;
-		public RecordMapper(String[] tables) {
+		protected RepositoryDAO thisthis = null;
+		
+		public RecordMapper(String[] tables, RepositoryDAO thisthis) {
 			this.tables = Arrays.asList(tables);
+			this.thisthis = thisthis;
 		}
 	    public Record mapRow(ResultSet rs, int rowNum) throws SQLException {
 	        Record r = new Record();
@@ -493,6 +550,14 @@ public class RepositoryDAO extends BaseDAO {
 	        	r.setId(rs.getLong("r.record_id"));
 		        r.setCreatedAt(rs.getTimestamp("r.date_created"));
 		        String status = rs.getString("r.status");
+		        try {
+			        Integer formatId = rs.getInt("r.format_id");
+			        r.setFormat(thisthis.getFormatDAO().getById(formatId));
+		        } catch (NullPointerException npe) {
+		        	LOG.debug("no format for record: "+r.getId());
+		        } catch (Throwable t) {
+		        	LOG.debug("", t);
+		        }
 		        if (status != null && status.length() == 1) {
 		        	r.setStatus(status.charAt(0));
 		        }

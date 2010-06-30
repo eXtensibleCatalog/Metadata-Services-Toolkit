@@ -19,6 +19,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
+import xc.mst.repo.Repository;
 import xc.mst.scheduling.HarvesterWorkerThread;
 import xc.mst.scheduling.ProcessingDirectiveWorkerThread;
 import xc.mst.utils.LogWriter;
@@ -73,6 +74,8 @@ public class DefaultProviderService extends BaseService implements ProviderServi
     public void insertProvider(Provider provider) throws DataException{
     	provider.setLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
     	getProviderDAO().insert(provider);
+    	Repository r = getRepositoryDAO().createRepository(provider);
+    	r.installOrUpdateIfNecessary(null, config.getProperty("version"));
         LogWriter.addInfo(provider.getLogFileName(), "Beginning logging for " + provider.getName());
     }
 

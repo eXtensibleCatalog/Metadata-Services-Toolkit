@@ -69,17 +69,14 @@ public class BaseDAO {
 	public void setConfig(MSTConfiguration config) {
 		this.config = config;
 	}
-	
-	protected String normalizeName(String repoName) {
-		return repoName.replaceAll(" ", "_").toLowerCase();
-	}
+
 	
 	public void createSchema(String name) {
 		createSchema(name, false);
 	}
 	
 	public void createSchema(String name, boolean dropIfExists) {
-		name = name.toLowerCase().replaceAll(" ", "_");
+		name = getUtil().normalizeName(name);
 		// this is potentially dangerous, but necessary for now
 		if (dropIfExists && schemasExists(name)) {
 			deleteSchema(name);
@@ -89,7 +86,7 @@ public class BaseDAO {
 	}
 	
 	public void deleteSchema(String name) {
-		this.jdbcTemplate.execute("drop database "+normalizeName(name));
+		this.jdbcTemplate.execute("drop database "+getUtil().normalizeName(name));
 	}
 	
 	public List<String> getSchemas() {

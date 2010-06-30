@@ -36,6 +36,7 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.RecordService;
+import xc.mst.repo.RepositoryService;
 import xc.mst.utils.MSTConfiguration;
 
 /**
@@ -122,6 +123,31 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		return SUCCESS;
 	}
 	
+	protected void addFilterQuery(SolrQuery solrQuery, String name, String value) {
+		RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
+		RepositoryService repositoryService = (RepositoryService)MSTConfiguration.getInstance().getBean("RepositoryService");
+		if ("successor".equals(name) || "processed_from".equals(name)) {
+			Record r = repositoryService.getRecord(Long.parseLong(value));
+			List<Record> records = null;
+			if ("successor".equals(name)) {
+				records = r.getPredecessors();
+			} else {
+				records = r.getSuccessors();
+			}
+			name="record_id";
+			StringBuilder sb = new StringBuilder();
+			for (int i=0; i<records.size(); i++) {
+				Record r2 = records.get(i);
+				sb.append(r2.getId()+"");
+				if (i < records.size()-1) {
+					sb.append(" OR ");
+				}
+			}
+			value = sb.toString();
+		}
+		solrQuery.addFilterQuery(name + ":\"" + value.replaceAll(":", "\\\\:") + "\"");
+	}
+	
 	/**
 	 * Search for records
 	 */
@@ -148,12 +174,14 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			StringTokenizer valueTokenizer = new StringTokenizer(selectedFacetValues, "|");
 			
 			while (nameTokenizer.hasMoreTokens()) {
-		    	solrQuery.addFilterQuery(nameTokenizer.nextToken() + ":\"" + valueTokenizer.nextToken().replaceAll(":", "\\\\:") + "\"");
+				String name = nameTokenizer.nextToken();
+				String value = valueTokenizer.nextToken();
+				addFilterQuery(solrQuery, name, value);
 			}
 		    
 			// Add selected facet to query
 		    if (addFacetName != null && addFacetName.length() > 0) {
-		    	solrQuery.addFilterQuery(addFacetName + ":\"" + addFacetValue.replaceAll(":", "\\\\:") + "\"");
+		    	addFilterQuery(solrQuery, addFacetName, addFacetValue);
 		    	// Add facet names and values to | separated list
 		    	selectedFacetNames = selectedFacetNames + "|" + addFacetName;
 		    	selectedFacetValues = selectedFacetValues + "|" + addFacetValue;
@@ -297,8 +325,8 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		}
 		
 		try {
-			RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
-			record = recordService.getById(recordId);
+			RepositoryService repositoryService = (RepositoryService)MSTConfiguration.getInstance().getBean("RepositoryService");
+			record = repositoryService.getRecord(recordId);
 			recordXML = record.getOaiXml();
 	
 			// Remove all formatting. Because some times only half XML is formatted, so lets remove formatting 
@@ -347,18 +375,13 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			recordXML = recordXML.replaceAll("<", "&lt;");
 			recordXML = recordXML.replaceAll(">", "&gt;");
 			
-		}  catch (DatabaseConfigException dce) {
-			log.error("Problem with connecting to database using the parameters in configuration file.", dce);
+		}  catch (Throwable t) {
+			log.error("", t);
     		errorType = "error";
     		addFieldError("dbError", "Problem with connecting to database using the parameters in configuration file.");
     		return INPUT;
-    	}  catch (IndexException ie) {
-    		log.error("Problem with connecting to Solr server. Check the path to solr folder.", ie);
-    		errorType = "error";
-    		addFieldError("dbError", "Problem with connecting to Solr server. Check the path to solr folder.");
-    		return INPUT;
     	}
-			
+		
 		return SUCCESS;
 	}
 

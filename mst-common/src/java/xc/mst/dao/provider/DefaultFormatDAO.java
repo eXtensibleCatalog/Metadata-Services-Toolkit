@@ -13,7 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.dao.DBConnectionResetException;
@@ -87,6 +89,8 @@ public class DefaultFormatDAO extends FormatDAO
 	 * Lock to synchronize access to the PreparedStatement to delete a format from the database
 	 */
 	private static Object psDeleteLock = new Object();
+	
+	protected Map<Integer, Format> cacheById = new HashMap<Integer, Format>();
 
 	@Override
 	public List<Format> getAll() throws DatabaseConfigException
@@ -172,6 +176,9 @@ public class DefaultFormatDAO extends FormatDAO
 	@Override
 	public Format getById(int formatId) throws DatabaseConfigException
 	{
+		if (cacheById.containsKey(formatId)) {
+			return cacheById.get(formatId);
+		}
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
@@ -229,6 +236,7 @@ public class DefaultFormatDAO extends FormatDAO
 						log.debug("Found the format with ID " + formatId + " in the database.");
 
 					// Return the format
+					cacheById.put(format.getId(), format);
 					return format;
 				} // end if(result found)
 
@@ -357,6 +365,7 @@ public class DefaultFormatDAO extends FormatDAO
 	@Override
 	public boolean insert(Format format) throws DataException
 	{
+		cacheById.clear();
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
@@ -430,6 +439,7 @@ public class DefaultFormatDAO extends FormatDAO
 	@Override
 	public boolean update(Format format) throws DataException
 	{
+		cacheById.clear();
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
@@ -486,6 +496,7 @@ public class DefaultFormatDAO extends FormatDAO
 	@Override
 	public boolean delete(Format format) throws DataException
 	{
+		cacheById.clear();
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");

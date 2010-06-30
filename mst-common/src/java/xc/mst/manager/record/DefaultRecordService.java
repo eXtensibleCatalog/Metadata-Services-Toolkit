@@ -112,34 +112,9 @@ public class DefaultRecordService extends RecordService
 	} // end method getAll()
 
 	@Override
-	public Record getById(long id) throws DatabaseConfigException, IndexException
-	{
-		if(log.isDebugEnabled())
-			log.debug("Getting the record with ID " + id);
-
-		// Create a query to get the record with the requested record ID
-		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_RECORD_ID + ":" + Long.toString(id));
-
-		// Get the result of the query
-		SolrDocumentList docs = null;
-		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
-		docs = sim.getDocumentList(query);
-
-		// Return null if we couldn't find the record with the correct ID
-		if(docs == null || docs.size() == 0)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the record with ID " + id + ".");
-
-			return null;
-		} // end if(record not found)
-
-		if(log.isDebugEnabled())
-			log.debug("Parcing the record with ID " + id + " from the Lucene Document it was stored in.");
-
-		return getRecordFromDocument(docs.get(0));
-	} // end method getById(long)
+	public Record getById(long id) throws DatabaseConfigException, IndexException {
+		return getRepositoryService().getRecord(id);
+	}
 
 	@Override
 	public Record loadBasicRecord(long id) throws IndexException
@@ -936,37 +911,12 @@ public class DefaultRecordService extends RecordService
 	} // end method getRecordFromDocument(Document)
 
 	@Override
-	public Record getRecordFieldsForBrowseFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
-	{
-		// Create a Record object to store the result
-		Record record = new Record();
-
-		// Set the fields on the record Object and return it
-		record.setId(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
-		record.setFormat(getFormatDAO().getById(Integer.parseInt((String)doc.getFieldValue(FIELD_FORMAT_ID))));
+	public Record getRecordFieldsForBrowseFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException {
+		Record record = getRepositoryService().getRecord(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
 		record.setProvider(getProviderDAO().loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
 		record.setService(getServiceDAO().loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
-		record.setHarvestScheduleName((String)doc.getFieldValue(FIELD_HARVEST_SCHEDULE_NAME));
-		record.setOaiIdentifier((String)doc.getFieldValue(FIELD_OAI_IDENTIFIER));
-
-		Collection<Object> errors = doc.getFieldValues(FIELD_ERROR);
-		if(errors != null)
-			for(Object error : errors)
-				record.addError((String)error);
-		
-		Collection<Object> processedFroms = doc.getFieldValues(FIELD_PROCESSED_FROM);
-		if(processedFroms != null) {
-			record.setNumberOfPredecessors(processedFroms.size());
-		}
-		
-		Collection<Object> successors = doc.getFieldValues(FIELD_SUCCESSOR);
-		if(successors != null) {
-			record.setNumberOfSuccessors(successors.size());
-		}
-		
-		// Return the record we parsed from the document
 		return record;
-	} // end method getRecordFromDocument(Document)
+	}
 
 	
 	@Override

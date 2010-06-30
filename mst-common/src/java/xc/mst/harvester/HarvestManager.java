@@ -119,9 +119,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			recordsProcessed = 0;
 			totalRecords = 0;
 			numErrorsTolerated = Integer.parseInt(config.getProperty("harvester.numErrorsToTolerate", "0"));
-			repo = (Repository)config.getBean("Repository");
-	    	repo.setName(harvestSchedule.getProvider().getName());
-	    	repo.installOrUpdateIfNecessary();
+			repo = getRepositoryService().getRepository(harvestSchedule.getProvider());
 		} catch (DatabaseConfigException e) {
 			getUtil().throwIt(e);
 		}
@@ -222,7 +220,6 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					currentHarvest.setHarvestSchedule(scheduleStep.getSchedule());
 					getHarvestDAO().insert(currentHarvest);
 					log.debug("repo.installOrUpdateIfNecessary()");
-					repo.installOrUpdateIfNecessary();
 					validate(scheduleStep);
 					firstHarvest = repo.getSize() == 0;
 					resumptionToken = null;

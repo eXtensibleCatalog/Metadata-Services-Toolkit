@@ -22,6 +22,8 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
+import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.Util;
 import xc.mst.utils.XmlHelper;
 
 /**
@@ -434,7 +436,22 @@ public class Record {
 	} // end method setHarvest(Harvest)
 
 	public String getOaiIdentifier() {
-		return oaiIdentifier;
+		StringBuilder sb = new StringBuilder();
+		sb.append("oai:");
+		sb.append(MSTConfiguration.getInstance().getProperty("DomainNameIdentifier"));
+		sb.append(":");
+		String name = null;
+		if (getProvider() != null) {
+			name = getProvider().getName();
+		}
+		if (getService() != null) {
+			name = getService().getName();
+		}
+		name = new Util().normalizeName(name);
+		sb.append(name);
+		sb.append("/");
+		sb.append(getId());
+		return sb.toString();
 	}
 
 	public void setOaiIdentifier(String oaiIdentifier) {
@@ -938,7 +955,7 @@ public class Record {
 	 */
 	public int getNumberOfPredecessors() 
 	{
-		return numberOfPredecessors;
+		return predecessors.size();
 	}
 
 	/**
@@ -948,7 +965,7 @@ public class Record {
 	 */
 	public int getNumberOfSuccessors() 
 	{
-		return numberOfSuccessors;
+		return this.successors.size();
 	}
 
 	/**

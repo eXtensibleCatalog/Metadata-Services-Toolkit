@@ -57,7 +57,7 @@ public class DefaultBrowseRecordService extends BaseService implements BrowseRec
 		SolrBrowseResult result = null;
 		
 		// Discard deleted records
-		query.addFilterQuery("deleted:false");
+		//query.addFilterQuery("deleted:false");
 		
 		if (log.isDebugEnabled()) {
 			log.debug("Querying Solr server with query:" + query);

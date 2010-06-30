@@ -202,7 +202,7 @@ public class Scheduler extends BaseService implements Runnable {
 							Repository incomingRepo = null;
 							if (jobToStart.getProcessingDirective().getSourceProvider() != null) {
 								incomingRepo = 
-									getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider().getName());
+									getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider());
 							} else if (jobToStart.getProcessingDirective().getSourceService() != null) {
 								incomingRepo = jobToStart.getProcessingDirective().getSourceService().getMetadataService().getRepository();
 							} else {
