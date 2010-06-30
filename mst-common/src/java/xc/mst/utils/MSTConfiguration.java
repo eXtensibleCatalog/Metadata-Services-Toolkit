@@ -58,7 +58,9 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 
 	/** Default constructor */
 	public MSTConfiguration() {
-		MSTConfiguration.instance = this;
+		if (MSTConfiguration.instance == null) {
+			MSTConfiguration.instance = this;
+		}
 	}
 	
 	/**
@@ -79,7 +81,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 				String keyStr = key.toString();
 				String pval = props.getProperty(keyStr);
 				properties.put(keyStr, pval);
-				System.out.println("key: "+key+" val: "+pval);
+				log.info("key: "+key+" val: "+pval);
 			}
 			init2();
 		}
@@ -90,9 +92,6 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	 * Creates and initializes configuration for MST
 	 */
 	public void init2() {
-		
-		System.out.println("MSTCONfig.init()");
-
 		if (applicationContext instanceof WebApplicationContext) {
 			String urlPath = ((WebApplicationContext)applicationContext).getServletContext().getContextPath();
 			// Remove the / in '/MetadataServicesToolkit'
@@ -117,12 +116,11 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
-	
-	public static Object getBean(String name) {
+
+	public Object getBean(String name) {
 		try {
-			return MSTConfiguration.instance.applicationContext.getBean(name);
+			return applicationContext.getBean(name);
 		} catch (Throwable t) {
-			log.error("", t);
 			throw new RuntimeException(t);
 		}
 	}
@@ -133,8 +131,15 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	 * @param name name of property
 	 * @return value of property
 	 */
-	public static String getProperty(String name) {
-		return instance.properties.getProperty(name);
+	public String getProperty(String name) {
+		return getProperty(name, null);
+	}
+	public String getProperty(String name, String def) {
+		String value = properties.getProperty(name);
+		if (value == null) {
+			value = def;
+		}
+		return value;
 	}
 
 	/**
@@ -158,7 +163,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 		this.properties = properties;
 	}
 
-	public static boolean isPerformanceTestingMode() {
+	public boolean isPerformanceTestingMode() {
 		try {
 			String ptMode = getProperty("PerformanceTestingMode");
 			if (ptMode != null && "true".equals(ptMode)) {
@@ -168,6 +173,10 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 			//do nothing
 		}
 		return false;
+	}
+	
+	public String getServicePath() {
+		return getUrlPath()+"/services/"+getProperty("service.name");
 	}
 
 }

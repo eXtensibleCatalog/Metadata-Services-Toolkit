@@ -17,9 +17,9 @@ import org.testng.annotations.Test;
 
 import xc.mst.bo.user.Group;
 import xc.mst.bo.user.Permission;
+import xc.mst.common.test.BaseTest;
 import xc.mst.helper.TestHelper;
 import xc.mst.manager.user.GroupService;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * Tests for Groups
@@ -27,7 +27,7 @@ import xc.mst.utils.MSTConfiguration;
  * @author Tejaswi Haramurali
  */
 @Test(groups = { "baseTests" }, enabled = true)
-public class GroupsTest
+public class GroupsTest extends BaseTest
 {
     /**
      * Method which tests all the functionality related to Groups
@@ -39,7 +39,7 @@ public class GroupsTest
       	 TestHelper helper = TestHelper.getInstance();
         try
         {
-            GroupService groupService = (GroupService)MSTConfiguration.getBean("GroupService");
+            GroupService groupService = (GroupService)getBean("GroupService");
             Group group = new Group();
             group.setDescription("New Group Description");
             group.setName("New Group Name");

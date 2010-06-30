@@ -19,7 +19,6 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * Service Class that is used for the creation/deletion/updating of Processing Directives.
@@ -149,7 +148,7 @@ public class DefaultProcessingDirectiveService extends BaseService implements Pr
      */
     private void runProcessingDirective(ProcessingDirective pd)
     {
-    	JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
+    	JobService jobService = (JobService)config.getBean("JobService");
     	
     	// Add job to database queue
 		try {

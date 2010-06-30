@@ -16,6 +16,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 
 import org.jdom.Document;
 import org.jdom.JDOMException;
@@ -27,6 +28,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.record.Record;
+import xc.mst.common.test.BaseTest;
 import xc.mst.dao.DataException;
 import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.ProviderDAO;
@@ -36,11 +38,9 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.record.RecordService;
 import xc.mst.services.MetadataService;
 import xc.mst.services.MetadataServiceFactory;
-import xc.mst.utils.MSTConfiguration;
-import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
-public class TestTransformation {
+public class TestTransformation extends BaseTest {
 
 	
 	/**
@@ -77,7 +77,7 @@ public class TestTransformation {
 	public HashMap<String,String> processedRecords = new HashMap<String, String>();
 	
 	
-	public Hashtable<String , RecordList> transformedRecords = new Hashtable<String, RecordList>();
+	public Hashtable<String , List<Record>> transformedRecords = new Hashtable<String, List<Record>>();
 	
 	public Hashtable<String , ArrayList<Document>> baseRecords = new Hashtable<String, ArrayList<Document>>();
 	
@@ -104,7 +104,7 @@ public class TestTransformation {
 		   	 TestHelper helper = TestHelper.getInstance(); 
 
 			// Initialize Record Service
-			recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+			recordService = (RecordService)getBean("RecordService");
 
 			// List of all test records
 			recordList.add("1048559");
@@ -135,7 +135,7 @@ public class TestTransformation {
 			Thread.sleep(1000);
 			
 			// Commit the records
-			((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
+			((SolrIndexManager)getBean("SolrIndexManager")).commitIndex();
 			Thread.sleep(1000);
 			
 		} catch (Exception e) {
@@ -157,14 +157,14 @@ public class TestTransformation {
 			// Run Transformation Service
 			MetadataService ms  = new MetadataServiceFactory().getService(transformationServiceId);
 			ms.runService(transformationServiceId, -1);;
-			((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
+			((SolrIndexManager)getBean("SolrIndexManager")).commitIndex();
 			Thread.sleep(1000);
 			
 			// Prepare the list of transformed records
 			for (String recordNRUID : inputRecordIDMap.keySet()) {
 				
 				Long SOLRID = inputRecordIDMap.get(recordNRUID);
-				RecordList list =  recordService.getByProcessedFrom(SOLRID.longValue());
+				List<Record> list =  recordService.getByProcessedFrom(SOLRID.longValue());
 				transformedRecords.put(recordNRUID, list);
 				
 			}
@@ -175,7 +175,7 @@ public class TestTransformation {
 			for(String recordNRUID: baseRecords.keySet()){
 				
 				ArrayList<Document> baseRecordList = baseRecords.get(recordNRUID);
-				RecordList transformedRecordList = transformedRecords.get(recordNRUID);
+				List<Record> transformedRecordList = transformedRecords.get(recordNRUID);
 				ArrayList<Document> transformedDocumentList = new ArrayList<Document>();
 
 				StringReader sr = null;
@@ -282,10 +282,10 @@ public class TestTransformation {
 	 */
 	public void addUnprocessedRecordFromFiles() throws DataException, IOException, IndexException
 	{
-		ProviderDAO providerDao = (ProviderDAO)MSTConfiguration.getBean("ProviderDAO");
-		FormatDAO formatDao = (FormatDAO)MSTConfiguration.getBean("FormatDAO");
-		ServiceDAO serviceDao = (ServiceDAO)MSTConfiguration.getBean("ServiceDAO");
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		ProviderDAO providerDao = (ProviderDAO)getBean("ProviderDAO");
+		FormatDAO formatDao = (FormatDAO)getBean("FormatDAO");
+		ServiceDAO serviceDao = (ServiceDAO)getBean("ServiceDAO");
+		RecordService recordService = (RecordService)getBean("RecordService");
 
 		for (String file : inputRecords.keySet()) {
 

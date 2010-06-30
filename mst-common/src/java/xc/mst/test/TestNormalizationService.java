@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,8 +34,8 @@ import xc.mst.dao.MySqlConnectionManager;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.services.MetadataServiceFactory;
 import xc.mst.services.MetadataService;
+import xc.mst.services.MetadataServiceFactory;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.RecordList;
 
@@ -315,8 +316,8 @@ public class TestNormalizationService
 			ms.runService(1, -1);
 			System.out.println(formatter.format(System.currentTimeMillis()));
 
-			RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
-			RecordList records = recordService.getAll();
+			RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
+			List<Record> records = recordService.getAll();
 			for(Record record: records)
 			{
 				System.out.println("Found record:\n" + record.getOaiXml() + "\n\n\n\n");
@@ -329,7 +330,7 @@ public class TestNormalizationService
 		{
 			e.printStackTrace();
 
-			RecordList records = recordService.getAll();
+			List<Record> records = recordService.getAll();
 			for(Record record: records)
 			{
 				System.out.println("Found record:\n" + record.getOaiXml() + "\n\n\n\n");

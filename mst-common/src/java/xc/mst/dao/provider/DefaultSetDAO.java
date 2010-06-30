@@ -13,7 +13,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 
 import xc.mst.bo.provider.Set;
 import xc.mst.dao.DBConnectionResetException;
@@ -126,6 +130,25 @@ public class DefaultSetDAO extends SetDAO
 	 * Lock to synchronize access to the delete PreparedStatement
 	 */
 	private static Object psDeleteLock = new Object();
+	
+	protected Map<String, Set> setMapByName = new HashMap<String, Set>();
+	protected Map<Integer, Set> setMapById = new HashMap<Integer, Set>();
+	
+	protected void removeFromCache(Set set) {
+		if (this.setMapByName.containsKey(set.getDisplayName())) {
+			this.setMapByName.remove(set.getDisplayName());
+		}
+		if (this.setMapById.containsKey(set.getId())) {
+			this.setMapById.remove(set.getId());
+		}
+	}
+	
+	protected void addToCache(Set set) {
+		if (!StringUtils.isEmpty(set.getDisplayName())) {
+			this.setMapByName.put(set.getDisplayName(), set);	
+		}
+		this.setMapById.put(set.getId(), set);
+	}
 
 	@Override
 	public List<Set> getAll() throws DatabaseConfigException
@@ -189,7 +212,7 @@ public class DefaultSetDAO extends SetDAO
 
 					// Add the set to the list
 					sets.add(set);
-				} // end loop over results
+				}
 
 				if(log.isDebugEnabled())
 					log.debug("Found " + sets.size() + " sets in the database.");
@@ -278,6 +301,7 @@ public class DefaultSetDAO extends SetDAO
 						log.debug("Found the set in the database with ID " + setId + ".");
 
 					// Add the set to the list
+					addToCache(set);
 					return set;
 				} // end if(set found)
 
@@ -367,6 +391,7 @@ public class DefaultSetDAO extends SetDAO
 					if(log.isDebugEnabled())
 						log.debug("Found the set in the database with ID " + setId + ".");
 
+					addToCache(set);
 					// Add the set to the list
 					return set;
 				} // end if(set found)
@@ -396,6 +421,9 @@ public class DefaultSetDAO extends SetDAO
 	@Override
 	public Set getBySetSpec(String setSpec) throws DatabaseConfigException
 	{
+		if (this.setMapByName.containsKey(setSpec)) {
+			return this.setMapByName.get(setSpec);
+		}
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
@@ -457,6 +485,7 @@ public class DefaultSetDAO extends SetDAO
 					if(log.isDebugEnabled())
 						log.debug("Found the set in the database with setSpec " + setSpec + ".");
 
+					addToCache(set);
 					// Add the set to the list
 					return set;
 				} // end if(set found)
@@ -550,6 +579,7 @@ public class DefaultSetDAO extends SetDAO
 					if(log.isDebugEnabled())
 						log.debug("Found the set in the database with provider ID " + providerId + ".");
 
+					addToCache(set);
 					// Add the set to the list
 					sets.add(set);
 				} // end loop over results
@@ -643,6 +673,7 @@ public class DefaultSetDAO extends SetDAO
 					if(log.isDebugEnabled())
 						log.debug("Found the record set in the database with provider ID " + providerId + ".");
 
+					addToCache(set);
 					// Add the set to the list
 					sets.add(set);
 				} // end loop over results
@@ -716,6 +747,8 @@ public class DefaultSetDAO extends SetDAO
 				psInsert.setBoolean(4, set.getIsProviderSet());
 				psInsert.setBoolean(5, set.getIsRecordSet());
 				psInsert.setInt(6, 0);
+				
+				removeFromCache(set);
 
 				// Execute the insert statement and return the result
 				if(dbConnectionManager.executeUpdate(psInsert) > 0)
@@ -795,6 +828,7 @@ public class DefaultSetDAO extends SetDAO
 				psInsert.setBoolean(4, set.getIsProviderSet());
 				psInsert.setBoolean(5, set.getIsRecordSet());
 				psInsert.setInt(6, providerId);
+				removeFromCache(set);
 
 				// Execute the insert statement and return the result
 				if(dbConnectionManager.executeUpdate(psInsert) > 0)
@@ -866,6 +900,7 @@ public class DefaultSetDAO extends SetDAO
 				psAddToProvider.setBoolean(2, true);
 				psAddToProvider.setBoolean(3, false);
 				psAddToProvider.setInt(4, set.getId());
+				removeFromCache(set);
 
 				// Execute the update statement and return the result
 				return dbConnectionManager.executeUpdate(psAddToProvider) > 0;
@@ -921,6 +956,7 @@ public class DefaultSetDAO extends SetDAO
 				psRemoveFromProvider.setBoolean(1, false);
 				psRemoveFromProvider.setBoolean(2, true);
 				psRemoveFromProvider.setInt(3, set.getId());
+				removeFromCache(set);
 
 				// Execute the update statement and return the result
 				return dbConnectionManager.executeUpdate(psRemoveFromProvider) > 0;
@@ -981,6 +1017,7 @@ public class DefaultSetDAO extends SetDAO
 				psUpdate.setBoolean(4, set.getIsProviderSet());
 				psUpdate.setBoolean(5, set.getIsRecordSet());
 				psUpdate.setInt(6, set.getId());
+				removeFromCache(set);
 
 				// Execute the update statement and return the result
 				return dbConnectionManager.executeUpdate(psUpdate) > 0;
@@ -1033,6 +1070,7 @@ public class DefaultSetDAO extends SetDAO
 				// Set the parameters on the delete statement
 				psDelete.setInt(1, set.getId());
 
+				removeFromCache(set);
 				// Execute the delete statement and return the result
 				return dbConnectionManager.execute(psDelete);
 			} // end try(delete the set)

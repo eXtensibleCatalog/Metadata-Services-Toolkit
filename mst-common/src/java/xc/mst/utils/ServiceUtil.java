@@ -11,12 +11,15 @@ package xc.mst.utils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.ServiceDAO;
@@ -41,12 +44,12 @@ public class ServiceUtil {
 	/**
 	 * Data access object for getting services
 	 */
-	private ServiceDAO serviceDao = (ServiceDAO)MSTConfiguration.getBean("ServiceDAO");
+	private ServiceDAO serviceDao = (ServiceDAO)MSTConfiguration.getInstance().getBean("ServiceDAO");
 
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+	private RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
 
 	/**
 	 * Used to send email reports
@@ -76,7 +79,7 @@ public class ServiceUtil {
 	 * @param successStatus The status of the MetadataService is the validation was successful
 	 * @param testSolr True to test the connection to the index, false otherwise
 	 */
-	public void checkService(int serviceId, String successStatus, boolean testSolr){
+	public void checkService(int serviceId, Status status, boolean testSolr){
 	}
 	
 	/**
@@ -89,14 +92,14 @@ public class ServiceUtil {
 	 * @param testSolr True to verify access to the Solr index, false otherwise
 	 * @return True iff the service is runnable
 	 */
-	public boolean checkService(Service service, String statusForSuccess, boolean testSolr) {
+	public boolean checkService(Service service, Status status, boolean testSolr) {
 
 		if(testSolr)
 		{
 			// Check that we can access the Solr index
 			try
 			{
-				RecordList test = recordService.getInputForService(service.getId());
+				List<Record> test = recordService.getInputForService(service.getId());
 				if(test == null)
 				{
 					LogWriter.addError(service.getServicesLogFileName(), "Cannot run the service because we cannot access the Solr index.");
@@ -139,8 +142,8 @@ public class ServiceUtil {
 	public void sendEmail(String message, String serviceName) {
 
 		try {
-			UserService userService = (UserService)MSTConfiguration.getBean("UserService");
-			GroupService groupService = (GroupService)MSTConfiguration.getBean("GroupService");
+			UserService userService = (UserService)MSTConfiguration.getInstance().getBean("UserService");
+			GroupService groupService = (GroupService)MSTConfiguration.getInstance().getBean("GroupService");
 
 			if (mailer.isConfigured()) {
 				

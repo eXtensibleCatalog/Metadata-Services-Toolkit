@@ -23,7 +23,6 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.ManifestationList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -111,7 +110,7 @@ public abstract class ManifestationService extends BaseService
 		// Set up the fields for the specific type of indexed object
 		doc = setFieldsOnDocument(manifestation, doc, true);
 
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		return sim.addDoc(doc);
 	} // end method insert(Manifestation)
 
@@ -141,7 +140,7 @@ public abstract class ManifestationService extends BaseService
 		// Set up the fields for the Manifestation
 		doc = setFieldsOnDocument(manifestation, doc, false);
 
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		return sim.addDoc(doc);
 	} // end method update(Manifestation)
 

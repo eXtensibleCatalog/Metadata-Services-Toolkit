@@ -116,11 +116,6 @@ public class Constants
 	 * Parameter for looking up the location of the logger configuration file from the MST's configuration file
 	 */
 	public static final String CONFIG_LOGGER_CONFIG_FILE_LOCATION = "LoggerConfigFileLocation";
-
-	/**
-	 * Parameter for looking up the harvester's timeout from the configuration file
-	 */
-	public static final String CONFIG_HARVESTER_TIMEOUT_URL = "HarvesterTimeout";
 	
 	/**
 	 * Parameter for looking up the location of the solr configuration
@@ -156,23 +151,6 @@ public class Constants
 	 * Parameter for looking up the directory where the Lucene index should be stored from the configuration file
 	 */
 	public static final String CONFIG_LUCENE_INDEX_DIRECTORY = "LuceneIndexDirectory";
-
-	// Database parameters
-
-	/**
-	 * Parameter for looking up the URL of the database from the configuration file
-	 */
-	public static final String CONFIG_DATABASE_URL = "DatabaseUrl";
-
-	/**
-	 * Parameter for looking up the username to log into the database from the configuration file
-	 */
-	public static final String CONFIG_DATABASE_USERNAME = "DatabaseUsername";
-
-	/**
-	 * Parameter for looking up the password to log into the database from the configuration file
-	 */
-	public static final String CONFIG_DATABASE_PASSWORD = "DatabasePassword";
 
 	// OAI Repository parameters
 
@@ -337,23 +315,7 @@ public class Constants
 	 * The closing tag for the OAI response element
 	 */
 	public static final String OAI_RESPONSE_FOOTER = "</OAI-PMH>";
-	
-	
-	//*******************************************************************
-	// MST Service Status Constants
-	//*******************************************************************
 
-	public static final String STATUS_SERVICE_RUNNING = "RUNNING";
-	
-	public static final String STATUS_SERVICE_NOT_RUNNING = "NOT_RUNNING";
-	
-	public static final String STATUS_SERVICE_PAUSED = "PAUSED";
-	
-	public static final String STATUS_SERVICE_ERROR = "ERROR";
-	
-	public static final String STATUS_SERVICE_CANCELED = "CANCELED";
-
-	
 	//*******************************************************************
 	// XC Element Name Constants
 	//*******************************************************************

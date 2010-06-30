@@ -18,8 +18,9 @@ import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.TypeFilter;
 
 import xc.mst.dao.BaseDAO;
+import xc.mst.utils.MSTConfiguration;
 
-public class DAOTypeFilter implements TypeFilter {
+public class DAOTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 	
 	private static final Logger LOG = Logger.getLogger(DAOTypeFilter.class);
 
@@ -29,8 +30,17 @@ public class DAOTypeFilter implements TypeFilter {
 		try {
 			ClassMetadata classMetadata = metadataReader.getClassMetadata();
 			String className = classMetadata.getClassName();
-			Class c = getClass().getClassLoader().loadClass(className);
-			//Class c = classMetadata.getClass();
+			try {
+				if (MSTConfiguration.getInstance().getBean(getBeanName(className)) != null) {
+					return false;
+				}
+			} catch (Throwable t) {
+				//do nothing
+			}
+			if (blackListed(className)) {
+				return false;
+			}
+			Class c = getClassLoader().loadClass(className);
 			if (BaseDAO.class.isAssignableFrom(c) && !BaseDAO.class.equals(c)) {
 				LOG.debug("c: "+c.getName());
 				return true;

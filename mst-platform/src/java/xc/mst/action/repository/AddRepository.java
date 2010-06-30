@@ -20,7 +20,6 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.utils.MSTConfiguration;
 
@@ -90,7 +89,7 @@ public class AddRepository extends BaseActionSupport
 
                 getProviderService().insertProvider(pr);
 
-                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
+                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
                 vr.validate(pr.getId());
 
             }
@@ -111,13 +110,6 @@ public class AddRepository extends BaseActionSupport
             errorType = "error";
             getUserService().sendEmailErrorReport();
             return INPUT;
-        }
-        catch(Hexception e)
-        {
-            log.error(e.getMessage(),e);
-            this.addFieldError("addRepositoryError", "Unable to validate the repository");
-            errorType = "error";
-            return SUCCESS;
         }
 
     }

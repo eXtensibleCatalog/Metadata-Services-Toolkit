@@ -14,22 +14,18 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.user.Server;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.user.ServerService;
-import xc.mst.manager.user.UserService;
-import xc.mst.utils.MSTConfiguration;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * This class is used to add a new LDAP server to the system
  *
  * @author Tejaswi Haramurali
  */
-public class AddLDAP extends ActionSupport
+public class AddLDAP extends BaseActionSupport
 {
     /**
 	 * Eclipse generated id
@@ -80,8 +76,7 @@ public class AddLDAP extends ActionSupport
     {
         try
         {
-                ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
-                List<Server> serverList = serverService.getAll();
+                List<Server> serverList = getServerService().getAll();
                 Iterator<Server> iter = serverList.iterator();
 
                 while(iter.hasNext())
@@ -116,8 +111,7 @@ public class AddLDAP extends ActionSupport
         {
             boolean serverExists = false;
          
-            ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
-            List<Server> serverList = serverService.getAll();
+            List<Server> serverList = getServerService().getAll();
             Iterator<Server> iter = serverList.iterator();
 
             while(iter.hasNext())
@@ -155,7 +149,7 @@ public class AddLDAP extends ActionSupport
                 }
                 else
                 {
-                    serverService.insertServer(server);
+                    getServerService().insertServer(server);
                 }
                
             }
@@ -183,7 +177,7 @@ public class AddLDAP extends ActionSupport
                 }
                 else
                 {
-                    serverService.updateServer(server);
+                    getServerService().updateServer(server);
                 }
             }
 
@@ -202,8 +196,7 @@ public class AddLDAP extends ActionSupport
         {
             log.error(de.getMessage(),de);
             this.addFieldError("addLDAPError", "Error occurred while adding LDAP Server. An email has been sent to the administrator");
-            UserService userService = (UserService)MSTConfiguration.getBean("UserService");
-            userService.sendEmailErrorReport();
+            getUserService().sendEmailErrorReport();
             errorType = "error";
             return INPUT;
         }

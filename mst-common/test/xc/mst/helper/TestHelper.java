@@ -24,10 +24,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.xml.sax.SAXException;
 
 import xc.mst.bo.log.Log;
+import xc.mst.common.test.BaseTest;
 import xc.mst.dao.DataException;
 import xc.mst.dao.log.DefaultLogDAO;
 import xc.mst.dao.log.LogDAO;
-import xc.mst.manager.record.MSTSolrServer;
+import xc.mst.manager.record.MSTSolrService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
  
@@ -38,7 +39,7 @@ import xc.mst.utils.MSTConfiguration;
  * @author Sharmila Ranganathan
  *
  */
-public class TestHelper {
+public class TestHelper extends BaseTest {
 	
 
 	/**
@@ -138,7 +139,7 @@ public class TestHelper {
 			SolrCore core = container.create(descriptor);
 			container.register("core1", core, false);
 
-			((MSTSolrServer)MSTConfiguration.getBean("MSTSolrServer")).setServer(new EmbeddedSolrServer(container, "core1"));
+			((MSTSolrService)MSTConfiguration.getInstance().getBean("MSTSolrServer")).setServer(new EmbeddedSolrServer(container, "core1"));
 		}
 		catch (IOException ioe)
 		{

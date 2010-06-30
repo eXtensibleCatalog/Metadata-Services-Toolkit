@@ -17,7 +17,6 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.user.User;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.utils.MSTConfiguration;
 
@@ -99,7 +98,7 @@ public class ViewRepository extends BaseActionSupport implements UserAware
       {
           try
           {
-                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
+                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
                 vr.validate(getRepositoryId());
                 message = "Repository revalidated!";
                 errorType = "info";
@@ -113,15 +112,6 @@ public class ViewRepository extends BaseActionSupport implements UserAware
               errorType = "error";
               execute();
           }
-          catch(Hexception he)
-          {
-              log.error(he.getMessage(),he);
-              this.addFieldError("validateRepositoryError", "Validation failed. There was an error when validating the repository");
-              errorType = "error";
-              execute();
-             
-          }
-          
           return SUCCESS;
       }
 

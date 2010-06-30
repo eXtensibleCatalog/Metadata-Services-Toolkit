@@ -19,9 +19,9 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
+import xc.mst.repo.Repository;
 import xc.mst.scheduling.HarvesterWorkerThread;
 import xc.mst.scheduling.ProcessingDirectiveWorkerThread;
-import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 
@@ -72,9 +72,10 @@ public class DefaultProviderService extends BaseService implements ProviderServi
      * @throws xc.mst.dao.DataException
      */
     public void insertProvider(Provider provider) throws DataException{
-
-    	provider.setLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
+    	provider.setLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
     	getProviderDAO().insert(provider);
+    	Repository r = getRepositoryDAO().createRepository(provider);
+    	r.installOrUpdateIfNecessary(null, config.getProperty("version"));
         LogWriter.addInfo(provider.getLogFileName(), "Beginning logging for " + provider.getName());
     }
 
@@ -89,22 +90,22 @@ public class DefaultProviderService extends BaseService implements ProviderServi
     	// Delete schedule for this repository
     	
     	// Check if any harvest is running 
-        if(Scheduler.getRunningJob()!=null)
+        if(getScheduler().getRunningJob()!=null)
         {
         	// Check if this repository is being harvested 
-        	if (Scheduler.getRunningJob().getType().equals(Constants.THREAD_REPOSITORY)) {
-        		HarvesterWorkerThread harvesterWorkerThread = (HarvesterWorkerThread)Scheduler.getRunningJob();
+        	if (getScheduler().getRunningJob().getType().equals(Constants.THREAD_REPOSITORY)) {
+        		HarvesterWorkerThread harvesterWorkerThread = (HarvesterWorkerThread)getScheduler().getRunningJob();
         		if (harvesterWorkerThread.getJobName().equals(provider.getName())) {
-        			Scheduler.cancelRunningJob();
+        			getScheduler().cancelRunningJob();
         		}
         	}
         	
         	// Check if this repository is being processed by processing directive
-        	if (Scheduler.getRunningJob().getType().equals(Constants.THREAD_PROCESSING_DIRECTIVE)) {
-        		ProcessingDirectiveWorkerThread processingDirectiveWorkerThread = (ProcessingDirectiveWorkerThread)Scheduler.getRunningJob();
+        	if (getScheduler().getRunningJob().getType().equals(Constants.THREAD_PROCESSING_DIRECTIVE)) {
+        		ProcessingDirectiveWorkerThread processingDirectiveWorkerThread = (ProcessingDirectiveWorkerThread)getScheduler().getRunningJob();
         		Provider sourceProvider = processingDirectiveWorkerThread.getProcessingDirective().getSourceProvider();
         		if (sourceProvider != null && sourceProvider.getName().equals(provider.getName())) {
-        			Scheduler.cancelRunningJob();
+        			getScheduler().cancelRunningJob();
         		}
         	}
         }
@@ -131,7 +132,7 @@ public class DefaultProviderService extends BaseService implements ProviderServi
      * @throws xc.mst.dao.DataException
      */
     public void updateProvider(Provider provider) throws DataException{
-    	provider.setLogFileName(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
+    	provider.setLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
     	getProviderDAO().update(provider);
     }
 

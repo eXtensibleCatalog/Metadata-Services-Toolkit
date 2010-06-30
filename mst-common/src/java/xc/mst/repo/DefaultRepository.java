@@ -12,22 +12,57 @@ package xc.mst.repo;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+
+import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Provider;
+import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
-import xc.mst.utils.MSTConfiguration;
 
 public class DefaultRepository extends BaseService implements Repository {
 	
+	private static final Logger LOG = Logger.getLogger(DefaultRepository.class);
+	
 	protected String name = null;
+	
+	protected Provider provider = null;
+	protected Service service = null;
 
-	public void installOrUpdateIfNecessary() {
-		if ("0.3.0".equals(MSTConfiguration.getProperty("version"))) {
-			boolean exists = getRepositoryDAO().exists(name);
-			System.out.println("exists: "+exists);
-			if (!exists) {
-				getRepositoryDAO().createTables(name);
+	public Provider getProvider() {
+		return provider;
+	}
+
+	public void setProvider(Provider provider) {
+		this.provider = provider;
+	}
+
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
+	}
+
+	public void installOrUpdateIfNecessary(final String previousVersion, final String currentVersion) {
+		final Repository thisthis = this;
+		this.transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
+				try {
+					LOG.debug("config.getProperty(\"version\"): "+config.getProperty("version"));
+					if (previousVersion == null && "0.3.0".equals(currentVersion)) {
+						getRepositoryDAO().createTables(thisthis);
+					}
+				} catch (Throwable t) {
+					LOG.error("", t);
+					status.setRollbackOnly();
+				}
 			}
-		}
+		});
 	}
 	
 	protected boolean exists() {
@@ -39,9 +74,17 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name.toLowerCase().replaceAll(" ", "_");
+	}
+	
+	public int getSize() {
+		return getRepositoryDAO().getSize(name);
 	}
 
+	public void addRecord(Record record) {
+		getRepositoryDAO().addRecord(name, record);
+	}
+	
 	public void addRecords(List<Record> records) {
 		getRepositoryDAO().addRecords(name, records);
 	}
@@ -54,22 +97,41 @@ public class DefaultRepository extends BaseService implements Repository {
 		getRepositoryDAO().endBatch(name);
 	}
 
-	public List<Record> getPredecessors(Record r) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Long> getPredecessorIds(Record r) {
+		return getRepositoryDAO().getPredecessors(name, r.getId());
 	}
 
+	// TODO: you need to check the cache as well
 	public Record getRecord(String oaiId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Record getRecord(long id) {
+	// TODO: you need to check the cache as well
+	public Record getRecord(long id) {	
 		return getRepositoryDAO().getRecord(name, id);
 	}
 
-	public List<Record> getRecords(Date from, Date until, Long startingId) {
-		return getRepositoryDAO().getRecords(name, from, until, startingId);
+	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+		LOG.debug("from:"+from+" until:"+until+ " startingId:"+startingId+" inputFormat:"+inputFormat+" inputSet:"+inputSet);
+		List<Record> records = getRepositoryDAO().getRecords(name, from, until, startingId, inputFormat, inputSet);
+		if (records == null) {
+			LOG.debug("no records found");
+		} else { 
+			LOG.debug("records.size(): "+records.size());
+		}
+		return records;
+	}
+	
+	public List<Record> getRecordsWSets(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+		return getRepositoryDAO().getRecordsWSets(name, from, until, startingId, inputFormat, inputSet);
+	}
+	
+	public void injectSuccessors(Record r) {
+		List<Record> succs = getRepositoryDAO().getSuccessors(name, r.getId());
+		if (succs != null) {
+			r.getSuccessors().addAll(succs);
+		}
 	}
 
 }

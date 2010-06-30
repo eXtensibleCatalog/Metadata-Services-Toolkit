@@ -13,11 +13,11 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.ServiceDAO;
-import xc.mst.manager.services.ServicesManager;
-import xc.mst.services.MetadataService;
+import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
@@ -45,7 +45,7 @@ public class MetadataServiceFactory {
 		if(log.isDebugEnabled())
 			log.debug("EnteringServiceFactoryegetnService for the service with ID " + serviceId + ".");
 		
-		ServiceDAO serviceDAO = (ServiceDAO)MSTConfiguration.getBean("ServiceDAO");
+		ServiceDAO serviceDAO = (ServiceDAO)MSTConfiguration.getInstance().getBean("ServiceDAO");
 
 		// Get the service
 		Service service = null;
@@ -79,7 +79,7 @@ public class MetadataServiceFactory {
 				log.debug("Found the MetadataService class named " + targetClassName + ", getting its constructor.");
 
 			*/
-			serviceInstance = ((ServicesManager)MSTConfiguration.getBean("ServicesManager")).getService(service.getName());
+			serviceInstance = ((ServicesService)MSTConfiguration.getInstance().getBean("ServicesService")).getServiceByName(service.getName()).getMetadataService();
 			return serviceInstance;
 			
 		}// end try(run the service through reflection)
@@ -119,7 +119,7 @@ public class MetadataServiceFactory {
 			log.error("Could not find class " + service.getClassName(), e);
 
 			// Update database with status of service
-			service.setStatus(Constants.STATUS_SERVICE_ERROR);
+			service.setStatus(Status.ERROR);
 			
 			ServiceUtil.getInstance().sendEmail("The java class " + service.getClassName() + " could not be found.", service.getName());
 
@@ -195,7 +195,7 @@ public class MetadataServiceFactory {
 			log.error("Exception occurred while invoking the service's processRecords method.", e);
 
 			// Update database with status of service
-			service.setStatus(Constants.STATUS_SERVICE_ERROR);
+			service.setStatus(Status.ERROR);
 
 			ServiceUtil.getInstance().sendEmail("Exception occurred while invoking the service's processRecords method.", service.getName());
 			

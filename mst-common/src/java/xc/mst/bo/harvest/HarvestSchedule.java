@@ -16,6 +16,7 @@ import java.util.List;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
+import xc.mst.constants.Status;
 
 /**
  * Represents a schedule for running a harvest
@@ -77,7 +78,7 @@ public class HarvestSchedule
 	/**
 	 * The current status of the harvest.
 	 */
-	private String status = null;
+	private Status status = null;
 	
 	/**
 	 * The OAI requests placed when the harvest schedule was run
@@ -303,7 +304,7 @@ public class HarvestSchedule
 	 * Gets the current status of the harvest.
 	 * @return The current status of the harvest.
 	 */
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
@@ -311,7 +312,7 @@ public class HarvestSchedule
 	 * Sets the current status of the harvest.
 	 * @param status The status of the harvest.
 	 */
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 	

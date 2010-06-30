@@ -9,12 +9,13 @@
 <project name="example-service" default="help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
 	<import file="build-custom.xml" />
+	<property file="custom.properties" />
 	<property file="build.properties" />
-	<property file="build-custom.properties" />
 
 	<target name="init">
 		<mkdir dir="${build.test.classes}" />
-		<mkdir dir="${build.classes}" />
+		<mkdir dir="${build.test.actual-output-records}" />
+		<mkdir dir="${build.classes.services}" />
 		<mkdir dir="${build.lib}" />
 		<mkdir dir="${build.zip.lib}" />
 		<mkdir dir="${ivy.dir}" />
@@ -68,9 +69,13 @@
 		<fileset dir="${build.lib}">
 			<include name="*.jar" />
 		</fileset>
-		<pathelement path="${build.classes}" />
 		<pathelement path="${build.test.classes}" />
 	</path>
+
+	<target name="echo.path">
+		<property name="classpath.test.run.str" refid="classpath.test.run" />
+		<echo>classpath.test.run.str: ${classpath.test.run.str}</echo>
+	</target>
 
 	<target name="clean">
 		<delete dir="${build.dir}" />
@@ -84,9 +89,6 @@
 
 	<target name="resolve" depends="download-ivy">
 		<ivy:resolve file="ivy.xml"/>
-		<!--
-		<ivy:resolve file="ivy-custom.xml"/>
-		-->
 	</target>
 
 	<target name="ivy-report" depends="resolve">
@@ -119,10 +121,28 @@
 		</copy>
 		<copy todir="${build.zip}">
 			<fileset dir=".">
-				<include name="sql/**/*" />
 				<include name="errors/**/*" />
 			</fileset>
 		</copy>
+		<copy todir="${build.zip}">
+			<fileset dir=".">
+				<include name="sql/**/*.sql" />
+			</fileset>
+		</copy>
+		<copy todir="${build.classes.services}">
+			<fileset dir="conf">
+				<include name="**/*.xml" />
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+		<copy todir="${build.mst-instance.dir}" overwrite="true">
+			<fileset dir="conf">
+				<include name="**/log4j.config.txt" />
+			</fileset>
+		</copy>
+		<copy todir="${build.classes.services}" file="custom.properties" />
+		<copy tofile="${build.mst-instance.dir}/install.properties" 
+			file="custom.properties" overwrite="true"/>
 	</target>
 
 	<target name="jar" depends="copy-resources, jar.nodep" />
@@ -133,15 +153,29 @@
 	</target>
 
 	<target name="zip" depends="jar, zip.nodep" />
-
 	<target name="zip.nodep" depends="jar.nodep">
 		<zip destfile="${build.dir}/${service.name}-${service.version}.zip">
 			<zipfileset  dir="${build.zip}" prefix="${service.name}"/>
 		</zip>
 	</target>
 
-	<target name="compile.test" depends="compile.nodep">
-		<javac srcdir="${test.dir}"
+	<target name="zip-dev-env">
+		<zip destfile="${build.dir}/${service.name}-${service.version}-dev-env.zip">
+			<zipfileset  dir="." >
+				<exclude name="build" />
+				<exclude name="build/**/*" />
+				<exclude name="bin" />
+				<exclude name="bin/**/*" />
+				<exclude name="ivy" />
+				<exclude name="ivy/**/*" />
+				<exclude name=".classpath" />
+				<exclude name=".project" />
+			</zipfileset>
+		</zip>
+	</target>
+
+	<target name="compile.test" depends="copy-resources.nodep">
+		<javac srcdir="${test.java}"
 			destdir="${build.test.classes}"
 			classpathref="classpath.test.compile"
 			debug="on"
@@ -153,12 +187,63 @@
 		<property name="test" value="" />
 	</target>
 
-	<target name="test" depends="compile.test, init.test">
+	<target name="install-mst">
+		<delete dir="${build.mst-instances.dir}" />
+		<unzip src="${build.lib}/MST-instances-${mst-instances.version}.jar"
+			dest="${build.dir}" />
+		<sql classpathref="classpath.compile"
+				driver="com.mysql.jdbc.Driver"
+				url="${DatabaseUrl}"
+				userid="${DatabaseUsername}"
+				password="${DatabasePassword}">
+			<path>
+				<fileset dir="${build.mst-instance.dir}/sql">
+					<include name="create_database_script.sql"/>
+				</fileset>
+			</path>
+		</sql>
+	</target>
+
+	<target name="testy">
+		<echo>
+			test.folder: ${test.folder}
+			test.file: ${test.file}
+		</echo>
+	</target>
+
+	<target name="unzip-base-tests">
+		<echo>build.test.classes: ${build.test.classes}</echo>
+		<unzip dest="${build.test.classes}">
+			<fileset dir="${build.lib}">
+				<include name="**/mst-service-impl-*.jar"/>
+			</fileset>
+		</unzip>
+		<delete>
+			<!-- change the name from service to services -->
+			<fileset dir="${build.test.classes}/xc/mst/service/impl/test">
+				<exclude name="**/ProcessFilesTest.class" />
+			</fileset>
+			<fileset dir="${build.test.classes}/xc/mst/services/impl" />
+		</delete>
+	</target>
+
+	<target name="test" depends="install-mst, init.test, compile.test, unzip-base-tests, test.nodep" />
+	<target name="test.nodep">
+		<property name="abs.build.dir" location="${build.dir}" />
+		<exec executable="${ant.executable}">
+			<arg value="-Dtest=${test}" />
+			<arg value="test.internal" />
+			<env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
+			<env key="MST_SERVICE_TEST_FOLDER" value="${test.folder}" />
+		</exec>
+	</target>
+
+	<target name="test.internal">
 		<taskdef name="testng" classpathref="classpath.compile"
 			classname="org.testng.TestNGAntTask" />
 
-		<testng classpathref="classpath.test.run">
-			<classfileset dir="${build.test.classes}" includes="**/${test}*.class"/>
+		<testng classpathref="classpath.test.run" outputdir="${build.test}">
+			<classfileset dir="${build.test.classes}" includes="**/*${test}*.class"/>
 		</testng>
 	</target>
 

@@ -17,41 +17,23 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import xc.mst.dao.BaseDAO;
 import xc.mst.manager.BaseManager;
 import xc.mst.manager.BaseService;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 
-public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationContextAware {
+public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostProcessor, ApplicationContextAware {
 	
 	private static final Logger LOG = Logger.getLogger(MSTBeanPostProcessor.class);
 	
 	protected ApplicationContext applicationContext = null;
-	protected Map<String, Method> serviceSetters = null;
-	protected Map<String, Method> managerSetters = null;
-	
-	public MSTBeanPostProcessor() {
-		serviceSetters = new HashMap<String, Method>();
-		for (Method m : BaseService.class.getMethods()) {
-			String mname = m.getName();
-			if (mname.startsWith("set") && mname.endsWith("DAO")) {
-				String beanName = mname.substring("set".length());
-				serviceSetters.put(beanName, m);
-			}
-		}
-		managerSetters = new HashMap<String, Method>();
-		for (Method m : BaseManager.class.getMethods()) {
-			String mname = m.getName();
-			if (mname.startsWith("set") && mname.endsWith("Service")) {
-				String beanName = mname.substring("set".length());
-				managerSetters.put(beanName, m);
-			}
-		}
-	}
 	
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
@@ -59,29 +41,70 @@ public class MSTBeanPostProcessor implements BeanPostProcessor, ApplicationConte
 	
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		if (bean instanceof BaseDAO) {
-			((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("DataSource"));
+			try {
+				((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("MetadataServiceDataSource"));	
+			} catch (NoSuchBeanDefinitionException nsbde) {
+				((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("DataSource"));
+			}
+			try {
+				((BaseDAO)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MetadataServiceMSTConfiguration"));	
+			} catch (NoSuchBeanDefinitionException nsbde) {
+				((BaseDAO)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MSTConfiguration"));
+			}
 			((BaseDAO)bean).setUtil((Util)this.applicationContext.getBean("Util"));
 		} else if (bean instanceof BaseService) {
-			LOG.info("bean: "+bean+" setUtil: "+this.applicationContext.getBean("Util"));
 			((BaseService)bean).setUtil((Util)this.applicationContext.getBean("Util"));
+			try {
+				((BaseService)bean).setTransactionManager((PlatformTransactionManager)this.applicationContext.getBean("MetadataServiceTransactionManager"));
+			} catch (NoSuchBeanDefinitionException nsbde) {
+				((BaseService)bean).setTransactionManager((PlatformTransactionManager)this.applicationContext.getBean("TransactionManager"));
+			}
+			try {
+				((BaseService)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MetadataServiceMSTConfiguration"));	
+			} catch (NoSuchBeanDefinitionException nsbde) {
+				((BaseService)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MSTConfiguration"));
+			}
+			
+			Map<String, Method> serviceSetters = new HashMap<String, Method>();
+			for (Method m : bean.getClass().getMethods()) {
+				String mname = m.getName();
+				if (mname.startsWith("set") && mname.endsWith("DAO")) {
+					String bn = mname.substring("set".length());
+					serviceSetters.put(bn, m);
+				}
+			}
 			for (String s : serviceSetters.keySet()) {
-				Object o = this.applicationContext.getBean(s);
-				Method m = this.serviceSetters.get(s);
+				Object o = null;
+				Method m = null;
 				try {
+					m = serviceSetters.get(s);
+					o = this.applicationContext.getBean(s);
 					m.invoke(bean, o);
 				} catch (Throwable t) {
-					throw new RuntimeException(t);
+					LOG.error(bean.getClass()+"."+m.getName());
+					LOG.error("", t);
 				}
 			}
 		}
+		
 		if (bean instanceof BaseManager) {
+			Map<String, Method> managerSetters = new HashMap<String, Method>();
+			for (Method m : bean.getClass().getMethods()) {
+				String mname = m.getName();
+				if (mname.startsWith("set") && mname.endsWith("Service") && !mname.equals("setService")) {
+					String bn = mname.substring("set".length());
+					managerSetters.put(bn, m);
+				}
+			}
 			for (String s : managerSetters.keySet()) {
-				Object o = this.applicationContext.getBean(s);
-				Method m = this.managerSetters.get(s);
+				Object o = null;
+				Method m = null;
 				try {
+					m = managerSetters.get(s);
+					o = this.applicationContext.getBean(s);
 					m.invoke(bean, o);
 				} catch (Throwable t) {
-					throw new RuntimeException(t);
+					LOG.error(t.getMessage()+" error calling "+bean.getClass()+"."+m.getName());
 				}
 			}	
 		}

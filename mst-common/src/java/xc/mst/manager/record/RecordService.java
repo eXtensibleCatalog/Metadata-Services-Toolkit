@@ -15,7 +15,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
+import org.jdom.Element;
 
+import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Holdings;
@@ -30,8 +32,6 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
-import xc.mst.utils.MSTConfiguration;
-import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -42,6 +42,8 @@ import xc.mst.utils.index.SolrIndexManager;
  */
 public abstract class RecordService extends BaseService
 {
+	public static final String OAI_NS_2_0 = "http://www.openarchives.org/OAI/2.0/";
+	
 	/**
 	 * A reference to the logger for this class
 	 */
@@ -211,7 +213,7 @@ public abstract class RecordService extends BaseService
 	 *
 	 * @return A list of all records in the index
 	 */
-	public abstract RecordList getAll() throws IndexException;
+	public abstract List<Record> getAll() throws IndexException;
 
 	/**
 	 * Gets the record from the index with the passed record ID
@@ -237,7 +239,7 @@ public abstract class RecordService extends BaseService
 	 * @param providerId The provider ID of the records to retrieve
 	 * @return A list of all records in the index with the passed provider ID
 	 */
-	public abstract RecordList getByProviderId(int providerId) throws IndexException;
+	public abstract List<Record> getByProviderId(int providerId) throws IndexException;
 
 	/**
 	 * Gets number of records from the index with the passed provider ID
@@ -253,7 +255,7 @@ public abstract class RecordService extends BaseService
 	 * @param serviceId The service ID of the records to retrieve
 	 * @return A list of all records in the index with the passed provider ID
 	 */
-	public abstract RecordList getByServiceId(int serviceId) throws IndexException;
+	public abstract List<Record> getByServiceId(int serviceId) throws IndexException;
 
 	/**
 	 * Gets number of records from the index with the passed service ID
@@ -269,7 +271,7 @@ public abstract class RecordService extends BaseService
 	 * @param serviceId The service ID of the service that processed records to retrieve
 	 * @return A list of all records in the index with the passed processing service ID
 	 */
-	public abstract RecordList getProcessedByServiceId(int serviceId) throws IndexException;
+	public abstract List<Record> getProcessedByServiceId(int serviceId) throws IndexException;
 
 	/**
 	 * Gets all records from the index with the passed harvest ID
@@ -277,7 +279,7 @@ public abstract class RecordService extends BaseService
 	 * @param harvestId The harvest ID of the records to retrieve
 	 * @return A list of all records in the index with the passed harvest ID
 	 */
-	public abstract RecordList getByHarvestId(int harvestId) throws IndexException;
+	public abstract List<Record> getByHarvestId(int harvestId) throws IndexException;
 
 	/**
 	 * Gets all records from the index with the passed format ID and service ID
@@ -286,7 +288,7 @@ public abstract class RecordService extends BaseService
 	 * @param serviceId The service that processed the records to retrieve
 	 * @return A list all records in the index with the passed format ID
 	 */
-	public abstract RecordList getByFormatIdAndServiceId(int formatId, int serviceId) throws IndexException;
+	public abstract List<Record> getByFormatIdAndServiceId(int formatId, int serviceId) throws IndexException;
 
 	/**
 	 * Gets all records from the index contained in the set with the passed name
@@ -294,7 +296,7 @@ public abstract class RecordService extends BaseService
 	 * @param setName the name of the set whose records should be returned
 	 * @return A list all records in the index contained in the set with the passed name
 	 */
-	public abstract RecordList getBySetName(String setName) throws IndexException;
+	public abstract List<Record> getBySetName(String setName) throws IndexException;
 
 	/**
 	 * Get successors of given records id created by specified service id
@@ -304,7 +306,7 @@ public abstract class RecordService extends BaseService
 	 * @return Successor records
 	 * @throws IndexException
 	 */
-	public abstract RecordList getSuccessorsCreatedByServiceId(long recordId, long serviceId) throws IndexException;
+	public abstract List<Record> getSuccessorsCreatedByServiceId(long recordId, long serviceId) throws IndexException;
 
 	/**
 	 * Gets all records from the index contained in the set with the passed setSpec
@@ -312,7 +314,7 @@ public abstract class RecordService extends BaseService
 	 * @param setSpec the setSpec of the set whose records should be returned
 	 * @return A list all records in the index contained in the set with the passed setSpec
 	 */
-	public abstract RecordList getBySetSpec(String setSpec) throws IndexException;
+	public abstract List<Record> getBySetSpec(String setSpec) throws IndexException;
 
 	/**
 	 * Gets all records from the index harvested from the provider with the passed name
@@ -320,7 +322,7 @@ public abstract class RecordService extends BaseService
 	 * @param providerName the name of the provider whose records should be returned
 	 * @return A list all records in the index harvested from the provider with the passed name
 	 */
-	public abstract RecordList getByProviderName(String providerName) throws IndexException;
+	public abstract List<Record> getByProviderName(String providerName) throws IndexException;
 
 	/**
 	 * Gets all records from the index harvested from the provider with the passed URL
@@ -328,7 +330,7 @@ public abstract class RecordService extends BaseService
 	 * @param providerUrl the URL of the provider whose records should be returned
 	 * @return A list all records in the index harvested from the provider with the passed URL
 	 */
-	public abstract RecordList getByProviderUrl(String providerUrl) throws IndexException;
+	public abstract List<Record> getByProviderUrl(String providerUrl) throws IndexException;
 
 	/**
 	 * Gets all records from the index with the format with the passed name
@@ -336,7 +338,7 @@ public abstract class RecordService extends BaseService
 	 * @param formatName the name of the format whose records should be returned
 	 * @return A list all records in the index with the format with the passed name
 	 */
-	public abstract RecordList getByFormatName(String formatName) throws IndexException;
+	public abstract List<Record> getByFormatName(String formatName) throws IndexException;
 
 	/**
 	 * Gets all record inputs that were not processed for a given service
@@ -357,7 +359,7 @@ public abstract class RecordService extends BaseService
 	 *
 	 * @return A list of all records that need to be processed for a given service
 	 */
-	public abstract RecordList getInputForService(int serviceId) throws IndexException;
+	public abstract List<Record> getInputForService(int serviceId) throws IndexException;
 
 //	/**
 //	 * Gets specified number of record inputs that were not processed for a given service
@@ -392,7 +394,7 @@ public abstract class RecordService extends BaseService
 	 * @return A List of Record Object representing the record with the passed OAI Identifier
 	 * @throws IndexException
 	 */
-	public abstract RecordList getByOaiIdentifiers(List<String> identifiers) throws IndexException;
+	public abstract List<Record> getByOaiIdentifiers(List<String> identifiers) throws IndexException;
 
 	/**
 	 * Gets the record from the index with the passed OAI Identifier
@@ -430,7 +432,7 @@ public abstract class RecordService extends BaseService
 	 * @param processedFromId The ID of the original record whose processed Records we're getting
 	 * @return A list of all records in the index which have been processed from the specified record
 	 */
-	public abstract RecordList getByProcessedFrom(long processedFromId) throws IndexException;
+	public abstract List<Record> getByProcessedFrom(long processedFromId) throws IndexException;
 
 	/**
 	 * Gets all records including deleted , from the index which have been processed from the specified record
@@ -438,7 +440,7 @@ public abstract class RecordService extends BaseService
 	 * @param processedFromId The ID of the original record whose processed Records we're getting
 	 * @return A list of all records in the index which have been processed from the specified record
 	 */
-	public abstract RecordList getSuccessorsCreatedByServiceIdIncludingDeletedRecords(long recordId, long serviceId) throws IndexException;
+	public abstract List<Record> getSuccessorsCreatedByServiceIdIncludingDeletedRecords(long recordId, long serviceId) throws IndexException;
 
 
 	/**
@@ -447,7 +449,7 @@ public abstract class RecordService extends BaseService
 	 * @param trait The trait of the records to retrieve
 	 * @return A list of all records in the index with the passed trait
 	 */
-	public abstract RecordList getByTrait(String trait) throws IndexException;
+	public abstract List<Record> getByTrait(String trait) throws IndexException;
 
 	/**
 	 * Gets the record from the index with the earliest datestamp processed by a given service
@@ -522,7 +524,7 @@ public abstract class RecordService extends BaseService
 		else
 			doc = setFieldsOnDocument(record, doc, true);
 
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		boolean retVal = sim.addDoc(doc);
 		return retVal;
 	} // end method insert(Record)
@@ -551,7 +553,7 @@ public abstract class RecordService extends BaseService
 		// Set up the fields for the Record
 		doc = setFieldsOnDocument(record, doc, false);
 
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		return sim.addDoc(doc);
 	} // end method update(Record)
 
@@ -573,7 +575,7 @@ public abstract class RecordService extends BaseService
 		                     + FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType;
 
 		// Delete all records with the matching record ID
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		boolean result = sim.deleteByQuery(deleteQuery);
 
 		// If the delete was successful, also delete rows in the MySQL tables which reference it
@@ -647,8 +649,12 @@ public abstract class RecordService extends BaseService
 	 * @throws DatabaseConfigException
 	 */
 	public abstract Record getRecordFieldsForBrowseFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException;
-
-
+	
+	public abstract Record parse(Element e);
+	public abstract Record parse(Element recordEl, Provider provider);
+	
+	public abstract Element createJDomElement(Record r);
+	public abstract Element createJDomElement(Record r, String namespace);
 
 	/**
 	 * Validates the fields on the passed Record Object

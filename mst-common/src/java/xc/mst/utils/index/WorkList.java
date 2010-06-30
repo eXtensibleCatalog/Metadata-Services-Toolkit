@@ -42,7 +42,7 @@ public class WorkList extends AbstractList<Work>
 	/**
 	 * An Object which manages the Solr index
 	 */
-	protected SolrIndexManager indexMgr = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+	protected SolrIndexManager indexMgr = (SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager");
 	
 	/**
 	 * The current offset into the results of the query that are in the document list
@@ -62,7 +62,7 @@ public class WorkList extends AbstractList<Work>
 	/**
 	 * The service used to get a record from a Lucene document
 	 */
-	private static WorkService service = (WorkService)MSTConfiguration.getBean("WorkService");
+	private static WorkService service = (WorkService)MSTConfiguration.getInstance().getBean("WorkService");
 	
 	/**
 	 * The number of elements in the list

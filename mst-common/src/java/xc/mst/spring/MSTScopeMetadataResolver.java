@@ -21,7 +21,7 @@ import xc.mst.dao.BaseDAO;
 import xc.mst.manager.BaseService;
 import xc.mst.repo.Repository;
 
-public class MSTScopeMetadataResolver implements ScopeMetadataResolver {
+public class MSTScopeMetadataResolver extends MSTAutoBeanHelper implements ScopeMetadataResolver {
 	
 	private static final Logger LOG = Logger.getLogger(MSTScopeMetadataResolver.class);
 	
@@ -39,7 +39,7 @@ public class MSTScopeMetadataResolver implements ScopeMetadataResolver {
 		try {
 			ScopeMetadata scopeMetadata = new ScopeMetadata();
 			String className = definition.getBeanClassName();
-			Class c = getClass().getClassLoader().loadClass(className);
+			Class c = getClassLoader().loadClass(className);
 			boolean prototype = false;
 			for (Class pc : prototypeScopes) {
 				if (pc.isAssignableFrom(c)) {

@@ -12,7 +12,6 @@ package xc.mst.common.test;
 import org.testng.annotations.Test;
 
 import xc.mst.manager.record.RecordService;
-import xc.mst.utils.MSTConfiguration;
 
 public class GenericTest extends BaseTest {
 	
@@ -20,7 +19,7 @@ public class GenericTest extends BaseTest {
 	public void goTest() {
 		
 		try {
-			RecordService rs = (RecordService)MSTConfiguration.getBean("RecordService");
+			RecordService rs = (RecordService)getBean("RecordService");
 			System.out.println("rs.getRecordDAO(): "+rs.getRecordDAO());
 		
 			/*

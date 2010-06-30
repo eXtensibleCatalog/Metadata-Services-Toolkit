@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,8 +73,8 @@ public class TestServices
 
 	public static void main(String[] args) throws DataException, IOException, JDOMException, IndexException
 	{
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
-		SolrIndexManager solrIndexManager = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
+		SolrIndexManager solrIndexManager = (SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager");
 
 		try
 		{
@@ -91,7 +92,7 @@ public class TestServices
 			solrIndexManager.commitIndex();
 			Thread.sleep(2000);
 			//RecordList records = recordService.getAll();
-			RecordList records = recordService.getByServiceId(serviceId);
+			List<Record> records = recordService.getByServiceId(serviceId);
 			System.out.println("O/P records ="+ records);
 			for(Record record: records)
 			{

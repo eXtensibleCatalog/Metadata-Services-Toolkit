@@ -14,15 +14,11 @@ import java.util.Date;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.provider.Provider;
-import xc.mst.bo.user.User;
+import xc.mst.common.test.BaseTest;
 import xc.mst.dao.DataException;
 import xc.mst.helper.TestHelper;
-import xc.mst.manager.repository.DefaultProviderService;
 import xc.mst.manager.repository.ProviderService;
-import xc.mst.manager.user.DefaultServerService;
-import xc.mst.manager.user.DefaultUserService;
 import xc.mst.manager.user.ServerService;
-import xc.mst.utils.MSTConfiguration;
 
 
 /**
@@ -31,7 +27,7 @@ import xc.mst.utils.MSTConfiguration;
  * @author Tejaswi Haramurali
  */
 @Test(groups = { "baseTests" }, enabled = true)
-public class ProviderServiceTest
+public class ProviderServiceTest extends BaseTest
 {
 
 	
@@ -47,8 +43,8 @@ public class ProviderServiceTest
    	 TestHelper helper = TestHelper.getInstance();
         try
         {
-        	ServerService serverService = (ServerService)MSTConfiguration.getBean("ServerService");
-            ProviderService providerService = (ProviderService)MSTConfiguration.getBean("ProviderService");
+        	ServerService serverService = (ServerService)getBean("ServerService");
+            ProviderService providerService = (ProviderService)getBean("ProviderService");
             Provider provider = new Provider();
             provider.setName("repositoryname");
             provider.setDescription("description");

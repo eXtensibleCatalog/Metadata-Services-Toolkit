@@ -46,11 +46,7 @@
 		 <fileset dir="${ivy.dir}" includes="*.jar" />
 	</path>
 
-	<taskdef resource="org/apache/ivy/ant/antlib.xml"
-			onerror="report"
-			uri="antlib:org.apache.ivy.ant"
-			classpathref="ivy.lib.path" />
-
+	<import file="${mst-instances}/build.xml" />
 	<import file="${mst-common}/build.xml" />
 	<import file="${mst-platform}/build.xml" />
 	<import file="${mst-service.impl}/build.xml" />
@@ -73,17 +69,27 @@
 		<property name="box" value="local" />
 	</target>
 
-	<target name="init" depends="init.default.properties">
+	<target name="init" depends="download-ivy, init.default.properties">
 		<echo>box: ${box}</echo>
 		<tstamp/>
+		<mkdir dir="${build.dir}" />
+		<taskdef resource="org/apache/ivy/ant/antlib.xml"
+				onerror="report"
+				uri="antlib:org.apache.ivy.ant"
+				classpathref="ivy.lib.path" />
+
 		<copy tofile="local.properties" file="local.properties.example" />
 		<property file="local.properties"/>
 		<!--
 		<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
 		-->
 	</target>
+
+	<target name="check.skip.download">
+		<available property="skip.download" file="${ivy.dir}" />
+	</target>
 	
-	<target name="download-ivy" unless="skip.download">
+	<target name="download-ivy" depends="check.skip.download" unless="skip.download">
 		<mkdir dir="${ivy.dir}" />
 		<!--  download Ivy from web site so that it can be used
 				even without any special installation -->
@@ -114,7 +120,7 @@
 		<target-custom-services target="clean" />
 	</target>
 
-	<target name="publish" depends="mc.publish, ms.publish">
+	<target name="publish" depends="mi.publish, mc.publish, ms.publish">
 	</target>
 
 	<target name="retrieve" depends="mc.retrieve,mp.retrieve,ms.retrieve">

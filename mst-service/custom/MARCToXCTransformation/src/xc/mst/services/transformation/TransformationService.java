@@ -25,6 +25,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.log4j.Logger;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -50,9 +51,6 @@ import xc.mst.services.transformation.bo.MarcXmlRecord;
 import xc.mst.services.transformation.bo.XCHoldingRecord;
 import xc.mst.services.transformation.bo.XCRecord;
 import xc.mst.services.transformation.dao.BibliographicManifestationMappingDAO;
-import xc.mst.services.transformation.dao.DefaultBibliographicManifestationMappingDAO;
-import xc.mst.services.transformation.dao.DefaultHeldHoldingRecordDAO;
-import xc.mst.services.transformation.dao.DefaultXCHoldingDAO;
 import xc.mst.services.transformation.dao.HeldHoldingRecordDAO;
 import xc.mst.services.transformation.dao.XCHoldingDAO;
 import xc.mst.utils.TimingLogger;
@@ -65,52 +63,55 @@ import xc.mst.utils.TimingLogger;
  */
 public class TransformationService extends GenericMetadataService
 {
+	
+	private final static Logger LOG = Logger.getLogger(TransformationService.class);
+	
 	/**
 	 * Builds the XML Document based on the record's OAI XML
 	 */
-	private SAXBuilder builder = new SAXBuilder();
+	protected SAXBuilder builder = new SAXBuilder();
 
 	/**
 	 * The namespace for MARC XML
 	 */
-	private Namespace marcNamespace = Namespace.getNamespace("marc", "http://www.loc.gov/MARC21/slim");
+	protected Namespace marcNamespace = Namespace.getNamespace("marc", "http://www.loc.gov/MARC21/slim");
 
 	/**
 	 * A map containing values for $4 subfields which we should treat as
 	 * roles and the rdarole they represent.
 	 */
-	private HashMap<String, String> roles = new HashMap<String, String>();
+	protected HashMap<String, String> roles = new HashMap<String, String>();
 	
 	/**
 	 * A list of errors to add to the record currently being processed
 	 */
-	private List<String> errors = new ArrayList<String>();
+	protected List<String> errors = new ArrayList<String>();
 	
 	/**
 	 * This is used to ensure that subfields from the same source get mapped to the same FRBR Work element
 	 */
-	private int artificialLinkingId = 0;
+	protected int artificialLinkingId = 0;
 
 	// The following HashSets are used to prevent duplicate values from being added to the XC record
 
-	private HashMap<String, Element> linkedCreatorFields = new HashMap<String, Element>();
+	protected HashMap<String, Element> linkedCreatorFields = new HashMap<String, Element>();
 	
 	/**
 	 * Org code used 
 	 */
-	private String orgCode = "";
+	protected String orgCode = "";
 	
-	private BibliographicManifestationMappingDAO bibliographicManifestationMappingDAO = new DefaultBibliographicManifestationMappingDAO();
+	protected BibliographicManifestationMappingDAO bibliographicManifestationMappingDAO = null;
+
+	protected HeldHoldingRecordDAO heldHoldingRecordDAO = null;
 	
-	private HeldHoldingRecordDAO heldHoldingRecordDAO = new DefaultHeldHoldingRecordDAO();
+	protected XCHoldingDAO xcHoldingDAO = null;
 	
-	private XCHoldingDAO xcHoldingDAO = new DefaultXCHoldingDAO();
+	protected List<HeldHoldingRecord> heldHoldingRecords;
 	
-	private List<HeldHoldingRecord> heldHoldingRecords;
+	protected HashMap<String, Record> holdingRecords = new HashMap<String, Record>();
 	
-	private HashMap<String, Record> holdingRecords = new HashMap<String, Record>();
-	
-	private boolean processingHeldRecords = false;
+	protected boolean processingHeldRecords = false;
 	
 	/**
 	 * Construct a TransformationService Object
@@ -138,6 +139,40 @@ public class TransformationService extends GenericMetadataService
 		roles.put("mod", "performer");
 		roles.put("pro", "producer");
 		roles.put("trl", "translator");
+	}
+	
+	public BibliographicManifestationMappingDAO getBibliographicManifestationMappingDAO() {
+		return bibliographicManifestationMappingDAO;
+	}
+
+	public void setBibliographicManifestationMappingDAO(
+			BibliographicManifestationMappingDAO bibliographicManifestationMappingDAO) {
+		this.bibliographicManifestationMappingDAO = bibliographicManifestationMappingDAO;
+	}
+
+	public HeldHoldingRecordDAO getHeldHoldingRecordDAO() {
+		return heldHoldingRecordDAO;
+	}
+
+	public void setHeldHoldingRecordDAO(HeldHoldingRecordDAO heldHoldingRecordDAO) {
+		this.heldHoldingRecordDAO = heldHoldingRecordDAO;
+	}
+
+	public XCHoldingDAO getXCHoldingDAO() {
+		return xcHoldingDAO;
+	}
+
+	public void setXCHoldingDAO(XCHoldingDAO xcHoldingDAO) {
+		this.xcHoldingDAO = xcHoldingDAO;
+	}
+	
+	public List<Record> process(Record r) {
+		List<Record> records = new ArrayList<Record>();
+		Record out = getRecordService().createSuccessor(r, getService());
+		LOG.debug("getBibliographicManifestationMappingDAO(): "+getBibliographicManifestationMappingDAO());
+		out.setOaiXml("<tr>"+out.getId()+"</tr>");
+		records.add(out);
+		return records;
 	}
 
 	@Override

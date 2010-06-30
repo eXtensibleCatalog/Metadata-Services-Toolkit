@@ -9,6 +9,7 @@
 
 package xc.mst.manager.record;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -81,5 +82,15 @@ public class DBRecordService extends DefaultRecordService {
 	
 	public void reset() {
 		getRecordDAO().reset();
+	}
+	
+	@Override
+	public List<Record> getByProviderId(int providerId) {
+		return new ArrayList<Record>();
+	}
+	
+	@Override
+	public List<Record> getBySetSpec(String setSpec)  {
+		return new ArrayList<Record>();
 	}
 }

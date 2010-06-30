@@ -47,27 +47,27 @@ public class Facade
 	/**
 	 * Data access object for getting services
 	 */
-	private static ServiceDAO serviceDao = (ServiceDAO)MSTConfiguration.getBean("ServiceDAO");
+	private static ServiceDAO serviceDao = (ServiceDAO)MSTConfiguration.getInstance().getBean("ServiceDAO");
 
 	/**
 	 * Data access object for getting and updating resumption tokens
 	 */
-	private static ResumptionTokenDAO resumptionTokenDao = (ResumptionTokenDAO)MSTConfiguration.getBean("ResumptionTokenDAO");
+	private static ResumptionTokenDAO resumptionTokenDao = (ResumptionTokenDAO)MSTConfiguration.getInstance().getBean("ResumptionTokenDAO");
 
 	/**
 	 * Data access object for getting formats
 	 */
-	private static FormatDAO formatDao = (FormatDAO)MSTConfiguration.getBean("FormatDAO");
+	private static FormatDAO formatDao = (FormatDAO)MSTConfiguration.getInstance().getBean("FormatDAO");
 
 	/**
 	 * Data access object for getting sets
 	 */
-	private static SetDAO setDao = (SetDAO)MSTConfiguration.getBean("SetDAO");
+	private static SetDAO setDao = (SetDAO)MSTConfiguration.getInstance().getBean("SetDAO");
 
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private static RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+	private static RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
 
 	/**
 	 * The logger object
@@ -355,19 +355,19 @@ public class Facade
 		// Most of the information is pulled from the configuration file, but the earliestDatestamp
 		// is read from the database as the lowest value for the OAI_datestamp column in the results table
 		Element root = new Element("Identify");
-		root.addContent(XMLUtil.xmlEl("repositoryName", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_NAME)));
+		root.addContent(XMLUtil.xmlEl("repositoryName", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_NAME)));
 		root.addContent(XMLUtil.xmlEl("baseURL", oaiRepoBaseURL));
-		root.addContent(XMLUtil.xmlEl("protocolVersion", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_PROTOCOL_VERSION)));
-		root.addContent(XMLUtil.xmlEl("adminEmail", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_ADMIN_EMAIL)));
-		root.addContent(XMLUtil.xmlEl("deletedRecord", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_DELETED_RECORD)));
-		root.addContent(XMLUtil.xmlEl("granularity", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_GRANULARITY)));
+		root.addContent(XMLUtil.xmlEl("protocolVersion", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_PROTOCOL_VERSION)));
+		root.addContent(XMLUtil.xmlEl("adminEmail", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_ADMIN_EMAIL)));
+		root.addContent(XMLUtil.xmlEl("deletedRecord", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_DELETED_RECORD)));
+		root.addContent(XMLUtil.xmlEl("granularity", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_GRANULARITY)));
 
 		// Get the earliest record.  If it's not null, set the earliestDatestamp to it's datestamp.
 		// Otherwise, there were no records, and we will set it to the beginning of the epoch
 		Record earliest = recordService.getEarliest(serviceId);
 		root.addContent(XMLUtil.xmlEl("earliestDatestamp", (earliest != null ? new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").format(earliest.getOaiDatestamp()) : "1970-01-01T12:00:00Z")));
 
-		String[] compressions = MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_COMPRESSION).split(";");
+		String[] compressions = MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_COMPRESSION).split(";");
 		for(String compression : compressions)
 			root.addContent(XMLUtil.xmlEl("compression", compression));
 
@@ -380,10 +380,10 @@ public class Facade
 		//oaiIdentifier.addNamespaceDeclaration(Namespace.getNamespace("schemaLocation", "http://www.openarchives.org/OAI/2.0/oai-identifier\nhttp://www.openarchives.org/OAI/2.0/oai-identifier.xsd"));
 
 		// Add child elements to the oaiIdentifier element with useful information
-		oaiIdentifier.addContent(XMLUtil.xmlEl("scheme", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_SCHEME)));
-		oaiIdentifier.addContent(XMLUtil.xmlEl("repositoryIdentifier", MSTConfiguration.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER)));
-		oaiIdentifier.addContent(XMLUtil.xmlEl("delimiter", MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_DELIMITER)));
-		oaiIdentifier.addContent(XMLUtil.xmlEl("sampleIdentifier", "oai:" + MSTConfiguration.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + MSTConfiguration.getInstanceName() + "/" + service.getName().replace(" ", "_") + "/1"));
+		oaiIdentifier.addContent(XMLUtil.xmlEl("scheme", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_SCHEME)));
+		oaiIdentifier.addContent(XMLUtil.xmlEl("repositoryIdentifier", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER)));
+		oaiIdentifier.addContent(XMLUtil.xmlEl("delimiter", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_DELIMITER)));
+		oaiIdentifier.addContent(XMLUtil.xmlEl("sampleIdentifier", "oai:" + MSTConfiguration.getInstance().getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + MSTConfiguration.getInstanceName() + "/" + service.getName().replace(" ", "_") + "/1"));
 
 		// Add a description element with the oai-identifier element we just created
 		root.addContent(XMLUtil.xmlEl("description", null).addContent(oaiIdentifier));
@@ -684,13 +684,13 @@ public class Facade
 
 		// Get the maximum number of records we should return at a time from the configuration file
 		// This value is different depending on whether we're returning the full records or just the identifiers
-		int recordLimit = (getRecords ? Integer.parseInt(MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_MAX_RECORDS)) :
-			                            Integer.parseInt(MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS)));
+		int recordLimit = (getRecords ? Integer.parseInt(MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_MAX_RECORDS)) :
+			                            Integer.parseInt(MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS)));
 
 		// Get the maximum length of the results returned in bytes
 		// This value is different depending on whether we're returning the full records or just the identifiers
-		int maxLength = (getRecords ? Integer.parseInt(MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_MAX_RECORDS_LENGTH)) :
-			                          Integer.parseInt(MSTConfiguration.getProperty(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS_LENGTH)));
+		int maxLength = (getRecords ? Integer.parseInt(MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_MAX_RECORDS_LENGTH)) :
+			                          Integer.parseInt(MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS_LENGTH)));
 
 		// The from and until dates.  They will be null if the passed Strings could not be parsed
 		Date fromDate = parseDate(from);

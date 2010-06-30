@@ -29,7 +29,7 @@ public class StartSchedulerThread
 	 */
 	public static void main(String[] args)
 	{
-		Scheduler scheduler = (Scheduler)MSTConfiguration.getBean("Scheduler");
+		Scheduler scheduler = (Scheduler)MSTConfiguration.getInstance().getBean("Scheduler");
 		Thread schedulerThread = new Thread(scheduler);
 		schedulerThread.start();
 	} // end main method

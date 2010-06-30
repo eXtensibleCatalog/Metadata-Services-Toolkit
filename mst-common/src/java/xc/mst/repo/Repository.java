@@ -12,27 +12,41 @@ package xc.mst.repo;
 import java.util.Date;
 import java.util.List;
 
+import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Provider;
+import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.service.Service;
 
 public interface Repository {
 	
 	public String getName();
 	public void setName(String name);
 	
+	public int getSize();
+	
 	public void beginBatch();
 	
 	public void endBatch();
 	
-	public void installOrUpdateIfNecessary(); 
+	public void installOrUpdateIfNecessary(String previousVersion, String currentVersion); 
 
+	public void addRecord(Record record);
 	public void addRecords(List<Record> records);
 	
-	public List<Record> getRecords(Date from, Date until, Long startingId);
+	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet);
 	
 	public Record getRecord(String oaiId);
 	
 	public Record getRecord(long id);
 	
-	public List<Record> getPredecessors(Record r);
+	public List<Long> getPredecessorIds(Record r);
+	
+	public void injectSuccessors(Record r);
+	
+	public Provider getProvider();
+	public Service getService();
+	public void setProvider(Provider p);
+	public void setService(Service s);
 
 }

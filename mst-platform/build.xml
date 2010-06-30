@@ -20,9 +20,10 @@
 		</fileset>
 	</path>
 
-	<path id="mp.classpath">
+	<path id="mp.classpath.compile">
 		<fileset dir="${mp.build.lib}">
 			<include name="*.jar" />
+			<exclude name="mst-service-impl*.jar" />
 		</fileset>
 	</path>
 
@@ -61,7 +62,7 @@
 	<target name="mp.compile.nodep" depends="mp.init">
 		<javac srcdir="${mp.src.java}"
 			destdir="${mp.build.classes}"
-			classpathref="mp.classpath"
+			classpathref="mp.classpath.compile"
 			debug="on"
 			deprecation="on"
 			debuglevel="lines,vars,source"/>
@@ -79,6 +80,7 @@
 				<exclude name="*.properties" />
 			</fileset>
 		</copy>
+		<copy tofile="${mp.build.classes}/env.properties" file="${box}.properties" overwrite="true" />
 		<copy todir="${mp.build.webapp}">
 			<fileset dir="${mp.src.webapp}" />
 		</copy>

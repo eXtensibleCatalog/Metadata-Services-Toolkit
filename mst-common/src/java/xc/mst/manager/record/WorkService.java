@@ -23,7 +23,6 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.SolrIndexManager;
 import xc.mst.utils.index.WorkList;
 
@@ -129,7 +128,7 @@ public abstract class WorkService extends BaseService
 		// Set up the fields for the specific type of indexed object
 		doc = setFieldsOnDocument(work, doc, true);
 
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		return sim.addDoc(doc);
 	} // end method insert(Work)
 
@@ -159,7 +158,7 @@ public abstract class WorkService extends BaseService
 		// Set up the fields for the Work
 		doc = setFieldsOnDocument(work, doc, false);
 
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		return sim.addDoc(doc);
 	} // end method update(Work)
 

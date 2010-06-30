@@ -30,7 +30,6 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * Browse for results using solr
@@ -54,11 +53,11 @@ public class DefaultBrowseRecordService extends BaseService implements BrowseRec
 	 */
 	public SolrBrowseResult search(SolrQuery query) throws IndexException, DatabaseConfigException {
 
-		SolrServer server = getMstSolrServer().getServer();
+		SolrServer server = getMSTSolrService().getServer();
 		SolrBrowseResult result = null;
 		
 		// Discard deleted records
-		query.addFilterQuery("deleted:false");
+		//query.addFilterQuery("deleted:false");
 		
 		if (log.isDebugEnabled()) {
 			log.debug("Querying Solr server with query:" + query);
@@ -80,7 +79,7 @@ public class DefaultBrowseRecordService extends BaseService implements BrowseRec
 	    // Load the records in the SolrBrowseResilt object
 	    SolrDocumentList docs = rsp.getResults();
 
-	    RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+	    RecordService recordService = (RecordService)config.getBean("RecordService");
 	    Iterator<SolrDocument> iteration = docs.iterator();
 	    List<Record> records = new ArrayList<Record>();
 

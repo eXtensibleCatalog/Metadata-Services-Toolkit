@@ -70,25 +70,25 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private static RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+	private static RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
 	
 	/**
 	 * Manager for getting, inserting and updating jobs
 	 */
-	private static JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
+	private static JobService jobService = (JobService)MSTConfiguration.getInstance().getBean("JobService");
 	
 	@Override
 	public void run() 
 	{
 		try
 		{
-			ServicesService serviceManager = (ServicesService)MSTConfiguration.getBean("ServicesService");
+			ServicesService serviceManager = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
 			service = serviceManager.getServiceById(serviceId);
 			
 			log.info("Starting thread to reprocess service " + service);
 			
 			// Reprocess the records processed by the service
-    		RecordList records = recordService.getProcessedByServiceId(service.getId());
+    		List<Record> records = recordService.getProcessedByServiceId(service.getId());
     		
     		// This will hold the records that has to be processed and is same as the re processing
     		// service's record's predecessor.
@@ -143,7 +143,7 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 				recordService.update(updatedRecord);				
 			}
 			
-			((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
+			((SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager")).commitIndex();
 
     		for(Service runMe : servicesToRun)
     		{
@@ -200,6 +200,7 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 		return "Deleting old service records and preparing for service reprocess.";
 	}
 
+	/*
 	@Override
 	public String getJobStatus() 
 	{
@@ -240,4 +241,5 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 	public void setServiceId(int serviceId) {
 		this.serviceId = serviceId;
 	}
+	*/
 }

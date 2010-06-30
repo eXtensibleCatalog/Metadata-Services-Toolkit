@@ -14,6 +14,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
+import xc.mst.dao.BaseDAO;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
@@ -24,7 +25,7 @@ import xc.mst.services.transformation.bo.XCHoldingRecord;
  *
  * @author Sharmila Ranganathan
  */
-public abstract class XCHoldingDAO
+public abstract class XCHoldingDAO extends BaseDAO
 {
 	/**
 	 * A reference to the logger for this class

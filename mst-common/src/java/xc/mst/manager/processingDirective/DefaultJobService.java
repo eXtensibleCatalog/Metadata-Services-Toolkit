@@ -158,7 +158,7 @@ public class DefaultJobService extends BaseService implements JobService {
 	public void writeToFile() throws DatabaseConfigException
 	{
 		List<Job> jobs = getAllJobs();
-		SetService setService = (SetService)MSTConfiguration.getBean("SetService");
+		SetService setService = (SetService)config.getBean("SetService");
 		
 		try{
 		    // Create file 

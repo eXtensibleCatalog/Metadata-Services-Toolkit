@@ -9,6 +9,8 @@
 
 package xc.mst.test;
 
+import java.util.List;
+
 import org.apache.log4j.PropertyConfigurator;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
@@ -228,7 +230,7 @@ public class TestTransformationService
 			// TODO removed IndexManager
 			// IndexManager.getInstance().maybeReOpen();
 
-			RecordList records = recordService.getAll();
+			List<Record> records = recordService.getAll();
 			for(Record record: records)
 			{
 				System.out.println("Found record:\n" + record.getOaiXml() + "\n\n\n\n");
@@ -241,7 +243,7 @@ public class TestTransformationService
 		{
 			e.printStackTrace();
 
-			RecordList records = recordService.getAll();
+			List<Record> records = recordService.getAll();
 			for(Record record: records)
 			{
 				System.out.println("Found record:\n" + record.getOaiXml() + "\n\n\n\n");

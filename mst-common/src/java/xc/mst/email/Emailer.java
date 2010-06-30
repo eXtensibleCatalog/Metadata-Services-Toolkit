@@ -30,9 +30,6 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.emailconfig.EmailConfig;
 import xc.mst.constants.Constants;
-import xc.mst.dao.DataException;
-import xc.mst.dao.emailconfig.EmailConfigDAO;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * This class can be used to send emails based on parameters in the configuration file
@@ -50,26 +47,7 @@ public class Emailer
 	/**
 	 * The SMTP configuration from the database
 	 */
-	private EmailConfig config = null;
-
-	/**
-	 * Constructs an Emailer, using the information in the first row of the
-	 * email_config database table.  If there were no rows in that table, the
-	 * Emailer will need to be manually configured using its configure method.
-	 */
-	public Emailer()
-	{
-		try
-		{
-			config =((EmailConfigDAO)MSTConfiguration.getBean("EmailConfigDAO")).getConfiguration();
-		}
-		catch (DataException e)
-		{
-			log.error("An error occurred while connecting to the database.", e);
-
-			config = null;
-		}
-	}
+	private EmailConfig emailConfig = null;
 
 	/**
 	 * Configures the Emailer to use the specified SMTP server
@@ -78,7 +56,7 @@ public class Emailer
 	 */
 	public void configure(EmailConfig config)
 	{
-		this.config = config;
+		this.emailConfig = config;
 	}
 
 	/**
@@ -91,7 +69,7 @@ public class Emailer
 	 */
 	public boolean isConfigured()
 	{
-		return config != null;
+		return emailConfig != null;
 	}
 
 	/**
@@ -119,12 +97,12 @@ public class Emailer
 			Message msg;
 
 			Properties props = System.getProperties();
-			props.put("mail.host", config.getEmailServerAddress());
-			if(config.getPassword() != null)
+			props.put("mail.host", emailConfig.getEmailServerAddress());
+			if(emailConfig.getPassword() != null)
 			{
 				props.put("mail.smtp.auth", "true");
 
-				Authenticator auth = new SMTPAuthenticator(config.getFromAddress().substring(0, config.getFromAddress().indexOf('@')), config.getPassword());
+				Authenticator auth = new SMTPAuthenticator(emailConfig.getFromAddress().substring(0, emailConfig.getFromAddress().indexOf('@')), emailConfig.getPassword());
 				Session session = Session.getDefaultInstance(props, auth);
 
 				msg = new MimeMessage(session);
@@ -135,7 +113,7 @@ public class Emailer
 	        msg.setSubject(subject);
 	        msg.setSentDate(new Date());
 
-	        msg.setFrom(InternetAddress.parse(config.getFromAddress(), false)[0]);
+	        msg.setFrom(InternetAddress.parse(emailConfig.getFromAddress(), false)[0]);
 	        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
 	        msg.setText(messageBody);
 
@@ -162,12 +140,12 @@ public class Emailer
             Message msg;
 
             Properties props = System.getProperties();
-            props.put("mail.host", config.getEmailServerAddress());
-            if(config.getPassword() != null)
+            props.put("mail.host", emailConfig.getEmailServerAddress());
+            if(emailConfig.getPassword() != null)
             {
                 props.put("mail.smtp.auth", "true");
 
-                Authenticator auth = new SMTPAuthenticator(config.getFromAddress().substring(0, config.getFromAddress().indexOf('@')), config.getPassword());
+                Authenticator auth = new SMTPAuthenticator(emailConfig.getFromAddress().substring(0, emailConfig.getFromAddress().indexOf('@')), emailConfig.getPassword());
                 Session session = Session.getDefaultInstance(props, auth);
 
                 msg = new MimeMessage(session);
@@ -178,7 +156,7 @@ public class Emailer
             msg.setSubject(subject);
             msg.setSentDate(new Date());
 
-            msg.setFrom(InternetAddress.parse(config.getFromAddress(), false)[0]);
+            msg.setFrom(InternetAddress.parse(emailConfig.getFromAddress(), false)[0]);
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
 
             MimeBodyPart mbp1 = new MimeBodyPart();

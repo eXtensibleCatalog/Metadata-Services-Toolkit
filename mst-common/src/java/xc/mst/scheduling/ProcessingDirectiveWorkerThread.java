@@ -9,6 +9,8 @@
 
 package xc.mst.scheduling;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.processing.Job;
@@ -60,12 +62,12 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 	/**
 	 * Manager for getting, inserting and updating records
 	 */
-	private static RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+	private static RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
 	
 	/**
 	 * Manager for getting, inserting and updating jobs
 	 */
-	private static JobService jobService = (JobService)MSTConfiguration.getBean("JobService");
+	private static JobService jobService = (JobService)MSTConfiguration.getInstance().getBean("JobService");
 	
 	/**
 	 * Sets the processing directive to check
@@ -82,7 +84,7 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 	{
 		try
 		{
-			RecordList recordsToCheck = new RecordList(null);
+			List<Record> recordsToCheck = new RecordList(null);
 			
 			log.info("Starting thread to process processing schedule " + processingDirective);
 			if(processingDirective.getSourceProvider() != null)
@@ -93,7 +95,7 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 			for(Record checkMe : recordsToCheck)
 				checkProcessingDirective(checkMe);
 			
-			((SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager")).commitIndex();
+			((SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager")).commitIndex();
 			
 			if (recordsToCheck != null && recordsToCheck.size() > 0) {
 				try {
@@ -141,6 +143,7 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 		return "Processing Directive";
 	}
 
+	/*
 	@Override
 	public String getJobStatus() 
 	{
@@ -151,7 +154,8 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 		else
 			return Constants.STATUS_SERVICE_RUNNING;
 	}
-
+	 */
+	
 	@Override
 	public String getType() 
 	{
@@ -214,6 +218,7 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 		return processingDirective;
 	}
 
+	/*
 	@Override
 	public int getProcessedRecordCount() {
 		// TODO Auto-generated method stub
@@ -225,4 +230,5 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	*/
 }

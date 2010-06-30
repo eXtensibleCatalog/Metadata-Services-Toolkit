@@ -14,17 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.constants.Constants;
-import xc.mst.scheduling.Scheduler;
-
-import com.opensymphony.xwork2.ActionSupport;
+import xc.mst.constants.Status;
 
 /**
  * This class is used to return the latest status of the processes running in the MST
  *
  * @author Tejaswi Haramurali
  */
-public class RefreshServiceBar extends ActionSupport implements ServletRequestAware
+public class RefreshServiceBar extends BaseActionSupport implements ServletRequestAware
 {
      /** Serial id */
 	private static final long serialVersionUID = -3395960723337222914L;
@@ -53,39 +52,44 @@ public class RefreshServiceBar extends ActionSupport implements ServletRequestAw
             try
             {
 
-                if(Scheduler.getRunningJob()!=null)
+                if(getScheduler().getRunningJob()!=null)
                 {
-                	if(!Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE) 
-                			&& !Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)
-                			&& !Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
-	                    if(Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_CANCELED))
+                	if(!getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE) 
+                			&& !getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)
+                			&& !getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
+	                    if(getScheduler().getRunningJob().getJobStatus().equals(Status.CANCELED))
 	                    {
-	                    	if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-	                        	currentProcess = "Aborting harvest of provider " + Scheduler.getRunningJob().getJobName();
+	                    	if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+	                        	currentProcess = "Aborting harvest of provider " + getScheduler().getRunningJob().getJobName();
 	                        } else {
-	                        	currentProcess = "Aborting process " + Scheduler.getRunningJob().getJobName();
+	                        	currentProcess = "Aborting process " + getScheduler().getRunningJob().getJobName();
 	                        }
 	                    }
-	                    else if (Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_PAUSED))
+	                    else if (getScheduler().getRunningJob().getJobStatus().equals(Status.PAUSED))
 	                    {
-	                        if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-	                        	currentProcess = "Paused harvesting from provider " + Scheduler.getRunningJob().getJobName();
+	                        if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+	                        	currentProcess = "Paused harvesting from provider " + getScheduler().getRunningJob().getJobName();
 	                        } else {
-	                        	currentProcess = "Paused processing through " + Scheduler.getRunningJob().getJobName();
+	                        	currentProcess = "Paused processing through " + getScheduler().getRunningJob().getJobName();
 	                        }
 	                    }  
-	                    else if (Scheduler.getRunningJob().getJobStatus().equalsIgnoreCase(Constants.STATUS_SERVICE_NOT_RUNNING))
+	                    else if (getScheduler().getRunningJob().getJobStatus().equals(Status.NOT_RUNNING))
 	                    {
 	                        	currentProcess = null;
 	                    } else {
-	                    	 if (Scheduler.getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-	                    		 if (Scheduler.getRunningJob().getProcessedRecordCount() > 0 && Scheduler.getRunningJob().getTotalRecordCount() > 0) {
-	                    			 currentProcess = "Harvested " +  Scheduler.getRunningJob().getProcessedRecordCount() + " records out of " + Scheduler.getRunningJob().getTotalRecordCount() + " from repository " + Scheduler.getRunningJob().getJobName();
+	                    	 if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+	                    		 if (getScheduler().getRunningJob().getRecordsProcessed() > 0 && getScheduler().getRunningJob().getTotalRecords() > 0) {
+	                    			 currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessed() + 
+	                    			 " records out of " + getScheduler().getRunningJob().getTotalRecords() + 
+	                    			 " from repository " + getScheduler().getRunningJob().getJobName();
 	                    		 } else {
-	                    			 currentProcess = "Harvested " +  Scheduler.getRunningJob().getProcessedRecordCount() + " records from repository " + Scheduler.getRunningJob().getJobName();
+	                    			 currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessed() + 
+	                    			 " records from repository " + getScheduler().getRunningJob().getJobName();
 	                    		 }
 	                         } else {
-	                         	currentProcess = "Processed " +  Scheduler.getRunningJob().getProcessedRecordCount() + " records out of " + Scheduler.getRunningJob().getTotalRecordCount() + " through " + Scheduler.getRunningJob().getJobName();
+	                         	currentProcess = "Processed " +  getScheduler().getRunningJob().getRecordsProcessed() + 
+	                         	" records out of " + getScheduler().getRunningJob().getTotalRecords() + 
+	                         	" through " + getScheduler().getRunningJob().getJobName();
 	                         }
 	                    }
                 	}

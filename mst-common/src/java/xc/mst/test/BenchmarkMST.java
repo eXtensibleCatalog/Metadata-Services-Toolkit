@@ -17,11 +17,7 @@ import org.jconfig.ConfigurationManager;
 
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
-import xc.mst.harvester.HarvestRunner;
-import xc.mst.harvester.Hexception;
-import xc.mst.harvester.OAIErrorException;
 import xc.mst.scheduling.SchedulingException;
-import xc.mst.utils.MSTConfiguration;
 
 
 /**
@@ -65,7 +61,7 @@ public class BenchmarkMST
 	 *
 	 * @param args Not used
 	 */
-	public static void main(String[] args) throws SchedulingException, DataException, Hexception, OAIErrorException
+	public static void main(String[] args) throws SchedulingException, DataException
 	{
 		// Run the harvester on the OAI repository and report how long it took
 		benchmarkHarvester();
@@ -77,7 +73,7 @@ public class BenchmarkMST
 	/**
 	 * Runs the harvester on the OAI repository and report how long it took
 	 */
-	private static void benchmarkHarvester() throws SchedulingException, DataException, Hexception, OAIErrorException
+	private static void benchmarkHarvester() throws SchedulingException, DataException
 	{
 		/*
 		// Insert the user to which the provider will be assigned
@@ -100,9 +96,11 @@ public class BenchmarkMST
 		System.out.println(formatter.format(System.currentTimeMillis()) + " Starting harvester.");
 
 		// Construct the XC_Harvester object.  This will automatically run the harvester
-		HarvestRunner harvester = (HarvestRunner)MSTConfiguration.getBean("HarvestRunner");
+		/* TODO: BDA this is changed.  
+		HarvestRunner harvester = (HarvestRunner)MSTConfiguration.getInstance().getBean("HarvestRunner");
 		harvester.setScheduleId(1);//HarvestSchedule.getRunOnceScheduleId(provider.getProviderId()));
 		harvester.runHarvest();
+		*/
 
 		// Print the end time
 		System.out.println(formatter.format(System.currentTimeMillis()) + " Harvester finished.");

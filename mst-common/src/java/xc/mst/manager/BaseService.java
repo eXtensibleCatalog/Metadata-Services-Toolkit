@@ -8,6 +8,9 @@
   */
 package xc.mst.manager;
 
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
+
 import xc.mst.dao.emailconfig.EmailConfigDAO;
 import xc.mst.dao.harvest.HarvestDAO;
 import xc.mst.dao.harvest.HarvestRecordUtilDAO;
@@ -48,7 +51,7 @@ import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.ExpressionService;
 import xc.mst.manager.record.HoldingsService;
 import xc.mst.manager.record.ItemService;
-import xc.mst.manager.record.MSTSolrServer;
+import xc.mst.manager.record.MSTSolrService;
 import xc.mst.manager.record.ManifestationService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
@@ -62,10 +65,15 @@ import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
 import xc.mst.repo.RepositoryDAO;
+import xc.mst.repo.RepositoryService;
+import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 
 public class BaseService {
+
+	protected TransactionTemplate transactionTemplate;
+	protected MSTConfiguration config;
 
 	protected Util util = null;
 	protected EmailConfigDAO emailConfigDAO = null;
@@ -99,6 +107,14 @@ public class BaseService {
 	protected UserGroupUtilDAO userGroupUtilDAO = null;
 	protected RecordDAO recordDAO = null;
 	protected RepositoryDAO repositoryDAO = null;
+
+	public void setTransactionManager(PlatformTransactionManager transactionManager) {
+		this.transactionTemplate = new TransactionTemplate(transactionManager);
+	}
+
+	public void setConfig(MSTConfiguration config) {
+		this.config = config;
+	}
 	
 	public Util getUtil() {
 		return util;
@@ -365,69 +381,75 @@ public class BaseService {
 	}
 
 	public EmailConfigService getEmailConfigService() {
-		return (EmailConfigService)MSTConfiguration.getBean("EmailConfigService");
+		return (EmailConfigService)config.getBean("EmailConfigService");
 	}
 	public ScheduleService getScheduleService() {
-		return (ScheduleService)MSTConfiguration.getBean("ScheduleService");
+		return (ScheduleService)config.getBean("ScheduleService");
 	}
 	public LogService getLogService() {
-		return (LogService)MSTConfiguration.getBean("LogService");
+		return (LogService)config.getBean("LogService");
 	}
 	public JobService getJobService() {
-		return (JobService)MSTConfiguration.getBean("JobService");
+		return (JobService)config.getBean("JobService");
 	}
 	public ProcessingDirectiveService getProcessingDirectiveService() {
-		return (ProcessingDirectiveService)MSTConfiguration.getBean("ProcessingDirectiveService");
+		return (ProcessingDirectiveService)config.getBean("ProcessingDirectiveService");
 	}
 	public ServicesService getServicesService() {
-		return (ServicesService)MSTConfiguration.getBean("ServicesService");
+		return (ServicesService)config.getBean("ServicesService");
 	}
 	public BrowseRecordService getBrowseRecordService() {
-		return (BrowseRecordService)MSTConfiguration.getBean("BrowseRecordService");
+		return (BrowseRecordService)config.getBean("BrowseRecordService");
 	}
 	public ExpressionService getExpressionService() {
-		return (ExpressionService)MSTConfiguration.getBean("ExpressionService");
+		return (ExpressionService)config.getBean("ExpressionService");
 	}
 	public HoldingsService getHoldingsService() {
-		return (HoldingsService)MSTConfiguration.getBean("HoldingsService");
+		return (HoldingsService)config.getBean("HoldingsService");
 	}
 	public ItemService getItemService() {
-		return (ItemService)MSTConfiguration.getBean("ItemService");
+		return (ItemService)config.getBean("ItemService");
 	}
 	public ManifestationService getManifestationService() {
-		return (ManifestationService)MSTConfiguration.getBean("ManifestationService");
+		return (ManifestationService)config.getBean("ManifestationService");
 	}
 	public WorkService getWorkService() {
-		return (WorkService)MSTConfiguration.getBean("WorkService");
+		return (WorkService)config.getBean("WorkService");
 	}
 	public FormatService getFormatService() {
-		return (FormatService)MSTConfiguration.getBean("FormatService");
+		return (FormatService)config.getBean("FormatService");
 	}
 	public ProviderService getProviderService() {
-		return (ProviderService)MSTConfiguration.getBean("ProviderService");
+		return (ProviderService)config.getBean("ProviderService");
 	}
 	public SetService getSetService() {
-		return (SetService)MSTConfiguration.getBean("SetService");
+		return (SetService)config.getBean("SetService");
 	}
 	public GroupService getGroupService() {
-		return (GroupService)MSTConfiguration.getBean("GroupService");
+		return (GroupService)config.getBean("GroupService");
 	}
 	public PermissionService getPermissionService() {
-		return (PermissionService)MSTConfiguration.getBean("PermissionService");
+		return (PermissionService)config.getBean("PermissionService");
 	}
 	public ServerService getServerService() {
-		return (ServerService)MSTConfiguration.getBean("ServerService");
+		return (ServerService)config.getBean("ServerService");
 	}
 	public UserGroupUtilService getUserGroupUtilService() {
-		return (UserGroupUtilService)MSTConfiguration.getBean("UserGroupUtilService");
+		return (UserGroupUtilService)config.getBean("UserGroupUtilService");
 	}
 	public UserService getUserService() {
-		return (UserService)MSTConfiguration.getBean("UserService");
+		return (UserService)config.getBean("UserService");
 	}
 	public RecordService getRecordService() {
-		return (RecordService)MSTConfiguration.getBean("RecordService");
+		return (RecordService)config.getBean("RecordService");
 	}
-	public MSTSolrServer getMstSolrServer() {
-		return (MSTSolrServer)MSTConfiguration.getBean("MSTSolrServer");
+	public MSTSolrService getMSTSolrService() {
+		return (MSTSolrService)config.getBean("MSTSolrService");
+	}
+	public Scheduler getScheduler() {
+		return (Scheduler)config.getBean("Scheduler");
+	}
+	public RepositoryService getRepositoryService() {
+		return (RepositoryService)config.getBean("RepositoryService");
 	}
 }

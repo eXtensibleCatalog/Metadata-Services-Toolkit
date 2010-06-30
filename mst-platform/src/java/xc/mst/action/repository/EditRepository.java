@@ -19,7 +19,6 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.harvester.Hexception;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.utils.MSTConfiguration;
 
@@ -152,7 +151,7 @@ public class EditRepository extends BaseActionSupport
                                 provider.removeAllSets();
                                 provider.setLastValidationDate(new Date());
                                 getProviderService().updateProvider(provider);
-                                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
+                                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
                                 vr.validate(provider.getId());
                             }
                             else //just update Repository details without revalidation
@@ -188,7 +187,7 @@ public class EditRepository extends BaseActionSupport
                             provider.removeAllSets();
                             provider.setLastValidationDate(new Date());
                             getProviderService().updateProvider(provider);
-                            ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
+                            ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
                             vr.validate(provider.getId());
                         }
                         else
@@ -214,7 +213,7 @@ public class EditRepository extends BaseActionSupport
                     provider.removeAllSets();
                     provider.setLastValidationDate(new Date());
                     getProviderService().updateProvider(provider);
-                    ValidateRepository vr = (ValidateRepository)MSTConfiguration.getBean("ValidateRepository");
+                    ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
                     vr.validate(provider.getId());
                 }
                 else
@@ -230,13 +229,6 @@ public class EditRepository extends BaseActionSupport
             log.error(e.getMessage(),e);
             errorType = "error";
             this.addFieldError("dbConfigError","Unable to access the database to get Repository information. There may be problem with database configuration.");
-            return INPUT;
-        }
-        catch(Hexception e)
-        {
-            log.error(e.getMessage(),e);
-            errorType = "error";
-            this.addFieldError("dbConfigError","Unable to validate the repository information");
             return INPUT;
         }
     }

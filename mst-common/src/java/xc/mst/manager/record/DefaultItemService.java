@@ -19,7 +19,6 @@ import xc.mst.bo.record.Item;
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.index.ItemList;
 import xc.mst.utils.index.SolrIndexManager;
 
@@ -47,7 +46,7 @@ public class DefaultItemService extends ItemService
 
 		// Get the result of the query
 		SolrDocumentList doc = null;
-		SolrIndexManager sim = (SolrIndexManager)MSTConfiguration.getBean("SolrIndexManager");
+		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 		doc = sim.getDocumentList(query);
 
 		// Return null if we couldn't find the item with the correct XC item ID
@@ -68,7 +67,7 @@ public class DefaultItemService extends ItemService
 	@Override
 	public ItemList getByHoldingsExemplified(String holdingsExemplified) throws IndexException
 	{
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		String trait = recordService.escapeString(Item.TRAIT_HOLDINGS_EXEMPLIFIED + ":" + holdingsExemplified);
 
 		if(log.isDebugEnabled())
@@ -116,7 +115,7 @@ public class DefaultItemService extends ItemService
 	public Item getItemFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
 	{
 		// Create a Item object to store the result
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		Item item = Item.buildItemFromRecord(recordService.getRecordFromDocument(doc));
 
 		// Return the item we parsed from the document
@@ -127,7 +126,7 @@ public class DefaultItemService extends ItemService
 	public Item getBasicItemFromDocument(SolrDocument doc)
 	{
 		// Create a Item object to store the result
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		Item item = Item.buildItemFromRecord(recordService.getBasicRecordFromDocument(doc));
 
 		// Return the item we parsed from the document
@@ -138,7 +137,7 @@ public class DefaultItemService extends ItemService
 	public SolrInputDocument setFieldsOnDocument(Item item, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		// Set the fields on the record
-		RecordService recordService = (RecordService)MSTConfiguration.getBean("RecordService");
+		RecordService recordService = (RecordService)config.getBean("RecordService");
 		return recordService.setFieldsOnDocument(item, doc, generateNewId);
 	} // end method setFieldsOnDocument(Item, Document, boolean)
 } // end class DefaultItemService

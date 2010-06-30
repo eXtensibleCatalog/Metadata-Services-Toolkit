@@ -20,7 +20,6 @@ import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.dao.DataException;
 import xc.mst.manager.IndexException;
-import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 
@@ -53,7 +52,8 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 
 		// Get the queue size and pool size for threads
 		int poolSize = Integer.parseInt(
-				MSTConfiguration.getProperty("SOLRIndexerMultiThreadCount")) == 0 ? 20 : Integer.parseInt(MSTConfiguration.getProperty("SOLRIndexerMultiThreadCount")) ;
+				MSTConfiguration.getInstance().getProperty("SOLRIndexerMultiThreadCount")) == 0 ? 20 : 
+					Integer.parseInt(MSTConfiguration.getInstance().getProperty("SOLRIndexerMultiThreadCount")) ;
 
 
 		log.info("SolrIndexManager Thread Pool Initialized");
@@ -78,7 +78,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 		log.debug("Add index to Solr - begin");
 
 		// Check if solr server is null
-		if (getMstSolrServer().getServer() == null)
+		if (getMSTSolrService().getServer() == null)
 		{
 			log.error("Solr server is null");
 
@@ -152,7 +152,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 		{
 			try 
 			{
-				getMstSolrServer().getServer() .add(doc);
+				getMSTSolrService().getServer() .add(doc);
 			}
 			catch (SolrServerException se)
 			{
@@ -165,7 +165,7 @@ public class ThreadedSolrIndexManager extends SolrIndexManager
 				try
 				{
 					getLogDAO().update(logObj);
-					Scheduler.getRunningJob().cancel();
+					getScheduler().getRunningJob().cancel();
 				}
 				catch(DataException e)
 				{
