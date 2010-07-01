@@ -118,6 +118,7 @@ public class NormalizationService extends GenericMetadataService {
 		// Initialize the XC format
 		try  {
 			marcxmlFormat = getFormatService().getFormatByName("marcxml");
+			loadConfiguration(getUtil().slurp("service.xccfg", getClass().getClassLoader()));
 		} catch (DatabaseConfigException e) {
 			LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
 		}
@@ -436,7 +437,6 @@ public class NormalizationService extends GenericMetadataService {
 		catch(Exception e)
 		{
 			LOG.error("An error occurred while normalizing the record with ID " + record.getId(), e);
-			logError("An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
 
 			if(LOG.isDebugEnabled())
 				LOG.debug("Adding errors to the record.");

@@ -2,7 +2,6 @@ package xc.mst.service.impl.test;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -13,7 +12,6 @@ import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
-import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.common.test.BaseTest;
 import xc.mst.constants.Status;
@@ -24,14 +22,57 @@ import xc.mst.services.MetadataServiceManager;
 import xc.mst.services.impl.service.SolrIndexService;
 import xc.mst.utils.MSTConfiguration;
 
-public class StartToFinishTest extends BaseTest {
+public abstract class StartToFinishTest extends BaseTest {
 	
 	private static final Logger LOG = Logger.getLogger(StartToFinishTest.class);
 	
 	protected Provider provider = null;
-	protected String serviceName = "example";
-	protected String repoName = "Test Repository";
 	
+	protected abstract String getServiceName();
+	protected abstract String getRepoName();
+	protected abstract String getProviderUrl();
+	protected abstract Format getIncomingFormat() throws Exception;
+	protected void testProvider() throws Exception {}
+	protected abstract void finalTest();
+	
+	
+	protected Format getDCFormat() throws Exception {
+		return getFormat(new String[] {"oai_dc", "http://www.openarchives.org/OAI/2.0/oai_dc/", "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"});
+	}
+	
+	protected Format getOaiMarcFormat() throws Exception {
+		return getFormat(new String[] {"oai_marc", "http://www.openarchives.org/OAI/1.1/oai_marc", "http://www.openarchives.org/OAI/1.1/oai_marc.xsd"});
+	}
+
+	protected Format getMarcXmlFormat() throws Exception {
+		return getFormat(new String[] {"marcxml", "http://www.loc.gov/MARC21/slim", "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd"});
+	}
+
+	protected Format getRfc1807Format() throws Exception {
+		return getFormat(new String[] {"rfc1807", "http://info.internet.isi.edu:80/in-notes/rfc/files/rfc1807.txt", "http://www.openarchives.org/OAI/1.1/rfc1807.xsd"});
+	}
+
+	protected Format getModsFormat() throws Exception {
+		return getFormat(new String[] {"mods", "http://www.loc.gov/mods/v3", "http://www.loc.gov/standards/mods/v3/mods-3-0.xsd"});
+	}
+	
+	protected Format getHtmlFormat() throws Exception {
+		return getFormat(new String[] {"html", "http://www.w3.org/TR/REC-html40", "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd"});
+	}
+
+	protected Format getFormat(String[] arr) throws Exception {
+		Format f = formatDAO.getByName(arr[0]);
+		if (f == null) {
+			f = new Format();
+			f.setName(arr[0]);
+			f.setNamespace(arr[1]);
+			f.setSchemaLocation(arr[2]);
+			formatDAO.insert(f);
+			f = formatDAO.getByName(arr[0]);
+		}
+		return f;
+	}
+
 	@Test
 	public void startToFinish() throws Exception  {
 		printClassPath();
@@ -55,18 +96,13 @@ public class StartToFinishTest extends BaseTest {
 		LOG.debug("after indexHarvestedRecords");
 		indexServicedRecords();
 		LOG.debug("after indexServicedRecords");
-		
-		Record r = getRepositoryService().getRecord(1999);
-		assert r.getPredecessors().get(0).getId() == 999;
-		
-		r = getRepositoryService().getRecord(999);
-		assert r.getSuccessors().get(0).getId() == 1999;
+
 	}
 	
 	public void dropOldSchemas() {
 		try {
-			repositoryDAO.deleteSchema(repoName);
-			repositoryDAO.deleteSchema(serviceName);
+			repositoryDAO.deleteSchema(getRepoName());
+			repositoryDAO.deleteSchema(getServiceName());
 		} catch (Throwable t) {
 			
 		}
@@ -77,9 +113,9 @@ public class StartToFinishTest extends BaseTest {
 		   
 		provider = new Provider();
 
-		provider.setName(repoName);
+		provider.setName(getRepoName());
 		provider.setDescription("Repository used in TestNG tests");
-		provider.setOaiProviderUrl("http://geolib.geo.auth.gr/digeo/index.php/index/oai");
+		provider.setOaiProviderUrl(getProviderUrl());
 		provider.setCreatedAt(new java.util.Date());
 		providerService.insertProvider(provider);
 		validateRepository.validate(provider.getId());
@@ -87,68 +123,37 @@ public class StartToFinishTest extends BaseTest {
 		Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(provider.getName());
 		
-		// Make sure we got the correct sets for the repository
-		assert setDAO.getSetsForProvider(provider.getId()).size() == 5 : "Expected 5 sets, but found " + setDAO.getSetsForProvider(provider.getId()).size() + " sets.";
-
-		// TODO:  Make the following test for sets work without encoding problems.
-		
-		//List<Set> sets = new DefaultSetDAO().getSetsForProvider(provider.getId());
-		//java.util.Set<String> setNames = new HashSet<String>();
-		//for(Set set : sets)
-			//setNames.add(set.getDisplayName());
-		
-		//assert setNames.contains("\u00ce\u0178\u00cf\ufffd\u00cf\u2026\u00ce\u00ba\u00cf\u201e\u00cf\u0152\u00cf\u201a \u00ce\u00a0\u00ce\u00bb\u00ce\u00bf\u00cf\ufffd\u00cf\u201e\u00ce\u00bf\u00cf\u201a") : "The set \u00ce\u0178\u00cf\ufffd\u00cf\u2026\u00ce\u00ba\u00cf\u201e\u00cf\u0152\u00cf\u201a \u00ce\u00a0\u00ce\u00bb\u00ce\u00bf\u00cf\ufffd\u00cf\u201e\u00ce\u00bf\u00cf\u201a was expected but not found.";
-		//assert setNames.contains("\u00ce\u2020\u00cf\ufffd\u00ce\u00b8\u00cf\ufffd\u00ce\u00b1") : "The set \u00ce\u2020\u00cf\ufffd\u00ce\u00b8\u00cf\ufffd\u00ce\u00b1 was expected but not found.";
-		//assert setNames.contains("\u00ce\u201d\u00ce\u00b5\u00ce\u00bb\u00cf\u201e\u00ce\u00af\u00ce\u00bf\u00ce\u00bd \u00cf\u201e\u00ce\u00b7\u00cf\u201a \u00ce\u2022\u00ce\u00bb\u00ce\u00bb\u00ce\u00b7\u00ce\u00bd\u00ce\u00b9\u00ce\u00ba\u00ce\u00ae\u00cf\u201a \u00ce\u201c\u00ce\u00b5\u00cf\u2030\u00ce\u00bb\u00ce\u00bf\u00ce\u00b3\u00ce\u00b9\u00ce\u00ba\u00ce\u00ae\u00cf\u201a \u00ce\u2022\u00cf\u201e\u00ce\u00b1\u00ce\u00b9\u00cf\ufffd\u00ce\u00af\u00ce\u00b1\u00cf\u201a") : "The set \u00ce\u201d\u00ce\u00b5\u00ce\u00bb\u00cf\u201e\u00ce\u00af\u00ce\u00bf\u00ce\u00bd \u00cf\u201e\u00ce\u00b7\u00cf\u201a \u00ce\u2022\u00ce\u00bb\u00ce\u00bb\u00ce\u00b7\u00ce\u00bd\u00ce\u00b9\u00ce\u00ba\u00ce\u00ae\u00cf\u201a \u00ce\u201c\u00ce\u00b5\u00cf\u2030\u00ce\u00bb\u00ce\u00bf\u00ce\u00b3\u00ce\u00b9\u00ce\u00ba\u00ce\u00ae\u00cf\u201a \u00ce\u2022\u00cf\u201e\u00ce\u00b1\u00ce\u00b9\u00cf\ufffd\u00ce\u00af\u00ce\u00b1\u00cf\u201a was expected but not found.";
-		//assert setNames.contains("\u00ce\u2020\u00cf\ufffd\u00ce\u00b8\u00cf\ufffd\u00ce\u00b1") : "The set \u00ce\u2020\u00cf\ufffd\u00ce\u00b8\u00cf\ufffd\u00ce\u00b1 was expected but not found.";
-		//assert setNames.contains("\u00ce\u2022\u00cf\u2026\u00cf\ufffd\u00ce\u00b5\u00cf\u201e\u00ce\u00ae\u00cf\ufffd\u00ce\u00b9\u00ce\u00b1") : "The set \u00ce\u2022\u00cf\u2026\u00cf\ufffd\u00ce\u00b5\u00cf\u201e\u00ce\u00ae\u00cf\ufffd\u00ce\u00b9\u00ce\u00b1 was expected but not found.";
-		
-		// Make sure we got the correct formats for the repository
-		List<Format> formats = formatDAO.getFormatsForProvider(provider.getId());
-		java.util.Set<String> formatNames = new HashSet<String>();
-		for(Format format : formats)
-			formatNames.add(format.getName());
-		
-		assert formatNames.contains("oai_dc") : "The format oai_dc was expected but not found.";
-		assert formatNames.contains("oai_marc") : "The format oai_marc was expected but not found.";
-		assert formatNames.contains("marcxml") : "The format marcxml was expected but not found.";
-		assert formatNames.contains("rfc1807") : "The format rfc1807 was expected but not found.";
+        testProvider();
 	}
 	
 	public void installService() throws Exception {
-		getServicesService().addNewService(serviceName);
+		getServicesService().addNewService(getServiceName());
 	}
 
 	public void configureProcessingRules() throws Exception {
-		Format f = new Format();
-		f.setName("oai_dc");
-		f.setNamespace("http://www.openarchives.org/OAI/2.0/oai_dc/");
-		f.setSchemaLocation("http://www.openarchives.org/OAI/2.0/oai_dc.xsd");
-		formatDAO.insert(f);
-		
 		Set s = new Set();
-		s.setDisplayName("Test-Repository");
-		s.setSetSpec("Test-Repository");
+		s.setDisplayName(getRepoName());
+		s.setSetSpec(getRepoName());
 		s.setIsProviderSet(false);
 		s.setIsRecordSet(true);
 		setDAO.insert(s);
 		
 		s = new Set();
-		s.setDisplayName("example-out");
-		s.setSetSpec("example-out");
+		s.setDisplayName(getServiceName()+"-out");
+		s.setSetSpec(getServiceName()+"-out");
 		s.setIsProviderSet(false);
 		s.setIsRecordSet(true);
 		setDAO.insert(s);
 		
-		Service service = getServicesService().getServiceByName(serviceName);
+		Service service = getServicesService().getServiceByName(getServiceName());
 		ProcessingDirective pd = new ProcessingDirective();
 		pd.setService(service);
 		pd.setSourceProvider(provider);
 		List<Format> formats = new ArrayList<Format>();
-		formats.add(formatDAO.getByName("oai_dc"));
+		formats.add(getIncomingFormat());
 		pd.setTriggeringFormats(formats);
 		List<Set> sets = new ArrayList<Set>();
-		sets.add(setDAO.getBySetSpec("Test-Repository"));
+		sets.add(setDAO.getBySetSpec(getRepoName()));
 		pd.setTriggeringSets(sets);
 		pd.setOutputSet(s);
 		processingDirectiveDAO.insert(pd);
@@ -160,7 +165,7 @@ public class StartToFinishTest extends BaseTest {
         schedule.setScheduleName("Test Schedule Name");
         schedule.setDayOfWeek(nowCal.get(Calendar.DAY_OF_WEEK));
 
-        schedule.addFormat(formatDAO.getByName("oai_dc"));
+        schedule.addFormat(getIncomingFormat());
         
         schedule.setHour(nowCal.get(Calendar.HOUR_OF_DAY));
         schedule.setId(111);

@@ -130,19 +130,9 @@
 				<fileset dir="${ms.example}">
 					<include name="conf/*" />
 					<include name="build.xml" />
+					<include name="build.properties" />
 					<include name="ivysettings.xml" />
 					<include name="ivy.xml" />
-					<!--
-					<include name="**/*.xml" />
-					<include name="**/*.properties" />
-					<exclude name="**/*custom*" />
-					<exclude name=".project" />
-					<exclude name=".classpath" />
-					<exclude name="test/**/*" />
-					<exclude name="bin/**/*" />
-					<exclude name="build/**/*" />
-					<exclude name="ivy" />
-					-->
 				</fileset>
 			</macro-file-set>
 		</copy-to-custom-services>

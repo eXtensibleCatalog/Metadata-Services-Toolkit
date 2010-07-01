@@ -393,7 +393,9 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 
         // If the record contained a resumption token, store that resumption token
         Element resumptionEl = listRecordsEl.getChild("resumptionToken", root.getNamespace());
-        resumption = resumptionEl.getText();
+        if (resumptionEl != null) {
+        	resumption = resumptionEl.getText();
+        }
         log.debug("resumption: "+resumption);
 		if (!StringUtils.isEmpty(resumption)) {
 			totalRecords = Integer.parseInt(resumptionEl.getAttributeValue("completeListSize"));
