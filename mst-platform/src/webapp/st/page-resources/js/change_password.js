@@ -52,14 +52,14 @@ YAHOO.xc.mst.changePassword = {
 			}
 		}			
 
-		document.changePasswordForm.action= basePath + 'changePassword.action';
+		document.changePasswordForm.action=  'changePassword.action';
 		document.changePasswordForm.submit();
 	
 	},
 
 	cancel : function()
 	{
-		document.changePasswordForm.action= basePath + 'viewMyAccount.action';
+		document.changePasswordForm.action=  'viewMyAccount.action';
 		document.changePasswordForm.submit();
 	
 	}

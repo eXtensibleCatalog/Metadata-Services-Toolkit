@@ -34,21 +34,21 @@ YAHOO.xc.mst.account = {
 
 		}
 
-		document.myAccountForm.action= basePath + 'saveMyAccount.action';
+		document.myAccountForm.action=  'saveMyAccount.action';
 		document.myAccountForm.submit();
 	
 	},
 
 	cancel : function()
 	{
-		document.myAccountForm.action= basePath + 'allRepository.action';
+		document.myAccountForm.action=  'allRepository.action';
 		document.myAccountForm.submit();
 	
 	},
 	
 	changePassword : function(userId)
 	{
-		document.myAccountForm.action= basePath + 'viewChangePassword.action';
+		document.myAccountForm.action=  'viewChangePassword.action';
 		document.myAccountForm.submit();
 	
 	},	

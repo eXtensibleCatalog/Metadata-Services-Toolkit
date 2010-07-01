@@ -29,7 +29,6 @@
 <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
 
 <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
-<SCRIPT LANGUAGE="JavaScript" SRC="pages/js/base_path.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
