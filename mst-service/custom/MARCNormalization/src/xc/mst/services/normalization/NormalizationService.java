@@ -9,31 +9,22 @@
 
 package xc.mst.services.normalization;
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.Namespace;
-import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
-import org.xml.sax.InputSource;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.repository.FormatService;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.services.impl.GenericMetadataService;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
-import xc.mst.utils.index.RecordList;
 
 /**
  * A Metadata Service which for each unprocessed marcxml record creates a new
@@ -41,218 +32,146 @@ import xc.mst.utils.index.RecordList;
  *
  * @author Eric Osisek
  */
-public class NormalizationService extends GenericMetadataService
-{
-	/**
-	 * Builds the XML Document based on the record's OAI XML
-	 */
-	private SAXBuilder builder = new SAXBuilder();
+public class NormalizationService extends GenericMetadataService {
 
-	/**
-	 * The namespace for MARCXML
-	 */
-	private Namespace marcNamespace = Namespace.getNamespace("marc", "http://www.loc.gov/MARC21/slim");
+	protected Namespace marcNamespace = Namespace.getNamespace("marc", "http://www.loc.gov/MARC21/slim");
 
 	/**
 	 * The Properties file with information on which Normalization steps to run
 	 */
-	private Properties enabledSteps = null;
+	protected Properties enabledSteps = null;
 
 	/**
 	 * The Properties file with the location name mappings
 	 */
-    private Properties locationNameProperties = null;
+	protected Properties locationNameProperties = null;
     
 	/**
 	 * The Properties file with the location limit name mappings
 	 */
-    private Properties locationLimitNameProperties = null;
+	protected Properties locationLimitNameProperties = null;
 
     /**
      * The Properties file with the DCMI type information for the leader 06
      */
-    private Properties dcmiType06Properties = null;
+	protected Properties dcmiType06Properties = null;
 
     /**
      * The Properties file with the MARC Vocabulary information for the leader 06
      */
-    private Properties leader06MarcVocabProperties = null;
+	protected Properties leader06MarcVocabProperties = null;
 
     /**
      * The Properties file with the vocab information for the leader 06
      */
-    private Properties vocab06Properties = null;
+	protected Properties vocab06Properties = null;
 
     /**
      * The Properties file with the mode of issuance information in it
      */
-    private Properties modeOfIssuanceProperties = null;
+	protected Properties modeOfIssuanceProperties = null;
 
     /**
      * The Properties file with the DCMI type information for the 00 offset 07
      */
-    private Properties dcmiType0007Properties = null;
+	protected Properties dcmiType0007Properties = null;
 
     /**
      * The Properties file with the vocab information for the 007 offset 00
      */
-    private Properties vocab007Properties = null;
+	protected Properties vocab007Properties = null;
 
     /**
      * The Properties file with the smd type information for the 007 offset 00
      */
-    private Properties smdType007Properties = null;
+	protected Properties smdType007Properties = null;
 
     /**
      * The Properties file with the language term information
      */
-    private Properties languageTermProperties = null;
+	protected Properties languageTermProperties = null;
 
     /**
      * The Properties file with the audience information for the 008 offset 22
      */
-    private Properties audienceFrom008Properties = null;
+	protected Properties audienceFrom008Properties = null;
 
     /**
 	 * The output format (marcxml) for records processed from this service
 	 */
-	private Format marcxmlFormat = null;
+	protected Format marcxmlFormat = null;
 	
 	/**
 	 * A list of errors to add to the record currently being processed
 	 */
-	private List<String> errors = new ArrayList<String>();
+	protected List<String> errors = new ArrayList<String>();
 
 	/**
 	 * A list of errors to add to the output record
 	 */
-	private List<String> outputRecordErrors = new ArrayList<String>();
+	protected List<String> outputRecordErrors = new ArrayList<String>();
 
     /**
 	 * Construct a NormalizationService Object
 	 */
-	public NormalizationService()
-	{
+	public void init() {
 		// Initialize the XC format
-		try 
-		{
-			FormatService formatService = (FormatService)MSTConfiguration.getBean("FormatService");
-			marcxmlFormat = formatService.getFormatByName("marcxml");
-		} 
-		catch (DatabaseConfigException e) 
-		{
+		try  {
+			marcxmlFormat = getFormatService().getFormatByName("marcxml");
+		} catch (DatabaseConfigException e) {
 			LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
 		}
 	}
 
 	@Override
-	public void  processRecord(Record processMe) throws Exception {
+	public List<Record> process(Record recordIn) {
 		TimingLogger.start("processRecord");
+		try {
 		
-		// If the record was deleted, delete and reprocess all records that were processed from it
-		if(processMe.getDeleted())
-		{
-			TimingLogger.start("processRecord.getDeleted");
-			List<Record> successors = getRecordService().getSuccessorsCreatedByServiceId(processMe.getId(), service.getId());
-
-			// If there are successors then the record exist and needs to be deleted. Since we are
-			// deleting the record, we need to decrement the count.
-			if (successors != null && successors.size() > 0) {
-				inputRecordCount--;
-			}
-			
-			// Handle reprocessing of successors
-			for(Record successor : successors){
-				
-				// Set the successors ad deleted
-				successor.setDeleted(true);
-			
-				// Schedule the services
-				reprocessRecord(successor);
-				getRecordService().update(successor);
-			}
-			
-			// Mark the record as having been processed by this service
-			processMe.addProcessedByService(service);
-			processMe.removeInputForService(service);
-			getRecordService().update(processMe);
-			TimingLogger.stop("processRecord.getDeleted");
-		} 
-
-		// Get the results of processing the record
-		TimingLogger.start("processRecord.convertRecord");
-		List<Record> results = convertRecord(processMe);
-		TimingLogger.stop("processRecord.convertRecord");
-		
-		boolean updatedInputRecord = false;
-		for(Record outgoingRecord : results)
-		{
-			// Mark the output record as a successor of the input record
-			if(!processMe.getSuccessors().contains(outgoingRecord))
-				processMe.addSuccessor(outgoingRecord);
-
-			// Mark the input record as a predecessor of the output record
-			outgoingRecord.addProcessedFrom(processMe);
-			
-			// Mark the record as not coming from a provider
-			outgoingRecord.setProvider(null);
-
-			// Add all sets the outgoing record belongs to to the service's list of output sets
-			for(Set outputSet : outgoingRecord.getSets())
-				service.addOutputSet(outputSet);
-
-			if(outputSet != null)
-				outgoingRecord.addSet(outputSet);
-
-			// Check whether or not this record already exists in the database
-			TimingLogger.start("processRecord.getByOaiIdentifierAndService.getByOaiIdentifierAndService");
-			Record oldRecord = getRecordService().getByOaiIdentifierAndService(outgoingRecord.getOaiIdentifier(), service.getId());
-			TimingLogger.stop("processRecord.getByOaiIdentifierAndService.getByOaiIdentifierAndService");
-
-			TimingLogger.start("processRecord.insert record");
-			// If the current record is a new record, insert it
-			if(oldRecord == null) {
-				insertNewRecord(outgoingRecord);
-			}
-			// Otherwise we've seen the record before.  Update it as appropriate
-			// If outgoingRecord's deleted flag is set to true, the record will
-			// be deleted.
-			else {
-				updateExistingRecord(outgoingRecord, oldRecord);
-				
-				// If output record exist then it means that the incoming record is an updated record
-				// So we set updatedInputRecord to true. This will be used to determine whether the input
-				// record is new record or updated record.
-				updatedInputRecord = true;
-			}
-			TimingLogger.stop("processRecord.insert record");
-		} // end loop over processed records
-		
-		// Mark the input record as done(processed by this service) only when its results are not empty.
-		// If results are empty then it means some exception occurred and no output records created
-		if (results.size() > 0) { 
-			// Mark the record as having been processed by this service
-			TimingLogger.start("processRecord.update record");
-			processMe.addProcessedByService(service);
-			processMe.removeInputForService(service);
-			getRecordService().update(processMe);
-			TimingLogger.stop("processRecord.update record");
-		} else if (!processMe.getDeleted()) {
-			unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
-		}
-		
-		// If the input record is a new record then increment the processed record count
-		if (!updatedInputRecord  && !processMe.getDeleted() && results.size() > 0) {
-			inputRecordCount++;
-		}
-		
-		processedRecordCount++;
+			// If the record was deleted, delete and reprocess all records that were processed from it
+			if(recordIn.getDeleted()) {
+				TimingLogger.start("processRecord.getDeleted");
+				List<Record> successors = getRecordService().getSuccessorsCreatedByServiceId(recordIn.getId(), service.getId());
 	
-		TimingLogger.stop("processRecord");
+				// If there are successors then the record exist and needs to be deleted. Since we are
+				// deleting the record, we need to decrement the count.
+				if (successors != null && successors.size() > 0) {
+					inputRecordCount--;
+				}
+				
+				// Handle reprocessing of successors
+				for(Record successor : successors){
+					
+					// Set the successors ad deleted
+					successor.setDeleted(true);
+				
+					// Schedule the services
+					reprocessRecord(successor);
+					getRecordService().update(successor);
+				}
+				
+				// Mark the record as having been processed by this service
+				recordIn.addProcessedByService(service);
+				recordIn.removeInputForService(service);
+				getRecordService().update(recordIn);
+				TimingLogger.stop("processRecord.getDeleted");
+			} 
+	
+			// Get the results of processing the record
+			TimingLogger.start("processRecord.convertRecord");
+			//TODO: make sure that recordIn is used to create the successors
+			List<Record> results = convertRecord(recordIn);
+			TimingLogger.stop("processRecord.convertRecord");
+			
+			TimingLogger.stop("processRecord");
+			return results;
+		} catch (Throwable t) {
+			getUtil().throwIt(t);
+		}
+		return null;
 	}
 	
-	private List<Record> convertRecord(Record record)
-	{
+	private List<Record> convertRecord(Record record) {
 		
 		// If the record was deleted, don't process it
 		if(record.getDeleted())
@@ -265,44 +184,17 @@ public class NormalizationService extends GenericMetadataService
 		// The list of records resulting from processing the incoming record
 		ArrayList<Record> results = new ArrayList<Record>();
 		
-		try
-		{
+		try {
 			if(LOG.isDebugEnabled())
 				LOG.debug("Normalizing record with ID " + record.getId() + ".");
 
 			// The XML after normalizing the record
-			Document marcXml = null;
+			Element marcXml = null;
 
-			// Parse the XML from the record
-			try
-			{
-				if(LOG.isDebugEnabled())
-					LOG.debug("Parsing the record's XML into a Document Object.");
-
-				TimingLogger.start("create dom");
-				marcXml = builder.build(new InputSource(new StringReader(record.getOaiXml())));
-				TimingLogger.stop("create dom");
-			}
-			catch(IOException e)
-			{
-				LOG.error("An error occurred while parsing the record's XML.", e);
-
-				logWarning("An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
-				
-				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
-
-				return results;
-			}
-			catch(JDOMException e)
-			{
-				LOG.error("An error occurred while parsing the record's XML.\n" + record.getOaiXml(), e);
-
-				logWarning("An XML parse error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ".");
-				
-				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
-
-				return results;
-			}
+			TimingLogger.start("create dom");
+			record.setMode(Record.JDOM_MODE);
+			marcXml = record.getOaiXmlEl();
+			TimingLogger.stop("create dom");
 
 			// Create a MarcXmlManagerForNormalizationService for the record
 			MarcXmlManager normalizedXml = new MarcXmlManager(marcXml, getOrganizationCode());
@@ -444,7 +336,9 @@ public class NormalizationService extends GenericMetadataService
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to update them
 			// instead of inserting a new Record
-			RecordList existingRecords = getRecordService().getSuccessorsCreatedByServiceIdIncludingDeletedRecords(record.getId(), service.getId());
+			//TODO - BDA
+			//List<Record> existingRecords = getRecordService().getSuccessorsCreatedByServiceIdIncludingDeletedRecords(record.getId(), service.getId());
+			List<Record> existingRecords = null;
 			
 			// If there was already a processed record for the record we just processed, update it
 			if(existingRecords != null && existingRecords.size() > 0)
@@ -479,10 +373,9 @@ public class NormalizationService extends GenericMetadataService
 					LOG.debug("Inserting the record since it was not processed from an older version of the record we just processed.");
 
 				// Create the normalized record
-				Record normalizedRecord = Record.copyRecord(record);
-				normalizedRecord.setOaiXml((new XMLOutputter()).outputString(normalizedXml.getModifiedMarcXml()));
+				Record normalizedRecord = getRecordService().createSuccessor(record, getService());
+				normalizedRecord.setOaiXmlEl(record.getOaiXmlEl());
 				normalizedRecord.setFormat(marcxmlFormat);
-				normalizedRecord.setOaiIdentifier(getNextOaiId());
 
 				// Set the datestamp, and header to null so they get computed when we insert the normalized record
 				normalizedRecord.setOaiDatestamp(null);
@@ -502,30 +395,24 @@ public class NormalizationService extends GenericMetadataService
 				String setName = null;
 
 				// Setup the setSpec and description based on the leader 06
-				if("acdefgijkmoprt".contains(""+leader06))
-				{
+				if("acdefgijkmoprt".contains(""+leader06)) {
 					setSpec = "MARCXMLbibliographic";
 					setName = "MARCXML Bibliographic Records";
 					setDescription = "A set of all MARCXML Bibliographic records in the repository.";
 					normalizedRecord.setType("MARC-Bib");
-				}
-				else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y')
-				{
+				} else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
 					setSpec = "MARCXMLholding";
 					setName = "MARCXML Holding Records";
 					setDescription = "A set of all MARCXML Holding records in the repository.";
 					normalizedRecord.setType("MARC-Holding");
 					
-				}
-				else if(leader06 == 'z')
-				{
+				} else if(leader06 == 'z') {
 					setSpec = "MARCXMLauthority";
 					setName = "MARCXML Authority Records";
 					setDescription = "A set of all MARCXML Authority records in the repository.";
 				}
 				
-				if(setSpec != null)
-				{
+				if(setSpec != null) {
 					// Get the set for the provider
 					Set recordTypeSet = getSetService().getSetBySetSpec(setSpec);
 					
@@ -2406,7 +2293,6 @@ public class NormalizationService extends GenericMetadataService
 	}
 	
 	protected String getOrganizationCode() {
-	
 		return enabledSteps.getProperty("OrganizationCode");
 	}
 	

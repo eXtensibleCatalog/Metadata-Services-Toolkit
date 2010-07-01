@@ -85,6 +85,10 @@ public class DefaultRecordService extends RecordService
 		getRepositoryDAO().injectId(rec);
 		return rec;
 	}
+	
+	public void injectNewId(Record r) {
+		getRepositoryDAO().injectId(r);
+	}
 
 	public Record createSuccessor(Record pred, Service s) {
 		Record succ = new Record();

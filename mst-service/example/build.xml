@@ -204,13 +204,6 @@
 		</sql>
 	</target>
 
-	<target name="testy">
-		<echo>
-			test.folder: ${test.folder}
-			test.file: ${test.file}
-		</echo>
-	</target>
-
 	<target name="unzip-base-tests">
 		<echo>build.test.classes: ${build.test.classes}</echo>
 		<unzip dest="${build.test.classes}">

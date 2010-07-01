@@ -866,23 +866,27 @@ public class Record {
 	 * @param otherRecord The record we're copying fields from
 	 * @return A record identical to otherRecord except that the record ID is -1.
 	 */
-	public static Record copyRecord(Record otherRecord)
-	{
+	public static Record copyRecord(Record otherRecord) {
 		// The record we'll be returning
 		Record record = new Record();
 
 		// Set all the fields on the new record to match the fields on the other record
 		// except for the record ID
-		record.setCreatedAt(otherRecord.getCreatedAt());
-		record.setDeleted(otherRecord.getDeleted());
+		//record.setCreatedAt(otherRecord.getCreatedAt());
+		//record.setDeleted(otherRecord.getDeleted());
 		record.setFormat(otherRecord.getFormat());
-		record.setOaiDatestamp(otherRecord.getOaiDatestamp());
-		record.setOaiHeader(otherRecord.getOaiHeader());
-		record.setOaiIdentifier(otherRecord.getOaiIdentifier());
-		record.setOaiXml(otherRecord.getOaiXml());
-		record.setProvider(otherRecord.getProvider());
-		record.setService(otherRecord.getService());
-		record.setUpdatedAt(otherRecord.getUpdatedAt());
+		//record.setOaiDatestamp(otherRecord.getOaiDatestamp());
+		//record.setOaiHeader(otherRecord.getOaiHeader());
+		//record.setOaiIdentifier(otherRecord.getOaiIdentifier());
+		if (Record.JDOM_MODE.equals(otherRecord.getMode())) {
+			record.setOaiXmlEl(otherRecord.getOaiXmlEl());
+		} else {
+			record.setOaiXml(otherRecord.getOaiXml());
+		}
+		
+		//record.setProvider(otherRecord.getProvider());
+		//record.setService(otherRecord.getService());
+		//record.setUpdatedAt(otherRecord.getUpdatedAt());
 
 		// Return the copied record
 		return record;
