@@ -235,6 +235,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 
 				String verb = "ListRecords";
 				request = baseURL;
+				
+				String baseRequest = null;
 
 				// If this is the first request, setup a ListRecords request with the
 				// correct metadataPrefix.  If we are supposed harvest a specific set
@@ -245,6 +247,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 
 					if (setSpec != null && setSpec.length() > 0)
 						request += "&set=" + setSpec;
+					
+					baseRequest = request;
 
 					//TODO check harvest schedule
 					Date from = scheduleStep.getLastRan();
@@ -252,6 +256,9 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 						request += "&from=" + UTC_FORMATTER.print(from.getTime()) +
 							"&until=" + UTC_FORMATTER.print(startDate.getTime());
 					}
+					
+					harvestSchedule.setRequest(baseRequest);
+					getHarvestScheduleDAO().update(harvestSchedule, false);
 				} else {
 					try {
 						resumptionToken = URLEncoder.encode(resumptionToken, "utf-8");

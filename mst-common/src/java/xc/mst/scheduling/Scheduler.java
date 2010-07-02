@@ -185,6 +185,7 @@ public class Scheduler extends BaseService implements Runnable {
 							HarvestManager hm = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
 							hm.setHarvestSchedule(jobToStart.getHarvestSchedule());
 							runningJob.setWorkDelegate(hm);
+							runningJob.type = Constants.THREAD_REPOSITORY;
 							/*
 							HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
 							harvestThread.setHarvestScheduleId(jobToStart.getHarvestSchedule().getId());
@@ -211,6 +212,7 @@ public class Scheduler extends BaseService implements Runnable {
 							msm.setIncomingRepository(incomingRepo);
 							msm.setTriggeringFormats(jobToStart.getProcessingDirective().getTriggeringFormats());
 							msm.setTriggeringSets(jobToStart.getProcessingDirective().getTriggeringSets());
+							runningJob.type = Constants.THREAD_SERVICE;
 							/*
 							TimingLogger.log("service : "+jobToStart.getService().getClassName());
 							ServiceWorkerThread serviceThread = new ServiceWorkerThread();
@@ -231,6 +233,7 @@ public class Scheduler extends BaseService implements Runnable {
 							deleteServiceWorkerThread.setServiceId(jobToStart.getService().getId());
 							deleteServiceWorkerThread.start();
 							runningJob = deleteServiceWorkerThread;
+							runningJob.type = Constants.THREAD_DELETE_SERVICE;
 						}
 
 						if (runningJob != null) {
