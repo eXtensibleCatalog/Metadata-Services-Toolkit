@@ -89,11 +89,11 @@
                               <c:forEach var="serviceFile" items="${serviceFiles}" varStatus="a">
                                  
                                   <c:choose>
-                                      <c:when test="${fn:contains(temporaryService.xccfgFileName,serviceFile.name)}">
-                                          <option selected id="${serviceFile.name}" value="${serviceFile.path}">${serviceFile.name}
+                                      <c:when test="${temporaryService.name eq serviceFile}">
+                                          <option selected id="${serviceFile}" value="${serviceFile}">${serviceFile}
                                       </c:when>
                                       <c:otherwise>
-		                                  <option id="${serviceFile.name}" value="${serviceFile.path}">${serviceFile.name}
+		                                  <option id="${serviceFile}" value="${serviceFile}">${serviceFile}
                                       </c:otherwise>
                                   </c:choose>
                                   

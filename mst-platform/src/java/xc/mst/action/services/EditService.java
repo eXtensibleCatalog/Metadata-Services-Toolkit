@@ -38,8 +38,8 @@ public class EditService extends BaseActionSupport
     /** Denotes the type of error */
     private String errorType;
 
-    /** List of XCCFG config files which were present in the directory (location of this directory can be obtained from the manual/documentation) */
-    private List<XccFgFile> serviceFiles = new ArrayList<XccFgFile>();
+    /** List of service directory names (location of this directory can be obtained from the manual/documentation) */
+    private List<String> serviceFiles = new ArrayList<String>();
 
     /** The XCCFG file selected by the user */
     private String selectedLocation;
@@ -87,11 +87,9 @@ public class EditService extends BaseActionSupport
             }
             for(File file : fileList)
             {
-            	String xccfgFolderLocation = file.getPath() + MSTConfiguration.FILE_SEPARATOR + "serviceConfig";
-            	File xccfgFolder = new File(xccfgFolderLocation);
-            	
-            	if(!xccfgFolder.exists() || !xccfgFolder.isDirectory())
-            		continue;
+            	if (file.isDirectory()) {
+            		serviceFiles.add(file.getName());
+            	}
             	
             	/*
             	File[] xccfgFolderList = xccfgFolder.listFiles(fileFilter);
@@ -122,42 +120,6 @@ public class EditService extends BaseActionSupport
             return SUCCESS;
         }
     }
-
-    /**
-     * Class to represent xccfg file
-     * 
-     * @author sharmilar
-     *
-     */
-    public class XccFgFile {
-    	/** Name of file */
-    	private String name;
-    	
-    	/** Path of file */
-    	private String path;
-
-    	/** Constructor */
-    	XccFgFile(String name, String path) {
-    		this.name = name;
-    		this.path = path;
-    		
-    	}
-    	
-    	/** 
-    	 * Get file name 
-    	 */
-		public String getName() {
-			return name;
-		}
-
-		/**
-		 * Get file path
-		 * @return
-		 */
-		public String getPath() {
-			return path;
-		}
-    }
     
     /**
      * The method that does the actual task of editing the details of a service
@@ -175,8 +137,7 @@ public class EditService extends BaseActionSupport
                 getUserService().sendEmailErrorReport();
                 return INPUT;
             }
-            File file = new File(getSelectedLocation());
-            getServicesService().updateService(file,tempService,reprocessRecords);
+            getServicesService().updateService(getSelectedLocation(),tempService,reprocessRecords);
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -279,21 +240,21 @@ public class EditService extends BaseActionSupport
 	}
 
     /**
-     * Returns the list of XCCFG config files at the hard-coded location (location can be found in documentation/manual)
+     * Returns the list of service folder names
      *
-     * @return list of config files
+     * @return list of service folder names
      */
-    public List<XccFgFile> getServiceFiles()
+    public List<String> getServiceFiles()
     {
         return this.serviceFiles;
     }
 
     /**
-     * Sets the list of XCCFG config files which were found at the hard-coded location (location can be found in documentation/manual)
+     * Sets the list of service folder names
      *
-     * @param serviceFileList list of config files
+     * @param serviceFileList list of service folder names
      */
-    public void setServiceFiles(List<XccFgFile> serviceFiles)
+    public void setServiceFiles(List<String> serviceFiles)
     {
         this.serviceFiles = serviceFiles;
     }
