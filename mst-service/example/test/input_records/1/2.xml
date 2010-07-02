@@ -7,4 +7,13 @@
       <foo xmlns="foo:bar">french fries</foo>
     </metadata>
   </record>
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:bib:2</identifier>
+	  <status>deleted</status>
+    </header>
+    <metadata>
+      <foo xmlns="foo:bar">french fries</foo>
+    </metadata>
+  </record>
 </records>

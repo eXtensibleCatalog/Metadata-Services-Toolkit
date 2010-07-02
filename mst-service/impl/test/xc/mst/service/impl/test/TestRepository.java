@@ -49,6 +49,8 @@ public class TestRepository extends BaseService implements Repository {
 	protected String basePath = null;
 	protected String currentFile = null;
 	
+	public void populatePredSuccMaps(TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {}
+	
 	protected DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	
 	public String getName() {
@@ -102,6 +104,7 @@ public class TestRepository extends BaseService implements Repository {
 					pw = new PrintWriter(outFile);
 					pw.println("<records xmlns=\"http://www.openarchives.org/OAI/2.0/\">");
 					for (Record r : records) {
+						LOG.debug("r.getService(): "+r.getService());
 						pw.println(xmlOutputter.outputString(getRecordService().createJDomElement(r, null)));
 					}
 					pw.println("</records>");
@@ -110,7 +113,6 @@ public class TestRepository extends BaseService implements Repository {
 					LOG.error("", t);
 				} finally {
 					try {
-						
 						pw.close();
 					} catch (Throwable t) {
 						LOG.error("file close failed: "+fileName);
@@ -128,14 +130,10 @@ public class TestRepository extends BaseService implements Repository {
 	public void addRecord(Record r) {
 		Record previousOutputRecord = (Record)repo.get(r.getId());
 		if (previousOutputRecord != null) {
-			if (Record.DELETED == r.getStatus()) {
-				previousOutputRecord.setStatus(Record.DELETED);
-			} else if (Record.ACTIVE == r.getStatus() || 
-					Record.HELD == r.getStatus()) {
-				previousOutputRecord.setStatus(Record.UPDATE_REPLACE);
-			}
+			previousOutputRecord.setStatus(Record.REPLACED);
 		}
 		repo.put(r.getId(), r);
+		LOG.debug("r.getStatus(): "+r.getStatus());
 		List<Record> outputRecordsInFile = outputFiles.get(this.currentFile);
 		if (outputRecordsInFile == null) {
 			outputRecordsInFile = new ArrayList<Record>();

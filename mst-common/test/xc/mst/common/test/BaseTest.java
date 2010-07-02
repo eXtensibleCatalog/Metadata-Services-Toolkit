@@ -126,4 +126,8 @@ public class BaseTest {
 	public ServicesService getServicesService() {
 		return (ServicesService)getBean("ServicesService");
 	}
+	
+	protected RepositoryDAO getRepositoryDAO() {
+		return (RepositoryDAO)getBean("RepositoryDAO");
+	}
 }

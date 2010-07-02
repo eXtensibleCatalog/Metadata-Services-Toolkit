@@ -7,4 +7,12 @@
       <foo xmlns="foo:bar">pb&amp;j</foo>
     </metadata>
   </record>
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:bib:1</identifier>
+    </header>
+    <metadata>
+      <foo xmlns="foo:bar">pb&amp;j 2</foo>
+    </metadata>
+  </record>
 </records>

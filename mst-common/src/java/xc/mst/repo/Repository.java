@@ -9,6 +9,8 @@
 
 package xc.mst.repo;
 
+import gnu.trove.TLongObjectHashMap;
+
 import java.util.Date;
 import java.util.List;
 
@@ -48,5 +50,7 @@ public interface Repository {
 	public Service getService();
 	public void setProvider(Provider p);
 	public void setService(Service s);
+	
+	public void populatePredSuccMaps(TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap);
 
 }

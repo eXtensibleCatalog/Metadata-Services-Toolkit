@@ -33,9 +33,9 @@ create table repo_name.record_sets (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 create table repo_name.record_predecessors (
-	id                    int        NOT NULL    AUTO_INCREMENT,
-	record_id             int,
-	pred_record_id        int,
+	id                    BIGINT        NOT NULL    AUTO_INCREMENT,
+	record_id             BIGINT,
+	pred_record_id        BIGINT,
 	PRIMARY KEY (id),
 	KEY idx_REPO_NAME_records_set_record_id(record_id),
 	KEY idx_REPO_NAME_records_set_pred_record_id(pred_record_id)

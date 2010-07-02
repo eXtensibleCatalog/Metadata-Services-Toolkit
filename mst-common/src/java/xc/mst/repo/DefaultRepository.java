@@ -9,6 +9,8 @@
 
 package xc.mst.repo;
 
+import gnu.trove.TLongObjectHashMap;
+
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +65,10 @@ public class DefaultRepository extends BaseService implements Repository {
 				}
 			}
 		});
+	}
+	
+	public void populatePredSuccMaps(TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {
+		getRepositoryDAO().populatePredSuccMaps(name, predKeyedMap, succKeyedMap);
 	}
 	
 	protected boolean exists() {

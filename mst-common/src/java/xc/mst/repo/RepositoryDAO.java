@@ -9,6 +9,9 @@
 
 package xc.mst.repo;
 
+import gnu.trove.TLongHashSet;
+import gnu.trove.TLongObjectHashMap;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -24,8 +28,10 @@ import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
@@ -46,6 +52,7 @@ public class RepositoryDAO extends BaseDAO {
 	protected final static String RECORDS_XML_TABLE = "RECORDS_XML";
 	protected final static String RECORDS_SETS_TABLE = "RECORD_SETS";
 	protected final static String RECORD_PREDECESSORS_TABLE = "RECORD_PREDECESSORS";
+	protected final static String RECORD_OAI_IDS = "RECORD_OAI_IDS";
 	protected final static String REPOS_TABLE = "REPOS";
 	
 	protected Lock oaiIdLock = new ReentrantLock();
@@ -339,12 +346,51 @@ public class RepositoryDAO extends BaseDAO {
 		        	}
 	        	}
 	        }
-
 	        updateCounts = jdbcTemplate.batchUpdate(
 	        		sql,
 	                new RecPredBatchPreparedStatementSetter(recordPreds));
 	        TimingLogger.stop("RECORD_PREDECESSORS_TABLE.insert");
-	        recordsToAdd = null;
+	        
+			TimingLogger.start("RECORD_OAI_IDS.insert");
+			sql = 
+    			"insert ignore into "+getTableName(name, RECORD_OAI_IDS)+
+    			" (record_id, oai_id) "+
+    			"values (?,?) "+
+    			";";
+			updateCounts = this.jdbcTemplate.execute(sql, new PreparedStatementCallback<int[]>() {
+				public int[] doInPreparedStatement(PreparedStatement ps)
+						throws SQLException, DataAccessException {
+					for (Record r : recordsToAdd) {
+						if (r.getHarvestedOaiIdentifier() != null) {
+							ps.setLong(1, r.getId());
+							ps.setString(2, r.getHarvestedOaiIdentifier());
+							ps.addBatch();	
+						}
+					}
+					return ps.executeBatch();
+				}
+			});
+			TimingLogger.stop("RECORD_OAI_IDS.insert");
+			
+			recordsToAdd = null;
+		}
+	}
+	
+	public void populateHarvestCache(String name, Map<String, List<Object[]>> harvestCache) {
+		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList("select record_id, oai_id from "+getTableName(name, RECORD_OAI_IDS));
+		for (Map<String, Object> row : rowList) {
+			Long recordId = (Long)row.get("record_id");
+			String oaiId = (String)row.get("oai_id");
+			String mostSigToken = getUtil().getMostSignificantToken(oaiId);
+			List<Object[]> entries = harvestCache.get(mostSigToken);
+			if (entries == null) {
+				entries = new ArrayList<Object[]>();
+				harvestCache.put(mostSigToken, entries);
+			}
+			Object[] entry = new Object[2];
+			entry[0] = oaiId;
+			entry[1] = recordId;
+			entries.add(entry);
 		}
 	}
 	
@@ -380,10 +426,6 @@ public class RepositoryDAO extends BaseDAO {
 		}
 	}
 	
-	public void createOaiIdTable() {
-		
-	}
-	
 	protected void createRepo(Repository repo) {
 		String name = repo.getName();
 		createSchema(name);
@@ -402,8 +444,15 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public void createTables(Repository repo) {
+		runSql(repo, "xc/mst/repo/sql/create_repo.sql");
+		if (repo.getProvider() != null) {
+			runSql(repo, "xc/mst/repo/sql/create_harvest_repo.sql");	
+		}
+	}
+	
+	protected void runSql(Repository repo, String sqlFile) {
 		String name = repo.getName();
-		String createTablesContents = getUtil().slurp("xc/mst/repo/sql/create_repo.sql");
+		String createTablesContents = getUtil().slurp(sqlFile);
 		createTablesContents = createTablesContents.replaceAll("REPO_NAME", getUtil().normalizeName(name));
 		createTablesContents = createTablesContents.replaceAll("repo_name", getUtil().normalizeName(name));
 		String[] tokens = createTablesContents.split(";");
@@ -411,7 +460,6 @@ public class RepositoryDAO extends BaseDAO {
 			if (StringUtils.isEmpty(StringUtils.trim(sql))) {
 				continue;
 			}
-			// oai ids
 			sql = sql + ";";
 			LOG.info(sql);
 			this.jdbcTemplate.execute(sql);
@@ -514,6 +562,27 @@ public class RepositoryDAO extends BaseDAO {
 			}	
 		}
 		return recs;
+	}
+	
+	public void populatePredSuccMaps(String name, TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {
+		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList("select record_id, pred_record_id from "+getTableName(name, RECORD_PREDECESSORS_TABLE));
+		for (Map<String, Object> row : rowList) {
+			Long succId = (Long)row.get("record_id");
+			Long predId = (Long)row.get("pred_record_id");
+			TLongHashSet succs = (TLongHashSet)predKeyedMap.get(predId);
+			if (succs == null) {
+				succs = new TLongHashSet();
+				predKeyedMap.put(predId, succs);
+			}
+			succs.add(succId);
+			
+			TLongHashSet preds = (TLongHashSet)succKeyedMap.get(succId);
+			if (preds == null) {
+				preds = new TLongHashSet();
+				succKeyedMap.put(succId, preds);
+			}
+			preds.add(predId);
+		}
 	}
 	
 	private static final class RepoMapper implements RowMapper<Repository> {

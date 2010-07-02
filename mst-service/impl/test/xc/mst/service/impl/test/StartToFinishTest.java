@@ -96,7 +96,15 @@ public abstract class StartToFinishTest extends BaseTest {
 		LOG.debug("after indexHarvestedRecords");
 		indexServicedRecords();
 		LOG.debug("after indexServicedRecords");
+		finalTest();
+		LOG.debug("after finalTest");
+		
+		Thread.sleep(60000);
+		createHarvestSchedule();
+		LOG.debug("after createHarvestSchedule");
 
+		waitUntilFinished();
+		LOG.debug("after waitUntilFinished");
 	}
 	
 	public void dropOldSchemas() {
@@ -120,7 +128,7 @@ public abstract class StartToFinishTest extends BaseTest {
 		providerService.insertProvider(provider);
 		validateRepository.validate(provider.getId());
 		
-		Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
+		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(provider.getName());
 		
         testProvider();

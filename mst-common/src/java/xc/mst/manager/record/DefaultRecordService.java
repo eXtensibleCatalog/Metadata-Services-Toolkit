@@ -98,7 +98,7 @@ public class DefaultRecordService extends RecordService
 		//LOG.debug("MSTConfiguration.getProperty(DomainNameIdentifier): "+config.getProperty("DomainNameIdentifier"));
 		//LOG.debug("s.getName(): "+s.getName());
 		//LOG.debug("succ.getId(): "+succ.getId());
-		succ.setOaiIdentifier("oai:"+config.getProperty("DomainNameIdentifier")+":"+s.getName()+":"+succ.getId());
+		//succ.setOaiIdentifier("oai:"+config.getProperty("DomainNameIdentifier")+":"+s.getName()+":"+succ.getId());
 		return succ;
 	}
 	
@@ -804,7 +804,7 @@ public class DefaultRecordService extends RecordService
 			record.setOaiDatestamp((Date)doc.getFieldValue(FIELD_OAI_DATESTAMP));
 		}
 		record.setOaiHeader((String)doc.getFieldValue(FIELD_OAI_HEADER));
-		record.setOaiIdentifier((String) doc.getFieldValue(FIELD_OAI_IDENTIFIER));
+		//record.setOaiIdentifier((String) doc.getFieldValue(FIELD_OAI_IDENTIFIER));
 		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
 		record.setHarvestScheduleName((String)doc.getFieldValue(FIELD_HARVEST_SCHEDULE_NAME));
 
@@ -843,7 +843,7 @@ public class DefaultRecordService extends RecordService
 			record.setOaiDatestamp((Date)doc.getFieldValue(FIELD_OAI_DATESTAMP));
 		}
 		record.setOaiHeader((String)doc.getFieldValue(FIELD_OAI_HEADER));
-		record.setOaiIdentifier(oaiId);
+		//record.setOaiIdentifier(oaiId);
 		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
 		record.setProvider(getProviderDAO().loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
 		record.setService(getServiceDAO().loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
@@ -1176,7 +1176,8 @@ public class DefaultRecordService extends RecordService
 			Element headerEl = recordEl.getChild("header", recordEl.getNamespace());
 			Element identifierElement = headerEl.getChild("identifier", recordEl.getNamespace());
 			if (identifierElement != null) {
-				r.setOaiIdentifier(identifierElement.getText());
+				r.setId(Long.parseLong(getUtil().getMostSignificantToken(identifierElement.getText())));
+				r.setHarvestedOaiIdentifier(identifierElement.getText());
 			}
 			Element datestampElement = headerEl.getChild("datestamp", recordEl.getNamespace());
 			if (datestampElement != null && !StringUtils.isEmpty(datestampElement.getText())) {
@@ -1198,6 +1199,9 @@ public class DefaultRecordService extends RecordService
 			}
 			*/
 			
+			// TODO: BDA - This might not be right, but I don't think I really care
+			//             since this is only currently used in the filesystem testing
+			//             mechanism and we don't care about setSpecs there.
 			List setSpecList = headerEl.getChildren("setSpec", recordEl.getNamespace());
 			if (setSpecList != null) {
 				for (Object setSpecObj : setSpecList) {
@@ -1244,7 +1248,7 @@ public class DefaultRecordService extends RecordService
 				}
 			}
 
-			String status = headerEl.getAttributeValue("status", recordEl.getNamespace());
+			String status = headerEl.getChildText("status", recordEl.getNamespace());
 			if (!StringUtils.isEmpty(status) && "DELETED".equals(status.toUpperCase())) {
 				if ("DELETED".equals(status.toUpperCase()) || "D".equals(status.toUpperCase())) {
 					r.setStatus(Record.DELETED);
@@ -1252,12 +1256,14 @@ public class DefaultRecordService extends RecordService
 					r.setStatus(Record.ACTIVE);
 				} else if ("HELD".equals(status.toUpperCase()) || "H".equals(status.toUpperCase())) {
 					r.setStatus(Record.HELD);
-				} else if ("UPDATE_REPLACE".equals(status.toUpperCase()) || "U".equals(status.toUpperCase())) {
-					r.setStatus(Record.UPDATE_REPLACE);
+				} else if ("REPLACED".equals(status.toUpperCase()) || "R".equals(status.toUpperCase())) {
+					r.setStatus(Record.REPLACED);
 				}
 			}
 		}
-		r.setOaiXmlEl((Element)recordEl.getChild("metadata", recordEl.getNamespace()).getChildren().get(0));
+		Element xmlEl = (Element)recordEl.getChild("metadata", recordEl.getNamespace()).getChildren().get(0);
+		xmlEl.detach();
+		r.setOaiXmlEl(xmlEl);
 		return r;
 	}
 	
@@ -1282,8 +1288,8 @@ public class DefaultRecordService extends RecordService
 		
 		for (Record p : r.getPredecessors()) {
 			Element predEl = new Element("predecessor", namespace);
+			predEl.setText(p.getHarvestedOaiIdentifier());
 			predsrEl.addContent(predEl);
-			predEl.setText(p.getOaiIdentifier());
 		}
 		
 		if (r.getSets() != null) {
@@ -1297,15 +1303,16 @@ public class DefaultRecordService extends RecordService
 		if (r.getStatus() != 0) {
 			Element statusEl = new Element("status", namespace);
 			if (r.getStatus() == Record.ACTIVE) {
-				//statusEl.setText("active");
+				statusEl.setText("active");
+				headerEl.addContent(statusEl);
 			} else if (r.getStatus() == Record.DELETED) {
 				statusEl.setText("deleted");
 				headerEl.addContent(statusEl);
 			} else if (r.getStatus() == Record.HELD) {
 				statusEl.setText("held");
 				headerEl.addContent(statusEl);
-			} else if (r.getStatus() == Record.UPDATE_REPLACE) {
-				statusEl.setText("update_replace");
+			} else if (r.getStatus() == Record.REPLACED) {
+				statusEl.setText("replaced");
 				headerEl.addContent(statusEl);
 			}
 		}
@@ -1314,6 +1321,7 @@ public class DefaultRecordService extends RecordService
 		}
 		Element metadataEl = new Element("metadata", namespace);
 		recordEl.addContent(metadataEl);
+		LOG.debug("r: "+r);
 		metadataEl.addContent(r.getOaiXmlEl());
 		return recordEl;
 	}

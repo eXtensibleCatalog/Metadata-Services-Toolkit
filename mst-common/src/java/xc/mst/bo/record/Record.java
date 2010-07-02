@@ -41,7 +41,7 @@ public class Record {
 	public static final char ACTIVE = 'A';
 	public static final char HELD = 'H';
 	public static final char DELETED = 'D';
-	public static final char UPDATE_REPLACE = 'U';
+	public static final char REPLACED = 'R';
 	
 	protected String mode = JDOM_MODE;
 
@@ -180,7 +180,7 @@ public class Record {
 	 */
 	protected int numberOfSuccessors;
 
-	protected char status = 0;
+	protected char status = Record.ACTIVE;
 	
 	public Record() {
 		super();
@@ -244,6 +244,9 @@ public class Record {
 			throw new RuntimeException(
 					"This record is not set to JDOM_MODE.  You must explicitly "+
 					"call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
+		}
+		if (this.oaiXmlEl != null) {
+			this.oaiXmlEl.detach();
 		}
 		return this.oaiXmlEl;
 	}
@@ -454,19 +457,14 @@ public class Record {
 		return sb.toString();
 	}
 
-	public void setOaiIdentifier(String oaiIdentifier) {
+	public void setHarvestedOaiIdentifier(String oaiIdentifier) {
 		this.oaiIdentifier = oaiIdentifier;
 	}
-
-	public String getOaiIdentifierMostSpecificToken() {
-		return oaiIdentifierMostSpecificToken;
-	}
-
-	public void setOaiIdentifierMostSpecificToken (
-			String oaiIdentifierMostSpecificToken) {
-		this.oaiIdentifierMostSpecificToken = oaiIdentifierMostSpecificToken;
-	}
 	
+	public String getHarvestedOaiIdentifier() {
+		return this.oaiIdentifier;
+	}
+
 	/**
 	 * Gets the record's OAI datestamp
 	 *
