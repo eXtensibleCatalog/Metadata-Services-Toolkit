@@ -40,7 +40,7 @@ function createErrorDiv(errorType, errorMessage) {
 		messageDivElement.className = errorType;
 
 		var imgElement = document.createElement('img');
-		imgElement.setAttribute('src',basePath + 'page-resources/img/' + errorType +'.jpg');
+		imgElement.setAttribute('src', 'page-resources/img/' + errorType +'.jpg');
 		
 		var newDivElement = document.createElement('div');
 		newDivElement.className = 'jsErrorMessage';

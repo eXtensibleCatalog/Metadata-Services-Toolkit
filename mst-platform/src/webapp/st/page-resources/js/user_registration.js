@@ -94,14 +94,14 @@ YAHOO.xc.mst.registeration = {
 
 		}
 
-		document.registerationForm.action= basePath + 'registerUser.action';
+		document.registerationForm.action= 'registerUser.action';
 		document.registerationForm.submit();
 	
 	},
 
 	cancel : function()
 	{
-		document.registerationForm.action= basePath + 'home.action';
+		document.registerationForm.action= 'home.action';
 		document.registerationForm.submit();
 	
 	},

@@ -847,16 +847,19 @@ public class DefaultServiceDAO extends ServiceDAO
 				    boolean success = true;
 
 				    // Insert the input format assignments
-				    for(Format inputFormat : service.getInputFormats())
+				    for(Format inputFormat : service.getInputFormats()) {
 				    	success = getServiceInputFormatUtilDAO().insert(service.getId(), inputFormat.getId()) && success;
+				    }
 
 				    // Insert the input set assignments
-				    for(xc.mst.bo.provider.Set inputSet : service.getOutputSets())
+				    for(xc.mst.bo.provider.Set inputSet : service.getOutputSets()) {
 				    	success = getServiceOutputSetUtilDAO().insert(service.getId(), inputSet.getId()) && success;
+				    }
 				    
 				    // Insert the output format assignments
-				    for(Format outputFormat : service.getOutputFormats())
+				    for(Format outputFormat : service.getOutputFormats()) {
 				    	success = getServiceOutputFormatUtilDAO().insert(service.getId(), outputFormat.getId()) && success;
+				    }
 
 				    if(success)
 				    {

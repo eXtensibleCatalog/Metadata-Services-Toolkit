@@ -6,7 +6,7 @@
   * website http://www.extensiblecatalog.org/.
   *
   -->
-<project name="ms" default="help" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="ms" default="ms.help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
 	<dirname property="ms.dir" file="${ant.file.ms}" />
 	

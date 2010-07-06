@@ -49,13 +49,13 @@ public interface ServicesService
 	 * Parses a configuration file with information on the service to update
      * and updates the service, loading any new .jar files if necessary.
 	 * 
-	 * @param configFile The configuration file defining the service
+	 * @param name Service folder name
 	 * @param service The service to update
 	 * @throws DataException If an error occurred while interacting with the database
      * @throws IOException If an error occurred while reading the configuration file
      * @throws ConfigFileException If the configuration file was invalid
 	 */
-	void updateService(File configFile, Service service, boolean reprocessingRequired) throws DataException, IndexException, IOException, ConfigFileException;
+	void updateService(String name, Service service, boolean reprocessingRequired) throws DataException, IndexException, IOException, ConfigFileException;
 
 	/**
      * Adds a new Service

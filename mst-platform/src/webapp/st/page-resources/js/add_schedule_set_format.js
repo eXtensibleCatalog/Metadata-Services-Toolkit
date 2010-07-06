@@ -13,14 +13,14 @@ YAHOO.xc.mst.schedule.add = {
 	
 	gotoPreviousStep : function()
 	{
-		document.addScheduleForm.action= basePath + 'saveSetFormatForScheduleAndGoToPrevious.action';
+		document.addScheduleForm.action=  'saveSetFormatForScheduleAndGoToPrevious.action';
 		document.addScheduleForm.submit();
 	
 	},
 	
 	cancel : function()
 	{
-		document.addScheduleForm.action= basePath + 'allSchedules.action';
+		document.addScheduleForm.action=  'allSchedules.action';
 		document.addScheduleForm.submit();
 	
 	},	
@@ -44,7 +44,7 @@ YAHOO.xc.mst.schedule.add = {
 			return false;
 		}
 				
-		document.addScheduleForm.action= basePath + 'saveSetFormatForScheduleAndExit.action';
+		document.addScheduleForm.action=  'saveSetFormatForScheduleAndExit.action';
 		document.addScheduleForm.submit();
 	
 	},

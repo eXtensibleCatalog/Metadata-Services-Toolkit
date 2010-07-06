@@ -84,9 +84,9 @@ YAHOO.xc.mst.schedule = {
 		}
 		
 		if (document.getElementById('schedule_id').value == -1) {
-			document.scheduleForm.action= basePath + 'addScheduleAndNext.action';
+			document.scheduleForm.action=  'addScheduleAndNext.action';
 		} else {
-			document.scheduleForm.action= basePath + 'updateScheduleAndNext.action';
+			document.scheduleForm.action=  'updateScheduleAndNext.action';
 		}
 		document.scheduleForm.submit();
 	
@@ -94,7 +94,7 @@ YAHOO.xc.mst.schedule = {
 
 	allSchedules : function()
 	{
-		document.scheduleForm.action= basePath + 'allSchedules.action';
+		document.scheduleForm.action=  'allSchedules.action';
 		document.scheduleForm.submit();
 	
 	},

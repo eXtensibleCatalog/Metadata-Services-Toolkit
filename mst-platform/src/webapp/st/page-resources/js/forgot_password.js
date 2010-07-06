@@ -36,7 +36,7 @@ YAHOO.xc.mst.password =
 	        if( YAHOO.xc.mst.password.forgotPasswordDialog.validate() )
 	        {
                 var cObj = YAHOO.util.Connect.asyncRequest('post',
-                basePath + 'resetPassword.action', callback);
+                 'resetPassword.action', callback);
             }
 	    };
 	

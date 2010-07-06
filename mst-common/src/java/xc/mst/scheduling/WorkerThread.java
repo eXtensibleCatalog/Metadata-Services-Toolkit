@@ -18,7 +18,7 @@ public class WorkerThread extends Thread {
 
 	private static final Logger LOG = Logger.getLogger(Constants.LOGGER_GENERAL);
 	
-	public static final String type = null;
+	protected String type = null;
 
 	protected Status status = null;
 	

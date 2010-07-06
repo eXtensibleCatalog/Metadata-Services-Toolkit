@@ -1288,7 +1288,7 @@ public class DefaultHarvestScheduleDAO extends HarvestScheduleDAO
 				psUpdate.setInt(7, harvestSchedule.getDayOfWeek());
 				psUpdate.setInt(8, harvestSchedule.getHour());
 				psUpdate.setString(9, harvestSchedule.getNotifyEmail());
-				if (harvestSchedule.getStatus() != null) {
+				if (harvestSchedule.getStatus() == null) {
 					psUpdate.setString(10, null);	
 				} else {
 					psUpdate.setString(10, harvestSchedule.getStatus().name());
