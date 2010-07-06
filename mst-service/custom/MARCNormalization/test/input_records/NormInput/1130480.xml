@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:10</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>02258cas a2200481   45 A</marc:leader>
+        <marc:controlfield tag="001">1130480</marc:controlfield>
+        <marc:controlfield tag="008">750327d19371970nyuzx m       0   a0eng u</marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">   38005696 </marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="019" ind1=" " ind2=" ">
+          <marc:subfield code="a">1644900</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="022" ind1=" " ind2=" ">
+          <marc:subfield code="a">0081-8356</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="b">ocm</marc:subfield>
+          <marc:subfield code="a">01240637</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="9">01078617</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="c">UDI</marc:subfield>
+          <marc:subfield code="d">UCU</marc:subfield>
+          <marc:subfield code="d">NYG</marc:subfield>
+          <marc:subfield code="d">m.c.</marc:subfield>
+          <marc:subfield code="d">MUL</marc:subfield>
+          <marc:subfield code="d">OCL</marc:subfield>
+          <marc:subfield code="d">RRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRSR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">HF5549</marc:subfield>
+          <marc:subfield code="b">.N27s</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">HF5549 .N27s</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">Studies in personnel policy.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="8">
+          <marc:subfield code="a">SPP</marc:subfield>
+          <marc:subfield code="f">no. 181-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="3">
+          <marc:subfield code="a">Personnel policy study</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">New York,</marc:subfield>
+          <marc:subfield code="b">National Industrial Conference Board.</marc:subfield>
+          <marc:subfield code="c">1937-1970.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">v.</marc:subfield>
+          <marc:subfield code="b">ill., tables</marc:subfield>
+          <marc:subfield code="c">29 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="362" ind1="0" ind2=" ">
+          <marc:subfield code="a">no. 1-221.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="490" ind1="1" ind2=" ">
+          <marc:subfield code="a">National Industrial Conference Board. Conference Board Reports</marc:subfield>
+          <marc:subfield code="v">no. 29-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="490" ind1="1" ind2=" ">
+          <marc:subfield code="a">National Industrial Conference Board. Research report from the Conference report.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="580" ind1=" " ind2=" ">
+          <marc:subfield code="a">No. 15-28 supplement to Conference Board management record.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Personnel management.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="760" ind1="1" ind2=" ">
+          <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+          <marc:subfield code="t">Conference Board reports,</marc:subfield>
+          <marc:subfield code="g">no. [1]-73; [1944]-55.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="760" ind1="1" ind2=" ">
+          <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+          <marc:subfield code="t">Research report from the Conference Board,</marc:subfield>
+          <marc:subfield code="g">no. 77-   1956 -</marc:subfield>
+          <marc:subfield code="x">0547-7352</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="772" ind1="1" ind2=" ">
+          <marc:subfield code="t">Conference Board management record</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="787" ind1="1" ind2=" ">
+          <marc:subfield code="t">Digest of Studies in personnel policy</marc:subfield>
+          <marc:subfield code="x">0547-7239</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="810" ind1="2" ind2=" ">
+          <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+          <marc:subfield code="t">Conference Board reports ;</marc:subfield>
+          <marc:subfield code="v">no. 29-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="810" ind1="2" ind2=" ">
+          <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+          <marc:subfield code="t">Research report from the Conference Board.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="910" ind1=" " ind2=" ">
+          <marc:subfield code="a">950906</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="911" ind1=" " ind2=" ">
+          <marc:subfield code="a">u</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="930" ind1=" " ind2=" ">
+          <marc:subfield code="l">Stack</marc:subfield>
+          <marc:subfield code="d">HF5549 .N27s</marc:subfield>
+          <marc:subfield code="j">no.1 (1937)-no.138 (1953), no.140 (1953)-no.142 (1954), no.144 (1954)-no.182 (1961), no.184 (1962)-no.197 (1965), no.199 (1965)-no.209 (1968), no.211 (1968)-no.221 (1970)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="930" ind1=" " ind2=" ">
+          <marc:subfield code="l">Folio</marc:subfield>
+          <marc:subfield code="d">HF5549 .N27s</marc:subfield>
+          <marc:subfield code="j">no.139 (1953), no.143 (1954), no.183 (1961), no.198 (1965), no.210 (1968)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">Folio</marc:subfield>
+          <marc:subfield code="m">RJCIRC</marc:subfield>
+          <marc:subfield code="s">HF5549 .N27s</marc:subfield>
+          <marc:subfield code="d">no.139</marc:subfield>
+          <marc:subfield code="b">39087013162120</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">Folio</marc:subfield>
+          <marc:subfield code="m">RJCIRC</marc:subfield>
+          <marc:subfield code="s">HF5549 .N27s</marc:subfield>
+          <marc:subfield code="d">no.143</marc:subfield>
+          <marc:subfield code="b">39087013161882</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">Folio</marc:subfield>
+          <marc:subfield code="m">RJCIRC</marc:subfield>
+          <marc:subfield code="s">HF5549 .N27s</marc:subfield>
+          <marc:subfield code="d">no.183</marc:subfield>
+          <marc:subfield code="b">39087014625620</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">Folio</marc:subfield>
+          <marc:subfield code="m">RJCIRC</marc:subfield>
+          <marc:subfield code="s">HF5549 .N27s</marc:subfield>
+          <marc:subfield code="d">no.198</marc:subfield>
+          <marc:subfield code="b">39087013162203</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">Folio</marc:subfield>
+          <marc:subfield code="m">RJCIRC</marc:subfield>
+          <marc:subfield code="s">HF5549 .N27s</marc:subfield>
+          <marc:subfield code="d">no.210</marc:subfield>
+          <marc:subfield code="b">39087014625638</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">Stack</marc:subfield>
+          <marc:subfield code="m">RJCIRC</marc:subfield>
+          <marc:subfield code="s">HF5549 .N27s</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:72</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>02471cam a22006254a 45&amp;#x2019;0</marc:leader>
+        <marc:controlfield tag="001">2373818</marc:controlfield>
+        <marc:controlfield tag="005">20021001153435.0</marc:controlfield>
+        <marc:controlfield tag="008">020707s20019999miuab    b    001 0 eng  </marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">   00037542 </marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)ocm43836551</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">2373818</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">DLC</marc:subfield>
+          <marc:subfield code="c">DLC</marc:subfield>
+          <marc:subfield code="d">NLM</marc:subfield>
+          <marc:subfield code="d">UKM</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="016" ind1="7" ind2=" ">
+          <marc:subfield code="a">101090724</marc:subfield>
+          <marc:subfield code="2">DNLM</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="019" ind1=" " ind2=" ">
+          <marc:subfield code="a">46634953</marc:subfield>
+          <marc:subfield code="a">46768045</marc:subfield>
+          <marc:subfield code="a">48110105</marc:subfield>
+          <marc:subfield code="a">48884717</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">078763932X (set : alk. paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0787639338 (v. 1 : alk. paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0787639346 (v. 2 : alk. paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0787639354 (v. 3 : alk. paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0787639362 (v. 4 : alk. paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0787639370 (v. 5 : alk. paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0787639389 (vol. 6 : alk. paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0787639397 (vol. 7 : alk. paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0787658170 (vol. 8 : alk. paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="024" ind1="7" ind2=" ">
+          <marc:subfield code="a">99804148031</marc:subfield>
+          <marc:subfield code="2">YBP</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="029" ind1="1" ind2=" ">
+          <marc:subfield code="a">NLM</marc:subfield>
+          <marc:subfield code="b">101090724</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="029" ind1="1" ind2=" ">
+          <marc:subfield code="a">UKM</marc:subfield>
+          <marc:subfield code="b">bA156690</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="029" ind1="1" ind2=" ">
+          <marc:subfield code="a">UKM</marc:subfield>
+          <marc:subfield code="b">bA208691</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="042" ind1=" " ind2=" ">
+          <marc:subfield code="a">pcc</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="050" ind1="0" ind2="0">
+          <marc:subfield code="a">Q175.46</marc:subfield>
+          <marc:subfield code="b">.S35 2001</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="060" ind1="0" ind2="0">
+          <marc:subfield code="a">Q 175.46</marc:subfield>
+          <marc:subfield code="b">S416 2001</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="082" ind1="0" ind2="0">
+          <marc:subfield code="a">509</marc:subfield>
+          <marc:subfield code="2">21</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">Science and its times :</marc:subfield>
+          <marc:subfield code="b">understanding the social significance of scientific discovery /</marc:subfield>
+          <marc:subfield code="c">Neil Schlager, editor ; Josh Lauer, associate editor.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Detroit :</marc:subfield>
+          <marc:subfield code="b">Gale Group,</marc:subfield>
+          <marc:subfield code="c">c2001.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">8 v. :</marc:subfield>
+          <marc:subfield code="b">ill., maps ;</marc:subfield>
+          <marc:subfield code="c">29 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="504" ind1=" " ind2=" ">
+          <marc:subfield code="a">Includes bibliographical references and indexes.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="505" ind1="1" ind2=" ">
+          <marc:subfield code="a">v. 1. 2000 B.C. to A.D. 699 -- v. 2. 700-1449 -- v. 3. 1450-1699 -- v. 4. 1700-1799 -- v. 5. 1800-1899    -- v. 7. 1950-present -- v. 8. Index.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="520" ind1="1" ind2=" ">
+          <marc:subfield code="a">"This series discusses how the major fields of science developed during specific time periods. Each volume focuses on a range of years and includes developments in exploration, life sciences, mathematics, physical sciences, and technology. When the series is completed, the seven volumes will cover 2000 B.C. to the present."--"Outstanding Reference Sources," American Libraries, May 2001.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Science</marc:subfield>
+          <marc:subfield code="x">Social aspects</marc:subfield>
+          <marc:subfield code="x">History.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="2">
+          <marc:subfield code="a">Science</marc:subfield>
+          <marc:subfield code="x">history.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="2">
+          <marc:subfield code="a">Social Conditions</marc:subfield>
+          <marc:subfield code="x">history.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Schlager, Neil,</marc:subfield>
+          <marc:subfield code="d">1966-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Lauer, Josh.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="945" ind1=" " ind2=" ">
+          <marc:subfield code="a">PromptCat</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="949" ind1=" " ind2=" ">
+          <marc:subfield code="b">39087021036985</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="949" ind1=" " ind2=" ">
+          <marc:subfield code="b">39087021036993</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="949" ind1=" " ind2=" ">
+          <marc:subfield code="b">39087021037009</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="949" ind1=" " ind2=" ">
+          <marc:subfield code="b">39087021037017</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="949" ind1=" " ind2=" ">
+          <marc:subfield code="b">39087021037025</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="949" ind1=" " ind2=" ">
+          <marc:subfield code="b">39087021037033</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="949" ind1=" " ind2=" ">
+          <marc:subfield code="b">39087021037041</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="949" ind1=" " ind2=" ">
+          <marc:subfield code="b">39087021037058</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="980" ind1=" " ind2=" ">
+          <marc:subfield code="a">2002-08-14</marc:subfield>
+          <marc:subfield code="b">610</marc:subfield>
+          <marc:subfield code="e">610</marc:subfield>
+          <marc:subfield code="f">67124</marc:subfield>
+          <marc:subfield code="g">1</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">92</marc:subfield>
+          <marc:subfield code="b">RRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="945" ind1=" " ind2=" ">
+          <marc:subfield code="a">MARS</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

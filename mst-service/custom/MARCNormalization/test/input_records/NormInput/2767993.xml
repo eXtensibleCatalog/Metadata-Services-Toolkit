@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:94</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01328cam a22003017a 4500</marc:leader>
+        <marc:controlfield tag="001">2767993</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20050511101640.0</marc:controlfield>
+        <marc:controlfield tag="006">m        d f      </marc:controlfield>
+        <marc:controlfield tag="008">020314s2001    dcu     s    f000 0 eng d</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)ocm49315959</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">2767993</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">GPO</marc:subfield>
+          <marc:subfield code="c">GPO</marc:subfield>
+          <marc:subfield code="d">DLC</marc:subfield>
+          <marc:subfield code="d">MvI</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="074" ind1=" " ind2=" ">
+          <marc:subfield code="a">0725 (online)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="086" ind1="0" ind2=" ">
+          <marc:subfield code="a">J 21.2:IL 6/2001</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Illegal alien resident population</marc:subfield>
+          <marc:subfield code="h">[electronic resource].</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2=" ">
+          <marc:subfield code="i">Online title from INS Statistics Division publication list:</marc:subfield>
+          <marc:subfield code="a">Estimates of the undocumented immigrant population residing in the United States :</marc:subfield>
+          <marc:subfield code="b">October 1996</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="250" ind1=" " ind2=" ">
+          <marc:subfield code="a">Updated Dec. 2001.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">[Washington, D.C.] :</marc:subfield>
+          <marc:subfield code="b">Immigration and Naturalization Service,</marc:subfield>
+          <marc:subfield code="c">2001.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="538" ind1=" " ind2=" ">
+          <marc:subfield code="a">System requirements: Adobe Acrobat Reader.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="538" ind1=" " ind2=" ">
+          <marc:subfield code="a">Mode of access: Internet from the INS web site. Address as of  3/14/02:http://www.ins.gov/graphics/aboutins/statistics/illegalalien/illegal.pdf; current access is available via PURL.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Title from title screen.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Illegal aliens</marc:subfield>
+          <marc:subfield code="z">United States</marc:subfield>
+          <marc:subfield code="v">Statistics.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Immigrants</marc:subfield>
+          <marc:subfield code="z">United States</marc:subfield>
+          <marc:subfield code="v">Statistics.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="1" ind2=" ">
+          <marc:subfield code="a">United States.</marc:subfield>
+          <marc:subfield code="b">Immigration and Naturalization Service.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="856" ind1="4" ind2="0">
+          <marc:subfield code="u">http://purl.access.gpo.gov/GPO/LPS18167</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="949" ind1=" " ind2=" ">
+          <marc:subfield code="l">Internet</marc:subfield>
+          <marc:subfield code="u">http://purl.access.gpo.gov/GPO/LPS18167</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="945" ind1=" " ind2=" ">
+          <marc:subfield code="a">MARS</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

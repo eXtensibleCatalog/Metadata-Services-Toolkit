@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:33</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01509cam a2200289Li 45&amp;#x2019;0</marc:leader>
+        <marc:controlfield tag="001">1355551</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20001112155031.0</marc:controlfield>
+        <marc:controlfield tag="007">hgraob---bzcu</marc:controlfield>
+        <marc:controlfield tag="008">820928s1804    xx      c     000 0 eng d</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="9">ocm15436930</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">STF</marc:subfield>
+          <marc:subfield code="c">STF</marc:subfield>
+          <marc:subfield code="d">HLS</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">PRINT </marc:subfield>
+          <marc:subfield code="a"> AC2 </marc:subfield>
+          <marc:subfield code="a"> .E12 </marc:subfield>
+          <marc:subfield code="a"> Ser.2</marc:subfield>
+          <marc:subfield code="a">no. 6422.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Gregory, William,</marc:subfield>
+          <marc:subfield code="d">fl. 1800.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="2">
+          <marc:subfield code="a">A visible display of divine providence, or, The journal of a captured missionary</marc:subfield>
+          <marc:subfield code="h">[microform] :</marc:subfield>
+          <marc:subfield code="b">designated to the Southern Pacific ocean, in the second voyage of the ship Duff ... captured by Le Grand Buonaparte, off Cape Frio : including every remarkable occurrence which took place on board the ships ... and in the province of Paraguay ... and at Portugal, on the return home, in the years 1798 and 1799 /</marc:subfield>
+          <marc:subfield code="c">by William Gregory ; with extracts compiled from the journals of ... other missionaries captured in the Duff.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Greensburg [Pa.] :</marc:subfield>
+          <marc:subfield code="b">Printed by John M. Snowden,</marc:subfield>
+          <marc:subfield code="c">1804.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">310 p. ;</marc:subfield>
+          <marc:subfield code="c">18 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="510" ind1="4" ind2=" ">
+          <marc:subfield code="a">Shaw &amp; Shoemaker,</marc:subfield>
+          <marc:subfield code="c">6422.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="533" ind1=" " ind2=" ">
+          <marc:subfield code="a">Microopaque.</marc:subfield>
+          <marc:subfield code="b">Worcester, Mass. :</marc:subfield>
+          <marc:subfield code="c">American Antiquarian Society,</marc:subfield>
+          <marc:subfield code="d">1966.</marc:subfield>
+          <marc:subfield code="e">4 microopaques ; 23 x 15 cm.</marc:subfield>
+          <marc:subfield code="f">(Early American imprints.  Second series ; no. 6422).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="539" ind1=" " ind2=" ">
+          <marc:subfield code="a">s</marc:subfield>
+          <marc:subfield code="b">1966</marc:subfield>
+          <marc:subfield code="d">pau</marc:subfield>
+          <marc:subfield code="e">n</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Voyages and travels.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Missions.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="740" ind1="4" ind2="1">
+          <marc:subfield code="a">The journal of a captured missionary.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="752" ind1=" " ind2=" ">
+          <marc:subfield code="a">United States</marc:subfield>
+          <marc:subfield code="b">Pennsylvania</marc:subfield>
+          <marc:subfield code="d">Greensburg.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="830" ind1=" " ind2="0">
+          <marc:subfield code="a">Early American imprints. 2nd series ;</marc:subfield>
+          <marc:subfield code="v">no. 6422.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="910" ind1=" " ind2=" ">
+          <marc:subfield code="a">19961011145700.0</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

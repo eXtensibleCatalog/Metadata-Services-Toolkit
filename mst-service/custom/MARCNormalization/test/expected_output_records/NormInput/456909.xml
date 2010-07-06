@@ -1,0 +1,140 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/139</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:141</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>00934cam a22002770  45 A</marc:leader>
+      <marc:controlfield tag="001">456909</marc:controlfield>
+      <marc:controlfield tag="008">800802s1936    pau      b    000 0 eng c</marc:controlfield>
+      <marc:datafield ind1=" " ind2=" " tag="010">
+        <marc:subfield code="a">36033160</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="a">(OCoLC)6579012</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="9">00375444</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="040">
+        <marc:subfield code="a">Univ. of Pennsylvania Libr.</marc:subfield>
+        <marc:subfield code="c">CLE</marc:subfield>
+        <marc:subfield code="d">SER</marc:subfield>
+        <marc:subfield code="d">RRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="049">
+        <marc:subfield code="a">RRRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2=" " tag="050">
+        <marc:subfield code="a">PR1215</marc:subfield>
+        <marc:subfield code="b">.Y6 1935</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="090">
+        <marc:subfield code="a">PR1215</marc:subfield>
+        <marc:subfield code="b">.Y65p</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="099">
+        <marc:subfield code="a">PR1215 .Y65p</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="100">
+        <marc:subfield code="a">Yost, Calvin Daniel,</marc:subfield>
+        <marc:subfield code="d">1910-</marc:subfield>
+        <marc:subfield code="4">aut</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2="4" tag="245">
+        <marc:subfield code="a">The poetry of the Gentleman's magazine:</marc:subfield>
+        <marc:subfield code="b">a study in eighteenth century literary taste ...</marc:subfield>
+        <marc:subfield code="c">[by] Calvin Daniel Yost, Jr.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="260">
+        <marc:subfield code="a">Philadelphia,</marc:subfield>
+        <marc:subfield code="c">1936.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="300">
+        <marc:subfield code="a">147 p.</marc:subfield>
+        <marc:subfield code="c">23 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="502">
+        <marc:subfield code="a">Thesis (PH. D.)--University of Pennsylvania, 1935.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="504">
+        <marc:subfield code="a">Bibliography: p. 143-147.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2="0" tag="630">
+        <marc:subfield code="a">Gentleman's magazine (London, England)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="650">
+        <marc:subfield code="a">English poetry</marc:subfield>
+        <marc:subfield code="y">18th century</marc:subfield>
+        <marc:subfield code="x">History and criticism.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="910">
+        <marc:subfield code="a">950906</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="911">
+        <marc:subfield code="a">u</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="966">
+        <marc:subfield code="l">Stack</marc:subfield>
+        <marc:subfield code="m">RMON</marc:subfield>
+        <marc:subfield code="s">PR1215 .Y65p</marc:subfield>
+        <marc:subfield code="b">39087003597541</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)456909</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="240" ind1="0" ind2="0">
+        <marc:subfield code="a">Poetry of the Gentleman's magazine:</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">English poetry</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="x">History and criticism.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="963" ind1=" " ind2="0">
+        <marc:subfield code="y">18th century</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

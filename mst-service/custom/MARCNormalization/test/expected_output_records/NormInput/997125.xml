@@ -1,0 +1,136 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/184</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:186</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>00942pam a2200289 a 45 A</marc:leader>
+      <marc:controlfield tag="001">997125</marc:controlfield>
+      <marc:controlfield tag="008">890628s1989    mau      b    001 0 eng</marc:controlfield>
+      <marc:datafield ind1=" " ind2=" " tag="010">
+        <marc:subfield code="a">89015525</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="020">
+        <marc:subfield code="a">0805787186</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="020">
+        <marc:subfield code="a">0805787194 (pbk.)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="a">(OCoLC)20016870</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="9">00942143</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="040">
+        <marc:subfield code="a">DLC</marc:subfield>
+        <marc:subfield code="c">DLC</marc:subfield>
+        <marc:subfield code="d">RRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="049">
+        <marc:subfield code="a">RRRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2="0" tag="050">
+        <marc:subfield code="a">PR2801</marc:subfield>
+        <marc:subfield code="b">.Z58 1989</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="099">
+        <marc:subfield code="a">PR2801 .Z58 1989</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="100">
+        <marc:subfield code="a">Zitner, Sheldon P.</marc:subfield>
+        <marc:subfield code="4">aut</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2="0" tag="245">
+        <marc:subfield code="a">All's well that ends well /</marc:subfield>
+        <marc:subfield code="c">Sheldon P. Zitner.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="260">
+        <marc:subfield code="a">Boston :</marc:subfield>
+        <marc:subfield code="b">Twayne Publishers,</marc:subfield>
+        <marc:subfield code="c">c1989.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="300">
+        <marc:subfield code="a">xxv, 187 p. ;</marc:subfield>
+        <marc:subfield code="c">23 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="490">
+        <marc:subfield code="a">Twayne's new critical introductions to Shakespeare</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="504">
+        <marc:subfield code="a">Includes bibliographical references (p. 181-183) and index.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2="0" tag="600">
+        <marc:subfield code="a">Shakespeare, William,</marc:subfield>
+        <marc:subfield code="d">1564-1616.</marc:subfield>
+        <marc:subfield code="t">All's well that ends well.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="830">
+        <marc:subfield code="a">Twayne's new critical introductions to Shakespeare</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="910">
+        <marc:subfield code="a">950906</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="911">
+        <marc:subfield code="a">p</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="966">
+        <marc:subfield code="l">Stack</marc:subfield>
+        <marc:subfield code="m">RMON</marc:subfield>
+        <marc:subfield code="s">PR2801 .Z58 1989</marc:subfield>
+        <marc:subfield code="b">39087012223659</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="947" ind1=" " ind2=" ">
+        <marc:subfield code="a">0805787186</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="947" ind1=" " ind2=" ">
+        <marc:subfield code="a">0805787194</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)997125</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="240" ind1="0" ind2="0">
+        <marc:subfield code="a">All's well that ends well /</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

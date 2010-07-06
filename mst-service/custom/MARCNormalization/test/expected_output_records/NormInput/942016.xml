@@ -1,0 +1,161 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/177</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:179</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01429cas a22003610  45 A</marc:leader>
+      <marc:controlfield tag="001">942016</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="007">hdrafv   baca</marc:controlfield>
+      <marc:controlfield tag="008">790504d18481928nyuwr p a     0   a0eng d</marc:controlfield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="a">(OCoLC)4927591</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="9">00885524</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="040">
+        <marc:subfield code="a">VHB</marc:subfield>
+        <marc:subfield code="c">VHB</marc:subfield>
+        <marc:subfield code="d">OCL</marc:subfield>
+        <marc:subfield code="d">PES</marc:subfield>
+        <marc:subfield code="d">DLC</marc:subfield>
+        <marc:subfield code="d">RRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="049">
+        <marc:subfield code="a">RRSR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="099">
+        <marc:subfield code="a">FILM Una191 reels 418, 1420- 1481</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="9" tag="099">
+        <marc:subfield code="a">FILM</marc:subfield>
+        <marc:subfield code="a">Una191</marc:subfield>
+        <marc:subfield code="a">reels</marc:subfield>
+        <marc:subfield code="a">418,</marc:subfield>
+        <marc:subfield code="a">1420-</marc:subfield>
+        <marc:subfield code="a">1481</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2=" " tag="130">
+        <marc:subfield code="a">Independent (New York, N.Y. : 1848)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2="4" tag="245">
+        <marc:subfield code="a">The Independent</marc:subfield>
+        <marc:subfield code="h">[microform].</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="3" ind2="4" tag="246">
+        <marc:subfield code="a">Independent and weekly review</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="260">
+        <marc:subfield code="a">New York, N.Y. :</marc:subfield>
+        <marc:subfield code="b">Published for the proprietors by S. W. Benedict,</marc:subfield>
+        <marc:subfield code="c">1848-1928.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="300">
+        <marc:subfield code="a">121 v. :</marc:subfield>
+        <marc:subfield code="b">ill.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="310">
+        <marc:subfield code="a">Weekly</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2=" " tag="362">
+        <marc:subfield code="a">Vol. 1, no. 1 (Dec. 7, 1848)-v. 121 (Oct. 13, 1928) = [Whole no.] 1-4089.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="500">
+        <marc:subfield code="a">Title from caption.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="500">
+        <marc:subfield code="a">Title varies slightly.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="533">
+        <marc:subfield code="a">Microfilm.</marc:subfield>
+        <marc:subfield code="b">Ann Arbor, Mich. :</marc:subfield>
+        <marc:subfield code="c">Xerox University Microfilms,</marc:subfield>
+        <marc:subfield code="d">[n.d.], 1974.</marc:subfield>
+        <marc:subfield code="e">63 microfilm reels ; 35 mm.</marc:subfield>
+        <marc:subfield code="f">(American periodical series: 1800-1850 ; 418, 1420-1481)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="580">
+        <marc:subfield code="a">Absorbed: The Chautauquan in June 1914; Harper's weekly in May 1916; Countryside and suburban life in Aug. 1917.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2="5" tag="780">
+        <marc:subfield code="t">Chautauquan</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2="5" tag="780">
+        <marc:subfield code="t">Harper's weekly</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2="5" tag="780">
+        <marc:subfield code="t">Countryside and suburban life</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="910">
+        <marc:subfield code="a">950805</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="911">
+        <marc:subfield code="a">p</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="930">
+        <marc:subfield code="l">Micro</marc:subfield>
+        <marc:subfield code="d">FILM Una191 reels 418, 1420-1481</marc:subfield>
+        <marc:subfield code="j">v.1-121</marc:subfield>
+        <marc:subfield code="g">5</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="966">
+        <marc:subfield code="l">Micro</marc:subfield>
+        <marc:subfield code="m">RMIC</marc:subfield>
+        <marc:subfield code="s">FILM Una191 reels 418, 1420- 1481</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Serial</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)942016</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Microform</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="934" ind1=" " ind2=" ">
+        <marc:subfield code="a">Microfilm reel</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="939" ind1=" " ind2=" ">
+        <marc:subfield code="a">1848-1928</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

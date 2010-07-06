@@ -1,0 +1,142 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/16</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:16</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01092ncm a2200337   45 A</marc:leader>
+      <marc:controlfield tag="001">1188191</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="008">930312q19001909au sga         n    ger d</marc:controlfield>
+      <marc:datafield ind1="3" ind2="0" tag="028">
+        <marc:subfield code="a">3873</marc:subfield>
+        <marc:subfield code="b">Josef Eberle</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="2" ind2="0" tag="028">
+        <marc:subfield code="a">J.E. 906</marc:subfield>
+        <marc:subfield code="b">Josef Eberle</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="a">(OCoLC)27722384</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="9">01137755</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="040">
+        <marc:subfield code="a">RER</marc:subfield>
+        <marc:subfield code="c">RER</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="048">
+        <marc:subfield code="a">vi01</marc:subfield>
+        <marc:subfield code="a">ka01</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="049">
+        <marc:subfield code="a">RERA</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="090">
+        <marc:subfield code="a">M1620</marc:subfield>
+        <marc:subfield code="b">.S378</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="099">
+        <marc:subfield code="a">M1620 .S378</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="100">
+        <marc:subfield code="a">Schreker, Franz,</marc:subfield>
+        <marc:subfield code="d">1878-1934.</marc:subfield>
+        <marc:subfield code="4">cmp</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2="0" tag="240">
+        <marc:subfield code="a">Lieder auf den Tod eines Kindes</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2="0" tag="245">
+        <marc:subfield code="a">Zwei Lieder auf den Tod eines Kindes, op. 5.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="260">
+        <marc:subfield code="a">Wien,</marc:subfield>
+        <marc:subfield code="b">Josef Eberle</marc:subfield>
+        <marc:subfield code="c">[190-]</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="300">
+        <marc:subfield code="a">score (5 p.)</marc:subfield>
+        <marc:subfield code="c">34cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="500">
+        <marc:subfield code="a">Publisher's no.: Universal-Edition No. 3873.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2=" " tag="505">
+        <marc:subfield code="a">O Glocken, bo?se Glocken (Holm).--Dass er ganz ein Engel werde (Holm).</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="590">
+        <marc:subfield code="a">Sibley Music Library copy bound with Schreker, Fu?nf Gesa?nge (1909).</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2="0" tag="600">
+        <marc:subfield code="a">Holm, Mia,</marc:subfield>
+        <marc:subfield code="d">1845-1912</marc:subfield>
+        <marc:subfield code="x">Musical settings.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="650">
+        <marc:subfield code="a">Songs (Medium voice) with piano.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="700">
+        <marc:subfield code="a">Holm, Mia,</marc:subfield>
+        <marc:subfield code="d">1845-1912.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="910">
+        <marc:subfield code="a">950805</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="911">
+        <marc:subfield code="a">u</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="966">
+        <marc:subfield code="l">/Stack</marc:subfield>
+        <marc:subfield code="m">SMONO</marc:subfield>
+        <marc:subfield code="s">M1620 .S378</marc:subfield>
+        <marc:subfield code="c">1</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Image</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Notated music</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Notated music</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)1188191</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">ger</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">German</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1="1" ind2="0">
+        <marc:subfield code="a">Holm, Mia,</marc:subfield>
+        <marc:subfield code="d">1845-1912</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1="1" ind2="0">
+        <marc:subfield code="x">Musical settings.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

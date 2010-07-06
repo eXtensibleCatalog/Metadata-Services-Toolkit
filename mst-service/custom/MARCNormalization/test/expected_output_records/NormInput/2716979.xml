@@ -1,0 +1,185 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/91</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:91</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01398cas a2200397 a 45 0</marc:leader>
+      <marc:controlfield tag="001">2716979</marc:controlfield>
+      <marc:controlfield tag="005">20050608142816.0</marc:controlfield>
+      <marc:controlfield tag="008">030915c20049999ohuqr1p       0   a0eng c</marc:controlfield>
+      <marc:datafield ind1=" " ind2=" " tag="010">
+        <marc:subfield code="a">2003215496</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="a">(OCoLC)53023489</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="a">2716979</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="040">
+        <marc:subfield code="a">NSD</marc:subfield>
+        <marc:subfield code="c">NSD</marc:subfield>
+        <marc:subfield code="d">CAS</marc:subfield>
+        <marc:subfield code="d">INU</marc:subfield>
+        <marc:subfield code="d">CLU</marc:subfield>
+        <marc:subfield code="d">DLC</marc:subfield>
+        <marc:subfield code="d">OCL</marc:subfield>
+        <marc:subfield code="d">RRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2=" " tag="022">
+        <marc:subfield code="a">1546-542X</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="030">
+        <marc:subfield code="a">IJACCP</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="037">
+        <marc:subfield code="b">American Ceramic Society, P.O. Box 6136, Westerville, OH 43086-6136</marc:subfield>
+        <marc:subfield code="c">$190.00</marc:subfield>
+        <marc:subfield code="c">$70.00 (members)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="042">
+        <marc:subfield code="a">lcd</marc:subfield>
+        <marc:subfield code="a">nsdp</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2="0" tag="050">
+        <marc:subfield code="a">TA455.C43</marc:subfield>
+        <marc:subfield code="b">I5648</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="049">
+        <marc:subfield code="a">RRRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2=" " tag="210">
+        <marc:subfield code="a">Int. j. appl. ceram. technol.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="222">
+        <marc:subfield code="a">International journal of applied ceramic technology</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2="0" tag="245">
+        <marc:subfield code="a">International journal of applied ceramic technology.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="3" ind2="0" tag="246">
+        <marc:subfield code="a">Applied ceramic technology</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="260">
+        <marc:subfield code="a">Westerville, OH :</marc:subfield>
+        <marc:subfield code="b">American Ceramic Society,</marc:subfield>
+        <marc:subfield code="c">c2004-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="300">
+        <marc:subfield code="a">v. :</marc:subfield>
+        <marc:subfield code="b">ill. ;</marc:subfield>
+        <marc:subfield code="c">26 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="310">
+        <marc:subfield code="a">Quarterly</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2=" " tag="362">
+        <marc:subfield code="a">Vol. 1, issue 1 (2004)-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="500">
+        <marc:subfield code="a">Title from cover.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="500">
+        <marc:subfield code="a">"Ceramic product development and commercialization."</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2=" " tag="510">
+        <marc:subfield code="a">Chemical abstracts</marc:subfield>
+        <marc:subfield code="x">0009-2258</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="530">
+        <marc:subfield code="a">Also issued online.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="650">
+        <marc:subfield code="a">Ceramic materials</marc:subfield>
+        <marc:subfield code="v">Periodicals.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="650">
+        <marc:subfield code="a">Ceramic materials</marc:subfield>
+        <marc:subfield code="x">Technological innovations</marc:subfield>
+        <marc:subfield code="v">Periodicals.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="2" ind2=" " tag="710">
+        <marc:subfield code="a">American Ceramic Society.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="776">
+        <marc:subfield code="t">International journal of applied ceramic technology (Online)</marc:subfield>
+        <marc:subfield code="w">(OCoLC)58046414</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="994">
+        <marc:subfield code="a">C0</marc:subfield>
+        <marc:subfield code="b">RRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="945">
+        <marc:subfield code="a">MARS</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Serial</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="939" ind1=" " ind2=" ">
+        <marc:subfield code="a">2004-</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)2716979</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="130" ind1="0" ind2=" ">
+        <marc:subfield code="a">International journal of applied ceramic technology.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Ceramic materials</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Ceramic materials</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="x">Technological innovations</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="969" ind1=" " ind2="0">
+        <marc:subfield code="v">Periodicals.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="969" ind1=" " ind2="0">
+        <marc:subfield code="v">Periodicals.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

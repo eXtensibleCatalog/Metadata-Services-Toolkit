@@ -1,0 +1,34 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/79</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:79</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Holding Records</setSpec>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>00298cy  a22001213  4500</marc:leader>
+      <marc:controlfield tag="001">2483966</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="004">1557247</marc:controlfield>
+      <marc:controlfield tag="005">20060906110144.0</marc:controlfield>
+      <marc:controlfield tag="008">0204154p    8   0001aueng0901128</marc:controlfield>
+      <marc:datafield ind1="1" ind2=" " tag="014">
+        <marc:subfield code="a">00058755</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="8" ind2=" " tag="852">
+        <marc:subfield code="b">NewsNewspr</marc:subfield>
+        <marc:subfield code="h">FILM .N57</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="3" ind2="0" tag="866">
+        <marc:subfield code="a">Sept.14,1857-</marc:subfield>
+        <marc:subfield code="x">Sept.14, 1857-Dec.31, 2001 linked to hldg #5497</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

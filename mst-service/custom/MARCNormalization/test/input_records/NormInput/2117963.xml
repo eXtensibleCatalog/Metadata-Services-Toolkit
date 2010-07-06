@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:66</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>03766cjm a2200541Ia 45e0</marc:leader>
+        <marc:controlfield tag="001">2117963</marc:controlfield>
+        <marc:controlfield tag="005">20011217111632.0</marc:controlfield>
+        <marc:controlfield tag="007">sd fsngnn---ed</marc:controlfield>
+        <marc:controlfield tag="008">001017p20001999nyuopn   df         ita d</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)ocm45180085</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">GZD</marc:subfield>
+          <marc:subfield code="c">GZD</marc:subfield>
+          <marc:subfield code="d">CPL</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="024" ind1="1" ind2=" ">
+          <marc:subfield code="a">028946704929</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="028" ind1="0" ind2="2">
+          <marc:subfield code="a">289 467 049-2</marc:subfield>
+          <marc:subfield code="b">Decca</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="033" ind1="2" ind2="0">
+          <marc:subfield code="a">19990703</marc:subfield>
+          <marc:subfield code="a">19990709</marc:subfield>
+          <marc:subfield code="b">5754</marc:subfield>
+          <marc:subfield code="c">W35</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="041" ind1="0" ind2=" ">
+          <marc:subfield code="d">itafre</marc:subfield>
+          <marc:subfield code="e">itafreeng</marc:subfield>
+          <marc:subfield code="h">itafre</marc:subfield>
+          <marc:subfield code="g">eng</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="092" ind1=" " ind2=" ">
+          <marc:subfield code="a">782.1</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RESM</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Fleming, Renee.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Rene&#x301;e Fleming</marc:subfield>
+          <marc:subfield code="h">[sound recording].</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">New York, NY :</marc:subfield>
+          <marc:subfield code="b">Decca :</marc:subfield>
+          <marc:subfield code="b">Manufactured and marketed by Universal Classics Group,</marc:subfield>
+          <marc:subfield code="c">p2000.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">1 sound disc :</marc:subfield>
+          <marc:subfield code="b">digital, stereo. ;</marc:subfield>
+          <marc:subfield code="c">4 3/4 in.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="306" ind1=" " ind2=" ">
+          <marc:subfield code="a">000251</marc:subfield>
+          <marc:subfield code="a">000451</marc:subfield>
+          <marc:subfield code="a">000247</marc:subfield>
+          <marc:subfield code="a">000254</marc:subfield>
+          <marc:subfield code="a">000459</marc:subfield>
+          <marc:subfield code="a">000353</marc:subfield>
+          <marc:subfield code="a">000501</marc:subfield>
+          <marc:subfield code="a">000355</marc:subfield>
+          <marc:subfield code="a">000428</marc:subfield>
+          <marc:subfield code="a">000626</marc:subfield>
+          <marc:subfield code="a">000339</marc:subfield>
+          <marc:subfield code="a">000612</marc:subfield>
+          <marc:subfield code="a">000733</marc:subfield>
+          <marc:subfield code="a">000430</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Opera excerpts.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="546" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sung in Italian and French.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="511" ind1="0" ind2=" ">
+          <marc:subfield code="a">Rene&#x301;e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="518" ind1=" " ind2=" ">
+          <marc:subfield code="a">Recorded July 3-9, 1999, The Colosseum, Watford.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Compact disc.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Biographical notes and texts with English translations (25 p. : ill.) inserted in container.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="505" ind1="0" ind2=" ">
+          <marc:subfield code="a">Gianni Schicchi. O mio babbino caro / Puccini ; Forzano (2:51) -- Madama Butterfly. Un bel di&#x300; vedremo / Puccini ; Giacosa &amp; Illica (4:51) -- La Bohe&#x300;me. Quando me n'vo&#x300; / Puccini ; Giacosa &amp; Illica (2:47) -- Turandot. Signore, ascolta! / Puccini ; compl. Alfano ; Adami &amp; Simoni (2:54) -- Pagliacci. Qual fiamma!-- Stridono lassu&#x300; / Leoncavallo (4:59) -- Adriana Lecouvreur. Ecco, respiro appena-- Io son l'umile ancella / Cilea ; Colautti (3:53) -- La Wally. Ebben?-- Ne andro&#x300; lontana / Catalani ; Illica (5:01) -- Manon. Je suis encor[e] tout e&#x301;tourdie / Massenet ; Meilhac &amp; Gille (3:55) --Manon. Allons! il le faut! pour lui-me&#x302;me-- Adieu, notre petite table / Massenet ; Meilhac &amp; Gille (4:28) -- Carmen. C'est des contrebandiers le refuge ordinaire-- Je dis que rien ne m'e&#x301;pouvante / Bizet ; Meilhac &amp; Hale&#x301;vy (6:26) -- Romeo et Juliette. Ah! Je veux vivre / Gounod ; Barbier &amp; Carre&#x301; (3:39) -- Simon Boccanegra. Come in quest'ora bruna / Verdi ; Piave ; rev. Boito (6:12) -- Norma. Casta diva / Bellini ; Romani (7:33) -- Les ve&#x302;pres siciliennes. Merci, jeunes amies / Verdi ; Scribe &amp; Duveyrier (4:30).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Operas</marc:subfield>
+          <marc:subfield code="v">Excerpts.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Mackerras, Charles,</marc:subfield>
+          <marc:subfield code="c">Sir,</marc:subfield>
+          <marc:subfield code="d">1925-</marc:subfield>
+          <marc:subfield code="4">cnd</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Puccini, Giacomo,</marc:subfield>
+          <marc:subfield code="d">1858-1924.</marc:subfield>
+          <marc:subfield code="t">Trittico.</marc:subfield>
+          <marc:subfield code="p">Gianni Schicchi.</marc:subfield>
+          <marc:subfield code="p">O mio babbino caro.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Puccini, Giacomo,</marc:subfield>
+          <marc:subfield code="d">1858-1924.</marc:subfield>
+          <marc:subfield code="t">Madama Butterfly.</marc:subfield>
+          <marc:subfield code="p">Un bel di&#x300;, vedremo.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Puccini, Giacomo,</marc:subfield>
+          <marc:subfield code="d">1858-1924.</marc:subfield>
+          <marc:subfield code="t">Bohe&#x300;me.</marc:subfield>
+          <marc:subfield code="p">Quando me'n vo.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Puccini, Giacomo,</marc:subfield>
+          <marc:subfield code="d">1858-1924.</marc:subfield>
+          <marc:subfield code="t">Turandot.</marc:subfield>
+          <marc:subfield code="p">Signore, ascolta!</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Leoncavallo, Ruggiero,</marc:subfield>
+          <marc:subfield code="d">1858-1919.</marc:subfield>
+          <marc:subfield code="t">Pagliacci.</marc:subfield>
+          <marc:subfield code="p">Hui! stridono lassu&#x300;.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Cile&#x300;a, Francesco,</marc:subfield>
+          <marc:subfield code="d">1866-1950.</marc:subfield>
+          <marc:subfield code="t">Adriana Lecouvreur.</marc:subfield>
+          <marc:subfield code="p">Io son l'umile ancella.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Catalani, Alfredo,</marc:subfield>
+          <marc:subfield code="d">1854-1893.</marc:subfield>
+          <marc:subfield code="t">Wally.</marc:subfield>
+          <marc:subfield code="p">Ebben? Ne andro&#x300; lontana.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Massenet, Jules,</marc:subfield>
+          <marc:subfield code="d">1842-1912.</marc:subfield>
+          <marc:subfield code="t">Manon.</marc:subfield>
+          <marc:subfield code="p">Je suis encore tout e&#x301;tourdie.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Massenet, Jules,</marc:subfield>
+          <marc:subfield code="d">1842-1912.</marc:subfield>
+          <marc:subfield code="t">Manon.</marc:subfield>
+          <marc:subfield code="p">Adieu, notre petite table.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Bizet, Georges,</marc:subfield>
+          <marc:subfield code="d">1838-1875.</marc:subfield>
+          <marc:subfield code="t">Carmen.</marc:subfield>
+          <marc:subfield code="p">Je dis que rien ne m'e&#x301;pouvante.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Gounod, Charles,</marc:subfield>
+          <marc:subfield code="d">1818-1893.</marc:subfield>
+          <marc:subfield code="t">Rome&#x301;o et Juliette.</marc:subfield>
+          <marc:subfield code="p">Je veux vivre dans le re&#x302;ve.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Verdi, Giuseppe,</marc:subfield>
+          <marc:subfield code="d">1813-1901.</marc:subfield>
+          <marc:subfield code="t">Simon Boccanegra.</marc:subfield>
+          <marc:subfield code="p">Come in quest'ora bruna.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Bellini, Vincenzo,</marc:subfield>
+          <marc:subfield code="d">1801-1835.</marc:subfield>
+          <marc:subfield code="t">Norma.</marc:subfield>
+          <marc:subfield code="p">Casta diva.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2="2">
+          <marc:subfield code="a">Verdi, Giuseppe,</marc:subfield>
+          <marc:subfield code="d">1813-1901.</marc:subfield>
+          <marc:subfield code="t">Ve&#x302;pres siciliennes.</marc:subfield>
+          <marc:subfield code="p">Merci jeunes amies.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">London Voices.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">London Philharmonic Orchestra.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">E0</marc:subfield>
+          <marc:subfield code="b">RES</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

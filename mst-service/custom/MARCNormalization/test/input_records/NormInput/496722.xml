@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:149</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00903ncm a22002890  45 A</marc:leader>
+        <marc:controlfield tag="001">496722</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="008">840716q19601969nyuopa         n    ita d</marc:controlfield>
+        <marc:datafield tag="028" ind1="3" ind2="2">
+          <marc:subfield code="a">No. 289</marc:subfield>
+          <marc:subfield code="b">Kalmus miniature orchestra scores</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="b">ocm</marc:subfield>
+          <marc:subfield code="a">10953165</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="9">00417400</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">RES</marc:subfield>
+          <marc:subfield code="c">RES</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="045" ind1="0" ind2=" ">
+          <marc:subfield code="b">d1896</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RESM [copy 1]</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">M 1500 .P977B 1960z</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Puccini, Giacomo,</marc:subfield>
+          <marc:subfield code="d">1858-1924.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="1" ind2="0">
+          <marc:subfield code="a">Bohe&#x300;me</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="3">
+          <marc:subfield code="a">La bohe&#x300;me :</marc:subfield>
+          <marc:subfield code="b">an opera in four acts /</marc:subfield>
+          <marc:subfield code="c">Puccini.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">New York :</marc:subfield>
+          <marc:subfield code="b">E.F. Kalmus,</marc:subfield>
+          <marc:subfield code="c">[196-?]</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">1 score (408 p.) ;</marc:subfield>
+          <marc:subfield code="c">27 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Libretto by Giuseppe Giacosa and Luigi Illica.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Operas</marc:subfield>
+          <marc:subfield code="x">Scores.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Giacosa, Giuseppe,</marc:subfield>
+          <marc:subfield code="d">1847-1906.</marc:subfield>
+          <marc:subfield code="t">Bohe&#x300;me.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Illica, Luigi,</marc:subfield>
+          <marc:subfield code="d">1857-1919.</marc:subfield>
+          <marc:subfield code="t">Bohe&#x300;me.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="910" ind1=" " ind2=" ">
+          <marc:subfield code="a">  950805        </marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="911" ind1=" " ind2=" ">
+          <marc:subfield code="a">p</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Stack</marc:subfield>
+          <marc:subfield code="m">SMONO </marc:subfield>
+          <marc:subfield code="s">M 1500 .P977B 1960z</marc:subfield>
+          <marc:subfield code="c"> 1</marc:subfield>
+          <marc:subfield code="b">39087011222637</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:146</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>02072cas a2200457 a 45e0</marc:leader>
+        <marc:controlfield tag="001">481</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20081203134004.0</marc:controlfield>
+        <marc:controlfield tag="008">750921c18839999mauwn1p       0   a0eng d</marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">17024346 //r862</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)01644869</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">MUL</marc:subfield>
+          <marc:subfield code="c">MUL</marc:subfield>
+          <marc:subfield code="d">COO</marc:subfield>
+          <marc:subfield code="d">NSD</marc:subfield>
+          <marc:subfield code="d">DLC</marc:subfield>
+          <marc:subfield code="d">IUL</marc:subfield>
+          <marc:subfield code="d">DLC</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">NSD</marc:subfield>
+          <marc:subfield code="d">SER</marc:subfield>
+          <marc:subfield code="d">RCS</marc:subfield>
+          <marc:subfield code="d">AIP</marc:subfield>
+          <marc:subfield code="d">HUL</marc:subfield>
+          <marc:subfield code="d">OCL</marc:subfield>
+          <marc:subfield code="d">DLC</marc:subfield>
+          <marc:subfield code="d">NSD</marc:subfield>
+          <marc:subfield code="d">IUL</marc:subfield>
+          <marc:subfield code="d">AIP</marc:subfield>
+          <marc:subfield code="d">DLC</marc:subfield>
+          <marc:subfield code="d">HUL</marc:subfield>
+          <marc:subfield code="d">OCL</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">HUL</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">NYG</marc:subfield>
+          <marc:subfield code="d">NSD</marc:subfield>
+          <marc:subfield code="d">HUL</marc:subfield>
+          <marc:subfield code="d">NSD</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">OCL</marc:subfield>
+          <marc:subfield code="d">AGL</marc:subfield>
+          <marc:subfield code="d">NSD</marc:subfield>
+          <marc:subfield code="d">OCL</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">NSD</marc:subfield>
+          <marc:subfield code="d">GUA</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="019" ind1=" " ind2=" ">
+          <marc:subfield code="a">1242075</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="022" ind1="0" ind2=" ">
+          <marc:subfield code="a">0036-8075</marc:subfield>
+          <marc:subfield code="y">003-8076</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="030" ind1=" " ind2=" ">
+          <marc:subfield code="a">SCIEAS</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="032" ind1=" " ind2=" ">
+          <marc:subfield code="a">484460</marc:subfield>
+          <marc:subfield code="b">USPS</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="042" ind1=" " ind2=" ">
+          <marc:subfield code="a">nsdp</marc:subfield>
+          <marc:subfield code="a">lc</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="050" ind1="0" ind2="0">
+          <marc:subfield code="a">Q1</marc:subfield>
+          <marc:subfield code="b">.S35</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">Q1</marc:subfield>
+          <marc:subfield code="b">.S391</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">Serial</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="130" ind1="0" ind2=" ">
+          <marc:subfield code="a">Science (Weekly)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="210" ind1="0" ind2=" ">
+          <marc:subfield code="a">Science</marc:subfield>
+          <marc:subfield code="b">(Wash. D.C.)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="222" ind1=" " ind2="0">
+          <marc:subfield code="a">Science</marc:subfield>
+          <marc:subfield code="b">(Washington, D.C.)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">Science.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Cambridge, Mass. :</marc:subfield>
+          <marc:subfield code="b">Moses King,</marc:subfield>
+          <marc:subfield code="c">[1883-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">v. :</marc:subfield>
+          <marc:subfield code="b">ill. ;</marc:subfield>
+          <marc:subfield code="c">26-32 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="310" ind1=" " ind2=" ">
+          <marc:subfield code="a">Weekly (except last week in Dec.)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="362" ind1="0" ind2=" ">
+          <marc:subfield code="a">[Vol. 1], no. 1 (Feb. 9, 1883)-v. 23, no. 581 (Mar. 23, 1894); n.s., v. 1, no. 1 (Jan. 4, 1895)-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Title from caption.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Published: Washington, D.C. : American Association for the Advancement of Science, 1992-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="520" ind1=" " ind2=" ">
+          <marc:subfield code="a">Since Jan. 1901 the official proceedings and most of the papers of the American Association for the Advancement of Science have been included in Science.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="580" ind1=" " ind2=" ">
+          <marc:subfield code="a">Vols. for 1911-1913 contain: the Proceedings of the Helminthological Society of Washington, 1st-15th meeting.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Science</marc:subfield>
+          <marc:subfield code="x">Periodicals.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="2">
+          <marc:subfield code="a">Science</marc:subfield>
+          <marc:subfield code="v">Periodicals.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">American Association for the Advancement of Science.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="770" ind1="0" ind2=" ">
+          <marc:subfield code="t">AAAS observer</marc:subfield>
+          <marc:subfield code="x">1043-6936</marc:subfield>
+          <marc:subfield code="w">(DLC)sn 88019924</marc:subfield>
+          <marc:subfield code="w">(OCoLC)18455932</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="776" ind1="1" ind2=" ">
+          <marc:subfield code="t">Science magazine</marc:subfield>
+          <marc:subfield code="w">(DLC)sn 96036234</marc:subfield>
+          <marc:subfield code="w">(OCoLC)34298537</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="777" ind1="1" ind2=" ">
+          <marc:subfield code="a">Helminthological Society of Washington.</marc:subfield>
+          <marc:subfield code="t">Proceedings of the Helminthological Society of Washington</marc:subfield>
+          <marc:subfield code="x">0018-0130</marc:subfield>
+          <marc:subfield code="w">(DLC)   6532051</marc:subfield>
+          <marc:subfield code="w">(OCoLC)1604661</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="780" ind1="0" ind2="0">
+          <marc:subfield code="t">Science</marc:subfield>
+          <marc:subfield code="x">0036-8075</marc:subfield>
+          <marc:subfield code="w">(DLC)   02027780</marc:subfield>
+          <marc:subfield code="w">(OCoLC)2948546</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="780" ind1="0" ind2="5">
+          <marc:subfield code="t">Scientific monthly</marc:subfield>
+          <marc:subfield code="x">0096-3771</marc:subfield>
+          <marc:subfield code="w">(DLC)16010072</marc:subfield>
+          <marc:subfield code="w">(OCoLC)1765233</marc:subfield>
+          <marc:subfield code="g">Jan. 1958</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

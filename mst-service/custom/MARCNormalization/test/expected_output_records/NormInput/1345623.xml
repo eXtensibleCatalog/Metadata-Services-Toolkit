@@ -1,0 +1,154 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/31</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:31</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01726cas a2200361 a 45&amp;#x2019;0</marc:leader>
+      <marc:controlfield tag="001">1345623</marc:controlfield>
+      <marc:controlfield tag="003">OCoLC</marc:controlfield>
+      <marc:controlfield tag="007">hduafv---baca</marc:controlfield>
+      <marc:controlfield tag="008">820611u1810uuuumiuuu   a     0   a0eng d</marc:controlfield>
+      <marc:datafield ind1=" " ind2=" " tag="010">
+        <marc:subfield code="a">sf 88093582</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="9">ocm08513404</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="040">
+        <marc:subfield code="a">MUU</marc:subfield>
+        <marc:subfield code="c">MUU</marc:subfield>
+        <marc:subfield code="d">PES</marc:subfield>
+        <marc:subfield code="d">DLC</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="011">
+        <marc:subfield code="a">06-6391</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="042">
+        <marc:subfield code="a">lcd</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2="0" tag="050">
+        <marc:subfield code="a">Microfilm 01104 no. 770 AP</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="099">
+        <marc:subfield code="a">FILM</marc:subfield>
+        <marc:subfield code="a">Una191</marc:subfield>
+        <marc:subfield code="a">770.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="049">
+        <marc:subfield code="a">RRRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="2" ind2=" " tag="110">
+        <marc:subfield code="a">Connecticut Academy of Arts and Sciences.</marc:subfield>
+        <marc:subfield code="4">aut</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2="0" tag="245">
+        <marc:subfield code="a">Memoirs of the Connecticut Academy of Arts and Sciences</marc:subfield>
+        <marc:subfield code="h">[microform].</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="260">
+        <marc:subfield code="a">New Haven :</marc:subfield>
+        <marc:subfield code="b">[The Academy],</marc:subfield>
+        <marc:subfield code="c">1810-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="300">
+        <marc:subfield code="a">v. :</marc:subfield>
+        <marc:subfield code="b">ill., plates (part col.) map, tables, diagrs. ;</marc:subfield>
+        <marc:subfield code="c">23-30 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2=" " tag="362">
+        <marc:subfield code="a">Vol. 1, pt. 1-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="515">
+        <marc:subfield code="a">Vol. 1 comprises 4 parts (412 p.) 8, published 1810-16.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="533">
+        <marc:subfield code="a">Microfilm.</marc:subfield>
+        <marc:subfield code="b">Ann Arbor, Mich. :</marc:subfield>
+        <marc:subfield code="c">University Microfilms.</marc:subfield>
+        <marc:subfield code="e">1 microfilm reel ; 35 mm.</marc:subfield>
+        <marc:subfield code="f">(American periodical series, 1800-1850 ; 770)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="550">
+        <marc:subfield code="a">Vols. 2-    published under the auspices of Yale University.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="580">
+        <marc:subfield code="a">Papers read before the Academy appeared chiefly in the American journal of science from 1818 until the commencement of the series of Transactions in 1866. The publication of the Memoirs was resumed in July 1910, in 4.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="2" ind2=" " tag="710">
+        <marc:subfield code="a">Yale University.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="776">
+        <marc:subfield code="a">Connecticut Academy of Arts and Sciences.</marc:subfield>
+        <marc:subfield code="t">Memoirs of the Connecticut Academy of Arts and Sciences</marc:subfield>
+        <marc:subfield code="w">(OCoLC)1564846</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="787">
+        <marc:subfield code="t">American journal of science</marc:subfield>
+        <marc:subfield code="g">1818-1865</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="787">
+        <marc:subfield code="a">Connecticut Academy of Arts and Sciences.</marc:subfield>
+        <marc:subfield code="t">Transactions</marc:subfield>
+        <marc:subfield code="g">1866-1909</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="830">
+        <marc:subfield code="a">American periodical series, 1800-1850 ;</marc:subfield>
+        <marc:subfield code="v">770.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="890">
+        <marc:subfield code="a">Connecticut Academy of Arts and Sciences.  Memoirs of the Connecticut Academy of Arts and Sciences.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="910">
+        <marc:subfield code="a">19961012095704.0</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Serial</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Microform</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="934" ind1=" " ind2=" ">
+        <marc:subfield code="a">Microfilm reel</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="240" ind1="0" ind2="0">
+        <marc:subfield code="a">Memoirs of the Connecticut Academy of Arts and Sciences</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>
