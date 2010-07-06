@@ -29,7 +29,16 @@ public class ExampleMetadataService extends GenericMetadataService {
 	public List<Record> process(Record r) {
 		List<Record> records = new ArrayList<Record>();
 		try {
-			Record out = getRecordService().createSuccessor(r, getService());
+			Record out = null;
+			LOG.debug("in.getStatus(): "+r.getStatus());
+			if (r.getSuccessors() != null && r.getSuccessors().size() > 0) {
+				out = r.getSuccessors().get(0);
+			} else {
+				out = getRecordService().createSuccessor(r, getService());
+			}
+			if (r.getStatus() == Record.DELETED) {
+				out.setStatus(Record.DELETED);
+			}
 			out.setFormat(getFormatDAO().getById(1));
 			r.setMode(Record.JDOM_MODE);
 			Element metadataEl = r.getOaiXmlEl();

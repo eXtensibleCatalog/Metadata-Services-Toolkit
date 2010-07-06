@@ -15,17 +15,13 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.jconfig.Configuration;
-import org.jconfig.ConfigurationManager;
 import org.jdom.Attribute;
-import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.xpath.XPath;
 
 import xc.mst.constants.Constants;
-import xc.mst.utils.MSTConfiguration;
 
 
 /**
@@ -35,33 +31,69 @@ import xc.mst.utils.MSTConfiguration;
  *
  * @author Eric Osisek
  */
-public class MarcXmlManager
-{
-	/**
-	 * The logger object
-	 */
+public class MarcXmlManager {
+
 	private static Logger log = Logger.getLogger(Constants.LOGGER_PROCESSING);
 
-	/**
-	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
-	 */
-	protected static final Configuration configuration = ConfigurationManager.getConfiguration();
+	protected static Namespace marcNamespace = Namespace.getNamespace("marc", "http://www.loc.gov/MARC21/slim");
 
-
-	/**
-	 * The namespace for MARC XML
-	 */
-	private static Namespace marcNamespace = Namespace.getNamespace("marc", "http://www.loc.gov/MARC21/slim");
-
-	/**
-	 * The MARC XML Document we're managing
-	 */
-	private Document marcXml = null;
+	protected Element marcXml = null;
 
 	/**
 	 * A set of linking tags currently existing on the MARC XML record
 	 */
-	private HashSet<String> usedLinkingFields = new HashSet<String>();
+	protected HashSet<String> usedLinkingFields = new HashSet<String>();
+	
+
+	/**
+	 * Constructs a MarcXmlManager based on a MARC XML record.
+	 * This constructor will initialize all cached fields by iterating over
+	 * the MARC XML record's fields exactly once.
+	 *
+	 * @param marcXml The MARC XML record we're managing
+	 * @param organizationCode The organization code from the configuration file
+	 */
+	@SuppressWarnings("unchecked")
+	public MarcXmlManager(Element marcXml, String organizationCode) {
+		this.marcXml = marcXml;
+
+		this.organizationCode = organizationCode;
+
+		// Get the MARC XML's leader
+		leader = this.marcXml.getChildText("leader", marcNamespace);
+
+		if(log.isDebugEnabled())
+			log.debug("Found the value of the leader to be " + leader + ".");
+
+		// Initialize the MARC XML control fields
+		initializeMarcControlFields();
+
+		// Initialize the MARC XML data fields
+		initializeMarcDataFields();
+
+		// Initialize the used linking fields
+		try
+		{
+			// Use XPATH to get a list of all linking fields currently
+			// in the MARC XML records.  These are the values of the $8
+			// subfield of any datafield
+			XPath xpath = XPath.newInstance("//marc:subfield[@code='8']");
+			xpath.addNamespace("marc", "http://www.loc.gov/MARC21/slim");
+			List<Element> elements = xpath.selectNodes(marcXml);
+
+			// Add all existing linking fields to the set of
+			// initial linking fields
+			for(Element element : elements)
+				if(!usedLinkingFields.contains(element.getText()))
+					usedLinkingFields.add(element.getText());
+		}
+		catch(JDOMException e)
+		{
+			log.error("An error occurred while getting the current linking fields on the MARC XML record.", e);
+		}
+
+	} // end constructor
+
 
 	/**
 	 * Tests whether or not the MARC XML record contains the passed linking field.
@@ -652,63 +684,13 @@ public class MarcXmlManager
 	 * @return A list of the original 035 fields for the MARC XML
 	 */
 	public ArrayList<Element> getOriginal035Fields() { return original035fields; }
-
-	/**
-	 * Constructs a MarcXmlManager based on a MARC XML record.
-	 * This constructor will initialize all cached fields by iterating over
-	 * the MARC XML record's fields exactly once.
-	 *
-	 * @param marcXml The MARC XML record we're managing
-	 * @param organizationCode The organization code from the configuration file
-	 */
-	@SuppressWarnings("unchecked")
-	public MarcXmlManager(Document marcXml, String organizationCode)
-	{
-		this.marcXml = marcXml;
-
-		this.organizationCode = organizationCode;
-
-		// Get the MARC XML's leader
-		leader = this.marcXml.getRootElement().getChildText("leader", marcNamespace);
-
-		if(log.isDebugEnabled())
-			log.debug("Found the value of the leader to be " + leader + ".");
-
-		// Initialize the MARC XML control fields
-		initializeMarcControlFields();
-
-		// Initialize the MARC XML data fields
-		initializeMarcDataFields();
-
-		// Initialize the used linking fields
-		try
-		{
-			// Use XPATH to get a list of all linking fields currently
-			// in the MARC XML records.  These are the values of the $8
-			// subfield of any datafield
-			XPath xpath = XPath.newInstance("//marc:subfield[@code='8']");
-			xpath.addNamespace("marc", "http://www.loc.gov/MARC21/slim");
-			List<Element> elements = xpath.selectNodes(marcXml);
-
-			// Add all existing linking fields to the set of
-			// initial linking fields
-			for(Element element : elements)
-				if(!usedLinkingFields.contains(element.getText()))
-					usedLinkingFields.add(element.getText());
-		}
-		catch(JDOMException e)
-		{
-			log.error("An error occurred while getting the current linking fields on the MARC XML record.", e);
-		}
-
-	} // end constructor
-
+	
 	/**
 	 * Gets the MARC XML resulting from the modifications which have been made through this MarcXmlManager
 	 *
 	 * @return The modified MARC XML record.
 	 */
-	public Document getModifiedMarcXml()
+	public Element getModifiedMarcXml()
 	{
 		return marcXml;
 	} // end method getModifiedMarcXml
@@ -751,7 +733,7 @@ public class MarcXmlManager
 			log.debug("Initializing MARC XML control fields.");
 
 		// Get the control fields
-		List<Element> controlFields = marcXml.getRootElement().getChildren("controlfield", marcNamespace);
+		List<Element> controlFields = marcXml.getChildren("controlfield", marcNamespace);
 
 		// Iterate over the fields and find the 001, 003, 007, and 008 control fields.
 		// Initialize their cached values as we find them.
@@ -814,7 +796,7 @@ public class MarcXmlManager
 			log.debug("Initializing MARC XML data fields.");
 
 		// Get the data fields
-		List<Element> fields = marcXml.getRootElement().getChildren("datafield", marcNamespace);
+		List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
 
 		// Iterate over the fields and find the one with the correct tag
 		for(Element field : fields)
@@ -1105,7 +1087,7 @@ public class MarcXmlManager
 		}
 
 		// Add the new field to the end of the MARC XML if we didn't insert it already
-		marcXml.getRootElement().addContent(newFieldElement).addContent("\n\n");
+		marcXml.addContent(newFieldElement).addContent("\n\n");
 
 		// If we just added a language code, add it to the list of new language codes we're maintaining
 		if(tag.equals(NormalizationServiceConstants.FIELD_9XX_LANGUAGE_SPLIT))
@@ -1139,7 +1121,7 @@ public class MarcXmlManager
 		newFieldElement.setText(value);
 		
 		// Add the new field to the end of the MARC XML if we didn't insert it already
-		marcXml.getRootElement().addContent(newFieldElement).addContent("\n\n");
+		marcXml.addContent(newFieldElement).addContent("\n\n");
 
 	}
 	
@@ -1156,7 +1138,7 @@ public class MarcXmlManager
 			log.debug("Copying the MARC XML tag " + copyFromTag + " subfields " + subfieldsToCopy + " into the MARC XML tag " + copyToTag);
 
 		// Get the data fields
-		List<Element> fields = marcXml.getRootElement().getChildren("datafield", marcNamespace);
+		List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
 
 		// The copied field with the correct tag
 		Element newField = null;
@@ -1219,7 +1201,7 @@ public class MarcXmlManager
 
 		// Add the new field to the end of the MARC XML if we found the field to copy from
 		if(newField != null)
-			marcXml.getRootElement().addContent(newField).addContent("\n\n");
+			marcXml.addContent(newField).addContent("\n\n");
 
 		// If we created a new 240 tag as a result of the copy, save it
 		if(copyToTag.equals("240") && field240element.size() == 0)
@@ -1245,7 +1227,7 @@ public class MarcXmlManager
 			log.debug("Copying " + targetFields.size() + " MARC XML tags into the MARC XML tag " + copyIntoField + " using only subfields before " + requiredSubfields);
 
 		// Get the data fields
-		List<Element> fields = marcXml.getRootElement().getChildren("datafield", marcNamespace);
+		List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
 
 		// The copied field with the correct tag
 		Element newField = null;
@@ -1328,7 +1310,7 @@ public class MarcXmlManager
 
 		// Add all the new elements
 		for(Element addMe : newFields)
-			marcXml.getRootElement().addContent(addMe).addContent("\n\n");
+			marcXml.addContent(addMe).addContent("\n\n");
 	}
 
 	/**
@@ -1347,7 +1329,7 @@ public class MarcXmlManager
 			log.debug("Copying " + targetFields.size() + " MARC XML tags into the MARC XML tag " + copyIntoField + " using only subfield " + copyOnlySubfield);
 
 		// Get the data fields
-		List<Element> fields = marcXml.getRootElement().getChildren("datafield", marcNamespace);
+		List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
 
 		// The copied field with the correct tag
 		Element newField = null;
@@ -1417,7 +1399,7 @@ public class MarcXmlManager
 
 		// Add all the new elements
 		for(Element addMe : newFields)
-			marcXml.getRootElement().addContent(addMe).addContent("\n\n");
+			marcXml.addContent(addMe).addContent("\n\n");
 	}
 
 	/**
@@ -1436,7 +1418,7 @@ public class MarcXmlManager
 			log.debug("Copying " + targetFields.size() + " MARC XML tags into the MARC XML tag " + copyIntoField + " using only subfields before the $t.");
 
 		// Get the data fields
-		List<Element> fields = marcXml.getRootElement().getChildren("datafield", marcNamespace);
+		List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
 
 		// The copied field with the correct tag
 		Element newField = null;
@@ -1537,7 +1519,7 @@ public class MarcXmlManager
 
 		// Add all the new elements
 		for(Element addMe : newFields)
-			marcXml.getRootElement().addContent(addMe).addContent("\n\n");
+			marcXml.addContent(addMe).addContent("\n\n");
 	}
 
 	/**
@@ -1599,7 +1581,7 @@ public class MarcXmlManager
 
 		// Remove the fields we found to be duplicates
 		for(Element removeMe : toRemove)
-			marcXml.getRootElement().removeContent(removeMe);
+			marcXml.removeContent(removeMe);
 	} // end method deduplicateMarcXmlField
 
 	/**
@@ -1679,7 +1661,7 @@ public class MarcXmlManager
 
 		// Remove the fields we found to be duplicates
 		for(Element removeMe : toRemove)
-			marcXml.getRootElement().removeContent(removeMe);
+			marcXml.removeContent(removeMe);
 	} // end method deduplicateMarcXmlField
 
 	/**
@@ -1716,7 +1698,7 @@ public class MarcXmlManager
 		boolean setValue = false;
 
 		// Get the data fields
-		List<Element> fields = marcXml.getRootElement().getChildren("datafield", marcNamespace);
+		List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
 
 		// The field we should add the subfield to
 		Element addSubfieldToMe = null;
@@ -1789,7 +1771,7 @@ public class MarcXmlManager
 		boolean setValue = false;
 
 		// Get the data fields
-		List<Element> fields = marcXml.getRootElement().getChildren("datafield", marcNamespace);
+		List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
 
 		// The field we should add the subfield to
 		Element addSubfieldToMe = null;
@@ -2003,7 +1985,7 @@ public class MarcXmlManager
 					potentialResults.addAll(tagTo880s.get(targetField));
 
 				for(Element potentialResult : potentialResults)
-					if(getSubfieldOfField(potentialResult, '5').contains(MSTConfiguration.getProperty(Constants.CONFIG_ORGANIZATION_CODE)))
+					if(getSubfieldOfField(potentialResult, '5').contains(this.organizationCode))
 						results.add(potentialResult);
 
 				return results;
@@ -2131,7 +2113,7 @@ public class MarcXmlManager
 			else
 			{
 				// Remove the control field
-				marcXml.getRootElement().removeContent(elements.get(0));
+				marcXml.removeContent(elements.get(0));
 
 				if(targetField.equals("003"))
 					field003 = null;
@@ -2188,8 +2170,8 @@ public class MarcXmlManager
 //		entityElement.getChildren().remove(element);
 		
 		// Remove the control field
-		marcXml.getRootElement().removeContent(element);
+		marcXml.removeContent(element);
 		
 	}
 	
-} // end class MarcXmlManager
+}

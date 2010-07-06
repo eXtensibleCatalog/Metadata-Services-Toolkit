@@ -128,8 +128,11 @@
 		<copy-to-custom-services subdir="">
 			<macro-file-set>
 				<fileset dir="${ms.example}">
-					<include name="**/*.xml" />
-					<include name="**/*.properties" />
+					<include name="conf/*" />
+					<include name="build.xml" />
+					<include name="build.properties" />
+					<include name="ivysettings.xml" />
+					<include name="ivy.xml" />
 				</fileset>
 			</macro-file-set>
 		</copy-to-custom-services>

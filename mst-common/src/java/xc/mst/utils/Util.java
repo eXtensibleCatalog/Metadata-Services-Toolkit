@@ -1,5 +1,10 @@
 package xc.mst.utils;
 
+import gnu.trove.TLongHashSet;
+import gnu.trove.TLongObjectHashMap;
+import gnu.trove.TLongObjectProcedure;
+import gnu.trove.TLongProcedure;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -112,6 +117,38 @@ public class Util {
 		} else {
 			throw new RuntimeException(t);
 		}
+	}
+	
+	public String getString(TLongObjectHashMap tlohm) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("total_size:");
+		sb.append(tlohm.size());
+		sb.append(" ");
+		tlohm.forEachEntry(new TLongObjectProcedure() {
+			public boolean execute(long key, Object value) {
+				TLongHashSet tlal = (TLongHashSet)value;
+				sb.append(key+":[");
+				tlal.forEach(new TLongProcedure() {
+					public boolean execute(long value) {
+						sb.append(value);
+						sb.append(",");
+						return true;
+					}
+				});
+				sb.append("] ");
+				return true;
+			}
+		});
+		return sb.toString();
+	}
+	
+	public String getMostSignificantToken(String oaiId) {
+		int idx0 = oaiId.lastIndexOf(MSTConfiguration.getInstance().getProperty("harvest.mostSignificantToken"));
+		String mostSigToken = oaiId;
+		if (idx0 > -1) {
+			mostSigToken = oaiId.substring(idx0+1);
+		}
+		return mostSigToken;
 	}
 
 }

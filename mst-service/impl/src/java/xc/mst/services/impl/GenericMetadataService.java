@@ -10,6 +10,9 @@
 package xc.mst.services.impl;
 
 
+import gnu.trove.TLongHashSet;
+import gnu.trove.TLongObjectHashMap;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,6 +58,9 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	protected int errorCount = 0;
 	protected int errorCountPerCommit = 0;
 	protected Emailer mailer = new Emailer();
+	
+	protected TLongObjectHashMap predecessorKeyedMap = new TLongObjectHashMap();
+	protected TLongObjectHashMap successorKeyedMap = new TLongObjectHashMap();
 
 	/**
 	 * A list of services to run after this service's processing completes
@@ -305,7 +311,11 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	public abstract List<Record> process(Record r);
 
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
+		LOG.debug("getService(): "+getService());
 		running.lock();
+		predecessorKeyedMap.clear();
+		successorKeyedMap.clear();
+		getRepository().populatePredSuccMaps(predecessorKeyedMap, successorKeyedMap);
 		//TODO - check and store tables of when the last "harvest" was
 		Date from = new Date(System.currentTimeMillis()-(1000*60*60*24*500));
 		Date until = new Date();
@@ -330,17 +340,17 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			}
 			getRepository().beginBatch();
 			for (Record in : records) {
-				if (getRepository() != null) {
-					// TODO:  This is sort of different than the current implementation
-					//        Although, it does about the same thing.  Perhaps it'll 
-					//        work as long as you configure the cache correctly
-					// NOTE: successor records need to have predecessors injected into them
-					//getRepository().injectSuccessors(in);
-				}
+				// TODO: currently the injected records here only contain ids.
+				//       This is helpful enough if you simply want to overwrite the
+				//       the existing record.  Although I can't think of a reason
+				//       why, someone might also want the xml with these injected records.
+				//       We may want to supply an optional way of doing that.
+				injectKnownSuccessors(in);
 				List<Record> out = process(in);
-				if (out != null && outputSet != null) {
+				if (out != null) {
 					for (Record rout : out) {
-						rout.addSet(outputSet);
+						injectKnownPredecessors(in, rout);
+						rout.setService(getService());
 					}
 					getRepository().addRecords(out);
 				}
@@ -353,5 +363,48 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			running.unlock();
 		}
 	}
-
+	
+	protected void injectKnownSuccessors(Record in) {
+		TLongHashSet tlal = (TLongHashSet)predecessorKeyedMap.get(in.getId());
+		if (tlal != null) {
+			long[] succIds = tlal.toArray();
+			for (int i=0; i<succIds.length; i++) {
+				Record succ = new Record();
+				succ.setId(succIds[i]);
+				//succ.setStatus(Record.UPDATE_REPLACE);
+				in.getSuccessors().add(succ);
+				tlal = (TLongHashSet)successorKeyedMap.get(succ.getId());
+				if (tlal != null) {
+					long[] predIds = tlal.toArray();
+					for (int j=0; j<predIds.length; j++) {
+						Record pred = in;
+						if (predIds[j] != in.getId()) {
+							pred = new Record();
+							pred.setId(predIds[j]);
+						}
+						succ.addPredecessor(pred);
+					}
+				}
+			}
+		}
+	}
+	
+	protected void injectKnownPredecessors(Record in, Record out) {
+		if (outputSet != null) {
+			out.addSet(outputSet);
+		}
+		TLongHashSet tlal = (TLongHashSet)predecessorKeyedMap.get(in.getId());
+		if (tlal == null) {
+			tlal = new TLongHashSet();
+			predecessorKeyedMap.put(in.getId(), tlal);
+		}
+		tlal.add(out.getId());
+		
+		tlal = (TLongHashSet)successorKeyedMap.get(out.getId());
+		if (tlal == null) {
+			tlal = new TLongHashSet();
+			successorKeyedMap.put(out.getId(), tlal);
+		}
+		tlal.add(in.getId());
+	}
 }

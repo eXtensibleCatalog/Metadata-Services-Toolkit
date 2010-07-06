@@ -1,10 +1,34 @@
-<records>
-  <record>
-    <header>
-      <identifier>oai:mst.rochester.edu:example:2</identifier>
-    </header>
-    <metadata>
-      <bar>you've been barred: french fries</bar>
-    </metadata>
-  </record>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:example/2</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:bib:2</predecessor>
+    </predecessors>
+    <status>replaced</status>
+  </header>
+  <metadata>
+    <foo xmlns="foo:bar">
+      french fries
+      <bar>you've been foobarred!</bar>
+    </foo>
+  </metadata>
+</record>
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:example/2</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:bib:2</predecessor>
+    </predecessors>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <foo xmlns="foo:bar">
+      french fries
+      <bar>you've been foobarred!</bar>
+    </foo>
+  </metadata>
+</record>
 </records>

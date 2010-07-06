@@ -1,10 +1,34 @@
-<records>
-  <record>
-    <header>
-      <identifier>oai:mst.rochester.edu:example:1</identifier>
-    </header>
-    <metadata>
-      <bar>you've been barred: pb&amp;j</bar>
-    </metadata>
-  </record>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:example/1</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:bib:1</predecessor>
+    </predecessors>
+    <status>replaced</status>
+  </header>
+  <metadata>
+    <foo xmlns="foo:bar">
+      pb&amp;j
+      <bar>you've been foobarred!</bar>
+    </foo>
+  </metadata>
+</record>
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:example/1</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:bib:1</predecessor>
+    </predecessors>
+    <status>active</status>
+  </header>
+  <metadata>
+    <foo xmlns="foo:bar">
+      pb&amp;j 2
+      <bar>you've been foobarred!</bar>
+    </foo>
+  </metadata>
+</record>
 </records>

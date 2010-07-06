@@ -29,8 +29,10 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 			
 			ServicesService ss = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
 	
-			ss.addNewService(serviceName);
 			Service s = ss.getServiceByName(serviceName);
+			getRepositoryDAO().deleteSchema(serviceName);
+			ss.addNewService(serviceName);
+			s = ss.getServiceByName(serviceName);
 			GenericMetadataService ms = (GenericMetadataService)s.getMetadataService();
 			
 			File inputRecordsDir = new File(INPUT_RECORDS_DIR);

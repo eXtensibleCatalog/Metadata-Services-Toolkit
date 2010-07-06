@@ -12,8 +12,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.httpclient.HttpException;
@@ -55,6 +58,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		UTC_FORMATTER = ISODateTimeFormat.dateTime();
 		UTC_FORMATTER = UTC_FORMATTER.withZone(DateTimeZone.UTC);
 	}
+	//        Map<MostSigToken, ListOfAllOaoIdsThatHaveToken<EntireOaiId, recordId>>
+	protected Map<String, List<Object[]>> harvestCache = new HashMap<String, List<Object[]>>();
 	
 	protected HarvestSchedule harvestSchedule = null;
 	protected List<HarvestScheduleStep> harvestScheduleSteps = null;
@@ -113,6 +118,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	
 	public void setup() {
 		try {
+			harvestCache.clear();
 			harvestScheduleSteps = getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId());
 			harvestScheduleStepIndex = 0;
 			startDate = new Date();
@@ -120,6 +126,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			totalRecords = 0;
 			numErrorsTolerated = Integer.parseInt(config.getProperty("harvester.numErrorsToTolerate", "0"));
 			repo = getRepositoryService().getRepository(harvestSchedule.getProvider());
+			getRepositoryDAO().populateHarvestCache(repo.getName(), harvestCache);
 		} catch (DatabaseConfigException e) {
 			getUtil().throwIt(e);
 		}
@@ -386,8 +393,33 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 				// record already exists in the database
 				// BDA: tell me why I care?
 				//Record oldRecord = (firstHarvest ? null : recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId));
+				String mostSigToken = getUtil().getMostSignificantToken(record.getHarvestedOaiIdentifier());
+				List<Object[]> entries = harvestCache.get(mostSigToken);
+				if (entries == null) {
+					entries = new ArrayList<Object[]>();
+					harvestCache.put(mostSigToken, entries);
+				}
+				Object[] entry = null;
 				
-				getRepositoryDAO().injectId(record);
+				for (Object[] objArr : entries) {
+					if (objArr[0].equals(record.getHarvestedOaiIdentifier())) {
+						entry = objArr;
+						break;
+					}
+				}
+				
+				if (entry == null) {
+					getRepositoryDAO().injectId(record);
+					log.debug("no record found for oai-id:"+record.getHarvestedOaiIdentifier());
+					entry = new Object[2];
+					entry[0] = record.getHarvestedOaiIdentifier();
+					entry[1] = record.getId();
+					entries.add(entry);
+				} else {
+					log.debug("record exists for oai-id:"+entry[0]+" recordId:"+entry[1]);
+					record.setId((Long)entry[1]);
+				}
+				
 				repo.addRecord(record);
 
 				TimingLogger.stop("erl - 3");
@@ -400,7 +432,9 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 
         // If the record contained a resumption token, store that resumption token
         Element resumptionEl = listRecordsEl.getChild("resumptionToken", root.getNamespace());
-        resumption = resumptionEl.getText();
+        if (resumptionEl != null) {
+        	resumption = resumptionEl.getText();
+        }
         log.debug("resumption: "+resumption);
 		if (!StringUtils.isEmpty(resumption)) {
 			totalRecords = Integer.parseInt(resumptionEl.getAttributeValue("completeListSize"));
