@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+
+	<marc:leader>00934cam a22002770  45 A</marc:leader>
+	<marc:controlfield tag="001">456909</marc:controlfield>
+	<marc:controlfield tag="008">800802s1936    pau      b    000 0 eng c</marc:controlfield>
+
+	<marc:datafield tag="010" ind1=" " ind2=" ">
+		<marc:subfield code="a">   36033160 </marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="b">ocm</marc:subfield>
+		<marc:subfield code="a">06579012</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="9">00375444</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="040" ind1=" " ind2=" ">
+		<marc:subfield code="a">Univ. of Pennsylvania Libr.</marc:subfield>
+		<marc:subfield code="c">CLE</marc:subfield>
+		<marc:subfield code="d">SER</marc:subfield>
+		<marc:subfield code="d">RRR</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="049" ind1=" " ind2=" ">
+		<marc:subfield code="a">RRRR</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="050" ind1="0" ind2=" ">
+		<marc:subfield code="a">PR1215</marc:subfield>
+		<marc:subfield code="b">.Y6 1935</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="090" ind1=" " ind2=" ">
+		<marc:subfield code="a">PR1215</marc:subfield>
+		<marc:subfield code="b">.Y65p</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="099" ind1=" " ind2=" ">
+		<marc:subfield code="a">PR1215 .Y65p</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="100" ind1="1" ind2=" ">
+		<marc:subfield code="a">Yost, Calvin Daniel,</marc:subfield>
+		<marc:subfield code="d">1910-</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="245" ind1="1" ind2="4">
+		<marc:subfield code="a">The poetry of the Gentleman's magazine:</marc:subfield>
+		<marc:subfield code="b">a study in eighteenth century literary taste ...</marc:subfield>
+		<marc:subfield code="c">[by] Calvin Daniel Yost, Jr.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="260" ind1=" " ind2=" ">
+		<marc:subfield code="a">Philadelphia,</marc:subfield>
+		<marc:subfield code="c">1936.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="300" ind1=" " ind2=" ">
+		<marc:subfield code="a">147 p.</marc:subfield>
+		<marc:subfield code="c">23 cm.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="502" ind1=" " ind2=" ">
+		<marc:subfield code="a">Thesis (PH. D.)--University of Pennsylvania, 1935.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="504" ind1=" " ind2=" ">
+		<marc:subfield code="a">Bibliography: p. 143-147.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="630" ind1="0" ind2="0">
+		<marc:subfield code="a">Gentleman's magazine (London, England)</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="0">
+		<marc:subfield code="a">English poetry</marc:subfield>
+		<marc:subfield code="y">18th century</marc:subfield>
+		<marc:subfield code="x">History and criticism.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="910" ind1=" " ind2=" ">
+		<marc:subfield code="a">950906</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="911" ind1=" " ind2=" ">
+		<marc:subfield code="a">u</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="966" ind1=" " ind2=" ">
+		<marc:subfield code="l">Stack</marc:subfield>
+		<marc:subfield code="m">RMON</marc:subfield>
+		<marc:subfield code="s">PR1215 .Y65p</marc:subfield>
+		<marc:subfield code="b">39087003597541</marc:subfield>
+	</marc:datafield>
+
+</marc:record>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+
+	<marc:leader>03998cjm a2200661Ia 45e0</marc:leader>
+	<marc:controlfield tag="001">1586760</marc:controlfield>
+	<marc:controlfield tag="005">20020813123354.0</marc:controlfield>
+	<marc:controlfield tag="007">sdubsmenn----e</marc:controlfield>
+	<marc:controlfield tag="008">750930t19751974ohumun   df         mul  </marc:controlfield>
+
+	<marc:datafield tag="010" ind1=" " ind2=" ">
+		<marc:subfield code="a">   75750655 /R</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="a">(OCoLC)01663487</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="a">1586760</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="040" ind1=" " ind2=" ">
+		<marc:subfield code="a">DLC</marc:subfield>
+		<marc:subfield code="c">KSU</marc:subfield>
+		<marc:subfield code="d">OCL</marc:subfield>
+		<marc:subfield code="d">OBE</marc:subfield>
+		<marc:subfield code="d">RES</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="028" ind1="0" ind2="2">
+		<marc:subfield code="a">5012</marc:subfield>
+		<marc:subfield code="b">Advent Records</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="033" ind1="0" ind2=" ">
+		<marc:subfield code="a">19740919</marc:subfield>
+		<marc:subfield code="b">4084</marc:subfield>
+		<marc:subfield code="c">C5</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="041" ind1="0" ind2=" ">
+		<marc:subfield code="d">engfregeritaporspa</marc:subfield>
+		<marc:subfield code="e">engfregeritaporspa</marc:subfield>
+		<marc:subfield code="g">eng</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="047" ind1=" " ind2=" ">
+		<marc:subfield code="a">pt</marc:subfield>
+		<marc:subfield code="a">md</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="050" ind1="0" ind2="0">
+		<marc:subfield code="a">M1495</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="099" ind1=" " ind2=" ">
+		<marc:subfield code="a">LP 20,172</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="049" ind1=" " ind2=" ">
+		<marc:subfield code="a">RESM</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="110" ind1="2" ind2=" ">
+		<marc:subfield code="a">Metropolitan Opera (New York, N.Y.).</marc:subfield>
+		<marc:subfield code="b">Madrigal Singers.</marc:subfield>
+		<marc:subfield code="4">prf</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="245" ind1="1" ind2="0">
+		<marc:subfield code="a">Simple gifts</marc:subfield>
+		<marc:subfield code="h">[sound recording]</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="260" ind1=" " ind2=" ">
+		<marc:subfield code="a">Cleveland, Ohio :</marc:subfield>
+		<marc:subfield code="b">Advent Records,</marc:subfield>
+		<marc:subfield code="c">[1975], p1974.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="300" ind1=" " ind2=" ">
+		<marc:subfield code="a">1 sound disc :</marc:subfield>
+		<marc:subfield code="b">analog, 33 1/3 rpm, stereo. ;</marc:subfield>
+		<marc:subfield code="c">12 in.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="511" ind1="0" ind2=" ">
+		<marc:subfield code="a">Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">&quot;Produced for the Metropolitan Opera Guild.&quot;</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="518" ind1=" " ind2=" ">
+		<marc:subfield code="a">Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">Notes on container ; program notes and texts ([2] p.) by J. Freeman inserted.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="505" ind1="0" ind2=" ">
+		<marc:subfield code="a">Simple gifts : Shaker hymn / [Joseph Brackett] -- Sumer is icumen in / Anon., 14th cent. -- To the shady woods / Thomas Tomkins -- What if I never speede / John Dowland -- Thus saith my Cloris bright / John Wilbye -- Now is the month of maying / Thomas Morley -- O magnum mysterium / Tomas Luis da Vittoria -- Nowel syng we / Anon., 15th cent. -- Remember o thou man / Thomas Ravenscroft -- Dormi, o bel bambin / Anon. -- Die Zauberflöte overture / Wolfgang Amadeus Mozart -- Un jour vis un foulon / Roland de Lassus -- Veux-tu, compère Grégoire / M.A. Charpentier -- Ojos morenos ; Não me firays, madre / Juan Vasquez -- Chi la gagliarda / Baldassare Donato -- L'humor svegghiato ; Applauso / Orazio Vecchi -- Vergine gloriosa / Luca Marenzio -- Contrappunto bestiale / Adriano Banchieri.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="0">
+		<marc:subfield code="a">Part-songs.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="0">
+		<marc:subfield code="a">Part-songs, Sacred.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Weidinger, Christine.</marc:subfield>
+		<marc:subfield code="4">prf</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Love, Shirley.</marc:subfield>
+		<marc:subfield code="4">prf</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Castel, Nico.</marc:subfield>
+		<marc:subfield code="4">prf</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Schmorr, Robert.</marc:subfield>
+		<marc:subfield code="4">prf</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Boucher, Gene.</marc:subfield>
+		<marc:subfield code="4">prf</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Best, Richard.</marc:subfield>
+		<marc:subfield code="4">prf</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Brackett, Joseph.</marc:subfield>
+		<marc:subfield code="t">Simple gifts.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Tomkins, Thomas,</marc:subfield>
+		<marc:subfield code="d">1572-1656.</marc:subfield>
+		<marc:subfield code="t">Songs,</marc:subfield>
+		<marc:subfield code="m">voices (3-6).</marc:subfield>
+		<marc:subfield code="p">To the shady woods.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Dowland, John,</marc:subfield>
+		<marc:subfield code="d">1563?-1626.</marc:subfield>
+		<marc:subfield code="t">Songs or ayres,</marc:subfield>
+		<marc:subfield code="n">3rd book.</marc:subfield>
+		<marc:subfield code="p">What if I never speede.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Wilbye, John,</marc:subfield>
+		<marc:subfield code="d">1574-1638.</marc:subfield>
+		<marc:subfield code="t">Madrigals,</marc:subfield>
+		<marc:subfield code="m">voices (3-6),</marc:subfield>
+		<marc:subfield code="n">set 1.</marc:subfield>
+		<marc:subfield code="p">Thus saith my Cloris bright</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Morley, Thomas,</marc:subfield>
+		<marc:subfield code="d">1557-1603?</marc:subfield>
+		<marc:subfield code="t">Balletts.</marc:subfield>
+		<marc:subfield code="p">Now is the month of maying.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Victoria, Tomás Luis de,</marc:subfield>
+		<marc:subfield code="d">ca. 1548-1611.</marc:subfield>
+		<marc:subfield code="t">Motets</marc:subfield>
+		<marc:subfield code="n">(1572).</marc:subfield>
+		<marc:subfield code="p">O magnum mysterium.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Ravenscroft, Thomas,</marc:subfield>
+		<marc:subfield code="d">1592?-1635?</marc:subfield>
+		<marc:subfield code="t">Remember, O thou man.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Mozart, Wolfgang Amadeus,</marc:subfield>
+		<marc:subfield code="d">1756-1791.</marc:subfield>
+		<marc:subfield code="t">Zauberflöte.</marc:subfield>
+		<marc:subfield code="p">Ouverture;</marc:subfield>
+		<marc:subfield code="o">arr.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Lasso, Orlando di,</marc:subfield>
+		<marc:subfield code="d">1532-1594.</marc:subfield>
+		<marc:subfield code="t">Jour vis un foulon.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Charpentier, Marc-Antoine,</marc:subfield>
+		<marc:subfield code="d">1643-1704.</marc:subfield>
+		<marc:subfield code="t">Veux-tu, compère Grégoire.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Vásquez, Juan,</marc:subfield>
+		<marc:subfield code="d">fl. 1535-1560.</marc:subfield>
+		<marc:subfield code="t">Recopilación de sonetos y villancicos.</marc:subfield>
+		<marc:subfield code="p">Ojos morenos, quándo nos veremos?</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Vásquez, Juan,</marc:subfield>
+		<marc:subfield code="d">fl. 1535-1560.</marc:subfield>
+		<marc:subfield code="t">Recopilación de sonetos y villancicos.</marc:subfield>
+		<marc:subfield code="p">Não me firays, madre.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Donato, Baldassare,</marc:subfield>
+		<marc:subfield code="d">d. 1603.</marc:subfield>
+		<marc:subfield code="t">Canzoni,</marc:subfield>
+		<marc:subfield code="n">libro 1.</marc:subfield>
+		<marc:subfield code="p">Chi la gagliarda.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Vecchi, Orazio,</marc:subfield>
+		<marc:subfield code="d">1550-1605.</marc:subfield>
+		<marc:subfield code="t">Veglie de Sienna.</marc:subfield>
+		<marc:subfield code="p">Humor svegghiato.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Vecchi, Orazio,</marc:subfield>
+		<marc:subfield code="d">1550-1605.</marc:subfield>
+		<marc:subfield code="t">Applauso.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Marenzio, Luca,</marc:subfield>
+		<marc:subfield code="d">1553-1599.</marc:subfield>
+		<marc:subfield code="t">Madrigals,</marc:subfield>
+		<marc:subfield code="m">voices (5)</marc:subfield>
+		<marc:subfield code="n">book 1.</marc:subfield>
+		<marc:subfield code="p">Vergine glorioso e lieta.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2="2">
+		<marc:subfield code="a">Banchieri, Adriano,</marc:subfield>
+		<marc:subfield code="d">d. 1634.</marc:subfield>
+		<marc:subfield code="t">Festino nella sera del Giovedi Grasso avanti cena.</marc:subfield>
+		<marc:subfield code="p">Contrappunto bestiale alla mente.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="730" ind1="0" ind2="2">
+		<marc:subfield code="a">Sumer is icumen in.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="730" ind1="0" ind2="2">
+		<marc:subfield code="a">Nowel syng we.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="730" ind1="0" ind2="2">
+		<marc:subfield code="a">Dormi, dormi, o bel bambin.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="945" ind1=" " ind2=" ">
+		<marc:subfield code="a">MARS</marc:subfield>
+	</marc:datafield>
+
+</marc:record>

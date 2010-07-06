@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+
+	<marc:leader>01051ncm a2200349   45 A</marc:leader>
+	<marc:controlfield tag="001">1191508</marc:controlfield>
+	<marc:controlfield tag="003">NRU</marc:controlfield>
+	<marc:controlfield tag="008">930401s1908    gw sga         n    eng d</marc:controlfield>
+
+	<marc:datafield tag="028" ind1="3" ind2="0">
+		<marc:subfield code="a">3222f</marc:subfield>
+		<marc:subfield code="b">Peters</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="028" ind1="2" ind2="0">
+		<marc:subfield code="a">9235f</marc:subfield>
+		<marc:subfield code="b">Peters</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="b">ocm</marc:subfield>
+		<marc:subfield code="a">27838336 </marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="9">01141132</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="040" ind1=" " ind2=" ">
+		<marc:subfield code="a">RER</marc:subfield>
+		<marc:subfield code="c">RER</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="041" ind1="1" ind2=" ">
+		<marc:subfield code="a">engger</marc:subfield>
+		<marc:subfield code="h">nor</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="048" ind1=" " ind2=" ">
+		<marc:subfield code="a">vn01</marc:subfield>
+		<marc:subfield code="a">ka01</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="049" ind1=" " ind2=" ">
+		<marc:subfield code="a">RERA</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="090" ind1=" " ind2=" ">
+		<marc:subfield code="a">M1620</marc:subfield>
+		<marc:subfield code="b">.G84n</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="099" ind1=" " ind2=" ">
+		<marc:subfield code="a">M1620 .G84n</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="100" ind1="1" ind2=" ">
+		<marc:subfield code="a">Grieg, Edvard,</marc:subfield>
+		<marc:subfield code="d">1843-1907.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="240" ind1="1" ind2="0">
+		<marc:subfield code="a">Efterladte sange,</marc:subfield>
+		<marc:subfield code="n">2.</marc:subfield>
+		<marc:subfield code="p">Jäger</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="245" ind1="1" ind2="4">
+		<marc:subfield code="a">Der Jäger</marc:subfield>
+		<marc:subfield code="b">(The hunter). [Nachgelassenes Werk.</marc:subfield>
+		<marc:subfield code="c">Englische Übersetzung von John Bernhoff.].</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="260" ind1=" " ind2=" ">
+		<marc:subfield code="a">Leipzig,</marc:subfield>
+		<marc:subfield code="b">Peters</marc:subfield>
+		<marc:subfield code="c">[c1908]</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="300" ind1=" " ind2=" ">
+		<marc:subfield code="a">7 p.</marc:subfield>
+		<marc:subfield code="c">34 cm.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">Publisher's no.: Edition Peters No. 3222f.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">Cover title.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">From Sechs Lieder für eine Singstimme und Klavier.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="590" ind1=" " ind2=" ">
+		<marc:subfield code="a">Sibley Music Library copy bound with his Tränen (c1908).</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="0">
+		<marc:subfield code="a">Songs with piano.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="740" ind1="0" ind2=" ">
+		<marc:subfield code="a">Hunter.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="910" ind1=" " ind2=" ">
+		<marc:subfield code="a">  950805         </marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="911" ind1=" " ind2=" ">
+		<marc:subfield code="a">u</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="966" ind1=" " ind2=" ">
+		<marc:subfield code="l">/Stack</marc:subfield>
+		<marc:subfield code="m">SMONO </marc:subfield>
+		<marc:subfield code="s">M1620 .G84n</marc:subfield>
+		<marc:subfield code="c"> 1</marc:subfield>
+	</marc:datafield>
+
+</marc:record>

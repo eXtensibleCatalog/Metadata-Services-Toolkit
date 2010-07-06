@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+
+	<marc:leader>01628cam a2200385Ia 4500</marc:leader>
+	<marc:controlfield tag="001">3849844</marc:controlfield>
+	<marc:controlfield tag="005">20080714112925.0</marc:controlfield>
+	<marc:controlfield tag="008">950113s1977    nyua   j      000 0 eng d</marc:controlfield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="a">(OCoLC)ocm31810399</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="040" ind1=" " ind2=" ">
+		<marc:subfield code="a">VYL</marc:subfield>
+		<marc:subfield code="c">VYL</marc:subfield>
+		<marc:subfield code="d">OCL</marc:subfield>
+		<marc:subfield code="d">OCLCQ</marc:subfield>
+		<marc:subfield code="d">RRR</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="020" ind1=" " ind2=" ">
+		<marc:subfield code="a">0440474655</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="020" ind1=" " ind2=" ">
+		<marc:subfield code="a">9780440474654</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="029" ind1="1" ind2=" ">
+		<marc:subfield code="a">AU@</marc:subfield>
+		<marc:subfield code="b">000005681913</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="043" ind1=" " ind2=" ">
+		<marc:subfield code="a">a-ja---</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="090" ind1=" " ind2=" ">
+		<marc:subfield code="a">RJ416.L4</marc:subfield>
+		<marc:subfield code="b">C63 1977b</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="049" ind1=" " ind2=" ">
+		<marc:subfield code="a">RRRR</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="100" ind1="1" ind2=" ">
+		<marc:subfield code="a">Coerr, Eleanor.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="245" ind1="1" ind2="0">
+		<marc:subfield code="a">Sadako and the thousand paper cranes /</marc:subfield>
+		<marc:subfield code="c">by Eleanor Coerr ; paintings by Ronald Himler.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="260" ind1=" " ind2=" ">
+		<marc:subfield code="a">New York :</marc:subfield>
+		<marc:subfield code="b">Dell Pub.,</marc:subfield>
+		<marc:subfield code="c">c1977.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="300" ind1=" " ind2=" ">
+		<marc:subfield code="a">64 p. :</marc:subfield>
+		<marc:subfield code="b">ill. ;</marc:subfield>
+		<marc:subfield code="c">20 cm.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">&quot;A Yearling book.&quot;</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">&quot;RL: 5.0 -- p. [4] of cover.&quot;</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="520" ind1=" " ind2=" ">
+		<marc:subfield code="a">Hospitalized with the dreaded atom bomb disease, leukemia, a child in Hiroshima races against time to fold one thousand paper cranes to verify the legend that by doing so a sick person will become healthy.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="505" ind1="0" ind2=" ">
+		<marc:subfield code="a">Good luck signs -- Peace Day -- Sadako's secret -- A secret no longer -- The Golden Crane -- Kenji -- Hundreds of wishes -- Last days -- Racing with the wind.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="0">
+		<marc:subfield code="a">Leukemia in children</marc:subfield>
+		<marc:subfield code="v">Juvenile literature.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="600" ind1="1" ind2="0">
+		<marc:subfield code="a">Sasaki, Sadako,</marc:subfield>
+		<marc:subfield code="d">1943-1955</marc:subfield>
+		<marc:subfield code="v">Juvenile literature.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="0">
+		<marc:subfield code="a">Atomic bomb</marc:subfield>
+		<marc:subfield code="x">Physiological effect</marc:subfield>
+		<marc:subfield code="v">Juvenile literature.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="651" ind1=" " ind2="0">
+		<marc:subfield code="a">Hiroshima-shi (Japan)</marc:subfield>
+		<marc:subfield code="x">History</marc:subfield>
+		<marc:subfield code="y">Bombardment, 1945</marc:subfield>
+		<marc:subfield code="v">Juvenile literature.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="1">
+		<marc:subfield code="a">Leukemia.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="600" ind1="1" ind2="1">
+		<marc:subfield code="a">Sasaki, Sadako,</marc:subfield>
+		<marc:subfield code="d">1943-1955.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="1">
+		<marc:subfield code="a">Atomic bomb</marc:subfield>
+		<marc:subfield code="x">Physiological effect.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="651" ind1=" " ind2="1">
+		<marc:subfield code="a">Hiroshima-shi (Japan)</marc:subfield>
+		<marc:subfield code="x">History</marc:subfield>
+		<marc:subfield code="y">Bombardment, 1945.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="1">
+		<marc:subfield code="a">Death.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Himler, Ronald.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="994" ind1=" " ind2=" ">
+		<marc:subfield code="a">C0</marc:subfield>
+		<marc:subfield code="b">RRR</marc:subfield>
+	</marc:datafield>
+
+</marc:record>

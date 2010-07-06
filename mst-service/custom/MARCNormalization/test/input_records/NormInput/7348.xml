@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+
+	<marc:leader>00215cx  a22001092  4500</marc:leader>
+	<marc:controlfield tag="001">7348</marc:controlfield>
+	<marc:controlfield tag="003">NRU</marc:controlfield>
+	<marc:controlfield tag="004">4576</marc:controlfield>
+	<marc:controlfield tag="005">20051003131452.0</marc:controlfield>
+	<marc:controlfield tag="008">9612090u    8   4001au   0000000</marc:controlfield>
+
+	<marc:datafield tag="014" ind1=" " ind2=" ">
+		<marc:subfield code="a">00093522</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="852" ind1="0" ind2=" ">
+		<marc:subfield code="b">DivColl</marc:subfield>
+		<marc:subfield code="h">E185.615</marc:subfield>
+		<marc:subfield code="i">.H28</marc:subfield>
+	</marc:datafield>
+
+</marc:record>

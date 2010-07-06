@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+
+	<marc:leader>02269cgm a2200517Ia 45e0</marc:leader>
+	<marc:controlfield tag="001">2637764</marc:controlfield>
+	<marc:controlfield tag="005">20051117145527.0</marc:controlfield>
+	<marc:controlfield tag="007">vd cgaizu</marc:controlfield>
+	<marc:controlfield tag="008">030102p20001939ch 232            vleng d</marc:controlfield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="a">(OCoLC)ocm51300396</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="040" ind1=" " ind2=" ">
+		<marc:subfield code="a">CVU</marc:subfield>
+		<marc:subfield code="c">CVU</marc:subfield>
+		<marc:subfield code="d">OCLCQ</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="028" ind1="4" ind2="0">
+		<marc:subfield code="a">EDVD 6501</marc:subfield>
+		<marc:subfield code="b">Evervision</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="041" ind1="1" ind2=" ">
+		<marc:subfield code="a">eng</marc:subfield>
+		<marc:subfield code="b">engchiind</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="090" ind1=" " ind2=" ">
+		<marc:subfield code="a">PN1997</marc:subfield>
+		<marc:subfield code="b">.G64 2000</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="049" ind1=" " ind2=" ">
+		<marc:subfield code="a">RRRR</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="245" ind1="0" ind2="0">
+		<marc:subfield code="a">Gone with the wind</marc:subfield>
+		<marc:subfield code="h">[videorecording] /</marc:subfield>
+		<marc:subfield code="c">Selznick International Pictures ; directed by Victor Fleming ; screenplay by Sidney Howard ; producer, David O. Selznick.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="260" ind1=" " ind2=" ">
+		<marc:subfield code="a">[Taipei, Taiwan] :</marc:subfield>
+		<marc:subfield code="b">Evervision,</marc:subfield>
+		<marc:subfield code="c">[2000?]</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="300" ind1=" " ind2=" ">
+		<marc:subfield code="a">1 videodisc (232 min.) :</marc:subfield>
+		<marc:subfield code="b">sd., col. ;</marc:subfield>
+		<marc:subfield code="c">4 3/4 in.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="440" ind1=" " ind2="4">
+		<marc:subfield code="a">The best movie collection</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">Originally produced as a motion picture in 1939.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">Based on the novel by Margaret Mitchell.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="511" ind1="1" ind2=" ">
+		<marc:subfield code="a">Clark Gable, Vivien Leigh, Leslie Howard, Olivia De Havilland, Thomas Mitchell, Hattie McDaniel, Butterfly McQueen.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="508" ind1=" " ind2=" ">
+		<marc:subfield code="a">Music by Max Steiner.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="538" ind1=" " ind2=" ">
+		<marc:subfield code="a">DVD ; all area code ; double sided.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="546" ind1=" " ind2=" ">
+		<marc:subfield code="a">In English ; with optional subtitles in English, Chinese, Indonisian.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="520" ind1=" " ind2=" ">
+		<marc:subfield code="a">Focuses on the life and loves of the beautiful and selfish Scarlett O'Hara. The story begins on the O'Haras' Georgia plantation of Tara in antebellum days and moves through the Civil War and Reconstruction.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="586" ind1=" " ind2=" ">
+		<marc:subfield code="a">Academy Award for Best Picture, 1939.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="0">
+		<marc:subfield code="a">Plantation life</marc:subfield>
+		<marc:subfield code="v">Drama.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="0">
+		<marc:subfield code="a">Reconstruction (U.S. history, 1865-1877)</marc:subfield>
+		<marc:subfield code="v">Drama.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="0">
+		<marc:subfield code="a">Feature films.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="651" ind1=" " ind2="0">
+		<marc:subfield code="a">United States</marc:subfield>
+		<marc:subfield code="x">History</marc:subfield>
+		<marc:subfield code="y">Civil War, 1861-1865</marc:subfield>
+		<marc:subfield code="v">Drama.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="651" ind1=" " ind2="0">
+		<marc:subfield code="a">Georgia</marc:subfield>
+		<marc:subfield code="x">History</marc:subfield>
+		<marc:subfield code="y">Civil War, 1861-1865</marc:subfield>
+		<marc:subfield code="v">Drama.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Gable, Clark,</marc:subfield>
+		<marc:subfield code="d">1901-1960.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Leigh, Vivien,</marc:subfield>
+		<marc:subfield code="d">1913-1967.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Howard, Leslie,</marc:subfield>
+		<marc:subfield code="d">1893-1943.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">De Havilland, Olivia.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Mitchell, Thomas,</marc:subfield>
+		<marc:subfield code="d">1892-1962.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">McDaniel, Hattie,</marc:subfield>
+		<marc:subfield code="d">1895-1952.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">McQueen, Butterfly.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Fleming, Victor,</marc:subfield>
+		<marc:subfield code="d">1883-1949.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Selznick, David O.,</marc:subfield>
+		<marc:subfield code="d">1902-1965.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Howard, Sidney Coe,</marc:subfield>
+		<marc:subfield code="d">1891-1939.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="700" ind1="1" ind2=" ">
+		<marc:subfield code="a">Mitchell, Margaret,</marc:subfield>
+		<marc:subfield code="d">1900-1949.</marc:subfield>
+		<marc:subfield code="t">Gone with the wind.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="710" ind1="2" ind2=" ">
+		<marc:subfield code="a">Selznick International Pictures.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="710" ind1="2" ind2=" ">
+		<marc:subfield code="a">Evervision Corp.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="994" ind1=" " ind2=" ">
+		<marc:subfield code="a">E0</marc:subfield>
+		<marc:subfield code="b">RRR</marc:subfield>
+	</marc:datafield>
+
+</marc:record>

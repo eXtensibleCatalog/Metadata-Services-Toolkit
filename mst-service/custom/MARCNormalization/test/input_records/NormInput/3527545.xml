@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+
+	<marc:leader>01017cam a2200325Ia 4500</marc:leader>
+	<marc:controlfield tag="001">3527545</marc:controlfield>
+	<marc:controlfield tag="005">20070910160935.0</marc:controlfield>
+	<marc:controlfield tag="008">010822s1987    ja            000 1 jpn d</marc:controlfield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="a">(OCoLC)ocm47830396</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="a">3527545</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="040" ind1=" " ind2=" ">
+		<marc:subfield code="a">OSU</marc:subfield>
+		<marc:subfield code="c">OSU</marc:subfield>
+		<marc:subfield code="d">RRR</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="066" ind1=" " ind2=" ">
+		<marc:subfield code="c">$1</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="020" ind1=" " ind2=" ">
+		<marc:subfield code="a">4334704964</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="020" ind1=" " ind2=" ">
+		<marc:subfield code="a">9784334704964</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="a">(OCoLC)47830396</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="090" ind1=" " ind2=" ">
+		<marc:subfield code="a">PL857.I793</marc:subfield>
+		<marc:subfield code="b">S56</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="049" ind1=" " ind2=" ">
+		<marc:subfield code="a">RRRR</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="100" ind1="1" ind2=" ">
+		<marc:subfield code="6">880-01</marc:subfield>
+		<marc:subfield code="a">Nishimura, Toshiyuki,</marc:subfield>
+		<marc:subfield code="d">1930-2007.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="245" ind1="1" ind2="0">
+		<marc:subfield code="6">880-02</marc:subfield>
+		<marc:subfield code="a">Shōkōgun :</marc:subfield>
+		<marc:subfield code="b">kannō hādo, akushon /</marc:subfield>
+		<marc:subfield code="c">Nishimura Jukō.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="260" ind1=" " ind2=" ">
+		<marc:subfield code="6">880-03</marc:subfield>
+		<marc:subfield code="a">Tōkyō :</marc:subfield>
+		<marc:subfield code="b">Kobunsha,</marc:subfield>
+		<marc:subfield code="c">Showa 62 [1987]</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="300" ind1=" " ind2=" ">
+		<marc:subfield code="a">373 p. ;</marc:subfield>
+		<marc:subfield code="c">16 cm.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="490" ind1="1" ind2=" ">
+		<marc:subfield code="6">880-04</marc:subfield>
+		<marc:subfield code="a">Kōbunsha bunko</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">Short stories.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="830" ind1=" " ind2="0">
+		<marc:subfield code="6">880-04</marc:subfield>
+		<marc:subfield code="a">Kōbunsha bunko.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="880" ind1="1" ind2=" ">
+		<marc:subfield code="6">100-01/$1</marc:subfield>
+		<marc:subfield code="a">西村寿行,</marc:subfield>
+		<marc:subfield code="d">1930-</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="880" ind1="1" ind2="0">
+		<marc:subfield code="6">245-02/$1</marc:subfield>
+		<marc:subfield code="a">症候群 :</marc:subfield>
+		<marc:subfield code="b">官能ハ－ド・アクシゅョン /</marc:subfield>
+		<marc:subfield code="c">西村寿行.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="880" ind1=" " ind2=" ">
+		<marc:subfield code="6">260-03/$1</marc:subfield>
+		<marc:subfield code="a">東京 :</marc:subfield>
+		<marc:subfield code="b">光文社,</marc:subfield>
+		<marc:subfield code="c">1990.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="880" ind1="0" ind2=" ">
+		<marc:subfield code="6">490-04/$1</marc:subfield>
+		<marc:subfield code="a">光文社文庫</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="994" ind1=" " ind2=" ">
+		<marc:subfield code="a">C0</marc:subfield>
+		<marc:subfield code="b">RRR</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="945" ind1=" " ind2=" ">
+		<marc:subfield code="a">MARS</marc:subfield>
+	</marc:datafield>
+
+</marc:record>
