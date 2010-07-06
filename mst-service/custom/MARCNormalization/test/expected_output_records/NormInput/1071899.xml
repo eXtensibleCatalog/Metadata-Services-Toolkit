@@ -1,0 +1,30 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/6</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:6</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Holding Records</setSpec>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>00224cx  a22001093  4500</marc:leader>
+      <marc:controlfield tag="001">1071899</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="004">970288</marc:controlfield>
+      <marc:controlfield tag="005">19961209125950.0</marc:controlfield>
+      <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
+      <marc:datafield ind1=" " ind2=" " tag="014">
+        <marc:subfield code="a">00914465</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2=" " tag="852">
+        <marc:subfield code="b">SibRare</marc:subfield>
+        <marc:subfield code="h">M1611.A748 C2 1755</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

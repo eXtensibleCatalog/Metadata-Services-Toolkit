@@ -1,132 +1,112 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>01264pam a2200361 a 45 A</marc:leader>
-	<marc:controlfield tag="001">1045129</marc:controlfield>
-	<marc:controlfield tag="008">901001s1991    ilua     bk   000 0 eng  </marc:controlfield>
-
-	<marc:datafield tag="010" ind1=" " ind2=" ">
-		<marc:subfield code="a">   90020316 /MN</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="020" ind1=" " ind2=" ">
-		<marc:subfield code="a">0226042537 (acid-free paper)</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="020" ind1=" " ind2=" ">
-		<marc:subfield code="a">0226042545 (pbk. : acid-free paper)</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="b">ocm</marc:subfield>
-		<marc:subfield code="a">22629928</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="9">00991477</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">DLC</marc:subfield>
-		<marc:subfield code="c">DLC</marc:subfield>
-		<marc:subfield code="d">RES</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="041" ind1="1" ind2=" ">
-		<marc:subfield code="a">eng</marc:subfield>
-		<marc:subfield code="h">ger</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="043" ind1=" " ind2=" ">
-		<marc:subfield code="a">f------</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RESM [copy 1]</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="050" ind1="0" ind2="0">
-		<marc:subfield code="a">ML3502.5</marc:subfield>
-		<marc:subfield code="b">.B4613 1991</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="090" ind1=" " ind2=" ">
-		<marc:subfield code="a">ML3502.5.B458</marc:subfield>
-		<marc:subfield code="b">S74 1991</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="099" ind1=" " ind2=" ">
-		<marc:subfield code="a">ML3502.5.B458 S74 1991</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="100" ind1="1" ind2=" ">
-		<marc:subfield code="a">Bender, Wolfgang.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="240" ind1="1" ind2="0">
-		<marc:subfield code="a">Sweet mother.</marc:subfield>
-		<marc:subfield code="l">English</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="1" ind2="0">
-		<marc:subfield code="a">Sweet mother :</marc:subfield>
-		<marc:subfield code="b">modern African music /</marc:subfield>
-		<marc:subfield code="c">Wolfgang Bender ; with a foreword by John M. Chernoff ; translated by Wolfgang Freis.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">Chicago :</marc:subfield>
-		<marc:subfield code="b">University of Chicago Press,</marc:subfield>
-		<marc:subfield code="c">c1991.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">xx, 235 p. :</marc:subfield>
-		<marc:subfield code="b">ill. ;</marc:subfield>
-		<marc:subfield code="c">23 cm.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="490" ind1="1" ind2=" ">
-		<marc:subfield code="a">Chicago studies in ethnomusicology</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Translation of: Sweet mother.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="504" ind1=" " ind2=" ">
-		<marc:subfield code="a">Includes bibliographical references (p. 205-213).</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="504" ind1=" " ind2=" ">
-		<marc:subfield code="a">Discography: p. 215-235.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Popular music</marc:subfield>
-		<marc:subfield code="z">Africa</marc:subfield>
-		<marc:subfield code="x">History and criticism.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="830" ind1=" " ind2="0">
-		<marc:subfield code="a">Chicago studies in ethnomusicology</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="910" ind1=" " ind2=" ">
-		<marc:subfield code="a">950906</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="911" ind1=" " ind2=" ">
-		<marc:subfield code="a">p</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Stack</marc:subfield>
-		<marc:subfield code="m">SMONO</marc:subfield>
-		<marc:subfield code="s">ML3502.5.B458 S74 1991</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="b">39087012021533</marc:subfield>
-	</marc:datafield>
-
-</marc:record>
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:3</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01264pam a2200361 a 45 A</marc:leader>
+        <marc:controlfield tag="001">1045129</marc:controlfield>
+        <marc:controlfield tag="008">901001s1991    ilua     bk   000 0 eng  </marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">   90020316 /MN</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0226042537 (acid-free paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0226042545 (pbk. : acid-free paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="b">ocm</marc:subfield>
+          <marc:subfield code="a">22629928</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="9">00991477</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">DLC</marc:subfield>
+          <marc:subfield code="c">DLC</marc:subfield>
+          <marc:subfield code="d">RES</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="041" ind1="1" ind2=" ">
+          <marc:subfield code="a">eng</marc:subfield>
+          <marc:subfield code="h">ger</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="043" ind1=" " ind2=" ">
+          <marc:subfield code="a">f------</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RESM [copy 1]</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="050" ind1="0" ind2="0">
+          <marc:subfield code="a">ML3502.5</marc:subfield>
+          <marc:subfield code="b">.B4613 1991</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">ML3502.5.B458</marc:subfield>
+          <marc:subfield code="b">S74 1991</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">ML3502.5.B458 S74 1991</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Bender, Wolfgang.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="1" ind2="0">
+          <marc:subfield code="a">Sweet mother.</marc:subfield>
+          <marc:subfield code="l">English</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Sweet mother :</marc:subfield>
+          <marc:subfield code="b">modern African music /</marc:subfield>
+          <marc:subfield code="c">Wolfgang Bender ; with a foreword by John M. Chernoff ; translated by Wolfgang Freis.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Chicago :</marc:subfield>
+          <marc:subfield code="b">University of Chicago Press,</marc:subfield>
+          <marc:subfield code="c">c1991.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">xx, 235 p. :</marc:subfield>
+          <marc:subfield code="b">ill. ;</marc:subfield>
+          <marc:subfield code="c">23 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="490" ind1="1" ind2=" ">
+          <marc:subfield code="a">Chicago studies in ethnomusicology</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Translation of: Sweet mother.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="504" ind1=" " ind2=" ">
+          <marc:subfield code="a">Includes bibliographical references (p. 205-213).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="504" ind1=" " ind2=" ">
+          <marc:subfield code="a">Discography: p. 215-235.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Popular music</marc:subfield>
+          <marc:subfield code="z">Africa</marc:subfield>
+          <marc:subfield code="x">History and criticism.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="830" ind1=" " ind2="0">
+          <marc:subfield code="a">Chicago studies in ethnomusicology</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="910" ind1=" " ind2=" ">
+          <marc:subfield code="a">950906</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="911" ind1=" " ind2=" ">
+          <marc:subfield code="a">p</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Stack</marc:subfield>
+          <marc:subfield code="m">SMONO</marc:subfield>
+          <marc:subfield code="s">ML3502.5.B458 S74 1991</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="b">39087012021533</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

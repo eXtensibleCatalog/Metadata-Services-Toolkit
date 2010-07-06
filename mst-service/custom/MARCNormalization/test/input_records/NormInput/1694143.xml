@@ -1,80 +1,72 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>00690cam a2200229Ia 45e0</marc:leader>
-	<marc:controlfield tag="001">1694143</marc:controlfield>
-	<marc:controlfield tag="005">20010526225634.0</marc:controlfield>
-	<marc:controlfield tag="008">990222t19931936nyu           000 1 eng d</marc:controlfield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)28491920</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">1694143</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">MLN</marc:subfield>
-		<marc:subfield code="c">MLN</marc:subfield>
-		<marc:subfield code="d">TXH</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="020" ind1=" " ind2=" ">
-		<marc:subfield code="a">0446365386</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="090" ind1=" " ind2=" ">
-		<marc:subfield code="a">PS3525.I972</marc:subfield>
-		<marc:subfield code="b">G6 1993</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RRRR</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="100" ind1="1" ind2=" ">
-		<marc:subfield code="a">Mitchell, Margaret,</marc:subfield>
-		<marc:subfield code="d">1900-1949.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="1" ind2="0">
-		<marc:subfield code="a">Gone with the wind /</marc:subfield>
-		<marc:subfield code="c">Margaret Mitchell.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="250" ind1=" " ind2=" ">
-		<marc:subfield code="a">Warner Books ed.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">New York, NY :</marc:subfield>
-		<marc:subfield code="b">Warner Books,</marc:subfield>
-		<marc:subfield code="c">[1993], c1936.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">1024 p. ;</marc:subfield>
-		<marc:subfield code="c">18 cm.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="651" ind1=" " ind2="0">
-		<marc:subfield code="a">United States</marc:subfield>
-		<marc:subfield code="x">History</marc:subfield>
-		<marc:subfield code="y">Civil War, 1861-1865</marc:subfield>
-		<marc:subfield code="v">Fiction.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="651" ind1=" " ind2="0">
-		<marc:subfield code="a">Georgia</marc:subfield>
-		<marc:subfield code="x">History</marc:subfield>
-		<marc:subfield code="y">Civil War, 1861-1865</marc:subfield>
-		<marc:subfield code="v">Fiction.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="945" ind1=" " ind2=" ">
-		<marc:subfield code="a">MARS</marc:subfield>
-	</marc:datafield>
-
-</marc:record>
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:51</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00690cam a2200229Ia 45e0</marc:leader>
+        <marc:controlfield tag="001">1694143</marc:controlfield>
+        <marc:controlfield tag="005">20010526225634.0</marc:controlfield>
+        <marc:controlfield tag="008">990222t19931936nyu           000 1 eng d</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)28491920</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">1694143</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">MLN</marc:subfield>
+          <marc:subfield code="c">MLN</marc:subfield>
+          <marc:subfield code="d">TXH</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0446365386</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">PS3525.I972</marc:subfield>
+          <marc:subfield code="b">G6 1993</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Mitchell, Margaret,</marc:subfield>
+          <marc:subfield code="d">1900-1949.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Gone with the wind /</marc:subfield>
+          <marc:subfield code="c">Margaret Mitchell.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="250" ind1=" " ind2=" ">
+          <marc:subfield code="a">Warner Books ed.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">New York, NY :</marc:subfield>
+          <marc:subfield code="b">Warner Books,</marc:subfield>
+          <marc:subfield code="c">[1993], c1936.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">1024 p. ;</marc:subfield>
+          <marc:subfield code="c">18 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="651" ind1=" " ind2="0">
+          <marc:subfield code="a">United States</marc:subfield>
+          <marc:subfield code="x">History</marc:subfield>
+          <marc:subfield code="y">Civil War, 1861-1865</marc:subfield>
+          <marc:subfield code="v">Fiction.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="651" ind1=" " ind2="0">
+          <marc:subfield code="a">Georgia</marc:subfield>
+          <marc:subfield code="x">History</marc:subfield>
+          <marc:subfield code="y">Civil War, 1861-1865</marc:subfield>
+          <marc:subfield code="v">Fiction.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="945" ind1=" " ind2=" ">
+          <marc:subfield code="a">MARS</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

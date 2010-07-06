@@ -1,108 +1,94 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>01073nam a22003010  45 A</marc:leader>
-	<marc:controlfield tag="001">347562</marc:controlfield>
-	<marc:controlfield tag="003">NRU</marc:controlfield>
-	<marc:controlfield tag="008">830827s1982    nyu           000 0 eng  </marc:controlfield>
-
-	<marc:datafield tag="010" ind1=" " ind2=" ">
-		<marc:subfield code="a">   82050799 </marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="020" ind1=" " ind2=" ">
-		<marc:subfield code="a">0932894135 (pbk.)</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="b">ocm</marc:subfield>
-		<marc:subfield code="a">09944545</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="9">00259830</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">DLC</marc:subfield>
-		<marc:subfield code="c">DLC</marc:subfield>
-		<marc:subfield code="d">RRR</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RRRR</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="050" ind1="0" ind2=" ">
-		<marc:subfield code="a">BX9750.S4</marc:subfield>
-		<marc:subfield code="b">L53 1982</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="099" ind1=" " ind2=" ">
-		<marc:subfield code="a">BX9750.S4 L53 1982</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="0" ind2="0">
-		<marc:subfield code="a">Lifestyle, conversations with members of the Unification Church /</marc:subfield>
-		<marc:subfield code="c">edited by Richard Quebedeaux.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="250" ind1=" " ind2=" ">
-		<marc:subfield code="a">1st ed.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">Barrytown, N.Y. :</marc:subfield>
-		<marc:subfield code="b">Unification Theological Seminary ;</marc:subfield>
-		<marc:subfield code="a">New York, N.Y. :</marc:subfield>
-		<marc:subfield code="b">Distributed by Rose of Sharon Press,</marc:subfield>
-		<marc:subfield code="c">c1982.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">x, 214 p. ;</marc:subfield>
-		<marc:subfield code="c">23 cm.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="490" ind1="1" ind2=" ">
-		<marc:subfield code="a">Conference series / Unification Theological Seminary ;</marc:subfield>
-		<marc:subfield code="v">no. 13</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="610" ind1="2" ind2="0">
-		<marc:subfield code="a">Unification Church</marc:subfield>
-		<marc:subfield code="x">Doctrines.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Quebedeaux, Richard.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="830" ind1=" " ind2="0">
-		<marc:subfield code="a">Conference series (Unification Theological Seminary) ;</marc:subfield>
-		<marc:subfield code="v">no. 13.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="910" ind1=" " ind2=" ">
-		<marc:subfield code="a">  950906        </marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="911" ind1=" " ind2=" ">
-		<marc:subfield code="a">p</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">Stack </marc:subfield>
-		<marc:subfield code="m">RMON  </marc:subfield>
-		<marc:subfield code="s">BX9750.S4 L53 1982</marc:subfield>
-		<marc:subfield code="b">39087001402538</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">GenStk</marc:subfield>
-		<marc:subfield code="m">DIVMTH</marc:subfield>
-		<marc:subfield code="s">BX9750.S4 L53 1982</marc:subfield>
-	</marc:datafield>
-
-</marc:record>
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:115</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01073nam a22003010  45 A</marc:leader>
+        <marc:controlfield tag="001">347562</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="008">830827s1982    nyu           000 0 eng  </marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">   82050799 </marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0932894135 (pbk.)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="b">ocm</marc:subfield>
+          <marc:subfield code="a">09944545</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="9">00259830</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">DLC</marc:subfield>
+          <marc:subfield code="c">DLC</marc:subfield>
+          <marc:subfield code="d">RRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="050" ind1="0" ind2=" ">
+          <marc:subfield code="a">BX9750.S4</marc:subfield>
+          <marc:subfield code="b">L53 1982</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">BX9750.S4 L53 1982</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">Lifestyle, conversations with members of the Unification Church /</marc:subfield>
+          <marc:subfield code="c">edited by Richard Quebedeaux.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="250" ind1=" " ind2=" ">
+          <marc:subfield code="a">1st ed.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Barrytown, N.Y. :</marc:subfield>
+          <marc:subfield code="b">Unification Theological Seminary ;</marc:subfield>
+          <marc:subfield code="a">New York, N.Y. :</marc:subfield>
+          <marc:subfield code="b">Distributed by Rose of Sharon Press,</marc:subfield>
+          <marc:subfield code="c">c1982.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">x, 214 p. ;</marc:subfield>
+          <marc:subfield code="c">23 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="490" ind1="1" ind2=" ">
+          <marc:subfield code="a">Conference series / Unification Theological Seminary ;</marc:subfield>
+          <marc:subfield code="v">no. 13</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="610" ind1="2" ind2="0">
+          <marc:subfield code="a">Unification Church</marc:subfield>
+          <marc:subfield code="x">Doctrines.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Quebedeaux, Richard.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="830" ind1=" " ind2="0">
+          <marc:subfield code="a">Conference series (Unification Theological Seminary) ;</marc:subfield>
+          <marc:subfield code="v">no. 13.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="910" ind1=" " ind2=" ">
+          <marc:subfield code="a">  950906        </marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="911" ind1=" " ind2=" ">
+          <marc:subfield code="a">p</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">Stack </marc:subfield>
+          <marc:subfield code="m">RMON  </marc:subfield>
+          <marc:subfield code="s">BX9750.S4 L53 1982</marc:subfield>
+          <marc:subfield code="b">39087001402538</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">GenStk</marc:subfield>
+          <marc:subfield code="m">DIVMTH</marc:subfield>
+          <marc:subfield code="s">BX9750.S4 L53 1982</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

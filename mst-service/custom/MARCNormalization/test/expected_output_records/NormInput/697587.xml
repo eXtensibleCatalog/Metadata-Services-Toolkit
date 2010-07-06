@@ -1,0 +1,153 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/160</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:162</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01268ccm a22003730  45 A</marc:leader>
+      <marc:controlfield tag="001">697587</marc:controlfield>
+      <marc:controlfield tag="008">781109s1954    fr sna         n    N/A d</marc:controlfield>
+      <marc:datafield ind1=" " ind2=" " tag="019">
+        <marc:subfield code="a">961643</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="2" ind2="0" tag="028">
+        <marc:subfield code="a">A.L. 21389</marc:subfield>
+        <marc:subfield code="b">Alphonse Leduc</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="a">(OCoLC)4359269</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="9">00629829</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="040">
+        <marc:subfield code="a">KTS</marc:subfield>
+        <marc:subfield code="c">KTS</marc:subfield>
+        <marc:subfield code="d">OCL</marc:subfield>
+        <marc:subfield code="d">RER</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="045">
+        <marc:subfield code="a">v1v3</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="048">
+        <marc:subfield code="a">sd01</marc:subfield>
+        <marc:subfield code="a">ka01</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="049">
+        <marc:subfield code="a">RERA</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="090">
+        <marc:subfield code="a">M238</marc:subfield>
+        <marc:subfield code="b">.B619s</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="099">
+        <marc:subfield code="a">M238 .B619s</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="3" ind2="2" tag="028">
+        <marc:subfield code="a">Pl. no. A.L. 21389</marc:subfield>
+        <marc:subfield code="b">Alphonse Leduc,</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="100">
+        <marc:subfield code="a">Birckenstock, Johann Adam,</marc:subfield>
+        <marc:subfield code="d">1687-1733.</marc:subfield>
+        <marc:subfield code="4">cmp</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2="0" tag="240">
+        <marc:subfield code="a">Sonatas,</marc:subfield>
+        <marc:subfield code="m">violin, continuo,</marc:subfield>
+        <marc:subfield code="n">op. 1.</marc:subfield>
+        <marc:subfield code="n">No. 11;</marc:subfield>
+        <marc:subfield code="o">arr.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2="0" tag="245">
+        <marc:subfield code="a">Sonate /</marc:subfield>
+        <marc:subfield code="c">J. A. Birkenstock ; realisation pour piano de Euge?ne Bigot ; [adapte?e par] J. Delmas-Boussagol.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="260">
+        <marc:subfield code="a">Paris :</marc:subfield>
+        <marc:subfield code="b">Alphonse Leduc,</marc:subfield>
+        <marc:subfield code="c">1954.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="300">
+        <marc:subfield code="a">score (16 p.) and part ;</marc:subfield>
+        <marc:subfield code="c">34 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="490">
+        <marc:subfield code="a">Les classiques de la contrebasse ;</marc:subfield>
+        <marc:subfield code="v">no. 45</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="500">
+        <marc:subfield code="a">Caption title.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="500">
+        <marc:subfield code="a">For double bass with piano.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="590">
+        <marc:subfield code="a">Sibley Music Library missing part.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="650">
+        <marc:subfield code="a">Sonatas (Double bass and piano), Arranged</marc:subfield>
+        <marc:subfield code="x">Scores and parts.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="700">
+        <marc:subfield code="a">Bigot, Euge?ne.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="2" ind2=" " tag="700">
+        <marc:subfield code="a">Delmas-Boussagol, J.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="830">
+        <marc:subfield code="a">Classiques de la contrebasse ;</marc:subfield>
+        <marc:subfield code="v">no. 45.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="910">
+        <marc:subfield code="a">950906</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="911">
+        <marc:subfield code="a">u</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="966">
+        <marc:subfield code="l">/Stack</marc:subfield>
+        <marc:subfield code="m">SMONO</marc:subfield>
+        <marc:subfield code="s">M238 .B619s</marc:subfield>
+        <marc:subfield code="c">1</marc:subfield>
+        <marc:subfield code="b">39087004862258</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Image</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Notated music</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Notated music</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)697587</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Sonatas (Double bass and piano), Arranged</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="x">Scores and parts.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

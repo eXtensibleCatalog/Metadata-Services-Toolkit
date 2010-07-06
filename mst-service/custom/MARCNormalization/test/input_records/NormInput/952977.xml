@@ -1,121 +1,105 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>01112ncm a2200325 a 45 A</marc:leader>
-	<marc:controlfield tag="001">952977</marc:controlfield>
-	<marc:controlfield tag="003">NRU</marc:controlfield>
-	<marc:controlfield tag="008">861125s1906    nyuzzc         n    N/A d</marc:controlfield>
-
-	<marc:datafield tag="028" ind1="2" ind2="0">
-		<marc:subfield code="a">18792-15</marc:subfield>
-		<marc:subfield code="b">C. Fischer</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="b">ocm</marc:subfield>
-		<marc:subfield code="a">14874368 </marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="9">00896731</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">IVI</marc:subfield>
-		<marc:subfield code="c">IVI</marc:subfield>
-		<marc:subfield code="d">m/c</marc:subfield>
-		<marc:subfield code="d">RER</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="048" ind1=" " ind2=" ">
-		<marc:subfield code="b">sa01</marc:subfield>
-		<marc:subfield code="a">ka01</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RERA</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="090" ind1=" " ind2=" ">
-		<marc:subfield code="a">M1013</marc:subfield>
-		<marc:subfield code="b">.B887FS</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="099" ind1=" " ind2=" ">
-		<marc:subfield code="a">M1013 .B887FS</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="100" ind1="1" ind2=" ">
-		<marc:subfield code="a">Bruch, Max,</marc:subfield>
-		<marc:subfield code="d">1838-1920.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="240" ind1="1" ind2="0">
-		<marc:subfield code="a">Romances,</marc:subfield>
-		<marc:subfield code="m">violin, orchestra,</marc:subfield>
-		<marc:subfield code="n">op. 42,</marc:subfield>
-		<marc:subfield code="r">A minor;</marc:subfield>
-		<marc:subfield code="o">arr.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="0" ind2="0">
-		<marc:subfield code="a">Romanze for violin and piano, op. 42 /</marc:subfield>
-		<marc:subfield code="c">Max Bruch ; edited by Theodore Spiering.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">New York :</marc:subfield>
-		<marc:subfield code="b">C. Fischer,</marc:subfield>
-		<marc:subfield code="c">c1916.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">1 score (13 p.) + 1 part (6 p.) ;</marc:subfield>
-		<marc:subfield code="c">31 cm.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="490" ind1="1" ind2=" ">
-		<marc:subfield code="a">Carl Fischer's music library ;</marc:subfield>
-		<marc:subfield code="v">no. 773</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Orchestra part reduced for piano.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="590" ind1=" " ind2=" ">
-		<marc:subfield code="a">Sibley Music Library copy is bound with his Fantasia, Op. 46.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Violin with orchestra</marc:subfield>
-		<marc:subfield code="x">Solo with piano.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Spiering, Theodore,</marc:subfield>
-		<marc:subfield code="d">1871-1925.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="830" ind1=" " ind2="0">
-		<marc:subfield code="a">Carl Fischer's music library ;</marc:subfield>
-		<marc:subfield code="v">no. 773.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="910" ind1=" " ind2=" ">
-		<marc:subfield code="a">  950805         </marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="911" ind1=" " ind2=" ">
-		<marc:subfield code="a">u</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Stack</marc:subfield>
-		<marc:subfield code="m">SMONO </marc:subfield>
-		<marc:subfield code="s">M1013 .B887FS</marc:subfield>
-		<marc:subfield code="c"> 1</marc:subfield>
-	</marc:datafield>
-
-</marc:record>
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:181</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01112ncm a2200325 a 45 A</marc:leader>
+        <marc:controlfield tag="001">952977</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="008">861125s1906    nyuzzc         n    N/A d</marc:controlfield>
+        <marc:datafield tag="028" ind1="2" ind2="0">
+          <marc:subfield code="a">18792-15</marc:subfield>
+          <marc:subfield code="b">C. Fischer</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="b">ocm</marc:subfield>
+          <marc:subfield code="a">14874368 </marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="9">00896731</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">IVI</marc:subfield>
+          <marc:subfield code="c">IVI</marc:subfield>
+          <marc:subfield code="d">m/c</marc:subfield>
+          <marc:subfield code="d">RER</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="048" ind1=" " ind2=" ">
+          <marc:subfield code="b">sa01</marc:subfield>
+          <marc:subfield code="a">ka01</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RERA</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">M1013</marc:subfield>
+          <marc:subfield code="b">.B887FS</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">M1013 .B887FS</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Bruch, Max,</marc:subfield>
+          <marc:subfield code="d">1838-1920.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="1" ind2="0">
+          <marc:subfield code="a">Romances,</marc:subfield>
+          <marc:subfield code="m">violin, orchestra,</marc:subfield>
+          <marc:subfield code="n">op. 42,</marc:subfield>
+          <marc:subfield code="r">A minor;</marc:subfield>
+          <marc:subfield code="o">arr.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">Romanze for violin and piano, op. 42 /</marc:subfield>
+          <marc:subfield code="c">Max Bruch ; edited by Theodore Spiering.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">New York :</marc:subfield>
+          <marc:subfield code="b">C. Fischer,</marc:subfield>
+          <marc:subfield code="c">c1916.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">1 score (13 p.) + 1 part (6 p.) ;</marc:subfield>
+          <marc:subfield code="c">31 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="490" ind1="1" ind2=" ">
+          <marc:subfield code="a">Carl Fischer's music library ;</marc:subfield>
+          <marc:subfield code="v">no. 773</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Orchestra part reduced for piano.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="590" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sibley Music Library copy is bound with his Fantasia, Op. 46.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Violin with orchestra</marc:subfield>
+          <marc:subfield code="x">Solo with piano.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Spiering, Theodore,</marc:subfield>
+          <marc:subfield code="d">1871-1925.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="830" ind1=" " ind2="0">
+          <marc:subfield code="a">Carl Fischer's music library ;</marc:subfield>
+          <marc:subfield code="v">no. 773.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="910" ind1=" " ind2=" ">
+          <marc:subfield code="a">  950805         </marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="911" ind1=" " ind2=" ">
+          <marc:subfield code="a">u</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Stack</marc:subfield>
+          <marc:subfield code="m">SMONO </marc:subfield>
+          <marc:subfield code="s">M1013 .B887FS</marc:subfield>
+          <marc:subfield code="c"> 1</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

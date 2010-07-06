@@ -1,37 +1,38 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>00370cy  a22001453  4500</marc:leader>
-	<marc:controlfield tag="001">809</marc:controlfield>
-	<marc:controlfield tag="003">NRU</marc:controlfield>
-	<marc:controlfield tag="004">481</marc:controlfield>
-	<marc:controlfield tag="005">20030324142022.0</marc:controlfield>
-	<marc:controlfield tag="008">9612094p00008   4001uueng0000000</marc:controlfield>
-
-	<marc:datafield tag="852" ind1="0" ind2=" ">
-		<marc:subfield code="b">CarlPer</marc:subfield>
-		<marc:subfield code="h">Q1</marc:subfield>
-		<marc:subfield code="i">.S391</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="866" ind1="3" ind2="0">
-		<marc:subfield code="a">n.s. v.101 (1945)-</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="866" ind1=" " ind2="0">
-		<marc:subfield code="8">0</marc:subfield>
-		<marc:subfield code="a">v. 322, no. 5903 (Nov. 7 2008)</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="866" ind1=" " ind2="0">
-		<marc:subfield code="8">0</marc:subfield>
-		<marc:subfield code="a">v. 322, no. 5904 (Nov. 14 2008)</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="866" ind1=" " ind2="0">
-		<marc:subfield code="8">0</marc:subfield>
-		<marc:subfield code="a">v. 322, no. 5905 (Nov. 21 2008)</marc:subfield>
-	</marc:datafield>
-
-</marc:record>
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:166</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00370cy  a22001453  4500</marc:leader>
+        <marc:controlfield tag="001">809</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="004">481</marc:controlfield>
+        <marc:controlfield tag="005">20030324142022.0</marc:controlfield>
+        <marc:controlfield tag="008">9612094p00008   4001uueng0000000</marc:controlfield>
+        <marc:datafield tag="852" ind1="0" ind2=" ">
+          <marc:subfield code="b">CarlPer</marc:subfield>
+          <marc:subfield code="h">Q1</marc:subfield>
+          <marc:subfield code="i">.S391</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="866" ind1="3" ind2="0">
+          <marc:subfield code="a">n.s. v.101 (1945)-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="866" ind1=" " ind2="0">
+          <marc:subfield code="8">0</marc:subfield>
+          <marc:subfield code="a">v. 322, no. 5903 (Nov. 7 2008)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="866" ind1=" " ind2="0">
+          <marc:subfield code="8">0</marc:subfield>
+          <marc:subfield code="a">v. 322, no. 5904 (Nov. 14 2008)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="866" ind1=" " ind2="0">
+          <marc:subfield code="8">0</marc:subfield>
+          <marc:subfield code="a">v. 322, no. 5905 (Nov. 21 2008)</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

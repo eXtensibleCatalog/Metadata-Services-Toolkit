@@ -1,0 +1,144 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/166</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:168</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>00807cam a22002650  45 A</marc:leader>
+      <marc:controlfield tag="001">824214</marc:controlfield>
+      <marc:controlfield tag="008">740723q19401949nyu           000 1 eng</marc:controlfield>
+      <marc:datafield ind1=" " ind2=" " tag="010">
+        <marc:subfield code="a">36022325</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="a">(OCoLC)958956</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="9">00761555</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="040">
+        <marc:subfield code="a">DLC</marc:subfield>
+        <marc:subfield code="c">KSU</marc:subfield>
+        <marc:subfield code="d">m.c.</marc:subfield>
+        <marc:subfield code="d">OCL</marc:subfield>
+        <marc:subfield code="d">RRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="049">
+        <marc:subfield code="a">RRRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2=" " tag="050">
+        <marc:subfield code="a">PZ3.D35</marc:subfield>
+        <marc:subfield code="b">Ta 83</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="090">
+        <marc:subfield code="a">PR4571</marc:subfield>
+        <marc:subfield code="b">.A1mo</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="099">
+        <marc:subfield code="a">PR4571 .A1mo</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="100">
+        <marc:subfield code="a">Dickens, Charles,</marc:subfield>
+        <marc:subfield code="d">1812-1870.</marc:subfield>
+        <marc:subfield code="4">aut</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2="2" tag="245">
+        <marc:subfield code="a">A tale of two cities.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="260">
+        <marc:subfield code="a">New York,</marc:subfield>
+        <marc:subfield code="b">The Modern Library</marc:subfield>
+        <marc:subfield code="c">[194-?]</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="300">
+        <marc:subfield code="a">x, 397 p.</marc:subfield>
+        <marc:subfield code="c">19 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="490">
+        <marc:subfield code="a">The modern library of the world's best books.</marc:subfield>
+        <marc:subfield code="v">[no.189]</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="651">
+        <marc:subfield code="a">France</marc:subfield>
+        <marc:subfield code="x">History</marc:subfield>
+        <marc:subfield code="y">Revolution, 1789-1799</marc:subfield>
+        <marc:subfield code="x">Fiction.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="830">
+        <marc:subfield code="a">Modern library of the world's best books ;</marc:subfield>
+        <marc:subfield code="v">189</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="910">
+        <marc:subfield code="a">951204</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="911">
+        <marc:subfield code="a">u</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="966">
+        <marc:subfield code="l">Stack</marc:subfield>
+        <marc:subfield code="m">RMON</marc:subfield>
+        <marc:subfield code="s">PR4571 .A1mo</marc:subfield>
+        <marc:subfield code="b">39087005290996</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)824214</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="240" ind1="0" ind2="0">
+        <marc:subfield code="a">Tale of two cities.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="x">History</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="x">Fiction.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="963" ind1=" " ind2="0">
+        <marc:subfield code="y">Revolution, 1789-1799</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="967" ind1=" " ind2="0">
+        <marc:subfield code="a">France</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

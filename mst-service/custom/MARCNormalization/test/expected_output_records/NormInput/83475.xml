@@ -1,0 +1,123 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/167</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:169</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01000ccm a2200289 a 45 0</marc:leader>
+      <marc:controlfield tag="001">83475</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="005">20080620125518.0</marc:controlfield>
+      <marc:controlfield tag="008">861202s1984    nyuzzz         n    N/A d</marc:controlfield>
+      <marc:datafield ind1="3" ind2="0" tag="028">
+        <marc:subfield code="a">67040</marc:subfield>
+        <marc:subfield code="b">Edition Peters</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="a">(OCoLC)14912531</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="9">01316873</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="040">
+        <marc:subfield code="a">CIA</marc:subfield>
+        <marc:subfield code="c">CIA</marc:subfield>
+        <marc:subfield code="d">RES</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="048">
+        <marc:subfield code="a">wa01</marc:subfield>
+        <marc:subfield code="a">wc01</marc:subfield>
+        <marc:subfield code="a">bd01</marc:subfield>
+        <marc:subfield code="a">pz03</marc:subfield>
+        <marc:subfield code="a">ka01</marc:subfield>
+        <marc:subfield code="a">sa01</marc:subfield>
+        <marc:subfield code="a">vc01</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="049">
+        <marc:subfield code="a">RESM</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="090">
+        <marc:subfield code="a">M3</marc:subfield>
+        <marc:subfield code="b">.C131 v.66</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="099">
+        <marc:subfield code="a">M3 .C131 v.66</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="100">
+        <marc:subfield code="a">Cage, John.</marc:subfield>
+        <marc:subfield code="4">cmp</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2="0" tag="240">
+        <marc:subfield code="a">Music for</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2="0" tag="245">
+        <marc:subfield code="a">Music for... /</marc:subfield>
+        <marc:subfield code="c">John Cage.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="260">
+        <marc:subfield code="a">New York :</marc:subfield>
+        <marc:subfield code="b">Henmar Press ; sole selling agents: C. F. Peters,</marc:subfield>
+        <marc:subfield code="c">c1984.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="300">
+        <marc:subfield code="a">9 parts ;</marc:subfield>
+        <marc:subfield code="c">36 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="500">
+        <marc:subfield code="a">"Parts for flute, clarinet, trombone, three percussion, piano, violin, and cello without score (no fixed relation), title to be completed by adding to "Music for" -- the number of players performing."</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="650">
+        <marc:subfield code="a">Instrumental ensembles</marc:subfield>
+        <marc:subfield code="v">Parts.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="910">
+        <marc:subfield code="a">19960716152404.0</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="911">
+        <marc:subfield code="a">u</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="966">
+        <marc:subfield code="l">/Csstk</marc:subfield>
+        <marc:subfield code="m">SCOLL</marc:subfield>
+        <marc:subfield code="s">M3 .C131 v.66</marc:subfield>
+        <marc:subfield code="c">1</marc:subfield>
+        <marc:subfield code="b">39087015849716</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Image</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Notated music</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Notated music</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)83475</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Instrumental ensembles</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="969" ind1=" " ind2="0">
+        <marc:subfield code="v">Parts.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

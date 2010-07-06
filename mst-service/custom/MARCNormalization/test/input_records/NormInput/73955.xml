@@ -1,92 +1,80 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>01191cas a2200289 a 45 0</marc:leader>
-	<marc:controlfield tag="001">73955</marc:controlfield>
-	<marc:controlfield tag="003">NRU</marc:controlfield>
-	<marc:controlfield tag="005">20010302103721.0</marc:controlfield>
-	<marc:controlfield tag="008">910320c19909999ne mnzp       0   a0eng d</marc:controlfield>
-
-	<marc:datafield tag="010" ind1=" " ind2=" ">
-		<marc:subfield code="a">sn 92005178 </marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="022" ind1=" " ind2=" ">
-		<marc:subfield code="a">0925-4439</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="030" ind1=" " ind2=" ">
-		<marc:subfield code="a">BBADEX</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="b">ocm</marc:subfield>
-		<marc:subfield code="a">23273598</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="9">01307347</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">NRT</marc:subfield>
-		<marc:subfield code="c">NRT</marc:subfield>
-		<marc:subfield code="d">NSD</marc:subfield>
-		<marc:subfield code="d">NST</marc:subfield>
-		<marc:subfield code="d">RNM</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RNMM</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="099" ind1=" " ind2=" ">
-		<marc:subfield code="a">Serial</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="210" ind1="0" ind2=" ">
-		<marc:subfield code="a">Biochim. biophys. acta, Mol. basis dis.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="222" ind1=" " ind2="0">
-		<marc:subfield code="a">Biochimica et biophysica acta. Molecular basis of disease</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="0" ind2="0">
-		<marc:subfield code="a">Biochimica et biophysica acta.</marc:subfield>
-		<marc:subfield code="p">Molecular basis of disease</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="246" ind1="1" ind2="0">
-		<marc:subfield code="a">Molecular basis of disease</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="246" ind1="1" ind2="0">
-		<marc:subfield code="a">BBA</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">Amsterdam :</marc:subfield>
-		<marc:subfield code="b">Elsevier Pub. Co.,</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Description based on: vol. 1315 (1996).</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="590" ind1=" " ind2=" ">
-		<marc:subfield code="a">Between 1947 and 1995 Miner subscribed to all 10 pts. of BBA. Beginning in 1996, Miner subscribes to the following 6 pts. only: BIOMEMBRANES; GENERAL SUBJECTS; MOLECULAR BASIS OF DISEASE; MOLECULAR CELL RESEARCH; REVIEWS ON BIOMEMBRANES; REVIEWS ON CANCER (this explains gaps in numeration on shelf.) Subscriptions to the other 4 pts. are held by Carlson.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="2">
-		<marc:subfield code="a">Molecular Biology</marc:subfield>
-		<marc:subfield code="x">periodicals.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="2">
-		<marc:subfield code="a">Pathology</marc:subfield>
-		<marc:subfield code="x">periodicals.</marc:subfield>
-	</marc:datafield>
-
-</marc:record>
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:164</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01191cas a2200289 a 45 0</marc:leader>
+        <marc:controlfield tag="001">73955</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20010302103721.0</marc:controlfield>
+        <marc:controlfield tag="008">910320c19909999ne mnzp       0   a0eng d</marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">sn 92005178 </marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="022" ind1=" " ind2=" ">
+          <marc:subfield code="a">0925-4439</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="030" ind1=" " ind2=" ">
+          <marc:subfield code="a">BBADEX</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="b">ocm</marc:subfield>
+          <marc:subfield code="a">23273598</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="9">01307347</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">NRT</marc:subfield>
+          <marc:subfield code="c">NRT</marc:subfield>
+          <marc:subfield code="d">NSD</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">RNM</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RNMM</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">Serial</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="210" ind1="0" ind2=" ">
+          <marc:subfield code="a">Biochim. biophys. acta, Mol. basis dis.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="222" ind1=" " ind2="0">
+          <marc:subfield code="a">Biochimica et biophysica acta. Molecular basis of disease</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">Biochimica et biophysica acta.</marc:subfield>
+          <marc:subfield code="p">Molecular basis of disease</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="0">
+          <marc:subfield code="a">Molecular basis of disease</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="0">
+          <marc:subfield code="a">BBA</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Amsterdam :</marc:subfield>
+          <marc:subfield code="b">Elsevier Pub. Co.,</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Description based on: vol. 1315 (1996).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="590" ind1=" " ind2=" ">
+          <marc:subfield code="a">Between 1947 and 1995 Miner subscribed to all 10 pts. of BBA. Beginning in 1996, Miner subscribes to the following 6 pts. only: BIOMEMBRANES; GENERAL SUBJECTS; MOLECULAR BASIS OF DISEASE; MOLECULAR CELL RESEARCH; REVIEWS ON BIOMEMBRANES; REVIEWS ON CANCER (this explains gaps in numeration on shelf.) Subscriptions to the other 4 pts. are held by Carlson.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="2">
+          <marc:subfield code="a">Molecular Biology</marc:subfield>
+          <marc:subfield code="x">periodicals.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="2">
+          <marc:subfield code="a">Pathology</marc:subfield>
+          <marc:subfield code="x">periodicals.</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

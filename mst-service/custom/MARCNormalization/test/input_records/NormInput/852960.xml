@@ -1,391 +1,346 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>04245ccm a22006850  45 A</marc:leader>
-	<marc:controlfield tag="001">852960</marc:controlfield>
-	<marc:controlfield tag="003">NRU</marc:controlfield>
-	<marc:controlfield tag="005">20050824135454.0</marc:controlfield>
-	<marc:controlfield tag="008">860910m1960    au zzm         n    N/A  </marc:controlfield>
-
-	<marc:datafield tag="010" ind1=" " ind2=" ">
-		<marc:subfield code="a">m  61000295 /M/r86</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="028" ind1="2" ind2="0">
-		<marc:subfield code="a">U.E. 2931</marc:subfield>
-		<marc:subfield code="b">Universal Edition</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="028" ind1="2" ind2="0">
-		<marc:subfield code="a">CFK 9256</marc:subfield>
-		<marc:subfield code="b">C.F. Kahnt</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="b">ocm</marc:subfield>
-		<marc:subfield code="a">15082670</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="9">00792471</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">DLC</marc:subfield>
-		<marc:subfield code="c">DLC</marc:subfield>
-		<marc:subfield code="d">m/c</marc:subfield>
-		<marc:subfield code="d">RES</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">[Closed] [Shelf] RESM [over]</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="050" ind1="0" ind2=" ">
-		<marc:subfield code="a">M3.</marc:subfield>
-		<marc:subfield code="b">M155</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="090" ind1=" " ind2=" ">
-		<marc:subfield code="a">M3</marc:subfield>
-		<marc:subfield code="b">.M214</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="099" ind1=" " ind2=" ">
-		<marc:subfield code="a">M3 .M214</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="100" ind1="1" ind2=" ">
-		<marc:subfield code="a">Mahler, Gustav,</marc:subfield>
-		<marc:subfield code="d">1860-1911.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="240" ind1="1" ind2="0">
-		<marc:subfield code="a">Works.</marc:subfield>
-		<marc:subfield code="f">1960</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="0" ind2="0">
-		<marc:subfield code="a">Sämtliche Werke :</marc:subfield>
-		<marc:subfield code="b">kritische Gesamtausgabe /</marc:subfield>
-		<marc:subfield code="c">Gustav Mahler ; herausgegeben von der Internationalen Gustav Mahler Gesellschaft, Wien.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">Wien :</marc:subfield>
-		<marc:subfield code="b">Universal Edition,</marc:subfield>
-		<marc:subfield code="c">c1960-</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">v. ;</marc:subfield>
-		<marc:subfield code="c">28 cm.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Publisher varies.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Pl. no.: U.E. 2931/</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="505" ind1="0" ind2=" ">
-		<marc:subfield code="a">Bd. 1. Symphonie Nr. 1 -- Bd. 2. Symphonie Nr. 2 -- Bd. 3. Symphonie Nr. 3 -- Bd. 4. Symphonie Nr. 4 in vier Sätzen -- Bd. 5. Symphonie Nr. 5 -- Bd. 6. Symphonie Nr. 6 -- Bd. 7. Symphonie Nr. 7 -- Bd. 8. Symphonie Nr. 8 -- Bd. 9. Das Lied von der Erde -- Bd. 10. Symphony Nr. 9 -- Bd. 11a. Adagio aus der Symphonie Nr. 10 -- Bd. 12. Das klagende Lied -- Bd. 13. Teilbd. 1. Lieder eines fahrenden Gesellen : für eine Singstimme mit Klavier ; Teilbd. 2a. Neun Lieder und Gesänge aus &quot;Des Knaben Wunderhorn&quot; : für Singstimme (hoch) und Klavier ; Teilbd. 2a. Lieder eines fahrenden Gesellen : für Singstimme (tief) und Klavier ; Teilbd. 2b. Fünfzehn Lieder, Humoresken und Balladen aus Des Knaben Wunderhorn für Singstimme und Klavier ; Teilbd. 3. Kindertotenlieder : für eine Singstimme mit Klavier ; Teilbd. 4. Lieder nach Texten von Friedrich Rückert : für eine Singstimme mit Klavier ; Teilbd. 5. Verschiedene Lieder -- Bd. 14. Teilbd. 1. Lieder eines fahrenden Gesellen : für eine Singstimme mit Orchester ; Teilbd. 2. Des Knaben Wunderhorn ; Teilbd. 3. Kindertotenlieder : für eine Singstimme mit Orchester ; Teilbd. 4. Lieder nach Texten von Friedrich Rückert : für eine Singstimme mit Orchester.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="710" ind1="2" ind2=" ">
-		<marc:subfield code="a">Internationale Gustav Mahler Gesellschaft.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="910" ind1=" " ind2=" ">
-		<marc:subfield code="a">950805</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="911" ind1=" " ind2=" ">
-		<marc:subfield code="a">p</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 1</marc:subfield>
-		<marc:subfield code="b">39087014310488</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 2</marc:subfield>
-		<marc:subfield code="b">39087013612603</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 3</marc:subfield>
-		<marc:subfield code="b">39087013612611</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 4</marc:subfield>
-		<marc:subfield code="b">39087013612629</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 5</marc:subfield>
-		<marc:subfield code="b">39087013612637</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 6</marc:subfield>
-		<marc:subfield code="b">39087013612645</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 7</marc:subfield>
-		<marc:subfield code="b">39087013612652</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 8</marc:subfield>
-		<marc:subfield code="b">39087013612660</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 9</marc:subfield>
-		<marc:subfield code="b">39087013612678</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 10</marc:subfield>
-		<marc:subfield code="b">39087013612686</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 11a</marc:subfield>
-		<marc:subfield code="b">39087013612694</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 12</marc:subfield>
-		<marc:subfield code="b">39087013612702</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 13</marc:subfield>
-		<marc:subfield code="e">pt. 1</marc:subfield>
-		<marc:subfield code="b">39087013612710</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 14</marc:subfield>
-		<marc:subfield code="e">pt. 1</marc:subfield>
-		<marc:subfield code="b">39087013612744</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 5 rev.</marc:subfield>
-		<marc:subfield code="b">39087012473890</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 13</marc:subfield>
-		<marc:subfield code="e">pt. 5</marc:subfield>
-		<marc:subfield code="b">39087012473908</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 13</marc:subfield>
-		<marc:subfield code="e">pt. 3</marc:subfield>
-		<marc:subfield code="b">39087013612728</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 13</marc:subfield>
-		<marc:subfield code="e">pt. 4</marc:subfield>
-		<marc:subfield code="b">39087013612736</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 14</marc:subfield>
-		<marc:subfield code="e">pt. 3</marc:subfield>
-		<marc:subfield code="b">39087013612751</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 14</marc:subfield>
-		<marc:subfield code="e">pt. 4</marc:subfield>
-		<marc:subfield code="b">39087013612769</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">2</marc:subfield>
-		<marc:subfield code="d">v. 5</marc:subfield>
-		<marc:subfield code="b">39087013612777</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">2</marc:subfield>
-		<marc:subfield code="d">v. 6</marc:subfield>
-		<marc:subfield code="b">39087013612793</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">3</marc:subfield>
-		<marc:subfield code="d">v. 6</marc:subfield>
-		<marc:subfield code="b">39087013612785</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">2</marc:subfield>
-		<marc:subfield code="d">v. 7</marc:subfield>
-		<marc:subfield code="b">39087013612801</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">2</marc:subfield>
-		<marc:subfield code="d">v. 9</marc:subfield>
-		<marc:subfield code="b">39087013612819</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 13</marc:subfield>
-		<marc:subfield code="e">pt. 2ah</marc:subfield>
-		<marc:subfield code="b">39087014310462</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 13</marc:subfield>
-		<marc:subfield code="e">pt. 2at</marc:subfield>
-		<marc:subfield code="b">39087014310512</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Csstk</marc:subfield>
-		<marc:subfield code="m">SCOLL</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">1</marc:subfield>
-		<marc:subfield code="d">v. 13</marc:subfield>
-		<marc:subfield code="e">pt. 2b</marc:subfield>
-		<marc:subfield code="b">39087014310520</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Stack</marc:subfield>
-		<marc:subfield code="m">SMONO</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">2</marc:subfield>
-		<marc:subfield code="d">v. 13</marc:subfield>
-		<marc:subfield code="e">pt. 2ah</marc:subfield>
-		<marc:subfield code="b">39087014310504</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Stack</marc:subfield>
-		<marc:subfield code="m">SMONO</marc:subfield>
-		<marc:subfield code="s">M3 .M214</marc:subfield>
-		<marc:subfield code="c">2</marc:subfield>
-		<marc:subfield code="d">v. 9</marc:subfield>
-		<marc:subfield code="b">39087014310496</marc:subfield>
-	</marc:datafield>
-
-</marc:record>
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:171</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>04245ccm a22006850  45 A</marc:leader>
+        <marc:controlfield tag="001">852960</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20050824135454.0</marc:controlfield>
+        <marc:controlfield tag="008">860910m1960    au zzm         n    N/A  </marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">m  61000295 /M/r86</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="028" ind1="2" ind2="0">
+          <marc:subfield code="a">U.E. 2931</marc:subfield>
+          <marc:subfield code="b">Universal Edition</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="028" ind1="2" ind2="0">
+          <marc:subfield code="a">CFK 9256</marc:subfield>
+          <marc:subfield code="b">C.F. Kahnt</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="b">ocm</marc:subfield>
+          <marc:subfield code="a">15082670</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="9">00792471</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">DLC</marc:subfield>
+          <marc:subfield code="c">DLC</marc:subfield>
+          <marc:subfield code="d">m/c</marc:subfield>
+          <marc:subfield code="d">RES</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">[Closed] [Shelf] RESM [over]</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="050" ind1="0" ind2=" ">
+          <marc:subfield code="a">M3.</marc:subfield>
+          <marc:subfield code="b">M155</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">M3</marc:subfield>
+          <marc:subfield code="b">.M214</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">M3 .M214</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Mahler, Gustav,</marc:subfield>
+          <marc:subfield code="d">1860-1911.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="1" ind2="0">
+          <marc:subfield code="a">Works.</marc:subfield>
+          <marc:subfield code="f">1960</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">Sa&#x308;mtliche Werke :</marc:subfield>
+          <marc:subfield code="b">kritische Gesamtausgabe /</marc:subfield>
+          <marc:subfield code="c">Gustav Mahler ; herausgegeben von der Internationalen Gustav Mahler Gesellschaft, Wien.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Wien :</marc:subfield>
+          <marc:subfield code="b">Universal Edition,</marc:subfield>
+          <marc:subfield code="c">c1960-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">v. ;</marc:subfield>
+          <marc:subfield code="c">28 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Publisher varies.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Pl. no.: U.E. 2931/</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="505" ind1="0" ind2=" ">
+          <marc:subfield code="a">Bd. 1. Symphonie Nr. 1 -- Bd. 2. Symphonie Nr. 2 -- Bd. 3. Symphonie Nr. 3 -- Bd. 4. Symphonie Nr. 4 in vier Sa&#x308;tzen -- Bd. 5. Symphonie Nr. 5 -- Bd. 6. Symphonie Nr. 6 -- Bd. 7. Symphonie Nr. 7 -- Bd. 8. Symphonie Nr. 8 -- Bd. 9. Das Lied von der Erde -- Bd. 10. Symphony Nr. 9 -- Bd. 11a. Adagio aus der Symphonie Nr. 10 -- Bd. 12. Das klagende Lied -- Bd. 13. Teilbd. 1. Lieder eines fahrenden Gesellen : fu&#x308;r eine Singstimme mit Klavier ; Teilbd. 2a. Neun Lieder und Gesa&#x308;nge aus "Des Knaben Wunderhorn" : fu&#x308;r Singstimme (hoch) und Klavier ; Teilbd. 2a. Lieder eines fahrenden Gesellen : fu&#x308;r Singstimme (tief) und Klavier ; Teilbd. 2b. Fu&#x308;nfzehn Lieder, Humoresken und Balladen aus Des Knaben Wunderhorn fu&#x308;r Singstimme und Klavier ; Teilbd. 3. Kindertotenlieder : fu&#x308;r eine Singstimme mit Klavier ; Teilbd. 4. Lieder nach Texten von Friedrich Ru&#x308;ckert : fu&#x308;r eine Singstimme mit Klavier ; Teilbd. 5. Verschiedene Lieder -- Bd. 14. Teilbd. 1. Lieder eines fahrenden Gesellen : fu&#x308;r eine Singstimme mit Orchester ; Teilbd. 2. Des Knaben Wunderhorn ; Teilbd. 3. Kindertotenlieder : fu&#x308;r eine Singstimme mit Orchester ; Teilbd. 4. Lieder nach Texten von Friedrich Ru&#x308;ckert : fu&#x308;r eine Singstimme mit Orchester.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">Internationale Gustav Mahler Gesellschaft.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="910" ind1=" " ind2=" ">
+          <marc:subfield code="a">950805</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="911" ind1=" " ind2=" ">
+          <marc:subfield code="a">p</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 1</marc:subfield>
+          <marc:subfield code="b">39087014310488</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 2</marc:subfield>
+          <marc:subfield code="b">39087013612603</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 3</marc:subfield>
+          <marc:subfield code="b">39087013612611</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 4</marc:subfield>
+          <marc:subfield code="b">39087013612629</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 5</marc:subfield>
+          <marc:subfield code="b">39087013612637</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 6</marc:subfield>
+          <marc:subfield code="b">39087013612645</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 7</marc:subfield>
+          <marc:subfield code="b">39087013612652</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 8</marc:subfield>
+          <marc:subfield code="b">39087013612660</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 9</marc:subfield>
+          <marc:subfield code="b">39087013612678</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 10</marc:subfield>
+          <marc:subfield code="b">39087013612686</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 11a</marc:subfield>
+          <marc:subfield code="b">39087013612694</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 12</marc:subfield>
+          <marc:subfield code="b">39087013612702</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 13</marc:subfield>
+          <marc:subfield code="e">pt. 1</marc:subfield>
+          <marc:subfield code="b">39087013612710</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 14</marc:subfield>
+          <marc:subfield code="e">pt. 1</marc:subfield>
+          <marc:subfield code="b">39087013612744</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 5 rev.</marc:subfield>
+          <marc:subfield code="b">39087012473890</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 13</marc:subfield>
+          <marc:subfield code="e">pt. 5</marc:subfield>
+          <marc:subfield code="b">39087012473908</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 13</marc:subfield>
+          <marc:subfield code="e">pt. 3</marc:subfield>
+          <marc:subfield code="b">39087013612728</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 13</marc:subfield>
+          <marc:subfield code="e">pt. 4</marc:subfield>
+          <marc:subfield code="b">39087013612736</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 14</marc:subfield>
+          <marc:subfield code="e">pt. 3</marc:subfield>
+          <marc:subfield code="b">39087013612751</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 14</marc:subfield>
+          <marc:subfield code="e">pt. 4</marc:subfield>
+          <marc:subfield code="b">39087013612769</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">2</marc:subfield>
+          <marc:subfield code="d">v. 5</marc:subfield>
+          <marc:subfield code="b">39087013612777</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">2</marc:subfield>
+          <marc:subfield code="d">v. 6</marc:subfield>
+          <marc:subfield code="b">39087013612793</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">3</marc:subfield>
+          <marc:subfield code="d">v. 6</marc:subfield>
+          <marc:subfield code="b">39087013612785</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">2</marc:subfield>
+          <marc:subfield code="d">v. 7</marc:subfield>
+          <marc:subfield code="b">39087013612801</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">2</marc:subfield>
+          <marc:subfield code="d">v. 9</marc:subfield>
+          <marc:subfield code="b">39087013612819</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 13</marc:subfield>
+          <marc:subfield code="e">pt. 2ah</marc:subfield>
+          <marc:subfield code="b">39087014310462</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 13</marc:subfield>
+          <marc:subfield code="e">pt. 2at</marc:subfield>
+          <marc:subfield code="b">39087014310512</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SCOLL</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="d">v. 13</marc:subfield>
+          <marc:subfield code="e">pt. 2b</marc:subfield>
+          <marc:subfield code="b">39087014310520</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Stack</marc:subfield>
+          <marc:subfield code="m">SMONO</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">2</marc:subfield>
+          <marc:subfield code="d">v. 13</marc:subfield>
+          <marc:subfield code="e">pt. 2ah</marc:subfield>
+          <marc:subfield code="b">39087014310504</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Stack</marc:subfield>
+          <marc:subfield code="m">SMONO</marc:subfield>
+          <marc:subfield code="s">M3 .M214</marc:subfield>
+          <marc:subfield code="c">2</marc:subfield>
+          <marc:subfield code="d">v. 9</marc:subfield>
+          <marc:subfield code="b">39087014310496</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

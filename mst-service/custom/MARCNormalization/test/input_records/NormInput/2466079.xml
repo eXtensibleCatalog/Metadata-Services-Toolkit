@@ -1,118 +1,101 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>02193cam a2200349 a 4500</marc:leader>
-	<marc:controlfield tag="001">2466079</marc:controlfield>
-	<marc:controlfield tag="003">NRU</marc:controlfield>
-	<marc:controlfield tag="005">20060630150727.0</marc:controlfield>
-	<marc:controlfield tag="008">030219s2002    nyua     b    001 0 eng  </marc:controlfield>
-
-	<marc:datafield tag="010" ind1=" " ind2=" ">
-		<marc:subfield code="a">  2002005807</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)49805793</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">DLC</marc:subfield>
-		<marc:subfield code="c">DLC</marc:subfield>
-		<marc:subfield code="d">NLC</marc:subfield>
-		<marc:subfield code="d">SYB</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="016" ind1=" " ind2=" ">
-		<marc:subfield code="a">20020143478</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="020" ind1=" " ind2=" ">
-		<marc:subfield code="a">1555704433 (pbk. : alk. paper)</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="029" ind1="1" ind2=" ">
-		<marc:subfield code="a">NLC</marc:subfield>
-		<marc:subfield code="b">20020143478</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="050" ind1="0" ind2="0">
-		<marc:subfield code="a">Z678.93.X54</marc:subfield>
-		<marc:subfield code="b">X54 2002</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="055" ind1="0" ind2="2">
-		<marc:subfield code="a">Z678.93*</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="082" ind1="0" ind2="0">
-		<marc:subfield code="a">005.7/2</marc:subfield>
-		<marc:subfield code="2">21</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RRRA</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="0" ind2="0">
-		<marc:subfield code="a">XML in libraries /</marc:subfield>
-		<marc:subfield code="c">edited by Roy Tennant.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">New York :</marc:subfield>
-		<marc:subfield code="b">Neal-Schuman Publishers,</marc:subfield>
-		<marc:subfield code="c">c2002.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">xi, 213 p. :</marc:subfield>
-		<marc:subfield code="b">ill. ;</marc:subfield>
-		<marc:subfield code="c">23 cm.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="504" ind1=" " ind2=" ">
-		<marc:subfield code="a">Includes bibliographical references and index.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="505" ind1="0" ind2=" ">
-		<marc:subfield code="a">Updating MARC records with XMLMARC / Kevin S. Clarke -- Searching and retrieving XML records via the Web / Theo van Veen -- Improving interlibrary loan with XML / Kyle Banerjee -- Harnessing Oracle and XT for finding aid dissemination and search / Leslie Myrick -- Creating a unified e-government portal using XML / Lloyd Sokvitne and Jan Lavelle -- Expediting the work of the indexer with XML / Walter Lewis, Gail Richardson, and Geoff Cannon -- Using XML to federate collections : the Legacy Tobacco Documents Library / Heidi Schmidt -- Publishing books online at eScholarship / Roy Tennant -- Building XML databases with Zope and Castor / Art Rhyno -- Migrating native law cases from HTML to XML / Darlene Fichter -- Transforming word processing documents into XML : electronic scholarly publishing at the University of Michigan / Brian Rosenblum -- Encoding digital objects with METS / Jerome McDonough -- Integrating systems with XML-based Web services / Don Gourley.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="541" ind1=" " ind2=" ">
-		<marc:subfield code="c">Rhees copy purchased by The Rush Rhees Library Campaign for the 90s Fund.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">XML (Document markup language)</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Libraries</marc:subfield>
-		<marc:subfield code="x">Data processing.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="6">
-		<marc:subfield code="a">XML (Langage de balisage)</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="6">
-		<marc:subfield code="a">Bibliothèques</marc:subfield>
-		<marc:subfield code="x">Automatisation.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Tennant, Roy.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="956" ind1="4" ind2="2">
-		<marc:subfield code="3">Rhees copy purchased by The Rush Rhees Library Campaign for the 90s Fund.</marc:subfield>
-		<marc:subfield code="u">http://www.library.rochester.edu/index.cfm?page=funds&amp;fund=rush rhees library campaign for the 90s</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="994" ind1=" " ind2=" ">
-		<marc:subfield code="a">92</marc:subfield>
-		<marc:subfield code="b">RRR</marc:subfield>
-	</marc:datafield>
-
-</marc:record>
+<?xml version="1.0"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:78</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>02193cam a2200349 a 4500</marc:leader>
+        <marc:controlfield tag="001">2466079</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20060630150727.0</marc:controlfield>
+        <marc:controlfield tag="008">030219s2002    nyua     b    001 0 eng  </marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">  2002005807</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)49805793</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">DLC</marc:subfield>
+          <marc:subfield code="c">DLC</marc:subfield>
+          <marc:subfield code="d">NLC</marc:subfield>
+          <marc:subfield code="d">SYB</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="016" ind1=" " ind2=" ">
+          <marc:subfield code="a">20020143478</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">1555704433 (pbk. : alk. paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="029" ind1="1" ind2=" ">
+          <marc:subfield code="a">NLC</marc:subfield>
+          <marc:subfield code="b">20020143478</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="050" ind1="0" ind2="0">
+          <marc:subfield code="a">Z678.93.X54</marc:subfield>
+          <marc:subfield code="b">X54 2002</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="055" ind1="0" ind2="2">
+          <marc:subfield code="a">Z678.93*</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="082" ind1="0" ind2="0">
+          <marc:subfield code="a">005.7/2</marc:subfield>
+          <marc:subfield code="2">21</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRA</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">XML in libraries /</marc:subfield>
+          <marc:subfield code="c">edited by Roy Tennant.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">New York :</marc:subfield>
+          <marc:subfield code="b">Neal-Schuman Publishers,</marc:subfield>
+          <marc:subfield code="c">c2002.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">xi, 213 p. :</marc:subfield>
+          <marc:subfield code="b">ill. ;</marc:subfield>
+          <marc:subfield code="c">23 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="504" ind1=" " ind2=" ">
+          <marc:subfield code="a">Includes bibliographical references and index.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="505" ind1="0" ind2=" ">
+          <marc:subfield code="a">Updating MARC records with XMLMARC / Kevin S. Clarke -- Searching and retrieving XML records via the Web / Theo van Veen -- Improving interlibrary loan with XML / Kyle Banerjee -- Harnessing Oracle and XT for finding aid dissemination and search / Leslie Myrick -- Creating a unified e-government portal using XML / Lloyd Sokvitne and Jan Lavelle -- Expediting the work of the indexer with XML / Walter Lewis, Gail Richardson, and Geoff Cannon -- Using XML to federate collections : the Legacy Tobacco Documents Library / Heidi Schmidt -- Publishing books online at eScholarship / Roy Tennant -- Building XML databases with Zope and Castor / Art Rhyno -- Migrating native law cases from HTML to XML / Darlene Fichter -- Transforming word processing documents into XML : electronic scholarly publishing at the University of Michigan / Brian Rosenblum -- Encoding digital objects with METS / Jerome McDonough -- Integrating systems with XML-based Web services / Don Gourley.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="541" ind1=" " ind2=" ">
+          <marc:subfield code="c">Rhees copy purchased by The Rush Rhees Library Campaign for the 90s Fund.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">XML (Document markup language)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Libraries</marc:subfield>
+          <marc:subfield code="x">Data processing.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="6">
+          <marc:subfield code="a">XML (Langage de balisage)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="6">
+          <marc:subfield code="a">Bibliothe&#x300;ques</marc:subfield>
+          <marc:subfield code="x">Automatisation.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Tennant, Roy.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="956" ind1="4" ind2="2">
+          <marc:subfield code="3">Rhees copy purchased by The Rush Rhees Library Campaign for the 90s Fund.</marc:subfield>
+          <marc:subfield code="u">http://www.library.rochester.edu/index.cfm?page=funds&amp;fund=rush rhees library campaign for the 90s</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">92</marc:subfield>
+          <marc:subfield code="b">RRR</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

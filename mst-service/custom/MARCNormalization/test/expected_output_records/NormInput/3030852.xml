@@ -1,0 +1,326 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/102</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:102</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>deleted</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>02881cam a2200457 a 45&amp;#x2019;0</marc:leader>
+      <marc:controlfield tag="001">3030852</marc:controlfield>
+      <marc:controlfield tag="005">20070912100818.0</marc:controlfield>
+      <marc:controlfield tag="008">051224s2005    onc      b    001 0 eng c</marc:controlfield>
+      <marc:datafield ind1=" " ind2=" " tag="016">
+        <marc:subfield code="a">20059020687</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="020">
+        <marc:subfield code="a">0802038247 :</marc:subfield>
+        <marc:subfield code="c">$85.00</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="7" ind2=" " tag="024">
+        <marc:subfield code="a">99811772018</marc:subfield>
+        <marc:subfield code="2">YBP</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2=" " tag="029">
+        <marc:subfield code="a">NLC</marc:subfield>
+        <marc:subfield code="b">20059020687</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="a">(OCoLC)59338662</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="035">
+        <marc:subfield code="a">3030852</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="040">
+        <marc:subfield code="a">NLC</marc:subfield>
+        <marc:subfield code="b">eng</marc:subfield>
+        <marc:subfield code="c">NLC</marc:subfield>
+        <marc:subfield code="d">BAKER</marc:subfield>
+        <marc:subfield code="d">VP@</marc:subfield>
+        <marc:subfield code="d">INU</marc:subfield>
+        <marc:subfield code="d">OrLoB-B</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="042">
+        <marc:subfield code="a">pcc</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="043">
+        <marc:subfield code="a">e-uk---</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="049">
+        <marc:subfield code="a">RRRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="055">
+        <marc:subfield code="a">CB417</marc:subfield>
+        <marc:subfield code="b">F79 2005</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2="4" tag="082">
+        <marc:subfield code="a">820.9</marc:subfield>
+        <marc:subfield code="2">22</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="090">
+        <marc:subfield code="a">PR468.R65</marc:subfield>
+        <marc:subfield code="b">F79 2005</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="100">
+        <marc:subfield code="a">Frye, Northrop.</marc:subfield>
+        <marc:subfield code="4">aut</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2="0" tag="245">
+        <marc:subfield code="a">Northrop Frye's writings on the eighteenth and nineteenth centuries /</marc:subfield>
+        <marc:subfield code="c">edited by Imre Salusinszky.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="260">
+        <marc:subfield code="a">Toronto :</marc:subfield>
+        <marc:subfield code="b">University of Toronto Press,</marc:subfield>
+        <marc:subfield code="c">c2005.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="300">
+        <marc:subfield code="a">xli, 415 p. ;</marc:subfield>
+        <marc:subfield code="c">24 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="490">
+        <marc:subfield code="a">Collected works of Northrop Frye ;</marc:subfield>
+        <marc:subfield code="v">v. 17</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="504">
+        <marc:subfield code="a">Includes bibliographical references (p. [355]-381) and index.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="0" ind2="0" tag="505">
+        <marc:subfield code="t">On the eighteenth century --</marc:subfield>
+        <marc:subfield code="g">1.</marc:subfield>
+        <marc:subfield code="t">The young Boswell --</marc:subfield>
+        <marc:subfield code="g">2.</marc:subfield>
+        <marc:subfield code="t">Towards defining an age of sensibility --</marc:subfield>
+        <marc:subfield code="g">3.</marc:subfield>
+        <marc:subfield code="t">Nature methodized --</marc:subfield>
+        <marc:subfield code="g">4.</marc:subfield>
+        <marc:subfield code="t">Varieties of eighteenth-century sensibility --</marc:subfield>
+        <marc:subfield code="t">On romanticism --</marc:subfield>
+        <marc:subfield code="g">5.</marc:subfield>
+        <marc:subfield code="t">CBC Goethe salute --</marc:subfield>
+        <marc:subfield code="g">6.</marc:subfield>
+        <marc:subfield code="t">Long sequacious notes --</marc:subfield>
+        <marc:subfield code="g">7.</marc:subfield>
+        <marc:subfield code="t">Lord Byron --</marc:subfield>
+        <marc:subfield code="g">8.</marc:subfield>
+        <marc:subfield code="t">Foreword to Romanticism reconsidered --</marc:subfield>
+        <marc:subfield code="g">9.</marc:subfield>
+        <marc:subfield code="t">The drunken boat : the revolutionary element in Romanticism --</marc:subfield>
+        <marc:subfield code="g">10.</marc:subfield>
+        <marc:subfield code="t">A study of English Romanticism --</marc:subfield>
+        <marc:subfield code="g">I.</marc:subfield>
+        <marc:subfield code="t">The Romantic myth --</marc:subfield>
+        <marc:subfield code="g">II.</marc:subfield>
+        <marc:subfield code="t">Yorick : the Romantic macabre --</marc:subfield>
+        <marc:subfield code="g">III.</marc:subfield>
+        <marc:subfield code="t">Prometheus : the Romantic revolutionary --</marc:subfield>
+        <marc:subfield code="g">IV.</marc:subfield>
+        <marc:subfield code="t">Endymion : the Romantic epiphanic --</marc:subfield>
+        <marc:subfield code="g">11.</marc:subfield>
+        <marc:subfield code="t">John Keats --</marc:subfield>
+        <marc:subfield code="g">12.</marc:subfield>
+        <marc:subfield code="t">Kathleen Hazel Coburn --</marc:subfield>
+        <marc:subfield code="g">13.</marc:subfield>
+        <marc:subfield code="t">How it was --</marc:subfield>
+        <marc:subfield code="g">14.</marc:subfield>
+        <marc:subfield code="t">In the earth, or in the air? --</marc:subfield>
+        <marc:subfield code="t">On the nineteenth century --</marc:subfield>
+        <marc:subfield code="g">15.</marc:subfield>
+        <marc:subfield code="t">Review of Patience and The silver box --</marc:subfield>
+        <marc:subfield code="g">16.</marc:subfield>
+        <marc:subfield code="t">Review of H. M. S. Pinafore --</marc:subfield>
+        <marc:subfield code="g">17.</marc:subfield>
+        <marc:subfield code="t">Iolanthe --</marc:subfield>
+        <marc:subfield code="g">18.</marc:subfield>
+        <marc:subfield code="t">Review of Iolanthe --</marc:subfield>
+        <marc:subfield code="g">19.</marc:subfield>
+        <marc:subfield code="t">Review of Bradbrook's Ibsen the Norwegian --</marc:subfield>
+        <marc:subfield code="g">20.</marc:subfield>
+        <marc:subfield code="t">James, LeFanu, and Morris --</marc:subfield>
+        <marc:subfield code="g">21.</marc:subfield>
+        <marc:subfield code="t">An important influence --</marc:subfield>
+        <marc:subfield code="g">22.</marc:subfield>
+        <marc:subfield code="t">Review of Joan Evans's John Ruskin --</marc:subfield>
+        <marc:subfield code="g">23.</marc:subfield>
+        <marc:subfield code="t">Emily Dickinson --</marc:subfield>
+        <marc:subfield code="g">24.</marc:subfield>
+        <marc:subfield code="t">The problem of spiritual authority in the nineteenth century --</marc:subfield>
+        <marc:subfield code="g">25.</marc:subfield>
+        <marc:subfield code="t">Dickens and the comedy of humours --</marc:subfield>
+        <marc:subfield code="g">26.</marc:subfield>
+        <marc:subfield code="t">The meeting of past and future in William Morris --</marc:subfield>
+        <marc:subfield code="g">27.</marc:subfield>
+        <marc:subfield code="t">The world as music and idea in Wagner's Parsifal --</marc:subfield>
+        <marc:subfield code="g">28.</marc:subfield>
+        <marc:subfield code="t">Some reflections on life and habit.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="650">
+        <marc:subfield code="a">English literature</marc:subfield>
+        <marc:subfield code="y">19th century</marc:subfield>
+        <marc:subfield code="x">History and criticism.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="650">
+        <marc:subfield code="a">Romanticism</marc:subfield>
+        <marc:subfield code="z">Great Britain.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="0" tag="650">
+        <marc:subfield code="a">English literature</marc:subfield>
+        <marc:subfield code="y">18th century</marc:subfield>
+        <marc:subfield code="x">History and criticism.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="6" tag="650">
+        <marc:subfield code="a">Litte?rature anglaise</marc:subfield>
+        <marc:subfield code="y">19e sie?cle</marc:subfield>
+        <marc:subfield code="x">Histoire et critique.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="6" tag="650">
+        <marc:subfield code="a">Romantisme</marc:subfield>
+        <marc:subfield code="z">Grande-Bretagne.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2="6" tag="650">
+        <marc:subfield code="a">Litte?rature anglaise</marc:subfield>
+        <marc:subfield code="y">18e sie?cle</marc:subfield>
+        <marc:subfield code="x">Histoire et critique.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="700">
+        <marc:subfield code="a">Salusinszky, Imre,</marc:subfield>
+        <marc:subfield code="d">1955-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1="1" ind2=" " tag="800">
+        <marc:subfield code="a">Frye, Northrop.</marc:subfield>
+        <marc:subfield code="t">Works.</marc:subfield>
+        <marc:subfield code="f">1996 ;</marc:subfield>
+        <marc:subfield code="v">v. 17.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="945">
+        <marc:subfield code="a">PromptCat</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="949">
+        <marc:subfield code="b">39087027576802</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="980">
+        <marc:subfield code="a">2006-01-11</marc:subfield>
+        <marc:subfield code="b">85</marc:subfield>
+        <marc:subfield code="e">71.4</marc:subfield>
+        <marc:subfield code="f">742884</marc:subfield>
+        <marc:subfield code="g">1</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="994">
+        <marc:subfield code="a">92</marc:subfield>
+        <marc:subfield code="b">RRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield ind1=" " ind2=" " tag="945">
+        <marc:subfield code="a">MARS</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="947" ind1=" " ind2=" ">
+        <marc:subfield code="a">0802038247</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)3030852</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="240" ind1="0" ind2="0">
+        <marc:subfield code="a">Northrop Frye's writings on the eighteenth and nineteenth centuries /</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">English literature</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Romanticism</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">English literature</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="6">
+        <marc:subfield code="a">Litte?rature anglaise</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="6">
+        <marc:subfield code="a">Romantisme</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="6">
+        <marc:subfield code="a">Litte?rature anglaise</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="x">History and criticism.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="x">History and criticism.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="6">
+        <marc:subfield code="x">Histoire et critique.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="6">
+        <marc:subfield code="x">Histoire et critique.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="963" ind1=" " ind2="0">
+        <marc:subfield code="y">19th century</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="963" ind1=" " ind2="0">
+        <marc:subfield code="y">18th century</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="963" ind1=" " ind2="6">
+        <marc:subfield code="y">19e sie?cle</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="963" ind1=" " ind2="6">
+        <marc:subfield code="y">18e sie?cle</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="967" ind1=" " ind2="0">
+        <marc:subfield code="z">Great Britain.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="967" ind1=" " ind2="6">
+        <marc:subfield code="z">Grande-Bretagne.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>
