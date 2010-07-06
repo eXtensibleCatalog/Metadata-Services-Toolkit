@@ -461,6 +461,10 @@ public class Record {
 		this.oaiIdentifier = oaiIdentifier;
 	}
 	
+	public void setOaiIdentifier(String oaiIdentifier) {
+		this.oaiIdentifier = oaiIdentifier;
+	}
+	
 	public String getHarvestedOaiIdentifier() {
 		return this.oaiIdentifier;
 	}
