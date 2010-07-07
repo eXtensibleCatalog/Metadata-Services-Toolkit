@@ -56,7 +56,7 @@
         <marc:subfield code="a">Kleine Choralvorspiele</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="0" tag="245">
-        <marc:subfield code="a">30 kleine Choralvorspiele fu?r Orgel :</marc:subfield>
+        <marc:subfield code="a">30 kleine Choralvorspiele für Orgel :</marc:subfield>
         <marc:subfield code="b">Opus 135a = Thirty little chorale preludes for organ /</marc:subfield>
         <marc:subfield code="c">Max Reger ; herausgegeben von Michael Kube.</marc:subfield>
       </marc:datafield>
@@ -67,7 +67,7 @@
         <marc:subfield code="a">Little chorale preludes</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="260">
-        <marc:subfield code="a">Mu?nchen :</marc:subfield>
+        <marc:subfield code="a">München :</marc:subfield>
         <marc:subfield code="b">G. Henle Verlag,</marc:subfield>
         <marc:subfield code="c">c2003.</marc:subfield>
       </marc:datafield>

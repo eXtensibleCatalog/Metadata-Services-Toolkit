@@ -67,7 +67,7 @@
         <marc:subfield code="a">"PD format, 48 kHz."</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="505">
-        <marc:subfield code="a">O sacred head now wounded / J. S. Bach ; arr. Howard Hanson (6:20) (Neill Humfeld, conductor) -- Largo / Warren Benson (13:48) -- Achieved is the glorius work / Joseph Haydn ; arr. Don Miller (3:45) -- Adoramus te Christe / Quirino Gasparini ; arr. Don Miller (2:30) -- Adagio / Camille St. Sae?ns ; arr. Ken Murley (5:19) -- Sonara for trombone choir and percussion (World premiere) / Sal Scarpa (7:25) -- Passacaglia in c minor / J. S. Bach ; arr. Don Hunsberger (7:07) (Donald Hunsberger, conductor) -- I'm getting sentimental over you / Ned Washington ; arr. Rob Boone (4:47) (Tom Ervin, soloist) -- Wolf eyes / Paul Winter ; arr. Mark Lusk (4:19) (Mark Lust, soloist) -- Sweet Georgia Brown / arr. Steve Mortenson (6:29) (Bionic Bones with Jim Pugh, soloist ; Bill Dobbins, piano ; Bill Campbell, bass ; Rich Thompson, drums) -- Stardust for the chief / Rayburn Wright (6:10) (John Beck, drums, Alec Brinkman, bass ; Donald Hunsberger, conductor).</marc:subfield>
+        <marc:subfield code="a">O sacred head now wounded / J. S. Bach ; arr. Howard Hanson (6:20) (Neill Humfeld, conductor) -- Largo / Warren Benson (13:48) -- Achieved is the glorius work / Joseph Haydn ; arr. Don Miller (3:45) -- Adoramus te Christe / Quirino Gasparini ; arr. Don Miller (2:30) -- Adagio / Camille St. Saëns ; arr. Ken Murley (5:19) -- Sonara for trombone choir and percussion (World premiere) / Sal Scarpa (7:25) -- Passacaglia in c minor / J. S. Bach ; arr. Don Hunsberger (7:07) (Donald Hunsberger, conductor) -- I'm getting sentimental over you / Ned Washington ; arr. Rob Boone (4:47) (Tom Ervin, soloist) -- Wolf eyes / Paul Winter ; arr. Mark Lusk (4:19) (Mark Lust, soloist) -- Sweet Georgia Brown / arr. Steve Mortenson (6:29) (Bionic Bones with Jim Pugh, soloist ; Bill Dobbins, piano ; Bill Campbell, bass ; Rich Thompson, drums) -- Stardust for the chief / Rayburn Wright (6:10) (John Beck, drums, Alec Brinkman, bass ; Donald Hunsberger, conductor).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="511">
         <marc:subfield code="a">Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</marc:subfield>
@@ -102,7 +102,7 @@
       <marc:datafield ind1="1" ind2="2" tag="700">
         <marc:subfield code="a">Bach, Johann Sebastian,</marc:subfield>
         <marc:subfield code="d">1685-1750.</marc:subfield>
-        <marc:subfield code="t">Mattha?uspassion.</marc:subfield>
+        <marc:subfield code="t">Matthäuspassion.</marc:subfield>
         <marc:subfield code="p">O Haupt voll Blut und Wunden;</marc:subfield>
         <marc:subfield code="o">arr.</marc:subfield>
         <marc:subfield code="8">1\c</marc:subfield>
@@ -116,7 +116,7 @@
       <marc:datafield ind1="1" ind2="2" tag="700">
         <marc:subfield code="a">Haydn, Joseph,</marc:subfield>
         <marc:subfield code="d">1732-1809.</marc:subfield>
-        <marc:subfield code="t">Scho?pfung.</marc:subfield>
+        <marc:subfield code="t">Schöpfung.</marc:subfield>
         <marc:subfield code="p">Vollendet ist das grosse Werk;</marc:subfield>
         <marc:subfield code="o">arr.</marc:subfield>
         <marc:subfield code="8">3\c</marc:subfield>
@@ -129,7 +129,7 @@
         <marc:subfield code="8">4\c</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="2" ind2="2" tag="700">
-        <marc:subfield code="a">Saint-Sae?ns, Camille,</marc:subfield>
+        <marc:subfield code="a">Saint-Saëns, Camille,</marc:subfield>
         <marc:subfield code="d">1835-1921.</marc:subfield>
         <marc:subfield code="t">Symphonies,</marc:subfield>
         <marc:subfield code="n">no. 3, op. 78,</marc:subfield>
@@ -266,7 +266,7 @@
         <marc:subfield code="8">4\c</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="959" ind1="2" ind2="2">
-        <marc:subfield code="a">Saint-Sae?ns, Camille,</marc:subfield>
+        <marc:subfield code="a">Saint-Saëns, Camille,</marc:subfield>
         <marc:subfield code="d">1835-1921.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">5\c</marc:subfield>

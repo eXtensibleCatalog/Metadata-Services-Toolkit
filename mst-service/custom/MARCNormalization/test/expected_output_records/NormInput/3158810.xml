@@ -186,16 +186,16 @@
         <marc:subfield code="a">Critique.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="6" tag="650">
-        <marc:subfield code="a">The?orie critique.</marc:subfield>
+        <marc:subfield code="a">Théorie critique.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="6" tag="650">
-        <marc:subfield code="a">Litte?rature</marc:subfield>
+        <marc:subfield code="a">Littérature</marc:subfield>
         <marc:subfield code="x">Histoire et critique.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="6" tag="650">
-        <marc:subfield code="a">Litte?rature romane</marc:subfield>
+        <marc:subfield code="a">Littérature romane</marc:subfield>
         <marc:subfield code="x">Histoire et critique</marc:subfield>
-        <marc:subfield code="x">The?orie, etc.</marc:subfield>
+        <marc:subfield code="x">Théorie, etc.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2=" " tag="700">
         <marc:subfield code="a">Adamson, Joseph,</marc:subfield>
@@ -278,11 +278,11 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="6">
-        <marc:subfield code="a">Litte?rature</marc:subfield>
+        <marc:subfield code="a">Littérature</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="6">
-        <marc:subfield code="a">Litte?rature romane</marc:subfield>
+        <marc:subfield code="a">Littérature romane</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="0">
@@ -306,7 +306,7 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="6">
-        <marc:subfield code="x">The?orie, etc.</marc:subfield>
+        <marc:subfield code="x">Théorie, etc.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
     </marc:record>

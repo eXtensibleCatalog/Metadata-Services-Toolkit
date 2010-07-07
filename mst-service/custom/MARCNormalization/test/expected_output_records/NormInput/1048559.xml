@@ -60,11 +60,11 @@
         <marc:subfield code="d">1882-1971.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="0" tag="240">
-        <marc:subfield code="a">Zhar-ptit?s?a</marc:subfield>
+        <marc:subfield code="a">Zhar-ptit︠s︡a</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="4" tag="245">
         <marc:subfield code="a">The firebird /</marc:subfield>
-        <marc:subfield code="c">Stravinsky. Two portraits / Barto?k</marc:subfield>
+        <marc:subfield code="c">Stravinsky. Two portraits / Bartók</marc:subfield>
         <marc:subfield code="h">[sound recording]</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="260">
@@ -81,7 +81,7 @@
         <marc:subfield code="a">Jubilee</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="500">
-        <marc:subfield code="a">Eds. recorded: B. Schott's So?hne (1st work) ; Boosey &amp; Hawkes (2nd work).</marc:subfield>
+        <marc:subfield code="a">Eds. recorded: B. Schott's Söhne (1st work) ; Boosey &amp; Hawkes (2nd work).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="500">
         <marc:subfield code="a">Compact disc.</marc:subfield>
@@ -93,10 +93,10 @@
         <marc:subfield code="a">Durations: 46:00 ; 12:00.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="500">
-        <marc:subfield code="a">Translation of program notes by Marie-Ce?cile Barras inserted in container.</marc:subfield>
+        <marc:subfield code="a">Translation of program notes by Marie-Cécile Barras inserted in container.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="511">
-        <marc:subfield code="a">Wiener Philharmoniker ; Christoph von Dohna?nyi, conductor.</marc:subfield>
+        <marc:subfield code="a">Wiener Philharmoniker ; Christoph von Dohnányi, conductor.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="518">
         <marc:subfield code="a">Recorded at the Sofiensaal, Vienna, Sept./Oct. 1979.</marc:subfield>
@@ -108,13 +108,13 @@
         <marc:subfield code="a">Suites (Orchestra)</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2=" " tag="700">
-        <marc:subfield code="a">Dohna?nyi, Christoph von.</marc:subfield>
+        <marc:subfield code="a">Dohnányi, Christoph von.</marc:subfield>
         <marc:subfield code="4">cnd.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="2" tag="700">
-        <marc:subfield code="a">Barto?k, Be?la,</marc:subfield>
+        <marc:subfield code="a">Bartók, Béla,</marc:subfield>
         <marc:subfield code="d">1881-1945.</marc:subfield>
-        <marc:subfield code="t">Portre?k.</marc:subfield>
+        <marc:subfield code="t">Portrék.</marc:subfield>
         <marc:subfield code="8">1\c</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="2" ind2=" " tag="710">
@@ -176,7 +176,7 @@
         <marc:subfield code="a">(NRU)1048559</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="959" ind1="1" ind2="2">
-        <marc:subfield code="a">Barto?k, Be?la,</marc:subfield>
+        <marc:subfield code="a">Bartók, Béla,</marc:subfield>
         <marc:subfield code="d">1881-1945.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">1\c</marc:subfield>

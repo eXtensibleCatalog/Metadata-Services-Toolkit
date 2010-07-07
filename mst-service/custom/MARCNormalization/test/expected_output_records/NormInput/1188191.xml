@@ -71,10 +71,10 @@
         <marc:subfield code="a">Publisher's no.: Universal-Edition No. 3873.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="505">
-        <marc:subfield code="a">O Glocken, bo?se Glocken (Holm).--Dass er ganz ein Engel werde (Holm).</marc:subfield>
+        <marc:subfield code="a">O Glocken, böse Glocken (Holm).--Dass er ganz ein Engel werde (Holm).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="590">
-        <marc:subfield code="a">Sibley Music Library copy bound with Schreker, Fu?nf Gesa?nge (1909).</marc:subfield>
+        <marc:subfield code="a">Sibley Music Library copy bound with Schreker, Fünf Gesänge (1909).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="0" tag="600">
         <marc:subfield code="a">Holm, Mia,</marc:subfield>

@@ -65,7 +65,7 @@
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="255">
         <marc:subfield code="a">Scale 1:500,000</marc:subfield>
-        <marc:subfield code="c">(W 113?--W 107?/N 41?--N 38?).</marc:subfield>
+        <marc:subfield code="c">(W 113⁰--W 107⁰/N 41⁰--N 38⁰).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="260">
         <marc:subfield code="a">Reston, Va. :</marc:subfield>

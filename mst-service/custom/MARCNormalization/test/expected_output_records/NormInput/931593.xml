@@ -16,7 +16,7 @@
       <marc:controlfield tag="008">880404s1878    gw opa         n    N/A d</marc:controlfield>
       <marc:datafield ind1="2" ind2="0" tag="028">
         <marc:subfield code="a">22331</marc:subfield>
-        <marc:subfield code="b">B. Schott's So?hne</marc:subfield>
+        <marc:subfield code="b">B. Schott's Söhne</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="035">
         <marc:subfield code="a">(OCoLC)17729059</marc:subfield>
@@ -49,20 +49,20 @@
       </marc:datafield>
       <marc:datafield ind1="1" ind2="0" tag="240">
         <marc:subfield code="a">Ring des Nibelungen.</marc:subfield>
-        <marc:subfield code="p">Go?tterda?mmerung.</marc:subfield>
+        <marc:subfield code="p">Götterdämmerung.</marc:subfield>
         <marc:subfield code="p">Trauermarsch;</marc:subfield>
         <marc:subfield code="o">arr.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="0" tag="245">
-        <marc:subfield code="a">Siegfried's Tod und Trauermarsch aus dem Musik-Drama Go?tterda?mmerung /</marc:subfield>
-        <marc:subfield code="c">von Richard Wagner ; fu?r Orchester bearbeitet von L. Stasny.</marc:subfield>
+        <marc:subfield code="a">Siegfried's Tod und Trauermarsch aus dem Musik-Drama Götterdämmerung /</marc:subfield>
+        <marc:subfield code="c">von Richard Wagner ; für Orchester bearbeitet von L. Stasny.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="254">
         <marc:subfield code="a">Partitur.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="260">
         <marc:subfield code="a">Mainz :</marc:subfield>
-        <marc:subfield code="b">B. Schott's So?hne,</marc:subfield>
+        <marc:subfield code="b">B. Schott's Söhne,</marc:subfield>
         <marc:subfield code="c">[1878?]</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="300">

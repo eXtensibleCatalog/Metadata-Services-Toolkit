@@ -68,7 +68,7 @@
         <marc:subfield code="a">Candidate for the degree Doctor of Musical Arts in Performance and Literature (piano).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="505">
-        <marc:subfield code="a">From Ann?ees de Pe?lerinage : Suisse. Valle?e d'Obermann / Franz Liszt (12:56) -- From North American ballads (1979). Winnsboro cotton mill blues / Frederic Rzewski (11:16) -- Piano concerto in C major, K. 503 / Wolfgang Amadeus Mozart (30:25).</marc:subfield>
+        <marc:subfield code="a">From Annʹees de Pèlerinage : Suisse. Vallée d'Obermann / Franz Liszt (12:56) -- From North American ballads (1979). Winnsboro cotton mill blues / Frederic Rzewski (11:16) -- Piano concerto in C major, K. 503 / Wolfgang Amadeus Mozart (30:25).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="0" tag="650">
         <marc:subfield code="a">Piano music.</marc:subfield>

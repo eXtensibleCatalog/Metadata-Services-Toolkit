@@ -57,7 +57,7 @@
         <marc:subfield code="n">op. 4</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2="0" tag="245">
-        <marc:subfield code="a">Fu?nf Lieder fu?r hohe Stimme mit Begleitung des Pianoforte. Op. 4.</marc:subfield>
+        <marc:subfield code="a">Fünf Lieder für hohe Stimme mit Begleitung des Pianoforte. Op. 4.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="260">
         <marc:subfield code="a">Wien,</marc:subfield>
@@ -72,10 +72,10 @@
         <marc:subfield code="a">Publisher's no.: Universal-Edition Nr. 3872.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="505">
-        <marc:subfield code="a">Fru?hling (Lemayer).--Unendliche Liebe (Tolstoi).--Wohl fu?hl' ich (Storm).--Liebe als Rezensentin (Sturm).--Lenzzauber (Scherenberg).</marc:subfield>
+        <marc:subfield code="a">Frühling (Lemayer).--Unendliche Liebe (Tolstoi).--Wohl fühl' ich (Storm).--Liebe als Rezensentin (Sturm).--Lenzzauber (Scherenberg).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="590">
-        <marc:subfield code="a">Sibley Music Library copy bound with Schreker, Fu?nf Gesa?nge (1909).</marc:subfield>
+        <marc:subfield code="a">Sibley Music Library copy bound with Schreker, Fünf Gesänge (1909).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="0" tag="650">
         <marc:subfield code="a">Songs (High voice) with piano.</marc:subfield>

@@ -56,12 +56,12 @@
       </marc:datafield>
       <marc:datafield ind1="1" ind2="0" tag="245">
         <marc:subfield code="a">Taitanikku o hikiagero /</marc:subfield>
-        <marc:subfield code="c">Kuraibu Kassura? ; Nakayama Yoshiyuki yaku.</marc:subfield>
+        <marc:subfield code="c">Kuraibu Kassurā ; Nakayama Yoshiyuki yaku.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="260">
-        <marc:subfield code="a">To?kyo? :</marc:subfield>
-        <marc:subfield code="b">Shincho?sha,</marc:subfield>
-        <marc:subfield code="c">Sho?wa 56 [1981]</marc:subfield>
+        <marc:subfield code="a">Tōkyō :</marc:subfield>
+        <marc:subfield code="b">Shinchōsha,</marc:subfield>
+        <marc:subfield code="c">Shōwa 56 [1981]</marc:subfield>
         <marc:subfield code="g">(1986 printing)</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="300">
@@ -70,7 +70,7 @@
         <marc:subfield code="c">15 cm.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="0" tag="440">
-        <marc:subfield code="a">Shincho? bunko ;</marc:subfield>
+        <marc:subfield code="a">Shinchō bunko ;</marc:subfield>
         <marc:subfield code="v">2713</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="0" tag="650">

@@ -113,7 +113,7 @@
         <marc:subfield code="w">(OCoLC)35633766</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2=" " tag="787">
-        <marc:subfield code="t">Rapport sur le de?veloppement en Afrique</marc:subfield>
+        <marc:subfield code="t">Rapport sur le développement en Afrique</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="850">
         <marc:subfield code="a">DLC</marc:subfield>

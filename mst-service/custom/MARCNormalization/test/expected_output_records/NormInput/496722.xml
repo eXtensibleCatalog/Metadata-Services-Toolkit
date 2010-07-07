@@ -45,10 +45,10 @@
         <marc:subfield code="4">cmp</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="0" tag="240">
-        <marc:subfield code="a">Bohe?me</marc:subfield>
+        <marc:subfield code="a">Bohème</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="3" tag="245">
-        <marc:subfield code="a">La bohe?me :</marc:subfield>
+        <marc:subfield code="a">La bohème :</marc:subfield>
         <marc:subfield code="b">an opera in four acts /</marc:subfield>
         <marc:subfield code="c">Puccini.</marc:subfield>
       </marc:datafield>
@@ -71,12 +71,12 @@
       <marc:datafield ind1="1" ind2=" " tag="700">
         <marc:subfield code="a">Giacosa, Giuseppe,</marc:subfield>
         <marc:subfield code="d">1847-1906.</marc:subfield>
-        <marc:subfield code="t">Bohe?me.</marc:subfield>
+        <marc:subfield code="t">Bohème.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2=" " tag="700">
         <marc:subfield code="a">Illica, Luigi,</marc:subfield>
         <marc:subfield code="d">1857-1919.</marc:subfield>
-        <marc:subfield code="t">Bohe?me.</marc:subfield>
+        <marc:subfield code="t">Bohème.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="910">
         <marc:subfield code="a">950805</marc:subfield>

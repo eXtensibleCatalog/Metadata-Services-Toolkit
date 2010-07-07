@@ -93,7 +93,7 @@
         <marc:subfield code="a">Sung in English, French, German, Italian or and Spanish.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="511">
-        <marc:subfield code="a">Jose? Carreras, Pla?cido Domingo, Luciano Pavarotti, tenors ; Orchestra de maggio musicale fiorentino, Orchestra del teatro dell'opera di Roma, Los Angeles Philharmonic, Orchestre de Paris ; James Levine, Zubin Mehta, conductors.</marc:subfield>
+        <marc:subfield code="a">José Carreras, Plácido Domingo, Luciano Pavarotti, tenors ; Orchestra de maggio musicale fiorentino, Orchestra del teatro dell'opera di Roma, Los Angeles Philharmonic, Orchestre de Paris ; James Levine, Zubin Mehta, conductors.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="500">
         <marc:subfield code="a">Lalo Schifrin arranged and orchestrated the medleys for the concerts in Los Angeles and Paris.</marc:subfield>
@@ -111,7 +111,7 @@
         <marc:subfield code="a">Program notes in English, French, German, Italian, and Spanish ([24] p. : col. ill.) inserted in container.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="505">
-        <marc:subfield code="a">'O sole mio -- Funiculi?, funicula? -- Libiamo ne' lieti calici -- Sous le ciel de Paris -- Torero quiero ser -- Parlami d'amore, Mariu -- Manha de carnaval -- Lolita -- Dicitencello vuie -- Core 'ngrato -- Because -- You'll never walk alone -- Singin' in the rain -- Maria/Tonight ; Cielito lindo -- Ochi tchorniye ; Caminito ; La vie en rose -- Mattinata ; Wien, Wien, nur du allein ; Amapola -- Lippen schweigen -- Brazil -- Sous les ponts de Paris -- Torna a surriento -- Nessun dorma -- La donna e? mobile.</marc:subfield>
+        <marc:subfield code="a">'O sole mio -- Funiculì, funiculà -- Libiamo ne' lieti calici -- Sous le ciel de Paris -- Torero quiero ser -- Parlami d'amore, Mariu -- Manha de carnaval -- Lolita -- Dicitencello vuie -- Core 'ngrato -- Because -- You'll never walk alone -- Singin' in the rain -- Maria/Tonight ; Cielito lindo -- Ochi tchorniye ; Caminito ; La vie en rose -- Mattinata ; Wien, Wien, nur du allein ; Amapola -- Lippen schweigen -- Brazil -- Sous les ponts de Paris -- Torna a surriento -- Nessun dorma -- La donna è mobile.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="590">
         <marc:subfield code="a">Art/Music copy: Gift of Sara Dougherty in memory of David Dougherty.</marc:subfield>
@@ -136,11 +136,11 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2=" " tag="700">
-        <marc:subfield code="a">Carreras, Jose?.</marc:subfield>
+        <marc:subfield code="a">Carreras, José.</marc:subfield>
         <marc:subfield code="4">prf</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2=" " tag="700">
-        <marc:subfield code="a">Domingo, Pla?cido,</marc:subfield>
+        <marc:subfield code="a">Domingo, Plácido,</marc:subfield>
         <marc:subfield code="d">1941-</marc:subfield>
         <marc:subfield code="4">prf</marc:subfield>
       </marc:datafield>

@@ -65,7 +65,7 @@
         <marc:subfield code="a">DVD bonus features include: 11 bonus chapters; 7 rare music archive clips; story-teller's chronicle; promo; alternative commentary; research notes; bibliography/discography; key websites; programmable audio CD; timeline; stills photo montage; Montmartre map.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="520">
-        <marc:subfield code="a">Ste?phane Grappelli tells his own story of a 77-year career. Contains all known film footage of Django Reinhardt including 7 minutes of the Hot Club Quintet of France.</marc:subfield>
+        <marc:subfield code="a">Stéphane Grappelli tells his own story of a 77-year career. Contains all known film footage of Django Reinhardt including 7 minutes of the Hot Club Quintet of France.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="538">
         <marc:subfield code="a">DVD, Dolby digital stereo.</marc:subfield>
@@ -74,7 +74,7 @@
         <marc:subfield code="a">In English with optional English subtitles.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="0" tag="600">
-        <marc:subfield code="a">Grappelli, Ste?phane.</marc:subfield>
+        <marc:subfield code="a">Grappelli, Stéphane.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="0" tag="650">
         <marc:subfield code="a">Jazz musicians</marc:subfield>
@@ -90,7 +90,7 @@
         <marc:subfield code="a">Balmer, Paul.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2=" " tag="700">
-        <marc:subfield code="a">Grappelli, Ste?phane.</marc:subfield>
+        <marc:subfield code="a">Grappelli, Stéphane.</marc:subfield>
         <marc:subfield code="4">prf</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2=" " tag="700">

@@ -57,11 +57,11 @@
         <marc:subfield code="c">21cm.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2=" " tag="490">
-        <marc:subfield code="a">Berner Vero?ffentlichungen zur Musikforschung,</marc:subfield>
+        <marc:subfield code="a">Berner Veröffentlichungen zur Musikforschung,</marc:subfield>
         <marc:subfield code="v">Heft 14</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="500">
-        <marc:subfield code="a">"Die vorliegende Dissertation [Bern] enthielt bei ihrer Einreichung zwei Hauptteile: der erste Teil bildete ... eine U?bersicht der Hauptgedanken ... Dieser ganze u?bersichtsteil muss fu?r den Druck wegfallen ... Der zweite Teil erscheint in seiner urspru?nglichen Gestalt."</marc:subfield>
+        <marc:subfield code="a">"Die vorliegende Dissertation [Bern] enthielt bei ihrer Einreichung zwei Hauptteile: der erste Teil bildete ... eine Übersicht der Hauptgedanken ... Dieser ganze übersichtsteil muss für den Druck wegfallen ... Der zweite Teil erscheint in seiner ursprünglichen Gestalt."</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="500">
         <marc:subfield code="a">"Histoire de la musique, et de ses effets" was begun by Pierre Bourdelot, continued by Pierre Bonnet and completed and pub. by Jacques Bonnet.</marc:subfield>
@@ -79,7 +79,7 @@
         <marc:subfield code="d">1610-1684 or 5.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="0" tag="830">
-        <marc:subfield code="a">Berner Vero?ffentlichungen zur Musikforschung ;</marc:subfield>
+        <marc:subfield code="a">Berner Veröffentlichungen zur Musikforschung ;</marc:subfield>
         <marc:subfield code="v">Heft 14.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="911">

@@ -55,12 +55,12 @@
         <marc:subfield code="4">cmp</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="0" tag="240">
-        <marc:subfield code="a">Gesa?nge</marc:subfield>
+        <marc:subfield code="a">Gesänge</marc:subfield>
         <marc:subfield code="n">(1909)</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2="0" tag="245">
-        <marc:subfield code="a">Fu?nf Gesa?nge</marc:subfield>
-        <marc:subfield code="b">fu?r eine tiefe Singstimme und Klavier.</marc:subfield>
+        <marc:subfield code="a">Fünf Gesänge</marc:subfield>
+        <marc:subfield code="b">für eine tiefe Singstimme und Klavier.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="260">
         <marc:subfield code="a">Wien :</marc:subfield>
@@ -81,10 +81,10 @@
         <marc:subfield code="a">Words from the Thousand and one nights (1st song); by Edith Ronsperger (2nd-5th songs).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="505">
-        <marc:subfield code="a">Ich frag' nach dir jedwede Morgensonne -- Dies aber kann mein Sehnen nimmer fassen -- Die Dunkelheit sinkt schwer wie Blei -- Sie sind so scho?n, die milden, sonnenreichen -- Einst gibt ein Tag mir alles Glu?ck zu eigen.</marc:subfield>
+        <marc:subfield code="a">Ich frag' nach dir jedwede Morgensonne -- Dies aber kann mein Sehnen nimmer fassen -- Die Dunkelheit sinkt schwer wie Blei -- Sie sind so schön, die milden, sonnenreichen -- Einst gibt ein Tag mir alles Glück zu eigen.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="590">
-        <marc:subfield code="a">Sibley Music Library copy bound with Schreker, Acht Lieder, op. 7 (1906); Zwei Gesa?nge, op. 2 (190-); Fu?nf Lieder, op. 4 (190-); Zwei Lieder, op. 5 (190-).</marc:subfield>
+        <marc:subfield code="a">Sibley Music Library copy bound with Schreker, Acht Lieder, op. 7 (1906); Zwei Gesänge, op. 2 (190-); Fünf Lieder, op. 4 (190-); Zwei Lieder, op. 5 (190-).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="0" tag="650">
         <marc:subfield code="a">Songs (Low voice) with piano.</marc:subfield>

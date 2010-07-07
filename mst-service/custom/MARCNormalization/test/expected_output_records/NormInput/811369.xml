@@ -47,7 +47,7 @@
         <marc:subfield code="a">QA445 .G44513 1984</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="130">
-        <marc:subfield code="a">Ge?ome?trie, proble?mes de ge?ome?trie commente?s et re?dige?s.</marc:subfield>
+        <marc:subfield code="a">Géométrie, problèmes de géométrie commentés et rédigés.</marc:subfield>
         <marc:subfield code="l">English.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="0" tag="245">
@@ -68,7 +68,7 @@
         <marc:subfield code="a">Problem books in mathematics</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="500">
-        <marc:subfield code="a">Translation of: Ge?ome?trie, proble?mes de ge?ome?trie commente?s et re?dige?s.</marc:subfield>
+        <marc:subfield code="a">Translation of: Géométrie, problèmes de géométrie commentés et rédigés.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="500">
         <marc:subfield code="a">Includes index.</marc:subfield>

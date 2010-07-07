@@ -63,7 +63,7 @@
         <marc:subfield code="f">1960</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2="0" tag="245">
-        <marc:subfield code="a">Sa?mtliche Werke :</marc:subfield>
+        <marc:subfield code="a">Sämtliche Werke :</marc:subfield>
         <marc:subfield code="b">kritische Gesamtausgabe /</marc:subfield>
         <marc:subfield code="c">Gustav Mahler ; herausgegeben von der Internationalen Gustav Mahler Gesellschaft, Wien.</marc:subfield>
       </marc:datafield>
@@ -83,7 +83,7 @@
         <marc:subfield code="a">Pl. no.: U.E. 2931/</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="505">
-        <marc:subfield code="a">Bd. 1. Symphonie Nr. 1 -- Bd. 2. Symphonie Nr. 2 -- Bd. 3. Symphonie Nr. 3 -- Bd. 4. Symphonie Nr. 4 in vier Sa?tzen -- Bd. 5. Symphonie Nr. 5 -- Bd. 6. Symphonie Nr. 6 -- Bd. 7. Symphonie Nr. 7 -- Bd. 8. Symphonie Nr. 8 -- Bd. 9. Das Lied von der Erde -- Bd. 10. Symphony Nr. 9 -- Bd. 11a. Adagio aus der Symphonie Nr. 10 -- Bd. 12. Das klagende Lied -- Bd. 13. Teilbd. 1. Lieder eines fahrenden Gesellen : fu?r eine Singstimme mit Klavier ; Teilbd. 2a. Neun Lieder und Gesa?nge aus "Des Knaben Wunderhorn" : fu?r Singstimme (hoch) und Klavier ; Teilbd. 2a. Lieder eines fahrenden Gesellen : fu?r Singstimme (tief) und Klavier ; Teilbd. 2b. Fu?nfzehn Lieder, Humoresken und Balladen aus Des Knaben Wunderhorn fu?r Singstimme und Klavier ; Teilbd. 3. Kindertotenlieder : fu?r eine Singstimme mit Klavier ; Teilbd. 4. Lieder nach Texten von Friedrich Ru?ckert : fu?r eine Singstimme mit Klavier ; Teilbd. 5. Verschiedene Lieder -- Bd. 14. Teilbd. 1. Lieder eines fahrenden Gesellen : fu?r eine Singstimme mit Orchester ; Teilbd. 2. Des Knaben Wunderhorn ; Teilbd. 3. Kindertotenlieder : fu?r eine Singstimme mit Orchester ; Teilbd. 4. Lieder nach Texten von Friedrich Ru?ckert : fu?r eine Singstimme mit Orchester.</marc:subfield>
+        <marc:subfield code="a">Bd. 1. Symphonie Nr. 1 -- Bd. 2. Symphonie Nr. 2 -- Bd. 3. Symphonie Nr. 3 -- Bd. 4. Symphonie Nr. 4 in vier Sätzen -- Bd. 5. Symphonie Nr. 5 -- Bd. 6. Symphonie Nr. 6 -- Bd. 7. Symphonie Nr. 7 -- Bd. 8. Symphonie Nr. 8 -- Bd. 9. Das Lied von der Erde -- Bd. 10. Symphony Nr. 9 -- Bd. 11a. Adagio aus der Symphonie Nr. 10 -- Bd. 12. Das klagende Lied -- Bd. 13. Teilbd. 1. Lieder eines fahrenden Gesellen : für eine Singstimme mit Klavier ; Teilbd. 2a. Neun Lieder und Gesänge aus "Des Knaben Wunderhorn" : für Singstimme (hoch) und Klavier ; Teilbd. 2a. Lieder eines fahrenden Gesellen : für Singstimme (tief) und Klavier ; Teilbd. 2b. Fünfzehn Lieder, Humoresken und Balladen aus Des Knaben Wunderhorn für Singstimme und Klavier ; Teilbd. 3. Kindertotenlieder : für eine Singstimme mit Klavier ; Teilbd. 4. Lieder nach Texten von Friedrich Rückert : für eine Singstimme mit Klavier ; Teilbd. 5. Verschiedene Lieder -- Bd. 14. Teilbd. 1. Lieder eines fahrenden Gesellen : für eine Singstimme mit Orchester ; Teilbd. 2. Des Knaben Wunderhorn ; Teilbd. 3. Kindertotenlieder : für eine Singstimme mit Orchester ; Teilbd. 4. Lieder nach Texten von Friedrich Rückert : für eine Singstimme mit Orchester.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="2" ind2=" " tag="710">
         <marc:subfield code="a">Internationale Gustav Mahler Gesellschaft.</marc:subfield>

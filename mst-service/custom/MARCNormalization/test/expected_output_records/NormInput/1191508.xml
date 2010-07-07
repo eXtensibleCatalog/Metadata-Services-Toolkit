@@ -59,12 +59,12 @@
       <marc:datafield ind1="1" ind2="0" tag="240">
         <marc:subfield code="a">Efterladte sange,</marc:subfield>
         <marc:subfield code="n">2.</marc:subfield>
-        <marc:subfield code="p">Ja?ger</marc:subfield>
+        <marc:subfield code="p">Jäger</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="4" tag="245">
-        <marc:subfield code="a">Der Ja?ger</marc:subfield>
+        <marc:subfield code="a">Der Jäger</marc:subfield>
         <marc:subfield code="b">(The hunter). [Nachgelassenes Werk.</marc:subfield>
-        <marc:subfield code="c">Englische U?bersetzung von John Bernhoff.].</marc:subfield>
+        <marc:subfield code="c">Englische Übersetzung von John Bernhoff.].</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="260">
         <marc:subfield code="a">Leipzig,</marc:subfield>
@@ -82,10 +82,10 @@
         <marc:subfield code="a">Cover title.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="500">
-        <marc:subfield code="a">From Sechs Lieder fu?r eine Singstimme und Klavier.</marc:subfield>
+        <marc:subfield code="a">From Sechs Lieder für eine Singstimme und Klavier.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="590">
-        <marc:subfield code="a">Sibley Music Library copy bound with his Tra?nen (c1908).</marc:subfield>
+        <marc:subfield code="a">Sibley Music Library copy bound with his Tränen (c1908).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="0" tag="650">
         <marc:subfield code="a">Songs with piano.</marc:subfield>

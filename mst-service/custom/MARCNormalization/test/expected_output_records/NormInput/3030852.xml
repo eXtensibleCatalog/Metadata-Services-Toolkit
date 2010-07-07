@@ -174,8 +174,8 @@
         <marc:subfield code="x">History and criticism.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="6" tag="650">
-        <marc:subfield code="a">Litte?rature anglaise</marc:subfield>
-        <marc:subfield code="y">19e sie?cle</marc:subfield>
+        <marc:subfield code="a">Littérature anglaise</marc:subfield>
+        <marc:subfield code="y">19e siècle</marc:subfield>
         <marc:subfield code="x">Histoire et critique.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="6" tag="650">
@@ -183,8 +183,8 @@
         <marc:subfield code="z">Grande-Bretagne.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="6" tag="650">
-        <marc:subfield code="a">Litte?rature anglaise</marc:subfield>
-        <marc:subfield code="y">18e sie?cle</marc:subfield>
+        <marc:subfield code="a">Littérature anglaise</marc:subfield>
+        <marc:subfield code="y">18e siècle</marc:subfield>
         <marc:subfield code="x">Histoire et critique.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2=" " tag="700">
@@ -269,7 +269,7 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="6">
-        <marc:subfield code="a">Litte?rature anglaise</marc:subfield>
+        <marc:subfield code="a">Littérature anglaise</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="6">
@@ -277,7 +277,7 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="6">
-        <marc:subfield code="a">Litte?rature anglaise</marc:subfield>
+        <marc:subfield code="a">Littérature anglaise</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="0">
@@ -305,11 +305,11 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="963" ind1=" " ind2="6">
-        <marc:subfield code="y">19e sie?cle</marc:subfield>
+        <marc:subfield code="y">19e siècle</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="963" ind1=" " ind2="6">
-        <marc:subfield code="y">18e sie?cle</marc:subfield>
+        <marc:subfield code="y">18e siècle</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="967" ind1=" " ind2="0">

@@ -78,7 +78,7 @@
       <marc:datafield ind1=" " ind2=" " tag="255">
         <marc:subfield code="a">Scale 1:24,000 ;</marc:subfield>
         <marc:subfield code="b">universal transverse Mercator proj.</marc:subfield>
-        <marc:subfield code="c">(W 112?07?30?--W 110?30?00?/N 34?30?00?--N 33?07?30?).</marc:subfield>
+        <marc:subfield code="c">(W 112⁰07ʹ30ʺ--W 110⁰30ʹ00ʺ/N 34⁰30ʹ00ʺ--N 33⁰07ʹ30ʺ).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="260">
         <marc:subfield code="a">[Reston, Va] :</marc:subfield>

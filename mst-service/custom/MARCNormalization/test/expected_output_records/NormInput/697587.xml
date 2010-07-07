@@ -68,7 +68,7 @@
       </marc:datafield>
       <marc:datafield ind1="0" ind2="0" tag="245">
         <marc:subfield code="a">Sonate /</marc:subfield>
-        <marc:subfield code="c">J. A. Birkenstock ; realisation pour piano de Euge?ne Bigot ; [adapte?e par] J. Delmas-Boussagol.</marc:subfield>
+        <marc:subfield code="c">J. A. Birkenstock ; realisation pour piano de Eugène Bigot ; [adaptée par] J. Delmas-Boussagol.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="260">
         <marc:subfield code="a">Paris :</marc:subfield>
@@ -97,7 +97,7 @@
         <marc:subfield code="x">Scores and parts.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2=" " tag="700">
-        <marc:subfield code="a">Bigot, Euge?ne.</marc:subfield>
+        <marc:subfield code="a">Bigot, Eugène.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="2" ind2=" " tag="700">
         <marc:subfield code="a">Delmas-Boussagol, J.</marc:subfield>

@@ -91,7 +91,7 @@
         <marc:subfield code="a">Notes on container ; program notes and texts ([2] p.) by J. Freeman inserted.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="505">
-        <marc:subfield code="a">Simple gifts : Shaker hymn / [Joseph Brackett] -- Sumer is icumen in / Anon., 14th cent. -- To the shady woods / Thomas Tomkins -- What if I never speede / John Dowland -- Thus saith my Cloris bright / John Wilbye -- Now is the month of maying / Thomas Morley -- O magnum mysterium / Tomas Luis da Vittoria -- Nowel syng we / Anon., 15th cent. -- Remember o thou man / Thomas Ravenscroft -- Dormi, o bel bambin / Anon. -- Die Zauberflo?te overture / Wolfgang Amadeus Mozart -- Un jour vis un foulon / Roland de Lassus -- Veux-tu, compe?re Gre?goire / M.A. Charpentier -- Ojos morenos ; Na?o me firays, madre / Juan Vasquez -- Chi la gagliarda / Baldassare Donato -- L'humor svegghiato ; Applauso / Orazio Vecchi -- Vergine gloriosa / Luca Marenzio -- Contrappunto bestiale / Adriano Banchieri.</marc:subfield>
+        <marc:subfield code="a">Simple gifts : Shaker hymn / [Joseph Brackett] -- Sumer is icumen in / Anon., 14th cent. -- To the shady woods / Thomas Tomkins -- What if I never speede / John Dowland -- Thus saith my Cloris bright / John Wilbye -- Now is the month of maying / Thomas Morley -- O magnum mysterium / Tomas Luis da Vittoria -- Nowel syng we / Anon., 15th cent. -- Remember o thou man / Thomas Ravenscroft -- Dormi, o bel bambin / Anon. -- Die Zauberflöte overture / Wolfgang Amadeus Mozart -- Un jour vis un foulon / Roland de Lassus -- Veux-tu, compère Grégoire / M.A. Charpentier -- Ojos morenos ; Não me firays, madre / Juan Vasquez -- Chi la gagliarda / Baldassare Donato -- L'humor svegghiato ; Applauso / Orazio Vecchi -- Vergine gloriosa / Luca Marenzio -- Contrappunto bestiale / Adriano Banchieri.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="0" tag="650">
         <marc:subfield code="a">Part-songs.</marc:subfield>
@@ -161,7 +161,7 @@
         <marc:subfield code="8">5\c</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="2" tag="700">
-        <marc:subfield code="a">Victoria, Toma?s Luis de,</marc:subfield>
+        <marc:subfield code="a">Victoria, Tomás Luis de,</marc:subfield>
         <marc:subfield code="d">ca. 1548-1611.</marc:subfield>
         <marc:subfield code="t">Motets</marc:subfield>
         <marc:subfield code="n">(1572).</marc:subfield>
@@ -177,7 +177,7 @@
       <marc:datafield ind1="1" ind2="2" tag="700">
         <marc:subfield code="a">Mozart, Wolfgang Amadeus,</marc:subfield>
         <marc:subfield code="d">1756-1791.</marc:subfield>
-        <marc:subfield code="t">Zauberflo?te.</marc:subfield>
+        <marc:subfield code="t">Zauberflöte.</marc:subfield>
         <marc:subfield code="p">Ouverture;</marc:subfield>
         <marc:subfield code="o">arr.</marc:subfield>
         <marc:subfield code="8">8\c</marc:subfield>
@@ -191,21 +191,21 @@
       <marc:datafield ind1="1" ind2="2" tag="700">
         <marc:subfield code="a">Charpentier, Marc-Antoine,</marc:subfield>
         <marc:subfield code="d">1643-1704.</marc:subfield>
-        <marc:subfield code="t">Veux-tu, compe?re Gre?goire.</marc:subfield>
+        <marc:subfield code="t">Veux-tu, compère Grégoire.</marc:subfield>
         <marc:subfield code="8">10\c</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="2" tag="700">
-        <marc:subfield code="a">Va?squez, Juan,</marc:subfield>
+        <marc:subfield code="a">Vásquez, Juan,</marc:subfield>
         <marc:subfield code="d">fl. 1535-1560.</marc:subfield>
-        <marc:subfield code="t">Recopilacio?n de sonetos y villancicos.</marc:subfield>
-        <marc:subfield code="p">Ojos morenos, qua?ndo nos veremos?</marc:subfield>
+        <marc:subfield code="t">Recopilación de sonetos y villancicos.</marc:subfield>
+        <marc:subfield code="p">Ojos morenos, quándo nos veremos?</marc:subfield>
         <marc:subfield code="8">11\c</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="2" tag="700">
-        <marc:subfield code="a">Va?squez, Juan,</marc:subfield>
+        <marc:subfield code="a">Vásquez, Juan,</marc:subfield>
         <marc:subfield code="d">fl. 1535-1560.</marc:subfield>
-        <marc:subfield code="t">Recopilacio?n de sonetos y villancicos.</marc:subfield>
-        <marc:subfield code="p">Na?o me firays, madre.</marc:subfield>
+        <marc:subfield code="t">Recopilación de sonetos y villancicos.</marc:subfield>
+        <marc:subfield code="p">Não me firays, madre.</marc:subfield>
         <marc:subfield code="8">12\c</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="1" ind2="2" tag="700">
@@ -370,7 +370,7 @@
         <marc:subfield code="8">5\c</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="959" ind1="1" ind2="2">
-        <marc:subfield code="a">Victoria, Toma?s Luis de,</marc:subfield>
+        <marc:subfield code="a">Victoria, Tomás Luis de,</marc:subfield>
         <marc:subfield code="d">ca. 1548-1611.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">6\c</marc:subfield>
@@ -400,13 +400,13 @@
         <marc:subfield code="8">10\c</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="959" ind1="1" ind2="2">
-        <marc:subfield code="a">Va?squez, Juan,</marc:subfield>
+        <marc:subfield code="a">Vásquez, Juan,</marc:subfield>
         <marc:subfield code="d">fl. 1535-1560.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">11\c</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="959" ind1="1" ind2="2">
-        <marc:subfield code="a">Va?squez, Juan,</marc:subfield>
+        <marc:subfield code="a">Vásquez, Juan,</marc:subfield>
         <marc:subfield code="d">fl. 1535-1560.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">12\c</marc:subfield>

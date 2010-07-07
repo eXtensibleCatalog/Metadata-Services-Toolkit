@@ -61,7 +61,7 @@
         <marc:subfield code="n">op. 7</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2="0" tag="245">
-        <marc:subfield code="a">Acht Lieder, fu?r eine Singstimme mit Begleitung des Pianoforte.</marc:subfield>
+        <marc:subfield code="a">Acht Lieder, für eine Singstimme mit Begleitung des Pianoforte.</marc:subfield>
         <marc:subfield code="b">Heft I-II.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="260">
@@ -80,10 +80,10 @@
         <marc:subfield code="a">Publisher's no.: Universal-Edition Nr. 3868-3869.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1="0" ind2=" " tag="505">
-        <marc:subfield code="a">v. 1. Wiegenliedchen.--Zu spa?te Reue.--Traum.--Spuk.--v. 2. Rosentod.--Ach, noch so jung.--Rosengruss.--Lied des Harfenma?dchens.</marc:subfield>
+        <marc:subfield code="a">v. 1. Wiegenliedchen.--Zu späte Reue.--Traum.--Spuk.--v. 2. Rosentod.--Ach, noch so jung.--Rosengruss.--Lied des Harfenmädchens.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2=" " tag="590">
-        <marc:subfield code="a">Sibley Music Library copy bound with Schreker, Fu?nf Gesa?nge (1909).</marc:subfield>
+        <marc:subfield code="a">Sibley Music Library copy bound with Schreker, Fünf Gesänge (1909).</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="0" tag="650">
         <marc:subfield code="a">Songs (Medium voice) with piano.</marc:subfield>

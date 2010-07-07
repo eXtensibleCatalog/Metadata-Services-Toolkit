@@ -122,7 +122,7 @@
       </marc:datafield>
       <marc:datafield ind1="2" ind2="6" tag="610">
         <marc:subfield code="a">American Library Association</marc:subfield>
-        <marc:subfield code="v">Pe?riodiques.</marc:subfield>
+        <marc:subfield code="v">Périodiques.</marc:subfield>
       </marc:datafield>
       <marc:datafield ind1=" " ind2="0" tag="650">
         <marc:subfield code="a">Library science</marc:subfield>
@@ -281,7 +281,7 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="969" ind1="2" ind2="6">
-        <marc:subfield code="v">Pe?riodiques.</marc:subfield>
+        <marc:subfield code="v">Périodiques.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">
