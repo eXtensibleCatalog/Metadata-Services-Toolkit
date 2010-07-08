@@ -100,57 +100,57 @@
         <marc:subfield code="a">92</marc:subfield>
         <marc:subfield code="b">RRR</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1="beluga" ind2=" ">
+      <marc:datafield tag="931" ind1=" " ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1="beluga" ind2=" ">
+      <marc:datafield tag="932" ind1=" " ind2=" ">
         <marc:subfield code="a">Language material</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1="beluga" ind2=" ">
+      <marc:datafield tag="933" ind1=" " ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1="beluga" ind2=" ">
+      <marc:datafield tag="935" ind1=" " ind2=" ">
         <marc:subfield code="a">Monograph/Item</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="035" ind1="beluga" ind2=" ">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(NRU)2466079</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="937" ind1="beluga" ind2=" ">
+      <marc:datafield tag="937" ind1=" " ind2=" ">
         <marc:subfield code="a">Non-Fiction</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1="beluga" ind2=" ">
+      <marc:datafield tag="941" ind1=" " ind2=" ">
         <marc:subfield code="a">eng</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1="beluga" ind2=" ">
+      <marc:datafield tag="943" ind1=" " ind2=" ">
         <marc:subfield code="a">English</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="947" ind1="beluga" ind2=" ">
+      <marc:datafield tag="947" ind1=" " ind2=" ">
         <marc:subfield code="a">1555704433</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="130" ind1="beluga1" ind2=" ">
+      <marc:datafield tag="130" ind1="0" ind2=" ">
         <marc:subfield code="a">XML in libraries /</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1="beluga2" ind2="0">
+      <marc:datafield tag="965" ind1=" " ind2="0">
         <marc:subfield code="a">Libraries</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1="beluga2" ind2="6">
+      <marc:datafield tag="965" ind1=" " ind2="6">
         <marc:subfield code="a">Bibliothèques</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1="beluga4" ind2="0">
+      <marc:datafield tag="965" ind1=" " ind2="0">
         <marc:subfield code="x">Data processing.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1="beluga4" ind2="6">
+      <marc:datafield tag="965" ind1=" " ind2="6">
         <marc:subfield code="x">Automatisation.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>

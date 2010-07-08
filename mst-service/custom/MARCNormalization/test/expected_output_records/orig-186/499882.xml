@@ -97,38 +97,38 @@
         <marc:subfield code="c">1</marc:subfield>
         <marc:subfield code="b">39087004973642</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1="beluga" ind2=" ">
+      <marc:datafield tag="931" ind1=" " ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1="beluga" ind2=" ">
+      <marc:datafield tag="932" ind1=" " ind2=" ">
         <marc:subfield code="a">Language material</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1="beluga" ind2=" ">
+      <marc:datafield tag="933" ind1=" " ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1="beluga" ind2=" ">
+      <marc:datafield tag="935" ind1=" " ind2=" ">
         <marc:subfield code="a">Monograph/Item</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="035" ind1="beluga" ind2=" ">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(NRU)499882</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="937" ind1="beluga" ind2=" ">
+      <marc:datafield tag="937" ind1=" " ind2=" ">
         <marc:subfield code="a">Non-Fiction</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1="beluga" ind2=" ">
+      <marc:datafield tag="941" ind1=" " ind2=" ">
         <marc:subfield code="a">fre</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1="beluga" ind2=" ">
+      <marc:datafield tag="943" ind1=" " ind2=" ">
         <marc:subfield code="a">French</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="240" ind1="beluga1" ind2="0">
+      <marc:datafield tag="240" ind1="0" ind2="0">
         <marc:subfield code="a">Claude Debussy</marc:subfield>
       </marc:datafield>
     </marc:record>

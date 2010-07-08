@@ -257,185 +257,185 @@
       <marc:datafield tag="945" ind1=" " ind2=" ">
         <marc:subfield code="a">MARS</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1="beluga" ind2=" ">
+      <marc:datafield tag="931" ind1=" " ind2=" ">
         <marc:subfield code="a">Sound</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1="beluga" ind2=" ">
+      <marc:datafield tag="932" ind1=" " ind2=" ">
         <marc:subfield code="a">Musical sound recording</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1="beluga" ind2=" ">
+      <marc:datafield tag="933" ind1=" " ind2=" ">
         <marc:subfield code="a">Sound recording</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1="beluga" ind2=" ">
+      <marc:datafield tag="935" ind1=" " ind2=" ">
         <marc:subfield code="a">Monograph/Item</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1="beluga" ind2=" ">
+      <marc:datafield tag="931" ind1=" " ind2=" ">
         <marc:subfield code="a">Sound</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1="beluga" ind2=" ">
+      <marc:datafield tag="933" ind1=" " ind2=" ">
         <marc:subfield code="a">Sound recording</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="934" ind1="beluga" ind2=" ">
+      <marc:datafield tag="934" ind1=" " ind2=" ">
         <marc:subfield code="a">Sound disk</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1="beluga" ind2=" ">
+      <marc:datafield tag="941" ind1=" " ind2=" ">
         <marc:subfield code="a">eng</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1="beluga" ind2=" ">
+      <marc:datafield tag="941" ind1=" " ind2=" ">
         <marc:subfield code="a">fre</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1="beluga" ind2=" ">
+      <marc:datafield tag="941" ind1=" " ind2=" ">
         <marc:subfield code="a">ger</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1="beluga" ind2=" ">
+      <marc:datafield tag="941" ind1=" " ind2=" ">
         <marc:subfield code="a">ita</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1="beluga" ind2=" ">
+      <marc:datafield tag="941" ind1=" " ind2=" ">
         <marc:subfield code="a">por</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1="beluga" ind2=" ">
+      <marc:datafield tag="941" ind1=" " ind2=" ">
         <marc:subfield code="a">spa</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1="beluga" ind2=" ">
+      <marc:datafield tag="943" ind1=" " ind2=" ">
         <marc:subfield code="a">English</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1="beluga" ind2=" ">
+      <marc:datafield tag="943" ind1=" " ind2=" ">
         <marc:subfield code="a">French</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1="beluga" ind2=" ">
+      <marc:datafield tag="943" ind1=" " ind2=" ">
         <marc:subfield code="a">German</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1="beluga" ind2=" ">
+      <marc:datafield tag="943" ind1=" " ind2=" ">
         <marc:subfield code="a">Italian</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1="beluga" ind2=" ">
+      <marc:datafield tag="943" ind1=" " ind2=" ">
         <marc:subfield code="a">Portuguese</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1="beluga" ind2=" ">
+      <marc:datafield tag="943" ind1=" " ind2=" ">
         <marc:subfield code="a">Spanish</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
-      <marc:datafield tag="035" ind1="beluga" ind2=" ">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(NRU)1586760</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="240" ind1="beluga1" ind2="0">
+      <marc:datafield tag="240" ind1="0" ind2="0">
         <marc:subfield code="a">Simple gifts</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Brackett, Joseph.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">1\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Tomkins, Thomas,</marc:subfield>
         <marc:subfield code="d">1572-1656.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">2\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Dowland, John,</marc:subfield>
         <marc:subfield code="d">1563?-1626.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">3\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Wilbye, John,</marc:subfield>
         <marc:subfield code="d">1574-1638.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">4\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Morley, Thomas,</marc:subfield>
         <marc:subfield code="d">1557-1603?</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">5\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Victoria, Tomás Luis de,</marc:subfield>
         <marc:subfield code="d">ca. 1548-1611.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">6\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Ravenscroft, Thomas,</marc:subfield>
         <marc:subfield code="d">1592?-1635?</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">7\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Mozart, Wolfgang Amadeus,</marc:subfield>
         <marc:subfield code="d">1756-1791.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">8\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Lasso, Orlando di,</marc:subfield>
         <marc:subfield code="d">1532-1594.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">9\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Charpentier, Marc-Antoine,</marc:subfield>
         <marc:subfield code="d">1643-1704.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">10\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Vásquez, Juan,</marc:subfield>
         <marc:subfield code="d">fl. 1535-1560.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">11\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Vásquez, Juan,</marc:subfield>
         <marc:subfield code="d">fl. 1535-1560.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">12\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Donato, Baldassare,</marc:subfield>
         <marc:subfield code="d">d. 1603.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">13\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Vecchi, Orazio,</marc:subfield>
         <marc:subfield code="d">1550-1605.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">14\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Vecchi, Orazio,</marc:subfield>
         <marc:subfield code="d">1550-1605.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">15\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Marenzio, Luca,</marc:subfield>
         <marc:subfield code="d">1553-1599.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">16\c</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="959" ind1="beluga5" ind2="2">
+      <marc:datafield tag="959" ind1="1" ind2="2">
         <marc:subfield code="a">Banchieri, Adriano,</marc:subfield>
         <marc:subfield code="d">d. 1634.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
