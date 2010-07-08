@@ -1,0 +1,5 @@
+In this folder is the raw output from the 0.2.9 system.  It is not in the
+exact format that I needed, so I created a one-time converter script
+to make sure that the 0.3.0 system produced the same output as the 0.2.9
+system.  Here are the steps I followed:
+
