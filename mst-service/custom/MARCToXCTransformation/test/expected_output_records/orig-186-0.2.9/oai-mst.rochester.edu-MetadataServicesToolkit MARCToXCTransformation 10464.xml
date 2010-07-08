@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="holdings" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10464">
+		<xc:location>MinerStack</xc:location>
+		<xc:callNumber>QH205 .P895 v.7 1978</xc:callNumber>
+		<xc:recordID type="NRU">573953</xc:recordID>
+		<xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10457</xc:manifestationHeld>
+	</xc:entity>
+</xc:frbr>

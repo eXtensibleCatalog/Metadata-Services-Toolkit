@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10509">
+		<xc:titleOfExpression>Ruinen von Athen. Ouvertüre</xc:titleOfExpression>
+		<dcterms:version>Partitur.</dcterms:version>
+		<dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10508</xc:workExpressed></xc:entity>
+</xc:frbr>

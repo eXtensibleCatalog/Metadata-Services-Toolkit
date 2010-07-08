@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10126">
+		<rdvocab:titleOfWork>Real calypso.</rdvocab:titleOfWork>
+		<dcterms:abstract>A collection of Calypso music from the period 1927-1946.</dcterms:abstract>
+		<xc:subject xsi:type="dcterms:LCSH">Popular music-Trinidad and Tobago.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Calypso (Music)</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Popular music</xc:subject>
+		<xc:spacial xsi:type="dcterms:LCSH">Trinidad and Tobago.</xc:spacial></xc:entity>
+</xc:frbr>

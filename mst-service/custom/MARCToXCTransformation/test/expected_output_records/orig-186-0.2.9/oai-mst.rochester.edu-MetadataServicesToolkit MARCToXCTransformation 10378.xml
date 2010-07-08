@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10378">
+		<dcterms:subject xsi:type="dcterms:LCC">E184.6</dcterms:subject>
+		<rdvocab:titleOfWork>African American newspapers</rdvocab:titleOfWork>
+		<dcterms:abstract>Complete texts of major 19th century African American newspapers. Includes first-hand reports of events and issues of the day, as well as biographies, vital statistics, essays and editorials, poetry and prose, and advertisements.</dcterms:abstract>
+		<xc:subject xsi:type="dcterms:LCSH">African Americans-History-19th century-Sources-Databases.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">African American newspapers-Databases.</xc:subject>
+		<rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+		<xc:temporal xsi:type="dcterms:LCSH">19th century</xc:temporal>
+		<xc:subject xsi:type="dcterms:LCSH">African Americans</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">African American newspapers</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">History</xc:subject>
+		<xc:type xsi:type="dcterms:LCSH">Sources</xc:type>
+		<xc:type xsi:type="dcterms:LCSH">Databases.</xc:type></xc:entity>
+</xc:frbr>

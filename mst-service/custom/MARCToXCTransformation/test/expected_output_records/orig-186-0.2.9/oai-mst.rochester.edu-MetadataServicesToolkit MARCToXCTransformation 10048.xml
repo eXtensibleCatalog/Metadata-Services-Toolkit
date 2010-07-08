@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10048">
+		<rdvocab:publisherNumber>3870</rdvocab:publisherNumber>
+		<rdvocab:publisherNumber>3871</rdvocab:publisherNumber>
+		<rdvocab:plateNumber>J.E. 844</rdvocab:plateNumber>
+		<rdvocab:plateNumber>J.E. 845</rdvocab:plateNumber>
+		<xc:recordID type="OCoLC">27722227</xc:recordID>
+		<xc:recordID type="NRU">1188189</xc:recordID>
+		<dcterms:title>Zwei Gesänge für mittlere Stimme mit Begleitung des Pianoforte. Op. 2.</dcterms:title>
+		<rdvocab:placeOfProduction>Wien,</rdvocab:placeOfProduction>
+		<dcterms:publisher>Josef Eberle</dcterms:publisher>
+		<dcterms:issued>[190-]</dcterms:issued>
+		<dcterms:extent>score (2 v. in 1)</dcterms:extent>
+		<rdvocab:dimensions>34 cm.</rdvocab:dimensions>
+		<dcterms:description>Publisher's no.: Universal-Edition Nr. 3870-3871.</dcterms:description>
+		<dcterms:tableOfContents>v. 1. Sommerfäden (Leen).--v. 2. Stimmen des Tages (Saar).</dcterms:tableOfContents>
+		<dcterms:description>Sibley Music Library copy bound with Schreker, Fünf Gesänge (1909).</dcterms:description>
+		<xc:typeLeader06>Notated music</xc:typeLeader06>
+		<xc:type007>Notated music</xc:type007>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10047</xc:expressionManifested></xc:entity>
+</xc:frbr>
