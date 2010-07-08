@@ -40,6 +40,7 @@ import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.SetupClasspath;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.Util;
+import xc.mst.utils.XmlHelper;
 
 public class BaseTest {
 	
@@ -63,6 +64,7 @@ public class BaseTest {
 	protected HarvestScheduleDAO harvestScheduleDAO = null;
 	protected ProcessingDirectiveDAO processingDirectiveDAO = null;
 	protected Scheduler scheduler = null;
+	protected XmlHelper xmlHelper = new XmlHelper();
 
 	@BeforeSuite
 	public void startup() {

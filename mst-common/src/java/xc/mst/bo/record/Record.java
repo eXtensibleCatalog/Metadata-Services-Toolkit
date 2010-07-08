@@ -356,7 +356,9 @@ public class Record {
 	}
 
 	public void setDeleted(boolean deleted) {
-		this.status = Record.DELETED;
+		if (deleted) {
+			this.status = Record.DELETED;
+		}
 	}
 
 	/**

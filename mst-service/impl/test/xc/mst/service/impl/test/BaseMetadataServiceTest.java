@@ -35,7 +35,7 @@ public class BaseMetadataServiceTest extends BaseTest {
 		Map<String, List<Record>> outputFiles = new HashMap<String, List<Record>>();
 		TLongObjectHashMap repo = new TLongObjectHashMap();
 		
-		long id = repositoryDAO.restIdSequence(1);
+		long id = repositoryDAO.resetIdSequence(1);
 		String inFolderStr = System.getenv("MST_SERVICE_TEST_FOLDER");
 		LOG.debug("folderStr: "+inFolderStr);
 		
@@ -160,7 +160,7 @@ public class BaseMetadataServiceTest extends BaseTest {
 			
 		}
 		
-		repositoryDAO.restIdSequence(id);
+		repositoryDAO.resetIdSequence(id);
 		
 		//TODO now check for equality
 	}

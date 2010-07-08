@@ -1,7 +1,8 @@
 RECORD_PREFIX='<records xmlns="http://www.openarchives.org/OAI/2.0/"><record><header><identifier>oai:mst.rochester.edu:OAI_ID</identifier></header><metadata>'
 RECORD_SUFFIX='</metadata></record></records>'
 OAI_ID=0
-for f in $(ls -1 ./mst-service/custom/MARCNormalization/test/input_records/NormInput/*.xml)
+#for f in $(ls -1 ./mst-service/custom/MARCNormalization/test/input_records/NormInput/*.xml)
+for f in $(ls -1 ./mst-service/custom/MARCNormalization/test/input_records/NormInput/481.xml)
 do
 	# just eyeballed it that every one is just 1
 	#grep -c '<marc:record' $f
@@ -12,7 +13,8 @@ do
 	cat ${f} | grep -v '<?xml' >> ${f}.new
 	echo $RECORD_SUFFIX >> ${f}.new
 	dos2unix ${f}.new
-	cat ${f}.new | xmllint --format - > ${f}.new.2
-	mv -f ${f}.new.2 ${f}
+	cat ${f}.new | xmllint --format --encode "UTF-8" - > ${f}.new.2
+	#echo '<?xml version="1.0" encoding="UTF-8"?>' > ${f}
+	cat ${f}.new.2 >> ${f}
 	rm ${f}.new*
 done
