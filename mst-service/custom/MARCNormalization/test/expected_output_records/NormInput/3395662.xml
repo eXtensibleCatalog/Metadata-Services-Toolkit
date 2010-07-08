@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:111</predecessor>
     </predecessors>
     <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -17,27 +17,27 @@
       <marc:controlfield tag="006">m        d</marc:controlfield>
       <marc:controlfield tag="007">cr  n</marc:controlfield>
       <marc:controlfield tag="008">740411c19709999ilumn1p s     0   a0eng</marc:controlfield>
-      <marc:datafield ind1=" " ind2=" " tag="010">
+      <marc:datafield tag="010" ind1=" " ind2=" ">
         <marc:subfield code="a">70021767</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="7" ind2=" " tag="016">
+      <marc:datafield tag="016" ind1="7" ind2=" ">
         <marc:subfield code="a">A25140000</marc:subfield>
         <marc:subfield code="2">DNLM</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="022">
+      <marc:datafield tag="022" ind1="0" ind2=" ">
         <marc:subfield code="a">0002-9769</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="032">
+      <marc:datafield tag="032" ind1=" " ind2=" ">
         <marc:subfield code="a">002460</marc:subfield>
         <marc:subfield code="b">USPS</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(WaSeSS)ssj1598</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="037">
+      <marc:datafield tag="037" ind1=" " ind2=" ">
         <marc:subfield code="b">50 E. Huron St., 60611</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="040">
+      <marc:datafield tag="040" ind1=" " ind2=" ">
         <marc:subfield code="a">DLC</marc:subfield>
         <marc:subfield code="c">OAU</marc:subfield>
         <marc:subfield code="d">NAlULS</marc:subfield>
@@ -75,76 +75,76 @@
         <marc:subfield code="d">CSdS</marc:subfield>
         <marc:subfield code="d">WaSeSS</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="042">
+      <marc:datafield tag="042" ind1=" " ind2=" ">
         <marc:subfield code="a">nsdp</marc:subfield>
         <marc:subfield code="a">lc</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="043">
+      <marc:datafield tag="043" ind1=" " ind2=" ">
         <marc:subfield code="a">n-us---</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="050">
+      <marc:datafield tag="050" ind1="0" ind2="0">
         <marc:subfield code="a">Z673.A5</marc:subfield>
         <marc:subfield code="b">B82</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="060">
+      <marc:datafield tag="060" ind1="0" ind2=" ">
         <marc:subfield code="a">Z 673 A508</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="082">
+      <marc:datafield tag="082" ind1=" " ind2=" ">
         <marc:subfield code="a">020.973</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="130">
+      <marc:datafield tag="130" ind1="0" ind2=" ">
         <marc:subfield code="a">American libraries (Online)</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="210">
+      <marc:datafield tag="210" ind1="0" ind2=" ">
         <marc:subfield code="a">Am. libr.</marc:subfield>
         <marc:subfield code="b">(Chic. Ill.)</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="222">
+      <marc:datafield tag="222" ind1=" " ind2="0">
         <marc:subfield code="a">American libraries</marc:subfield>
         <marc:subfield code="b">(Chicago, Ill.)</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="245">
+      <marc:datafield tag="245" ind1="0" ind2="0">
         <marc:subfield code="a">American libraries</marc:subfield>
         <marc:subfield code="h">[electronic resource].</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="260">
+      <marc:datafield tag="260" ind1=" " ind2=" ">
         <marc:subfield code="a">[Chicago]</marc:subfield>
         <marc:subfield code="b">American Library Association.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="310">
+      <marc:datafield tag="310" ind1=" " ind2=" ">
         <marc:subfield code="a">11 no. a year</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="362">
+      <marc:datafield tag="362" ind1="0" ind2=" ">
         <marc:subfield code="a">v. 1- Jan. 1970-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="550">
+      <marc:datafield tag="550" ind1=" " ind2=" ">
         <marc:subfield code="a">Official bulletin of the American Library Association.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2="6" tag="610">
+      <marc:datafield tag="610" ind1="2" ind2="6">
         <marc:subfield code="a">American Library Association</marc:subfield>
         <marc:subfield code="v">Périodiques.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Library science</marc:subfield>
         <marc:subfield code="v">Periodicals.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="2" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="2">
         <marc:subfield code="a">Library Science</marc:subfield>
         <marc:subfield code="v">Periodicals.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="710">
+      <marc:datafield tag="710" ind1="2" ind2=" ">
         <marc:subfield code="a">American Library Association.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="710">
+      <marc:datafield tag="710" ind1="2" ind2=" ">
         <marc:subfield code="a">EBSCO Publishing (Firm)</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="710">
+      <marc:datafield tag="710" ind1="2" ind2=" ">
         <marc:subfield code="a">ProQuest Information and Learning Company.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="710">
+      <marc:datafield tag="710" ind1="2" ind2=" ">
         <marc:subfield code="a">H.W. Wilson Company.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="770">
+      <marc:datafield tag="770" ind1="0" ind2=" ">
         <marc:subfield code="a">American Library Association.</marc:subfield>
         <marc:subfield code="t">ALA handbook of organization</marc:subfield>
         <marc:subfield code="g">&lt;1998/99-&gt;</marc:subfield>
@@ -152,21 +152,21 @@
         <marc:subfield code="w">(DLC)   73617320</marc:subfield>
         <marc:subfield code="w">(OCoLC)1415962</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="770">
+      <marc:datafield tag="770" ind1="0" ind2=" ">
         <marc:subfield code="a">American Library Association.</marc:subfield>
         <marc:subfield code="t">Annual report</marc:subfield>
         <marc:subfield code="g">&lt;2000-&gt;</marc:subfield>
         <marc:subfield code="w">(DLC)   00252871</marc:subfield>
         <marc:subfield code="w">(OCoLC)22831726</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="2" tag="780">
+      <marc:datafield tag="780" ind1="0" ind2="2">
         <marc:subfield code="a">American Library Association.</marc:subfield>
         <marc:subfield code="t">ALA bulletin</marc:subfield>
         <marc:subfield code="x">0364-4006</marc:subfield>
         <marc:subfield code="w">(DLC)sc 78001579</marc:subfield>
         <marc:subfield code="w">(OCoLC)1480279</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="850">
+      <marc:datafield tag="850" ind1=" " ind2=" ">
         <marc:subfield code="a">CaMWUC</marc:subfield>
         <marc:subfield code="a">CaOKR</marc:subfield>
         <marc:subfield code="a">CoU</marc:subfield>
@@ -175,10 +175,10 @@
         <marc:subfield code="a">MBCo</marc:subfield>
         <marc:subfield code="a">OU</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="852">
+      <marc:datafield tag="852" ind1=" " ind2=" ">
         <marc:subfield code="x">universal pattern</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2="2" tag="853">
+      <marc:datafield tag="853" ind1="1" ind2="2">
         <marc:subfield code="8">1</marc:subfield>
         <marc:subfield code="a">v.</marc:subfield>
         <marc:subfield code="b">no.</marc:subfield>
@@ -187,7 +187,7 @@
         <marc:subfield code="i">(year)</marc:subfield>
         <marc:subfield code="j">(month)</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2="0" tag="853">
+      <marc:datafield tag="853" ind1="2" ind2="0">
         <marc:subfield code="8">2</marc:subfield>
         <marc:subfield code="a">v.</marc:subfield>
         <marc:subfield code="b">no.</marc:subfield>
@@ -199,96 +199,96 @@
         <marc:subfield code="x">01</marc:subfield>
         <marc:subfield code="y">cm06/07</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="4" ind2="0" tag="856">
+      <marc:datafield tag="856" ind1="4" ind2="0">
         <marc:subfield code="b">Internet</marc:subfield>
         <marc:subfield code="z">Full text.</marc:subfield>
         <marc:subfield code="u">http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=AMERLIBCHIL</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="4" ind2="0" tag="863">
+      <marc:datafield tag="863" ind1="4" ind2="0">
         <marc:subfield code="8">1</marc:subfield>
         <marc:subfield code="a">&lt;1&gt;-</marc:subfield>
         <marc:subfield code="i">&lt;1970&gt;-</marc:subfield>
         <marc:subfield code="x">provisional</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="4" ind2="1" tag="863">
+      <marc:datafield tag="863" ind1="4" ind2="1">
         <marc:subfield code="8">2.1</marc:subfield>
         <marc:subfield code="a">&lt;36 &gt;</marc:subfield>
         <marc:subfield code="b">&lt;1&gt;</marc:subfield>
         <marc:subfield code="i">&lt;2005&gt;</marc:subfield>
         <marc:subfield code="j">&lt;01&gt;</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="999">
+      <marc:datafield tag="999" ind1=" " ind2=" ">
         <marc:subfield code="a">Journal RCL Internet SS</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
+      <marc:datafield tag="931" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
+      <marc:datafield tag="932" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Language material</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
+      <marc:datafield tag="932" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Computer file</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1=" " ind2=" ">
+      <marc:datafield tag="935" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Serial</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Electronic resource</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="934" ind1=" " ind2=" ">
+      <marc:datafield tag="934" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Remote</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="937" ind1=" " ind2=" ">
+      <marc:datafield tag="937" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Non-Fiction</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="939" ind1=" " ind2=" ">
+      <marc:datafield tag="939" ind1="beluga" ind2=" ">
         <marc:subfield code="a">1970-</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1=" " ind2=" ">
+      <marc:datafield tag="941" ind1="beluga" ind2=" ">
         <marc:subfield code="a">eng</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1=" " ind2=" ">
+      <marc:datafield tag="943" ind1="beluga" ind2=" ">
         <marc:subfield code="a">English</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:datafield tag="035" ind1="beluga" ind2=" ">
         <marc:subfield code="a">(NRU)3395662</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1="2" ind2="6">
+      <marc:datafield tag="965" ind1="beluga2" ind2="6">
         <marc:subfield code="a">American Library Association</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga2" ind2="0">
         <marc:subfield code="a">Library science</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="2">
+      <marc:datafield tag="965" ind1="beluga2" ind2="2">
         <marc:subfield code="a">Library Science</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="969" ind1="2" ind2="6">
+      <marc:datafield tag="969" ind1="beluga4" ind2="6">
         <marc:subfield code="v">Périodiques.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
+      <marc:datafield tag="969" ind1="beluga4" ind2="0">
         <marc:subfield code="v">Periodicals.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="2">
+      <marc:datafield tag="969" ind1="beluga4" ind2="2">
         <marc:subfield code="v">Periodicals.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>

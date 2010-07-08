@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:32</predecessor>
     </predecessors>
     <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -16,66 +16,66 @@
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="007">hdrafv---baca</marc:controlfield>
       <marc:controlfield tag="008">831017d1843188uiluwr p a     0   a0eng d</marc:controlfield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="9">ocm10026410</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="040">
+      <marc:datafield tag="040" ind1=" " ind2=" ">
         <marc:subfield code="a">CNO</marc:subfield>
         <marc:subfield code="c">CNO</marc:subfield>
         <marc:subfield code="d">PES</marc:subfield>
         <marc:subfield code="d">NYG</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="092">
+      <marc:datafield tag="092" ind1=" " ind2=" ">
         <marc:subfield code="a">051</marc:subfield>
         <marc:subfield code="b">A51p2</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="099">
+      <marc:datafield tag="099" ind1=" " ind2=" ">
         <marc:subfield code="a">FILM</marc:subfield>
         <marc:subfield code="a">Una191</marc:subfield>
         <marc:subfield code="a">747-748, 1720-1726, 1936.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="049">
+      <marc:datafield tag="049" ind1=" " ind2=" ">
         <marc:subfield code="a">RRRR</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="245">
+      <marc:datafield tag="245" ind1="0" ind2="0">
         <marc:subfield code="a">Prairie farmer</marc:subfield>
         <marc:subfield code="h">[microform].</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="260">
+      <marc:datafield tag="260" ind1=" " ind2=" ">
         <marc:subfield code="a">Chicago :</marc:subfield>
         <marc:subfield code="b">[Union Agricultural Society,</marc:subfield>
         <marc:subfield code="c">1843-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="300">
+      <marc:datafield tag="300" ind1=" " ind2=" ">
         <marc:subfield code="a">v. :</marc:subfield>
         <marc:subfield code="b">ill. ;</marc:subfield>
         <marc:subfield code="c">27 cm.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="310">
+      <marc:datafield tag="310" ind1=" " ind2=" ">
         <marc:subfield code="a">Weekly</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="321">
+      <marc:datafield tag="321" ind1=" " ind2=" ">
         <marc:subfield code="a">Monthly</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="362">
+      <marc:datafield tag="362" ind1="0" ind2=" ">
         <marc:subfield code="a">Vol. 3, no. 1 (Jan. 1843)-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">On film: whole no. v. 1-10 (reels 747-748); whole no. v. 11-15, 18-19, 21-23, 29-36, 43-48 (reels 1720-1726); v39-42, 1868-1871 (reel 1936).</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">Reels 747-748: some advertising pages are missing.  Reels 1720-1726: pagination is irregular.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">A leading agricultural magazine founded by the Union Agricultural Society of Chicago and a champion of farmers' rights.  It supported the grange movement and in 1873 created a department devoted to the grange.  Besides articles on agriculture, horticulture, and stock raising, it provided general and market news, a children's column, and departments dealing with healt, household problems, and veterinary medicine.  Cf.  American periodicals, 1741-1900.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">Title from caption.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="515">
+      <marc:datafield tag="515" ind1=" " ind2=" ">
         <marc:subfield code="a">Vol. 18, no. 41-v. 37, no. 26, Oct. 7, 1858-1868 also numbered v. 2, no. 15-v. 21; v. 38 omitted in numbering. Cf. Union list of serials.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="533">
+      <marc:datafield tag="533" ind1=" " ind2=" ">
         <marc:subfield code="a">Microfilm.</marc:subfield>
         <marc:subfield code="b">Ann Arbor, Mich. :</marc:subfield>
         <marc:subfield code="c">University Microfilms International,</marc:subfield>
@@ -83,103 +83,103 @@
         <marc:subfield code="e">10 microfilm reels ; 35 mm.</marc:subfield>
         <marc:subfield code="f">(American periodical series: 1800-1850 ; 747-748, 1720-1726, 1936)</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Farm life</marc:subfield>
         <marc:subfield code="x">Periodicals.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="651">
+      <marc:datafield tag="651" ind1=" " ind2="0">
         <marc:subfield code="a">United States</marc:subfield>
         <marc:subfield code="x">Rural conditions</marc:subfield>
         <marc:subfield code="x">Periodicals.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="710">
+      <marc:datafield tag="710" ind1="2" ind2=" ">
         <marc:subfield code="a">Union Agricultural Society (Chicago, Ill.)</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="776">
+      <marc:datafield tag="776" ind1="1" ind2=" ">
         <marc:subfield code="t">Prairie farmer</marc:subfield>
         <marc:subfield code="w">(OCoLC)8013620</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="780">
+      <marc:datafield tag="780" ind1="0" ind2="0">
         <marc:subfield code="t">Union agriculturist and western prairie farmer</marc:subfield>
         <marc:subfield code="w">(OCoLC)10173281</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="5" tag="780">
+      <marc:datafield tag="780" ind1="0" ind2="5">
         <marc:subfield code="t">Emery's journal of agriculture</marc:subfield>
         <marc:subfield code="g">July 1858</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="785">
+      <marc:datafield tag="785" ind1="0" ind2="0">
         <marc:subfield code="t">People's illustrated weekly and prairie farmer</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="830">
+      <marc:datafield tag="830" ind1=" " ind2="0">
         <marc:subfield code="a">American periodical series: 1800-1850 ;</marc:subfield>
         <marc:subfield code="v">747-748, 1720-1726, 1936.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="910">
+      <marc:datafield tag="910" ind1=" " ind2=" ">
         <marc:subfield code="a">19961012100228.0</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
+      <marc:datafield tag="931" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
+      <marc:datafield tag="932" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Language material</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1=" " ind2=" ">
+      <marc:datafield tag="935" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Serial</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:datafield tag="035" ind1="beluga" ind2=" ">
         <marc:subfield code="a">(NRU)1352471</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Microform</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="934" ind1=" " ind2=" ">
+      <marc:datafield tag="934" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Microfilm reel</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="937" ind1=" " ind2=" ">
+      <marc:datafield tag="937" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Non-Fiction</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="939" ind1=" " ind2=" ">
+      <marc:datafield tag="939" ind1="beluga" ind2=" ">
         <marc:subfield code="a">1843-188u</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1=" " ind2=" ">
+      <marc:datafield tag="941" ind1="beluga" ind2=" ">
         <marc:subfield code="a">eng</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1=" " ind2=" ">
+      <marc:datafield tag="943" ind1="beluga" ind2=" ">
         <marc:subfield code="a">English</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="130" ind1="0" ind2=" ">
+      <marc:datafield tag="130" ind1="beluga1" ind2=" ">
         <marc:subfield code="a">Prairie farmer</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga2" ind2="0">
         <marc:subfield code="a">Farm life</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga4" ind2="0">
         <marc:subfield code="x">Periodicals.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga4" ind2="0">
         <marc:subfield code="x">Rural conditions</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga4" ind2="0">
         <marc:subfield code="x">Periodicals.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="967" ind1=" " ind2="0">
+      <marc:datafield tag="967" ind1="beluga2" ind2="0">
         <marc:subfield code="a">United States</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>

@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:42</predecessor>
     </predecessors>
     <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -16,16 +16,16 @@
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="005">20060410153927.0</marc:controlfield>
       <marc:controlfield tag="008">750921c18579999nyudr1ne      0   a0eng d</marc:controlfield>
-      <marc:datafield ind1=" " ind2=" " tag="010">
+      <marc:datafield tag="010" ind1=" " ind2=" ">
         <marc:subfield code="a">sn 78004456</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)1645522</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">1557247</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="040">
+      <marc:datafield tag="040" ind1=" " ind2=" ">
         <marc:subfield code="a">MUL</marc:subfield>
         <marc:subfield code="c">MUL</marc:subfield>
         <marc:subfield code="d">NSD</marc:subfield>
@@ -61,231 +61,231 @@
         <marc:subfield code="d">CUS</marc:subfield>
         <marc:subfield code="d">NYG</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="019">
+      <marc:datafield tag="019" ind1=" " ind2=" ">
         <marc:subfield code="a">11597235</marc:subfield>
         <marc:subfield code="a">11630839</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="022">
+      <marc:datafield tag="022" ind1="0" ind2=" ">
         <marc:subfield code="a">0362-4331</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="030">
+      <marc:datafield tag="030" ind1=" " ind2=" ">
         <marc:subfield code="a">NYTIAO</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="032">
+      <marc:datafield tag="032" ind1=" " ind2=" ">
         <marc:subfield code="a">383520</marc:subfield>
         <marc:subfield code="b">USPS</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="042">
+      <marc:datafield tag="042" ind1=" " ind2=" ">
         <marc:subfield code="a">nsdp</marc:subfield>
         <marc:subfield code="a">lc</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="043">
+      <marc:datafield tag="043" ind1=" " ind2=" ">
         <marc:subfield code="a">n-us-ny</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="050">
+      <marc:datafield tag="050" ind1="0" ind2="0">
         <marc:subfield code="a">Newspaper</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="049">
+      <marc:datafield tag="049" ind1=" " ind2=" ">
         <marc:subfield code="a">RRRR</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="210">
+      <marc:datafield tag="210" ind1="0" ind2=" ">
         <marc:subfield code="a">N. Y. times</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="222">
+      <marc:datafield tag="222" ind1=" " ind2="0">
         <marc:subfield code="a">New York times</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="4" tag="245">
+      <marc:datafield tag="245" ind1="0" ind2="4">
         <marc:subfield code="a">The New York times.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="246">
+      <marc:datafield tag="246" ind1="1" ind2=" ">
         <marc:subfield code="a">New York times</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="246">
+      <marc:datafield tag="246" ind1="1" ind2=" ">
         <marc:subfield code="i">Issues for Sept. 19-26, 1923 published jointly with other newspapers as:</marc:subfield>
         <marc:subfield code="a">Combined New York morning newspapers</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="246">
+      <marc:datafield tag="246" ind1="1" ind2=" ">
         <marc:subfield code="i">Issue for Sept. 23, 1923 published jointly with other newspapers as:</marc:subfield>
         <marc:subfield code="a">Combined New York Sunday newspapers</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="260">
+      <marc:datafield tag="260" ind1=" " ind2=" ">
         <marc:subfield code="a">New-York [N.Y. :</marc:subfield>
         <marc:subfield code="b">H.J. Raymond &amp; Co.],</marc:subfield>
         <marc:subfield code="c">1857-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="300">
+      <marc:datafield tag="300" ind1=" " ind2=" ">
         <marc:subfield code="a">v. :</marc:subfield>
         <marc:subfield code="b">ill. ;</marc:subfield>
         <marc:subfield code="c">59 cm.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="310">
+      <marc:datafield tag="310" ind1=" " ind2=" ">
         <marc:subfield code="a">Daily,</marc:subfield>
         <marc:subfield code="b">1861-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="321">
+      <marc:datafield tag="321" ind1=" " ind2=" ">
         <marc:subfield code="a">Daily (except Sunday),</marc:subfield>
         <marc:subfield code="b">1857-1861</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="362">
+      <marc:datafield tag="362" ind1="0" ind2=" ">
         <marc:subfield code="a">Vol. 6, no. 1868 (Sept. 14, 1857)-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="510">
+      <marc:datafield tag="510" ind1="1" ind2=" ">
         <marc:subfield code="a">Biography index</marc:subfield>
         <marc:subfield code="x">0006-3053</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="510">
+      <marc:datafield tag="510" ind1="1" ind2=" ">
         <marc:subfield code="a">National newspaper index</marc:subfield>
         <marc:subfield code="b">1979-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="510">
+      <marc:datafield tag="510" ind1="1" ind2=" ">
         <marc:subfield code="a">NEXIS</marc:subfield>
         <marc:subfield code="b">June 1, 1980-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="510">
+      <marc:datafield tag="510" ind1="2" ind2=" ">
         <marc:subfield code="a">Bibliography of agriculture</marc:subfield>
         <marc:subfield code="x">0006-1530</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="510">
+      <marc:datafield tag="510" ind1="2" ind2=" ">
         <marc:subfield code="a">BioBusiness</marc:subfield>
         <marc:subfield code="b">1990-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="510">
+      <marc:datafield tag="510" ind1="2" ind2=" ">
         <marc:subfield code="a">Book review index</marc:subfield>
         <marc:subfield code="x">0524-0581</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="510">
+      <marc:datafield tag="510" ind1="2" ind2=" ">
         <marc:subfield code="a">Chemical industry notes</marc:subfield>
         <marc:subfield code="x">0045-639X</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="510">
+      <marc:datafield tag="510" ind1="2" ind2=" ">
         <marc:subfield code="a">Energy information abstracts</marc:subfield>
         <marc:subfield code="x">0147-6521</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="510">
+      <marc:datafield tag="510" ind1="2" ind2=" ">
         <marc:subfield code="a">Environment abstracts</marc:subfield>
         <marc:subfield code="x">0093-3287</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="510">
+      <marc:datafield tag="510" ind1="2" ind2=" ">
         <marc:subfield code="a">Film literature index</marc:subfield>
         <marc:subfield code="x">0093-6758</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="510">
+      <marc:datafield tag="510" ind1="2" ind2=" ">
         <marc:subfield code="a">Infobank</marc:subfield>
         <marc:subfield code="b">Jan. 1969-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="510">
+      <marc:datafield tag="510" ind1="2" ind2=" ">
         <marc:subfield code="a">Predicasts</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="515">
+      <marc:datafield tag="515" ind1=" " ind2=" ">
         <marc:subfield code="a">Suspended Dec. 12-28, 1958; Dec. 20, 1962-Mar. 1963; Sept. 17-Oct. 10, 1965; and Aug. 10-Nov. 5, 1978.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="530">
+      <marc:datafield tag="530" ind1=" " ind2=" ">
         <marc:subfield code="a">Also available on microfilm from University Microfilms International and in an online version.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="530">
+      <marc:datafield tag="530" ind1=" " ind2=" ">
         <marc:subfield code="a">Also available via the Internet.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="580">
+      <marc:datafield tag="580" ind1=" " ind2=" ">
         <marc:subfield code="a">Issued monthly reduced size publication titled: Little times, &lt;1924-1928&gt;.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="651">
+      <marc:datafield tag="651" ind1=" " ind2="0">
         <marc:subfield code="a">New York (N.Y.)</marc:subfield>
         <marc:subfield code="v">Newspapers.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="651">
+      <marc:datafield tag="651" ind1=" " ind2="0">
         <marc:subfield code="a">New York County (N.Y.)</marc:subfield>
         <marc:subfield code="v">Newspapers.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="752">
+      <marc:datafield tag="752" ind1=" " ind2=" ">
         <marc:subfield code="a">United States</marc:subfield>
         <marc:subfield code="b">New York</marc:subfield>
         <marc:subfield code="c">New York</marc:subfield>
         <marc:subfield code="d">New York.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="775">
+      <marc:datafield tag="775" ind1="0" ind2=" ">
         <marc:subfield code="t">Semi-weekly times (New York, N.Y.)</marc:subfield>
         <marc:subfield code="g">1857-1867</marc:subfield>
         <marc:subfield code="w">(DLC)sn 83045440</marc:subfield>
         <marc:subfield code="w">(OCoLC)9475039</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="775">
+      <marc:datafield tag="775" ind1="0" ind2=" ">
         <marc:subfield code="t">New-York weekly times</marc:subfield>
         <marc:subfield code="g">1857-&lt;1896&gt;</marc:subfield>
         <marc:subfield code="w">(OCoLC)9447647</marc:subfield>
         <marc:subfield code="w">(DLC)sn 83045332</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="776">
+      <marc:datafield tag="776" ind1="1" ind2=" ">
         <marc:subfield code="t">New York times on the Web</marc:subfield>
         <marc:subfield code="w">(OCoLC)34107580</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="777">
+      <marc:datafield tag="777" ind1="1" ind2=" ">
         <marc:subfield code="t">Little times</marc:subfield>
         <marc:subfield code="w">(DLC)sn 92061532</marc:subfield>
         <marc:subfield code="w">(OCoLC)1756036</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="780">
+      <marc:datafield tag="780" ind1="0" ind2="0">
         <marc:subfield code="t">New-York daily times</marc:subfield>
         <marc:subfield code="w">(DLC)sn 83030746</marc:subfield>
         <marc:subfield code="w">(OCoLC)7919228</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="945">
+      <marc:datafield tag="945" ind1=" " ind2=" ">
         <marc:subfield code="a">MARS</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
+      <marc:datafield tag="931" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
+      <marc:datafield tag="932" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Language material</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1=" " ind2=" ">
+      <marc:datafield tag="935" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Serial</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:datafield tag="035" ind1="beluga" ind2=" ">
         <marc:subfield code="a">(NRU)1557247</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="937" ind1=" " ind2=" ">
+      <marc:datafield tag="937" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Non-Fiction</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="939" ind1=" " ind2=" ">
+      <marc:datafield tag="939" ind1="beluga" ind2=" ">
         <marc:subfield code="a">1857-</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1=" " ind2=" ">
+      <marc:datafield tag="941" ind1="beluga" ind2=" ">
         <marc:subfield code="a">eng</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1=" " ind2=" ">
+      <marc:datafield tag="943" ind1="beluga" ind2=" ">
         <marc:subfield code="a">English</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="945" ind1=" " ind2=" ">
+      <marc:datafield tag="945" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Adult</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="130" ind1="0" ind2=" ">
+      <marc:datafield tag="130" ind1="beluga1" ind2=" ">
         <marc:subfield code="a">New York times.</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="967" ind1=" " ind2="0">
+      <marc:datafield tag="967" ind1="beluga2" ind2="0">
         <marc:subfield code="a">New York (N.Y.)</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="967" ind1=" " ind2="0">
+      <marc:datafield tag="967" ind1="beluga2" ind2="0">
         <marc:subfield code="a">New York County (N.Y.)</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
+      <marc:datafield tag="969" ind1="beluga4" ind2="0">
         <marc:subfield code="v">Newspapers.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
+      <marc:datafield tag="969" ind1="beluga4" ind2="0">
         <marc:subfield code="v">Newspapers.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>

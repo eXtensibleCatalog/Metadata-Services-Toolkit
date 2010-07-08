@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:112</predecessor>
     </predecessors>
     <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -18,22 +18,22 @@
       <marc:controlfield tag="006">m        d</marc:controlfield>
       <marc:controlfield tag="007">cr  n</marc:controlfield>
       <marc:controlfield tag="008">010111c20019999nyuqr1p s     0   a0eng c</marc:controlfield>
-      <marc:datafield ind1=" " ind2=" " tag="010">
+      <marc:datafield tag="010" ind1=" " ind2=" ">
         <marc:subfield code="a">2001212542</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="022">
+      <marc:datafield tag="022" ind1="0" ind2=" ">
         <marc:subfield code="a">1533-2969</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(WaSeSS)ssj16563</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="037">
+      <marc:datafield tag="037" ind1=" " ind2=" ">
         <marc:subfield code="b">Haworth Press, Inc., 10 Alice Street, Binghamton, N.Y. 13901-1580</marc:subfield>
         <marc:subfield code="c">$30.00 (individual)</marc:subfield>
         <marc:subfield code="c">$60.00 (institutions)</marc:subfield>
         <marc:subfield code="c">$120.00 (library)</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="040">
+      <marc:datafield tag="040" ind1=" " ind2=" ">
         <marc:subfield code="a">NSDP</marc:subfield>
         <marc:subfield code="c">NSDP</marc:subfield>
         <marc:subfield code="d">GU</marc:subfield>
@@ -43,75 +43,75 @@
         <marc:subfield code="d">OCoLC</marc:subfield>
         <marc:subfield code="d">WaSeSS</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="042">
+      <marc:datafield tag="042" ind1=" " ind2=" ">
         <marc:subfield code="a">lc</marc:subfield>
         <marc:subfield code="a">nsdp</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2="4" tag="050">
+      <marc:datafield tag="050" ind1="1" ind2="4">
         <marc:subfield code="a">HF5410</marc:subfield>
         <marc:subfield code="b">.J723</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2="0" tag="082">
+      <marc:datafield tag="082" ind1="1" ind2="0">
         <marc:subfield code="a">658</marc:subfield>
         <marc:subfield code="2">13</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="130">
+      <marc:datafield tag="130" ind1="0" ind2=" ">
         <marc:subfield code="a">Services marketing quarterly (Online)</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="210">
+      <marc:datafield tag="210" ind1="0" ind2=" ">
         <marc:subfield code="a">Serv. mark. q.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="222">
+      <marc:datafield tag="222" ind1=" " ind2="0">
         <marc:subfield code="a">Services marketing quarterly</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="245">
+      <marc:datafield tag="245" ind1="0" ind2="0">
         <marc:subfield code="a">Services marketing quarterly</marc:subfield>
         <marc:subfield code="h">[electronic resource].</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="260">
+      <marc:datafield tag="260" ind1=" " ind2=" ">
         <marc:subfield code="a">Binghamton, N.Y. :</marc:subfield>
         <marc:subfield code="b">Haworth Press, Inc.,</marc:subfield>
         <marc:subfield code="c">2001-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="310">
+      <marc:datafield tag="310" ind1=" " ind2=" ">
         <marc:subfield code="a">Quarterly</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="362">
+      <marc:datafield tag="362" ind1="0" ind2=" ">
         <marc:subfield code="a">Vol. 22, no. 1 (2001)-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">Title from cover.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Marketing</marc:subfield>
         <marc:subfield code="v">Periodicals.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Service industries</marc:subfield>
         <marc:subfield code="v">Periodicals.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="710">
+      <marc:datafield tag="710" ind1="2" ind2=" ">
         <marc:subfield code="a">ProQuest Information and Learning Company.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="776">
+      <marc:datafield tag="776" ind1="1" ind2=" ">
         <marc:subfield code="t">Services marketing quarterly (Online)</marc:subfield>
         <marc:subfield code="x">1533-2977</marc:subfield>
         <marc:subfield code="w">(DLC)    2001212543</marc:subfield>
         <marc:subfield code="w">(OCoLC)45706032</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="780">
+      <marc:datafield tag="780" ind1="0" ind2="0">
         <marc:subfield code="t">Journal of professional services marketing</marc:subfield>
         <marc:subfield code="x">0748-4623</marc:subfield>
         <marc:subfield code="w">(DLC)sf 95095424</marc:subfield>
         <marc:subfield code="w">(OCoLC)10947393</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="850">
+      <marc:datafield tag="850" ind1=" " ind2=" ">
         <marc:subfield code="a">DLC</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="852">
+      <marc:datafield tag="852" ind1=" " ind2=" ">
         <marc:subfield code="x">universal pattern</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2="0" tag="853">
+      <marc:datafield tag="853" ind1="2" ind2="0">
         <marc:subfield code="8">1</marc:subfield>
         <marc:subfield code="a">v.</marc:subfield>
         <marc:subfield code="b">no.</marc:subfield>
@@ -120,80 +120,80 @@
         <marc:subfield code="i">(year)</marc:subfield>
         <marc:subfield code="w">q</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="4" ind2="0" tag="856">
+      <marc:datafield tag="856" ind1="4" ind2="0">
         <marc:subfield code="b">Internet</marc:subfield>
         <marc:subfield code="z">Full text.</marc:subfield>
         <marc:subfield code="u">http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=SERVMARQU</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="4" ind2="1" tag="863">
+      <marc:datafield tag="863" ind1="4" ind2="1">
         <marc:subfield code="8">1.1</marc:subfield>
         <marc:subfield code="a">22</marc:subfield>
         <marc:subfield code="b">1</marc:subfield>
         <marc:subfield code="i">2001</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="999">
+      <marc:datafield tag="999" ind1=" " ind2=" ">
         <marc:subfield code="a">Journal RCL Internet SS</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
+      <marc:datafield tag="931" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
+      <marc:datafield tag="932" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Language material</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
+      <marc:datafield tag="932" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Computer file</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1=" " ind2=" ">
+      <marc:datafield tag="935" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Serial</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:datafield tag="035" ind1="beluga" ind2=" ">
         <marc:subfield code="a">(NRU)3407379</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Electronic resource</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="934" ind1=" " ind2=" ">
+      <marc:datafield tag="934" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Remote</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="937" ind1=" " ind2=" ">
+      <marc:datafield tag="937" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Non-Fiction</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="939" ind1=" " ind2=" ">
+      <marc:datafield tag="939" ind1="beluga" ind2=" ">
         <marc:subfield code="a">2001-</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1=" " ind2=" ">
+      <marc:datafield tag="941" ind1="beluga" ind2=" ">
         <marc:subfield code="a">eng</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1=" " ind2=" ">
+      <marc:datafield tag="943" ind1="beluga" ind2=" ">
         <marc:subfield code="a">English</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga2" ind2="0">
         <marc:subfield code="a">Marketing</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga2" ind2="0">
         <marc:subfield code="a">Service industries</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
+      <marc:datafield tag="969" ind1="beluga4" ind2="0">
         <marc:subfield code="v">Periodicals.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
+      <marc:datafield tag="969" ind1="beluga4" ind2="0">
         <marc:subfield code="v">Periodicals.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>

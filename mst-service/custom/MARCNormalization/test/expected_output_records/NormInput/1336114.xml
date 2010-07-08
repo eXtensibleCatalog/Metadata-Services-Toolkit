@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:28</predecessor>
     </predecessors>
     <setSpec>MARCXML Holding Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -17,10 +17,10 @@
       <marc:controlfield tag="004">1222801</marc:controlfield>
       <marc:controlfield tag="005">20020219132801.0</marc:controlfield>
       <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
-      <marc:datafield ind1=" " ind2=" " tag="014">
+      <marc:datafield tag="014" ind1=" " ind2=" ">
         <marc:subfield code="a">01173097</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="8" ind2=" " tag="852">
+      <marc:datafield tag="852" ind1="8" ind2=" ">
         <marc:subfield code="b">MinerSer2</marc:subfield>
         <marc:subfield code="h">Serial</marc:subfield>
         <marc:subfield code="z">Shelved in the journal collection as, "Clinical practice guideline", no. 4 (1993)</marc:subfield>

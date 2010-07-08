@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:114</predecessor>
     </predecessors>
     <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -16,16 +16,16 @@
       <marc:controlfield tag="005">20070810120159.0</marc:controlfield>
       <marc:controlfield tag="007">sd fsngnnmmned</marc:controlfield>
       <marc:controlfield tag="008">030521s2002    enkmun              ita d</marc:controlfield>
-      <marc:datafield ind1=" " ind2=" " tag="010">
+      <marc:datafield tag="010" ind1=" " ind2=" ">
         <marc:subfield code="a">2003583369</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)50126222</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">3472288</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="040">
+      <marc:datafield tag="040" ind1=" " ind2=" ">
         <marc:subfield code="a">ORX</marc:subfield>
         <marc:subfield code="c">ORX</marc:subfield>
         <marc:subfield code="d">DLC</marc:subfield>
@@ -33,215 +33,215 @@
         <marc:subfield code="d">BTCTA</marc:subfield>
         <marc:subfield code="d">RRR</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="024">
+      <marc:datafield tag="024" ind1="1" ind2=" ">
         <marc:subfield code="a">028946699928</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2="0" tag="024">
+      <marc:datafield tag="024" ind1="1" ind2="0">
         <marc:subfield code="a">028946699928</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="2" tag="028">
+      <marc:datafield tag="028" ind1="0" ind2="2">
         <marc:subfield code="a">289 466 999-2</marc:subfield>
         <marc:subfield code="b">Decca</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="042">
+      <marc:datafield tag="042" ind1=" " ind2=" ">
         <marc:subfield code="a">lcderive</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="047">
+      <marc:datafield tag="047" ind1=" " ind2=" ">
         <marc:subfield code="a">op</marc:subfield>
         <marc:subfield code="a">mc</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="050">
+      <marc:datafield tag="050" ind1="0" ind2="0">
         <marc:subfield code="a">SDA 68355</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="4" tag="082">
+      <marc:datafield tag="082" ind1="0" ind2="4">
         <marc:subfield code="a">782.1</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="049">
+      <marc:datafield tag="049" ind1=" " ind2=" ">
         <marc:subfield code="a">RRRR</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="4" tag="245">
+      <marc:datafield tag="245" ind1="0" ind2="4">
         <marc:subfield code="a">The best of the 3 tenors</marc:subfield>
         <marc:subfield code="h">[sound recording].</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="3" ind2=" " tag="246">
+      <marc:datafield tag="246" ind1="3" ind2=" ">
         <marc:subfield code="a">Best of the three tenors</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="3" ind2="0" tag="246">
+      <marc:datafield tag="246" ind1="3" ind2="0">
         <marc:subfield code="a">Tibor Rudas presents the best of the 3 tenors</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="246">
+      <marc:datafield tag="246" ind1="1" ind2=" ">
         <marc:subfield code="i">Title on container spine:</marc:subfield>
         <marc:subfield code="a">Greatest trios</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="260">
+      <marc:datafield tag="260" ind1=" " ind2=" ">
         <marc:subfield code="a">London :</marc:subfield>
         <marc:subfield code="b">Decca,</marc:subfield>
         <marc:subfield code="c">p2002.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="300">
+      <marc:datafield tag="300" ind1=" " ind2=" ">
         <marc:subfield code="a">1 sound disc (64 min.) :</marc:subfield>
         <marc:subfield code="b">digital, stereo. ;</marc:subfield>
         <marc:subfield code="c">4 3/4 in.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="306">
+      <marc:datafield tag="306" ind1=" " ind2=" ">
         <marc:subfield code="a">010425</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">Opera and musical excerpts and songs.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="546">
+      <marc:datafield tag="546" ind1=" " ind2=" ">
         <marc:subfield code="a">Sung in English, French, German, Italian or and Spanish.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="511">
+      <marc:datafield tag="511" ind1="0" ind2=" ">
         <marc:subfield code="a">José Carreras, Plácido Domingo, Luciano Pavarotti, tenors ; Orchestra de maggio musicale fiorentino, Orchestra del teatro dell'opera di Roma, Los Angeles Philharmonic, Orchestre de Paris ; James Levine, Zubin Mehta, conductors.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">Lalo Schifrin arranged and orchestrated the medleys for the concerts in Los Angeles and Paris.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="518">
+      <marc:datafield tag="518" ind1=" " ind2=" ">
         <marc:subfield code="a">Recorded live in Rome (July 7, 1990), Los Angeles (July 16, 1994), and Paris (July 10, 1998).</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">"Greatest moments from the Rome, Los Angeles and Paris concerts"--Container.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">Compact disc.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">Program notes in English, French, German, Italian, and Spanish ([24] p. : col. ill.) inserted in container.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="505">
+      <marc:datafield tag="505" ind1="0" ind2=" ">
         <marc:subfield code="a">'O sole mio -- Funiculì, funiculà -- Libiamo ne' lieti calici -- Sous le ciel de Paris -- Torero quiero ser -- Parlami d'amore, Mariu -- Manha de carnaval -- Lolita -- Dicitencello vuie -- Core 'ngrato -- Because -- You'll never walk alone -- Singin' in the rain -- Maria/Tonight ; Cielito lindo -- Ochi tchorniye ; Caminito ; La vie en rose -- Mattinata ; Wien, Wien, nur du allein ; Amapola -- Lippen schweigen -- Brazil -- Sous les ponts de Paris -- Torna a surriento -- Nessun dorma -- La donna è mobile.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="590">
+      <marc:datafield tag="590" ind1=" " ind2=" ">
         <marc:subfield code="a">Art/Music copy: Gift of Sara Dougherty in memory of David Dougherty.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Operas</marc:subfield>
         <marc:subfield code="v">Excerpts.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Songs (High voice) with orchestra.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Vocal trios with orchestra.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Musicals</marc:subfield>
         <marc:subfield code="v">Excerpts, Arranged.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="7" tag="655">
+      <marc:datafield tag="655" ind1=" " ind2="7">
         <marc:subfield code="a">Classical Music.</marc:subfield>
         <marc:subfield code="2">local</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:datafield tag="700" ind1="1" ind2=" ">
         <marc:subfield code="a">Carreras, José.</marc:subfield>
         <marc:subfield code="4">prf</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:datafield tag="700" ind1="1" ind2=" ">
         <marc:subfield code="a">Domingo, Plácido,</marc:subfield>
         <marc:subfield code="d">1941-</marc:subfield>
         <marc:subfield code="4">prf</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:datafield tag="700" ind1="1" ind2=" ">
         <marc:subfield code="a">Pavarotti, Luciano.</marc:subfield>
         <marc:subfield code="4">prf</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:datafield tag="700" ind1="1" ind2=" ">
         <marc:subfield code="a">Levine, James,</marc:subfield>
         <marc:subfield code="d">1943-</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:datafield tag="700" ind1="1" ind2=" ">
         <marc:subfield code="a">Mehta, Zubin.</marc:subfield>
         <marc:subfield code="4">cnd</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:datafield tag="700" ind1="1" ind2=" ">
         <marc:subfield code="a">Rudas, Tibor.</marc:subfield>
         <marc:subfield code="4">cnd</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:datafield tag="700" ind1="1" ind2=" ">
         <marc:subfield code="a">Schifrin, Lalo.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="711">
+      <marc:datafield tag="711" ind1="2" ind2=" ">
         <marc:subfield code="a">Maggio musicale fiorentino.</marc:subfield>
         <marc:subfield code="e">Orchestra.</marc:subfield>
         <marc:subfield code="4">prf</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="710">
+      <marc:datafield tag="710" ind1="2" ind2=" ">
         <marc:subfield code="a">Teatro dell'opera (Rome, Italy).</marc:subfield>
         <marc:subfield code="b">Orchestra.</marc:subfield>
         <marc:subfield code="4">prf</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="710">
+      <marc:datafield tag="710" ind1="2" ind2=" ">
         <marc:subfield code="a">Los Angeles Philharmonic Orchestra.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="710">
+      <marc:datafield tag="710" ind1="2" ind2=" ">
         <marc:subfield code="a">Orchestre de Paris.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="994">
+      <marc:datafield tag="994" ind1=" " ind2=" ">
         <marc:subfield code="a">C0</marc:subfield>
         <marc:subfield code="b">RRR</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="945">
+      <marc:datafield tag="945" ind1=" " ind2=" ">
         <marc:subfield code="a">MARS</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
+      <marc:datafield tag="931" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Sound</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
+      <marc:datafield tag="932" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Musical sound recording</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Sound recording</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1=" " ind2=" ">
+      <marc:datafield tag="935" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Monograph/Item</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
+      <marc:datafield tag="931" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Sound</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Sound recording</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="934" ind1=" " ind2=" ">
+      <marc:datafield tag="934" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Sound disk</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1=" " ind2=" ">
+      <marc:datafield tag="941" ind1="beluga" ind2=" ">
         <marc:subfield code="a">ita</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1=" " ind2=" ">
+      <marc:datafield tag="943" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Italian</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:datafield tag="035" ind1="beluga" ind2=" ">
         <marc:subfield code="a">(NRU)3472288</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="130" ind1="0" ind2=" ">
+      <marc:datafield tag="130" ind1="beluga1" ind2=" ">
         <marc:subfield code="a">Best of the 3 tenors</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga2" ind2="0">
         <marc:subfield code="a">Operas</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga2" ind2="0">
         <marc:subfield code="a">Musicals</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
+      <marc:datafield tag="969" ind1="beluga4" ind2="0">
         <marc:subfield code="v">Excerpts.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
+      <marc:datafield tag="969" ind1="beluga4" ind2="0">
         <marc:subfield code="v">Excerpts, Arranged.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>

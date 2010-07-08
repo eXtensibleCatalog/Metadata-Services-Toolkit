@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:116</predecessor>
     </predecessors>
     <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -16,22 +16,22 @@
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="005">20070710083753.0</marc:controlfield>
       <marc:controlfield tag="008">060922s2006    njua          001 0 eng d</marc:controlfield>
-      <marc:datafield ind1=" " ind2=" " tag="020">
+      <marc:datafield tag="020" ind1=" " ind2=" ">
         <marc:subfield code="a">0764525476</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="020">
+      <marc:datafield tag="020" ind1=" " ind2=" ">
         <marc:subfield code="a">9780764525476</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)71517906</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)71517906</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">3494560</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="040">
+      <marc:datafield tag="040" ind1=" " ind2=" ">
         <marc:subfield code="a">JRZ</marc:subfield>
         <marc:subfield code="c">JRZ</marc:subfield>
         <marc:subfield code="d">BAKER</marc:subfield>
@@ -44,32 +44,32 @@
         <marc:subfield code="d">RNM</marc:subfield>
         <marc:subfield code="d">OrLoB-B</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="049">
+      <marc:datafield tag="049" ind1=" " ind2=" ">
         <marc:subfield code="a">[Ref 20] RNMS</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="096">
+      <marc:datafield tag="096" ind1=" " ind2=" ">
         <marc:subfield code="a">WM 203.5 S559u 2006</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="100">
+      <marc:datafield tag="100" ind1="1" ind2=" ">
         <marc:subfield code="a">Shore, Stephen M.,</marc:subfield>
         <marc:subfield code="d">1961-</marc:subfield>
         <marc:subfield code="4">aut</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2="0" tag="245">
+      <marc:datafield tag="245" ind1="1" ind2="0">
         <marc:subfield code="a">Understanding autism for dummies /</marc:subfield>
         <marc:subfield code="c">by Stephen M. Shore and Linda G. Rastelli.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="260">
+      <marc:datafield tag="260" ind1=" " ind2=" ">
         <marc:subfield code="a">Hoboken, NJ :</marc:subfield>
         <marc:subfield code="b">Wiley,</marc:subfield>
         <marc:subfield code="c">2006.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="300">
+      <marc:datafield tag="300" ind1=" " ind2=" ">
         <marc:subfield code="a">xviii, 365 p. :</marc:subfield>
         <marc:subfield code="b">ill. ;</marc:subfield>
         <marc:subfield code="c">24 cm.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="505">
+      <marc:datafield tag="505" ind1="0" ind2="0">
         <marc:subfield code="g">Part I.</marc:subfield>
         <marc:subfield code="t">Understanding Autism --</marc:subfield>
         <marc:subfield code="g">Part II.</marc:subfield>
@@ -277,7 +277,7 @@
         <marc:subfield code="t">Staying Involved with Your Child's Education --</marc:subfield>
         <marc:subfield code="t">Working within the system --</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="8" ind2="0" tag="505">
+      <marc:datafield tag="505" ind1="8" ind2="0">
         <marc:subfield code="t">Supporting your child at home --</marc:subfield>
         <marc:subfield code="t">Acting Early with an Individualized Family Service Plan (IFSP) --</marc:subfield>
         <marc:subfield code="t">Specifying Special: Entering the Public School System --</marc:subfield>
@@ -396,79 +396,79 @@
         <marc:subfield code="t">Exploring listserves --</marc:subfield>
         <marc:subfield code="t">Accessing World-Wide Autism Organizations and Resources.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Autism in children</marc:subfield>
         <marc:subfield code="v">Popular works.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="2" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="2">
         <marc:subfield code="a">Autistic Disorder</marc:subfield>
         <marc:subfield code="v">Popular Works.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:datafield tag="700" ind1="1" ind2=" ">
         <marc:subfield code="a">Rastelli, Linda G.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="994">
+      <marc:datafield tag="994" ind1=" " ind2=" ">
         <marc:subfield code="a">C0</marc:subfield>
         <marc:subfield code="b">RNM</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="945">
+      <marc:datafield tag="945" ind1=" " ind2=" ">
         <marc:subfield code="a">MARS</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
+      <marc:datafield tag="931" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
+      <marc:datafield tag="932" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Language material</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1=" " ind2=" ">
+      <marc:datafield tag="935" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Monograph/Item</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:datafield tag="035" ind1="beluga" ind2=" ">
         <marc:subfield code="a">(NRU)3494560</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="937" ind1=" " ind2=" ">
+      <marc:datafield tag="937" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Non-Fiction</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1=" " ind2=" ">
+      <marc:datafield tag="941" ind1="beluga" ind2=" ">
         <marc:subfield code="a">eng</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1=" " ind2=" ">
+      <marc:datafield tag="943" ind1="beluga" ind2=" ">
         <marc:subfield code="a">English</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="947" ind1=" " ind2=" ">
+      <marc:datafield tag="947" ind1="beluga" ind2=" ">
         <marc:subfield code="a">0764525476</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="947" ind1=" " ind2=" ">
+      <marc:datafield tag="947" ind1="beluga" ind2=" ">
         <marc:subfield code="a">9780764525476</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="240" ind1="0" ind2="0">
+      <marc:datafield tag="240" ind1="beluga1" ind2="0">
         <marc:subfield code="a">Understanding autism for dummies /</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga2" ind2="0">
         <marc:subfield code="a">Autism in children</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="2">
+      <marc:datafield tag="965" ind1="beluga2" ind2="2">
         <marc:subfield code="a">Autistic Disorder</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
+      <marc:datafield tag="969" ind1="beluga4" ind2="0">
         <marc:subfield code="v">Popular works.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="2">
+      <marc:datafield tag="969" ind1="beluga4" ind2="2">
         <marc:subfield code="v">Popular Works.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>

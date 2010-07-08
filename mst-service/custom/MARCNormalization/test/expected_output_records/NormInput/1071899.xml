@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:6</predecessor>
     </predecessors>
     <setSpec>MARCXML Holding Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -17,10 +17,10 @@
       <marc:controlfield tag="004">970288</marc:controlfield>
       <marc:controlfield tag="005">19961209125950.0</marc:controlfield>
       <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
-      <marc:datafield ind1=" " ind2=" " tag="014">
+      <marc:datafield tag="014" ind1=" " ind2=" ">
         <marc:subfield code="a">00914465</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="852">
+      <marc:datafield tag="852" ind1="0" ind2=" ">
         <marc:subfield code="b">SibRare</marc:subfield>
         <marc:subfield code="h">M1611.A748 C2 1755</marc:subfield>
       </marc:datafield>

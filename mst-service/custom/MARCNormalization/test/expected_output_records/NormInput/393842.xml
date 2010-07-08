@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:134</predecessor>
     </predecessors>
     <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -15,145 +15,145 @@
       <marc:controlfield tag="001">393842</marc:controlfield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="008">791120s1934    nyua          000 0 eng</marc:controlfield>
-      <marc:datafield ind1=" " ind2=" " tag="010">
+      <marc:datafield tag="010" ind1=" " ind2=" ">
         <marc:subfield code="a">34005267</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)5719070</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="9">00308884</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="040">
+      <marc:datafield tag="040" ind1=" " ind2=" ">
         <marc:subfield code="a">DLC</marc:subfield>
         <marc:subfield code="c">AFU</marc:subfield>
         <marc:subfield code="d">RRR</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="049">
+      <marc:datafield tag="049" ind1=" " ind2=" ">
         <marc:subfield code="a">RRRR</marc:subfield>
         <marc:subfield code="c">1,2</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="050">
+      <marc:datafield tag="050" ind1=" " ind2=" ">
         <marc:subfield code="a">HQ766</marc:subfield>
         <marc:subfield code="b">.K64</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="090">
+      <marc:datafield tag="090" ind1=" " ind2=" ">
         <marc:subfield code="a">HQ766</marc:subfield>
         <marc:subfield code="b">.K83b</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="099">
+      <marc:datafield tag="099" ind1=" " ind2=" ">
         <marc:subfield code="a">HQ766 .K83b</marc:subfield>
         <marc:subfield code="a">HQ 766 K83b</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="100">
+      <marc:datafield tag="100" ind1="1" ind2=" ">
         <marc:subfield code="a">Kopp, Marie Elizabeth,</marc:subfield>
         <marc:subfield code="d">1888-</marc:subfield>
         <marc:subfield code="4">aut</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2="0" tag="245">
+      <marc:datafield tag="245" ind1="1" ind2="0">
         <marc:subfield code="a">Birth control in practice;</marc:subfield>
         <marc:subfield code="b">analysis of ten thousand case histories of the Birth Control Clinical Research Bureau;</marc:subfield>
         <marc:subfield code="c">text and tables by Marie E. Kopp, PH. D.; prepared under the supervision of a scientific advisory committee; with a foreword by Adolf Meyer, M.D.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="260">
+      <marc:datafield tag="260" ind1=" " ind2=" ">
         <marc:subfield code="a">New York,</marc:subfield>
         <marc:subfield code="b">R.M. McBride &amp; Company,</marc:subfield>
         <marc:subfield code="c">1934.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="300">
+      <marc:datafield tag="300" ind1=" " ind2=" ">
         <marc:subfield code="a">xxvi, 2  ., 31-290 p.</marc:subfield>
         <marc:subfield code="b">tables (part fold.)</marc:subfield>
         <marc:subfield code="c">23 cm.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Birth control</marc:subfield>
         <marc:subfield code="z">United States.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Women</marc:subfield>
         <marc:subfield code="x">Health and hygiene.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Contraception.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:datafield tag="700" ind1="1" ind2=" ">
         <marc:subfield code="a">Wilson, Edwin Bidwell,</marc:subfield>
         <marc:subfield code="d">1879-1964.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2=" " tag="710">
+      <marc:datafield tag="710" ind1="2" ind2=" ">
         <marc:subfield code="a">Birth Control Clinical Research Bureau (New York, N.Y.)</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="910">
+      <marc:datafield tag="910" ind1=" " ind2=" ">
         <marc:subfield code="a">951118</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="911">
+      <marc:datafield tag="911" ind1=" " ind2=" ">
         <marc:subfield code="a">u</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="966">
+      <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">Stack</marc:subfield>
         <marc:subfield code="m">RMON</marc:subfield>
         <marc:subfield code="s">HQ766 .K83b</marc:subfield>
         <marc:subfield code="b">39087007237250</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="966">
+      <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">Stack</marc:subfield>
         <marc:subfield code="m">RMON</marc:subfield>
         <marc:subfield code="s">HQ766 .K83b</marc:subfield>
         <marc:subfield code="b">39087007237243</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="966">
+      <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">Stack*</marc:subfield>
         <marc:subfield code="m">MMON</marc:subfield>
         <marc:subfield code="s">HQ 766 K83b</marc:subfield>
         <marc:subfield code="b">39087004557585</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
+      <marc:datafield tag="931" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
+      <marc:datafield tag="932" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Language material</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1=" " ind2=" ">
+      <marc:datafield tag="935" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Monograph/Item</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:datafield tag="035" ind1="beluga" ind2=" ">
         <marc:subfield code="a">(NRU)393842</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="937" ind1=" " ind2=" ">
+      <marc:datafield tag="937" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Non-Fiction</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1=" " ind2=" ">
+      <marc:datafield tag="941" ind1="beluga" ind2=" ">
         <marc:subfield code="a">eng</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1=" " ind2=" ">
+      <marc:datafield tag="943" ind1="beluga" ind2=" ">
         <marc:subfield code="a">English</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="240" ind1="0" ind2="0">
+      <marc:datafield tag="240" ind1="beluga1" ind2="0">
         <marc:subfield code="a">Birth control in practice;</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga2" ind2="0">
         <marc:subfield code="a">Birth control</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga2" ind2="0">
         <marc:subfield code="a">Women</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga4" ind2="0">
         <marc:subfield code="x">Health and hygiene.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="967" ind1=" " ind2="0">
+      <marc:datafield tag="967" ind1="beluga4" ind2="0">
         <marc:subfield code="z">United States.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>

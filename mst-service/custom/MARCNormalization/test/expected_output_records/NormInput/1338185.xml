@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:29</predecessor>
     </predecessors>
     <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -17,13 +17,13 @@
       <marc:controlfield tag="005">19961012095053.0</marc:controlfield>
       <marc:controlfield tag="007">hduafv---baca</marc:controlfield>
       <marc:controlfield tag="008">801111d18291831miuuu p a     0   a0eng</marc:controlfield>
-      <marc:datafield ind1=" " ind2=" " tag="010">
+      <marc:datafield tag="010" ind1=" " ind2=" ">
         <marc:subfield code="a">sf 88092025</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)6927407</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="040">
+      <marc:datafield tag="040" ind1=" " ind2=" ">
         <marc:subfield code="a">DLC</marc:subfield>
         <marc:subfield code="c">MUU</marc:subfield>
         <marc:subfield code="d">OCL</marc:subfield>
@@ -31,122 +31,122 @@
         <marc:subfield code="d">DLC</marc:subfield>
         <marc:subfield code="d">NST</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="042">
+      <marc:datafield tag="042" ind1=" " ind2=" ">
         <marc:subfield code="a">lcd</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="050">
+      <marc:datafield tag="050" ind1="0" ind2="0">
         <marc:subfield code="a">Microfilm 01104 no. 468-469 AP</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="092">
+      <marc:datafield tag="092" ind1=" " ind2=" ">
         <marc:subfield code="a">FM051</marc:subfield>
         <marc:subfield code="b">A51p2</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="099">
+      <marc:datafield tag="099" ind1=" " ind2=" ">
         <marc:subfield code="a">FILM</marc:subfield>
         <marc:subfield code="a">Una191</marc:subfield>
         <marc:subfield code="a">468-469.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="049">
+      <marc:datafield tag="049" ind1=" " ind2=" ">
         <marc:subfield code="a">RRRR</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="130">
+      <marc:datafield tag="130" ind1="0" ind2=" ">
         <marc:subfield code="a">American monthly magazine (Boston, Mass.)</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="4" tag="245">
+      <marc:datafield tag="245" ind1="0" ind2="4">
         <marc:subfield code="a">The American monthly magazine</marc:subfield>
         <marc:subfield code="h">[microform].</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="260">
+      <marc:datafield tag="260" ind1=" " ind2=" ">
         <marc:subfield code="a">[Boston, Mass. :</marc:subfield>
         <marc:subfield code="b">Pierce and Williams],</marc:subfield>
         <marc:subfield code="c">1829-1831.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="300">
+      <marc:datafield tag="300" ind1=" " ind2=" ">
         <marc:subfield code="a">3 v.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="310">
+      <marc:datafield tag="310" ind1=" " ind2=" ">
         <marc:subfield code="a">Monthly</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="362">
+      <marc:datafield tag="362" ind1="0" ind2=" ">
         <marc:subfield code="a">Vol. 1, no. 1 (Apr. 1829)-v. 3, no. 4 (July 1831).</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">Title from caption.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="533">
+      <marc:datafield tag="533" ind1=" " ind2=" ">
         <marc:subfield code="a">Microfilm.</marc:subfield>
         <marc:subfield code="b">Ann Arbor, Mich. :</marc:subfield>
         <marc:subfield code="c">University Microfilms.</marc:subfield>
         <marc:subfield code="e">2 microfilm reels ; 35 mm.</marc:subfield>
         <marc:subfield code="f">(American periodical series, 1800-1850 ; 468-469)</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">Editor: 1829-1831, N. P. Willis.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:datafield tag="700" ind1="1" ind2=" ">
         <marc:subfield code="a">Willis, Nathaniel Parker,</marc:subfield>
         <marc:subfield code="d">1806-1867.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="776">
+      <marc:datafield tag="776" ind1="1" ind2=" ">
         <marc:subfield code="t">American monthly magazine (Boston, Mass.)</marc:subfield>
         <marc:subfield code="w">(OCoLC)1480441</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="4" tag="785">
+      <marc:datafield tag="785" ind1="0" ind2="4">
         <marc:subfield code="t">New-York mirror</marc:subfield>
         <marc:subfield code="w">(DLC)sf 89091552</marc:subfield>
         <marc:subfield code="w">(OCoLC)11195076</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="830">
+      <marc:datafield tag="830" ind1=" " ind2="0">
         <marc:subfield code="a">American periodical series, 1800-1850 ;</marc:subfield>
         <marc:subfield code="v">468-469.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="890">
+      <marc:datafield tag="890" ind1=" " ind2=" ">
         <marc:subfield code="a">The American monthly magazine.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="936">
+      <marc:datafield tag="936" ind1=" " ind2=" ">
         <marc:subfield code="a">Unknown</marc:subfield>
         <marc:subfield code="a">July 1831 (surrogate)</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
+      <marc:datafield tag="931" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
+      <marc:datafield tag="932" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Language material</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1=" " ind2=" ">
+      <marc:datafield tag="935" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Serial</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:datafield tag="035" ind1="beluga" ind2=" ">
         <marc:subfield code="a">(NRU)1338185</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Microform</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="934" ind1=" " ind2=" ">
+      <marc:datafield tag="934" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Microfilm reel</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="937" ind1=" " ind2=" ">
+      <marc:datafield tag="937" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Non-Fiction</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="939" ind1=" " ind2=" ">
+      <marc:datafield tag="939" ind1="beluga" ind2=" ">
         <marc:subfield code="a">1829-1831</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1=" " ind2=" ">
+      <marc:datafield tag="941" ind1="beluga" ind2=" ">
         <marc:subfield code="a">eng</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1=" " ind2=" ">
+      <marc:datafield tag="943" ind1="beluga" ind2=" ">
         <marc:subfield code="a">English</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>

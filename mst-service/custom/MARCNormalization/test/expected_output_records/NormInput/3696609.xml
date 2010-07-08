@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:123</predecessor>
     </predecessors>
     <setSpec>MARCXML Holding Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -17,7 +17,7 @@
       <marc:controlfield tag="004">3494560</marc:controlfield>
       <marc:controlfield tag="005">20070612104751.0</marc:controlfield>
       <marc:controlfield tag="008">0705240p    8   1001uu   0000000</marc:controlfield>
-      <marc:datafield ind1="2" ind2=" " tag="852">
+      <marc:datafield tag="852" ind1="2" ind2=" ">
         <marc:subfield code="b">MinerRef20</marc:subfield>
         <marc:subfield code="h">WM 203.5</marc:subfield>
         <marc:subfield code="i">S559u 2006</marc:subfield>

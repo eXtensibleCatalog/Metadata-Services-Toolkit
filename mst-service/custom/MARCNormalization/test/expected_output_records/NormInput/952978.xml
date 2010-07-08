@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:182</predecessor>
     </predecessors>
     <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -16,118 +16,118 @@
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="005">20061115105354.0</marc:controlfield>
       <marc:controlfield tag="008">850424s1916    nyuftc         n    N/A d</marc:controlfield>
-      <marc:datafield ind1="2" ind2="0" tag="028">
+      <marc:datafield tag="028" ind1="2" ind2="0">
         <marc:subfield code="a">19159-48</marc:subfield>
         <marc:subfield code="b">Carl Fischer.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)11955372</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="9">00896732</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="040">
+      <marc:datafield tag="040" ind1=" " ind2=" ">
         <marc:subfield code="a">XFM</marc:subfield>
         <marc:subfield code="c">XFM</marc:subfield>
         <marc:subfield code="d">m/c</marc:subfield>
         <marc:subfield code="d">RER</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="048">
+      <marc:datafield tag="048" ind1=" " ind2=" ">
         <marc:subfield code="b">sa01</marc:subfield>
         <marc:subfield code="a">ka01</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="049">
+      <marc:datafield tag="049" ind1=" " ind2=" ">
         <marc:subfield code="a">RERA</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="090">
+      <marc:datafield tag="090" ind1=" " ind2=" ">
         <marc:subfield code="a">M1013</marc:subfield>
         <marc:subfield code="b">.B887FS</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="099">
+      <marc:datafield tag="099" ind1=" " ind2=" ">
         <marc:subfield code="a">M1013 .B887FS</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="100">
+      <marc:datafield tag="100" ind1="1" ind2=" ">
         <marc:subfield code="a">Bruch, Max,</marc:subfield>
         <marc:subfield code="d">1838-1920.</marc:subfield>
         <marc:subfield code="4">cmp</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2="0" tag="240">
+      <marc:datafield tag="240" ind1="1" ind2="0">
         <marc:subfield code="a">Schottische Fantasie;</marc:subfield>
         <marc:subfield code="o">arr.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2="0" tag="245">
+      <marc:datafield tag="245" ind1="0" ind2="0">
         <marc:subfield code="a">Fantasia on Scottish folk-melodies :</marc:subfield>
         <marc:subfield code="b">op. 46 /</marc:subfield>
         <marc:subfield code="c">Max Bruch ; edited by Theodore Spiering.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="260">
+      <marc:datafield tag="260" ind1=" " ind2=" ">
         <marc:subfield code="a">New York :</marc:subfield>
         <marc:subfield code="b">Fischer,</marc:subfield>
         <marc:subfield code="c">1916.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="300">
+      <marc:datafield tag="300" ind1=" " ind2=" ">
         <marc:subfield code="a">1 score (35 p.) + 1 part (15 p.) ;</marc:subfield>
         <marc:subfield code="c">30 cm.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="490">
+      <marc:datafield tag="490" ind1="1" ind2=" ">
         <marc:subfield code="a">C. Fischer's music library ;</marc:subfield>
         <marc:subfield code="v">No. 784.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="505">
+      <marc:datafield tag="505" ind1="0" ind2=" ">
         <marc:subfield code="a">Introduction -- Adagio -- Scherzo -- Andante -- Finale.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="590">
+      <marc:datafield tag="590" ind1=" " ind2=" ">
         <marc:subfield code="a">Sibley Music Library copy is bound with his Romance, Op. 42.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Violin with orchestra</marc:subfield>
         <marc:subfield code="x">Solo with piano.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:datafield tag="700" ind1="1" ind2=" ">
         <marc:subfield code="a">Spiering, Theodore,</marc:subfield>
         <marc:subfield code="d">1871-1925.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="830">
+      <marc:datafield tag="830" ind1=" " ind2="0">
         <marc:subfield code="a">C. Fischer's music library ;</marc:subfield>
         <marc:subfield code="v">no. 784.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="910">
+      <marc:datafield tag="910" ind1=" " ind2=" ">
         <marc:subfield code="a">951204</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="911">
+      <marc:datafield tag="911" ind1=" " ind2=" ">
         <marc:subfield code="a">u</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="966">
+      <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">/Stack</marc:subfield>
         <marc:subfield code="m">SMONO</marc:subfield>
         <marc:subfield code="s">M1013 .B887FS</marc:subfield>
         <marc:subfield code="c">1</marc:subfield>
         <marc:subfield code="b">39087009377690</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
+      <marc:datafield tag="931" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Image</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
+      <marc:datafield tag="932" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Notated music</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Notated music</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1=" " ind2=" ">
+      <marc:datafield tag="935" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Monograph/Item</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:datafield tag="035" ind1="beluga" ind2=" ">
         <marc:subfield code="a">(NRU)952978</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga2" ind2="0">
         <marc:subfield code="a">Violin with orchestra</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
+      <marc:datafield tag="965" ind1="beluga4" ind2="0">
         <marc:subfield code="x">Solo with piano.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>

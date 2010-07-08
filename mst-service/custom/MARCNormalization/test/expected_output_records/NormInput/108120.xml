@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:8</predecessor>
     </predecessors>
     <setSpec>MARCXML Holding Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -17,10 +17,10 @@
       <marc:controlfield tag="004">84562</marc:controlfield>
       <marc:controlfield tag="005">19961209123958.0</marc:controlfield>
       <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
-      <marc:datafield ind1=" " ind2=" " tag="014">
+      <marc:datafield tag="014" ind1=" " ind2=" ">
         <marc:subfield code="a">01317964</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="852">
+      <marc:datafield tag="852" ind1="0" ind2=" ">
         <marc:subfield code="b">RheesStack</marc:subfield>
         <marc:subfield code="h">D16.15 .O83 1995</marc:subfield>
       </marc:datafield>

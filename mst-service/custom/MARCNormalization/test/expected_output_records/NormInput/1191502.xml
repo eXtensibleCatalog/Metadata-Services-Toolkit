@@ -7,7 +7,7 @@
       <predecessor>oai:mst.rochester.edu:17</predecessor>
     </predecessors>
     <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>deleted</status>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -15,132 +15,132 @@
       <marc:controlfield tag="001">1191502</marc:controlfield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="008">930401s1908    gw sga         n    eng d</marc:controlfield>
-      <marc:datafield ind1="3" ind2="0" tag="028">
+      <marc:datafield tag="028" ind1="3" ind2="0">
         <marc:subfield code="a">3221d</marc:subfield>
         <marc:subfield code="b">Peters</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="2" ind2="0" tag="028">
+      <marc:datafield tag="028" ind1="2" ind2="0">
         <marc:subfield code="a">9234d</marc:subfield>
         <marc:subfield code="b">Peters</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)27838245</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="9">01141126</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="040">
+      <marc:datafield tag="040" ind1=" " ind2=" ">
         <marc:subfield code="a">RER</marc:subfield>
         <marc:subfield code="c">RER</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="041">
+      <marc:datafield tag="041" ind1="1" ind2=" ">
         <marc:subfield code="a">engger</marc:subfield>
         <marc:subfield code="h">nor</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="048">
+      <marc:datafield tag="048" ind1=" " ind2=" ">
         <marc:subfield code="a">vn01</marc:subfield>
         <marc:subfield code="a">ka01</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="049">
+      <marc:datafield tag="049" ind1=" " ind2=" ">
         <marc:subfield code="a">RERA</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="090">
+      <marc:datafield tag="090" ind1=" " ind2=" ">
         <marc:subfield code="a">M1620</marc:subfield>
         <marc:subfield code="b">.G84n</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="099">
+      <marc:datafield tag="099" ind1=" " ind2=" ">
         <marc:subfield code="a">M1620 .G84n</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2=" " tag="100">
+      <marc:datafield tag="100" ind1="1" ind2=" ">
         <marc:subfield code="a">Grieg, Edvard,</marc:subfield>
         <marc:subfield code="d">1843-1907.</marc:subfield>
         <marc:subfield code="4">cmp</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2="0" tag="240">
+      <marc:datafield tag="240" ind1="1" ind2="0">
         <marc:subfield code="a">Efterladte sange,</marc:subfield>
         <marc:subfield code="n">1.</marc:subfield>
         <marc:subfield code="p">Taaren</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="1" ind2="0" tag="245">
+      <marc:datafield tag="245" ind1="1" ind2="0">
         <marc:subfield code="a">Tränen</marc:subfield>
         <marc:subfield code="b">(Tears). [Nachgelassenes Werk.</marc:subfield>
         <marc:subfield code="c">Englische Übersetzung von John Bernhoff. Übersetzung aus dem Norwegischen ins Deutsche von Hans Schmidt].</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="260">
+      <marc:datafield tag="260" ind1=" " ind2=" ">
         <marc:subfield code="a">Leipzig,</marc:subfield>
         <marc:subfield code="b">Peters</marc:subfield>
         <marc:subfield code="c">[c1908]</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="300">
+      <marc:datafield tag="300" ind1=" " ind2=" ">
         <marc:subfield code="a">5 p.</marc:subfield>
         <marc:subfield code="c">34 cm.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">Publisher's no.: Edition Peters No. 3221d.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">Cover title.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">From Fünf Lieder für eine Singstimme und Klavier.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="590">
+      <marc:datafield tag="590" ind1=" " ind2=" ">
         <marc:subfield code="a">Sibley Music Library copy bound with his Ein schlichter Sang, Seufzer, and Der Jäger (c1908).</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2="0" tag="650">
+      <marc:datafield tag="650" ind1=" " ind2="0">
         <marc:subfield code="a">Songs with piano.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="740">
+      <marc:datafield tag="740" ind1="0" ind2=" ">
         <marc:subfield code="a">Tears.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1="0" ind2=" " tag="740">
+      <marc:datafield tag="740" ind1="0" ind2=" ">
         <marc:subfield code="a">Taaren.</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="910">
+      <marc:datafield tag="910" ind1=" " ind2=" ">
         <marc:subfield code="a">950805</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="911">
+      <marc:datafield tag="911" ind1=" " ind2=" ">
         <marc:subfield code="a">u</marc:subfield>
       </marc:datafield>
-      <marc:datafield ind1=" " ind2=" " tag="966">
+      <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">/Stack</marc:subfield>
         <marc:subfield code="m">SMONO</marc:subfield>
         <marc:subfield code="s">M1620 .G84n</marc:subfield>
         <marc:subfield code="c">1</marc:subfield>
         <marc:subfield code="b">39087012009991</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
+      <marc:datafield tag="931" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Image</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
+      <marc:datafield tag="932" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Notated music</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
+      <marc:datafield tag="933" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Notated music</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="935" ind1=" " ind2=" ">
+      <marc:datafield tag="935" ind1="beluga" ind2=" ">
         <marc:subfield code="a">Monograph/Item</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:datafield tag="035" ind1="beluga" ind2=" ">
         <marc:subfield code="a">(NRU)1191502</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1=" " ind2=" ">
+      <marc:datafield tag="941" ind1="beluga" ind2=" ">
         <marc:subfield code="a">eng</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="941" ind1=" " ind2=" ">
+      <marc:datafield tag="941" ind1="beluga" ind2=" ">
         <marc:subfield code="a">ger</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1=" " ind2=" ">
+      <marc:datafield tag="943" ind1="beluga" ind2=" ">
         <marc:subfield code="a">English</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="943" ind1=" " ind2=" ">
+      <marc:datafield tag="943" ind1="beluga" ind2=" ">
         <marc:subfield code="a">German</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
