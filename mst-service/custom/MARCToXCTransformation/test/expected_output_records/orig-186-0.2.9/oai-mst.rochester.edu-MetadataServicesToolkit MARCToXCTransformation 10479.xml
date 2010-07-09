@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="holdings" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10479">
+		<xc:location>CarlPer</xc:location>
+		<xc:callNumber>Q1 .S391</xc:callNumber>
+		<xc:textualHoldings type="Basic Bibliographic Unit">n.s. v.101 (1945)-</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 322, no. 5903 (Nov. 7 2008)</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 322, no. 5904 (Nov. 14 2008)</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 322, no. 5905 (Nov. 21 2008)</xc:textualHoldings>
+		<xc:recordID type="NRU">809</xc:recordID>
+		<xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10442</xc:manifestationHeld>
+	</xc:entity>
+</xc:frbr>

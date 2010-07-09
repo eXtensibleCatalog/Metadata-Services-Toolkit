@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10280">
+		<xc:identifier type="UPC">200956070000</xc:identifier>
+		<xc:identifier type="SoundNr">P2-49361</xc:identifier>
+		<xc:recordID type="OCoLC">53015834</xc:recordID>
+		<xc:recordID type="NRU">2510091</xc:recordID>
+		<rdvocab:statementOfResponsibilityRelatingToTitle>John Coltrane.</rdvocab:statementOfResponsibilityRelatingToTitle>
+		<dcterms:title>Coltrane for lovers</dcterms:title>
+		<rdvocab:placeOfProduction>Universal City, Calif. :</rdvocab:placeOfProduction>
+		<dcterms:publisher>Verve,</dcterms:publisher>
+		<dcterms:issued>p2001.</dcterms:issued>
+		<dcterms:extent>1 sound disc :</dcterms:extent>
+		<rdvocab:soundCharacteristics>digital ;</rdvocab:soundCharacteristics>
+		<rdvocab:dimensions>4 3/4 in.</rdvocab:dimensions>
+		<dcterms:description>Compact disc.</dcterms:description>
+		<dcterms:description>Notes by Al Young on insert.</dcterms:description>
+		<dcterms:tableOfContents>My one and only love (4:57) -- Too young to go steady (4:24) -- In a sentimental mood (4:18) -- It's easy to remember (2:50) -- Dedicated to you (5:32) -- You don't know what love is (5:16) -- After the rain (4:13) -- My little brown book (5:26) -- Soul eyes (5:26) -- They say it's wonderful (5:22) -- Nancy (with the laughing face) (3:17).</dcterms:tableOfContents>
+		<xc:typeLeader06>Musical sound recording</xc:typeLeader06>
+		<xc:type007>Sound recording</xc:type007>
+		<xc:typeSMD>Sound disk</xc:typeSMD>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10279</xc:expressionManifested></xc:entity>
+</xc:frbr>

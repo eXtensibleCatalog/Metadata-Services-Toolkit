@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10312">
+		<xc:recordID type="OCoLC">49315959</xc:recordID>
+		<xc:recordID type="NRU">2767993</xc:recordID>
+		<xc:identifier type="GPOItem">0725 (online)</xc:identifier>
+		<xc:identifier type="SuDoc">J 21.2:IL 6/2001</xc:identifier>
+		<dcterms:title>Illegal alien resident population</dcterms:title>
+		<dcterms:alternative>Estimates of the undocumented immigrant population residing in the United States : October 1996</dcterms:alternative>
+		<rdvocab:editionStatement>Updated Dec. 2001.</rdvocab:editionStatement>
+		<rdvocab:placeOfProduction>[Washington, D.C.] :</rdvocab:placeOfProduction>
+		<dcterms:publisher>Immigration and Naturalization Service,</dcterms:publisher>
+		<dcterms:issued>2001.</dcterms:issued>
+		<dcterms:description>Title from title screen.</dcterms:description>
+		<dcterms:identifier>http://purl.access.gpo.gov/GPO/LPS18167</dcterms:identifier>
+		<xc:typeLeader06>Language material</xc:typeLeader06>
+		<xc:typeLeader06>Computer file</xc:typeLeader06>
+		<xc:type007>Text</xc:type007>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10311</xc:expressionManifested></xc:entity>
+</xc:frbr>

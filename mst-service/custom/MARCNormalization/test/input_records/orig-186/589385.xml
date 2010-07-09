@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:159</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00999cas a2200349   45e0</marc:leader>
+        <marc:controlfield tag="001">589385</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20020508113955.0</marc:controlfield>
+        <marc:controlfield tag="008">790509d197819uucauqr1p       0   a0eng d</marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">sc 79003925 </marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)ocm04943383</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">COO</marc:subfield>
+          <marc:subfield code="c">COO</marc:subfield>
+          <marc:subfield code="d">DLC</marc:subfield>
+          <marc:subfield code="d">NSD</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">AIP</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">EBZ</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="012" ind1=" " ind2=" ">
+          <marc:subfield code="a">2</marc:subfield>
+          <marc:subfield code="l">a</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="022" ind1="0" ind2=" ">
+          <marc:subfield code="a">0276-3052</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="042" ind1=" " ind2=" ">
+          <marc:subfield code="a">lc</marc:subfield>
+          <marc:subfield code="a">nsdp</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">ML3809</marc:subfield>
+          <marc:subfield code="b">.I61</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RESM</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="210" ind1="0" ind2=" ">
+          <marc:subfield code="a">Interval</marc:subfield>
+          <marc:subfield code="b">(San Diego, Calif.)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="222" ind1=" " ind2="0">
+          <marc:subfield code="a">Interval</marc:subfield>
+          <marc:subfield code="b">(San Diego, Calif.)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">Interval.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">[San Diego, Calif.,</marc:subfield>
+          <marc:subfield code="b">J. Glasier]</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="265" ind1=" " ind2=" ">
+          <marc:subfield code="a">Interval, P.O. Box 8027, San Diego, CA 92102</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">v.</marc:subfield>
+          <marc:subfield code="b">ill.</marc:subfield>
+          <marc:subfield code="c">29 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="310" ind1=" " ind2=" ">
+          <marc:subfield code="a">Quarterly</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="362" ind1="0" ind2=" ">
+          <marc:subfield code="a">v. 1-   May 1978-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">"A microtonal newsletter."</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Editor: 1978-   J. Glasier.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="510" ind1="1" ind2=" ">
+          <marc:subfield code="a">Music index</marc:subfield>
+          <marc:subfield code="x">0027-4348</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Glasier, Jonathan.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="850" ind1=" " ind2=" ">
+          <marc:subfield code="a">CSt</marc:subfield>
+          <marc:subfield code="a">CU</marc:subfield>
+          <marc:subfield code="a">CU-Riv</marc:subfield>
+          <marc:subfield code="a">CU-SB</marc:subfield>
+          <marc:subfield code="a">CaBVaS</marc:subfield>
+          <marc:subfield code="a">IU</marc:subfield>
+          <marc:subfield code="a">MiU</marc:subfield>
+          <marc:subfield code="a">NRU-Mus</marc:subfield>
+          <marc:subfield code="a">OCU</marc:subfield>
+          <marc:subfield code="a">TxLT</marc:subfield>
+          <marc:subfield code="a">ViU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="936" ind1=" " ind2=" ">
+          <marc:subfield code="a">winter 1979</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">E0</marc:subfield>
+          <marc:subfield code="b">RES</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

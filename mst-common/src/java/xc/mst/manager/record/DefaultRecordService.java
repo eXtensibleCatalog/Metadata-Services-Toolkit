@@ -1249,7 +1249,7 @@ public class DefaultRecordService extends RecordService
 			}
 
 			String status = headerEl.getChildText("status", recordEl.getNamespace());
-			if (!StringUtils.isEmpty(status) && "DELETED".equals(status.toUpperCase())) {
+			if (!StringUtils.isEmpty(status)) {
 				if ("DELETED".equals(status.toUpperCase()) || "D".equals(status.toUpperCase())) {
 					r.setStatus(Record.DELETED);
 				} else if ("ACTIVE".equals(status.toUpperCase()) || "A".equals(status.toUpperCase())) {

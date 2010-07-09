@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:80</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01907cjm a2200385Ia 45x0</marc:leader>
+        <marc:controlfield tag="001">2510091</marc:controlfield>
+        <marc:controlfield tag="005">20080723205127.0</marc:controlfield>
+        <marc:controlfield tag="007">sd fsngnn-m-ee</marc:controlfield>
+        <marc:controlfield tag="008">010313p20011961caujzn   i          eng d</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)ocm53015834</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">RES</marc:subfield>
+          <marc:subfield code="c">RES</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="024" ind1="1" ind2=" ">
+          <marc:subfield code="a">200956070000</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="028" ind1="0" ind2="2">
+          <marc:subfield code="a">P2-49361</marc:subfield>
+          <marc:subfield code="b">Verve</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RESM</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Coltrane, John,</marc:subfield>
+          <marc:subfield code="d">1926-1967.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Coltrane for lovers</marc:subfield>
+          <marc:subfield code="h">[sound recording] /</marc:subfield>
+          <marc:subfield code="c">John Coltrane.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Universal City, Calif. :</marc:subfield>
+          <marc:subfield code="b">Verve,</marc:subfield>
+          <marc:subfield code="c">p2001.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">1 sound disc :</marc:subfield>
+          <marc:subfield code="b">digital ;</marc:subfield>
+          <marc:subfield code="c">4 3/4 in.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Compact disc.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="511" ind1="0" ind2=" ">
+          <marc:subfield code="a">John Coltrane, tenor saxophone, with, variously: McCoy Tyner, Duke Elllington, piano ; Jimmy Garrison, Aaron Bell, Reggie Workman, bass ; Elvin Jones, Roy Haynes, Sam Woodyard, drums ; Johnny Hartman, vocals.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="508" ind1=" " ind2=" ">
+          <marc:subfield code="a">Compiled and produced by Richard Seidel ; production managed by Bryan Koniarz ; production and research coordinated by Carlos Kase ; original recordings produced by Bob Thiele.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="518" ind1=" " ind2=" ">
+          <marc:subfield code="a">Recorded 1961-1963, by Rudy Van Gelder at Van Gelder Recording Studio, Englewood Cliffs, N.J.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Notes by Al Young on insert.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="505" ind1="0" ind2=" ">
+          <marc:subfield code="a">My one and only love (4:57) -- Too young to go steady (4:24) -- In a sentimental mood (4:18) -- It's easy to remember (2:50) -- Dedicated to you (5:32) -- You don't know what love is (5:16) -- After the rain (4:13) -- My little brown book (5:26) -- Soul eyes (5:26) -- They say it's wonderful (5:22) -- Nancy (with the laughing face) (3:17).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Jazz</marc:subfield>
+          <marc:subfield code="y">1961-1970.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Tyner, McCoy.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Ellington, Duke,</marc:subfield>
+          <marc:subfield code="d">1899-1974.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Garrison, Jimmy.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Bell, Aaron,</marc:subfield>
+          <marc:subfield code="d">1922-2003</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Workman, Reggie.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Jones, Elvin.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Haynes, Roy.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Woodyard, Sam,</marc:subfield>
+          <marc:subfield code="d">1925-1988</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Hartman, Johnny.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">X0</marc:subfield>
+          <marc:subfield code="b">RES</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

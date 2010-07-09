@@ -337,19 +337,16 @@ public class NormalizationService extends GenericMetadataService {
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to update them
 			// instead of inserting a new Record
-			//TODO - BDA
-			//List<Record> existingRecords = getRecordService().getSuccessorsCreatedByServiceIdIncludingDeletedRecords(record.getId(), service.getId());
-			List<Record> existingRecords = null;
 			
 			// If there was already a processed record for the record we just processed, update it
-			if(existingRecords != null && existingRecords.size() > 0)
+			if(record.getSuccessors() != null && record.getSuccessors().size() > 0)
 			{
 				if(LOG.isDebugEnabled())
 					LOG.debug("Updating the record which was processed from an older version of the record we just processed.");
 
 				// Get the record which was processed from the record we just processed
 				// (there should only be one)
-				Record oldNormalizedRecord = existingRecords.get(0);
+				Record oldNormalizedRecord = record.getSuccessors().get(0);
 
 				// Set the XML to the new normalized XML
 				oldNormalizedRecord.setOaiXml((new XMLOutputter()).outputString(normalizedXml.getModifiedMarcXml()));
@@ -375,7 +372,7 @@ public class NormalizationService extends GenericMetadataService {
 
 				// Create the normalized record
 				Record normalizedRecord = getRecordService().createSuccessor(record, getService());
-				normalizedRecord.setOaiXmlEl(record.getOaiXmlEl());
+				normalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
 				normalizedRecord.setFormat(marcxmlFormat);
 
 				// Set the datestamp, and header to null so they get computed when we insert the normalized record
@@ -2168,6 +2165,7 @@ public class NormalizationService extends GenericMetadataService {
 	
 		// The Properties file we're currently populating
 		Properties current = null;
+		LOG.debug("loadConfiguration: "+this);
 		
 	    for(String line : configurationLines)
 	    {

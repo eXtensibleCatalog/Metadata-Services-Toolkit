@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10063">
+		<rdvocab:publisherNumber>3222f</rdvocab:publisherNumber>
+		<rdvocab:plateNumber>9235f</rdvocab:plateNumber>
+		<xc:recordID type="OCoLC">27838336</xc:recordID>
+		<xc:recordID type="NRU">1191508</xc:recordID>
+		<rdvocab:statementOfResponsibilityRelatingToTitle>Englische Übersetzung von John Bernhoff.].</rdvocab:statementOfResponsibilityRelatingToTitle>
+		<dcterms:title>Der Jäger (The hunter). [Nachgelassenes Werk.</dcterms:title>
+		<dcterms:alternative>Jäger</dcterms:alternative>
+		<rdvocab:placeOfProduction>Leipzig,</rdvocab:placeOfProduction>
+		<dcterms:publisher>Peters</dcterms:publisher>
+		<dcterms:issued>[c1908]</dcterms:issued>
+		<dcterms:extent>7 p.</dcterms:extent>
+		<rdvocab:dimensions>34 cm.</rdvocab:dimensions>
+		<dcterms:description>Publisher's no.: Edition Peters No. 3222f.</dcterms:description>
+		<dcterms:description>Cover title.</dcterms:description>
+		<dcterms:description>From Sechs Lieder für eine Singstimme und Klavier.</dcterms:description>
+		<dcterms:description>Sibley Music Library copy bound with his Tränen (c1908).</dcterms:description>
+		<dcterms:alternative>Hunter.</dcterms:alternative>
+		<xc:typeLeader06>Notated music</xc:typeLeader06>
+		<xc:type007>Notated music</xc:type007>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10062</xc:expressionManifested></xc:entity>
+</xc:frbr>

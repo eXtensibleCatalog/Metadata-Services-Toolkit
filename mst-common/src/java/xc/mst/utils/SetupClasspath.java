@@ -9,9 +9,8 @@
 
 package xc.mst.utils;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -35,9 +34,8 @@ public class SetupClasspath {
     		}
     		if (rootDir == null) {
 	    		try {
-	    			BufferedReader reader = new BufferedReader(new InputStreamReader(
-	    					SetupClasspath.class.getClassLoader().getResourceAsStream(
-		    			        "env.properties")));
+	    			InputStream reader = SetupClasspath.class.getClassLoader().getResourceAsStream(
+		    			        "env.properties");
 		    		Properties props = new Properties();
 		    		props.load(reader);
 		    		reader.close();

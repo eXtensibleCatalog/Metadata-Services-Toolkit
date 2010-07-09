@@ -1,0 +1,146 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/76</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:76</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>active</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>00957cas a2200277Ka 45e0</marc:leader>
+      <marc:controlfield tag="001">2427871</marc:controlfield>
+      <marc:controlfield tag="005">20031028094413.0</marc:controlfield>
+      <marc:controlfield tag="006">jbln</marc:controlfield>
+      <marc:controlfield tag="007">sd fungnn---eu</marc:controlfield>
+      <marc:controlfield tag="008">021126c20029999wvutr p       0   a0eng d</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)51071370</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="a">RRR</marc:subfield>
+        <marc:subfield code="c">RRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="049" ind1=" " ind2=" ">
+        <marc:subfield code="a">RRRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="0" ind2="0">
+        <marc:subfield code="a">Blues music sampler</marc:subfield>
+        <marc:subfield code="h">[sound recording].</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="a">[West Union, WV?] :</marc:subfield>
+        <marc:subfield code="b">Blues Revue,</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">sound discs :</marc:subfield>
+        <marc:subfield code="b">digital ;</marc:subfield>
+        <marc:subfield code="c">4 3/4 in.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="310" ind1=" " ind2=" ">
+        <marc:subfield code="a">Three times a year.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="362" ind1="1" ind2=" ">
+        <marc:subfield code="a">Began in 2002?</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Compilations of previously released recordings.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Description based on: BR003 (Oct./Nov. 2002).</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Produced by Blues Revue Music.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="580" ind1=" " ind2=" ">
+        <marc:subfield code="a">Issued as supplement to: Blues revue, which is shelved at: ML3520.8 .B57.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Blues (Music)</marc:subfield>
+        <marc:subfield code="v">Periodicals.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="655" ind1=" " ind2="7">
+        <marc:subfield code="a">Jazz/Blues/American Folk Music.</marc:subfield>
+        <marc:subfield code="2">local</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="772" ind1="0" ind2=" ">
+        <marc:subfield code="t">Blues revue</marc:subfield>
+        <marc:subfield code="x">1091-7543</marc:subfield>
+        <marc:subfield code="w">(DLC)sn 97641096</marc:subfield>
+        <marc:subfield code="w">(OCoLC)31185486</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="994" ind1=" " ind2=" ">
+        <marc:subfield code="a">E0</marc:subfield>
+        <marc:subfield code="b">RRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sound</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Musical sound recording</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Serial</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sound recording</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="934" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sound disk</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="939" ind1=" " ind2=" ">
+        <marc:subfield code="a">2002-</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)2427871</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="130" ind1="0" ind2=" ">
+        <marc:subfield code="a">Blues music sampler</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Blues (Music)</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="969" ind1=" " ind2="0">
+        <marc:subfield code="v">Periodicals.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

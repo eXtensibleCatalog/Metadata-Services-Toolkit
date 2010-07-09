@@ -1,51 +1,27 @@
 package xc.mst.utils;
 
-import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.log4j.Logger;
 import org.jdom.Element;
-import org.jdom.input.DOMBuilder;
+import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 public class XmlHelper {
 	
 	private static final Logger LOG = Logger.getLogger(XmlHelper.class);
-	protected static DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	protected SAXBuilder builder = new SAXBuilder();
 	
 	protected Format xmlFormat = null;
 	protected XMLOutputter xmlOutputterPretty = null;
 	protected XMLOutputter xmlOutputterCompact = null;
-	protected DocumentBuilder documentBuilder = null;
-	protected DOMBuilder domBuilder = null;
-	
-	public DocumentBuilder getDocumentBuilder() {
-		if (this.documentBuilder == null) {
-			try {
-				return dbf.newDocumentBuilder();
-			} catch (Throwable t) {
-				LOG.debug("", t);
-				Util.getUtil().throwIt(t);
-			}
-		}
-		return this.documentBuilder;
-	}
-	
-	public DOMBuilder getDOMBuilder() {
-		if (this.domBuilder == null) {
-			this.domBuilder = new DOMBuilder();
-		}
-		return this.domBuilder;
-	}
-	
+
 	public XMLOutputter getXMLOutputterPretty() {
 		if (xmlOutputterPretty == null) {
 			xmlFormat = org.jdom.output.Format.getPrettyFormat();
+			xmlFormat.setEncoding("UTF-8");
 			xmlOutputterPretty = new XMLOutputter(xmlFormat);
 		}
 		return xmlOutputterPretty;
@@ -54,6 +30,7 @@ public class XmlHelper {
 	public XMLOutputter getXMLOutputterCompact() {
 		if (xmlOutputterCompact == null) {
 			xmlFormat = org.jdom.output.Format.getCompactFormat();
+			xmlFormat.setEncoding("UTF-8");
 			xmlOutputterCompact = new XMLOutputter(xmlFormat);
 		}
 		return xmlOutputterCompact;
@@ -69,7 +46,7 @@ public class XmlHelper {
 	
 	public org.jdom.Document getJDomDocument(InputStream is) {
 		try {
-			return getDOMBuilder().build(getDocumentBuilder().parse(is));
+			return builder.build(is);
 		} catch (Throwable t) {
 			LOG.error("", t);
 			Util.getUtil().throwIt(t);
@@ -79,10 +56,26 @@ public class XmlHelper {
 	
 	public org.jdom.Document getJDomDocument(String str) {
 		try {
-			return getJDomDocument(new ByteArrayInputStream(str.getBytes("utf-8")));
-		} catch (UnsupportedEncodingException uee) {
+			return builder.build(str);
+		} catch (Throwable uee) {
 			LOG.error("", uee);
 			return null;
+		}
+	}
+	
+	public boolean diffXmlFiles(String file1, String file2) {
+		try {
+			LOG.debug("file1: "+new Util().slurp(file1));
+			String file1contents = getString(builder.build(new FileInputStream(file1)).getRootElement());
+			LOG.debug("file1contents: "+file1contents);
+			
+			LOG.debug("file2: "+new Util().slurp(file2));
+			String file2contents = getString(builder.build(new FileInputStream(file2)).getRootElement());
+			LOG.debug("file2contents: "+file2contents);
+			return !file1contents.equals(file2contents);
+		} catch (Throwable t) {
+			Util.getUtil().throwIt(t);
+			return true;
 		}
 	}
 

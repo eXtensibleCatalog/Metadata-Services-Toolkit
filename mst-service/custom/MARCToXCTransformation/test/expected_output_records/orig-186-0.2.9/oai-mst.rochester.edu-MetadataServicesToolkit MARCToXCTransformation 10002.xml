@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10002">
+		<xc:recordID type="LCCN">m  57001938</xc:recordID>
+		<xc:recordID type="OCoLC">22879014</xc:recordID>
+		<xc:recordID type="NRU">1012755</xc:recordID>
+		<rdvocab:statementOfResponsibilityRelatingToTitle>by Andrew Green and Herman J. Koch.</rdvocab:statementOfResponsibilityRelatingToTitle>
+		<dcterms:title>The complete Proper of the Mass, set to Gregorian themes and Psalm tones for Sundays and feasts of the liturgical year,</dcterms:title>
+		<rdvocab:editionStatement>Rev. and enl. ed.</rdvocab:editionStatement>
+		<rdvocab:placeOfProduction>Boston,</rdvocab:placeOfProduction>
+		<dcterms:publisher>McLaughlin &amp; Reilly</dcterms:publisher>
+		<dcterms:issued>[c1957]</dcterms:issued>
+		<dcterms:extent>xvii p., vocal score (225 p.)</dcterms:extent>
+		<rdvocab:dimensions>32 cm.</rdvocab:dimensions>
+		<dcterms:description>First ed. published in 1946 under title: The Proper of the Mass.</dcterms:description>
+		<dcterms:description>Modern notation, principally with organ acc.; Latin words.</dcterms:description>
+		<dcterms:description>"Liturgical calendar": vi p. inserted.</dcterms:description>
+		<dcterms:alternative>Proper of the Mass.</dcterms:alternative>
+		<xc:typeLeader06>Notated music</xc:typeLeader06>
+		<xc:type007>Notated music</xc:type007>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10001</xc:expressionManifested></xc:entity>
+</xc:frbr>

@@ -1,0 +1,177 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/67</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:67</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>active</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01620cas a22004450  45 A</marc:leader>
+      <marc:controlfield tag="001">21292</marc:controlfield>
+      <marc:controlfield tag="005">20051215114507.0</marc:controlfield>
+      <marc:controlfield tag="008">770504c19489999dcuar1       f0   a0eng d</marc:controlfield>
+      <marc:datafield tag="010" ind1=" " ind2=" ">
+        <marc:subfield code="a">sn 80012547</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="019" ind1=" " ind2=" ">
+        <marc:subfield code="a">3788588</marc:subfield>
+        <marc:subfield code="a">1326692</marc:subfield>
+        <marc:subfield code="a">3788624</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="022" ind1="0" ind2=" ">
+        <marc:subfield code="a">0083-0208</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)2939249</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="037" ind1=" " ind2=" ">
+        <marc:subfield code="a">044-000-01633-8</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="a">GPO</marc:subfield>
+        <marc:subfield code="c">GPO</marc:subfield>
+        <marc:subfield code="d">NSD</marc:subfield>
+        <marc:subfield code="d">m.c.</marc:subfield>
+        <marc:subfield code="d">OCL</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="042" ind1=" " ind2=" ">
+        <marc:subfield code="a">nsdp</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="043" ind1=" " ind2=" ">
+        <marc:subfield code="a">n-us---</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="074" ind1=" " ind2=" ">
+        <marc:subfield code="a">0882-B</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="086" ind1="0" ind2=" ">
+        <marc:subfield code="a">S 1.70:</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="090" ind1=" " ind2=" ">
+        <marc:subfield code="a">JX1977.2.U5</marc:subfield>
+        <marc:subfield code="b">A32</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="210" ind1="0" ind2=" ">
+        <marc:subfield code="a">U.S. particip. UN</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="222" ind1=" " ind2="0">
+        <marc:subfield code="a">U.S. participation in the UN</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="0" ind2="0">
+        <marc:subfield code="a">U.S. participation in the UN.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2=" ">
+        <marc:subfield code="a">United States participation in the United Nations</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="0" ind2="8">
+        <marc:subfield code="a">Report on the United Nations</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="250" ind1=" " ind2=" ">
+        <marc:subfield code="a">Departmental edition</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="a">[Washington]</marc:subfield>
+        <marc:subfield code="b">Dept. of State, Bureau of International Organization Affairs; for sale by the Supt. of Docs., U.S. Govt. Print. Off.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">v.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="310" ind1=" " ind2=" ">
+        <marc:subfield code="a">Annual</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="362" ind1="0" ind2=" ">
+        <marc:subfield code="a">1948-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="490" ind1="1" ind2=" ">
+        <marc:subfield code="a">International organization and conference series</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="490" ind1="1" ind2=" ">
+        <marc:subfield code="a">Department of State publication</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">"Report by the President to the Congress for the Year"</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="610" ind1="2" ind2="0">
+        <marc:subfield code="a">United Nations</marc:subfield>
+        <marc:subfield code="z">United States.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="710" ind1="1" ind2=" ">
+        <marc:subfield code="a">United States.</marc:subfield>
+        <marc:subfield code="b">Dept. of State.</marc:subfield>
+        <marc:subfield code="b">Bureau of International Organization Affairs.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="760" ind1="0" ind2=" ">
+        <marc:subfield code="t">Department of State publication</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="760" ind1="0" ind2=" ">
+        <marc:subfield code="t">International organization and conference series</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="775" ind1="0" ind2=" ">
+        <marc:subfield code="t">Document edition</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="780" ind1="0" ind2="0">
+        <marc:subfield code="t">United States and the United Nations</marc:subfield>
+        <marc:subfield code="x">0272-6769</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="830" ind1=" " ind2="0">
+        <marc:subfield code="a">Department of State publication.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="830" ind1=" " ind2="0">
+        <marc:subfield code="a">Department of State publication.</marc:subfield>
+        <marc:subfield code="p">International organization and conference series.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Serial</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="939" ind1=" " ind2=" ">
+        <marc:subfield code="a">1948-</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)21292</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="130" ind1="0" ind2=" ">
+        <marc:subfield code="a">U.S. participation in the UN.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1="2" ind2="0">
+        <marc:subfield code="a">United Nations</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="967" ind1="2" ind2="0">
+        <marc:subfield code="z">United States.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

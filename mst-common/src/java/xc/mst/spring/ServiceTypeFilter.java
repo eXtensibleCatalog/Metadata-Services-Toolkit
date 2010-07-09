@@ -21,6 +21,7 @@ import org.springframework.core.type.filter.TypeFilter;
 
 import xc.mst.manager.BaseManager;
 import xc.mst.manager.BaseService;
+import xc.mst.services.MetadataService;
 import xc.mst.utils.MSTConfiguration;
 
 public class ServiceTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
@@ -53,7 +54,8 @@ public class ServiceTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 				return false;
 			}
 			Class c = getClassLoader().loadClass(className);
-			if (BaseService.class.isAssignableFrom(c) && !BaseManager.class.equals(c) && !BaseService.class.equals(c)) {
+			if (BaseService.class.isAssignableFrom(c) && !BaseManager.class.equals(c) 
+					&& !BaseService.class.equals(c) && !MetadataService.class.isAssignableFrom(c)) {
 				LOG.debug("c: "+c.getName());
 				return true;
 			} else if (serviceBeans.containsKey(className)) {

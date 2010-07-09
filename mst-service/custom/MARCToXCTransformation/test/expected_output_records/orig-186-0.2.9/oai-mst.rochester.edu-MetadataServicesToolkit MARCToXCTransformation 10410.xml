@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10410">
+		<dcterms:subject xsi:type="dcterms:LCC">BX4700.C567</dcterms:subject>
+		<dcterms:subject xsi:type="dcterms:DDC">271/.9</dcterms:subject>
+		<dcterms:subject xsi:type="dcterms:DDC">B</dcterms:subject>
+		<rdvocab:titleOfWork>Life of Christina of Markyate /</rdvocab:titleOfWork>
+		<xc:subject xsi:type="dcterms:LCSH">Christina, of Markyate, Saint, b. ca. 1096.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Christian women saints-England-Biography.</xc:subject>
+		<rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+		<xc:subject xsi:type="dcterms:LCSH">Christian women saints</xc:subject>
+		<xc:spacial xsi:type="dcterms:LCSH">England</xc:spacial>
+		<xc:type xsi:type="dcterms:LCSH">Biography.</xc:type></xc:entity>
+</xc:frbr>

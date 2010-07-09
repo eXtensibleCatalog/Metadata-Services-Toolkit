@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+
+	<marc:leader>00403cx  a22001213  4500</marc:leader>
+	<marc:controlfield tag="001">4713</marc:controlfield>
+	<marc:controlfield tag="003">NRU</marc:controlfield>
+	<marc:controlfield tag="004">2888</marc:controlfield>
+	<marc:controlfield tag="005">20000922132106.0</marc:controlfield>
+	<marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
+
+	<marc:datafield tag="014" ind1="1" ind2=" ">
+		<marc:subfield code="a">00051546</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="852" ind1="8" ind2=" ">
+		<marc:subfield code="b">MinerSer2</marc:subfield>
+		<marc:subfield code="h">Serial</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="866" ind1=" " ind2="0">
+		<marc:subfield code="a">v. 52 (1931)-v. 134, no. 3 (1971), v. 135 (1971)-v. 139, no. 1 (1973), v. 139, no. 3 (1973)-v. 222 (1994). Vol. 52, no, 2 (1931) bound with: Journal of morphology and physiology</marc:subfield>
+	</marc:datafield>
+
+</marc:record>

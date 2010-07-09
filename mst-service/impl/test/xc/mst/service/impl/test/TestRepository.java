@@ -3,6 +3,7 @@ package xc.mst.service.impl.test;
 import gnu.trove.TLongObjectHashMap;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,13 +14,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.input.DOMBuilder;
+import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
@@ -78,45 +78,51 @@ public class TestRepository extends BaseService implements Repository {
 	}
 	
 	public void beginBatch() {
+		LOG.debug("beginBatch");
 	}
 	
 	public void endBatch() {
-		Format format = Format.getPrettyFormat();
-		XMLOutputter xmlOutputter = new XMLOutputter(format);
-		File outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName);
-		if (!outFolder.exists()) {
-			outFolder.mkdir();
-		} else {
-			for (String prevOutFile : outFolder.list()) {
-				LOG.debug("deleting file: "+ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+prevOutFile);
-				new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+prevOutFile).delete();
+		if (!inputFilesIterator.hasNext()) {
+			LOG.debug("endBatch");
+			Format format = Format.getPrettyFormat();
+			format.setEncoding("UTF-8");
+			XMLOutputter xmlOutputter = new XMLOutputter(format);
+			File outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName);
+			if (!outFolder.exists()) {
+				outFolder.mkdir();
+			} else {
+				for (String prevOutFile : outFolder.list()) {
+					LOG.debug("deleting file: "+ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+prevOutFile);
+					new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+prevOutFile).delete();
+				}
 			}
-		}
-		for (Map.Entry<String, List<Record>> me : outputFiles.entrySet()) {
-			String fileName = me.getKey();
-			List<Record> records = me.getValue();
-			if (records != null) {
-				File outFile = null;
-				PrintWriter pw = null;
-				try {
-					outFile = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+fileName);
-					LOG.debug("writing outFile: "+outFile);
-					pw = new PrintWriter(outFile);
-					pw.println("<records xmlns=\"http://www.openarchives.org/OAI/2.0/\">");
-					for (Record r : records) {
-						LOG.debug("r.getService(): "+r.getService());
-						pw.println(xmlOutputter.outputString(getRecordService().createJDomElement(r, null)));
-					}
-					pw.println("</records>");
-				} catch (Throwable t) {
-					LOG.error("file failed: "+fileName);
-					LOG.error("", t);
-				} finally {
+			for (Map.Entry<String, List<Record>> me : outputFiles.entrySet()) {
+				String fileName = me.getKey();
+				List<Record> records = me.getValue();
+				if (records != null) {
+					File outFile = null;
+					PrintWriter pw = null;
 					try {
-						pw.close();
+						outFile = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+fileName);
+						LOG.debug("writing outFile: "+outFile);
+						pw = new PrintWriter(outFile, "UTF-8");
+						pw.println("<records xmlns=\"http://www.openarchives.org/OAI/2.0/\">");
+						for (Record r : records) {
+							LOG.debug("r.getService(): "+r.getService());
+							pw.println(xmlOutputter.outputString(getRecordService().createJDomElement(r, null)));
+						}
+						pw.println("</records>");
 					} catch (Throwable t) {
-						LOG.error("file close failed: "+fileName);
+						LOG.error("file failed: "+fileName);
 						LOG.error("", t);
+					} finally {
+						try {
+							LOG.debug("closing file: "+fileName);
+							pw.close();
+						} catch (Throwable t) {
+							LOG.error("file close failed: "+fileName);
+							LOG.error("", t);
+						}
 					}
 				}
 			}
@@ -160,10 +166,8 @@ public class TestRepository extends BaseService implements Repository {
 				this.currentFile = fileName;
 				File file2process = new File(INPUT_RECORDS_DIR+"/"+folderName+"/"+fileName);
 				LOG.debug("file2process: "+file2process);
-				
-				DocumentBuilder db = dbf.newDocumentBuilder();
-				DOMBuilder domBuilder = new DOMBuilder();
-				Document doc = domBuilder.build(db.parse(file2process));
+				SAXBuilder builder = new SAXBuilder();
+				Document doc = builder.build(new FileInputStream(file2process));
 				
 				Element records = doc.getRootElement();
 				for (Object recordObj : records.getChildren("record", doc.getRootElement().getNamespace())) {
@@ -200,33 +204,33 @@ public class TestRepository extends BaseService implements Repository {
 			r.getSuccessors().addAll(succs);
 		}
 	}
-	@Override
+
 	public List<Long> getPredecessorIds(Record r) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
+
 	public Provider getProvider() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
+
 	public Service getService() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
+
 	public void installOrUpdateIfNecessary(String previousVersion,
 			String currentVersion) {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
+
 	public void setProvider(Provider p) {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
+
 	public void setService(Service s) {
 		// TODO Auto-generated method stub
 		

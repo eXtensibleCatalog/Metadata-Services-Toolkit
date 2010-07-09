@@ -1,0 +1,116 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/9</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:9</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>active</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>00947nam a2200253 a 45 A</marc:leader>
+      <marc:controlfield tag="001">1120580</marc:controlfield>
+      <marc:controlfield tag="008">820604s1976    dcu      b    000 0 eng d</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)8492230</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="9">01068494</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="a">IAL</marc:subfield>
+        <marc:subfield code="c">IAL</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="041" ind1="1" ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="h">lat</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="049" ind1=" " ind2=" ">
+        <marc:subfield code="a">VQEX</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="050" ind1=" " ind2=" ">
+        <marc:subfield code="a">BX3703</marc:subfield>
+        <marc:subfield code="b">.J43</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="099" ind1=" " ind2=" ">
+        <marc:subfield code="a">BX3703 .J43</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="110" ind1="2" ind2=" ">
+        <marc:subfield code="a">Jesuits.</marc:subfield>
+        <marc:subfield code="4">aut</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="240" ind1="1" ind2="0">
+        <marc:subfield code="a">Decreta congregationum.</marc:subfield>
+        <marc:subfield code="l">English</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="1" ind2="0">
+        <marc:subfield code="a">Statutes on poverty and related matters :</marc:subfield>
+        <marc:subfield code="b">revised by mandate of the 32nd General Congregation and promulgated by Very Reverend Father General Pedro Arrupe on September 8, 1976, from the generalate of the Society of Jesus, Rome.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="250" ind1=" " ind2=" ">
+        <marc:subfield code="a">[New ed.]</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="a">Washington :</marc:subfield>
+        <marc:subfield code="b">The Jesuit Conference ;</marc:subfield>
+        <marc:subfield code="a">St. Louis, Mo. :</marc:subfield>
+        <marc:subfield code="b">The American Assistancy Seminar, St. Louis University,</marc:subfield>
+        <marc:subfield code="c">1976.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">44 p. ;</marc:subfield>
+        <marc:subfield code="c">20 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="504" ind1=" " ind2=" ">
+        <marc:subfield code="a">Includes bibliographical references.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Poverty, Vow of.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="910" ind1=" " ind2=" ">
+        <marc:subfield code="a">950805</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="966" ind1=" " ind2=" ">
+        <marc:subfield code="l">GenStk</marc:subfield>
+        <marc:subfield code="m">SBIMTH</marc:subfield>
+        <marc:subfield code="s">BX3703 .J43</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)1120580</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

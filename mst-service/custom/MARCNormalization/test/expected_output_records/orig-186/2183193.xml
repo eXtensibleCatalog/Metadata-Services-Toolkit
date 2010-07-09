@@ -1,0 +1,163 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/69</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:69</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>active</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01813cem a2200421 a 4500</marc:leader>
+      <marc:controlfield tag="001">2183193</marc:controlfield>
+      <marc:controlfield tag="005">20030517174524.0</marc:controlfield>
+      <marc:controlfield tag="007">aj-aanzn</marc:controlfield>
+      <marc:controlfield tag="008">880311s1988    vauag     a  f  1   eng d</marc:controlfield>
+      <marc:datafield tag="034" ind1="1" ind2=" ">
+        <marc:subfield code="a">a</marc:subfield>
+        <marc:subfield code="b">500000</marc:subfield>
+        <marc:subfield code="d">W1130000</marc:subfield>
+        <marc:subfield code="e">W1070000</marc:subfield>
+        <marc:subfield code="f">N0410000</marc:subfield>
+        <marc:subfield code="g">N0380000</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)17639275</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">2183193</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="a">GIS</marc:subfield>
+        <marc:subfield code="c">GIS</marc:subfield>
+        <marc:subfield code="d">GPO</marc:subfield>
+        <marc:subfield code="d">MvI-cor</marc:subfield>
+        <marc:subfield code="d">MvI</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="052" ind1=" " ind2=" ">
+        <marc:subfield code="a">4310</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="052" ind1=" " ind2=" ">
+        <marc:subfield code="a">4340</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="074" ind1=" " ind2=" ">
+        <marc:subfield code="a">619-G-11</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="086" ind1="0" ind2=" ">
+        <marc:subfield code="a">I 19.113:MF-2008-B</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="090" ind1=" " ind2=" ">
+        <marc:subfield code="a">G3700 svar</marc:subfield>
+        <marc:subfield code="b">.G453 MF-2008-B</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="099" ind1=" " ind2=" ">
+        <marc:subfield code="a">QE75 .M222mf no. MF-2008-B</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="110" ind1="2" ind2=" ">
+        <marc:subfield code="a">Geological Survey (U.S.)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="1" ind2="0">
+        <marc:subfield code="a">Surface vitrinite-reflectance map of the Uinta, Piceance, and Eagle Basins area, Utah and Colorado /</marc:subfield>
+        <marc:subfield code="c">Department of the Interior, U.S. Geological Survey ; by Vito F. Nuccio and Ronald C. Johnson ; prepared in cooperation with the Utah Geological and Mineral Survey and the Colorado Geological Survey.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="255" ind1=" " ind2=" ">
+        <marc:subfield code="a">Scale 1:500,000</marc:subfield>
+        <marc:subfield code="c">(W 113⁰--W 107⁰/N 41⁰--N 38⁰).</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="a">Reston, Va. :</marc:subfield>
+        <marc:subfield code="b">The Survey ;</marc:subfield>
+        <marc:subfield code="a">Denver, CO :</marc:subfield>
+        <marc:subfield code="b">For sale by Branch of Distribution,</marc:subfield>
+        <marc:subfield code="c">1988.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">1 map ;</marc:subfield>
+        <marc:subfield code="c">70 x 120 cm., on sheet 86 x 127 cm., folded in envelope 30 x 24 cm. +</marc:subfield>
+        <marc:subfield code="e">1 pamphlet (21 p. ; 28 cm.)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="490" ind1="1" ind2=" ">
+        <marc:subfield code="a">Miscellaneous field studies ;</marc:subfield>
+        <marc:subfield code="v">map MF-2008-B</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="490" ind1="1" ind2=" ">
+        <marc:subfield code="a">Folio of the Uinta and Piceance basin area</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Relief shown by contours and spot heights.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Includes index map.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Pamphlet includes bibliography, p. 2.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Thermal prospecting.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Nuccio, Vito F.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Johnson, Ronald Carl,</marc:subfield>
+        <marc:subfield code="d">1950-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="710" ind1="2" ind2=" ">
+        <marc:subfield code="a">Utah Geological and Mineral Survey.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="710" ind1="2" ind2=" ">
+        <marc:subfield code="a">Colorado Geological Survey.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="830" ind1=" " ind2="0">
+        <marc:subfield code="a">Miscellaneous field studies ;</marc:subfield>
+        <marc:subfield code="v">map MF-2008-B.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="830" ind1=" " ind2="0">
+        <marc:subfield code="a">Folio of the Uinta and Piceance basin area.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="949" ind1=" " ind2=" ">
+        <marc:subfield code="l">CarlMapCs</marc:subfield>
+        <marc:subfield code="m">Map</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Cartographic material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Image</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Map</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="934" ind1=" " ind2=" ">
+        <marc:subfield code="a">Map</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)2183193</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="240" ind1="0" ind2="0">
+        <marc:subfield code="a">Surface vitrinite-reflectance map of the Uinta, Piceance, and Eagle Basins area, Utah and Colorado /</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

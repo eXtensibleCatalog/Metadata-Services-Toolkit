@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10311">
+		<xc:titleOfExpression>Illegal alien resident population</xc:titleOfExpression>
+		<dcterms:version>Updated Dec. 2001.</dcterms:version>
+		<dcterms:requires>System requirements: Adobe Acrobat Reader.</dcterms:requires>
+		<dcterms:requires>Mode of access: Internet from the INS web site. Address as of  3/14/02:http://www.ins.gov/graphics/aboutins/statistics/illegalalien/illegal.pdf; current access is available via PURL.</dcterms:requires>
+		<dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<xc:contributor>United States. Immigration and Naturalization Service.</xc:contributor>
+		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10310</xc:workExpressed></xc:entity>
+</xc:frbr>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10112">
+		<xc:titleOfExpression>Journal of Seventeenth-Century music</xc:titleOfExpression>
+		<dcterms:requires>Mode of access: World Wide Web.</dcterms:requires>
+		<dcterms:requires>System requirements for sound files: Sun audio files (also known as "basic" audio) using mu-law data format. Files are monaural and can be played on most PC, Mac, or UNIX systems with audio hardware and software. All musical examples are digitized at 44,100 samples/second (standard for commercial CD recording). Spoken examples are digitized at 8,000 samples/second. Size of audio files (in KB or MB) indicated parenthetically in the text.</dcterms:requires>
+		<dcterms:requires>System requirements for graphic files: GIF graphical image format representing musical examples, fascimiles of original documents and other visual materials.</dcterms:requires>
+		<dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<xc:contributor>Society for Seventeenth-Century Music.</xc:contributor>
+		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10111</xc:workExpressed></xc:entity>
+</xc:frbr>
