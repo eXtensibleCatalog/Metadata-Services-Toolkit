@@ -145,6 +145,9 @@
       <marc:datafield tag="240" ind1="0" ind2="0">
         <marc:subfield code="a">Musikgeschichtliche.</marc:subfield>
       </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Musikgeschichtliche.</marc:subfield>
+      </marc:datafield>
     </marc:record>
   </metadata>
 </record>

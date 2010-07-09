@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/162</identifier>
+    <identifier>oai:mst.rochester.edu:marcnormalization/164</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:164</predecessor>
@@ -123,10 +123,6 @@
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="2">
         <marc:subfield code="a">Pathology</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="2">
-        <marc:subfield code="x">periodicals.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="2">

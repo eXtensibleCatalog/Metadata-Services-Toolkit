@@ -171,14 +171,6 @@
         <marc:subfield code="x">Romances</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="x">Romances</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Adaptations.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">
         <marc:subfield code="v">Adaptations.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>

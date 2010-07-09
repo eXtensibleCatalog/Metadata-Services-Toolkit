@@ -111,6 +111,9 @@
         <marc:subfield code="v">Scores.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Nutcracker suite :</marc:subfield>
+      </marc:datafield>
     </marc:record>
   </metadata>
 </record>

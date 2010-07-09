@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/166</identifier>
+    <identifier>oai:mst.rochester.edu:marcnormalization/168</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:168</predecessor>
@@ -137,6 +137,9 @@
       <marc:datafield tag="967" ind1=" " ind2="0">
         <marc:subfield code="a">France</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Tale of two cities.</marc:subfield>
       </marc:datafield>
     </marc:record>
   </metadata>

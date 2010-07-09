@@ -264,10 +264,6 @@
         <marc:subfield code="a">Romanticism</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="a">English literature</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="6">
         <marc:subfield code="a">Littérature anglaise</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
@@ -276,20 +272,8 @@
         <marc:subfield code="a">Romantisme</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="6">
-        <marc:subfield code="a">Littérature anglaise</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="0">
         <marc:subfield code="x">History and criticism.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="x">History and criticism.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="6">
-        <marc:subfield code="x">Histoire et critique.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="6">

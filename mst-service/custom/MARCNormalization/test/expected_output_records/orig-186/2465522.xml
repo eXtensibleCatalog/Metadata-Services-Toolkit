@@ -107,14 +107,6 @@
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(NRU)2465522</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
-        <marc:subfield code="a">Sound</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
-        <marc:subfield code="a">Sound recording</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="934" ind1=" " ind2=" ">
         <marc:subfield code="a">Sound disk</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>

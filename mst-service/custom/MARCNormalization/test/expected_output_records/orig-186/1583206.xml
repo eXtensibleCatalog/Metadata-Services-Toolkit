@@ -98,14 +98,6 @@
         <marc:subfield code="a">Monograph/Item</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
-        <marc:subfield code="a">Sound</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
-        <marc:subfield code="a">Sound recording</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="934" ind1=" " ind2=" ">
         <marc:subfield code="a">Sound disk</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
@@ -132,6 +124,9 @@
       <marc:datafield tag="967" ind1=" " ind2="0">
         <marc:subfield code="z">Trinidad and Tobago.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Real calypso.</marc:subfield>
       </marc:datafield>
     </marc:record>
   </metadata>

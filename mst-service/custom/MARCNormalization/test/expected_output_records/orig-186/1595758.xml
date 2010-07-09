@@ -203,22 +203,6 @@
         <marc:subfield code="a">Africa</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="967" ind1=" " ind2="0">
-        <marc:subfield code="a">Africa</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="967" ind1=" " ind2="0">
-        <marc:subfield code="a">Africa</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Periodicals.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Periodicals.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">
         <marc:subfield code="v">Periodicals.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>

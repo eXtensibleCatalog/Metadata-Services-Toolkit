@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/139</identifier>
+    <identifier>oai:mst.rochester.edu:marcnormalization/141</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:141</predecessor>
@@ -133,6 +133,9 @@
       <marc:datafield tag="963" ind1=" " ind2="0">
         <marc:subfield code="y">18th century</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Poetry of the Gentleman's magazine:</marc:subfield>
       </marc:datafield>
     </marc:record>
   </metadata>

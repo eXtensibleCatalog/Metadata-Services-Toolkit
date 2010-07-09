@@ -164,15 +164,7 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="a">Ceramic materials</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
         <marc:subfield code="x">Technological innovations</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Periodicals.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">

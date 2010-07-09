@@ -309,6 +309,9 @@
         <marc:subfield code="x">Théorie, etc.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Secular Scripture and other writings on critical theory, 1976-1991 /</marc:subfield>
+      </marc:datafield>
     </marc:record>
   </metadata>
 </record>

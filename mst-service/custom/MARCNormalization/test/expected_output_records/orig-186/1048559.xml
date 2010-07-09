@@ -159,14 +159,6 @@
         <marc:subfield code="a">Monograph/Item</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
-        <marc:subfield code="a">Sound</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
-        <marc:subfield code="a">Sound recording</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="934" ind1=" " ind2=" ">
         <marc:subfield code="a">Sound disk</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
@@ -180,6 +172,9 @@
         <marc:subfield code="d">1881-1945.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">1\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Firebird /</marc:subfield>
       </marc:datafield>
     </marc:record>
   </metadata>

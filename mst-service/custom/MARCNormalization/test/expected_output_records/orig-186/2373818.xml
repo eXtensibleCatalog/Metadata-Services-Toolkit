@@ -281,10 +281,6 @@
         <marc:subfield code="x">history.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="2">
-        <marc:subfield code="x">history.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
     </marc:record>
   </metadata>
 </record>

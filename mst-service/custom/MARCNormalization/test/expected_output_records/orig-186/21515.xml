@@ -50,9 +50,6 @@
         <marc:subfield code="a">AU@</marc:subfield>
         <marc:subfield code="b">000001921621</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">(OCoLC)4216235</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="037" ind1=" " ind2=" ">
         <marc:subfield code="b">Indiana Theory Review, Room 041 Sycamore Hall, Indiana University School of Music, Bloomington, IN 47401</marc:subfield>
       </marc:datafield>

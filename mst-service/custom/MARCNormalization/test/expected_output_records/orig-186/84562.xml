@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/168</identifier>
+    <identifier>oai:mst.rochester.edu:marcnormalization/170</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:170</predecessor>
@@ -139,16 +139,15 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="a">History</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
         <marc:subfield code="x">Periodization.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="0">
         <marc:subfield code="x">Philosophy.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Politics of time :</marc:subfield>
       </marc:datafield>
     </marc:record>
   </metadata>

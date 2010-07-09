@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/124</identifier>
+    <identifier>oai:mst.rochester.edu:marcnormalization/126</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:126</predecessor>
@@ -24,9 +24,6 @@
         <marc:subfield code="d">OCL</marc:subfield>
         <marc:subfield code="d">OCLCQ</marc:subfield>
         <marc:subfield code="d">RRR</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">(OCoLC)33026495</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="041" ind1="1" ind2=" ">
         <marc:subfield code="a">jpn</marc:subfield>
@@ -135,14 +132,6 @@
       </marc:datafield>
       <marc:datafield tag="967" ind1=" " ind2="0">
         <marc:subfield code="a">United States</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Fiction.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Fiction.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">

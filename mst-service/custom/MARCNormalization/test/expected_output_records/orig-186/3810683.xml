@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/129</identifier>
+    <identifier>oai:mst.rochester.edu:marcnormalization/131</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:131</predecessor>
@@ -181,10 +181,6 @@
       </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">
         <marc:subfield code="v">Maps.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Maps, Topographic.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">

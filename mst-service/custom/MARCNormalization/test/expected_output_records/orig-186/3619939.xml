@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/118</identifier>
+    <identifier>oai:mst.rochester.edu:marcnormalization/119</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:119</predecessor>
@@ -41,9 +41,6 @@
       <marc:datafield tag="029" ind1="1" ind2=" ">
         <marc:subfield code="a">NZ1</marc:subfield>
         <marc:subfield code="b">10846983</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">(OCoLC)146449285</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="049" ind1=" " ind2=" ">
         <marc:subfield code="a">RRRR</marc:subfield>
@@ -181,20 +178,12 @@
         <marc:subfield code="x">Civilization</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="x">Civilization</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="967" ind1=" " ind2="0">
         <marc:subfield code="a">Russia (Federation)</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="967" ind1=" " ind2="0">
         <marc:subfield code="a">Soviet Union</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Encyclopedias.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">

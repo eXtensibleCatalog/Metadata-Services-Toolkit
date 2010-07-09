@@ -143,6 +143,9 @@
         <marc:subfield code="a">German</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Schlichter Sang</marc:subfield>
+      </marc:datafield>
     </marc:record>
   </metadata>
 </record>

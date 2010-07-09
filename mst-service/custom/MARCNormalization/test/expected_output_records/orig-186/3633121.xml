@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/119</identifier>
+    <identifier>oai:mst.rochester.edu:marcnormalization/120</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:120</predecessor>
@@ -30,9 +30,6 @@
         <marc:subfield code="d">VPI</marc:subfield>
         <marc:subfield code="d">OCLCQ</marc:subfield>
         <marc:subfield code="d">BTCTA</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">(OCoLC)45453899</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="037" ind1=" " ind2=" ">
         <marc:subfield code="b">Accessible Archives, Inc., 697 Sugartown Road, Malvern, PA 19355</marc:subfield>
@@ -167,10 +164,6 @@
       </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">
         <marc:subfield code="v">Sources</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Databases.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">

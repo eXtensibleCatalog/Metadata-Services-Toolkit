@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/138</identifier>
+    <identifier>oai:mst.rochester.edu:marcnormalization/140</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:140</predecessor>
@@ -147,10 +147,6 @@
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="0">
         <marc:subfield code="a">Lyric poetry</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="x">History and criticism.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="0">

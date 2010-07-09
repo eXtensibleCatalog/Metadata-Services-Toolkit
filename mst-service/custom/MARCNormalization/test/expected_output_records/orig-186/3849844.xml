@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/131</identifier>
+    <identifier>oai:mst.rochester.edu:marcnormalization/133</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:133</predecessor>
@@ -215,18 +215,6 @@
       </marc:datafield>
       <marc:datafield tag="967" ind1=" " ind2="1">
         <marc:subfield code="a">Hiroshima-shi (Japan)</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Juvenile literature.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1="1" ind2="0">
-        <marc:subfield code="v">Juvenile literature.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Juvenile literature.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">

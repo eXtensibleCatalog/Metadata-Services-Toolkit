@@ -26,9 +26,6 @@
         <marc:subfield code="a">(OCoLC)71517906</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">(OCoLC)71517906</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">3494560</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="040" ind1=" " ind2=" ">

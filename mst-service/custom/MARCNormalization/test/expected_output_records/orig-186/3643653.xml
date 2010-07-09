@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/120</identifier>
+    <identifier>oai:mst.rochester.edu:marcnormalization/121</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:121</predecessor>
@@ -30,9 +30,6 @@
       <marc:datafield tag="028" ind1="3" ind2="0">
         <marc:subfield code="a">7185</marc:subfield>
         <marc:subfield code="b">Peters</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">(OCoLC)8441944</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="090" ind1=" " ind2=" ">
         <marc:subfield code="a">M25.G687</marc:subfield>
@@ -95,6 +92,9 @@
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(NRU)3643653</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Bananier /</marc:subfield>
       </marc:datafield>
     </marc:record>
   </metadata>

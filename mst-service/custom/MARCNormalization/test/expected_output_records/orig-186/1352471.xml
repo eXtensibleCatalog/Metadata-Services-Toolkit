@@ -175,10 +175,6 @@
         <marc:subfield code="x">Rural conditions</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="x">Periodicals.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="967" ind1=" " ind2="0">
         <marc:subfield code="a">United States</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>

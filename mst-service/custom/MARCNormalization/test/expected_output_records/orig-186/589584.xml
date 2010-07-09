@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/158</identifier>
+    <identifier>oai:mst.rochester.edu:marcnormalization/160</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:160</predecessor>
@@ -137,6 +137,9 @@
       <marc:datafield tag="965" ind1=" " ind2="0">
         <marc:subfield code="x">Indexes.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Rare union of literature with music :</marc:subfield>
       </marc:datafield>
     </marc:record>
   </metadata>

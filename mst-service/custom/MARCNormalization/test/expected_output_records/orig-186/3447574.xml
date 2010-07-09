@@ -47,9 +47,6 @@
         <marc:subfield code="a">YDXCP</marc:subfield>
         <marc:subfield code="b">2212069</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">(OCoLC)62679945</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="043" ind1=" " ind2=" ">
         <marc:subfield code="a">n-us---</marc:subfield>
       </marc:datafield>
@@ -238,22 +235,6 @@
       </marc:datafield>
       <marc:datafield tag="967" ind1=" " ind2="0">
         <marc:subfield code="a">United States</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="967" ind1=" " ind2="0">
-        <marc:subfield code="z">United States</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Case studies.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Case studies.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Case studies.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">
