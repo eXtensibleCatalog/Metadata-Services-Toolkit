@@ -1,36 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
-<record>
-  <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/156</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:156</predecessor>
-    </predecessors>
-    <setSpec>MARCXML Holding Records</setSpec>
-    <status>active</status>
-  </header>
-  <metadata>
-    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-      <marc:leader>00270cx  a22001213  4500</marc:leader>
-      <marc:controlfield tag="001">560427</marc:controlfield>
-      <marc:controlfield tag="003">NRU</marc:controlfield>
-      <marc:controlfield tag="004">499882</marc:controlfield>
-      <marc:controlfield tag="005">20081014130004.0</marc:controlfield>
-      <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
-      <marc:datafield tag="014" ind1=" " ind2=" ">
-        <marc:subfield code="a">00420779</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="852" ind1="0" ind2=" ">
-        <marc:subfield code="b">SibStack</marc:subfield>
-        <marc:subfield code="h">ML410</marc:subfield>
-        <marc:subfield code="i">.D28 I48</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="876" ind1=" " ind2=" ">
-        <marc:subfield code="t">1</marc:subfield>
-        <marc:subfield code="j">lost 20080818</marc:subfield>
-        <marc:subfield code="r">39087004973642</marc:subfield>
-      </marc:datafield>
-    </marc:record>
-  </metadata>
-</record>
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:marcnormalization/156</identifier>
+      <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10155.xml</oldFileName>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00270cx  a22001213  4500</marc:leader>
+        <marc:controlfield tag="001">560427</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="004">499882</marc:controlfield>
+        <marc:controlfield tag="005">20081014130004.0</marc:controlfield>
+        <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
+        <marc:datafield tag="014" ind1=" " ind2=" ">
+          <marc:subfield code="a">00420779</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="852" ind1="0" ind2=" ">
+          <marc:subfield code="b">SibStack</marc:subfield>
+          <marc:subfield code="h">ML410</marc:subfield>
+          <marc:subfield code="i">.D28 I48</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="876" ind1=" " ind2=" ">
+          <marc:subfield code="t">1</marc:subfield>
+          <marc:subfield code="j">lost 20080818</marc:subfield>
+          <marc:subfield code="r">39087004973642</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
 </records>

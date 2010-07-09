@@ -1,40 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
-<record>
-  <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/54</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:54</predecessor>
-    </predecessors>
-    <setSpec>MARCXML Holding Records</setSpec>
-    <status>active</status>
-  </header>
-  <metadata>
-    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-      <marc:leader>00359nx  a22001694  4500</marc:leader>
-      <marc:controlfield tag="001">1724781</marc:controlfield>
-      <marc:controlfield tag="003">NRU</marc:controlfield>
-      <marc:controlfield tag="004">1191502</marc:controlfield>
-      <marc:controlfield tag="004">1191506</marc:controlfield>
-      <marc:controlfield tag="004">1191508</marc:controlfield>
-      <marc:controlfield tag="004">1191513</marc:controlfield>
-      <marc:controlfield tag="005">19980210163402.0</marc:controlfield>
-      <marc:controlfield tag="008">9802104u    8   1001uu   0901128</marc:controlfield>
-      <marc:datafield tag="014" ind1="1" ind2=" ">
-        <marc:subfield code="a">1191513</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="014" ind1="1" ind2=" ">
-        <marc:subfield code="a">1191506</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="014" ind1="1" ind2=" ">
-        <marc:subfield code="a">1191508</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="852" ind1="0" ind2=" ">
-        <marc:subfield code="b">SibStack</marc:subfield>
-        <marc:subfield code="h">M1620 .G84n</marc:subfield>
-        <marc:subfield code="z">Copy 2. Preservation photocopy.</marc:subfield>
-      </marc:datafield>
-    </marc:record>
-  </metadata>
-</record>
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:marcnormalization/54</identifier>
+      <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10053.xml</oldFileName>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00359nx  a22001694  4500</marc:leader>
+        <marc:controlfield tag="001">1724781</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="004">1191502</marc:controlfield>
+        <marc:controlfield tag="004">1191506</marc:controlfield>
+        <marc:controlfield tag="004">1191508</marc:controlfield>
+        <marc:controlfield tag="004">1191513</marc:controlfield>
+        <marc:controlfield tag="005">19980210163402.0</marc:controlfield>
+        <marc:controlfield tag="008">9802104u    8   1001uu   0901128</marc:controlfield>
+        <marc:datafield tag="014" ind1="1" ind2=" ">
+          <marc:subfield code="a">1191513</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="014" ind1="1" ind2=" ">
+          <marc:subfield code="a">1191506</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="014" ind1="1" ind2=" ">
+          <marc:subfield code="a">1191508</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="852" ind1="0" ind2=" ">
+          <marc:subfield code="b">SibStack</marc:subfield>
+          <marc:subfield code="h">M1620 .G84n</marc:subfield>
+          <marc:subfield code="z">Copy 2. Preservation photocopy.</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
 </records>

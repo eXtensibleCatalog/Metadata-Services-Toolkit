@@ -1,212 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
-<record>
-  <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/65</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:65</predecessor>
-    </predecessors>
-    <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>active</status>
-  </header>
-  <metadata>
-    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-      <marc:leader>02828nas a22005051a 4500</marc:leader>
-      <marc:controlfield tag="001">1975731</marc:controlfield>
-      <marc:controlfield tag="005">20010207163510.0</marc:controlfield>
-      <marc:controlfield tag="007">he bmb020baca</marc:controlfield>
-      <marc:controlfield tag="008">911021c19729999mduar   b    f0    0eng d</marc:controlfield>
-      <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">sn 87042035</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">(OCoLC)6018330</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">gp 87008428</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">cis6900009</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="040" ind1=" " ind2=" ">
-        <marc:subfield code="a">GPO</marc:subfield>
-        <marc:subfield code="c">GPO</marc:subfield>
-        <marc:subfield code="d">m.c.</marc:subfield>
-        <marc:subfield code="d">GPO</marc:subfield>
-        <marc:subfield code="d">HUL</marc:subfield>
-        <marc:subfield code="d">GPO</marc:subfield>
-        <marc:subfield code="d">MvI-ocs</marc:subfield>
-        <marc:subfield code="d">MvI-ocs</marc:subfield>
-        <marc:subfield code="d">Congressional Information Service</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="042" ind1=" " ind2=" ">
-        <marc:subfield code="a">lcd</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="043" ind1=" " ind2=" ">
-        <marc:subfield code="a">n-us---</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="074" ind1=" " ind2=" ">
-        <marc:subfield code="a">996-A, 996-B (microfiche)</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="086" ind1="0" ind2=" ">
-        <marc:subfield code="a">X</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="086" ind1="0" ind2=" ">
-        <marc:subfield code="a">Y 1.1/7:</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="099" ind1=" " ind2=" ">
-        <marc:subfield code="a">CIS Fiche: Ask at Documents Desk</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="110" ind1="1" ind2=" ">
-        <marc:subfield code="a">United States.</marc:subfield>
-        <marc:subfield code="b">Office of Management and Budget.</marc:subfield>
-        <marc:subfield code="4">aut</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="240" ind1="1" ind2="0">
-        <marc:subfield code="a">Budget of the United States Government (Document edition)</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="245" ind1="1" ind2="0">
-        <marc:subfield code="a">Budget of the United States Government</marc:subfield>
-        <marc:subfield code="h">[microform].</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="246" ind1="1" ind2="8">
-        <marc:subfield code="a">Budget of the U.S. Government</marc:subfield>
-        <marc:subfield code="f">1983</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="250" ind1=" " ind2=" ">
-        <marc:subfield code="a">[Doc. ed.]</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="260" ind1=" " ind2=" ">
-        <marc:subfield code="a">Washington, D.C. :</marc:subfield>
-        <marc:subfield code="b">Executive Office of the President, Office of Management and Budget,</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="300" ind1=" " ind2=" ">
-        <marc:subfield code="a">v. :</marc:subfield>
-        <marc:subfield code="b">ill. ;</marc:subfield>
-        <marc:subfield code="c">24 cm.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="310" ind1=" " ind2=" ">
-        <marc:subfield code="a">Annual</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="362" ind1="1" ind2=" ">
-        <marc:subfield code="a">Began with 1971/72.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="490" ind1="1" ind2=" ">
-        <marc:subfield code="a">House document</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="500" ind1=" " ind2=" ">
-        <marc:subfield code="a">CIS Microfiche Accession Numbers: CIS 97 H180-4 (v.1), CIS 97 H180-5 (v.2), CIS 97 H180-6 (v.1), CIS 97 H180-7 (v.1), CIS 96 H180-7 (v.1), CIS 96 H180-8 (v.2), CIS 96 H180-10 (v.4), CIS 96 H180-9 (v.3), CIS 96 H180-11 (v.5), CIS 96 H940-1, CIS 95 H180-7, CIS 94 H180-11, CIS 93 H180-22, CIS 92 H180-3, CIS 91 H180-1, CIS 90 H180-1, CIS 89 H180-1, CIS 88 H180-4, CIS 87 H180-1, CIS 87 H180-3, CIS 86 H180-7, CIS 85 H180-10, CIS 84 H180-1, CIS 83 H180-1, CIS 82 H180-1, CIS 81 H180-1, CIS 80 H180-2, CIS 79 H180-12, CIS 78 H180-3, CIS 77 H180-10, CIS 76 H180-6, CIS 75 H180-23, CIS 74 H180-3, CIS 73 H180-1, CIS 72 H920-8, CIS 71 H180-2</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="500" ind1=" " ind2=" ">
-        <marc:subfield code="a">Title varies slightly.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="500" ind1=" " ind2=" ">
-        <marc:subfield code="a">Information incorrect in publication as to sale by Supt. of Docs. Only dept. ed. for sale.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="500" ind1=" " ind2=" ">
-        <marc:subfield code="a">Description based on: Fiscal year 1982.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="500" ind1=" " ind2=" ">
-        <marc:subfield code="a">Reuse of record except for individual research requires license from Congressional Information Service, Inc.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="510" ind1="1" ind2=" ">
-        <marc:subfield code="a">CIS Index</marc:subfield>
-        <marc:subfield code="x">0007-8514</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="515" ind1=" " ind2=" ">
-        <marc:subfield code="a">Report covers fiscal year.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="525" ind1=" " ind2=" ">
-        <marc:subfield code="a">Supplements accompany some issues.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="530" ind1=" " ind2=" ">
-        <marc:subfield code="a">Vols. for &lt;1984-&gt; distributed to some depository libraries in microfiche.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="533" ind1=" " ind2=" ">
-        <marc:subfield code="a">Microfiche.</marc:subfield>
-        <marc:subfield code="b">[Bethesda, Md.] :</marc:subfield>
-        <marc:subfield code="c">Congressional Information Service,</marc:subfield>
-        <marc:subfield code="d">1971-</marc:subfield>
-        <marc:subfield code="e">11 X 15 cm.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="650" ind1=" " ind2="0">
-        <marc:subfield code="a">Budget</marc:subfield>
-        <marc:subfield code="z">United States</marc:subfield>
-        <marc:subfield code="x">Periodicals.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="775" ind1="0" ind2=" ">
-        <marc:subfield code="a">United States. Office of Management and Budget.</marc:subfield>
-        <marc:subfield code="t">Budget of the United States Government (Dept. ed.)</marc:subfield>
-        <marc:subfield code="x">0163-2000</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="780" ind1="0" ind2="0">
-        <marc:subfield code="a">United States. Bureau of the Budget.</marc:subfield>
-        <marc:subfield code="t">Budget of the United States Government</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="787" ind1="0" ind2=" ">
-        <marc:subfield code="a">United States. Office of Management and Budget.</marc:subfield>
-        <marc:subfield code="t">Budget of the United States Government (Doc. ed.). Appendix</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="830" ind1=" " ind2="0">
-        <marc:subfield code="a">House document (United States. Congress. House)</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
-        <marc:subfield code="a">Text</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
-        <marc:subfield code="a">Language material</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
-        <marc:subfield code="a">Text</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="935" ind1=" " ind2=" ">
-        <marc:subfield code="a">Serial</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
-        <marc:subfield code="a">Microform</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="934" ind1=" " ind2=" ">
-        <marc:subfield code="a">Microfiche</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="937" ind1=" " ind2=" ">
-        <marc:subfield code="a">Non-Fiction</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="939" ind1=" " ind2=" ">
-        <marc:subfield code="a">1972-</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="941" ind1=" " ind2=" ">
-        <marc:subfield code="a">eng</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="943" ind1=" " ind2=" ">
-        <marc:subfield code="a">English</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:controlfield tag="003">NRU</marc:controlfield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">(NRU)1975731</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="a">Budget</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="x">Periodicals.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="967" ind1=" " ind2="0">
-        <marc:subfield code="z">United States</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-    </marc:record>
-  </metadata>
-</record>
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:marcnormalization/65</identifier>
+      <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10064.xml</oldFileName>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>02828nas a22005051a 4500</marc:leader>
+        <marc:controlfield tag="001">1975731</marc:controlfield>
+        <marc:controlfield tag="005">20010207163510.0</marc:controlfield>
+        <marc:controlfield tag="007">he bmb020baca</marc:controlfield>
+        <marc:controlfield tag="008">911021c19729999mduar   b    f0    0eng d</marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">sn 87042035</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)6018330</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">gp 87008428</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">cis6900009</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">GPO</marc:subfield>
+          <marc:subfield code="c">GPO</marc:subfield>
+          <marc:subfield code="d">m.c.</marc:subfield>
+          <marc:subfield code="d">GPO</marc:subfield>
+          <marc:subfield code="d">HUL</marc:subfield>
+          <marc:subfield code="d">GPO</marc:subfield>
+          <marc:subfield code="d">MvI-ocs</marc:subfield>
+          <marc:subfield code="d">MvI-ocs</marc:subfield>
+          <marc:subfield code="d">Congressional Information Service</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="042" ind1=" " ind2=" ">
+          <marc:subfield code="a">lcd</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="043" ind1=" " ind2=" ">
+          <marc:subfield code="a">n-us---</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="074" ind1=" " ind2=" ">
+          <marc:subfield code="a">996-A, 996-B (microfiche)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="086" ind1="0" ind2=" ">
+          <marc:subfield code="a">X</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="086" ind1="0" ind2=" ">
+          <marc:subfield code="a">Y 1.1/7:</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">CIS Fiche: Ask at Documents Desk</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="110" ind1="1" ind2=" ">
+          <marc:subfield code="a">United States.</marc:subfield>
+          <marc:subfield code="b">Office of Management and Budget.</marc:subfield>
+          <marc:subfield code="4">aut</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="1" ind2="0">
+          <marc:subfield code="a">Budget of the United States Government (Document edition)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Budget of the United States Government</marc:subfield>
+          <marc:subfield code="h">[microform].</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="8">
+          <marc:subfield code="a">Budget of the U.S. Government</marc:subfield>
+          <marc:subfield code="f">1983</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="250" ind1=" " ind2=" ">
+          <marc:subfield code="a">[Doc. ed.]</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Washington, D.C. :</marc:subfield>
+          <marc:subfield code="b">Executive Office of the President, Office of Management and Budget,</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">v. :</marc:subfield>
+          <marc:subfield code="b">ill. ;</marc:subfield>
+          <marc:subfield code="c">24 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="310" ind1=" " ind2=" ">
+          <marc:subfield code="a">Annual</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="362" ind1="1" ind2=" ">
+          <marc:subfield code="a">Began with 1971/72.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="490" ind1="1" ind2=" ">
+          <marc:subfield code="a">House document</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">CIS Microfiche Accession Numbers: CIS 97 H180-4 (v.1), CIS 97 H180-5 (v.2), CIS 97 H180-6 (v.1), CIS 97 H180-7 (v.1), CIS 96 H180-7 (v.1), CIS 96 H180-8 (v.2), CIS 96 H180-10 (v.4), CIS 96 H180-9 (v.3), CIS 96 H180-11 (v.5), CIS 96 H940-1, CIS 95 H180-7, CIS 94 H180-11, CIS 93 H180-22, CIS 92 H180-3, CIS 91 H180-1, CIS 90 H180-1, CIS 89 H180-1, CIS 88 H180-4, CIS 87 H180-1, CIS 87 H180-3, CIS 86 H180-7, CIS 85 H180-10, CIS 84 H180-1, CIS 83 H180-1, CIS 82 H180-1, CIS 81 H180-1, CIS 80 H180-2, CIS 79 H180-12, CIS 78 H180-3, CIS 77 H180-10, CIS 76 H180-6, CIS 75 H180-23, CIS 74 H180-3, CIS 73 H180-1, CIS 72 H920-8, CIS 71 H180-2</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Title varies slightly.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Information incorrect in publication as to sale by Supt. of Docs. Only dept. ed. for sale.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Description based on: Fiscal year 1982.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Reuse of record except for individual research requires license from Congressional Information Service, Inc.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="510" ind1="1" ind2=" ">
+          <marc:subfield code="a">CIS Index</marc:subfield>
+          <marc:subfield code="x">0007-8514</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="515" ind1=" " ind2=" ">
+          <marc:subfield code="a">Report covers fiscal year.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="525" ind1=" " ind2=" ">
+          <marc:subfield code="a">Supplements accompany some issues.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="530" ind1=" " ind2=" ">
+          <marc:subfield code="a">Vols. for &lt;1984-&gt; distributed to some depository libraries in microfiche.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="533" ind1=" " ind2=" ">
+          <marc:subfield code="a">Microfiche.</marc:subfield>
+          <marc:subfield code="b">[Bethesda, Md.] :</marc:subfield>
+          <marc:subfield code="c">Congressional Information Service,</marc:subfield>
+          <marc:subfield code="d">1971-</marc:subfield>
+          <marc:subfield code="e">11 X 15 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Budget</marc:subfield>
+          <marc:subfield code="z">United States</marc:subfield>
+          <marc:subfield code="x">Periodicals.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="775" ind1="0" ind2=" ">
+          <marc:subfield code="a">United States. Office of Management and Budget.</marc:subfield>
+          <marc:subfield code="t">Budget of the United States Government (Dept. ed.)</marc:subfield>
+          <marc:subfield code="x">0163-2000</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="780" ind1="0" ind2="0">
+          <marc:subfield code="a">United States. Bureau of the Budget.</marc:subfield>
+          <marc:subfield code="t">Budget of the United States Government</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="787" ind1="0" ind2=" ">
+          <marc:subfield code="a">United States. Office of Management and Budget.</marc:subfield>
+          <marc:subfield code="t">Budget of the United States Government (Doc. ed.). Appendix</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="830" ind1=" " ind2="0">
+          <marc:subfield code="a">House document (United States. Congress. House)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Language material</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="935" ind1=" " ind2=" ">
+          <marc:subfield code="a">Serial</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Microform</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="934" ind1=" " ind2=" ">
+          <marc:subfield code="a">Microfiche</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="937" ind1=" " ind2=" ">
+          <marc:subfield code="a">Non-Fiction</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="939" ind1=" " ind2=" ">
+          <marc:subfield code="a">1972-    </marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="941" ind1=" " ind2=" ">
+          <marc:subfield code="a">eng</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="943" ind1=" " ind2=" ">
+          <marc:subfield code="a">English</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(NRU)1975731</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="a">Budget</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="x">Periodicals.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="967" ind1=" " ind2="0">
+          <marc:subfield code="z">United States</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
 </records>

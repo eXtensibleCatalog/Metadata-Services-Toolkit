@@ -1,138 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
-<record>
-  <header>
-    <identifier>oai:mst.rochester.edu:marcnormalization/178</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:178</predecessor>
-    </predecessors>
-    <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>active</status>
-  </header>
-  <metadata>
-    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-      <marc:leader>00989ncm a22002890  45 A</marc:leader>
-      <marc:controlfield tag="001">931593</marc:controlfield>
-      <marc:controlfield tag="008">880404s1878    gw opa         n    N/A d</marc:controlfield>
-      <marc:datafield tag="028" ind1="2" ind2="0">
-        <marc:subfield code="a">22331</marc:subfield>
-        <marc:subfield code="b">B. Schott's Söhne</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">(OCoLC)17729059</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="9">00874818</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="040" ind1=" " ind2=" ">
-        <marc:subfield code="a">NDD</marc:subfield>
-        <marc:subfield code="c">NDD</marc:subfield>
-        <marc:subfield code="d">RER</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="048" ind1=" " ind2=" ">
-        <marc:subfield code="a">oa</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="049" ind1=" " ind2=" ">
-        <marc:subfield code="a">RERA</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="090" ind1=" " ind2=" ">
-        <marc:subfield code="a">M1070</marc:subfield>
-        <marc:subfield code="b">.W13GST</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="099" ind1=" " ind2=" ">
-        <marc:subfield code="a">M1070 .W13GST</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="100" ind1="1" ind2=" ">
-        <marc:subfield code="a">Wagner, Richard,</marc:subfield>
-        <marc:subfield code="d">1813-1883.</marc:subfield>
-        <marc:subfield code="4">cmp</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="240" ind1="1" ind2="0">
-        <marc:subfield code="a">Ring des Nibelungen.</marc:subfield>
-        <marc:subfield code="p">Götterdämmerung.</marc:subfield>
-        <marc:subfield code="p">Trauermarsch;</marc:subfield>
-        <marc:subfield code="o">arr.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="245" ind1="1" ind2="0">
-        <marc:subfield code="a">Siegfried's Tod und Trauermarsch aus dem Musik-Drama Götterdämmerung /</marc:subfield>
-        <marc:subfield code="c">von Richard Wagner ; für Orchester bearbeitet von L. Stasny.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="254" ind1=" " ind2=" ">
-        <marc:subfield code="a">Partitur.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="260" ind1=" " ind2=" ">
-        <marc:subfield code="a">Mainz :</marc:subfield>
-        <marc:subfield code="b">B. Schott's Söhne,</marc:subfield>
-        <marc:subfield code="c">[1878?]</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="300" ind1=" " ind2=" ">
-        <marc:subfield code="a">1 score (28 p.) ;</marc:subfield>
-        <marc:subfield code="c">34 cm.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="650" ind1=" " ind2="0">
-        <marc:subfield code="a">Orchestral music, Arranged</marc:subfield>
-        <marc:subfield code="x">Scores.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="650" ind1=" " ind2="0">
-        <marc:subfield code="a">Operas</marc:subfield>
-        <marc:subfield code="x">Excerpts, Arranged</marc:subfield>
-        <marc:subfield code="x">Scores.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="700" ind1="1" ind2=" ">
-        <marc:subfield code="a">Stasny, L.</marc:subfield>
-        <marc:subfield code="q">(Ludwig),</marc:subfield>
-        <marc:subfield code="d">1823-1883.</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="910" ind1=" " ind2=" ">
-        <marc:subfield code="a">950805</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="911" ind1=" " ind2=" ">
-        <marc:subfield code="a">u</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="966" ind1=" " ind2=" ">
-        <marc:subfield code="l">/Csstk</marc:subfield>
-        <marc:subfield code="m">SMONC</marc:subfield>
-        <marc:subfield code="s">M1070 .W13GST</marc:subfield>
-        <marc:subfield code="c">1</marc:subfield>
-        <marc:subfield code="b">39087011178359</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="931" ind1=" " ind2=" ">
-        <marc:subfield code="a">Image</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="932" ind1=" " ind2=" ">
-        <marc:subfield code="a">Notated music</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
-        <marc:subfield code="a">Notated music</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="935" ind1=" " ind2=" ">
-        <marc:subfield code="a">Monograph/Item</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:controlfield tag="003">NRU</marc:controlfield>
-      <marc:datafield tag="035" ind1=" " ind2=" ">
-        <marc:subfield code="a">(NRU)931593</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="a">Orchestral music, Arranged</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="a">Operas</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="x">Scores.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="x">Excerpts, Arranged</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-    </marc:record>
-  </metadata>
-</record>
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:marcnormalization/178</identifier>
+      <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10177.xml</oldFileName>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00989ncm a22002890  45 A</marc:leader>
+        <marc:controlfield tag="001">931593</marc:controlfield>
+        <marc:controlfield tag="008">880404s1878    gw opa         n    N/A d</marc:controlfield>
+        <marc:datafield tag="028" ind1="2" ind2="0">
+          <marc:subfield code="a">22331</marc:subfield>
+          <marc:subfield code="b">B. Schott's Söhne</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)17729059</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="9">00874818</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">NDD</marc:subfield>
+          <marc:subfield code="c">NDD</marc:subfield>
+          <marc:subfield code="d">RER</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="048" ind1=" " ind2=" ">
+          <marc:subfield code="a">oa</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RERA</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">M1070</marc:subfield>
+          <marc:subfield code="b">.W13GST</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">M1070 .W13GST</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Wagner, Richard,</marc:subfield>
+          <marc:subfield code="d">1813-1883.</marc:subfield>
+          <marc:subfield code="4">cmp</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="1" ind2="0">
+          <marc:subfield code="a">Ring des Nibelungen.</marc:subfield>
+          <marc:subfield code="p">Götterdämmerung.</marc:subfield>
+          <marc:subfield code="p">Trauermarsch;</marc:subfield>
+          <marc:subfield code="o">arr.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Siegfried's Tod und Trauermarsch aus dem Musik-Drama Götterdämmerung /</marc:subfield>
+          <marc:subfield code="c">von Richard Wagner ; für Orchester bearbeitet von L. Stasny.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="254" ind1=" " ind2=" ">
+          <marc:subfield code="a">Partitur.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Mainz :</marc:subfield>
+          <marc:subfield code="b">B. Schott's Söhne,</marc:subfield>
+          <marc:subfield code="c">[1878?]</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">1 score (28 p.) ;</marc:subfield>
+          <marc:subfield code="c">34 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Orchestral music, Arranged</marc:subfield>
+          <marc:subfield code="x">Scores.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Operas</marc:subfield>
+          <marc:subfield code="x">Excerpts, Arranged</marc:subfield>
+          <marc:subfield code="x">Scores.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Stasny, L.</marc:subfield>
+          <marc:subfield code="q">(Ludwig),</marc:subfield>
+          <marc:subfield code="d">1823-1883.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="910" ind1=" " ind2=" ">
+          <marc:subfield code="a">950805</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="911" ind1=" " ind2=" ">
+          <marc:subfield code="a">u</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">/Csstk</marc:subfield>
+          <marc:subfield code="m">SMONC</marc:subfield>
+          <marc:subfield code="s">M1070 .W13GST</marc:subfield>
+          <marc:subfield code="c">1</marc:subfield>
+          <marc:subfield code="b">39087011178359</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Image</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Notated music</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Notated music</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="935" ind1=" " ind2=" ">
+          <marc:subfield code="a">Monograph/Item</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(NRU)931593</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="a">Orchestral music, Arranged</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="a">Operas</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="x">Scores.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="x">Excerpts, Arranged</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="x">Scores.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
 </records>
