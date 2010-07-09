@@ -69,10 +69,11 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 				File expectedOutputFolder = new File(TestRepository.EXPECTED_OUTPUT_RECORDS+"/"+folderStr);
 				Set<String> expectedOutputFiles = new HashSet<String>();
 				for (String ef : expectedOutputFolder.list()) {
-					expectedOutputFiles.add(ef);	
+					if (!ef.contains(".svn")) {
+						expectedOutputFiles.add(ef);
+					}
 				}
-				
-				/*
+
 				File actualOutputFolder  = new File(TestRepository.ACTUAL_OUTPUT_RECORDS+"/"+folderStr);
 				for (String af : actualOutputFolder.list()) {
 					LOG.debug("af: "+af);
@@ -91,11 +92,14 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 					testFailures.put(folderStr+"/"+ef, "file expected, but wasn't produced.");
 				}
 				
+				StringBuilder sb = new StringBuilder();
 				for (String key : testFailures.keySet()) {
 					String value = testFailures.get(key);
-					LOG.error(key+": "+value);
+					String s2 = "\n"+key+": "+value;
+					LOG.error(s2);
+					sb.append(s2);
 				}
-				*/
+				throw new RuntimeException(sb.toString());
 			}
 			
 		} catch (Throwable t) {
