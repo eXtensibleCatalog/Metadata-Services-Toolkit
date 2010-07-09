@@ -1,23 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
-  <record>
-    <header>
-      <identifier>oai:mst.rochester.edu:marcnormalization/98</identifier>
-      <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10097.xml</oldFileName>
-    </header>
-    <metadata>
-      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-        <marc:leader>00198cx  a22000971  4500</marc:leader>
-        <marc:controlfield tag="001">2921276</marc:controlfield>
-        <marc:controlfield tag="003">NRU</marc:controlfield>
-        <marc:controlfield tag="004">2767993</marc:controlfield>
-        <marc:controlfield tag="005">20060831163055.0</marc:controlfield>
-        <marc:controlfield tag="008">0503070u||||8|||4001uu|||0000000</marc:controlfield>
-        <marc:datafield tag="852" ind1="3" ind2=" ">
-          <marc:subfield code="b">BGILfed</marc:subfield>
-          <marc:subfield code="h">J 21.2:IL 6/2001</marc:subfield>
-        </marc:datafield>
-      </marc:record>
-    </metadata>
-  </record>
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/98</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:98</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Holding Records</setSpec>
+    <status>active</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>00198cx  a22000971  4500</marc:leader>
+      <marc:controlfield tag="001">2921276</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="004">2767993</marc:controlfield>
+      <marc:controlfield tag="005">20060831163055.0</marc:controlfield>
+      <marc:controlfield tag="008">0503070u||||8|||4001uu|||0000000</marc:controlfield>
+      <marc:datafield tag="852" ind1="3" ind2=" ">
+        <marc:subfield code="b">BGILfed</marc:subfield>
+        <marc:subfield code="h">J 21.2:IL 6/2001</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
 </records>

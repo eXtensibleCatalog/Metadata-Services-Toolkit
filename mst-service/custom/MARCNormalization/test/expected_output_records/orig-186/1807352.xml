@@ -1,25 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
-  <record>
-    <header>
-      <identifier>oai:mst.rochester.edu:marcnormalization/57</identifier>
-      <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10056.xml</oldFileName>
-    </header>
-    <metadata>
-      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-        <marc:leader>00278nx  a22000974  4500</marc:leader>
-        <marc:controlfield tag="001">1807352</marc:controlfield>
-        <marc:controlfield tag="003">NRU</marc:controlfield>
-        <marc:controlfield tag="004">1188185</marc:controlfield>
-        <marc:controlfield tag="005">19981207094357.0</marc:controlfield>
-        <marc:controlfield tag="008">9812074u    8   1001uu   0901128</marc:controlfield>
-        <marc:datafield tag="852" ind1="0" ind2=" ">
-          <marc:subfield code="b">SibStack</marc:subfield>
-          <marc:subfield code="h">M1621</marc:subfield>
-          <marc:subfield code="i">.S378 op.7</marc:subfield>
-          <marc:subfield code="z">Preservation photocopy, 1998. Original in binder's collection (M1620 .S378).</marc:subfield>
-        </marc:datafield>
-      </marc:record>
-    </metadata>
-  </record>
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/57</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:57</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Holding Records</setSpec>
+    <status>active</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>00278nx  a22000974  4500</marc:leader>
+      <marc:controlfield tag="001">1807352</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="004">1188185</marc:controlfield>
+      <marc:controlfield tag="005">19981207094357.0</marc:controlfield>
+      <marc:controlfield tag="008">9812074u    8   1001uu   0901128</marc:controlfield>
+      <marc:datafield tag="852" ind1="0" ind2=" ">
+        <marc:subfield code="b">SibStack</marc:subfield>
+        <marc:subfield code="h">M1621</marc:subfield>
+        <marc:subfield code="i">.S378 op.7</marc:subfield>
+        <marc:subfield code="z">Preservation photocopy, 1998. Original in binder's collection (M1620 .S378).</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
 </records>

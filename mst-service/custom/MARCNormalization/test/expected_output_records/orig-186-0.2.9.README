@@ -3,3 +3,7 @@ exact format that I needed, so I created a one-time converter script
 to make sure that the 0.3.0 system produced the same output as the 0.2.9
 system.  Here are the steps I followed:
 
+1) run ./scripts/conv/norm_output_1.sh
+2) run ./scripts/conv/norm_output_diff_1.sh
+3) eyeball "out2" file to see if there are any real diffs
+   if there are, take a look the the "out" file

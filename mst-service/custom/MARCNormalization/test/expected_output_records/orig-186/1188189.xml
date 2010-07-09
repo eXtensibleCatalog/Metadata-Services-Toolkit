@@ -1,129 +1,133 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
-  <record>
-    <header>
-      <identifier>oai:mst.rochester.edu:marcnormalization/14</identifier>
-      <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10013.xml</oldFileName>
-    </header>
-    <metadata>
-      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-        <marc:leader>01085ncm a2200337   45 A</marc:leader>
-        <marc:controlfield tag="001">1188189</marc:controlfield>
-        <marc:controlfield tag="003">NRU</marc:controlfield>
-        <marc:controlfield tag="008">930312q19001909au sga         n    ger d</marc:controlfield>
-        <marc:datafield tag="028" ind1="3" ind2="0">
-          <marc:subfield code="a">3870</marc:subfield>
-          <marc:subfield code="b">Josef Eberle</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="028" ind1="3" ind2="0">
-          <marc:subfield code="a">3871</marc:subfield>
-          <marc:subfield code="b">Josef Eberle</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="028" ind1="2" ind2="0">
-          <marc:subfield code="a">J.E. 844</marc:subfield>
-          <marc:subfield code="b">Josef Eberle</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="028" ind1="2" ind2="0">
-          <marc:subfield code="a">J.E. 845</marc:subfield>
-          <marc:subfield code="b">Josef Eberle</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="035" ind1=" " ind2=" ">
-          <marc:subfield code="a">(OCoLC)27722227</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="035" ind1=" " ind2=" ">
-          <marc:subfield code="9">01137753</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="040" ind1=" " ind2=" ">
-          <marc:subfield code="a">RER</marc:subfield>
-          <marc:subfield code="c">RER</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="048" ind1=" " ind2=" ">
-          <marc:subfield code="a">vi01</marc:subfield>
-          <marc:subfield code="a">ka01</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="049" ind1=" " ind2=" ">
-          <marc:subfield code="a">RERA</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="090" ind1=" " ind2=" ">
-          <marc:subfield code="a">M1620</marc:subfield>
-          <marc:subfield code="b">.S378</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="099" ind1=" " ind2=" ">
-          <marc:subfield code="a">M1620 .S378</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="100" ind1="1" ind2=" ">
-          <marc:subfield code="a">Schreker, Franz,</marc:subfield>
-          <marc:subfield code="d">1878-1934.</marc:subfield>
-          <marc:subfield code="4">cmp</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="240" ind1="1" ind2="0">
-          <marc:subfield code="a">Gesänge,</marc:subfield>
-          <marc:subfield code="n">op. 2</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="245" ind1="0" ind2="0">
-          <marc:subfield code="a">Zwei Gesänge für mittlere Stimme mit Begleitung des Pianoforte. Op. 2.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="260" ind1=" " ind2=" ">
-          <marc:subfield code="a">Wien,</marc:subfield>
-          <marc:subfield code="b">Josef Eberle</marc:subfield>
-          <marc:subfield code="c">[190-]</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="300" ind1=" " ind2=" ">
-          <marc:subfield code="a">score (2 v. in 1)</marc:subfield>
-          <marc:subfield code="c">34 cm.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="500" ind1=" " ind2=" ">
-          <marc:subfield code="a">Publisher's no.: Universal-Edition Nr. 3870-3871.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="505" ind1="0" ind2=" ">
-          <marc:subfield code="a">v. 1. Sommerfäden (Leen).--v. 2. Stimmen des Tages (Saar).</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="590" ind1=" " ind2=" ">
-          <marc:subfield code="a">Sibley Music Library copy bound with Schreker, Fünf Gesänge (1909).</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="650" ind1=" " ind2="0">
-          <marc:subfield code="a">Songs (Medium voice) with piano.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="910" ind1=" " ind2=" ">
-          <marc:subfield code="a">  950805         </marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="911" ind1=" " ind2=" ">
-          <marc:subfield code="a">u</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="966" ind1=" " ind2=" ">
-          <marc:subfield code="l">/Stack</marc:subfield>
-          <marc:subfield code="m">SMONO </marc:subfield>
-          <marc:subfield code="s">M1620 .S378</marc:subfield>
-          <marc:subfield code="c"> 1</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="931" ind1=" " ind2=" ">
-          <marc:subfield code="a">Image</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="932" ind1=" " ind2=" ">
-          <marc:subfield code="a">Notated music</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="933" ind1=" " ind2=" ">
-          <marc:subfield code="a">Notated music</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="935" ind1=" " ind2=" ">
-          <marc:subfield code="a">Monograph/Item</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="035" ind1=" " ind2=" ">
-          <marc:subfield code="a">(NRU)1188189</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="941" ind1=" " ind2=" ">
-          <marc:subfield code="a">ger</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="943" ind1=" " ind2=" ">
-          <marc:subfield code="a">German</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-      </marc:record>
-    </metadata>
-  </record>
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/14</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:14</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>active</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01085ncm a2200337   45 A</marc:leader>
+      <marc:controlfield tag="001">1188189</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="008">930312q19001909au sga         n    ger d</marc:controlfield>
+      <marc:datafield tag="028" ind1="3" ind2="0">
+        <marc:subfield code="a">3870</marc:subfield>
+        <marc:subfield code="b">Josef Eberle</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="028" ind1="3" ind2="0">
+        <marc:subfield code="a">3871</marc:subfield>
+        <marc:subfield code="b">Josef Eberle</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="028" ind1="2" ind2="0">
+        <marc:subfield code="a">J.E. 844</marc:subfield>
+        <marc:subfield code="b">Josef Eberle</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="028" ind1="2" ind2="0">
+        <marc:subfield code="a">J.E. 845</marc:subfield>
+        <marc:subfield code="b">Josef Eberle</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)27722227</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="9">01137753</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="a">RER</marc:subfield>
+        <marc:subfield code="c">RER</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="048" ind1=" " ind2=" ">
+        <marc:subfield code="a">vi01</marc:subfield>
+        <marc:subfield code="a">ka01</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="049" ind1=" " ind2=" ">
+        <marc:subfield code="a">RERA</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="090" ind1=" " ind2=" ">
+        <marc:subfield code="a">M1620</marc:subfield>
+        <marc:subfield code="b">.S378</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="099" ind1=" " ind2=" ">
+        <marc:subfield code="a">M1620 .S378</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="100" ind1="1" ind2=" ">
+        <marc:subfield code="a">Schreker, Franz,</marc:subfield>
+        <marc:subfield code="d">1878-1934.</marc:subfield>
+        <marc:subfield code="4">cmp</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="240" ind1="1" ind2="0">
+        <marc:subfield code="a">Gesänge,</marc:subfield>
+        <marc:subfield code="n">op. 2</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="0" ind2="0">
+        <marc:subfield code="a">Zwei Gesänge für mittlere Stimme mit Begleitung des Pianoforte. Op. 2.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="a">Wien,</marc:subfield>
+        <marc:subfield code="b">Josef Eberle</marc:subfield>
+        <marc:subfield code="c">[190-]</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">score (2 v. in 1)</marc:subfield>
+        <marc:subfield code="c">34 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Publisher's no.: Universal-Edition Nr. 3870-3871.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="505" ind1="0" ind2=" ">
+        <marc:subfield code="a">v. 1. Sommerfäden (Leen).--v. 2. Stimmen des Tages (Saar).</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="590" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sibley Music Library copy bound with Schreker, Fünf Gesänge (1909).</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Songs (Medium voice) with piano.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="910" ind1=" " ind2=" ">
+        <marc:subfield code="a">950805</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="911" ind1=" " ind2=" ">
+        <marc:subfield code="a">u</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="966" ind1=" " ind2=" ">
+        <marc:subfield code="l">/Stack</marc:subfield>
+        <marc:subfield code="m">SMONO</marc:subfield>
+        <marc:subfield code="s">M1620 .S378</marc:subfield>
+        <marc:subfield code="c">1</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Image</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Notated music</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Notated music</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)1188189</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">ger</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">German</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
 </records>

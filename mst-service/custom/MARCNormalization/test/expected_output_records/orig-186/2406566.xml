@@ -1,170 +1,166 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
-  <record>
-    <header>
-      <identifier>oai:mst.rochester.edu:marcnormalization/75</identifier>
-      <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10074.xml</oldFileName>
-    </header>
-    <metadata>
-      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-        <marc:leader>01558cgm a2200337Ma 45x0</marc:leader>
-        <marc:controlfield tag="001">2406566</marc:controlfield>
-        <marc:controlfield tag="005">20040422132927.0</marc:controlfield>
-        <marc:controlfield tag="007">vd mgaizs</marc:controlfield>
-        <marc:controlfield tag="008">021015s2002    enk128 e          vleng d</marc:controlfield>
-        <marc:datafield tag="035" ind1=" " ind2=" ">
-          <marc:subfield code="a">(OCoLC)53213246</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="040" ind1=" " ind2=" ">
-          <marc:subfield code="a">VP@</marc:subfield>
-          <marc:subfield code="c">VP@</marc:subfield>
-          <marc:subfield code="d">RES</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="024" ind1="1" ind2=" ">
-          <marc:subfield code="a">2012066206651</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="028" ind1="4" ind2="2">
-          <marc:subfield code="a">MoE 001</marc:subfield>
-          <marc:subfield code="b">Music on Earth</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="041" ind1="0" ind2=" ">
-          <marc:subfield code="a">eng</marc:subfield>
-          <marc:subfield code="b">eng</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="049" ind1=" " ind2=" ">
-          <marc:subfield code="a">RESM</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="245" ind1="0" ind2="0">
-          <marc:subfield code="a">Stephane Grappelli</marc:subfield>
-          <marc:subfield code="h">[videorecording] :</marc:subfield>
-          <marc:subfield code="b">a life in the jazz century /</marc:subfield>
-          <marc:subfield code="c">directed, written and presented by Paul Balmer ; produced by Judy Caine.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="246" ind1="3" ind2="0">
-          <marc:subfield code="a">Life in the jazz century</marc:subfield>
-          <marc:subfield code="h">[videorecording]</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="260" ind1=" " ind2=" ">
-          <marc:subfield code="a">[London] :</marc:subfield>
-          <marc:subfield code="b">Music on Earth,</marc:subfield>
-          <marc:subfield code="c">c2002.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="300" ind1=" " ind2=" ">
-          <marc:subfield code="a">2 videodiscs (128 min.) :</marc:subfield>
-          <marc:subfield code="b">sd., col. and b&amp;w ;</marc:subfield>
-          <marc:subfield code="c">4 3/4 in.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="500" ind1=" " ind2=" ">
-          <marc:subfield code="a">Title from container.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="500" ind1=" " ind2=" ">
-          <marc:subfield code="a">DVD bonus features include: 11 bonus chapters; 7 rare music archive clips; story-teller's chronicle; promo; alternative commentary; research notes; bibliography/discography; key websites; programmable audio CD; timeline; stills photo montage; Montmartre map.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="520" ind1=" " ind2=" ">
-          <marc:subfield code="a">Stéphane Grappelli tells his own story of a 77-year career. Contains all known film footage of Django Reinhardt including 7 minutes of the Hot Club Quintet of France.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="538" ind1=" " ind2=" ">
-          <marc:subfield code="a">DVD, Dolby digital stereo.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="546" ind1=" " ind2=" ">
-          <marc:subfield code="a">In English with optional English subtitles.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="600" ind1="1" ind2="0">
-          <marc:subfield code="a">Grappelli, Stéphane.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="650" ind1=" " ind2="0">
-          <marc:subfield code="a">Jazz musicians</marc:subfield>
-          <marc:subfield code="z">France</marc:subfield>
-          <marc:subfield code="v">Biography.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="650" ind1=" " ind2="0">
-          <marc:subfield code="a">Violinists</marc:subfield>
-          <marc:subfield code="z">France</marc:subfield>
-          <marc:subfield code="v">Biography.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="700" ind1="1" ind2=" ">
-          <marc:subfield code="a">Balmer, Paul.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="700" ind1="1" ind2=" ">
-          <marc:subfield code="a">Grappelli, Stéphane.</marc:subfield>
-          <marc:subfield code="4">prf</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="700" ind1="1" ind2=" ">
-          <marc:subfield code="a">Reinhardt, Django,</marc:subfield>
-          <marc:subfield code="d">1910-1953.</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="994" ind1=" " ind2=" ">
-          <marc:subfield code="a">X0</marc:subfield>
-          <marc:subfield code="b">RES</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="931" ind1=" " ind2=" ">
-          <marc:subfield code="a">Image</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="932" ind1=" " ind2=" ">
-          <marc:subfield code="a">Projected medium</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="935" ind1=" " ind2=" ">
-          <marc:subfield code="a">Monograph/Item</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="931" ind1=" " ind2=" ">
-          <marc:subfield code="a">MovingImage</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="933" ind1=" " ind2=" ">
-          <marc:subfield code="a">Video recording</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="934" ind1=" " ind2=" ">
-          <marc:subfield code="a">Videodisc</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="941" ind1=" " ind2=" ">
-          <marc:subfield code="a">eng</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="943" ind1=" " ind2=" ">
-          <marc:subfield code="a">English</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="945" ind1=" " ind2=" ">
-          <marc:subfield code="a">Adult</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:controlfield tag="003">NRU</marc:controlfield>
-        <marc:datafield tag="035" ind1=" " ind2=" ">
-          <marc:subfield code="a">(NRU)2406566</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="130" ind1="0" ind2=" ">
-          <marc:subfield code="a">Stephane Grappelli</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="965" ind1=" " ind2="0">
-          <marc:subfield code="a">Jazz musicians</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="965" ind1=" " ind2="0">
-          <marc:subfield code="a">Violinists</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="967" ind1=" " ind2="0">
-          <marc:subfield code="z">France</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="967" ind1=" " ind2="0">
-          <marc:subfield code="z">France</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="969" ind1=" " ind2="0">
-          <marc:subfield code="v">Biography.</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-        <marc:datafield tag="969" ind1=" " ind2="0">
-          <marc:subfield code="v">Biography.</marc:subfield>
-          <marc:subfield code="5">NRU</marc:subfield>
-        </marc:datafield>
-      </marc:record>
-    </metadata>
-  </record>
+<record>
+  <header>
+    <identifier>oai:mst.rochester.edu:marcnormalization/75</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:75</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>active</status>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01558cgm a2200337Ma 45x0</marc:leader>
+      <marc:controlfield tag="001">2406566</marc:controlfield>
+      <marc:controlfield tag="005">20040422132927.0</marc:controlfield>
+      <marc:controlfield tag="007">vd mgaizs</marc:controlfield>
+      <marc:controlfield tag="008">021015s2002    enk128 e          vleng d</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)53213246</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="a">VP@</marc:subfield>
+        <marc:subfield code="c">VP@</marc:subfield>
+        <marc:subfield code="d">RES</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="024" ind1="1" ind2=" ">
+        <marc:subfield code="a">2012066206651</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="028" ind1="4" ind2="2">
+        <marc:subfield code="a">MoE 001</marc:subfield>
+        <marc:subfield code="b">Music on Earth</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="041" ind1="0" ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="b">eng</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="049" ind1=" " ind2=" ">
+        <marc:subfield code="a">RESM</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="0" ind2="0">
+        <marc:subfield code="a">Stephane Grappelli</marc:subfield>
+        <marc:subfield code="h">[videorecording] :</marc:subfield>
+        <marc:subfield code="b">a life in the jazz century /</marc:subfield>
+        <marc:subfield code="c">directed, written and presented by Paul Balmer ; produced by Judy Caine.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Life in the jazz century</marc:subfield>
+        <marc:subfield code="h">[videorecording]</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="a">[London] :</marc:subfield>
+        <marc:subfield code="b">Music on Earth,</marc:subfield>
+        <marc:subfield code="c">c2002.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">2 videodiscs (128 min.) :</marc:subfield>
+        <marc:subfield code="b">sd., col. and b&amp;w ;</marc:subfield>
+        <marc:subfield code="c">4 3/4 in.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Title from container.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">DVD bonus features include: 11 bonus chapters; 7 rare music archive clips; story-teller's chronicle; promo; alternative commentary; research notes; bibliography/discography; key websites; programmable audio CD; timeline; stills photo montage; Montmartre map.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="520" ind1=" " ind2=" ">
+        <marc:subfield code="a">Stéphane Grappelli tells his own story of a 77-year career. Contains all known film footage of Django Reinhardt including 7 minutes of the Hot Club Quintet of France.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="538" ind1=" " ind2=" ">
+        <marc:subfield code="a">DVD, Dolby digital stereo.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="546" ind1=" " ind2=" ">
+        <marc:subfield code="a">In English with optional English subtitles.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="600" ind1="1" ind2="0">
+        <marc:subfield code="a">Grappelli, Stéphane.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Jazz musicians</marc:subfield>
+        <marc:subfield code="z">France</marc:subfield>
+        <marc:subfield code="v">Biography.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Violinists</marc:subfield>
+        <marc:subfield code="z">France</marc:subfield>
+        <marc:subfield code="v">Biography.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Balmer, Paul.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Grappelli, Stéphane.</marc:subfield>
+        <marc:subfield code="4">prf</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Reinhardt, Django,</marc:subfield>
+        <marc:subfield code="d">1910-1953.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="994" ind1=" " ind2=" ">
+        <marc:subfield code="a">X0</marc:subfield>
+        <marc:subfield code="b">RES</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Image</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Projected medium</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">MovingImage</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Video recording</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="934" ind1=" " ind2=" ">
+        <marc:subfield code="a">Videodisc</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="945" ind1=" " ind2=" ">
+        <marc:subfield code="a">Adult</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)2406566</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="130" ind1="0" ind2=" ">
+        <marc:subfield code="a">Stephane Grappelli</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Jazz musicians</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Violinists</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="967" ind1=" " ind2="0">
+        <marc:subfield code="z">France</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="969" ind1=" " ind2="0">
+        <marc:subfield code="v">Biography.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
 </records>
