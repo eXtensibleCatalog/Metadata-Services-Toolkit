@@ -375,7 +375,7 @@ public class NormalizationService extends GenericMetadataService {
 
 				// Create the normalized record
 				Record normalizedRecord = getRecordService().createSuccessor(record, getService());
-				normalizedRecord.setOaiXmlEl(record.getOaiXmlEl());
+				normalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
 				normalizedRecord.setFormat(marcxmlFormat);
 
 				// Set the datestamp, and header to null so they get computed when we insert the normalized record
@@ -2168,6 +2168,7 @@ public class NormalizationService extends GenericMetadataService {
 	
 		// The Properties file we're currently populating
 		Properties current = null;
+		LOG.debug("loadConfiguration: "+this);
 		
 	    for(String line : configurationLines)
 	    {

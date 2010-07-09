@@ -34,6 +34,7 @@ import xc.mst.constants.Constants;
 public class MarcXmlManager {
 
 	private static Logger log = Logger.getLogger(Constants.LOGGER_PROCESSING);
+	private static final Logger LOG = Logger.getLogger(MarcXmlManager.class);
 
 	protected static Namespace marcNamespace = Namespace.getNamespace("marc", "http://www.loc.gov/MARC21/slim");
 
@@ -712,7 +713,7 @@ public class MarcXmlManager {
 		{
 			// Use XPATH to get a list of all subfields of the passed tag with the passed subfield value.
 			// Return true iff this list is not empty
-			XPath xpath = XPath.newInstance("//marc:datafield[@tag='" + tag + "']/marc:subfield[@code='" + subfield + "']");
+			XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + tag + "']/marc:subfield[@code='" + subfield + "']");
 			xpath.addNamespace("marc", "http://www.loc.gov/MARC21/slim");
 			return !xpath.selectNodes(marcXml).isEmpty();
 		}
@@ -1533,6 +1534,7 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public void deduplicateMarcXmlField(String tag)
 	{
+		LOG.debug("deduping tag: "+tag);
 		// A list of values we've currently seen on target fields
 		HashSet<String> currentValues = new HashSet<String>();
 
@@ -1545,6 +1547,7 @@ public class MarcXmlManager {
 		// Iterate over the fields and find the one with the correct tag
 		for(Element field : fields)
 		{
+			LOG.debug("field: "+field);
 			// A string which is unique for each distinct field
 			StringBuilder value = new StringBuilder();
 
@@ -1568,6 +1571,7 @@ public class MarcXmlManager {
 			// If we've already seen the value of the current field, remove the
 			// current field as it is a duplicate.  Otherwise, add its value to
 			// the list of values we've seen.
+			LOG.debug("valueStr: "+valueStr);
 			if(currentValues.contains(valueStr))
 			{
 				if(log.isDebugEnabled())
@@ -1960,7 +1964,7 @@ public class MarcXmlManager {
 		try
 		{
 			// An XPATH expression to get the requested control field
-			XPath xpath = XPath.newInstance("//marc:datafield[@tag='" + targetField + "']");
+			XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + targetField + "']");
 			xpath.addNamespace(marcNamespace);
 
 			// Get the data fields.  If the target field was not a 9xx field we can return the entire
@@ -2070,7 +2074,7 @@ public class MarcXmlManager {
 		try
 		{
 			// An XPATH expression to get the linking field
-			XPath xpath = XPath.newInstance("//marc:subfield[@code='8']/..");
+			XPath xpath = XPath.newInstance(".//marc:subfield[@code='8']/..");
 			xpath.addNamespace(marcNamespace);
 
 			// Get the linking fields.
@@ -2099,7 +2103,7 @@ public class MarcXmlManager {
 				log.debug("Removing the control field " + targetField);
 
 			// An XPATH expression to get the requested control field
-			XPath xpath = XPath.newInstance("//marc:controlfield[@tag='" + targetField + "']");
+			XPath xpath = XPath.newInstance(".//marc:controlfield[@tag='" + targetField + "']");
 			xpath.addNamespace(marcNamespace);
 
 			// Get the control field.  There should not be more than one Element in this list.
@@ -2151,7 +2155,7 @@ public class MarcXmlManager {
 		try
 		{
 			// An XPATH expression to get the requested control field
-			XPath xpath = XPath.newInstance("//marc:datafield[@tag='" + 945 + "']");
+			XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + 945 + "']");
 			xpath.addNamespace(marcNamespace);
 
 			return xpath.selectNodes(marcXml);
