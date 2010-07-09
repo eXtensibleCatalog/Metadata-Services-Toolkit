@@ -1,0 +1,590 @@
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1012755.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1041697.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1045129.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1048559.xml	(revision 963)
++        <marc:datafield tag="931" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="933" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound recording</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1053198.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1071899.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1071900.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/108120.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1120580.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1130480.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1177208.xml	(revision 963)
++        <marc:datafield tag="931" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="933" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound recording</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+-        <marc:subfield code="8">7\c</marc:subfield>
++          <marc:subfield code="a">Bach, Johann Sebastian,</marc:subfield>
++          <marc:subfield code="d">1685-1750.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++          <marc:subfield code="8">7\c</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="959" ind1="1" ind2="2">
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1188184.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1188185.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1188189.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1188190.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1188191.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1191502.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1191506.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1191508.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1191513.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1222801.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1225858.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1234020.xml	(revision 963)
++        <marc:datafield tag="965" ind1=" " ind2="0">
++          <marc:subfield code="x">Maps.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="967" ind1=" " ind2="0">
++          <marc:subfield code="z">Northeastern States</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1299843.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1303386.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1323972.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1328233.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1336114.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1338185.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1341018.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1345623.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1352471.xml	(revision 963)
++        <marc:datafield tag="965" ind1=" " ind2="0">
++          <marc:subfield code="x">Periodicals.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1355551.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1441021.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1445282.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1455234.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1469520.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/147041.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1472600.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/147733.xml	(revision 963)
++          <marc:subfield code="x">Fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="965" ind1=" " ind2="0">
++        <marc:datafield tag="965" ind1=" " ind2="0">
++          <marc:subfield code="x">Fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1524739.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1557247.xml	(revision 963)
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Newspapers.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1560.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1564330.xml	(revision 963)
++        <marc:datafield tag="965" ind1=" " ind2="0">
++          <marc:subfield code="x">International cooperation</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Congresses.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Congresses.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1583187.xml	(revision 963)
++        <marc:datafield tag="931" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="933" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound recording</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1583206.xml	(revision 963)
++        <marc:datafield tag="931" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="933" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound recording</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1586760.xml	(revision 963)
++        <marc:datafield tag="931" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="933" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound recording</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        </marc:datafield>
++        <marc:datafield tag="959" ind1="1" ind2="2">
++          <marc:subfield code="a">Vásquez, Juan,</marc:subfield>
++          <marc:subfield code="d">fl. 1535-1560.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="959" ind1="1" ind2="2">
++          <marc:subfield code="a">Vecchi, Orazio,</marc:subfield>
++          <marc:subfield code="d">1550-1605.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1595758.xml	(revision 963)
++        <marc:datafield tag="967" ind1=" " ind2="0">
++          <marc:subfield code="a">Africa</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="967" ind1=" " ind2="0">
++          <marc:subfield code="a">Africa</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Periodicals.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Periodicals.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1654634.xml	(revision 963)
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Congresses.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1658525.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1694143.xml	(revision 963)
++        <marc:datafield tag="965" ind1=" " ind2="0">
++          <marc:subfield code="x">History</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="963" ind1=" " ind2="0">
++          <marc:subfield code="y">Civil War, 1861-1865</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1707227.xml	(revision 963)
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Congresses.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Congresses.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1714983.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1724781.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1781042.xml	(revision 963)
++        <marc:datafield tag="965" ind1=" " ind2="0">
++          <marc:subfield code="x">Romances</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Adaptations.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1807351.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1807352.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1807355.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1807357.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1807358.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/18206.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1850431.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1911916.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1911920.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/1975731.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2117963.xml	(revision 963)
++        <marc:datafield tag="931" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="933" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound recording</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        </marc:datafield>
++        <marc:datafield tag="959" ind1="1" ind2="2">
++          <marc:subfield code="a">Puccini, Giacomo,</marc:subfield>
++          <marc:subfield code="d">1858-1924.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="959" ind1="1" ind2="2">
++          <marc:subfield code="a">Puccini, Giacomo,</marc:subfield>
++          <marc:subfield code="d">1858-1924.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="959" ind1="1" ind2="2">
++          <marc:subfield code="a">Puccini, Giacomo,</marc:subfield>
++          <marc:subfield code="d">1858-1924.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="959" ind1="1" ind2="2">
++          <marc:subfield code="a">Massenet, Jules,</marc:subfield>
++          <marc:subfield code="d">1842-1912.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
+-        <marc:subfield code="8">14\c</marc:subfield>
++        <marc:datafield tag="959" ind1="1" ind2="2">
++          <marc:subfield code="a">Verdi, Giuseppe,</marc:subfield>
++          <marc:subfield code="d">1813-1901.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++          <marc:subfield code="8">14\c</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/21292.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/21515.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2183193.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2189196.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2257790.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2373818.xml	(revision 963)
++        <marc:datafield tag="965" ind1=" " ind2="2">
++          <marc:subfield code="x">history.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2386823.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2393459.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2406566.xml	(revision 963)
++        <marc:datafield tag="967" ind1=" " ind2="0">
++          <marc:subfield code="z">France</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Biography.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2427871.xml	(revision 963)
++        <marc:datafield tag="931" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2465522.xml	(revision 963)
++        <marc:datafield tag="931" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="933" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound recording</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2466079.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2483966.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2510091.xml	(revision 963)
++        <marc:datafield tag="931" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="933" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound recording</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2516299.xml	(revision 963)
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Periodicals.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2573.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2578532.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2597308.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2604581.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2612059.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2612680.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2637764.xml	(revision 963)
++        <marc:datafield tag="965" ind1=" " ind2="0">
++          <marc:subfield code="x">History</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="963" ind1=" " ind2="0">
++          <marc:subfield code="y">Civil War, 1861-1865</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Drama.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Drama.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Drama.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2707414.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2715432.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2716979.xml	(revision 963)
++          <marc:subfield code="a">Ceramic materials</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="965" ind1=" " ind2="0">
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Periodicals.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2750974.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2750975.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2767993.xml	(revision 963)
++        <marc:datafield tag="967" ind1=" " ind2="0">
++          <marc:subfield code="z">United States</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Statistics.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2768134.xml	(revision 963)
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Juvenile fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Juvenile fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Juvenile fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Juvenile fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/27810.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2888.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2921276.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2941762.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/2944145.xml	(revision 963)
++        <marc:datafield tag="967" ind1=" " ind2="0">
++          <marc:subfield code="a">Russia</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/29692.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3030852.xml	(revision 963)
++        <marc:datafield tag="965" ind1=" " ind2="0">
++          <marc:subfield code="a">English literature</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="965" ind1=" " ind2="6">
++          <marc:subfield code="a">Littérature anglaise</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="965" ind1=" " ind2="0">
++          <marc:subfield code="x">History and criticism.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="965" ind1=" " ind2="6">
++          <marc:subfield code="x">Histoire et critique.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3095212.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3157056.xml	(revision 963)
++        <marc:datafield tag="933" ind1=" " ind2=" ">
++          <marc:subfield code="a">Electronic resource</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="965" ind1="1" ind2="2">
++          <marc:subfield code="a">Congresses</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Databases.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3158810.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3159543.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/31649.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/31650.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3229920.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3349023.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3395662.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3407379.xml	(revision 963)
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Periodicals.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3447574.xml	(revision 963)
++        <marc:datafield tag="967" ind1=" " ind2="0">
++          <marc:subfield code="z">United States</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Case studies.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Case studies.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Case studies.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3472288.xml	(revision 963)
++        <marc:datafield tag="931" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="933" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound recording</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/347562.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3494560.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3527545.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3571217.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3619939.xml	(revision 963)
++        <marc:datafield tag="965" ind1=" " ind2="0">
++          <marc:subfield code="x">Civilization</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Encyclopedias.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3633121.xml	(revision 963)
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Databases.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3643653.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3686087.xml	(revision 963)
++        <marc:datafield tag="967" ind1=" " ind2="0">
++          <marc:subfield code="z">Michigan</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3696609.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3711415.xml	(revision 963)
++        <marc:datafield tag="931" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="933" ind1=" " ind2=" ">
++          <marc:subfield code="a">Sound recording</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3722562.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3724338.xml	(revision 963)
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3724341.xml	(revision 963)
++        <marc:datafield tag="969" ind1="2" ind2="0">
++          <marc:subfield code="v">Fiction.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/37294.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3768890.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3795970.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3810683.xml	(revision 963)
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Maps, Topographic.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3848194.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3849844.xml	(revision 963)
++        <marc:datafield tag="969" ind1="1" ind2="0">
++          <marc:subfield code="v">Juvenile literature.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Juvenile literature.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="969" ind1=" " ind2="0">
++          <marc:subfield code="v">Juvenile literature.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/393842.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/3949333.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/4164761.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/418963.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/4385.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/444443.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/444444.xml	(revision 963)
++        <marc:datafield tag="965" ind1=" " ind2="0">
++          <marc:subfield code="x">History and criticism.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/456909.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/46920.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/46921.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/4713.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/4714.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/481.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/49443.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/49444.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/496722.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/499284.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/499882.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/500167.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/512520.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/551384.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/556928.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/560427.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/560760.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/573953.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/589385.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/589584.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/656643.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/697587.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/7348.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/73955.xml	(revision 963)
++        <marc:datafield tag="965" ind1=" " ind2="2">
++          <marc:subfield code="x">periodicals.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/807.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/809.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/811369.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/824214.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/83475.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/84562.xml	(revision 963)
++          <marc:subfield code="a">History</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
++        <marc:datafield tag="965" ind1=" " ind2="0">
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/852960.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/883452.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/883558.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/891566.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/896124.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/914190.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/92365.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/931593.xml	(revision 963)
++        <marc:datafield tag="965" ind1=" " ind2="0">
++          <marc:subfield code="x">Scores.</marc:subfield>
++          <marc:subfield code="5">NRU</marc:subfield>
++        </marc:datafield>
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/942016.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/945818.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/952977.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/952978.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/970288.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/97034.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/979130.xml	(revision 963)
+--- mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/997125.xml	(revision 963)
