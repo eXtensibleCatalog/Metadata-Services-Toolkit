@@ -142,9 +142,6 @@
         <marc:subfield code="n">R1707007</marc:subfield>
         <marc:subfield code="c">$79.95</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="945" ind1=" " ind2=" ">
-        <marc:subfield code="a">PromptCat</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="949" ind1=" " ind2=" ">
         <marc:subfield code="b">39087029437144</marc:subfield>
       </marc:datafield>

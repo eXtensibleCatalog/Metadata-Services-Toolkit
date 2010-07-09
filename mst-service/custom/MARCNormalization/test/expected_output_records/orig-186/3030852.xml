@@ -197,9 +197,6 @@
         <marc:subfield code="f">1996 ;</marc:subfield>
         <marc:subfield code="v">v. 17.</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="945" ind1=" " ind2=" ">
-        <marc:subfield code="a">PromptCat</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="949" ind1=" " ind2=" ">
         <marc:subfield code="b">39087027576802</marc:subfield>
       </marc:datafield>
@@ -213,9 +210,6 @@
       <marc:datafield tag="994" ind1=" " ind2=" ">
         <marc:subfield code="a">92</marc:subfield>
         <marc:subfield code="b">RRR</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="945" ind1=" " ind2=" ">
-        <marc:subfield code="a">MARS</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="931" ind1=" " ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>

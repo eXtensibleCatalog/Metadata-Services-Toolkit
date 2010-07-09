@@ -152,9 +152,6 @@
         <marc:subfield code="w">(DLC)sn 95037139</marc:subfield>
         <marc:subfield code="w">(OCoLC)32030472</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="945" ind1=" " ind2=" ">
-        <marc:subfield code="a">MARS</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="931" ind1=" " ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>

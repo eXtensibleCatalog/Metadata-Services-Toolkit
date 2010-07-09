@@ -111,9 +111,6 @@
         <marc:subfield code="b">YANK</marc:subfield>
         <marc:subfield code="n">2401060</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="945" ind1=" " ind2=" ">
-        <marc:subfield code="a">PromptCat</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="949" ind1=" " ind2=" ">
         <marc:subfield code="b">39087029172816</marc:subfield>
       </marc:datafield>
@@ -127,9 +124,6 @@
       <marc:datafield tag="994" ind1=" " ind2=" ">
         <marc:subfield code="a">92</marc:subfield>
         <marc:subfield code="b">RRR</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="945" ind1=" " ind2=" ">
-        <marc:subfield code="a">MARS</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="931" ind1=" " ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>

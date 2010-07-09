@@ -120,9 +120,6 @@
         <marc:subfield code="u">http://purl.access.gpo.gov/GPO/LPS547</marc:subfield>
         <marc:subfield code="z">Scroll down to "Georgia" and click on desired issue (requires Adobe Acrobat software, which is available for download)</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="945" ind1=" " ind2=" ">
-        <marc:subfield code="a">MARS</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="931" ind1=" " ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
