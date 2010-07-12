@@ -143,7 +143,11 @@ public class Util {
 	}
 	
 	public String getMostSignificantToken(String oaiId) {
-		int idx0 = oaiId.lastIndexOf(MSTConfiguration.getInstance().getProperty("harvest.mostSignificantToken"));
+		return getMostSignificantToken(oaiId, MSTConfiguration.getInstance().getProperty("harvest.mostSignificantToken"));
+	}
+	
+	public String getMostSignificantToken(String oaiId, String delimiter) {
+		int idx0 = oaiId.lastIndexOf(delimiter);
 		String mostSigToken = oaiId;
 		if (idx0 > -1) {
 			mostSigToken = oaiId.substring(idx0+1);

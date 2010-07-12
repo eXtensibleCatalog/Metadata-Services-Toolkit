@@ -1176,7 +1176,7 @@ public class DefaultRecordService extends RecordService
 			Element headerEl = recordEl.getChild("header", recordEl.getNamespace());
 			Element identifierElement = headerEl.getChild("identifier", recordEl.getNamespace());
 			if (identifierElement != null) {
-				r.setId(Long.parseLong(getUtil().getMostSignificantToken(identifierElement.getText())));
+				r.setId(Long.parseLong(getUtil().getMostSignificantToken(identifierElement.getText(), "/")));
 				r.setHarvestedOaiIdentifier(identifierElement.getText());
 			}
 			Element datestampElement = headerEl.getChild("datestamp", recordEl.getNamespace());
