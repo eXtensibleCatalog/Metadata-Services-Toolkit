@@ -5,7 +5,7 @@ create table oai_id_sequence (
 	PRIMARY KEY (id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-insert into oai_id_sequence values (0);
+insert into oai_id_sequence values (1);
 
 drop function if exists get_next_oai_id;
 

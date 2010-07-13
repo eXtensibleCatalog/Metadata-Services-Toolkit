@@ -20,8 +20,6 @@ import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
 
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.Record;
@@ -29,6 +27,7 @@ import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
 import xc.mst.repo.Repository;
 import xc.mst.utils.Util;
+import xc.mst.utils.XmlHelper;
 
 public class TestRepository extends BaseService implements Repository {
 	
@@ -48,6 +47,7 @@ public class TestRepository extends BaseService implements Repository {
 	protected String folderName = null;
 	protected String basePath = null;
 	protected String currentFile = null;
+	protected XmlHelper xmlHelper = new XmlHelper();
 	
 	public void populatePredSuccMaps(TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {}
 	
@@ -84,9 +84,6 @@ public class TestRepository extends BaseService implements Repository {
 	public void endBatch() {
 		if (!inputFilesIterator.hasNext()) {
 			LOG.debug("endBatch");
-			Format format = Format.getPrettyFormat();
-			format.setEncoding("UTF-8");
-			XMLOutputter xmlOutputter = new XMLOutputter(format);
 			File outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName);
 			if (!outFolder.exists()) {
 				outFolder.mkdir();
@@ -109,7 +106,7 @@ public class TestRepository extends BaseService implements Repository {
 						pw.println("<records xmlns=\"http://www.openarchives.org/OAI/2.0/\">");
 						for (Record r : records) {
 							LOG.debug("r.getService(): "+r.getService());
-							pw.println(xmlOutputter.outputString(getRecordService().createJDomElement(r, null)));
+							pw.println(xmlHelper.getStringPretty(getRecordService().createJDomElement(r, null)));
 						}
 						pw.println("</records>");
 					} catch (Throwable t) {

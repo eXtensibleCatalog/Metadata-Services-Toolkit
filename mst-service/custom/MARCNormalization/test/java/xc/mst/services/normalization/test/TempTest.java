@@ -18,9 +18,8 @@ public class TempTest extends BaseMetadataServiceTest {
 	public void doTest101() {
 		try {
 			
-			String xml = "<hello d=\"1\" c=\"1\" z=\"1\" a=\"1\" />";
+			String xml = "<a>  <b><hello d=\"1\" c=\"1\" z=\"1\" a=\"1\">  some space before and   after    </hello>  </b></a>";
 			Document d = xmlHelper.getJDomDocument(xml);
-			
 			/*
 			Element el = new Element("hello");
 			el.setAttribute("d", "1");
@@ -29,7 +28,9 @@ public class TempTest extends BaseMetadataServiceTest {
 			el.setAttribute("a", "1");
 			*/
 			Element el = d.getRootElement();
-			System.out.println(new XmlHelper().getStringPretty(el));
+			LOG.debug("raw: "+new XmlHelper().getStringRaw(el));
+			LOG.debug("compact: "+new XmlHelper().getStringCompact(el));
+			LOG.debug("pretty: "+new XmlHelper().getStringPretty(el));
 		} catch (Throwable t) {
 			LOG.error("", t);
 		}

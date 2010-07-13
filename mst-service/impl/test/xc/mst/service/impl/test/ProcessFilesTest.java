@@ -96,14 +96,15 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 				for (String key : testFailures.keySet()) {
 					String value = testFailures.get(key);
 					String s2 = "\n"+key+": "+value;
-					LOG.error(s2);
+
 					sb.append(s2);
 				}
+				LOG.error(sb.toString());
 				throw new RuntimeException(sb.toString());
 			}
 			
 		} catch (Throwable t) {
-			throw new RuntimeException(t);
+			util.throwIt(t);
 		}
 	}
 

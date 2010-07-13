@@ -25,6 +25,7 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.services.impl.GenericMetadataService;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.XmlHelper;
 
 /**
  * A Metadata Service which for each unprocessed marcxml record creates a new
@@ -110,6 +111,8 @@ public class NormalizationService extends GenericMetadataService {
 	 * A list of errors to add to the output record
 	 */
 	protected List<String> outputRecordErrors = new ArrayList<String>();
+	
+	protected XmlHelper xmlHelper = new XmlHelper();
 
     /**
 	 * Construct a NormalizationService Object
@@ -339,8 +342,7 @@ public class NormalizationService extends GenericMetadataService {
 			// instead of inserting a new Record
 			
 			// If there was already a processed record for the record we just processed, update it
-			if(record.getSuccessors() != null && record.getSuccessors().size() > 0)
-			{
+			if(record.getSuccessors() != null && record.getSuccessors().size() > 0) {
 				if(LOG.isDebugEnabled())
 					LOG.debug("Updating the record which was processed from an older version of the record we just processed.");
 
@@ -349,7 +351,7 @@ public class NormalizationService extends GenericMetadataService {
 				Record oldNormalizedRecord = record.getSuccessors().get(0);
 
 				// Set the XML to the new normalized XML
-				oldNormalizedRecord.setOaiXml((new XMLOutputter()).outputString(normalizedXml.getModifiedMarcXml()));
+				oldNormalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
 
 				// Mark the record as not being deleted
 				oldNormalizedRecord.setDeleted(false);

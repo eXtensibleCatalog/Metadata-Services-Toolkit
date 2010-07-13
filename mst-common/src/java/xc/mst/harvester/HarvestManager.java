@@ -8,15 +8,14 @@
   */
 package xc.mst.harvester;
 
+import gnu.trove.TObjectLongHashMap;
+
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.httpclient.HttpException;
@@ -59,7 +58,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		UTC_FORMATTER = UTC_FORMATTER.withZone(DateTimeZone.UTC);
 	}
 	//        Map<MostSigToken, ListOfAllOaoIdsThatHaveToken<EntireOaiId, recordId>>
-	protected Map<String, List<Object[]>> harvestCache = new HashMap<String, List<Object[]>>();
+	protected TObjectLongHashMap harvestCache = new TObjectLongHashMap();
 	
 	protected HarvestSchedule harvestSchedule = null;
 	protected List<HarvestScheduleStep> harvestScheduleSteps = null;
@@ -393,33 +392,14 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 				// record already exists in the database
 				// BDA: tell me why I care?
 				//Record oldRecord = (firstHarvest ? null : recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId));
-				String mostSigToken = getUtil().getMostSignificantToken(record.getHarvestedOaiIdentifier());
-				List<Object[]> entries = harvestCache.get(mostSigToken);
-				if (entries == null) {
-					entries = new ArrayList<Object[]>();
-					harvestCache.put(mostSigToken, entries);
-				}
-				Object[] entry = null;
-				
-				for (Object[] objArr : entries) {
-					if (objArr[0].equals(record.getHarvestedOaiIdentifier())) {
-						entry = objArr;
-						break;
-					}
-				}
-				
-				if (entry == null) {
+				String nonRedundantId = getUtil().getNonRedundantOaiId(record.getHarvestedOaiIdentifier());
+				Long recordId = harvestCache.get(nonRedundantId);
+				if (recordId == 0) {
 					getRepositoryDAO().injectId(record);
-					log.debug("no record found for oai-id:"+record.getHarvestedOaiIdentifier());
-					entry = new Object[2];
-					entry[0] = record.getHarvestedOaiIdentifier();
-					entry[1] = record.getId();
-					entries.add(entry);
+					harvestCache.put(nonRedundantId, record.getId());
 				} else {
-					log.debug("record exists for oai-id:"+entry[0]+" recordId:"+entry[1]);
-					record.setId((Long)entry[1]);
+					record.setId(recordId);
 				}
-				
 				repo.addRecord(record);
 
 				TimingLogger.stop("erl - 3");

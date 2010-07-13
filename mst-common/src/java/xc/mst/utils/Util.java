@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.core.io.ClassPathResource;
@@ -142,17 +143,15 @@ public class Util {
 		return sb.toString();
 	}
 	
-	public String getMostSignificantToken(String oaiId) {
-		return getMostSignificantToken(oaiId, MSTConfiguration.getInstance().getProperty("harvest.mostSignificantToken"));
-	}
-	
-	public String getMostSignificantToken(String oaiId, String delimiter) {
-		int idx0 = oaiId.lastIndexOf(delimiter);
-		String mostSigToken = oaiId;
-		if (idx0 > -1) {
-			mostSigToken = oaiId.substring(idx0+1);
+	protected List<String> redundantTokens = null;
+	public String getNonRedundantOaiId(String oaiId) {
+		if (redundantTokens == null) {
+			redundantTokens = MSTConfiguration.getInstance().getPropertyAsList("harvest.redundantToken");
 		}
-		return mostSigToken;
+		for (String redundantToken : redundantTokens) {
+			oaiId = oaiId.replaceAll(redundantToken, "");	
+		}
+		return oaiId;
 	}
 
 }

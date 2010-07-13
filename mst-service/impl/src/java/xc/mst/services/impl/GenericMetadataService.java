@@ -390,21 +390,23 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	}
 	
 	protected void injectKnownPredecessors(Record in, Record out) {
-		if (outputSet != null) {
-			out.addSet(outputSet);
+		if (in.getId() > -1) {
+			if (outputSet != null) {
+				out.addSet(outputSet);
+			}
+			TLongHashSet tlal = (TLongHashSet)predecessorKeyedMap.get(in.getId());
+			if (tlal == null) {
+				tlal = new TLongHashSet();
+				predecessorKeyedMap.put(in.getId(), tlal);
+			}
+			tlal.add(out.getId());
+			
+			tlal = (TLongHashSet)successorKeyedMap.get(out.getId());
+			if (tlal == null) {
+				tlal = new TLongHashSet();
+				successorKeyedMap.put(out.getId(), tlal);
+			}
+			tlal.add(in.getId());
 		}
-		TLongHashSet tlal = (TLongHashSet)predecessorKeyedMap.get(in.getId());
-		if (tlal == null) {
-			tlal = new TLongHashSet();
-			predecessorKeyedMap.put(in.getId(), tlal);
-		}
-		tlal.add(out.getId());
-		
-		tlal = (TLongHashSet)successorKeyedMap.get(out.getId());
-		if (tlal == null) {
-			tlal = new TLongHashSet();
-			successorKeyedMap.put(out.getId(), tlal);
-		}
-		tlal.add(in.getId());
 	}
 }
