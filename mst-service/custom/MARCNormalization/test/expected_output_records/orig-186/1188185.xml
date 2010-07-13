@@ -92,16 +92,16 @@
         <marc:subfield code="a">Songs, German.</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="910" ind1=" " ind2=" ">
-        <marc:subfield code="a">950805</marc:subfield>
+        <marc:subfield code="a">  950805         </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="911" ind1=" " ind2=" ">
         <marc:subfield code="a">u</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">/Stack</marc:subfield>
-        <marc:subfield code="m">SMONO</marc:subfield>
+        <marc:subfield code="m">SMONO </marc:subfield>
         <marc:subfield code="s">M1620 .S378</marc:subfield>
-        <marc:subfield code="c">1</marc:subfield>
+        <marc:subfield code="c"> 1</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="931" ind1=" " ind2=" ">
         <marc:subfield code="a">Image</marc:subfield>

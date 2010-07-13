@@ -22,7 +22,7 @@
       </marc:datafield>
       <marc:datafield tag="852" ind1="0" ind2=" ">
         <marc:subfield code="b">RheesStack</marc:subfield>
-        <marc:subfield code="h">PR509 .R47</marc:subfield>
+        <marc:subfield code="h">PR509 .R47 </marc:subfield>
       </marc:datafield>
     </marc:record>
   </metadata>

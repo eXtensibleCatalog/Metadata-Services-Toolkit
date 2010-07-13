@@ -26,10 +26,10 @@
         <marc:subfield code="d">HLS</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="099" ind1=" " ind2=" ">
-        <marc:subfield code="a">PRINT</marc:subfield>
-        <marc:subfield code="a">AC2</marc:subfield>
-        <marc:subfield code="a">.E12</marc:subfield>
-        <marc:subfield code="a">Ser.2</marc:subfield>
+        <marc:subfield code="a">PRINT </marc:subfield>
+        <marc:subfield code="a"> AC2 </marc:subfield>
+        <marc:subfield code="a"> .E12 </marc:subfield>
+        <marc:subfield code="a"> Ser.2</marc:subfield>
         <marc:subfield code="a">no. 6422.</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="049" ind1=" " ind2=" ">

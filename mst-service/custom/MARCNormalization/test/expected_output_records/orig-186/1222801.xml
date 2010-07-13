@@ -15,9 +15,9 @@
       <marc:controlfield tag="001">1222801</marc:controlfield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="005">20020219132717.0</marc:controlfield>
-      <marc:controlfield tag="008">930317s1993    mdu      b   f001 0 eng</marc:controlfield>
+      <marc:controlfield tag="008">930317s1993    mdu      b   f001 0 eng  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">93127790</marc:subfield>
+        <marc:subfield code="a">   93127790 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)27853547</marc:subfield>

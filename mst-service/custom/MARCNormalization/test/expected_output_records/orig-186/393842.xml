@@ -14,9 +14,9 @@
       <marc:leader>01276nam a22003250  45 A</marc:leader>
       <marc:controlfield tag="001">393842</marc:controlfield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
-      <marc:controlfield tag="008">791120s1934    nyua          000 0 eng</marc:controlfield>
+      <marc:controlfield tag="008">791120s1934    nyua          000 0 eng  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">34005267</marc:subfield>
+        <marc:subfield code="a">   34005267 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)5719070</marc:subfield>
@@ -42,7 +42,7 @@
         <marc:subfield code="b">.K83b</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="099" ind1=" " ind2=" ">
-        <marc:subfield code="a">HQ766 .K83b</marc:subfield>
+        <marc:subfield code="a">HQ766 .K83b </marc:subfield>
         <marc:subfield code="a">HQ 766 K83b</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="100" ind1="1" ind2=" ">
@@ -84,26 +84,26 @@
         <marc:subfield code="a">Birth Control Clinical Research Bureau (New York, N.Y.)</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="910" ind1=" " ind2=" ">
-        <marc:subfield code="a">951118</marc:subfield>
+        <marc:subfield code="a">  951118        </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="911" ind1=" " ind2=" ">
         <marc:subfield code="a">u</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
-        <marc:subfield code="l">Stack</marc:subfield>
-        <marc:subfield code="m">RMON</marc:subfield>
+        <marc:subfield code="l">Stack </marc:subfield>
+        <marc:subfield code="m">RMON  </marc:subfield>
         <marc:subfield code="s">HQ766 .K83b</marc:subfield>
         <marc:subfield code="b">39087007237250</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
-        <marc:subfield code="l">Stack</marc:subfield>
-        <marc:subfield code="m">RMON</marc:subfield>
+        <marc:subfield code="l">Stack </marc:subfield>
+        <marc:subfield code="m">RMON  </marc:subfield>
         <marc:subfield code="s">HQ766 .K83b</marc:subfield>
         <marc:subfield code="b">39087007237243</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">Stack*</marc:subfield>
-        <marc:subfield code="m">MMON</marc:subfield>
+        <marc:subfield code="m">MMON  </marc:subfield>
         <marc:subfield code="s">HQ 766 K83b</marc:subfield>
         <marc:subfield code="b">39087004557585</marc:subfield>
       </marc:datafield>

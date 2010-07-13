@@ -13,9 +13,9 @@
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
       <marc:leader>01264pam a2200361 a 45 A</marc:leader>
       <marc:controlfield tag="001">1045129</marc:controlfield>
-      <marc:controlfield tag="008">901001s1991    ilua     bk   000 0 eng</marc:controlfield>
+      <marc:controlfield tag="008">901001s1991    ilua     bk   000 0 eng  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">90020316 /MN</marc:subfield>
+        <marc:subfield code="a">   90020316 /MN</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="020" ind1=" " ind2=" ">
         <marc:subfield code="a">0226042537 (acid-free paper)</marc:subfield>
@@ -140,11 +140,11 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="947" ind1=" " ind2=" ">
-        <marc:subfield code="a">0226042537</marc:subfield>
+        <marc:subfield code="a">0226042537 </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="947" ind1=" " ind2=" ">
-        <marc:subfield code="a">0226042545</marc:subfield>
+        <marc:subfield code="a">0226042545 </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:controlfield tag="003">NRU</marc:controlfield>

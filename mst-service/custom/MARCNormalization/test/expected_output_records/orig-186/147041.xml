@@ -13,9 +13,9 @@
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
       <marc:leader>01328pam a22003610  45 A</marc:leader>
       <marc:controlfield tag="001">147041</marc:controlfield>
-      <marc:controlfield tag="008">770201r19771764nyu           000 0aeng</marc:controlfield>
+      <marc:controlfield tag="008">770201r19771764nyu           000 0aeng  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">77000869</marc:subfield>
+        <marc:subfield code="a">   77000869 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="020" ind1=" " ind2=" ">
         <marc:subfield code="a">0824016343 :</marc:subfield>
@@ -139,7 +139,7 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="947" ind1=" " ind2=" ">
-        <marc:subfield code="a">0824016343</marc:subfield>
+        <marc:subfield code="a">0824016343 </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:controlfield tag="003">NRU</marc:controlfield>

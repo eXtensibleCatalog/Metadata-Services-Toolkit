@@ -15,7 +15,7 @@
       <marc:controlfield tag="001">1130480</marc:controlfield>
       <marc:controlfield tag="008">750327d19371970nyuzx m       0   a0eng u</marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">38005696</marc:subfield>
+        <marc:subfield code="a">   38005696 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="019" ind1=" " ind2=" ">
         <marc:subfield code="a">1644900</marc:subfield>

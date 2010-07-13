@@ -96,20 +96,20 @@
         <marc:subfield code="t">Countryside and suburban life</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="910" ind1=" " ind2=" ">
-        <marc:subfield code="a">950805</marc:subfield>
+        <marc:subfield code="a">  950805        </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="911" ind1=" " ind2=" ">
         <marc:subfield code="a">p</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="930" ind1=" " ind2=" ">
-        <marc:subfield code="l">Micro</marc:subfield>
-        <marc:subfield code="d">FILM Una191 reels 418, 1420-1481</marc:subfield>
-        <marc:subfield code="j">v.1-121</marc:subfield>
-        <marc:subfield code="g">5</marc:subfield>
+        <marc:subfield code="l">Micro </marc:subfield>
+        <marc:subfield code="d"> FILM Una191 reels 418, 1420-1481 </marc:subfield>
+        <marc:subfield code="j"> v.1-121 </marc:subfield>
+        <marc:subfield code="g"> 5</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
-        <marc:subfield code="l">Micro</marc:subfield>
-        <marc:subfield code="m">RMIC</marc:subfield>
+        <marc:subfield code="l">Micro </marc:subfield>
+        <marc:subfield code="m">RMIC  </marc:subfield>
         <marc:subfield code="s">FILM Una191 reels 418, 1420- 1481</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="931" ind1=" " ind2=" ">

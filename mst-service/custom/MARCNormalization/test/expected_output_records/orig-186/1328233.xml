@@ -16,9 +16,9 @@
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="005">19961012094315.0</marc:controlfield>
       <marc:controlfield tag="007">hduafv---baca</marc:controlfield>
-      <marc:controlfield tag="008">780530d18011821miuuu   a     0   a0eng</marc:controlfield>
+      <marc:controlfield tag="008">780530d18011821miuuu   a     0   a0eng  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">sf 88091571</marc:subfield>
+        <marc:subfield code="a">sf 88091571 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)3938164</marc:subfield>
@@ -42,8 +42,8 @@
         <marc:subfield code="b">A51p2</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="099" ind1=" " ind2=" ">
-        <marc:subfield code="a">FILM</marc:subfield>
-        <marc:subfield code="a">Una191</marc:subfield>
+        <marc:subfield code="a">FILM </marc:subfield>
+        <marc:subfield code="a"> Una191</marc:subfield>
         <marc:subfield code="a">40-42, 220-227.</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="049" ind1=" " ind2=" ">

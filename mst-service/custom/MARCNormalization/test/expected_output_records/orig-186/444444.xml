@@ -14,9 +14,9 @@
       <marc:leader>00994nam a22003250  45 A</marc:leader>
       <marc:controlfield tag="001">444444</marc:controlfield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
-      <marc:controlfield tag="008">750321s1913    enk           000 0 eng</marc:controlfield>
+      <marc:controlfield tag="008">750321s1913    enk           000 0 eng  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">13024871</marc:subfield>
+        <marc:subfield code="a">   13024871 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="020" ind1=" " ind2=" ">
         <marc:subfield code="a">0404078168</marc:subfield>
@@ -45,10 +45,10 @@
       </marc:datafield>
       <marc:datafield tag="090" ind1=" " ind2=" ">
         <marc:subfield code="a">PR509</marc:subfield>
-        <marc:subfield code="b">.R47</marc:subfield>
+        <marc:subfield code="b">.R47 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="099" ind1=" " ind2=" ">
-        <marc:subfield code="a">PR509 .R47</marc:subfield>
+        <marc:subfield code="a">PR509 .R47 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="100" ind1="1" ind2=" ">
         <marc:subfield code="a">Rhys, Ernest,</marc:subfield>
@@ -86,21 +86,21 @@
         <marc:subfield code="a">Channels of English literature.</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="910" ind1=" " ind2=" ">
-        <marc:subfield code="a">950906</marc:subfield>
+        <marc:subfield code="a">  950906        </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="911" ind1=" " ind2=" ">
         <marc:subfield code="a">u</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
-        <marc:subfield code="l">Stack</marc:subfield>
-        <marc:subfield code="m">RMON</marc:subfield>
-        <marc:subfield code="s">PR509 .R47</marc:subfield>
+        <marc:subfield code="l">Stack </marc:subfield>
+        <marc:subfield code="m">RMON  </marc:subfield>
+        <marc:subfield code="s">PR509 .R47 </marc:subfield>
         <marc:subfield code="b">39087005864147</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
-        <marc:subfield code="l">Stack</marc:subfield>
-        <marc:subfield code="m">RMON</marc:subfield>
-        <marc:subfield code="s">PR509 .R47</marc:subfield>
+        <marc:subfield code="l">Stack </marc:subfield>
+        <marc:subfield code="m">RMON  </marc:subfield>
+        <marc:subfield code="s">PR509 .R47 </marc:subfield>
         <marc:subfield code="b">39087005864154</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="931" ind1=" " ind2=" ">

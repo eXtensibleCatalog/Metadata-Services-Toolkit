@@ -16,8 +16,8 @@
       <marc:controlfield tag="005">20060410153300.0</marc:controlfield>
       <marc:controlfield tag="008">900813c19899999iv ar     s   0    0eng d</marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">94643540</marc:subfield>
-        <marc:subfield code="z">sn 91022371</marc:subfield>
+        <marc:subfield code="a">   94643540 </marc:subfield>
+        <marc:subfield code="z">sn 91022371 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)22211635</marc:subfield>
@@ -165,7 +165,7 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="939" ind1=" " ind2=" ">
-        <marc:subfield code="a">1989-</marc:subfield>
+        <marc:subfield code="a">1989-    </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="941" ind1=" " ind2=" ">

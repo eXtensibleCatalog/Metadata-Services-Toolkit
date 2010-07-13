@@ -14,11 +14,11 @@
       <marc:leader>02256nas a2200541   4500</marc:leader>
       <marc:controlfield tag="001">3395662</marc:controlfield>
       <marc:controlfield tag="005">20070106073108.0</marc:controlfield>
-      <marc:controlfield tag="006">m        d</marc:controlfield>
-      <marc:controlfield tag="007">cr  n</marc:controlfield>
-      <marc:controlfield tag="008">740411c19709999ilumn1p s     0   a0eng</marc:controlfield>
+      <marc:controlfield tag="006">m        d        </marc:controlfield>
+      <marc:controlfield tag="007">cr  n         </marc:controlfield>
+      <marc:controlfield tag="008">740411c19709999ilumn1p s     0   a0eng  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">70021767</marc:subfield>
+        <marc:subfield code="a">   70021767 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="016" ind1="7" ind2=" ">
         <marc:subfield code="a">A25140000</marc:subfield>
@@ -253,7 +253,7 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="939" ind1=" " ind2=" ">
-        <marc:subfield code="a">1970-</marc:subfield>
+        <marc:subfield code="a">1970-    </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="941" ind1=" " ind2=" ">

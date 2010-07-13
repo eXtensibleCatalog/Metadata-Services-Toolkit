@@ -14,7 +14,7 @@
       <marc:leader>00950cam a22002890  45 A</marc:leader>
       <marc:controlfield tag="001">512520</marc:controlfield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
-      <marc:controlfield tag="005">950906</marc:controlfield>
+      <marc:controlfield tag="005">  950906        </marc:controlfield>
       <marc:controlfield tag="008">790621s1978    ne a          001 0 eng d</marc:controlfield>
       <marc:datafield tag="020" ind1=" " ind2=" ">
         <marc:subfield code="a">072040665X (vol.).</marc:subfield>
@@ -81,7 +81,7 @@
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">Stack*</marc:subfield>
-        <marc:subfield code="m">MMON</marc:subfield>
+        <marc:subfield code="m">MMON  </marc:subfield>
         <marc:subfield code="s">QH205 .P895 v.7 1978</marc:subfield>
         <marc:subfield code="b">39087004692812</marc:subfield>
       </marc:datafield>
@@ -117,11 +117,11 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="947" ind1=" " ind2=" ">
-        <marc:subfield code="a">072040665X</marc:subfield>
+        <marc:subfield code="a">072040665X </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="947" ind1=" " ind2=" ">
-        <marc:subfield code="a">0720442508</marc:subfield>
+        <marc:subfield code="a">0720442508 </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="240" ind1="0" ind2="0">

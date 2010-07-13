@@ -30,8 +30,8 @@
         <marc:subfield code="b">A51p2</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="099" ind1=" " ind2=" ">
-        <marc:subfield code="a">FILM</marc:subfield>
-        <marc:subfield code="a">Una191</marc:subfield>
+        <marc:subfield code="a">FILM </marc:subfield>
+        <marc:subfield code="a"> Una191</marc:subfield>
         <marc:subfield code="a">747-748, 1720-1726, 1936.</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="049" ind1=" " ind2=" ">

@@ -17,7 +17,7 @@
       <marc:controlfield tag="005">19860410212206.0</marc:controlfield>
       <marc:controlfield tag="008">730226s1947    sz            000 0 ger u</marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">49052183</marc:subfield>
+        <marc:subfield code="a">   49052183 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)564693</marc:subfield>
@@ -87,29 +87,29 @@
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">/Csstk</marc:subfield>
-        <marc:subfield code="m">SMONC</marc:subfield>
+        <marc:subfield code="m">SMONC </marc:subfield>
         <marc:subfield code="s">ML159.B5 V8</marc:subfield>
-        <marc:subfield code="c">1</marc:subfield>
+        <marc:subfield code="c"> 1</marc:subfield>
         <marc:subfield code="b">39087008624530</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">/Csstk</marc:subfield>
-        <marc:subfield code="m">SMONC</marc:subfield>
+        <marc:subfield code="m">SMONC </marc:subfield>
         <marc:subfield code="s">ML159.B5 V8</marc:subfield>
-        <marc:subfield code="c">2</marc:subfield>
+        <marc:subfield code="c"> 2</marc:subfield>
         <marc:subfield code="b">39087008624548</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">/Micro</marc:subfield>
-        <marc:subfield code="m">SMIC</marc:subfield>
+        <marc:subfield code="m">SMIC  </marc:subfield>
         <marc:subfield code="s">ML159.B5 V8</marc:subfield>
-        <marc:subfield code="c">3</marc:subfield>
+        <marc:subfield code="c"> 3</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">/Micro</marc:subfield>
-        <marc:subfield code="m">SMIC</marc:subfield>
+        <marc:subfield code="m">SMIC  </marc:subfield>
         <marc:subfield code="s">ML159.B5 V8</marc:subfield>
-        <marc:subfield code="c">4</marc:subfield>
+        <marc:subfield code="c"> 4</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="931" ind1=" " ind2=" ">
         <marc:subfield code="a">Text</marc:subfield>

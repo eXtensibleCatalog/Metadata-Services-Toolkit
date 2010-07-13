@@ -16,19 +16,19 @@
       <marc:controlfield tag="005">20071221140426.0</marc:controlfield>
       <marc:controlfield tag="008">990510d19931997nyuar         1    0eng d</marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">00238118</marc:subfield>
-        <marc:subfield code="z">95126894</marc:subfield>
-        <marc:subfield code="z">96208307</marc:subfield>
-        <marc:subfield code="z">97116436</marc:subfield>
-        <marc:subfield code="z">97125305</marc:subfield>
-        <marc:subfield code="z">97125431</marc:subfield>
-        <marc:subfield code="z">00501288</marc:subfield>
-        <marc:subfield code="z">00689022</marc:subfield>
-        <marc:subfield code="z">00710757</marc:subfield>
-        <marc:subfield code="z">00711782</marc:subfield>
-        <marc:subfield code="z">2001267319</marc:subfield>
-        <marc:subfield code="z">2001277897</marc:subfield>
-        <marc:subfield code="z">2004300064</marc:subfield>
+        <marc:subfield code="a">   00238118 </marc:subfield>
+        <marc:subfield code="z">   95126894 </marc:subfield>
+        <marc:subfield code="z">   96208307 </marc:subfield>
+        <marc:subfield code="z">   97116436 </marc:subfield>
+        <marc:subfield code="z">   97125305 </marc:subfield>
+        <marc:subfield code="z">   97125431 </marc:subfield>
+        <marc:subfield code="z">   00501288 </marc:subfield>
+        <marc:subfield code="z">   00689022 </marc:subfield>
+        <marc:subfield code="z">   00710757 </marc:subfield>
+        <marc:subfield code="z">   00711782 </marc:subfield>
+        <marc:subfield code="z">  2001267319</marc:subfield>
+        <marc:subfield code="z">  2001277897</marc:subfield>
+        <marc:subfield code="z">  2004300064</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)38095179</marc:subfield>

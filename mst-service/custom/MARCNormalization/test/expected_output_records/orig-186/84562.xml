@@ -15,9 +15,9 @@
       <marc:controlfield tag="001">84562</marc:controlfield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="005">19970217184634.0</marc:controlfield>
-      <marc:controlfield tag="008">950531s1995    enka     b    001 0 eng</marc:controlfield>
+      <marc:controlfield tag="008">950531s1995    enka     b    001 0 eng  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">95030097</marc:subfield>
+        <marc:subfield code="a">   95030097 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="020" ind1=" " ind2=" ">
         <marc:subfield code="a">0860914828 (hb)</marc:subfield>
@@ -87,8 +87,8 @@
         <marc:subfield code="a">p</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
-        <marc:subfield code="l">Stack</marc:subfield>
-        <marc:subfield code="m">RMON</marc:subfield>
+        <marc:subfield code="l">Stack </marc:subfield>
+        <marc:subfield code="m">RMON </marc:subfield>
         <marc:subfield code="s">D16.15 .O83 1995</marc:subfield>
         <marc:subfield code="b">39087017140635</marc:subfield>
       </marc:datafield>
@@ -124,11 +124,11 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="947" ind1=" " ind2=" ">
-        <marc:subfield code="a">0860914828</marc:subfield>
+        <marc:subfield code="a">0860914828 </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="947" ind1=" " ind2=" ">
-        <marc:subfield code="a">0860916529</marc:subfield>
+        <marc:subfield code="a">0860916529 </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="240" ind1="0" ind2="0">

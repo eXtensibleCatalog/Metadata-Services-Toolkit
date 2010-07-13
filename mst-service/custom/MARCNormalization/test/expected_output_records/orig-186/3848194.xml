@@ -14,9 +14,9 @@
       <marc:leader>01630cam a22004574a 4500</marc:leader>
       <marc:controlfield tag="001">3848194</marc:controlfield>
       <marc:controlfield tag="005">20080721080325.0</marc:controlfield>
-      <marc:controlfield tag="008">080711s2008    enkb     b    001 0beng</marc:controlfield>
+      <marc:controlfield tag="008">080711s2008    enkb     b    001 0beng  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">2007035102</marc:subfield>
+        <marc:subfield code="a">  2007035102</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)171150763</marc:subfield>

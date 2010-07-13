@@ -15,7 +15,7 @@
       <marc:controlfield tag="001">2941762</marc:controlfield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="005">20050316094922.0</marc:controlfield>
-      <marc:controlfield tag="008">050307</marc:controlfield>
+      <marc:controlfield tag="008">050307                          </marc:controlfield>
       <marc:datafield tag="852" ind1=" " ind2=" ">
         <marc:subfield code="b">Internet</marc:subfield>
       </marc:datafield>
