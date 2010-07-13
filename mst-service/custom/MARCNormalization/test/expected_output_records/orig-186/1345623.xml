@@ -1,13 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
     <identifier>oai:mst.rochester.edu:marcnormalization/31</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:31</predecessor>
-    </predecessors>
-    <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>active</status>
+    <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10030.xml</oldFileName>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">

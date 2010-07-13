@@ -1,13 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
     <identifier>oai:mst.rochester.edu:marcnormalization/47</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:47</predecessor>
-    </predecessors>
-    <setSpec>MARCXML Bibliographic Records</setSpec>
-    <status>active</status>
+    <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10046.xml</oldFileName>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -270,6 +266,14 @@
         <marc:subfield code="a">Monograph/Item</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sound</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sound recording</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
       <marc:datafield tag="934" ind1=" " ind2=" ">
         <marc:subfield code="a">Sound disk</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
@@ -393,6 +397,11 @@
         <marc:subfield code="d">fl. 1535-1560.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">11\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="959" ind1="1" ind2="2">
+        <marc:subfield code="a">Vásquez, Juan,</marc:subfield>
+        <marc:subfield code="d">fl. 1535-1560.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">12\c</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="959" ind1="1" ind2="2">
@@ -406,6 +415,11 @@
         <marc:subfield code="d">1550-1605.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">14\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="959" ind1="1" ind2="2">
+        <marc:subfield code="a">Vecchi, Orazio,</marc:subfield>
+        <marc:subfield code="d">1550-1605.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
         <marc:subfield code="8">15\c</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="959" ind1="1" ind2="2">
