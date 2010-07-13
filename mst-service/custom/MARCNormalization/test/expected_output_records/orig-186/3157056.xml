@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
     <identifier>oai:mst.rochester.edu:marcnormalization/104</identifier>
-    <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10103.xml</oldFileName>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:104</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -109,10 +113,6 @@
         <marc:subfield code="a">Monograph/Item</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="933" ind1=" " ind2=" ">
-        <marc:subfield code="a">Electronic resource</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="934" ind1=" " ind2=" ">
         <marc:subfield code="a">Remote</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
@@ -136,10 +136,6 @@
         <marc:subfield code="a">Congresses</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1="1" ind2="2">
-        <marc:subfield code="a">Congresses</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="965" ind1=" " ind2="0">
         <marc:subfield code="a">Congresses and conventions</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
@@ -154,10 +150,6 @@
       </marc:datafield>
       <marc:datafield tag="969" ind1="1" ind2="2">
         <marc:subfield code="v">Directory.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Databases.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">

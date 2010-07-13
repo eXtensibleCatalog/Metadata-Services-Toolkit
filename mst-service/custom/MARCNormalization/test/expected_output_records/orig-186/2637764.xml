@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
     <identifier>oai:mst.rochester.edu:marcnormalization/88</identifier>
-    <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10087.xml</oldFileName>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:88</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -204,14 +208,6 @@
         <marc:subfield code="x">History</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="x">History</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="963" ind1=" " ind2="0">
-        <marc:subfield code="y">Civil War, 1861-1865</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="963" ind1=" " ind2="0">
         <marc:subfield code="y">Civil War, 1861-1865</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
@@ -222,18 +218,6 @@
       </marc:datafield>
       <marc:datafield tag="967" ind1=" " ind2="0">
         <marc:subfield code="a">Georgia</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Drama.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Drama.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="969" ind1=" " ind2="0">
-        <marc:subfield code="v">Drama.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="969" ind1=" " ind2="0">

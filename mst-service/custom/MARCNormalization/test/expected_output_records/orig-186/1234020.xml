@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header>
     <identifier>oai:mst.rochester.edu:marcnormalization/23</identifier>
-    <oldFileName>oai-mst.rochester.edu-MetadataServicesToolkit MARCNormalization 10022.xml</oldFileName>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:23</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+    <status>active</status>
   </header>
   <metadata>
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
@@ -145,16 +149,8 @@
         <marc:subfield code="x">Maps.</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:datafield tag="965" ind1=" " ind2="0">
-        <marc:subfield code="x">Maps.</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
       <marc:datafield tag="967" ind1=" " ind2="0">
         <marc:subfield code="a">Northeastern States</marc:subfield>
-        <marc:subfield code="5">NRU</marc:subfield>
-      </marc:datafield>
-      <marc:datafield tag="967" ind1=" " ind2="0">
-        <marc:subfield code="z">Northeastern States</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
     </marc:record>
