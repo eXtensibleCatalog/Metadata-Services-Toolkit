@@ -16,7 +16,7 @@
       <marc:controlfield tag="005">20070115150106.0</marc:controlfield>
       <marc:controlfield tag="008">061003s2006    nyua     b    000 0 eng d</marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">2006905843</marc:subfield>
+        <marc:subfield code="a">  2006905843</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)71819834</marc:subfield>

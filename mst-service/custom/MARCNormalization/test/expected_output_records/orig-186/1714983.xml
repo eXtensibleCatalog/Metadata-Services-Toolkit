@@ -14,7 +14,7 @@
       <marc:leader>02259cam a2200505 i 4500</marc:leader>
       <marc:controlfield tag="001">1714983</marc:controlfield>
       <marc:controlfield tag="005">20080731133825.0</marc:controlfield>
-      <marc:controlfield tag="008">990621b        ilua     m    000 0 eng</marc:controlfield>
+      <marc:controlfield tag="008">990621b        ilua     m    000 0 eng  </marc:controlfield>
       <marc:datafield tag="024" ind1="4" ind2="1">
         <marc:subfield code="a">8756-2324(198603/04)65:21.4QTP;1-E</marc:subfield>
       </marc:datafield>

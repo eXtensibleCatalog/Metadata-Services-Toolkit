@@ -14,9 +14,9 @@
       <marc:leader>01214ccm a2200349   45 A</marc:leader>
       <marc:controlfield tag="001">1012755</marc:controlfield>
       <marc:controlfield tag="005">20020212200426.0</marc:controlfield>
-      <marc:controlfield tag="008">901220s1957    maucca         n    lat</marc:controlfield>
+      <marc:controlfield tag="008">901220s1957    maucca         n    lat  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">m  57001938</marc:subfield>
+        <marc:subfield code="a">m  57001938 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)22879014</marc:subfield>

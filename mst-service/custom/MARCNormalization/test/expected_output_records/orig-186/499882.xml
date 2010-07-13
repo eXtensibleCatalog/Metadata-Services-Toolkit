@@ -16,7 +16,7 @@
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="008">731224s1953    fr ch    b    000 0bfremc</marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">a  54005405</marc:subfield>
+        <marc:subfield code="a">a  54005405 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)766614</marc:subfield>
@@ -85,16 +85,16 @@
         <marc:subfield code="v">1.</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="910" ind1=" " ind2=" ">
-        <marc:subfield code="a">951118</marc:subfield>
+        <marc:subfield code="a">  951118        </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="911" ind1=" " ind2=" ">
         <marc:subfield code="a">u</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">/Stack</marc:subfield>
-        <marc:subfield code="m">SMONO</marc:subfield>
+        <marc:subfield code="m">SMONO </marc:subfield>
         <marc:subfield code="s">ML410.D28 I48</marc:subfield>
-        <marc:subfield code="c">1</marc:subfield>
+        <marc:subfield code="c"> 1</marc:subfield>
         <marc:subfield code="b">39087004973642</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="931" ind1=" " ind2=" ">

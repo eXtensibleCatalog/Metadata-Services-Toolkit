@@ -236,7 +236,7 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="939" ind1=" " ind2=" ">
-        <marc:subfield code="a">1849-</marc:subfield>
+        <marc:subfield code="a">1849-    </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="941" ind1=" " ind2=" ">

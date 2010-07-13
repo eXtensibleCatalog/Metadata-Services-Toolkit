@@ -15,7 +15,7 @@
       <marc:controlfield tag="001">852960</marc:controlfield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="005">20050824135454.0</marc:controlfield>
-      <marc:controlfield tag="008">860910m1960    au zzm         n    N/A</marc:controlfield>
+      <marc:controlfield tag="008">860910m1960    au zzm         n    N/A  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
         <marc:subfield code="a">m  61000295 /M/r86</marc:subfield>
       </marc:datafield>

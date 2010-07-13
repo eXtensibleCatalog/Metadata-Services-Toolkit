@@ -11,6 +11,7 @@ package xc.mst.repo;
 
 import gnu.trove.TLongHashSet;
 import gnu.trove.TLongObjectHashMap;
+import gnu.trove.TObjectLongHashMap;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -376,21 +377,13 @@ public class RepositoryDAO extends BaseDAO {
 		}
 	}
 	
-	public void populateHarvestCache(String name, Map<String, List<Object[]>> harvestCache) {
+	public void populateHarvestCache(String name, TObjectLongHashMap harvestCache) {
 		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList("select record_id, oai_id from "+getTableName(name, RECORD_OAI_IDS));
 		for (Map<String, Object> row : rowList) {
 			Long recordId = (Long)row.get("record_id");
 			String oaiId = (String)row.get("oai_id");
-			String mostSigToken = getUtil().getMostSignificantToken(oaiId);
-			List<Object[]> entries = harvestCache.get(mostSigToken);
-			if (entries == null) {
-				entries = new ArrayList<Object[]>();
-				harvestCache.put(mostSigToken, entries);
-			}
-			Object[] entry = new Object[2];
-			entry[0] = oaiId;
-			entry[1] = recordId;
-			entries.add(entry);
+			oaiId = getUtil().getNonRedundantOaiId(oaiId);
+			harvestCache.put(oaiId, recordId);
 		}
 	}
 	

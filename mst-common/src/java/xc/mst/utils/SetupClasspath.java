@@ -21,6 +21,7 @@ import org.apache.log4j.PropertyConfigurator;
 public class SetupClasspath {
 	
 	public static void setupClasspath(String dir) {
+		System.setProperty("line.separator", "\n");
 		if (dir == null) {
 			dir = "MetadataServicesToolkit";
 		}

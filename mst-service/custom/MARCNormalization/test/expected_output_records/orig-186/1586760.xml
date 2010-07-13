@@ -15,9 +15,9 @@
       <marc:controlfield tag="001">1586760</marc:controlfield>
       <marc:controlfield tag="005">20020813123354.0</marc:controlfield>
       <marc:controlfield tag="007">sdubsmenn----e</marc:controlfield>
-      <marc:controlfield tag="008">750930t19751974ohumun   df         mul</marc:controlfield>
+      <marc:controlfield tag="008">750930t19751974ohumun   df         mul  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">75750655 /R</marc:subfield>
+        <marc:subfield code="a">   75750655 /R</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)1663487</marc:subfield>

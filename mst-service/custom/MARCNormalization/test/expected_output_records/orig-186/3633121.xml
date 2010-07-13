@@ -16,9 +16,9 @@
       <marc:controlfield tag="005">20071115105455.0</marc:controlfield>
       <marc:controlfield tag="006">smu d s     0    2</marc:controlfield>
       <marc:controlfield tag="007">cr |||||||||||</marc:controlfield>
-      <marc:controlfield tag="008">000727m19989999pau     s     000 0 eng</marc:controlfield>
+      <marc:controlfield tag="008">000727m19989999pau     s     000 0 eng  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">2003615712</marc:subfield>
+        <marc:subfield code="a">  2003615712</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)45453899</marc:subfield>

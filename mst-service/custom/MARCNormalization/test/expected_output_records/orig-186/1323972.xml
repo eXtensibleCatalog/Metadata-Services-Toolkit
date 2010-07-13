@@ -17,7 +17,7 @@
       <marc:controlfield tag="007">hduafv---baca</marc:controlfield>
       <marc:controlfield tag="008">831207d18821905miuuu p a     0   a0eng d</marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">sf 89092178</marc:subfield>
+        <marc:subfield code="a">sf 89092178 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="9">ocm10197508</marc:subfield>
@@ -41,8 +41,8 @@
         <marc:subfield code="b">A51p2</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="099" ind1=" " ind2=" ">
-        <marc:subfield code="a">FILM</marc:subfield>
-        <marc:subfield code="a">Una191</marc:subfield>
+        <marc:subfield code="a">FILM </marc:subfield>
+        <marc:subfield code="a"> Una191</marc:subfield>
         <marc:subfield code="a">1075-1087.</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="049" ind1=" " ind2=" ">

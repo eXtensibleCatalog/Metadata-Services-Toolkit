@@ -16,7 +16,7 @@
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="004">970288</marc:controlfield>
       <marc:controlfield tag="005">19991110195050.0</marc:controlfield>
-      <marc:controlfield tag="007">he bm</marc:controlfield>
+      <marc:controlfield tag="007">he bm        </marc:controlfield>
       <marc:controlfield tag="008">9612090u    0   4001ua   0000000</marc:controlfield>
       <marc:datafield tag="014" ind1=" " ind2=" ">
         <marc:subfield code="a">00914465</marc:subfield>

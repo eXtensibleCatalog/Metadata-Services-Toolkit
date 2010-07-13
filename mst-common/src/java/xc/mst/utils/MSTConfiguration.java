@@ -11,6 +11,8 @@
 package xc.mst.utils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -134,6 +136,18 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	public String getProperty(String name) {
 		return getProperty(name, null);
 	}
+	
+	public List<String> getPropertyAsList(String name) {
+		List<String> props = new ArrayList<String>();
+		String propertiesStr = getProperty(name, null);
+		if (properties != null) {
+			for (String token : propertiesStr.split(",")) {
+				props.add(token);
+			}
+		}
+		return props;
+	}
+	
 	public String getProperty(String name, String def) {
 		String value = properties.getProperty(name);
 		if (value == null) {

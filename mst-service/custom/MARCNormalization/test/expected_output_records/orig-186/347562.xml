@@ -14,9 +14,9 @@
       <marc:leader>01073nam a22003010  45 A</marc:leader>
       <marc:controlfield tag="001">347562</marc:controlfield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
-      <marc:controlfield tag="008">830827s1982    nyu           000 0 eng</marc:controlfield>
+      <marc:controlfield tag="008">830827s1982    nyu           000 0 eng  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">82050799</marc:subfield>
+        <marc:subfield code="a">   82050799 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="020" ind1=" " ind2=" ">
         <marc:subfield code="a">0932894135 (pbk.)</marc:subfield>
@@ -76,14 +76,14 @@
         <marc:subfield code="v">no. 13.</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="910" ind1=" " ind2=" ">
-        <marc:subfield code="a">950906</marc:subfield>
+        <marc:subfield code="a">  950906        </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="911" ind1=" " ind2=" ">
         <marc:subfield code="a">p</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
-        <marc:subfield code="l">Stack</marc:subfield>
-        <marc:subfield code="m">RMON</marc:subfield>
+        <marc:subfield code="l">Stack </marc:subfield>
+        <marc:subfield code="m">RMON  </marc:subfield>
         <marc:subfield code="s">BX9750.S4 L53 1982</marc:subfield>
         <marc:subfield code="b">39087001402538</marc:subfield>
       </marc:datafield>
@@ -124,7 +124,7 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="947" ind1=" " ind2=" ">
-        <marc:subfield code="a">0932894135</marc:subfield>
+        <marc:subfield code="a">0932894135 </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="130" ind1="0" ind2=" ">

@@ -137,7 +137,7 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="947" ind1=" " ind2=" ">
-        <marc:subfield code="a">3551552096</marc:subfield>
+        <marc:subfield code="a">3551552096 </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:controlfield tag="003">NRU</marc:controlfield>

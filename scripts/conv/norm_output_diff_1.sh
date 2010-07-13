@@ -4,7 +4,7 @@ for fn in $(ls -1 ./mst-service/custom/MARCNormalization/test/input_records/orig
 do
 	ef=./mst-service/custom/MARCNormalization/test/expected_output_records/orig-186/$fn
 	
-	svn diff --diff-cmd diff -x -uw ${ef} >> out
+	svn diff --diff-cmd diff -x -u ${ef} >> out
 done
 
 dos2unix out

@@ -17,7 +17,7 @@
       <marc:controlfield tag="007">hduafv---baca</marc:controlfield>
       <marc:controlfield tag="008">820611u1810uuuumiuuu   a     0   a0eng d</marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">sf 88093582</marc:subfield>
+        <marc:subfield code="a">sf 88093582 </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="9">ocm08513404</marc:subfield>

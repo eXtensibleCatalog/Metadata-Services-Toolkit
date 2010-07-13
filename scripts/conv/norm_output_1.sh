@@ -37,6 +37,7 @@ do
 	dos2unix ${ef}.new
 	cat ${ef}.new | xmllint --format --encode "UTF-8" - > ${ef}.new.2
 	#echo '<?xml version="1.0" encoding="UTF-8"?>' > ${ef}
-	cat ${ef}.new.2 > ${ef}
+	sed 's/^  //g' ${ef}.new.2 > ${ef}
+	#unix2dos ${ef}
 	rm ${ef}.new*
 done

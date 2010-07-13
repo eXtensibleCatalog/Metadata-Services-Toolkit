@@ -65,7 +65,7 @@
       </marc:datafield>
       <marc:datafield tag="300" ind1=" " ind2=" ">
         <marc:subfield code="a">score (5 p.)</marc:subfield>
-        <marc:subfield code="c">34cm.</marc:subfield>
+        <marc:subfield code="c"> 34cm.</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="500" ind1=" " ind2=" ">
         <marc:subfield code="a">Publisher's no.: Universal-Edition No. 3873.</marc:subfield>
@@ -89,16 +89,16 @@
         <marc:subfield code="d">1845-1912.</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="910" ind1=" " ind2=" ">
-        <marc:subfield code="a">950805</marc:subfield>
+        <marc:subfield code="a">  950805         </marc:subfield>
       </marc:datafield>
       <marc:datafield tag="911" ind1=" " ind2=" ">
         <marc:subfield code="a">u</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="966" ind1=" " ind2=" ">
         <marc:subfield code="l">/Stack</marc:subfield>
-        <marc:subfield code="m">SMONO</marc:subfield>
+        <marc:subfield code="m">SMONO </marc:subfield>
         <marc:subfield code="s">M1620 .S378</marc:subfield>
-        <marc:subfield code="c">1</marc:subfield>
+        <marc:subfield code="c"> 1</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="931" ind1=" " ind2=" ">
         <marc:subfield code="a">Image</marc:subfield>

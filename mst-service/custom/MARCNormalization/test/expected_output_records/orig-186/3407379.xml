@@ -15,11 +15,11 @@
       <marc:controlfield tag="001">3407379</marc:controlfield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="005">20070106114905.0</marc:controlfield>
-      <marc:controlfield tag="006">m        d</marc:controlfield>
-      <marc:controlfield tag="007">cr  n</marc:controlfield>
+      <marc:controlfield tag="006">m        d        </marc:controlfield>
+      <marc:controlfield tag="007">cr  n         </marc:controlfield>
       <marc:controlfield tag="008">010111c20019999nyuqr1p s     0   a0eng c</marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">2001212542</marc:subfield>
+        <marc:subfield code="a">  2001212542</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="022" ind1="0" ind2=" ">
         <marc:subfield code="a">1533-2969</marc:subfield>
@@ -170,7 +170,7 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="939" ind1=" " ind2=" ">
-        <marc:subfield code="a">2001-</marc:subfield>
+        <marc:subfield code="a">2001-    </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="941" ind1=" " ind2=" ">

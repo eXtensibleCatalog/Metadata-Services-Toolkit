@@ -14,9 +14,9 @@
       <marc:leader>01792cam a2200469 a 4500</marc:leader>
       <marc:controlfield tag="001">3447574</marc:controlfield>
       <marc:controlfield tag="005">20070302082345.0</marc:controlfield>
-      <marc:controlfield tag="008">051208s2006    maua     b    001 0 eng</marc:controlfield>
+      <marc:controlfield tag="008">051208s2006    maua     b    001 0 eng  </marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
-        <marc:subfield code="a">2005058420</marc:subfield>
+        <marc:subfield code="a">  2005058420</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(OCoLC)62679945</marc:subfield>
@@ -188,11 +188,11 @@
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="947" ind1=" " ind2=" ">
-        <marc:subfield code="a">0262134594</marc:subfield>
+        <marc:subfield code="a">0262134594 </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:datafield tag="947" ind1=" " ind2=" ">
-        <marc:subfield code="a">0262633248</marc:subfield>
+        <marc:subfield code="a">0262633248 </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
       <marc:controlfield tag="003">NRU</marc:controlfield>
