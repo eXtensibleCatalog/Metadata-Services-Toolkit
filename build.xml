@@ -129,6 +129,8 @@
 	</target>
 
 	<target name="coordinated.retrieve">
+		<ant target="ms.copy-example" />
+
 		<ant target="clean" />
 
 		<ant target="mi.publish" />
