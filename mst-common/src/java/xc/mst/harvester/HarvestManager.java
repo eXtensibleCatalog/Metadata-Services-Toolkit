@@ -406,18 +406,11 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 				if (recordId == 0) {
 					getRepositoryDAO().injectId(record);
 					harvestCache.put(nonRedundantId, record.getId());
-				} else {
-					record.setId(recordId);
-				}				
-				Record oldRecord = repo.getRecord(record.getOaiIdentifier());
-				if (oldRecord != null) {
-					numberOfUpdatedRecords++;
-					record.setId(oldRecord.getId());
-				} else {
 					numberOfNewRecords++;
-					getRepositoryDAO().injectId(record);
+				} else {
 					record.setId(recordId);
-				}
+					numberOfUpdatedRecords++;
+				}				
 
 				repo.addRecord(record);
 
