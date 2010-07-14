@@ -16,7 +16,11 @@
 		<delete dir="mi.build.dir" />
 	</target>
 
-	<target name="mi.resolve" depends="init">
+	<target name="mi.init" depends="init">
+		<mkdir dir="${mi.build.dir}" />
+	</target>
+
+	<target name="mi.resolve" depends="mi.init">
 		<ivy:resolve file="${mi.dir}/ivy.xml"/>
 	</target>
 
