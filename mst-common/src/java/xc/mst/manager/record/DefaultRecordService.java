@@ -1260,9 +1260,14 @@ public class DefaultRecordService extends RecordService
 				}
 			}
 		}
-		Element xmlEl = (Element)recordEl.getChild("metadata", recordEl.getNamespace()).getChildren().get(0);
-		xmlEl.detach();
-		r.setOaiXmlEl(xmlEl);
+
+		// Metadata element will not exist in case the record has status = deleted. So null check is required here.
+		if (recordEl.getChild("metadata", recordEl.getNamespace()) != null) {
+			Element xmlEl = (Element)recordEl.getChild("metadata", recordEl.getNamespace()).getChildren().get(0);
+			xmlEl.detach();
+			r.setOaiXmlEl(xmlEl);
+		}
+
 		return r;
 	}
 	
