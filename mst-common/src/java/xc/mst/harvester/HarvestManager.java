@@ -71,6 +71,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	protected int numErrorsToTolerate = 0;
 	protected int numErrorsTolerated = 0;
 	protected int requestsSent4Step = 0;
+	protected int numberOfNewRecords = 0;
+	protected int numberOfUpdatedRecords = 0;
 	
 	protected ReentrantLock running = new ReentrantLock();
 	
@@ -299,6 +301,11 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
                 TimingLogger.stop("parseRecords");
 
                 repo.endBatch();
+                Provider provider = harvestSchedule.getProvider();
+                provider.setRecordsAdded(provider.getRecordsAdded() + numberOfNewRecords);
+                provider.setRecordsReplaced(provider.getRecordsReplaced() + numberOfUpdatedRecords);
+                getProviderDAO().update(provider);
+                
 				LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL + ", " + recordsProcessed + " new records were returned by the OAI provider.");
 		
 			} catch(DataException de) {
@@ -375,6 +382,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		// Loop over all records in the OAI response
 		List recordsEl = listRecordsEl.getChildren("record", root.getNamespace());
 		
+
 		for (Object recordElObj : recordsEl) {
 			recordEl = (Element)recordElObj;
 			TimingLogger.start("parseRecords loop");
@@ -387,10 +395,11 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
             	TimingLogger.stop("getRecordService().parse(recordEl)");
             	record.setFormat(scheduleStep.getFormat());
 				record.setHarvest(currentHarvest);
+				record.setProvider(currentHarvest.getProvider());
 				
 				// If the provider has been harvested before, check whether or not this
 				// record already exists in the database
-				// BDA: tell me why I care?
+				// BDA: tell me why I care? SR : To keep count of number of new records added and number of updated records.
 				//Record oldRecord = (firstHarvest ? null : recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId));
 				String nonRedundantId = getUtil().getNonRedundantOaiId(record.getHarvestedOaiIdentifier());
 				Long recordId = harvestCache.get(nonRedundantId);
@@ -399,7 +408,17 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					harvestCache.put(nonRedundantId, record.getId());
 				} else {
 					record.setId(recordId);
+				}				
+				Record oldRecord = repo.getRecord(record.getOaiIdentifier());
+				if (oldRecord != null) {
+					numberOfUpdatedRecords++;
+					record.setId(oldRecord.getId());
+				} else {
+					numberOfNewRecords++;
+					getRepositoryDAO().injectId(record);
+					record.setId(recordId);
 				}
+
 				repo.addRecord(record);
 
 				TimingLogger.stop("erl - 3");
@@ -412,6 +431,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 
         // If the record contained a resumption token, store that resumption token
         Element resumptionEl = listRecordsEl.getChild("resumptionToken", root.getNamespace());
+
         if (resumptionEl != null) {
         	resumption = resumptionEl.getText();
         }
