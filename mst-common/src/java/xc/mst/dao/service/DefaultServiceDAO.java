@@ -21,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.Service;
+import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
 import xc.mst.constants.Status;
 import xc.mst.dao.DBConnectionResetException;
@@ -1093,6 +1094,11 @@ public class DefaultServiceDAO extends ServiceDAO
 				log.info("Re executing the query that failed ");
 				return delete(service);
 			}
-		} // end synchronized
-	} // end method delete(Service)
-} // end class DefaultServiceDAO
+		}
+	}
+	
+	public void persist(ServiceHarvest serviceHarvest) {
+		hibernateTemplate.save(serviceHarvest);
+	}
+	
+}

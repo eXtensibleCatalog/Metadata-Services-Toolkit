@@ -208,6 +208,10 @@
             <artifact name="spring-web" type="jar"/>
 		</dependency>
 
+		<dependency org="org.springframework" name="spring-orm" rev="3.0.2.RELEASE" transitive="false">
+            <artifact name="spring-orm" type="jar"/>
+		</dependency>
+
 		<dependency org="javax.xml" name="jaxp-api" rev="1.4.2" transitive="true">
             <artifact name="jaxp-api" type="jar" url="http://repo1.maven.org/maven2/javax/xml/jaxp-api/1.4.2/jaxp-api-1.4.2.jar"/>
 		</dependency>
@@ -225,8 +229,24 @@
             <artifact name="trove" type="jar"/>
 		</dependency>
 
-		<dependency org="joda-time" name="joda-time" rev="1.6" transitive="true">
+		<dependency org="joda-time" name="joda-time" rev="1.6" transitive="false">
             <artifact name="joda-time" type="jar"/>
+		</dependency>
+
+		<dependency org="hibernate" name="hibernate3" rev="3.2.3.GA" transitive="false">
+			<artifact name="hibernate3" type="jar" />
+		</dependency>
+
+		<dependency org="javax.transaction" name="jta" rev="1.1" transitive="false">
+			<artifact name="jta" type="jar" />
+		</dependency>
+
+		<dependency org="dom4j" name="dom4j" rev="1.6.1" transitive="false">
+			<artifact name="dom4j" type="jar" />
+		</dependency>
+
+		<dependency org="cglib" name="cglib" rev="2.2" transitive="true">
+			<artifact name="cglib" type="jar" />
 		</dependency>
 
     </dependencies>

@@ -38,6 +38,18 @@
 		<property name="maxActive" value="5" />
 	</bean>
 	
+	<bean id="SessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="DataSource"/>
+		<property name="mappingResources">
+			<list>
+				<value>mst.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<value>hibernate.dialect=org.hibernate.dialect.MySQL5Dialect</value>
+		</property>
+	</bean>
+	
 	<bean id="TransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="DataSource"/>
 	</bean>

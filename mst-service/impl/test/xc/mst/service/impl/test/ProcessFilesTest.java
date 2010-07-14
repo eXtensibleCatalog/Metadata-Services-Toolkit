@@ -99,8 +99,11 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 
 					sb.append(s2);
 				}
-				LOG.error(sb.toString());
-				throw new RuntimeException(sb.toString());
+				
+				if (sb.length() > 0) {
+					LOG.error(sb.toString());
+					throw new RuntimeException(sb.toString());
+				}
 			}
 			
 		} catch (Throwable t) {

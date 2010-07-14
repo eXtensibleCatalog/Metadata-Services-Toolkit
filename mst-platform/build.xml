@@ -27,8 +27,11 @@
 		</fileset>
 	</path>
 
-	<target name="mp.clean">
+	<target name="mp.clean" depends="init">
 		<delete dir="${mp.build.dir}" />
+		<echo>${tomcat.dir}/webapps/${mp.project-name}</echo>
+		<delete dir="${tomcat.dir}/webapps/${mp.project-name}" />
+		<delete file="${tomcat.dir}/webapps/${mp.project-name}.war" />
 	</target>
 
 	<target name="mp.help">

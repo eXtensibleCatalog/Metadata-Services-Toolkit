@@ -16,8 +16,10 @@ import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.SessionFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import xc.mst.dao.harvest.HarvestDAO;
 import xc.mst.dao.harvest.HarvestRecordUtilDAO;
@@ -60,6 +62,7 @@ public class BaseDAO {
 	protected MSTConfiguration config;
 	
 	protected NamedParameterJdbcTemplate namedParameterJdbcTemplate = null;
+	protected HibernateTemplate hibernateTemplate = null;
 	protected JdbcTemplate jdbcTemplate = null;
 	
 	protected Util util = null;
@@ -176,6 +179,10 @@ public class BaseDAO {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 		this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
 	}
+	
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+    }
 	
 	public Util getUtil() {
 		return util;

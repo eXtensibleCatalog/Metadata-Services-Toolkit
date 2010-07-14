@@ -124,6 +124,8 @@ public class Scheduler extends BaseService implements Runnable {
 			if (runningJob == null || !runningJob.isAlive()) {
 				try {
 					if (previousJob != null) {
+						getJobService().deleteJob(previousJob);
+						
 						LOG.debug("finished job: "+previousJob.getJobType());
 						LOG.debug("runningJob: "+runningJob);
 						TimingLogger.reset();
@@ -239,9 +241,6 @@ public class Scheduler extends BaseService implements Runnable {
 						if (runningJob != null) {
 							runningJob.start();
 						}
-						// Delete the job from database once its scheduled to run
-						// BDA - hmmm... perhaps we shouldn't delete it until it completes?
-						getJobService().deleteJob(jobToStart);
 					} // end if(the service job queue was empty)
 				} catch(DataException de) {
 					LOG.error("DataException occured when getting job from database", de);

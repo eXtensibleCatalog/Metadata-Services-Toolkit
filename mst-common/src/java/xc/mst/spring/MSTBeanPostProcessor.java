@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -51,6 +52,7 @@ public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostP
 			} catch (NoSuchBeanDefinitionException nsbde) {
 				((BaseDAO)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MSTConfiguration"));
 			}
+			((BaseDAO)bean).setSessionFactory((SessionFactory)this.applicationContext.getBean("SessionFactory"));
 			((BaseDAO)bean).setUtil((Util)this.applicationContext.getBean("Util"));
 		} else if (bean instanceof BaseService) {
 			((BaseService)bean).setUtil((Util)this.applicationContext.getBean("Util"));
