@@ -121,13 +121,14 @@ public class Scheduler extends BaseService implements Runnable {
 				}
 			}
 
+			
 			if (runningJob == null || !runningJob.isAlive()) {
+				
+				
 				try {
 					if (previousJob != null) {
 						getJobService().deleteJob(previousJob);
 						
-						LOG.debug("finished job: "+previousJob.getJobType());
-						LOG.debug("runningJob: "+runningJob);
 						TimingLogger.reset();
 						
 						List<ProcessingDirective> processingDirectives = null;
@@ -142,6 +143,7 @@ public class Scheduler extends BaseService implements Runnable {
 							previousJob.getService().setStatus(runningJob.getJobStatus());
 							getServiceDAO().update(previousJob.getService());
 						}
+						
 						if (processingDirectives != null) {
 							try {
 								for (ProcessingDirective pd : processingDirectives) {
@@ -162,8 +164,11 @@ public class Scheduler extends BaseService implements Runnable {
 									*/
 
 									
-									LOG.debug("adding to job queue pd.getId(): "+pd.getId());
-									Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
+									//Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
+									Job job = new Job();
+									job.setService(pd.getService());
+									job.setOutputSetId(0);
+									job.setJobType(Constants.THREAD_SERVICE);
 									job.setOrder(getJobService().getMaxOrder() + 1);
 									job.setProcessingDirective(pd);
 									getJobService().insertJob(job);	
@@ -199,7 +204,6 @@ public class Scheduler extends BaseService implements Runnable {
 							MetadataServiceManager msm = new MetadataServiceManager();
 							runningJob.setWorkDelegate(msm);
 							Service s = getServicesService().getServiceByName(jobToStart.getService().getName());
-							LOG.debug("jobToStart.getService().getMetadataService(): "+s.getMetadataService());
 							msm.setMetadataService(s.getMetadataService());
 							msm.setOutputSet(getSetDAO().getById(jobToStart.getOutputSetId()));
 							Repository incomingRepo = null;

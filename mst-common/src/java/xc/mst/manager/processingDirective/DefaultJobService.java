@@ -57,7 +57,6 @@ public class DefaultJobService extends BaseService implements JobService {
 
     	try {
 			jobDAO.insert(job);
-			
 			// Write the current jobs in queue to a file
 			writeToFile();
 		} catch (DataException e) {
