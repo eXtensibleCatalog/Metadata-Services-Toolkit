@@ -233,8 +233,12 @@
             <artifact name="joda-time" type="jar"/>
 		</dependency>
 
-		<dependency org="hibernate" name="hibernate3" rev="3.2.3.GA" transitive="false">
-			<artifact name="hibernate3" type="jar" />
+		<!--
+		<dependency org="org.hibernate" name="hibernate" rev="3.5.1-Final" transitive="true" />
+		-->
+
+		<dependency org="org.hibernate" name="hibernate-core" rev="3.5.1-Final" transitive="false">
+			<artifact name="hibernate-core" type="jar" />
 		</dependency>
 
 		<dependency org="javax.transaction" name="jta" rev="1.1" transitive="false">
@@ -247,6 +251,14 @@
 
 		<dependency org="cglib" name="cglib" rev="2.2" transitive="true">
 			<artifact name="cglib" type="jar" />
+		</dependency>
+
+		<dependency org="antlr" name="antlr" rev="2.7.6" transitive="false">
+			<artifact name="antlr" type="jar" />
+		</dependency>
+
+		<dependency org="javassist" name="javassist" rev="3.8.0.GA" transitive="false">
+			<artifact name="javassist" type="jar" />
 		</dependency>
 
     </dependencies>

@@ -2,16 +2,18 @@ package xc.mst.bo.service;
 
 import java.util.Date;
 
+import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 
 public class ServiceHarvest {
 
 	protected Long id = null;
 	protected Set set = null;
+	protected Format format = null;
 	protected Date from = null;
 	protected Date until = null;
 	protected Long highestId = null;
-	protected Long repoId = null;
+	protected String repoName = null;
 	protected Service service = null;
 	
 	public Long getId() {
@@ -25,6 +27,12 @@ public class ServiceHarvest {
 	}
 	public void setSet(Set set) {
 		this.set = set;
+	}
+	public Format getFormat() {
+		return format;
+	}
+	public void setFormat(Format format) {
+		this.format = format;
 	}
 	public Date getFrom() {
 		return from;
@@ -44,11 +52,11 @@ public class ServiceHarvest {
 	public void setHighestId(Long highestId) {
 		this.highestId = highestId;
 	}
-	public Long getRepoId() {
-		return repoId;
+	public String getRepoName() {
+		return repoName;
 	}
-	public void setRepoId(Long repoId) {
-		this.repoId = repoId;
+	public void setRepoName(String repoName) {
+		this.repoName = repoName;
 	}
 	public Service getService() {
 		return service;

@@ -31,6 +31,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
+import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
 import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
@@ -316,13 +317,32 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 		predecessorKeyedMap.clear();
 		successorKeyedMap.clear();
 		getRepository().populatePredSuccMaps(predecessorKeyedMap, successorKeyedMap);
-		//TODO - check and store tables of when the last "harvest" was
-		Date from = new Date(System.currentTimeMillis()-(1000*60*60*24*500));
-		Date until = new Date();
 		
-		List<Record> records = repo.getRecords(from, until, null, inputFormat, inputSet);
+		ServiceHarvest sh = getServiceDAO().getServiceHarvest(
+				inputFormat, inputSet, repo.getName(), getService());
+		if (sh == null) {
+			sh = new ServiceHarvest();
+			sh.setFormat(inputFormat);
+			sh.setRepoName(repo.getName());
+			sh.setSet(inputSet);
+			sh.setService(getService());
+		}
+		if (sh.getHighestId() == null) {
+			if (sh.getUntil() != null) {
+				sh.setFrom(sh.getUntil());
+			} else {
+				sh.setFrom(new Date(System.currentTimeMillis()-(1000*60*60*24*365*50)));
+			}
+			sh.setUntil(new Date());
+		} else {
+			if (sh.getUntil() == null || sh.getFrom() == null) {
+				throw new RuntimeException("bogus data in service_harvests");
+			}
+		}
+		getServiceDAO().persist(sh);
 		
-		Long highestId = null;
+		List<Record> records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
+		
 		boolean previouslyPaused = false;
 		while (records != null && records.size() > 0 && !stopped) {
 			if (paused) {
@@ -354,10 +374,15 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 					}
 					getRepository().addRecords(out);
 				}
-				highestId = in.getId();
+				sh.setHighestId(in.getId());
 			}
 			getRepository().endBatch();
-			records = repo.getRecords(from, until, highestId, inputFormat, inputSet);
+			getServiceDAO().persist(sh);
+			records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
+		}
+		if (!stopped) {
+			sh.setHighestId(null);
+			getServiceDAO().persist(sh);
 		}
 		if (!previouslyPaused) {
 			running.unlock();

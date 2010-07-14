@@ -444,7 +444,8 @@ CREATE TABLE service_harvests
 (
   service_harvest_id INT(11)  NOT NULL AUTO_INCREMENT,
   service_id         int(11),
-  repo_id            int(11),
+  format_id          int(11),
+  repo_name          varchar(64),
   set_id             int(11),
   from_date          datetime,
   until_date         datetime,
