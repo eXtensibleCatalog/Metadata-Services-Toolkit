@@ -17,6 +17,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.service.Service;
+import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
 import xc.mst.dao.BaseDAO;
 import xc.mst.dao.DataException;
@@ -281,5 +282,7 @@ public abstract class ServiceDAO extends BaseDAO
 			log.error("The following errors occurred: " + errors);
 			throw new DataException(errors);
 		} // end if(we found an error)
-	} // end method validateFields(Service, boolean, boolean)
-} // end class ServiceDAO
+	}
+	
+	public abstract void persist(ServiceHarvest serviceHarvest);
+}

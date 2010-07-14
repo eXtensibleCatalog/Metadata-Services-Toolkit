@@ -13,6 +13,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import org.apache.log4j.Logger;
+import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.testng.annotations.AfterSuite;
@@ -23,6 +24,7 @@ import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.provider.SetDAO;
+import xc.mst.dao.service.ServiceDAO;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.processingDirective.ServicesService;
@@ -93,6 +95,11 @@ public class BaseTest {
 		processingDirectiveDAO = (ProcessingDirectiveDAO)getBean("ProcessingDirectiveDAO");
 		scheduler = (Scheduler)getBean("Scheduler");
 		LOG.debug("startup complete");
+		
+		/*
+		SessionFactory sessionFactory = (SessionFactory)getBean("SessionFactory");
+		sessionFactory.openSession();
+		*/
 	}
 	
 	protected Object getBean(String name) {
@@ -103,6 +110,10 @@ public class BaseTest {
 	public void shutdown() {
 		TimingLogger.reset(true);
 		LOG.debug("shutdown");
+		/*
+		SessionFactory sessionFactory = (SessionFactory)getBean("SessionFactory");
+		sessionFactory.close();
+		*/
 	}
 	
 	protected void printClassPath() {
@@ -131,5 +142,13 @@ public class BaseTest {
 	
 	protected RepositoryDAO getRepositoryDAO() {
 		return (RepositoryDAO)getBean("RepositoryDAO");
+	}
+	
+	protected ServiceDAO getServiceDAO() {
+		return (ServiceDAO)getBean("ServiceDAO");
+	}
+	
+	protected SetService getSetService() {
+		return (SetService)getBean("SetService");
 	}
 }

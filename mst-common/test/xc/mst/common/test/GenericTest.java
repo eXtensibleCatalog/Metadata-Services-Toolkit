@@ -9,20 +9,49 @@
 
 package xc.mst.common.test;
 
+import java.util.Date;
+
+import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
-import xc.mst.manager.record.RecordService;
+import xc.mst.bo.provider.Set;
+import xc.mst.bo.service.Service;
+import xc.mst.bo.service.ServiceHarvest;
 
 public class GenericTest extends BaseTest {
+	
+	private static final Logger LOG = Logger.getLogger(GenericTest.class);
 	
 	@Test
 	public void goTest() {
 		
 		try {
+			String serviceName = "example";
+			try {
+				getRepositoryDAO().deleteSchema(serviceName);
+			} catch (Throwable t) {}
+			getServicesService().addNewService(serviceName);
+			
+			ServiceHarvest sh = new ServiceHarvest();
+			//Service s = getServicesService().getServiceByName(serviceName);
+			Service s = new Service();
+			s.setId(45);
+			
+			LOG.debug("s.getName(): "+s.getName());
+			LOG.debug("s.getId(): "+s.getId());
+			
+			Set set = getSetService().getSetById(1);
+			sh.setSet(set);
+			sh.setService(s);
+			sh.setFrom(new Date());
+			sh.setUntil(new Date());
+			sh.setRepoId(50l);
+			getServiceDAO().persist(sh);
+			
+			/*
 			RecordService rs = (RecordService)getBean("RecordService");
 			System.out.println("rs.getRecordDAO(): "+rs.getRecordDAO());
-		
-			/*
+			
 			List<URL> urls = new ArrayList<URL>();
 
 			System.out.println("hello");

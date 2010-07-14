@@ -128,6 +128,24 @@
 		<target-custom-services target="retrieve" />
 	</target>
 
+	<target name="coordinated.retrieve">
+		<ant target="clean" />
+
+		<ant target="mi.publish" />
+
+		<ant target="mc.retrieve" />
+		<ant target="mc.publish" />
+
+		<ant target="ms.retrieve" />
+		<ant target="ms.publish" />
+
+		<ant target="mp.retrieve" />
+
+		<ant dir="${mst-service}/example" target="retrieve" inheritAll="false" />
+
+		<target-custom-services target="retrieve" />
+	</target>
+
 	<!-- Create the distriubtion file -->
 	<target name="dist-zip">
 	</target>
