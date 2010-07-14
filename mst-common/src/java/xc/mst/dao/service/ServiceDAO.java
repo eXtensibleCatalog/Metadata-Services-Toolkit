@@ -285,7 +285,14 @@ public abstract class ServiceDAO extends BaseDAO
 		} // end if(we found an error)
 	}
 	
-	public abstract void persist(ServiceHarvest serviceHarvest);
+	public void persist(ServiceHarvest serviceHarvest) {
+		log.debug("serviceHarvest.getId(): "+serviceHarvest.getId());
+		if (serviceHarvest.getId() != null) {
+			hibernateTemplate.update(serviceHarvest);	
+		} else {
+			hibernateTemplate.persist(serviceHarvest);
+		}
+	}
 	
 	@SuppressWarnings("unchecked")
 	public ServiceHarvest getServiceHarvest(Format format, xc.mst.bo.provider.Set set, String repoName, Service service) {
@@ -298,6 +305,9 @@ public abstract class ServiceDAO extends BaseDAO
 			setId = set.getId();
 		}
 		Integer serviceId = null;
+		if (service != null) {
+			serviceId = service.getId();
+		}
 		
 		List<ServiceHarvest> shs = (List<ServiceHarvest>)this.hibernateTemplate.find(
 				"from xc.mst.bo.service.ServiceHarvest as sh "+

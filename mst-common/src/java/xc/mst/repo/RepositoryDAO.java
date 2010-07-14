@@ -307,7 +307,7 @@ public class RepositoryDAO extends BaseDAO {
 	                    public void setValues(PreparedStatement ps, int j) throws SQLException {
 	                    	int k=0;
 	                    	Record r = recordsToAdd.get(j);
-	                    	if (r.getSets() != null) {
+	                    	if (r.getSets() != null && r.getSets().size() > 0) {
 		                    	int totalSets = r.getSets().size();
 		                    	for (Set s : r.getSets()) {
 			                    	int i=1;
@@ -319,8 +319,8 @@ public class RepositoryDAO extends BaseDAO {
 		                    		}
 		                    	}
 	                    	} else {
-	                    		ps.setObject(k++, null);
-	                    		ps.setObject(k++, null);
+	                    		ps.setObject(++k, null);
+	                    		ps.setObject(++k, null);
 	                    	}
 	                    }
 	                    public int getBatchSize() {

@@ -328,11 +328,14 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			sh.setService(getService());
 		}
 		if (sh.getHighestId() == null) {
+			LOG.debug("sh.getHighestId(): "+sh.getHighestId());
 			if (sh.getUntil() != null) {
 				sh.setFrom(sh.getUntil());
 			} else {
-				sh.setFrom(new Date(System.currentTimeMillis()-(1000*60*60*24*365*50)));
+				sh.setFrom(new Date(System.currentTimeMillis()-(1000l*60*60*24*365*50)));
 			}
+			LOG.debug("sh.getUntil(): "+sh.getUntil());
+			LOG.debug("sh.getFrom(): "+sh.getFrom());
 			sh.setUntil(new Date());
 		} else {
 			if (sh.getUntil() == null || sh.getFrom() == null) {
@@ -340,6 +343,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			}
 		}
 		getServiceDAO().persist(sh);
+		LOG.debug("sh.getId(): "+sh.getId());
 		
 		List<Record> records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
 		
@@ -377,6 +381,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 				sh.setHighestId(in.getId());
 			}
 			getRepository().endBatch();
+			LOG.debug("sh.getId(): "+sh.getId());
 			getServiceDAO().persist(sh);
 			records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
 		}

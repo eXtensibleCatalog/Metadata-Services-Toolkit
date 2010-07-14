@@ -1097,8 +1097,4 @@ public class DefaultServiceDAO extends ServiceDAO
 		}
 	}
 	
-	public void persist(ServiceHarvest serviceHarvest) {
-		hibernateTemplate.save(serviceHarvest);
-	}
-	
 }
