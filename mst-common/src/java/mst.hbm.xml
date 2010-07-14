@@ -9,8 +9,9 @@
 			<generator class="native"/>
 		</id>
 		<many-to-one name="service" column="service_id" class="xc.mst.bo.service.Service" />
-		<property name="repoId" column="repo_id" />
+		<property name="repoName" column="repo_name" />
 		<many-to-one name="set" column="set_id" class="xc.mst.bo.provider.Set" />
+		<many-to-one name="format" column="format_id" class="xc.mst.bo.provider.Format" />
 		<property name="from" column="from_date" />
 		<property name="until" column="until_date" />
 		<property name="highestId" column="highest_id" />
@@ -27,6 +28,12 @@
     
     <class name="xc.mst.bo.service.Service" table="services">
         <id name="id" column="service_id">
+    		<generator class="native" />
+    	</id>
+    </class>
+    
+    <class name="xc.mst.bo.provider.Format" table="formats">
+        <id name="id" column="format_id">
     		<generator class="native" />
     	</id>
     </class>

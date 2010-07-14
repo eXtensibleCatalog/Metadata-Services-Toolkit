@@ -45,7 +45,7 @@ public class GenericTest extends BaseTest {
 			sh.setService(s);
 			sh.setFrom(new Date());
 			sh.setUntil(new Date());
-			sh.setRepoId(50l);
+			sh.setRepoName(serviceName);
 			getServiceDAO().persist(sh);
 			
 			/*

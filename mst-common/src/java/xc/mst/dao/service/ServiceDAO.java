@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
@@ -285,4 +286,32 @@ public abstract class ServiceDAO extends BaseDAO
 	}
 	
 	public abstract void persist(ServiceHarvest serviceHarvest);
+	
+	@SuppressWarnings("unchecked")
+	public ServiceHarvest getServiceHarvest(Format format, xc.mst.bo.provider.Set set, String repoName, Service service) {
+		Integer formatId = null;
+		if (format != null) {
+			formatId = format.getId();
+		}
+		Integer setId = null;
+		if (set != null) {
+			setId = set.getId();
+		}
+		Integer serviceId = null;
+		
+		List<ServiceHarvest> shs = (List<ServiceHarvest>)this.hibernateTemplate.find(
+				"from xc.mst.bo.service.ServiceHarvest as sh "+
+				"where sh.format.id = ? and "+
+					"sh.set.id = ? and "+
+					"sh.repoName = ? and "+
+					"sh.service.id = ? "+
+					"", formatId, setId, repoName, serviceId);
+		if (shs == null || shs.size() == 0) {
+			return null;
+		} else if (shs.size() == 1) {
+			return shs.get(0);
+		} else {
+			throw new RuntimeException("there shouldn't be more than one of these");
+		}
+	}
 }
