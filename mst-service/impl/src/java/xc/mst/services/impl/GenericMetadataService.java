@@ -33,6 +33,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
 import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataService;
@@ -380,10 +381,22 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 				}
 				sh.setHighestId(in.getId());
 			}
+
 			getRepository().endBatch();
 			LOG.debug("sh.getId(): "+sh.getId());
 			getServiceDAO().persist(sh);
+
+			// Set number of input and output records.
+			service.setInputRecordCount(service.getInputRecordCount() + records.size());
+			service.setOutputRecordCount(getRepository().getSize());
+
 			records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
+			try {
+				getServiceDAO().update(service);
+			} catch(DataException de) {
+				LOG.error("Exception occured while updating the service", de);
+			}
+
 		}
 		if (!stopped) {
 			sh.setHighestId(null);

@@ -140,8 +140,11 @@ public class Scheduler extends BaseService implements Runnable {
 						} else if (previousJob.getService() != null) { // was service
 							processingDirectives = getProcessingDirectiveDAO().getBySourceServiceId(
 									previousJob.getService().getId());
-							previousJob.getService().setStatus(runningJob.getJobStatus());
-							getServiceDAO().update(previousJob.getService());
+							// Reload service. It is changed during service processing.
+							// TODO check to see if there is better way to do this
+							Service service = getServiceDAO().getById(previousJob.getService().getId());
+							service.setStatus(runningJob.getJobStatus());
+							getServiceDAO().update(service);
 						}
 						
 						if (processingDirectives != null) {
