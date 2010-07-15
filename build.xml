@@ -196,12 +196,6 @@
 		</ant>
 	</target>
 
-	<target name="test" depends="init, mc.resolve">
-		<echo>
-			ivy.distrib.dir: ${ivy.home}
-		</echo>
-	</target>
-
 	<target name="dist" depends="coordinated.retrieve, dist.nodep" />
 	<target name="dist.nodep" depends="init, mc.resolve">
 		<copy todir="${dist.dir}/ivy/xc">
