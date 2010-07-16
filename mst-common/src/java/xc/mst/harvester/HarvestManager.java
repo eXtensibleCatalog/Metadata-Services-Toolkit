@@ -304,6 +304,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
                 Provider provider = harvestSchedule.getProvider();
                 provider.setRecordsAdded(provider.getRecordsAdded() + numberOfNewRecords);
                 provider.setRecordsReplaced(provider.getRecordsReplaced() + numberOfUpdatedRecords);
+                provider.setLastHarvestEndTime(new Date());
                 getProviderDAO().update(provider);
                 
 				LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL + ", " + recordsProcessed + " new records were returned by the OAI provider.");
