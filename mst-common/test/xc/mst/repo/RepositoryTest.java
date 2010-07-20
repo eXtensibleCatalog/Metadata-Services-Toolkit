@@ -10,12 +10,15 @@
 package xc.mst.repo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.common.test.BaseTest;
@@ -40,12 +43,20 @@ public class RepositoryTest extends BaseTest {
 		install();
 		addRecords();
 		findRecords();
+		getRecords();
 	}
 
 	public void install() {
 		try {
-			repositoryDAO.dropTables(repoName);
+			repositoryDAO.deleteSchema(repoName);
+			repositoryDAO.createSchema(repoName);
 			repo.installOrUpdateIfNecessary(null, MSTConfiguration.getInstance().getProperty("version"));
+			
+			Format f = new Format();
+			f.setNamespace("marcxml");
+			f.setSchemaLocation("http://www.extensiblecatalog.org/support");
+			f.setName("http://www.loc.gov/MARC21/slim");
+			getFormatDAO().insert(f);
 		} catch (Throwable t) {
 			t.printStackTrace(System.out);
 		}
@@ -54,13 +65,17 @@ public class RepositoryTest extends BaseTest {
 	public void addRecords() {
 		try {
 			List<Record> records = new ArrayList<Record>();
-			
+			Format f = getFormatDAO().getById(1);
+			Set set = getSetDAO().getById(1);
 			Record previousRecord = recordService.createRecord();
+			Service s = new Service();
+			s.setId(1);
 			for (int i=0; i<10; i++) {
-				Service norm = getServicesService().getServiceByName("MARCNormalization");
-				LOG.debug("norm: "+norm);
-				Record record = recordService.createSuccessor(previousRecord, norm);
+				Record record = recordService.createSuccessor(previousRecord, s);
+				record.setMode(Record.STRING_MODE);
 				record.setOaiXml("<hello>"+i+"</hello>");
+				record.setFormat(f);
+				record.addSet(set);
 				records.add(record);
 				//record.setXML();
 				lastRecordId = record.getId();
@@ -76,6 +91,18 @@ public class RepositoryTest extends BaseTest {
 			Record r = repo.getRecord(lastRecordId);
 			LOG.debug("r.getId(): "+r.getId());
 			//LOG.debug("r.getXml(): "+r.getXml());
+		} catch (Throwable t) {
+			t.printStackTrace(System.out);
+		}
+	}
+	
+	public void getRecords() {
+		try {
+			assert getRepositoryDAO().getRecords(repoName, null, null, null, null, null).size() == 10;
+			Format f = getFormatDAO().getById(1);
+			assert getRepositoryDAO().getRecords(repoName, null, null, null, f, null).size() == 10;
+			Set set = getSetDAO().getById(1);
+			assert getRepositoryDAO().getRecords(repoName, null, null, null, f, set).size() == 10;
 		} catch (Throwable t) {
 			t.printStackTrace(System.out);
 		}

@@ -440,6 +440,8 @@ public class RepositoryDAO extends BaseDAO {
 		runSql(repo, "xc/mst/repo/sql/create_repo.sql");
 		if (repo.getProvider() != null) {
 			runSql(repo, "xc/mst/repo/sql/create_harvest_repo.sql");	
+		} else if (repo.getService() != null) {
+			runSql(repo, "xc/mst/repo/sql/create_service_repo.sql");
 		}
 	}
 	
@@ -479,42 +481,59 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public List<Record> getRecords(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
-		//TODO add inputFormat and inputSet to the query
-		
-		Object obj[] = {from, until, inputFormat.getId()};
-		int objectArrayCount = 3;
-		String sql = 
-			"select "+RECORDS_TABLE_COLUMNS+
-				"x.xml "+
-			"from "+getTableName(name, RECORDS_TABLE)+" r, "+
-				getTableName(name, RECORDS_XML_TABLE)+" x, "+
-				getTableName(name, RECORD_UPDATES_TABLE)+" u, "+
-				getTableName(name, RECORDS_SETS_TABLE)+" s "+
-			"where r.record_id = x.record_id " +
-				"and r.record_id = u.record_id " +
-				"and r.date_updated >= ? "+
-				"and u.date_updated < ? " +
-			    "and r.format_id = ? ";
+		List<Object> params = new ArrayList<Object>();
+		if (until == null) {
+			until = new Date();
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append(
+				" select "+RECORDS_TABLE_COLUMNS+
+					" x.xml "+
+				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
+					getTableName(name, RECORDS_XML_TABLE)+" x, "+
+					getTableName(name, RECORD_UPDATES_TABLE)+" u ");
+		if (inputSet != null) {
+			sb.append(
+				", "+getTableName(name, RECORDS_SETS_TABLE)+" s ");
+		}
+		sb.append(
+				" where r.record_id = x.record_id " +
+					" and r.record_id = u.record_id " +
+					" and (r.record_id > ? or ? is null) "+
+					" and (u.date_updated > ? or ? is null) "+
+					" and u.date_updated <= ? ");
+		if (inputFormat != null) {
+			sb.append(
+					" and r.format_id = ? ");
+		}
+		params.add(startingId);
+		params.add(startingId);
+		params.add(from);
+		params.add(from);
+		params.add(until);
+		if (inputFormat != null) {
+			params.add(inputFormat.getId());
+		}
 		
 		if (inputSet != null) {
-			sql += "and r.record_id = s.record_id " +
-					" and s.set_id = ? ";
-			obj[objectArrayCount++] = inputSet.getId();
+			sb.append(
+					" and r.record_id = s.record_id " +
+					" and s.set_id = ? ");
+			params.add(inputSet.getId());
 		}
-		
-		if (startingId != null) {
-			sql += " and r.record_id > ? ";
-			obj[objectArrayCount++] = startingId;
-		}
-		sql += " order by r.record_id limit 200";
+		sb.append(
+				" order by r.record_id limit 50");
+
+		Object obj[] = params.toArray();
 		
 		List<Record> records = null;
 		try {
-			records = this.jdbcTemplate.query(sql, obj, 
+			records = this.jdbcTemplate.query(sb.toString(), obj, 
 					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}, this));
 		} catch (EmptyResultDataAccessException e) {
 			LOG.info("no records found for from: "+from+" until: "+until+" startingId: "+startingId + " format:" + inputFormat + " inputSet:" + inputSet);
 		}
+		LOG.debug("records.size(): "+records.size());
 		return records;
 	}
 	

@@ -196,6 +196,27 @@
 		</ant>
 	</target>
 
+	<target name="dist" depends="coordinated.retrieve, dist.nodep" />
+	<target name="dist.nodep" depends="init, mc.resolve">
+		<copy todir="${dist.dir}/ivy/xc">
+			<fileset dir="${ivy.home}/local/xc" />
+		</copy>
+
+		<property name="sname" value="example" />
+		<property name="sversion" value="0.3.0" />
+		<ant dir="${mst-service}/${sname}" target="zip-dev-env" inheritAll="false" />
+		<copy file="${mst-service}/${sname}/build/${sname}-${sversion}-dev-env.zip" 
+			todir="${dist.dir}/mst-service-example" />
+
+		<!--
+		<property name="sname" value="MARCNormalization" />
+		<property name="sversion" value="0.3.0" />
+		<ant dir="${mst-service}/custom/${sname}" target="zip-dev-env" inheritAll="false" />
+		<copy file="${mst-service}/custom/${sname}/build/${sname}-${sversion}-dev-env.zip" 
+			todir="${dist.dir}/mst-service-example" />
+		-->
+	</target>
+
 	<!--
 	<target name="full-dist" depends="compile, dist-jar, javadoc"
 			description="generate the distribution" >
