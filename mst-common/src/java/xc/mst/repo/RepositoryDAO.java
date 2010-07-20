@@ -480,29 +480,40 @@ public class RepositoryDAO extends BaseDAO {
 	
 	public List<Record> getRecords(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
 		//TODO add inputFormat and inputSet to the query
+		
+		Object obj[] = {from, until, inputFormat.getId()};
+		int objectArrayCount = 3;
 		String sql = 
 			"select "+RECORDS_TABLE_COLUMNS+
 				"x.xml "+
 			"from "+getTableName(name, RECORDS_TABLE)+" r, "+
-				getTableName(name, RECORDS_XML_TABLE)+" x "+
-			"where r.record_id = x.record_id "+
-				"and r.date_created >= ? "+
-				"and r.date_created < ? ";
+				getTableName(name, RECORDS_XML_TABLE)+" x, "+
+				getTableName(name, RECORD_UPDATES_TABLE)+" u, "+
+				getTableName(name, RECORDS_SETS_TABLE)+" s "+
+			"where r.record_id = x.record_id " +
+				"and r.record_id = u.record_id " +
+				"and r.date_updated >= ? "+
+				"and u.date_updated < ? " +
+			    "and r.format_id = ? ";
+		
+		if (inputSet != null) {
+			sql += "and r.record_id = s.record_id " +
+					" and s.set_id = ? ";
+			obj[objectArrayCount++] = inputSet.getId();
+		}
+		
 		if (startingId != null) {
 			sql += " and r.record_id > ? ";
+			obj[objectArrayCount++] = startingId;
 		}
 		sql += " order by r.record_id limit 200";
+		
 		List<Record> records = null;
 		try {
-			if (startingId != null) {
-				records = this.jdbcTemplate.query(sql, new Object[]{from, until, startingId}, 
-						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}, this));	
-			} else {
-				records = this.jdbcTemplate.query(sql, new Object[]{from, until}, 
-						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}, this));
-			}
+			records = this.jdbcTemplate.query(sql, obj, 
+					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}, this));
 		} catch (EmptyResultDataAccessException e) {
-			LOG.info("no records found for from: "+from+" until: "+until+" startingId: "+startingId);
+			LOG.info("no records found for from: "+from+" until: "+until+" startingId: "+startingId + " format:" + inputFormat + " inputSet:" + inputSet);
 		}
 		return records;
 	}
