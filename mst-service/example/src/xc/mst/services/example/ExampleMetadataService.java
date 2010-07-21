@@ -30,7 +30,6 @@ public class ExampleMetadataService extends GenericMetadataService {
 		List<Record> records = new ArrayList<Record>();
 		try {
 			Record out = null;
-			LOG.debug("in.getStatus(): "+r.getStatus());
 			if (r.getSuccessors() != null && r.getSuccessors().size() > 0) {
 				out = r.getSuccessors().get(0);
 			} else {

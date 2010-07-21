@@ -39,10 +39,10 @@ import xc.mst.email.Emailer;
 import xc.mst.manager.BaseManager;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkDelegate;
+import xc.mst.scheduling.WorkerThread;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
-import xc.mst.utils.XmlHelper;
 
 
 public class HarvestManager extends BaseManager implements WorkDelegate {
@@ -51,6 +51,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	 * A reference to the logger which writes to the HarvestIn log file
 	 */
 	private static Logger log = Logger.getLogger("harvestIn");
+	protected WorkerThread workerThread = null;
 	
 	protected static DateTimeFormatter UTC_FORMATTER = null;
 	static {
@@ -75,6 +76,12 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	protected int numberOfUpdatedRecords = 0;
 	
 	protected ReentrantLock running = new ReentrantLock();
+	
+	public String printDate(Date d) {
+		String s = UTC_FORMATTER.print(d.getTime());
+		s = s.substring(0, s.length()-5)+"Z";
+		return s;
+	}
 	
 	/**
 	 * The granularity of the OAI repository we're harvesting (either GRAN_DAY or GRAN_SECOND)
@@ -101,6 +108,14 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		return "harvest-"+harvestSchedule.getProvider().getName();
 	}
 	
+	public WorkerThread getWorkerThread() {
+		return workerThread;
+	}
+
+	public void setWorkerThread(WorkerThread workerThread) {
+		this.workerThread = workerThread;
+	}
+	
 	public String getDetailedStatus() {
 		return "processed "+recordsProcessed+" of "+totalRecords;
 	}
@@ -119,6 +134,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	
 	public void setup() {
 		try {
+			hssFirstTime = true;
 			harvestCache.clear();
 			harvestScheduleSteps = getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId());
 			harvestScheduleStepIndex = 0;
@@ -258,11 +274,13 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					
 					baseRequest = request;
 
-					//TODO check harvest schedule
-					Date from = scheduleStep.getLastRan();
-					if (from != null) {
-						request += "&from=" + UTC_FORMATTER.print(from.getTime()) +
-							"&until=" + UTC_FORMATTER.print(startDate.getTime());
+					//Date from = scheduleStep.getLastRan();
+					Date from = getRepositoryDAO().getLastModifiedOai(currentHarvest.getProvider().getName());
+					//becuase from is inclusive
+					//from = new Date(from.getTime()+1000);
+					if (from != null && from.getTime() != 0) {
+						request += "&from=" + printDate(from) +
+							"&until=" + printDate(startDate);
 					}
 					
 					harvestSchedule.setRequest(baseRequest);
@@ -290,9 +308,11 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 				// Perform the harvest
 				TimingLogger.start("sendRequest");
 			    Document doc = getHttpService().sendRequest(request);
+			    /*
 			    log.debug("doc: ");
 			    if (log.isDebugEnabled())
 			    	log.debug(new XmlHelper().getString(doc.getRootElement()));
+			    */
 			    TimingLogger.stop("sendRequest");
 
 			    TimingLogger.start("parseRecords");
@@ -304,6 +324,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
                 Provider provider = harvestSchedule.getProvider();
                 provider.setRecordsAdded(provider.getRecordsAdded() + numberOfNewRecords);
                 provider.setRecordsReplaced(provider.getRecordsReplaced() + numberOfUpdatedRecords);
+                provider.setLastHarvestEndTime(new Date());
                 getProviderDAO().update(provider);
                 
 				LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL + ", " + recordsProcessed + " new records were returned by the OAI provider.");

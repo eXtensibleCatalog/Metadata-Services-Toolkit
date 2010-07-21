@@ -11,6 +11,7 @@ package xc.mst.scheduling;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import xc.mst.harvester.HarvestManager;
 import xc.mst.manager.BaseService;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataServiceManager;
+import xc.mst.services.SolrWorkDelegate;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
@@ -61,8 +63,9 @@ public class Scheduler extends BaseService implements Runnable {
 		return runningJob;
 	}
 	
-	public void run() {		
+	public void run() {
 		Map<Integer, String> lastRunDate = new HashMap<Integer, String>();
+		WorkerThread solrWorkerThread = null;
 		
 		try {
 			for (Service s : getServiceDAO().getAll()) {
@@ -81,9 +84,19 @@ public class Scheduler extends BaseService implements Runnable {
 			throw new RuntimeException(de);
 		}
 		
+		if (config.getPropertyAsBoolean("solr.index.whenIdle", false)) {
+			LOG.debug("solr.index.whenIdle is true");
+			solrWorkerThread = new WorkerThread();
+			LOG.debug("solrWorkerThread: "+solrWorkerThread);
+			SolrWorkDelegate solrWd = (SolrWorkDelegate)config.getBean("SolrWorkDelegate");
+			solrWorkerThread.setWorkDelegate(solrWd);
+			solrWorkerThread.start();
+		} else {
+			LOG.debug("solr.index.whenIdle is false");
+		}
+
 		while(!killed) {
 			Calendar now = Calendar.getInstance();
-
 			List<HarvestSchedule> schedulesToRun = null;
 			String thisMinute = ""+now.get(Calendar.HOUR_OF_DAY)+now.get(Calendar.DAY_OF_WEEK)+now.get(Calendar.MINUTE);
 			try {
@@ -122,26 +135,52 @@ public class Scheduler extends BaseService implements Runnable {
 			}
 
 			
-			if (runningJob == null || !runningJob.isAlive()) {
-				
-				
+			if (runningJob == null || !runningJob.isAlive() || runningJob == solrWorkerThread) {
+				LOG.debug("runningJob: "+runningJob);
+				if (runningJob != null) {
+					LOG.debug("runningJob.getWorkDelegate(): "+runningJob.getWorkDelegate());
+				}
+				LOG.debug("previousJob: "+previousJob);
 				try {
 					if (previousJob != null) {
 						getJobService().deleteJob(previousJob);
 						
 						TimingLogger.reset();
 						
+						Repository previousRepo = null;
 						List<ProcessingDirective> processingDirectives = null;
 						if (previousJob.getHarvestSchedule() != null) { // was harvest
 							processingDirectives = getProcessingDirectiveDAO().getBySourceProviderId(
 									previousJob.getHarvestSchedule().getProvider().getId());
 							previousJob.getHarvestSchedule().setStatus(runningJob.getJobStatus());
 							getHarvestScheduleDAO().update(previousJob.getHarvestSchedule(), false);
+							previousRepo = (Repository)config.getBean("Repository");
+							previousRepo.setName(previousJob.getHarvestSchedule().getProvider().getName());
 						} else if (previousJob.getService() != null) { // was service
 							processingDirectives = getProcessingDirectiveDAO().getBySourceServiceId(
 									previousJob.getService().getId());
-							previousJob.getService().setStatus(runningJob.getJobStatus());
-							getServiceDAO().update(previousJob.getService());
+							// Reload service. It is changed during service processing.
+							// TODO check to see if there is better way to do this
+							Service service = getServicesService().getServiceById(previousJob.getService().getId());
+							//getById(previousJob.getService().getId());
+							LOG.debug("service: "+service);
+							LOG.debug("service.getName(): "+service.getName());
+							LOG.debug("service.getMetadataService(): "+service.getMetadataService());
+							previousRepo = service.getMetadataService().getRepository();
+							service.setStatus(runningJob.getJobStatus());
+							getServiceDAO().update(service);
+						}
+						
+						if (previousRepo != null) {
+					        try {
+					        	// I slightly future dated the timestamp of the records so that for a given time, they will always
+					        	// be there.  We need to wait for that future dating to become present before moving on here.
+						        while (new Date().before(previousRepo.getLastModified())) {
+						        	Thread.sleep(500);
+						        }
+					        } catch (Throwable t) {
+					        	LOG.error("", t);
+					        }
 						}
 						
 						if (processingDirectives != null) {
@@ -181,8 +220,12 @@ public class Scheduler extends BaseService implements Runnable {
 					Job jobToStart = getJobService().getNextJobToExecute();
 					previousJob = jobToStart;
 
+					LOG.debug("jobToStart: "+jobToStart);
 					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
 					if(jobToStart != null) {
+						if (solrWorkerThread != null) {
+							solrWorkerThread.pause();
+						}
 						runningJob = null;
 						TimingLogger.reset();
 						TimingLogger.log("starting job: "+jobToStart.getJobType());
@@ -245,7 +288,14 @@ public class Scheduler extends BaseService implements Runnable {
 						if (runningJob != null) {
 							runningJob.start();
 						}
-					} // end if(the service job queue was empty)
+					} else {
+						if (solrWorkerThread != null && runningJob != solrWorkerThread) {
+							LOG.debug("solrWorkerThead.proceed");
+							solrWorkerThread.proceed();
+							runningJob = solrWorkerThread;
+							runningJob.type = Constants.SOLR_INDEXER;
+						}
+					}
 				} catch(DataException de) {
 					LOG.error("DataException occured when getting job from database", de);
 				}

@@ -31,6 +31,10 @@ public interface Repository {
 	
 	public void endBatch();
 	
+	public Date getLastModified();
+	
+	public int getNumRecords();
+	
 	public void installOrUpdateIfNecessary(String previousVersion, String currentVersion); 
 
 	public void addRecord(Record record);

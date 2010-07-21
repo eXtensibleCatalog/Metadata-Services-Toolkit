@@ -1,11 +1,11 @@
 create table repo_name.records (
 	record_id        int        NOT NULL,
-	date_created     datetime,
+	oai_datestamp     datetime,
 	status           char(1),
 	format_id        int,
 
 	PRIMARY KEY (record_id),
-	KEY idx_REPO_NAME_records_date_created (date_created),
+	KEY idx_REPO_NAME_records_date_created (oai_datestamp),
 	KEY idx_REPO_NAME_records_status (status),
 	KEY idx_REPO_NAME_records_format_id (format_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

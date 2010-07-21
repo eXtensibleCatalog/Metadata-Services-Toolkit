@@ -1,6 +1,7 @@
 package xc.mst.repo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -31,6 +32,17 @@ public class RepositoryService extends BaseService {
 			util.throwIt(t);
 			return null;
 		}
+	}
+	
+	public Date getLastModified() {
+		Date d = null;
+		for (Repository r : getAll()) {
+			Date d2 = getRepositoryDAO().getLastModified(r.getName());
+			if (d2 != null && (d == null || d2.after(d))) {
+				d = d2;
+			}
+		}
+		return d;
 	}
 	
 	public Repository getRepository(Provider p) {

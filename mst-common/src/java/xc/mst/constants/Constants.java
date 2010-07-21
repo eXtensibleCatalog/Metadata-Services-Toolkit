@@ -342,6 +342,8 @@ public class Constants
 	
 	public static final String THREAD_REPOSITORY = "REPOSITORY";
 	
+	public static final String SOLR_INDEXER = "SOLR_INDEXER";
+	
 	public static final String THREAD_PROCESSING_DIRECTIVE = "PD";
 	
 	public static final String THREAD_SERVICE_REPROCESS = "REPROCESS";

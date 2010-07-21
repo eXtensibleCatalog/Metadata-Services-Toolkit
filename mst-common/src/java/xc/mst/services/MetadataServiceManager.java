@@ -7,6 +7,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.manager.BaseManager;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkDelegate;
+import xc.mst.scheduling.WorkerThread;
 
 public class MetadataServiceManager extends BaseManager implements WorkDelegate {
 	
@@ -15,6 +16,15 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 	protected List<Format> triggeringFormats = null;
 	protected List<Set> triggeringSets = null;
 	protected Set outputSet = null;
+	protected WorkerThread workerThread = null;
+	
+	public WorkerThread getWorkerThread() {
+		return workerThread;
+	}
+
+	public void setWorkerThread(WorkerThread workerThread) {
+		this.workerThread = workerThread;
+	}
 
 	public Set getOutputSet() {
 		return outputSet;
@@ -63,7 +73,7 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 	public boolean doSomeWork() {
 		if (triggeringFormats != null) {
 			for (Format f : triggeringFormats) {
-				if (triggeringSets != null) {
+				if (triggeringSets != null && triggeringSets.size() > 0) {
 					for (Set s : triggeringSets) {
 						metadataService.process(incomingRepository, f, s, outputSet);
 					}
@@ -71,7 +81,7 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 					metadataService.process(incomingRepository, f, null, outputSet);	
 				}
 			}
-		} else if (triggeringSets != null) {
+		} else if (triggeringSets != null && triggeringSets.size() > 0) {
 			for (Set s : triggeringSets) {
 				metadataService.process(incomingRepository, null, s, outputSet);
 			}

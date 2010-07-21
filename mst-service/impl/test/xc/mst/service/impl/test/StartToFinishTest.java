@@ -2,9 +2,12 @@ package xc.mst.service.impl.test;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.common.SolrDocumentList;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.harvest.HarvestSchedule;
@@ -33,7 +36,17 @@ public abstract class StartToFinishTest extends BaseTest {
 	protected abstract String getProviderUrl();
 	protected abstract Format getIncomingFormat() throws Exception;
 	protected void testProvider() throws Exception {}
-	protected abstract void finalTest();
+	protected abstract void finalTest() throws Exception;
+	
+	protected Repository getServiceRepository() throws Exception {
+		return getServicesService().getServiceByName(getServiceName()).getMetadataService().getRepository();
+	}
+	
+	protected Repository getHarvestRepository() throws Exception {
+		Repository r = (Repository)MSTConfiguration.getInstance().getBean("Repository");
+		r.setName(getRepoName());
+		return r;
+	}
 	
 	
 	protected Format getDCFormat() throws Exception {
@@ -92,11 +105,14 @@ public abstract class StartToFinishTest extends BaseTest {
 		waitUntilFinished();
 		LOG.debug("after waitUntilFinished");
 		
+		finalTest();
+		
+		/*
 		indexHarvestedRecords();
 		LOG.debug("after indexHarvestedRecords");
 		indexServicedRecords();
 		LOG.debug("after indexServicedRecords");
-		finalTest();
+		
 		LOG.debug("after finalTest");
 		
 		Thread.sleep(60000);
@@ -105,6 +121,7 @@ public abstract class StartToFinishTest extends BaseTest {
 
 		waitUntilFinished();
 		LOG.debug("after waitUntilFinished");
+		*/
 	}
 	
 	public void dropOldSchemas() {
@@ -185,19 +202,35 @@ public abstract class StartToFinishTest extends BaseTest {
         scheduleService.insertSchedule(schedule);
 	}
 	
+	public void updateHarvestSchedule() throws Exception {
+		Calendar nowCal = Calendar.getInstance();
+		HarvestSchedule schedule = scheduleService.getScheduleById(1);
+		schedule.setMinute(nowCal.get(Calendar.MINUTE));
+		scheduleService.updateSchedule(schedule);
+	}
+	
 	public void waitUntilFinished() {
 		int timesNotRunning = 0;
 		while (true) {
+			LOG.debug("checking to see if finished");
 			try {
 				Thread.sleep(1000);
-				if (scheduler.getRunningJob() == null || Status.RUNNING != scheduler.getRunningJob().getJobStatus()) {
+				Date lastModified = getRepositoryService().getLastModified();
+				LOG.debug("lastModified :"+lastModified);
+				if (lastModified != null && lastModified.after(new Date())) {
+					LOG.debug("Future dated!");
+					continue;
+				}
+				if (scheduler.getRunningJob() == null || 
+						Status.RUNNING != scheduler.getRunningJob().getJobStatus()) {
 					timesNotRunning++;
 				} else {
 					timesNotRunning = 0;
 				}
-				if (timesNotRunning > 5) {
+				if (timesNotRunning > 7) {
 					break;
 				}
+				LOG.debug("timeNotRunning: "+timesNotRunning);
 			} catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
@@ -220,8 +253,7 @@ public abstract class StartToFinishTest extends BaseTest {
 					solrIndexService.setService(s);
 					msm.setMetadataService(solrIndexService);
 					msm.setIncomingRepository(repo);
-					((SolrIndexService)solrIndexService).setProvider2index(p);
-					((SolrIndexService)solrIndexService).setService2index(null);
+					repo.setProvider(p);
 					runningJob.run();
 				}
 			}
@@ -245,8 +277,7 @@ public abstract class StartToFinishTest extends BaseTest {
 					solrIndexService.setService(s2);
 					msm.setMetadataService(solrIndexService);
 					msm.setIncomingRepository(repo);
-					((SolrIndexService)solrIndexService).setProvider2index(null);
-					((SolrIndexService)solrIndexService).setService2index(s);
+					repo.setService(s2);
 					runningJob.run();
 				}
 			}

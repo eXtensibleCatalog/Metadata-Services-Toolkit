@@ -26,6 +26,11 @@ public class WorkerThread extends Thread {
 	 
 	public void setWorkDelegate(WorkDelegate workDelegate) {
 		this.workDelegate = workDelegate;
+		this.workDelegate.setWorkerThread(this);
+	}
+	
+	public WorkDelegate getWorkDelegate() {
+		return this.workDelegate;
 	}
 
 	public void run() {
@@ -86,6 +91,10 @@ public class WorkerThread extends Thread {
 
 	public Status getJobStatus() {
 		return status;
+	}
+	
+	public void setJobStatus(Status status) {
+		this.status = status;
 	}
 	
 	public String getDetailedStatus() {

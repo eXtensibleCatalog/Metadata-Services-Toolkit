@@ -123,7 +123,7 @@
 	<target name="publish" depends="mi.publish, mc.publish, ms.publish">
 	</target>
 
-	<target name="retrieve" depends="mc.retrieve,mp.retrieve,ms.retrieve">
+	<target name="retrieve" depends="ms.copy-example,mc.retrieve,mp.retrieve,ms.retrieve">
 		<ant dir="${mst-service}/example" target="retrieve" inheritAll="false" />
 		<target-custom-services target="retrieve" />
 	</target>

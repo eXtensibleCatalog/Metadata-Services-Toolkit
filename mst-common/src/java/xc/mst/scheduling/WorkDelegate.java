@@ -22,4 +22,7 @@ public interface WorkDelegate {
 
 	public int getTotalRecords();
 	
+	public WorkerThread getWorkerThread();
+	public void setWorkerThread(WorkerThread wt);
+	
 }

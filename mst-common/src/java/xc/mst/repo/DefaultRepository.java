@@ -49,6 +49,14 @@ public class DefaultRepository extends BaseService implements Repository {
 	public void setService(Service service) {
 		this.service = service;
 	}
+	
+	public Date getLastModified() {
+		return getRepositoryDAO().getLastModified(name);
+	}
+	
+	public int getNumRecords() {
+		return getRepositoryDAO().getNumRecords(name);
+	}
 
 	public void installOrUpdateIfNecessary(final String previousVersion, final String currentVersion) {
 		final Repository thisthis = this;
@@ -129,8 +137,8 @@ public class DefaultRepository extends BaseService implements Repository {
 		return records;
 	}
 	
-	public List<Record> getRecordsWSets(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
-		return getRepositoryDAO().getRecordsWSets(name, from, until, startingId, inputFormat, inputSet);
+	public List<Record> getRecordsWSets(Date from, Date until, Long startingId) {
+		return getRepositoryDAO().getRecordsWSets(name, from, until, startingId);
 	}
 	
 	public void injectSuccessors(Record r) {
