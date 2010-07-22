@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.common.SolrDocumentList;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.harvest.HarvestSchedule;
@@ -22,7 +20,6 @@ import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
 import xc.mst.services.MetadataService;
 import xc.mst.services.MetadataServiceManager;
-import xc.mst.services.impl.service.SolrIndexService;
 import xc.mst.utils.MSTConfiguration;
 
 public abstract class StartToFinishTest extends BaseTest {
