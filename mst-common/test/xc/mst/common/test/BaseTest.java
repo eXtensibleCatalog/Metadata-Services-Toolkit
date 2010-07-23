@@ -13,7 +13,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import org.apache.log4j.Logger;
-import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.testng.annotations.AfterSuite;
@@ -43,6 +42,7 @@ import xc.mst.utils.SetupClasspath;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.Util;
 import xc.mst.utils.XmlHelper;
+import xc.mst.utils.index.SolrIndexManager;
 
 public class BaseTest {
 	
@@ -148,7 +148,19 @@ public class BaseTest {
 		return (ServiceDAO)getBean("ServiceDAO");
 	}
 	
+	protected FormatDAO getFormatDAO() {
+		return (FormatDAO)getBean("FormatDAO");
+	}
+	
+	protected SetDAO getSetDAO() {
+		return (SetDAO)getBean("SetDAO");
+	}
+	
 	protected SetService getSetService() {
 		return (SetService)getBean("SetService");
+	}
+	
+	protected SolrIndexManager getSolrIndexManager() {
+		return (SolrIndexManager)getBean("SolrIndexManager");
 	}
 }

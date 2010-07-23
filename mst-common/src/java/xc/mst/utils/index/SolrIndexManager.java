@@ -63,7 +63,7 @@ public class SolrIndexManager extends BaseManager {
 	 * @param doc The document to add
 	 * @return true on success, false on failure
 	 */
-public boolean addDoc(SolrInputDocument doc) throws IndexException {
+	public boolean addDoc(SolrInputDocument doc) throws IndexException {
 		// Check if solr server is null
 		if (getMSTSolrService() == null) {
 			log.error("Solr server is null");

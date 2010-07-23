@@ -64,7 +64,7 @@ public class RepositoryDAO extends BaseDAO {
 	
 	protected final static String RECORDS_TABLE_COLUMNS = 
 			"r.record_id, "+
-			"r.date_created, "+
+			"r.oai_datestamp, "+
 			"r.format_id, "+
 			"r.status, ";
 	
@@ -125,6 +125,18 @@ public class RepositoryDAO extends BaseDAO {
 			repos.addAll(tempRepos);
 		}
 		return repos;
+	}
+	
+	public int getNumRecords(String name) {
+		return this.jdbcTemplate.queryForInt("select count(*) from "+getTableName(name, RECORDS_TABLE));
+	}
+	
+	public Date getLastModified(String name) {
+		return (Date)this.jdbcTemplate.queryForObject("select max(date_updated) from "+getTableName(name, RECORD_UPDATES_TABLE), Date.class);
+	}
+	
+	public Date getLastModifiedOai(String name) {
+		return (Date)this.jdbcTemplate.queryForObject("select max(oai_datestamp) from "+getTableName(name, RECORDS_TABLE), Date.class);
 	}
 	
 	public List<Record> getSuccessors(String name, long id) {
@@ -215,14 +227,15 @@ public class RepositoryDAO extends BaseDAO {
 	protected void commitIfNecessary(String name, boolean force) {
 		int batchSize = 50000;
 		if (force || batchSize <= recordsToAdd.size()) {
-			final Date d = new Date();
+			final long startTime = System.currentTimeMillis();
 			String sql = 
     			"insert into "+getTableName(name, RECORDS_TABLE)+
-    			" (record_id, date_created, status, format_id ) "+
+    			" (record_id, oai_datestamp, status, format_id ) "+
     			"values (?,?,?,?) "+
     			"on duplicate key update "+
     				"status=?, "+
-    				"format_id=? "+
+    				"format_id=?, "+
+    				"oai_datestamp=? "+
     			";";
 			TimingLogger.start("RECORDS_TABLE.insert");
 	        int[] updateCounts = jdbcTemplate.batchUpdate(
@@ -232,7 +245,11 @@ public class RepositoryDAO extends BaseDAO {
 	                    	int i=1;
 	                    	Record r = recordsToAdd.get(j);
 	                        ps.setLong(i++, r.getId());
-	                        ps.setTimestamp(i++, new Timestamp(d.getTime()));
+	                        if (r.getOaiDatestamp() == null) {
+	                        	ps.setTimestamp(i++, new Timestamp(startTime));	
+	                        } else {
+	                        	ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
+	                        }
 	                        for (int k=0; k<2; k++) {
 		                        ps.setString(i++, String.valueOf(r.getStatus()));
 		                        if (r.getFormat() != null) {
@@ -241,6 +258,11 @@ public class RepositoryDAO extends BaseDAO {
 		                        	ps.setObject(i++, null);
 		                        }
 	                        }
+	                        if (r.getOaiDatestamp() == null) {
+	                        	ps.setTimestamp(i++, new Timestamp(startTime));	
+	                        } else {
+	                        	ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
+	                        }
 	                    }
 
 	                    public int getBatchSize() {
@@ -248,27 +270,7 @@ public class RepositoryDAO extends BaseDAO {
 	                    }
 	                } );
 	        TimingLogger.stop("RECORDS_TABLE.insert");
-	        TimingLogger.start("RECORD_UPDATES_TABLE.insert");
-			sql = 
-    			"insert into "+getTableName(name, RECORD_UPDATES_TABLE)+
-    			" (record_id, date_updated) "+
-    			"values (?,?) "+
-    			";";
-	        updateCounts = jdbcTemplate.batchUpdate(
-	        		sql,
-	                new BatchPreparedStatementSetter() {
-	                    public void setValues(PreparedStatement ps, int j) throws SQLException {
-	                    	int i=1;
-	                    	Record r = recordsToAdd.get(j);
-	                        ps.setLong(i++, r.getId());
-	                        ps.setTimestamp(i++, new Timestamp(d.getTime()));
-	                    }
-
-	                    public int getBatchSize() {
-	                        return recordsToAdd.size();
-	                    }
-	                } );
-	        TimingLogger.stop("RECORD_UPDATES_TABLE.insert");
+	        final long endTime = System.currentTimeMillis();
 	        TimingLogger.start("RECORDS_XML_TABLE.insert");
 			sql = 
     			"insert into "+getTableName(name, RECORDS_XML_TABLE)+
@@ -373,6 +375,45 @@ public class RepositoryDAO extends BaseDAO {
 			});
 			TimingLogger.stop("RECORD_OAI_IDS.insert");
 			
+			// I slightly future dating the timestamp of the records so that a record will always
+			// have been available from it's update_date forward.  If we don't do this, then it's 
+			// possible for harvests to miss records.
+			final long updateTime = System.currentTimeMillis() + (endTime - startTime) + 3000;
+			TimingLogger.start("RECORD_UPDATES_TABLE.insert");
+			sql = 
+				"insert into "+getTableName(name, RECORD_UPDATES_TABLE)+
+				" (record_id, date_updated) "+
+				"values (?,?) "+
+				";";
+			updateCounts = jdbcTemplate.batchUpdate(
+					sql,
+	                new BatchPreparedStatementSetter() {
+	                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+	                    	int i=1;
+	                    	Record r = recordsToAdd.get(j);
+	                        ps.setLong(i++, r.getId());
+	                        ps.setTimestamp(i++, new Timestamp(updateTime));
+	                    }
+
+	                    public int getBatchSize() {
+	                        return recordsToAdd.size();
+	                    }
+	                } );
+	        TimingLogger.stop("RECORD_UPDATES_TABLE.insert");
+	        LOG.debug(RECORD_UPDATES_TABLE+" committed: "+new Date());
+	        LOG.debug("updateTime: "+new Date(updateTime));
+	        
+	        /*
+	        Date updateDate = new Date(updateTime+1000);
+	        try {
+		        while (new Date().before(updateDate)) {
+		        	Thread.sleep(500);
+		        }
+	        } catch (Throwable t) {
+	        	LOG.error("", t);
+	        }
+	        */
+	        
 			recordsToAdd = null;
 		}
 	}
@@ -488,20 +529,24 @@ public class RepositoryDAO extends BaseDAO {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 				" select "+RECORDS_TABLE_COLUMNS+
+					//"u.date_updated, "+
 					" x.xml "+
 				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
-					getTableName(name, RECORDS_XML_TABLE)+" x, "+
-					getTableName(name, RECORD_UPDATES_TABLE)+" u ");
+					getTableName(name, RECORDS_XML_TABLE)+" x ");
 		if (inputSet != null) {
 			sb.append(
-				", "+getTableName(name, RECORDS_SETS_TABLE)+" s ");
+				", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ");
 		}
 		sb.append(
 				" where r.record_id = x.record_id " +
-					" and r.record_id = u.record_id " +
+					//" and r.record_id = u.record_id " +
 					" and (r.record_id > ? or ? is null) "+
-					" and (u.date_updated > ? or ? is null) "+
-					" and u.date_updated <= ? ");
+					" and exists ("+
+						"select 1 "+
+						"from "+getTableName(name, RECORD_UPDATES_TABLE)+" u "+
+						"where (u.date_updated > ? or ? is null) "+
+							" and u.record_id = r.record_id "+
+							" and u.date_updated <= ? ) ");
 		if (inputFormat != null) {
 			sb.append(
 					" and r.format_id = ? ");
@@ -517,8 +562,8 @@ public class RepositoryDAO extends BaseDAO {
 		
 		if (inputSet != null) {
 			sb.append(
-					" and r.record_id = s.record_id " +
-					" and s.set_id = ? ");
+					" and r.record_id = rs.record_id " +
+					" and rs.set_id = ? ");
 			params.add(inputSet.getId());
 		}
 		sb.append(
@@ -537,54 +582,62 @@ public class RepositoryDAO extends BaseDAO {
 		return records;
 	}
 	
-	public List<Record> getRecordsWSets(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
-		List<Record> recs = getRecords(name, from, until, startingId, inputFormat, inputSet);
-		if (recs != null && recs.size() > 0) {
-			long endingId = recs.get(recs.size()-1).getId();
-			//TODO add inputFormat and inputSet to the query
-			String sql = 
-				"select "+RECORDS_TABLE_COLUMNS+
-					"s.set_id, "+
-					"s.set_spec, "+
-					"s.display_name "+
-				"from "+getTableName(name, RECORDS_TABLE)+" r, "+
-					getTableName(name, RECORDS_SETS_TABLE)+" rs, "+
-					"sets s "+
-				"where r.record_id = rs.record_id "+
-					"and s.set_id = rs.set_id "+
-					"and r.record_id <= ? "+
-					"and r.date_created >= ? "+
-					"and r.date_created < ? ";
-			if (startingId != null) {
-				sql += " and r.record_id > ? ";
-			}
-			sql += " order by r.record_id";
+	public List<Record> getRecordsWSets(String name, Date from, Date until, Long startingId) {
+		List<Object> params = new ArrayList<Object>();
+		if (until == null) {
+			until = new Date();
+		}
+		List<Record> records = getRecords(name, from, until, startingId, null, null);
+		if (records != null && records.size() > 0) {
+			Long highestId = records.get(records.size()-1).getId();
+			StringBuilder sb = new StringBuilder();
+			sb.append(
+					" select "+RECORDS_TABLE_COLUMNS+
+						"s.set_id, "+
+						"s.set_spec, "+
+						"s.display_name "+
+					" from "+getTableName(name, RECORDS_TABLE)+" r, "+
+						getTableName(name, RECORD_UPDATES_TABLE)+" u, "+
+						getTableName(name, RECORDS_SETS_TABLE)+" rs, "+
+						" sets s"+
+					" where r.record_id = u.record_id " +
+						" and rs.record_id = r.record_id "+
+						" and rs.set_id = s.set_id "+
+						" and (r.record_id > ? or ? is null) "+
+						" and r.record_id <= ? "+
+						" and (u.date_updated > ? or ? is null) "+
+						" and u.date_updated <= ? order by r.record_id ");
+			LOG.debug("startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
+			params.add(startingId);
+			params.add(startingId);
+			params.add(highestId);
+			params.add(from);
+			params.add(from);
+			params.add(until);
+			
+			Object obj[] = params.toArray();
+			
 			List<Record> recordsWSets = null;
 			try {
-				if (startingId != null) {
-					recordsWSets = this.jdbcTemplate.query(
-							sql, 
-							new Object[]{endingId, from, until, startingId},
-							new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}, this));	
-				} else {
-					recordsWSets = this.jdbcTemplate.query(
-							sql,
-							new Object[]{endingId, from, until}, 
-							new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}, this));
-				}
+				recordsWSets = this.jdbcTemplate.query(sb.toString(), obj, 
+						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}, this));
+				LOG.debug("recordsWSets.size() "+recordsWSets.size());
 				int recIdx = 0;
-				Record currentRecord = recs.get(recIdx);
+				Record currentRecord = records.get(recIdx);
 				for (Record rws : recordsWSets) {
 					while (currentRecord.getId() != rws.getId()) {
-						currentRecord = recs.get(++recIdx);		
+						currentRecord = records.get(++recIdx);
 					}
 					currentRecord.addSet(rws.getSets().get(0));
 				}
 			} catch (EmptyResultDataAccessException e) {
-				LOG.info("no records found for from: "+from+" until: "+until+" startingId: "+startingId);
-			}	
+				LOG.info("no recordsWSets found for from: "+from+" until: "+until+" startingId: "+startingId);
+			}
+			LOG.debug("records.size(): "+records.size());
 		}
-		return recs;
+
+
+		return records;
 	}
 	
 	public void populatePredSuccMaps(String name, TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {
@@ -606,6 +659,10 @@ public class RepositoryDAO extends BaseDAO {
 			}
 			preds.add(predId);
 		}
+	}
+	
+	public void setAllLastModifiedOais(String name, Date d) {
+		this.jdbcTemplate.update("update "+getTableName(name, RECORDS_TABLE)+ " set oai_datestamp=?", d);
 	}
 	
 	private static final class RepoMapper implements RowMapper<Repository> {
@@ -640,7 +697,7 @@ public class RepositoryDAO extends BaseDAO {
 	        Record r = new Record();
 	        if (tables.contains(RECORDS_TABLE)) {
 	        	r.setId(rs.getLong("r.record_id"));
-		        r.setCreatedAt(rs.getTimestamp("r.date_created"));
+		        r.setCreatedAt(rs.getTimestamp("r.oai_datestamp"));
 		        String status = rs.getString("r.status");
 		        try {
 			        Integer formatId = rs.getInt("r.format_id");
@@ -653,6 +710,9 @@ public class RepositoryDAO extends BaseDAO {
 		        if (status != null && status.length() == 1) {
 		        	r.setStatus(status.charAt(0));
 		        }
+	        }
+	        if (tables.contains(RECORD_UPDATES_TABLE)) {
+	        	r.setUpdatedAt(rs.getDate("u.date_updated"));
 	        }
 	        if (tables.contains(RECORDS_XML_TABLE)) {
 	        	r.setMode(Record.STRING_MODE);

@@ -7,6 +7,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.manager.BaseManager;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkDelegate;
+import xc.mst.scheduling.WorkerThread;
 
 public class MetadataServiceManager extends BaseManager implements WorkDelegate {
 	
@@ -15,6 +16,15 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 	protected List<Format> triggeringFormats = null;
 	protected List<Set> triggeringSets = null;
 	protected Set outputSet = null;
+	protected WorkerThread workerThread = null;
+	
+	public WorkerThread getWorkerThread() {
+		return workerThread;
+	}
+
+	public void setWorkerThread(WorkerThread workerThread) {
+		this.workerThread = workerThread;
+	}
 
 	public Set getOutputSet() {
 		return outputSet;

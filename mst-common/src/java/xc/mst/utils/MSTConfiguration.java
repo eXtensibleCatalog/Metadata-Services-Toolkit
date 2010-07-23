@@ -31,6 +31,8 @@ import xc.mst.constants.Constants;
  */
 public class MSTConfiguration extends PropertyPlaceholderConfigurer implements ApplicationContextAware {
 	
+	private static final Logger LOG = Logger.getLogger(MSTConfiguration.class);
+	
 	protected Properties properties = new Properties();
 
 	protected ApplicationContext applicationContext = null;
@@ -146,6 +148,24 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 			}
 		}
 		return props;
+	}
+	
+	public boolean getPropertyAsBoolean(String name, boolean def) {
+		String value = getProperty(name);
+		LOG.debug("value: "+value);
+		if (value == null) {
+			return def;	
+		} else {
+			value = value.toUpperCase();
+			if ("TRUE".equals(value) || "ON".equals(value) || "YES".equals(value)) {
+				return true;
+			} else if ("FALSE".equals(value) || "OFF".equals(value) || "OFF".equals(value)) {
+				return false;
+			} else {
+				log.error("property '"+name+"' value not understood: "+value);
+				return def;
+			}
+		}
 	}
 	
 	public String getProperty(String name, String def) {

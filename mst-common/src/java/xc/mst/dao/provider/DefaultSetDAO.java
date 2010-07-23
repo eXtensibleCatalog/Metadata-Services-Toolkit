@@ -239,6 +239,9 @@ public class DefaultSetDAO extends SetDAO
 	@Override
 	public Set getById(int setId) throws DatabaseConfigException
 	{
+		if (this.setMapById.containsKey(setId)) {
+			return this.setMapById.get(setId);
+		}
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");

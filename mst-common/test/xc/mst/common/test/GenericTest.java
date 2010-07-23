@@ -10,13 +10,17 @@
 package xc.mst.common.test;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.provider.Set;
+import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
+import xc.mst.repo.DefaultRepository;
+import xc.mst.utils.MSTConfiguration;
 
 public class GenericTest extends BaseTest {
 	
@@ -26,6 +30,49 @@ public class GenericTest extends BaseTest {
 	public void goTest() {
 		
 		try {
+			String repoName = "test_repo";
+			DefaultRepository repo = (DefaultRepository)MSTConfiguration.getInstance().getBean("Repository");
+			repo.setName(repoName);
+			Date from = new Date();
+			from.setHours(14);
+			from.setMinutes(34);
+			from.setSeconds(58);
+			
+			Date to = new Date();
+			to.setHours(14);
+			to.setMinutes(35);
+			to.setSeconds(01);
+			
+			List<Record> records = 
+				((DefaultRepository)repo).getRecordsWSets(from, to, null);
+			
+			LOG.debug("records.size(): "+records.size());
+			
+			
+			/*
+			String serviceName = "example";
+			try {
+				getRepositoryDAO().deleteSchema(serviceName);
+			} catch (Throwable t) {}
+			
+			ServiceHarvest sh = new ServiceHarvest();
+			//Service s = getServicesService().getServiceByName(serviceName);
+			Service s = new Service();
+			s.setId(45);
+			
+			LOG.debug("s.getName(): "+s.getName());
+			LOG.debug("s.getId(): "+s.getId());
+
+			sh.setService(s);
+			sh.setFrom(new Date());
+			sh.setUntil(new Date());
+			sh.setRepoName(serviceName);
+			getServiceDAO().persist(sh);
+
+			sh = getServiceDAO().getServiceHarvest(null, null, serviceName, s);
+			LOG.debug("sh: "+sh);
+			LOG.debug("sh.getId(): "+sh.getId());
+
 			String serviceName = "example";
 			try {
 				getRepositoryDAO().deleteSchema(serviceName);
@@ -47,6 +94,7 @@ public class GenericTest extends BaseTest {
 			sh.setUntil(new Date());
 			sh.setRepoName(serviceName);
 			getServiceDAO().persist(sh);
+			*/
 			
 			/*
 			RecordService rs = (RecordService)getBean("RecordService");

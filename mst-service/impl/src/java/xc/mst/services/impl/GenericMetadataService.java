@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.Semaphore;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -73,7 +73,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 
 	protected boolean stopped = false;
 	protected boolean paused = false;
-	protected ReentrantLock running = new ReentrantLock();
+	protected Semaphore running = new Semaphore(1);
 	protected int processedRecordCount = 0;
 	protected int totalRecordCount = 0;
 	protected int inputRecordCount = 0;
@@ -133,9 +133,9 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	public void setInputRecordCount(int inputRecordCount) {
 	}
 	
-	public void cancel() {stopped = true; running.lock(); running.unlock();}
-	public void finish() {running.lock(); running.unlock();}
-	public void pause()  {paused = true; running.lock(); running.unlock();}
+	public void cancel() {stopped = true; running.acquireUninterruptibly(); running.release();}
+	public void finish() {running.acquireUninterruptibly(); running.release();}
+	public void pause()  {paused = true; running.acquireUninterruptibly(); running.release();}
 	public void resume() {paused = false;}
 	
 	public void install() {
@@ -311,22 +311,20 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	}
 	
 	public abstract List<Record> process(Record r);
-
-	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
-		LOG.debug("getService(): "+getService());
-		running.lock();
-		predecessorKeyedMap.clear();
-		successorKeyedMap.clear();
-		getRepository().populatePredSuccMaps(predecessorKeyedMap, successorKeyedMap);
-		
+	
+	protected ServiceHarvest getServiceHarvest(Format inputFormat, xc.mst.bo.provider.Set inputSet, String repoName, Service service) {
+		LOG.debug("inputFormat: "+inputFormat);
+		LOG.debug("inputSet: "+inputSet);
+		LOG.debug("repoName: "+repoName);
+		LOG.debug("service.getId(): "+service.getId());
 		ServiceHarvest sh = getServiceDAO().getServiceHarvest(
-				inputFormat, inputSet, repo.getName(), getService());
+				inputFormat, inputSet, repoName, getService());
 		if (sh == null) {
 			sh = new ServiceHarvest();
 			sh.setFormat(inputFormat);
-			sh.setRepoName(repo.getName());
+			sh.setRepoName(repoName);
 			sh.setSet(inputSet);
-			sh.setService(getService());
+			sh.setService(getServiceDAO().getService(getService().getId()));
 		}
 		if (sh.getHighestId() == null) {
 			LOG.debug("sh.getHighestId(): "+sh.getHighestId());
@@ -345,14 +343,26 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 		}
 		getServiceDAO().persist(sh);
 		LOG.debug("sh.getId(): "+sh.getId());
+		return sh;
+	}
+
+	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
+		LOG.debug("getService(): "+getService());
+		running.acquireUninterruptibly();
+		predecessorKeyedMap.clear();
+		successorKeyedMap.clear();
+		getRepository().populatePredSuccMaps(predecessorKeyedMap, successorKeyedMap);
 		
+		ServiceHarvest sh = getServiceHarvest(
+				inputFormat, inputSet, repo.getName(), getService());
 		List<Record> records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
+		getRepository().beginBatch();
 		
 		boolean previouslyPaused = false;
 		while (records != null && records.size() > 0 && !stopped) {
 			if (paused) {
 				previouslyPaused = true;
-				running.unlock();
+				running.release();
 				try {
 					Thread.sleep(1000);
 				} catch (Throwable t) {
@@ -361,9 +371,9 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 				continue;
 			}
 			if (previouslyPaused) {
-				running.lock();
+				running.acquireUninterruptibly();
 			}
-			getRepository().beginBatch();
+			
 			for (Record in : records) {
 				// TODO: currently the injected records here only contain ids.
 				//       This is helpful enough if you simply want to overwrite the
@@ -382,7 +392,6 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 				sh.setHighestId(in.getId());
 			}
 
-			getRepository().endBatch();
 			LOG.debug("sh.getId(): "+sh.getId());
 			getServiceDAO().persist(sh);
 
@@ -398,12 +407,13 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			}
 
 		}
+		getRepository().endBatch();
 		if (!stopped) {
 			sh.setHighestId(null);
 			getServiceDAO().persist(sh);
 		}
 		if (!previouslyPaused) {
-			running.unlock();
+			running.release();
 		}
 	}
 	

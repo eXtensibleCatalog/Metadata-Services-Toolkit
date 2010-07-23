@@ -103,6 +103,11 @@ public class RepositoryTest extends BaseTest {
 			assert getRepositoryDAO().getRecords(repoName, null, null, null, f, null).size() == 10;
 			Set set = getSetDAO().getById(1);
 			assert getRepositoryDAO().getRecords(repoName, null, null, null, f, set).size() == 10;
+			List<Record> records = getRepositoryDAO().getRecordsWSets(repoName, null, null, null);
+			assert records.size() == 10;
+			for (Record r : records) {
+				assert r.getSets().get(0).getId() == set.getId();
+			}
 		} catch (Throwable t) {
 			t.printStackTrace(System.out);
 		}

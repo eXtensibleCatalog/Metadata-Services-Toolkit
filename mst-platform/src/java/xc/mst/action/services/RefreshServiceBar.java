@@ -39,6 +39,8 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
 
     /** Determines how the HTML should be displayed in the view page for this action */
     private String displayType;
+    
+    protected int consecutiveSolrIndexes = 0;
 
     /**
      * Overrides default implementation to refresh the contents of the service status bar.
@@ -51,7 +53,7 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
     	
             try
             {
-
+            	boolean solrIndexRunning = false;
                 if(getScheduler().getRunningJob()!=null)
                 {
                 	if(!getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE) 
@@ -69,6 +71,8 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
 	                    {
 	                        if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
 	                        	currentProcess = "Paused harvesting from provider " + getScheduler().getRunningJob().getJobName();
+	                        } else if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.SOLR_INDEXER)) {
+	                        	currentProcess = null;
 	                        } else {
 	                        	currentProcess = "Paused processing through " + getScheduler().getRunningJob().getJobName();
 	                        }
@@ -86,6 +90,11 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
 	                    			 currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessed() + 
 	                    			 " records from repository " + getScheduler().getRunningJob().getJobName();
 	                    		 }
+	                    	 } else if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.SOLR_INDEXER)) {
+	                    		 solrIndexRunning = true;
+	                    		 if (consecutiveSolrIndexes > 2) {
+	                    			 currentProcess = "creating solr index";
+	                    		 }
 	                         } else {
 	                         	currentProcess = "Processed " +  getScheduler().getRunningJob().getRecordsProcessed() + 
 	                         	" records out of " + getScheduler().getRunningJob().getTotalRecords() + 
@@ -100,6 +109,11 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
                 }
                 displayType = (String)request.getSession().getAttribute("serviceBarDisplay");
                 setDisplayType(displayType);
+                if (solrIndexRunning) {
+                	consecutiveSolrIndexes++;
+                } else {
+                	consecutiveSolrIndexes=0;
+                }
                 return SUCCESS;
             }
             catch(Exception e)

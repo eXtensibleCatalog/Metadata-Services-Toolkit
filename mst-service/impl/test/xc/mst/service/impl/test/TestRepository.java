@@ -51,6 +51,14 @@ public class TestRepository extends BaseService implements Repository {
 	
 	public void populatePredSuccMaps(TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {}
 	
+	public Date getLastModified() {
+		return null;
+	}
+	
+	public int getNumRecords() {
+		return -1;
+	}
+	
 	protected DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	
 	public String getName() {

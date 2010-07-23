@@ -9,6 +9,8 @@
 
 package xc.mst.scheduling;
 
+import java.util.concurrent.Semaphore;
+
 import org.apache.log4j.Logger;
 
 import xc.mst.constants.Constants;
@@ -23,15 +25,35 @@ public class WorkerThread extends Thread {
 	protected Status status = null;
 	
 	protected WorkDelegate workDelegate = null;
+	
+	protected Semaphore setupComplete = null;
+	
+	public WorkerThread() {
+		setupComplete = new Semaphore(1);
+		setupComplete.acquireUninterruptibly();
+	}
+	
+	public void waitForSetupCompletion() {
+		if (setupComplete != null) {
+			setupComplete.acquireUninterruptibly();
+			setupComplete = null;
+		}
+	}
 	 
 	public void setWorkDelegate(WorkDelegate workDelegate) {
 		this.workDelegate = workDelegate;
+		this.workDelegate.setWorkerThread(this);
+	}
+	
+	public WorkDelegate getWorkDelegate() {
+		return this.workDelegate;
 	}
 
 	public void run() {
 		try {
 			this.status = Status.RUNNING;
 			this.workDelegate.setup();
+			setupComplete.release();
 			boolean keepGoing = true;
 			while (keepGoing) {
 				LOG.debug("workDelegate.getName(): "+workDelegate.getName());
@@ -54,16 +76,19 @@ public class WorkerThread extends Thread {
 	}
 	
 	public void cancel() {
+		waitForSetupCompletion();
 		this.workDelegate.cancel();
 		this.status = Status.CANCELED;
 	}
 
 	public void pause() {
+		waitForSetupCompletion();
 		this.workDelegate.pause();
 		this.status = Status.PAUSED;
 	}
 
 	public void proceed() {
+		waitForSetupCompletion();
 		this.workDelegate.resume();
 		this.status = Status.RUNNING;
 	}
@@ -86,6 +111,10 @@ public class WorkerThread extends Thread {
 
 	public Status getJobStatus() {
 		return status;
+	}
+	
+	public void setJobStatus(Status status) {
+		this.status = status;
 	}
 	
 	public String getDetailedStatus() {
