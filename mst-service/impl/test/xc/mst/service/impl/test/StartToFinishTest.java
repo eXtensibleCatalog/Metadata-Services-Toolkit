@@ -218,6 +218,9 @@ public abstract class StartToFinishTest extends BaseTest {
 					LOG.debug("Future dated!");
 					continue;
 				}
+				if (scheduler.getRunningJob() != null) {
+					LOG.debug("scheduler.getRunningJob().getJobStatus(): "+scheduler.getRunningJob().getJobStatus());
+				}
 				if (scheduler.getRunningJob() == null || 
 						Status.RUNNING != scheduler.getRunningJob().getJobStatus()) {
 					timesNotRunning++;

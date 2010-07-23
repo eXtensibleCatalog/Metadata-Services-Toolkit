@@ -356,6 +356,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 		ServiceHarvest sh = getServiceHarvest(
 				inputFormat, inputSet, repo.getName(), getService());
 		List<Record> records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
+		getRepository().beginBatch();
 		
 		boolean previouslyPaused = false;
 		while (records != null && records.size() > 0 && !stopped) {
@@ -372,7 +373,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			if (previouslyPaused) {
 				running.acquireUninterruptibly();
 			}
-			getRepository().beginBatch();
+			
 			for (Record in : records) {
 				// TODO: currently the injected records here only contain ids.
 				//       This is helpful enough if you simply want to overwrite the
@@ -391,7 +392,6 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 				sh.setHighestId(in.getId());
 			}
 
-			getRepository().endBatch();
 			LOG.debug("sh.getId(): "+sh.getId());
 			getServiceDAO().persist(sh);
 
@@ -407,6 +407,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			}
 
 		}
+		getRepository().endBatch();
 		if (!stopped) {
 			sh.setHighestId(null);
 			getServiceDAO().persist(sh);

@@ -10,6 +10,7 @@ import org.apache.solr.common.SolrDocumentList;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.Record;
+import xc.mst.repo.DefaultRepository;
 
 public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTest {
 	
@@ -62,37 +63,26 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 	
 	protected void finalTest() throws Exception {
+		boolean useAsserts = true;
 		Record r = getRepositoryService().getRecord(1999);
-		assert r.getPredecessors().get(0).getId() == 999;
+		if (useAsserts)
+			assert r.getPredecessors().get(0).getId() == 999;
 		
 		r = getRepositoryService().getRecord(999);
-		assert r.getSuccessors().get(0).getId() == 1999;
-		
-		assert getHarvestRepository().getNumRecords() == 1000;
-		assert getServiceRepository().getNumRecords() == 1000;
+		if (useAsserts) {
+			assert r.getSuccessors().get(0).getId() == 1999;
+			assert getHarvestRepository().getNumRecords() == 1000;
+			assert getServiceRepository().getNumRecords() == 1000;
+		}
 		
 		SolrQuery sq = new SolrQuery("*:*");
 		SolrDocumentList sdl = getSolrIndexManager().getDocumentList(sq);
 		LOG.debug("sdl.getNumFound(): "+sdl.getNumFound());
-		assert sdl.getNumFound() == 2000;
-		
-		Date until = new Date();
-		Long startingId = null;
-		List<Record> records = getHarvestRepository().getRecords(null, until, startingId, null, null);
-		int setCount = 0;
-		while (records != null && records.size() > 0) {
-			for (Record r2 : records) {
-				startingId = r2.getId();
-				LOG.debug("r2.getSets(): "+r2.getSets());
-				if (r2.getSets().contains("test_repo:bgsg")) {
-					setCount++;
-				}
-			}
-			records = getHarvestRepository().getRecords(null, until, startingId, null, null);
-			
+		if (useAsserts) {
+			assert sdl.getNumFound() == 2000;
 		}
-		LOG.debug("setCount: "+setCount);
-		//assert setCount == 2000;
+		
+		verifySets();
 
 		getRepositoryDAO().setAllLastModifiedOais(getHarvestRepository().getName(), new Date(0));
 		Date beforeGettingSameRecords = new Date();
@@ -100,16 +90,19 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		LOG.debug("160");
 		waitUntilFinished();
 		
-		assert beforeGettingSameRecords.before(getHarvestRepository().getLastModified());
-		// for some reason it's picking up 30 more records the 
-		assert getHarvestRepository().getNumRecords() == 1000;
+		if (useAsserts) {
+			assert beforeGettingSameRecords.before(getHarvestRepository().getLastModified()); 
+			assert getHarvestRepository().getNumRecords() == 1000;
+			assert getServiceRepository().getNumRecords() == 1000;
+		}
+		verifySets();
 		LOG.debug("getHarvestRepository().getNumRecords(): "+getHarvestRepository().getNumRecords());
-		assert getServiceRepository().getNumRecords() == 1000;
 		LOG.debug("getServiceRepository().getNumRecords(): "+getServiceRepository().getNumRecords());
 		sq = new SolrQuery("*:*");
 		sdl = getSolrIndexManager().getDocumentList(sq);
 		LOG.debug("sdl.getNumFound(): "+sdl.getNumFound());
-		assert sdl.getNumFound() == 2000;
+		if (useAsserts)
+			assert sdl.getNumFound() == 2000;
 		
 		LOG.debug("180");
 		LOG.debug("200");
@@ -120,12 +113,41 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		
 		LOG.debug("getHarvestRepository().getNumRecords(): "+getHarvestRepository().getNumRecords());
 		LOG.debug("getServiceRepository().getNumRecords(): "+getServiceRepository().getNumRecords());
-		assert getHarvestRepository().getNumRecords() > 1000;
-		assert getServiceRepository().getNumRecords() > 1000;
+		if (useAsserts) {
+			assert getHarvestRepository().getNumRecords() > 1000;
+			assert getServiceRepository().getNumRecords() > 1000;
+		}
 		
 		sq = new SolrQuery("*:*");
 		sdl = getSolrIndexManager().getDocumentList(sq);
 		LOG.debug("sdl.getNumFound(): "+sdl.getNumFound());
-		assert sdl.getNumFound() > 2000;
+		if (useAsserts)
+			assert sdl.getNumFound() > 2000;
+			
+	}
+	
+	public void verifySets() throws Exception {
+		
+		Date until = new Date();
+		Long startingId = null;
+		List<Record> records = ((DefaultRepository)getHarvestRepository()).getRecordsWSets(null, until, startingId);
+		int setCount = 0;
+		while (records != null && records.size() > 0) {
+			for (Record r2 : records) {
+				startingId = r2.getId();
+				LOG.debug("r2.getSets(): "+r2.getSets());
+				LOG.debug("r2.getId(): "+r2.getId());
+				if (r2.getSets().size() > 0) {
+					setCount++;
+					LOG.debug("r2.getSets().size() > 0");
+				} else {
+					LOG.debug("r2.getSets().size() !> 0");
+				}
+			}
+			records = ((DefaultRepository)getHarvestRepository()).getRecordsWSets(null, until, startingId);
+		}
+		LOG.debug("setCount: "+setCount);
+		//assert setCount == 2000;
+
 	}
 }

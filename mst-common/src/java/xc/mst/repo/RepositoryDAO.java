@@ -595,8 +595,7 @@ public class RepositoryDAO extends BaseDAO {
 					" select "+RECORDS_TABLE_COLUMNS+
 						"s.set_id, "+
 						"s.set_spec, "+
-						"s.display_name, "+
-						"(select min(u.date_updated) from "+getTableName(name, RECORD_UPDATES_TABLE)+" where record_id = r.record_id) as first_update "+
+						"s.display_name "+
 					" from "+getTableName(name, RECORDS_TABLE)+" r, "+
 						getTableName(name, RECORD_UPDATES_TABLE)+" u, "+
 						getTableName(name, RECORDS_SETS_TABLE)+" rs, "+
@@ -621,7 +620,7 @@ public class RepositoryDAO extends BaseDAO {
 			List<Record> recordsWSets = null;
 			try {
 				recordsWSets = this.jdbcTemplate.query(sb.toString(), obj, 
-						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE, "first_update"}, this));
+						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}, this));
 				LOG.debug("recordsWSets.size() "+recordsWSets.size());
 				int recIdx = 0;
 				Record currentRecord = records.get(recIdx);
@@ -714,9 +713,6 @@ public class RepositoryDAO extends BaseDAO {
 	        }
 	        if (tables.contains(RECORD_UPDATES_TABLE)) {
 	        	r.setUpdatedAt(rs.getDate("u.date_updated"));
-	        }
-	        if (tables.contains("first_update")) {
-	        	r.setCreatedAt(rs.getDate("first_update"));
 	        }
 	        if (tables.contains(RECORDS_XML_TABLE)) {
 	        	r.setMode(Record.STRING_MODE);

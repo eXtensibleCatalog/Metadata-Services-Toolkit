@@ -100,8 +100,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	protected int totalRecords = 0;
 
 	public void cancel() {running.lock(); running.unlock();}
-	public void finish() {running.lock(); running.unlock();}
-	public void pause()  {running.lock(); running.unlock();}
+	public void finish() {repo.endBatch(); running.lock(); running.unlock();}
+	public void pause()  {repo.endBatch(); running.lock(); running.unlock();}
 	public void resume() {}
 	
 	public String getName() {
@@ -144,6 +144,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			numErrorsTolerated = Integer.parseInt(config.getProperty("harvester.numErrorsToTolerate", "0"));
 			repo = getRepositoryService().getRepository(harvestSchedule.getProvider());
 			getRepositoryDAO().populateHarvestCache(repo.getName(), harvestCache);
+			repo.beginBatch();
 		} catch (DatabaseConfigException e) {
 			getUtil().throwIt(e);
 		}
@@ -279,8 +280,9 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					//becuase from is inclusive
 					//from = new Date(from.getTime()+1000);
 					if (from != null && from.getTime() != 0) {
-						request += "&from=" + printDate(from) +
-							"&until=" + printDate(startDate);
+						request += "&from=" + printDate(from);
+						// no need to set the until.  Some repos (eg IRPlus work better w/out an until)
+						//+"&until=" + printDate(startDate);
 					}
 					
 					harvestSchedule.setRequest(baseRequest);
@@ -304,7 +306,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					log.debug("Sending the OAI request: " + request);
 				}
 
-				repo.beginBatch();
+				
 				// Perform the harvest
 				TimingLogger.start("sendRequest");
 			    Document doc = getHttpService().sendRequest(request);
@@ -320,7 +322,6 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
                 log.debug("resumptionToken: "+resumptionToken);
                 TimingLogger.stop("parseRecords");
 
-                repo.endBatch();
                 Provider provider = harvestSchedule.getProvider();
                 provider.setRecordsAdded(provider.getRecordsAdded() + numberOfNewRecords);
                 provider.setRecordsReplaced(provider.getRecordsReplaced() + numberOfUpdatedRecords);

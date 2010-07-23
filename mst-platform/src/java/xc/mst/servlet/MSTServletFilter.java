@@ -31,6 +31,7 @@ public class MSTServletFilter implements Filter {
 		sessionFactory.openSession();
 		*/
 		try {
+			req.setCharacterEncoding("UTF-8");
 			chain.doFilter(req, resp);
 		} catch (Throwable t) {
 			LOG.error("", t);

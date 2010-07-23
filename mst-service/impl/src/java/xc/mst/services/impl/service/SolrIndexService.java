@@ -40,6 +40,7 @@ public class SolrIndexService extends GenericMetadataService  {
 		while (records != null && records.size() > 0 && !stopped) {
 			if (paused) {
 				previouslyPaused = true;
+				LOG.debug("paused");
 				running.release();
 				try {
 					Thread.sleep(1000);
@@ -50,6 +51,7 @@ public class SolrIndexService extends GenericMetadataService  {
 				continue;
 			}
 			if (previouslyPaused) {
+				previouslyPaused = false;
 				LOG.debug("acquireUninterruptibly 1");
 				running.acquireUninterruptibly();
 				LOG.debug("acquireUninterruptibly 2");
@@ -87,7 +89,7 @@ public class SolrIndexService extends GenericMetadataService  {
 	
 	public List<Record> process(Record r) {
 		if (r.getId() % 10 == 0) {
-			LOG.debug("indexing record.getId(): "+r.getId());	
+			LOG.debug("indexing record.getId(): "+r.getId());
 		}
 		SolrInputDocument doc = new SolrInputDocument();
 		doc.addField(RecordService.FIELD_RECORD_ID, r.getId());
@@ -102,8 +104,12 @@ public class SolrIndexService extends GenericMetadataService  {
 		}
 		
 		if (r.getSets() != null) {
+			boolean done = false;
 			for (Set s : r.getSets()) {
-				LOG.debug("index set: "+s.getSetSpec());
+				if (!done) {
+					LOG.debug("r.getId(): "+r.getId()+" index set: "+s.getSetSpec());
+					done = true;
+				}
 				doc.addField(RecordService.FIELD_SET_SPEC, s.getSetSpec());
 				doc.addField(RecordService.FIELD_SET_NAME, s.getDisplayName());
 			}
