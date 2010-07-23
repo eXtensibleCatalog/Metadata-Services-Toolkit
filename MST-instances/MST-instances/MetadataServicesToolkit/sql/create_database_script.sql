@@ -751,25 +751,6 @@ CREATE TABLE record_types
   PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table record_messages (
-  record_message_id  int(11)      NOT NULL AUTO_INCREMENT,
-  rec_in_out         char(1)      not null,
-  record_id          int          NOT NULL,
-  repo_id            int          not null,
-  msg_code           int          not null,
-  msg_level          char(1)      not null,
-  service_id         int(11)      not null,
-    
-  PRIMARY KEY (record_message_id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-create table record_message_details (
-  record_message_id  int(11)      NOT NULL AUTO_INCREMENT,
-  detail             varchar      not null,
-
-  PRIMARY KEY (record_message_id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 -- -------------------------------------------------------------
 -- Insert information for the GUI
 -- -------------------------------------------------------------
