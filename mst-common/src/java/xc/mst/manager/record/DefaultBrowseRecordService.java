@@ -70,7 +70,6 @@ public class DefaultBrowseRecordService extends BaseService implements BrowseRec
 		
 		QueryResponse rsp = null;
 		try {
-			log.debug("query."+query.getQuery());
 			rsp = server.query( query );
 		} catch (SolrServerException sse) {
 			log.error("Exception occured while executing the query. Check the path to solr folder.", sse);
