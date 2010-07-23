@@ -42,7 +42,9 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 			s = ss.getServiceByName(serviceName);
 			GenericMetadataService ms = (GenericMetadataService)s.getMetadataService();
 			
-			File inputRecordsDir = new File(INPUT_RECORDS_DIR);
+			File inputRecordsDir = new File(TestRepository.INPUT_RECORDS_DIR);
+			LOG.debug("inputRecordsDir: "+inputRecordsDir);
+			LOG.debug("new File(\".\").getAbsolutePath(): "+new File(".").getAbsolutePath());
 			List<String> folderStrs = new ArrayList<String>();
 			
 			if (!StringUtils.isEmpty(inFolderStr)) {

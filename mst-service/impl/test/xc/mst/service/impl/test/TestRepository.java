@@ -33,9 +33,9 @@ public class TestRepository extends BaseService implements Repository {
 	
 	private static final Logger LOG = Logger.getLogger(TestRepository.class);
 	
-	public final static String INPUT_RECORDS_DIR = "test/input_records";
-	public final static String EXPECTED_OUTPUT_RECORDS = "test/expected_output_records";
-	public final static String ACTUAL_OUTPUT_RECORDS = "build/test/actual_output_records";
+	public final static String INPUT_RECORDS_DIR = "../test/input_records";
+	public final static String EXPECTED_OUTPUT_RECORDS = "../test/expected_output_records";
+	public final static String ACTUAL_OUTPUT_RECORDS = "test/actual_output_records";
 	
 	protected Set<String> inputFileNames = new TreeSet<String>();
 	//protected int inputFilesIterator = 0;
@@ -178,6 +178,18 @@ public class TestRepository extends BaseService implements Repository {
 				for (Object recordObj : records.getChildren("record", doc.getRootElement().getNamespace())) {
 					Element record = (Element)recordObj;
 					Record in = getRecordService().parse(record);
+					String oaiId = in.getHarvestedOaiIdentifier();
+					LOG.debug("in.getId(): "+in.getId());
+					LOG.debug("oaiId: "+oaiId);
+					int idx1 = oaiId.lastIndexOf("/");
+					if (idx1 == -1) {
+						idx1 = oaiId.lastIndexOf(":");
+					}
+					if (idx1 != -1) {
+						LOG.debug("oaiId.substring(idx1+1): "+oaiId.substring(idx1+1));
+						in.setId(Long.parseLong(oaiId.substring(idx1+1)));
+					}
+					LOG.debug("in.getId(): "+in.getId());
 					inputRecords.add(in);
 					//this.inputRecordFileNames.put(in, fileName);
 				}

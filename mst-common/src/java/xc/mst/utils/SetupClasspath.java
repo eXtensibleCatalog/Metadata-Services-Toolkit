@@ -10,6 +10,7 @@
 package xc.mst.utils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -33,19 +34,30 @@ public class SetupClasspath {
     				rootDir = null;
     			}
     		}
-    		if (rootDir == null) {
-	    		try {
-	    			InputStream reader = SetupClasspath.class.getClassLoader().getResourceAsStream(
-		    			        "env.properties");
-		    		Properties props = new Properties();
-		    		props.load(reader);
-		    		reader.close();
-		    		if (props.getProperty("mst.root.dir") != null) {
-		    			rootDir = props.getProperty("mst.root.dir");
+    		for (String fStr : new String[] {
+    				"install.properties", "env.properties"}) {
+	    		if (rootDir == null) {
+		    		try {
+		    			InputStream reader = SetupClasspath.class.getClassLoader().getResourceAsStream(fStr);
+		    			if (reader == null) {
+		    				File f = new File(fStr);
+		    				if (f.exists()) {
+		    					reader = new FileInputStream(f);
+		    				}
+		    			}
+		    			if (reader != null) {
+				    		Properties props = new Properties();
+				    		props.load(reader);
+				    		reader.close();
+				    		if (props.getProperty("mst.root.dir") != null) {
+				    			rootDir = props.getProperty("mst.root.dir");
+				    		}
+				    		break;
+		    			}
+		    		} catch (Throwable t) {
+		    			t.printStackTrace(System.out);
+		    			t.printStackTrace(System.err);
 		    		}
-	    		} catch (Throwable t) {
-	    			t.printStackTrace(System.out);
-	    			t.printStackTrace(System.err);
 	    		}
     		}
 
