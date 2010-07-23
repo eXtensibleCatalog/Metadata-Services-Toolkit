@@ -173,8 +173,10 @@ public class Scheduler extends BaseService implements Runnable {
 						
 						if (previousRepo != null) {
 					        try {
-					        	// I slightly future dated the timestamp of the records so that for a given time, they will always
-					        	// be there.  We need to wait for that future dating to become present before moving on here.
+					        	// I slightly future dated the timestamp of the records so that a record will always
+					        	// have been available from it's update_date forward.  We need to wait for that 
+					        	// future dating to become present before moving on here.  Otherwise, the next service
+					        	// will not pick up all the records that were just inserted.
 						        while (new Date().before(previousRepo.getLastModified())) {
 						        	Thread.sleep(500);
 						        }

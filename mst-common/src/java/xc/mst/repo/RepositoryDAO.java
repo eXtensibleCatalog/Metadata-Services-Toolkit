@@ -375,6 +375,9 @@ public class RepositoryDAO extends BaseDAO {
 			});
 			TimingLogger.stop("RECORD_OAI_IDS.insert");
 			
+        	// I slightly future dating the timestamp of the records so that a record will always
+        	// have been available from it's update_date forward.  If we don't do this, then it's 
+			// possible for harvests to miss records.
 	        final long updateTime = System.currentTimeMillis() + (endTime - startTime) + 3000;
 	        TimingLogger.start("RECORD_UPDATES_TABLE.insert");
 			sql = 
@@ -600,7 +603,7 @@ public class RepositoryDAO extends BaseDAO {
 						" and r.record_id <= ? "+
 						" and (u.date_updated > ? or ? is null) "+
 						" and u.date_updated <= ? order by r.record_id ");
-			
+			LOG.debug("startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
 			params.add(startingId);
 			params.add(startingId);
 			params.add(highestId);
@@ -614,6 +617,7 @@ public class RepositoryDAO extends BaseDAO {
 			try {
 				recordsWSets = this.jdbcTemplate.query(sb.toString(), obj, 
 						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}, this));
+				LOG.debug("recordsWSets.size() "+recordsWSets.size());
 				int recIdx = 0;
 				Record currentRecord = records.get(recIdx);
 				for (Record rws : recordsWSets) {
