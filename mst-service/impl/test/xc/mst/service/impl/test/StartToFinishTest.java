@@ -330,17 +330,10 @@ public abstract class StartToFinishTest extends BaseTest {
 		Service service = getServicesService().getServiceByName(getServiceName());
 		bean.setServiceId(service.getId());
 
-		String oaiRepoBaseURL = "dummy URL";
-
 		Facade facade = (Facade) MSTConfiguration.getInstance().getBean("Facade");
-		facade.setOaiBean(bean);
-		facade.setOaiRepoBaseURL(oaiRepoBaseURL);
-		
-		// Execute the correct request on the Facade Object
-		facade.execute();
 		
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(bean.getXmlResponse());
+		stringBuilder.append(facade.execute(bean));
 		
 		harvestOutResponse = stringBuilder.toString();
 
