@@ -41,7 +41,9 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
+import xc.mst.constants.Constants;
 import xc.mst.dao.BaseDAO;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
 public class RepositoryDAO extends BaseDAO {
@@ -505,15 +507,21 @@ public class RepositoryDAO extends BaseDAO {
 	public Record getRecord(String name, long id) {
 		String sql = 
 			"select "+RECORDS_TABLE_COLUMNS+
-				"x.xml "+
+				"x.xml, "+ " u.date_updated " +
 			"from "+getTableName(name, RECORDS_TABLE)+" r, "+
-				getTableName(name, RECORDS_XML_TABLE)+" x "+
+				getTableName(name, RECORDS_XML_TABLE)+" x, "+
+				getTableName(name, RECORD_UPDATES_TABLE)+" u "+
 			"where r.record_id=? "+
-				"and r.record_id = x.record_id";
+				"and r.record_id = x.record_id " + 
+				"and r.record_id = u.record_id " +
+				" and u.date_updated =" +
+					" (select max(u.date_updated)" +
+					" from " + getTableName(name, RECORD_UPDATES_TABLE)+" u " +
+					" where u.record_id = r.record_id )";
 		Record r = null;
 		try {
 			r = this.jdbcTemplate.queryForObject(sql, 
-					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}, this),
+					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE, RECORD_UPDATES_TABLE}, this),
 					id);
 		} catch (EmptyResultDataAccessException e) {
 			LOG.info("record not found for id: "+id);
@@ -529,24 +537,26 @@ public class RepositoryDAO extends BaseDAO {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 				" select "+RECORDS_TABLE_COLUMNS+
-					//"u.date_updated, "+
-					" x.xml "+
+				" x.xml, "+ " u.date_updated  " +
 				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
-					getTableName(name, RECORDS_XML_TABLE)+" x ");
+					getTableName(name, RECORDS_XML_TABLE)+" x, " +
+					getTableName(name, RECORD_UPDATES_TABLE)+" u ");
 		if (inputSet != null) {
 			sb.append(
 				", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ");
 		}
 		sb.append(
 				" where r.record_id = x.record_id " +
-					//" and r.record_id = u.record_id " +
 					" and (r.record_id > ? or ? is null) "+
-					" and exists ("+
-						"select 1 "+
-						"from "+getTableName(name, RECORD_UPDATES_TABLE)+" u "+
-						"where (u.date_updated > ? or ? is null) "+
-							" and u.record_id = r.record_id "+
-							" and u.date_updated <= ? ) ");
+					" and r.record_id = u.record_id " +
+					" and (u.date_updated > ? or ? is null) "+
+					" and u.date_updated <= ?  " +
+					" and u.date_updated =" +
+						" (select max(u.date_updated)" +
+						" from " + getTableName(name, RECORD_UPDATES_TABLE)+" u " +
+						" where u.record_id = r.record_id )"
+					);
+					
 		if (inputFormat != null) {
 			sb.append(
 					" and r.format_id = ? ");
@@ -567,19 +577,135 @@ public class RepositoryDAO extends BaseDAO {
 			params.add(inputSet.getId());
 		}
 		sb.append(
-				" order by r.record_id limit 50");
+				" order by r.record_id limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 1000));
 
 		Object obj[] = params.toArray();
 		
 		List<Record> records = null;
 		try {
 			records = this.jdbcTemplate.query(sb.toString(), obj, 
-					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE}, this));
+					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE, RECORD_UPDATES_TABLE}, this));
 		} catch (EmptyResultDataAccessException e) {
 			LOG.info("no records found for from: "+from+" until: "+until+" startingId: "+startingId + " format:" + inputFormat + " inputSet:" + inputSet);
 		}
 		LOG.debug("records.size(): "+records.size());
 		return records;
+	}
+	
+	public List<Record> getRecordHeader(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+		List<Object> params = new ArrayList<Object>();
+		if (until == null) {
+			until = new Date();
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append(
+				" select "+RECORDS_TABLE_COLUMNS+
+				" u.date_updated  " +
+				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
+					getTableName(name, RECORD_UPDATES_TABLE)+" u ");
+		if (inputSet != null) {
+			sb.append(
+				", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ");
+		}
+		sb.append(
+				" where  (r.record_id > ? or ? is null) "+
+					" and r.record_id = u.record_id " +
+					" and (u.date_updated > ? or ? is null) "+
+					" and u.date_updated <= ?  " +
+					" and u.date_updated =" +
+						" (select max(u.date_updated)" +
+						" from " + getTableName(name, RECORD_UPDATES_TABLE)+" u " +
+						" where u.record_id = r.record_id )"
+					);
+					
+		if (inputFormat != null) {
+			sb.append(
+					" and r.format_id = ? ");
+		}
+		params.add(startingId);
+		params.add(startingId);
+		params.add(from);
+		params.add(from);
+		params.add(until);
+		if (inputFormat != null) {
+			params.add(inputFormat.getId());
+		}
+		
+		if (inputSet != null) {
+			sb.append(
+					" and r.record_id = rs.record_id " +
+					" and rs.set_id = ? ");
+			params.add(inputSet.getId());
+		}
+		sb.append(
+				" order by r.record_id limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS, 1000));
+
+		Object obj[] = params.toArray();
+		
+		List<Record> records = null;
+		try {
+			records = this.jdbcTemplate.query(sb.toString(), obj, 
+					new RecordMapper(new String[]{RECORDS_TABLE, RECORD_UPDATES_TABLE}, this));
+		} catch (EmptyResultDataAccessException e) {
+			LOG.info("no records found for from: "+from+" until: "+until+" startingId: "+startingId + " format:" + inputFormat + " inputSet:" + inputSet);
+		}
+		LOG.debug("records.size(): "+records.size());
+		return records;
+	}
+	
+	public long getRecordCount(String name, Date from, Date until, Format inputFormat, Set inputSet) {
+		List<Object> params = new ArrayList<Object>();
+		if (until == null) {
+			until = new Date();
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append(
+				" select count(*) " +
+				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
+					getTableName(name, RECORD_UPDATES_TABLE)+" u ");
+		if (inputSet != null) {
+			sb.append(
+				", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ");
+		}
+		sb.append(
+				" where  r.record_id = u.record_id " +
+					" and (u.date_updated > ? or ? is null) "+
+					" and u.date_updated <= ?  " +
+					" and u.date_updated =" +
+						" (select max(u.date_updated)" +
+						" from " + getTableName(name, RECORD_UPDATES_TABLE)+" u " +
+						" where u.record_id = r.record_id )"
+					);
+					
+		if (inputFormat != null) {
+			sb.append(
+					" and r.format_id = ? ");
+		}
+
+		params.add(from);
+		params.add(from);
+		params.add(until);
+		if (inputFormat != null) {
+			params.add(inputFormat.getId());
+		}
+		
+		if (inputSet != null) {
+			sb.append(
+					" and r.record_id = rs.record_id " +
+					" and rs.set_id = ? ");
+			params.add(inputSet.getId());
+		}
+
+		Object obj[] = params.toArray();
+		
+		long recordCount = 0;
+		try {
+			recordCount = this.jdbcTemplate.queryForLong(sb.toString(), obj);
+		} catch (EmptyResultDataAccessException e) {
+			LOG.info("no records found for from: "+from+" until: "+until + " format:" + inputFormat + " inputSet:" + inputSet);
+		}
+		LOG.debug("records count: "+recordCount);
+		return recordCount;
 	}
 	
 	public List<Record> getRecordsWSets(String name, Date from, Date until, Long startingId) {
@@ -712,18 +838,13 @@ public class RepositoryDAO extends BaseDAO {
 		        }
 	        }
 	        if (tables.contains(RECORD_UPDATES_TABLE)) {
-	        	r.setUpdatedAt(rs.getDate("u.date_updated"));
+	        	r.setUpdatedAt(rs.getTimestamp("u.date_updated"));
 	        }
 	        if (tables.contains(RECORDS_XML_TABLE)) {
 	        	r.setMode(Record.STRING_MODE);
 		        r.setOaiXml(rs.getString("x.xml"));
 	        }
 	        
-	        // These wouldn't work here since they are one-to-many relationships
-	        // I don't think we care because I don't know that we'll ever really
-	        // need to query these in this way.
-	        if (tables.contains(RECORD_UPDATES_TABLE)) {
-	        }
 	        if (tables.contains(RECORDS_SETS_TABLE)) {
 	        	r.setId(rs.getLong("r.record_id"));
 	        	Set s = new Set();

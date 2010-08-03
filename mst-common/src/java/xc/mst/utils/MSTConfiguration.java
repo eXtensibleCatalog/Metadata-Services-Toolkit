@@ -177,6 +177,24 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	}
 
 	/**
+	 * Get property value as int
+	 * 
+	 * @param name name of property to retrieve
+	 * @param def default value
+	 * @return Value defined in configuration file
+	 */
+	public int getPropertyAsInt(String name, int def) {
+		String strValue = properties.getProperty(name);
+		int value = 0;
+		if (strValue != null) {
+			value = Integer.parseInt(strValue);
+		} else {
+			value = def;
+		}
+		return value;
+	}
+	
+	/**
 	 * Get relative path from tomcat working directory to MST configuration folder 
 	 * 
 	 * @return path to MST configuration folder

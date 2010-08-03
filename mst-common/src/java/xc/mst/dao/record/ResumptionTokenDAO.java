@@ -76,6 +76,12 @@ public abstract class ResumptionTokenDAO extends BaseDAO
 	 * The name of the token column
 	 */
 	protected final static String COL_TOKEN = "token";
+	
+	
+	/**
+	 * The name of the starting Id column
+	 */
+	protected final static String COL_STARTING_ID = "starting_id";
 
 	/**
 	 * Gets all resumption tokens in the database
@@ -165,6 +171,7 @@ public abstract class ResumptionTokenDAO extends BaseDAO
 			if(resumptionToken.getMetadataFormat() == null || resumptionToken.getMetadataFormat().length() <= 0 ||  resumptionToken.getMetadataFormat().length() > 511)
 				errorMessage.append("The metadata format field is invalid. ");
 
+			log.info("resumptionToken.getOffset()::" + resumptionToken.getOffset());
 			if(resumptionToken.getOffset() < 0)
 				errorMessage.append("The offset is invalid. ");
 		} // end if(we need to check the non-ID fields)

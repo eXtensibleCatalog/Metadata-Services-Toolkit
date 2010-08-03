@@ -47,12 +47,17 @@ public class ResumptionToken
 	/**
 	 * The resumption token's offset column
 	 */
-	private int offset = -1;
+	private long offset = -1;
 	
 	/**
 	 * The token issued to get more records.
 	 */
 	private String token;
+	
+	/**
+	 * Starting record Id to query
+	 */
+	private long startingId;
 
 	/**
 	 * Gets the resumption token's ID
@@ -159,7 +164,7 @@ public class ResumptionToken
 	 *
 	 * @return The resumption token's offset
 	 */
-	public int getOffset()
+	public long getOffset()
 	{
 		return offset;
 	} // end method getOffset()
@@ -169,7 +174,7 @@ public class ResumptionToken
 	 *
 	 * @param offset The resumption token's new offset
 	 */
-	public void setOffset(int offset)
+	public void setOffset(long offset)
 	{
 		this.offset = offset;
 	} // end method setOffset(int)
@@ -180,5 +185,23 @@ public class ResumptionToken
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	/**
+	 * Get starting id
+	 * 
+	 * @return
+	 */
+	public long getStartingId() {
+		return startingId;
+	}
+
+	/**
+	 * Set starting Id
+	 * 
+	 * @param startingId
+	 */
+	public void setStartingId(long startingId) {
+		this.startingId = startingId;
 	}
 } // end class ResumptionToken

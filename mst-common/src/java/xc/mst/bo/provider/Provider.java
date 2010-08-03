@@ -23,188 +23,118 @@ import xc.mst.utils.MSTConfiguration;
  */
 public class Provider
 {
-	/**
-	 * The provider's id
-	 */
+	/** The provider's id */
 	private int id = -1;
 
-	/**
-	 * The date and time the provider was created
-	 */
+	/** The date and time the provider was created  */
 	private Date createdAt = null;
 
-	/**
-	 * The date and time the provider was updated
-	 */
+	/** The date and time the provider was updated	 */
 	private Timestamp updatedAt = null;
 
-	/**
-	 * The provider's name
-	 */
+	/** The provider's name 	 */
 	private String name = null;
 
-	/**
-	 * The provider's url
-	 */
+	/** The provider's url	 */
 	private String url = null;
 
-	/**
-	 * The provider's title
-	 */
+	/** The provider's title	 */
 	private String title = null;
 
-	/**
-	 * The provider's creator
-	 */
+	/** The provider's creator	 */
 	private String creator = null;
 
-	/**
-	 * The provider's subject
-	 */
+	/** The provider's subject	 */
 	private String subject = null;
 
-	/**
-	 * The provider's description
-	 */
+	/** The provider's description	 */
 	private String description = null;
 
-	/**
-	 * The provider's publisher
-	 */
+	/** The provider's publisher	 */
 	private String publisher = null;
 
-	/**
-	 * The provider's contributors
-	 */
+	/** The provider's contributors	 */
 	private String contributors = null;
 
-	/**
-	 * The provider's date
-	 */
+	/** The provider's date	 */
 	private Date date = null;
 
-	/**
-	 * The provider's type
-	 */
+	/** The provider's type	 */
 	private String type = null;
 
-	/**
-	 * The provider's format
-	 */
+	/** The provider's format	 */
 	private String format = null;
 
-	/**
-	 * The provider's identifier
-	 */
+	/** The provider's identifier	 */
 	private int identifier = -1;
 
-	/**
-	 * The provider's language
-	 */
+	/** The provider's language	 */
 	private String language = null;
 
-	/**
-	 * The provider's relation
-	 */
+	/** The provider's relation	 */
 	private String relation = null;
 
-	/**
-	 * The provider's coverage
-	 */
+	/** The provider's coverage	 */
 	private String coverage = null;
 
-	/**
-	 * The provider's rights
-	 */
+	/** The provider's rights	 */
 	private String rights = null;
 
-	/**
-	 * True iff the provider is in service
-	 */
+	/** True iff the provider is in service	 */
 	private boolean service = false;
 
-	/**
-	 * The time when the listSets and listMetadataFormats responses should be validated for the providers
-	 */
+	/** The time when the listSets and listMetadataFormats responses should be validated for the providers	 */
 	private Date nextListSetsListFormats = null;
 
-	/**
-	 * The version of the OAI protocol the provider supports
-	 */
+	/** The version of the OAI protocol the provider supports	 */
 	private String protocolVersion = null;
 
-	/**
-	 * The time when the provider was last validated
-	 */
+	/** The time when the provider was last validated	 */
 	private Date lastValidationDate = null;
 
-	/**
-	 * Whether or not the provider's identify response was valid
-	 */
+	/** Whether or not the provider's identify response was valid	 */
 	private boolean identify = false;
 
-	/**
-	 * Whether or not the provider's listMetadataFormats response was valid
-	 */
+	/** Whether or not the provider's listMetadataFormats response was valid	 */
 	private boolean listformats = false;
 
-	/**
-	 * Whether or not the provider's listSets response was valid
-	 */
+	/** Whether or not the provider's listSets response was valid	 */
 	private boolean listsets = false;
 
-	/**
-	 * A list of sets the provider supports
-	 */
+	/** A list of sets the provider supports	 */
 	private List<Set> sets = new ArrayList<Set>();
 
-	/**
-	 * A list of formats the provider supports
-	 */
+	/** A list of formats the provider supports	 */
 	private List<Format> formats = new ArrayList<Format>();
 
-	/**
-	 * A counter tracking the number of warnings from harvesting the provider
-	 */
+	/** A counter tracking the number of warnings from harvesting the provider	 */
 	private int warnings = 0;
 
-	/**
-	 * A counter tracking the number of errors from harvesting the provider
-	 */
+	/** A counter tracking the number of errors from harvesting the provider	 */
 	private int errors = 0;
 
-	/**
-	 * A counter tracking the number of new records harvested from the provider
-	 */
+	/** A counter tracking the number of new records harvested from the provider	 */
 	private int recordsAdded = 0;
 
-	/**
-	 * A counter tracking the number of updated records harvested from the provider
-	 */
+	/** A counter tracking the number of updated records harvested from the provider	 */
 	private int recordsReplaced = 0;
 
-	/**
-	 * The last OAI request run on the provider
-	 */
+	/** The last OAI request run on the provider	 */
 	private String lastOaiRequest = null;
 
-	/**
-	 * The timestamp when the last harvest of this provider completed
-	 */
+	/** The timestamp when the last harvest of this provider completed	 */
 	private Date lastHarvestEndTime = null;
 
-	/**
-	 * The timestamp when the provider's logs were last reset
-	 */
+	/** The timestamp when the provider's logs were last reset	 */
 	private Date lastLogReset = null;
 
-	/**
-	 * The name of the log file for this provider
-	 */
+	/** The name of the log file for this provider 	 */
 	private String logFileName = null;
+	
+	/** Number of records to harvest	 */
+	private long numberOfRecordsToHarvest;	
 
-	/**
-	 * List of sets the records harvested from this repository belong to. 
+	/** List of sets the records harvested from this repository belong to. 
 	 * After harvest the records belong to different sets than the ones supported by the repository. 
 	 */
 	private List<Set> harvestedRecordSets = new ArrayList<Set>();
@@ -1022,6 +952,24 @@ public class Provider
 		sb.append(" URL= "+ url+"]");
 		
 		return sb.toString();
+	}
+
+	/**
+	 * Get number of records to harvest for testing
+	 * 
+	 * @return number of records to harvest
+	 */
+	public long getNumberOfRecordsToHarvest() {
+		return numberOfRecordsToHarvest;
+	}
+
+	/**
+	 * Set number of records to harvest for testing
+	 * 
+	 * @param numberOfRecordsToHarvest  number of records to harvest
+	 */
+	public void setNumberOfRecordsToHarvest(long numberOfRecordsToHarvest) {
+		this.numberOfRecordsToHarvest = numberOfRecordsToHarvest;
 	}
 
 } // end class Provider

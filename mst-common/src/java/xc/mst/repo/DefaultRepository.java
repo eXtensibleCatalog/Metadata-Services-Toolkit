@@ -117,8 +117,15 @@ public class DefaultRepository extends BaseService implements Repository {
 
 	// TODO: you need to check the cache as well
 	public Record getRecord(String oaiId) {
-		// TODO Auto-generated method stub
-		return null;
+		int indexOfSlash = oaiId.lastIndexOf("/");
+
+		if (indexOfSlash != -1) {
+			String id = oaiId.substring(indexOfSlash + 1);
+			return getRecord(Long.parseLong(id));
+		} else {
+			return null;
+		}
+		
 	}
 
 	// TODO: you need to check the cache as well
@@ -129,6 +136,25 @@ public class DefaultRepository extends BaseService implements Repository {
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
 		LOG.debug("from:"+from+" until:"+until+ " startingId:"+startingId+" inputFormat:"+inputFormat+" inputSet:"+inputSet);
 		List<Record> records = getRepositoryDAO().getRecords(name, from, until, startingId, inputFormat, inputSet);
+		if (records == null) {
+			LOG.debug("no records found");
+		} else { 
+			LOG.debug("records.size(): "+records.size());
+		}
+		return records;
+	}
+	
+	public long getRecordCount(Date from, Date until, Format inputFormat, Set inputSet) {
+		LOG.debug("from:"+from+" until:"+until+ " inputFormat:"+inputFormat+" inputSet:"+inputSet);
+		long recordCount = getRepositoryDAO().getRecordCount(name, from, until, inputFormat, inputSet);
+
+		return recordCount;
+	}
+	
+	
+	public List<Record> getRecordHeader(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+		LOG.debug("from:"+from+" until:"+until+ " startingId:"+startingId+" inputFormat:"+inputFormat+" inputSet:"+inputSet);
+		List<Record> records = getRepositoryDAO().getRecordHeader(name, from, until, startingId, inputFormat, inputSet);
 		if (records == null) {
 			LOG.debug("no records found");
 		} else { 
