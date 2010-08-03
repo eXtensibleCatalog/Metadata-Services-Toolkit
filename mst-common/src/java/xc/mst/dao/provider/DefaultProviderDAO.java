@@ -184,7 +184,8 @@ public class DefaultProviderDAO extends ProviderDAO
 				                                   COL_LAST_OAI_REQUEST + ", " +
 				                                   COL_LAST_HARVEST_END_TIME + ", " +
 				                                   COL_LAST_LOG_RESET + ", " +
-				                                   COL_LOG_FILE_NAME + " " +
+				                                   COL_LOG_FILE_NAME + ", " +
+				                                   COL_RECORDS_TO_HARVEST + " " +
 	                                   "FROM " + PROVIDERS_TABLE_NAME;
 
 					if(log.isDebugEnabled())
@@ -241,6 +242,7 @@ public class DefaultProviderDAO extends ProviderDAO
 					provider.setLastHarvestEndTime(results.getDate(32));
 					provider.setLastLogReset(results.getDate(33));
 					provider.setLogFileName(results.getString(34));
+					provider.setNumberOfRecordsToHarvest(results.getLong(35));
 
 					provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
 
@@ -337,7 +339,8 @@ public class DefaultProviderDAO extends ProviderDAO
 		                                   COL_LAST_OAI_REQUEST + ", " +
 		                                   COL_LAST_HARVEST_END_TIME + ", " +
 		                                   COL_LAST_LOG_RESET + ", " +
-		                                   COL_LOG_FILE_NAME + " " +
+		                                   COL_LOG_FILE_NAME + ", " +
+		                                   COL_RECORDS_TO_HARVEST + " " +
                                "FROM " + PROVIDERS_TABLE_NAME + " " +
                                "ORDER BY " + columnName + (asc ? " ASC" : " DESC");
 
@@ -393,6 +396,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				provider.setLastHarvestEndTime(results.getDate(32));
 				provider.setLastLogReset(results.getDate(33));
 				provider.setLogFileName(results.getString(34));
+				provider.setNumberOfRecordsToHarvest(results.getLong(35));
 
 				provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
 
@@ -504,7 +508,9 @@ public class DefaultProviderDAO extends ProviderDAO
 				                                   COL_LAST_OAI_REQUEST + ", " +
 				                                   COL_LAST_HARVEST_END_TIME + ", " +
 				                                   COL_LAST_LOG_RESET + ", " +
-				                                   COL_LOG_FILE_NAME + " " +
+				                                   COL_LOG_FILE_NAME + ", " +
+				                                   COL_RECORDS_TO_HARVEST + " " +
+				                                   
 	                                   "FROM " + PROVIDERS_TABLE_NAME + " " +
 	                                   "WHERE " + COL_OAI_PROVIDER_URL + "=?";
 
@@ -565,6 +571,7 @@ public class DefaultProviderDAO extends ProviderDAO
 					provider.setLastHarvestEndTime(results.getDate(32));
 					provider.setLastLogReset(results.getDate(33));
 					provider.setLogFileName(results.getString(34));
+					provider.setNumberOfRecordsToHarvest(results.getLong(35));
 
 					provider.setFormats(getFormatDAO().getFormatsForProvider(provider.getId()));
 					provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
@@ -652,7 +659,8 @@ public class DefaultProviderDAO extends ProviderDAO
 				                                   COL_LAST_OAI_REQUEST + ", " +
 				                                   COL_LAST_HARVEST_END_TIME + ", " +
 				                                   COL_LAST_LOG_RESET + ", " +
-				                                   COL_LOG_FILE_NAME + " " +
+				                                   COL_LOG_FILE_NAME + ", " +
+				                                   COL_RECORDS_TO_HARVEST + " " +
 	                                   "FROM " + PROVIDERS_TABLE_NAME + " " +
 	                                   "WHERE " + COL_NAME + "=?";
 
@@ -713,6 +721,7 @@ public class DefaultProviderDAO extends ProviderDAO
 					provider.setLastHarvestEndTime(results.getDate(32));
 					provider.setLastLogReset(results.getDate(33));
 					provider.setLogFileName(results.getString(34));
+					provider.setNumberOfRecordsToHarvest(results.getLong(35));
 
 					provider.setFormats(getFormatDAO().getFormatsForProvider(provider.getId()));
 					provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
@@ -801,7 +810,8 @@ public class DefaultProviderDAO extends ProviderDAO
 				                                   COL_LAST_OAI_REQUEST + ", " +
 				                                   COL_LAST_HARVEST_END_TIME + ", " +
 				                                   COL_LAST_LOG_RESET + ", " +
-				                                   COL_LOG_FILE_NAME + " " +
+				                                   COL_LOG_FILE_NAME + ", " +
+				                                   COL_RECORDS_TO_HARVEST + " " +
 	                                   "FROM " + PROVIDERS_TABLE_NAME + " " +
 	                                   "WHERE " + COL_PROVIDER_ID + "=?";
 
@@ -862,6 +872,7 @@ public class DefaultProviderDAO extends ProviderDAO
 					provider.setLastHarvestEndTime(results.getDate(32));
 					provider.setLastLogReset(results.getDate(33));
 					provider.setLogFileName(results.getString(34));
+					provider.setNumberOfRecordsToHarvest(results.getLong(35));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the provider with ID " + providerId + " in the database.");
@@ -948,11 +959,12 @@ public class DefaultProviderDAO extends ProviderDAO
 	            	    													COL_LAST_OAI_REQUEST + ", " +
 	            	    													COL_LAST_HARVEST_END_TIME + ", " +
 	            	    													COL_LAST_LOG_RESET + ", " +
-	            	    													COL_LOG_FILE_NAME + ") " +
+	            	    													COL_LOG_FILE_NAME + ", " +
+	            	    													COL_RECORDS_TO_HARVEST + ") " +
 	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?," +
 	            				              " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?," +
 	            				              " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?," +
-	            				              " ?, ?, ?, ?)";
+	            				              " ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"insert provider\" PreparedStatement from the SQL " + insertSql);
@@ -996,6 +1008,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				psInsert.setDate(31, provider.getLastHarvestEndTime());
 				psInsert.setDate(32, provider.getLastLogReset());
 				psInsert.setString(33, provider.getLogFileName());
+				psInsert.setLong(34, provider.getNumberOfRecordsToHarvest());
 
 				// Execute the insert statement and return the result
 				if(dbConnectionManager.executeUpdate(psInsert) > 0)
@@ -1112,7 +1125,8 @@ public class DefaultProviderDAO extends ProviderDAO
 				                                                          COL_LAST_OAI_REQUEST + "=?, " +
 				                                                          COL_LAST_HARVEST_END_TIME + "=?, " +
 				                                                          COL_LAST_LOG_RESET + "=?, " +
-				                                                          COL_LOG_FILE_NAME + "=? " +
+				                                                          COL_LOG_FILE_NAME + "=?, " +
+				                                                          COL_RECORDS_TO_HARVEST + "=? " +
 	                                   "WHERE " + COL_PROVIDER_ID + "=?";
 
 					if(log.isDebugEnabled())
@@ -1156,7 +1170,8 @@ public class DefaultProviderDAO extends ProviderDAO
 				psUpdate.setDate(30, provider.getLastHarvestEndTime());
 				psUpdate.setDate(31, provider.getLastLogReset());
 				psUpdate.setString(32, provider.getLogFileName());
-				psUpdate.setInt(33, provider.getId());
+				psUpdate.setLong(33, provider.getNumberOfRecordsToHarvest());
+				psUpdate.setInt(34, provider.getId());
 
 				// Execute the update statement and return the result
 				// Execute the update statement and return the result

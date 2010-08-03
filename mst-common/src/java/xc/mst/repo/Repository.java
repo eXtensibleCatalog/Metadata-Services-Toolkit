@@ -42,6 +42,30 @@ public interface Repository {
 	
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet);
 	
+	/**
+	 * Get number of records that satisfy the given criteria
+	 * 
+	 * @param from From date to harvest the records
+	 * @param until Until date to harvest records
+	 * @param startingId starting record id to query from
+	 * @param inputFormat format of the record
+	 * @param inputSet Set of record
+	 * @return
+	 */
+	public long getRecordCount(Date from, Date until, Format inputFormat, Set inputSet);
+	
+	/**
+	 * Get record header information
+	 * 
+	 * @param from From date to harvest the records
+	 * @param until Until date to harvest records
+	 * @param startingId starting record id to query from
+	 * @param inputFormat format of the record
+	 * @param inputSet Set of record
+	 * @return
+	 */
+	public List<Record> getRecordHeader(Date from, Date until, Long startingId, Format inputFormat, Set inputSet);
+	
 	public Record getRecord(String oaiId);
 	
 	public Record getRecord(long id);

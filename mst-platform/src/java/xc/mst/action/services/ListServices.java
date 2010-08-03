@@ -65,7 +65,7 @@ public class ListServices extends BaseActionSupport implements ServletRequestAwa
     {
         try
         {
-           baseURL = "http://" + servletRequest.getServerName() + ":" +  servletRequest.getServerPort() + servletRequest.getContextPath() + "/" + "SERVICE_NAME" + "/oaiRepository";
+           baseURL = "http://" + servletRequest.getServerName() + ":" +  servletRequest.getServerPort() + servletRequest.getContextPath() + "/st/" + "SERVICE_NAME" + "/oaiRepository";
            if(columnSorted.equalsIgnoreCase("ServiceName"))
             {
                     ServicesList = getServicesService().getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_SERVICE_NAME);

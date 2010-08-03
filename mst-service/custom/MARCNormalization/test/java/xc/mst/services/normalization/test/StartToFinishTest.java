@@ -1,12 +1,16 @@
 package xc.mst.services.normalization.test;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.jdom.Element;
 
 import gnu.trove.TLongObjectHashMap;
 import xc.mst.bo.provider.Format;
 import xc.mst.repo.Repository;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
+import xc.mst.utils.XmlHelper;
 
 public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTest {
 	
@@ -25,6 +29,10 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 	
 	protected Format getIncomingFormat() throws Exception {
+		return getMarcXmlFormat();
+	}
+
+	protected Format getHarvestOutFormat() throws Exception {
 		return getMarcXmlFormat();
 	}
 	
@@ -48,4 +56,23 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		LOG.debug(getServiceName()+".successorKeyedMap: "+successorKeyedMap);
 		LOG.debug(new Util().getString(successorKeyedMap));
 	}
+
+	/**
+	 * To test harvest out functionality
+	 */
+	protected void testHarvestOut() {
+		
+		int numberOfRecords = 0;
+
+		org.jdom.Document doc = new XmlHelper().getJDomDocument(getHarvestOutResponse());
+
+		List<Element> records = doc.getRootElement().getChildren("record");
+		if (records != null) {
+			numberOfRecords = records.size();
+		}
+		
+		LOG.debug("Number of records harvested out : " + numberOfRecords);
+		
+		assert numberOfRecords == 1000 : " Number of harvested records should be 1000 but instead it is " + numberOfRecords;
+		
 }

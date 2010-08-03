@@ -47,6 +47,9 @@ public class AddRepository extends BaseActionSupport
 
     /**The ID of the repository to be added */
     private int repositoryId;
+    
+    /** Number of records to harvest */
+    private int numberOfRecordsToHarvest;
 
 	/** Error type */
 	private String errorType;
@@ -65,6 +68,7 @@ public class AddRepository extends BaseActionSupport
 
             Provider repositorySameName = getProviderService().getProviderByName(repositoryName);
             Provider repositorySameURL = getProviderService().getProviderByURL(repositoryURL);
+            
             if(repositorySameName!=null)
             {
 
@@ -86,6 +90,7 @@ public class AddRepository extends BaseActionSupport
                 pr.setUpdatedAt( new Timestamp(new Date().getTime()));
                 pr.setLastValidationDate(new Date());
                 pr.setOaiProviderUrl(getRepositoryURL());
+                pr.setNumberOfRecordsToHarvest(numberOfRecordsToHarvest);
 
                 getProviderService().insertProvider(pr);
 
@@ -190,6 +195,24 @@ public class AddRepository extends BaseActionSupport
     {
         return repositoryURL;
     }
+    
+    /**
+     * Gets the number of records to harvest
+     *
+     * @return number of records to harvest
+     */
+	public int getNumberOfRecordsToHarvest() {
+		return numberOfRecordsToHarvest;
+	}
+
+    /**
+     * Sets the number of records to harvest
+     *
+     * @param numberOfRecordsToHarvest number of records to harvest
+     */
+	public void setNumberOfRecordsToHarvest(int numberOfRecordsToHarvest) {
+		this.numberOfRecordsToHarvest = numberOfRecordsToHarvest;
+	}
 
     
 }

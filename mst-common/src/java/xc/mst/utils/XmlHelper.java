@@ -3,6 +3,7 @@ package xc.mst.utils;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jdom.Element;
@@ -112,4 +113,17 @@ public class XmlHelper {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public int getNumberOfRecords(String xml) {
+		int numberOfRecords = 0;
+
+		org.jdom.Document doc = getJDomDocument(xml);
+		LOG.debug("doc.getRootElement():"+doc.getRootElement());
+		List<Element> records = doc.getRootElement().getChildren("record");
+		if (records != null) {
+			numberOfRecords = records.size();
+		}
+		
+		return numberOfRecords;
+	}
 }

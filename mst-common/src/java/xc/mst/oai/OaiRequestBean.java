@@ -14,25 +14,8 @@ package xc.mst.oai;
  */
 public class OaiRequestBean
 {
-	/**
-	 * The verb used in the request
-	 */
+	/** The verb used in the request */
 	private String verb;
-
-	/**
-	 * XML response to the OAI request
-	 */
-	private String xmlResponse;
-
-	/**
-	 * The request element in the OAI response
-	 */
-	private String requestElement;
-
-	/**
-	 * The response date element in the OAI response
-	 */
-	private String responseDateElement;
 
 	/**
 	 * An optional argument with a UTCdatetime value, which specifies
@@ -67,36 +50,15 @@ public class OaiRequestBean
 	 * by a previous ListIdentifiers request that issued an incomplete list.
 	 */
 	private String resumptionToken;
+	
+	/** OAI repository'e base URL  */
+	private String oaiRepoBaseURL;
 
-	/**
-	 * The ID of the service who's OAI repository was invoked.
-	 */
+	/** The ID of the service who's OAI repository was invoked. */
 	private int serviceId = -1;
 
-	/**
-	 * GetRecord's identifier parameter
-	 */
+	/** GetRecord's identifier parameter */
 	private String identifier;
-
-	public String getRequestElement()
-	{
-		return requestElement;
-	}
-
-	public void setRequestElement(String requestElement)
-	{
-		this.requestElement = requestElement;
-	}
-
-	public String getResponseDateElement()
-	{
-		return responseDateElement;
-	}
-
-	public void setResponseDateElement(String responseDateElement)
-	{
-		this.responseDateElement = responseDateElement;
-	}
 
 	/**
 	 * Returns the verb.
@@ -116,83 +78,160 @@ public class OaiRequestBean
 		this.verb = verb;
 	}
 
-	public String getXmlResponse()
-	{
-		return xmlResponse;
-	}
-
-	public void setXmlResponse(String xmlResponse)
-	{
-		this.xmlResponse = xmlResponse;
-	}
-
+	/**
+	 * Get from date to harvest records from
+	 * 
+	 * @return from from date to harvest records from
+	 */
 	public String getFrom()
 	{
 		return from;
 	}
 
+	/**
+	 * Set from date to harvest records from
+	 * 
+	 * @param from from date to harvest records from
+	 */
 	public void setFrom(String from)
 	{
 		this.from = from;
 	}
 
+	/**
+	 * Get format of the record to harvest
+	 * 
+	 * @return format of the record to harvest
+	 */
 	public String getMetadataPrefix()
 	{
 		return metadataPrefix;
 	}
 
+	/**
+	 * Set format of the record to harvest
+	 * 
+	 * @param metadataPrefix format of the record to harvest
+	 */
 	public void setMetadataPrefix(String metadataPrefix)
 	{
 		this.metadataPrefix = metadataPrefix;
 	}
 
+	/**
+	 * Get resumption token
+	 * 
+	 * @return resumption token
+	 */
 	public String getResumptionToken()
 	{
 		return resumptionToken;
 	}
 
+	/**
+	 * Set resumption token
+	 * 
+	 * @param resumptionToken resumption token
+	 */
 	public void setResumptionToken(String resumptionToken)
 	{
 		this.resumptionToken = resumptionToken;
 	}
 
+	/**
+	 * Get set spec of record to harvest
+	 * 
+	 * @return set of record to harvest
+	 */
 	public String getSet()
 	{
 		return set;
 	}
 
+	/**
+	 * Set set spec of record to harvest
+	 * 
+	 * @param set  set spec of record to harvest
+	 */
 	public void setSet(String set)
 	{
 		this.set = set;
 	}
 
+	/**
+	 * Get until date
+	 *  
+	 * @return until date
+	 */
 	public String getUntil()
 	{
 		return until;
 	}
 
+	/**
+	 * Set until date 
+	 * 
+	 * @param until until date of record to harvest
+	 */
 	public void setUntil(String until)
 	{
 		this.until = until;
 	}
 
+	/**
+	 * Get requested OAI identifier 
+	 *  
+	 * @return oai identifier
+	 */
 	public String getIdentifier()
 	{
 		return identifier;
 	}
 
+	/**
+	 * Set requested OAI identifier
+	 * 
+	 * @param identifier requested OAI identifier
+	 */
 	public void setIdentifier(String identifier)
 	{
 		this.identifier = identifier;
 	}
 
-	public int getServiceId()
-	{
+	/**
+	 * Get service id
+	 * 
+	 * @return service id
+	 */
+	public int getServiceId() {
 		return serviceId;
 	}
 
+	/**
+	 * Set service id
+	 * 
+	 * @param serviceId service id
+	 */
 	public void setServiceId(int serviceId)
 	{
 		this.serviceId = serviceId;
+	}
+
+	/**
+	 * Get oai repository base URL
+	 * 
+	 * @return oai repository base URL
+	 */
+	public String getOaiRepoBaseURL() {
+		return oaiRepoBaseURL;
+	}
+
+	/**
+	 * Set oai repository base URL
+	 * 
+	 * @param oaiRepoBaseURL oai repository base URL
+	 */
+	public void setOaiRepoBaseURL(String oaiRepoBaseURL) {
+		this.oaiRepoBaseURL = oaiRepoBaseURL;
 	}
 }

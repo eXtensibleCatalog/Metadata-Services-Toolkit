@@ -221,6 +221,11 @@ public abstract class ProviderDAO extends BaseDAO
 	public final static String COL_LOG_FILE_NAME = "log_file_name";
 
 	/**
+	 * The name of the number of records to harvest column
+	 */
+	public final static String COL_RECORDS_TO_HARVEST = "number_of_records_to_harvest";
+
+	/**
 	 * A set of all columns which are valid for sorting
 	 */
 	protected static Set<String> sortableColumns = new HashSet<String>();

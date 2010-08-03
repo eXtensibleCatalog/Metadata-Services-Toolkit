@@ -45,6 +45,9 @@ public class EditRepository extends BaseActionSupport
     
 	/** Error type */
 	private String errorType;
+	
+    /** Number of records to harvest */
+    private long numberOfRecordsToHarvest;
 
    /**
      * Overrides default implementation to edit the details of a repository.
@@ -68,6 +71,7 @@ public class EditRepository extends BaseActionSupport
             }
             setRepositoryName(provider.getName());
             setRepositoryURL(provider.getOaiProviderUrl());
+            setNumberOfRecordsToHarvest(provider.getNumberOfRecordsToHarvest());
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -90,6 +94,7 @@ public class EditRepository extends BaseActionSupport
         try
         {
             Provider provider = getProviderService().getProviderById(repositoryId);
+            provider.setNumberOfRecordsToHarvest(numberOfRecordsToHarvest);
             if(provider==null)
             {
                 errorType = "error";
@@ -110,7 +115,6 @@ public class EditRepository extends BaseActionSupport
 
             }
             provider.setOaiProviderUrl(getRepositoryURL());
-
 
             Provider repositorySameName = getProviderService().getProviderByName(repositoryName);
             Provider repositorySameURL = getProviderService().getProviderByURL(repositoryURL);
@@ -159,7 +163,8 @@ public class EditRepository extends BaseActionSupport
                             	getProviderService().updateProvider(provider);
                             }
                         }
-
+                    	getProviderService().updateProvider(provider);
+                    	
                         return SUCCESS;
 
                     }
@@ -194,10 +199,12 @@ public class EditRepository extends BaseActionSupport
                         {
                         	getProviderService().updateProvider(provider);
                         }
+                    	getProviderService().updateProvider(provider);
 
                         return SUCCESS;
                     }
                 }
+                
 
             }
             else //no reposiotry with the same details exists
@@ -312,4 +319,18 @@ public class EditRepository extends BaseActionSupport
     {
         return repositoryId;
     }
+
+    /**
+     * Get number of records to harvest
+     */
+	public long getNumberOfRecordsToHarvest() {
+		return numberOfRecordsToHarvest;
+	}
+
+    /**
+     * Set number of records to harvest
+     */
+	public void setNumberOfRecordsToHarvest(long numberOfRecordsToHarvest) {
+		this.numberOfRecordsToHarvest = numberOfRecordsToHarvest;
+	}
 }

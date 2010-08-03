@@ -117,7 +117,8 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 				                                   COL_FROM + ", " +
 				                                   COL_UNTIL + ", " +
 				                                   COL_OFFSET + ", " +
-				                                   COL_TOKEN + " " +
+				                                   COL_TOKEN + ", " +
+				                                   COL_STARTING_ID + " " +
 	                                   "FROM " + RESUMPTION_TOKENS_TABLE_NAME;
 
 					if(log.isDebugEnabled())
@@ -145,8 +146,9 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 					resumptionToken.setMetadataFormat(results.getString(3));
 					resumptionToken.setFrom(results.getTimestamp(4));
 					resumptionToken.setUntil(results.getTimestamp(5));
-					resumptionToken.setOffset(results.getInt(6));
+					resumptionToken.setOffset(results.getLong(6));
 					resumptionToken.setToken(results.getString(7));
+					resumptionToken.setStartingId(results.getLong(8));
 
 					// Add the resumption tokens to the list
 					resumptionTokens.add(resumptionToken);
@@ -201,7 +203,8 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 	            	    						   COL_FROM + ", " +
 	            	    						   COL_UNTIL + ", " +
 	            	    						   COL_OFFSET + ", " +
-	            	    						   COL_TOKEN + " " +
+	            	    						   COL_TOKEN + ", " +
+				                                   COL_STARTING_ID + " " +
 	                                   "FROM " + RESUMPTION_TOKENS_TABLE_NAME + " " +
 	                                   "WHERE " + COL_RESUMPTION_TOKEN_ID + "=?";
 
@@ -233,8 +236,9 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 					resumptionToken.setMetadataFormat(results.getString(3));
 					resumptionToken.setFrom(results.getTimestamp(4));
 					resumptionToken.setUntil(results.getTimestamp(5));
-					resumptionToken.setOffset(results.getInt(6));
+					resumptionToken.setOffset(results.getLong(6));
 					resumptionToken.setToken(results.getString(7));
+					resumptionToken.setStartingId(results.getLong(8));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the resumption token with ID " + id + " in the database.");
@@ -292,7 +296,8 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 	            	    						   COL_FROM + ", " +
 	            	    						   COL_UNTIL + ", " +
 	            	    						   COL_OFFSET + ", " +
-	            	    						   COL_TOKEN + " " +
+	            	    						   COL_TOKEN + ", " +
+				                                   COL_STARTING_ID + " " +
 	                                   "FROM " + RESUMPTION_TOKENS_TABLE_NAME + " " +
 	                                   "WHERE " + COL_TOKEN + "=?";
 
@@ -324,8 +329,9 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 					resumptionToken.setMetadataFormat(results.getString(3));
 					resumptionToken.setFrom(results.getTimestamp(4));
 					resumptionToken.setUntil(results.getTimestamp(5));
-					resumptionToken.setOffset(results.getInt(6));
+					resumptionToken.setOffset(results.getLong(6));
 					resumptionToken.setToken(results.getString(7));
+					resumptionToken.setStartingId(results.getLong(8));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the resumption token with token " + token + " in the database.");
@@ -384,8 +390,9 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 				                                                            COL_FROM + ", " +
 				                                                            COL_UNTIL + ", " +
 				                                                            COL_OFFSET + ", " +
-				                                                            COL_TOKEN + ") " +
-	            				       "VALUES (?, ?, ?, ?, ?, ?)";
+				                                                            COL_TOKEN + ", " +
+				                                                            COL_STARTING_ID+ ") " +
+	            				       "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"insert resumption token\" PreparedStatement from the SQL " + insertSql);
@@ -400,8 +407,9 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 				psInsert.setString(2, resumptionToken.getMetadataFormat());
 				psInsert.setTimestamp(3, resumptionToken.getFrom());
 				psInsert.setTimestamp(4, resumptionToken.getUntil());
-				psInsert.setInt(5, resumptionToken.getOffset());
+				psInsert.setLong(5, resumptionToken.getOffset());
 				psInsert.setString(6, resumptionToken.getToken());
+				psInsert.setLong(7, resumptionToken.getStartingId());
 
 				// Execute the insert statement and return the result
 				if(dbConnectionManager.executeUpdate(psInsert) > 0)
@@ -460,7 +468,8 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 				                                                          COL_FROM + "=?, " +
 				                                                          COL_UNTIL + "=?, " +
 				                                                          COL_OFFSET + "=?, " +
-				                                                          COL_TOKEN + "=? " +
+				                                                          COL_TOKEN + "=?, " +
+				                                                          COL_STARTING_ID + "=? " +
 	                                   "WHERE " + COL_RESUMPTION_TOKEN_ID + "=?";
 
 					if(log.isDebugEnabled())
@@ -476,9 +485,11 @@ public class DefaultResumptionTokenDAO extends ResumptionTokenDAO
 				psUpdate.setString(2, resumptionToken.getMetadataFormat());
 				psUpdate.setTimestamp(3, resumptionToken.getFrom());
 				psUpdate.setTimestamp(4, resumptionToken.getUntil());
-				psUpdate.setInt(5, resumptionToken.getOffset());
+				psUpdate.setLong(5, resumptionToken.getOffset());
 				psUpdate.setString(6, resumptionToken.getToken());
-				psUpdate.setLong(7, resumptionToken.getId());
+				psUpdate.setLong(7, resumptionToken.getStartingId());
+				psUpdate.setLong(8, resumptionToken.getId());
+				
 
 				// Execute the update statement and return the result
 				return dbConnectionManager.executeUpdate(psUpdate) > 0;

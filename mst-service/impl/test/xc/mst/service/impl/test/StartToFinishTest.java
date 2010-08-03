@@ -15,18 +15,30 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
 import xc.mst.common.test.BaseTest;
+import xc.mst.constants.Constants;
 import xc.mst.constants.Status;
+import xc.mst.oai.Facade;
+import xc.mst.oai.OaiRequestBean;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
 import xc.mst.services.MetadataService;
 import xc.mst.services.MetadataServiceManager;
 import xc.mst.utils.MSTConfiguration;
 
+/**
+ * Tests example service by processing records from a repository through example service. 
+ * 
+ * @author Ben Anderson
+ * @author Sharmila Ranaganathan
+ */
 public abstract class StartToFinishTest extends BaseTest {
 	
 	private static final Logger LOG = Logger.getLogger(StartToFinishTest.class);
 	
 	protected Provider provider = null;
+	
+	/** XML response of harvest out */
+	protected String harvestOutResponse = null;
 	
 	protected abstract String getServiceName();
 	protected abstract String getRepoName();
@@ -35,9 +47,19 @@ public abstract class StartToFinishTest extends BaseTest {
 	protected void testProvider() throws Exception {}
 	protected abstract void finalTest() throws Exception;
 	
+	/**
+	 * Get format to harvest from MST 
+	 */
+	protected abstract Format getHarvestOutFormat() throws Exception;
+
 	protected Repository getServiceRepository() throws Exception {
 		return getServicesService().getServiceByName(getServiceName()).getMetadataService().getRepository();
 	}
+	
+	/**
+	 * To test harvest out functionality
+	 */
+	protected abstract void testHarvestOut();
 	
 	protected Repository getHarvestRepository() throws Exception {
 		Repository r = (Repository)MSTConfiguration.getInstance().getBean("Repository");
@@ -119,6 +141,12 @@ public abstract class StartToFinishTest extends BaseTest {
 		waitUntilFinished();
 		LOG.debug("after waitUntilFinished");
 		*/
+		
+		harvestOutRecordsFromMST();
+		LOG.debug("after harvestOutRecordsFromMST");
+		
+		testHarvestOut();
+		LOG.debug("after testHarvestOut");
 	}
 	
 	public void dropOldSchemas() {
@@ -284,5 +312,41 @@ public abstract class StartToFinishTest extends BaseTest {
 		} catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
+	}
+
+	/**
+	 * To test harvesting records from MST using OAI PMH
+	 * 
+	 * @throws Exception
+	 */
+	public void harvestOutRecordsFromMST() throws Exception {
+
+		OaiRequestBean bean = new OaiRequestBean();
+
+		// Set parameters on the bean based on the OAI request's parameters
+		bean.setVerb("ListRecords");
+		bean.setMetadataPrefix(getHarvestOutFormat().getName());
+		
+		Service service = getServicesService().getServiceByName(getServiceName());
+		bean.setServiceId(service.getId());
+
+		Facade facade = (Facade) MSTConfiguration.getInstance().getBean("Facade");
+		
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(facade.execute(bean));
+		
+		harvestOutResponse = stringBuilder.toString();
+
+		LOG.debug("XML response");
+		LOG.debug(harvestOutResponse);
+	}
+
+	/**
+	 * Get harvest out response
+	 * 
+	 * @return
+	 */
+	public String getHarvestOutResponse() {
+		return harvestOutResponse;
 	}
 }

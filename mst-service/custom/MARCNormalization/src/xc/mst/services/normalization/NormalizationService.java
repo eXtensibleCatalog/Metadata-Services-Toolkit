@@ -207,7 +207,7 @@ public class NormalizationService extends GenericMetadataService {
 			char leader06 = normalizedXml.getLeader().charAt(6);
 			
 			// Run these steps only if the record is a bibliographic record
-			if("acdefgijkmoprt".contains(""+leader06))
+			if("abcdefghijkmnoprt".contains(""+leader06))
 			{
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_REMOVE_OCOLC_003, "0").equals("1"))
 					normalizedXml = removeOcolc003(normalizedXml);
@@ -395,7 +395,7 @@ public class NormalizationService extends GenericMetadataService {
 				String setName = null;
 
 				// Setup the setSpec and description based on the leader 06
-				if("acdefgijkmoprt".contains(""+leader06)) {
+				if("abcdefghijkmnoprt".contains(""+leader06)) {
 					setSpec = "MARCXMLbibliographic";
 					setName = "MARCXML Bibliographic Records";
 					setDescription = "A set of all MARCXML Bibliographic records in the repository.";
@@ -410,6 +410,9 @@ public class NormalizationService extends GenericMetadataService {
 					setSpec = "MARCXMLauthority";
 					setName = "MARCXML Authority Records";
 					setDescription = "A set of all MARCXML Authority records in the repository.";
+				} else { // If leader 6th character is invalid, then log error and do not process that record.
+					logError("Record Id " + record.getOaiIdentifier() + " with leader character " + leader06 + " not processed.");
+					return new ArrayList<Record>();
 				}
 				
 				if(setSpec != null) {
