@@ -21,6 +21,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
+import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
@@ -37,7 +38,7 @@ public class TestRepository extends BaseService implements Repository {
 	public final static String EXPECTED_OUTPUT_RECORDS = "../test/expected_output_records";
 	public final static String ACTUAL_OUTPUT_RECORDS = "test/actual_output_records";
 	
-	protected Set<String> inputFileNames = new TreeSet<String>();
+	protected java.util.Set<String> inputFileNames = new TreeSet<String>();
 	//protected int inputFilesIterator = 0;
 	protected Iterator inputFilesIterator = null;
 	//protected Map<Record, String> inputRecordFileNames = new HashMap<Record, String>();
@@ -253,4 +254,24 @@ public class TestRepository extends BaseService implements Repository {
 		
 	}
 
+	public List<Record> getRecordHeader(Date from, Date until, Long startingId, Format inputFormat, xc.mst.bo.provider.Set inputSet) {
+		
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * Get number of records that satisfy the given criteria
+	 * 
+	 * @param from
+	 * @param until
+	 * @param startingId
+	 * @param inputFormat
+	 * @param inputSet
+	 * @return
+	 */
+	public long getRecordCount(Date from, Date until, Format inputFormat, xc.mst.bo.provider.Set inputSet) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
