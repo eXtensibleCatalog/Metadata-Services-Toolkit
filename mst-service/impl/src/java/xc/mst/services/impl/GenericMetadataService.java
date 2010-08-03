@@ -347,7 +347,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	}
 
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
-		LOG.debug("getService(): "+getService());
+
 		running.acquireUninterruptibly();
 		predecessorKeyedMap.clear();
 		successorKeyedMap.clear();
@@ -398,6 +398,10 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			// Set number of input and output records.
 			service.setInputRecordCount(service.getInputRecordCount() + records.size());
 			service.setOutputRecordCount(getRepository().getSize());
+			
+			// TODO : currently # of output records and HarvestOutRecordsAvailable are same. So we can get rid of one of the fields in Services.
+			// TODO : Should # of harvest out records available include deleted records too? 
+			service.setHarvestOutRecordsAvailable(service.getOutputRecordCount());
 
 			records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
 			try {

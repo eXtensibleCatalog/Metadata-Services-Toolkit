@@ -331,7 +331,7 @@ public class TransformationService extends GenericMetadataService
 			char leader06 = originalRecord.getLeader().charAt(6);
 			
 			// If the record is a bib record according to the leader06
-			if("acdefgijkmoprt".contains(""+leader06))
+			if("abcdefghijkmnoprt".contains(""+leader06))
 			{
 				results = processBibliographicRecord(record, originalRecord);
 			}
@@ -339,6 +339,9 @@ public class TransformationService extends GenericMetadataService
 			else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y')
 			{
 				results = processHoldingRecord(record, originalRecord);
+			} else { // If leader 6th character is invalid, then log error and do not process that record.
+				logError("Record Id " + record.getOaiIdentifier() + " with leader character " + leader06 + " not processed.");
+				return results;
 			}
 			return results;
 		}
@@ -4912,7 +4915,7 @@ public class TransformationService extends GenericMetadataService
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:spatial based on the 967 $a value
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "967", "az", "", "spacial", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "967", "az", "", "spatial", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**

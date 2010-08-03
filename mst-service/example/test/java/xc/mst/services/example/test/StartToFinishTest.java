@@ -7,10 +7,13 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.common.SolrDocumentList;
+import org.hibernate.util.XMLHelper;
+import org.jdom.Element;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.Record;
 import xc.mst.repo.DefaultRepository;
+import xc.mst.utils.XmlHelper;
 
 public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTest {
 	
@@ -29,6 +32,10 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 	
 	protected Format getIncomingFormat() throws Exception {
+		return getDCFormat();
+	}
+	
+	protected Format getHarvestOutFormat() throws Exception {
 		return getDCFormat();
 	}
 	
@@ -149,5 +156,25 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		LOG.debug("setCount: "+setCount);
 		//assert setCount == 2000;
 
+	}
+
+	/**
+	 * To test harvest out functionality
+	 */
+	protected void testHarvestOut() {
+		
+		int numberOfRecords = 0;
+
+		org.jdom.Document doc = new XmlHelper().getJDomDocument(getHarvestOutResponse());
+
+		List<Element> records = doc.getRootElement().getChildren("record");
+		if (records != null) {
+			numberOfRecords = records.size();
+		}
+		
+		LOG.debug("Number of records harvested out : " + numberOfRecords);
+		
+		assert numberOfRecords == 1000 : " Number of harvested records should be 1000 but instead it is " + numberOfRecords;
+		
 	}
 }

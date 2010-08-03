@@ -112,6 +112,7 @@ CREATE TABLE providers
   last_harvest_end_time DATETIME,
   last_log_reset DATETIME,
   log_file_name VARCHAR(355) NOT NULL,
+  number_of_records_to_harvest BIGINT(7), 
 
   PRIMARY KEY (provider_id )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -407,6 +408,7 @@ CREATE TABLE resumption_tokens
   until TIMESTAMP NULL DEFAULT NULL,
   offset BIGINT(11) NOT NULL,
   token VARCHAR(255),
+  starting_id BIGINT(11) NOT NULL,
   PRIMARY KEY(resumption_token_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
