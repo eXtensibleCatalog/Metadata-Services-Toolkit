@@ -22,6 +22,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordIfc;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
@@ -1350,8 +1351,11 @@ public class DefaultProviderDAO extends ProviderDAO
 
 		// If we got here, we need to recursively delete all records
 		// processed from the record we just marked as deleted.
-		for(Record successorRecord : record.getSuccessors())
+		for(RecordIfc sucRec : record.getSuccessors()) {
+			Record successorRecord = (Record)sucRec;
 			success = markAsDeleted(successorRecord) && success;
+		}
+			
 
 		// Return whether or not all deletes were successful
 		return success;

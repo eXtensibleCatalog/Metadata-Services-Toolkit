@@ -23,6 +23,7 @@ import xc.mst.bo.record.Expression;
 import xc.mst.bo.record.Holdings;
 import xc.mst.bo.record.Item;
 import xc.mst.bo.record.Manifestation;
+import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.record.Work;
@@ -205,7 +206,7 @@ public abstract class RecordService extends BaseService
 	 */
 	public final static String FIELD_ALL = "all";
 
-	public abstract Record createRecord();
+	public abstract OutputRecord createRecord();
 	public abstract void injectNewId(Record r);
 	public abstract Record createSuccessor(Record record, Service s);
 	

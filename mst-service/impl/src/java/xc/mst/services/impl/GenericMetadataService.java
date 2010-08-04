@@ -29,7 +29,10 @@ import org.springframework.context.ApplicationContextAware;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
+import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordIfc;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
@@ -310,7 +313,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	public void postUpdate() {
 	}
 	
-	public abstract List<Record> process(Record r);
+	public abstract List<OutputRecord> process(InputRecord r);
 	
 	protected ServiceHarvest getServiceHarvest(Format inputFormat, xc.mst.bo.provider.Set inputSet, String repoName, Service service) {
 		LOG.debug("inputFormat: "+inputFormat);
@@ -381,13 +384,14 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 				//       why, someone might also want the xml with these injected records.
 				//       We may want to supply an optional way of doing that.
 				injectKnownSuccessors(in);
-				List<Record> out = process(in);
+				List<OutputRecord> out = process(in);
 				if (out != null) {
-					for (Record rout : out) {
-						injectKnownPredecessors(in, rout);
-						rout.setService(getService());
+					for (RecordIfc rout : out) {
+						Record rout2 = (Record)rout;
+						injectKnownPredecessors(in, rout2);
+						rout2.setService(getService());
+						getRepository().addRecord(rout2);
 					}
-					getRepository().addRecords(out);
 				}
 				sh.setHighestId(in.getId());
 			}

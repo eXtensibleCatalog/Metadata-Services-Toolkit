@@ -49,7 +49,7 @@
 		<copy-to-custom-services subdir="build/lib">
 			<macro-file-set>
 				<fileset dir="${mi.build.dir}">
-					<include name="${mi.build.dir}/${mst-instances}-${mi.version}.jar" />
+					<include name="${mst-instances}-${mi.version}.jar" />
 				</fileset>
 			</macro-file-set>
 		</copy-to-custom-services>

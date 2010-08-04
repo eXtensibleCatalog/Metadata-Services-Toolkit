@@ -124,27 +124,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	}
 	
 	protected void addFilterQuery(SolrQuery solrQuery, String name, String value) {
-		RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
-		RepositoryService repositoryService = (RepositoryService)MSTConfiguration.getInstance().getBean("RepositoryService");
-		if ("successor".equals(name) || "processed_from".equals(name)) {
-			Record r = repositoryService.getRecord(Long.parseLong(value));
-			List<Record> records = null;
-			if ("successor".equals(name)) {
-				records = r.getPredecessors();
-			} else {
-				records = r.getSuccessors();
-			}
-			name="record_id";
-			StringBuilder sb = new StringBuilder();
-			for (int i=0; i<records.size(); i++) {
-				Record r2 = records.get(i);
-				sb.append(r2.getId()+"");
-				if (i < records.size()-1) {
-					sb.append(" OR ");
-				}
-			}
-			value = sb.toString();
-		}
 		solrQuery.addFilterQuery(name + ":\"" + value.replaceAll(":", "\\\\:") + "\"");
 	}
 	

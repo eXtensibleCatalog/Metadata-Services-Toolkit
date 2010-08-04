@@ -16,10 +16,11 @@ import java.util.StringTokenizer;
 
 import org.jdom.Element;
 import org.jdom.Namespace;
-import org.jdom.output.XMLOutputter;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
+import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.services.ServiceValidationException;
@@ -128,15 +129,16 @@ public class NormalizationService extends GenericMetadataService {
 	}
 
 	@Override
-	public List<Record> process(Record recordIn) {
+	public List<OutputRecord> process(InputRecord recordIn) {
 		TimingLogger.start("processRecord");
 		try {
-		
+			List<OutputRecord> results = null;
 			// If the record was deleted, delete and reprocess all records that were processed from it
 			if(recordIn.getDeleted()) {
+				results = new ArrayList<OutputRecord>();
 				TimingLogger.start("processRecord.getDeleted");
-				List<Record> successors = getRecordService().getSuccessorsCreatedByServiceId(recordIn.getId(), service.getId());
-	
+				List<OutputRecord> successors = recordIn.getSuccessors();
+
 				// If there are successors then the record exist and needs to be deleted. Since we are
 				// deleting the record, we need to decrement the count.
 				if (successors != null && successors.size() > 0) {
@@ -144,30 +146,20 @@ public class NormalizationService extends GenericMetadataService {
 				}
 				
 				// Handle reprocessing of successors
-				for(Record successor : successors){
-					
-					// Set the successors ad deleted
-					successor.setDeleted(true);
-				
-					// Schedule the services
-					reprocessRecord(successor);
-					getRecordService().update(successor);
+				for(OutputRecord successor : successors){
+					successor.setStatus(Record.DELETED);
 				}
-				
-				// Mark the record as having been processed by this service
-				recordIn.addProcessedByService(service);
-				recordIn.removeInputForService(service);
-				getRecordService().update(recordIn);
 				TimingLogger.stop("processRecord.getDeleted");
-			} 
-	
-			// Get the results of processing the record
-			TimingLogger.start("processRecord.convertRecord");
-			//TODO: make sure that recordIn is used to create the successors
-			List<Record> results = convertRecord(recordIn);
-			TimingLogger.stop("processRecord.convertRecord");
+			} else {
+				// Get the results of processing the record
+				TimingLogger.start("processRecord.convertRecord");
+				//TODO: make sure that recordIn is used to create the successors
+				results = convertRecord(recordIn);
+				TimingLogger.stop("processRecord.convertRecord");
+				
+				TimingLogger.stop("processRecord");
+			}
 			
-			TimingLogger.stop("processRecord");
 			return results;
 		} catch (Throwable t) {
 			getUtil().throwIt(t);
@@ -175,18 +167,14 @@ public class NormalizationService extends GenericMetadataService {
 		return null;
 	}
 	
-	private List<Record> convertRecord(Record record) {
-		
-		// If the record was deleted, don't process it
-		if(record.getDeleted())
-			return new ArrayList<Record>();
+	private List<OutputRecord> convertRecord(InputRecord record) {
 		
 		// Empty the lists of errors because we're beginning to process a new record
 		errors.clear();
 		outputRecordErrors.clear();
 		
 		// The list of records resulting from processing the incoming record
-		ArrayList<Record> results = new ArrayList<Record>();
+		ArrayList<OutputRecord> results = new ArrayList<OutputRecord>();
 		
 		try {
 			if(LOG.isDebugEnabled())
@@ -348,13 +336,10 @@ public class NormalizationService extends GenericMetadataService {
 
 				// Get the record which was processed from the record we just processed
 				// (there should only be one)
-				Record oldNormalizedRecord = record.getSuccessors().get(0);
+				OutputRecord oldNormalizedRecord = record.getSuccessors().get(0);
 
 				// Set the XML to the new normalized XML
 				oldNormalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
-
-				// Mark the record as not being deleted
-				oldNormalizedRecord.setDeleted(false);
 				
 				// Add errors
 				oldNormalizedRecord.setErrors(outputRecordErrors);
@@ -373,16 +358,9 @@ public class NormalizationService extends GenericMetadataService {
 					LOG.debug("Inserting the record since it was not processed from an older version of the record we just processed.");
 
 				// Create the normalized record
-				Record normalizedRecord = getRecordService().createSuccessor(record, getService());
+				OutputRecord normalizedRecord = getRecordService().createRecord();
 				normalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
 				normalizedRecord.setFormat(marcxmlFormat);
-
-				// Set the datestamp, and header to null so they get computed when we insert the normalized record
-				normalizedRecord.setOaiDatestamp(null);
-				normalizedRecord.setOaiHeader(null);
-
-				// Mark the record as not being deleted
-				normalizedRecord.setDeleted(false);
 
 				// Add errors
 				normalizedRecord.setErrors(outputRecordErrors);
@@ -399,20 +377,18 @@ public class NormalizationService extends GenericMetadataService {
 					setSpec = "MARCXMLbibliographic";
 					setName = "MARCXML Bibliographic Records";
 					setDescription = "A set of all MARCXML Bibliographic records in the repository.";
-					normalizedRecord.setType("MARC-Bib");
 				} else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
 					setSpec = "MARCXMLholding";
 					setName = "MARCXML Holding Records";
 					setDescription = "A set of all MARCXML Holding records in the repository.";
-					normalizedRecord.setType("MARC-Holding");
 					
 				} else if(leader06 == 'z') {
 					setSpec = "MARCXMLauthority";
 					setName = "MARCXML Authority Records";
 					setDescription = "A set of all MARCXML Authority records in the repository.";
 				} else { // If leader 6th character is invalid, then log error and do not process that record.
-					logError("Record Id " + record.getOaiIdentifier() + " with leader character " + leader06 + " not processed.");
-					return new ArrayList<Record>();
+					logError("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
+					return new ArrayList<OutputRecord>();
 				}
 				
 				if(setSpec != null) {

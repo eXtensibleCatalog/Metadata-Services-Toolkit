@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
+import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.services.impl.GenericMetadataService;
 import xc.mst.services.service.FooService;
@@ -26,14 +28,14 @@ public class ExampleMetadataService extends GenericMetadataService {
 		this.fooService = fooService;
 	}
 
-	public List<Record> process(Record r) {
-		List<Record> records = new ArrayList<Record>();
+	public List<OutputRecord> process(InputRecord r) {
+		List<OutputRecord> records = new ArrayList<OutputRecord>();
 		try {
-			Record out = null;
+			OutputRecord out = null;
 			if (r.getSuccessors() != null && r.getSuccessors().size() > 0) {
 				out = r.getSuccessors().get(0);
 			} else {
-				out = getRecordService().createSuccessor(r, getService());
+				out = getRecordService().createRecord();
 			}
 			if (r.getStatus() == Record.DELETED) {
 				out.setStatus(Record.DELETED);

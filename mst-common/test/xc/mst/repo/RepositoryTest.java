@@ -10,7 +10,6 @@
 package xc.mst.repo;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -20,6 +19,7 @@ import org.testng.annotations.Test;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordIfc;
 import xc.mst.bo.service.Service;
 import xc.mst.common.test.BaseTest;
 import xc.mst.utils.MSTConfiguration;
@@ -67,10 +67,11 @@ public class RepositoryTest extends BaseTest {
 			List<Record> records = new ArrayList<Record>();
 			Format f = getFormatDAO().getById(1);
 			Set set = getSetDAO().getById(1);
-			Record previousRecord = recordService.createRecord();
+			RecordIfc previousRecord = recordService.createRecord();
 			Service s = new Service();
 			s.setId(1);
 			for (int i=0; i<10; i++) {
+				/*
 				Record record = recordService.createSuccessor(previousRecord, s);
 				record.setMode(Record.STRING_MODE);
 				record.setOaiXml("<hello>"+i+"</hello>");
@@ -79,6 +80,7 @@ public class RepositoryTest extends BaseTest {
 				records.add(record);
 				//record.setXML();
 				lastRecordId = record.getId();
+				*/
 			}
 			repo.addRecords(records);
 		} catch (Throwable t) {

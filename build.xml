@@ -26,6 +26,16 @@
 		</sequential>
 	</macrodef>
 
+	<target name="test.macro">
+		<copy-to-custom-services subdir="">
+			<macro-file-set>
+				<fileset dir=".">
+					<include name="out" />
+				</fileset>
+			</macro-file-set>
+		</copy-to-custom-services>
+	</target>
+
 	<macrodef name="target-custom-services">
 		<attribute name="target" />
 		<sequential>

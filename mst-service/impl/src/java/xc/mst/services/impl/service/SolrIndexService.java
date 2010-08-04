@@ -8,6 +8,8 @@ import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
+import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.manager.IndexException;
@@ -87,7 +89,8 @@ public class SolrIndexService extends GenericMetadataService  {
 		}
 	}
 	
-	public List<Record> process(Record r) {
+	public List<OutputRecord> process(InputRecord ri) {
+		Record r = (Record)ri;
 		if (r.getId() % 10 == 0) {
 			LOG.debug("indexing record.getId(): "+r.getId());
 		}
