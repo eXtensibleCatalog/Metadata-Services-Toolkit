@@ -74,6 +74,6 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		
 		LOG.debug("Number of records harvested out : " + numberOfRecords);
 		
-		assert numberOfRecords == 175 : " Number of harvested records should be 1000 but instead it is " + numberOfRecords;
+		assert numberOfRecords == 175 : " Number of harvested records should be 175 but instead it is " + numberOfRecords;
 	}
 }
