@@ -40,6 +40,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordIfc;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.BaseDAO;
@@ -343,7 +344,7 @@ public class RepositoryDAO extends BaseDAO {
 	        List<long[]> recordPreds = new ArrayList<long[]>();
 	        for (Record r : recordsToAdd) {
 	        	if (r.getPredecessors() != null) {
-		        	for (Record p : r.getPredecessors()) {
+		        	for (RecordIfc p : r.getPredecessors()) {
 		        		long[] recPredRow = new long[2];
 		        		recPredRow[0] = r.getId();
 		        		recPredRow[1] = p.getId();

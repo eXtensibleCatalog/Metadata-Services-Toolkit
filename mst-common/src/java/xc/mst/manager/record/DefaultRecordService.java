@@ -36,7 +36,9 @@ import org.joda.time.format.ISODateTimeFormat;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
+import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordIfc;
 import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
@@ -80,7 +82,7 @@ public class DefaultRecordService extends RecordService
 		UTC_FORMATTER = UTC_FORMATTER.withZone(DateTimeZone.UTC);
 	}
 	
-	public Record createRecord() {
+	public OutputRecord createRecord() {
 		Record rec = new Record();
 		getRepositoryDAO().injectId(rec);
 		return rec;
@@ -1086,7 +1088,7 @@ public class DefaultRecordService extends RecordService
 			TimingLogger.add("SOLR-"+FIELD_PROCESSED_FROM, Long.toString(processedFrom.getId()).length());
 		}
 
-		for(Record successor : record.getSuccessors()) {
+		for(RecordIfc successor : record.getSuccessors()) {
 			doc.addField(FIELD_SUCCESSOR, Long.toString(successor.getId()));
 			TimingLogger.add("SOLR-"+FIELD_SUCCESSOR, Long.toString(successor.getId()).length());
 		}
@@ -1291,9 +1293,10 @@ public class DefaultRecordService extends RecordService
 		Element predsrEl = new Element("predecessors", namespace);
 		headerEl.addContent(predsrEl);
 		
-		for (Record p : r.getPredecessors()) {
+		for (RecordIfc p : r.getPredecessors()) {
 			Element predEl = new Element("predecessor", namespace);
-			predEl.setText(p.getHarvestedOaiIdentifier());
+			Record p2 = (Record)p;
+			predEl.setText(p2.getHarvestedOaiIdentifier());
 			predsrEl.addContent(predEl);
 		}
 		

@@ -1,11 +1,12 @@
 package xc.mst.services.normalization.test;
 
+import gnu.trove.TLongObjectHashMap;
+
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jdom.Element;
 
-import gnu.trove.TLongObjectHashMap;
 import xc.mst.bo.provider.Format;
 import xc.mst.repo.Repository;
 import xc.mst.utils.MSTConfiguration;
@@ -73,6 +74,6 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		
 		LOG.debug("Number of records harvested out : " + numberOfRecords);
 		
-		assert numberOfRecords == 1000 : " Number of harvested records should be 1000 but instead it is " + numberOfRecords;
-		
+		assert numberOfRecords == 175 : " Number of harvested records should be 1000 but instead it is " + numberOfRecords;
+	}
 }

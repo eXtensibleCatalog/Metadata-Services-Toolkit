@@ -31,7 +31,7 @@ import xc.mst.utils.XmlHelper;
  *
  * @author Eric Osisek
  */
-public class Record {
+public class Record implements InputRecord, OutputRecord {
 	
 	private static final Logger LOG = Logger.getLogger(Record.class);
 	
@@ -59,7 +59,7 @@ public class Record {
 	 */
 	protected long id = -1;
 	
-	protected List<Record> predecessors = new ArrayList<Record>();
+	protected List<InputRecord> predecessors = new ArrayList<InputRecord>();
 
 	/**
 	 * The record's type
@@ -153,7 +153,7 @@ public class Record {
 	/**
 	 * A list of the records which used this record to process 
 	 */
-	protected List<Record> successors = new ArrayList<Record>();
+	protected List<OutputRecord> successors = new ArrayList<OutputRecord>();
 	
 	/**
 	 * A list of the services for which this record is input
@@ -628,7 +628,7 @@ public class Record {
 	 * 
 	 * @return A list of records which were processed from this record
 	 */
-	public List<Record> getSuccessors() 
+	public List<OutputRecord> getSuccessors() 
 	{
 		return successors;
 	} // end method getSuccesors()
@@ -638,7 +638,7 @@ public class Record {
 	 * 
 	 * @param successors The new list of records which were processed from this record
 	 */
-	public void setSuccessors(List<Record> successors) 
+	public void setSuccessors(List<OutputRecord> successors) 
 	{
 		this.successors = successors;
 	} // end method setSuccessors(List<Record>)
@@ -1014,7 +1014,7 @@ public class Record {
 		predecessors.add(r);
 	}
 	
-	public List<Record> getPredecessors() {
+	public List<InputRecord> getPredecessors() {
 		return predecessors;
 	}
 	
