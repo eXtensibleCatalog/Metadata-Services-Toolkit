@@ -518,9 +518,9 @@ public class Facade extends BaseManager
 				
 				StringBuilder stringBuilder = new StringBuilder();
 				stringBuilder.append("<record>")
-							.append(getHeader(record).replaceAll("<\\?xml.*\\?>", ""))
+							.append(getHeader(record))
 							.append("<metadata>")
-							.append(record.getOaiXml().replaceAll("<\\?xml.*\\?>", ""))
+							.append(record.getOaiXml())
 							.append("</metadata>")
 							.append("</record>");
 
@@ -705,12 +705,12 @@ public class Facade extends BaseManager
 						String header = getHeader(record);
 						header = header.replaceAll("<header>", "<header status=\"deleted\">");
 						xml.append("<record>\n")
-				          .append(header.replaceAll("<\\?xml.*\\?>", ""))
+				          .append(header)
 				          .append("\n</record>\n");
 					} else { // If not deleted append header as well as record XML
 						xml.append("<record>\n");
 						
-						xml.append(getHeader(record).replaceAll("<\\?xml.*\\?>", ""))
+						xml.append(getHeader(record))
 						          .append("\n<metadata>\n")
 						          .append(record.getOaiXml().replaceAll("<\\?xml.*\\?>", ""))
 						          .append("\n</metadata>\n")
