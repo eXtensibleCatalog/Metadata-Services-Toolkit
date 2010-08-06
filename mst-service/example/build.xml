@@ -255,11 +255,8 @@
 
 	<target name="start2finishtest" depends="install-mst, compile.test" >
 		<property name="abs.build.dir" location="${build.dir}" />
-		<exec executable="${ant.executable}">
-			<arg value="-Dtest=StartToFinishTest" />
-			<arg value="test.internal" />
-			<env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
-		</exec>
+		<property name="test" value="StartToFinishTest" />
+		<ant target="test" inheritAll="true" />
 	</target>
 
 </project>

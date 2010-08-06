@@ -464,8 +464,12 @@ out = getRecordService().createSuccessor(r, getService());
 				if (out != null) {
 					for (RecordIfc rout : out) {
 						Record rout2 = (Record)rout;
-						injectKnownPredecessors(in, rout2);
+						rout2.addPredecessor(in);
 						rout2.setService(getService());
+						if (rout2.getId() == -1) {
+							getRepositoryDAO().injectId(rout2);
+						}
+						injectKnownPredecessors(in, rout2);
 						getRepository().addRecord(rout2);
 					}
 				}
