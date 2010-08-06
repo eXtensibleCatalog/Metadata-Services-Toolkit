@@ -39,7 +39,7 @@
         </dependency>
 
 		<dependency org="org.testng" name="testng" rev="5.8" transitive="false">
-                <artifact name="testng" type="jar"
+			<artifact name="testng" type="jar"
                 url="http://repo1.maven.org/maven2/org/testng/testng/5.8/testng-5.8-jdk15.jar"/>
         </dependency>
        
@@ -259,6 +259,14 @@
 
 		<dependency org="javassist" name="javassist" rev="3.8.0.GA" transitive="false">
 			<artifact name="javassist" type="jar" />
+		</dependency>
+
+		<dependency org="oro" name="oro" rev="2.0.8" transitive="false">
+			<artifact name="oro" type="jar" />
+		</dependency>
+
+		<dependency org="commons-net" name="commons-net" rev="2.0" transitive="false">
+			<artifact name="commons-net" type="jar" />
 		</dependency>
 
     </dependencies>

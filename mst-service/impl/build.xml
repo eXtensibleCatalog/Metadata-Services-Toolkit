@@ -79,6 +79,28 @@
 			debuglevel="lines,vars,source"/>
 	</target>
 
+	<target name="ms.doc" depends="ms.compile.nodep">
+		<javadoc
+			destdir="${ms.build.doc}/api"
+			author="true"
+			version="true"
+			use="true"
+			classpathref="ms.classpath.compile"
+			linksource="yes"
+			windowtitle="eXtensinble Catalog">
+
+			<fileset dir="${ms.src.java}" defaultexcludes="yes">
+				<include name="xc/**/*"/>
+			</fileset>
+
+			<doctitle><![CDATA[<h1>eXtensible Catalog</h1>]]></doctitle>
+		    <bottom>
+			<![CDATA[<i>Copyright &#169; 2010 University of Rochester Libraries</i>]]></bottom>
+	       <tag name="todo" scope="all" description="To do:"/>
+	       <link href="http://download.oracle.com/javase/6/docs/api/"/>
+        </javadoc>
+	</target>
+
 	<target name="ms.copy-resources" depends="ms.compile, ms.copy-resources.nodep" />
 	<target name="ms.copy-resources.nodep" depends="ms.compile.nodep">
 		<copy todir="${ms.build.classes}">
