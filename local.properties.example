@@ -1,3 +1,7 @@
 tomcat.dir=C:/dev/java/tomcat_6.0
 mst.root.dir=c:/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/impl/build/
 dist.dir=../../dist/
+
+ftp.server=
+ftp.userid=
+ftp.password=

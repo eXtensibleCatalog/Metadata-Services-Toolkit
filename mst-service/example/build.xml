@@ -42,6 +42,27 @@
 		 =================================
 	-->
 
+	<target name="doc" depends="compile">
+		<javadoc
+			destdir="${build.doc}/api"
+			author="true"
+			version="true"
+			use="true"
+			windowtitle="eXtensinble Catalog">
+
+			<fileset dir="${src.dir}" defaultexcludes="yes">
+				<include name="**"/>
+			</fileset>
+
+			<doctitle><![CDATA[<h1>eXtensible Catalog</h1>]]></doctitle>
+		    <bottom>
+			<![CDATA[<i>Copyright &#169; 2006 University of Rochester Libraries</i>]]></bottom>
+	       <tag name="todo" scope="all" description="To do:"/>
+	       <link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
+        </javadoc>
+		
+	</target>
+
 	<!-- clean the ivy cache -->
 	<target name="clean-cache" depends="download-ivy"
 	   description="--> clean the ivy cache">

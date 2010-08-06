@@ -79,6 +79,23 @@
 		<property name="box" value="local" />
 	</target>
 
+	<target name="check.skip.get.antlibs">
+		<available property="skip.get.antlibs" file="${ant.home}/lib/oro-2.0.8.jar" />
+	</target>
+
+	<target name="get.antlibs" depends="check.skip.get.antlibs" unless="skip.get.antlibs">
+		<echo>skit.get.antlibs: ${skip.get.antlibs}</echo>
+		<echo>ant.home: ${ant.home}</echo>
+		<echo>mc.build.lib: ${mc.build.lib}</echo>
+		<ant target="mc.retrieve" />
+		<copy todir="${ant.home}/lib" flatten="true">
+			<fileset dir="${mc.build.lib}">
+				<include name="oro*.jar" />
+				<include name="commons-net*.jar" />
+			</fileset>
+		</copy>
+	</target>
+
 	<target name="init" depends="download-ivy, init.default.properties">
 		<echo>box: ${box}</echo>
 		<tstamp/>
@@ -93,6 +110,42 @@
 		<!--
 		<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
 		-->
+	</target>
+
+	<target name="javadoc" depends="init">
+		<!-- linksource="yes" -->
+		<javadoc
+			destdir="${build.javadoc}"
+			author="true"
+			version="true"
+			use="true"
+			classpathref="ms.classpath.compile"
+			windowtitle="eXtensinble Catalog">
+
+			<fileset dir="${mc.src.java}" defaultexcludes="yes">
+				<include name="xc/**/*.java"/>
+			</fileset>
+
+			<fileset dir="${ms.src.java}" defaultexcludes="yes">
+				<include name="xc/**/*.java"/>
+			</fileset>
+
+			<doctitle><![CDATA[<h1>eXtensible Catalog</h1>]]></doctitle>
+		    <bottom>
+			<![CDATA[<i>Copyright &#169; 2010 University of Rochester Libraries</i>]]></bottom>
+	       <tag name="todo" scope="all" description="To do:"/>
+	       <link href="http://download.oracle.com/javase/6/docs/api/"/>
+        </javadoc>
+	</target>
+
+	<target name="ftp.javadoc" depends="ftp.javadoc.nodep, get.antlibs, javadoc" />
+	<target name="ftp.javadoc.nodep" depends="init">
+		<ftp server="${ftp.server}"
+				userid="${ftp.userid}"
+				remotedir="/MST/api"
+				password="${ftp.password}">
+			<fileset dir="${build.javadoc}"/>
+		</ftp>
 	</target>
 
 	<target name="check.skip.download">
