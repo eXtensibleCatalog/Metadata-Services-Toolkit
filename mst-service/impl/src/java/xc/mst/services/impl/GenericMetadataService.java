@@ -313,20 +313,10 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	public void postUpdate() {
 	}
 	
-	/*
-	 * 
-
-Helper methods
-
-    * RecordService.createSuccessor. Ex: 
-
-out = getRecordService().createSuccessor(r, getService());
-
-    * A service implementer will typically want to use this method for creating output records. If the record already exists, it isn't necessary to do it this way. Instead you can just populate the existing record with the new contents.
-    * */
-	
 	/**
-	 * @param r
+	 *  
+	 * 
+	 * @param r <b>note: modifying input objects has no effect on the system</b>
 	 * <ul>
 	 * 		<li>
 	 * 			r.status
@@ -361,8 +351,11 @@ out = getRecordService().createSuccessor(r, getService());
 	 * 	  	</li>
 	 * </ul>
 	 * @return
-	 * 	The process method returns a list of records that are inserted, updated, or deleted as a result of processing this
-	 *  InputRecord.  The below attributes are in the context of that list of Records returned by the process method.
+	 * 	The process method returns a list of OutputRecords that are inserted, updated, or deleted as a result of processing this
+	 *  InputRecord.  The below attributes are in the context of that list of Records returned by the process method.  In order
+	 *  to create a new record, use this helper method getRecordService().createRecord().  If you wish to overwrite an already
+	 *  existing record (ie it was attached to the InputRecord as a successor), simply set the xml and add it to the returned list.
+	 *  <b>note: any inserts, updates, and deletes must be added to the returned list otherwise they won't be recorded</b>
 	 *	<ul>
 	 * 		<li>
 	 * 			OutputRecord.id
@@ -388,6 +381,11 @@ out = getRecordService().createSuccessor(r, getService());
 	 *				</li>
 	 * 			</ul>
 	 * 		</li>
+	 * </ul>
+	 * 
+	 *  @see xc.mst.bo.record.RecordIfc
+	 *  @see xc.mst.bo.record.InputRecord
+	 *  @see xc.mst.bo.record.OutputRecord
 	 */
 	public abstract List<OutputRecord> process(InputRecord r);
 	
