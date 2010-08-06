@@ -53,11 +53,10 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 	private static Logger log = Logger.getLogger(Constants.LOGGER_HARVEST_OUT);
 
 	/**
-	 * The doGet method of the servlet. This method is called when a form has its tag value method equals to get.
 	 * It parses the OAI request parameters into an OaiRequestBean and calls the Facade class to process the request.
      *
-	 * @throws ServletException if an error occurred
-	 * @throws IOException if an error occurred
+	 * @throws ServletException if an servlet error occurred
+	 * @throws IOException if an IO error occurred
 	 */
 	public String execute() throws ServletException, IOException
 	{
