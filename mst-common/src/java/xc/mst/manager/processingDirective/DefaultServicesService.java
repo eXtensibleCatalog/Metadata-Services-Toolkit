@@ -373,6 +373,7 @@ public class DefaultServicesService extends BaseService
     		getRepositoryDAO().createRepository(service);
     		MetadataService ms = getMetadataService(service);
     		ms.getRepository().installOrUpdateIfNecessary(null, version);
+    		ms.setService(service);
     		ms.install();
     	}
     	catch(DataException e)

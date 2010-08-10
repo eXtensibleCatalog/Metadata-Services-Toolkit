@@ -148,6 +148,7 @@ public class NormalizationService extends GenericMetadataService {
 				// Handle reprocessing of successors
 				for(OutputRecord successor : successors){
 					successor.setStatus(Record.DELETED);
+					results.add(successor);
 				}
 				TimingLogger.stop("processRecord.getDeleted");
 			} else {
@@ -190,6 +191,9 @@ public class NormalizationService extends GenericMetadataService {
 
 			// Create a MarcXmlManagerForNormalizationService for the record
 			MarcXmlManager normalizedXml = new MarcXmlManager(marcXml, getOrganizationCode());
+			
+			LOG.debug("normalizedXml: "+normalizedXml);
+			LOG.debug("normalizedXml.getLeader(): "+normalizedXml.getLeader());
 
 			// Get the Leader 06.  This will allow us to determine the record's type, and we'll put it in the correct set for that type
 			char leader06 = normalizedXml.getLeader().charAt(6);

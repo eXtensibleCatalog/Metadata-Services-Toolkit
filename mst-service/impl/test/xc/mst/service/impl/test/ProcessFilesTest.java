@@ -31,6 +31,7 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 			String serviceName = MSTConfiguration.getInstance().getProperty("service.name");
 			String inFolderStr = System.getenv("MST_SERVICE_TEST_FOLDER");
 			LOG.debug("folderStr: "+inFolderStr);
+			LOG.debug("serviceName: "+serviceName);
 			
 			ServicesService ss = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
 			
@@ -69,42 +70,44 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 				repositoryDAO.resetIdSequence(id);
 				
 				File expectedOutputFolder = new File(TestRepository.EXPECTED_OUTPUT_RECORDS+"/"+folderStr);
-				Set<String> expectedOutputFiles = new HashSet<String>();
-				for (String ef : expectedOutputFolder.list()) {
-					if (!ef.contains(".svn")) {
-						expectedOutputFiles.add(ef);
-					}
-				}
-
-				File actualOutputFolder  = new File(TestRepository.ACTUAL_OUTPUT_RECORDS+"/"+folderStr);
-				for (String af : actualOutputFolder.list()) {
-					LOG.debug("af: "+af);
-					if (expectedOutputFiles.contains(af)) {
-						expectedOutputFiles.remove(af);
-						if (new XmlHelper().diffXmlFiles(
-								TestRepository.ACTUAL_OUTPUT_RECORDS+"/"+folderStr+"/"+af, 
-								TestRepository.EXPECTED_OUTPUT_RECORDS+"/"+folderStr+"/"+af)) {
-							testFailures.put(folderStr+"/"+af, "files differ");
+				if (expectedOutputFolder.exists()) {
+					Set<String> expectedOutputFiles = new HashSet<String>();
+					for (String ef : expectedOutputFolder.list()) {
+						if (!ef.contains(".svn")) {
+							expectedOutputFiles.add(ef);
 						}
-					} else {
-						testFailures.put(folderStr+"/"+af, "file exists in actual, but not expected.");
 					}
-				}
-				for (String ef : expectedOutputFiles) {
-					testFailures.put(folderStr+"/"+ef, "file expected, but wasn't produced.");
-				}
-				
-				StringBuilder sb = new StringBuilder();
-				for (String key : testFailures.keySet()) {
-					String value = testFailures.get(key);
-					String s2 = "\n"+key+": "+value;
+					
+					File actualOutputFolder  = new File(TestRepository.ACTUAL_OUTPUT_RECORDS+"/"+folderStr);
+					for (String af : actualOutputFolder.list()) {
+						LOG.debug("af: "+af);
+						if (expectedOutputFiles.contains(af)) {
+							expectedOutputFiles.remove(af);
+							if (new XmlHelper().diffXmlFiles(
+									TestRepository.ACTUAL_OUTPUT_RECORDS+"/"+folderStr+"/"+af, 
+									TestRepository.EXPECTED_OUTPUT_RECORDS+"/"+folderStr+"/"+af)) {
+								testFailures.put(folderStr+"/"+af, "files differ");
+							}
+						} else {
+							testFailures.put(folderStr+"/"+af, "file exists in actual, but not expected.");
+						}
+					}
+					for (String ef : expectedOutputFiles) {
+						testFailures.put(folderStr+"/"+ef, "file expected, but wasn't produced.");
+					}
+					
+					StringBuilder sb = new StringBuilder();
+					for (String key : testFailures.keySet()) {
+						String value = testFailures.get(key);
+						String s2 = "\n"+key+": "+value;
 
-					sb.append(s2);
-				}
-				
-				if (sb.length() > 0) {
-					LOG.error(sb.toString());
-					throw new RuntimeException(sb.toString());
+						sb.append(s2);
+					}
+					
+					if (sb.length() > 0) {
+						LOG.error(sb.toString());
+						throw new RuntimeException(sb.toString());
+					}
 				}
 			}
 			

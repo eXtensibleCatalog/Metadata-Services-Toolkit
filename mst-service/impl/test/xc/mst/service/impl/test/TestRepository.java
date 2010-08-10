@@ -168,6 +168,9 @@ public class TestRepository extends BaseService implements Repository {
 		if (inputFilesIterator.hasNext()) {
 			String fileName = (String)inputFilesIterator.next();
 			List<Record> inputRecords = new ArrayList<Record>();
+			if (!fileName.endsWith(".xml")) {
+				return inputRecords;
+			}
 			try {
 				this.currentFile = fileName;
 				File file2process = new File(INPUT_RECORDS_DIR+"/"+folderName+"/"+fileName);
@@ -176,7 +179,13 @@ public class TestRepository extends BaseService implements Repository {
 				Document doc = builder.build(new FileInputStream(file2process));
 				
 				Element records = doc.getRootElement();
-				for (Object recordObj : records.getChildren("record", doc.getRootElement().getNamespace())) {
+				LOG.debug("records: "+records);
+				Element listRecords = records.getChild("ListRecords", records.getNamespace());
+				LOG.debug("listRecords: "+listRecords);
+				if (listRecords != null) {
+					records = listRecords;
+				}
+				for (Object recordObj : records.getChildren("record", records.getNamespace())) {
 					Element record = (Element)recordObj;
 					Record in = getRecordService().parse(record);
 					String oaiId = in.getHarvestedOaiIdentifier();
@@ -191,6 +200,7 @@ public class TestRepository extends BaseService implements Repository {
 						in.setId(Long.parseLong(oaiId.substring(idx1+1)));
 					}
 					LOG.debug("in.getId(): "+in.getId());
+					LOG.debug("in.getStatus(): "+in.getStatus());
 					inputRecords.add(in);
 					//this.inputRecordFileNames.put(in, fileName);
 				}

@@ -57,7 +57,6 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 
 	protected ApplicationContext applicationContext = null;
 	protected GenericMetadataDAO genericMetadataDAO = null;
-	protected Service service = null;
 	protected List<ProcessingDirective> processingDirectives = null;
 	protected int warningCount = 0;
 	protected int errorCount = 0;
@@ -143,7 +142,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	
 	public void install() {
 		try {
-			getGenericMetadataDAO().executeServiceDBScripts(config.getServicePath()+"/sql/install.sql");
+			getGenericMetadataDAO().executeServiceDBScripts(config.getServicePath()+getServiceName()+"/sql/install.sql");
 			postInstall();
 		} catch (Throwable t) {
 			LOG.error("", t);
@@ -155,7 +154,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 
 	public void uninstall() {
 		try {
-			getGenericMetadataDAO().executeServiceDBScripts(config.getServicePath()+"/sql/uninstall.sql");
+			getGenericMetadataDAO().executeServiceDBScripts(config.getServicePath()+getServiceName()+"/sql/uninstall.sql");
 			postInstall();
 		} catch (Throwable t) {
 			LOG.error("", t);
@@ -172,7 +171,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	
 	public void update(String pvStr, String cvStr) {
 		List<String> fileNames = new ArrayList<String>();
-		File dir = new File(config.getServicePath()+"/sql/");
+		File dir = new File(config.getServicePath()+getServiceName()+"/sql/");
 		for (String file : dir.list()) {
 			if (file.contains("update.") && file.endsWith(".sql")) {
 				fileNames.add(file);

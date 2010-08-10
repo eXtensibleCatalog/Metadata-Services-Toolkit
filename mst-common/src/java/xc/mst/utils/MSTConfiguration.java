@@ -228,7 +228,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	}
 	
 	public String getServicePath() {
-		return getUrlPath()+"/services/"+getProperty("service.name");
+		return getUrlPath()+"/services/";
 	}
 
 }
