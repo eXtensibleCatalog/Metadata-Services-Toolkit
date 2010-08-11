@@ -1,0 +1,449 @@
+==================================================
+==================================================
+==== processing 01-TESTsample20100128.mrc...
+==== executing cmd: convertload.bat...
+==================================================
+Lucene Statistics Value is:false
+ log4j property file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.log4j.properties
+2010-08-10 16:06:27,453 [main] (Logging.java:50) INFO  - Logging started in directory: log
+2010-08-10 16:06:27,531 [main] (ConfigUtil.java:37) INFO  - [PRG] ConfigUtil::load(C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties)
+2010-08-10 16:06:27,562 [main] (ConfigUtil.java:42) INFO  - [PRG] load from file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties
+2010-08-10 16:06:27,562 [main] (ConfigUtil.java:45) INFO  - config file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties
+Its success
+Temporary file created. File is tmpfile.txt
+2010-08-10 16:06:27,718 [main] (ConfigUtil.java:97) INFO  - [PRG] successful ConfigUtil::load
+2010-08-10 16:06:27,765 [main] (DButil.java:88) INFO  - [PRG] DB parameters: fileName: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties, host: localhost, port: 3306, database: extensiblecatalog, user: root, password: ****
+2010-08-10 16:06:27,765 [main] (ConfigUtil.java:37) INFO  - [PRG] ConfigUtil::load(C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties)
+2010-08-10 16:06:27,765 [main] (ConfigUtil.java:42) INFO  - [PRG] load from file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties
+2010-08-10 16:06:27,765 [main] (ConfigUtil.java:45) INFO  - config file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties
+Its success
+Temporary file created. File is tmpfile.txt
+2010-08-10 16:06:27,781 [main] (ConfigUtil.java:97) INFO  - [PRG] successful ConfigUtil::load
+2010-08-10 16:06:27,796 [main] (XcOaiIdConfigUtil.java:44) INFO  - [PRG] XC OAI ID parameters: fileName: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties, Oai Identifier Domain name: library.rochester.edu, Oai Id Repository Identifier: URVoyager1
+2010-08-10 16:06:28,109 [main] (PrototypeMgr.java:352) DEBUG - [PRG] selection SQL: com.mysql.jdbc.JDBC4PreparedStatement@cb6009: SELECT * FROM sets
+2010-08-10 16:06:28,125 [main] (PrototypeMgr.java:358) DEBUG - [PRG] number of rows: 5
+2010-08-10 16:06:28,125 [main] (Importer.java:962) INFO  - [PRG] Importer v0.6.4
+2010-08-10 16:06:28,125 [main] (Importer.java:963) INFO  - [PRG] needConvert? true, needModify? false, needLoad? true, needLogDetail? true, doIndentXml? true, sourceDir: marc, destinationDir: marc_dest, destinationXmlDir: xml, errorDir: error, errorXmlDir: error_xml, fileOfDeletedRecords: false, marcSchema: schema\MARC21slim_rochester.xsd, logDir: log, marcEncoding: utf8, charConversion: ISO5426, splitSize: 10000, luceneIndex: lucene_index, storageType: Lucene, createXml11: false, translateLeaderBadCharsToZero: true, translateNonleaderBadCharsToSpaces: true, convertDir: marc, modifyDir: marcxml, loadDir: xml, errorSuffix: error, destinationSuffix: dest, doDeleteTemporaryFiles: false, errorModifiedXmlDir: null, destinationModifiedXmlDir: null
+2010-08-10 16:06:28,125 [main] (Importer.java:129) INFO  - [PRG] [DirectoryNameGiver] convert source: marc, convert target: xml, convert destination: marc_dest, convert error: marc_error, modify source: null, modify target: null, modify destination: null, modify error: null, load source: xml, load target: null, load destination: xml_dest, load error: xml_error
+2010-08-10 16:06:28,125 [main] (Importer.java:184) INFO  -  *********** START OF CONVERT PROCESS ************ 
+
+2010-08-10 16:06:28,171 [main] (Importer.java:185) INFO  - [PRG] Start conversion from MARC files at marc to MARCXML files at xml
+2010-08-10 16:06:28,171 [main] (Importer.java:191) INFO  - [LIB] Conversion started at 2010/08/10 16:06:28
+2010-08-10 16:06:28,171 [main] (Importer.java:192) INFO  - [LIB] Start conversion from MARC files at marc to MARCXML files at xml
+
+
+2010-08-10 16:06:28,187 [main] (Importer.java:227) INFO  - [PRG] Converter settings: createXml11: false, translateLeaderBadCharsToZero: true, translateNonleaderBadCharsToSpaces: true
+2010-08-10 16:06:28,187 [main] (Importer.java:259) INFO  - [PRG] Converting 01-TESTsample20100128.mrc to 01-TESTsample20100128.xml
+2010-08-10 16:06:28,187 [main] (Importer.java:261) INFO  - [LIB] Converting 01-TESTsample20100128.mrc to 01-TESTsample20100128.xml
+
+
+2010-08-10 16:06:29,796 [main] (Converter.java:320) INFO  - [PRG] converted: 30, invalid: 0 records. It took 00:00:01.609
+2010-08-10 16:06:29,796 [main] (Converter.java:321) INFO  - [PRG] converted: 30, invalid: 0 records. It took 00:00:01.609
+2010-08-10 16:06:29,796 [main] (Importer.java:269) INFO  - [PRG] Conversion statistics for 01-TESTsample20100128.mrc converted: 30, invalid: 0 records. It took 00:00:01.609
+2010-08-10 16:06:29,796 [main] (Importer.java:277) INFO  - [PRG] Moving 01-TESTsample20100128.mrc to marc_dest
+2010-08-10 16:06:29,812 [main] (Importer.java:287) INFO  - [PRG] Delete marc_dest\01-TESTsample20100128.mrc - true
+2010-08-10 16:06:29,812 [main] (Importer.java:293) INFO  - [PRG] remove marc file (01-TESTsample20100128.mrc) to marc_dest: true
+2010-08-10 16:06:29,812 [main] (Importer.java:370) INFO  - [LIB] Conversion completed at 2010/08/10 16:06:29
+2010-08-10 16:06:29,812 [main] (Importer.java:371) INFO  - [PRG] Conversion statistics summary: converted: 30, invalid: 0 records. It took 00:00:01.625
+2010-08-10 16:06:29,812 [main] (Importer.java:373) INFO  - [LIB] Conversion statistics summary: converted: 30, invalid: 0 records. It took 00:00:01.625
+
+2010-08-10 16:06:29,812 [main] (Importer.java:375) INFO  -  *********** END OF CONVERT PROCESS ************ 
+
+2010-08-10 16:06:29,812 [main] (Importer.java:571) INFO  -  *********** START OF LOAD PROCESS ************ 
+
+2010-08-10 16:06:29,828 [main] (Importer.java:572) INFO  - [PRG] Start loading of MARCXML files from xml
+2010-08-10 16:06:29,828 [main] (Importer.java:576) INFO  - [LIB] Load started at 2010/08/10 16:06:29
+2010-08-10 16:06:29,828 [main] (Importer.java:577) INFO  - [LIB] Start loading of MARCXML files from xml
+
+
+2010-08-10 16:06:29,828 [main] (Importer.java:587) INFO  - [PRG] Storage type: Lucene
+2010-08-10 16:06:29,828 [main] (Importer.java:871) INFO  - [PRG] LuceneIndex: lucene_index
+2010-08-10 16:06:31,906 [main] (LuceneImporter.java:83) INFO  - [PRG] Read all ids. It took 00:00:00.0
+2010-08-10 16:06:32,093 [main] (DButil.java:99) INFO  - [PRG] connectionCounter is not 0! 1
+2010-08-10 16:06:32,140 [main] (Importer.java:610) INFO  - [PRG] loading 01-TESTsample20100128.xml
+2010-08-10 16:06:32,140 [main] (Importer.java:620) INFO  - [PRG] Importing records...
+2010-08-10 16:06:32,140 [main] (PrototypeMgr.java:352) DEBUG - [PRG] selection SQL: com.mysql.jdbc.JDBC4PreparedStatement@1b273cc: SELECT * FROM tracking_oaiidnumber WHERE tracking_id = 1
+2010-08-10 16:06:32,140 [main] (PrototypeMgr.java:358) DEBUG - [PRG] number of rows: 1
+2010-08-10 16:06:32,140 [main] (Importer.java:638) DEBUG - The Tracked OAI ID Number value is419
+2010-08-10 16:06:32,140 [main] (Importer.java:639) DEBUG - The Tracking ID is1
+2010-08-10 16:06:33,578 [main] (Importer.java:682) INFO  - [PRG] Import statistics for 01-TESTsample20100128.xml: created 30, updated: 0, skipped: 0, invalid: 0, deleted: 0, bib: 10, auth: 0, holdings: 20 records. Invalid files: 0. It took 00:00:01.438. checkTime: 00:00:00.031. insertTime: 00:00:00.999. others: 00:00:00.408
+2010-08-10 16:06:33,578 [main] (Importer.java:683) INFO  - [LIB] Import statistics for 01-TESTsample20100128.xml: created 30, updated: 0, skipped: 0, invalid: 0, deleted: 0, bib: 10, auth: 0, holdings: 20 records. Invalid files: 0. It took 00:00:01.438. checkTime: 00:00:00.031. insertTime: 00:00:00.999. others: 00:00:00.408
+
+
+2010-08-10 16:06:33,593 [main] (Importer.java:703) INFO  - [PRG] Delete xml_dest\01-TESTsample20100128.xml
+2010-08-10 16:06:33,593 [main] (Importer.java:710) INFO  - [PRG] Move XML file (01-TESTsample20100128.xml) to destination_xml directory (C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\xml_dest\01-TESTsample20100128.xml): true
+2010-08-10 16:06:33,625 [main] (PrototypeMgr.java:326) DEBUG - [PRG] com.mysql.jdbc.JDBC4PreparedStatement@c01e99: UPDATE tracking_oaiidnumber SET tracking_id = 1, tracked_oaiidnumber = 449 WHERE tracking_id = '1'
+2010-08-10 16:06:33,906 [main] (Importer.java:758) INFO  - [PRG] Import statistics summary: created 30, updated: 0, skipped: 0, invalid: 0, deleted: 0, bib: 10, auth: 0, holdings: 20 records. Invalid files: 0. It took 00:00:01.828. checkTime: 00:00:00.031. insertTime: 00:00:00.999. others: 00:00:00.798
+2010-08-10 16:06:33,906 [main] (Importer.java:760) INFO  - [LIB] Load completed at 2010/08/10 16:06:33
+2010-08-10 16:06:33,906 [main] (Importer.java:761) INFO  -  *********** END OF LOAD PROCESS ************ 
+
+2010-08-10 16:06:33,906 [main] (Importer.java:762) INFO  - [LIB] Import statistics summary: created 30, updated: 0, skipped: 0, invalid: 0, deleted: 0, bib: 10, auth: 0, holdings: 20 records. Invalid files: 0. It took 00:00:01.828. checkTime: 00:00:00.031. insertTime: 00:00:00.999. others: 00:00:00.798
+
+2010-08-10 16:06:33,906 [main] (Importer.java:774) ERROR - [PRG] Can't delete the temporary xml directory, because there exist 2 files in it.
+2010-08-10 16:06:33,906 [main] (Importer.java:780) INFO  - [PRG] optimizing database...
+2010-08-10 16:06:33,906 [main] (Importer.java:785) INFO  - [PRG] Import done
+2010-08-10 16:06:33,906 [main] (Importer.java:148) INFO  - [PRG] Import finished
+2010-08-10 16:06:33,906 [main] (Importer.java:149) INFO  - [LIB] Import finished
+==================================================
+
+curl http://localhost:8080/OAIToolkit/oai-request.do?verb=ListRecords&metadataPrefix=marcxml&from=2010-08-10T20:06:24Z&until=2010-08-10T20:06:35Z | xmllint --format - > /cygdrive/c/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCNormalization/test/input_records/randys-30/01-TESTsample20100128.mrc.xml
+==== grep '<record>' /cygdrive/c/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCNormalization/test/input_records/randys-30/01-TESTsample20100128.mrc.xml | wc -l
+30
+==================================================
+==================================================
+
+==================================================
+==================================================
+==== processing 02-TESTsample20100205.mrc...
+==== executing cmd: convertload.bat...
+==================================================
+Lucene Statistics Value is:false
+ log4j property file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.log4j.properties
+2010-08-10 16:06:39,812 [main] (Logging.java:50) INFO  - Logging started in directory: log
+2010-08-10 16:06:39,828 [main] (ConfigUtil.java:37) INFO  - [PRG] ConfigUtil::load(C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties)
+2010-08-10 16:06:39,828 [main] (ConfigUtil.java:42) INFO  - [PRG] load from file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties
+2010-08-10 16:06:39,828 [main] (ConfigUtil.java:45) INFO  - config file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties
+Its success
+Temporary file created. File is tmpfile.txt
+2010-08-10 16:06:39,890 [main] (ConfigUtil.java:97) INFO  - [PRG] successful ConfigUtil::load
+2010-08-10 16:06:39,890 [main] (DButil.java:88) INFO  - [PRG] DB parameters: fileName: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties, host: localhost, port: 3306, database: extensiblecatalog, user: root, password: ****
+2010-08-10 16:06:39,906 [main] (ConfigUtil.java:37) INFO  - [PRG] ConfigUtil::load(C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties)
+2010-08-10 16:06:39,906 [main] (ConfigUtil.java:42) INFO  - [PRG] load from file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties
+2010-08-10 16:06:39,906 [main] (ConfigUtil.java:45) INFO  - config file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties
+Its success
+Temporary file created. File is tmpfile.txt
+2010-08-10 16:06:39,906 [main] (ConfigUtil.java:97) INFO  - [PRG] successful ConfigUtil::load
+2010-08-10 16:06:39,906 [main] (XcOaiIdConfigUtil.java:44) INFO  - [PRG] XC OAI ID parameters: fileName: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties, Oai Identifier Domain name: library.rochester.edu, Oai Id Repository Identifier: URVoyager1
+2010-08-10 16:06:40,156 [main] (PrototypeMgr.java:352) DEBUG - [PRG] selection SQL: com.mysql.jdbc.JDBC4PreparedStatement@cb6009: SELECT * FROM sets
+2010-08-10 16:06:40,171 [main] (PrototypeMgr.java:358) DEBUG - [PRG] number of rows: 5
+2010-08-10 16:06:40,171 [main] (Importer.java:962) INFO  - [PRG] Importer v0.6.4
+2010-08-10 16:06:40,171 [main] (Importer.java:963) INFO  - [PRG] needConvert? true, needModify? false, needLoad? true, needLogDetail? true, doIndentXml? true, sourceDir: marc, destinationDir: marc_dest, destinationXmlDir: xml, errorDir: error, errorXmlDir: error_xml, fileOfDeletedRecords: false, marcSchema: schema\MARC21slim_rochester.xsd, logDir: log, marcEncoding: utf8, charConversion: ISO5426, splitSize: 10000, luceneIndex: lucene_index, storageType: Lucene, createXml11: false, translateLeaderBadCharsToZero: true, translateNonleaderBadCharsToSpaces: true, convertDir: marc, modifyDir: marcxml, loadDir: xml, errorSuffix: error, destinationSuffix: dest, doDeleteTemporaryFiles: false, errorModifiedXmlDir: null, destinationModifiedXmlDir: null
+2010-08-10 16:06:40,171 [main] (Importer.java:129) INFO  - [PRG] [DirectoryNameGiver] convert source: marc, convert target: xml, convert destination: marc_dest, convert error: marc_error, modify source: null, modify target: null, modify destination: null, modify error: null, load source: xml, load target: null, load destination: xml_dest, load error: xml_error
+2010-08-10 16:06:40,171 [main] (Importer.java:184) INFO  -  *********** START OF CONVERT PROCESS ************ 
+
+2010-08-10 16:06:40,171 [main] (Importer.java:185) INFO  - [PRG] Start conversion from MARC files at marc to MARCXML files at xml
+2010-08-10 16:06:40,171 [main] (Importer.java:191) INFO  - [LIB] Conversion started at 2010/08/10 16:06:40
+2010-08-10 16:06:40,171 [main] (Importer.java:192) INFO  - [LIB] Start conversion from MARC files at marc to MARCXML files at xml
+
+
+2010-08-10 16:06:40,171 [main] (Importer.java:227) INFO  - [PRG] Converter settings: createXml11: false, translateLeaderBadCharsToZero: true, translateNonleaderBadCharsToSpaces: true
+2010-08-10 16:06:40,171 [main] (Importer.java:259) INFO  - [PRG] Converting 02-TESTsample20100205.mrc to 02-TESTsample20100205.xml
+2010-08-10 16:06:40,171 [main] (Importer.java:261) INFO  - [LIB] Converting 02-TESTsample20100205.mrc to 02-TESTsample20100205.xml
+
+
+2010-08-10 16:06:40,468 [main] (Converter.java:320) INFO  - [PRG] converted: 28, invalid: 0 records. It took 00:00:00.297
+2010-08-10 16:06:40,468 [main] (Converter.java:321) INFO  - [PRG] converted: 28, invalid: 0 records. It took 00:00:00.297
+2010-08-10 16:06:40,468 [main] (Importer.java:269) INFO  - [PRG] Conversion statistics for 02-TESTsample20100205.mrc converted: 28, invalid: 0 records. It took 00:00:00.297
+2010-08-10 16:06:40,468 [main] (Importer.java:277) INFO  - [PRG] Moving 02-TESTsample20100205.mrc to marc_dest
+2010-08-10 16:06:40,468 [main] (Importer.java:287) INFO  - [PRG] Delete marc_dest\02-TESTsample20100205.mrc - true
+2010-08-10 16:06:40,468 [main] (Importer.java:293) INFO  - [PRG] remove marc file (02-TESTsample20100205.mrc) to marc_dest: true
+2010-08-10 16:06:40,468 [main] (Importer.java:370) INFO  - [LIB] Conversion completed at 2010/08/10 16:06:40
+2010-08-10 16:06:40,468 [main] (Importer.java:371) INFO  - [PRG] Conversion statistics summary: converted: 28, invalid: 0 records. It took 00:00:00.297
+2010-08-10 16:06:40,468 [main] (Importer.java:373) INFO  - [LIB] Conversion statistics summary: converted: 28, invalid: 0 records. It took 00:00:00.297
+
+2010-08-10 16:06:40,468 [main] (Importer.java:375) INFO  -  *********** END OF CONVERT PROCESS ************ 
+
+2010-08-10 16:06:40,468 [main] (Importer.java:571) INFO  -  *********** START OF LOAD PROCESS ************ 
+
+2010-08-10 16:06:40,468 [main] (Importer.java:572) INFO  - [PRG] Start loading of MARCXML files from xml
+2010-08-10 16:06:40,468 [main] (Importer.java:576) INFO  - [LIB] Load started at 2010/08/10 16:06:40
+2010-08-10 16:06:40,468 [main] (Importer.java:577) INFO  - [LIB] Start loading of MARCXML files from xml
+
+
+2010-08-10 16:06:40,468 [main] (Importer.java:587) INFO  - [PRG] Storage type: Lucene
+2010-08-10 16:06:40,468 [main] (Importer.java:871) INFO  - [PRG] LuceneIndex: lucene_index
+2010-08-10 16:06:40,625 [main] (LuceneImporter.java:83) INFO  - [PRG] Read all ids. It took 00:00:00.0
+2010-08-10 16:06:40,625 [main] (DButil.java:99) INFO  - [PRG] connectionCounter is not 0! 1
+2010-08-10 16:06:40,640 [main] (Importer.java:610) INFO  - [PRG] loading 02-TESTsample20100205.xml
+2010-08-10 16:06:40,640 [main] (Importer.java:620) INFO  - [PRG] Importing records...
+2010-08-10 16:06:40,640 [main] (PrototypeMgr.java:352) DEBUG - [PRG] selection SQL: com.mysql.jdbc.JDBC4PreparedStatement@55bb93: SELECT * FROM tracking_oaiidnumber WHERE tracking_id = 1
+2010-08-10 16:06:40,640 [main] (PrototypeMgr.java:358) DEBUG - [PRG] number of rows: 1
+2010-08-10 16:06:40,640 [main] (Importer.java:638) DEBUG - The Tracked OAI ID Number value is449
+2010-08-10 16:06:40,640 [main] (Importer.java:639) DEBUG - The Tracking ID is1
+2010-08-10 16:06:41,000 [main] (Importer.java:682) INFO  - [PRG] Import statistics for 02-TESTsample20100205.xml: created 1, updated: 27, skipped: 0, invalid: 0, deleted: 0, bib: 9, auth: 0, holdings: 19 records. Invalid files: 0. It took 00:00:00.360. checkTime: 00:00:00.016. insertTime: 00:00:00.047. others: 00:00:00.297
+2010-08-10 16:06:41,000 [main] (Importer.java:683) INFO  - [LIB] Import statistics for 02-TESTsample20100205.xml: created 1, updated: 27, skipped: 0, invalid: 0, deleted: 0, bib: 9, auth: 0, holdings: 19 records. Invalid files: 0. It took 00:00:00.360. checkTime: 00:00:00.016. insertTime: 00:00:00.047. others: 00:00:00.297
+
+
+2010-08-10 16:06:41,000 [main] (Importer.java:703) INFO  - [PRG] Delete xml_dest\02-TESTsample20100205.xml
+2010-08-10 16:06:41,000 [main] (Importer.java:710) INFO  - [PRG] Move XML file (02-TESTsample20100205.xml) to destination_xml directory (C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\xml_dest\02-TESTsample20100205.xml): true
+2010-08-10 16:06:41,015 [main] (PrototypeMgr.java:326) DEBUG - [PRG] com.mysql.jdbc.JDBC4PreparedStatement@7ecd78: UPDATE tracking_oaiidnumber SET tracking_id = 1, tracked_oaiidnumber = 450 WHERE tracking_id = '1'
+2010-08-10 16:06:41,078 [main] (Importer.java:758) INFO  - [PRG] Import statistics summary: created 1, updated: 27, skipped: 0, invalid: 0, deleted: 0, bib: 9, auth: 0, holdings: 19 records. Invalid files: 0. It took 00:00:00.453. checkTime: 00:00:00.016. insertTime: 00:00:00.047. others: 00:00:00.390
+2010-08-10 16:06:41,078 [main] (Importer.java:760) INFO  - [LIB] Load completed at 2010/08/10 16:06:41
+2010-08-10 16:06:41,078 [main] (Importer.java:761) INFO  -  *********** END OF LOAD PROCESS ************ 
+
+2010-08-10 16:06:41,078 [main] (Importer.java:762) INFO  - [LIB] Import statistics summary: created 1, updated: 27, skipped: 0, invalid: 0, deleted: 0, bib: 9, auth: 0, holdings: 19 records. Invalid files: 0. It took 00:00:00.453. checkTime: 00:00:00.016. insertTime: 00:00:00.047. others: 00:00:00.390
+
+2010-08-10 16:06:41,078 [main] (Importer.java:774) ERROR - [PRG] Can't delete the temporary xml directory, because there exist 2 files in it.
+2010-08-10 16:06:41,078 [main] (Importer.java:780) INFO  - [PRG] optimizing database...
+2010-08-10 16:06:41,140 [main] (Importer.java:785) INFO  - [PRG] Import done
+2010-08-10 16:06:41,140 [main] (Importer.java:148) INFO  - [PRG] Import finished
+2010-08-10 16:06:41,140 [main] (Importer.java:149) INFO  - [LIB] Import finished
+==================================================
+
+curl http://localhost:8080/OAIToolkit/oai-request.do?verb=ListRecords&metadataPrefix=marcxml&from=2010-08-10T20:06:35Z&until=2010-08-10T20:06:42Z | xmllint --format - > /cygdrive/c/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCNormalization/test/input_records/randys-30/02-TESTsample20100205.mrc.xml
+==== grep '<record>' /cygdrive/c/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCNormalization/test/input_records/randys-30/02-TESTsample20100205.mrc.xml | wc -l
+28
+==================================================
+==================================================
+
+==================================================
+==================================================
+==== processing 03-deleted.bib.mrc...
+==== executing cmd: convertload.bat...
+==================================================
+Lucene Statistics Value is:false
+ log4j property file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.log4j.properties
+2010-08-10 16:06:42,828 [main] (Logging.java:50) INFO  - Logging started in directory: log
+2010-08-10 16:06:42,828 [main] (ConfigUtil.java:37) INFO  - [PRG] ConfigUtil::load(C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties)
+2010-08-10 16:06:42,828 [main] (ConfigUtil.java:42) INFO  - [PRG] load from file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties
+2010-08-10 16:06:42,828 [main] (ConfigUtil.java:45) INFO  - config file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties
+Its success
+Temporary file created. File is tmpfile.txt
+2010-08-10 16:06:42,890 [main] (ConfigUtil.java:97) INFO  - [PRG] successful ConfigUtil::load
+2010-08-10 16:06:42,890 [main] (DButil.java:88) INFO  - [PRG] DB parameters: fileName: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties, host: localhost, port: 3306, database: extensiblecatalog, user: root, password: ****
+2010-08-10 16:06:42,890 [main] (ConfigUtil.java:37) INFO  - [PRG] ConfigUtil::load(C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties)
+2010-08-10 16:06:42,906 [main] (ConfigUtil.java:42) INFO  - [PRG] load from file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties
+2010-08-10 16:06:42,906 [main] (ConfigUtil.java:45) INFO  - config file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties
+Its success
+Temporary file created. File is tmpfile.txt
+2010-08-10 16:06:42,906 [main] (ConfigUtil.java:97) INFO  - [PRG] successful ConfigUtil::load
+2010-08-10 16:06:42,906 [main] (XcOaiIdConfigUtil.java:44) INFO  - [PRG] XC OAI ID parameters: fileName: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties, Oai Identifier Domain name: library.rochester.edu, Oai Id Repository Identifier: URVoyager1
+2010-08-10 16:06:43,187 [main] (PrototypeMgr.java:352) DEBUG - [PRG] selection SQL: com.mysql.jdbc.JDBC4PreparedStatement@105d88a: SELECT * FROM sets
+2010-08-10 16:06:43,187 [main] (PrototypeMgr.java:358) DEBUG - [PRG] number of rows: 5
+2010-08-10 16:06:43,187 [main] (Importer.java:962) INFO  - [PRG] Importer v0.6.4
+2010-08-10 16:06:43,187 [main] (Importer.java:963) INFO  - [PRG] needConvert? true, needModify? false, needLoad? true, needLogDetail? true, doIndentXml? true, sourceDir: marc, destinationDir: marc_dest, destinationXmlDir: xml, errorDir: error, errorXmlDir: error_xml, fileOfDeletedRecords: false, marcSchema: schema\MARC21slim_rochester.xsd, logDir: log, marcEncoding: utf8, charConversion: ISO5426, splitSize: 10000, luceneIndex: lucene_index, storageType: Lucene, createXml11: false, translateLeaderBadCharsToZero: true, translateNonleaderBadCharsToSpaces: true, convertDir: marc, modifyDir: marcxml, loadDir: xml, errorSuffix: error, destinationSuffix: dest, doDeleteTemporaryFiles: false, errorModifiedXmlDir: null, destinationModifiedXmlDir: null
+2010-08-10 16:06:43,187 [main] (Importer.java:129) INFO  - [PRG] [DirectoryNameGiver] convert source: marc, convert target: xml, convert destination: marc_dest, convert error: marc_error, modify source: null, modify target: null, modify destination: null, modify error: null, load source: xml, load target: null, load destination: xml_dest, load error: xml_error
+2010-08-10 16:06:43,187 [main] (Importer.java:184) INFO  -  *********** START OF CONVERT PROCESS ************ 
+
+2010-08-10 16:06:43,187 [main] (Importer.java:185) INFO  - [PRG] Start conversion from MARC files at marc to MARCXML files at xml
+2010-08-10 16:06:43,187 [main] (Importer.java:191) INFO  - [LIB] Conversion started at 2010/08/10 16:06:43
+2010-08-10 16:06:43,187 [main] (Importer.java:192) INFO  - [LIB] Start conversion from MARC files at marc to MARCXML files at xml
+
+
+2010-08-10 16:06:43,203 [main] (Importer.java:227) INFO  - [PRG] Converter settings: createXml11: false, translateLeaderBadCharsToZero: true, translateNonleaderBadCharsToSpaces: true
+2010-08-10 16:06:43,203 [main] (Importer.java:259) INFO  - [PRG] Converting 03-deleted.bib.mrc to 03-deleted.bib.xml
+2010-08-10 16:06:43,203 [main] (Importer.java:261) INFO  - [LIB] Converting 03-deleted.bib.mrc to 03-deleted.bib.xml
+
+
+2010-08-10 16:06:43,437 [main] (Converter.java:320) INFO  - [PRG] converted: 1, invalid: 0 records. It took 00:00:00.234
+2010-08-10 16:06:43,437 [main] (Converter.java:321) INFO  - [PRG] converted: 1, invalid: 0 records. It took 00:00:00.234
+2010-08-10 16:06:43,437 [main] (Importer.java:269) INFO  - [PRG] Conversion statistics for 03-deleted.bib.mrc converted: 1, invalid: 0 records. It took 00:00:00.234
+2010-08-10 16:06:43,437 [main] (Importer.java:277) INFO  - [PRG] Moving 03-deleted.bib.mrc to marc_dest
+2010-08-10 16:06:43,437 [main] (Importer.java:287) INFO  - [PRG] Delete marc_dest\03-deleted.bib.mrc - true
+2010-08-10 16:06:43,453 [main] (Importer.java:293) INFO  - [PRG] remove marc file (03-deleted.bib.mrc) to marc_dest: true
+2010-08-10 16:06:43,453 [main] (Importer.java:370) INFO  - [LIB] Conversion completed at 2010/08/10 16:06:43
+2010-08-10 16:06:43,453 [main] (Importer.java:371) INFO  - [PRG] Conversion statistics summary: converted: 1, invalid: 0 records. It took 00:00:00.250
+2010-08-10 16:06:43,453 [main] (Importer.java:373) INFO  - [LIB] Conversion statistics summary: converted: 1, invalid: 0 records. It took 00:00:00.250
+
+2010-08-10 16:06:43,453 [main] (Importer.java:375) INFO  -  *********** END OF CONVERT PROCESS ************ 
+
+2010-08-10 16:06:43,453 [main] (Importer.java:571) INFO  -  *********** START OF LOAD PROCESS ************ 
+
+2010-08-10 16:06:43,453 [main] (Importer.java:572) INFO  - [PRG] Start loading of MARCXML files from xml
+2010-08-10 16:06:43,453 [main] (Importer.java:576) INFO  - [LIB] Load started at 2010/08/10 16:06:43
+2010-08-10 16:06:43,453 [main] (Importer.java:577) INFO  - [LIB] Start loading of MARCXML files from xml
+
+
+2010-08-10 16:06:43,453 [main] (Importer.java:587) INFO  - [PRG] Storage type: Lucene
+2010-08-10 16:06:43,453 [main] (Importer.java:871) INFO  - [PRG] LuceneIndex: lucene_index
+2010-08-10 16:06:43,578 [main] (LuceneImporter.java:83) INFO  - [PRG] Read all ids. It took 00:00:00.0
+2010-08-10 16:06:43,593 [main] (DButil.java:99) INFO  - [PRG] connectionCounter is not 0! 1
+2010-08-10 16:06:43,593 [main] (Importer.java:610) INFO  - [PRG] loading 03-deleted.bib.xml
+2010-08-10 16:06:43,609 [main] (Importer.java:620) INFO  - [PRG] Importing records...
+2010-08-10 16:06:43,609 [main] (PrototypeMgr.java:352) DEBUG - [PRG] selection SQL: com.mysql.jdbc.JDBC4PreparedStatement@14d7745: SELECT * FROM tracking_oaiidnumber WHERE tracking_id = 1
+2010-08-10 16:06:43,609 [main] (PrototypeMgr.java:358) DEBUG - [PRG] number of rows: 1
+2010-08-10 16:06:43,609 [main] (Importer.java:638) DEBUG - The Tracked OAI ID Number value is450
+2010-08-10 16:06:43,609 [main] (Importer.java:639) DEBUG - The Tracking ID is1
+2010-08-10 16:06:43,656 [main] (Importer.java:682) INFO  - [PRG] Import statistics for 03-deleted.bib.xml: created 0, updated: 0, skipped: 0, invalid: 0, deleted: 1, bib: 1, auth: 0, holdings: 0 records. Invalid files: 0. It took 00:00:00.063. checkTime: 00:00:00.0. insertTime: 00:00:00.016. others: 00:00:00.047
+2010-08-10 16:06:43,656 [main] (Importer.java:683) INFO  - [LIB] Import statistics for 03-deleted.bib.xml: created 0, updated: 0, skipped: 0, invalid: 0, deleted: 1, bib: 1, auth: 0, holdings: 0 records. Invalid files: 0. It took 00:00:00.063. checkTime: 00:00:00.0. insertTime: 00:00:00.016. others: 00:00:00.047
+
+
+2010-08-10 16:06:43,656 [main] (Importer.java:703) INFO  - [PRG] Delete xml_dest\03-deleted.bib.xml
+2010-08-10 16:06:43,656 [main] (Importer.java:710) INFO  - [PRG] Move XML file (03-deleted.bib.xml) to destination_xml directory (C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\xml_dest\03-deleted.bib.xml): true
+2010-08-10 16:06:43,671 [main] (PrototypeMgr.java:326) DEBUG - [PRG] com.mysql.jdbc.JDBC4PreparedStatement@11d2572: UPDATE tracking_oaiidnumber SET tracking_id = 1, tracked_oaiidnumber = 450 WHERE tracking_id = '1'
+2010-08-10 16:06:43,734 [main] (Importer.java:758) INFO  - [PRG] Import statistics summary: created 0, updated: 0, skipped: 0, invalid: 0, deleted: 1, bib: 1, auth: 0, holdings: 0 records. Invalid files: 0. It took 00:00:00.141. checkTime: 00:00:00.0. insertTime: 00:00:00.016. others: 00:00:00.125
+2010-08-10 16:06:43,734 [main] (Importer.java:760) INFO  - [LIB] Load completed at 2010/08/10 16:06:43
+2010-08-10 16:06:43,734 [main] (Importer.java:761) INFO  -  *********** END OF LOAD PROCESS ************ 
+
+2010-08-10 16:06:43,734 [main] (Importer.java:762) INFO  - [LIB] Import statistics summary: created 0, updated: 0, skipped: 0, invalid: 0, deleted: 1, bib: 1, auth: 0, holdings: 0 records. Invalid files: 0. It took 00:00:00.141. checkTime: 00:00:00.0. insertTime: 00:00:00.016. others: 00:00:00.125
+
+2010-08-10 16:06:43,734 [main] (Importer.java:774) ERROR - [PRG] Can't delete the temporary xml directory, because there exist 2 files in it.
+2010-08-10 16:06:43,734 [main] (Importer.java:780) INFO  - [PRG] optimizing database...
+2010-08-10 16:06:43,765 [main] (Importer.java:785) INFO  - [PRG] Import done
+2010-08-10 16:06:43,765 [main] (Importer.java:148) INFO  - [PRG] Import finished
+2010-08-10 16:06:43,765 [main] (Importer.java:149) INFO  - [LIB] Import finished
+==================================================
+
+curl http://localhost:8080/OAIToolkit/oai-request.do?verb=ListRecords&metadataPrefix=marcxml&from=2010-08-10T20:06:42Z&until=2010-08-10T20:06:44Z | xmllint --format - > /cygdrive/c/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCNormalization/test/input_records/randys-30/03-deleted.bib.mrc.xml
+==== grep '<record>' /cygdrive/c/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCNormalization/test/input_records/randys-30/03-deleted.bib.mrc.xml | wc -l
+1
+==================================================
+==================================================
+
+==================================================
+==================================================
+==== processing 03-deleted.bib.mrk...
+==== executing cmd: convertload.bat...
+==================================================
+Lucene Statistics Value is:false
+ log4j property file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.log4j.properties
+2010-08-10 16:06:45,390 [main] (Logging.java:50) INFO  - Logging started in directory: log
+2010-08-10 16:06:45,406 [main] (ConfigUtil.java:37) INFO  - [PRG] ConfigUtil::load(C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties)
+2010-08-10 16:06:45,406 [main] (ConfigUtil.java:42) INFO  - [PRG] load from file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties
+2010-08-10 16:06:45,406 [main] (ConfigUtil.java:45) INFO  - config file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties
+Its success
+Temporary file created. File is tmpfile.txt
+2010-08-10 16:06:45,468 [main] (ConfigUtil.java:97) INFO  - [PRG] successful ConfigUtil::load
+2010-08-10 16:06:45,468 [main] (DButil.java:88) INFO  - [PRG] DB parameters: fileName: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties, host: localhost, port: 3306, database: extensiblecatalog, user: root, password: ****
+2010-08-10 16:06:45,468 [main] (ConfigUtil.java:37) INFO  - [PRG] ConfigUtil::load(C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties)
+2010-08-10 16:06:45,468 [main] (ConfigUtil.java:42) INFO  - [PRG] load from file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties
+2010-08-10 16:06:45,468 [main] (ConfigUtil.java:45) INFO  - config file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties
+Its success
+Temporary file created. File is tmpfile.txt
+2010-08-10 16:06:45,484 [main] (ConfigUtil.java:97) INFO  - [PRG] successful ConfigUtil::load
+2010-08-10 16:06:45,484 [main] (XcOaiIdConfigUtil.java:44) INFO  - [PRG] XC OAI ID parameters: fileName: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties, Oai Identifier Domain name: library.rochester.edu, Oai Id Repository Identifier: URVoyager1
+2010-08-10 16:06:45,734 [main] (PrototypeMgr.java:352) DEBUG - [PRG] selection SQL: com.mysql.jdbc.JDBC4PreparedStatement@105d88a: SELECT * FROM sets
+2010-08-10 16:06:45,734 [main] (PrototypeMgr.java:358) DEBUG - [PRG] number of rows: 5
+2010-08-10 16:06:45,734 [main] (Importer.java:962) INFO  - [PRG] Importer v0.6.4
+2010-08-10 16:06:45,750 [main] (Importer.java:963) INFO  - [PRG] needConvert? true, needModify? false, needLoad? true, needLogDetail? true, doIndentXml? true, sourceDir: marc, destinationDir: marc_dest, destinationXmlDir: xml, errorDir: error, errorXmlDir: error_xml, fileOfDeletedRecords: false, marcSchema: schema\MARC21slim_rochester.xsd, logDir: log, marcEncoding: utf8, charConversion: ISO5426, splitSize: 10000, luceneIndex: lucene_index, storageType: Lucene, createXml11: false, translateLeaderBadCharsToZero: true, translateNonleaderBadCharsToSpaces: true, convertDir: marc, modifyDir: marcxml, loadDir: xml, errorSuffix: error, destinationSuffix: dest, doDeleteTemporaryFiles: false, errorModifiedXmlDir: null, destinationModifiedXmlDir: null
+2010-08-10 16:06:45,750 [main] (Importer.java:129) INFO  - [PRG] [DirectoryNameGiver] convert source: marc, convert target: xml, convert destination: marc_dest, convert error: marc_error, modify source: null, modify target: null, modify destination: null, modify error: null, load source: xml, load target: null, load destination: xml_dest, load error: xml_error
+2010-08-10 16:06:45,750 [main] (Importer.java:184) INFO  -  *********** START OF CONVERT PROCESS ************ 
+
+2010-08-10 16:06:45,750 [main] (Importer.java:185) INFO  - [PRG] Start conversion from MARC files at marc to MARCXML files at xml
+2010-08-10 16:06:45,750 [main] (Importer.java:191) INFO  - [LIB] Conversion started at 2010/08/10 16:06:45
+2010-08-10 16:06:45,750 [main] (Importer.java:192) INFO  - [LIB] Start conversion from MARC files at marc to MARCXML files at xml
+
+
+2010-08-10 16:06:45,750 [main] (Importer.java:227) INFO  - [PRG] Converter settings: createXml11: false, translateLeaderBadCharsToZero: true, translateNonleaderBadCharsToSpaces: true
+2010-08-10 16:06:45,750 [main] (Importer.java:245) WARN  - [PRG] There's no MARC file in the source directory: marc
+2010-08-10 16:06:45,750 [main] (Importer.java:370) INFO  - [LIB] Conversion completed at 2010/08/10 16:06:45
+2010-08-10 16:06:45,750 [main] (Importer.java:371) INFO  - [PRG] Conversion statistics summary: converted: 0, invalid: 0 records. It took 00:00:00.0
+2010-08-10 16:06:45,750 [main] (Importer.java:373) INFO  - [LIB] Conversion statistics summary: converted: 0, invalid: 0 records. It took 00:00:00.0
+
+2010-08-10 16:06:45,750 [main] (Importer.java:375) INFO  -  *********** END OF CONVERT PROCESS ************ 
+
+2010-08-10 16:06:45,750 [main] (Importer.java:571) INFO  -  *********** START OF LOAD PROCESS ************ 
+
+2010-08-10 16:06:45,750 [main] (Importer.java:572) INFO  - [PRG] Start loading of MARCXML files from xml
+2010-08-10 16:06:45,750 [main] (Importer.java:576) INFO  - [LIB] Load started at 2010/08/10 16:06:45
+2010-08-10 16:06:45,750 [main] (Importer.java:577) INFO  - [LIB] Start loading of MARCXML files from xml
+
+
+2010-08-10 16:06:45,750 [main] (Importer.java:583) WARN  - [PRG] There's no XML file in the source directory.
+2010-08-10 16:06:45,750 [main] (Importer.java:587) INFO  - [PRG] Storage type: Lucene
+2010-08-10 16:06:45,750 [main] (Importer.java:871) INFO  - [PRG] LuceneIndex: lucene_index
+2010-08-10 16:06:45,906 [main] (LuceneImporter.java:83) INFO  - [PRG] Read all ids. It took 00:00:00.0
+2010-08-10 16:06:45,906 [main] (DButil.java:99) INFO  - [PRG] connectionCounter is not 0! 1
+2010-08-10 16:06:45,921 [main] (Importer.java:758) INFO  - [PRG] Import statistics summary: created 0, updated: 0, skipped: 0, invalid: 0, deleted: 0, bib: 0, auth: 0, holdings: 0 records. Invalid files: 0. It took 00:00:00.015. checkTime: 00:00:00.0. insertTime: 00:00:00.0. others: 00:00:00.015
+2010-08-10 16:06:45,921 [main] (Importer.java:760) INFO  - [LIB] Load completed at 2010/08/10 16:06:45
+2010-08-10 16:06:45,921 [main] (Importer.java:761) INFO  -  *********** END OF LOAD PROCESS ************ 
+
+2010-08-10 16:06:45,921 [main] (Importer.java:762) INFO  - [LIB] Import statistics summary: created 0, updated: 0, skipped: 0, invalid: 0, deleted: 0, bib: 0, auth: 0, holdings: 0 records. Invalid files: 0. It took 00:00:00.015. checkTime: 00:00:00.0. insertTime: 00:00:00.0. others: 00:00:00.015
+
+2010-08-10 16:06:45,921 [main] (Importer.java:774) ERROR - [PRG] Can't delete the temporary xml directory, because there exist 2 files in it.
+2010-08-10 16:06:45,921 [main] (Importer.java:780) INFO  - [PRG] optimizing database...
+2010-08-10 16:06:45,921 [main] (Importer.java:785) INFO  - [PRG] Import done
+2010-08-10 16:06:45,921 [main] (Importer.java:148) INFO  - [PRG] Import finished
+2010-08-10 16:06:45,921 [main] (Importer.java:149) INFO  - [LIB] Import finished
+==================================================
+
+curl http://localhost:8080/OAIToolkit/oai-request.do?verb=ListRecords&metadataPrefix=marcxml&from=2010-08-10T20:06:44Z&until=2010-08-10T20:06:47Z | xmllint --format - > /cygdrive/c/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCNormalization/test/input_records/randys-30/03-deleted.bib.mrk.xml
+==== grep '<record>' /cygdrive/c/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCNormalization/test/input_records/randys-30/03-deleted.bib.mrk.xml | wc -l
+0
+==================================================
+==================================================
+
+==================================================
+==================================================
+==== processing 04-deleted.mfhd.mrc...
+==== executing cmd: convertload.bat...
+==================================================
+Lucene Statistics Value is:false
+ log4j property file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.log4j.properties
+2010-08-10 16:06:47,593 [main] (Logging.java:50) INFO  - Logging started in directory: log
+2010-08-10 16:06:47,593 [main] (ConfigUtil.java:37) INFO  - [PRG] ConfigUtil::load(C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties)
+2010-08-10 16:06:47,593 [main] (ConfigUtil.java:42) INFO  - [PRG] load from file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties
+2010-08-10 16:06:47,593 [main] (ConfigUtil.java:45) INFO  - config file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties
+Its success
+Temporary file created. File is tmpfile.txt
+2010-08-10 16:06:47,656 [main] (ConfigUtil.java:97) INFO  - [PRG] successful ConfigUtil::load
+2010-08-10 16:06:47,656 [main] (DButil.java:88) INFO  - [PRG] DB parameters: fileName: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.db.properties, host: localhost, port: 3306, database: extensiblecatalog, user: root, password: ****
+2010-08-10 16:06:47,656 [main] (ConfigUtil.java:37) INFO  - [PRG] ConfigUtil::load(C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties)
+2010-08-10 16:06:47,656 [main] (ConfigUtil.java:42) INFO  - [PRG] load from file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties
+2010-08-10 16:06:47,656 [main] (ConfigUtil.java:45) INFO  - config file: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties
+Its success
+Temporary file created. File is tmpfile.txt
+2010-08-10 16:06:47,671 [main] (ConfigUtil.java:97) INFO  - [PRG] successful ConfigUtil::load
+2010-08-10 16:06:47,671 [main] (XcOaiIdConfigUtil.java:44) INFO  - [PRG] XC OAI ID parameters: fileName: C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\OAIToolkit.xcoaiid.properties, Oai Identifier Domain name: library.rochester.edu, Oai Id Repository Identifier: URVoyager1
+2010-08-10 16:06:47,937 [main] (PrototypeMgr.java:352) DEBUG - [PRG] selection SQL: com.mysql.jdbc.JDBC4PreparedStatement@105d88a: SELECT * FROM sets
+2010-08-10 16:06:47,937 [main] (PrototypeMgr.java:358) DEBUG - [PRG] number of rows: 5
+2010-08-10 16:06:47,937 [main] (Importer.java:962) INFO  - [PRG] Importer v0.6.4
+2010-08-10 16:06:47,937 [main] (Importer.java:963) INFO  - [PRG] needConvert? true, needModify? false, needLoad? true, needLogDetail? true, doIndentXml? true, sourceDir: marc, destinationDir: marc_dest, destinationXmlDir: xml, errorDir: error, errorXmlDir: error_xml, fileOfDeletedRecords: false, marcSchema: schema\MARC21slim_rochester.xsd, logDir: log, marcEncoding: utf8, charConversion: ISO5426, splitSize: 10000, luceneIndex: lucene_index, storageType: Lucene, createXml11: false, translateLeaderBadCharsToZero: true, translateNonleaderBadCharsToSpaces: true, convertDir: marc, modifyDir: marcxml, loadDir: xml, errorSuffix: error, destinationSuffix: dest, doDeleteTemporaryFiles: false, errorModifiedXmlDir: null, destinationModifiedXmlDir: null
+2010-08-10 16:06:47,937 [main] (Importer.java:129) INFO  - [PRG] [DirectoryNameGiver] convert source: marc, convert target: xml, convert destination: marc_dest, convert error: marc_error, modify source: null, modify target: null, modify destination: null, modify error: null, load source: xml, load target: null, load destination: xml_dest, load error: xml_error
+2010-08-10 16:06:47,937 [main] (Importer.java:184) INFO  -  *********** START OF CONVERT PROCESS ************ 
+
+2010-08-10 16:06:47,937 [main] (Importer.java:185) INFO  - [PRG] Start conversion from MARC files at marc to MARCXML files at xml
+2010-08-10 16:06:47,937 [main] (Importer.java:191) INFO  - [LIB] Conversion started at 2010/08/10 16:06:47
+2010-08-10 16:06:47,937 [main] (Importer.java:192) INFO  - [LIB] Start conversion from MARC files at marc to MARCXML files at xml
+
+
+2010-08-10 16:06:47,937 [main] (Importer.java:227) INFO  - [PRG] Converter settings: createXml11: false, translateLeaderBadCharsToZero: true, translateNonleaderBadCharsToSpaces: true
+2010-08-10 16:06:47,937 [main] (Importer.java:259) INFO  - [PRG] Converting 04-deleted.mfhd.mrc to 04-deleted.mfhd.xml
+2010-08-10 16:06:47,937 [main] (Importer.java:261) INFO  - [LIB] Converting 04-deleted.mfhd.mrc to 04-deleted.mfhd.xml
+
+
+2010-08-10 16:06:48,171 [main] (Converter.java:320) INFO  - [PRG] converted: 2, invalid: 0 records. It took 00:00:00.234
+2010-08-10 16:06:48,171 [main] (Converter.java:321) INFO  - [PRG] converted: 2, invalid: 0 records. It took 00:00:00.234
+2010-08-10 16:06:48,171 [main] (Importer.java:269) INFO  - [PRG] Conversion statistics for 04-deleted.mfhd.mrc converted: 2, invalid: 0 records. It took 00:00:00.234
+2010-08-10 16:06:48,171 [main] (Importer.java:277) INFO  - [PRG] Moving 04-deleted.mfhd.mrc to marc_dest
+2010-08-10 16:06:48,171 [main] (Importer.java:287) INFO  - [PRG] Delete marc_dest\04-deleted.mfhd.mrc - true
+2010-08-10 16:06:48,171 [main] (Importer.java:293) INFO  - [PRG] remove marc file (04-deleted.mfhd.mrc) to marc_dest: true
+2010-08-10 16:06:48,171 [main] (Importer.java:370) INFO  - [LIB] Conversion completed at 2010/08/10 16:06:48
+2010-08-10 16:06:48,171 [main] (Importer.java:371) INFO  - [PRG] Conversion statistics summary: converted: 2, invalid: 0 records. It took 00:00:00.234
+2010-08-10 16:06:48,171 [main] (Importer.java:373) INFO  - [LIB] Conversion statistics summary: converted: 2, invalid: 0 records. It took 00:00:00.234
+
+2010-08-10 16:06:48,171 [main] (Importer.java:375) INFO  -  *********** END OF CONVERT PROCESS ************ 
+
+2010-08-10 16:06:48,171 [main] (Importer.java:571) INFO  -  *********** START OF LOAD PROCESS ************ 
+
+2010-08-10 16:06:48,171 [main] (Importer.java:572) INFO  - [PRG] Start loading of MARCXML files from xml
+2010-08-10 16:06:48,171 [main] (Importer.java:576) INFO  - [LIB] Load started at 2010/08/10 16:06:48
+2010-08-10 16:06:48,171 [main] (Importer.java:577) INFO  - [LIB] Start loading of MARCXML files from xml
+
+
+2010-08-10 16:06:48,171 [main] (Importer.java:587) INFO  - [PRG] Storage type: Lucene
+2010-08-10 16:06:48,171 [main] (Importer.java:871) INFO  - [PRG] LuceneIndex: lucene_index
+2010-08-10 16:06:48,312 [main] (LuceneImporter.java:83) INFO  - [PRG] Read all ids. It took 00:00:00.0
+2010-08-10 16:06:48,312 [main] (DButil.java:99) INFO  - [PRG] connectionCounter is not 0! 1
+2010-08-10 16:06:48,328 [main] (Importer.java:610) INFO  - [PRG] loading 04-deleted.mfhd.xml
+2010-08-10 16:06:48,328 [main] (Importer.java:620) INFO  - [PRG] Importing records...
+2010-08-10 16:06:48,328 [main] (PrototypeMgr.java:352) DEBUG - [PRG] selection SQL: com.mysql.jdbc.JDBC4PreparedStatement@113beb5: SELECT * FROM tracking_oaiidnumber WHERE tracking_id = 1
+2010-08-10 16:06:48,328 [main] (PrototypeMgr.java:358) DEBUG - [PRG] number of rows: 1
+2010-08-10 16:06:48,328 [main] (Importer.java:638) DEBUG - The Tracked OAI ID Number value is450
+2010-08-10 16:06:48,328 [main] (Importer.java:639) DEBUG - The Tracking ID is1
+2010-08-10 16:06:48,375 [main] (Importer.java:682) INFO  - [PRG] Import statistics for 04-deleted.mfhd.xml: created 0, updated: 0, skipped: 0, invalid: 0, deleted: 2, bib: 0, auth: 0, holdings: 2 records. Invalid files: 0. It took 00:00:00.047. checkTime: 00:00:00.0. insertTime: 00:00:00.016. others: 00:00:00.031
+2010-08-10 16:06:48,375 [main] (Importer.java:683) INFO  - [LIB] Import statistics for 04-deleted.mfhd.xml: created 0, updated: 0, skipped: 0, invalid: 0, deleted: 2, bib: 0, auth: 0, holdings: 2 records. Invalid files: 0. It took 00:00:00.047. checkTime: 00:00:00.0. insertTime: 00:00:00.016. others: 00:00:00.031
+
+
+2010-08-10 16:06:48,375 [main] (Importer.java:703) INFO  - [PRG] Delete xml_dest\04-deleted.mfhd.xml
+2010-08-10 16:06:48,390 [main] (Importer.java:710) INFO  - [PRG] Move XML file (04-deleted.mfhd.xml) to destination_xml directory (C:\dev\xc\oai-toolkit\installation\OAIToolkit-0.6.5\xml_dest\04-deleted.mfhd.xml): true
+2010-08-10 16:06:48,390 [main] (PrototypeMgr.java:326) DEBUG - [PRG] com.mysql.jdbc.JDBC4PreparedStatement@7c3885: UPDATE tracking_oaiidnumber SET tracking_id = 1, tracked_oaiidnumber = 450 WHERE tracking_id = '1'
+2010-08-10 16:06:48,703 [main] (Importer.java:758) INFO  - [PRG] Import statistics summary: created 0, updated: 0, skipped: 0, invalid: 0, deleted: 2, bib: 0, auth: 0, holdings: 2 records. Invalid files: 0. It took 00:00:00.391. checkTime: 00:00:00.0. insertTime: 00:00:00.016. others: 00:00:00.375
+2010-08-10 16:06:48,703 [main] (Importer.java:760) INFO  - [LIB] Load completed at 2010/08/10 16:06:48
+2010-08-10 16:06:48,703 [main] (Importer.java:761) INFO  -  *********** END OF LOAD PROCESS ************ 
+
+2010-08-10 16:06:48,703 [main] (Importer.java:762) INFO  - [LIB] Import statistics summary: created 0, updated: 0, skipped: 0, invalid: 0, deleted: 2, bib: 0, auth: 0, holdings: 2 records. Invalid files: 0. It took 00:00:00.391. checkTime: 00:00:00.0. insertTime: 00:00:00.016. others: 00:00:00.375
+
+2010-08-10 16:06:48,703 [main] (Importer.java:774) ERROR - [PRG] Can't delete the temporary xml directory, because there exist 2 files in it.
+2010-08-10 16:06:48,703 [main] (Importer.java:780) INFO  - [PRG] optimizing database...
+2010-08-10 16:06:48,734 [main] (Importer.java:785) INFO  - [PRG] Import done
+2010-08-10 16:06:48,734 [main] (Importer.java:148) INFO  - [PRG] Import finished
+2010-08-10 16:06:48,734 [main] (Importer.java:149) INFO  - [LIB] Import finished
+==================================================
+
+curl http://localhost:8080/OAIToolkit/oai-request.do?verb=ListRecords&metadataPrefix=marcxml&from=2010-08-10T20:06:47Z&until=2010-08-10T20:06:49Z | xmllint --format - > /cygdrive/c/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCNormalization/test/input_records/randys-30/04-deleted.mfhd.mrc.xml
+==== grep '<record>' /cygdrive/c/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCNormalization/test/input_records/randys-30/04-deleted.mfhd.mrc.xml | wc -l
+2
+==================================================
+==================================================
+

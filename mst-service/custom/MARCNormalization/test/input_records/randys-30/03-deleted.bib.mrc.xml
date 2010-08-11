@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2010-08-10T20:06:45Z</responseDate>
+  <request verb="ListRecords" from="2010-08-10T20:06:42Z" until="2010-08-10T20:06:44Z" metadataPrefix="marcxml">http://localhost:8080/OAIToolkit/oai-request.do</request>
+  <ListRecords>
+    <record>
+      <header status="deleted">
+        <identifier>oai:library.rochester.edu:URVoyager1/447</identifier>
+        <datestamp>2010-08-10T20:06:43Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+    </record>
+  </ListRecords>
+</OAI-PMH>
