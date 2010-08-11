@@ -18,6 +18,8 @@ import java.util.SimpleTimeZone;
 
 import org.apache.log4j.Logger;
 import org.jdom.Element;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
@@ -44,6 +46,8 @@ public class Facade extends BaseManager
 {
 	/** The logger object	 */
 	private static Logger log = Logger.getLogger(Constants.LOGGER_HARVEST_OUT);
+	
+	protected static final DateTimeFormatter UTC_PARSER = ISODateTimeFormat.dateTimeParser();
 
 	/** The number of warnings in executing the current request	 */
 	private int warningCount = 0;
@@ -559,8 +563,8 @@ public class Facade extends BaseManager
 			                          MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS_LENGTH, 1000000));
 
 		// The from and until dates.  They will be null if the passed Strings could not be parsed
-		Date fromDate = parseDate(from);
-		Date untilDate = parseDate(until);
+		Date fromDate = new Date(UTC_PARSER.parseDateTime(from).getMillis());
+		Date untilDate = new Date(UTC_PARSER.parseDateTime(until).getMillis());
 		
 		// Starting record id 
 		long startingId = 0;

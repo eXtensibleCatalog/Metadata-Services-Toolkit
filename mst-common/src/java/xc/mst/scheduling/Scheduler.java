@@ -11,7 +11,6 @@ package xc.mst.scheduling;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +27,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.HarvestManager;
 import xc.mst.manager.BaseService;
+import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataServiceManager;
 import xc.mst.services.SolrWorkDelegate;
@@ -172,17 +172,9 @@ public class Scheduler extends BaseService implements Runnable {
 						}
 						
 						if (previousRepo != null) {
-					        try {
-					        	// I slightly future dated the timestamp of the records so that a record will always
-					        	// have been available from it's update_date forward.  We need to wait for that 
-					        	// future dating to become present before moving on here.  Otherwise, the next service
-					        	// will not pick up all the records that were just inserted.
-						        while (new Date().before(previousRepo.getLastModified())) {
-						        	Thread.sleep(500);
-						        }
-					        } catch (Throwable t) {
-					        	LOG.error("", t);
-					        }
+							if (previousRepo instanceof DefaultRepository) {
+								((DefaultRepository) previousRepo).sleepUntilReady();
+							}
 						}
 						
 						if (processingDirectives != null) {

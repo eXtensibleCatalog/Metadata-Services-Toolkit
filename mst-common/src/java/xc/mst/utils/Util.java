@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -79,6 +81,21 @@ public class Util {
 			LOG.error("", t);
 		}
 		return null;
+	}
+	
+	public void spit(String fileName, String content) {
+		File f = new File(fileName);
+		if (f.exists()) {
+			f.delete();
+		}
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(f);
+			fw.write(content);
+			fw.close();
+		} catch (Throwable t) {
+			throwIt(t);
+		}
 	}
 	
 	public ClassLoader getClassLoader() {

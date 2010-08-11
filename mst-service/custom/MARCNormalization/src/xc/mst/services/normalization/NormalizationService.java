@@ -148,6 +148,7 @@ public class NormalizationService extends GenericMetadataService {
 				// Handle reprocessing of successors
 				for(OutputRecord successor : successors){
 					successor.setStatus(Record.DELETED);
+					successor.setFormat(marcxmlFormat);
 					results.add(successor);
 				}
 				TimingLogger.stop("processRecord.getDeleted");
@@ -341,6 +342,8 @@ public class NormalizationService extends GenericMetadataService {
 				// Get the record which was processed from the record we just processed
 				// (there should only be one)
 				OutputRecord oldNormalizedRecord = record.getSuccessors().get(0);
+				
+				oldNormalizedRecord.setFormat(marcxmlFormat);
 
 				// Set the XML to the new normalized XML
 				oldNormalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());

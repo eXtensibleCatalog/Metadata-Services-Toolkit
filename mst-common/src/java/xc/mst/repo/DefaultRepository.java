@@ -173,5 +173,21 @@ public class DefaultRepository extends BaseService implements Repository {
 			r.getSuccessors().addAll(succs);
 		}
 	}
+	
+	/**
+	 *  I slightly future dated the timestamp of the records so that a record will always
+	 *  have been available from it's update_date forward.  We need to wait for that 
+	 *  future dating to become present before moving on here.  Otherwise, the next service
+	 *  will not pick up all the records that were just inserted.
+	 */
+	public void sleepUntilReady() {
+	    while (new Date().before(getLastModified())) {
+	    	try {
+	    		Thread.sleep(500);
+	    	} catch (Throwable t) {
+	    		getUtil().throwIt(t);
+	    	}
+	    }
+	}
 
 }

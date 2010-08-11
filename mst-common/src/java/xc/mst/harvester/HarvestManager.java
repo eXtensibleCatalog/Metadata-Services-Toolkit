@@ -10,6 +10,7 @@ package xc.mst.harvester;
 
 import gnu.trove.TObjectLongHashMap;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.URLEncoder;
@@ -43,6 +44,7 @@ import xc.mst.scheduling.WorkerThread;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.XmlHelper;
 
 
 public class HarvestManager extends BaseManager implements WorkDelegate {
@@ -136,7 +138,11 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		try {
 			hssFirstTime = true;
 			harvestCache.clear();
-			harvestScheduleSteps = getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId());
+			if (harvestSchedule.getSteps() == null) {
+				harvestScheduleSteps = getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId());
+			} else {
+				harvestScheduleSteps = harvestSchedule.getSteps();
+			}
 			harvestScheduleStepIndex = 0;
 			startDate = new Date();
 			recordsProcessed = 0;
@@ -226,103 +232,149 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			}
 		}
 		requestsSent4Step++;
+		log.debug("harvestScheduleSteps.size(): "+harvestScheduleSteps.size());
 		if (retVal && harvestScheduleStepIndex >= 0 && harvestScheduleStepIndex < harvestScheduleSteps.size()) {
 			try {
 				HarvestScheduleStep scheduleStep = harvestScheduleSteps.get(harvestScheduleStepIndex);
 					
-				String metadataPrefix = scheduleStep.getFormat().getName();
+				String metadataPrefix = null;
+				if (scheduleStep != null && scheduleStep.getFormat() != null) {
+					metadataPrefix = scheduleStep.getFormat().getName();
+				}
+				
 				String setSpec = null;
 				
 				// If there was a set, set up the setSpec
 				if(scheduleStep.getSet() != null)
 					setSpec = scheduleStep.getSet().getSetSpec();
 					
+				
+				HarvestSchedule schedule = scheduleStep.getSchedule();
+				String baseURL = null;
+				
 				if (hssFirstTime) {
 					// Setup the harvest we're currently running
 					currentHarvest = new Harvest();
 					currentHarvest.setStartTime(startDate);
 					currentHarvest.setProvider(scheduleStep.getSchedule().getProvider());
 					currentHarvest.setHarvestSchedule(scheduleStep.getSchedule());
+					baseURL = currentHarvest.getProvider().getOaiProviderUrl();	
 					getHarvestDAO().insert(currentHarvest);
 					log.debug("repo.installOrUpdateIfNecessary()");
-					validate(scheduleStep);
+					if (!baseURL.startsWith("file:")) 
+						validate(scheduleStep);
 					firstHarvest = repo.getSize() == 0;
 					resumptionToken = null;
 				}
 				
-				HarvestSchedule schedule = scheduleStep.getSchedule();
-				String baseURL = currentHarvest.getProvider().getOaiProviderUrl();
 				LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Starting harvest of " + baseURL);
-
+				
+                Provider provider = harvestSchedule.getProvider();
 				String request = null;
-				
-				TimingLogger.log("firstHarvest: "+firstHarvest);
+				Document doc = null;
+				if (baseURL.startsWith("file:")) {
+					File pwd = new File(".");
+					log.debug("pwd: "+pwd.getAbsolutePath());
+					pwd = new File("file://.");
+					log.debug("pwd: "+pwd.getAbsolutePath());
+					//pwd = new File(new URI("file://."));
+					//log.debug("pwd: "+pwd.getAbsolutePath());
+					String folderStr = baseURL.substring("file://".length());
+					log.debug("folderStr: "+folderStr);
+					File folder = new File(folderStr);
+					boolean nextOne = false;
+					File file2harvest = null;
+					log.debug("provider.getLastOaiRequest(): "+provider.getLastOaiRequest());
+					log.debug("provider: "+provider);
+					log.debug("provider.hashCode(): "+provider.hashCode());
+					for (File file : folder.listFiles()) {
+						log.debug("file.getName(): "+file.getName());
+						if (!file.getName().endsWith(".xml")) {
+							continue;
+						} else if (nextOne || provider.getLastOaiRequest() == null) {
+							file2harvest = file;
+							break;
+						} else {
+							if (provider.getLastOaiRequest().equals(file.getName())) {
+								nextOne = true;
+							}
+						}
+					}
+					log.debug("file2harvest: "+file2harvest);
+					if (file2harvest == null) {
+						return false;
+					}
+					provider.setLastOaiRequest(file2harvest.getName());
+				    doc = new XmlHelper().getJDomDocument(getUtil().slurp(file2harvest));
+				} else if (baseURL.startsWith("http:")) {
+					TimingLogger.log("firstHarvest: "+firstHarvest);
 
-				String verb = "ListRecords";
-				request = baseURL;
-				
-				String baseRequest = null;
-
-				// If this is the first request, setup a ListRecords request with the
-				// correct metadataPrefix.  If we are supposed harvest a specific set
-				// or use a known from or until parameter, set them here as well.
-				if (hssFirstTime) {
-					request += "?verb=" + verb;
-					request += "&metadataPrefix=" + metadataPrefix;
-
-					if (setSpec != null && setSpec.length() > 0)
-						request += "&set=" + setSpec;
+					String verb = "ListRecords";
+					request = baseURL;
 					
-					baseRequest = request;
+					String baseRequest = null;
 
-					//Date from = scheduleStep.getLastRan();
-					Date from = getRepositoryDAO().getLastModifiedOai(currentHarvest.getProvider().getName());
-					//becuase from is inclusive
-					//from = new Date(from.getTime()+1000);
-					if (from != null && from.getTime() != 0) {
-						request += "&from=" + printDate(from);
-						// no need to set the until.  Some repos (eg IRPlus work better w/out an until)
-						//+"&until=" + printDate(startDate);
+					// If this is the first request, setup a ListRecords request with the
+					// correct metadataPrefix.  If we are supposed harvest a specific set
+					// or use a known from or until parameter, set them here as well.
+					if (hssFirstTime) {
+						request += "?verb=" + verb;
+						request += "&metadataPrefix=" + metadataPrefix;
+
+						if (setSpec != null && setSpec.length() > 0)
+							request += "&set=" + setSpec;
+						
+						baseRequest = request;
+
+						//Date from = scheduleStep.getLastRan();
+						Date from = getRepositoryDAO().getLastModifiedOai(currentHarvest.getProvider().getName());
+						//becuase from is inclusive
+						//from = new Date(from.getTime()+1000);
+						if (from != null && from.getTime() != 0) {
+							request += "&from=" + printDate(from);
+							// no need to set the until.  Some repos (eg IRPlus work better w/out an until)
+							//+"&until=" + printDate(startDate);
+						}
+						
+						harvestSchedule.setRequest(baseRequest);
+						getHarvestScheduleDAO().update(harvestSchedule, false);
+					} else {
+						try {
+							resumptionToken = URLEncoder.encode(resumptionToken, "utf-8");
+						} catch (UnsupportedEncodingException uee) {
+							log.error("couldn't encode resumption token: "+resumptionToken);
+						}
+						request += "?verb=" + verb + "&resumptionToken=" + resumptionToken;
 					}
 					
-					harvestSchedule.setRequest(baseRequest);
-					getHarvestScheduleDAO().update(harvestSchedule, false);
-				} else {
-					try {
-						resumptionToken = URLEncoder.encode(resumptionToken, "utf-8");
-					} catch (UnsupportedEncodingException uee) {
-						log.error("couldn't encode resumption token: "+resumptionToken);
+					LogWriter.addInfo(schedule.getProvider().getLogFileName(), "The OAI request is " + request);
+					
+					// TODO: BDA - I doubt we need this.
+					//currentHarvest.setRequest(request);
+					//getHarvestDAO().update(currentHarvest);
+
+					if (log.isDebugEnabled()) {
+						log.debug("Sending the OAI request: " + request);
 					}
-					request += "?verb=" + verb + "&resumptionToken=" + resumptionToken;
+
+					// Perform the harvest
+					TimingLogger.start("sendRequest");
+					doc = getHttpService().sendRequest(request);
+				    /*
+				    log.debug("doc: ");
+				    if (log.isDebugEnabled())
+				    	log.debug(new XmlHelper().getString(doc.getRootElement()));
+				    */
+				    TimingLogger.stop("sendRequest");
+				    
+				    provider.setLastOaiRequest(request);
 				}
 				
-				LogWriter.addInfo(schedule.getProvider().getLogFileName(), "The OAI request is " + request);
-				
-				// TODO: BDA - I doubt we need this.
-				//currentHarvest.setRequest(request);
-				//getHarvestDAO().update(currentHarvest);
-
-				if (log.isDebugEnabled()) {
-					log.debug("Sending the OAI request: " + request);
-				}
-
-				
-				// Perform the harvest
-				TimingLogger.start("sendRequest");
-			    Document doc = getHttpService().sendRequest(request);
-			    /*
-			    log.debug("doc: ");
-			    if (log.isDebugEnabled())
-			    	log.debug(new XmlHelper().getString(doc.getRootElement()));
-			    */
-			    TimingLogger.stop("sendRequest");
-
-			    TimingLogger.start("parseRecords");
-			    resumptionToken = parseRecords(metadataPrefix, doc, baseURL);
+				TimingLogger.start("parseRecords");
+				resumptionToken = parseRecords(metadataPrefix, doc, baseURL);
                 log.debug("resumptionToken: "+resumptionToken);
                 TimingLogger.stop("parseRecords");
-
-                Provider provider = harvestSchedule.getProvider();
+                
                 provider.setRecordsAdded(provider.getRecordsAdded() + numberOfNewRecords);
                 provider.setRecordsReplaced(provider.getRecordsReplaced() + numberOfUpdatedRecords);
                 provider.setLastHarvestEndTime(new Date());
@@ -403,7 +455,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 
 		// Loop over all records in the OAI response
 		List recordsEl = listRecordsEl.getChildren("record", root.getNamespace());
-		
+		log.debug("recordsEl.size(): "+recordsEl.size());
 
 		for (Object recordElObj : recordsEl) {
 			recordEl = (Element)recordElObj;
