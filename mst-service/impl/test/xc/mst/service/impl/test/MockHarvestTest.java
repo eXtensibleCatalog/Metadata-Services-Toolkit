@@ -3,10 +3,13 @@ package xc.mst.service.impl.test;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.jdom.Document;
-import org.jdom.Element;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.harvest.HarvestSchedule;
@@ -28,6 +31,10 @@ import xc.mst.utils.XmlHelper;
 public abstract class MockHarvestTest extends StartToFinishTest {
 	
 	private static final Logger LOG = Logger.getLogger(MockHarvestTest.class);
+	
+	public static final String EXPECTED_OUTPUT_FOLDER = "../test/mock_harvest_expected_output";
+	public static final String INPUT_FOLDER = "../test/mock_harvest_input";
+	public static final String ACTUAL_OUTPUT_FOLDER = "test/mock_harvest_actual_output";
 	
 	protected HarvestManager harvestManager = null;
 	protected Date harvestOutFrom = null;
@@ -78,6 +85,8 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 			}
 				
 			finalTest();
+			
+			compareAgainstExpectedOutput();
 			
 		} catch (Throwable t) {
 			util.throwIt(t);
@@ -159,11 +168,65 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 		
 		LOG.debug("XML response");
 		LOG.debug(harvestOutResponse);
-		File outputFolder = new File("test/mock_harvest_actual_output_records/"+getFolder());
+		File outputFolder = new File(ACTUAL_OUTPUT_FOLDER+"/"+getFolder());
 		if (!outputFolder.exists()) {
 			outputFolder.mkdir();
 		}
-		Util.getUtil().spit("test/mock_harvest_actual_output_records/"+getFolder()+"/"+provider.getLastOaiRequest(), harvestOutResponse);
+		Util.getUtil().spit(ACTUAL_OUTPUT_FOLDER+"/"+getFolder()+"/"+provider.getLastOaiRequest(), harvestOutResponse);
+	}
+	
+	public void compareAgainstExpectedOutput() {
+		Map<String, String> testFailures = new HashMap<String, String>();
+		File expectedOutputContainingFolder = new File(EXPECTED_OUTPUT_FOLDER);
+		String[] expectedOutputFolders = expectedOutputContainingFolder.list();
+		if (expectedOutputFolders != null) {
+			for (String folderStr : expectedOutputFolders) {
+				
+				File expectedOutputFolder = new File(EXPECTED_OUTPUT_FOLDER+"/"+folderStr);
+				Set<String> expectedOutputFiles = new HashSet<String>();
+				for (String ef : expectedOutputFolder.list()) {
+					if (ef.endsWith(".xml")) {
+						expectedOutputFiles.add(ef);
+					}
+				}
+				
+				File actualOutputFolder  = new File(ACTUAL_OUTPUT_FOLDER+"/"+folderStr);
+				if (!actualOutputFolder.exists()) {
+					testFailures.put(folderStr, "folder expected, but wasn't produced.");
+					continue;
+				}
+				for (String af : actualOutputFolder.list()) {
+					LOG.debug("af: "+af);
+					if (expectedOutputFiles.contains(af)) {
+						expectedOutputFiles.remove(af);
+						if (new XmlHelper().diffXmlFiles(
+								ACTUAL_OUTPUT_FOLDER+"/"+folderStr+"/"+af, 
+								EXPECTED_OUTPUT_FOLDER+"/"+folderStr+"/"+af)) {
+							testFailures.put(folderStr+"/"+af, "files differ");
+						}
+					} else {
+						testFailures.put(folderStr+"/"+af, "file exists in actual, but not expected.");
+					}
+				}
+				for (String ef : expectedOutputFiles) {
+					testFailures.put(folderStr+"/"+ef, "file expected, but wasn't produced.");
+				}
+				
+				StringBuilder sb = new StringBuilder();
+				for (String key : testFailures.keySet()) {
+					String value = testFailures.get(key);
+					String s2 = "\n"+key+": "+value;
+
+					sb.append(s2);
+				}
+				
+				if (sb.length() > 0) {
+					LOG.error(sb.toString());
+					throw new RuntimeException(sb.toString());
+				}
+			}		
+		}
+
 	}
 
 }

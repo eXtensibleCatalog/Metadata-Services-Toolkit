@@ -15,7 +15,7 @@
 	<target name="init">
 		<mkdir dir="${build.test.classes}" />
 		<mkdir dir="${build.test.actual-output-records}" />
-		<mkdir dir="${build.test.mock-harvest-actual-output-records}" />
+		<mkdir dir="${build.test.mock-harvest-actual-output}" />
 		<mkdir dir="${build.classes.services}" />
 		<mkdir dir="${build.lib}" />
 		<mkdir dir="${build.zip.lib}" />

@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.SimpleTimeZone;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Element;
 import org.joda.time.format.DateTimeFormatter;
@@ -563,8 +564,14 @@ public class Facade extends BaseManager
 			                          MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS_LENGTH, 1000000));
 
 		// The from and until dates.  They will be null if the passed Strings could not be parsed
-		Date fromDate = new Date(UTC_PARSER.parseDateTime(from).getMillis());
-		Date untilDate = new Date(UTC_PARSER.parseDateTime(until).getMillis());
+		Date fromDate = null;
+		if (!StringUtils.isEmpty(from)) {
+			fromDate = new Date(UTC_PARSER.parseDateTime(from).getMillis());
+		}
+		Date untilDate = null;
+		if (!StringUtils.isEmpty(until)) {
+			untilDate = new Date(UTC_PARSER.parseDateTime(until).getMillis());
+		}
 		
 		// Starting record id 
 		long startingId = 0;

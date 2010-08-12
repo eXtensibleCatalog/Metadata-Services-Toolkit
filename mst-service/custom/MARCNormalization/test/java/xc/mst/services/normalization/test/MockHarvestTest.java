@@ -17,7 +17,7 @@ public class MockHarvestTest extends xc.mst.service.impl.test.MockHarvestTest {
 	}
 	
 	protected String getProviderUrl() {
-		return "file://../test/mock_harvest/"+getFolder();
+		return "file://"+INPUT_FOLDER+"/"+getFolder();
 	}
 	
 	public String getFolder() {

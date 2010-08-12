@@ -138,7 +138,10 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		try {
 			hssFirstTime = true;
 			harvestCache.clear();
-			if (harvestSchedule.getSteps() == null) {
+			// BDA - I added this check for 0 becuase the initialization of HarvestSchedule.steps creates a new
+			// list of size zero.  The DAO which creates the harvestSchedule doesn't inject steps into it.  So
+			// there's really no other way to tell. 
+			if (harvestSchedule.getSteps() == null || harvestSchedule.getSteps().size() == 0) {
 				harvestScheduleSteps = getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId());
 			} else {
 				harvestScheduleSteps = harvestSchedule.getSteps();

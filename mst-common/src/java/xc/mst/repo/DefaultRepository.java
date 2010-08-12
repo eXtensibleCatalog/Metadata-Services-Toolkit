@@ -181,12 +181,14 @@ public class DefaultRepository extends BaseService implements Repository {
 	 *  will not pick up all the records that were just inserted.
 	 */
 	public void sleepUntilReady() {
-	    while (new Date().before(getLastModified())) {
+		Date lm = getLastModified();
+	    while (lm != null && new Date().before(lm)) {
 	    	try {
 	    		Thread.sleep(500);
 	    	} catch (Throwable t) {
 	    		getUtil().throwIt(t);
 	    	}
+	    	lm = getLastModified();
 	    }
 	}
 
