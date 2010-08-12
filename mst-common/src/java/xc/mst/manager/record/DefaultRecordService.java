@@ -1316,19 +1316,14 @@ public class DefaultRecordService extends RecordService
 		}
 		
 		if (r.getStatus() != 0) {
-			Element statusEl = new Element("status", namespace);
 			if (r.getStatus() == Record.ACTIVE) {
-				statusEl.setText("active");
-				headerEl.addContent(statusEl);
+				headerEl.setAttribute("status", "active");
 			} else if (r.getStatus() == Record.DELETED) {
-				statusEl.setText("deleted");
-				headerEl.addContent(statusEl);
+				headerEl.setAttribute("status", "deleted");
 			} else if (r.getStatus() == Record.HELD) {
-				statusEl.setText("held");
-				headerEl.addContent(statusEl);
+				headerEl.setAttribute("status", "held");
 			} else if (r.getStatus() == Record.REPLACED) {
-				statusEl.setText("replaced");
-				headerEl.addContent(statusEl);
+				headerEl.setAttribute("status", "replaced");
 			}
 		}
 		if (r.getMode().equals(Record.STRING_MODE)) {

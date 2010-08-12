@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,7 +28,11 @@ public class Util {
 	}
 	
 	public String normalizeName(String name) {
-		return name.replaceAll(" ", "_").toLowerCase();
+		if (name == null) {
+			return name;
+		} else {
+			return name.replaceAll(" ", "_").toLowerCase();
+		}
 	}
 	
 	public String slurp(File file) {

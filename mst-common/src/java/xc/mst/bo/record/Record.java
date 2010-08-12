@@ -1011,7 +1011,9 @@ public class Record implements InputRecord, OutputRecord {
 	}
 	
 	public void addPredecessor(Record r) {
-		predecessors.add(r);
+		if (!predecessors.contains(r)) {
+			predecessors.add(r);
+		}
 	}
 	
 	public List<InputRecord> getPredecessors() {

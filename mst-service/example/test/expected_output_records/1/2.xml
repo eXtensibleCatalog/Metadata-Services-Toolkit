@@ -1,12 +1,11 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
-  <header>
+  <header status="replaced">
     <identifier>oai:mst.rochester.edu:example/2</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:bib:2</predecessor>
     </predecessors>
-    <status>replaced</status>
   </header>
   <metadata>
     <foo xmlns="foo:bar">
@@ -16,19 +15,12 @@
   </metadata>
 </record>
 <record>
-  <header>
+  <header status="deleted">
     <identifier>oai:mst.rochester.edu:example/2</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:bib:2</predecessor>
     </predecessors>
-    <status>deleted</status>
   </header>
-  <metadata>
-    <foo xmlns="foo:bar">
-      french fries
-      <bar>you've been foobarred!</bar>
-    </foo>
-  </metadata>
 </record>
 </records>

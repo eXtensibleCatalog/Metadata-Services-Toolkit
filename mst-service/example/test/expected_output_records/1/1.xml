@@ -1,12 +1,11 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
-  <header>
+  <header status="replaced">
     <identifier>oai:mst.rochester.edu:example/1</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:bib:1</predecessor>
     </predecessors>
-    <status>replaced</status>
   </header>
   <metadata>
     <foo xmlns="foo:bar">
@@ -16,13 +15,12 @@
   </metadata>
 </record>
 <record>
-  <header>
+  <header status="active">
     <identifier>oai:mst.rochester.edu:example/1</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:bib:1</predecessor>
     </predecessors>
-    <status>active</status>
   </header>
   <metadata>
     <foo xmlns="foo:bar">

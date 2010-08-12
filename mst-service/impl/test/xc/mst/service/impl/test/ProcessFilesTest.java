@@ -33,12 +33,16 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 			LOG.debug("folderStr: "+inFolderStr);
 			LOG.debug("serviceName: "+serviceName);
 			
+			try {
+				repositoryDAO.deleteSchema(serviceName);
+			} catch (Throwable t) {
+			}
+			
 			ServicesService ss = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
 			
 			Map<String, String> testFailures = new HashMap<String, String>();
 	
 			Service s = ss.getServiceByName(serviceName);
-			getRepositoryDAO().deleteSchema(serviceName);
 			ss.addNewService(serviceName);
 			s = ss.getServiceByName(serviceName);
 			GenericMetadataService ms = (GenericMetadataService)s.getMetadataService();
