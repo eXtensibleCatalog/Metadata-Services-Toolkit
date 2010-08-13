@@ -102,11 +102,15 @@ public class XmlHelper {
 			//LOG.debug("file1: "+new Util().slurp(file1));
 			String file1contents = getString(getBuilder().build(new FileInputStream(file1)).getRootElement());
 			file1contents = file1contents.replaceAll("<datestamp>.*</datestamp>", "");
+			file1contents = file1contents.replaceAll("<request.*</request>", "");
+			file1contents = file1contents.replaceAll("<responseDate.*</responseDate>", "");
 			//LOG.debug("file1contents: "+file1contents);
 			
 			//LOG.debug("file2: "+new Util().slurp(file2));
 			String file2contents = getString(getBuilder().build(new FileInputStream(file2)).getRootElement());
 			file2contents = file2contents.replaceAll("<datestamp>.*</datestamp>", "");
+			file2contents = file2contents.replaceAll("<request.*</request>", "");
+			file2contents = file2contents.replaceAll("<responseDate.*</responseDate>", "");
 			//LOG.debug("file2contents: "+file2contents);
 			return !file1contents.equals(file2contents);
 		} catch (Throwable t) {

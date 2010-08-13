@@ -154,6 +154,7 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 		
 		Service service = getServicesService().getServiceByName(getServiceName());
 		bean.setServiceId(service.getId());
+		bean.setRequest("http://localhost:8080/MetadataServicesToolkit/"+getServiceName()+"-Service/oaiRepository?verb=ListRecords");
 
 		Facade facade = (Facade) MSTConfiguration.getInstance().getBean("Facade");
 		
@@ -181,7 +182,9 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 		String[] expectedOutputFolders = expectedOutputContainingFolder.list();
 		if (expectedOutputFolders != null) {
 			for (String folderStr : expectedOutputFolders) {
-				
+				if (folderStr.contains(".svn")) {
+					continue;
+				}
 				File expectedOutputFolder = new File(EXPECTED_OUTPUT_FOLDER+"/"+folderStr);
 				Set<String> expectedOutputFiles = new HashSet<String>();
 				for (String ef : expectedOutputFolder.list()) {

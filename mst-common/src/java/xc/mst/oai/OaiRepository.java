@@ -112,38 +112,18 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 			oaiRequest.setResumptionToken(request.getParameter("resumptionToken"));
 			oaiRequest.setServiceId(service != null ? service.getId() : 0);
 			oaiRequest.setOaiRepoBaseURL("http://" + request.getServerName() + ":" +  request.getServerPort() + request.getContextPath() + servletPath);
-	
+			oaiRequest.setRequest(request.getRequestURL().toString());
 			
 			// Create the Facade Object, which will compute the results of the request and set them on the bean
 			Facade facade = (Facade) MSTConfiguration.getInstance().getBean("Facade");
 	
 			// Execute the correct request on the Facade Object
-			String xml = facade.execute(oaiRequest);
-	
-			// Build the OAI response
-			StringBuilder oaiResponseElement = new StringBuilder();
-	
-			// Append the header
-			oaiResponseElement.append(Constants.OAI_RESPONSE_HEADER);
-	
-			// Append the response date element
-			oaiResponseElement.append(facade.getResponseDate()).append("\n");
-	
-			// Append the request element
-			oaiResponseElement.append(facade.getRequestElement(request.getRequestURL(), oaiRequest)).append("\n");
-	
-			// Append the response itself
-			oaiResponseElement.append(xml).append("\n");
-	
-			// Append the footer
-			oaiResponseElement.append(Constants.OAI_RESPONSE_FOOTER);
-	
-			oaiXMLOutput = oaiResponseElement.toString();
+			oaiXMLOutput = facade.execute(oaiRequest);
 	
 			response.setContentType("text/xml; charset=UTF-8");
 			
 			// Write the response
-			response.getWriter().write(oaiResponseElement.toString());
+			response.getWriter().write(oaiXMLOutput);
 
 		    return SUCCESS;
 		}
