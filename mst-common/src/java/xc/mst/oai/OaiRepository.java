@@ -60,8 +60,6 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 	 */
 	public String execute() throws ServletException, IOException
 	{
-		if(log.isDebugEnabled())
-			log.debug("In doGet, parsing out parameters");
 
 		try
 		{

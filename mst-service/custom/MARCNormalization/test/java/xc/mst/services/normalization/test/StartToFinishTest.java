@@ -26,7 +26,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 	
 	protected String getProviderUrl() {
-		return "http://128.151.244.137:8080/OAIToolkit_0.6.1/oai-request.do";
+		return "http://128.151.244.132:8080/OAIToolkit_testDataset_size10/oai-request.do";
 	}
 	
 	protected Format getIncomingFormat() throws Exception {
@@ -74,6 +74,6 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		
 		LOG.debug("Number of records harvested out : " + numberOfRecords);
 		
-		assert numberOfRecords == 175 : " Number of harvested records should be 175 but instead it is " + numberOfRecords;
+		assert numberOfRecords == 28 : " Number of harvested records should be 175 but instead it is " + numberOfRecords;
 	}
 }

@@ -22,6 +22,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.services.impl.GenericMetadataService;
@@ -106,12 +107,12 @@ public class NormalizationService extends GenericMetadataService {
 	/**
 	 * A list of errors to add to the record currently being processed
 	 */
-	protected List<String> errors = new ArrayList<String>();
+	protected List<RecordMessage> errors = new ArrayList<RecordMessage>();
 
 	/**
 	 * A list of errors to add to the output record
 	 */
-	protected List<String> outputRecordErrors = new ArrayList<String>();
+	protected List<RecordMessage> outputRecordErrors = new ArrayList<RecordMessage>();
 	
 	protected XmlHelper xmlHelper = new XmlHelper();
 
@@ -153,8 +154,12 @@ public class NormalizationService extends GenericMetadataService {
 			} else {
 				// Get the results of processing the record
 				TimingLogger.start("processRecord.convertRecord");
+				
 				//TODO: make sure that recordIn is used to create the successors
 				results = convertRecord(recordIn);
+				if (results != null && results.size() > 0) {
+					LOG.debug("** 2 results:"+ ((Record)results.get(0)).getMessages().get(0).getMessageCode());
+				}
 				TimingLogger.stop("processRecord.convertRecord");
 				
 				TimingLogger.stop("processRecord");
@@ -319,8 +324,14 @@ public class NormalizationService extends GenericMetadataService {
 			
 			if(LOG.isDebugEnabled())
 				LOG.debug("Adding errors to the record.");
-			
-			record.setErrors(errors);
+
+			// TODO for testing - should be removed
+			errors.add(new RecordMessage(service.getId(), "102", "error", "Invalid leader 06 value: " + leader06));
+			outputRecordErrors.add(new RecordMessage(service.getId(), "102", "error", "Invalid leader 06 value: " + leader06));
+LOG.debug("errors::"+errors);
+LOG.debug("outputRecordErrors::"+outputRecordErrors);
+
+			record.setMessages(errors);
 			
 			if(LOG.isDebugEnabled())
 				LOG.debug("Creating the normalized record.");
@@ -342,7 +353,7 @@ public class NormalizationService extends GenericMetadataService {
 				oldNormalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
 				
 				// Add errors
-				oldNormalizedRecord.setErrors(outputRecordErrors);
+				oldNormalizedRecord.setMessages(outputRecordErrors);
 				
 				// Add the normalized record after modifications were made to it to
 				// the list of modified records.
@@ -363,7 +374,7 @@ public class NormalizationService extends GenericMetadataService {
 				normalizedRecord.setFormat(marcxmlFormat);
 
 				// Add errors
-				normalizedRecord.setErrors(outputRecordErrors);
+				normalizedRecord.setMessages(outputRecordErrors);
 				
 				// Insert the normalized record
 
@@ -406,7 +417,9 @@ public class NormalizationService extends GenericMetadataService {
 				// Add the record to the list of records resulting from processing the
 				// incoming record
 				results.add(normalizedRecord);
-				
+				if (results != null && results.size() > 0) {
+					LOG.debug("** 1 results:"+ ((Record)results.get(0)).getMessages().get(0).getMessageCode());
+				}				
 				if(LOG.isDebugEnabled())
 					LOG.debug("Created normalized record from unnormalized record with ID " + record.getId());
 				return results;
@@ -419,7 +432,7 @@ public class NormalizationService extends GenericMetadataService {
 			if(LOG.isDebugEnabled())
 				LOG.debug("Adding errors to the record.");
 			
-			record.setErrors(errors);
+			record.setMessages(errors);
 			
 			return results;
 		}
@@ -530,8 +543,8 @@ public class NormalizationService extends GenericMetadataService {
 				LOG.debug("Cannot find a MARC vocabulary mapping for the leader 06 value of " + leader06 + ".");
 			
 			if(leader06 != ' ') {
-				errors.add(service.getId() + "-102: Invalid leader 06 value: " + leader06);
-				outputRecordErrors.add(service.getId() + "-102: Invalid leader 06 value: " + leader06);
+				errors.add(new RecordMessage(service.getId(), "102", "error", "Invalid leader 06 value: " + leader06));
+				outputRecordErrors.add(new RecordMessage(service.getId(), "102", "error", "Invalid leader 06 value: " + leader06));
 			}
 		}
 		else
@@ -635,8 +648,8 @@ public class NormalizationService extends GenericMetadataService {
 			if(LOG.isDebugEnabled())
 				LOG.debug("Cannot find a mode of issuance mapping for the leader 07 value of " + leader07 + ", returning the unmodified MARCXML.");
 
-			errors.add(service.getId() + "-103: Invalid leader 07 value: " + leader07);
-			outputRecordErrors.add(service.getId() + "-103: Invalid leader 07 value: " + leader07);
+			errors.add(new RecordMessage(service.getId(), "103", "error", "Invalid leader 07 value: " + leader07));
+			outputRecordErrors.add(new RecordMessage(service.getId(), "103", "error", "Invalid leader 07 value: " + leader07));
 			
 			return marcXml;
 		}
@@ -667,8 +680,8 @@ public class NormalizationService extends GenericMetadataService {
 		String control003 = marcXml.getField003();
 
 		if(control001 == null) {
-			outputRecordErrors.add(service.getId() + "-101: Cannot create 035 from 001((001 control field missing).");
-			errors.add(service.getId() + "-101: Missing control field 001.");
+			outputRecordErrors.add(new RecordMessage(service.getId(), "101", "error", " - Cannot create 035 from 001."));
+			errors.add(new RecordMessage(service.getId(), "101", "error"));
 		}
 
 		// If either control field didn't exist, we don't have to do anything
@@ -683,8 +696,7 @@ public class NormalizationService extends GenericMetadataService {
 		boolean moveAllOrgCodes = enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_MOVE_ALL_MARC_ORG_CODES, "0").equals("1");
 
 		// Create the new 035 field
-		if(moveAllOrgCodes || control003.equalsIgnoreCase(getOrganizationCode()))
-		{
+		if(moveAllOrgCodes || control003.equalsIgnoreCase(getOrganizationCode())) {
 			String new035 = null;
 			
 			if (Character.isLetter(control001.charAt(0))) {
@@ -780,8 +792,8 @@ public class NormalizationService extends GenericMetadataService {
 				if(LOG.isDebugEnabled())
 					LOG.debug("Cannot find an 007 Vocab mapping for the 007 offset 00 value of " + field007offset00 + ", returning the unmodified MARCXML.");
 	
-				errors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00);
-				outputRecordErrors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00);
+				errors.add(new RecordMessage(service.getId(), "104", "error", "Invalid value in Control Field 007 offset 00: " + field007offset00));
+				outputRecordErrors.add(new RecordMessage(service.getId(), "104", "error", "Invalid value in Control Field 007 offset 00: " + field007offset00));
 				
 				return marcXml;
 			}
@@ -824,8 +836,8 @@ public class NormalizationService extends GenericMetadataService {
 				if(LOG.isDebugEnabled())
 					LOG.debug("Cannot find a SMD Vocab mapping for the 007 offset 00 and 01 values of " + field007offset00and01 + ", returning the unmodified MARCXML.");
 				
-				errors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00and01);
-				outputRecordErrors.add(service.getId() + "-104: Invalid value in Control Field 007 offset 00: " + field007offset00and01);
+				errors.add(new RecordMessage(service.getId(), "104", "error", "Invalid value in Control Field 007 offset 00: " + field007offset00and01));
+				outputRecordErrors.add(new RecordMessage(service.getId(), "104", "error", "Invalid value in Control Field 007 offset 00: " + field007offset00and01));
 	
 	
 				return marcXml;
@@ -1044,8 +1056,8 @@ public class NormalizationService extends GenericMetadataService {
 				if(LOG.isDebugEnabled())
 					LOG.debug("Cannot find a language term mapping for the language code " + languageCode + ".");
 
-				errors.add(service.getId() + "-106: Unrecognized language code: " + languageCode);
-				outputRecordErrors.add(service.getId() + "-106: Unrecognized language code: " + languageCode);
+				errors.add(new RecordMessage(service.getId(), "106", "error", "Unrecognized language code: " + languageCode));
+				outputRecordErrors.add(new RecordMessage(service.getId(), "106", "error", "Unrecognized language code: " + languageCode));
 				
 				continue;
 			}
@@ -1098,8 +1110,8 @@ public class NormalizationService extends GenericMetadataService {
 				return marcXml;
 			}
 			else if(field008offset22 != ' ' && (field008offset22 != 'a' && field008offset22 != 'b' && field008offset22 != 'c' && field008offset22 != 'd' && field008offset22 != 'e' && field008offset22 != 'f' && field008offset22 != 'g' && field008offset22 != 'j'&& field008offset22 != '|' && field008offset22 != '#')) {
-				errors.add(service.getId() + "-105: Invalid value in Control Field 008 offset 22: " + field008offset22);
-				outputRecordErrors.add(service.getId() + "-105: Invalid value in Control Field 008 offset 22: " + field008offset22);
+				errors.add(new RecordMessage(service.getId(), "105", "error", "Invalid value in Control Field 008 offset 22: " + field008offset22));
+				outputRecordErrors.add(new RecordMessage(service.getId(), "105", "error", "Invalid value in Control Field 008 offset 22: " + field008offset22));
 			}
 
 			if(LOG.isDebugEnabled())
@@ -1306,13 +1318,13 @@ public class NormalizationService extends GenericMetadataService {
 				// Initialize the bSubfield if we found the $b
 				if(subfield.getAttribute("code").getValue().equals("b")) {
 					bSubfield = subfield;
-					errors.add(service.getId() + "-107: Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
+					errors.add(new RecordMessage(service.getId(), "107", "error", "Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)"));
 				}
 
 				// Initialize the subfield9 if we found the $9
 				if(subfield.getAttribute("code").getValue().equals("9")) {
 					subfield9 = subfield;
-					errors.add(service.getId() + "-107: Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
+					errors.add(new RecordMessage(service.getId(), "107", "error", "Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)"));
 				}
 					
 			} // end loop over 035 subfields

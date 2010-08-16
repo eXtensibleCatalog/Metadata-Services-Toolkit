@@ -22,6 +22,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.Semaphore;
 
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -33,6 +35,7 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordIfc;
+import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
@@ -41,6 +44,7 @@ import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataService;
 import xc.mst.services.impl.dao.GenericMetadataDAO;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * A copy of the MST is designed to interface with one or more Metadata Services depending on how it's configured.
@@ -436,6 +440,7 @@ out = getRecordService().createSuccessor(r, getService());
 				inputFormat, inputSet, repo.getName(), getService());
 		List<Record> records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
 		getRepository().beginBatch();
+		//repo.beginBatch();
 		
 		boolean previouslyPaused = false;
 		while (records != null && records.size() > 0 && !stopped) {
@@ -470,10 +475,17 @@ out = getRecordService().createSuccessor(r, getService());
 							getRepositoryDAO().injectId(rout2);
 						}
 						injectKnownPredecessors(in, rout2);
+						if (rout2.getMessages() != null && rout2.getMessages().size() > 0) {
+							LOG.debug("** MS: rout2.getMessages():" + rout2.getMessages().get(0).getMessageCode());
+						}
+
 						getRepository().addRecord(rout2);
 					}
 				}
 				sh.setHighestId(in.getId());
+				
+				// Update the error message on incoming record
+				//repo.addRecord(in);
 			}
 
 			LOG.debug("sh.getId(): "+sh.getId());
@@ -495,6 +507,7 @@ out = getRecordService().createSuccessor(r, getService());
 			}
 
 		}
+//		repo.endBatch();
 		getRepository().endBatch();
 		if (!stopped) {
 			sh.setHighestId(null);
@@ -550,4 +563,6 @@ out = getRecordService().createSuccessor(r, getService());
 			tlal.add(in.getId());
 		}
 	}
+	
+
 }
