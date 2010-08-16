@@ -797,6 +797,7 @@ public class Record implements InputRecord, OutputRecord {
 	 */
 	public void setMessages(List<RecordMessage> messages)
 	{
+		LOG.debug("Record.setMessages() called");
 		this.messages= messages;
 	} // end method setMessages(List<RecordMessage>)
 
@@ -807,6 +808,7 @@ public class Record implements InputRecord, OutputRecord {
 	 */
 	public void addMessage(RecordMessage message)
 	{
+		LOG.debug("Record.addMessage() called");
 		if(!messages.contains(message))
 			messages.add(message);
 	} // end method addMessage(RecordMessage)
@@ -818,6 +820,7 @@ public class Record implements InputRecord, OutputRecord {
 	 */
 	public void removeMessage(RecordMessage message)
 	{
+		LOG.debug("Record.removeMessage() called");
 		if(messages.contains(message))
 			messages.remove(message);
 	} // end method removeError(RecordMessage)
