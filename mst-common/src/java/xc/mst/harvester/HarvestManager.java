@@ -228,12 +228,17 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	public boolean doSomeWork() {
 		running.lock();
 		boolean retVal = true;
+		/*
+		 * BDA - I moved this to the bottom of this method
 		String testHarvestMaxRequests = config.getProperty("test.harvest.maxRequests");
+		recordsProcessed;
 		if (testHarvestMaxRequests != null) {
-			if (Integer.parseInt(testHarvestMaxRequests) == requestsSent4Step) {
+			int maxRequests = Integer.parseInt(testHarvestMaxRequests);
+			if (maxRequests > 0 && maxRequests == requestsSent4Step) {
 				retVal = false;
 			}
 		}
+		*/
 		requestsSent4Step++;
 		log.debug("harvestScheduleSteps.size(): "+harvestScheduleSteps.size());
 		if (retVal && harvestScheduleStepIndex >= 0 && harvestScheduleStepIndex < harvestScheduleSteps.size()) {
@@ -269,6 +274,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					firstHarvest = repo.getSize() == 0;
 					resumptionToken = null;
 				}
+				baseURL = currentHarvest.getProvider().getOaiProviderUrl();
 				
 				LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Starting harvest of " + baseURL);
 				
@@ -310,8 +316,6 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					provider.setLastOaiRequest(file2harvest.getName());
 				    doc = new XmlHelper().getJDomDocument(getUtil().slurp(file2harvest));
 				} else if (baseURL.startsWith("http:")) {
-					TimingLogger.log("firstHarvest: "+firstHarvest);
-
 					String verb = "ListRecords";
 					request = baseURL;
 					
@@ -373,6 +377,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 				    provider.setLastOaiRequest(request);
 				}
 				
+				numberOfNewRecords=0;
+				numberOfUpdatedRecords=0;
 				TimingLogger.start("parseRecords");
 				resumptionToken = parseRecords(metadataPrefix, doc, baseURL);
                 log.debug("resumptionToken: "+resumptionToken);
@@ -401,8 +407,16 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					retVal = false;
 				}
 			}
+			if (requestsSent4Step % 10 == 0) {
+				TimingLogger.reset();
+			}
 			retVal = true;
 		} else {
+			retVal = false;
+			TimingLogger.reset();
+		}
+		if (harvestSchedule.getProvider().getNumberOfRecordsToHarvest() > 0 && 
+				harvestSchedule.getProvider().getNumberOfRecordsToHarvest() <= recordsProcessed) {
 			retVal = false;
 		}
 		running.unlock();
@@ -462,8 +476,6 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 
 		for (Object recordElObj : recordsEl) {
 			recordEl = (Element)recordElObj;
-			TimingLogger.start("parseRecords loop");
-			TimingLogger.start("erl - 1");
 
             try {
             	HarvestScheduleStep scheduleStep = harvestScheduleSteps.get(harvestScheduleStepIndex);
@@ -491,8 +503,6 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 
 				repo.addRecord(record);
 
-				TimingLogger.stop("erl - 3");
-				TimingLogger.stop("insert record");
 			} catch (Exception e) {
 				log.error("An error occurred in insertion ", e);
 			}

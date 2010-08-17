@@ -81,7 +81,7 @@ public class SolrWorkDelegate extends BaseService implements WorkDelegate {
 	}
 
 	public boolean doSomeWork() {
-		this.workerThread.setJobStatus(Status.PAUSED);
+		this.workerThread.setJobStatus(Status.IDLE);
 		wait4availability();
 		this.workerThread.setJobStatus(Status.RUNNING);
 		LOG.debug("doSomeWork");
@@ -104,9 +104,13 @@ public class SolrWorkDelegate extends BaseService implements WorkDelegate {
 		} catch (Throwable t) {
 			LOG.error("", t);
 		}
-		this.workerThread.setJobStatus(Status.PAUSED);
-		try {Thread.sleep(3000);} catch (Throwable t) {}
-		this.workerThread.setJobStatus(Status.RUNNING);
+		if (this.workerThread.getJobStatus().equals(Status.RUNNING)) {
+			this.workerThread.setJobStatus(Status.IDLE);
+			try {Thread.sleep(3000);} catch (Throwable t) {}
+			if (this.workerThread.getJobStatus().equals(Status.IDLE)) {
+				this.workerThread.setJobStatus(Status.RUNNING);
+			}
+		}
 		return true;
 	}
 	

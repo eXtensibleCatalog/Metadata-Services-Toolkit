@@ -51,13 +51,13 @@ public class RepositoryDAO extends BaseDAO {
 	
 	private static Logger LOG = Logger.getLogger(RepositoryDAO.class);
 	
-	protected final static String RECORDS_TABLE = "RECORDS";
-	protected final static String RECORD_UPDATES_TABLE = "RECORD_UPDATES";
-	protected final static String RECORDS_XML_TABLE = "RECORDS_XML";
-	protected final static String RECORDS_SETS_TABLE = "RECORD_SETS";
-	protected final static String RECORD_PREDECESSORS_TABLE = "RECORD_PREDECESSORS";
-	protected final static String RECORD_OAI_IDS = "RECORD_OAI_IDS";
-	protected final static String REPOS_TABLE = "REPOS";
+	protected final static String RECORDS_TABLE = "records";
+	protected final static String RECORD_UPDATES_TABLE = "record_updates";
+	protected final static String RECORDS_XML_TABLE = "records_xml";
+	protected final static String RECORDS_SETS_TABLE = "record_sets";
+	protected final static String RECORD_PREDECESSORS_TABLE = "record_predecessors";
+	protected final static String RECORD_OAI_IDS = "record_oai_ids";
+	protected final static String REPOS_TABLE = "repos";
 	
 	protected Lock oaiIdLock = new ReentrantLock();
 	protected int nextId = -1;
@@ -228,8 +228,9 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	protected void commitIfNecessary(String name, boolean force) {
-		int batchSize = 50000;
+		int batchSize = 5000;
 		if (force || batchSize <= recordsToAdd.size()) {
+			TimingLogger.start("commit to db");
 			final long startTime = System.currentTimeMillis();
 			String sql = 
     			"insert into "+getTableName(name, RECORDS_TABLE)+
@@ -418,6 +419,7 @@ public class RepositoryDAO extends BaseDAO {
 	        */
 	        
 			recordsToAdd = null;
+			TimingLogger.stop("commit to db");
 		}
 	}
 	
@@ -508,17 +510,14 @@ public class RepositoryDAO extends BaseDAO {
 	public Record getRecord(String name, long id) {
 		String sql = 
 			"select "+RECORDS_TABLE_COLUMNS+
-				"x.xml, "+ " u.date_updated " +
+				"x.xml, "+ " max(u.date_updated) as date_updated " +
 			"from "+getTableName(name, RECORDS_TABLE)+" r, "+
 				getTableName(name, RECORDS_XML_TABLE)+" x, "+
 				getTableName(name, RECORD_UPDATES_TABLE)+" u "+
 			"where r.record_id=? "+
 				"and r.record_id = x.record_id " + 
 				"and r.record_id = u.record_id " +
-				" and u.date_updated =" +
-					" (select max(u.date_updated)" +
-					" from " + getTableName(name, RECORD_UPDATES_TABLE)+" u " +
-					" where u.record_id = r.record_id )";
+			"group by u.record_id";
 		Record r = null;
 		try {
 			r = this.jdbcTemplate.queryForObject(sql, 
@@ -531,6 +530,7 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public List<Record> getRecords(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+		long t0 = System.currentTimeMillis();
 		List<Object> params = new ArrayList<Object>();
 		if (until == null) {
 			until = new Date();
@@ -538,7 +538,7 @@ public class RepositoryDAO extends BaseDAO {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 				" select "+RECORDS_TABLE_COLUMNS+
-				" x.xml, "+ " u.date_updated  " +
+				" x.xml, "+ " max(u.date_updated) as date_updated " +
 				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
 					getTableName(name, RECORDS_XML_TABLE)+" x, " +
 					getTableName(name, RECORD_UPDATES_TABLE)+" u ");
@@ -551,12 +551,14 @@ public class RepositoryDAO extends BaseDAO {
 					" and (r.record_id > ? or ? is null) "+
 					" and r.record_id = u.record_id " +
 					" and (u.date_updated > ? or ? is null) "+
-					" and u.date_updated <= ?  " +
-					" and u.date_updated =" +
+					" and u.date_updated <= ?  "
+					);
+		/*
+					+
+			  		" and u.date_updated =" +
 						" (select max(u.date_updated)" +
 						" from " + getTableName(name, RECORD_UPDATES_TABLE)+" u " +
-						" where u.record_id = r.record_id )"
-					);
+						" where u.record_id = r.record_id )" */
 					
 		if (inputFormat != null) {
 			sb.append(
@@ -578,7 +580,8 @@ public class RepositoryDAO extends BaseDAO {
 			params.add(inputSet.getId());
 		}
 		sb.append(
-				" order by r.record_id limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 1000));
+				" group by u.record_id "+
+				" order by u.record_id limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 1000));
 
 		Object obj[] = params.toArray();
 		
@@ -590,6 +593,10 @@ public class RepositoryDAO extends BaseDAO {
 			LOG.info("no records found for from: "+from+" until: "+until+" startingId: "+startingId + " format:" + inputFormat + " inputSet:" + inputSet);
 		}
 		LOG.debug("records.size(): "+records.size());
+		if (records != null && records.size() > 0) {
+			TimingLogger.add("GET_RECORDS_TIME", System.currentTimeMillis()-t0);
+			TimingLogger.add("GET_RECORDS_NUM", records.size());
+		}
 		return records;
 	}
 	
@@ -601,7 +608,7 @@ public class RepositoryDAO extends BaseDAO {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 				" select "+RECORDS_TABLE_COLUMNS+
-				" u.date_updated  " +
+				" max(u.date_updated) as u.date_updated  " +
 				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
 					getTableName(name, RECORD_UPDATES_TABLE)+" u ");
 		if (inputSet != null) {
@@ -613,10 +620,7 @@ public class RepositoryDAO extends BaseDAO {
 					" and r.record_id = u.record_id " +
 					" and (u.date_updated > ? or ? is null) "+
 					" and u.date_updated <= ?  " +
-					" and u.date_updated =" +
-						" (select max(u.date_updated)" +
-						" from " + getTableName(name, RECORD_UPDATES_TABLE)+" u " +
-						" where u.record_id = r.record_id )"
+					" group by u.record_id "
 					);
 					
 		if (inputFormat != null) {
@@ -639,7 +643,7 @@ public class RepositoryDAO extends BaseDAO {
 			params.add(inputSet.getId());
 		}
 		sb.append(
-				" order by r.record_id limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS, 1000));
+				" order by u.record_id limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS, 1000));
 
 		Object obj[] = params.toArray();
 		
@@ -672,10 +676,7 @@ public class RepositoryDAO extends BaseDAO {
 				" where  r.record_id = u.record_id " +
 					" and (u.date_updated > ? or ? is null) "+
 					" and u.date_updated <= ?  " +
-					" and u.date_updated =" +
-						" (select max(u.date_updated)" +
-						" from " + getTableName(name, RECORD_UPDATES_TABLE)+" u " +
-						" where u.record_id = r.record_id )"
+					" group by u.record_id "
 					);
 					
 		if (inputFormat != null) {
@@ -733,7 +734,9 @@ public class RepositoryDAO extends BaseDAO {
 						" and (r.record_id > ? or ? is null) "+
 						" and r.record_id <= ? "+
 						" and (u.date_updated > ? or ? is null) "+
-						" and u.date_updated <= ? order by r.record_id ");
+						" and u.date_updated <= ? "+
+						" group by u.record_id "+
+						" order by u.record_id ");
 			LOG.debug("startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
 			params.add(startingId);
 			params.add(startingId);
@@ -839,7 +842,7 @@ public class RepositoryDAO extends BaseDAO {
 		        }
 	        }
 	        if (tables.contains(RECORD_UPDATES_TABLE)) {
-	        	r.setUpdatedAt(rs.getTimestamp("u.date_updated"));
+	        	r.setUpdatedAt(rs.getTimestamp("date_updated"));
 	        }
 	        if (tables.contains(RECORDS_XML_TABLE)) {
 	        	r.setMode(Record.STRING_MODE);

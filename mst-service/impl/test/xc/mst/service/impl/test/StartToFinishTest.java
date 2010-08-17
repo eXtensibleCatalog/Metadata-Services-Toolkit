@@ -15,7 +15,6 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
 import xc.mst.common.test.BaseTest;
-import xc.mst.constants.Constants;
 import xc.mst.constants.Status;
 import xc.mst.oai.Facade;
 import xc.mst.oai.OaiRequestBean;
@@ -40,6 +39,7 @@ public abstract class StartToFinishTest extends BaseTest {
 	/** XML response of harvest out */
 	protected String harvestOutResponse = null;
 	
+	protected long getNumberOfRecordsToHarvest() {return 100000;}
 	protected abstract String getServiceName();
 	protected abstract String getRepoName();
 	protected abstract String getProviderUrl();
@@ -152,9 +152,11 @@ public abstract class StartToFinishTest extends BaseTest {
 	public void dropOldSchemas() {
 		try {
 			repositoryDAO.deleteSchema(getRepoName());
+		} catch (Throwable t) {
+		}
+		try {
 			repositoryDAO.deleteSchema(getServiceName());
 		} catch (Throwable t) {
-			
 		}
 	}
 	
@@ -167,6 +169,7 @@ public abstract class StartToFinishTest extends BaseTest {
 		provider.setDescription("Repository used in TestNG tests");
 		provider.setOaiProviderUrl(getProviderUrl());
 		provider.setCreatedAt(new java.util.Date());
+		provider.setNumberOfRecordsToHarvest(getNumberOfRecordsToHarvest());
 		providerService.insertProvider(provider);
 		validateRepository.validate(provider.getId());
 		
@@ -248,6 +251,7 @@ public abstract class StartToFinishTest extends BaseTest {
 				}
 				if (scheduler.getRunningJob() != null) {
 					LOG.debug("scheduler.getRunningJob().getJobStatus(): "+scheduler.getRunningJob().getJobStatus());
+					LOG.debug("scheduler.getRunningJob().getJobName(): "+scheduler.getRunningJob().getJobName());
 				}
 				if (scheduler.getRunningJob() == null || 
 						Status.RUNNING != scheduler.getRunningJob().getJobStatus()) {

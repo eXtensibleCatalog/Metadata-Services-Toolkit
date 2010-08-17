@@ -11,9 +11,4 @@ do
 	echo removing $file
 done
 
-for file in $(find $TOMCAT_HOME/logs/*)
-do
-	rm $file
-	echo removing $file
-done
-
+. ./scripts/clear_tc_files.sh

@@ -134,9 +134,12 @@ public class Scheduler extends BaseService implements Runnable {
 				}
 			}
 
-			
+			LOG.debug("runningJob: "+runningJob);
+			if (runningJob != null) {
+				LOG.debug("runningJob.isAlive(): "+runningJob.isAlive());
+				LOG.debug("runningJob == solrWorkerThread: "+(runningJob == solrWorkerThread));
+			}
 			if (runningJob == null || !runningJob.isAlive() || runningJob == solrWorkerThread) {
-				LOG.debug("runningJob: "+runningJob);
 				if (runningJob != null) {
 					LOG.debug("runningJob.getWorkDelegate(): "+runningJob.getWorkDelegate());
 				}
@@ -170,10 +173,13 @@ public class Scheduler extends BaseService implements Runnable {
 							service.setStatus(runningJob.getJobStatus());
 							getServiceDAO().update(service);
 						}
+						LOG.debug("processingDirectives: "+processingDirectives);
 						
 						if (previousRepo != null) {
 							if (previousRepo instanceof DefaultRepository) {
+								LOG.debug("sleepUntilReady...start");
 								((DefaultRepository) previousRepo).sleepUntilReady();
+								LOG.debug("sleepUntilReady...finished");
 							}
 						}
 						
@@ -212,6 +218,12 @@ public class Scheduler extends BaseService implements Runnable {
 						}
 					}
 					Job jobToStart = getJobService().getNextJobToExecute();
+					if (jobToStart == null && previousJob != null && solrWorkerThread != null) {
+						LOG.debug("solrWorkerThead.proceed");
+						solrWorkerThread.proceed();
+						runningJob = solrWorkerThread;
+						runningJob.type = Constants.SOLR_INDEXER;
+					}
 					previousJob = jobToStart;
 
 					LOG.debug("jobToStart: "+jobToStart);
@@ -281,13 +293,6 @@ public class Scheduler extends BaseService implements Runnable {
 
 						if (runningJob != null) {
 							runningJob.start();
-						}
-					} else {
-						if (solrWorkerThread != null && runningJob != solrWorkerThread) {
-							LOG.debug("solrWorkerThead.proceed");
-							solrWorkerThread.proceed();
-							runningJob = solrWorkerThread;
-							runningJob.type = Constants.SOLR_INDEXER;
 						}
 					}
 				} catch(DataException de) {

@@ -89,8 +89,16 @@ public class XmlHelper {
 	
 	public org.jdom.Document getJDomDocument(String str) {
 		try {
+			TimingLogger.start("new StringReader()");
 			StringReader sr = new StringReader(str);
-			return getBuilder().build(sr);
+			TimingLogger.stop("new StringReader()");
+			TimingLogger.start("getBuilder()");
+			SAXBuilder sb = getBuilder();
+			TimingLogger.stop("getBuilder()");
+			TimingLogger.start("sb.build(sr)");
+			org.jdom.Document d = sb.build(sr);
+			TimingLogger.stop("sb.build(sr)");
+			return d;
 		} catch (Throwable uee) {
 			LOG.error("", uee);
 			return null;

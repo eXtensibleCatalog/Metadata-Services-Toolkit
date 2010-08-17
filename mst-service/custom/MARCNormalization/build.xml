@@ -213,6 +213,11 @@
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/MST-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />
+		<echo>
+			DatabaseUrl: @${DatabaseUrl}@
+			DatabaseUsername: @${DatabaseUsername}@
+			DatabasePassword: @${DatabasePassword}@
+		</echo>
 		<sql classpathref="classpath.compile"
 				driver="com.mysql.jdbc.Driver"
 				url="${DatabaseUrl}"

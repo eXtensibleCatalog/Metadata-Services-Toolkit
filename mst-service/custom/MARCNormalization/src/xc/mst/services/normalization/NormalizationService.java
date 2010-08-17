@@ -130,6 +130,7 @@ public class NormalizationService extends GenericMetadataService {
 
 	@Override
 	public List<OutputRecord> process(InputRecord recordIn) {
+		LOG.debug("recordIn.getId(): "+recordIn.getId());
 		TimingLogger.start("processRecord");
 		try {
 			List<OutputRecord> results = null;

@@ -41,6 +41,7 @@ import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataService;
 import xc.mst.services.impl.dao.GenericMetadataDAO;
+import xc.mst.utils.TimingLogger;
 
 /**
  * A copy of the MST is designed to interface with one or more Metadata Services depending on how it's configured.
@@ -137,7 +138,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	
 	public void cancel() {stopped = true; running.acquireUninterruptibly(); running.release();}
 	public void finish() {running.acquireUninterruptibly(); running.release();}
-	public void pause()  {paused = true; running.acquireUninterruptibly(); running.release();}
+	public void pause()  {LOG.debug("pausing...");paused = true; running.acquireUninterruptibly(); running.release();LOG.debug("paused.");}
 	public void resume() {paused = false;}
 	
 	public void install() {
@@ -409,9 +410,9 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			} else {
 				sh.setFrom(new Date(System.currentTimeMillis()-(1000l*60*60*24*365*50)));
 			}
+			sh.setUntil(new Date());
 			LOG.debug("sh.getUntil(): "+sh.getUntil());
 			LOG.debug("sh.getFrom(): "+sh.getFrom());
-			sh.setUntil(new Date());
 		} else {
 			if (sh.getUntil() == null || sh.getFrom() == null) {
 				throw new RuntimeException("bogus data in service_harvests");
@@ -434,6 +435,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 		List<Record> records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
 		getRepository().beginBatch();
 		
+		int getRecordLoops = 0;
 		boolean previouslyPaused = false;
 		while (records != null && records.size() > 0 && !stopped) {
 			if (paused) {
@@ -457,7 +459,9 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 				//       why, someone might also want the xml with these injected records.
 				//       We may want to supply an optional way of doing that.
 				injectKnownSuccessors(in);
+				TimingLogger.start(getServiceName()+".process");
 				List<OutputRecord> out = process(in);
+				TimingLogger.stop(getServiceName()+".process");
 				if (out != null) {
 					for (RecordIfc rout : out) {
 						Record rout2 = (Record)rout;
@@ -490,7 +494,11 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			} catch(DataException de) {
 				LOG.error("Exception occured while updating the service", de);
 			}
-
+			
+			getRecordLoops++;
+			if (getRecordLoops % 50 == 0) {
+				TimingLogger.reset();	
+			}
 		}
 		getRepository().endBatch();
 		if (!stopped) {
@@ -500,6 +508,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 		if (!previouslyPaused) {
 			running.release();
 		}
+		TimingLogger.reset();
 	}
 	
 	protected void injectKnownSuccessors(Record in) {

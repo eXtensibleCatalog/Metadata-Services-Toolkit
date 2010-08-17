@@ -41,9 +41,11 @@ public class SolrIndexService extends GenericMetadataService  {
 		LOG.debug("stopped: "+stopped);
 		while (records != null && records.size() > 0 && !stopped) {
 			if (paused) {
-				previouslyPaused = true;
-				LOG.debug("paused");
-				running.release();
+				if (!previouslyPaused) {
+					previouslyPaused = true;
+					LOG.debug("paused");
+					running.release();	
+				}
 				try {
 					Thread.sleep(1000);
 				} catch (Throwable t) {

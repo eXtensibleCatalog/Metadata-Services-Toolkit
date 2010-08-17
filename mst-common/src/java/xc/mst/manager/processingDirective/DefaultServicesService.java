@@ -690,8 +690,16 @@ public class DefaultServicesService extends BaseService
 
     	for(File file : fileList) {
     		if (file.isDirectory() && !allServices.contains(file.getName())) {
- 	    		String serviceName = file.getName();
-	    		availableServices.add(serviceName);
+    			boolean nameIsAcceptable = true;
+    			for (byte b : file.getName().getBytes()) {
+    				if (!(Character.isDigit((char)b) || Character.isLetter((char)b))) {
+    					nameIsAcceptable = false;
+    				}
+    			}
+    			if (nameIsAcceptable) {
+	 	    		String serviceName = file.getName();
+		    		availableServices.add(serviceName);
+    			}
     		}
     	}
     	

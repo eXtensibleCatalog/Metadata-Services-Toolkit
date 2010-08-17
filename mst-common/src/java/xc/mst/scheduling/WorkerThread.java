@@ -70,7 +70,9 @@ public class WorkerThread extends Thread {
 			LOG.error("", e);
 			this.status = Status.ERROR;
 		} finally {
+			LOG.debug("before finish workDelegate.getName(): "+workDelegate.getName());
 			this.workDelegate.finish();
+			LOG.debug("after finish workDelegate.getName(): "+workDelegate.getName());
 			this.status = Status.NOT_RUNNING;
 		}
 	}
