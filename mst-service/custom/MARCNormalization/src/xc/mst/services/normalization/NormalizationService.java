@@ -343,7 +343,7 @@ public class NormalizationService extends GenericMetadataService {
 				// Get the record which was processed from the record we just processed
 				// (there should only be one)
 				OutputRecord oldNormalizedRecord = record.getSuccessors().get(0);
-				
+				oldNormalizedRecord.setMode(Record.JDOM_MODE);
 				oldNormalizedRecord.setFormat(marcxmlFormat);
 
 				// Set the XML to the new normalized XML

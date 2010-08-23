@@ -1,11 +1,11 @@
 <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
-  <responseDate>2010-08-13T11:18:07Z</responseDate>
-  <request verb="ListRecords" from="2010-08-13T15:18:00Z" until="2010-08-13T15:18:07Z" metadataPrefix="marcxml">http://localhost:8080/MetadataServicesToolkit/MARCNormalization-Service/oaiRepository?verb=ListRecords</request>
+  <responseDate>2010-08-23T14:58:51Z</responseDate>
+  <request from="2010-08-23T18:58:44Z" metadataPrefix="marcxml" until="2010-08-23T18:58:51Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/MARCNormalization-Service/oaiRepository?verb=ListRecords</request>
   <ListRecords>
     <record>
       <header status="deleted">
         <identifier>oai:mst.rochester.edu:marcnormalization/59</identifier>
-        <datestamp>2010-08-13T15:18:07Z</datestamp>
+        <datestamp>2010-08-23T18:58:51Z</datestamp>
       </header>
     </record>
   </ListRecords>

@@ -100,6 +100,7 @@ public class DefaultServicesService extends BaseService
 	}
 
 	public void onApplicationEvent(ApplicationEvent event) {
+		/*
 		try {
 	        if (event instanceof ContextRefreshedEvent) {
 	        	boolean b = isRootAC();
@@ -112,15 +113,17 @@ public class DefaultServicesService extends BaseService
 		} catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
+		*/
     }
 	
 	public ServiceEntry getServiceEntry(String name) {
 		synchronized (this) {
-			LOG.debug("entering getMetadataService "+name+" "+System.currentTimeMillis());
+			LOG.debug("entering getMetadataService "+name+" "+System.currentTimeMillis()+" "+this);
 			if (!serviceEntries.containsKey(name)) {
 				new ServiceEntry(name).start();	
 			}
 			ServiceEntry se = serviceEntries.get(name);
+			LOG.debug("exiting  getMetadataService "+name+" "+System.currentTimeMillis()+" "+this);
 			return se;	
 		}
 	}
@@ -183,6 +186,7 @@ public class DefaultServicesService extends BaseService
 				        			br = new BufferedReader(new InputStreamReader(loader.getResourceAsStream(
 				        					"xc/mst/services/spring-service.xml")));
 				        		} catch (Throwable t) {
+				        			LOG.debug("", t);
 				        			semaphore.release();
 				        			return;
 				        		}
@@ -199,8 +203,9 @@ public class DefaultServicesService extends BaseService
 				        		util.setClassLoader(null);
 			        		}
 						} catch (Throwable t) {
+							LOG.debug("", t);
+						} finally {
 							semaphore.release();
-							t.printStackTrace(System.out);
 						}
 						LOG.debug("done initting ac");
 					}

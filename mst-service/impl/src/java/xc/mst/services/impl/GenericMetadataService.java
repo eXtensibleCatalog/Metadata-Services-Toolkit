@@ -64,8 +64,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	protected int errorCountPerCommit = 0;
 	protected Emailer mailer = new Emailer();
 	
-	protected TLongObjectHashMap predecessorKeyedMap = new TLongObjectHashMap();
-	protected TLongObjectHashMap successorKeyedMap = new TLongObjectHashMap();
+	protected TLongHashSet predecessors = new TLongHashSet();
 
 	/**
 	 * A list of services to run after this service's processing completes
@@ -435,9 +434,8 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 				(outputSet==null?"null":outputSet.getDisplayName())+")");
 
 		running.acquireUninterruptibly();
-		predecessorKeyedMap.clear();
-		successorKeyedMap.clear();
-		getRepository().populatePredSuccMaps(predecessorKeyedMap, successorKeyedMap);
+		predecessors.clear();
+		getRepository().populatePredecessors(predecessors);
 		
 		LOG.debug("gettingServiceHarvest");
 		ServiceHarvest sh = getServiceHarvest(
@@ -481,7 +479,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 						if (rout2.getId() == -1) {
 							getRepositoryDAO().injectId(rout2);
 						}
-						injectKnownPredecessors(in, rout2);
+						//injectKnownPredecessors(in, rout2);
 						getRepository().addRecord(rout2);
 					}
 				}
@@ -523,30 +521,12 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	}
 	
 	protected void injectKnownSuccessors(Record in) {
-		TLongHashSet tlal = (TLongHashSet)predecessorKeyedMap.get(in.getId());
-		if (tlal != null) {
-			long[] succIds = tlal.toArray();
-			for (int i=0; i<succIds.length; i++) {
-				Record succ = new Record();
-				succ.setId(succIds[i]);
-				//succ.setStatus(Record.UPDATE_REPLACE);
-				in.getSuccessors().add(succ);
-				tlal = (TLongHashSet)successorKeyedMap.get(succ.getId());
-				if (tlal != null) {
-					long[] predIds = tlal.toArray();
-					for (int j=0; j<predIds.length; j++) {
-						Record pred = in;
-						if (predIds[j] != in.getId()) {
-							pred = new Record();
-							pred.setId(predIds[j]);
-						}
-						succ.addPredecessor(pred);
-					}
-				}
-			}
+		if (predecessors.contains(in.getId())) {
+			getRepository().injectSuccessors(in);
 		}
 	}
 	
+	/*
 	protected void injectKnownPredecessors(Record in, Record out) {
 		if (in.getId() > -1) {
 			if (outputSet != null) {
@@ -567,4 +547,5 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 			tlal.add(in.getId());
 		}
 	}
+	*/
 }

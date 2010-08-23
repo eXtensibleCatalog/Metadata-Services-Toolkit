@@ -9,7 +9,7 @@
 
 package xc.mst.repo;
 
-import gnu.trove.TLongObjectHashMap;
+import gnu.trove.TLongHashSet;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.List;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
+import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 
@@ -73,12 +74,13 @@ public interface Repository {
 	public List<Long> getPredecessorIds(Record r);
 	
 	public void injectSuccessors(Record r);
+	public void injectSuccessorIds(Record r);
 	
 	public Provider getProvider();
 	public Service getService();
 	public void setProvider(Provider p);
 	public void setService(Service s);
 	
-	public void populatePredSuccMaps(TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap);
+	public void populatePredecessors(TLongHashSet predecessors);
 
 }

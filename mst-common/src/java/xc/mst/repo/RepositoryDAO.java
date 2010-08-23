@@ -10,7 +10,6 @@
 package xc.mst.repo;
 
 import gnu.trove.TLongHashSet;
-import gnu.trove.TLongObjectHashMap;
 import gnu.trove.TObjectLongHashMap;
 
 import java.sql.PreparedStatement;
@@ -20,6 +19,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -770,25 +770,25 @@ public class RepositoryDAO extends BaseDAO {
 		return records;
 	}
 	
-	public void populatePredSuccMaps(String name, TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {
+	public void populatePredecessors(String name, TLongHashSet predecessors) {
 		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList("select record_id, pred_record_id from "+getTableName(name, RECORD_PREDECESSORS_TABLE));
 		for (Map<String, Object> row : rowList) {
-			Long succId = (Long)row.get("record_id");
+			//Long succId = (Long)row.get("record_id");
 			Long predId = (Long)row.get("pred_record_id");
-			TLongHashSet succs = (TLongHashSet)predKeyedMap.get(predId);
-			if (succs == null) {
-				succs = new TLongHashSet();
-				predKeyedMap.put(predId, succs);
-			}
-			succs.add(succId);
-			
-			TLongHashSet preds = (TLongHashSet)succKeyedMap.get(succId);
-			if (preds == null) {
-				preds = new TLongHashSet();
-				succKeyedMap.put(succId, preds);
-			}
-			preds.add(predId);
+			predecessors.add(predId);
 		}
+	}
+	
+
+	public java.util.Set<Long> getSuccessorIds(String name, Long predId) {
+		java.util.Set<Long> succIds = new HashSet<Long>();
+		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
+				"select record_id from "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" where pred_record_id=?", predId);
+		for (Map<String, Object> row : rowList) {
+			Long succId = (Long)row.get("record_id");
+			succIds.add(succId);
+		}
+		return succIds;
 	}
 	
 	public void setAllLastModifiedOais(String name, Date d) {

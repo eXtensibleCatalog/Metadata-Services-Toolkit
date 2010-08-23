@@ -140,23 +140,14 @@ public class Util {
 		}
 	}
 	
-	public String getString(TLongObjectHashMap tlohm) {
+	public String getString(TLongHashSet tlohm) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("total_size:");
 		sb.append(tlohm.size());
 		sb.append(" ");
-		tlohm.forEachEntry(new TLongObjectProcedure() {
-			public boolean execute(long key, Object value) {
-				TLongHashSet tlal = (TLongHashSet)value;
-				sb.append(key+":[");
-				tlal.forEach(new TLongProcedure() {
-					public boolean execute(long value) {
-						sb.append(value);
-						sb.append(",");
-						return true;
-					}
-				});
-				sb.append("] ");
+		tlohm.forEach(new TLongProcedure() {
+			public boolean execute(long value) {
+				sb.append(value+", ");
 				return true;
 			}
 		});

@@ -9,10 +9,15 @@
 
 package xc.mst.repo;
 
+import gnu.trove.TLongHashSet;
 import gnu.trove.TLongObjectHashMap;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.transaction.TransactionStatus;
@@ -21,6 +26,8 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
+import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
@@ -28,6 +35,7 @@ import xc.mst.manager.BaseService;
 public class DefaultRepository extends BaseService implements Repository {
 	
 	private static final Logger LOG = Logger.getLogger(DefaultRepository.class);
+	Map<Long, java.util.Set<Long>> predSuccMap = new HashMap<Long, java.util.Set<Long>>();
 	
 	protected String name = null;
 	
@@ -75,8 +83,8 @@ public class DefaultRepository extends BaseService implements Repository {
 		});
 	}
 	
-	public void populatePredSuccMaps(TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {
-		getRepositoryDAO().populatePredSuccMaps(name, predKeyedMap, succKeyedMap);
+	public void populatePredecessors(TLongHashSet predecessors) {
+		getRepositoryDAO().populatePredecessors(name, predecessors);
 	}
 	
 	protected boolean exists() {
@@ -96,6 +104,16 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 
 	public void addRecord(Record record) {
+		if (record.getPredecessors() != null) {
+			for (InputRecord ir : record.getPredecessors()) {
+				java.util.Set<Long> succIds = predSuccMap.get(ir.getId());
+				if (succIds == null) {
+					succIds = new HashSet<Long>();
+					predSuccMap.put(ir.getId(), succIds);
+				}
+				succIds.add(record.getId());
+			}
+		}
 		getRepositoryDAO().addRecord(name, record);
 	}
 	
@@ -109,6 +127,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	
 	public void endBatch() {
 		getRepositoryDAO().endBatch(name);
+		predSuccMap.clear();
 	}
 
 	public List<Long> getPredecessorIds(Record r) {
@@ -171,6 +190,21 @@ public class DefaultRepository extends BaseService implements Repository {
 		List<Record> succs = getRepositoryDAO().getSuccessors(name, r.getId());
 		if (succs != null) {
 			r.getSuccessors().addAll(succs);
+		}
+	}
+	
+	public void injectSuccessorIds(Record r) {
+		java.util.Set<Long> succIds = predSuccMap.get(r.getId());
+		if (succIds == null) {
+			succIds = getRepositoryDAO().getSuccessorIds(name, r.getId());
+			predSuccMap.put(r.getId(), succIds);
+		}
+		if (succIds != null) {
+			for (Long succId : succIds) {
+				Record or = new Record();
+				or.setId(succId);
+				r.getSuccessors().add(or);
+			}
 		}
 	}
 	
