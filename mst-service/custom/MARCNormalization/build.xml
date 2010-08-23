@@ -213,11 +213,6 @@
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/MST-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />
-		<echo>
-			DatabaseUrl: @${DatabaseUrl}@
-			DatabaseUsername: @${DatabaseUsername}@
-			DatabasePassword: @${DatabasePassword}@
-		</echo>
 		<sql classpathref="classpath.compile"
 				driver="com.mysql.jdbc.Driver"
 				url="${DatabaseUrl}"
@@ -247,14 +242,20 @@
 		</delete>
 	</target>
 
-	<target name="test.oncurrent" depends="init.test, compile.test, test.nodep" />
-	<target name="test" depends="install-mst, init.test, compile.test, unzip-base-tests, test.nodep" />
-	<target name="test.nodep">
+	<target name="test" depends="install-mst, unzip-base-tests, test.nodep" />
+	<target name="test.nodep" depends="init.test, compile.test">
 		<taskdef name="testng" classpathref="classpath.compile"
 			classname="org.testng.TestNGAntTask" />
 
 		<testng classpathref="classpath.test.run" outputdir="${build.test}"
 				workingDir="${build.dir}">
+			<jvmarg value="-server" />
+			<jvmarg value="-Xms700M" />
+			<jvmarg value="-Xmx700M" />
+			<!--
+			<jvmarg value="-Xms3000M" />
+			<jvmarg value="-Xmx3000M" />
+			-->
 			<classfileset dir="${build.test.classes}" includes="**/*${test}*.class"/>
 		</testng>
 	</target>

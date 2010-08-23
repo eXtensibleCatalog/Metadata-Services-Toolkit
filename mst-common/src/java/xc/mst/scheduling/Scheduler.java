@@ -134,10 +134,10 @@ public class Scheduler extends BaseService implements Runnable {
 				}
 			}
 
-			LOG.debug("runningJob: "+runningJob);
+			//LOG.debug("runningJob: "+runningJob);
 			if (runningJob != null) {
-				LOG.debug("runningJob.isAlive(): "+runningJob.isAlive());
-				LOG.debug("runningJob == solrWorkerThread: "+(runningJob == solrWorkerThread));
+				//LOG.debug("runningJob.isAlive(): "+runningJob.isAlive());
+				//LOG.debug("runningJob == solrWorkerThread: "+(runningJob == solrWorkerThread));
 			}
 			if (runningJob == null || !runningJob.isAlive() || runningJob == solrWorkerThread) {
 				if (runningJob != null) {

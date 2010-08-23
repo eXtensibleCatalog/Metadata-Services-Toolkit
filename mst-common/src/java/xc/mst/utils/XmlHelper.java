@@ -1,31 +1,59 @@
 package xc.mst.utils;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.apache.log4j.Logger;
 import org.jdom.Element;
+import org.jdom.input.DOMBuilder;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.w3c.dom.Document;
 
 public class XmlHelper {
 	
 	private static final Logger LOG = Logger.getLogger(XmlHelper.class);
-	protected SAXBuilder builder = new SAXBuilder();
+	protected SAXBuilder saxBuilder = new SAXBuilder();
+	protected DOMBuilder domBuilder = new DOMBuilder();
+	protected DocumentBuilder docBuilder = null;
 	
 	//protected Format xmlFormat = null;
 	protected XMLOutputter xmlOutputterPretty = null;
 	protected XMLOutputter xmlOutputterCompact = null;
 	protected XMLOutputter xmlOutputterRaw = null;
 	
-	protected SAXBuilder getBuilder() {
-		if (builder ==null) {
-			builder = new SAXBuilder();
+	protected SAXBuilder getSaxBuilder() {
+		if (saxBuilder ==null) {
+			saxBuilder = new SAXBuilder();
 		}
-		return builder;
+		return saxBuilder;
+	}
+	
+	protected DOMBuilder getDomBuilder() {
+		if (domBuilder ==null) {
+			domBuilder = new DOMBuilder();
+		}
+		return domBuilder;
+	}
+	
+	protected DocumentBuilder getDocumentBuilder() {
+		if (docBuilder == null) {
+			try {
+				docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			} catch (Throwable t) {
+				LOG.error("", t);
+			}
+			LOG.debug("docBuilder: "+docBuilder);
+			LOG.debug("docBuilder.getClass(): "+docBuilder.getClass());
+		}
+		return docBuilder;
 	}
 
 	public XMLOutputter getXMLOutputterPretty() {
@@ -79,7 +107,7 @@ public class XmlHelper {
 	
 	public org.jdom.Document getJDomDocument(InputStream is) {
 		try {
-			return getBuilder().build(is);
+			return getSaxBuilder().build(is);
 		} catch (Throwable t) {
 			LOG.error("", t);
 			Util.getUtil().throwIt(t);
@@ -89,15 +117,12 @@ public class XmlHelper {
 	
 	public org.jdom.Document getJDomDocument(String str) {
 		try {
-			TimingLogger.start("new StringReader()");
-			StringReader sr = new StringReader(str);
-			TimingLogger.stop("new StringReader()");
-			TimingLogger.start("getBuilder()");
-			SAXBuilder sb = getBuilder();
-			TimingLogger.stop("getBuilder()");
-			TimingLogger.start("sb.build(sr)");
-			org.jdom.Document d = sb.build(sr);
-			TimingLogger.stop("sb.build(sr)");
+			TimingLogger.start("xerces");
+			Document doc = getDocumentBuilder().parse(new ByteArrayInputStream(str.getBytes("UTF-8")));
+			TimingLogger.stop("xerces");
+			TimingLogger.start("jdom");
+			org.jdom.Document d = getDomBuilder().build(doc);
+			TimingLogger.stop("jdom");
 			return d;
 		} catch (Throwable uee) {
 			LOG.error("", uee);
@@ -108,14 +133,14 @@ public class XmlHelper {
 	public boolean diffXmlFiles(String file1, String file2) {
 		try {
 			//LOG.debug("file1: "+new Util().slurp(file1));
-			String file1contents = getString(getBuilder().build(new FileInputStream(file1)).getRootElement());
+			String file1contents = getString(getSaxBuilder().build(new FileInputStream(file1)).getRootElement());
 			file1contents = file1contents.replaceAll("<datestamp>.*</datestamp>", "");
 			file1contents = file1contents.replaceAll("<request.*</request>", "");
 			file1contents = file1contents.replaceAll("<responseDate.*</responseDate>", "");
 			//LOG.debug("file1contents: "+file1contents);
 			
 			//LOG.debug("file2: "+new Util().slurp(file2));
-			String file2contents = getString(getBuilder().build(new FileInputStream(file2)).getRootElement());
+			String file2contents = getString(getSaxBuilder().build(new FileInputStream(file2)).getRootElement());
 			file2contents = file2contents.replaceAll("<datestamp>.*</datestamp>", "");
 			file2contents = file2contents.replaceAll("<request.*</request>", "");
 			file2contents = file2contents.replaceAll("<responseDate.*</responseDate>", "");

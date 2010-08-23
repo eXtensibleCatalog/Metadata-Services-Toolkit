@@ -183,6 +183,16 @@ public class TimingStats {
 		LOG.debug("reset()");
 		LOG.debug("***");
 		reset(true);
+		Runtime r = Runtime.getRuntime();
+		long maxMem = r.maxMemory()/1048576;
+		long totalMem = r.totalMemory()/1048576;
+		
+		long freeBytes = r.freeMemory();
+		long freeMem = freeBytes/1048576;
+		LOG.debug("");
+		LOG.debug("Free  memory: " + Long.toString(freeMem) + "MB.");
+		LOG.debug("Total memory: " + Long.toString(totalMem) + "MB.");
+		LOG.debug("Max'm memory: " + Long.toString(maxMem) + "MB.");
 		LOG.debug("***");
 	}
 	

@@ -5,9 +5,9 @@ import java.util.List;
 import org.jdom.Element;
 
 /**
- * @author Benjamin Anderson
- * 
  * The is the base record interface to be used by service implementers.
+ * 
+ * @author Benjamin Anderson
  *
  */
 public interface RecordIfc {

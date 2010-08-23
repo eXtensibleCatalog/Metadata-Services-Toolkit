@@ -322,7 +322,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	 * 			r.status
 	 * 			<ul>
 	 * 				<li>
-	 * 					If the InputRecord has been deleted, then the status will be Record.DELETED.
+	 * 					If this InputRecord has been deleted, then the status will be Record.DELETED.
 	 * 					Otherwise it will be Record.ACTIVE. 
 	 * 				</li>
 	 * 			</ul>
@@ -331,8 +331,8 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	 * 			r.successors
 	 * 			<ul>
 	 * 				<li>
-	 * 					if this InputRecord has been processed before (determined by the oai-id), then the record 
-	 * 					with have successor Records attached to it. The only data attached to these records 
+	 * 					If this InputRecord has been processed before (determined by the oai-id), then the record 
+	 * 					will have successor Records attached to it. The only data attached to these records 
 	 * 					is the id. The content (xml) is not attached. If implementers find it necessary to 
 	 * 					have this, we may provide an optional way to get that content.
 	 * 				</li>
@@ -342,7 +342,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	 * 			r.successors.predecessors
 	 * 			<ul>
 	 * 				<li>
-	 * 					if this InputRecord has successors associated with it, then the predecessors of the successors 
+	 * 					If this InputRecord has successors associated with it, then the predecessors of the successors 
 	 * 					will also be attached. As with InputRecord.successors, these predecessor records only have the 
 	 * 					id associated with them. For a typical one-to-one service, this data is somewhat redundant. 
 	 * 					But for more complex services in which a Record may have more than one predecessor, it becomes necessary.
@@ -425,13 +425,24 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
 
+		LOG.debug("getClass(): "+getClass());
+		LOG.debug("inputFormat: "+inputFormat);
+		LOG.debug("inputSet: "+inputSet);
+		LOG.debug("outputSet: "+outputSet);
+		LOG.debug(getClass().getName()+".process("+repo.getName()+", "+
+				(inputFormat==null?"null":inputFormat.getName())+", "+
+				(inputSet==null?"null":inputSet.getDisplayName())+", "+
+				(outputSet==null?"null":outputSet.getDisplayName())+")");
+
 		running.acquireUninterruptibly();
 		predecessorKeyedMap.clear();
 		successorKeyedMap.clear();
 		getRepository().populatePredSuccMaps(predecessorKeyedMap, successorKeyedMap);
 		
+		LOG.debug("gettingServiceHarvest");
 		ServiceHarvest sh = getServiceHarvest(
 				inputFormat, inputSet, repo.getName(), getService());
+		LOG.debug("sh: "+sh);
 		List<Record> records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
 		getRepository().beginBatch();
 		
