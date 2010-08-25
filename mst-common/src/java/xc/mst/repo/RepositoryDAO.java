@@ -293,6 +293,12 @@ public class RepositoryDAO extends BaseDAO {
 	                        ps.setLong(i++, r.getId());
 	                        ps.setString(i++, r.getOaiXml());
 	                        ps.setString(i++, r.getOaiXml());
+	                        if (r.getOaiXml() != null) {
+	                        	TimingLogger.add("RECORDS_XML_LENGTH", r.getOaiXml().length());
+	                        } else {
+	                        	TimingLogger.add("RECORDS_XML_LENGTH", 0);
+	                        }
+	                        
 	                    }
 
 	                    public int getBatchSize() {

@@ -398,6 +398,7 @@ public class NormalizationService extends GenericMetadataService {
 					logError("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
 					return new ArrayList<OutputRecord>();
 				}
+				TimingLogger.add(setName, 0);
 				
 				if(setSpec != null) {
 					// Get the set for the provider

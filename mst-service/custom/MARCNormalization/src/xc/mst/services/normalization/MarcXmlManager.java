@@ -78,7 +78,7 @@ public class MarcXmlManager {
 			// Use XPATH to get a list of all linking fields currently
 			// in the MARC XML records.  These are the values of the $8
 			// subfield of any datafield
-			XPath xpath = XPath.newInstance("//marc:subfield[@code='8']");
+			XPath xpath = XPath.newInstance(".//marc:subfield[@code='8']");
 			xpath.addNamespace("marc", "http://www.loc.gov/MARC21/slim");
 			List<Element> elements = xpath.selectNodes(marcXml);
 
