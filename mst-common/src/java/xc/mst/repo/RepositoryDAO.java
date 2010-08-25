@@ -587,7 +587,8 @@ public class RepositoryDAO extends BaseDAO {
 		}
 		sb.append(
 				" group by u.record_id "+
-				" order by u.record_id limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 1000));
+				" order by u.record_id "+
+				" limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 1000));
 
 		Object obj[] = params.toArray();
 		
@@ -742,7 +743,8 @@ public class RepositoryDAO extends BaseDAO {
 						" and (u.date_updated > ? or ? is null) "+
 						" and u.date_updated <= ? "+
 						" group by u.record_id "+
-						" order by u.record_id ");
+						" order by u.record_id "+
+						" limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 1000));
 			LOG.debug("startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
 			params.add(startingId);
 			params.add(startingId);
@@ -771,7 +773,6 @@ public class RepositoryDAO extends BaseDAO {
 			}
 			LOG.debug("records.size(): "+records.size());
 		}
-
 
 		return records;
 	}

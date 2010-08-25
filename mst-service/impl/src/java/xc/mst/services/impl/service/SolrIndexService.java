@@ -17,6 +17,7 @@ import xc.mst.manager.record.RecordService;
 import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
 import xc.mst.services.impl.GenericMetadataService;
+import xc.mst.utils.TimingLogger;
 
 public class SolrIndexService extends GenericMetadataService  {
 	
@@ -39,6 +40,7 @@ public class SolrIndexService extends GenericMetadataService  {
 		Long highestId = null;
 		boolean previouslyPaused = false;
 		LOG.debug("stopped: "+stopped);
+		int getRecordLoops = 0;
 		while (records != null && records.size() > 0 && !stopped) {
 			if (paused) {
 				if (!previouslyPaused) {
@@ -61,21 +63,34 @@ public class SolrIndexService extends GenericMetadataService  {
 				LOG.debug("acquireUninterruptibly 2");
 			}
 			for (Record in : records) {
+				TimingLogger.start("SolrIndexService.process");
 				process(in);
+				TimingLogger.stop("SolrIndexService.process");
 				highestId = in.getId();
 				sh.setHighestId(in.getId());
 			}
 			LOG.debug("sh.getFrom(): "+sh.getFrom()+" sh.getUntil(): "+sh.getUntil()+" sh.getHighestId(): "+sh.getHighestId()+" inputFormat: "+inputFormat+" inputSet:"+inputSet);
+			TimingLogger.start("getRecordsWSets");
 			records = 
 				((DefaultRepository)repo).getRecordsWSets(from, until, highestId);
+			TimingLogger.stop("getRecordsWSets");
+			TimingLogger.add(repo.getName(), highestId);
 			LOG.debug("sh.getId(): "+sh.getId());
 			getServiceDAO().persist(sh);
-			try {
-				getSolrIndexManager().commitIndex();
-			} catch (IndexException ie) {
-				throw new RuntimeException(ie);
+
+			getRecordLoops++;
+			if (getRecordLoops % 50 == 0) {
+				try {
+					TimingLogger.start("commitIndex");
+					getSolrIndexManager().commitIndex();
+					TimingLogger.stop("commitIndex");
+				} catch (IndexException ie) {
+					throw new RuntimeException(ie);
+				}
+				TimingLogger.reset();	
 			}
 		}
+		TimingLogger.reset();
 		LOG.debug("stopped: "+stopped);
 		if (!stopped) {
 			sh.setHighestId(null);

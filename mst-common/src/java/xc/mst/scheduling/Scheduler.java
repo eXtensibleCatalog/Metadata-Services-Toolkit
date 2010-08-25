@@ -56,6 +56,7 @@ public class Scheduler extends BaseService implements Runnable {
 	protected Job previousJob = null;
 
 	public void init() {
+		LOG.error("init");
 		new Thread(this).start();
 	}
 	
@@ -85,14 +86,14 @@ public class Scheduler extends BaseService implements Runnable {
 		}
 		
 		if (config.getPropertyAsBoolean("solr.index.whenIdle", false)) {
-			LOG.debug("solr.index.whenIdle is true");
+			LOG.info("solr.index.whenIdle is true");
 			solrWorkerThread = new WorkerThread();
 			LOG.debug("solrWorkerThread: "+solrWorkerThread);
 			SolrWorkDelegate solrWd = (SolrWorkDelegate)config.getBean("SolrWorkDelegate");
 			solrWorkerThread.setWorkDelegate(solrWd);
 			solrWorkerThread.start();
 		} else {
-			LOG.debug("solr.index.whenIdle is false");
+			LOG.info("solr.index.whenIdle is false");
 		}
 
 		while(!killed) {
@@ -218,7 +219,7 @@ public class Scheduler extends BaseService implements Runnable {
 						}
 					}
 					Job jobToStart = getJobService().getNextJobToExecute();
-					if (jobToStart == null && previousJob != null && solrWorkerThread != null) {
+					if (jobToStart == null && runningJob != solrWorkerThread && solrWorkerThread != null) {
 						LOG.debug("solrWorkerThead.proceed");
 						solrWorkerThread.proceed();
 						runningJob = solrWorkerThread;

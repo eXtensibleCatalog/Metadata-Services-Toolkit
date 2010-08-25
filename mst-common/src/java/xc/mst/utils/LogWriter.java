@@ -27,6 +27,32 @@ public class LogWriter
 	 */
 	private static HashMap<String, Logger> loggers = new HashMap<String, Logger>();
 	
+	public static void addDebug(String logFileLocation, String message)
+	{
+		// If we already have a logger for the file, use it
+		if(loggers.containsKey(logFileLocation))
+			loggers.get(logFileLocation).debug(message);
+		else // Otherwise create a new logger for the file and use that
+		{
+			// Create a new file appender to write to the requested file
+			FileAppender appender = new FileAppender();
+			appender.setFile(MSTConfiguration.getUrlPath()+"/"+logFileLocation);
+			appender.setName(logFileLocation);
+			appender.setLayout(new PatternLayout("%d{DATE} %5p [%t] - %m%n"));
+			appender.activateOptions();
+			
+			// Create a new logger for the file appender we just created
+			Logger logger = Logger.getLogger(logFileLocation);
+			logger.addAppender(appender);
+			
+			// Use the new logger to write the info message
+			logger.debug(message);
+			
+			// Add the logger to the HashMap so we can access it next time we need it
+			loggers.put(logFileLocation, logger);
+		} // end else(The logger wasn't defined)
+	} // end method addInfo(String, String)
+	
 	/**
 	 * Writes an info level message to the log file
 	 *

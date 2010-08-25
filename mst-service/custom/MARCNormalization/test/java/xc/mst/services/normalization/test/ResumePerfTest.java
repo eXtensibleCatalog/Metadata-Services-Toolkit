@@ -1,5 +1,7 @@
 package xc.mst.services.normalization.test;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
@@ -7,6 +9,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
 import xc.mst.common.test.BaseTest;
+import xc.mst.constants.Status;
 import xc.mst.repo.Repository;
 import xc.mst.services.impl.GenericMetadataService;
 
@@ -30,10 +33,47 @@ public class ResumePerfTest extends BaseTest {
 			
 			repo = (Repository)getBean("Repository");
 			repo.setName("135_5m");
-			
-			ms.process(repo, format, incomingSet, null);
+
+			//ms.process(repo, format, incomingSet, null);
+			waitUntilFinished();
 		} catch (Throwable t) {
 			LOG.error("", t);
+		}
+		
+	}
+	
+	public void waitUntilFinished() {
+		int timesNotRunning = 0;
+		while (true) {
+			LOG.debug("checking to see if finished");
+			try {
+				Thread.sleep(1000);
+				Date lastModified = getRepositoryService().getLastModified();
+				LOG.debug("lastModified :"+lastModified);
+				if (lastModified != null && lastModified.after(new Date())) {
+					LOG.debug("Future dated!");
+					continue;
+				}
+				if (scheduler.getRunningJob() != null) {
+					LOG.debug("scheduler.getRunningJob().getJobStatus(): "+scheduler.getRunningJob().getJobStatus());
+					LOG.debug("scheduler.getRunningJob().getJobName(): "+scheduler.getRunningJob().getJobName());
+				} else {
+					LOG.debug("scheduler.getRunningJob() == null");
+				}
+				if (scheduler.getRunningJob() == null || 
+						Status.RUNNING != scheduler.getRunningJob().getJobStatus()) {
+					timesNotRunning++;
+				} else {
+					timesNotRunning = 0;
+				}
+				if (timesNotRunning > 7) {
+					break;
+				}
+				LOG.debug("timeNotRunning: "+timesNotRunning);
+			} catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+			
 		}
 	}
 }

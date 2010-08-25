@@ -170,9 +170,9 @@ public class TimingStats {
 			if (timer.numTimes.get() != 0) {
 				double avg = (0.+timer.totalTime.get())/timer.numTimes.get();
 				avgTime = String.format("%.2f", avg);
-				avgTime = StringUtils.leftPad(avgTime, 10);
+				avgTime = StringUtils.leftPad(avgTime, 12);
 			}
-			String longestTime = StringUtils.leftPad(timer.longestTime+"", 7);
+			String longestTime = StringUtils.leftPad(timer.longestTime+"", 9);
 			String num = StringUtils.leftPad(timer.numTimes+"", 7);
 			sb.append("TimingLogger! total: "+totalTime+"    avg:"+avgTime+"    longest:"+longestTime+"    num:"+num+"   "+name);
 			LOG.debug(sb);

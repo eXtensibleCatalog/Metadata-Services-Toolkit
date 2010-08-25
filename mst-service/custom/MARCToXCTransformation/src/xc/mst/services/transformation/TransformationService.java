@@ -121,6 +121,29 @@ public class TransformationService extends GenericMetadataService
 	
 	@Override
 	public List<OutputRecord> process(InputRecord processMe) {
+		//2 maps as instance variables
+			//bibsProcessed <bib_001, bib_record_id>
+			//bibsYetToArrive <bib_001, bib_record_id>
+		//if new
+			//if bib
+				//if bib(001) exists in bibsYetToArrive
+					//START_HERE_IN_AM
+				//add entry to bibsProcessed
+			//if holding
+				//if bib (004) exists in bibsProcessed 
+					//no map manipulation
+					//output xc-holding with status A
+				//else
+					//if bib(004) exists in bibsYetToArrive
+						//use the record_id for linking
+					//else
+						//generate a new oai-id for the bibYetToArrive
+						//add an entry to bibsYetToArrive
+					//output xc-holding with status H
+	}
+	
+	@Override
+	public List<OutputRecord> process2(InputRecord processMe) {
 		List<OutputRecord> records = new ArrayList<OutputRecord>();
 
 		TimingLogger.start("processRecord");
@@ -312,7 +335,7 @@ public class TransformationService extends GenericMetadataService
 
 	}
 	
-	private void removeExistingBibRecords(InputRecord record, List<OutputRecord> existingRecords) throws DataException,  DatabaseConfigException, IndexException {
+	private void removeExistingBibRecords(InputRecord record) throws DataException,  DatabaseConfigException, IndexException {
 		Record manifestation = null;
 		for (Record oldRecord: existingRecords) {
 			if (oldRecord.getType().equalsIgnoreCase("XC-Manifestation")) {
