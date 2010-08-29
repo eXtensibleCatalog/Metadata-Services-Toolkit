@@ -382,7 +382,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			String errorCode = error.substring(indexOfHypen + 1, error.indexOf(":"));
 			BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getInstance().getBean("BrowseRecordService");
 			ErrorCode error = browseRecordService.getError(errorCode, service);
-	
+
 			// Get error code
 			FileInputStream fis = new FileInputStream(error.getErrorDescriptionFile());
 			BufferedInputStream bis = new BufferedInputStream(fis);
