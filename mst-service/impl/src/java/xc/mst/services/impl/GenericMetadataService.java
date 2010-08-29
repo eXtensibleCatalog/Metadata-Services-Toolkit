@@ -440,6 +440,7 @@ out = getRecordService().createSuccessor(r, getService());
 				inputFormat, inputSet, repo.getName(), getService());
 		List<Record> records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
 		getRepository().beginBatch();
+		//  TODO not inserting errors on input record.
 		//repo.beginBatch();
 		
 		boolean previouslyPaused = false;
@@ -475,17 +476,15 @@ out = getRecordService().createSuccessor(r, getService());
 							getRepositoryDAO().injectId(rout2);
 						}
 						injectKnownPredecessors(in, rout2);
-						if (rout2.getMessages() != null && rout2.getMessages().size() > 0) {
-							LOG.debug("** MS: rout2.getMessages():" + rout2.getMessages().get(0).getMessageCode());
-						}
-
+						
 						getRepository().addRecord(rout2);
 					}
 				}
 				sh.setHighestId(in.getId());
 				
+				//  TODO not inserting errors on input record.
 				// Update the error message on incoming record
-				//repo.addRecord(in);
+//				repo.addRecord(in);
 			}
 
 			LOG.debug("sh.getId(): "+sh.getId());
@@ -507,6 +506,7 @@ out = getRecordService().createSuccessor(r, getService());
 			}
 
 		}
+		//  TODO not inserting errors on input record.
 //		repo.endBatch();
 		getRepository().endBatch();
 		if (!stopped) {
