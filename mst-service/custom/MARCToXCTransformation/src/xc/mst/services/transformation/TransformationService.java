@@ -127,8 +127,11 @@ public class TransformationService extends GenericMetadataService
 		//if new
 			//if bib
 				//if bib(001) exists in bibsYetToArrive
-					//START_HERE_IN_AM
-				//add entry to bibsProcessed
+					//output xc-manifestation with set aside bib_record_id
+					//move bibsYetToArrive entry to bibsProcessed
+				//else
+					//output xc-manifestation with new record_id
+					//create new entry in bibsProcessed
 			//if holding
 				//if bib (004) exists in bibsProcessed 
 					//no map manipulation

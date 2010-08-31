@@ -1,4 +1,4 @@
-export BACKUP_FOLDER="${HOME}/mst/backups/$(date +%Y%m%d_%H%M%S)"
+export BACKUP_FOLDER="${BASE_DIR}/backups/$(date +%Y%m%d_%H%M%S)"
 mkdir -p ${BACKUP_FOLDER} 2> /dev/null
 
 . ./scripts/backup_logs.sh

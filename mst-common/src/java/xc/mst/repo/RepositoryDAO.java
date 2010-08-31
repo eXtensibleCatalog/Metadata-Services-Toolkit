@@ -531,6 +531,7 @@ public class RepositoryDAO extends BaseDAO {
 					id);
 		} catch (EmptyResultDataAccessException e) {
 			LOG.info("record not found for id: "+id);
+			LOG.info("sql: "+sql);
 		}
 		return r;
 	}
