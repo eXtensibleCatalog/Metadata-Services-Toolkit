@@ -27,6 +27,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
@@ -45,8 +46,7 @@ import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.BaseDAO;
-import xc.mst.manager.processingDirective.DefaultServicesService;
-import xc.mst.manager.processingDirective.ServicesService;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
@@ -220,7 +220,11 @@ public class RepositoryDAO extends BaseDAO {
 		if (recordsToAdd == null) {
 			recordsToAdd = new ArrayList<Record>();
 		}
-
+		if (r.getMessages() != null && r.getMessages().size() > 0) {
+			LOG.debug("** In record DAO addRecord(String name, Record r):"+r.getMessages().get(0).getMessageCode());
+		} else {
+			LOG.debug("** In record DAOaddRecord(String name, Record r) :"+r.getMessages());
+		}
 		recordsToAdd.add(r);
 		commitIfNecessary(name, false);
 	}
@@ -246,7 +250,6 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	protected void commitIfNecessary(String name, boolean force) {
-		LOG.debug("commitIfNecessary:Inbatch : " + inBatch);
 		int batchSize = 50000;
 		if (force || batchSize <= recordsToAdd.size()) {
 			final long startTime = System.currentTimeMillis();
@@ -360,23 +363,32 @@ public class RepositoryDAO extends BaseDAO {
     			";";
 	        List<Object[]> recordMsgs = new ArrayList<Object[]>();
 	        for (Record r : recordsToAdd) {
+	        	LOG.debug("** recordsToAdd rec : " + r);
 	        	if (r.getMessages() != null) {
 	        		LOG.debug("** r.getMessages():" + r.getMessages());
-		        	for (RecordMessage m : r.getMessages()) {
+//		        	for (RecordMessage m : r.getMessages()) {
+		        		//LOG.debug("** RecordMessage m:" + m);
 		        		Object[] recMsgRow = new Object[6];
 		        		recMsgRow[0] = r.getId();
+		        		// TODO for now it is always set to true(input record). Looks like we dont need the
+		        		// information whether it is input or output record.
 		        		recMsgRow[1] = true;
-		        		recMsgRow[2] = m.getMessageCode();
-		        		recMsgRow[3] = m.getMessageLevel();
-		        		recMsgRow[4] =  m.getServiceId();
-		        		recMsgRow[5] = m.getDetailedMessage();
+		        		recMsgRow[2] = "111"; //m.getMessageCode();
+		        		recMsgRow[3] = "error"; //m.getMessageLevel();
+		        		recMsgRow[4] = 1; // m.getService().getId();
+		        		recMsgRow[5] = "Detailed message goes here!"; //m.getDetailedMessage();
 		        		recordMsgs.add(recMsgRow);
-		        	}
+		        	//}
 	        	}
 	        }
 	        updateCounts = jdbcTemplate.batchUpdate(
 	        		sql,
 	                new RecMessageBatchPreparedStatementSetter(recordMsgs));
+
+			for (Record rec: recordsToAdd) {
+				LOG.debug("** rec" + rec.getMessages());
+			}
+
 	        TimingLogger.stop("RECORD_MESSAGES.insert");
 	        TimingLogger.start("RECORD_PREDECESSORS_TABLE.insert");
 	        // TODO: Delete previous predecessors that are no longer there.
@@ -590,32 +602,6 @@ public class RepositoryDAO extends BaseDAO {
 					id);
 		} catch (EmptyResultDataAccessException e) {
 			LOG.info("record not found for id: "+id);
-		}
-		
-		// If record not null then get error message information
-		if (r != null) {
-			String messageSql = 
-				"select " + RECORD_MESSAGES_TABLE_COLUMNS +
-				"from "+getTableName(name, RECORD_MESSAGES_TABLE)+" rm " +
-				"where rm.record_id=? ";
-	
-			try {
-
-				List<RecordMessage> messages = jdbcTemplate.query(messageSql,
-						new Object[] {r.getId()},
-						new RowMapper<RecordMessage>() {
-							public RecordMessage mapRow(ResultSet rs, int rowNum) throws SQLException {
-								RecordMessage msg = new RecordMessage(rs.getInt(6), rs.getString(4), rs.getString(5), rs.getString(7));
-								msg.setId(rs.getLong(1));
-								ServicesService servicesService = (ServicesService) MSTConfiguration.getInstance().getBean("ServicesService");
-								msg.setMessage(servicesService.getError(msg.getServiceId(), msg.getMessageCode()));
-								return msg;
-							}
-				});
-				r.setMessages(messages);
-			} catch (EmptyResultDataAccessException e) {
-				LOG.info("Messages not found for record id: "+id);
-			}
 		}
 		return r;
 	}
@@ -860,9 +846,9 @@ public class RepositoryDAO extends BaseDAO {
 					List<RecordMessage> messages = jdbcTemplate.query(sbMessages.toString(),
 							new Object[] {rws.getId()},
 							new RowMapper() {
-								public RecordMessage mapRow(ResultSet rs, int rowNum) throws SQLException {
-									RecordMessage msg = new RecordMessage(rs.getInt(6), rs.getString(4), rs.getString(5), rs.getString(7));
-									msg.setId(rs.getLong(1));
+								public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+									RecordMessage msg = new RecordMessage(rs.getLong(5), rs.getString(3), rs.getString(4), rs.getString(6));
+									msg.setId(rs.getLong(0));
 									return msg;
 								}
 					});

@@ -56,7 +56,6 @@ public class RepositoryService extends BaseService {
 		try {
 			for (Repository r : getAll()) {
 				Record rec = r.getRecord(id);
-				
 				if (rec != null) {
 					injectSuccessors(rec);
 					injectPredecessors(rec);

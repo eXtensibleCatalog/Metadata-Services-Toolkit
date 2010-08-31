@@ -920,7 +920,8 @@ public class DefaultRecordService extends RecordService
 	@Override
 	public Record getRecordFieldsForBrowseFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException {
 		Record record = getRepositoryService().getRecord(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
-
+		record.setProvider(getProviderDAO().loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
+		record.setService(getServiceDAO().loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
 		return record;
 	}
 
@@ -1109,7 +1110,7 @@ public class DefaultRecordService extends RecordService
 		}
 
 		for(RecordMessage error : record.getMessages()) {
-			String message = error.getServiceId() + "-" + error.getMessageCode() + ":" + error.getMessage();
+			String message = error.getService().getId() + "-" + error.getMessageCode() + ":" + error.getMessage();
 			doc.addField(FIELD_ERROR, message);
 			TimingLogger.add("SOLR-"+FIELD_ERROR, message.length());
 		}
@@ -1139,7 +1140,7 @@ public class DefaultRecordService extends RecordService
 		
 		for(RecordMessage error : record.getMessages())
 		{
-			all.append(error.getServiceId() + "-" + error.getMessageCode() + ":" + error.getMessage());
+			all.append(error.getService().getId() + "-" + error.getMessageCode() + ":" + error.getMessage());
 			all.append(" ");
 		}
 		

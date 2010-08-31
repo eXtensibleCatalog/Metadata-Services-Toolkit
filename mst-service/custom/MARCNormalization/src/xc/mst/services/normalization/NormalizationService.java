@@ -157,7 +157,9 @@ public class NormalizationService extends GenericMetadataService {
 				
 				//TODO: make sure that recordIn is used to create the successors
 				results = convertRecord(recordIn);
-
+				if (results != null && results.size() > 0) {
+					LOG.debug("** 2 results:"+ ((Record)results.get(0)).getMessages().get(0).getMessageCode());
+				}
 				TimingLogger.stop("processRecord.convertRecord");
 				
 				TimingLogger.stop("processRecord");
@@ -173,8 +175,8 @@ public class NormalizationService extends GenericMetadataService {
 	private List<OutputRecord> convertRecord(InputRecord record) {
 		
 		// Empty the lists of errors because we're beginning to process a new record
-		errors = new ArrayList<RecordMessage>();
-		outputRecordErrors = new ArrayList<RecordMessage>();
+		errors.clear();
+		outputRecordErrors.clear();
 		
 		// The list of records resulting from processing the incoming record
 		ArrayList<OutputRecord> results = new ArrayList<OutputRecord>();
@@ -323,6 +325,12 @@ public class NormalizationService extends GenericMetadataService {
 			if(LOG.isDebugEnabled())
 				LOG.debug("Adding errors to the record.");
 
+			// TODO for testing - should be removed
+			errors.add(new RecordMessage(service.getId(), "102", "error", "Invalid leader 06 value: " + leader06));
+			outputRecordErrors.add(new RecordMessage(service.getId(), "102", "error", "Invalid leader 06 value: " + leader06));
+LOG.debug("errors::"+errors);
+LOG.debug("outputRecordErrors::"+outputRecordErrors);
+
 			record.setMessages(errors);
 			
 			if(LOG.isDebugEnabled())
@@ -409,6 +417,9 @@ public class NormalizationService extends GenericMetadataService {
 				// Add the record to the list of records resulting from processing the
 				// incoming record
 				results.add(normalizedRecord);
+				if (results != null && results.size() > 0) {
+					LOG.debug("** 1 results:"+ ((Record)results.get(0)).getMessages().get(0).getMessageCode());
+				}				
 				if(LOG.isDebugEnabled())
 					LOG.debug("Created normalized record from unnormalized record with ID " + record.getId());
 				return results;
@@ -672,7 +683,7 @@ public class NormalizationService extends GenericMetadataService {
 			outputRecordErrors.add(new RecordMessage(service.getId(), "101", "error", " - Cannot create 035 from 001."));
 			errors.add(new RecordMessage(service.getId(), "101", "error"));
 		}
-	
+
 		// If either control field didn't exist, we don't have to do anything
 		if(control001 == null || control003 == null)
 		{

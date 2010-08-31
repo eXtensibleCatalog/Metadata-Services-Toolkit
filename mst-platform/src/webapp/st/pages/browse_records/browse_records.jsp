@@ -173,7 +173,7 @@ text-decoration:underline;
 													  <c:param name="startPageNumber" value="${startPageNumber}"/>
 													  <c:param name="currentPageNumber" value="${currentPageNumber}"/>
 												  </c:url>
-										   		&nbsp;<a href="${viewError}"><img src="${pageContext.request.contextPath}/st/page-resources/img/information.png"/></a>
+										   		&nbsp;<a href="${viewError}"><img src="${pageContext.request.contextPath}/page-resources/img/information.png"/></a>
 										   	</c:if>											
 											
 											<br/>
@@ -413,9 +413,9 @@ text-decoration:underline;
 									<br>
 								</c:if>
 								<div class="redError">
-								<c:if test="${record.messages != '[]'}">
+								<c:if test="${record.errors != '[]'}">
 									Error:
-									<c:forEach var="error" items="${record.messages}" varStatus="status"><c:if test="${status.count > 1}">, </c:if>${error.serviceId}-${error.messageCode}:${error.message} [${error.detailedMessage}]</c:forEach>
+									<c:forEach var="error" items="${record.errors}" varStatus="status"><c:if test="${status.count > 1}">, </c:if>${error}</c:forEach>
 									<br>
 								</c:if>
 								</div>

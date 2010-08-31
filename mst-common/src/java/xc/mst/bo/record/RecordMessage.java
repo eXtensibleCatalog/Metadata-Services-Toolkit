@@ -121,7 +121,6 @@ public class RecordMessage {
 		buffer.append(" messageLevel=" + messageLevel);
 		buffer.append(" service=" + serviceId);
 		buffer.append(" message=" + message);
-		buffer.append(" detailedMessage=" + detailedMessage);
 		
 
 		return buffer.toString();
