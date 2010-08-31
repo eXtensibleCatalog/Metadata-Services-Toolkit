@@ -11,6 +11,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.RecordService;
@@ -146,6 +147,12 @@ public class SolrIndexService extends GenericMetadataService  {
 			doc.addField("service_name", this.repository.getService().getName());
 		} else {
 			doc.addField(RecordService.FIELD_SERVICE_ID, 0);
+		}
+		if (r.getMessages() != null) {
+			for (RecordMessage m : r.getMessages()) {
+				doc.addField(RecordService.FIELD_ERROR,
+						m.getServiceId() + "-" + m.getMessageCode() + ":" + getServicesService().getError(m.getServiceId(), m.getMessageCode()));
+			}
 		}
 		
 		try {

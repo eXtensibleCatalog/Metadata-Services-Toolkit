@@ -41,3 +41,16 @@ create table repo_name.record_predecessors (
 	KEY idx_REPO_NAME_records_set_record_id(record_id),
 	KEY idx_REPO_NAME_records_set_pred_record_id(pred_record_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE repo_name.record_messages (
+  record_message_id  BIGINT      NOT NULL AUTO_INCREMENT,
+  rec_in_out         char(1)      not null,
+  record_id          int          NOT NULL,
+  msg_code           varchar(10)         not null,
+  msg_level          varchar(100)      not null,
+  service_id         int(11)      not null,
+  detail             TEXT,    
+  PRIMARY KEY (record_message_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+

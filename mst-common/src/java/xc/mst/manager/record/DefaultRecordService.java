@@ -39,6 +39,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordIfc;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
@@ -865,7 +866,7 @@ public class DefaultRecordService extends RecordService
 		Collection<Object> errors = doc.getFieldValues(FIELD_ERROR);
 		if(errors != null)
 			for(Object error : errors)
-				record.addError((String)error);
+				record.addMessage(new RecordMessage((String)error));
 		
 		Collection<Object> uplinks = doc.getFieldValues(FIELD_UP_LINK);
 		if(uplinks != null) {
@@ -1108,9 +1109,10 @@ public class DefaultRecordService extends RecordService
 			TimingLogger.add("SOLR-"+FIELD_TRAIT, trait.length());
 		}
 
-		for(String error : record.getErrors()) {
-			doc.addField(FIELD_ERROR, error);
-			TimingLogger.add("SOLR-"+FIELD_ERROR, error.length());
+		for(RecordMessage error : record.getMessages()) {
+			String message = error.getService().getId() + "-" + error.getMessageCode() + ":" + error.getMessage();
+			doc.addField(FIELD_ERROR, message);
+			TimingLogger.add("SOLR-"+FIELD_ERROR, message.length());
 		}
 
 		StringBuffer all = new StringBuffer();
@@ -1136,9 +1138,9 @@ public class DefaultRecordService extends RecordService
 			all.append(" ");
 		}
 		
-		for(String error : record.getErrors())
+		for(RecordMessage error : record.getMessages())
 		{
-			all.append(error);
+			all.append(error.getService().getId() + "-" + error.getMessageCode() + ":" + error.getMessage());
 			all.append(" ");
 		}
 		

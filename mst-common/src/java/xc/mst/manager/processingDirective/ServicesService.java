@@ -116,4 +116,11 @@ public interface ServicesService
     public List<Service> getAllServicesSorted(boolean sort,String columnSorted) throws DatabaseConfigException;
     
     public Collection<String> getServicesAvailableForInstall();
+    /**
+	 * Get error text for given error code
+	 * 
+	 * @param errorCode Error code
+	 * @return Corresponding error text
+	 */
+	public String getError(int serviceId, String errorCode);
 }

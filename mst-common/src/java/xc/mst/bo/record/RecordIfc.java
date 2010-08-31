@@ -53,6 +53,6 @@ public interface RecordIfc {
 	 */
 	public boolean getDeleted();
 	
-	public void setErrors(List<String> errors);
+	public void setMessages(List<RecordMessage> errors);
 
 }

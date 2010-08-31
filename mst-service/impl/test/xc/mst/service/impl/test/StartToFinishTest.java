@@ -125,7 +125,6 @@ public abstract class StartToFinishTest extends BaseTest {
 		LOG.debug("after waitUntilFinished");
 		
 		finalTest();
-		
 		/*
 		indexHarvestedRecords();
 		LOG.debug("after indexHarvestedRecords");
@@ -133,7 +132,8 @@ public abstract class StartToFinishTest extends BaseTest {
 		LOG.debug("after indexServicedRecords");
 		
 		LOG.debug("after finalTest");
-		
+
+				
 		Thread.sleep(60000);
 		createHarvestSchedule();
 		LOG.debug("after createHarvestSchedule");
