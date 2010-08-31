@@ -150,7 +150,7 @@ public class Manifestation extends Record
 
 		manifestation.setCreatedAt(record.getCreatedAt());
 		manifestation.setDeleted(record.getDeleted());
-		manifestation.setErrors(record.getErrors());
+		manifestation.setMessages(record.getMessages());
 		manifestation.setFormat(record.getFormat());
 		manifestation.setFrbrLevelId(record.getFrbrLevelId());
 		manifestation.setHarvest(record.getHarvest());

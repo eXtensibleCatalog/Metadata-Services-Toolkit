@@ -253,9 +253,9 @@
 			<!--
 			<jvmarg value="-Xms700M" />
 			<jvmarg value="-Xmx700M" />
-			-->
 			<jvmarg value="-Xms3000M" />
 			<jvmarg value="-Xmx3000M" />
+			-->
 			<classfileset dir="${build.test.classes}" includes="**/*${test}*.class"/>
 		</testng>
 	</target>

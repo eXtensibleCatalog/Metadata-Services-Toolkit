@@ -62,7 +62,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	
 			org.jdom.Document doc = new XmlHelper().getJDomDocument(getHarvestOutResponse());
 	
-	
+
 			Namespace ns = doc.getRootElement().getNamespace();
 			List<Element> records = doc.getRootElement().getChild("ListRecords", ns).getChildren("record", ns);
 			if (records != null) {
@@ -71,13 +71,11 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 			
 			LOG.debug("Number of records harvested out : " + numberOfRecords);
 			
-			assert numberOfRecords == 175 : " Number of harvested records should be 175 but instead it is " + numberOfRecords;
+			assert numberOfRecords == 28 : " Number of harvested records should be 175 but instead it is " + numberOfRecords;
+			LOG.debug("Number of records harvested out : " + numberOfRecords);
 		} catch (Throwable t) {
 			util.throwIt(t);
 		}
-		
-		LOG.debug("Number of records harvested out : " + numberOfRecords);
-		
-		assert numberOfRecords == 28 : " Number of harvested records should be 175 but instead it is " + numberOfRecords;
+
 	}
 }

@@ -155,7 +155,7 @@ public class Work extends Record
 
 		work.setCreatedAt(record.getCreatedAt());
 		work.setDeleted(record.getDeleted());
-		work.setErrors(record.getErrors());
+		work.setMessages(record.getMessages());
 		work.setFormat(record.getFormat());
 		work.setFrbrLevelId(record.getFrbrLevelId());
 		work.setHarvest(record.getHarvest());

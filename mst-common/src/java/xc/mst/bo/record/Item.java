@@ -150,7 +150,7 @@ public class Item extends Record
 
 		item.setCreatedAt(record.getCreatedAt());
 		item.setDeleted(record.getDeleted());
-		item.setErrors(record.getErrors());
+		item.setMessages(record.getMessages());
 		item.setFormat(record.getFormat());
 		item.setFrbrLevelId(record.getFrbrLevelId());
 		item.setHarvest(record.getHarvest());

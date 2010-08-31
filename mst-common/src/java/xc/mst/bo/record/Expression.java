@@ -84,7 +84,7 @@ public class Expression extends Record
 
 		expression.setCreatedAt(record.getCreatedAt());
 		expression.setDeleted(record.getDeleted());
-		expression.setErrors(record.getErrors());
+		expression.setMessages(record.getMessages());
 		expression.setFormat(record.getFormat());
 		expression.setFrbrLevelId(record.getFrbrLevelId());
 		expression.setHarvest(record.getHarvest());
