@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -27,7 +28,11 @@ public class Util {
 	}
 	
 	public String normalizeName(String name) {
-		return name.replaceAll(" ", "_").toLowerCase();
+		if (name == null) {
+			return name;
+		} else {
+			return name.replaceAll(" ", "_").toLowerCase();
+		}
 	}
 	
 	public String slurp(File file) {
@@ -81,6 +86,21 @@ public class Util {
 		return null;
 	}
 	
+	public void spit(String fileName, String content) {
+		File f = new File(fileName);
+		if (f.exists()) {
+			f.delete();
+		}
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(f);
+			fw.write(content);
+			fw.close();
+		} catch (Throwable t) {
+			throwIt(t);
+		}
+	}
+	
 	public ClassLoader getClassLoader() {
 		return currentClassLoader.get();
 	}
@@ -120,23 +140,14 @@ public class Util {
 		}
 	}
 	
-	public String getString(TLongObjectHashMap tlohm) {
+	public String getString(TLongHashSet tlohm) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("total_size:");
 		sb.append(tlohm.size());
 		sb.append(" ");
-		tlohm.forEachEntry(new TLongObjectProcedure() {
-			public boolean execute(long key, Object value) {
-				TLongHashSet tlal = (TLongHashSet)value;
-				sb.append(key+":[");
-				tlal.forEach(new TLongProcedure() {
-					public boolean execute(long value) {
-						sb.append(value);
-						sb.append(",");
-						return true;
-					}
-				});
-				sb.append("] ");
+		tlohm.forEach(new TLongProcedure() {
+			public boolean execute(long value) {
+				sb.append(value+", ");
 				return true;
 			}
 		});

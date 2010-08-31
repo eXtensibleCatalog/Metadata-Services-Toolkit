@@ -131,6 +131,7 @@ public class NormalizationService extends GenericMetadataService {
 
 	@Override
 	public List<OutputRecord> process(InputRecord recordIn) {
+		LOG.debug("recordIn.getId(): "+recordIn.getId());
 		TimingLogger.start("processRecord");
 		try {
 			List<OutputRecord> results = null;
@@ -149,6 +150,8 @@ public class NormalizationService extends GenericMetadataService {
 				// Handle reprocessing of successors
 				for(OutputRecord successor : successors){
 					successor.setStatus(Record.DELETED);
+					successor.setFormat(marcxmlFormat);
+					results.add(successor);
 				}
 				TimingLogger.stop("processRecord.getDeleted");
 			} else {
@@ -157,9 +160,7 @@ public class NormalizationService extends GenericMetadataService {
 				
 				//TODO: make sure that recordIn is used to create the successors
 				results = convertRecord(recordIn);
-				if (results != null && results.size() > 0) {
-					LOG.debug("** 2 results:"+ ((Record)results.get(0)).getMessages().get(0).getMessageCode());
-				}
+
 				TimingLogger.stop("processRecord.convertRecord");
 				
 				TimingLogger.stop("processRecord");
@@ -175,8 +176,8 @@ public class NormalizationService extends GenericMetadataService {
 	private List<OutputRecord> convertRecord(InputRecord record) {
 		
 		// Empty the lists of errors because we're beginning to process a new record
-		errors.clear();
-		outputRecordErrors.clear();
+		errors = new ArrayList<RecordMessage>();
+		outputRecordErrors = new ArrayList<RecordMessage>();
 		
 		// The list of records resulting from processing the incoming record
 		ArrayList<OutputRecord> results = new ArrayList<OutputRecord>();
@@ -195,6 +196,9 @@ public class NormalizationService extends GenericMetadataService {
 
 			// Create a MarcXmlManagerForNormalizationService for the record
 			MarcXmlManager normalizedXml = new MarcXmlManager(marcXml, getOrganizationCode());
+			
+			LOG.debug("normalizedXml: "+normalizedXml);
+			LOG.debug("normalizedXml.getLeader(): "+normalizedXml.getLeader());
 
 			// Get the Leader 06.  This will allow us to determine the record's type, and we'll put it in the correct set for that type
 			char leader06 = normalizedXml.getLeader().charAt(6);
@@ -325,12 +329,6 @@ public class NormalizationService extends GenericMetadataService {
 			if(LOG.isDebugEnabled())
 				LOG.debug("Adding errors to the record.");
 
-			// TODO for testing - should be removed
-			errors.add(new RecordMessage(service.getId(), "102", "error", "Invalid leader 06 value: " + leader06));
-			outputRecordErrors.add(new RecordMessage(service.getId(), "102", "error", "Invalid leader 06 value: " + leader06));
-LOG.debug("errors::"+errors);
-LOG.debug("outputRecordErrors::"+outputRecordErrors);
-
 			record.setMessages(errors);
 			
 			if(LOG.isDebugEnabled())
@@ -348,6 +346,8 @@ LOG.debug("outputRecordErrors::"+outputRecordErrors);
 				// Get the record which was processed from the record we just processed
 				// (there should only be one)
 				OutputRecord oldNormalizedRecord = record.getSuccessors().get(0);
+				oldNormalizedRecord.setMode(Record.JDOM_MODE);
+				oldNormalizedRecord.setFormat(marcxmlFormat);
 
 				// Set the XML to the new normalized XML
 				oldNormalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
@@ -401,6 +401,7 @@ LOG.debug("outputRecordErrors::"+outputRecordErrors);
 					logError("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
 					return new ArrayList<OutputRecord>();
 				}
+				TimingLogger.add(setName, 0);
 				
 				if(setSpec != null) {
 					// Get the set for the provider
@@ -417,9 +418,6 @@ LOG.debug("outputRecordErrors::"+outputRecordErrors);
 				// Add the record to the list of records resulting from processing the
 				// incoming record
 				results.add(normalizedRecord);
-				if (results != null && results.size() > 0) {
-					LOG.debug("** 1 results:"+ ((Record)results.get(0)).getMessages().get(0).getMessageCode());
-				}				
 				if(LOG.isDebugEnabled())
 					LOG.debug("Created normalized record from unnormalized record with ID " + record.getId());
 				return results;
@@ -683,7 +681,7 @@ LOG.debug("outputRecordErrors::"+outputRecordErrors);
 			outputRecordErrors.add(new RecordMessage(service.getId(), "101", "error", " - Cannot create 035 from 001."));
 			errors.add(new RecordMessage(service.getId(), "101", "error"));
 		}
-
+	
 		// If either control field didn't exist, we don't have to do anything
 		if(control001 == null || control003 == null)
 		{

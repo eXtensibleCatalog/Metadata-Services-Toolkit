@@ -1,6 +1,6 @@
 package xc.mst.services.normalization.test;
 
-import gnu.trove.TLongObjectHashMap;
+import gnu.trove.TLongHashSet;
 
 import org.testng.annotations.Test;
 
@@ -23,22 +23,16 @@ public class QuickTest extends BaseMetadataServiceTest {
 	public void quickTest() {
 		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(getRepoName());
-		TLongObjectHashMap predecessorKeyedMap = new TLongObjectHashMap();
-		TLongObjectHashMap successorKeyedMap = new TLongObjectHashMap();
-		repo.populatePredSuccMaps(predecessorKeyedMap, successorKeyedMap);
-		LOG.debug(getRepoName()+".predecessorKeyedMap: "+predecessorKeyedMap);
-		LOG.debug(new Util().getString(predecessorKeyedMap));
-		LOG.debug(getRepoName()+".successorKeyedMap: "+successorKeyedMap);
-		LOG.debug(new Util().getString(successorKeyedMap));
+		TLongHashSet predecessors = new TLongHashSet();
+		repo.populatePredecessors(predecessors);
+		LOG.debug(getRepoName()+".predecessors: "+predecessors);
+		LOG.debug(new Util().getString(predecessors));
 		
         repo.setName(getServiceName());
-		predecessorKeyedMap.clear();
-		successorKeyedMap.clear();
-		repo.populatePredSuccMaps(predecessorKeyedMap, successorKeyedMap);
-		LOG.debug(getServiceName()+".predecessorKeyedMap: "+predecessorKeyedMap);
-		LOG.debug(new Util().getString(predecessorKeyedMap));
-		LOG.debug(getServiceName()+".successorKeyedMap: "+successorKeyedMap);
-		LOG.debug(new Util().getString(successorKeyedMap));
+        predecessors.clear();
+		repo.populatePredecessors(predecessors);
+		LOG.debug(getServiceName()+".predecessors: "+predecessors);
+		LOG.debug(new Util().getString(predecessors));
 	}
 
 }

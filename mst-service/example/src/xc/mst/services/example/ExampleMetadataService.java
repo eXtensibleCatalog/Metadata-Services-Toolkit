@@ -37,28 +37,29 @@ public class ExampleMetadataService extends GenericMetadataService {
 			} else {
 				out = getRecordService().createRecord();
 			}
+			out.setFormat(getFormatDAO().getById(1));
 			if (r.getStatus() == Record.DELETED) {
 				out.setStatus(Record.DELETED);
-			}
-			out.setFormat(getFormatDAO().getById(1));
-			r.setMode(Record.JDOM_MODE);
-			Element metadataEl = r.getOaiXmlEl();
-			Element foo = metadataEl.getChild("foo", Namespace.getNamespace(FOO_NS));
-			if (foo != null) {
-				getFooService().fooFound(foo.getText());
-				// you could do this 
-				// out.setOaiXml("<bar>you've been barred: "+StringEscapeUtils.escapeXml(foo.getText())+"</bar>");
-				// or you could do this
-				Element barEl = new Element("bar", Namespace.getNamespace(FOO_NS));
-				barEl.setText("you've been barred: "+foo.getText());
-				out.setOaiXmlEl(barEl);
+				LOG.debug("deleted r.getId():"+r.getId()+" out.getId():"+out.getId());
 			} else {
-				Element barEl = new Element("bar", Namespace.getNamespace(FOO_NS));
-				barEl.setText("you've been foobarred!");
-				metadataEl.addContent(barEl);
-				out.setOaiXmlEl(metadataEl);
+				r.setMode(Record.JDOM_MODE);
+				Element metadataEl = r.getOaiXmlEl();
+				Element foo = metadataEl.getChild("foo", Namespace.getNamespace(FOO_NS));
+				if (foo != null) {
+					getFooService().fooFound(foo.getText());
+					// you could do this 
+					// out.setOaiXml("<bar>you've been barred: "+StringEscapeUtils.escapeXml(foo.getText())+"</bar>");
+					// or you could do this
+					Element barEl = new Element("bar", Namespace.getNamespace(FOO_NS));
+					barEl.setText("you've been barred: "+foo.getText());
+					out.setOaiXmlEl(barEl);
+				} else {
+					Element barEl = new Element("bar", Namespace.getNamespace(FOO_NS));
+					barEl.setText("you've been foobarred!");
+					metadataEl.addContent(barEl);
+					out.setOaiXmlEl(metadataEl);
+				}			
 			}
-	
 			records.add(out);
 		} catch (Throwable t) {
 			util.throwIt(t);

@@ -9,10 +9,16 @@
 
 package xc.mst.common.test;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.provider.Set;
@@ -21,15 +27,52 @@ import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.repo.DefaultRepository;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.TimingLogger;
+import xc.mst.utils.XmlHelper;
 
 public class GenericTest extends BaseTest {
 	
 	private static final Logger LOG = Logger.getLogger(GenericTest.class);
 	
+	@BeforeSuite
+	@Override
+	public void startup() {
+		super.startup();
+	}
+	
+	@AfterSuite
+	@Override
+	public void shutdown() {
+		super.shutdown();
+	}
+	
 	@Test
 	public void goTest() {
 		
 		try {
+			
+			String str = util.slurp(new File("docs/393842.xml"));
+			
+			XmlHelper x = new XmlHelper();
+			for (int i=0; i<1000; i++) {
+				TimingLogger.start("x");
+				x.getJDomDocument(str);
+				TimingLogger.stop("x");
+			}
+			TimingLogger.reset();
+			
+			/*
+			JdbcTemplate jdbcTemplate = new JdbcTemplate((DataSource)getBean("DataSource"));
+			
+			for (int i=0; i<1000; i++) {
+				long t0 = System.currentTimeMillis();
+				jdbcTemplate.queryForInt("select 1");
+				long t1 = System.currentTimeMillis();
+				System.out.println("time to execute: "+(t1-t0));
+			}
+			*/
+			
+			/*
 			String repoName = "test_repo";
 			DefaultRepository repo = (DefaultRepository)MSTConfiguration.getInstance().getBean("Repository");
 			repo.setName(repoName);
@@ -49,7 +92,6 @@ public class GenericTest extends BaseTest {
 			LOG.debug("records.size(): "+records.size());
 			
 			
-			/*
 			String serviceName = "example";
 			try {
 				getRepositoryDAO().deleteSchema(serviceName);

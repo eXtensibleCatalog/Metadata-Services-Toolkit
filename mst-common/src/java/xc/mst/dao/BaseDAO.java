@@ -89,7 +89,9 @@ public class BaseDAO {
 	}
 	
 	public void deleteSchema(String name) {
-		this.jdbcTemplate.execute("drop database "+getUtil().normalizeName(name));
+		String sql = "drop database "+getUtil().normalizeName(name);
+		LOG.debug("executing: "+sql);
+		this.jdbcTemplate.execute(sql);
 	}
 	
 	public List<String> getSchemas() {

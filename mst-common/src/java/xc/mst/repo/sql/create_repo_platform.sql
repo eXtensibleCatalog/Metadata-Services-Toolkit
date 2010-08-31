@@ -1,4 +1,4 @@
-create table REPOS (
+create table repos (
 	repo_id          int          not null      AUTO_INCREMENT,
 	repo_name        varchar(25)  not null,
 	service_id       int,

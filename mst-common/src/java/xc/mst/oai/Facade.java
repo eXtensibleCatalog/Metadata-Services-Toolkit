@@ -16,8 +16,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.SimpleTimeZone;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Element;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
@@ -44,6 +47,8 @@ public class Facade extends BaseManager
 {
 	/** The logger object	 */
 	private static Logger log = Logger.getLogger(Constants.LOGGER_HARVEST_OUT);
+	
+	protected static final DateTimeFormatter UTC_PARSER = ISODateTimeFormat.dateTimeParser();
 
 	/** The number of warnings in executing the current request	 */
 	private int warningCount = 0;
@@ -85,7 +90,7 @@ public class Facade extends BaseManager
 	 * @param url The requested URL
 	 * @param oaiRequest OAI request
 	 */
-	public String getRequestElement(StringBuffer url, OaiRequestBean oaiRequest)
+	public String getRequestElement(String url, OaiRequestBean oaiRequest)
 	{
 		if(log.isDebugEnabled())
 			log.debug("Creating the response header for the OAI repsonse.");
@@ -177,27 +182,50 @@ public class Facade extends BaseManager
 		// recognized
 		try
 		{
-			if(oaiRequest.getVerb() == null)
-			{
+			
+			String oaiVerbOutput = null;
+			if(oaiRequest.getVerb() == null) {
 				LogWriter.addWarning(service.getHarvestOutLogFileName(), "The OAI request did not contain a verb.");
 				warningCount++;
 
 				return ErrorBuilder.badVerbError();
+			} else if(oaiRequest.getVerb().equalsIgnoreCase("Identify")) {
+				oaiVerbOutput = doIdentify(oaiRequest);
+			} else if(oaiRequest.getVerb().equalsIgnoreCase("ListSets")) {
+				oaiVerbOutput = doListSets(oaiRequest);
+			} else if(oaiRequest.getVerb().equalsIgnoreCase("ListMetadataFormats")) {
+				oaiVerbOutput = doListMetadataFormats(oaiRequest);
+			} else if(oaiRequest.getVerb().equalsIgnoreCase("ListIdentifiers")) {
+				oaiVerbOutput = doListIdentifiers(oaiRequest);
+			} else if(oaiRequest.getVerb().equalsIgnoreCase("ListRecords")) {
+				oaiVerbOutput = doListRecords(oaiRequest);
+			} else if(oaiRequest.getVerb().equalsIgnoreCase("GetRecord")) {
+				oaiVerbOutput = doGetRecord(oaiRequest);
 			}
-			else if(oaiRequest.getVerb().equalsIgnoreCase("Identify"))
-				return doIdentify(oaiRequest);
-			else if(oaiRequest.getVerb().equalsIgnoreCase("ListSets"))
-				return doListSets(oaiRequest);
-			else if(oaiRequest.getVerb().equalsIgnoreCase("ListMetadataFormats"))
-				return doListMetadataFormats(oaiRequest);
-			else if(oaiRequest.getVerb().equalsIgnoreCase("ListIdentifiers"))
-				return doListIdentifiers(oaiRequest);
-			else if(oaiRequest.getVerb().equalsIgnoreCase("ListRecords"))
-				return doListRecords(oaiRequest);
-			else if(oaiRequest.getVerb().equalsIgnoreCase("GetRecord"))
-				return doGetRecord(oaiRequest);
-			else
-			{
+			
+			if (oaiVerbOutput != null) {
+				// Build the OAI response
+				StringBuilder oaiResponseElement = new StringBuilder();
+		
+				// Append the header
+				oaiResponseElement.append(Constants.OAI_RESPONSE_HEADER);
+
+				// Append the response date element
+				oaiResponseElement.append(getResponseDate()).append("\n");
+
+				if (oaiRequest.getRequest() != null) {
+					// Append the request element
+					oaiResponseElement.append(getRequestElement(oaiRequest.getRequest(), oaiRequest)).append("\n");
+				}
+		
+				// Append the response itself
+				oaiResponseElement.append(oaiVerbOutput).append("\n");
+		
+				// Append the footer
+				oaiResponseElement.append(Constants.OAI_RESPONSE_FOOTER);
+				
+				return oaiResponseElement.toString();
+			} else {
 				LogWriter.addWarning(service.getHarvestOutLogFileName(), "The OAI request contained an invalid verb: " + oaiRequest.getVerb() + ".");
 				warningCount++;
 
@@ -559,8 +587,14 @@ public class Facade extends BaseManager
 			                          MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS_LENGTH, 1000000));
 
 		// The from and until dates.  They will be null if the passed Strings could not be parsed
-		Date fromDate = parseDate(from);
-		Date untilDate = parseDate(until);
+		Date fromDate = null;
+		if (!StringUtils.isEmpty(from)) {
+			fromDate = new Date(UTC_PARSER.parseDateTime(from).getMillis());
+		}
+		Date untilDate = null;
+		if (!StringUtils.isEmpty(until)) {
+			untilDate = new Date(UTC_PARSER.parseDateTime(until).getMillis());
+		}
 		
 		// Starting record id 
 		long startingId = 0;

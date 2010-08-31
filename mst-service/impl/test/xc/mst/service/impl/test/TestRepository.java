@@ -1,5 +1,6 @@
 package xc.mst.service.impl.test;
 
+import gnu.trove.TLongHashSet;
 import gnu.trove.TLongObjectHashMap;
 
 import java.io.File;
@@ -23,6 +24,7 @@ import org.jdom.input.SAXBuilder;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
+import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
@@ -168,6 +170,9 @@ public class TestRepository extends BaseService implements Repository {
 		if (inputFilesIterator.hasNext()) {
 			String fileName = (String)inputFilesIterator.next();
 			List<Record> inputRecords = new ArrayList<Record>();
+			if (!fileName.endsWith(".xml")) {
+				return inputRecords;
+			}
 			try {
 				this.currentFile = fileName;
 				File file2process = new File(INPUT_RECORDS_DIR+"/"+folderName+"/"+fileName);
@@ -176,7 +181,13 @@ public class TestRepository extends BaseService implements Repository {
 				Document doc = builder.build(new FileInputStream(file2process));
 				
 				Element records = doc.getRootElement();
-				for (Object recordObj : records.getChildren("record", doc.getRootElement().getNamespace())) {
+				LOG.debug("records: "+records);
+				Element listRecords = records.getChild("ListRecords", records.getNamespace());
+				LOG.debug("listRecords: "+listRecords);
+				if (listRecords != null) {
+					records = listRecords;
+				}
+				for (Object recordObj : records.getChildren("record", records.getNamespace())) {
 					Element record = (Element)recordObj;
 					Record in = getRecordService().parse(record);
 					String oaiId = in.getHarvestedOaiIdentifier();
@@ -191,6 +202,7 @@ public class TestRepository extends BaseService implements Repository {
 						in.setId(Long.parseLong(oaiId.substring(idx1+1)));
 					}
 					LOG.debug("in.getId(): "+in.getId());
+					LOG.debug("in.getStatus(): "+in.getStatus());
 					inputRecords.add(in);
 					//this.inputRecordFileNames.put(in, fileName);
 				}
@@ -273,5 +285,20 @@ public class TestRepository extends BaseService implements Repository {
 	public long getRecordCount(Date from, Date until, Format inputFormat, xc.mst.bo.provider.Set inputSet) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public void populatePredecessors(TLongHashSet predecessors) {
+		//do nothing
+	}
+	
+	public void injectSuccessorIds(Record r) {
+		List<Record> succs = successorMap.get(r.getOaiIdentifier());
+		if (succs != null) {
+			for (Record succ : succs) {
+				Record out = new Record();
+				out.setId(succ.getId());
+				r.getSuccessors().add(out);	
+			}
+		}
 	}
 }

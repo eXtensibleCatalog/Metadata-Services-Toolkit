@@ -116,6 +116,9 @@ public class DeleteServiceWorkerThread extends WorkerThread
 					}
 					
 					// Remove errors added to predecessor record 
+					/*
+					 * TODO:  BDA: removed because we switched errors to messages and I'm not
+					 * going to bother fixing this here because I'm not sure if we still need this class
 					List<String> errors =  predecessor.getErrors();
 					
 					if (errors != null && errors.size() > 0) {
@@ -132,6 +135,7 @@ public class DeleteServiceWorkerThread extends WorkerThread
 							predecessor.getErrors().removeAll(errorsToRemove);
 						}
 					}
+					*/
 
 					predecessor.removeSucessor(record);
 

@@ -37,6 +37,8 @@ import org.jdom.xpath.XPath;
 import org.xml.sax.InputSource;
 
 import xc.mst.bo.provider.Set;
+import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
@@ -54,6 +56,7 @@ import xc.mst.services.transformation.dao.BibliographicManifestationMappingDAO;
 import xc.mst.services.transformation.dao.HeldHoldingRecordDAO;
 import xc.mst.services.transformation.dao.XCHoldingDAO;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.XmlHelper;
 
 /**
  * A Metadata Service which for each unprocessed marcxml record creates an XC schema
@@ -63,29 +66,16 @@ import xc.mst.utils.TimingLogger;
  */
 public class TransformationService extends GenericMetadataService
 {
-	
+
 	private final static Logger LOG = Logger.getLogger(TransformationService.class);
+
+	protected XmlHelper xmlHelper = new XmlHelper();
 	
-	/**
-	 * Builds the XML Document based on the record's OAI XML
-	 */
-	protected SAXBuilder builder = new SAXBuilder();
-
-	/**
-	 * The namespace for MARC XML
-	 */
-	protected Namespace marcNamespace = Namespace.getNamespace("marc", "http://www.loc.gov/MARC21/slim");
-
 	/**
 	 * A map containing values for $4 subfields which we should treat as
 	 * roles and the rdarole they represent.
 	 */
 	protected HashMap<String, String> roles = new HashMap<String, String>();
-	
-	/**
-	 * A list of errors to add to the record currently being processed
-	 */
-	protected List<String> errors = new ArrayList<String>();
 	
 	/**
 	 * This is used to ensure that subfields from the same source get mapped to the same FRBR Work element
@@ -101,22 +91,10 @@ public class TransformationService extends GenericMetadataService
 	 */
 	protected String orgCode = "";
 	
-	protected BibliographicManifestationMappingDAO bibliographicManifestationMappingDAO = null;
-
-	protected HeldHoldingRecordDAO heldHoldingRecordDAO = null;
-	
-	protected XCHoldingDAO xcHoldingDAO = null;
-	
-	protected List<HeldHoldingRecord> heldHoldingRecords;
-	
-	protected HashMap<String, Record> holdingRecords = new HashMap<String, Record>();
-	
-	protected boolean processingHeldRecords = false;
-	
 	/**
 	 * Construct a TransformationService Object
 	 */
-	public TransformationService()
+	public void init()
 	{
 		// Initialize the list of roles
 		roles.put("aut", "author");
@@ -141,47 +119,40 @@ public class TransformationService extends GenericMetadataService
 		roles.put("trl", "translator");
 	}
 	
-	public BibliographicManifestationMappingDAO getBibliographicManifestationMappingDAO() {
-		return bibliographicManifestationMappingDAO;
-	}
-
-	public void setBibliographicManifestationMappingDAO(
-			BibliographicManifestationMappingDAO bibliographicManifestationMappingDAO) {
-		this.bibliographicManifestationMappingDAO = bibliographicManifestationMappingDAO;
-	}
-
-	public HeldHoldingRecordDAO getHeldHoldingRecordDAO() {
-		return heldHoldingRecordDAO;
-	}
-
-	public void setHeldHoldingRecordDAO(HeldHoldingRecordDAO heldHoldingRecordDAO) {
-		this.heldHoldingRecordDAO = heldHoldingRecordDAO;
-	}
-
-	public XCHoldingDAO getXCHoldingDAO() {
-		return xcHoldingDAO;
-	}
-
-	public void setXCHoldingDAO(XCHoldingDAO xcHoldingDAO) {
-		this.xcHoldingDAO = xcHoldingDAO;
+	@Override
+	public List<OutputRecord> process(InputRecord processMe) {
+		//2 maps as instance variables
+			//bibsProcessed <bib_001, bib_record_id>
+			//bibsYetToArrive <bib_001, bib_record_id>
+		//if new
+			//if bib
+				//if bib(001) exists in bibsYetToArrive
+					//output xc-manifestation with set aside bib_record_id
+					//move bibsYetToArrive entry to bibsProcessed
+				//else
+					//output xc-manifestation with new record_id
+					//create new entry in bibsProcessed
+			//if holding
+				//if bib (004) exists in bibsProcessed 
+					//no map manipulation
+					//output xc-holding with status A
+				//else
+					//if bib(004) exists in bibsYetToArrive
+						//use the record_id for linking
+					//else
+						//generate a new oai-id for the bibYetToArrive
+						//add an entry to bibsYetToArrive
+					//output xc-holding with status H
 	}
 	
-	public List<Record> process(Record r) {
-		List<Record> records = new ArrayList<Record>();
-		Record out = getRecordService().createSuccessor(r, getService());
-		LOG.debug("getBibliographicManifestationMappingDAO(): "+getBibliographicManifestationMappingDAO());
-		out.setOaiXml("<tr>"+out.getId()+"</tr>");
-		records.add(out);
-		return records;
-	}
-
 	@Override
-	public void  processRecord(Record processMe) throws Exception {
+	public List<OutputRecord> process2(InputRecord processMe) {
+		List<OutputRecord> records = new ArrayList<OutputRecord>();
+
 		TimingLogger.start("processRecord");
 
 		// Get the results of processing the record
 		List<Record> results = convertRecord(processMe);
-		
 		
 		// If results is not null, then record is processed. If results is null, then the record is held 
 		if (results != null) {
@@ -273,47 +244,18 @@ public class TransformationService extends GenericMetadataService
 		} 
 	}
 	
-	private List<Record> convertRecord(Record record)
-	{
+	private List<OutputRecord> convertRecord(InputRecord record) {
 		
 		if(LOG.isDebugEnabled())
 			LOG.debug("Transforming record with ID " + record.getId() + ".");
 		
-		// Empty the lists of errors because we're beginning to process a new record
-		errors.clear();
-		
 		// A list of records resulting from processing the incoming record
-		List<Record> results = new ArrayList<Record>();
+		List<OutputRecord> results = new ArrayList<OutputRecord>();
 
-		try
-		{
+		try {
 			// The XML before transforming the record
-			Document marcXml = null;
-
-			// Parse the XML from the record
-			try
-			{
-				if(LOG.isDebugEnabled())
-					LOG.debug("Parsing the record's XML into a Document Object.");
-
-				marcXml = builder.build(new InputSource(new StringReader(record.getOaiXml())));
-			}
-			catch(IOException e)
-			{
-				LOG.error("An error occurred while parsing the record's XML.", e);
-
-				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
-				
-				return results;
-			}
-			catch(JDOMException e)
-			{
-				LOG.error("An error occurred while parsing the record's XML.", e);
-
-				errors.add(service.getId() + "-100: An XML parse error occurred while processing the record: " + e.getMessage());
-				
-				return results;
-			}
+			record.setMode(Record.JDOM_MODE);
+			Element marcXml = record.getOaiXmlEl();
 
 			// Create a MarcXmlRecord for the record
 			MarcXmlRecord originalRecord = new MarcXmlRecord(marcXml);
@@ -322,7 +264,8 @@ public class TransformationService extends GenericMetadataService
 			orgCode = originalRecord.getOrgCode();
 			if (orgCode.equals("")) {
 				// Add error
-				record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
+				//TODO message
+				//record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
 			}
 			
 			
@@ -395,7 +338,7 @@ public class TransformationService extends GenericMetadataService
 
 	}
 	
-	private void removeExistingBibRecords(Record record, List<Record> existingRecords) throws DataException,  DatabaseConfigException, IndexException {
+	private void removeExistingBibRecords(InputRecord record) throws DataException,  DatabaseConfigException, IndexException {
 		Record manifestation = null;
 		for (Record oldRecord: existingRecords) {
 			if (oldRecord.getType().equalsIgnoreCase("XC-Manifestation")) {
@@ -497,15 +440,15 @@ public class TransformationService extends GenericMetadataService
 	/*
 	 * Process bibliographic record
 	 */
-	private List<Record> processBibliographicRecord(Record record, MarcXmlRecord originalRecord) 
+	private List<OutputRecord> processBibliographicRecord(InputRecord record, MarcXmlRecord originalRecord) 
 			throws DataException, DatabaseConfigException, TransformerConfigurationException, IndexException, TransformerException{
 
 		// A list of records resulting from processing the incoming record
-		List<Record> results = new ArrayList<Record>();
+		List<OutputRecord> results = new ArrayList<OutputRecord>();
 		
 		// Get any records which were processed from the record we're processing
 		// If there are any (there should be at most 1) we need to delete them
-		List<Record> existingRecords = getRecordService().getSuccessorsCreatedByServiceId(record.getId(), service.getId());
+		//List<Record> existingRecords = getRecordService().getSuccessorsCreatedByServiceId(record.getId(), service.getId());
 
 		boolean updatedInputRecord = false;
 		
@@ -515,9 +458,9 @@ public class TransformationService extends GenericMetadataService
 
 			// If there are successors then the record exist and needs to be deleted. Since we are
 			// deleting the record, we need to decrement the count.
-			if (existingRecords != null && existingRecords.size() > 0) {
+			if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
 				inputRecordCount--;
-				removeExistingBibRecords(record, existingRecords);
+				removeExistingBibRecords(record);
 			}
 			
 			// Mark the record as having been processed by this service

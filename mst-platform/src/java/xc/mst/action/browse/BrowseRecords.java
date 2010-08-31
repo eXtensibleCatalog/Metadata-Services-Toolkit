@@ -26,6 +26,8 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import xc.mst.bo.record.FacetFilter;
+import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SolrBrowseResult;
 import xc.mst.bo.service.ErrorCode;
@@ -124,7 +126,39 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	}
 	
 	protected void addFilterQuery(SolrQuery solrQuery, String name, String value) {
+		RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
+		RepositoryService repositoryService = (RepositoryService)MSTConfiguration.getInstance().getBean("RepositoryService");
+		if ("successor".equals(name) || "processed_from".equals(name)) {
+			Record r = repositoryService.getRecord(Long.parseLong(value));
+			List<Record> records = new ArrayList<Record>();
+			if ("successor".equals(name)) {
+				List<InputRecord> irs = ((Record)r).getPredecessors();
+				if (irs != null) {
+					for (InputRecord ir : irs) {
+						records.add((Record)ir);
+					}
+				}
+			} else {
+				List<OutputRecord> ors = ((Record)r).getSuccessors();
+				if (ors != null) {
+					for (OutputRecord or : ors) {
+						records.add((Record)or);
+					}
+				}
+			}
+			name="record_id";
+			StringBuilder sb = new StringBuilder();
+			for (int i=0; i<records.size(); i++) {
+				Record r2 = records.get(i);
+				sb.append(r2.getId()+"");
+				if (i < records.size()-1) {
+					sb.append(" OR ");
+				}
+			}
+			value = sb.toString();
+		}
 		solrQuery.addFilterQuery(name + ":\"" + value.replaceAll(":", "\\\\:") + "\"");
+
 	}
 	
 	/**
@@ -382,7 +416,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			String errorCode = error.substring(indexOfHypen + 1, error.indexOf(":"));
 			BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getInstance().getBean("BrowseRecordService");
 			ErrorCode error = browseRecordService.getError(errorCode, service);
-	
+
 			// Get error code
 			FileInputStream fis = new FileInputStream(error.getErrorDescriptionFile());
 			BufferedInputStream bis = new BufferedInputStream(fis);

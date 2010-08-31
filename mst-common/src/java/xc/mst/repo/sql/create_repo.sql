@@ -15,7 +15,8 @@ create table repo_name.record_updates (
 	record_id             int,
 	date_updated          datetime,
 	PRIMARY KEY (id),
-	KEY idx_REPO_NAME_record_updates_date_updated (date_updated)
+	KEY idx_REPO_NAME_record_updates_date_updated (date_updated),
+	KEY idx_REPO_NAME_record_id (record_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 create table repo_name.records_xml (

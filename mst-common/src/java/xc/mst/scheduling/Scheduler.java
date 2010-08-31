@@ -11,7 +11,6 @@ package xc.mst.scheduling;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +27,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.HarvestManager;
 import xc.mst.manager.BaseService;
+import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataServiceManager;
 import xc.mst.services.SolrWorkDelegate;
@@ -56,6 +56,7 @@ public class Scheduler extends BaseService implements Runnable {
 	protected Job previousJob = null;
 
 	public void init() {
+		LOG.error("init");
 		new Thread(this).start();
 	}
 	
@@ -85,14 +86,14 @@ public class Scheduler extends BaseService implements Runnable {
 		}
 		
 		if (config.getPropertyAsBoolean("solr.index.whenIdle", false)) {
-			LOG.debug("solr.index.whenIdle is true");
+			LOG.info("solr.index.whenIdle is true");
 			solrWorkerThread = new WorkerThread();
 			LOG.debug("solrWorkerThread: "+solrWorkerThread);
 			SolrWorkDelegate solrWd = (SolrWorkDelegate)config.getBean("SolrWorkDelegate");
 			solrWorkerThread.setWorkDelegate(solrWd);
 			solrWorkerThread.start();
 		} else {
-			LOG.debug("solr.index.whenIdle is false");
+			LOG.info("solr.index.whenIdle is false");
 		}
 
 		while(!killed) {
@@ -134,9 +135,12 @@ public class Scheduler extends BaseService implements Runnable {
 				}
 			}
 
-			
+			//LOG.debug("runningJob: "+runningJob);
+			if (runningJob != null) {
+				//LOG.debug("runningJob.isAlive(): "+runningJob.isAlive());
+				//LOG.debug("runningJob == solrWorkerThread: "+(runningJob == solrWorkerThread));
+			}
 			if (runningJob == null || !runningJob.isAlive() || runningJob == solrWorkerThread) {
-				LOG.debug("runningJob: "+runningJob);
 				if (runningJob != null) {
 					LOG.debug("runningJob.getWorkDelegate(): "+runningJob.getWorkDelegate());
 				}
@@ -170,19 +174,14 @@ public class Scheduler extends BaseService implements Runnable {
 							service.setStatus(runningJob.getJobStatus());
 							getServiceDAO().update(service);
 						}
+						LOG.debug("processingDirectives: "+processingDirectives);
 						
 						if (previousRepo != null) {
-					        try {
-					        	// I slightly future dated the timestamp of the records so that a record will always
-					        	// have been available from it's update_date forward.  We need to wait for that 
-					        	// future dating to become present before moving on here.  Otherwise, the next service
-					        	// will not pick up all the records that were just inserted.
-						        while (new Date().before(previousRepo.getLastModified())) {
-						        	Thread.sleep(500);
-						        }
-					        } catch (Throwable t) {
-					        	LOG.error("", t);
-					        }
+							if (previousRepo instanceof DefaultRepository) {
+								LOG.debug("sleepUntilReady...start");
+								((DefaultRepository) previousRepo).sleepUntilReady();
+								LOG.debug("sleepUntilReady...finished");
+							}
 						}
 						
 						if (processingDirectives != null) {
@@ -220,6 +219,12 @@ public class Scheduler extends BaseService implements Runnable {
 						}
 					}
 					Job jobToStart = getJobService().getNextJobToExecute();
+					if (jobToStart == null && runningJob != solrWorkerThread && solrWorkerThread != null) {
+						LOG.debug("solrWorkerThead.proceed");
+						solrWorkerThread.proceed();
+						runningJob = solrWorkerThread;
+						runningJob.type = Constants.SOLR_INDEXER;
+					}
 					previousJob = jobToStart;
 
 					LOG.debug("jobToStart: "+jobToStart);
@@ -289,13 +294,6 @@ public class Scheduler extends BaseService implements Runnable {
 
 						if (runningJob != null) {
 							runningJob.start();
-						}
-					} else {
-						if (solrWorkerThread != null && runningJob != solrWorkerThread) {
-							LOG.debug("solrWorkerThead.proceed");
-							solrWorkerThread.proceed();
-							runningJob = solrWorkerThread;
-							runningJob.type = Constants.SOLR_INDEXER;
 						}
 					}
 				} catch(DataException de) {

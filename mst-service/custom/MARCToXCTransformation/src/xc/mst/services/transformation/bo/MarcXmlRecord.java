@@ -17,14 +17,12 @@ import org.apache.log4j.Logger;
 import org.jconfig.Configuration;
 import org.jconfig.ConfigurationManager;
 import org.jdom.Attribute;
-import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.xpath.XPath;
 
 import xc.mst.constants.Constants;
-import xc.mst.utils.MSTConfiguration;
 
 
 /**
@@ -47,7 +45,7 @@ public class MarcXmlRecord
 	/**
 	 * The MARC XML Document we're managing
 	 */
-	protected Document marcXml = null;
+	protected Element marcXml = null;
 
 	/**
 	 * The value of the leader field
@@ -91,11 +89,11 @@ public class MarcXmlRecord
 	 *
 	 * @param marcXml The MARC XML record we're managing
 	 */
-	public MarcXmlRecord(Document marcXml)
+	public MarcXmlRecord(Element marcXml)
 	{
 		this.marcXml = marcXml;
 		// Get the MARC XML's leader
-		leader = this.marcXml.getRootElement().getChildText("leader", marcNamespace);
+		leader = this.marcXml.getChildText("leader", marcNamespace);
 
 		if(log.isDebugEnabled())
 			log.debug("Found the value of the leader to be " + leader + ".");
@@ -147,7 +145,7 @@ public class MarcXmlRecord
 				log.debug("Getting the control field " + targetField);
 
 			// An XPATH expression to get the requested control field
-			XPath xpath = XPath.newInstance("//marc:controlfield[@tag='" + targetField + "']");
+			XPath xpath = XPath.newInstance(".//marc:controlfield[@tag='" + targetField + "']");
 			xpath.addNamespace(marcNamespace);
 
 			// Get the control field.  There should not be more than one Element in this list.
@@ -203,7 +201,7 @@ public class MarcXmlRecord
 				else
 				{
 					// An XPATH expression to get the requested control field
-					XPath xpath = XPath.newInstance("//marc:datafield[@tag='" + targetField + "']");
+					XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + targetField + "']");
 					xpath.addNamespace(marcNamespace);
 					results = xpath.selectNodes(marcXml);
 				}
@@ -224,7 +222,7 @@ public class MarcXmlRecord
 				else
 				{
 					// An XPATH expression to get the requested control field
-					XPath xpath = XPath.newInstance("//marc:datafield[@tag='" + targetField + "']");
+					XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + targetField + "']");
 					xpath.addNamespace(marcNamespace);
 					potentialResults = xpath.selectNodes(marcXml);
 				}
@@ -265,7 +263,7 @@ public class MarcXmlRecord
 		try
 		{
 			// An XPATH expression to get the requested control field
-			XPath xpath = XPath.newInstance("//marc:datafield[@tag='" + 945 + "']");
+			XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + 945 + "']");
 			xpath.addNamespace(marcNamespace);
 
 			return xpath.selectNodes(marcXml);
@@ -508,7 +506,7 @@ public class MarcXmlRecord
 			log.debug("Initializing MARC XML data fields.");
 
 		// Get the data fields
-		List<Element> fields = marcXml.getRootElement().getChildren("datafield", marcNamespace);
+		List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
 
 		// Iterate over the fields and find the one with the correct tag
 		for(Element field : fields)

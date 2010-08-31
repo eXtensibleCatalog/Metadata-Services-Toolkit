@@ -1004,7 +1004,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				    		success = getServiceOutputSetUtilDAO().insert(service.getId(), inputSet.getId()) && success;
 				    
 				    if(success)
-				    	LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the service with the name " + service.getName());
+				    	LogWriter.addDebug(logObj.getLogFileLocation(), "Updated the service with the name " + service.getName());
 				    else
 				    {
 				    	LogWriter.addWarning(logObj.getLogFileLocation(), "Updated the service with the name " + service.getName() + ", but failed to update the formats it inputs and outputs");

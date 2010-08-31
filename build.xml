@@ -106,7 +106,7 @@
 				classpathref="ivy.lib.path" />
 
 		<copy tofile="local.properties" file="local.properties.example" />
-		<property file="local.properties"/>
+		<property file="${box}.properties"/>
 		<!--
 		<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
 		-->
@@ -138,12 +138,22 @@
         </javadoc>
 	</target>
 
-	<target name="ftp.javadoc" depends="ftp.javadoc.nodep, get.antlibs, javadoc" />
+	<target name="echo2" depends="init">
+		<echo>
+			ftp.server: ${ftp.server}
+			ftp.userid: ${ftp.userid}
+			ftp.password: ${ftp.password}
+		</echo>
+	</target>
+
+	<target name="ftp.javadoc" depends="get.antlibs, javadoc, ftp.javadoc.nodep"/>
 	<target name="ftp.javadoc.nodep" depends="init">
 		<ftp server="${ftp.server}"
 				userid="${ftp.userid}"
 				remotedir="/MST/api"
-				password="${ftp.password}">
+				password="${ftp.password}"
+				binary="yes"
+				retriesAllowed="10">
 			<fileset dir="${build.javadoc}"/>
 		</ftp>
 	</target>

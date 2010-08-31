@@ -23,6 +23,7 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.TimingLogger;
 import xc.mst.utils.Util;
 import xc.mst.utils.XmlHelper;
 
@@ -215,7 +216,12 @@ public class Record implements InputRecord, OutputRecord {
 			} else if (mode.equals(JDOM_MODE)) {
 				if (this.oaiXml != null) {
 					try {
-						this.oaiXmlEl = xmlHelper.getJDomDocument(this.oaiXml).detachRootElement();
+						TimingLogger.start("getJDomDocument()");
+						org.jdom.Document d = xmlHelper.getJDomDocument(this.oaiXml);
+						TimingLogger.stop("getJDomDocument()");
+						TimingLogger.start("detachRootElement()");
+						this.oaiXmlEl = d.detachRootElement();
+						TimingLogger.stop("detachRootElement()");
 					} catch (Throwable t) {
 						LOG.error("this.oaiXml.getBytes()");
 						LOG.error("", t);
@@ -1016,7 +1022,9 @@ public class Record implements InputRecord, OutputRecord {
 	}
 	
 	public void addPredecessor(Record r) {
-		predecessors.add(r);
+		if (!predecessors.contains(r)) {
+			predecessors.add(r);
+		}
 	}
 	
 	public List<InputRecord> getPredecessors() {

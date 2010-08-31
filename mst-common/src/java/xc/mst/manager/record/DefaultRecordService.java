@@ -920,8 +920,7 @@ public class DefaultRecordService extends RecordService
 	@Override
 	public Record getRecordFieldsForBrowseFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException {
 		Record record = getRepositoryService().getRecord(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
-		record.setProvider(getProviderDAO().loadBasicProvider(Integer.parseInt((String)doc.getFieldValue(FIELD_PROVIDER_ID))));
-		record.setService(getServiceDAO().loadBasicService(Integer.parseInt((String)doc.getFieldValue(FIELD_SERVICE_ID))));
+
 		return record;
 	}
 
@@ -1110,7 +1109,7 @@ public class DefaultRecordService extends RecordService
 		}
 
 		for(RecordMessage error : record.getMessages()) {
-			String message = error.getService().getId() + "-" + error.getMessageCode() + ":" + error.getMessage();
+			String message = error.getServiceId() + "-" + error.getMessageCode() + ":" + error.getMessage();
 			doc.addField(FIELD_ERROR, message);
 			TimingLogger.add("SOLR-"+FIELD_ERROR, message.length());
 		}
@@ -1140,7 +1139,7 @@ public class DefaultRecordService extends RecordService
 		
 		for(RecordMessage error : record.getMessages())
 		{
-			all.append(error.getService().getId() + "-" + error.getMessageCode() + ":" + error.getMessage());
+			all.append(error.getServiceId() + "-" + error.getMessageCode() + ":" + error.getMessage());
 			all.append(" ");
 		}
 		
@@ -1211,7 +1210,14 @@ public class DefaultRecordService extends RecordService
 				for (Object setSpecObj : setSpecList) {
 					Element setSpecEl = (Element)setSpecObj;
 
-					String setSpec = provider.getName().replace(' ', '-') + ":" + setSpecEl.getText();
+					String setSpec = null;
+					if (provider != null) {
+						setSpec = provider.getName().replace(' ', '-');
+					}
+					if (setSpec != null) {
+						setSpec += ":";
+					}
+					setSpec += setSpecEl.getText(); 
 
 					// Split the set into its components
 					String[] setSpecLevels = setSpec.split(":");
@@ -1233,7 +1239,7 @@ public class DefaultRecordService extends RecordService
 							Set set = getSetDAO().getBySetSpec(currentSetSpec);
 	
 							// Add the set if there wasn't already one in the database
-							if(set == null) {
+							if(set == null && provider != null) {
 								set = new Set();
 								set.setSetSpec(currentSetSpec);
 								set.setDisplayName(currentSetSpec);
@@ -1252,7 +1258,7 @@ public class DefaultRecordService extends RecordService
 				}
 			}
 
-			String status = headerEl.getChildText("status", recordEl.getNamespace());
+			String status = headerEl.getAttributeValue("status");
 			if (!StringUtils.isEmpty(status)) {
 				if ("DELETED".equals(status.toUpperCase()) || "D".equals(status.toUpperCase())) {
 					r.setStatus(Record.DELETED);
@@ -1311,28 +1317,25 @@ public class DefaultRecordService extends RecordService
 		}
 		
 		if (r.getStatus() != 0) {
-			Element statusEl = new Element("status", namespace);
 			if (r.getStatus() == Record.ACTIVE) {
-				statusEl.setText("active");
-				headerEl.addContent(statusEl);
+				headerEl.setAttribute("status", "active");
 			} else if (r.getStatus() == Record.DELETED) {
-				statusEl.setText("deleted");
-				headerEl.addContent(statusEl);
+				headerEl.setAttribute("status", "deleted");
 			} else if (r.getStatus() == Record.HELD) {
-				statusEl.setText("held");
-				headerEl.addContent(statusEl);
+				headerEl.setAttribute("status", "held");
 			} else if (r.getStatus() == Record.REPLACED) {
-				statusEl.setText("replaced");
-				headerEl.addContent(statusEl);
+				headerEl.setAttribute("status", "replaced");
 			}
 		}
 		if (r.getMode().equals(Record.STRING_MODE)) {
 			r.setMode(Record.JDOM_MODE);
 		}
-		Element metadataEl = new Element("metadata", namespace);
-		recordEl.addContent(metadataEl);
+		if (!r.getDeleted()) {
+			Element metadataEl = new Element("metadata", namespace);
+			recordEl.addContent(metadataEl);
+			metadataEl.addContent(r.getOaiXmlEl());
+		}
 		LOG.debug("r: "+r);
-		metadataEl.addContent(r.getOaiXmlEl());
 		return recordEl;
 	}
 	

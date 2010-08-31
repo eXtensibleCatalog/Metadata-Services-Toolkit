@@ -44,6 +44,7 @@ import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataService;
 import xc.mst.services.impl.dao.GenericMetadataDAO;
+import xc.mst.utils.TimingLogger;
 import xc.mst.utils.MSTConfiguration;
 
 /**
@@ -61,15 +62,13 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 
 	protected ApplicationContext applicationContext = null;
 	protected GenericMetadataDAO genericMetadataDAO = null;
-	protected Service service = null;
 	protected List<ProcessingDirective> processingDirectives = null;
 	protected int warningCount = 0;
 	protected int errorCount = 0;
 	protected int errorCountPerCommit = 0;
 	protected Emailer mailer = new Emailer();
 	
-	protected TLongObjectHashMap predecessorKeyedMap = new TLongObjectHashMap();
-	protected TLongObjectHashMap successorKeyedMap = new TLongObjectHashMap();
+	protected TLongHashSet predecessors = new TLongHashSet();
 
 	/**
 	 * A list of services to run after this service's processing completes
@@ -142,12 +141,12 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	
 	public void cancel() {stopped = true; running.acquireUninterruptibly(); running.release();}
 	public void finish() {running.acquireUninterruptibly(); running.release();}
-	public void pause()  {paused = true; running.acquireUninterruptibly(); running.release();}
+	public void pause()  {LOG.debug("pausing...");paused = true; running.acquireUninterruptibly(); running.release();LOG.debug("paused.");}
 	public void resume() {paused = false;}
 	
 	public void install() {
 		try {
-			getGenericMetadataDAO().executeServiceDBScripts(config.getServicePath()+"/sql/install.sql");
+			getGenericMetadataDAO().executeServiceDBScripts(config.getServicePath()+getServiceName()+"/sql/install.sql");
 			postInstall();
 		} catch (Throwable t) {
 			LOG.error("", t);
@@ -159,7 +158,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 
 	public void uninstall() {
 		try {
-			getGenericMetadataDAO().executeServiceDBScripts(config.getServicePath()+"/sql/uninstall.sql");
+			getGenericMetadataDAO().executeServiceDBScripts(config.getServicePath()+getServiceName()+"/sql/uninstall.sql");
 			postInstall();
 		} catch (Throwable t) {
 			LOG.error("", t);
@@ -176,7 +175,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	
 	public void update(String pvStr, String cvStr) {
 		List<String> fileNames = new ArrayList<String>();
-		File dir = new File(config.getServicePath()+"/sql/");
+		File dir = new File(config.getServicePath()+getServiceName()+"/sql/");
 		for (String file : dir.list()) {
 			if (file.contains("update.") && file.endsWith(".sql")) {
 				fileNames.add(file);
@@ -317,26 +316,16 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	public void postUpdate() {
 	}
 	
-	/*
-	 * 
-
-Helper methods
-
-    * RecordService.createSuccessor. Ex: 
-
-out = getRecordService().createSuccessor(r, getService());
-
-    * A service implementer will typically want to use this method for creating output records. If the record already exists, it isn't necessary to do it this way. Instead you can just populate the existing record with the new contents.
-    * */
-	
 	/**
-	 * @param r
+	 *  
+	 * 
+	 * @param r <b>note: modifying input objects has no effect on the system</b>
 	 * <ul>
 	 * 		<li>
 	 * 			r.status
 	 * 			<ul>
 	 * 				<li>
-	 * 					If the InputRecord has been deleted, then the status will be Record.DELETED.
+	 * 					If this InputRecord has been deleted, then the status will be Record.DELETED.
 	 * 					Otherwise it will be Record.ACTIVE. 
 	 * 				</li>
 	 * 			</ul>
@@ -345,8 +334,8 @@ out = getRecordService().createSuccessor(r, getService());
 	 * 			r.successors
 	 * 			<ul>
 	 * 				<li>
-	 * 					if this InputRecord has been processed before (determined by the oai-id), then the record 
-	 * 					with have successor Records attached to it. The only data attached to these records 
+	 * 					If this InputRecord has been processed before (determined by the oai-id), then the record 
+	 * 					will have successor Records attached to it. The only data attached to these records 
 	 * 					is the id. The content (xml) is not attached. If implementers find it necessary to 
 	 * 					have this, we may provide an optional way to get that content.
 	 * 				</li>
@@ -356,7 +345,7 @@ out = getRecordService().createSuccessor(r, getService());
 	 * 			r.successors.predecessors
 	 * 			<ul>
 	 * 				<li>
-	 * 					if this InputRecord has successors associated with it, then the predecessors of the successors 
+	 * 					If this InputRecord has successors associated with it, then the predecessors of the successors 
 	 * 					will also be attached. As with InputRecord.successors, these predecessor records only have the 
 	 * 					id associated with them. For a typical one-to-one service, this data is somewhat redundant. 
 	 * 					But for more complex services in which a Record may have more than one predecessor, it becomes necessary.
@@ -365,8 +354,11 @@ out = getRecordService().createSuccessor(r, getService());
 	 * 	  	</li>
 	 * </ul>
 	 * @return
-	 * 	The process method returns a list of records that are inserted, updated, or deleted as a result of processing this
-	 *  InputRecord.  The below attributes are in the context of that list of Records returned by the process method.
+	 * 	The process method returns a list of OutputRecords that are inserted, updated, or deleted as a result of processing this
+	 *  InputRecord.  The below attributes are in the context of that list of Records returned by the process method.  In order
+	 *  to create a new record, use this helper method getRecordService().createRecord().  If you wish to overwrite an already
+	 *  existing record (ie it was attached to the InputRecord as a successor), simply set the xml and add it to the returned list.
+	 *  <b>note: any inserts, updates, and deletes must be added to the returned list otherwise they won't be recorded</b>
 	 *	<ul>
 	 * 		<li>
 	 * 			OutputRecord.id
@@ -392,6 +384,11 @@ out = getRecordService().createSuccessor(r, getService());
 	 *				</li>
 	 * 			</ul>
 	 * 		</li>
+	 * </ul>
+	 * 
+	 *  @see xc.mst.bo.record.RecordIfc
+	 *  @see xc.mst.bo.record.InputRecord
+	 *  @see xc.mst.bo.record.OutputRecord
 	 */
 	public abstract List<OutputRecord> process(InputRecord r);
 	
@@ -416,9 +413,9 @@ out = getRecordService().createSuccessor(r, getService());
 			} else {
 				sh.setFrom(new Date(System.currentTimeMillis()-(1000l*60*60*24*365*50)));
 			}
+			sh.setUntil(new Date());
 			LOG.debug("sh.getUntil(): "+sh.getUntil());
 			LOG.debug("sh.getFrom(): "+sh.getFrom());
-			sh.setUntil(new Date());
 		} else {
 			if (sh.getUntil() == null || sh.getFrom() == null) {
 				throw new RuntimeException("bogus data in service_harvests");
@@ -431,17 +428,29 @@ out = getRecordService().createSuccessor(r, getService());
 
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
 
+		LOG.debug("getClass(): "+getClass());
+		LOG.debug("inputFormat: "+inputFormat);
+		LOG.debug("inputSet: "+inputSet);
+		LOG.debug("outputSet: "+outputSet);
+		LOG.debug(getClass().getName()+".process("+repo.getName()+", "+
+				(inputFormat==null?"null":inputFormat.getName())+", "+
+				(inputSet==null?"null":inputSet.getDisplayName())+", "+
+				(outputSet==null?"null":outputSet.getDisplayName())+")");
+
 		running.acquireUninterruptibly();
-		predecessorKeyedMap.clear();
-		successorKeyedMap.clear();
-		getRepository().populatePredSuccMaps(predecessorKeyedMap, successorKeyedMap);
+		predecessors.clear();
+		getRepository().populatePredecessors(predecessors);
 		
+		LOG.debug("gettingServiceHarvest");
 		ServiceHarvest sh = getServiceHarvest(
 				inputFormat, inputSet, repo.getName(), getService());
+		LOG.debug("sh: "+sh);
 		List<Record> records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
 		getRepository().beginBatch();
+		//  TODO not inserting errors on input record.
 		//repo.beginBatch();
 		
+		int getRecordLoops = 0;
 		boolean previouslyPaused = false;
 		while (records != null && records.size() > 0 && !stopped) {
 			if (paused) {
@@ -465,7 +474,9 @@ out = getRecordService().createSuccessor(r, getService());
 				//       why, someone might also want the xml with these injected records.
 				//       We may want to supply an optional way of doing that.
 				injectKnownSuccessors(in);
+				TimingLogger.start(getServiceName()+".process");
 				List<OutputRecord> out = process(in);
+				TimingLogger.stop(getServiceName()+".process");
 				if (out != null) {
 					for (RecordIfc rout : out) {
 						Record rout2 = (Record)rout;
@@ -474,18 +485,16 @@ out = getRecordService().createSuccessor(r, getService());
 						if (rout2.getId() == -1) {
 							getRepositoryDAO().injectId(rout2);
 						}
-						injectKnownPredecessors(in, rout2);
-						if (rout2.getMessages() != null && rout2.getMessages().size() > 0) {
-							LOG.debug("** MS: rout2.getMessages():" + rout2.getMessages().get(0).getMessageCode());
-						}
-
+						//injectKnownPredecessors(in, rout2);
+						
 						getRepository().addRecord(rout2);
 					}
 				}
 				sh.setHighestId(in.getId());
 				
+				//  TODO not inserting errors on input record.
 				// Update the error message on incoming record
-				//repo.addRecord(in);
+//				repo.addRecord(in);
 			}
 
 			LOG.debug("sh.getId(): "+sh.getId());
@@ -505,8 +514,13 @@ out = getRecordService().createSuccessor(r, getService());
 			} catch(DataException de) {
 				LOG.error("Exception occured while updating the service", de);
 			}
-
+			
+			getRecordLoops++;
+			if (getRecordLoops % 50 == 0) {
+				TimingLogger.reset();	
+			}
 		}
+		//  TODO not inserting errors on input record.
 //		repo.endBatch();
 		getRepository().endBatch();
 		if (!stopped) {
@@ -516,33 +530,16 @@ out = getRecordService().createSuccessor(r, getService());
 		if (!previouslyPaused) {
 			running.release();
 		}
+		TimingLogger.reset();
 	}
 	
 	protected void injectKnownSuccessors(Record in) {
-		TLongHashSet tlal = (TLongHashSet)predecessorKeyedMap.get(in.getId());
-		if (tlal != null) {
-			long[] succIds = tlal.toArray();
-			for (int i=0; i<succIds.length; i++) {
-				Record succ = new Record();
-				succ.setId(succIds[i]);
-				//succ.setStatus(Record.UPDATE_REPLACE);
-				in.getSuccessors().add(succ);
-				tlal = (TLongHashSet)successorKeyedMap.get(succ.getId());
-				if (tlal != null) {
-					long[] predIds = tlal.toArray();
-					for (int j=0; j<predIds.length; j++) {
-						Record pred = in;
-						if (predIds[j] != in.getId()) {
-							pred = new Record();
-							pred.setId(predIds[j]);
-						}
-						succ.addPredecessor(pred);
-					}
-				}
-			}
+		if (predecessors.contains(in.getId())) {
+			getRepository().injectSuccessors(in);
 		}
 	}
 	
+	/*
 	protected void injectKnownPredecessors(Record in, Record out) {
 		if (in.getId() > -1) {
 			if (outputSet != null) {
@@ -563,6 +560,5 @@ out = getRecordService().createSuccessor(r, getService());
 			tlal.add(in.getId());
 		}
 	}
-	
-
+	*/
 }

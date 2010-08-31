@@ -13,6 +13,8 @@ import java.util.TreeMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.apache.commons.collections.OrderedMapIterator;
+import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -21,9 +23,11 @@ public class TimingStats {
 	public static final Logger LOG = Logger.getLogger(TimingLogger.class);
 	
 	protected static int longestThreadName = 0;
+	protected int currentIndent = 0;
 	protected boolean manualShutOff = false;
 
-	protected Map<String, Timer> namedTimers = new TreeMap<String, Timer>();
+	protected ListOrderedMap namedTimers = new ListOrderedMap();
+	protected Map<String, Integer> indentation = new TreeMap<String, Integer>();
 	protected Map<String, Long> namedLastTimes = new TreeMap<String, Long>();
 	protected Map<String, Long> namedBeginTimes = new TreeMap<String, Long>();
 	protected long lastReset = System.currentTimeMillis();
@@ -66,7 +70,7 @@ public class TimingStats {
 				LOG.debug(sb.toString());				
 			}
 			if (name != DEFAULT) {
-				Timer timer = namedTimers.get(name);
+				Timer timer = (Timer)namedTimers.get(name);
 				if (timer == null) {
 					timer = new Timer();
 					namedTimers.put(name, timer);
@@ -99,14 +103,24 @@ public class TimingStats {
 	
 	public void start(String name) {
 		if (TimingStats.LOG.isDebugEnabled() && !manualShutOff) {
+			Timer timer = (Timer)namedTimers.get(name);
+			if (timer == null) {
+				timer = new Timer();
+				namedTimers.put(name, timer);
+			}
 			long tnow = System.currentTimeMillis();
 			namedLastTimes.put(name, tnow);
+			if (!indentation.containsKey(name)) {
+				indentation.put(name, currentIndent);	
+			}
+			currentIndent++;
 		}
 	}
 	
 	public void stop(String name) {
 		if (TimingStats.LOG.isDebugEnabled() && !manualShutOff) {
 			log(name, null, true);
+			currentIndent--;
 		}
 	}
 	
@@ -126,7 +140,7 @@ public class TimingStats {
 	
 	public void add(String name, long val) {
 		if (!manualShutOff) {
-			Timer timer = namedTimers.get(name);
+			Timer timer = (Timer)namedTimers.get(name);
 			if (timer == null) {
 				timer = new Timer();
 				namedTimers.put(name, timer);
@@ -141,16 +155,24 @@ public class TimingStats {
 	
 	public void reset(String name) {
 		StringBuilder sb = getStringBuilder();
-		Timer timer = namedTimers.get(name);
+		Timer timer = (Timer)namedTimers.get(name);
 		if (timer != null) {
 			String totalTime = StringUtils.leftPad(timer.totalTime.get()+"", 10);
+			if (indentation.containsKey(name)) {
+				//LOG.debug("indentation.get("+name+"):"+ indentation.get(name));
+				StringBuilder sb2 = new StringBuilder();
+				for (int i=0; i<indentation.get(name); i++) {
+					sb2.append("  ");
+				}
+				name = sb2.append(name).toString();
+			}
 			String avgTime = "";
 			if (timer.numTimes.get() != 0) {
 				double avg = (0.+timer.totalTime.get())/timer.numTimes.get();
 				avgTime = String.format("%.2f", avg);
-				avgTime = StringUtils.leftPad(avgTime, 10);
+				avgTime = StringUtils.leftPad(avgTime, 12);
 			}
-			String longestTime = StringUtils.leftPad(timer.longestTime+"", 7);
+			String longestTime = StringUtils.leftPad(timer.longestTime+"", 9);
 			String num = StringUtils.leftPad(timer.numTimes+"", 7);
 			sb.append("TimingLogger! total: "+totalTime+"    avg:"+avgTime+"    longest:"+longestTime+"    num:"+num+"   "+name);
 			LOG.debug(sb);
@@ -161,6 +183,16 @@ public class TimingStats {
 		LOG.debug("reset()");
 		LOG.debug("***");
 		reset(true);
+		Runtime r = Runtime.getRuntime();
+		long maxMem = r.maxMemory()/1048576;
+		long totalMem = r.totalMemory()/1048576;
+		
+		long freeBytes = r.freeMemory();
+		long freeMem = freeBytes/1048576;
+		LOG.debug("");
+		LOG.debug("Free  memory: " + Long.toString(freeMem) + "MB.");
+		LOG.debug("Total memory: " + Long.toString(totalMem) + "MB.");
+		LOG.debug("Max'm memory: " + Long.toString(maxMem) + "MB.");
 		LOG.debug("***");
 	}
 	
@@ -173,10 +205,16 @@ public class TimingStats {
 			}
 			LOG.debug("namedTimers.size(): "+namedTimers.size());
 			LOG.debug("includeDefault: "+includeDefault);
+			OrderedMapIterator omi = namedTimers.orderedMapIterator(); 
+			while (omi.hasNext()) {
+				reset((String)omi.next());
+			}
+			/*
 			for (String key : namedTimers.keySet()) {
 				reset(key);
 			}
-			namedTimers = new TreeMap<String, Timer>();
+			*/
+			namedTimers = new ListOrderedMap();
 			Long nullLastTime = namedLastTimes.get(DEFAULT);
 			namedLastTimes =  new TreeMap<String, Long>();
 			Long nullBeginTime = namedBeginTimes.get(DEFAULT);

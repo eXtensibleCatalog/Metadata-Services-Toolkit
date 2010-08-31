@@ -213,7 +213,7 @@ public class Holdings extends Record
 
 		holdings.setCreatedAt(record.getCreatedAt());
 		holdings.setDeleted(record.getDeleted());
-		holdings.setErrors(record.getErrors());
+		holdings.setMessages(record.getMessages());
 		holdings.setFormat(record.getFormat());
 		holdings.setFrbrLevelId(record.getFrbrLevelId());
 		holdings.setHarvest(record.getHarvest());

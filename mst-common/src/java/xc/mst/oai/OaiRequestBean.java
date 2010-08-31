@@ -59,6 +59,9 @@ public class OaiRequestBean
 
 	/** GetRecord's identifier parameter */
 	private String identifier;
+	
+	/** Because the request is embedded in the output, we need to know what it is */
+	protected String request = null;
 
 	/**
 	 * Returns the verb.
@@ -233,5 +236,13 @@ public class OaiRequestBean
 	 */
 	public void setOaiRepoBaseURL(String oaiRepoBaseURL) {
 		this.oaiRepoBaseURL = oaiRepoBaseURL;
+	}
+	
+	public String getRequest() {
+		return request;
+	}
+
+	public void setRequest(String request) {
+		this.request = request;
 	}
 }

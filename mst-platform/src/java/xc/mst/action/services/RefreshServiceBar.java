@@ -67,7 +67,8 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
 	                        	currentProcess = "Aborting process " + getScheduler().getRunningJob().getJobName();
 	                        }
 	                    }
-	                    else if (getScheduler().getRunningJob().getJobStatus().equals(Status.PAUSED))
+	                    else if (getScheduler().getRunningJob().getJobStatus().equals(Status.PAUSED) || 
+	                    		getScheduler().getRunningJob().getJobStatus().equals(Status.IDLE))
 	                    {
 	                        if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
 	                        	currentProcess = "Paused harvesting from provider " + getScheduler().getRunningJob().getJobName();
