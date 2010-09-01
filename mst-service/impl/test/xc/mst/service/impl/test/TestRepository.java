@@ -25,6 +25,7 @@ import org.jdom.input.SAXBuilder;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
@@ -142,6 +143,19 @@ public class TestRepository extends BaseService implements Repository {
 	}
 	
 	public void addRecord(Record r) {
+		for (InputRecord ir : r.getPredecessors()) {
+			LOG.debug("((Record)ir).getOaiIdentifier(): "+((Record)ir).getOaiIdentifier());
+			LOG.debug("((Record)ir).getHarvestedOaiIdentifier(): "+((Record)ir).getHarvestedOaiIdentifier());
+			List<Record> succs = successorMap.get(((Record)ir).getHarvestedOaiIdentifier());
+			if (succs == null) {
+				succs = new ArrayList<Record>();
+				successorMap.put(((Record)ir).getHarvestedOaiIdentifier(), succs);
+			}
+			if (!succs.contains(r)) {
+				LOG.debug("r.getOaiIdentifier(): "+r.getOaiIdentifier());
+				succs.add(r);
+			}
+		}
 		Record previousOutputRecord = (Record)repo.get(r.getId());
 		if (previousOutputRecord != null) {
 			previousOutputRecord.setStatus(Record.REPLACED);
@@ -292,7 +306,7 @@ public class TestRepository extends BaseService implements Repository {
 	}
 	
 	public void injectSuccessorIds(Record r) {
-		List<Record> succs = successorMap.get(r.getOaiIdentifier());
+		List<Record> succs = successorMap.get(r.getHarvestedOaiIdentifier());
 		if (succs != null) {
 			for (Record succ : succs) {
 				Record out = new Record();

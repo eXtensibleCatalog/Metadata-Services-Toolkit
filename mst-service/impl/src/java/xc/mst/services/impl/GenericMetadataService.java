@@ -473,7 +473,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 				//       the existing record.  Although I can't think of a reason
 				//       why, someone might also want the xml with these injected records.
 				//       We may want to supply an optional way of doing that.
-				injectKnownSuccessors(in);
+				injectKnownSuccessorsIds(in);
 				TimingLogger.start(getServiceName()+".process");
 				List<OutputRecord> out = process(in);
 				TimingLogger.stop(getServiceName()+".process");
@@ -485,7 +485,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 						if (rout2.getId() == -1) {
 							getRepositoryDAO().injectId(rout2);
 						}
-						//injectKnownPredecessors(in, rout2);
+						injectKnownPredecessors(in, rout2);
 						
 						getRepository().addRecord(rout2);
 					}
@@ -533,32 +533,19 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 		TimingLogger.reset();
 	}
 	
-	protected void injectKnownSuccessors(Record in) {
+	protected void injectKnownSuccessorsIds(Record in) {
 		if (predecessors.contains(in.getId())) {
-			getRepository().injectSuccessors(in);
+			getRepository().injectSuccessorIds(in);
 		}
 	}
 	
-	/*
 	protected void injectKnownPredecessors(Record in, Record out) {
 		if (in.getId() > -1) {
 			if (outputSet != null) {
 				out.addSet(outputSet);
 			}
-			TLongHashSet tlal = (TLongHashSet)predecessorKeyedMap.get(in.getId());
-			if (tlal == null) {
-				tlal = new TLongHashSet();
-				predecessorKeyedMap.put(in.getId(), tlal);
-			}
-			tlal.add(out.getId());
-			
-			tlal = (TLongHashSet)successorKeyedMap.get(out.getId());
-			if (tlal == null) {
-				tlal = new TLongHashSet();
-				successorKeyedMap.put(out.getId(), tlal);
-			}
-			tlal.add(in.getId());
+			predecessors.add(in.getId());
 		}
 	}
-	*/
+
 }
