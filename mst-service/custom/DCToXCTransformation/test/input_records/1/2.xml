@@ -1,0 +1,15 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:bib:2</identifier>
+    </header>
+    <metadata>
+      <foo xmlns="foo:bar">french fries</foo>
+    </metadata>
+  </record>
+  <record>
+    <header status="deleted">
+      <identifier>oai:mst.rochester.edu:bib:2</identifier>
+    </header>
+  </record>
+</records>
