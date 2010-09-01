@@ -18,7 +18,7 @@
  <property name="ivy.local.default.ivy.pattern"      value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" override="false"/>
  <property name="ivy.local.default.artifact.pattern" value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" override="false"/>
 
- <property name="ivy.ivyrep.default.ivy.root"        value="http://xcmetadataservicestoolkit.googlecode.com/svn/dist/ivy/" override="false"/>
+ <property name="ivy.ivyrep.default.ivy.root"        value="http://www.extensiblecatalog.org/doc/Ivy/" override="false"/>
  <property name="ivy.ivyrep.default.ivy.pattern"     value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" override="false"/>
  <property name="ivy.ivyrep.default.artifact.root"   value="${ivy.ivyrep.default.ivy.root}" override="false"/>
  <property name="ivy.ivyrep.default.artifact.pattern" value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" override="false"/>

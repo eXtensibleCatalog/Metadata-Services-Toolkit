@@ -21,6 +21,7 @@
 				  self.addMappedName("MARCNormalization/@{subdir}/"+source);
 				  self.addMappedName("MARCToXCTransformation/@{subdir}/"+source);
 				  self.addMappedName("aggregation/@{subdir}/"+source);
+				  self.addMappedName("DCToXCTransformation/@{subdir}/"+source);
 				</scriptmapper>
 			</copy>
 		</sequential>
@@ -260,13 +261,16 @@
 	</target>
 
 	<target name="deploy" >
+		<ant target="mi.deploy" />
 		<ant target="mc.deploy" />
 		<ant target="mp.deploy" />
 		<ant target="ms.copy-example" />
+		<!--
 		<ant target="deploy-service">
 			<property name="sname" value="MARCNormalization"/>
 			<property name="sversion" value="0.3.0"/>
 		</ant>
+		-->
 	</target>
 
 	<target name="dist" depends="coordinated.retrieve, dist.nodep" />

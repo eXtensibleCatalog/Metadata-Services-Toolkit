@@ -11,11 +11,11 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.services.impl.GenericMetadataService;
-import xc.mst.services.service.FooService;
+import xc.mst.services.dc2xc.service.FooService;
 
 public class DCTransformationService extends GenericMetadataService {
 	
-	private static final Logger LOG = Logger.getLogger(ExampleMetadataService.class);
+	private static final Logger LOG = Logger.getLogger(DCTransformationService.class);
 	public static final String FOO_NS = "foo:bar";
 	
 	protected FooService fooService = null;

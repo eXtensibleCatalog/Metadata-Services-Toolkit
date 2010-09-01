@@ -196,7 +196,8 @@
 		</zip>
 	</target>
 
-	<target name="compile.test" depends="copy-resources.nodep">
+	<target name="compile.test" depends="copy-resources" />
+	<target name="compile.test.nodep" depends="copy-resources.nodep">
 		<javac srcdir="${test.java}"
 			destdir="${build.test.classes}"
 			classpathref="classpath.test.compile"
@@ -242,8 +243,8 @@
 		</delete>
 	</target>
 
-	<target name="test" depends="install-mst, unzip-base-tests, test.nodep" />
-	<target name="test.nodep" depends="init.test, compile.test">
+	<target name="test" depends="install-mst, unzip-base-tests, compile.test, test.nodep" />
+	<target name="test.nodep" depends="init.test, compile.test.nodep">
 		<taskdef name="testng" classpathref="classpath.compile"
 			classname="org.testng.TestNGAntTask" />
 
