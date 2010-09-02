@@ -1,9 +1,16 @@
+/**
+  * Copyright (c) 2010 eXtensible Catalog Organization
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  */
 package xc.mst.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
