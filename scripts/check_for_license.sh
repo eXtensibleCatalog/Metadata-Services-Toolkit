@@ -5,9 +5,10 @@
 
 
 # lets change who the copyright is assigned to
-for f in $(find ./ -name \*.java -printf '"%h/%f"\n' | grep -v svn | grep -v '\/\(bin\|build\|input\|output\)\/' | xargs grep -Hc 'Copyright .*University of Rochester' )
+for f in $(find ./ -name \*.xml -printf '"%h/%f"\n' | grep -v svn | grep -v '\/\(bin\|build\|input\|output\)\/' | xargs grep -Hc 'Copyright .*University of Rochester' | gawk -F ':' '{print $1}')
 do
-	sed -i 's/\(Copyright.*\)\(University of Rochester\)/\1eXtensible Catalog Organization/g' $f
+	echo $f
+	#sed -i 's/\(Copyright.*\)\(University of Rochester\)/\1eXtensible Catalog Organization/g' $f
 done
 
 
