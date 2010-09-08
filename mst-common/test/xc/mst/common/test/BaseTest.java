@@ -12,9 +12,12 @@ package xc.mst.common.test;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import javax.sql.DataSource;
+
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -49,6 +52,7 @@ public class BaseTest {
 	protected static final Logger LOG = Logger.getLogger(BaseTest.class);
 	
 	protected ApplicationContext applicationContext = null;
+	protected JdbcTemplate jdbcTemplate = null;
 	
 	protected Util util = null;
 	protected Repository repo = null;
@@ -94,8 +98,10 @@ public class BaseTest {
 		setDAO = (SetDAO)getBean("SetDAO");  
 		processingDirectiveDAO = (ProcessingDirectiveDAO)getBean("ProcessingDirectiveDAO");
 		scheduler = (Scheduler)getBean("Scheduler");
-		LOG.debug("startup complete");
 		
+		jdbcTemplate = new JdbcTemplate((DataSource)getBean("DataSource"));
+		
+		LOG.debug("startup complete");
 		/*
 		SessionFactory sessionFactory = (SessionFactory)getBean("SessionFactory");
 		sessionFactory.openSession();

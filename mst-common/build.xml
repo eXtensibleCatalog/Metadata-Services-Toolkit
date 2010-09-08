@@ -182,15 +182,6 @@
 	<target name="mc.test" depends="mc.install-mst, mc.test.nodep" />
 	<target name="mc.test.nodep" depends="mc.compile.test, mc.init.test">
 		<property name="abs.build.dir" location="${mc.build.dir}" />
-		<exec executable="${ant.executable}">
-			<arg value="-Dtest=${test}" />
-			<arg value="mc.test.internal" />
-			<env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
-			<env key="MST_SERVICE_TEST_FOLDER" value="${test.folder}" />
-		</exec>
-	</target>
-
-	<target name="mc.test.internal">
 		<path id="mc.classpath.test.run">
 			<fileset dir="${mc.build.lib}">
 				<include name="*.jar" />
@@ -202,6 +193,8 @@
 			classname="org.testng.TestNGAntTask" />
 
 		<testng classpathref="mc.classpath.test.run" outputdir="${mc.build.test}">
+			<env key="MST_SERVICE_TEST_FOLDER" value="${test.folder}" />
+			<env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
 			<classfileset dir="${mc.build.test.classes}" includes="**/${test}*.class"/>
 		</testng>
 	</target>
