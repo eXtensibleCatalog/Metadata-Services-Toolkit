@@ -116,7 +116,7 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 		return metadataService.getProcessedRecordCount();
 	}
 
-	public int getTotalRecords() {
+	public long getTotalRecords() {
 		return metadataService.getTotalRecordCount();
 	}
 

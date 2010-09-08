@@ -111,7 +111,7 @@ public class TimingStats {
 			long tnow = System.currentTimeMillis();
 			namedLastTimes.put(name, tnow);
 			if (!indentation.containsKey(name)) {
-				indentation.put(name, currentIndent);	
+				indentation.put(name, currentIndent);
 			}
 			currentIndent++;
 		}
@@ -140,6 +140,7 @@ public class TimingStats {
 	
 	public void add(String name, long val) {
 		if (!manualShutOff) {
+			indentation.put(name, currentIndent);
 			Timer timer = (Timer)namedTimers.get(name);
 			if (timer == null) {
 				timer = new Timer();
@@ -170,8 +171,10 @@ public class TimingStats {
 			if (timer.numTimes.get() != 0) {
 				double avg = (0.+timer.totalTime.get())/timer.numTimes.get();
 				avgTime = String.format("%.2f", avg);
-				avgTime = StringUtils.leftPad(avgTime, 12);
+			} else {
+				avgTime = "n/a";
 			}
+			avgTime = StringUtils.leftPad(avgTime, 12);
 			String longestTime = StringUtils.leftPad(timer.longestTime+"", 9);
 			String num = StringUtils.leftPad(timer.numTimes+"", 7);
 			sb.append("TimingLogger! total: "+totalTime+"    avg:"+avgTime+"    longest:"+longestTime+"    num:"+num+"   "+name);
@@ -180,20 +183,22 @@ public class TimingStats {
 	}
 	
 	public void reset() {
-		LOG.debug("reset()");
-		LOG.debug("***");
-		reset(true);
-		Runtime r = Runtime.getRuntime();
-		long maxMem = r.maxMemory()/1048576;
-		long totalMem = r.totalMemory()/1048576;
-		
-		long freeBytes = r.freeMemory();
-		long freeMem = freeBytes/1048576;
-		LOG.debug("");
-		LOG.debug("Free  memory: " + Long.toString(freeMem) + "MB.");
-		LOG.debug("Total memory: " + Long.toString(totalMem) + "MB.");
-		LOG.debug("Max'm memory: " + Long.toString(maxMem) + "MB.");
-		LOG.debug("***");
+		if (namedTimers != null && namedTimers.size() > 0) {
+			LOG.debug("reset()");
+			LOG.debug("***");
+			reset(true);
+			Runtime r = Runtime.getRuntime();
+			long maxMem = r.maxMemory()/1048576;
+			long totalMem = r.totalMemory()/1048576;
+			
+			long freeBytes = r.freeMemory();
+			long freeMem = freeBytes/1048576;
+			LOG.debug("");
+			LOG.debug("Free  memory: " + Long.toString(freeMem) + "MB.");
+			LOG.debug("Total memory: " + Long.toString(totalMem) + "MB.");
+			LOG.debug("Max'm memory: " + Long.toString(maxMem) + "MB.");
+			LOG.debug("***");
+		}
 	}
 	
 	public void reset(boolean includeDefault) {

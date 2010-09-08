@@ -8,7 +8,6 @@
   */
 package xc.mst.services.impl.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -32,92 +31,38 @@ public class SolrIndexService extends GenericMetadataService  {
 	
 	private static final Logger LOG = Logger.getLogger(SolrIndexService.class);
 	
-	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
-		LOG.debug("process "+this);
-		this.repository = repo;
-		running.acquireUninterruptibly();
-		//TODO - check and store tables of when the last "harvest" was
-		Date from = new Date(System.currentTimeMillis()-(1000*60*60*24*500));
-		Date until = new Date();
-		
-		ServiceHarvest sh = getServiceHarvest(
-				inputFormat, inputSet, repo.getName(), getService());
-		LOG.debug("sh.getFrom(): "+sh.getFrom()+" sh.getUntil(): "+sh.getUntil()+" sh.getHighestId(): "+sh.getHighestId()+" inputFormat: "+inputFormat+" inputSet:"+inputSet);
-		List<Record> records = 
+	Repository incomingRepository = null;
+	
+	@Override
+	protected List<Record> getRecords(Repository repo, ServiceHarvest sh, Format inputFormat, Set inputSet) {
+		TimingLogger.start("getRecordsWSets");
+		List<Record> rs =  
 			((DefaultRepository)repo).getRecordsWSets(sh.getFrom(), sh.getUntil(), sh.getHighestId());
-		
-		Long highestId = null;
-		boolean previouslyPaused = false;
-		LOG.debug("stopped: "+stopped);
-		int getRecordLoops = 0;
-		while (records != null && records.size() > 0 && !stopped) {
-			if (paused) {
-				if (!previouslyPaused) {
-					previouslyPaused = true;
-					LOG.debug("paused");
-					running.release();	
-				}
-				try {
-					Thread.sleep(1000);
-				} catch (Throwable t) {
-					LOG.error("", t);
-					throw new RuntimeException(t);
-				}
-				continue;
-			}
-			if (previouslyPaused) {
-				previouslyPaused = false;
-				LOG.debug("acquireUninterruptibly 1");
-				running.acquireUninterruptibly();
-				LOG.debug("acquireUninterruptibly 2");
-			}
-			for (Record in : records) {
-				TimingLogger.start("SolrIndexService.process");
-				process(in);
-				TimingLogger.stop("SolrIndexService.process");
-				highestId = in.getId();
-				sh.setHighestId(in.getId());
-			}
-			LOG.debug("sh.getFrom(): "+sh.getFrom()+" sh.getUntil(): "+sh.getUntil()+" sh.getHighestId(): "+sh.getHighestId()+" inputFormat: "+inputFormat+" inputSet:"+inputSet);
-			TimingLogger.start("getRecordsWSets");
-			records = 
-				((DefaultRepository)repo).getRecordsWSets(from, until, highestId);
-			TimingLogger.stop("getRecordsWSets");
-			TimingLogger.add(repo.getName(), highestId);
-			LOG.debug("sh.getId(): "+sh.getId());
-			getServiceDAO().persist(sh);
-
-			getRecordLoops++;
-			if (getRecordLoops % 50 == 0) {
-				try {
-					TimingLogger.start("commitIndex");
-					getSolrIndexManager().commitIndex();
-					TimingLogger.stop("commitIndex");
-				} catch (IndexException ie) {
-					throw new RuntimeException(ie);
-				}
-				TimingLogger.reset();	
-			}
-		}
-		TimingLogger.reset();
-		LOG.debug("stopped: "+stopped);
-		if (!stopped) {
-			sh.setHighestId(null);
-			getServiceDAO().persist(sh);
-		}
+		TimingLogger.stop("getRecordsWSets");
+		return rs;
+	}
+	
+	@Override
+	protected void endBatch() {
 		try {
+			TimingLogger.start("commitIndex");
 			getSolrIndexManager().commitIndex();
-		} catch (IndexException ie) {
-			throw new RuntimeException(ie);
+			TimingLogger.stop("commitIndex");
+		} catch (Throwable t) {
+			getUtil().throwIt(t);
 		}
-		if (!previouslyPaused) {
-			running.release();
-		}
+		super.endBatch();
+	}
+	
+	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
+		this.incomingRepository = repo;
+		super.process(repo, inputFormat, inputSet, outputSet);
 	}
 	
 	public List<OutputRecord> process(InputRecord ri) {
+		TimingLogger.add(incomingRepository.getName(), ri.getId());
 		Record r = (Record)ri;
-		if (r.getId() % 10 == 0) {
+		if (r.getId() % 1000 == 0) {
 			LOG.debug("indexing record.getId(): "+r.getId());
 		}
 		SolrInputDocument doc = new SolrInputDocument();
@@ -136,7 +81,7 @@ public class SolrIndexService extends GenericMetadataService  {
 			boolean done = false;
 			for (Set s : r.getSets()) {
 				if (!done) {
-					LOG.debug("r.getId(): "+r.getId()+" index set: "+s.getSetSpec());
+					//LOG.debug("r.getId(): "+r.getId()+" index set: "+s.getSetSpec());
 					done = true;
 				}
 				doc.addField(RecordService.FIELD_SET_SPEC, s.getSetSpec());
@@ -144,15 +89,15 @@ public class SolrIndexService extends GenericMetadataService  {
 			}
 		}
 		
-		if (this.repository.getProvider() != null) {
-			doc.addField(RecordService.FIELD_PROVIDER_ID, this.repository.getProvider().getId());
-			doc.addField("provider_name", this.repository.getProvider().getName());
+		if (this.incomingRepository.getProvider() != null) {
+			doc.addField(RecordService.FIELD_PROVIDER_ID, this.incomingRepository.getProvider().getId());
+			doc.addField("provider_name", this.incomingRepository.getProvider().getName());
 		} else {
 			doc.addField(RecordService.FIELD_PROVIDER_ID, 0);
 		}
-		if (this.repository.getService() != null) {
-			doc.addField(RecordService.FIELD_SERVICE_ID, this.repository.getService().getId());
-			doc.addField("service_name", this.repository.getService().getName());
+		if (this.incomingRepository.getService() != null) {
+			doc.addField(RecordService.FIELD_SERVICE_ID, this.incomingRepository.getService().getId());
+			doc.addField("service_name", this.incomingRepository.getService().getName());
 		} else {
 			doc.addField(RecordService.FIELD_SERVICE_ID, 0);
 		}

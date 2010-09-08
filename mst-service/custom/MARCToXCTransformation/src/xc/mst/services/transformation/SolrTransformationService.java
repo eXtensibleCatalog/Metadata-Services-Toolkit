@@ -64,10 +64,10 @@ import xc.mst.utils.XmlHelper;
  *
  * @author Eric Osisek
  */
-public class TransformationService extends GenericMetadataService
+public class SolrTransformationService extends GenericMetadataService
 {
 
-	private final static Logger LOG = Logger.getLogger(TransformationService.class);
+	private final static Logger LOG = Logger.getLogger(SolrTransformationService.class);
 
 	protected XmlHelper xmlHelper = new XmlHelper();
 	

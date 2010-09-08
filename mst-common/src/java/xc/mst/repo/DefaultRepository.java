@@ -10,9 +10,7 @@
 package xc.mst.repo;
 
 import gnu.trove.TLongHashSet;
-import gnu.trove.TLongObjectHashMap;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,7 +25,6 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.InputRecord;
-import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
@@ -35,6 +32,9 @@ import xc.mst.manager.BaseService;
 public class DefaultRepository extends BaseService implements Repository {
 	
 	private static final Logger LOG = Logger.getLogger(DefaultRepository.class);
+	
+	// This is meant only to be a cache of what is not yet in the DB.  This will not
+	// keep all pred-succs in memory.
 	Map<Long, java.util.Set<Long>> predSuccMap = new HashMap<Long, java.util.Set<Long>>();
 	
 	protected String name = null;
@@ -114,7 +114,9 @@ public class DefaultRepository extends BaseService implements Repository {
 				succIds.add(record.getId());
 			}
 		}
-		getRepositoryDAO().addRecord(name, record);
+		if (getRepositoryDAO().addRecord(name, record)) {
+			predSuccMap.clear();	
+		}
 	}
 	
 	public void addRecords(List<Record> records) {
@@ -166,7 +168,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	public long getRecordCount(Date from, Date until, Format inputFormat, Set inputSet) {
 		LOG.debug("from:"+from+" until:"+until+ " inputFormat:"+inputFormat+" inputSet:"+inputSet);
 		long recordCount = getRepositoryDAO().getRecordCount(name, from, until, inputFormat, inputSet);
-
+		LOG.debug("recordCount:"+recordCount);
 		return recordCount;
 	}
 	
@@ -224,6 +226,10 @@ public class DefaultRepository extends BaseService implements Repository {
 	    	}
 	    	lm = getLastModified();
 	    }
+	}
+	
+	public void deleteAllData() {
+		getRepositoryDAO().deleteAllData(this.name);
 	}
 
 }

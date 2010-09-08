@@ -9,6 +9,8 @@
  
 package xc.mst.services.transformation;
 
+import gnu.trove.TLongLongHashMap;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -119,6 +122,54 @@ public class TransformationService extends GenericMetadataService
 		roles.put("trl", "translator");
 	}
 	
+	protected TLongLongHashMap bibsProcessedLongId = new TLongLongHashMap();
+	protected Map<String, Long> bibsProcessedStringId = new HashMap<String, Long>();
+	
+	protected TLongLongHashMap bibsYet2ArriveLongId = new TLongLongHashMap();
+	protected Map<String, Long> bibsYet2ArriveStringId = new HashMap<String, Long>();
+	
+	protected Long getLongFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s) {
+		try {
+			Long bibMarcId = Long.parseLong(s);
+			long l = longLongMap.get(bibMarcId);
+			if (l == 0) {
+				return null;
+			} else {
+				return (Long)l;
+			}
+		} catch (NumberFormatException nfe) {
+			return stringLongMap.get(s);
+		}
+	}
+	protected void add2Map(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s, long lv) {
+		try {
+			Long bibMarcId = Long.parseLong(s);
+			longLongMap.put(bibMarcId, lv);
+		} catch (NumberFormatException nfe) {
+			stringLongMap.put(s, lv);
+		}
+	}
+	
+	protected Long getOutputRecordId4BibProcessed(String s) {
+		return getLongFromMap(bibsProcessedLongId, bibsProcessedStringId, s);
+	}
+	protected void addOutputRecordId4BibProcessed(String s, Long l) {
+		add2Map(bibsProcessedLongId, bibsProcessedStringId, s, l);
+	}
+	protected void removeOutputRecordId4BibProcessed(String s) {
+		
+	}
+	protected Long getOutputRecordId4BibYet2Arrive(String s) {
+		return getLongFromMap(bibsYet2ArriveLongId, bibsYet2ArriveStringId, s);
+	}
+	protected void addOutputRecordId4BibYet2Arrive(String s, Long l) {
+		add2Map(bibsYet2ArriveLongId, bibsYet2ArriveStringId, s, l);
+	}
+	protected void removeOutputRecordId4BibYet2Arrive(String s) {
+		
+	}
+	
+	
 	@Override
 	public List<OutputRecord> process(InputRecord processMe) {
 		//2 maps as instance variables
@@ -129,6 +180,7 @@ public class TransformationService extends GenericMetadataService
 				//if bib(001) exists in bibsYetToArrive
 					//output xc-manifestation with set aside bib_record_id
 					//move bibsYetToArrive entry to bibsProcessed
+					//mark held holdings as active
 				//else
 					//output xc-manifestation with new record_id
 					//create new entry in bibsProcessed
@@ -139,10 +191,12 @@ public class TransformationService extends GenericMetadataService
 				//else
 					//if bib(004) exists in bibsYetToArrive
 						//use the record_id for linking
+						//output xc-holding as held
 					//else
 						//generate a new oai-id for the bibYetToArrive
 						//add an entry to bibsYetToArrive
 					//output xc-holding with status H
+		//
 	}
 	
 	@Override

@@ -40,7 +40,7 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
     /** Determines how the HTML should be displayed in the view page for this action */
     private String displayType;
     
-    protected int consecutiveSolrIndexes = 0;
+    protected static int consecutiveSolrIndexes = 0;
 
     /**
      * Overrides default implementation to refresh the contents of the service status bar.
@@ -50,12 +50,15 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
     @Override
     public String execute()
     {
-    	
             try
             {
             	boolean solrIndexRunning = false;
+            	LOG.debug("getScheduler().getRunningJob(): "+getScheduler().getRunningJob());
                 if(getScheduler().getRunningJob()!=null)
                 {
+                	LOG.debug("getScheduler().getRunningJob().getJobStatus(): "+getScheduler().getRunningJob().getJobStatus());
+                	LOG.debug("getScheduler().getRunningJob().getType(): "+getScheduler().getRunningJob().getType());
+                	
                 	if(!getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE) 
                 			&& !getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)
                 			&& !getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
@@ -94,7 +97,12 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
 	                    	 } else if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.SOLR_INDEXER)) {
 	                    		 solrIndexRunning = true;
 	                    		 if (consecutiveSolrIndexes > 2) {
-	                    			 currentProcess = "creating solr index";
+		                        	 LOG.debug("getScheduler().getRunningJob().getRecordsProcessed(): "+getScheduler().getRunningJob().getRecordsProcessed());
+		                        	 LOG.debug("getScheduler().getRunningJob().getTotalRecords(): "+getScheduler().getRunningJob().getTotalRecords());
+		                        	 LOG.debug("getScheduler().getRunningJob().getJobName(): "+getScheduler().getRunningJob().getJobName());
+	                    			 currentProcess = "Processed " +  getScheduler().getRunningJob().getRecordsProcessed() + 
+	 	                         		" records out of " + getScheduler().getRunningJob().getTotalRecords() + 
+	 	                         		" through " + getScheduler().getRunningJob().getJobName();
 	                    		 }
 	                         } else {
 	                         	currentProcess = "Processed " +  getScheduler().getRunningJob().getRecordsProcessed() + 
@@ -110,6 +118,8 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
                 }
                 displayType = (String)request.getSession().getAttribute("serviceBarDisplay");
                 setDisplayType(displayType);
+                LOG.debug("solrIndexRunning: "+solrIndexRunning);
+                LOG.debug("consecutiveSolrIndexes: "+consecutiveSolrIndexes);
                 if (solrIndexRunning) {
                 	consecutiveSolrIndexes++;
                 } else {
@@ -117,8 +127,9 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
                 }
                 return SUCCESS;
             }
-            catch(Exception e)
+            catch(Throwable e)
             {
+            	LOG.error("", e);
                 log.error("The status of the services running in the MST , could not be displayed correctly",e);
                 this.addFieldError("refreshServiceBar", "The status of the services running in the MST , could not be displayed correctly");
                 return INPUT;

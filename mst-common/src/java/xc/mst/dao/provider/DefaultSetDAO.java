@@ -131,12 +131,12 @@ public class DefaultSetDAO extends SetDAO
 	 */
 	private static Object psDeleteLock = new Object();
 	
-	protected Map<String, Set> setMapByName = new HashMap<String, Set>();
+	protected Map<String, Set> setMapBySetSpec = new HashMap<String, Set>();
 	protected Map<Integer, Set> setMapById = new HashMap<Integer, Set>();
 	
 	protected void removeFromCache(Set set) {
-		if (this.setMapByName.containsKey(set.getDisplayName())) {
-			this.setMapByName.remove(set.getDisplayName());
+		if (this.setMapBySetSpec.containsKey(set.getSetSpec())) {
+			this.setMapBySetSpec.remove(set.getSetSpec());
 		}
 		if (this.setMapById.containsKey(set.getId())) {
 			this.setMapById.remove(set.getId());
@@ -144,8 +144,8 @@ public class DefaultSetDAO extends SetDAO
 	}
 	
 	protected void addToCache(Set set) {
-		if (!StringUtils.isEmpty(set.getDisplayName())) {
-			this.setMapByName.put(set.getDisplayName(), set);	
+		if (!StringUtils.isEmpty(set.getSetSpec())) {
+			this.setMapBySetSpec.put(set.getSetSpec(), set);	
 		}
 		this.setMapById.put(set.getId(), set);
 	}
@@ -424,8 +424,8 @@ public class DefaultSetDAO extends SetDAO
 	@Override
 	public Set getBySetSpec(String setSpec) throws DatabaseConfigException
 	{
-		if (this.setMapByName.containsKey(setSpec)) {
-			return this.setMapByName.get(setSpec);
+		if (this.setMapBySetSpec.containsKey(setSpec)) {
+			return this.setMapBySetSpec.get(setSpec);
 		}
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnectionManager.getDbConnection() == null)

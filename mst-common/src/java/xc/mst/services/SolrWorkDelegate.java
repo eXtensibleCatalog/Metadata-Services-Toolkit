@@ -69,7 +69,7 @@ public class SolrWorkDelegate extends BaseService implements WorkDelegate {
 		return solrIndexService.getProcessedRecordCount();
 	}
 
-	public int getTotalRecords() {
+	public long getTotalRecords() {
 		return solrIndexService.getTotalRecordCount();
 	}
 

@@ -107,7 +107,7 @@ public class WorkerThread extends Thread {
 		return this.workDelegate.getRecordsProcessed();
 	}
 
-	public int getTotalRecords() {
+	public long getTotalRecords() {
 		return this.workDelegate.getTotalRecords();
 	}
 

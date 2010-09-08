@@ -219,9 +219,7 @@ public class Record implements InputRecord, OutputRecord {
 						TimingLogger.start("getJDomDocument()");
 						org.jdom.Document d = xmlHelper.getJDomDocument(this.oaiXml);
 						TimingLogger.stop("getJDomDocument()");
-						TimingLogger.start("detachRootElement()");
 						this.oaiXmlEl = d.detachRootElement();
-						TimingLogger.stop("detachRootElement()");
 					} catch (Throwable t) {
 						LOG.error("this.oaiXml.getBytes()");
 						LOG.error("", t);

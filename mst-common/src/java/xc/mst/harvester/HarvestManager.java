@@ -126,7 +126,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		return recordsProcessed;
 	}
 
-	public int getTotalRecords() {
+	public long getTotalRecords() {
 		return totalRecords;
 	}
 

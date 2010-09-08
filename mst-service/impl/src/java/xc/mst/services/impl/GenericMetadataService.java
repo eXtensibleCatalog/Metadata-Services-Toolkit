@@ -11,7 +11,6 @@ package xc.mst.services.impl;
 
 
 import gnu.trove.TLongHashSet;
-import gnu.trove.TLongObjectHashMap;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,8 +21,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.Semaphore;
 
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -35,17 +32,17 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordIfc;
-import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.email.Emailer;
+import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
+import xc.mst.service.impl.test.TestRepository;
 import xc.mst.services.MetadataService;
 import xc.mst.services.impl.dao.GenericMetadataDAO;
 import xc.mst.utils.TimingLogger;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * A copy of the MST is designed to interface with one or more Metadata Services depending on how it's configured.
@@ -80,9 +77,6 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	protected boolean stopped = false;
 	protected boolean paused = false;
 	protected Semaphore running = new Semaphore(1);
-	protected int processedRecordCount = 0;
-	protected int totalRecordCount = 0;
-	protected int inputRecordCount = 0;
 	protected Set outputSet;
 	protected List<String> unprocessedErrorRecordIdentifiers = new ArrayList<String>();
 	
@@ -425,9 +419,17 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 		LOG.debug("sh.getId(): "+sh.getId());
 		return sh;
 	}
-
+	
+	protected List<Record> getRecords(Repository repo, ServiceHarvest sh, Format inputFormat, Set inputSet) {
+		return  
+			repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);	
+	}
+	
+	protected void endBatch() {
+		TimingLogger.reset();
+	}
+	
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
-
 		LOG.debug("getClass(): "+getClass());
 		LOG.debug("inputFormat: "+inputFormat);
 		LOG.debug("inputSet: "+inputSet);
@@ -438,18 +440,21 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 				(outputSet==null?"null":outputSet.getDisplayName())+")");
 
 		running.acquireUninterruptibly();
-		predecessors.clear();
-		getRepository().populatePredecessors(predecessors);
+		if (getRepository() != null) {
+			predecessors.clear();
+			getRepository().populatePredecessors(predecessors);
+		}
 		
 		LOG.debug("gettingServiceHarvest");
 		ServiceHarvest sh = getServiceHarvest(
 				inputFormat, inputSet, repo.getName(), getService());
+		//this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), inputFormat, inputSet);
 		LOG.debug("sh: "+sh);
-		List<Record> records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
-		getRepository().beginBatch();
-		//  TODO not inserting errors on input record.
-		//repo.beginBatch();
-		
+		List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
+		if (getRepository() != null) {
+			getRepository().beginBatch();	
+		}
+
 		int getRecordLoops = 0;
 		boolean previouslyPaused = false;
 		while (records != null && records.size() > 0 && !stopped) {
@@ -491,38 +496,45 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 					}
 				}
 				sh.setHighestId(in.getId());
+				processedRecordCount++;
 				
 				//  TODO not inserting errors on input record.
 				// Update the error message on incoming record
 //				repo.addRecord(in);
 			}
 
-			LOG.debug("sh.getId(): "+sh.getId());
-			getServiceDAO().persist(sh);
+			records = getRecords(repo, sh, inputFormat, inputSet);
+			if (getRepository() != null && !(getRepository() instanceof TestRepository)) {
+				LOG.debug("sh.getId(): "+sh.getId());
+				getServiceDAO().persist(sh);
+	
+				// Set number of input and output records.
+				LOG.debug("service: "+service);
+				LOG.debug("records: "+records);
+				service.setInputRecordCount(service.getInputRecordCount() + records.size());
+				service.setOutputRecordCount(getRepository().getSize());
+				
+				// TODO : currently # of output records and HarvestOutRecordsAvailable are same. So we can get rid of one of the fields in Services.
+				// TODO : Should # of harvest out records available include deleted records too? 
+				service.setHarvestOutRecordsAvailable(service.getOutputRecordCount());
 
-			// Set number of input and output records.
-			service.setInputRecordCount(service.getInputRecordCount() + records.size());
-			service.setOutputRecordCount(getRepository().getSize());
-			
-			// TODO : currently # of output records and HarvestOutRecordsAvailable are same. So we can get rid of one of the fields in Services.
-			// TODO : Should # of harvest out records available include deleted records too? 
-			service.setHarvestOutRecordsAvailable(service.getOutputRecordCount());
-
-			records = repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
-			try {
-				getServiceDAO().update(service);
-			} catch(DataException de) {
-				LOG.error("Exception occured while updating the service", de);
+				try {
+					getServiceDAO().update(service);
+				} catch(DataException de) {
+					LOG.error("Exception occured while updating the service", de);
+				}
 			}
 			
 			getRecordLoops++;
-			if (getRecordLoops % 50 == 0) {
-				TimingLogger.reset();	
+			if (getRecordLoops % 10 == 0) {
+				endBatch();	
 			}
 		}
 		//  TODO not inserting errors on input record.
 //		repo.endBatch();
-		getRepository().endBatch();
+		if (getRepository() != null) {
+			getRepository().endBatch();
+		}
 		if (!stopped) {
 			sh.setHighestId(null);
 			getServiceDAO().persist(sh);
@@ -530,7 +542,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 		if (!previouslyPaused) {
 			running.release();
 		}
-		TimingLogger.reset();
+		endBatch();
 	}
 	
 	protected void injectKnownSuccessorsIds(Record in) {

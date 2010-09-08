@@ -311,11 +311,12 @@ public abstract class ServiceDAO extends BaseDAO
 		
 		List<ServiceHarvest> shs = (List<ServiceHarvest>)this.hibernateTemplate.find(
 				"from xc.mst.bo.service.ServiceHarvest as sh "+
-				"where (sh.format.id = ? or (sh.format.id is null and ? is null)) and "+
-					"(sh.set.id = ? or (sh.set.id is null and ? is null)) and "+
+				"where (sh.format.id = ? or (sh.format is null and ? is null)) and "+
+					"(sh.set.id = ? or (sh.set is null and ? is null)) and "+
 					"sh.repoName = ? and "+
 					"sh.service.id = ? "+
 					"", formatId, formatId, setId, setId, repoName, serviceId);
+		log.error("shs: "+shs);
 		if (shs == null || shs.size() == 0) {
 			return null;
 		} else if (shs.size() == 1) {

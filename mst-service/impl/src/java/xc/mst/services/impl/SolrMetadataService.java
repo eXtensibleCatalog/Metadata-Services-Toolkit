@@ -67,7 +67,7 @@ public abstract class SolrMetadataService extends BaseManager {
 	protected boolean isCanceled;
 	protected boolean isPaused;
 	protected int processedRecordCount = 0;
-	protected int totalRecordCount = 0;
+	protected long totalRecordCount = 0;
 	protected int inputRecordCount = 0;
 	protected Set outputSet;
 	protected List<String> unprocessedErrorRecordIdentifiers = new ArrayList<String>();
@@ -521,7 +521,7 @@ public abstract class SolrMetadataService extends BaseManager {
 	 * Gets the count of total records
 	 * @return the totalRecordCount
 	 */
-	public int getTotalRecordCount() {
+	public long getTotalRecordCount() {
 		return totalRecordCount;
 	}
 

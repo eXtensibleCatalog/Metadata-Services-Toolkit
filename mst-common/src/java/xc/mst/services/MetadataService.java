@@ -55,7 +55,7 @@ public interface MetadataService {
 	public void setPaused(boolean isPaused);
 	public Status getServiceStatus();
 	public int getProcessedRecordCount();
-	public int getTotalRecordCount();
+	public long getTotalRecordCount();
 	public List<String> getUnprocessedErrorRecordIdentifiers();
 	public void setUnprocessedErrorRecordIdentifiers(List<String> l);
 

@@ -23,6 +23,7 @@ import org.jdom.Namespace;
 import org.jdom.xpath.XPath;
 
 import xc.mst.constants.Constants;
+import xc.mst.utils.TimingLogger;
 
 
 /**
@@ -139,23 +140,27 @@ public class MarcXmlRecord
 	@SuppressWarnings("unchecked")
 	public String getControlField(String targetField)
 	{
+		TimingLogger.start("getControlField");
 		try
 		{
 			if(log.isDebugEnabled())
 				log.debug("Getting the control field " + targetField);
 
 			// An XPATH expression to get the requested control field
+			TimingLogger.start("getControlField.XPath.newInstance");
 			XPath xpath = XPath.newInstance(".//marc:controlfield[@tag='" + targetField + "']");
 			xpath.addNamespace(marcNamespace);
+			TimingLogger.stop("getControlField.XPath.newInstance");
 
 			// Get the control field.  There should not be more than one Element in this list.
+			TimingLogger.start("getControlField.xpath.selectNodes");
 			List<Element> elements = xpath.selectNodes(marcXml);
-
+			TimingLogger.stop("getControlField.xpath.selectNodes");
 			if(elements.size() == 0)
 			{
 				if(log.isDebugEnabled())
 					log.debug("The " + targetField + " control field did not exist in the MARC XML record.");
-
+				TimingLogger.stop("getControlField");
 				return null;
 			}
 			else
@@ -165,13 +170,14 @@ public class MarcXmlRecord
 
 				if(log.isDebugEnabled())
 					log.debug("The " + targetField + " control field had a value of " + value + ".");
-
+				TimingLogger.stop("getControlField");
 				return value;
 			}
 		}
 		catch(JDOMException e)
 		{
 			log.error("An error occurred getting control field " + targetField);
+			TimingLogger.stop("getControlField");
 			return null;
 		}
 	}
@@ -185,6 +191,7 @@ public class MarcXmlRecord
 	@SuppressWarnings("unchecked")
 	public List<Element> getDataFields(String targetField)
 	{
+		TimingLogger.start("getDataFields");
 		if(log.isDebugEnabled())
 			log.debug("Getting the " + targetField + " fields.");
 
@@ -209,7 +216,8 @@ public class MarcXmlRecord
 				// Get the 880 fields that match the requested tag
 				if(tagTo880s.containsKey(targetField))
 					results.addAll(tagTo880s.get(targetField));
-
+				
+				TimingLogger.stop("getDataFields");
 				return results;
 			}
 			else
@@ -238,12 +246,14 @@ public class MarcXmlRecord
 						results.add(potentialResult);
 					}
 				}
+				TimingLogger.stop("getDataFields");
 				return results;
 			}
 		}
 		catch(JDOMException e)
 		{
 			log.error("An error occurred getting the " + targetField + " fields.", e);
+			TimingLogger.stop("getDataFields");
 			return new ArrayList<Element>();
 		}
 	}
@@ -257,6 +267,7 @@ public class MarcXmlRecord
 	@SuppressWarnings("unchecked")
 	public List<Element> get945()
 	{
+		TimingLogger.start("get945");
 		if(log.isDebugEnabled())
 			log.debug("Getting the " + 945 + " fields.");
 
@@ -266,11 +277,13 @@ public class MarcXmlRecord
 			XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + 945 + "']");
 			xpath.addNamespace(marcNamespace);
 
+			TimingLogger.stop("get945");
 			return xpath.selectNodes(marcXml);
 		}
 		catch(JDOMException e)
 		{
 			log.error("An error occurred getting the " + 945 + " fields.", e);
+			TimingLogger.stop("get945");
 			return new ArrayList<Element>();
 		}
 	}
@@ -284,9 +297,12 @@ public class MarcXmlRecord
 	 */
 	public List<String> getSubfield(String targetField, char targetSubfield)
 	{
+		TimingLogger.start("getSubfield");
 		if(log.isDebugEnabled())
 			log.debug("Getting the " + targetField + " $" + targetSubfield + " subfields' values.");
-		return tagSubfieldsToValues.get(targetField + "$" + targetSubfield);
+		List<String> ret = tagSubfieldsToValues.get(targetField + "$" + targetSubfield);
+		TimingLogger.stop("getSubfield");
+		return ret;
 	}
 
 	/**
@@ -299,6 +315,7 @@ public class MarcXmlRecord
 	@SuppressWarnings("unchecked")
 	public static List<String> getSubfieldOfField(Element datafield, char subfield)
 	{
+		TimingLogger.start("getSubfieldOfField");
 		if(log.isDebugEnabled())
 			log.debug("Getting the " + subfield + " of the passed datafield.");
 
@@ -319,7 +336,8 @@ public class MarcXmlRecord
 			{
 				if(log.isDebugEnabled())
 					log.debug("The passed datafield did not have a $" + subfield + " subfield.");
-
+				
+				TimingLogger.stop("getSubfieldOfField");
 				return results;
 			}
 			else
@@ -337,12 +355,14 @@ public class MarcXmlRecord
 					results.add(value);
 				}
 
+				TimingLogger.stop("getSubfieldOfField");
 				return results;
 			}
 		}
 		catch(JDOMException e)
 		{
 			log.error("An error occurred getting the $" + subfield + " subfields of the passed datafields.", e);
+			TimingLogger.stop("getSubfieldOfField");
 			return results;
 		}
 	}
@@ -356,6 +376,7 @@ public class MarcXmlRecord
 	@SuppressWarnings("unchecked")
 	public static Element getSiblingOfField(Element datafield)
 	{
+		TimingLogger.start("getSiblingOfField");
 		if(log.isDebugEnabled())
 			log.debug("Getting the sibling of the passed datafield.");
 
@@ -373,6 +394,7 @@ public class MarcXmlRecord
 				if(log.isDebugEnabled())
 					log.debug("The passed datafield did not have a sibling.");
 
+				TimingLogger.stop("getSiblingOfField");
 				return null;
 			}
 			else
@@ -380,12 +402,14 @@ public class MarcXmlRecord
 				if(log.isDebugEnabled())
 					log.debug("Found the sibling of the passed datafield.");
 
+				TimingLogger.stop("getSiblingOfField");
 				return elements.get(0);
 			}
 		}
 		catch(JDOMException e)
 		{
 			log.error("An error occurred getting the sibling of the passed datafields.", e);
+			TimingLogger.stop("getSiblingOfField");
 			return null;
 		}
 	}
@@ -400,6 +424,7 @@ public class MarcXmlRecord
 	@SuppressWarnings("unchecked")
 	public static List<String> getSiblingOfSubfield(Element datafield, char subfield)
 	{
+		TimingLogger.start("getSiblingOfSubfield");
 		if(log.isDebugEnabled())
 			log.debug("Getting the " + subfield + " sibling of the passed subfield.");
 
@@ -421,6 +446,7 @@ public class MarcXmlRecord
 				if(log.isDebugEnabled())
 					log.debug("The passed datafield did not have a $" + subfield + " subfield.");
 
+				TimingLogger.stop("getSiblingOfSubfield");
 				return results;
 			}
 			else
@@ -437,13 +463,15 @@ public class MarcXmlRecord
 
 					results.add(value);
 				}
-
+				
+				TimingLogger.stop("getSiblingOfSubfield");
 				return results;
 			}
 		}
 		catch(JDOMException e)
 		{
 			log.error("An error occurred getting the $" + subfield + " subfields of the passed datafields.", e);
+			TimingLogger.stop("getSiblingOfSubfield");
 			return results;
 		}
 	}
@@ -458,6 +486,7 @@ public class MarcXmlRecord
 	@SuppressWarnings("unchecked")
 	public static String getIndicatorOfField(Element datafield, String indicator)
 	{
+		TimingLogger.start("getIndicatorOfField");
 		if(log.isDebugEnabled())
 			log.debug("Getting the ind" + indicator + " of the passed datafield.");
 
@@ -476,6 +505,7 @@ public class MarcXmlRecord
 				if(log.isDebugEnabled())
 					log.debug("The passed datafield did not have a ind" + indicator + ".");
 
+				TimingLogger.stop("getIndicatorOfField");
 				return null;
 			}
 			else
@@ -486,12 +516,14 @@ public class MarcXmlRecord
 				if(log.isDebugEnabled())
 					log.debug("Found a ind" + indicator + " with a value of " + value + ".");
 
+				TimingLogger.stop("getIndicatorOfField");
 				return value;
 			}
 		}
 		catch(JDOMException e)
 		{
 			log.error("An error occurred getting the ind" + indicator + " of the passed datafield.", e);
+			TimingLogger.stop("getIndicatorOfField");
 			return null;
 		}
 	}
@@ -502,6 +534,7 @@ public class MarcXmlRecord
 	@SuppressWarnings("unchecked")
 	private void initializeMarcDataFields()
 	{
+		TimingLogger.start("initializeMarcDataFields");
 		if(log.isDebugEnabled())
 			log.debug("Initializing MARC XML data fields.");
 
@@ -547,6 +580,7 @@ public class MarcXmlRecord
 				tagSubfieldsToValues.get(tagAndCode).add(subfield.getText());
 			}
 		} // end loop over data fields
+		TimingLogger.stop("initializeMarcDataFields");
 	} // end method initializeMarcDataFields
 
 	public String getOrgCode() {

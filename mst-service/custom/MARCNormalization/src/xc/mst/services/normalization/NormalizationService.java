@@ -131,6 +131,7 @@ public class NormalizationService extends GenericMetadataService {
 
 	@Override
 	public List<OutputRecord> process(InputRecord recordIn) {
+		TimingLogger.add("xpath", 0);
 		LOG.debug("recordIn.getId(): "+recordIn.getId());
 		TimingLogger.start("processRecord");
 		try {
@@ -174,7 +175,6 @@ public class NormalizationService extends GenericMetadataService {
 	}
 	
 	private List<OutputRecord> convertRecord(InputRecord record) {
-		
 		// Empty the lists of errors because we're beginning to process a new record
 		errors = new ArrayList<RecordMessage>();
 		outputRecordErrors = new ArrayList<RecordMessage>();
@@ -330,7 +330,7 @@ public class NormalizationService extends GenericMetadataService {
 				LOG.debug("Adding errors to the record.");
 
 			record.setMessages(errors);
-			
+						
 			if(LOG.isDebugEnabled())
 				LOG.debug("Creating the normalized record.");
 
@@ -405,7 +405,9 @@ public class NormalizationService extends GenericMetadataService {
 				
 				if(setSpec != null) {
 					// Get the set for the provider
+					TimingLogger.start("getSetBySetSpec");
 					Set recordTypeSet = getSetService().getSetBySetSpec(setSpec);
+					TimingLogger.stop("getSetBySetSpec");
 					
 					// Add the set if it doesn't already exist
 					if(recordTypeSet == null)
@@ -431,7 +433,6 @@ public class NormalizationService extends GenericMetadataService {
 				LOG.debug("Adding errors to the record.");
 			
 			record.setMessages(errors);
-			
 			return results;
 		}
 	}
@@ -2283,11 +2284,6 @@ public class NormalizationService extends GenericMetadataService {
 	
 	protected String getOrganizationCode() {
 		return enabledSteps.getProperty("OrganizationCode");
-	}
-	
-	@Override
-	public void setInputRecordCount(int inputRecordCount) {
-		this.inputRecordCount = inputRecordCount;
 	}
 	
 }

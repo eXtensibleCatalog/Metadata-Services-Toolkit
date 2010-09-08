@@ -18,6 +18,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
 import xc.mst.common.test.BaseTest;
 import xc.mst.constants.Status;
+import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
 import xc.mst.services.impl.GenericMetadataService;
 
@@ -29,8 +30,13 @@ public class ResumePerfTest extends BaseTest {
 	public void resumePerfTest() {
 
 		try {
+			repositoryDAO.deleteSchema("MARCNormalization");
+			getServicesService().addNewService("MARCNormalization");
+			
 			Service s = getServicesService().getServiceByName("MARCNormalization");
 			GenericMetadataService ms = (GenericMetadataService)s.getMetadataService();
+			
+			((DefaultRepository)ms.getRepository()).deleteAllData();
 			
 			Set incomingSet = getSetDAO().getById(9);
 			//Set outgoingSet = getSetDAO().getById(10);
@@ -43,6 +49,7 @@ public class ResumePerfTest extends BaseTest {
 			repo.setName("135_5m");
 
 			//ms.process(repo, format, incomingSet, null);
+			ms.process(repo, null, null, null);
 			waitUntilFinished();
 		} catch (Throwable t) {
 			LOG.error("", t);

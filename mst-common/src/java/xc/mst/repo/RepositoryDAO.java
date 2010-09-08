@@ -45,7 +45,6 @@ import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.BaseDAO;
-import xc.mst.manager.processingDirective.DefaultServicesService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
@@ -216,13 +215,13 @@ public class RepositoryDAO extends BaseDAO {
 		addRecords(name, records, false);
 	}
 	
-	public void addRecord(String name, Record r) {
+	public boolean addRecord(String name, Record r) {
 		if (recordsToAdd == null) {
 			recordsToAdd = new ArrayList<Record>();
 		}
 
 		recordsToAdd.add(r);
-		commitIfNecessary(name, false);
+		return commitIfNecessary(name, false);
 	}
 	
 	public void addRecords(String name, List<Record> records, boolean force) {
@@ -245,10 +244,14 @@ public class RepositoryDAO extends BaseDAO {
 		}
 	}
 	
-	protected void commitIfNecessary(String name, boolean force) {
+	protected boolean commitIfNecessary(String name, boolean force) {
 		LOG.debug("commitIfNecessary:Inbatch : " + inBatch);
 		int batchSize = 5000;
+		if (recordsToAdd != null) {
+			//LOG.error("beluga highest id: "+recordsToAdd.get(recordsToAdd.size()-1).getId());
+		}
 		if (force || batchSize <= recordsToAdd.size()) {
+			//LOG.error("beluga commit!!!");
 			TimingLogger.start("commit to db");
 			final long startTime = System.currentTimeMillis();
 			String sql = 
@@ -359,6 +362,7 @@ public class RepositoryDAO extends BaseDAO {
 	                    }
 	                } );
 	        TimingLogger.stop("RECORDS_SETS_TABLE.insert");
+	        /*
 	        TimingLogger.start("RECORD_MESSAGES.insert");
 			sql = 
     			"insert into "+getTableName(name, RECORD_MESSAGES_TABLE)+
@@ -385,6 +389,7 @@ public class RepositoryDAO extends BaseDAO {
 	        		sql,
 	                new RecMessageBatchPreparedStatementSetter(recordMsgs));
 	        TimingLogger.stop("RECORD_MESSAGES.insert");
+	        */
 	        TimingLogger.start("RECORD_PREDECESSORS_TABLE.insert");
 	        // TODO: Delete previous predecessors that are no longer there.
 			sql = 
@@ -471,6 +476,9 @@ public class RepositoryDAO extends BaseDAO {
 	        
 			recordsToAdd = null;
 			TimingLogger.stop("commit to db");
+			return true;
+		} else {
+			return false;
 		}
 	}
 	
@@ -763,44 +771,40 @@ public class RepositoryDAO extends BaseDAO {
 		}
 		StringBuilder sb = new StringBuilder();
 		sb.append(
-				" select count(*) " +
+				" select u.record_id " +
 				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
 					getTableName(name, RECORD_UPDATES_TABLE)+" u ");
 		if (inputSet != null) {
-			sb.append(
-				", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ");
+			sb.append(", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ");
 		}
 		sb.append(
 				" where  r.record_id = u.record_id " +
 					" and (u.date_updated > ? or ? is null) "+
-					" and u.date_updated <= ?  " +
-					" group by u.record_id "
+					" and u.date_updated <= ?  "
 					);
-					
-		if (inputFormat != null) {
-			sb.append(
-					" and r.format_id = ? ");
-		}
-
 		params.add(from);
 		params.add(from);
 		params.add(until);
 		if (inputFormat != null) {
+			sb.append(
+					" and r.format_id = ? ");
 			params.add(inputFormat.getId());
 		}
-		
 		if (inputSet != null) {
 			sb.append(
 					" and r.record_id = rs.record_id " +
 					" and rs.set_id = ? ");
 			params.add(inputSet.getId());
 		}
+		sb.append(" group by u.record_id ");
+		sb.append(" order by u.record_id ");
 
 		Object obj[] = params.toArray();
 		
 		long recordCount = 0;
 		try {
-			recordCount = this.jdbcTemplate.queryForLong(sb.toString(), obj);
+			LOG.debug("query for count: "+sb.toString());
+			recordCount = this.jdbcTemplate.queryForList(sb.toString(), obj).size();
 		} catch (EmptyResultDataAccessException e) {
 			LOG.info("no records found for from: "+from+" until: "+until + " format:" + inputFormat + " inputSet:" + inputSet);
 		}
@@ -836,7 +840,7 @@ public class RepositoryDAO extends BaseDAO {
 						" group by u.record_id "+
 						" order by u.record_id "+
 						" limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 1000));
-			LOG.debug("startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
+			LOG.debug("name: "+name+" startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
 			params.add(startingId);
 			params.add(startingId);
 			params.add(highestId);
@@ -869,6 +873,7 @@ public class RepositoryDAO extends BaseDAO {
 					}
 					currentRecord.addSet(rws.getSets().get(0));
 					
+					/*
 					List<RecordMessage> messages = jdbcTemplate.query(sbMessages.toString(),
 							new Object[] {rws.getId()},
 							new RowMapper() {
@@ -880,6 +885,7 @@ public class RepositoryDAO extends BaseDAO {
 					});
 					
 					currentRecord.setMessages(messages);
+					*/
 					
 			
 				}
@@ -915,6 +921,15 @@ public class RepositoryDAO extends BaseDAO {
 	
 	public void setAllLastModifiedOais(String name, Date d) {
 		this.jdbcTemplate.update("update "+getTableName(name, RECORDS_TABLE)+ " set oai_datestamp=?", d);
+	}
+	
+	public void deleteAllData(String name) {
+		this.jdbcTemplate.update("delete from "+getTableName(name, RECORDS_TABLE));
+		this.jdbcTemplate.update("delete from "+getTableName(name, RECORD_PREDECESSORS_TABLE));
+		this.jdbcTemplate.update("delete from "+getTableName(name, RECORDS_SETS_TABLE));
+		this.jdbcTemplate.update("delete from "+getTableName(name, RECORD_UPDATES_TABLE));
+		this.jdbcTemplate.update("delete from "+getTableName(name, RECORDS_TABLE));
+		this.jdbcTemplate.update("delete from "+getTableName(name, RECORDS_XML_TABLE));
 	}
 	
 	private static final class RepoMapper implements RowMapper<Repository> {
@@ -984,4 +999,5 @@ public class RepositoryDAO extends BaseDAO {
 	        return r;
 	    }        
 	}
+
 }
