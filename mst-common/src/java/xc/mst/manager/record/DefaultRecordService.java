@@ -45,7 +45,9 @@ import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.Util;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
@@ -1337,6 +1339,33 @@ public class DefaultRecordService extends RecordService
 		}
 		LOG.debug("r: "+r);
 		return recordEl;
+	}
+	
+	public String getOaiIdentifier(long id, Provider p) {
+		return getOaiIdentifier(id, p, null);
+	}
+	
+	public String getOaiIdentifier(long id, Service s) {
+		return getOaiIdentifier(id, null, s);
+	}
+	
+	public String getOaiIdentifier(long id, Provider p, Service s) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("oai:");
+		sb.append(MSTConfiguration.getInstance().getProperty("DomainNameIdentifier"));
+		sb.append(":");
+		String name = null;
+		if (p != null) {
+			name = p.getName();
+		}
+		if (s != null) {
+			name = s.getName();
+		}
+		name = new Util().normalizeName(name);
+		sb.append(name);
+		sb.append("/");
+		sb.append(id);
+		return sb.toString();
 	}
 	
 }

@@ -51,7 +51,7 @@ import xc.mst.services.transformation.bo.BibliographicManifestationMapping;
 import xc.mst.services.transformation.bo.HeldHoldingRecord;
 import xc.mst.services.transformation.bo.MarcXmlRecord;
 import xc.mst.services.transformation.bo.XCHoldingRecord;
-import xc.mst.services.transformation.bo.XCRecord;
+import xc.mst.services.transformation.bo.AggregateXCRecord;
 import xc.mst.services.transformation.dao.BibliographicManifestationMappingDAO;
 import xc.mst.services.transformation.dao.HeldHoldingRecordDAO;
 import xc.mst.services.transformation.dao.XCHoldingDAO;
@@ -67,7 +67,7 @@ import xc.mst.utils.XmlHelper;
 public class SolrTransformationService extends GenericMetadataService
 {
 
-	private final static Logger LOG = Logger.getLogger(SolrTransformationService.class);
+	protected final static Logger LOG = Logger.getLogger(SolrTransformationService.class);
 
 	protected XmlHelper xmlHelper = new XmlHelper();
 	
@@ -85,6 +85,8 @@ public class SolrTransformationService extends GenericMetadataService
 	// The following HashSets are used to prevent duplicate values from being added to the XC record
 
 	protected HashMap<String, Element> linkedCreatorFields = new HashMap<String, Element>();
+	
+	protected boolean processingHeldRecords = false;
 	
 	/**
 	 * Org code used 
@@ -194,7 +196,7 @@ public class SolrTransformationService extends GenericMetadataService
 	/*
 	 * Process the held Holding record
 	 */
-	private void processHeldRecord() {
+	protected void processHeldRecord() {
 		
 		processingHeldRecords = true;
 		try {
@@ -218,7 +220,7 @@ public class SolrTransformationService extends GenericMetadataService
 		} 
 	}
 	
-	private List<OutputRecord> convertRecord(InputRecord record) {
+	protected List<OutputRecord> convertRecord(InputRecord record) {
 		
 		if(LOG.isDebugEnabled())
 			LOG.debug("Transforming record with ID " + record.getId() + ".");
@@ -257,7 +259,7 @@ public class SolrTransformationService extends GenericMetadataService
 			{
 				results = processHoldingRecord(record, originalRecord);
 			} else { // If leader 6th character is invalid, then log error and do not process that record.
-				logError("Record Id " + record.getOaiIdentifier() + " with leader character " + leader06 + " not processed.");
+				logError("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
 				return results;
 			}
 			return results;
@@ -281,7 +283,7 @@ public class SolrTransformationService extends GenericMetadataService
 	/*
 	 * Deletes the successor record of input bibliographic record
 	 */
-	private void deleteRecord(Record successorRecord, Record inputRecord) {
+	protected void deleteRecord(Record successorRecord, Record inputRecord) {
 		successorRecord.setDeleted(true);
 		
 		// Mark this record as input to services that have processed it.
@@ -312,7 +314,7 @@ public class SolrTransformationService extends GenericMetadataService
 
 	}
 	
-	private void removeExistingBibRecords(InputRecord record, List<OutputRecord> existingRecords) throws DataException,  DatabaseConfigException, IndexException {
+	protected void removeExistingBibRecords(InputRecord record, List<OutputRecord> existingRecords) throws DataException,  DatabaseConfigException, IndexException {
 		Record manifestation = null;
 		for (Record oldRecord: existingRecords) {
 			if (oldRecord.getType().equalsIgnoreCase("XC-Manifestation")) {
@@ -414,7 +416,7 @@ public class SolrTransformationService extends GenericMetadataService
 	/*
 	 * Process bibliographic record
 	 */
-	private List<OutputRecord> processBibliographicRecord(InputRecord record, MarcXmlRecord originalRecord) 
+	protected List<OutputRecord> processBibliographicRecord(InputRecord record, MarcXmlRecord originalRecord) 
 			throws DataException, DatabaseConfigException, TransformerConfigurationException, IndexException, TransformerException{
 
 		// A list of records resulting from processing the incoming record
@@ -459,7 +461,7 @@ public class SolrTransformationService extends GenericMetadataService
 		}
 
 		// Create an XCRecord Object to hold the transformed record
-		XCRecord transformedRecord = new XCRecord();
+		AggregateXCRecord transformedRecord = new AggregateXCRecord();
 		
 		// Run the transformation steps
 		// Each one processes a different MARC XML field and adds the appropriate
@@ -667,7 +669,7 @@ public class SolrTransformationService extends GenericMetadataService
 	/*
 	 * Process holding record 
 	 */
-	private List<Record> processHoldingRecord(Record record, MarcXmlRecord originalRecord) 
+	protected List<Record> processHoldingRecord(Record record, MarcXmlRecord originalRecord) 
 			throws  DatabaseConfigException, TransformerConfigurationException, IndexException, TransformerException, DataException {
 		
 		// A list of records resulting from processing the incoming record
@@ -760,7 +762,7 @@ public class SolrTransformationService extends GenericMetadataService
 			}
 			
 			// Create an XCRecord Object to hold the transformed record
-			XCRecord transformedRecord = new XCRecord();
+			AggregateXCRecord transformedRecord = new AggregateXCRecord();
 			
 			// Run the transformation steps
 			// Each one processes a different MARC XML field and adds the appropriate
@@ -800,15 +802,16 @@ public class SolrTransformationService extends GenericMetadataService
 	/*
 	 * Removes manifestation link from holding record
 	 */
+	//TODO
 	@SuppressWarnings("unchecked")
-	private void removeManifestationHeld(Record holdingRecord, Record manifestation) {
+	protected void removeManifestationHeld(Record holdingRecord, Record manifestation) {
 		
 		try {
 			Document document = builder.build(new InputSource(new StringReader(holdingRecord.getOaiXml())));
 				
 			// An XPATH expression to get the requested control field
 			XPath xpath = XPath.newInstance("//xc:manifestationHeld");
-			xpath.addNamespace(XCRecord.XC_NAMESPACE);
+			xpath.addNamespace(AggregateXCRecord.XC_NAMESPACE);
 	
 			// Get the control field.  There should not be more than one Element in this list.
 			List<Element> elements = xpath.selectNodes(document);
@@ -846,7 +849,8 @@ public class SolrTransformationService extends GenericMetadataService
 	/*
 	 * Links manifestation record with given set of holding record
 	 */
-	private void linkManifestation(List<XCHoldingRecord> xcHoldingRecords, String manifestationOAIId) {
+	//TODO
+	protected void linkManifestation(List<XCHoldingRecord> xcHoldingRecords, String manifestationOAIId) {
 		
 		List<String> xcHoldingOaiIds = new ArrayList<String>();
 		String field004 = null;
@@ -889,9 +893,9 @@ public class SolrTransformationService extends GenericMetadataService
 				Document document = builder.build(new InputSource(new StringReader(record.getOaiXml())));
 				
 				// Create back links to Manifestation
-				Element linkManifestation =  new Element("manifestationHeld",XCRecord.XC_NAMESPACE);
+				Element linkManifestation =  new Element("manifestationHeld",AggregateXCRecord.XC_NAMESPACE);
 				linkManifestation.setText(manifestationOAIId);
-				document.getRootElement().getChild("entity",XCRecord.XC_NAMESPACE).addContent("\t").addContent(linkManifestation.detach()).addContent("\n\t");
+				document.getRootElement().getChild("entity",AggregateXCRecord.XC_NAMESPACE).addContent("\t").addContent(linkManifestation.detach()).addContent("\n\t");
 		
 				StringWriter writer = new StringWriter();
 				TransformerFactory tf = TransformerFactory.newInstance();
@@ -926,6 +930,7 @@ public class SolrTransformationService extends GenericMetadataService
 		}
 	}
 
+	//TODO
 	public boolean updateServiceStatistics() {
 		
 		// Remove all records from hashmap memory. Since the records are saved we can access it from Solr
@@ -942,10 +947,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process010(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process010(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:recordID with a type of LCCN based on the 010 $a values
-		return processFieldBasic(transformMe, transformInto, "010", 'a', "recordID", XCRecord.XC_NAMESPACE, new Attribute("type", "LCCN"), FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "010", 'a', "recordID", AggregateXCRecord.XC_NAMESPACE, new Attribute("type", "LCCN"), FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -956,10 +961,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process015(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process015(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:identifier based on the 015 $a values with a type based on the corrosponding 015 $2 value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "015", 'a', "identifier", XCRecord.XC_NAMESPACE, new Attribute("type", "null"), '2', null, FrbrLevel.MANIFESTATION);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "015", 'a', "identifier", AggregateXCRecord.XC_NAMESPACE, new Attribute("type", "null"), '2', null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -970,10 +975,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process016(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process016(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:identifier based on the 015 $a values with a type based on the corrosponding 015 $2 value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "016", 'a', "identifier", XCRecord.XC_NAMESPACE, new Attribute("type", "null"), '2', "LAC", FrbrLevel.MANIFESTATION);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "016", 'a', "identifier", AggregateXCRecord.XC_NAMESPACE, new Attribute("type", "null"), '2', "LAC", FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -984,13 +989,13 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process022(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process022(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an identifier with a type of ISSN based on the 022 $a values
-		transformInto = processFieldBasic(transformMe, transformInto, "022", 'a', "identifier", XCRecord.XC_NAMESPACE, new Attribute("type", "ISSN"), FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "022", 'a', "identifier", AggregateXCRecord.XC_NAMESPACE, new Attribute("type", "ISSN"), FrbrLevel.MANIFESTATION);
 
 		// Create an identifier with a type of ISSN-L based on the 022 $l values
-		return processFieldBasic(transformMe, transformInto, "022", 'l', "identifier", XCRecord.XC_NAMESPACE, new Attribute("type", "ISSN-L"), FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "022", 'l', "identifier", AggregateXCRecord.XC_NAMESPACE, new Attribute("type", "ISSN-L"), FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -1001,7 +1006,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process024(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process024(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 1st indicator to the type of the XC:identifier
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
@@ -1013,7 +1018,7 @@ public class SolrTransformationService extends GenericMetadataService
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:identifier with a type based on the 1st indicator and a value based on the 024 $a values
-		return processFieldAttributeFromIndicator(transformMe, transformInto, "024", 'a', "identifier", XCRecord.XC_NAMESPACE, "1", indicatorToType, true, FrbrLevel.MANIFESTATION);
+		return processFieldAttributeFromIndicator(transformMe, transformInto, "024", 'a', "identifier", AggregateXCRecord.XC_NAMESPACE, "1", indicatorToType, true, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -1024,7 +1029,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process028(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process028(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the 028 datafields (Publisher Numbers) in the MARC XML record
 		List<Element> pns = transformMe.getDataFields("028");
@@ -1055,25 +1060,25 @@ public class SolrTransformationService extends GenericMetadataService
 			{
 				name= "identifier";
 				type = "SoundNr";
-				namespace = XCRecord.XC_NAMESPACE;
+				namespace = AggregateXCRecord.XC_NAMESPACE;
 			}
 			else if(ind1.equals("2"))
 			{
 				name= "plateNumber";
 				type = null;
-				namespace = XCRecord.RDVOCAB_NAMESPACE;
+				namespace = AggregateXCRecord.RDVOCAB_NAMESPACE;
 			}
 			else if(ind1.equals("3"))
 			{
 				name= "publisherNumber";
 				type = null;
-				namespace = XCRecord.RDVOCAB_NAMESPACE;
+				namespace = AggregateXCRecord.RDVOCAB_NAMESPACE;
 			}
 			else if(ind1.equals("4"))
 			{
 				name= "identifier";
 				type = "VideoNr";
-				namespace = XCRecord.XC_NAMESPACE;
+				namespace = AggregateXCRecord.XC_NAMESPACE;
 			}
 			else
 			{
@@ -1108,10 +1113,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process030(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process030(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an identifier with a type of CODEN based on the 030 $a values
-		return processFieldBasic(transformMe, transformInto, "030", 'a', "identifier", XCRecord.XC_NAMESPACE, new Attribute("type", "CODEN"), FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "030", 'a', "identifier", AggregateXCRecord.XC_NAMESPACE, new Attribute("type", "CODEN"), FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -1123,7 +1128,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process035(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process035(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the control numbers from the 035 $a in the MARC XML record
 		List<String> controlNumbers = transformMe.getSubfield("035", 'a');
@@ -1156,7 +1161,7 @@ public class SolrTransformationService extends GenericMetadataService
 			attributes.add(new Attribute("type", type));
 
 			// Set the control number on the XC record
-			transformInto.addElement("recordID", value.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
+			transformInto.addElement("recordID", value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 		}
 
 		// Return the result of this transformation step
@@ -1171,7 +1176,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process037(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process037(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields("037");
@@ -1208,7 +1213,7 @@ public class SolrTransformationService extends GenericMetadataService
 					LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level " + "identifier with a type of \"GPO\" based on the 037 $a value, which is " + value);
 
 				// Add the element to the XC record
-				transformInto.addElement("identifier", value.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
+				transformInto.addElement("identifier", value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 			}
 		}
 
@@ -1224,7 +1229,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process050(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process050(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 
 		// Create a xc:subject with a type of dcterms:LCC based on the 050 $a values
@@ -1249,10 +1254,10 @@ public class SolrTransformationService extends GenericMetadataService
 
 			// Setup the attribute list
 			ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-			attributes.add(new Attribute("type", "dcterms:LCC", XCRecord.XSI_NAMESPACE));
+			attributes.add(new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
 
 			// Add the element to the XC record
-			transformInto.addElement("subject", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.WORK);
+			transformInto.addElement("subject", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.WORK);
 		}
 
 		// Return the result
@@ -1267,20 +1272,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process055(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process055(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		
 		// Setup the map from the 1st indicator to the type of the XC:identifier
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCC", XCRecord.XSI_NAMESPACE));
-		indicatorToType.put("1", new Attribute("type", "dcterms:LCC", XCRecord.XSI_NAMESPACE));
-		indicatorToType.put("2", new Attribute("type", "dcterms:LCC", XCRecord.XSI_NAMESPACE));
-		indicatorToType.put("3", new Attribute("type", "dcterms:LCC", XCRecord.XSI_NAMESPACE));
-		indicatorToType.put("4", new Attribute("type", "dcterms:LCC", XCRecord.XSI_NAMESPACE));
-		indicatorToType.put("5", new Attribute("type", "dcterms:LCC", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put("1", new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put("3", new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put("4", new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put("5", new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
 
 		// Create an xc:identifier with a type based on the 1st indicator and a value based on the 024 $a values
-		return processFieldAttributeFromIndicator(transformMe, transformInto, "055", 'a', "subject", XCRecord.DCTERMS_NAMESPACE, "2", indicatorToType, false, FrbrLevel.WORK);
+		return processFieldAttributeFromIndicator(transformMe, transformInto, "055", 'a', "subject", AggregateXCRecord.DCTERMS_NAMESPACE, "2", indicatorToType, false, FrbrLevel.WORK);
 	}
 
 	/**
@@ -1291,10 +1296,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process060(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process060(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:subject with a type of LCCN based on the 060 $a values
-		return processFieldBasic(transformMe, transformInto, "060", 'a', "subject", XCRecord.DCTERMS_NAMESPACE, new Attribute("type", "dcterms:NLM",XCRecord.XSI_NAMESPACE), FrbrLevel.WORK);
+		return processFieldBasic(transformMe, transformInto, "060", 'a', "subject", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("type", "dcterms:NLM",AggregateXCRecord.XSI_NAMESPACE), FrbrLevel.WORK);
 	}
 
 	/**
@@ -1305,10 +1310,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process074(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process074(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:identifier with a type of GPOItem based on the 074 $a values
-		return processFieldBasic(transformMe, transformInto, "074", 'a', "identifier", XCRecord.XC_NAMESPACE, new Attribute("type", "GPOItem"), FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "074", 'a', "identifier", AggregateXCRecord.XC_NAMESPACE, new Attribute("type", "GPOItem"), FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -1319,10 +1324,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process082(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process082(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:subject with a xsi:type of dcterms:DDC based on the 082 $a values
-		return processFieldBasic(transformMe, transformInto, "082", 'a', "subject", XCRecord.DCTERMS_NAMESPACE, new Attribute("type", "dcterms:DDC", XCRecord.XSI_NAMESPACE), FrbrLevel.WORK);
+		return processFieldBasic(transformMe, transformInto, "082", 'a', "subject", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("type", "dcterms:DDC", AggregateXCRecord.XSI_NAMESPACE), FrbrLevel.WORK);
 	}
 	
 	/**
@@ -1333,7 +1338,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process084(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process084(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		
 		// Get the target subfields MARC XML record
@@ -1343,7 +1348,7 @@ public class SolrTransformationService extends GenericMetadataService
 			for (String subfieldValue : subfieldValues) {
 				if (subfieldValue.equalsIgnoreCase("NDC8")) {
 					// Create an dcterms:subject with a xsi:type of dcterms:DDC based on the 082 $a values
-					return processFieldBasic(transformMe, transformInto, "084", 'a', "subject", XCRecord.XC_NAMESPACE, new Attribute("type", "NDC8"), FrbrLevel.WORK);
+					return processFieldBasic(transformMe, transformInto, "084", 'a', "subject", AggregateXCRecord.XC_NAMESPACE, new Attribute("type", "NDC8"), FrbrLevel.WORK);
 				}
 			}
 		}
@@ -1359,10 +1364,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process086(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process086(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:identifier with a type of SuDoc based on the 086 $a values
-		return processFieldBasic(transformMe, transformInto, "086", 'a', "identifier", XCRecord.XC_NAMESPACE, new Attribute("type", "SuDoc"), FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "086", 'a', "identifier", AggregateXCRecord.XC_NAMESPACE, new Attribute("type", "SuDoc"), FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -1373,10 +1378,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process090(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process090(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create a xc:subject with a type of dcterms:LCC based on the 090 $a values
-		return processFieldBasic(transformMe, transformInto, "090", 'a', "subject", XCRecord.DCTERMS_NAMESPACE, new Attribute("type", "dcterms:LCC", XCRecord.XSI_NAMESPACE), FrbrLevel.WORK);
+		return processFieldBasic(transformMe, transformInto, "090", 'a', "subject", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE), FrbrLevel.WORK);
 	}
 
 	/**
@@ -1387,10 +1392,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process092(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process092(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:subject with a xsi:type of dcterms:DDC based on the 092 $a values
-		return processFieldBasic(transformMe, transformInto, "092", 'a', "subject", XCRecord.DCTERMS_NAMESPACE, new Attribute("type", "dcterms:DDC", XCRecord.XSI_NAMESPACE), FrbrLevel.WORK);
+		return processFieldBasic(transformMe, transformInto, "092", 'a', "subject", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("type", "dcterms:DDC", AggregateXCRecord.XSI_NAMESPACE), FrbrLevel.WORK);
 	}
 
 	/**
@@ -1401,10 +1406,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process100(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process100(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:creator based on the 100 abcdegq values
-		return processFieldWithAuthorityIgnoreRoles(transformMe, transformInto, "100", "abcdegq", "creator", XCRecord.XC_NAMESPACE, FrbrLevel.WORK);
+		return processFieldWithAuthorityIgnoreRoles(transformMe, transformInto, "100", "abcdegq", "creator", AggregateXCRecord.XC_NAMESPACE, FrbrLevel.WORK);
 	}
 
 	/**
@@ -1415,10 +1420,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process110(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process110(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:creator based on the 110 abcdeg values
-		return processFieldWithAuthorityIgnoreRoles(transformMe, transformInto, "110", "abcdeg", "creator", XCRecord.XC_NAMESPACE, FrbrLevel.WORK);
+		return processFieldWithAuthorityIgnoreRoles(transformMe, transformInto, "110", "abcdeg", "creator", AggregateXCRecord.XC_NAMESPACE, FrbrLevel.WORK);
 	}
 
 	/**
@@ -1429,10 +1434,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process111(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process111(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:creator based on the 111 acdegjq values
-		return processFieldWithAuthorityIgnoreRoles(transformMe, transformInto, "111", "acdegjnq", "creator", XCRecord.XC_NAMESPACE, FrbrLevel.WORK);
+		return processFieldWithAuthorityIgnoreRoles(transformMe, transformInto, "111", "acdegjnq", "creator", AggregateXCRecord.XC_NAMESPACE, FrbrLevel.WORK);
 	}
 
 	/**
@@ -1445,7 +1450,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord process130(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process130(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields("130");
@@ -1499,14 +1504,14 @@ public class SolrTransformationService extends GenericMetadataService
 					if(prefix.equals("DLC"))
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
-						atts.add(new Attribute("type", "lcnaf", XCRecord.XSI_NAMESPACE));
-						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), XCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
+						atts.add(new Attribute("type", "lcnaf", AggregateXCRecord.XSI_NAMESPACE));
+						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
 					else if(prefix.equals(getOrganizationCode()))
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
 						atts.add(new Attribute("type", "xcauth"));
-						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, value.trim(), XCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
+						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
 				}
 
@@ -1522,7 +1527,7 @@ public class SolrTransformationService extends GenericMetadataService
 			{
 				String value = titleOfWorkBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
 
-				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
+				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_WORK, AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
 				
 			}
 			
@@ -1531,7 +1536,7 @@ public class SolrTransformationService extends GenericMetadataService
 			{
 				String value = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
 
-				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
+				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_EXPRESSION, AggregateXCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
 			}
 		}
 
@@ -1556,10 +1561,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process210(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process210(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:alternative based on the 210 $a and $b values
-		return processFieldBasic(transformMe, transformInto, "210", "ab", "alternative", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "210", "ab", "alternative", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -1570,10 +1575,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process222(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process222(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:alternative based on the 222 $a and $b values
-		return processFieldBasic(transformMe, transformInto, "222", "ab", "alternative", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "222", "ab", "alternative", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -1587,7 +1592,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord process240(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process240(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields("240");
@@ -1641,14 +1646,14 @@ public class SolrTransformationService extends GenericMetadataService
 					if(prefix.equals("DLC"))
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
-						atts.add(new Attribute("type", "lcnaf", XCRecord.XSI_NAMESPACE));
-						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), XCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
+						atts.add(new Attribute("type", "lcnaf", AggregateXCRecord.XSI_NAMESPACE));
+						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
 					else if(prefix.equals(getOrganizationCode()))
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
 						atts.add(new Attribute("type", "xcauth"));
-						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, value.trim(), XCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
+						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
 				}
 
@@ -1667,7 +1672,7 @@ public class SolrTransformationService extends GenericMetadataService
 			{
 				String value = titleOfWorkBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
 
-				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
+				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_WORK, AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
 				
 			}
 
@@ -1676,7 +1681,7 @@ public class SolrTransformationService extends GenericMetadataService
 			{
 				String value = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
 			
-				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
+				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_EXPRESSION, AggregateXCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
 			}
 		}
 
@@ -1704,7 +1709,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord process243(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process243(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields("243");
@@ -1758,14 +1763,14 @@ public class SolrTransformationService extends GenericMetadataService
 					if(prefix.equals("DLC"))
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
-						atts.add(new Attribute("type", "lcnaf", XCRecord.XSI_NAMESPACE));
-						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), XCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
+						atts.add(new Attribute("type", "lcnaf", AggregateXCRecord.XSI_NAMESPACE));
+						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
 					else if(prefix.equals(getOrganizationCode()))
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
 						atts.add(new Attribute("type", "xcauth"));
-						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, value.trim(), XCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
+						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
 				}
 
@@ -1782,7 +1787,7 @@ public class SolrTransformationService extends GenericMetadataService
 			{
 				String value = titleOfWorkBuilder.substring(0, titleOfWorkBuilder.length()-1); // The value is everything except the last space
 
-				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
+				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_WORK, AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
 				
 			}
 			
@@ -1791,7 +1796,7 @@ public class SolrTransformationService extends GenericMetadataService
 			{
 				String value = titleOfExpressionBuilder.substring(0, titleOfExpressionBuilder.length()-1); // The value is everything except the last space
 
-				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
+				transformInto = processFieldBasic(transformInto, value, Constants.ELEMENT_TITLE_OF_EXPRESSION, AggregateXCRecord.XC_NAMESPACE, null, FrbrLevel.EXPRESSION);
 			}
 
 		}
@@ -1818,13 +1823,13 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process245(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process245(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:titleAnnotation based on the 245 $c values
-		transformInto = processFieldBasic(transformMe, transformInto, "245", 'c', "statementOfResponsibilityRelatingToTitle", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "245", 'c', "statementOfResponsibilityRelatingToTitle", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dc:title based on the 245 abfgknps values
-		return processFieldBasic(transformMe, transformInto, "245", "abfgknps", "title", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "245", "abfgknps", "title", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -1836,7 +1841,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord process246(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process246(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested field
 		List<Element> elements = transformMe.getDataFields("246");
@@ -1886,7 +1891,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level title based on the concatination of the 246's subfields' value, which is " + value);
 
 					// Create an dc:title based on the 246 abfnp values
-					transformInto.addElement("title", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
+					transformInto.addElement("title", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 				}
 				else
 				{
@@ -1894,7 +1899,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level alternative based on the concatination of the 246's subfields' value, which is " + value);
 
 					// Create a dcterms:alternative based on the 246 abfnp values
-					transformInto.addElement("alternative", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
+					transformInto.addElement("alternative", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 				}
 			}
 		}
@@ -1911,10 +1916,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process247(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process247(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:alternative based on the 247 abnfp values
-		return processFieldBasic(transformMe, transformInto, "247", "abfnp", "alternative", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "247", "abfnp", "alternative", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -1926,13 +1931,13 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process250(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process250(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:edition based on the 250 ab values
-		transformInto = processFieldBasic(transformMe, transformInto, "250", "ab", "editionStatement", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "250", "ab", "editionStatement", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an rdvocab:version based on the 250 $a value
-		return processFieldBasic(transformMe, transformInto, "250", 'a', "version", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "250", 'a', "version", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -1944,7 +1949,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process254(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process254(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the target subfields MARC XML record
 		List<String> subfields = transformMe.getSubfield("254", 'a');
@@ -1956,8 +1961,8 @@ public class SolrTransformationService extends GenericMetadataService
 		// Add each subfield to the specified level with the specified tag and attribute
 		for(String value : subfields)
 		{
-			transformInto = processFieldBasic(transformInto, value, "editionStatement", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
-			transformInto = processFieldBasic(transformInto, value, "version", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
+			transformInto = processFieldBasic(transformInto, value, "editionStatement", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+			transformInto = processFieldBasic(transformInto, value, "version", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
 		}
 
 		// Return the result
@@ -1978,10 +1983,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process255(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process255(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:scale based on the 255 abcdefg values
-		return processFieldBasic(transformMe, transformInto, "255", "abcdefg", "scale", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "255", "abcdefg", "scale", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -1994,25 +1999,25 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process260(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process260(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:placeOfProduction based on the 260 $a values
-		transformInto = processFieldBasic(transformMe, transformInto, "260", 'a', "placeOfProduction", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "260", 'a', "placeOfProduction", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dc:publisher based on the 260 $b values
-		transformInto = processFieldBasic(transformMe, transformInto, "260", 'b', "publisher", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "260", 'b', "publisher", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dcterms:issued based on the 260 $c values
-		transformInto = processFieldBasic(transformMe, transformInto, "260", 'c', "issued", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "260", 'c', "issued", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an rdvocab:placeOfProduction based on the 260 $e values
-		transformInto = processFieldBasic(transformMe, transformInto, "260", 'e', "placeOfProduction", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "260", 'e', "placeOfProduction", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dc:publisher  based on the 260 $f values
-		transformInto = processFieldBasic(transformMe, transformInto, "260", 'f', "publisher", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "260", 'f', "publisher", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dcterms:issued based on the 260 $g values
-		return processFieldBasic(transformMe, transformInto, "260", 'g', "issued", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "260", 'g', "issued", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2025,24 +2030,24 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process300(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process300(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:extent based on the 300 $a values
-		transformInto = processFieldBasic(transformMe, transformInto, "300", 'a', "extent", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "300", 'a', "extent", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create a different element depending on the leader06 value based on the 300 $b values
 		char leader06 = transformMe.getLeader().charAt(6);
 		if("ij".contains("" + leader06))
-			transformInto = processFieldBasic(transformMe, transformInto, "300", 'b', "soundCharacteristics", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+			transformInto = processFieldBasic(transformMe, transformInto, "300", 'b', "soundCharacteristics", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 		else if("acdt".contains("" + leader06))
-			transformInto = processFieldBasic(transformMe, transformInto, "300", 'b', "illustrationContent", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
+			transformInto = processFieldBasic(transformMe, transformInto, "300", 'b', "illustrationContent", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
 		else
-			transformInto = processFieldBasic(transformMe, transformInto, "300", 'b', "otherPhysicalDetails", XCRecord.XC_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+			transformInto = processFieldBasic(transformMe, transformInto, "300", 'b', "otherPhysicalDetails", AggregateXCRecord.XC_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an rdvocab:dimensions based on the 300 $c values
-		transformInto = processFieldBasic(transformMe, transformInto, "300", 'c', "dimensions", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "300", 'c', "dimensions", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 		 
-		return processFieldBasic(transformMe, transformInto, "300", 'e', "hasPart", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "300", 'e', "hasPart", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2053,10 +2058,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process310(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process310(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:frequency based on the 310 ab values
-		return processFieldBasic(transformMe, transformInto, "310", "ab", "frequency", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "310", "ab", "frequency", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2067,10 +2072,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process321(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process321(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:frequency based on the 321 ab values
-		return processFieldBasic(transformMe, transformInto, "321", "ab", "frequency", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "321", "ab", "frequency", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2081,10 +2086,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process362(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process362(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:numbering based on the 362 $a and $z values
-		return processFieldBasic(transformMe, transformInto, "362", "az", "numberingOfSerials", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "362", "az", "numberingOfSerials", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2095,10 +2100,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process440(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process440(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:isPartOf based on the 440 anpv0 values
-		return processFieldWithAuthority(transformMe, transformInto, "440", "anpv", "isPartOf", XCRecord.XC_NAMESPACE, FrbrLevel.MANIFESTATION);
+		return processFieldWithAuthority(transformMe, transformInto, "440", "anpv", "isPartOf", AggregateXCRecord.XC_NAMESPACE, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2110,15 +2115,15 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process490(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process490(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create the subfield to attribute map.
 		// We'll map the $x subfield to a dcterms:ISSN attribute
 		HashMap<String, Attribute> subfieldToAttribute = new HashMap<String, Attribute>();
-		subfieldToAttribute.put("x", new Attribute("ISSN", "null", XCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("x", new Attribute("ISSN", "null", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dcterms:isPartOf based on the 490 av values
-		return processFieldReqIndicatorAttFromField(transformMe, transformInto, "490", "av", "isPartOf", XCRecord.DCTERMS_NAMESPACE, "1", "0", subfieldToAttribute, FrbrLevel.MANIFESTATION);
+		return processFieldReqIndicatorAttFromField(transformMe, transformInto, "490", "av", "isPartOf", AggregateXCRecord.DCTERMS_NAMESPACE, "1", "0", subfieldToAttribute, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2129,10 +2134,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process500(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process500(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:description based on the 500 a3 values
-		return processFieldBasic(transformMe, transformInto, "500", "a3", "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "500", "a3", "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2143,10 +2148,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process501(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process501(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:relation based on the 501 $a values
-		return processFieldBasic(transformMe, transformInto, "501", 'a', "relation", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "501", 'a', "relation", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2157,10 +2162,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process502(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process502(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:dissertationOrThesisInformation based on the 502 $a values
-		return processFieldBasic(transformMe, transformInto, "502", 'a', "dissertationOrThesisInformation", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
+		return processFieldBasic(transformMe, transformInto, "502", 'a', "dissertationOrThesisInformation", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2171,10 +2176,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process504(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process504(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:description based on the 504 $a and $b values
-		return processFieldBasic(transformMe, transformInto, "504", "ab", "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "504", "ab", "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2185,10 +2190,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process505(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process505(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:tableOfContents based on the 505 agrtu values
-		return processFieldBasic(transformMe, transformInto, "505", "agrtu", "tableOfContents", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "505", "agrtu", "tableOfContents", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2199,10 +2204,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process506(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process506(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:rights based on the 506 abcdefu3 values
-		return processFieldBasic(transformMe, transformInto, "506", "abcdefu3", "rights", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "506", "abcdefu3", "rights", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2213,10 +2218,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process507(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process507(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:scale based on the 507 $a and $b values
-		return processFieldBasic(transformMe, transformInto, "507", "ab", "scale", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "507", "ab", "scale", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2227,10 +2232,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process508(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process508(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:artisticAndOrTechnicalCredits based on the 508 $a values
-		return processFieldBasic(transformMe, transformInto, "508", 'a', "artisticAndOrTechnicalCredits", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "508", 'a', "artisticAndOrTechnicalCredits", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2241,10 +2246,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process510(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process510(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:isReferencedBy based on the 510 abc3 values with a dcterms:ISSN based on the corrosponding 510 $x value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "510", "abc3", "isReferencedBy", XCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", XCRecord.DCTERMS_NAMESPACE), 'x', null, FrbrLevel.EXPRESSION);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "510", "abc3", "isReferencedBy", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", AggregateXCRecord.DCTERMS_NAMESPACE), 'x', null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2255,10 +2260,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process511(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process511(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdarole:performerNarratorAndOrPresenter based on the 511 $a values
-		return processFieldBasic(transformMe, transformInto, "511", 'a', "performerNarratorAndOrPresenter", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "511", 'a', "performerNarratorAndOrPresenter", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2269,10 +2274,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process513(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process513(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:temporal based on the 513 $a and $b values
-		return processFieldBasic(transformMe, transformInto, "513", "ab", "temporal", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.WORK);
+		return processFieldBasic(transformMe, transformInto, "513", "ab", "temporal", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2283,10 +2288,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process515(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process515(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:numberingOfSerials based on the 515 $a values
-		return processFieldBasic(transformMe, transformInto, "515", 'a', "numberingOfSerials", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "515", 'a', "numberingOfSerials", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2297,10 +2302,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process518(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process518(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:placeAndDateOfCapture based on the 518 a3 values
-		return processFieldBasic(transformMe, transformInto, "518", "a3", "placeAndDateOfCapture", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "518", "a3", "placeAndDateOfCapture", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2311,10 +2316,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process520(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process520(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:abstract based on the 520 abcu3 values
-		return processFieldBasic(transformMe, transformInto, "520", "abcu3", "abstract", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.WORK);
+		return processFieldBasic(transformMe, transformInto, "520", "abcu3", "abstract", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2325,10 +2330,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process521(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process521(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:audience based on the 521 ab3 values
-		return processFieldBasic(transformMe, transformInto, "521", "ab3", "audience", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.WORK);
+		return processFieldBasic(transformMe, transformInto, "521", "ab3", "audience", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2339,10 +2344,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process522(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process522(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:spatial based on the 522 $a values
-		return processFieldBasic(transformMe, transformInto, "522", 'a', "spatial", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.WORK);
+		return processFieldBasic(transformMe, transformInto, "522", 'a', "spatial", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2353,10 +2358,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process525(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process525(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:relation based on the 525 $a values
-		return processFieldBasic(transformMe, transformInto, "525", 'a', "relation", XCRecord.XC_NAMESPACE, null, FrbrLevel.WORK);
+		return processFieldBasic(transformMe, transformInto, "525", 'a', "relation", AggregateXCRecord.XC_NAMESPACE, null, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2367,10 +2372,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process530(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process530(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:hasFormat based on the 530 abcdu3 values
-		return processFieldBasic(transformMe, transformInto, "530", "abcdu3", "hasFormat", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "530", "abcdu3", "hasFormat", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2381,10 +2386,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process533(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process533(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:hasFormat based on the 533 abcdefmn3 values
-		return processFieldBasic(transformMe, transformInto, "533", "abcdefmn3", "hasFormat", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "533", "abcdefmn3", "hasFormat", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2395,10 +2400,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process534(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process534(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:isFormatOf based on the 534 abc3 values with a dcterms:ISSN based on the corrosponding 534 $x value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "534", "abcefklmnptx3", "isFormatOf", XCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", XCRecord.DCTERMS_NAMESPACE), 'x', null, FrbrLevel.EXPRESSION);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "534", "abcefklmnptx3", "isFormatOf", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", AggregateXCRecord.DCTERMS_NAMESPACE), 'x', null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2409,10 +2414,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process538(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process538(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:requires based on the 538 aiu3 values
-		return processFieldBasic(transformMe, transformInto, "538", "aiu3", "requires", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "538", "aiu3", "requires", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2423,10 +2428,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process540(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process540(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:rights based on the 540 abcdu3 values
-		return processFieldBasic(transformMe, transformInto, "540", "abcdu3", "rights", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "540", "abcdu3", "rights", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2437,10 +2442,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process544(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process544(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:description based on the 544 abcden3 values
-		return processFieldBasic(transformMe, transformInto, "544", "abcden3", "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "544", "abcden3", "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2451,10 +2456,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process546(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process546(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:language based on the 546 ab3 values
-		return processFieldBasic(transformMe, transformInto, "546", "ab3", "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "546", "ab3", "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2465,10 +2470,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process547(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process547(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:description based on the 547 $a values
-		return processFieldBasic(transformMe, transformInto, "547", 'a', "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "547", 'a', "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2479,10 +2484,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process550(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process550(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:description based on the 550 $a values
-		return processFieldBasic(transformMe, transformInto, "550", 'a', "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "550", 'a', "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2494,14 +2499,14 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process555(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process555(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Return the unmodified record if the leader 08 value is not 'a'
 		if(transformMe.getLeader().charAt(8) != 'a')
 			return transformInto;
 
 		// Create an dc:description based on the 555 abcdu3 values
-		return processFieldBasic(transformMe, transformInto, "555", "abcdu3", "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "555", "abcdu3", "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2512,10 +2517,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process580(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process580(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:relation based on the 580 $a values
-		return processFieldBasic(transformMe, transformInto, "580", 'a', "relation", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "580", 'a', "relation", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2526,10 +2531,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process586(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process586(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:awards based on the 586 a3 values
-		return processFieldBasic(transformMe, transformInto, "586", "a3", "awards", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "586", "a3", "awards", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -2540,37 +2545,37 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process59X(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process59X(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:description based on the 590 $a values
-		transformInto = processFieldBasic(transformMe, transformInto, "590", 'a', "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "590", 'a', "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dc:description based on the 591 $a values
-		transformInto = processFieldBasic(transformMe, transformInto, "591", 'a', "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "591", 'a', "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dc:description based on the 592 $a values
-		transformInto = processFieldBasic(transformMe, transformInto, "592", 'a', "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "592", 'a', "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dc:description based on the 593 $a values
-		transformInto = processFieldBasic(transformMe, transformInto, "593", 'a', "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "593", 'a', "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dc:description based on the 594 $a values
-		transformInto = processFieldBasic(transformMe, transformInto, "594", 'a', "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "594", 'a', "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dc:description based on the 595 $a values
-		transformInto = processFieldBasic(transformMe, transformInto, "595", 'a', "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "595", 'a', "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dc:description based on the 596 $a values
-		transformInto = processFieldBasic(transformMe, transformInto, "596", 'a', "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "596", 'a', "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dc:description based on the 597 $a values
-		transformInto = processFieldBasic(transformMe, transformInto, "597", 'a', "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "597", 'a', "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dc:description based on the 598 $a values
-		transformInto = processFieldBasic(transformMe, transformInto, "598", 'a', "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		transformInto = processFieldBasic(transformMe, transformInto, "598", 'a', "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 
 		// Create an dc:description based on the 599 $a values
-		return processFieldBasic(transformMe, transformInto, "599", 'a', "description", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "599", 'a', "description", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -2581,20 +2586,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process600(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process600(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("1", new Attribute("type", "lcac"));
-		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("3", new Attribute("type", "nal"));
 		indicatorToType.put("5", new Attribute("type", "cash"));
 		indicatorToType.put("6", new Attribute("type", "rvm"));
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:subject with a type based on the 2nd indicator and a value based on the 600 abcdefgklmnopqrstuvwxyz23 values
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "600", "abcdefgklmnopqrstuvwxyz23", "vxyz", "subject", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "600", "abcdefgklmnopqrstuvwxyz23", "vxyz", "subject", AggregateXCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2605,20 +2610,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process610(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process610(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("1", new Attribute("type", "lcac"));
-		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("3", new Attribute("type", "nal"));
 		indicatorToType.put("5", new Attribute("type", "cash"));
 		indicatorToType.put("6", new Attribute("type", "rvm"));
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:subject with a type based on the 2nd indicator and a value based on the 610 abcdefgklmnopqrstuvwxyz23 values
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "610", "abcdefgklmnopqrstuvwxyz234", "vxyz", "subject", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "610", "abcdefgklmnopqrstuvwxyz234", "vxyz", "subject", AggregateXCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2629,20 +2634,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process611(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process611(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("1", new Attribute("type", "lcac"));
-		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("3", new Attribute("type", "nal"));
 		indicatorToType.put("5", new Attribute("type", "cash"));
 		indicatorToType.put("6", new Attribute("type", "rvm"));
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:subject with a type based on the 2nd indicator and a value based on the 611 acdefgklnpqstvwxyz234 values
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "611", "acdefgklnpqstvwxyz234", "vxyz", "subject", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "611", "acdefgklnpqstvwxyz234", "vxyz", "subject", AggregateXCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2653,20 +2658,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process630(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process630(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("1", new Attribute("type", "lcac"));
-		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("3", new Attribute("type", "nal"));
 		indicatorToType.put("5", new Attribute("type", "cash"));
 		indicatorToType.put("6", new Attribute("type", "rvm"));
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:subject with a type based on the 2nd indicator and a value based on the 630 adefgklmnoprstvwxyz234 values
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "630", "adefgklmnoprstvwxyz234", "vxyz", "subject", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "630", "adefgklmnoprstvwxyz234", "vxyz", "subject", AggregateXCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2677,20 +2682,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process648(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process648(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("1", new Attribute("type", "lcac"));
-		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("3", new Attribute("type", "nal"));
 		indicatorToType.put("5", new Attribute("type", "cash"));
 		indicatorToType.put("6", new Attribute("type", "rvm"));
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:temporal with a type based on the 2nd indicator and a value based on the 648 avwxyz2 values
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "648", "avwxyz", "vxyz", "temporal", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "648", "avwxyz", "vxyz", "temporal", AggregateXCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2701,20 +2706,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process650(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process650(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("1", new Attribute("type", "lcac"));
-		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("3", new Attribute("type", "nal"));
 		indicatorToType.put("5", new Attribute("type", "cash"));
 		indicatorToType.put("6", new Attribute("type", "rvm"));
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:subject with a type based on the 2nd indicator and a value based on the 650 abcdevxyz234 values
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "650", "abcdevxyz234", "vxyz", "subject", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "650", "abcdevxyz234", "vxyz", "subject", AggregateXCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2725,20 +2730,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process651(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process651(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("1", new Attribute("type", "lcac"));
-		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("3", new Attribute("type", "nal"));
 		indicatorToType.put("5", new Attribute("type", "cash"));
 		indicatorToType.put("6", new Attribute("type", "rvm"));
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:spatial with a type based on the 2nd indicator and a value based on the 651 aevxyz234 values
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "651", "aevxyz234", "vxyz", "spatial", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "651", "aevxyz234", "vxyz", "spatial", AggregateXCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2749,10 +2754,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process653(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process653(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:subject based on the 653 $a values
-		return processFieldBasic(transformMe, transformInto, "653", 'a', "subject", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.WORK);
+		return processFieldBasic(transformMe, transformInto, "653", 'a', "subject", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2763,10 +2768,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process654(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process654(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:subject based on the 654 abcevyz034 values
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "654", "abcevyz034", "bcevyz034", "subject", XCRecord.DCTERMS_NAMESPACE, new Attribute("type", "null"), '2', null, FrbrLevel.WORK);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "654", "abcevyz034", "bcevyz034", "subject", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("type", "null"), '2', null, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2777,20 +2782,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process655(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process655(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("1", new Attribute("type", "lcac"));
-		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("3", new Attribute("type", "nal"));
 		indicatorToType.put("5", new Attribute("type", "cash"));
 		indicatorToType.put("6", new Attribute("type", "rvm"));
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:type with a type based on the 2nd indicator and a value based on the 655 abcvwyxz23 values
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "655", "abcvwxyz3", "vxyz", "type", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "655", "abcvwxyz3", "vxyz", "type", AggregateXCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**
@@ -2804,7 +2809,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord process700(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process700(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested field
 		List<Element> elements = transformMe.getDataFields("700");
@@ -2840,7 +2845,7 @@ public class SolrTransformationService extends GenericMetadataService
 
 				// The name of the element to add
 				String elementName = Constants.ELEMENT_CONTRIBUTOR;
-				Namespace elementNamespace = XCRecord.XC_NAMESPACE;
+				Namespace elementNamespace = AggregateXCRecord.XC_NAMESPACE;
 
 				// Get the $4 element, which we'll use to add "role" elements
 				List<String> roleSubfields = MarcXmlRecord.getSubfieldOfField(element, '4');
@@ -2879,7 +2884,7 @@ public class SolrTransformationService extends GenericMetadataService
 					}
 					else
 					{
-						elementNamespace = XCRecord.RDAROLE_NAMESPACE;
+						elementNamespace = AggregateXCRecord.RDAROLE_NAMESPACE;
 
 						boolean addedRole = false;
 
@@ -2911,7 +2916,7 @@ public class SolrTransformationService extends GenericMetadataService
 						if(!addedRole)
 						{
 							elementName = "contributor";
-							elementNamespace = XCRecord.XC_NAMESPACE;
+							elementNamespace = AggregateXCRecord.XC_NAMESPACE;
 
 							// Setup the attribute list for the XC record field
 							ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -2977,7 +2982,7 @@ public class SolrTransformationService extends GenericMetadataService
 						//transformInto.addElementBasedOnLinkingField(Constants.ELEMENT_TITLE_OF_THE_WORK, value, XCRecord.XC_NAMESPACE, titleAttributes, linkingTag);
 						
 						Hashtable<String , Element>  workSubElements = new Hashtable<String, Element>();
-						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE);
+						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, AggregateXCRecord.RDVOCAB_NAMESPACE);
 						titleOfWorkElement.setText(titleBuilder.toString());
 						
 						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
@@ -2985,7 +2990,7 @@ public class SolrTransformationService extends GenericMetadataService
 							workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
 
 						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
-						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
+						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, AggregateXCRecord.RDVOCAB_NAMESPACE);
 						titleOfExpressionElement.setText(titleBuilder.toString());
 						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
 						
@@ -3047,7 +3052,7 @@ public class SolrTransformationService extends GenericMetadataService
 							attributes.add((Attribute)authorityAttribute);
 
 						// Add the element to the XC record
-						transformInto.addElement(elementName, value.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
+						transformInto.addElement(elementName, value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
 						
 					}
 				}
@@ -3069,7 +3074,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord process710(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process710(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested field
 		List<Element> elements = transformMe.getDataFields("710");
@@ -3105,7 +3110,7 @@ public class SolrTransformationService extends GenericMetadataService
 
 				// The name of the element to add
 				String elementName = "contributor";
-				Namespace elementNamespace = XCRecord.XC_NAMESPACE;
+				Namespace elementNamespace = AggregateXCRecord.XC_NAMESPACE;
 
 				// Get the $4 element, which we'll use to add "role" elements
 				List<String> roleSubfields = MarcXmlRecord.getSubfieldOfField(element, '4');
@@ -3144,7 +3149,7 @@ public class SolrTransformationService extends GenericMetadataService
 					}
 					else
 					{
-						elementNamespace = XCRecord.RDAROLE_NAMESPACE;
+						elementNamespace = AggregateXCRecord.RDAROLE_NAMESPACE;
 
 						boolean addedRole = false;
 
@@ -3176,7 +3181,7 @@ public class SolrTransformationService extends GenericMetadataService
 						if(!addedRole)
 						{
 							elementName = "contributor";
-							elementNamespace = XCRecord.XC_NAMESPACE;
+							elementNamespace = AggregateXCRecord.XC_NAMESPACE;
 
 							// Setup the attribute list for the XC record field
 							ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -3239,7 +3244,7 @@ public class SolrTransformationService extends GenericMetadataService
 						//transformInto.addElementBasedOnLinkingField(Constants.ELEMENT_TITLE_OF_THE_WORK, value, XCRecord.XC_NAMESPACE, titleAttributes, linkingTag);
 						
 						Hashtable<String , Element>  workSubElements = new Hashtable<String, Element>();
-						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE);
+						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, AggregateXCRecord.RDVOCAB_NAMESPACE);
 						titleOfWorkElement.setText(titleBuilder.toString());
 						
 						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
@@ -3247,7 +3252,7 @@ public class SolrTransformationService extends GenericMetadataService
 							workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
 
 						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
-						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
+						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, AggregateXCRecord.RDVOCAB_NAMESPACE);
 						titleOfExpressionElement.setText(titleBuilder.toString());
 						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
 						
@@ -3309,7 +3314,7 @@ public class SolrTransformationService extends GenericMetadataService
 							attributes.add((Attribute)authorityAttribute);
 
 						// Add the element to the XC record
-						transformInto.addElement(elementName, value.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
+						transformInto.addElement(elementName, value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
 					}
 				}
 			}
@@ -3329,7 +3334,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord process711(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process711(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested field
 		List<Element> elements = transformMe.getDataFields("711");
@@ -3365,7 +3370,7 @@ public class SolrTransformationService extends GenericMetadataService
 
 				// The name of the element to add
 				String elementName = "contributor";
-				Namespace elementNamespace = XCRecord.XC_NAMESPACE;
+				Namespace elementNamespace = AggregateXCRecord.XC_NAMESPACE;
 
 				// Get the $4 element, which we'll use to add "role" elements
 				List<String> roleSubfields = MarcXmlRecord.getSubfieldOfField(element, '4');
@@ -3404,7 +3409,7 @@ public class SolrTransformationService extends GenericMetadataService
 					}
 					else
 					{
-						elementNamespace = XCRecord.RDAROLE_NAMESPACE;
+						elementNamespace = AggregateXCRecord.RDAROLE_NAMESPACE;
 
 						boolean addedRole = false;
 
@@ -3436,7 +3441,7 @@ public class SolrTransformationService extends GenericMetadataService
 						if(!addedRole)
 						{
 							elementName = "contributor";
-							elementNamespace = XCRecord.XC_NAMESPACE;
+							elementNamespace = AggregateXCRecord.XC_NAMESPACE;
 
 							// Setup the attribute list for the XC record field
 							ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -3499,7 +3504,7 @@ public class SolrTransformationService extends GenericMetadataService
 						//transformInto.addElementBasedOnLinkingField(Constants.ELEMENT_TITLE_OF_THE_WORK, value, XCRecord.XC_NAMESPACE, titleAttributes, linkingTag);
 						
 						Hashtable<String , Element>  workSubElements = new Hashtable<String, Element>();
-						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE);
+						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, AggregateXCRecord.RDVOCAB_NAMESPACE);
 						titleOfWorkElement.setText(titleBuilder.toString());
 						
 						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
@@ -3507,7 +3512,7 @@ public class SolrTransformationService extends GenericMetadataService
 							workSubElements.put(Constants.ELEMENT_CREATOR, linkedCreatorFields.get(linkingTag));
 
 						Hashtable<String , Element>  expressionSubElements = new Hashtable<String, Element>();
-						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
+						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, AggregateXCRecord.RDVOCAB_NAMESPACE);
 						titleOfExpressionElement.setText(titleBuilder.toString());
 						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
 						
@@ -3569,7 +3574,7 @@ public class SolrTransformationService extends GenericMetadataService
 							attributes.add((Attribute)authorityAttribute);
 
 						// Add the element to the XC record
-						transformInto.addElement(elementName, value.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
+						transformInto.addElement(elementName, value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
 					}
 				}
 			}
@@ -3587,10 +3592,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process720(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process720(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:contributor based on the 720 ae4 values
-		return processFieldBasic(transformMe, transformInto, "720", "ae4", "contributor", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "720", "ae4", "contributor", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -3603,7 +3608,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord process730(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process730(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested field
 		List<Element> elements = transformMe.getDataFields("730");
@@ -3664,7 +3669,7 @@ public class SolrTransformationService extends GenericMetadataService
 					
 					if(titleOfWorkBuilder.length() > 0){
 
-						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, XCRecord.RDVOCAB_NAMESPACE);
+						Element titleOfWorkElement = new Element(Constants.ELEMENT_TITLE_OF_WORK, AggregateXCRecord.RDVOCAB_NAMESPACE);
 						titleOfWorkElement.setText(workTitleValue.toString());
 						workSubElements.put(Constants.ELEMENT_TITLE_OF_WORK, titleOfWorkElement);
 						if(linkingTag!=null && linkedCreatorFields.get(linkingTag) != null)
@@ -3676,7 +3681,7 @@ public class SolrTransformationService extends GenericMetadataService
 					
 					if(titleOfExpressionBuilder.length() > 0){
 						
-						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, XCRecord.RDVOCAB_NAMESPACE);
+						Element titleOfExpressionElement = new Element(Constants.ELEMENT_TITLE_OF_EXPRESSION, AggregateXCRecord.RDVOCAB_NAMESPACE);
 						titleOfExpressionElement.setText(expressionTitleValue.toString());
 						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
 					}
@@ -3750,7 +3755,7 @@ public class SolrTransformationService extends GenericMetadataService
 						attributes.add(issnAttribute);
 
 					// Add the element to the XC record
-					transformInto.addElement(elementName, value.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
+					transformInto.addElement(elementName, value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
 				}
 			}
 		}
@@ -3767,10 +3772,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process740(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process740(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:alternative based on the 740 anpv values
-		return processFieldBasic(transformMe, transformInto, "740", "anpv", "alternative", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "740", "anpv", "alternative", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -3781,10 +3786,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process752(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process752(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:coverage based on the 752 abcdfgh0 values
-		return processFieldBasicDashSubfields(transformMe, transformInto, "752", "abcdfgh0", "coverage", XCRecord.XC_NAMESPACE, null, FrbrLevel.WORK);
+		return processFieldBasicDashSubfields(transformMe, transformInto, "752", "abcdfgh0", "coverage", AggregateXCRecord.XC_NAMESPACE, null, FrbrLevel.WORK);
 	}
 
 	/**
@@ -3795,10 +3800,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process760(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process760(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:isPartOf based on the 760 agit3 values with a dcterms:ISSN based on the corrosponding 760 $x value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "760", "agit3", "isPartOf", XCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", XCRecord.DCTERMS_NAMESPACE), 'x', null, FrbrLevel.MANIFESTATION);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "760", "agit3", "isPartOf", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", AggregateXCRecord.DCTERMS_NAMESPACE), 'x', null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -3809,15 +3814,15 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process765(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process765(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute and the $z subfield to a dcterms:ISBN attribute
 		HashMap<String, Attribute> subfieldToAttribute = new HashMap<String, Attribute>();
-		subfieldToAttribute.put("x", new Attribute("ISSN", "", XCRecord.DCTERMS_NAMESPACE));
-		subfieldToAttribute.put("z", new Attribute("ISBN", "", XCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("x", new Attribute("ISSN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("z", new Attribute("ISBN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dcterms:isVersionOf based on the 765 agit3 values with a dcterms:ISSN based on the corrosponding 765 $x value and a dcterms:ISBN based on the corrosponding 765 $z value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "765", "agit3", "isVersionOf", XCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.EXPRESSION);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "765", "agit3", "isVersionOf", AggregateXCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -3828,15 +3833,15 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process770(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process770(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute and the $z subfield to a dcterms:ISBN attribute
 		HashMap<String, Attribute> subfieldToAttribute = new HashMap<String, Attribute>();
-		subfieldToAttribute.put("x", new Attribute("ISSN", "", XCRecord.DCTERMS_NAMESPACE));
-		subfieldToAttribute.put("z", new Attribute("ISBN", "", XCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("x", new Attribute("ISSN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("z", new Attribute("ISBN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dc:relation based on the 770 agit values with a dcterms:ISSN based on the corrosponding 770 $x value and a dcterms:ISBN based on the corrosponding 770 $z value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "770", "agit", "relation", XCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.WORK);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "770", "agit", "relation", AggregateXCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.WORK);
 	}
 
 	/**
@@ -3847,15 +3852,15 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process772(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process772(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute and the $z subfield to a dcterms:ISBN attribute
 		HashMap<String, Attribute> subfieldToAttribute = new HashMap<String, Attribute>();
-		subfieldToAttribute.put("x", new Attribute("ISSN", "", XCRecord.DCTERMS_NAMESPACE));
-		subfieldToAttribute.put("z", new Attribute("ISBN", "", XCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("x", new Attribute("ISSN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("z", new Attribute("ISBN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dc:relation based on the 772 agit values with a dcterms:ISSN based on the corrosponding 772 $x value and a dcterms:ISBN based on the corrosponding 772 $z value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "772", "agit", "relation", XCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.WORK);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "772", "agit", "relation", AggregateXCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.WORK);
 	}
 
 	/**
@@ -3866,15 +3871,15 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process773(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process773(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute and the $z subfield to a dcterms:ISBN attribute
 		HashMap<String, Attribute> subfieldToAttribute = new HashMap<String, Attribute>();
-		subfieldToAttribute.put("x", new Attribute("ISSN", "", XCRecord.DCTERMS_NAMESPACE));
-		subfieldToAttribute.put("z", new Attribute("ISBN", "", XCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("x", new Attribute("ISSN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("z", new Attribute("ISBN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dcterms:isPartOf based on the 773 agitwxz3 values with a dcterms:ISSN based on the corrosponding 773 $x value and a dcterms:ISBN based on the corrosponding 773 $z value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "773", "agit3", "isPartOf", XCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.MANIFESTATION);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "773", "agit3", "isPartOf", AggregateXCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -3885,15 +3890,15 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process775(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process775(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute and the $z subfield to a dcterms:ISBN attribute
 		HashMap<String, Attribute> subfieldToAttribute = new HashMap<String, Attribute>();
-		subfieldToAttribute.put("x", new Attribute("ISSN", "", XCRecord.DCTERMS_NAMESPACE));
-		subfieldToAttribute.put("z", new Attribute("ISBN", "", XCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("x", new Attribute("ISSN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("z", new Attribute("ISBN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dc:relation based on the 775 agit values with a dcterms:ISSN based on the corrosponding 775 $x value and a dcterms:ISBN based on the corrosponding 775 $z value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "775", "agit", "relation", XCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.EXPRESSION);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "775", "agit", "relation", AggregateXCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -3904,15 +3909,15 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process776(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process776(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute and the $z subfield to a dcterms:ISBN attribute
 		HashMap<String, Attribute> subfieldToAttribute = new HashMap<String, Attribute>();
-		subfieldToAttribute.put("x", new Attribute("ISSN", "", XCRecord.DCTERMS_NAMESPACE));
-		subfieldToAttribute.put("z", new Attribute("ISBN", "", XCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("x", new Attribute("ISSN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("z", new Attribute("ISBN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dcterms:isFormatOf based on the 776 agit values with a dcterms:ISSN based on the corrosponding 776 $x value and a dcterms:ISBN based on the corrosponding 776 $z value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "776", "agit", "HasFormat", XCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.EXPRESSION);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "776", "agit", "HasFormat", AggregateXCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -3923,14 +3928,14 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process777(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process777(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute
 		HashMap<String, Attribute> subfieldToAttribute = new HashMap<String, Attribute>();
-		subfieldToAttribute.put("x", new Attribute("ISSN", "", XCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("x", new Attribute("ISSN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dc:relation based on the 777 agit values with a dcterms:ISSN based on the corrosponding 777 $x value and a dcterms:ISBN based on the corrosponding 777 $z value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "777", "agit", "relation", XCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.EXPRESSION);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "777", "agit", "relation", AggregateXCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -3943,17 +3948,17 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process780(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process780(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create the subfield to attribute map.
 		// We'll map the $x subfield to a dcterms:ISSN attribute
 		// and the $z subfield to the dcterms:ISBN attribute
 		HashMap<String, Attribute> subfieldToAttribute = new HashMap<String, Attribute>();
-		subfieldToAttribute.put("x", new Attribute("ISSN", "", XCRecord.DCTERMS_NAMESPACE));
-		subfieldToAttribute.put("z", new Attribute("ISBN", "", XCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("x", new Attribute("ISSN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("z", new Attribute("ISBN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dcterms:replaces based on the 780 agitxz values
-		return processFieldReqIndicatorAttFromField(transformMe, transformInto, "780", "agit", "replaces", XCRecord.DCTERMS_NAMESPACE, null, null, subfieldToAttribute, FrbrLevel.WORK);
+		return processFieldReqIndicatorAttFromField(transformMe, transformInto, "780", "agit", "replaces", AggregateXCRecord.DCTERMS_NAMESPACE, null, null, subfieldToAttribute, FrbrLevel.WORK);
 	}
 
 	/**
@@ -3966,17 +3971,17 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process785(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process785(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create the subfield to attribute map.
 		// We'll map the $x subfield to a dcterms:ISSN attribute
 		// and the $z subfield to the dcterms:ISBN attribute
 		HashMap<String, Attribute> subfieldToAttribute = new HashMap<String, Attribute>();
-		subfieldToAttribute.put("x", new Attribute("ISSN", "null", XCRecord.DCTERMS_NAMESPACE));
-		subfieldToAttribute.put("z", new Attribute("ISBN", "null", XCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("x", new Attribute("ISSN", "null", AggregateXCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("z", new Attribute("ISBN", "null", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dcterms:isReplacedBy based on the 785 agitxz values
-		return processFieldReqIndicatorAttFromField(transformMe, transformInto, "785", "agit", "isReplacedBy", XCRecord.DCTERMS_NAMESPACE, null, null, subfieldToAttribute, FrbrLevel.WORK);
+		return processFieldReqIndicatorAttFromField(transformMe, transformInto, "785", "agit", "isReplacedBy", AggregateXCRecord.DCTERMS_NAMESPACE, null, null, subfieldToAttribute, FrbrLevel.WORK);
 	}
 
 	/**
@@ -3987,15 +3992,15 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process786(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process786(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute and the $z subfield to a dcterms:ISBN attribute
 		HashMap<String, Attribute> subfieldToAttribute = new HashMap<String, Attribute>();
-		subfieldToAttribute.put("x", new Attribute("ISSN", "", XCRecord.DCTERMS_NAMESPACE));
-		subfieldToAttribute.put("z", new Attribute("ISBN", "", XCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("x", new Attribute("ISSN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("z", new Attribute("ISBN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dcterms:isVersionOf based on the 786 agit values with a dcterms:ISSN based on the corrosponding 786 $x value and a dcterms:ISBN based on the corrosponding 786 $z value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "786", "agit", "isVersionOf", XCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.EXPRESSION);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "786", "agit", "isVersionOf", AggregateXCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -4006,15 +4011,15 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process787(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process787(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute and the $z subfield to a dcterms:ISBN attribute
 		HashMap<String, Attribute> subfieldToAttribute = new HashMap<String, Attribute>();
-		subfieldToAttribute.put("x", new Attribute("ISSN", "", XCRecord.DCTERMS_NAMESPACE));
-		subfieldToAttribute.put("z", new Attribute("ISBN", "", XCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("x", new Attribute("ISSN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
+		subfieldToAttribute.put("z", new Attribute("ISBN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dc:relation based on the 787 agit values with a dcterms:ISSN based on the corrosponding 787 $x value and a dcterms:ISBN based on the corrosponding 787 $z value
-		return processFieldAttributeFromSubfield(transformMe, transformInto, "787", "agit", "relation", XCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.EXPRESSION);
+		return processFieldAttributeFromSubfield(transformMe, transformInto, "787", "agit", "relation", AggregateXCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -4025,10 +4030,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process800(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process800(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:isReferencedBy based on the 800 abcdegq4klmnoprstv values with a dcterms:ISSN based on the corrosponding 510 $x value
-		return processFieldWithAuthorityAttributeFromSubfield(transformMe, transformInto, "800", "abcdefgq4klmnoprstv", "isPartOf", XCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", XCRecord.DCTERMS_NAMESPACE), 'x', FrbrLevel.MANIFESTATION);
+		return processFieldWithAuthorityAttributeFromSubfield(transformMe, transformInto, "800", "abcdefgq4klmnoprstv", "isPartOf", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", AggregateXCRecord.DCTERMS_NAMESPACE), 'x', FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -4039,10 +4044,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process810(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process810(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:isReferencedBy based on the 810 abcdeg4klmnoprstv values with a dcterms:ISSN based on the corrosponding 510 $x value
-		return processFieldWithAuthorityAttributeFromSubfield(transformMe, transformInto, "810", "abcdefg4klmnoprstv", "isPartOf", XCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", XCRecord.DCTERMS_NAMESPACE), 'x', FrbrLevel.MANIFESTATION);
+		return processFieldWithAuthorityAttributeFromSubfield(transformMe, transformInto, "810", "abcdefg4klmnoprstv", "isPartOf", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", AggregateXCRecord.DCTERMS_NAMESPACE), 'x', FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -4053,10 +4058,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process811(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process811(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:isReferencedBy based on the 811 acdefgjklnpqstv4 values with a dcterms:ISSN based on the corrosponding 510 $x value
-		return processFieldWithAuthorityAttributeFromSubfield(transformMe, transformInto, "811", "acdefgjklnpqstv4", "isPartOf", XCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", XCRecord.DCTERMS_NAMESPACE), 'x', FrbrLevel.MANIFESTATION);
+		return processFieldWithAuthorityAttributeFromSubfield(transformMe, transformInto, "811", "acdefgjklnpqstv4", "isPartOf", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", AggregateXCRecord.DCTERMS_NAMESPACE), 'x', FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -4067,10 +4072,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process830(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process830(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:isReferencedBy based on the 830 adfgklmnoprstv values with a dcterms:ISSN based on the corrosponding 510 $x value
-		return processFieldWithAuthorityAttributeFromSubfield(transformMe, transformInto, "830", "adfgklmnoprstv", "isPartOf", XCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", XCRecord.DCTERMS_NAMESPACE), 'x', FrbrLevel.MANIFESTATION);
+		return processFieldWithAuthorityAttributeFromSubfield(transformMe, transformInto, "830", "adfgklmnoprstv", "isPartOf", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN", "null", AggregateXCRecord.DCTERMS_NAMESPACE), 'x', FrbrLevel.MANIFESTATION);
 	}
 
 	/*
@@ -4081,7 +4086,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformMe The MARC XML record we're transforming
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
-	private XCRecord holdingsProcess843(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected XCRecord holdingsProcess843(MarcXmlRecord transformMe, XCRecord transformInto)
 	{
 		// Create an xc:description based on the 843 abcdefmn values
 		return processFieldBasic(transformMe, transformInto, "843", "abcdefmn", "description", XCRecord.XC_NAMESPACE, null, FrbrLevel.HOLDINGS);
@@ -4099,7 +4104,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord process852(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process852(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields("852");
@@ -4227,13 +4232,13 @@ public class SolrTransformationService extends GenericMetadataService
 					String textualHoldingsValue = textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1);
 					if (siblingTag.equals("866")) {
 						Attribute attribute = new Attribute("type","Basic Bibliographic Unit");
-						textualHoldings.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHoldingsValue).setAttribute(attribute));
+						textualHoldings.add(new Element("textualHoldings", AggregateXCRecord.XC_NAMESPACE).setText(textualHoldingsValue).setAttribute(attribute));
 					} else if (siblingTag.equals("867")) {
 						Attribute attribute = new Attribute("type","Supplementary material");
-						textualHoldings.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHoldingsValue).setAttribute(attribute));
+						textualHoldings.add(new Element("textualHoldings", AggregateXCRecord.XC_NAMESPACE).setText(textualHoldingsValue).setAttribute(attribute));
 					} else if (siblingTag.equals("868")) {
 						Attribute attribute = new Attribute("type","Indexes");
-						textualHoldings.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHoldingsValue).setAttribute(attribute));
+						textualHoldings.add(new Element("textualHoldings", AggregateXCRecord.XC_NAMESPACE).setText(textualHoldingsValue).setAttribute(attribute));
 					}
 				}
 					
@@ -4248,10 +4253,10 @@ public class SolrTransformationService extends GenericMetadataService
 			String callNumberValue = (callNumberBuilder.length() > 0 ? callNumberBuilder.substring(0, callNumberBuilder.length()-1) : ""); // The value is everything except the last space
 
 			for(String location : locationValues) {
-				holdingsContent.add(new Element("location", XCRecord.XC_NAMESPACE).setText(location));
+				holdingsContent.add(new Element("location", AggregateXCRecord.XC_NAMESPACE).setText(location));
 			}
 			if(callNumberValue.length() > 0) {
-				holdingsContent.add(new Element("callNumber", XCRecord.XC_NAMESPACE).setText(callNumberValue));
+				holdingsContent.add(new Element("callNumber", AggregateXCRecord.XC_NAMESPACE).setText(callNumberValue));
 			}
 			for(Element textualHolding : textualHoldings) {
 				holdingsContent.add(textualHolding);
@@ -4261,14 +4266,14 @@ public class SolrTransformationService extends GenericMetadataService
 				
 			if(subjectLCCBuilder.length() > 0){
 				ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-				attributes.add(new Attribute("type", "dcterms:LCC", XCRecord.XSI_NAMESPACE));
-				transformInto.addElement("subject", subjectLCCBuilder.toString(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.WORK);
+				attributes.add(new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
+				transformInto.addElement("subject", subjectLCCBuilder.toString(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.WORK);
 			}
 			
 			if(subjectDDCBuilder.length() > 0){
 				ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-				attributes.add(new Attribute("type", "dcterms:DDC", XCRecord.XSI_NAMESPACE));
-				transformInto.addElement("subject", subjectDDCBuilder.toString(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.WORK);
+				attributes.add(new Attribute("type", "dcterms:DDC", AggregateXCRecord.XSI_NAMESPACE));
+				transformInto.addElement("subject", subjectDDCBuilder.toString(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.WORK);
 			}
 			
 		}
@@ -4289,7 +4294,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord process856(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process856(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested field
 		List<Element> elements = transformMe.getDataFields("856");
@@ -4341,7 +4346,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level identifier based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create an dcterms:identifier based on the 856 abcdfhijklmnopqrstuvwxyz23 values
-					transformInto.addElement("identifier", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
+					transformInto.addElement("identifier", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 				}
 				else if(ind2 != null && ind2.equals("1"))
 				{
@@ -4349,7 +4354,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level alternative based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create a dcterms:hasVersion based on the 856 abcdfhijklmnopqrstuvwxyz23 values
-					transformInto.addElement("hasVersion", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
+					transformInto.addElement("hasVersion", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
 				}
 				else if(ind2 != null && ind2.equals("2"))
 				{
@@ -4357,7 +4362,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level alternative based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create a dc:relation based on the 856 abcdfhijklmnopqrstuvwxyz23 values
-					transformInto.addElement("relation", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
+					transformInto.addElement("relation", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
 				}
 			}
 		}
@@ -4374,7 +4379,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process866(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process866(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested field
 		List<Element> elements = transformMe.getDataFields("852");
@@ -4382,7 +4387,7 @@ public class SolrTransformationService extends GenericMetadataService
 		// Create textualHoldings only when there is no 852 field. If there are 852 fields, then textualHoldings would have been created while processing 852 field. See process852()
 		if (elements == null || elements.size() == 0) {
 			// Create an xc:description based on the 866 abcdefmn values
-			return processFieldBasic(transformMe, transformInto, "866", "az", "textualHoldings", XCRecord.XC_NAMESPACE, new Attribute("type","Basic Bibliographic Unit"), FrbrLevel.HOLDINGS);
+			return processFieldBasic(transformMe, transformInto, "866", "az", "textualHoldings", AggregateXCRecord.XC_NAMESPACE, new Attribute("type","Basic Bibliographic Unit"), FrbrLevel.HOLDINGS);
 		}
 		
 		return transformInto;
@@ -4396,7 +4401,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process867(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process867(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested field
 		List<Element> elements = transformMe.getDataFields("852");
@@ -4404,7 +4409,7 @@ public class SolrTransformationService extends GenericMetadataService
 		// Create textualHoldings only when there is no 852 field. If there are 852 fields, then textualHoldings would have been created while processing 852 field. See process852()
 		if (elements == null || elements.size() == 0) {
 			// Create an xc:description based on the 867 abcdefmn values
-			return processFieldBasic(transformMe, transformInto, "867", "az", "textualHoldings", XCRecord.XC_NAMESPACE, new Attribute("type","Supplementary material"), FrbrLevel.HOLDINGS);
+			return processFieldBasic(transformMe, transformInto, "867", "az", "textualHoldings", AggregateXCRecord.XC_NAMESPACE, new Attribute("type","Supplementary material"), FrbrLevel.HOLDINGS);
 		}
 		
 		return transformInto;
@@ -4418,7 +4423,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process868(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process868(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested field
 		List<Element> elements = transformMe.getDataFields("852");
@@ -4426,7 +4431,7 @@ public class SolrTransformationService extends GenericMetadataService
 		// Create textualHoldings only when there is no 852 field. If there are 852 fields, then textualHoldings would have been created while processing 852 field. See process852()
 		if (elements == null || elements.size() == 0) {
 			// Create an xc:description based on the 867 abcdefmn values
-			return processFieldBasic(transformMe, transformInto, "868", "az", "textualHoldings", XCRecord.XC_NAMESPACE, new Attribute("type","Indexes"), FrbrLevel.HOLDINGS);
+			return processFieldBasic(transformMe, transformInto, "868", "az", "textualHoldings", AggregateXCRecord.XC_NAMESPACE, new Attribute("type","Indexes"), FrbrLevel.HOLDINGS);
 		}
 		
 		return transformInto;
@@ -4441,10 +4446,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process931(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process931(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:type based on the 931 $a values
-		return processFieldBasic(transformMe, transformInto, "931", 'a', "type", XCRecord.DCTERMS_NAMESPACE, new Attribute("type", "dcterms:DCMIType", XCRecord.XSI_NAMESPACE), FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "931", 'a', "type", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("type", "dcterms:DCMIType", AggregateXCRecord.XSI_NAMESPACE), FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -4455,10 +4460,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process932(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process932(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:typeLeader06 based on the 932 $a values
-		return processFieldBasic(transformMe, transformInto, "932", 'a', "typeLeader06", XCRecord.XC_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "932", 'a', "typeLeader06", AggregateXCRecord.XC_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -4469,10 +4474,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process933(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process933(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:type007 based on the 933 $a values
-		return processFieldBasic(transformMe, transformInto, "933", 'a', "type007", XCRecord.XC_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "933", 'a', "type007", AggregateXCRecord.XC_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -4483,10 +4488,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process934(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process934(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an xc:typeSMD based on the 934 $a values
-		return processFieldBasic(transformMe, transformInto, "934", 'a', "typeSMD", XCRecord.XC_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "934", 'a', "typeSMD", AggregateXCRecord.XC_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -4497,10 +4502,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process935(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process935(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:modeOfIssuance based on the 935 $a values
-		return processFieldBasic(transformMe, transformInto, "935", 'a', "modeOfIssuance", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "935", 'a', "modeOfIssuance", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -4511,10 +4516,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process937(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process937(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an rdvocab:natureOfContent based on the 937 $a values
-		return processFieldBasic(transformMe, transformInto, "937", 'a', "natureOfContent", XCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
+		return processFieldBasic(transformMe, transformInto, "937", 'a', "natureOfContent", AggregateXCRecord.RDVOCAB_NAMESPACE, null, FrbrLevel.WORK);
 	}
 
 	/**
@@ -4525,10 +4530,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process939(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process939(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:issued based on the 939 $a values
-		return processFieldBasic(transformMe, transformInto, "939", 'a', "issued", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "939", 'a', "issued", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -4539,10 +4544,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process943(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process943(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:language based on the 943 $a values
-		return processFieldBasic(transformMe, transformInto, "943", 'a', "language", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
+		return processFieldBasic(transformMe, transformInto, "943", 'a', "language", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.EXPRESSION);
 	}
 
 	/**
@@ -4556,7 +4561,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord process945(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process945(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 
 		// Get the elements with the requested field
@@ -4619,7 +4624,7 @@ public class SolrTransformationService extends GenericMetadataService
 				if(callNumberBuilder.length() > 0)
 				{
 					// Create a xc:callNumber in a seperate holdings element based on the 945 ab values
-					Element callNumberElement = new Element("callNumber",XCRecord.XC_NAMESPACE);
+					Element callNumberElement = new Element("callNumber",AggregateXCRecord.XC_NAMESPACE);
 					holdingsElements.add(callNumberElement.setText(callNumberBuilder.toString().trim()));
 				}
 				
@@ -4627,7 +4632,7 @@ public class SolrTransformationService extends GenericMetadataService
 				{
 					
 					// Create a xc:callNumber in a seperate holdings element based on the 945 ab values
-					Element callNumberElement = new Element("location",XCRecord.XC_NAMESPACE);
+					Element callNumberElement = new Element("location",AggregateXCRecord.XC_NAMESPACE);
 					holdingsElements.add(callNumberElement.setText(locationDisplayBuilder.toString().trim()));
 				}
 
@@ -4647,7 +4652,7 @@ public class SolrTransformationService extends GenericMetadataService
 
 				if(audienceBuilder.length() > 0)
 				{
-					transformInto.addElement("audience", audienceBuilder.toString().trim(), XCRecord.DCTERMS_NAMESPACE, new ArrayList<Attribute>(), FrbrLevel.WORK);
+					transformInto.addElement("audience", audienceBuilder.toString().trim(), AggregateXCRecord.DCTERMS_NAMESPACE, new ArrayList<Attribute>(), FrbrLevel.WORK);
 				}
 				
 			}
@@ -4666,10 +4671,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process947(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process947(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dcterms:identifier based on the 947 $a values
-		return processFieldBasic(transformMe, transformInto, "947", 'a', "identifier", XCRecord.DCTERMS_NAMESPACE, new Attribute("type", "ISBN"), FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "947", 'a', "identifier", AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("type", "ISBN"), FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -4682,7 +4687,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord process959(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process959(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields("959");
@@ -4749,7 +4754,7 @@ public class SolrTransformationService extends GenericMetadataService
 				
 				for(String linkingField : linkingFields)
 				{
-					Element creatorElement = new Element("creator", XCRecord.XC_NAMESPACE );
+					Element creatorElement = new Element("creator", AggregateXCRecord.XC_NAMESPACE );
 					creatorElement.setAttributes(attributes);
 					creatorElement.addContent(value);
 					linkedCreatorFields.put(linkingField, (Element)creatorElement.clone());
@@ -4771,20 +4776,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process963(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process963(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("1", new Attribute("type", "lcac"));
-		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("3", new Attribute("type", "nal"));
 		indicatorToType.put("5", new Attribute("type", "cash"));
 		indicatorToType.put("6", new Attribute("type", "rvm"));
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:temporal based on the 963 ay values
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "963", "ay", "", "temporal", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "963", "ay", "", "temporal", AggregateXCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**
@@ -4795,20 +4800,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process965(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process965(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("1", new Attribute("type", "lcac"));
-		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("3", new Attribute("type", "nal"));
 		indicatorToType.put("5", new Attribute("type", "cash"));
 		indicatorToType.put("6", new Attribute("type", "rvm"));
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:subject based on the 965 $a value
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "965", "ax", "", "subject", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "965", "ax", "", "subject", AggregateXCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**
@@ -4819,20 +4824,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process967(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process967(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("1", new Attribute("type", "lcac"));
-		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("3", new Attribute("type", "nal"));
 		indicatorToType.put("5", new Attribute("type", "cash"));
 		indicatorToType.put("6", new Attribute("type", "rvm"));
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:spatial based on the 967 $a value
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "967", "az", "", "spatial", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "967", "az", "", "spatial", AggregateXCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**
@@ -4843,20 +4848,20 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord process969(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord process969(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
 		HashMap<String, Attribute> indicatorToType = new HashMap<String, Attribute>();
-		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("0", new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("1", new Attribute("type", "lcac"));
-		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", XCRecord.XSI_NAMESPACE));
+		indicatorToType.put("2", new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
 		indicatorToType.put("3", new Attribute("type", "nal"));
 		indicatorToType.put("5", new Attribute("type", "cash"));
 		indicatorToType.put("6", new Attribute("type", "rvm"));
 		indicatorToType.put("7", new Attribute("type", "$2"));
 
 		// Create an xc:type based on the 969 $a value
-		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "969", "av", "", "type", XCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
+		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, "969", "av", "", "type", AggregateXCRecord.XC_NAMESPACE, "2", indicatorToType, FrbrLevel.WORK);
 	}
 
 	/**
@@ -4868,7 +4873,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord holdingsProcess001And003(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord holdingsProcess001And003(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		String field001 = transformMe.getControlField("001");
 		String field003 = transformMe.getControlField("003");
@@ -4893,7 +4898,7 @@ public class SolrTransformationService extends GenericMetadataService
 		attributes.add(new Attribute("type", field003));
 
 		// Add the element to the XC record
-		transformInto.addElement("recordID", field001.trim(), XCRecord.XC_NAMESPACE, attributes, FrbrLevel.HOLDINGS);
+		transformInto.addElement("recordID", field001.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.HOLDINGS);
 
 		// Return the result
 		return transformInto;
@@ -4907,10 +4912,10 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param transformInto The XC record which will store the transformed version of the record
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord holdingsProcess506(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord holdingsProcess506(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Create an dc:rights based on the 506 abcdefu3 values
-		return processFieldBasic(transformMe, transformInto, "506", "abcdefu3", "rights", XCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
+		return processFieldBasic(transformMe, transformInto, "506", "abcdefu3", "rights", AggregateXCRecord.DCTERMS_NAMESPACE, null, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -4923,7 +4928,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord holdingsProcess852(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord holdingsProcess852(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields("852");
@@ -4989,13 +4994,13 @@ public class SolrTransformationService extends GenericMetadataService
 
 				if(textualHoldingsBuilder.length() > 0) {
 					if (siblingTag.equals("866")) {
-						textualHoldingsElements.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1)).setAttribute(new Attribute("type","Basic Bibliographic Unit")));
+						textualHoldingsElements.add(new Element("textualHoldings", AggregateXCRecord.XC_NAMESPACE).setText(textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1)).setAttribute(new Attribute("type","Basic Bibliographic Unit")));
 					}
 					if (siblingTag.equals("867")) {
-						textualHoldingsElements.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1)).setAttribute(new Attribute("type","Supplementary material")));
+						textualHoldingsElements.add(new Element("textualHoldings", AggregateXCRecord.XC_NAMESPACE).setText(textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1)).setAttribute(new Attribute("type","Supplementary material")));
 					}
 					if (siblingTag.equals("868")) {
-						textualHoldingsElements.add(new Element("textualHoldings", XCRecord.XC_NAMESPACE).setText(textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1)).setAttribute(new Attribute("type","Indexes")));
+						textualHoldingsElements.add(new Element("textualHoldings", AggregateXCRecord.XC_NAMESPACE).setText(textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1)).setAttribute(new Attribute("type","Indexes")));
 					}
 				}
 
@@ -5010,9 +5015,9 @@ public class SolrTransformationService extends GenericMetadataService
 			String callNumberValue = (callNumberBuilder.length() > 0 ? callNumberBuilder.substring(0, callNumberBuilder.length()-1) : ""); // The value is everything except the last space
 
 			if(locationValue.length() > 0)
-				holdingsContent.add(new Element("location", XCRecord.XC_NAMESPACE).setText(locationValue));
+				holdingsContent.add(new Element("location", AggregateXCRecord.XC_NAMESPACE).setText(locationValue));
 			if(callNumberValue.length() > 0)
-				holdingsContent.add(new Element("callNumber", XCRecord.XC_NAMESPACE).setText(callNumberValue));
+				holdingsContent.add(new Element("callNumber", AggregateXCRecord.XC_NAMESPACE).setText(callNumberValue));
 			for(Element textualHoldingElement : textualHoldingsElements) {
 				holdingsContent.add(textualHoldingElement);
 			}
@@ -5034,7 +5039,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord holdingsProcess856(MarcXmlRecord transformMe, XCRecord transformInto)
+	protected AggregateXCRecord holdingsProcess856(MarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Get the elements with the requested field
 		List<Element> elements = transformMe.getDataFields("856");
@@ -5084,7 +5089,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + FrbrLevel.HOLDINGS + " level identifier based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create an dcterms:identifier based on the 856 abcdfhijklmnopqrstuvwxyz23 values
-					transformInto.addElement("identifier", value.trim(), XCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.HOLDINGS);
+					transformInto.addElement("identifier", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.HOLDINGS);
 				}
 			}
 		}
@@ -5105,7 +5110,7 @@ public class SolrTransformationService extends GenericMetadataService
      * @param level The FRBR level of the element to create
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord processFieldBasic(XCRecord transformInto, String value, String elementName, Namespace elementNamespace, Attribute elementAttribute, FrbrLevel level)
+	protected AggregateXCRecord processFieldBasic(AggregateXCRecord transformInto, String value, String elementName, Namespace elementNamespace, Attribute elementAttribute, FrbrLevel level)
 	{
 		if(LOG.isDebugEnabled())
 			LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " with a value of " + value);
@@ -5136,7 +5141,7 @@ public class SolrTransformationService extends GenericMetadataService
      * @param level The FRBR level of the element to create
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord processFieldBasic(MarcXmlRecord transformMe, XCRecord transformInto, String field, char subfield, String elementName, Namespace elementNamespace, Attribute elementAttribute, FrbrLevel level)
+	protected AggregateXCRecord processFieldBasic(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, char subfield, String elementName, Namespace elementNamespace, Attribute elementAttribute, FrbrLevel level)
 	{
 		// Get the target subfields MARC XML record
 		List<String> subfields = transformMe.getSubfield(field, subfield);
@@ -5181,7 +5186,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord processFieldBasic(MarcXmlRecord transformMe, XCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, Attribute elementAttribute, FrbrLevel level)
+	protected AggregateXCRecord processFieldBasic(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, Attribute elementAttribute, FrbrLevel level)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields(field);
@@ -5247,7 +5252,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord processFieldBasicDashSubfields(MarcXmlRecord transformMe, XCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, Attribute elementAttribute, FrbrLevel level)
+	protected AggregateXCRecord processFieldBasicDashSubfields(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, Attribute elementAttribute, FrbrLevel level)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields(field);
@@ -5314,7 +5319,7 @@ public class SolrTransformationService extends GenericMetadataService
      * @param level The FRBR level of the element to create
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord processFieldAttributeFromSubfield(MarcXmlRecord transformMe, XCRecord transformInto, String field, char subfield, String elementName, Namespace elementNamespace, Attribute elementAttribute, char attributeSubfield, String defaultAttribute, FrbrLevel level)
+	protected AggregateXCRecord processFieldAttributeFromSubfield(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, char subfield, String elementName, Namespace elementNamespace, Attribute elementAttribute, char attributeSubfield, String defaultAttribute, FrbrLevel level)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields(field);
@@ -5376,7 +5381,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord processFieldAttributeFromSubfield(MarcXmlRecord transformMe, XCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, Attribute elementAttribute, char attributeSubfield, String defaultAttribute, FrbrLevel level)
+	protected AggregateXCRecord processFieldAttributeFromSubfield(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, Attribute elementAttribute, char attributeSubfield, String defaultAttribute, FrbrLevel level)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields(field);
@@ -5451,7 +5456,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord processFieldAttributeFromSubfield(MarcXmlRecord transformMe, XCRecord transformInto, String field, String targetSubfields, String dashSubfields, String elementName, Namespace elementNamespace, Attribute elementAttribute, char attributeSubfield, String defaultAttribute, FrbrLevel level)
+	protected AggregateXCRecord processFieldAttributeFromSubfield(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, String targetSubfields, String dashSubfields, String elementName, Namespace elementNamespace, Attribute elementAttribute, char attributeSubfield, String defaultAttribute, FrbrLevel level)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields(field);
@@ -5532,7 +5537,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord processFieldAttributeFromSubfield(MarcXmlRecord transformMe, XCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, HashMap<String, Attribute> subfieldToAttribute, FrbrLevel level)
+	protected AggregateXCRecord processFieldAttributeFromSubfield(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, HashMap<String, Attribute> subfieldToAttribute, FrbrLevel level)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields(field);
@@ -5606,7 +5611,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord processFieldWithAuthority(MarcXmlRecord transformMe, XCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, FrbrLevel level)
+	protected AggregateXCRecord processFieldWithAuthority(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, FrbrLevel level)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields(field);
@@ -5683,7 +5688,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord processFieldWithAuthorityAttributeFromIndicator(MarcXmlRecord transformMe, XCRecord transformInto, 
+	protected AggregateXCRecord processFieldWithAuthorityAttributeFromIndicator(MarcXmlRecord transformMe, AggregateXCRecord transformInto, 
 			String field, String targetSubfields, String subfieldsToDash, String elementName, Namespace elementNamespace, 
 			String targetIndicator, HashMap<String, Attribute> indicatorToValue, FrbrLevel level)
 	{
@@ -5797,7 +5802,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord processFieldWithAuthorityAttributeFromSubfield(MarcXmlRecord transformMe, XCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, Attribute attribute, char attributeSubfield, FrbrLevel level)
+	protected AggregateXCRecord processFieldWithAuthorityAttributeFromSubfield(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, Attribute attribute, char attributeSubfield, FrbrLevel level)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields(field);
@@ -5887,7 +5892,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord processFieldWithAuthorityIgnoreRoles(MarcXmlRecord transformMe, XCRecord transformInto, String field, String targetSubfields, String defaultElementName, Namespace defaultElementNamespace, FrbrLevel defaultLevel)
+	protected AggregateXCRecord processFieldWithAuthorityIgnoreRoles(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, String targetSubfields, String defaultElementName, Namespace defaultElementNamespace, FrbrLevel defaultLevel)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields(field);
@@ -5953,7 +5958,7 @@ public class SolrTransformationService extends GenericMetadataService
 				}
 				else
 				{
-					elementNamespace = XCRecord.RDAROLE_NAMESPACE;
+					elementNamespace = AggregateXCRecord.RDAROLE_NAMESPACE;
 
 					boolean addedRole = false;
 
@@ -6021,7 +6026,7 @@ public class SolrTransformationService extends GenericMetadataService
      * @param level The FRBR level of the element to create
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	private XCRecord processFieldAttributeFromIndicator(MarcXmlRecord transformMe, XCRecord transformInto, String field, char subfield, String elementName, Namespace elementNamespace, String targetIndicator, HashMap<String, Attribute> indicatorToValue, boolean requireIndicator, FrbrLevel level)
+	protected AggregateXCRecord processFieldAttributeFromIndicator(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, char subfield, String elementName, Namespace elementNamespace, String targetIndicator, HashMap<String, Attribute> indicatorToValue, boolean requireIndicator, FrbrLevel level)
 	{
 		// Get the elements with the requested field
 		List<Element> elements = transformMe.getDataFields(field);
@@ -6094,7 +6099,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	private XCRecord processFieldReqIndicatorAttFromField(MarcXmlRecord transformMe, XCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, String targetIndicator, String indicatorRequiredValue, HashMap<String, Attribute> fieldToAttribute, FrbrLevel level)
+	protected AggregateXCRecord processFieldReqIndicatorAttFromField(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, String targetIndicator, String indicatorRequiredValue, HashMap<String, Attribute> fieldToAttribute, FrbrLevel level)
 	{
 		
 		// Get the elements with the requested field
@@ -6173,7 +6178,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param valueOf0 The value of the tag's $0
 	 * @return
 	 */
-	private Attribute getAttributeForAuthority(String tag, String valueOf0)
+	protected Attribute getAttributeForAuthority(String tag, String valueOf0)
 	{
 		// Check that the $0 is in the format we're expecting: "(<prefix>)<value>"
 		// If it isn't, we can't build an authority Attribute, so return null
@@ -6262,7 +6267,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param tPresent true iff the field contained a $t
 	 * @return
 	 */
-	private Attribute getAttributeForAuthority(String tag, String valueOf0, boolean tPresent)
+	protected Attribute getAttributeForAuthority(String tag, String valueOf0, boolean tPresent)
 	{
 		// Check that the $0 is in the format we're expecting: "(<prefix>)<value>"
 		// If it isn't, we can't build an authority Attribute, so return null
@@ -6318,7 +6323,7 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @param level The FRBR level to add the result to
 	 * @return
 	 */
-	private XCRecord addElementForAuthority(MarcXmlRecord transformMe, XCRecord transformInto, String tag, String valueOf0, String linkingField)
+	protected AggregateXCRecord addElementForAuthority(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String tag, String valueOf0, String linkingField)
 	{
 		// Check that the $0 is in the format we're expecting: "(<prefix>)<value>"
 		// If it isn't, we can't build an authority Attribute, so return null
@@ -6341,14 +6346,14 @@ public class SolrTransformationService extends GenericMetadataService
 			if(prefix.equals("DLC"))
 			{
 				ArrayList<Attribute> atts = new ArrayList<Attribute>();
-				atts.add(new Attribute("type", "lcnaf", XCRecord.XSI_NAMESPACE));
-				transformInto.addElementBasedOnLinkingField("identifierForTheWork", "n" + value, XCRecord.RDVOCAB_NAMESPACE, atts, linkingField);
+				atts.add(new Attribute("type", "lcnaf", AggregateXCRecord.XSI_NAMESPACE));
+				transformInto.addElementBasedOnLinkingField("identifierForTheWork", "n" + value, AggregateXCRecord.RDVOCAB_NAMESPACE, atts, linkingField);
 			}
 			else if(prefix.equals(getOrganizationCode()))
 			{
 				ArrayList<Attribute> atts = new ArrayList<Attribute>();
 				atts.add(new Attribute("type", "xcauth"));
-				transformInto.addElementBasedOnLinkingField("identifierForTheWork", value, XCRecord.RDVOCAB_NAMESPACE, atts, linkingField);
+				transformInto.addElementBasedOnLinkingField("identifierForTheWork", value, AggregateXCRecord.RDVOCAB_NAMESPACE, atts, linkingField);
 			}
 		}
 

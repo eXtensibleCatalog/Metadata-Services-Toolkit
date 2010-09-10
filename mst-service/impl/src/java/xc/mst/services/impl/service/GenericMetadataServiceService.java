@@ -9,11 +9,13 @@
 package xc.mst.services.impl.service;
 
 import xc.mst.manager.BaseService;
+import xc.mst.services.MetadataService;
 import xc.mst.services.impl.dao.GenericMetadataDAO;
 
 public class GenericMetadataServiceService extends BaseService {
 	
 	protected GenericMetadataDAO genericMetadataDAO = null;
+	protected MetadataService metadataService = null;
 
 	public GenericMetadataDAO getGenericMetadataDAO() {
 		return genericMetadataDAO;
@@ -21,6 +23,14 @@ public class GenericMetadataServiceService extends BaseService {
 
 	public void setGenericMetadataDAO(GenericMetadataDAO genericMetadataDAO) {
 		this.genericMetadataDAO = genericMetadataDAO;
+	}
+
+	public MetadataService getMetadataService() {
+		return metadataService;
+	}
+
+	public void setMetadataService(MetadataService metadataService) {
+		this.metadataService = metadataService;
 	}
 
 }

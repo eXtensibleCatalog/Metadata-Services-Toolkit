@@ -22,9 +22,9 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
+import xc.mst.manager.record.RecordService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
-import xc.mst.utils.Util;
 import xc.mst.utils.XmlHelper;
 
 /**
@@ -133,6 +133,7 @@ public class Record implements InputRecord, OutputRecord {
 
 	/**
 	 * This is not used by the Record class, but classes extending it which represent the individual FRBR levels can use this to indicate  the other FRBR elements to which they are linked.
+	 * BDA - 2010-09-10 - unless I'm missing something, these aren't actually used anywhere.
 	 */
 	protected List<String> upLinks = new ArrayList<String>();
 
@@ -446,29 +447,15 @@ public class Record implements InputRecord, OutputRecord {
 	} // end method setHarvest(Harvest)
 
 	public String getOaiIdentifier() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("oai:");
-		sb.append(MSTConfiguration.getInstance().getProperty("DomainNameIdentifier"));
-		sb.append(":");
-		String name = null;
-		if (getProvider() != null) {
-			name = getProvider().getName();
-		}
-		if (getService() != null) {
-			name = getService().getName();
-		}
-		name = new Util().normalizeName(name);
-		sb.append(name);
-		sb.append("/");
-		sb.append(getId());
-		return sb.toString();
+		return getOaiIdentifier(getId());
+	}
+	
+	protected String getOaiIdentifier(long id) {
+		return ((RecordService)MSTConfiguration.getInstance().getBean("RecordService")).getOaiIdentifier(
+				id, getProvider(), getService());
 	}
 
 	public void setHarvestedOaiIdentifier(String oaiIdentifier) {
-		this.oaiIdentifier = oaiIdentifier;
-	}
-	
-	public void setOaiIdentifier(String oaiIdentifier) {
 		this.oaiIdentifier = oaiIdentifier;
 	}
 	

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xc="http://www.extensiblecatalog.info/Elements"
+    xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdvocab="http://rdvocab.info/Elements"
+    xmlns:dcterms="http://purl.org/dc/terms/" xmlns:marcrel="http://id.loc.gov/vocabulary/relators.html"
+    xmlns:lccn="http://id.loc.gov/authorities#ConceptScheme"
+    xmlns:rdarole="http://rdvocab.info/roles"
+    xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd
+                        http://purl.org/dc/elements/1.1/ http://dublincore.org/schemas/xmls/qdc/2008/02/11/dc.xsd
+                        http://purl.org/dc/terms/ http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd
+                        http://purl.org/dc/dcmitype/ http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd">
+    <responseDate>2002-02-08T08:55:46Z</responseDate>
+    <request verb="GetRecord" identifier="oai:arXiv.org:cs/0112017" metadataPrefix="oai_dc"
+        >http://arXiv.org/oai2</request>
+    <GetRecord>
+        <record>
+            <header>
+                <identifier>oai:arXiv.org:hep-th/9901001</identifier>
+                <datestamp>1999-12-25</datestamp>
+                <setSpec>physics:hep</setSpec>
+                <setSpec>math</setSpec>
+            </header>
+            <metadata>
+                <xc:frbr>
+                <!--This is a dummy record that includes all XC Schema fields within the XC-defined Holdings entity.  Revised July 2010-->
+                 <xc:entity type="holdings" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10006">
+                    <!--Corresponds to the metadata available in MARC holdings-->
+                    <xc:callNumber>Z695.A1 L69</xc:callNumber>
+                    <dcterms:description>Library lacks disk.</dcterms:description>
+                    <dcterms:identifier>http://www.eXtensibleCatalog.org</dcterms:identifier>
+                    <xc:itemOfHoldings>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10007</xc:itemOfHoldings>
+                    <!--Previous element is a "downlink" - not required-->
+                    <xc:location>Rhees Stacks</xc:location>
+                    <xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10005</xc:manifestationHeld>
+                    <!--Previous element is an "uplink" - REQUIRED-->
+                    <xc:recordID type="NRU">5555555</xc:recordID>
+                    <xc:restrictionsOnUse>May not be reproduced.</xc:restrictionsOnUse>
+                    <xc:textualHoldings type="BasicBibliographicUnit">v.1 (1957)-</xc:textualHoldings>
+                </xc:entity>
+              </xc:frbr>
+          </metadata>
+       </record>
+   </GetRecord>
+</OAI-PMH>
+

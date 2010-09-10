@@ -33,6 +33,8 @@ import xc.mst.utils.TimingLogger;
  */
 public class MarcXmlRecord
 {
+	protected static boolean useXpath = false; 
+	
 	/**
 	 * The logger object
 	 */
@@ -146,16 +148,28 @@ public class MarcXmlRecord
 			if(log.isDebugEnabled())
 				log.debug("Getting the control field " + targetField);
 
-			// An XPATH expression to get the requested control field
-			TimingLogger.start("getControlField.XPath.newInstance");
-			XPath xpath = XPath.newInstance(".//marc:controlfield[@tag='" + targetField + "']");
-			xpath.addNamespace(marcNamespace);
-			TimingLogger.stop("getControlField.XPath.newInstance");
+			List<Element> elements = null;
+			TimingLogger.start("getControlField.xpath");
+			TimingLogger.start("xpath");
+			if (useXpath) {
+				// An XPATH expression to get the requested control field
+				XPath xpath = XPath.newInstance(".//marc:controlfield[@tag='" + targetField + "']");
+				xpath.addNamespace(marcNamespace);
 
-			// Get the control field.  There should not be more than one Element in this list.
-			TimingLogger.start("getControlField.xpath.selectNodes");
-			List<Element> elements = xpath.selectNodes(marcXml);
-			TimingLogger.stop("getControlField.xpath.selectNodes");
+				// Get the control field.  There should not be more than one Element in this list.
+				elements = xpath.selectNodes(marcXml);
+			} else {
+				elements = new ArrayList<Element>();
+				for (Object o : marcXml.getChildren("controlfield", marcXml.getNamespace())) {
+					Element e = (Element)o;
+					if (targetField.equals(e.getAttributeValue("tag"))) {
+						elements.add(e);
+					}
+				}
+			}
+			TimingLogger.stop("getControlField.xpath");
+			TimingLogger.stop("xpath");
+
 			if(elements.size() == 0)
 			{
 				if(log.isDebugEnabled())
@@ -203,14 +217,27 @@ public class MarcXmlRecord
 			{
 				List<Element> results = null;
 
-				if(tagToFields.containsKey(targetField))
+				if(tagToFields.containsKey(targetField)) {
 					results = tagToFields.get(targetField);
-				else
-				{
-					// An XPATH expression to get the requested control field
-					XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + targetField + "']");
-					xpath.addNamespace(marcNamespace);
-					results = xpath.selectNodes(marcXml);
+				} else {
+					TimingLogger.start("getDataFields.xpath");
+					TimingLogger.start("xpath");
+					if (useXpath) {
+						// An XPATH expression to get the requested control field
+						XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + targetField + "']");
+						xpath.addNamespace(marcNamespace);
+						results = xpath.selectNodes(marcXml);	
+					} else {
+						results = new ArrayList<Element>();
+						for (Object o : marcXml.getChildren("datafield", marcXml.getNamespace())) {
+							Element e = (Element)o;
+							if (targetField.equals(e.getAttributeValue("tag"))) {
+								results.add(e);
+							}
+						}
+					}
+					TimingLogger.stop("getDataFields.xpath");
+					TimingLogger.stop("xpath");
 				}
 
 				// Get the 880 fields that match the requested tag
@@ -226,14 +253,27 @@ public class MarcXmlRecord
 				
 				if(tagToFields.containsKey(targetField)) {
 					potentialResults = tagToFields.get(targetField);
+				} else {
+					TimingLogger.start("getDataFields2.xpath");
+					TimingLogger.start("xpath");
+					if (useXpath) {
+						// An XPATH expression to get the requested control field
+						XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + targetField + "']");
+						xpath.addNamespace(marcNamespace);
+						potentialResults = xpath.selectNodes(marcXml);	
+					} else {
+						potentialResults = new ArrayList<Element>();
+						for (Object o : marcXml.getChildren("datafield", marcXml.getNamespace())) {
+							Element e = (Element)o;
+							if (targetField.equals(e.getAttributeValue("tag"))) {
+								potentialResults.add(e);
+							}
+						}
+					}
+					TimingLogger.stop("getDataFields2.xpath");
+					TimingLogger.stop("xpath");
 				}
-				else
-				{
-					// An XPATH expression to get the requested control field
-					XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + targetField + "']");
-					xpath.addNamespace(marcNamespace);
-					potentialResults = xpath.selectNodes(marcXml);
-				}
+
 				ArrayList<Element> results = new ArrayList<Element>();
 
 				// Get the 880 fields that match the requested tag
@@ -273,12 +313,27 @@ public class MarcXmlRecord
 
 		try
 		{
-			// An XPATH expression to get the requested control field
-			XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + 945 + "']");
-			xpath.addNamespace(marcNamespace);
+			List<Element> nodes = null;
+			TimingLogger.start("get945.xpath");
+			TimingLogger.start("xpath");
+			if (useXpath) {
+				// An XPATH expression to get the requested control field
+				XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + 945 + "']");
+				xpath.addNamespace(marcNamespace);
+				nodes = xpath.selectNodes(marcXml);				
+			} else {
+				nodes = new ArrayList<Element>();
+				for (Object o : marcXml.getChildren("datafield", marcXml.getNamespace())) {
+					Element e = (Element)o;
+					if ("945".equals(e.getAttributeValue("tag"))) {
+						nodes.add(e);
+					}
+				}
+			}
+			TimingLogger.stop("get945.xpath");
+			TimingLogger.stop("xpath");
 
-			TimingLogger.stop("get945");
-			return xpath.selectNodes(marcXml);
+			return nodes;
 		}
 		catch(JDOMException e)
 		{
@@ -324,12 +379,29 @@ public class MarcXmlRecord
 
 		try
 		{
-			// An XPATH expression to get the requested subfields
-			XPath xpath = XPath.newInstance("marc:subfield[@code='" + subfield + "']");
-			xpath.addNamespace(marcNamespace);
+			
+			List<Element> elements = null;
+			TimingLogger.start("getSubfieldOfField.xpath");
+			TimingLogger.start("xpath");
+			if (useXpath) {
+				// An XPATH expression to get the requested subfields
+				XPath xpath = XPath.newInstance("marc:subfield[@code='" + subfield + "']");
+				xpath.addNamespace(marcNamespace);
 
-			// Get the subfields.
-			List<Element> elements = xpath.selectNodes(datafield);
+				// Get the subfields.
+				elements = xpath.selectNodes(datafield);			
+			} else {
+				elements = new ArrayList<Element>();
+				for (Object o : datafield.getChildren("subfield", datafield.getNamespace())) {
+					Element e = (Element)o;
+					if ((subfield+"").equals(e.getAttributeValue("code"))) {
+						elements.add(e);
+					}
+				}
+			}
+			TimingLogger.stop("getSubfieldOfField.xpath");
+			TimingLogger.stop("xpath");
+
 
 			// Return the empty list if there were no matching subfields
 			if(elements.size() == 0)
@@ -382,28 +454,48 @@ public class MarcXmlRecord
 
 		try
 		{
-			// An XPATH expression to get the requested subfields
-			XPath xpath = XPath.newInstance("following-sibling::*[1]");
+			Element element = null;
+			
+			TimingLogger.start("getSiblingOfField.xpath");
+			TimingLogger.start("xpath");
+			if (useXpath) {
+				// An XPATH expression to get the requested subfields
+				XPath xpath = XPath.newInstance("following-sibling::*[1]");
 
-			// Get the subfields.
-			List<Element> elements = xpath.selectNodes(datafield);
+				// Get the subfields.
+				List<Element> elements = xpath.selectNodes(datafield);
+				
+				if (elements != null && elements.size() > 0) {
+					element = elements.get(0);
+				}
+			} else {
+				boolean found = false;
+				for (Object o : ((Element)datafield.getParent()).getChildren()) {
+					Element e = (Element)o;
+					if (found) {
+						element = e;
+					}
+					if (e.equals(datafield)) {
+						found = true;
+					}
+				}
+			}
+			TimingLogger.stop("getSiblingOfField.xpath");
+			TimingLogger.stop("xpath");
 
 			// Return the empty list if there were no matching subfields
-			if(elements.size() == 0)
-			{
+			if(element == null) {
 				if(log.isDebugEnabled())
 					log.debug("The passed datafield did not have a sibling.");
 
 				TimingLogger.stop("getSiblingOfField");
 				return null;
-			}
-			else
-			{
+			} else {
 				if(log.isDebugEnabled())
 					log.debug("Found the sibling of the passed datafield.");
 
 				TimingLogger.stop("getSiblingOfField");
-				return elements.get(0);
+				return element;
 			}
 		}
 		catch(JDOMException e)
@@ -433,12 +525,27 @@ public class MarcXmlRecord
 
 		try
 		{
-			// An XPATH expression to get the requested subfields
-			XPath xpath = XPath.newInstance("../marc:subfield[@code='" + subfield + "']");
-			xpath.addNamespace(marcNamespace);
+			List<Element> elements = null;
+			TimingLogger.start("getSiblingOfSubfield.xpath");
+			TimingLogger.start("xpath");
+			if (useXpath) {
+				// An XPATH expression to get the requested subfields
+				XPath xpath = XPath.newInstance("../marc:subfield[@code='" + subfield + "']");
+				xpath.addNamespace(marcNamespace);
 
-			// Get the subfields.
-			List<Element> elements = xpath.selectNodes(datafield);
+				// Get the subfields.
+				elements = xpath.selectNodes(datafield);
+			} else {
+				elements = new ArrayList<Element>();
+				for (Object o : datafield.getChildren("subfield", datafield.getNamespace())) {
+					Element e = (Element)o;
+					if ((subfield+"").equals(e.getAttributeValue("code"))) {
+						elements.add(e);
+					}
+				}
+			}
+			TimingLogger.stop("getSiblingOfSubfield.xpath");
+			TimingLogger.stop("xpath");
 
 			// Return the empty list if there were no matching subfields
 			if(elements.size() == 0)
@@ -492,15 +599,28 @@ public class MarcXmlRecord
 
 		try
 		{
-			// An XPATH expression to get the requested indicator
-			XPath xpath = XPath.newInstance("@ind" + indicator);
-			xpath.addNamespace(marcNamespace);
+			Attribute attr = null;
+			
+			TimingLogger.start("getIndicatorOfField.xpath");
+			TimingLogger.start("xpath");
+			if (useXpath) {
+				// An XPATH expression to get the requested indicator
+				XPath xpath = XPath.newInstance("@ind" + indicator);
+				xpath.addNamespace(marcNamespace);
 
-			// Get the subfields.
-			List<Attribute> attributes = xpath.selectNodes(datafield);
+				// Get the subfields.
+				List<Attribute> attributes = xpath.selectNodes(datafield);
+				if (attributes != null && attributes.size() > 0) {
+					attr = attributes.get(0);
+				}
+			} else {
+				attr = datafield.getAttribute("ind"+indicator);
+			}
+			TimingLogger.stop("getIndicatorOfField.xpath");
+			TimingLogger.stop("xpath");
 
 			// Return the empty list if there were no matching subfields
-			if(attributes.size() == 0)
+			if(attr == null)
 			{
 				if(log.isDebugEnabled())
 					log.debug("The passed datafield did not have a ind" + indicator + ".");
@@ -511,7 +631,7 @@ public class MarcXmlRecord
 			else
 			{
 				// The value of the requested control field
-				String value = attributes.get(0).getValue();
+				String value = attr.getValue();
 
 				if(log.isDebugEnabled())
 					log.debug("Found a ind" + indicator + " with a value of " + value + ".");

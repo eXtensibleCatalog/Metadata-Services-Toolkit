@@ -41,11 +41,9 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordIfc;
-import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.BaseDAO;
-import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
@@ -201,14 +199,18 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public void injectId(Record r) {
+		r.setId(getNextId());
+	}
+	
+	public long getNextId() {
 		oaiIdLock.lock();
 		if (nextId == nextIdInDB) {
 			int idsAtOnce = 1000;
 			nextId = this.getNextOaiId.executeObject(Integer.class, idsAtOnce);
 			nextIdInDB = nextId + idsAtOnce;
 		}
-		r.setId(this.nextId++);
 		oaiIdLock.unlock();
+		return this.nextId++;
 	}
 	
 	public void addRecords(String name, List<Record> records) {
@@ -606,6 +608,7 @@ public class RepositoryDAO extends BaseDAO {
 			LOG.info("sql: "+sql);
 		}
 		
+		/*
 		// If record not null then get error message information
 		if (r != null) {
 			String messageSql = 
@@ -631,6 +634,7 @@ public class RepositoryDAO extends BaseDAO {
 				LOG.info("Messages not found for record id: "+id);
 			}
 		}
+		*/
 		return r;
 	}
 	

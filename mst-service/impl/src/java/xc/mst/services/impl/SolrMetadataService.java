@@ -40,7 +40,6 @@ import xc.mst.manager.BaseManager;
 import xc.mst.manager.IndexException;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.utils.LogWriter;
-import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.Records;
@@ -577,18 +576,6 @@ public abstract class SolrMetadataService extends BaseManager {
 		{
 			LOG.error("An error occurred while updating a record in the Solr index.", e);
 		}
-	}
-	
-	/**
-	 * Gets the next OAI identifier for the service
-	 *
-	 * @return The next OAI identifier for the service
-	 */
-	public final String getNextOaiId()
-	{
-		return "oai:" + config.getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + 
-				MSTConfiguration.getInstanceName() + "/" + service.getName().replace(" ", "_") + "/" + 
-				getOaiIdentifierForServiceDAO().getNextOaiIdForService(service.getId());
 	}
 		
 	/**
