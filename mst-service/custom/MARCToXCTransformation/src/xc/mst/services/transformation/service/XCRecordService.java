@@ -438,56 +438,28 @@ public class XCRecordService extends GenericMetadataServiceService {
 
 		/*$$ WORK $$*/
 		// Create original Work Document
-		// BDA - according to Jennifer there could be more than one work per bib
-		Long workId = null;
-		if (ar.getPreviousWorkIds() != null && ar.getPreviousWorkIds().size() > 0) {
-			workId = ar.getPreviousWorkIds().get(0);
-			if (ar.getPreviousWorkIds().size() > 1) {
-				for (int i=1; i<ar.getPreviousWorkIds().size(); i++) {
-					Record work2delete = new Record();
-					work2delete.setId(ar.getPreviousWorkIds().get(i));
-					work2delete.setStatus(Record.DELETED);
-					records.add(work2delete);
-				}
-			}
-		}
-		if (workId == null) {
-			workId = getRepositoryDAO().getNextId();
-		}
+		Long workId = getId(ar.getPreviousWorkIds());
 		String workOaiID = getRecordService().getOaiIdentifier(
-				workId, getMetadataService().getService());;
-		ar.xcWorkElement.setAttribute(new Attribute("id",workOaiID));
-		ar.xcRootElement.addContent(ar.xcWorkElement);
+				workId, getMetadataService().getService());
+		Element tempXcWorkElement = (Element)ar.xcWorkElement.clone();
+		tempXcWorkElement.setAttribute(new Attribute("id",workOaiID));
+		ar.xcRootElement.addContent(tempXcWorkElement);
 		Element rootElement = (Element)ar.xcRootElement.clone();
 		records.add(createRecord(ar, workId, rootElement, null));
 		ar.xcRootElement.removeContent();
 		
 		/*$$ EXPRESSION $$*/
 		// Create original Expression Document
-		// BDA - according to Jennifer there could be more than one expression per bib
-		Long expressionId = null;
-		if (ar.getPreviousExpressionIds() != null && ar.getPreviousExpressionIds().size() > 0) {
-			expressionId = ar.getPreviousExpressionIds().get(0);
-			if (ar.getPreviousExpressionIds().size() > 1) {
-				for (int i=1; i<ar.getPreviousExpressionIds().size(); i++) {
-					Record expression2delete = new Record();
-					expression2delete.setId(ar.getPreviousExpressionIds().get(i));
-					expression2delete.setStatus(Record.DELETED);
-					records.add(expression2delete);
-				}
-			}
-		}
-		if (expressionId == null) {
-			expressionId = getRepositoryDAO().getNextId();
-		}
+		Long expressionId = getId(ar.getPreviousExpressionIds());
 		Element expressionToWorkLinkingElement = new Element("workExpressed", AggregateXCRecord.XC_NAMESPACE);
 		expressionToWorkLinkingElement.setText(workOaiID);
 		 
 		String expressionOaiID = getRecordService().getOaiIdentifier(
 				expressionId, getMetadataService().getService());
-		ar.xcExpressionElement.addContent(expressionToWorkLinkingElement.detach());
-		ar.xcExpressionElement.setAttribute(new Attribute("id",expressionOaiID));
-		ar.xcRootElement.addContent(ar.xcExpressionElement);
+		Element tempXcExpressionElement = (Element)ar.xcExpressionElement.clone(); 
+		tempXcExpressionElement.addContent(expressionToWorkLinkingElement.detach());
+		tempXcExpressionElement.setAttribute(new Attribute("id",expressionOaiID));
+		ar.xcRootElement.addContent(tempXcExpressionElement);
 		rootElement = (Element)ar.xcRootElement.clone();
 		List<String> workElementOaiIDs = new ArrayList<String>();
 		workElementOaiIDs.add(workOaiID);
@@ -548,23 +520,19 @@ public class XCRecordService extends GenericMetadataServiceService {
 			}
 			
 			// Set the OAI id
-			long newWorkId = getRepositoryDAO().getNextId(); 
+			long newWorkId = getId(ar.getPreviousWorkIds()); 
 			String newWorkOaiID = getRecordService().getOaiIdentifier(
 					newWorkId, getMetadataService().getService());
 			newWorkElement.setAttribute(new Attribute("id", newWorkOaiID));
-			ar.xcRootElement.addContent("\n\t")
-						 .addContent(newWorkElement)
-						 .addContent("\n");
-			doc = (new Document()).setRootElement((Element)ar.xcRootElement.clone());
-			records.add(createRecord(ar, newWorkId, "XC-Work", doc, null));
-			documents.add(doc);
+			ar.xcRootElement.addContent(newWorkElement);
+			records.add(createRecord(ar, newWorkId, (Element)ar.xcRootElement.clone(), null));
 			ar.xcRootElement.removeContent();
 
 			// Expression
 			// Clone the original expression
 			Element newExpressionElement = (Element)ar.xcExpressionElement.clone();
 			// Generate the OAI id
-			long newExpressionId = getRepositoryDAO().getNextId(); 
+			long newExpressionId = getId(ar.getPreviousExpressionIds());
 			String newExpressionOaiID = getRecordService().getOaiIdentifier(
 					newExpressionId, getMetadataService().getService());
 			newExpressionElement.setAttribute(new Attribute("id", newExpressionOaiID));
@@ -584,7 +552,6 @@ public class XCRecordService extends GenericMetadataServiceService {
 								Constants.ELEMENT_TITLE_OF_EXPRESSION,
 								AggregateXCRecord.XC_NAMESPACE);
 					}
-					newExpressionElement.addContent("\n\t\t");
 					newExpressionElement.addContent(titleOfExpressionElement
 							.detach());
 				}
@@ -593,11 +560,9 @@ public class XCRecordService extends GenericMetadataServiceService {
 			// Link to corresponding work doc
 			expressionToWorkLinkingElement = new Element("workExpressed", AggregateXCRecord.XC_NAMESPACE);
 			expressionToWorkLinkingElement.setText(newWorkOaiID);
-			newExpressionElement.addContent("\n\t\t")
-								.addContent(expressionToWorkLinkingElement.detach());
+			newExpressionElement.addContent(expressionToWorkLinkingElement.detach());
 			
-			ar.xcRootElement.addContent("\n\t")
-						 .addContent(newExpressionElement.addContent("\n\t")).addContent("\n");
+			ar.xcRootElement.addContent(newExpressionElement);
 			doc = (new Document()).setRootElement((Element)ar.xcRootElement.clone());
 			
 			List<String> workExpressedOaiIDs = new ArrayList<String>();
@@ -712,6 +677,21 @@ public class XCRecordService extends GenericMetadataServiceService {
 
 		}
 		
+		for (List<Long> previousIds : new List[] {
+				ar.getPreviousWorkIds(),
+				ar.getPreviousExpressionIds(),
+				ar.getPreviousHoldingIds()
+		}) {
+			if (previousIds != null && previousIds.size() > 0) {
+				for (int i=0; i<previousIds.size(); i++) {
+					Record record2delete = new Record();
+					record2delete.setId(previousIds.get(i));
+					record2delete.setStatus(Record.DELETED);
+					records.add(record2delete);
+				}
+			}	
+		}
+		
 		return records;
 	}
 	
@@ -765,6 +745,18 @@ public class XCRecordService extends GenericMetadataServiceService {
 		}
 
 		return records;
+	}
+	
+	protected Long getId(List<Long> previousIds) {
+		Long recordId = null;
+		if (previousIds != null && previousIds.size() > 0) {
+			recordId = previousIds.get(0);
+			previousIds.remove(0);
+		}
+		if (recordId == null) {
+			recordId = getRepositoryDAO().getNextId();
+		}
+		return recordId;
 	}
 	
 	/*

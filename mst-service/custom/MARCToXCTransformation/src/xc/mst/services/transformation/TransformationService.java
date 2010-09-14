@@ -158,9 +158,10 @@ public class TransformationService extends SolrTransformationService {
 						List<Long> holdingIds = getTransformationDAO().getLinkedRecordIds(manifestationId);
 						if (holdingIds != null) {
 							for (Long holdingId : holdingIds) {
-								Record deletedHolding = new Record();
-								deletedHolding.setId(holdingId);
-								results.add(deletedHolding);
+								Record orphanedHolding = new Record();
+								orphanedHolding.setStatus(Record.HELD);
+								orphanedHolding.setId(holdingId);
+								results.add(orphanedHolding);
 							}
 						}
 					}
