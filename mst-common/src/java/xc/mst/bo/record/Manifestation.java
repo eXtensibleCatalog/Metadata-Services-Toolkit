@@ -158,7 +158,6 @@ public class Manifestation extends Record
 		manifestation.setInputForServices(record.getInputForServices());
 		manifestation.setOaiDatestamp(record.getOaiDatestamp());
 		manifestation.setOaiHeader(record.getOaiHeader());
-		manifestation.setOaiIdentifier(record.getOaiIdentifier());
 		manifestation.setOaiXml(record.getOaiXml());
 		manifestation.setProcessedByServices(record.getProcessedByServices());
 		manifestation.setProcessedFrom(record.getProcessedFrom());

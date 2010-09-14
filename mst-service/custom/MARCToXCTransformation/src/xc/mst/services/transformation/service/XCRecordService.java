@@ -1,3 +1,11 @@
+/**
+  * Copyright (c) 2010 eXtensible Catalog Organization
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  */
 package xc.mst.services.transformation.service;
 
 import java.util.ArrayList;
@@ -19,19 +27,43 @@ import xc.mst.services.impl.GenericMetadataService;
 import xc.mst.services.impl.service.GenericMetadataServiceService;
 import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
 import xc.mst.services.transformation.bo.AggregateXCRecord;
+import xc.mst.services.transformation.dao.TransformationDAO;
 import xc.mst.utils.XmlHelper;
 
+/**
+ * 
+ * @author Benjamin D. Anderson
+ *
+ */
 public class XCRecordService extends GenericMetadataServiceService {
 
 	protected XmlHelper xmlHelper = new XmlHelper();
+	
+	TransformationDAO transformationDAO = null;
+	
+	public TransformationDAO getTransformationDAO() {
+		return transformationDAO;
+	}
+
+	public void setTransformationDAO(TransformationDAO transformationDAO) {
+		this.transformationDAO = transformationDAO;
+	}
+
+	public String getType(Record r) {
+		r.setMode(Record.JDOM_MODE);
+		Element el = r.getOaiXmlEl();
+		Element entityEl = el.getChild("entity", AggregateXCRecord.XC_NAMESPACE);
+		String type = entityEl.getAttributeValue("type");
+
+		return type;
+	}
 
 	/**
 	 * Gets a Document Object containing the XC record
 	 *
 	 * @return A Document Object containing the XC record
 	 */
-	public Document getXcRecordXml(AggregateXCRecord ar)
-	{
+	public Document getXcRecordXml(AggregateXCRecord ar) {
 		// Add an endline character to the last child of each FRBR group.
 		// This doesn't do anything except format the XML to make it easier to read.
 		ar.xcWorkElement.addContent("\n\t");
@@ -391,7 +423,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 	 * @param transformationService 
 	 * @return
 	 */
-	public List<Record> getSplitXCRecordXML(AggregateXCRecord ar, GenericMetadataService transformationService) 
+	public List<Record> getSplitXCRecordXML(AggregateXCRecord ar, Long manifestationId) 
 			throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 
 		List<Document> documents = new ArrayList<Document>();
@@ -406,40 +438,60 @@ public class XCRecordService extends GenericMetadataServiceService {
 
 		/*$$ WORK $$*/
 		// Create original Work Document
-		long workId = getRepositoryDAO().getNextId(); 
+		// BDA - according to Jennifer there could be more than one work per bib
+		Long workId = null;
+		if (ar.getPreviousWorkIds() != null && ar.getPreviousWorkIds().size() > 0) {
+			workId = ar.getPreviousWorkIds().get(0);
+			if (ar.getPreviousWorkIds().size() > 1) {
+				for (int i=1; i<ar.getPreviousWorkIds().size(); i++) {
+					Record work2delete = new Record();
+					work2delete.setId(ar.getPreviousWorkIds().get(i));
+					work2delete.setStatus(Record.DELETED);
+					records.add(work2delete);
+				}
+			}
+		}
+		if (workId == null) {
+			workId = getRepositoryDAO().getNextId();
+		}
 		String workOaiID = getRecordService().getOaiIdentifier(
-				workId, getMetadataService().getService());
-		
-		// Change spaces to underscores
-		Element tempXcWorkElement = (Element)ar.xcWorkElement.clone();
-		tempXcWorkElement.setAttribute(new Attribute("id",workOaiID));
-		ar.xcRootElement.addContent("\n\t")
-					 .addContent(tempXcWorkElement)
-					 .addContent("\n");
-		Document doc = (new Document()).setRootElement((Element)ar.xcRootElement.clone());
-		records.add(createRecord(ar, workId, "XC-Work", doc, null));
-		documents.add(doc);
+				workId, getMetadataService().getService());;
+		ar.xcWorkElement.setAttribute(new Attribute("id",workOaiID));
+		ar.xcRootElement.addContent(ar.xcWorkElement);
+		Element rootElement = (Element)ar.xcRootElement.clone();
+		records.add(createRecord(ar, workId, rootElement, null));
 		ar.xcRootElement.removeContent();
 		
 		/*$$ EXPRESSION $$*/
 		// Create original Expression Document
+		// BDA - according to Jennifer there could be more than one expression per bib
+		Long expressionId = null;
+		if (ar.getPreviousExpressionIds() != null && ar.getPreviousExpressionIds().size() > 0) {
+			expressionId = ar.getPreviousExpressionIds().get(0);
+			if (ar.getPreviousExpressionIds().size() > 1) {
+				for (int i=1; i<ar.getPreviousExpressionIds().size(); i++) {
+					Record expression2delete = new Record();
+					expression2delete.setId(ar.getPreviousExpressionIds().get(i));
+					expression2delete.setStatus(Record.DELETED);
+					records.add(expression2delete);
+				}
+			}
+		}
+		if (expressionId == null) {
+			expressionId = getRepositoryDAO().getNextId();
+		}
 		Element expressionToWorkLinkingElement = new Element("workExpressed", AggregateXCRecord.XC_NAMESPACE);
 		expressionToWorkLinkingElement.setText(workOaiID);
-		Element tempXcExpressionElement = (Element)ar.xcExpressionElement.clone();
-		
-		long expressionId = getRepositoryDAO().getNextId(); 
+		 
 		String expressionOaiID = getRecordService().getOaiIdentifier(
 				expressionId, getMetadataService().getService());
-		tempXcExpressionElement.addContent("\n\t\t").addContent(expressionToWorkLinkingElement.detach());
-		tempXcExpressionElement.setAttribute(new Attribute("id",expressionOaiID));
-		ar.xcRootElement.addContent("\n\t")
-        			 .addContent(tempXcExpressionElement)
-					 .addContent("\n");
-		doc = (new Document()).setRootElement((Element)ar.xcRootElement.clone());
+		ar.xcExpressionElement.addContent(expressionToWorkLinkingElement.detach());
+		ar.xcExpressionElement.setAttribute(new Attribute("id",expressionOaiID));
+		ar.xcRootElement.addContent(ar.xcExpressionElement);
+		rootElement = (Element)ar.xcRootElement.clone();
 		List<String> workElementOaiIDs = new ArrayList<String>();
 		workElementOaiIDs.add(workOaiID);
-		records.add(createRecord(ar, expressionId, "XC-Expression", doc, workElementOaiIDs));
-		documents.add(doc);
+		records.add(createRecord(ar, expressionId, rootElement, workElementOaiIDs));
 		ar.xcRootElement.removeContent();
 		
 		/*$$ LINKED WORK & EXPRESSION $$*/
@@ -567,7 +619,9 @@ public class XCRecordService extends GenericMetadataServiceService {
 		
 		/*$$ MANIFESTATION $$*/
 		// Set the OAI id
-		long manifestationId = getRepositoryDAO().getNextId();
+		if (manifestationId == null) {
+			manifestationId = getRepositoryDAO().getNextId();
+		}
 		String manifestationOaiId = getRecordService().getOaiIdentifier(
 				manifestationId, getMetadataService().getService());
 		ar.xcManifestationElement.setAttribute("id", manifestationOaiId);
@@ -723,17 +777,17 @@ public class XCRecordService extends GenericMetadataServiceService {
 	 * @throws TransformerException
 	 * @throws DatabaseConfigException
 	 */
-	private Record createRecord(AggregateXCRecord ar, Long recordId, String recordType, 
-			Document document, List<String> upLinks) 
+	private Record createRecord(AggregateXCRecord ar, Long recordId, 
+			Element oaiXmlEl, List<String> upLinks) 
 				throws TransformerConfigurationException, TransformerException, DatabaseConfigException {
 
 		Record xcRecord = new Record();
 		xcRecord.setId(recordId);
 		xcRecord.setMode(Record.JDOM_MODE);
-		xcRecord.setOaiXmlEl(document.getRootElement());
+		xcRecord.setOaiXmlEl(oaiXmlEl);
 		xcRecord.setFormat(ar.xcFormat);
-		xcRecord.setType(recordType);
 		
+		// BDA - I don't think these uplinks are actually being used.  I'll leave them for now.
 		if (upLinks != null) {
 			for (String upLink: upLinks) {
 				xcRecord.addUpLink(upLink);

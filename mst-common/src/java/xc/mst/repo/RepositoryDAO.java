@@ -299,6 +299,15 @@ public class RepositoryDAO extends BaseDAO {
 	                } );
 	        TimingLogger.stop("RECORDS_TABLE.insert");
 	        final long endTime = System.currentTimeMillis();
+        	
+	        final List<Record> recordXmls2Add = new ArrayList<Record>();
+        	for (Record r : recordsToAdd) {
+        		r.setMode(Record.STRING_MODE);
+        		if (!Record.UNCHANGED.equals(r.getOaiXml())) {
+            		recordXmls2Add.add(r);
+            	}
+        	}
+        	
 	        TimingLogger.start("RECORDS_XML_TABLE.insert");
 			sql = 
     			"insert into "+getTableName(name, RECORDS_XML_TABLE)+
@@ -312,7 +321,7 @@ public class RepositoryDAO extends BaseDAO {
 	                new BatchPreparedStatementSetter() {
 	                    public void setValues(PreparedStatement ps, int j) throws SQLException {
 	                    	int i=1;
-	                    	Record r = recordsToAdd.get(j);
+	                    	Record r = recordXmls2Add.get(j);
 	                    	r.setMode(Record.STRING_MODE);
 	                        ps.setLong(i++, r.getId());
 	                        ps.setString(i++, r.getOaiXml());
@@ -322,14 +331,28 @@ public class RepositoryDAO extends BaseDAO {
 	                        } else {
 	                        	TimingLogger.add("RECORDS_XML_LENGTH", 0);
 	                        }
-	                        
 	                    }
 
 	                    public int getBatchSize() {
-	                        return recordsToAdd.size();
+	                        return recordXmls2Add.size();
 	                    }
 	                } );
 	        TimingLogger.stop("RECORDS_XML_TABLE.insert");
+	        /*
+	        TimingLogger.start("RECORDS_XML_TABLE.fs_insert");
+	        try {
+		        OutputStream os = new BufferedOutputStream(new FileOutputStream(
+		        		MSTConfiguration.getUrlPath()+"/records/"+recordsToAdd.get(0).getId()+".xml"));
+		        for (Record r : recordsToAdd) {
+		        	r.setMode(Record.STRING_MODE);
+		        	os.write(r.getOaiXml().getBytes("UTF-8"));
+		        }
+		        os.close();
+	        } catch (Throwable t) {
+	        	LOG.error("", t);
+	        }
+	        TimingLogger.stop("RECORDS_XML_TABLE.fs_insert");
+	        */
 	        TimingLogger.start("RECORDS_SETS_TABLE.insert");
 			sql = 
     			"insert ignore into "+getTableName(name, RECORDS_SETS_TABLE)+

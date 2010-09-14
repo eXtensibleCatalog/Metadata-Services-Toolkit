@@ -38,6 +38,7 @@ public class Record implements InputRecord, OutputRecord {
 	
 	public static final String STRING_MODE = "Record.STRING_MODE";
 	public static final String JDOM_MODE = "Record.JDOM_MODE";
+	public static final String UNCHANGED = "Record.UNCHANGED";
 	
 	public static final char ACTIVE = 'A';
 	public static final char HELD = 'H';
@@ -61,19 +62,6 @@ public class Record implements InputRecord, OutputRecord {
 	protected long id = -1;
 	
 	protected List<InputRecord> predecessors = new ArrayList<InputRecord>();
-
-	/**
-	 * The record's type
-	 */
-	protected String type = null;
-	
-	/**
-	 * This is not used by the Record class, but classes extending it
-	 * which represent the individual FRBR levels can use this to
-	 * indicate the ID assigned by the aggregation service for that
-	 * particular element.
-	 */
-	protected long frbrLevelId = -1;
 
 	/**
 	 * The time when the record was created
@@ -296,26 +284,6 @@ public class Record implements InputRecord, OutputRecord {
 	{
 		this.id = id;
 	} // end method setRecordId(long)
-
-	/**
-	 * Gets the ID assigned by the aggregation service for the FRBR level element
-	 *
-	 * @return The ID assigned by the aggregation service for the FRBR level element
-	 */
-	public long getFrbrLevelId()
-	{
-		return frbrLevelId;
-	} // end method getFrbrLevelId()
-
-	/**
-	 * Sets the ID assigned by the aggregation service for the FRBR level element
-	 *
-	 * @param frbrLevelId The new ID assigned by the aggregation service for the FRBR level element
-	 */
-	public void setFrbrLevelId(long frbrLevelId)
-	{
-		this.frbrLevelId = frbrLevelId;
-	} // end method setFrbrLevelId(long)
 
 	/**
 	 * Gets the time when the record was created
@@ -938,7 +906,6 @@ public class Record implements InputRecord, OutputRecord {
 		}
 		buffer.append(" updatedAt=" + updatedAt);
 		buffer.append(" sets=" + sets);
-		buffer.append(" frbrLevelId=" + frbrLevelId);
 		if (harvest != null) 
 		{
 			buffer.append(" ScheduleId=" + harvest.getHarvestSchedule().getId());
@@ -1014,14 +981,6 @@ public class Record implements InputRecord, OutputRecord {
 	
 	public List<InputRecord> getPredecessors() {
 		return predecessors;
-	}
-	
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 	
 	public static void setIndexedObjectType(String indexedObjectType) {

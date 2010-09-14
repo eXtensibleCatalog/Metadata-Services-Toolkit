@@ -9,6 +9,7 @@
  
 package xc.mst.services.transformation;
 
+import gnu.trove.TLongArrayList;
 import gnu.trove.TLongLongHashMap;
 
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.services.transformation.bo.AggregateXCRecord;
 import xc.mst.services.transformation.bo.MarcXmlRecord;
-import xc.mst.services.transformation.service.XCRecordService;
 import xc.mst.utils.XmlHelper;
 
 /**
@@ -46,74 +46,6 @@ public class TransformationService extends SolrTransformationService {
 
 	protected XmlHelper xmlHelper = new XmlHelper();
 	
-	protected XCRecordService XCRecordService = null;
-	
-	public XCRecordService getXCRecordService() {
-		return XCRecordService;
-	}
-
-	public void setXCRecordService(XCRecordService xCRecordService) {
-		XCRecordService = xCRecordService;
-	}
-
-	/**
-	 * A map containing values for $4 subfields which we should treat as
-	 * roles and the rdarole they represent.
-	 */
-	protected HashMap<String, String> roles = new HashMap<String, String>();
-	
-	/**
-	 * This is used to ensure that subfields from the same source get mapped to the same FRBR Work element
-	 */
-	protected int artificialLinkingId = 0;
-
-	// The following HashSets are used to prevent duplicate values from being added to the XC record
-
-	protected HashMap<String, Element> linkedCreatorFields = new HashMap<String, Element>();
-	
-	/**
-	 * Org code used 
-	 */
-	protected String orgCode = "";
-	
-	/**
-	 * Construct a TransformationService Object
-	 */
-	public void init()
-	{
-		// Initialize the list of roles
-		roles.put("aut", "author");
-		roles.put("lbt", "author");
-		roles.put("lyr", "author");
-		roles.put("cmp", "composer");
-		roles.put("com", "compiler");
-		roles.put("art", "artist");
-		roles.put("ths", "thesisAdvisor");
-		roles.put("drt", "director");
-		roles.put("edt", "editor");
-		roles.put("ill", "illustrator");
-		roles.put("prf", "performer");
-		roles.put("act", "performer");
-		roles.put("dnc", "performer");
-		roles.put("nrt", "performer");
-		roles.put("voc", "performer");
-		roles.put("itr", "performer");
-		roles.put("cnd", "performer");
-		roles.put("mod", "performer");
-		roles.put("pro", "producer");
-		roles.put("trl", "translator");
-	}
-	
-	@Override
-	protected void endBatch() {
-		try {
-			//TODO - create links
-		} catch (Throwable t) {
-			getUtil().throwIt(t);
-		}
-		super.endBatch();
-	}
-	
 	//TODO - these datastructures need to be read in and they need to be persisted.
 	// which begs the question about the lack of transactions... I need a way to 
 	// rollback if something bad happens.  Probably the easiest thing to do is just to delete
@@ -123,6 +55,20 @@ public class TransformationService extends SolrTransformationService {
 	
 	protected TLongLongHashMap bibsYet2ArriveLongId = new TLongLongHashMap();
 	protected Map<String, Long> bibsYet2ArriveStringId = new HashMap<String, Long>();
+	
+	// Struggled to come up with a good name here.  manifestations are not held,
+	// but holdings pointing to them are.  The point of this is to switch the status
+	// on holdings records from H to A.  Instead of keeping all the previously held
+	// holdings ids (that are no active) in memory, it'll be easier to keep the 
+	// manifestation id that was being waited on (but finally came through) since
+	// I already have it.
+	protected TLongArrayList manifestionIdsPreviouslyHeld = new TLongArrayList();
+	
+	@Override
+	public void init() {
+		super.init();
+		//TODO load all data structures
+	}
 	
 	protected Long getLongFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s) {
 		try {
@@ -176,86 +122,380 @@ public class TransformationService extends SolrTransformationService {
 	}
 	
 	@Override
-	public List<OutputRecord> process(InputRecord record) {
-		
-		List<OutputRecord> results = new ArrayList<OutputRecord>();
-		
-		boolean isBib = false;
-		boolean isHolding = false;
-
-
-		// This will populate the ar record with W(*) E(*) M(?) H(*)
-		// It will also be populate the previously*Ids
-		// All of the logic for transforming records is done in this method.
-		AggregateXCRecord ar = getXCRecordService.parse(record);
-		
-		// This logic should be moved into the above parse method.
-		record.setMode(Record.JDOM_MODE);
-		Element marcXml = record.getOaiXmlEl();
-
-		// Create a MarcXmlRecord for the record
-		MarcXmlRecord originalRecord = new MarcXmlRecord(marcXml);
-		char leader06 = originalRecord.getLeader().charAt(6);
-		if("abcdefghijkmnoprt".contains(""+leader06)) {
-			isBib = true;
-		} else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
-			isHolding = true;
-		} else { // If leader 6th character is invalid, then log error and do not process that record.
-			logError("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
-			return results;
+	protected void endBatch() {
+		try {
+			// persist 4 001->recordId maps
+			
+			// persist links
+			
+			// flip holdings records from H to A based on manifestionIdsPreviouslyHeld
+			//   (use the links table)  
+			
+			manifestionIdsPreviouslyHeld.clear();
+		} catch (Throwable t) {
+			getUtil().throwIt(t);
 		}
-		
-		if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
-			// if delete
-			// else update
-		} else {
-			// if delete - do nothing
-			if (isBib) {
-				Long bibOutputId = getManifestationId4BibYet2Arrive(originalRecord.getControlField("001"));
-				if (bibOutputId != null) {
-					//output xc-manifestation with set aside bib_record_id
-					//move bibsYetToArrive entry to bibsProcessed
-					//mark held holdings as active
-				} else {
-					//output xc-manifestation with new record_id
-					//create new entry in bibsProcessed
-				}
-			} else if (isHolding) {
-				// BDA - can't there be more than one manifestionId per holding?
-				//       This is the way it was, so I'm not going to change it now, but at some point
-				//       this should be addressed.
-				Long manifestationId = getManifestationId4BibProcessed(originalRecord.getControlField("004"));
-				if (manifestationId != null) {
-					//no map manipulation
-					//output xc-holding with status A
-				} else {
-					manifestationId = getManifestationId4BibYet2Arrive(originalRecord.getControlField("004"));
-					if (manifestationId != null) {
-						//use the record_id for linking
-						//output xc-holding as held
-					} else {
-						//generate a new oai-id for the bibYetToArrive
-						//add an entry to bibsYetToArrive
+		super.endBatch();
+	}
+	
+	@Override
+	public List<OutputRecord> process(InputRecord record) {
+		try {			
+			List<OutputRecord> results = new ArrayList<OutputRecord>();
+
+			if (Record.DELETED == record.getStatus()) {
+				if (record.getSuccessors() != null) {
+					Long manifestationId = null; 
+					for (OutputRecord or : record.getSuccessors()) {
+						or.setStatus(Record.DELETED);
+						results.add(or);
+						Record r = getRepository().getRecord(or.getId());
+						if (AggregateXCRecord.MANIFESTATION.equals(getXCRecordService().getType(r))) {
+							manifestationId = or.getId();
+						}
 					}
-					//output xc-holding with status H
+					if (manifestationId != null) {
+						List<Long> holdingIds = getTransformationDAO().getLinkedRecordIds(manifestationId);
+						if (holdingIds != null) {
+							for (Long holdingId : holdingIds) {
+								Record deletedHolding = new Record();
+								deletedHolding.setId(holdingId);
+								results.add(deletedHolding);
+							}
+						}
+					}
 				}
+			} else {
+				record.setMode(Record.JDOM_MODE);
+				Element marcXml = record.getOaiXmlEl();
+
+				MarcXmlRecord originalRecord = new MarcXmlRecord(marcXml);
+				
+				// Get the ORG code from the 035 field
+				orgCode = originalRecord.getOrgCode();
+				if (orgCode.equals("")) {
+					// Add error
+					//record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
+				}
+				
+				boolean hasBib = false;
+				boolean hasHolding = false;
+				
+				char leader06 = originalRecord.getLeader().charAt(6);
+				if("abcdefghijkmnoprt".contains(""+leader06)) {
+					hasBib = true;
+				} else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
+					hasHolding = true;
+				} else { // If leader 6th character is invalid, then log error and do not process that record.
+					logError("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
+					return results;
+				}
+				
+				AggregateXCRecord ar = new AggregateXCRecord();
+				if (hasBib) {
+					processBibliographicRecord(ar, originalRecord);
+				}
+				// not sure if this should be an else if
+				if (hasHolding) {
+					processHoldingRecord(ar, originalRecord);
+				}
+				
+				if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
+					for (OutputRecord or : record.getSuccessors()) {
+						Record succ = getRepository().getRecord(or.getId());
+						String type = getXCRecordService().getType(succ);
+						if (AggregateXCRecord.HOLDINGS.equals(type)) {
+							ar.getPreviousHoldingIds().add(or.getId());
+						} else if (AggregateXCRecord.MANIFESTATION.equals(type)) {
+							ar.setPreviousManifestationId(or.getId());
+						} else if (AggregateXCRecord.EXPRESSION.equals(type)) {
+							ar.getPreviousExpressionIds().add(or.getId());
+						} else if (AggregateXCRecord.WORK.equals(type)) {
+							ar.getPreviousWorkIds().add(or.getId());
+						} else {
+							throw new RuntimeException("bogus");
+						}
+					}
+				}
+				if (hasBib) {
+					String bib001 = originalRecord.getControlField("001");
+					Long manifestationId = getManifestationId4BibYet2Arrive(bib001);
+					if (manifestationId != null) {
+						removeManifestationId4BibYet2Arrive(bib001);
+						manifestionIdsPreviouslyHeld.add(manifestationId);
+						//mark held holdings as active
+					} else {
+						if (ar.getPreviousManifestationId() != null) {
+							manifestationId = getRepositoryDAO().getNextId();	
+						} else {
+							manifestationId = ar.getPreviousManifestationId();
+						}
+					}
+					addManifestationId4BibProcessed(bib001, manifestationId);
+					List<Record> bibRecords = getBibliographicRecords(ar, manifestationId);
+					if (bibRecords != null) {
+						results.add(bibRecords);
+					}
+				} if (hasHolding) {
+					String holding004 = originalRecord.getControlField("004");
+					Long manifestationId = getManifestationId4BibProcessed(holding004);
+					char status = 0;
+					if (manifestationId != null) {
+						status = Record.ACTIVE;
+					} else {
+						manifestationId = getManifestationId4BibYet2Arrive(holding004);
+						status = Record.HELD;
+						if (manifestationId == null) {
+							manifestationId = getRepositoryDAO().getNextId();
+							addManifestationId4BibYet2Arrive(holding004, manifestationId);
+						}
+					}
+					List<Record> holdingsRecords = getHoldingsRecords(ar, status);
+					if (holdingsRecords != null) {
+						results.add(holdingsRecords);
+					}
+				}
+				//update service accordingly w/ new record counts
+			}
+			return results;
+		} catch (Throwable t) {
+			LOG.error("", t);
+		}
+		return null;
+	}
+	
+	/*
+	 * Process bibliographic record
+	 */
+	protected void processBibliographicRecord(
+			AggregateXCRecord transformedRecord, MarcXmlRecord originalRecord) 
+				throws DataException, DatabaseConfigException, TransformerConfigurationException, 
+					IndexException, TransformerException{
+		
+		// Run the transformation steps
+		// Each one processes a different MARC XML field and adds the appropriate
+		// XC fields to transformedRecord based on the field it processes.
+		transformedRecord = process010(originalRecord, transformedRecord);
+		
+		transformedRecord = process015(originalRecord, transformedRecord);
+		
+		transformedRecord = process016(originalRecord, transformedRecord);
+		
+		transformedRecord = process022(originalRecord, transformedRecord);
+		
+		transformedRecord = process024(originalRecord, transformedRecord);
+		
+		transformedRecord = process028(originalRecord, transformedRecord);
+		
+		transformedRecord = process030(originalRecord, transformedRecord);
+		
+		transformedRecord = process035(originalRecord, transformedRecord);
+		
+		transformedRecord = process037(originalRecord, transformedRecord);
+		
+		transformedRecord = process050(originalRecord, transformedRecord);
+		
+		transformedRecord = process055(originalRecord, transformedRecord);
+		
+		transformedRecord = process060(originalRecord, transformedRecord);
+		
+		transformedRecord = process074(originalRecord, transformedRecord);
+		
+		transformedRecord = process082(originalRecord, transformedRecord);
+		transformedRecord = process084(originalRecord, transformedRecord);
+		
+		transformedRecord = process086(originalRecord, transformedRecord);
+		
+		transformedRecord = process090(originalRecord, transformedRecord);
+		
+		transformedRecord = process092(originalRecord, transformedRecord);
+		
+		transformedRecord = process100(originalRecord, transformedRecord);
+		
+		transformedRecord = process110(originalRecord, transformedRecord);
+		
+		transformedRecord = process111(originalRecord, transformedRecord);
+		
+		transformedRecord = process130(originalRecord, transformedRecord);
+		
+		transformedRecord = process210(originalRecord, transformedRecord);
+		
+		transformedRecord = process222(originalRecord, transformedRecord);
+		
+		transformedRecord = process240(originalRecord, transformedRecord);
+		
+		transformedRecord = process243(originalRecord, transformedRecord);
+		
+		transformedRecord = process245(originalRecord, transformedRecord);
+		
+		transformedRecord = process246(originalRecord, transformedRecord);
+		
+		transformedRecord = process247(originalRecord, transformedRecord);
+		
+		transformedRecord = process250(originalRecord, transformedRecord);
+		
+		transformedRecord = process254(originalRecord, transformedRecord);
+		
+		transformedRecord = process255(originalRecord, transformedRecord);
+		
+		transformedRecord = process260(originalRecord, transformedRecord);
+		
+		transformedRecord = process300(originalRecord, transformedRecord);
+		
+		transformedRecord = process310(originalRecord, transformedRecord);
+		
+		transformedRecord = process321(originalRecord, transformedRecord);
+		
+		transformedRecord = process362(originalRecord, transformedRecord);
+		
+		transformedRecord = process440(originalRecord, transformedRecord);
+		
+		transformedRecord = process490(originalRecord, transformedRecord);
+		
+		transformedRecord = process500(originalRecord, transformedRecord);
+		
+		transformedRecord = process501(originalRecord, transformedRecord);
+		
+		transformedRecord = process502(originalRecord, transformedRecord);
+		
+		transformedRecord = process504(originalRecord, transformedRecord);
+		transformedRecord = process505(originalRecord, transformedRecord);
+		transformedRecord = process506(originalRecord, transformedRecord);
+		transformedRecord = process507(originalRecord, transformedRecord);
+		transformedRecord = process508(originalRecord, transformedRecord);
+		transformedRecord = process510(originalRecord, transformedRecord);
+		transformedRecord = process511(originalRecord, transformedRecord);
+		transformedRecord = process513(originalRecord, transformedRecord);
+		transformedRecord = process515(originalRecord, transformedRecord);
+		transformedRecord = process518(originalRecord, transformedRecord);
+		transformedRecord = process520(originalRecord, transformedRecord);
+		transformedRecord = process521(originalRecord, transformedRecord);
+		transformedRecord = process522(originalRecord, transformedRecord);
+		transformedRecord = process525(originalRecord, transformedRecord);
+		transformedRecord = process530(originalRecord, transformedRecord);
+		transformedRecord = process533(originalRecord, transformedRecord);
+		transformedRecord = process534(originalRecord, transformedRecord);
+		transformedRecord = process538(originalRecord, transformedRecord);
+		transformedRecord = process540(originalRecord, transformedRecord);
+		transformedRecord = process544(originalRecord, transformedRecord);
+		transformedRecord = process546(originalRecord, transformedRecord);
+		transformedRecord = process547(originalRecord, transformedRecord);
+		transformedRecord = process550(originalRecord, transformedRecord);
+		transformedRecord = process555(originalRecord, transformedRecord);
+		transformedRecord = process580(originalRecord, transformedRecord);
+		transformedRecord = process586(originalRecord, transformedRecord);
+		transformedRecord = process59X(originalRecord, transformedRecord);
+		transformedRecord = process600(originalRecord, transformedRecord);
+		transformedRecord = process610(originalRecord, transformedRecord);
+		transformedRecord = process611(originalRecord, transformedRecord);
+		transformedRecord = process630(originalRecord, transformedRecord);
+		transformedRecord = process648(originalRecord, transformedRecord);
+		transformedRecord = process650(originalRecord, transformedRecord);
+		transformedRecord = process651(originalRecord, transformedRecord);
+		transformedRecord = process653(originalRecord, transformedRecord);
+		transformedRecord = process654(originalRecord, transformedRecord);
+		transformedRecord = process655(originalRecord, transformedRecord);
+		transformedRecord = process720(originalRecord, transformedRecord);
+		transformedRecord = process740(originalRecord, transformedRecord);
+		transformedRecord = process752(originalRecord, transformedRecord);
+		transformedRecord = process760(originalRecord, transformedRecord);
+		transformedRecord = process765(originalRecord, transformedRecord);
+		transformedRecord = process770(originalRecord, transformedRecord);
+		transformedRecord = process772(originalRecord, transformedRecord);
+		transformedRecord = process773(originalRecord, transformedRecord);
+		transformedRecord = process775(originalRecord, transformedRecord);
+		transformedRecord = process776(originalRecord, transformedRecord);
+		transformedRecord = process777(originalRecord, transformedRecord);
+		transformedRecord = process780(originalRecord, transformedRecord);
+		transformedRecord = process785(originalRecord, transformedRecord);
+		transformedRecord = process786(originalRecord, transformedRecord);
+		transformedRecord = process787(originalRecord, transformedRecord);
+		transformedRecord = process800(originalRecord, transformedRecord);
+		transformedRecord = process810(originalRecord, transformedRecord);
+		transformedRecord = process811(originalRecord, transformedRecord);
+		transformedRecord = process830(originalRecord, transformedRecord);
+		transformedRecord = process852(originalRecord, transformedRecord);
+		transformedRecord = process856(originalRecord, transformedRecord);
+		transformedRecord = process866(originalRecord, transformedRecord);
+		transformedRecord = process867(originalRecord, transformedRecord);
+		transformedRecord = process868(originalRecord, transformedRecord);
+		transformedRecord = process931(originalRecord, transformedRecord);
+		transformedRecord = process932(originalRecord, transformedRecord);
+		transformedRecord = process933(originalRecord, transformedRecord);
+		transformedRecord = process934(originalRecord, transformedRecord);
+		transformedRecord = process935(originalRecord, transformedRecord);
+		transformedRecord = process937(originalRecord, transformedRecord);
+		transformedRecord = process939(originalRecord, transformedRecord);
+		transformedRecord = process943(originalRecord, transformedRecord);
+		transformedRecord = process945(originalRecord, transformedRecord);
+		transformedRecord = process947(originalRecord, transformedRecord);
+		transformedRecord = process959(originalRecord, transformedRecord);
+		transformedRecord = process963(originalRecord, transformedRecord);
+		transformedRecord = process965(originalRecord, transformedRecord);
+		transformedRecord = process967(originalRecord, transformedRecord);
+		transformedRecord = process969(originalRecord, transformedRecord);
+		transformedRecord = process700(originalRecord, transformedRecord);
+		transformedRecord = process710(originalRecord, transformedRecord);
+		transformedRecord = process711(originalRecord, transformedRecord);
+		transformedRecord = process730(originalRecord, transformedRecord);
+	
+	}
+	
+	
+	/*
+	 * Process bibliographic record
+	 */
+	protected List<OutputRecord> getBibliographicRecords(AggregateXCRecord ar, long manifestationRecordId) 
+			throws DataException, DatabaseConfigException, TransformerConfigurationException, IndexException, TransformerException{
+
+		// A list of records resulting from processing the incoming record
+		List<OutputRecord> results = new ArrayList<OutputRecord>();
+
+		// Get the XC records created as output
+		results = getXCRecordService().getSplitXCRecordXML(ar, manifestationRecordId);
+		
+		Record manifestationRecord = null;
+		// Store the bib oai id, bib 001 field and its manifestation in database
+		for (Record outputRecord:results) {
+
+			if (outputRecord.getType().equals("XC-Manifestation")) {
+				manifestationRecord = outputRecord;
+				
+				BibliographicManifestationMapping bibliographicManifestationMapping 
+					= new BibliographicManifestationMapping(record.getOaiIdentifier(), outputRecord.getOaiIdentifier(), originalRecord.getControlField("001"));
+				bibliographicManifestationMappingDAO.insert(bibliographicManifestationMapping);
+				break;
 			}
 		}
-		//update service accordingly w/ new record counts
+		
+		// Check for any held record
+		heldHoldingRecords = heldHoldingRecordDAO.getByHolding004Field(originalRecord.getControlField("001"));
+		
+		// Get already processed holding record that has matching 004 field
+		List<XCHoldingRecord> xcHoldingRecords = xcHoldingDAO.getByHolding004Field(originalRecord.getControlField("001"));
+		
+		// link the manifestation for already processed xc holding records
+		linkManifestation(xcHoldingRecords, manifestationRecord.getOaiIdentifier());
+		
+		// If the input record is a new record then increment the processed record count
+		if (!updatedInputRecord  && results.size() > 0) {
+			inputRecordCount++;
+		}
+		
 		return results;
+	
 	}
+	
 	
 	/*
 	 * Process holding record 
 	 */
-	protected List<Record> processHoldingRecord(
-			Record record, MarcXmlRecord originalRecord, long manifestationId) 
+	protected void processHoldingRecord(
+			AggregateXCRecord transformedRecord,
+			MarcXmlRecord originalRecord) 
 				throws  DatabaseConfigException, TransformerConfigurationException, 
 					IndexException, TransformerException, DataException {
 
-		// Create an XCRecord Object to hold the transformed record
-		AggregateXCRecord transformedRecord = new AggregateXCRecord();
-		
 		// Run the transformation steps
 		// Each one processes a different MARC XML field and adds the appropriate
 		// XC fields to transformedRecord based on the field it processes.
@@ -269,16 +509,23 @@ public class TransformationService extends SolrTransformationService {
 		/* holdingsProcess843 is commented for now. This will be implemented later.
 		transformedRecord = holdingsProcess843(originalRecord, transformedRecord);
 		*/
-		
-		// Get the XC records created as output & Link Holding to manifestation
-		List<Record> results = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
-				transformedRecord, manifestationId);
-		
-		// If the input record is a new record then increment the processed record count
-		if (true  && results.size() > 0) {
-			inputRecordCount++;
+	}
+	
+	protected List<Record> getHoldingRecords(AggregateXCRecord ar, long manifestationId) {
+		try {
+			// Get the XC records created as output & Link Holding to manifestation
+			List<Record> results = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
+					ar, manifestationId);
+			
+			// If the input record is a new record then increment the processed record count
+			if (true  && results.size() > 0) {
+				inputRecordCount++;
+			}
+			
+			return results;
+		} catch (Throwable t) {
+			LOG.error("", t);
 		}
-		
-		return results;
+		return null;
 	}
 }

@@ -81,6 +81,12 @@ public class AggregateXCRecord
 	 * The namespace for RDA Roles
 	 */
 	public static final Namespace RDAROLE_NAMESPACE = Namespace.getNamespace("rdarole", "http://rdvocab.info/roles");
+	
+	public static final String HOLDINGS = "holdings";
+	public static final String WORK = "work";
+	public static final String EXPRESSION = "expression";
+	public static final String MANIFESTATION = "manifestation";
+	public static final String ITEM = "item";
 
 	// BDA 2010-09-10- I'm making some of these instance variables public because I moved a bunch of logic
 	// to XCRecordService and it's either make these public or create a bunch of getters and setters.  Perhaps
@@ -88,22 +94,22 @@ public class AggregateXCRecord
 	/**
 	 * The element for the work FRBR level
 	 */
-	public Element xcWorkElement = (new Element("entity", XC_NAMESPACE)).setAttribute("type", "work");
+	public Element xcWorkElement = (new Element("entity", XC_NAMESPACE)).setAttribute("type", WORK);
 
 	/**
 	 * The element for the expression FRBR level
 	 */
-	public Element xcExpressionElement = (new Element("entity", XC_NAMESPACE)).setAttribute("type", "expression");
+	public Element xcExpressionElement = (new Element("entity", XC_NAMESPACE)).setAttribute("type", EXPRESSION);
 
 	/**
 	 * The element for the manifestation FRBR level
 	 */
-	public Element xcManifestationElement = (new Element("entity", XC_NAMESPACE)).setAttribute("type", "manifestation");
+	public Element xcManifestationElement = (new Element("entity", XC_NAMESPACE)).setAttribute("type", MANIFESTATION);
 
 	/**
 	 * The element for the item FRBR level
 	 */
-	public Element xcItemElement = (new Element("entity", XC_NAMESPACE)).setAttribute("type", "item");
+	public Element xcItemElement = (new Element("entity", XC_NAMESPACE)).setAttribute("type", ITEM);
 
 	/**
 	 * An XC record can contain extra work elements describing works within the manifestation (such as the tracks on a CD.)
@@ -175,6 +181,38 @@ public class AggregateXCRecord
 		}
 
 		return xcRecordId;
+	}
+	
+	public List<Long> getPreviousWorkIds() {
+		return previousWorkIds;
+	}
+
+	public void setPreviousWorkIds(List<Long> previousWorkIds) {
+		this.previousWorkIds = previousWorkIds;
+	}
+
+	public List<Long> getPreviousExpressionIds() {
+		return previousExpressionIds;
+	}
+
+	public void setPreviousExpressionIds(List<Long> previousExpressionIds) {
+		this.previousExpressionIds = previousExpressionIds;
+	}
+
+	public Long getPreviousManifestationId() {
+		return previousManifestationId;
+	}
+
+	public void setPreviousManifestationId(Long previousManifestationId) {
+		this.previousManifestationId = previousManifestationId;
+	}
+
+	public List<Long> getPreviousHoldingIds() {
+		return previousHoldingIds;
+	}
+
+	public void setPreviousHoldingIds(List<Long> previousHoldingIds) {
+		this.previousHoldingIds = previousHoldingIds;
 	}
 
 	/**

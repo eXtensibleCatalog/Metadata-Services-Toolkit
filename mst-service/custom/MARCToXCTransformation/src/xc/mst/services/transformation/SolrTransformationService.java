@@ -9,53 +9,24 @@
  
 package xc.mst.services.transformation;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-
 import org.apache.log4j.Logger;
 import org.jdom.Attribute;
-import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.Namespace;
-import org.jdom.input.SAXBuilder;
-import org.jdom.transform.JDOMSource;
-import org.jdom.xpath.XPath;
-import org.xml.sax.InputSource;
 
-import xc.mst.bo.provider.Set;
-import xc.mst.bo.record.InputRecord;
-import xc.mst.bo.record.OutputRecord;
-import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
-import xc.mst.dao.DataException;
-import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.IndexException;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.services.impl.GenericMetadataService;
 import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
-import xc.mst.services.transformation.bo.BibliographicManifestationMapping;
-import xc.mst.services.transformation.bo.HeldHoldingRecord;
-import xc.mst.services.transformation.bo.MarcXmlRecord;
-import xc.mst.services.transformation.bo.XCHoldingRecord;
 import xc.mst.services.transformation.bo.AggregateXCRecord;
-import xc.mst.services.transformation.dao.BibliographicManifestationMappingDAO;
-import xc.mst.services.transformation.dao.HeldHoldingRecordDAO;
-import xc.mst.services.transformation.dao.XCHoldingDAO;
-import xc.mst.utils.TimingLogger;
+import xc.mst.services.transformation.bo.MarcXmlRecord;
+import xc.mst.services.transformation.dao.TransformationDAO;
+import xc.mst.services.transformation.service.XCRecordService;
 import xc.mst.utils.XmlHelper;
 
 /**
@@ -64,10 +35,25 @@ import xc.mst.utils.XmlHelper;
  *
  * @author Eric Osisek
  */
-public class SolrTransformationService extends GenericMetadataService
-{
+public abstract class SolrTransformationService extends GenericMetadataService {
 
 	protected final static Logger LOG = Logger.getLogger(SolrTransformationService.class);
+
+	protected Namespace marcNamespace = Namespace.getNamespace("marc", "http://www.loc.gov/MARC21/slim");
+	
+	protected XCRecordService XCRecordService = null;
+	
+	public XCRecordService getXCRecordService() {
+		return XCRecordService;
+	}
+
+	public void setXCRecordService(XCRecordService xCRecordService) {
+		XCRecordService = xCRecordService;
+	}
+	
+	public TransformationDAO getTransformationDAO() {
+		return getXCRecordService().getTransformationDAO();
+	}
 
 	protected XmlHelper xmlHelper = new XmlHelper();
 	
@@ -119,824 +105,6 @@ public class SolrTransformationService extends GenericMetadataService
 		roles.put("mod", "performer");
 		roles.put("pro", "producer");
 		roles.put("trl", "translator");
-	}
-	
-	@Override
-	public List<OutputRecord> process(InputRecord processMe) {
-		List<OutputRecord> records = new ArrayList<OutputRecord>();
-
-		TimingLogger.start("processRecord");
-
-		// Get the results of processing the record
-		List<Record> results = convertRecord(processMe);
-		
-		// If results is not null, then record is processed. If results is null, then the record is held 
-		if (results != null) {
-			TimingLogger.add("outgoingRecords", results.size());
-			for(Record outgoingRecord : results)
-			{
-				// Mark the output record as a successor of the input record
-				if(!processMe.getSuccessors().contains(outgoingRecord))
-					processMe.addSuccessor(outgoingRecord);
-	
-				// Mark the input record as a predecessor of the output record
-				outgoingRecord.addProcessedFrom(processMe);
-				
-				// Mark the record as not coming from a provider
-				outgoingRecord.setProvider(null);
-	
-				// Add all sets the outgoing record belongs to to the service's list of output sets
-				for(Set outputSet : outgoingRecord.getSets())
-					service.addOutputSet(outputSet);
-	
-				if(outputSet != null){
-					outgoingRecord.addSet(outputSet);
-				}
-	
-				insertNewRecord(outgoingRecord);
-				
-				if (outgoingRecord.getType().equalsIgnoreCase("XC-Holding")) {
-					// Place all holding records in HashMap, so that they can be retrieved to link manifestation
-					holdingRecords.put(outgoingRecord.getOaiIdentifier(), outgoingRecord);
-				}
-			} // end loop over processed records
-		
-
-			// Mark the input record as done(processed by this service) only when its results are not empty.
-			// If results are empty then it means some exception occurred and no output records created
-			if (results.size() > 0) { 
-				// Mark the record as having been processed by this service
-				processMe.addProcessedByService(service);
-				processMe.removeInputForService(service);
-				getRecordService().update(processMe);
-			} else if (!processMe.getDeleted()) {
-				unprocessedErrorRecordIdentifiers.add(processMe.getOaiIdentifier());
-			}
-			
-		} else { // If results = null then it means the record is held.
-			// Mark the record as having been processed by this service
-			processMe.addProcessedByService(service);
-			processMe.removeInputForService(service);
-			getRecordService().update(processMe);
-			TimingLogger.add("outgoingRecords", 0);
-		}
-
-		// Increase processed count
-		if (!processingHeldRecords) {
-			processedRecordCount++;
-		}
-		
-		// If there are held holding records that are linked to this bib record, then process them.
-		if (!processingHeldRecords && heldHoldingRecords != null && heldHoldingRecords.size() > 0) {
-			processHeldRecord();
-		}
-		TimingLogger.stop("processRecord");
-	}
-	
-	/*
-	 * Process the held Holding record
-	 */
-	protected void processHeldRecord() {
-		
-		processingHeldRecords = true;
-		try {
-			
-			for (HeldHoldingRecord heldHoldingRecord: heldHoldingRecords) {
-				Record heldRecord = getRecordService().getByOaiIdentifier(heldHoldingRecord.getHoldingRecordOAIID());
-
-				// delete held record from table
-				heldHoldingRecordDAO.delete(heldHoldingRecord);
-				processRecord(heldRecord);
-			}
-			heldHoldingRecords.clear();
-			
-			processingHeldRecords =  false;
-		}  catch(DataException de) {
-			LOG.error("Exception occured while processing held holding records", de);
-		} catch(IndexException ie) {
-			LOG.error("Exception occured while processing held holding records", ie);
-		} catch(Exception e) {
-			LOG.error("Exception occured while processing held holding records", e);
-		} 
-	}
-	
-	protected List<OutputRecord> convertRecord(InputRecord record) {
-		
-		if(LOG.isDebugEnabled())
-			LOG.debug("Transforming record with ID " + record.getId() + ".");
-		
-		// A list of records resulting from processing the incoming record
-		List<OutputRecord> results = new ArrayList<OutputRecord>();
-
-		try {
-			// The XML before transforming the record
-			record.setMode(Record.JDOM_MODE);
-			Element marcXml = record.getOaiXmlEl();
-
-			// Create a MarcXmlRecord for the record
-			MarcXmlRecord originalRecord = new MarcXmlRecord(marcXml);
-
-			// Get the ORG code from the 035 field
-			orgCode = originalRecord.getOrgCode();
-			if (orgCode.equals("")) {
-				// Add error
-				//TODO message
-				//record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
-			}
-			
-			
-			// Get the Leader 06.  This will allow us to determine the record's type
-			// (bib or holding) and we'll process it appropriately
-			char leader06 = originalRecord.getLeader().charAt(6);
-			
-			// If the record is a bib record according to the leader06
-			if("abcdefghijkmnoprt".contains(""+leader06))
-			{
-				results = processBibliographicRecord(record, originalRecord);
-			}
-			// If the record is a holdings record according to the leader06
-			else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y')
-			{
-				results = processHoldingRecord(record, originalRecord);
-			} else { // If leader 6th character is invalid, then log error and do not process that record.
-				logError("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
-				return results;
-			}
-			return results;
-		}
-		catch(Exception e)
-		{
-			
-			LOG.error("An error occurred while Transforming the record with ID " + record.getId(), e);
-
-			logError("An error occurred while processing the record with OAI Identifier " + record.getOaiIdentifier() + ": " + e.getMessage());
-
-			if(LOG.isDebugEnabled())
-				LOG.debug("Adding warnings and errors to the record.");
-			
-			record.setErrors(errors);
-			return results;
-		}
-		
-	}
-	
-	/*
-	 * Deletes the successor record of input bibliographic record
-	 */
-	protected void deleteRecord(Record successorRecord, Record inputRecord) {
-		successorRecord.setDeleted(true);
-		
-		// Mark this record as input to services that have processed it.
-		reprocessRecord(successorRecord);
-		
-		inputRecord.removeSucessor(successorRecord);
-		
-		List<String> errors =  inputRecord.getErrors();
-		
-		if (errors != null && errors.size() > 0) {
-			
-			ArrayList<String> errorsToRemove = new ArrayList<String>(); 
-		
-			for (String error: errors) {
-				
-				if(error.startsWith(Integer.valueOf(service.getId()).toString() + "-")) {
-					errorsToRemove.add(error);
-				}
-			}
-
-			if (errorsToRemove.size() > 0) {
-				inputRecord.getErrors().removeAll(errorsToRemove);
-			}
-		}
-		
-		updateRecord(successorRecord);
-		
-
-	}
-	
-	protected void removeExistingBibRecords(InputRecord record, List<OutputRecord> existingRecords) throws DataException,  DatabaseConfigException, IndexException {
-		Record manifestation = null;
-		for (Record oldRecord: existingRecords) {
-			if (oldRecord.getType().equalsIgnoreCase("XC-Manifestation")) {
-				manifestation = oldRecord;
-			}
-			deleteRecord(oldRecord, record);
-		}
-		
-		// If there is manifestation record then delete all its references
-		if (manifestation!= null) {
-			// Remove the MARCBib entry in marc_bibliographic_to_xc_manifestation table
-			BibliographicManifestationMapping bibliographicManifestationMapping = bibliographicManifestationMappingDAO.getByBibliographicOAIId(record.getOaiIdentifier());
-			String deletedManifestationOAIId = bibliographicManifestationMapping.getManifestationRecordOAIId();
-			bibliographicManifestationMappingDAO.delete(bibliographicManifestationMapping);
-			
-			// Get the XC holding record mappings to deleted manifestation record.
-			List<XCHoldingRecord> holdingManifestationMappings = xcHoldingDAO.getByManifestationOAIId(deletedManifestationOAIId);
-			
-			List<Record> holdingRecordsToRemoveLink =  new ArrayList<Record>();
-			List<String> oaiIdsToGetFromSolr = new ArrayList<String>();
-			
-			for (XCHoldingRecord h: holdingManifestationMappings) {
-				
-				// delete holding manifestation mapping
-				xcHoldingDAO.delete(h);
-				
-				// Check if holding record is in memory hashmap, else get from Solr
-				Record r = holdingRecords.get(h.getHoldingRecordOAIID());
-				
-				if (r != null) {
-					holdingRecordsToRemoveLink.add(r);
-				} else {
-					// Add holding OAI ids
-					oaiIdsToGetFromSolr.add(h.getHoldingRecordOAIID());
-				}
-			}
-			holdingRecordsToRemoveLink.addAll(getRecordService().getByOaiIdentifiers(oaiIdsToGetFromSolr));
-			
-			// Remove manifestation link in holding record in Solr
-			for (Record holdingRecord : holdingRecordsToRemoveLink) {
-				
-				List<String> uplinks = holdingRecord.getUpLinks();
-				
-				if (uplinks != null && uplinks.size() >1) {
-					
-					holdingRecord.removeUpLink(manifestation.getOaiIdentifier());
-					
-					// Remove manifestationHeld from XML
-					removeManifestationHeld(holdingRecord, manifestation);
-					
-					// Place all holding records in HashMap, so that they can be retrieved to link manifestation
-					holdingRecords.put(holdingRecord.getOaiIdentifier(), holdingRecord);
-
-				} else {
-					
-					// Delete XC holding record 
-					holdingRecord.setDeleted(true);
-				
-					// Remove XC holding from its predecessor MARC holding
-					List<Record> predecessors = holdingRecord.getProcessedFrom();
-					for (Record predecessor : predecessors) {
-						predecessor = getRecordService().getById(predecessor.getId());
-						predecessor.removeSucessor(holdingRecord);
-						List<String> errors =  predecessor.getErrors();
-						
-						if (errors != null && errors.size() > 0) {
-							
-							ArrayList<String> errorsToRemove = new ArrayList<String>(); 
-						
-							for (String error: errors) {
-								
-								if(error.startsWith(Integer.valueOf(service.getId()).toString() + "-")) {
-									errorsToRemove.add(error);
-								}
-							}
-							if (errorsToRemove.size() > 0) {
-								predecessor.getErrors().removeAll(errorsToRemove);
-							}
-						}
-						updateRecord(predecessor);
-						// Place the predecessor in held records.
-						heldHoldingRecordDAO.insert(new HeldHoldingRecord(predecessor.getOaiIdentifier(), bibliographicManifestationMapping.getBibliographicRecord001Field()));
-						
-					}
-					
-					// Reprocess holding record TODO check if update can be called inside reprocessRecord()
-					reprocessRecord(holdingRecord);
-					
-					// Decrement number of input records
-					inputRecordCount--;
-					
-				}
-				updateRecord(holdingRecord);
-			} 
-			
-		}  // End If if (manifestationRecord!= null) 
-	}
-
-	/*
-	 * Process bibliographic record
-	 */
-	protected List<OutputRecord> processBibliographicRecord(InputRecord record, MarcXmlRecord originalRecord) 
-			throws DataException, DatabaseConfigException, TransformerConfigurationException, IndexException, TransformerException{
-
-		// A list of records resulting from processing the incoming record
-		List<OutputRecord> results = new ArrayList<OutputRecord>();
-		
-		// Get any records which were processed from the record we're processing
-		// If there are any (there should be at most 1) we need to delete them
-		//List<Record> existingRecords = getRecordService().getSuccessorsCreatedByServiceId(record.getId(), service.getId());
-
-		boolean updatedInputRecord = false;
-		
-		// If the record was deleted, delete and reprocess all records that were processed from it
-		if(record.getDeleted())
-		{
-
-			// If there are successors then the record exist and needs to be deleted. Since we are
-			// deleting the record, we need to decrement the count.
-			if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
-				inputRecordCount--;
-				removeExistingBibRecords(record);
-			}
-			
-			// Mark the record as having been processed by this service
-			record.addProcessedByService(service);
-			record.removeInputForService(service);
-			getRecordService().update(record);
-			
-			return new ArrayList<Record>();
-		
-		} 		
-
-		// If there was already a processed record for the record we just processed, delete it
-		if(existingRecords.size() > 0)
-		{
-			updatedInputRecord = true;
-
-			if(LOG.isDebugEnabled())
-				LOG.debug("Updating the record which was processed from an older version of the record we just processed.");
-			
-			removeExistingBibRecords(record, existingRecords);
-
-		}
-
-		// Create an XCRecord Object to hold the transformed record
-		AggregateXCRecord transformedRecord = new AggregateXCRecord();
-		
-		// Run the transformation steps
-		// Each one processes a different MARC XML field and adds the appropriate
-		// XC fields to transformedRecord based on the field it processes.
-		transformedRecord = process010(originalRecord, transformedRecord);
-		
-		transformedRecord = process015(originalRecord, transformedRecord);
-		
-		transformedRecord = process016(originalRecord, transformedRecord);
-		
-		transformedRecord = process022(originalRecord, transformedRecord);
-		
-		transformedRecord = process024(originalRecord, transformedRecord);
-		
-		transformedRecord = process028(originalRecord, transformedRecord);
-		
-		transformedRecord = process030(originalRecord, transformedRecord);
-		
-		transformedRecord = process035(originalRecord, transformedRecord);
-		
-		transformedRecord = process037(originalRecord, transformedRecord);
-		
-		transformedRecord = process050(originalRecord, transformedRecord);
-		
-		transformedRecord = process055(originalRecord, transformedRecord);
-		
-		transformedRecord = process060(originalRecord, transformedRecord);
-		
-		transformedRecord = process074(originalRecord, transformedRecord);
-		
-		transformedRecord = process082(originalRecord, transformedRecord);
-		transformedRecord = process084(originalRecord, transformedRecord);
-		
-		transformedRecord = process086(originalRecord, transformedRecord);
-		
-		transformedRecord = process090(originalRecord, transformedRecord);
-		
-		transformedRecord = process092(originalRecord, transformedRecord);
-		
-		transformedRecord = process100(originalRecord, transformedRecord);
-		
-		transformedRecord = process110(originalRecord, transformedRecord);
-		
-		transformedRecord = process111(originalRecord, transformedRecord);
-		
-		transformedRecord = process130(originalRecord, transformedRecord);
-		
-		transformedRecord = process210(originalRecord, transformedRecord);
-		
-		transformedRecord = process222(originalRecord, transformedRecord);
-		
-		transformedRecord = process240(originalRecord, transformedRecord);
-		
-		transformedRecord = process243(originalRecord, transformedRecord);
-		
-		transformedRecord = process245(originalRecord, transformedRecord);
-		
-		transformedRecord = process246(originalRecord, transformedRecord);
-		
-		transformedRecord = process247(originalRecord, transformedRecord);
-		
-		transformedRecord = process250(originalRecord, transformedRecord);
-		
-		transformedRecord = process254(originalRecord, transformedRecord);
-		
-		transformedRecord = process255(originalRecord, transformedRecord);
-		
-		transformedRecord = process260(originalRecord, transformedRecord);
-		
-		transformedRecord = process300(originalRecord, transformedRecord);
-		
-		transformedRecord = process310(originalRecord, transformedRecord);
-		
-		transformedRecord = process321(originalRecord, transformedRecord);
-		
-		transformedRecord = process362(originalRecord, transformedRecord);
-		
-		transformedRecord = process440(originalRecord, transformedRecord);
-		
-		transformedRecord = process490(originalRecord, transformedRecord);
-		
-		transformedRecord = process500(originalRecord, transformedRecord);
-		
-		transformedRecord = process501(originalRecord, transformedRecord);
-		
-		transformedRecord = process502(originalRecord, transformedRecord);
-		
-		transformedRecord = process504(originalRecord, transformedRecord);
-		transformedRecord = process505(originalRecord, transformedRecord);
-		transformedRecord = process506(originalRecord, transformedRecord);
-		transformedRecord = process507(originalRecord, transformedRecord);
-		transformedRecord = process508(originalRecord, transformedRecord);
-		transformedRecord = process510(originalRecord, transformedRecord);
-		transformedRecord = process511(originalRecord, transformedRecord);
-		transformedRecord = process513(originalRecord, transformedRecord);
-		transformedRecord = process515(originalRecord, transformedRecord);
-		transformedRecord = process518(originalRecord, transformedRecord);
-		transformedRecord = process520(originalRecord, transformedRecord);
-		transformedRecord = process521(originalRecord, transformedRecord);
-		transformedRecord = process522(originalRecord, transformedRecord);
-		transformedRecord = process525(originalRecord, transformedRecord);
-		transformedRecord = process530(originalRecord, transformedRecord);
-		transformedRecord = process533(originalRecord, transformedRecord);
-		transformedRecord = process534(originalRecord, transformedRecord);
-		transformedRecord = process538(originalRecord, transformedRecord);
-		transformedRecord = process540(originalRecord, transformedRecord);
-		transformedRecord = process544(originalRecord, transformedRecord);
-		transformedRecord = process546(originalRecord, transformedRecord);
-		transformedRecord = process547(originalRecord, transformedRecord);
-		transformedRecord = process550(originalRecord, transformedRecord);
-		transformedRecord = process555(originalRecord, transformedRecord);
-		transformedRecord = process580(originalRecord, transformedRecord);
-		transformedRecord = process586(originalRecord, transformedRecord);
-		transformedRecord = process59X(originalRecord, transformedRecord);
-		transformedRecord = process600(originalRecord, transformedRecord);
-		transformedRecord = process610(originalRecord, transformedRecord);
-		transformedRecord = process611(originalRecord, transformedRecord);
-		transformedRecord = process630(originalRecord, transformedRecord);
-		transformedRecord = process648(originalRecord, transformedRecord);
-		transformedRecord = process650(originalRecord, transformedRecord);
-		transformedRecord = process651(originalRecord, transformedRecord);
-		transformedRecord = process653(originalRecord, transformedRecord);
-		transformedRecord = process654(originalRecord, transformedRecord);
-		transformedRecord = process655(originalRecord, transformedRecord);
-		transformedRecord = process720(originalRecord, transformedRecord);
-		transformedRecord = process740(originalRecord, transformedRecord);
-		transformedRecord = process752(originalRecord, transformedRecord);
-		transformedRecord = process760(originalRecord, transformedRecord);
-		transformedRecord = process765(originalRecord, transformedRecord);
-		transformedRecord = process770(originalRecord, transformedRecord);
-		transformedRecord = process772(originalRecord, transformedRecord);
-		transformedRecord = process773(originalRecord, transformedRecord);
-		transformedRecord = process775(originalRecord, transformedRecord);
-		transformedRecord = process776(originalRecord, transformedRecord);
-		transformedRecord = process777(originalRecord, transformedRecord);
-		transformedRecord = process780(originalRecord, transformedRecord);
-		transformedRecord = process785(originalRecord, transformedRecord);
-		transformedRecord = process786(originalRecord, transformedRecord);
-		transformedRecord = process787(originalRecord, transformedRecord);
-		transformedRecord = process800(originalRecord, transformedRecord);
-		transformedRecord = process810(originalRecord, transformedRecord);
-		transformedRecord = process811(originalRecord, transformedRecord);
-		transformedRecord = process830(originalRecord, transformedRecord);
-		transformedRecord = process852(originalRecord, transformedRecord);
-		transformedRecord = process856(originalRecord, transformedRecord);
-		transformedRecord = process866(originalRecord, transformedRecord);
-		transformedRecord = process867(originalRecord, transformedRecord);
-		transformedRecord = process868(originalRecord, transformedRecord);
-		transformedRecord = process931(originalRecord, transformedRecord);
-		transformedRecord = process932(originalRecord, transformedRecord);
-		transformedRecord = process933(originalRecord, transformedRecord);
-		transformedRecord = process934(originalRecord, transformedRecord);
-		transformedRecord = process935(originalRecord, transformedRecord);
-		transformedRecord = process937(originalRecord, transformedRecord);
-		transformedRecord = process939(originalRecord, transformedRecord);
-		transformedRecord = process943(originalRecord, transformedRecord);
-		transformedRecord = process945(originalRecord, transformedRecord);
-		transformedRecord = process947(originalRecord, transformedRecord);
-		transformedRecord = process959(originalRecord, transformedRecord);
-		transformedRecord = process963(originalRecord, transformedRecord);
-		transformedRecord = process965(originalRecord, transformedRecord);
-		transformedRecord = process967(originalRecord, transformedRecord);
-		transformedRecord = process969(originalRecord, transformedRecord);
-		transformedRecord = process700(originalRecord, transformedRecord);
-		transformedRecord = process710(originalRecord, transformedRecord);
-		transformedRecord = process711(originalRecord, transformedRecord);
-		transformedRecord = process730(originalRecord, transformedRecord);
-
-
-		// Get the XC records created as output
-		results = transformedRecord.getSplitXCRecordXML(this);
-		
-		Record manifestationRecord = null;
-		// Store the bib oai id, bib 001 field and its manifestation in database
-		for (Record outputRecord:results) {
-
-			if (outputRecord.getType().equals("XC-Manifestation")) {
-				manifestationRecord = outputRecord;
-				
-				BibliographicManifestationMapping bibliographicManifestationMapping 
-					= new BibliographicManifestationMapping(record.getOaiIdentifier(), outputRecord.getOaiIdentifier(), originalRecord.getControlField("001"));
-				bibliographicManifestationMappingDAO.insert(bibliographicManifestationMapping);
-				break;
-			}
-		}
-		
-		// Check for any held record
-		heldHoldingRecords = heldHoldingRecordDAO.getByHolding004Field(originalRecord.getControlField("001"));
-		
-		// Get already processed holding record that has matching 004 field
-		List<XCHoldingRecord> xcHoldingRecords = xcHoldingDAO.getByHolding004Field(originalRecord.getControlField("001"));
-		
-		// link the manifestation for already processed xc holding records
-		linkManifestation(xcHoldingRecords, manifestationRecord.getOaiIdentifier());
-		
-		// If the input record is a new record then increment the processed record count
-		if (!updatedInputRecord  && results.size() > 0) {
-			inputRecordCount++;
-		}
-		
-		return results;
-	
-	}
-	
-	/*
-	 * Process holding record 
-	 */
-	protected List<Record> processHoldingRecord(Record record, MarcXmlRecord originalRecord) 
-			throws  DatabaseConfigException, TransformerConfigurationException, IndexException, TransformerException, DataException {
-		
-		// A list of records resulting from processing the incoming record
-		List<Record> results = new ArrayList<Record>();
-		
-		// Get any records which were processed from the record we're processing
-		// If there are any (there should be at most 1) we need to delete them
-		List<Record> existingRecords = getRecordService().getSuccessorsCreatedByServiceId(record.getId(), service.getId());
-		
-		boolean updatedInputRecord = false;
-		
-		// If the record was deleted, delete and reprocess all records that were processed from it
-		if(record.getDeleted())
-		{
-			// If there are successors then the record exist and needs to be deleted. Since we are
-			// deleting the record, we need to decrement the count.
-			if (existingRecords != null && existingRecords.size() > 0) {
-				inputRecordCount--;
-			
-				// Handle reprocessing of successors
-				for(Record successor : existingRecords)
-				{
-					deleteRecord(successor, record);
-					
-					// Delete holding manifestation mapping
-					xcHoldingDAO.deleteByHoldingOAIId(successor.getOaiIdentifier());
-				}
-			}
-			
-			// Check if delted holding record is held 
-			HeldHoldingRecord heldHoldingRecord =  heldHoldingRecordDAO.getByMARCXMLHoldingOAId(record.getOaiIdentifier());
-			
-			// If it is in held table, delete the row
-			if (heldHoldingRecord != null) {
-				heldHoldingRecordDAO.delete(heldHoldingRecord);
-			}
-		
-			// Mark the record as having been processed by this service
-			record.addProcessedByService(service);
-			record.removeInputForService(service);
-			getRecordService().update(record);
-			
-			return new ArrayList<Record>();
-		
-		} 
-		
-		// Delete the old records created by the input holding record
-		if (existingRecords != null && existingRecords.size() > 0) {
-			
-			updatedInputRecord = true;
-			
-			for (Record oldRecord : existingRecords) {
-				
-				deleteRecord(oldRecord, record);
-				
-				// Delete holding manifestation mapping
-				xcHoldingDAO.deleteByHoldingOAIId(oldRecord.getOaiIdentifier());
-			}
-
-
-		}
-		
-		
-		// Check if holding 004 matches bib 001
-		List<BibliographicManifestationMapping> bibliographicManifestationMappings 
-			= bibliographicManifestationMappingDAO.getByBibliographic001Field(originalRecord.getControlField("004"));
-
-		// Check if holding record is already held 
-		HeldHoldingRecord heldHoldingRecord =  heldHoldingRecordDAO.getByMARCXMLHoldingOAId(record.getOaiIdentifier());
-		
-		if (bibliographicManifestationMappings == null || bibliographicManifestationMappings.size() == 0) {
-			
-			// Add to held records table
-			if (heldHoldingRecord == null) {
-				heldHoldingRecord = new HeldHoldingRecord(record.getOaiIdentifier(), originalRecord.getControlField("004"));
-				heldHoldingRecordDAO.insert(heldHoldingRecord);
-			}
-			
-			// If the input record is updated record and there is no matching bib record then decrement the processed record count
-			if (updatedInputRecord) {
-				inputRecordCount--;
-			}
-			return null;
-
-		} else {
-			
-			// Delete from held records table
-			if (heldHoldingRecord != null) {
-				heldHoldingRecordDAO.delete(heldHoldingRecord);
-			}
-			
-			// Create an XCRecord Object to hold the transformed record
-			AggregateXCRecord transformedRecord = new AggregateXCRecord();
-			
-			// Run the transformation steps
-			// Each one processes a different MARC XML field and adds the appropriate
-			// XC fields to transformedRecord based on the field it processes.
-			transformedRecord = holdingsProcess506(originalRecord, transformedRecord);
-			transformedRecord = holdingsProcess852(originalRecord, transformedRecord);
-			transformedRecord = holdingsProcess856(originalRecord, transformedRecord);
-			transformedRecord = process866(originalRecord, transformedRecord);
-			transformedRecord = process867(originalRecord, transformedRecord);
-			transformedRecord = process868(originalRecord, transformedRecord);
-			transformedRecord = holdingsProcess001And003(originalRecord, transformedRecord);
-			/* holdingsProcess843 is commented for now. This will be implemented later.
-			transformedRecord = holdingsProcess843(originalRecord, transformedRecord);
-			*/
-			
-			// Get the XC records created as output & Link Holding to manifestation
-			results = transformedRecord.getSplitXCRecordXMLForHoldingRecord(this, bibliographicManifestationMappings);
-			
-			// Insert the mapping between XC holding and manifestation in database
-			for (Record outputRecord : results) {
-				for (BibliographicManifestationMapping bibliographicManifestationMapping : bibliographicManifestationMappings) {
-					XCHoldingRecord holdingRecord = new XCHoldingRecord(outputRecord.getOaiIdentifier(), originalRecord.getControlField("004"), bibliographicManifestationMapping.getManifestationRecordOAIId());
-					xcHoldingDAO.insert(holdingRecord);
-				}
-			}
-			
-			
-			// If the input record is a new record then increment the processed record count
-			if (!updatedInputRecord  && results.size() > 0) {
-				inputRecordCount++;
-			}
-		}
-		
-		return results;
-	}
-	
-	/*
-	 * Removes manifestation link from holding record
-	 */
-	//TODO
-	@SuppressWarnings("unchecked")
-	protected void removeManifestationHeld(Record holdingRecord, Record manifestation) {
-		
-		try {
-			Document document = builder.build(new InputSource(new StringReader(holdingRecord.getOaiXml())));
-				
-			// An XPATH expression to get the requested control field
-			XPath xpath = XPath.newInstance("//xc:manifestationHeld");
-			xpath.addNamespace(AggregateXCRecord.XC_NAMESPACE);
-	
-			// Get the control field.  There should not be more than one Element in this list.
-			List<Element> elements = xpath.selectNodes(document);
-			
-			// Remove manifestationHeld tag from holding record
-			for(Element element : elements) {
-				if (element.getValue().equalsIgnoreCase(manifestation.getOaiIdentifier())) {
-					List<Element> children = document.getRootElement().getChildren();
-					Element entityElement = ((Element)(children.get(0)));
-					entityElement.getChildren().remove(element);
-				}
-			}
-			
-			StringWriter writer = new StringWriter();
-			TransformerFactory tf = TransformerFactory.newInstance();
-			Transformer tran = tf.newTransformer();
-			Source src = new JDOMSource(document);
-			Result res = new StreamResult(writer);
-			tran.transform(src, res);
-			holdingRecord.setOaiXml(writer.toString());
-			
-		} catch(JDOMException je) {
-			LOG.error("An error occurred when removing manifestationHeld link from holding record " + holdingRecord.getOaiIdentifier(), je);
-		}  catch(IOException ioe) {
-			LOG.error("An error occurred when removing manifestationHeld link from holding record " + holdingRecord.getOaiIdentifier(), ioe );
-		}  catch(TransformerConfigurationException tce) {
-			LOG.error("TransformerConfigurationException occured when removing manifestationHeld link from holding record " + holdingRecord.getOaiIdentifier() + tce);
-		} catch (TransformerException te) {
-			LOG.error("TransformerException occured when removing manifestationHeld link from holding record " + holdingRecord.getOaiIdentifier() + te);
-		}
-		
-		
-	}
-	
-	/*
-	 * Links manifestation record with given set of holding record
-	 */
-	//TODO
-	protected void linkManifestation(List<XCHoldingRecord> xcHoldingRecords, String manifestationOAIId) {
-		
-		List<String> xcHoldingOaiIds = new ArrayList<String>();
-		String field004 = null;
-		
-		// Get distinct holding OAI Ids
-		for (XCHoldingRecord holdingRecord : xcHoldingRecords) {
-			field004 = holdingRecord.getHolding004Field();
-
-			if (!xcHoldingOaiIds.contains(holdingRecord.getHoldingRecordOAIID())) {
-				xcHoldingOaiIds.add(holdingRecord.getHoldingRecordOAIID());
-			}
-		}
-		
-		
-		try {
-			List<Record> completeSetOfRecords = new ArrayList<Record>();
-			List<String> oaiIdsToGetFromSolr = new ArrayList<String>();
-			
-			// Check if holding record exist in memory hashmap. If not add to a list so that it can be
-			// retrieved from Solr
-			for (String oaiId : xcHoldingOaiIds) {
-				Record r = holdingRecords.get(oaiId);
-				
-				if (r != null) {
-					completeSetOfRecords.add(r);
-				} else {
-					oaiIdsToGetFromSolr.add(oaiId);
-				}
-			}
-
-			// Get holding records from Solr
-			if (oaiIdsToGetFromSolr.size() > 0) {
-			
-				completeSetOfRecords.addAll(getRecordService().getByOaiIdentifiers(xcHoldingOaiIds));
-			}
-			
-			// Link manifestation to holding records
-			for (Record record : completeSetOfRecords) {
-				
-				Document document = builder.build(new InputSource(new StringReader(record.getOaiXml())));
-				
-				// Create back links to Manifestation
-				Element linkManifestation =  new Element("manifestationHeld",AggregateXCRecord.XC_NAMESPACE);
-				linkManifestation.setText(manifestationOAIId);
-				document.getRootElement().getChild("entity",AggregateXCRecord.XC_NAMESPACE).addContent("\t").addContent(linkManifestation.detach()).addContent("\n\t");
-		
-				StringWriter writer = new StringWriter();
-				TransformerFactory tf = TransformerFactory.newInstance();
-				Transformer tran = tf.newTransformer();
-				Source src = new JDOMSource(document);
-				Result res = new StreamResult(writer);
-				tran.transform(src, res);
-				
-				record.setOaiXml(writer.toString());
-				record.addUpLink(manifestationOAIId);
-				updateRecord(record);
-				
-				// Place all holding records in HashMap, so that they can be retrieved to link manifestation
-				holdingRecords.put(record.getOaiIdentifier(), record);
-				
-				// Insert the link between holding and manifestation record
-				XCHoldingRecord holdingRecord = new XCHoldingRecord(record.getOaiIdentifier(), field004, manifestationOAIId);
-				xcHoldingDAO.insert(holdingRecord);
-			}
-		} catch(IndexException ie) {
-			LOG.error("Index exception occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + ie);
-		} catch (JDOMException je) {
-			LOG.error("JDOMException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + je);
-		} catch (IOException ioe) {
-			LOG.error("IOException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + ioe);
-		} catch(TransformerConfigurationException tce) {
-			LOG.error("TransformerConfigurationException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + tce);
-		} catch (TransformerException te) {
-			LOG.error("TransformerException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + te);
-		} catch (DataException de) {
-			LOG.error("DataException occured while linking the maninfestation with OAI id: " + manifestationOAIId + " with already existing holding records." + de);
-		}
-	}
-
-	//TODO
-	public boolean updateServiceStatistics() {
-		
-		// Remove all records from hashmap memory. Since the records are saved we can access it from Solr
-		holdingRecords.clear();
-
-		return super.updateServiceStatistics();
 	}
 
 	/**
@@ -1098,7 +266,7 @@ public class SolrTransformationService extends GenericMetadataService
 				attributes.add(new Attribute("type", type));
 
 			// Add the identifier to the XC record
-			transformInto.addElement(name, subfieldA.trim(), namespace, attributes, FrbrLevel.MANIFESTATION);
+			getXCRecordService().addElement(transformInto, name, subfieldA.trim(), namespace, attributes, FrbrLevel.MANIFESTATION);
 		}
 
 		// Return the result of this transformation step
@@ -1161,7 +329,7 @@ public class SolrTransformationService extends GenericMetadataService
 			attributes.add(new Attribute("type", type));
 
 			// Set the control number on the XC record
-			transformInto.addElement("recordID", value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
+			getXCRecordService().addElement(transformInto, "recordID", value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 		}
 
 		// Return the result of this transformation step
@@ -1213,7 +381,7 @@ public class SolrTransformationService extends GenericMetadataService
 					LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level " + "identifier with a type of \"GPO\" based on the 037 $a value, which is " + value);
 
 				// Add the element to the XC record
-				transformInto.addElement("identifier", value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
+				getXCRecordService().addElement(transformInto, "identifier", value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 			}
 		}
 
@@ -1257,7 +425,7 @@ public class SolrTransformationService extends GenericMetadataService
 			attributes.add(new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
 
 			// Add the element to the XC record
-			transformInto.addElement("subject", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.WORK);
+			getXCRecordService().addElement(transformInto, "subject", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.WORK);
 		}
 
 		// Return the result
@@ -1505,13 +673,13 @@ public class SolrTransformationService extends GenericMetadataService
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
 						atts.add(new Attribute("type", "lcnaf", AggregateXCRecord.XSI_NAMESPACE));
-						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
+						getXCRecordService().addElement(transformInto, Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
 					else if(prefix.equals(getOrganizationCode()))
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
 						atts.add(new Attribute("type", "xcauth"));
-						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
+						getXCRecordService().addElement(transformInto, Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
 				}
 
@@ -1647,13 +815,13 @@ public class SolrTransformationService extends GenericMetadataService
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
 						atts.add(new Attribute("type", "lcnaf", AggregateXCRecord.XSI_NAMESPACE));
-						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
+						getXCRecordService().addElement(transformInto, Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
 					else if(prefix.equals(getOrganizationCode()))
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
 						atts.add(new Attribute("type", "xcauth"));
-						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
+						getXCRecordService().addElement(transformInto, Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
 				}
 
@@ -1764,13 +932,13 @@ public class SolrTransformationService extends GenericMetadataService
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
 						atts.add(new Attribute("type", "lcnaf", AggregateXCRecord.XSI_NAMESPACE));
-						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
+						getXCRecordService().addElement(transformInto, Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, "n" + value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
 					else if(prefix.equals(getOrganizationCode()))
 					{
 						ArrayList<Attribute> atts = new ArrayList<Attribute>();
 						atts.add(new Attribute("type", "xcauth"));
-						transformInto.addElement(Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
+						getXCRecordService().addElement(transformInto, Constants.ELEMENT_IDENTIFIER_FOR_THE_WORK, value.trim(), AggregateXCRecord.RDVOCAB_NAMESPACE, atts, FrbrLevel.WORK);
 					}
 				}
 
@@ -1891,7 +1059,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level title based on the concatination of the 246's subfields' value, which is " + value);
 
 					// Create an dc:title based on the 246 abfnp values
-					transformInto.addElement("title", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
+					getXCRecordService().addElement(transformInto, "title", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 				}
 				else
 				{
@@ -1899,7 +1067,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level alternative based on the concatination of the 246's subfields' value, which is " + value);
 
 					// Create a dcterms:alternative based on the 246 abfnp values
-					transformInto.addElement("alternative", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
+					getXCRecordService().addElement(transformInto, "alternative", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 				}
 			}
 		}
@@ -2880,7 +2048,7 @@ public class SolrTransformationService extends GenericMetadataService
 							LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 						// Add the element to the XC record
-						transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
+						getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
 					}
 					else
 					{
@@ -2908,7 +2076,7 @@ public class SolrTransformationService extends GenericMetadataService
 								LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 							// Add the element to the XC record
-							transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+							getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 
 							addedRole = true;
 						}
@@ -2927,7 +2095,7 @@ public class SolrTransformationService extends GenericMetadataService
 								LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 							// Add the element to the XC record
-							transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
+							getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
 						}
 					}
 				}
@@ -2994,7 +2162,7 @@ public class SolrTransformationService extends GenericMetadataService
 						titleOfExpressionElement.setText(titleBuilder.toString());
 						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
 						
-						transformInto.addLinkedWorkAndExpression(workSubElements, expressionSubElements);
+						getXCRecordService().addLinkedWorkAndExpression(transformInto, workSubElements, expressionSubElements);
 						
 					}
 				
@@ -3052,7 +2220,7 @@ public class SolrTransformationService extends GenericMetadataService
 							attributes.add((Attribute)authorityAttribute);
 
 						// Add the element to the XC record
-						transformInto.addElement(elementName, value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
+						getXCRecordService().addElement(transformInto, elementName, value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
 						
 					}
 				}
@@ -3145,7 +2313,7 @@ public class SolrTransformationService extends GenericMetadataService
 							LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 						// Add the element to the XC record
-						transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
+						getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
 					}
 					else
 					{
@@ -3173,7 +2341,7 @@ public class SolrTransformationService extends GenericMetadataService
 								LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 							// Add the element to the XC record
-							transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+							getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 
 							addedRole = true;
 						}
@@ -3192,7 +2360,7 @@ public class SolrTransformationService extends GenericMetadataService
 								LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 							// Add the element to the XC record
-							transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
+							getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
 						}
 					}
 				}
@@ -3256,7 +2424,7 @@ public class SolrTransformationService extends GenericMetadataService
 						titleOfExpressionElement.setText(titleBuilder.toString());
 						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
 						
-						transformInto.addLinkedWorkAndExpression(workSubElements, expressionSubElements);
+						getXCRecordService().addLinkedWorkAndExpression(transformInto, workSubElements, expressionSubElements);
 						
 					}
 					
@@ -3314,7 +2482,7 @@ public class SolrTransformationService extends GenericMetadataService
 							attributes.add((Attribute)authorityAttribute);
 
 						// Add the element to the XC record
-						transformInto.addElement(elementName, value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
+						getXCRecordService().addElement(transformInto, elementName, value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
 					}
 				}
 			}
@@ -3405,7 +2573,7 @@ public class SolrTransformationService extends GenericMetadataService
 							LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 						// Add the element to the XC record
-						transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
+						getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
 					}
 					else
 					{
@@ -3433,7 +2601,7 @@ public class SolrTransformationService extends GenericMetadataService
 								LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 							// Add the element to the XC record
-							transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+							getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 
 							addedRole = true;
 						}
@@ -3452,7 +2620,7 @@ public class SolrTransformationService extends GenericMetadataService
 								LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the 700's subfields' value, which is " + value);
 
 							// Add the element to the XC record
-							transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
+							getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, FrbrLevel.EXPRESSION);
 						}
 					}
 				}
@@ -3516,7 +2684,7 @@ public class SolrTransformationService extends GenericMetadataService
 						titleOfExpressionElement.setText(titleBuilder.toString());
 						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
 						
-						transformInto.addLinkedWorkAndExpression(workSubElements, expressionSubElements);
+						getXCRecordService().addLinkedWorkAndExpression(transformInto, workSubElements, expressionSubElements);
 						
 					}
 
@@ -3574,7 +2742,7 @@ public class SolrTransformationService extends GenericMetadataService
 							attributes.add((Attribute)authorityAttribute);
 
 						// Add the element to the XC record
-						transformInto.addElement(elementName, value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
+						getXCRecordService().addElement(transformInto, elementName, value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
 					}
 				}
 			}
@@ -3686,7 +2854,7 @@ public class SolrTransformationService extends GenericMetadataService
 						expressionSubElements.put(Constants.ELEMENT_TITLE_OF_EXPRESSION, titleOfExpressionElement);
 					}
 					
-					transformInto.addLinkedWorkAndExpression(workSubElements, expressionSubElements);
+					getXCRecordService().addLinkedWorkAndExpression(transformInto, workSubElements, expressionSubElements);
 					
 				}
 				// Increment the artificial linking ID so the next 730 gets mapped to a seperate work element
@@ -3755,7 +2923,7 @@ public class SolrTransformationService extends GenericMetadataService
 						attributes.add(issnAttribute);
 
 					// Add the element to the XC record
-					transformInto.addElement(elementName, value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
+					getXCRecordService().addElement(transformInto, elementName, value.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.WORK);
 				}
 			}
 		}
@@ -4262,18 +3430,18 @@ public class SolrTransformationService extends GenericMetadataService
 				holdingsContent.add(textualHolding);
 			}
 
-			transformInto.addHoldingsElement(holdingsContent);
+			getXCRecordService().addHoldingsElement(transformInto, holdingsContent);
 				
 			if(subjectLCCBuilder.length() > 0){
 				ArrayList<Attribute> attributes = new ArrayList<Attribute>();
 				attributes.add(new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
-				transformInto.addElement("subject", subjectLCCBuilder.toString(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.WORK);
+				getXCRecordService().addElement(transformInto, "subject", subjectLCCBuilder.toString(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.WORK);
 			}
 			
 			if(subjectDDCBuilder.length() > 0){
 				ArrayList<Attribute> attributes = new ArrayList<Attribute>();
 				attributes.add(new Attribute("type", "dcterms:DDC", AggregateXCRecord.XSI_NAMESPACE));
-				transformInto.addElement("subject", subjectDDCBuilder.toString(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.WORK);
+				getXCRecordService().addElement(transformInto, "subject", subjectDDCBuilder.toString(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.WORK);
 			}
 			
 		}
@@ -4346,7 +3514,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level identifier based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create an dcterms:identifier based on the 856 abcdfhijklmnopqrstuvwxyz23 values
-					transformInto.addElement("identifier", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
+					getXCRecordService().addElement(transformInto, "identifier", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 				}
 				else if(ind2 != null && ind2.equals("1"))
 				{
@@ -4354,7 +3522,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level alternative based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create a dcterms:hasVersion based on the 856 abcdfhijklmnopqrstuvwxyz23 values
-					transformInto.addElement("hasVersion", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
+					getXCRecordService().addElement(transformInto, "hasVersion", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
 				}
 				else if(ind2 != null && ind2.equals("2"))
 				{
@@ -4362,7 +3530,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level alternative based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create a dc:relation based on the 856 abcdfhijklmnopqrstuvwxyz23 values
-					transformInto.addElement("relation", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
+					getXCRecordService().addElement(transformInto, "relation", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
 				}
 			}
 		}
@@ -4636,7 +3804,7 @@ public class SolrTransformationService extends GenericMetadataService
 					holdingsElements.add(callNumberElement.setText(locationDisplayBuilder.toString().trim()));
 				}
 
-				transformInto.addHoldingsElement(holdingsElements);
+				getXCRecordService().addHoldingsElement(transformInto, holdingsElements);
 				
 			} else {
 				// Add each subfield to the specified level with the specified tag
@@ -4652,7 +3820,7 @@ public class SolrTransformationService extends GenericMetadataService
 
 				if(audienceBuilder.length() > 0)
 				{
-					transformInto.addElement("audience", audienceBuilder.toString().trim(), AggregateXCRecord.DCTERMS_NAMESPACE, new ArrayList<Attribute>(), FrbrLevel.WORK);
+					getXCRecordService().addElement(transformInto, "audience", audienceBuilder.toString().trim(), AggregateXCRecord.DCTERMS_NAMESPACE, new ArrayList<Attribute>(), FrbrLevel.WORK);
 				}
 				
 			}
@@ -4898,7 +4066,7 @@ public class SolrTransformationService extends GenericMetadataService
 		attributes.add(new Attribute("type", field003));
 
 		// Add the element to the XC record
-		transformInto.addElement("recordID", field001.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.HOLDINGS);
+		getXCRecordService().addElement(transformInto, "recordID", field001.trim(), AggregateXCRecord.XC_NAMESPACE, attributes, FrbrLevel.HOLDINGS);
 
 		// Return the result
 		return transformInto;
@@ -5022,7 +4190,7 @@ public class SolrTransformationService extends GenericMetadataService
 				holdingsContent.add(textualHoldingElement);
 			}
 			
-			transformInto.addHoldingsElement(holdingsContent);
+			getXCRecordService().addHoldingsElement(transformInto, holdingsContent);
 		}
 
 		// Return the result
@@ -5089,7 +4257,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + FrbrLevel.HOLDINGS + " level identifier based on the concatination of the 856's subfields' value, which is " + value);
 
 					// Create an dcterms:identifier based on the 856 abcdfhijklmnopqrstuvwxyz23 values
-					transformInto.addElement("identifier", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.HOLDINGS);
+					getXCRecordService().addElement(transformInto, "identifier", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.HOLDINGS);
 				}
 			}
 		}
@@ -5121,7 +4289,7 @@ public class SolrTransformationService extends GenericMetadataService
 			attributes.add((Attribute)elementAttribute.clone());
 
 		// Add the element to the XC record
-		transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+		getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 
 		// Return the result
 		return transformInto;
@@ -5141,8 +4309,9 @@ public class SolrTransformationService extends GenericMetadataService
      * @param level The FRBR level of the element to create
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	protected AggregateXCRecord processFieldBasic(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, char subfield, String elementName, Namespace elementNamespace, Attribute elementAttribute, FrbrLevel level)
-	{
+	protected AggregateXCRecord processFieldBasic(MarcXmlRecord transformMe, AggregateXCRecord transformInto, 
+			String field, char subfield, String elementName, Namespace elementNamespace, 
+			Attribute elementAttribute, FrbrLevel level) {
 		// Get the target subfields MARC XML record
 		List<String> subfields = transformMe.getSubfield(field, subfield);
 		
@@ -5154,7 +4323,9 @@ public class SolrTransformationService extends GenericMetadataService
 		for(String value : subfields)
 		{
 			if(LOG.isDebugEnabled())
-				LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the " + field + " $" + subfield + " value, which is " + value);
+				LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + 
+						elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the " + 
+						field + " $" + subfield + " value, which is " + value);
 
 			// Setup the attribute list
 			ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -5162,7 +4333,7 @@ public class SolrTransformationService extends GenericMetadataService
 				attributes.add((Attribute)elementAttribute.clone());
 		
 			// Add the element to the XC record
-			transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+			getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 		}
 
 		// Return the result
@@ -5186,8 +4357,9 @@ public class SolrTransformationService extends GenericMetadataService
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	protected AggregateXCRecord processFieldBasic(MarcXmlRecord transformMe, AggregateXCRecord transformInto, String field, String targetSubfields, String elementName, Namespace elementNamespace, Attribute elementAttribute, FrbrLevel level)
-	{
+	protected AggregateXCRecord processFieldBasic(MarcXmlRecord transformMe, AggregateXCRecord transformInto, 
+			String field, String targetSubfields, String elementName, Namespace elementNamespace, 
+			Attribute elementAttribute, FrbrLevel level) {
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields(field);
 
@@ -5212,7 +4384,7 @@ public class SolrTransformationService extends GenericMetadataService
 				String subfieldCode = subfield.getAttribute("code").getValue();
 
 				if(targetSubfields.contains(subfieldCode))
-					builder.append(subfield.getText() + " ");
+					builder.append(subfield.getText()).append(" ");
 			}
 
 			// If any target fields were found
@@ -5221,7 +4393,9 @@ public class SolrTransformationService extends GenericMetadataService
 				String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
 				if(LOG.isDebugEnabled())
-					LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
+					LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + 
+							elementAttribute.getName() + " of \"" + elementAttribute.getValue() + "\"") + 
+							" based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Setup the attribute list
 				ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -5229,7 +4403,8 @@ public class SolrTransformationService extends GenericMetadataService
 					attributes.add((Attribute)elementAttribute.clone());
 
 				// Add the element to the XC record
-				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+				getXCRecordService().addElement(transformInto, elementName, value.trim(), 
+						elementNamespace, attributes, level);
 			}
 		}
 
@@ -5295,7 +4470,7 @@ public class SolrTransformationService extends GenericMetadataService
 					attributes.add((Attribute)elementAttribute.clone());
 
 				// Add the element to the XC record
-				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+				getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 			}
 		}
 
@@ -5356,7 +4531,7 @@ public class SolrTransformationService extends GenericMetadataService
 					LOG.debug("Adding a " + level + " level " + elementName + (elementAttribute == null ? "" : " with a " + elementAttribute.getName() + " of \"" + attributeValue + "\"") + " based on the " + field + " $" + subfield + " value, which is " + value);
 
 				// Add the element to the XC record
-				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+				getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 			}
 		}
 
@@ -5431,7 +4606,7 @@ public class SolrTransformationService extends GenericMetadataService
 					attributes.add(((Attribute)elementAttribute.clone()).setValue(attributeValue));
 
 				// Add the element to the XC record
-				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+				getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 			}
 		}
 
@@ -5514,7 +4689,7 @@ public class SolrTransformationService extends GenericMetadataService
 					attributes.add(((Attribute)elementAttribute.clone()).setValue(attributeValue));
 
 				// Add the element to the XC record
-				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+				getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 			}
 		}
 
@@ -5588,7 +4763,7 @@ public class SolrTransformationService extends GenericMetadataService
 					LOG.debug("Adding a " + level + " level " + elementName + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Add the element to the XC record
-				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+				getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 			}
 		}
 
@@ -5665,7 +4840,7 @@ public class SolrTransformationService extends GenericMetadataService
 					LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Add the element to the XC record
-				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+				getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 			}
 		}
 
@@ -5779,7 +4954,7 @@ public class SolrTransformationService extends GenericMetadataService
 					LOG.debug("Adding a " + level + " level " + elementName + (attributeToUse != null ? " with a " + attributeToUse.getName() + " of \"" + attributeToUse.getValue() + "\"" : "") + (authorityAttribute != null ? " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"" : "") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Add the element to the XC record
-				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+				getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 			}
 		}
 
@@ -5869,7 +5044,7 @@ public class SolrTransformationService extends GenericMetadataService
 					LOG.debug("Adding a " + level + " level " + elementName + (attributeToUse != null ? " with a " + attributeToUse.getName() + " of \"" + attributeToUse.getValue() + "\"" : "") + (authorityAttribute != null ? " with a " + authorityAttribute.getName() + " of \"" + authorityAttribute.getValue() + "\"" : "") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 				// Add the element to the XC record
-				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+				getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 			}
 		}
 
@@ -5954,7 +5129,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 					// Add the element to the XC record
-					transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+					getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 				}
 				else
 				{
@@ -5981,7 +5156,7 @@ public class SolrTransformationService extends GenericMetadataService
 							LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 						// Add the element to the XC record
-						transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+						getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 
 						addedRole = true;
 					}
@@ -6000,7 +5175,7 @@ public class SolrTransformationService extends GenericMetadataService
 							LOG.debug("Adding a " + level + " level " + elementName + (authorityAttribute == null ? "" : " with an agentID of \"" + authorityAttribute.getValue() + "\"") + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 
 						// Add the element to the XC record
-						transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+						getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 					}
 				}
 			}
@@ -6072,7 +5247,7 @@ public class SolrTransformationService extends GenericMetadataService
 					LOG.debug("Adding a " + level + " level " + elementName + (attributeToUse == null ? "" : " with a " + attributeToUse.getName() + " of \"" + attributeToUse.getValue() + "\"") + " based on the " + field + " $" + subfield + " value, which is " + value);
 
 				// Add the element to the XC record
-				transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+				getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 			}
 		}
 
@@ -6149,7 +5324,8 @@ public class SolrTransformationService extends GenericMetadataService
 						attributes.add(((Attribute)fieldToAttribute.get(subfieldCode).clone()).setValue(subfield.getText()));
 					}
 					catch (Exception e) {
-						errors.add(service.getId() + "-101: Subfield "+ subfieldCode +" is not repeatable in tag "+field);
+						//TODO
+						//errors.add(service.getId() + "-101: Subfield "+ subfieldCode +" is not repeatable in tag "+field);
 					}
 				}
 	
@@ -6162,7 +5338,7 @@ public class SolrTransformationService extends GenericMetadataService
 						LOG.debug("Adding a " + level + " level " + elementName + " based on the concatination of the " + field + "'s subfields' value, which is " + value);
 	
 					// Add the element to the XC record
-					transformInto.addElement(elementName, value.trim(), elementNamespace, attributes, level);
+					getXCRecordService().addElement(transformInto, elementName, value.trim(), elementNamespace, attributes, level);
 				}
 			}
 	
@@ -6347,13 +5523,13 @@ public class SolrTransformationService extends GenericMetadataService
 			{
 				ArrayList<Attribute> atts = new ArrayList<Attribute>();
 				atts.add(new Attribute("type", "lcnaf", AggregateXCRecord.XSI_NAMESPACE));
-				transformInto.addElementBasedOnLinkingField("identifierForTheWork", "n" + value, AggregateXCRecord.RDVOCAB_NAMESPACE, atts, linkingField);
+				getXCRecordService().addElementBasedOnLinkingField(transformInto, "identifierForTheWork", "n" + value, AggregateXCRecord.RDVOCAB_NAMESPACE, atts, linkingField);
 			}
 			else if(prefix.equals(getOrganizationCode()))
 			{
 				ArrayList<Attribute> atts = new ArrayList<Attribute>();
 				atts.add(new Attribute("type", "xcauth"));
-				transformInto.addElementBasedOnLinkingField("identifierForTheWork", value, AggregateXCRecord.RDVOCAB_NAMESPACE, atts, linkingField);
+				getXCRecordService().addElementBasedOnLinkingField(transformInto, "identifierForTheWork", value, AggregateXCRecord.RDVOCAB_NAMESPACE, atts, linkingField);
 			}
 		}
 
