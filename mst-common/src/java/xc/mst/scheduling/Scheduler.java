@@ -144,7 +144,7 @@ public class Scheduler extends BaseService implements Runnable {
 				if (runningJob != null) {
 					LOG.debug("runningJob.getWorkDelegate(): "+runningJob.getWorkDelegate());
 				}
-				LOG.debug("previousJob: "+previousJob);
+				//LOG.debug("previousJob: "+previousJob);
 				try {
 					if (previousJob != null) {
 						getJobService().deleteJob(previousJob);
@@ -227,7 +227,7 @@ public class Scheduler extends BaseService implements Runnable {
 					}
 					previousJob = jobToStart;
 
-					LOG.debug("jobToStart: "+jobToStart);
+					//LOG.debug("jobToStart: "+jobToStart);
 					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
 					if(jobToStart != null) {
 						if (solrWorkerThread != null) {

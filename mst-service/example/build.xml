@@ -261,6 +261,16 @@
 		</testng>
 	</target>
 
+	<target name="test.internals" depends="install-mst, compile.test, test.internals.nodep" />
+	<target name="test.internals.nodep" depends="init.test, compile.test.nodep">
+		<java classpathref="classpath.test.run" 
+				classname="xc.mst.service.impl.test.MetadataServiceSpecificTest"
+				fork="true" 
+				dir="${build.dir}" >
+			<env key="service.name" value="${service.name}"/>
+		</java>
+	</target>
+
 	<target name="start2finishtest" depends="install-mst, compile.test" >
 		<property name="abs.build.dir" location="${build.dir}" />
 		<property name="test" value="StartToFinishTest" />

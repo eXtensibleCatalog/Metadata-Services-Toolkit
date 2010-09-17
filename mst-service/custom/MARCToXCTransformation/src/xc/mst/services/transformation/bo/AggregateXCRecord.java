@@ -9,46 +9,28 @@
 
 package xc.mst.services.transformation.bo;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-
 import org.apache.log4j.Logger;
-import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
-import org.jdom.output.XMLOutputter;
-import org.jdom.transform.JDOMSource;
-
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
 import xc.mst.bo.provider.Format;
-import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.repository.FormatService;
-import xc.mst.services.impl.GenericMetadataService;
-import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
 import xc.mst.utils.MSTConfiguration;
-
-
 
 /**
  * This class contains methods to add, update, and get the values of various XC record fields.
  *
  * @author Eric Osisek
+ * @author Benjamin D. Anderson
  */
 public class AggregateXCRecord
 {

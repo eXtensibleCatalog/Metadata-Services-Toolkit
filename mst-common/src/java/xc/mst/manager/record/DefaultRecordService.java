@@ -803,7 +803,7 @@ public class DefaultRecordService extends RecordService
 
 		// Set the fields on the record Object and return it
 		record.setId(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
-		record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
+		//record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
 		record.setDeleted(Boolean.parseBoolean((String)doc.getFieldValue(FIELD_DELETED)));
 		if (doc.getFieldValue(FIELD_OAI_DATESTAMP) != null) {
 			record.setOaiDatestamp((Date)doc.getFieldValue(FIELD_OAI_DATESTAMP));
@@ -841,7 +841,7 @@ public class DefaultRecordService extends RecordService
 
 		// Set the fields on the record Object and return it
 		record.setId(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
-		record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
+		//record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
 		record.setDeleted(Boolean.parseBoolean((String)doc.getFieldValue(FIELD_DELETED)));
 		record.setFormat(getFormatDAO().getById(Integer.parseInt((String)doc.getFieldValue(FIELD_FORMAT_ID))));
 		if (doc.getFieldValue(FIELD_OAI_DATESTAMP) != null) {
@@ -857,7 +857,7 @@ public class DefaultRecordService extends RecordService
 
 		
 		if (doc.getFieldValue(FIELD_RECORD_TYPE) != null) {
-			record.setType((String)doc.getFieldValue(FIELD_RECORD_TYPE));
+			//record.setType((String)doc.getFieldValue(FIELD_RECORD_TYPE));
 		}
 
 		Collection<Object> sets = doc.getFieldValues(FIELD_SET_SPEC);
@@ -985,6 +985,7 @@ public class DefaultRecordService extends RecordService
 
 		// Set the appropriate fields on it.
 		doc.addField(FIELD_RECORD_ID, Long.toString(record.getId()));
+		/*
 		if (record.getType() != null) {
 			doc.addField(FIELD_RECORD_TYPE, record.getType());
 			TimingLogger.add("SOLR-"+FIELD_RECORD_TYPE, record.getType().length());
@@ -992,6 +993,7 @@ public class DefaultRecordService extends RecordService
 		
 		doc.addField(FIELD_FRBR_LEVEL_ID, Long.toString(record.getFrbrLevelId()));
 		TimingLogger.add("SOLR-"+FIELD_FRBR_LEVEL_ID, Long.toString(record.getFrbrLevelId()).length());
+		*/
 		
 		if (record.getCreatedAt() != null) {
 			doc.addField(FIELD_CREATED_AT, record.getCreatedAt());

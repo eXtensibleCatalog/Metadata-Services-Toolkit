@@ -20,10 +20,10 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
+import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.services.impl.GenericMetadataService;
 import xc.mst.services.impl.service.GenericMetadataServiceService;
 import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
 import xc.mst.services.transformation.bo.AggregateXCRecord;
@@ -66,19 +66,13 @@ public class XCRecordService extends GenericMetadataServiceService {
 	public Document getXcRecordXml(AggregateXCRecord ar) {
 		// Add an endline character to the last child of each FRBR group.
 		// This doesn't do anything except format the XML to make it easier to read.
-		ar.xcWorkElement.addContent("\n\t");
-		ar.xcExpressionElement.addContent("\n\t");
-		ar.xcManifestationElement.addContent("\n\t");
-		ar.xcItemElement.addContent("\n\t");
 
 		ar.xcRootElement = (new Element("frbr", AggregateXCRecord.XC_NAMESPACE))
-		                     .addContent("\n\t")
-		                     .addContent(ar.xcWorkElement)
-		                     .addContent("\n");
+		                     .addContent(ar.xcWorkElement);
 
 		// Add the extra work elements
 		for(String key : ar.linkingFieldToWorkElement.keySet())
-			ar.xcRootElement.addContent("\t").addContent(ar.linkingFieldToWorkElement.get(key).addContent("\n\t")).addContent("\n");
+			ar.xcRootElement.addContent(ar.linkingFieldToWorkElement.get(key));
 
 		// Add the extra work elements
 		
@@ -122,26 +116,21 @@ public class XCRecordService extends GenericMetadataServiceService {
 
 					// If exists, replace the title
 					Element titleOfExpressionElement = subElements.get(element);
-					newWorkElement.addContent("\n\t\t");
 					newWorkElement.addContent(titleOfExpressionElement.detach());
 				}
 				else if(element.equals(Constants.ELEMENT_CREATOR)) {
-					newWorkElement.addContent("\n\t\t");
 					newWorkElement.addContent(subElements.get(element));
 
 				}
 			}
 		}
 
-		ar.xcRootElement.addContent("\t")
-		             .addContent(ar.xcExpressionElement)
-		             .addContent("\n\t")
-		             .addContent(ar.xcManifestationElement)
-		             .addContent("\n\t");
+		ar.xcRootElement.addContent(ar.xcExpressionElement)
+		             .addContent(ar.xcManifestationElement);
 
 		// Add the holdings elements
 		for(Element holdingsElement : ar.holdingsElements)
-			ar.xcRootElement.addContent("\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n\t");
+			ar.xcRootElement.addContent(holdingsElement);
 
 		// Add the extra expression elements
 		for(Hashtable<String, Element> subElements : ar.subElementsOfExpressionElements){
@@ -156,16 +145,14 @@ public class XCRecordService extends GenericMetadataServiceService {
 				{
 					// If exists, replace the title
 					Element titleOfExpressionElement = subElements.get(element);
-					newExpressionElement.addContent("\n\t\t");
 					newExpressionElement.addContent(titleOfExpressionElement.detach());
 				}
 			}
 
-			ar.xcRootElement.addContent(newExpressionElement.addContent("\n\t")).addContent("\n\t");
+			ar.xcRootElement.addContent(newExpressionElement);
 		}
 
-		ar.xcRootElement.addContent(ar.xcItemElement)
-		             .addContent("\n");
+		ar.xcRootElement.addContent(ar.xcItemElement);
 
 		// Add the namespaces which the XC record needs
 		ar.xcRootElement.addNamespaceDeclaration(AggregateXCRecord.XSI_NAMESPACE);
@@ -265,23 +252,23 @@ public class XCRecordService extends GenericMetadataServiceService {
 		switch (level)
 		{
 			case WORK:
-				ar.xcWorkElement.addContent("\n\t\t").addContent(newElement);
+				ar.xcWorkElement.addContent(newElement);
 				ar.hasBibInfo = true;
 				break;
 			case EXPRESSION:
-				ar.xcExpressionElement.addContent("\n\t\t").addContent(newElement);
+				ar.xcExpressionElement.addContent(newElement);
 				ar.hasBibInfo = true;
 				break;
 			case MANIFESTATION:
-				ar.xcManifestationElement.addContent("\n\t\t").addContent(newElement);
+				ar.xcManifestationElement.addContent(newElement);
 				ar.hasBibInfo = true;
 				break;
 			case ITEM:
-				ar.xcItemElement.addContent("\n\t\t").addContent(newElement);
+				ar.xcItemElement.addContent(newElement);
 				break;
 			case HOLDINGS:
 				for(Element holdingsElement : ar.holdingsElements)
-					holdingsElement.addContent("\n\t\t").addContent((Element)newElement.clone());
+					holdingsElement.addContent((Element)newElement.clone());
 				break;
 		}
 	}
@@ -297,7 +284,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 		Element holdingsElement = (new Element("entity", AggregateXCRecord.XC_NAMESPACE)).setAttribute("type", "holdings");
 
 		for(Element content : holdingsElementContent)
-			holdingsElement.addContent("\n\t\t").addContent(content);
+			holdingsElement.addContent(content);
 
 		ar.holdingsElements.add(holdingsElement);
 	}
@@ -355,7 +342,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 		}
 
 		// Add the new element to the work element for the linking field
-		workElement.addContent("\n\t\t").addContent(newElement);
+		workElement.addContent(newElement);
 	}
 
 	/**
@@ -423,11 +410,12 @@ public class XCRecordService extends GenericMetadataServiceService {
 	 * @param transformationService 
 	 * @return
 	 */
-	public List<Record> getSplitXCRecordXML(AggregateXCRecord ar, Long manifestationId) 
+	public List<OutputRecord> getSplitXCRecordXML(List<long[]> links, AggregateXCRecord ar, Long manifestationId) 
 			throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 
-		List<Document> documents = new ArrayList<Document>();
-		List<Record> records = new ArrayList<Record>();
+		List<Long> expressionIds = new ArrayList<Long>();
+		List<Long> holdingIds = new ArrayList<Long>();
+		List<OutputRecord> records = new ArrayList<OutputRecord>();
 		
 		// Create the root document
 		ar.xcRootElement = new Element("frbr", AggregateXCRecord.XC_NAMESPACE);
@@ -451,6 +439,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 		/*$$ EXPRESSION $$*/
 		// Create original Expression Document
 		Long expressionId = getId(ar.getPreviousExpressionIds());
+		expressionIds.add(expressionId);
 		Element expressionToWorkLinkingElement = new Element("workExpressed", AggregateXCRecord.XC_NAMESPACE);
 		expressionToWorkLinkingElement.setText(workOaiID);
 		 
@@ -509,13 +498,10 @@ public class XCRecordService extends GenericMetadataServiceService {
 
 					// If exists, replace the title
 					Element titleOfExpressionElement = workElement.get(element);
-					newWorkElement.addContent("\n\t\t");
 					newWorkElement.addContent(titleOfExpressionElement.detach());
 				}
 				else if(element.equals(Constants.ELEMENT_CREATOR)) {
-					newWorkElement.addContent("\n\t\t");
 					newWorkElement.addContent(workElement.get(element));
-
 				}
 			}
 			
@@ -533,6 +519,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 			Element newExpressionElement = (Element)ar.xcExpressionElement.clone();
 			// Generate the OAI id
 			long newExpressionId = getId(ar.getPreviousExpressionIds());
+			expressionIds.add(newExpressionId);
 			String newExpressionOaiID = getRecordService().getOaiIdentifier(
 					newExpressionId, getMetadataService().getService());
 			newExpressionElement.setAttribute(new Attribute("id", newExpressionOaiID));
@@ -540,7 +527,6 @@ public class XCRecordService extends GenericMetadataServiceService {
 			// Add or replace title
 			Hashtable<String, Element> expElement = ar.subElementsOfExpressionElements.get(index);
 			for (String element : expElement.keySet()) {
-					
 					if(element.equals(Constants.ELEMENT_TITLE_OF_EXPRESSION))
 					{
 					Element titleOfExpressionElement = expElement.get(element);
@@ -563,12 +549,10 @@ public class XCRecordService extends GenericMetadataServiceService {
 			newExpressionElement.addContent(expressionToWorkLinkingElement.detach());
 			
 			ar.xcRootElement.addContent(newExpressionElement);
-			doc = (new Document()).setRootElement((Element)ar.xcRootElement.clone());
 			
 			List<String> workExpressedOaiIDs = new ArrayList<String>();
 			workExpressedOaiIDs.add(newWorkOaiID);
-			records.add(createRecord(ar, newWorkId, "XC-Expression", doc, workExpressedOaiIDs));
-			documents.add(doc);
+			records.add(createRecord(ar, newWorkId, (Element)ar.xcRootElement.clone(), workExpressedOaiIDs));
 			ar.xcRootElement.removeContent();
 			
 			index++;
@@ -576,7 +560,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 		
 		/*		for(String key : linkingFieldToWorkElement.keySet())
 				{
-						xcRootElement.addContent("\t").addContent(linkingFieldToWorkElement.get(key).addContent("\n\t")).addContent("\n");
+						xcRootElement.addContent(linkingFieldToWorkElement.get(key));
 						list.add((new Document()).setRootElement((Element)xcRootElement.clone()));
 						xcRootElement.removeContent();
 				}
@@ -585,63 +569,49 @@ public class XCRecordService extends GenericMetadataServiceService {
 		/*$$ MANIFESTATION $$*/
 		// Set the OAI id
 		if (manifestationId == null) {
-			manifestationId = getRepositoryDAO().getNextId();
+			manifestationId = ar.getPreviousManifestationId();
+			if (manifestationId == null) {
+				manifestationId = getRepositoryDAO().getNextId();
+			}
 		}
 		String manifestationOaiId = getRecordService().getOaiIdentifier(
 				manifestationId, getMetadataService().getService());
 		ar.xcManifestationElement.setAttribute("id", manifestationOaiId);
 		// Link to expression docs
 		List<String> linkExpressionOAIIds = new ArrayList<String>();
-		for (Document document : documents) {
-			if(document.getRootElement().getChild("entity", AggregateXCRecord.XC_NAMESPACE).
-					getAttributeValue("type").equals("expression"))
-			{
-				Element linkExpression =  new Element(
-						"expressionManifested",AggregateXCRecord.XC_NAMESPACE);
-				String linkExpressionOAIId = document.getRootElement().
-						getChild("entity",AggregateXCRecord.XC_NAMESPACE).getAttributeValue("id");
-				linkExpressionOAIIds.add(linkExpressionOAIId);
-				linkExpression.setText(linkExpressionOAIId);
-				ar.xcManifestationElement.addContent("\n\t\t")
-									  .addContent(linkExpression.detach());
-			}
+		for (Long eId : expressionIds) {
+			Element linkExpression =  new Element(
+					"expressionManifested",AggregateXCRecord.XC_NAMESPACE);
+			String linkExpressionOAIId = getRecordService().getOaiIdentifier(
+					eId, getMetadataService().getService());
+			linkExpressionOAIIds.add(linkExpressionOAIId);
+			linkExpression.setText(linkExpressionOAIId);
+			ar.xcManifestationElement.addContent(linkExpression.detach());
 		}
-		ar.xcRootElement.addContent("\n\t")
-		 			 .addContent(ar.xcManifestationElement)
-		 			 .addContent("\n");
-		doc = (new Document()).setRootElement((Element)ar.xcRootElement.clone());
-		records.add(createRecord(ar, manifestationId, "XC-Manifestation", doc, linkExpressionOAIIds));
-		documents.add(doc);
+		ar.xcRootElement.addContent(ar.xcManifestationElement);
+		records.add(createRecord(ar, manifestationId, (Element)ar.xcRootElement.clone(), linkExpressionOAIIds));
 		ar.xcRootElement.removeContent();
 
 		/*$$ HOLDINGS $$*/
 		// Create the Holdings documents
 		List<String> manifestationHeldOAIIds = new ArrayList<String>();
 		for(Element holdingsElement : ar.holdingsElements){
-			
-			long holdingId = getRepositoryDAO().getNextId();
+			long holdingId = getId(ar.getPreviousHoldingIds());
+			long[] link = new long[]{holdingId, manifestationId};
+			links.add(link);
 			String holdingOaiId = getRecordService().getOaiIdentifier(
 					holdingId, getMetadataService().getService());
 			holdingsElement.setAttribute("id", holdingOaiId);
 			// Create back links to manifestation
-			for (Document document : documents) {
-				if(document.getRootElement().getChild("entity", AggregateXCRecord.XC_NAMESPACE).
-						getAttributeValue("type").equals("manifestation"))
-				{
-					Element linkManifestation =  new Element(
-							"manifestationHeld", AggregateXCRecord.XC_NAMESPACE);
-					String manifestationHeld = document.getRootElement().getChild(
-							"entity", AggregateXCRecord.XC_NAMESPACE).getAttributeValue("id");
-					manifestationHeldOAIIds.add(manifestationHeld);
-					linkManifestation.setText(manifestationHeld);
-					holdingsElement.addContent("\n\t\t").addContent(linkManifestation.detach());
-				}
-				
-			}
-			ar.xcRootElement.addContent("\n\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n");
-			doc = (new Document()).setRootElement((Element)ar.xcRootElement.clone());
-			records.add(createRecord(ar, holdingId, "XC-Holding", doc, manifestationHeldOAIIds));
-			documents.add(doc);
+			Element linkManifestation =  new Element(
+					"manifestationHeld", AggregateXCRecord.XC_NAMESPACE);
+			String manifestationHeld = getRecordService().getOaiIdentifier(
+					manifestationId, getMetadataService().getService());
+			manifestationHeldOAIIds.add(manifestationHeld);
+			linkManifestation.setText(manifestationHeld);
+			holdingsElement.addContent(linkManifestation.detach());
+			ar.xcRootElement.addContent(holdingsElement);
+			records.add(createRecord(ar, holdingId, (Element)ar.xcRootElement.clone(), manifestationHeldOAIIds));
 			
 			ar.xcRootElement.removeContent();
 		}
@@ -650,29 +620,23 @@ public class XCRecordService extends GenericMetadataServiceService {
 		// Create the Items documents
 		if(ar.xcItemElement.getChildren().size() != 0)
 		{
+			//TODO - when items being being used - see the strategy above for getting ids
 			long itemId = getRepositoryDAO().getNextId();
 			String itemOaiId = getRecordService().getOaiIdentifier(
 					itemId, getMetadataService().getService());
 			
 			ar.xcItemElement.setAttribute("id", itemOaiId);
 			// Create back links to expression
-			for (Document document : documents) {
-				if(document.getRootElement().getChild(
-						"entity", AggregateXCRecord.XC_NAMESPACE).getAttributeValue("type").equals("holdings"))
-				{
-					Element linkExpression =  new Element(
-							"holdingsExemplified", AggregateXCRecord.XC_NAMESPACE);
-					linkExpression.setText(document.getRootElement().getChild(
-							"entity", AggregateXCRecord.XC_NAMESPACE).getAttributeValue("id"));
-					ar.xcItemElement.addContent("\n\t\t").addContent(linkExpression.detach());
-				}
+			for (Long hId : holdingIds) {
+				Element linkExpression =  new Element(
+						"holdingsExemplified", AggregateXCRecord.XC_NAMESPACE);
+				String hoaid = getRecordService().getOaiIdentifier(
+						hId, getMetadataService().getService());
+				linkExpression.setText(hoaid);
+				ar.xcItemElement.addContent(linkExpression.detach());
 			}
-			ar.xcRootElement.addContent("\n\t")
-			 .addContent(ar.xcItemElement)
-			 .addContent("\n");
-			doc = (new Document()).setRootElement((Element)ar.xcRootElement.clone());
-			records.add(createRecord(ar, itemId, "XC-Item", doc, null));
-			documents.add(doc);
+			ar.xcRootElement.addContent(ar.xcItemElement);
+			records.add(createRecord(ar, itemId, (Element)ar.xcRootElement.clone(), null));
 			ar.xcRootElement.removeContent();
 
 		}
@@ -703,12 +667,12 @@ public class XCRecordService extends GenericMetadataServiceService {
 	 * @param transformationService 
 	 * @return
 	 */
-	public List<Record> getSplitXCRecordXMLForHoldingRecord(
+	public List<OutputRecord> getSplitXCRecordXMLForHoldingRecord(
 			AggregateXCRecord ar,
 			long manifestationId) 
 				throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 
-		List<Record> records = new ArrayList<Record>();
+		List<OutputRecord> records = new ArrayList<OutputRecord>();
 		
 		// Create the root document
 		ar.xcRootElement = new Element("frbr", AggregateXCRecord.XC_NAMESPACE);
@@ -735,11 +699,10 @@ public class XCRecordService extends GenericMetadataServiceService {
 					"manifestationHeld", AggregateXCRecord.XC_NAMESPACE);
 			linkManifestation.setText(getRecordService().getOaiIdentifier(manifestationId, 
 					getMetadataService().getService()));
-			holdingsElement.addContent("\n\t\t").addContent(linkManifestation.detach());
+			holdingsElement.addContent(linkManifestation.detach());
 
-			ar.xcRootElement.addContent("\n\t").addContent(holdingsElement.addContent("\n\t")).addContent("\n");
-			Document doc = (new Document()).setRootElement((Element)ar.xcRootElement.clone());
-			records.add(createRecord(ar, holdingId, "XC-Holding", doc, manifestationHeldOAIIds));
+			ar.xcRootElement.addContent(holdingsElement);
+			records.add(createRecord(ar, holdingId, (Element)ar.xcRootElement.clone(), manifestationHeldOAIIds));
 			
 			ar.xcRootElement.removeContent();
 		}

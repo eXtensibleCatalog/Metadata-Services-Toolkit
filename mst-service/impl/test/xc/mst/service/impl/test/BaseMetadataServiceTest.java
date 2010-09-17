@@ -8,8 +8,19 @@
   */
 package xc.mst.service.impl.test;
 
+import org.testng.annotations.BeforeSuite;
+
 import xc.mst.common.test.BaseTest;
 
 public class BaseMetadataServiceTest extends BaseTest {
 
+	protected String getServiceName() {
+		return null;
+	}
+
+	@BeforeSuite
+	@Override
+	public void startup() {
+		super.startup();
+	}
 }

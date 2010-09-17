@@ -58,6 +58,11 @@
 		<context:include-filter type="custom" expression="xc.mst.spring.ServiceTypeFilter" />
 	</context:component-scan>
 	
+	<context:component-scan base-package="xc.mst.services.transformation"
+			use-default-filters="false">
+		<context:include-filter type="custom" expression="xc.mst.services.impl.spring.TestTypeFilter" />
+	</context:component-scan>
+	
 	<bean class="xc.mst.spring.MSTBeanPostProcessor"/>
 
 	<import resource="spring-service-custom.xml"/>

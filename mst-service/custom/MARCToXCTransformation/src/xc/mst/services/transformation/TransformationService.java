@@ -55,6 +55,7 @@ public class TransformationService extends SolrTransformationService {
 	
 	protected TLongLongHashMap bibsYet2ArriveLongId = new TLongLongHashMap();
 	protected Map<String, Long> bibsYet2ArriveStringId = new HashMap<String, Long>();
+	protected List<long[]> uplinks = new ArrayList<long[]>();
 	
 	// Struggled to come up with a good name here.  manifestations are not held,
 	// but holdings pointing to them are.  The point of this is to switch the status
@@ -67,7 +68,7 @@ public class TransformationService extends SolrTransformationService {
 	@Override
 	public void init() {
 		super.init();
-		//TODO load all data structures
+		getTransformationDAO().loadBibMaps(bibsProcessedLongId, bibsProcessedStringId, bibsYet2ArriveLongId, bibsYet2ArriveStringId);
 	}
 	
 	protected Long getLongFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s) {
@@ -125,12 +126,16 @@ public class TransformationService extends SolrTransformationService {
 	protected void endBatch() {
 		try {
 			// persist 4 001->recordId maps
+			getTransformationDAO().persistBibMaps(bibsProcessedLongId, bibsProcessedStringId, 
+					bibsYet2ArriveLongId, bibsYet2ArriveStringId);
 			
 			// persist links
+			getTransformationDAO().persistLinkedRecordIds(uplinks);
+			uplinks.clear();
 			
 			// flip holdings records from H to A based on manifestionIdsPreviouslyHeld
 			//   (use the links table)  
-			
+			getTransformationDAO().activateHeldHoldings(manifestionIdsPreviouslyHeld);
 			manifestionIdsPreviouslyHeld.clear();
 		} catch (Throwable t) {
 			getUtil().throwIt(t);
@@ -179,25 +184,23 @@ public class TransformationService extends SolrTransformationService {
 					//record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
 				}
 				
-				boolean hasBib = false;
-				boolean hasHolding = false;
+				boolean isBib = false;
+				boolean isHolding = false;
 				
 				char leader06 = originalRecord.getLeader().charAt(6);
 				if("abcdefghijkmnoprt".contains(""+leader06)) {
-					hasBib = true;
+					isBib = true;
 				} else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
-					hasHolding = true;
+					isHolding = true;
 				} else { // If leader 6th character is invalid, then log error and do not process that record.
 					logError("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
 					return results;
 				}
 				
 				AggregateXCRecord ar = new AggregateXCRecord();
-				if (hasBib) {
+				if (isBib) {
 					processBibliographicRecord(ar, originalRecord);
-				}
-				// not sure if this should be an else if
-				if (hasHolding) {
+				} else if (isHolding) {
 					processHoldingRecord(ar, originalRecord);
 				}
 				
@@ -217,14 +220,15 @@ public class TransformationService extends SolrTransformationService {
 							throw new RuntimeException("bogus");
 						}
 					}
+				} else {
+					inputRecordCount++;
 				}
-				if (hasBib) {
+				if (isBib) {
 					String bib001 = originalRecord.getControlField("001");
 					Long manifestationId = getManifestationId4BibYet2Arrive(bib001);
 					if (manifestationId != null) {
 						removeManifestationId4BibYet2Arrive(bib001);
 						manifestionIdsPreviouslyHeld.add(manifestationId);
-						//mark held holdings as active
 					} else {
 						if (ar.getPreviousManifestationId() != null) {
 							manifestationId = getRepositoryDAO().getNextId();	
@@ -233,11 +237,11 @@ public class TransformationService extends SolrTransformationService {
 						}
 					}
 					addManifestationId4BibProcessed(bib001, manifestationId);
-					List<Record> bibRecords = getBibliographicRecords(ar, manifestationId);
+					List<OutputRecord> bibRecords = getXCRecordService().getSplitXCRecordXML(uplinks, ar, manifestationId);
 					if (bibRecords != null) {
-						results.add(bibRecords);
+						results.addAll(bibRecords);
 					}
-				} if (hasHolding) {
+				} else if (isHolding) {
 					String holding004 = originalRecord.getControlField("004");
 					Long manifestationId = getManifestationId4BibProcessed(holding004);
 					char status = 0;
@@ -251,9 +255,13 @@ public class TransformationService extends SolrTransformationService {
 							addManifestationId4BibYet2Arrive(holding004, manifestationId);
 						}
 					}
-					List<Record> holdingsRecords = getHoldingsRecords(ar, status);
+					List<OutputRecord> holdingsRecords = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
+							ar, manifestationId);
 					if (holdingsRecords != null) {
-						results.add(holdingsRecords);
+						for (OutputRecord r : holdingsRecords) {
+							r.setStatus(status);
+							results.add(r);	
+						}
 					}
 				}
 				//update service accordingly w/ new record counts
@@ -277,88 +285,47 @@ public class TransformationService extends SolrTransformationService {
 		// Each one processes a different MARC XML field and adds the appropriate
 		// XC fields to transformedRecord based on the field it processes.
 		transformedRecord = process010(originalRecord, transformedRecord);
-		
 		transformedRecord = process015(originalRecord, transformedRecord);
-		
 		transformedRecord = process016(originalRecord, transformedRecord);
-		
 		transformedRecord = process022(originalRecord, transformedRecord);
-		
 		transformedRecord = process024(originalRecord, transformedRecord);
-		
 		transformedRecord = process028(originalRecord, transformedRecord);
-		
 		transformedRecord = process030(originalRecord, transformedRecord);
-		
 		transformedRecord = process035(originalRecord, transformedRecord);
-		
 		transformedRecord = process037(originalRecord, transformedRecord);
-		
 		transformedRecord = process050(originalRecord, transformedRecord);
-		
 		transformedRecord = process055(originalRecord, transformedRecord);
-		
 		transformedRecord = process060(originalRecord, transformedRecord);
-		
 		transformedRecord = process074(originalRecord, transformedRecord);
-		
 		transformedRecord = process082(originalRecord, transformedRecord);
 		transformedRecord = process084(originalRecord, transformedRecord);
-		
 		transformedRecord = process086(originalRecord, transformedRecord);
-		
 		transformedRecord = process090(originalRecord, transformedRecord);
-		
 		transformedRecord = process092(originalRecord, transformedRecord);
-		
 		transformedRecord = process100(originalRecord, transformedRecord);
-		
 		transformedRecord = process110(originalRecord, transformedRecord);
-		
 		transformedRecord = process111(originalRecord, transformedRecord);
-		
 		transformedRecord = process130(originalRecord, transformedRecord);
-		
 		transformedRecord = process210(originalRecord, transformedRecord);
-		
 		transformedRecord = process222(originalRecord, transformedRecord);
-		
 		transformedRecord = process240(originalRecord, transformedRecord);
-		
 		transformedRecord = process243(originalRecord, transformedRecord);
-		
 		transformedRecord = process245(originalRecord, transformedRecord);
-		
 		transformedRecord = process246(originalRecord, transformedRecord);
-		
 		transformedRecord = process247(originalRecord, transformedRecord);
-		
 		transformedRecord = process250(originalRecord, transformedRecord);
-		
 		transformedRecord = process254(originalRecord, transformedRecord);
-		
 		transformedRecord = process255(originalRecord, transformedRecord);
-		
 		transformedRecord = process260(originalRecord, transformedRecord);
-		
 		transformedRecord = process300(originalRecord, transformedRecord);
-		
 		transformedRecord = process310(originalRecord, transformedRecord);
-		
 		transformedRecord = process321(originalRecord, transformedRecord);
-		
 		transformedRecord = process362(originalRecord, transformedRecord);
-		
 		transformedRecord = process440(originalRecord, transformedRecord);
-		
 		transformedRecord = process490(originalRecord, transformedRecord);
-		
 		transformedRecord = process500(originalRecord, transformedRecord);
-		
 		transformedRecord = process501(originalRecord, transformedRecord);
-		
 		transformedRecord = process502(originalRecord, transformedRecord);
-		
 		transformedRecord = process504(originalRecord, transformedRecord);
 		transformedRecord = process505(originalRecord, transformedRecord);
 		transformedRecord = process506(originalRecord, transformedRecord);
@@ -439,54 +406,7 @@ public class TransformationService extends SolrTransformationService {
 		transformedRecord = process710(originalRecord, transformedRecord);
 		transformedRecord = process711(originalRecord, transformedRecord);
 		transformedRecord = process730(originalRecord, transformedRecord);
-	
 	}
-	
-	
-	/*
-	 * Process bibliographic record
-	 */
-	protected List<OutputRecord> getBibliographicRecords(AggregateXCRecord ar, long manifestationRecordId) 
-			throws DataException, DatabaseConfigException, TransformerConfigurationException, IndexException, TransformerException{
-
-		// A list of records resulting from processing the incoming record
-		List<OutputRecord> results = new ArrayList<OutputRecord>();
-
-		// Get the XC records created as output
-		results = getXCRecordService().getSplitXCRecordXML(ar, manifestationRecordId);
-		
-		Record manifestationRecord = null;
-		// Store the bib oai id, bib 001 field and its manifestation in database
-		for (Record outputRecord:results) {
-
-			if (outputRecord.getType().equals("XC-Manifestation")) {
-				manifestationRecord = outputRecord;
-				
-				BibliographicManifestationMapping bibliographicManifestationMapping 
-					= new BibliographicManifestationMapping(record.getOaiIdentifier(), outputRecord.getOaiIdentifier(), originalRecord.getControlField("001"));
-				bibliographicManifestationMappingDAO.insert(bibliographicManifestationMapping);
-				break;
-			}
-		}
-		
-		// Check for any held record
-		heldHoldingRecords = heldHoldingRecordDAO.getByHolding004Field(originalRecord.getControlField("001"));
-		
-		// Get already processed holding record that has matching 004 field
-		List<XCHoldingRecord> xcHoldingRecords = xcHoldingDAO.getByHolding004Field(originalRecord.getControlField("001"));
-		
-		// link the manifestation for already processed xc holding records
-		linkManifestation(xcHoldingRecords, manifestationRecord.getOaiIdentifier());
-		
-		// If the input record is a new record then increment the processed record count
-		if (!updatedInputRecord  && results.size() > 0) {
-			inputRecordCount++;
-		}
-		
-		return results;
-	
-	}
-	
 	
 	/*
 	 * Process holding record 
@@ -511,22 +431,5 @@ public class TransformationService extends SolrTransformationService {
 		transformedRecord = holdingsProcess843(originalRecord, transformedRecord);
 		*/
 	}
-	
-	protected List<Record> getHoldingRecords(AggregateXCRecord ar, long manifestationId) {
-		try {
-			// Get the XC records created as output & Link Holding to manifestation
-			List<Record> results = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
-					ar, manifestationId);
-			
-			// If the input record is a new record then increment the processed record count
-			if (true  && results.size() > 0) {
-				inputRecordCount++;
-			}
-			
-			return results;
-		} catch (Throwable t) {
-			LOG.error("", t);
-		}
-		return null;
-	}
+
 }

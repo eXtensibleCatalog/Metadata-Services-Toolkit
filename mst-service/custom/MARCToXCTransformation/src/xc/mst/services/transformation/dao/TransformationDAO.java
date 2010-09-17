@@ -8,13 +8,23 @@
   */
 package xc.mst.services.transformation.dao;
 
+import gnu.trove.TLongArrayList;
 import gnu.trove.TLongLongHashMap;
+import gnu.trove.TLongLongProcedure;
+import gnu.trove.TLongProcedure;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+
+import xc.mst.bo.record.Record;
 import xc.mst.dao.BaseDAO;
+import xc.mst.utils.TimingLogger;
 
 /**
  * 
@@ -23,12 +33,33 @@ import xc.mst.dao.BaseDAO;
  */
 public class TransformationDAO extends BaseDAO {
 	
+	protected final static String bibsProcessedLongId_table = "bibsProcessedLongId";
+	protected final static String bibsProcessedStringId_table = "bibsProcessedStringId";
+	protected final static String bibsYet2ArriveLongId_table = "bibsYet2ArriveLongId";
+	protected final static String bibsYet2ArriveStringId_table = "bibsYet2ArriveStringId";
+	protected final static String links_table = "links";
+	
 	public void persistBibMaps(
 			TLongLongHashMap bibsProcessedLongId, 
 			Map<String, Long> bibsProcessedStringId,
 			TLongLongHashMap bibsYet2ArriveLongId,
 			Map<String, Long> bibsYet2ArriveStringId ) {
-		
+		if (bibsProcessedLongId != null && bibsProcessedLongId.size() > 0) {
+			TimingLogger.start(bibsProcessedLongId_table+".insert");
+			final List<Object[]> params = new ArrayList<Object[]>();
+			bibsProcessedLongId.forEachEntry(new TLongLongProcedure() {
+				public boolean execute(long key, long value) {
+					params.add(new Object[] {key, value});
+					return true;
+				}
+			});
+			String sql =
+				"insert ignore into "+bibsProcessedLongId_table+
+				" (bib_001, record_id) "+
+				"values (?,?) ;";
+	        int[] updateCounts = this.simpleJdbcTemplate.batchUpdate(sql, params);
+	        TimingLogger.stop(bibsProcessedLongId_table+".insert");
+		}
 	}
 	
 	public void loadBibMaps	(
@@ -44,7 +75,11 @@ public class TransformationDAO extends BaseDAO {
 		return linkedRecordsIds;
 	}
 	
-	public void persistLinkedRecordIds(long[] recordIds) {
+	public void persistLinkedRecordIds(List<long[]> links) {
+		
+	}
+	
+	public void activateHeldHoldings(TLongArrayList manifestionIdsPreviouslyHeld) {
 		
 	}
 }

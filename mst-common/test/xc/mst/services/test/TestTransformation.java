@@ -293,7 +293,7 @@ public class TestTransformation extends BaseTest {
 			record.setOaiXml(inputRecords.get(file));
 			record.setFormat(formatDao.getById(1));
 			record.setProvider(providerDao.getById(1));
-			record.setOaiIdentifier("oai:rochester");
+			//record.setOaiIdentifier("oai:rochester");
 			record.setProvider(providerDao.getById(1));
 			record.addInputForService(serviceDao.getById(transformationServiceId));
 			// Add unprocessed records to index manager

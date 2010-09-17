@@ -33,26 +33,6 @@ public class Expression extends Record
 	} // end method getIndexedObjectType()
 
 	/**
-	 * Sets the expression's XC expression ID
-	 *
-	 * @param newExpressionId The expression's new XC expression ID
-	 */
-	public void setXcExpressionId(long newExpressionId)
-	{
-		frbrLevelId = newExpressionId;
-	} // end method setXcExpressionId(long)
-
-	/**
-	 * Gets the expression's XC expression ID
-	 *
-	 * @return The expression's XC expression ID
-	 */
-	public long getXcExpressionId()
-	{
-		return frbrLevelId;
-	} // end method getXcExpressionId()
-
-	/**
 	 * Adds an up link to the passed work element
 	 *
 	 * @param work The work element to link to
@@ -86,13 +66,11 @@ public class Expression extends Record
 		expression.setDeleted(record.getDeleted());
 		expression.setMessages(record.getMessages());
 		expression.setFormat(record.getFormat());
-		expression.setFrbrLevelId(record.getFrbrLevelId());
 		expression.setHarvest(record.getHarvest());
 		expression.setId(record.getId());
 		expression.setInputForServices(record.getInputForServices());
 		expression.setOaiDatestamp(record.getOaiDatestamp());
 		expression.setOaiHeader(record.getOaiHeader());
-		expression.setOaiIdentifier(record.getOaiIdentifier());
 		expression.setOaiXml(record.getOaiXml());
 		expression.setProcessedByServices(record.getProcessedByServices());
 		expression.setProcessedFrom(record.getProcessedFrom());

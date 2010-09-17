@@ -37,11 +37,11 @@ import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.email.Emailer;
-import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
 import xc.mst.service.impl.test.TestRepository;
 import xc.mst.services.MetadataService;
 import xc.mst.services.impl.dao.GenericMetadataDAO;
+import xc.mst.services.impl.spring.TestTypeFilter;
 import xc.mst.utils.TimingLogger;
 
 /**
@@ -88,6 +88,10 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	
 	static {
 		LOG.debug("GenericMetadataService class loaded!!!");
+	}
+	
+	public void runTests() {
+		TestTypeFilter.runTests();
 	}
 	
 	public ApplicationContext getApplicationContext() {

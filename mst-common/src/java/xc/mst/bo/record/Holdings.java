@@ -46,26 +46,6 @@ public class Holdings extends Record
 	} // end method getIndexedObjectType()
 
 	/**
-	 * Sets the holdings's XC holdings ID
-	 *
-	 * @param newHoldingsId The holdings's new XC holdings ID
-	 */
-	public void setXcHoldingsId(long newHoldingsId)
-	{
-		frbrLevelId = newHoldingsId;
-	} // end method setXcHoldingsId(long)
-
-	/**
-	 * Gets the holdings's XC holdings ID
-	 *
-	 * @return The holdings's XC holdings ID
-	 */
-	public long getXcHoldingsId()
-	{
-		return frbrLevelId;
-	} // end method getXcHoldingsId()
-
-	/**
 	 * Adds a recordId trait to the holdings
 	 *
 	 * @param type The type attribute of the recordId element
@@ -215,13 +195,11 @@ public class Holdings extends Record
 		holdings.setDeleted(record.getDeleted());
 		holdings.setMessages(record.getMessages());
 		holdings.setFormat(record.getFormat());
-		holdings.setFrbrLevelId(record.getFrbrLevelId());
 		holdings.setHarvest(record.getHarvest());
 		holdings.setId(record.getId());
 		holdings.setInputForServices(record.getInputForServices());
 		holdings.setOaiDatestamp(record.getOaiDatestamp());
 		holdings.setOaiHeader(record.getOaiHeader());
-		holdings.setOaiIdentifier(record.getOaiIdentifier());
 		holdings.setOaiXml(record.getOaiXml());
 		holdings.setProcessedByServices(record.getProcessedByServices());
 		holdings.setProcessedFrom(record.getProcessedFrom());
