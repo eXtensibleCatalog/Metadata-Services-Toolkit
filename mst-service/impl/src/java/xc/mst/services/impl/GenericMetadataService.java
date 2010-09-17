@@ -40,6 +40,7 @@ import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.service.impl.test.TestRepository;
 import xc.mst.services.MetadataService;
+import xc.mst.services.MetadataServiceExtras;
 import xc.mst.services.impl.dao.GenericMetadataDAO;
 import xc.mst.services.impl.spring.TestTypeFilter;
 import xc.mst.utils.TimingLogger;
@@ -53,7 +54,8 @@ import xc.mst.utils.TimingLogger;
  * @author Eric Osisek
  */
 
-public abstract class GenericMetadataService extends SolrMetadataService implements MetadataService, ApplicationContextAware {
+public abstract class GenericMetadataService extends SolrMetadataService 
+		implements MetadataService, MetadataServiceExtras, ApplicationContextAware {
 
 	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_PROCESSING);
 
@@ -91,7 +93,7 @@ public abstract class GenericMetadataService extends SolrMetadataService impleme
 	}
 	
 	public void runTests() {
-		TestTypeFilter.runTests();
+		TestTypeFilter.runTests(this);
 	}
 	
 	public ApplicationContext getApplicationContext() {

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import xc.mst.service.impl.test.BaseInternalTest;
@@ -16,23 +15,6 @@ import xc.mst.services.transformation.dao.TransformationDAO;
 public class TransformationDaoTest extends BaseInternalTest {
 	
 	private final static Logger LOG = Logger.getLogger(TransformationDaoTest.class);
-	
-	@BeforeSuite
-	@Override
-	public void startup() {
-		/*
-		super.startup();
-		try {
-			repositoryDAO.deleteSchema(getServiceName());
-		} catch (Throwable t) {
-		}
-		try {
-			getServicesService().addNewService(getServiceName());
-		} catch (Throwable t) {
-			LOG.error("", t);
-		}
-		*/
-	}
 
 	@Test
 	public void testPersistBibMaps() {
@@ -45,7 +27,7 @@ public class TransformationDaoTest extends BaseInternalTest {
 			parent = getClass().getClassLoader().getParent();	
 		}
 		
-		TransformationDAO transformationDAO = ((TransformationService)ac.getBean("MetadataService")).getTransformationDAO();
+		TransformationDAO transformationDAO = ((TransformationService)getMetadataService()).getTransformationDAO();
 		TLongLongHashMap bibsProcessedLongId = new TLongLongHashMap();
 		Map<String, Long> bibsProcessedStringId = new HashMap<String, Long>();
 		TLongLongHashMap bibsYet2ArriveLongId = new TLongLongHashMap();

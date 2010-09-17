@@ -74,14 +74,29 @@
 		 <fileset dir="ivy" includes="*.jar" />
 	</path>
 
+	<path id="classpath.mst">
+		<fileset dir="${build.lib}">
+			<include name="*.jar" />
+			<exclude name="mst-service*" />
+		</fileset>
+	</path>
+
 	<path id="classpath.compile">
 		<fileset dir="${build.lib}">
+			<include name="*.jar" />
+			<exclude name="mst-service*" />
+		</fileset>
+		<fileset dir="${build.zip.lib}">
 			<include name="*.jar" />
 		</fileset>
 	</path>
 
 	<path id="classpath.test.compile">
 		<fileset dir="${build.lib}">
+			<include name="*.jar" />
+			<exclude name="mst-service*" />
+		</fileset>
+		<fileset dir="${build.zip.lib}">
 			<include name="*.jar" />
 		</fileset>
 		<pathelement path="${build.classes}" />
@@ -90,8 +105,11 @@
 	<path id="classpath.test.run">
 		<fileset dir="${build.lib}">
 			<include name="*.jar" />
+			<exclude name="mst-service*" />
 		</fileset>
+		<!--
 		<pathelement path="${build.test.classes}" />
+		-->
 	</path>
 
 	<target name="echo.path">
@@ -125,6 +143,19 @@
 	<target name="compile" depends="retrieve, compile.nodep" />
 
 	<target name="compile.nodep" depends="init">
+		<copy todir="${build.zip.lib}" overwrite="true">
+			<fileset dir="${build.lib}">
+				<include name="mst-service-impl*.jar" />
+				<!--
+				anything jars you've added in your ivy-custom.xml should be included in the zip
+				all the other jars are already loaded into the mst-platform
+				<include name="" />
+				-->
+			</fileset>
+		</copy>
+		<delete>
+			<fileset dir="${build.lib}" includes="mst-service*" />
+		</delete>
 		<javac srcdir="${src.dir}"
 			destdir="${build.classes}"
 			classpathref="classpath.compile"
@@ -214,7 +245,7 @@
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/MST-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />
-		<sql classpathref="classpath.compile"
+		<sql classpathref="classpath.mst"
 				driver="com.mysql.jdbc.Driver"
 				url="${DatabaseUrl}"
 				userid="${DatabaseUsername}"
@@ -230,7 +261,7 @@
 	<target name="unzip-base-tests">
 		<echo>build.test.classes: ${build.test.classes}</echo>
 		<unzip dest="${build.test.classes}">
-			<fileset dir="${build.lib}">
+			<fileset dir="${build..zip.lib}">
 				<include name="**/mst-service-impl-*.jar"/>
 			</fileset>
 		</unzip>
@@ -243,9 +274,9 @@
 		</delete>
 	</target>
 
-	<target name="test" depends="install-mst, unzip-base-tests, compile.test, test.nodep" />
+	<target name="test" depends="install-mst, compile.test, unzip-base-tests, test.nodep" />
 	<target name="test.nodep" depends="init.test, compile.test.nodep">
-		<taskdef name="testng" classpathref="classpath.compile"
+		<taskdef name="testng" classpathref="classpath.mst"
 			classname="org.testng.TestNGAntTask" />
 
 		<testng classpathref="classpath.test.run" outputdir="${build.test}"
@@ -264,7 +295,7 @@
 	<target name="test.internals" depends="install-mst, compile.test, test.internals.nodep" />
 	<target name="test.internals.nodep" depends="init.test, compile.test.nodep">
 		<java classpathref="classpath.test.run" 
-				classname="xc.mst.service.impl.test.MetadataServiceSpecificTest"
+				classname="xc.mst.services.test.MetadataServiceSpecificTest"
 				fork="true" 
 				dir="${build.dir}" >
 			<env key="service.name" value="${service.name}"/>

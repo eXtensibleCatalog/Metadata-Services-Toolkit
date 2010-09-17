@@ -1,9 +1,10 @@
-package xc.mst.service.impl.test;
+package xc.mst.services.test;
 
+import xc.mst.common.test.BaseTest;
 import xc.mst.services.MetadataService;
-import xc.mst.services.impl.GenericMetadataService;
+import xc.mst.services.MetadataServiceExtras;
 
-public class MetadataServiceSpecificTest extends BaseMetadataServiceTest {
+public class MetadataServiceSpecificTest extends BaseTest {
 	
 	protected String getServiceName() {
 		return System.getenv("service.name");
@@ -19,7 +20,9 @@ public class MetadataServiceSpecificTest extends BaseMetadataServiceTest {
 			getServicesService().addNewService(getServiceName());
 			System.out.println("getServiceName(): "+getServiceName());
 			MetadataService ms = getServicesService().getServiceByName(getServiceName()).getMetadataService();
-			((GenericMetadataService)ms).runTests();
+			if (ms instanceof MetadataServiceExtras) {
+				((MetadataServiceExtras)ms).runTests();
+			}
 			shutdown();
 		} catch (Throwable t) {
 			t.printStackTrace();

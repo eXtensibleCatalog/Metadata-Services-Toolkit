@@ -21,6 +21,7 @@ import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 
 import xc.mst.service.impl.test.BaseInternalTest;
+import xc.mst.services.MetadataService;
 import xc.mst.spring.MSTAutoBeanHelper;
 
 /**
@@ -33,7 +34,8 @@ public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 	private static final Logger LOG = Logger.getLogger(TestTypeFilter.class);
 	
 	@SuppressWarnings("unchecked")
-	private static List<Class> testClasses = new ArrayList<Class>(); 
+	private static List<Class> testClasses = new ArrayList<Class>();
+	public static MetadataService metadataService = null;
 
 	@SuppressWarnings("unchecked")
 	public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory)
@@ -42,9 +44,12 @@ public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 			ClassMetadata classMetadata = metadataReader.getClassMetadata();
 			String className = classMetadata.getClassName();
 			Class c = getClassLoader().loadClass(className);
+			LOG.debug("checking class: "+c);
+			System.out.println("checking class"+c);
 			if (BaseInternalTest.class.isAssignableFrom(c) && 
 					!BaseInternalTest.class.equals(c)) {
 				testClasses.add(c);
+				LOG.debug("adding class to test suite: "+c);
 			}
 		} catch (Throwable t) {
 			LOG.debug("", t);
@@ -52,7 +57,8 @@ public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 		return false;
 	}
 	
-	public static void runTests() {
+	public static void runTests(MetadataService metadataService) {
+		TestTypeFilter.metadataService = metadataService;
 		try {
 			TestListenerAdapter tla = new TestListenerAdapter();
 			TestNG testng = new TestNG();
