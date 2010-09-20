@@ -6,7 +6,7 @@
   * website http://www.extensiblecatalog.org/.
   *
   */
-package xc.mst.services.impl;
+package xc.mst.services;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,7 +38,6 @@ import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.email.Emailer;
 import xc.mst.manager.BaseManager;
 import xc.mst.manager.IndexException;
-import xc.mst.services.ServiceValidationException;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.ServiceUtil;
 import xc.mst.utils.TimingLogger;

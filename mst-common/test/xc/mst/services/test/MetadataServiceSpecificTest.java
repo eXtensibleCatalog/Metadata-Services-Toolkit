@@ -13,11 +13,14 @@ public class MetadataServiceSpecificTest extends BaseTest {
 	protected void go() {
 		try {
 			startup();
-			try {
-				repositoryDAO.deleteSchema(getServiceName());
-			} catch (Throwable t) {
+			boolean skipMstInstall = "TRUE".equals(System.getenv("service.name").toUpperCase()); 
+			if (!skipMstInstall) {
+				try {
+					getRepositoryDAO().deleteSchema(getServiceName());
+				} catch (Throwable t) {
+				}
+				getServicesService().addNewService(getServiceName());
 			}
-			getServicesService().addNewService(getServiceName());
 			System.out.println("getServiceName(): "+getServiceName());
 			MetadataService ms = getServicesService().getServiceByName(getServiceName()).getMetadataService();
 			if (ms instanceof MetadataServiceExtras) {

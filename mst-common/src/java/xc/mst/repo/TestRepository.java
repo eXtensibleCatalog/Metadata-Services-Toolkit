@@ -6,7 +6,7 @@
   * website http://www.extensiblecatalog.org/.
   *
   */
-package xc.mst.service.impl.test;
+package xc.mst.repo;
 
 import gnu.trove.TLongHashSet;
 import gnu.trove.TLongObjectHashMap;
@@ -35,7 +35,6 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
-import xc.mst.repo.Repository;
 import xc.mst.utils.Util;
 import xc.mst.utils.XmlHelper;
 

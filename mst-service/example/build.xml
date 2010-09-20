@@ -22,13 +22,20 @@
 		<mkdir dir="${ivy.dir}" />
 	</target>
 
-	<target name="download-ivy" unless="skip.download" depends="init">
+	<target name="check.skip.download">
+		<available property="skip.download" file="${ivy.dir}" />
+	</target>
+
+	<target name="ivy.download" unless="skip.download" depends="init, check.skip.download">
 		<mkdir dir="${ivy.dir}" />
 		<!--  download Ivy from web site so that it can be used
 				even without any special installation -->
 		<echo message="Please wait this may take a few minutes - installing ivy..." />
 		<get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.version}/ivy-${ivy.version}.jar"
 			dest="${ivy.jar}" usetimestamp="true" />
+	</target>
+
+	<target name="ivy.init" depends="ivy.download">
 		<taskdef resource="org/apache/ivy/ant/antlib.xml"
 				uri="antlib:org.apache.ivy.ant"
 				classpathref="ivy.lib.path" />
@@ -65,7 +72,7 @@
 	</target>
 
 	<!-- clean the ivy cache -->
-	<target name="clean-cache" depends="download-ivy"
+	<target name="clean-cache" depends="ivy.init"
 	   description="--> clean the ivy cache">
 	   <ivy:cleancache />
 	</target>
@@ -127,7 +134,7 @@
 		</echo>
 	</target>
 
-	<target name="resolve" depends="download-ivy">
+	<target name="resolve" depends="ivy.init">
 		<ivy:resolve file="ivy.xml"/>
 	</target>
 
@@ -138,11 +145,6 @@
 
 	<target name="retrieve" depends="ivy-report">
 		<ivy:retrieve sync="true" pattern="${build.lib}/[artifact]-[revision].[ext]"/>
-	</target>
-
-	<target name="compile" depends="retrieve, compile.nodep" />
-
-	<target name="compile.nodep" depends="init">
 		<copy todir="${build.zip.lib}" overwrite="true">
 			<fileset dir="${build.lib}">
 				<include name="mst-service-impl*.jar" />
@@ -156,12 +158,28 @@
 		<delete>
 			<fileset dir="${build.lib}" includes="mst-service*" />
 		</delete>
+	</target>
+
+	<target name="compile" depends="retrieve, compile.nodep"/>
+	<target name="compile.nodep" depends="init">
 		<javac srcdir="${src.dir}"
 			destdir="${build.classes}"
 			classpathref="classpath.compile"
 			debug="on"
 			deprecation="on"
-			debuglevel="lines,vars,source"/>
+			debuglevel="lines,vars,source">
+			<!--
+			<classpath id="classpath.compile">
+				<fileset dir="${build.lib}">
+					<include name="*.jar" />
+					<exclude name="mst-service*" />
+				</fileset>
+				<fileset dir="${build.zip.lib}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			-->
+		</javac>
 	</target>
 
 	<target name="copy-resources" depends="copy-custom-libs, compile, copy-resources.nodep" />
@@ -241,6 +259,10 @@
 		<property name="test" value="" />
 	</target>
 
+	<target name="init.skip.mst.install" unless="${skip.mst.install}">
+		<property name="skip.mst.install" value="" />
+	</target>
+
 	<target name="install-mst">
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/MST-instances-${mst-instances.version}.jar"
@@ -261,12 +283,11 @@
 	<target name="unzip-base-tests">
 		<echo>build.test.classes: ${build.test.classes}</echo>
 		<unzip dest="${build.test.classes}">
-			<fileset dir="${build..zip.lib}">
+			<fileset dir="${build.zip.lib}">
 				<include name="**/mst-service-impl-*.jar"/>
 			</fileset>
 		</unzip>
 		<delete>
-			<!-- change the name from service to services -->
 			<fileset dir="${build.test.classes}/xc/mst/service/impl/test">
 				<exclude name="**/ProcessFilesTest.class" />
 			</fileset>
@@ -275,12 +296,30 @@
 	</target>
 
 	<target name="test" depends="install-mst, compile.test, unzip-base-tests, test.nodep" />
-	<target name="test.nodep" depends="init.test, compile.test.nodep">
+	<target name="test.nodep" depends="init.test, init.skip.mst.install, compile.test.nodep">
+		<!--
 		<taskdef name="testng" classpathref="classpath.mst"
 			classname="org.testng.TestNGAntTask" />
 
 		<testng classpathref="classpath.test.run" outputdir="${build.test}"
 				workingDir="${build.dir}">
+			<env key="service.name" value="${service.name}"/>
+			<env key="service.test" value="${test}"/>
+			<jvmarg value="-server" />
+			<jvmarg value="-Xms700M" />
+			<jvmarg value="-Xmx700M" />
+			<jvmarg value="-Xms3000M" />
+			<jvmarg value="-Xmx3000M" />
+			<classfileset dir="${build.test.classes}" includes="**/*${test}*.class"/>
+		</testng>
+		-->
+		<java classpathref="classpath.test.run" 
+				classname="xc.mst.services.test.MetadataServiceSpecificTest"
+				fork="true" 
+				dir="${build.dir}" >
+			<env key="service.name" value="${service.name}"/>
+			<env key="service.test" value="${test}"/>
+			<env key="skip.mst.install" value="${skip.mst.install}"/>
 			<jvmarg value="-server" />
 			<!--
 			<jvmarg value="-Xms700M" />
@@ -288,8 +327,7 @@
 			<jvmarg value="-Xms3000M" />
 			<jvmarg value="-Xmx3000M" />
 			-->
-			<classfileset dir="${build.test.classes}" includes="**/*${test}*.class"/>
-		</testng>
+		</java>
 	</target>
 
 	<target name="test.internals" depends="install-mst, compile.test, test.internals.nodep" />
@@ -303,7 +341,6 @@
 	</target>
 
 	<target name="start2finishtest" depends="install-mst, compile.test" >
-		<property name="abs.build.dir" location="${build.dir}" />
 		<property name="test" value="StartToFinishTest" />
 		<ant target="test" inheritAll="true" />
 	</target>

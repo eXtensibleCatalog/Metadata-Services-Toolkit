@@ -7,7 +7,7 @@
   *
   */
 
-package xc.mst.services.impl;
+package xc.mst.services;
 
 
 import gnu.trove.TLongHashSet;
@@ -36,13 +36,11 @@ import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
+import xc.mst.dao.GenericMetadataDAO;
 import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
-import xc.mst.service.impl.test.TestRepository;
-import xc.mst.services.MetadataService;
-import xc.mst.services.MetadataServiceExtras;
-import xc.mst.services.impl.dao.GenericMetadataDAO;
-import xc.mst.services.impl.spring.TestTypeFilter;
+import xc.mst.repo.TestRepository;
+import xc.mst.spring.TestTypeFilter;
 import xc.mst.utils.TimingLogger;
 
 /**

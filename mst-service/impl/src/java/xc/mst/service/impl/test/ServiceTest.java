@@ -16,6 +16,7 @@ import xc.mst.bo.service.Service;
 import xc.mst.common.test.BaseTest;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataService;
+import xc.mst.utils.MSTConfiguration;
 
 public class ServiceTest extends BaseTest {
 	
@@ -38,9 +39,11 @@ public class ServiceTest extends BaseTest {
 			MetadataService ms = s.getMetadataService();
 			LOG.debug("ms: "+ms);
 			Repository srepo = ms.getRepository();
-			repositoryDAO.dropTables(srepo.getName());
+			getRepositoryDAO().dropTables(srepo.getName());
 			srepo.installOrUpdateIfNecessary(null, s.getVersion());
 			
+			Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
+			repo.setName("r1");
 			ms.process(repo, null, null, null);
 		} catch (Throwable t) {
 			LOG.error("", t);

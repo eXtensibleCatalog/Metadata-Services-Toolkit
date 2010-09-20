@@ -8,11 +8,11 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
-import xc.mst.service.impl.test.BaseInternalTest;
 import xc.mst.services.transformation.TransformationService;
 import xc.mst.services.transformation.dao.TransformationDAO;
+import xc.mst.test.BaseMetadataServiceTest;
 
-public class TransformationDaoTest extends BaseInternalTest {
+public class TransformationDaoTest extends BaseMetadataServiceTest {
 	
 	private final static Logger LOG = Logger.getLogger(TransformationDaoTest.class);
 

@@ -6,11 +6,10 @@
   * website http://www.extensiblecatalog.org/.
   *
   */
-package xc.mst.services.impl.dao;
+package xc.mst.dao;
 
 import org.apache.log4j.Logger;
 
-import xc.mst.dao.BaseDAO;
 
 public class GenericMetadataDAO extends BaseDAO {
 	

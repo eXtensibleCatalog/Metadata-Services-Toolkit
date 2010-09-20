@@ -65,13 +65,16 @@
 	<target name="mc.compile" depends="mc.retrieve, mc.compile.nodep" />
 
 	<target name="mc.compile.nodep" depends="mc.init">
-		<javac srcdir="${mc.src.java}"
+		<javac 
 			includeantruntime="false"
 			destdir="${mc.build.classes}"
 			classpathref="mc.classpath.compile"
 			debug="on"
 			deprecation="on"
-			debuglevel="lines,vars,source"/>
+			debuglevel="lines,vars,source">
+			<src path="${mc.src.java}" />
+			<src path="${mc.test.dir}" />
+		</javac>
 	</target>
 
 	<target name="mc.copy-resources" depends="mc.compile, mc.copy-resources.nodep" />

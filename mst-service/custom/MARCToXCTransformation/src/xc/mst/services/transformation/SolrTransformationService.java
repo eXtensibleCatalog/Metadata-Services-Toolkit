@@ -20,8 +20,8 @@ import org.jdom.Element;
 import org.jdom.Namespace;
 
 import xc.mst.constants.Constants;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.services.ServiceValidationException;
-import xc.mst.services.impl.GenericMetadataService;
 import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
 import xc.mst.services.transformation.bo.AggregateXCRecord;
 import xc.mst.services.transformation.bo.MarcXmlRecord;

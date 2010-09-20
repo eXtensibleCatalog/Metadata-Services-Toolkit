@@ -82,7 +82,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 			assert numberOfRecords == 28 : " Number of harvested records should be 175 but instead it is " + numberOfRecords;
 			LOG.debug("Number of records harvested out : " + numberOfRecords);
 		} catch (Throwable t) {
-			util.throwIt(t);
+			getUtil().throwIt(t);
 		}
 
 	}

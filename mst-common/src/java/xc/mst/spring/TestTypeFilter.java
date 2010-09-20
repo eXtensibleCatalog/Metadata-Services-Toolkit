@@ -6,12 +6,13 @@
   * website http://www.extensiblecatalog.org/.
   *
   */
-package xc.mst.services.impl.spring;
+package xc.mst.spring;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.core.type.ClassMetadata;
 import org.springframework.core.type.classreading.MetadataReader;
@@ -20,9 +21,8 @@ import org.springframework.core.type.filter.TypeFilter;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 
-import xc.mst.service.impl.test.BaseInternalTest;
 import xc.mst.services.MetadataService;
-import xc.mst.spring.MSTAutoBeanHelper;
+import xc.mst.test.BaseMetadataServiceTest;
 
 /**
  * 
@@ -45,11 +45,15 @@ public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 			String className = classMetadata.getClassName();
 			Class c = getClassLoader().loadClass(className);
 			LOG.debug("checking class: "+c);
-			System.out.println("checking class"+c);
-			if (BaseInternalTest.class.isAssignableFrom(c) && 
-					!BaseInternalTest.class.equals(c)) {
-				testClasses.add(c);
-				LOG.debug("adding class to test suite: "+c);
+			if (BaseMetadataServiceTest.class.isAssignableFrom(c) && 
+					!BaseMetadataServiceTest.class.equals(c)) {
+				String filter = System.getenv("service.test");
+				LOG.debug("filter: "+filter);
+				LOG.debug("c.getName(): "+c.getName());
+				if (StringUtils.isEmpty(filter) || c.getName().contains(filter)) {
+					testClasses.add(c);
+					LOG.debug("adding class to test suite: "+c);
+				}
 			}
 		} catch (Throwable t) {
 			LOG.debug("", t);

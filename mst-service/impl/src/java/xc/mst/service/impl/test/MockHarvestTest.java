@@ -30,7 +30,7 @@ import xc.mst.oai.OaiRequestBean;
 import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
-import xc.mst.services.impl.GenericMetadataService;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 import xc.mst.utils.XmlHelper;
@@ -97,7 +97,7 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 			compareAgainstExpectedOutput();
 			
 		} catch (Throwable t) {
-			util.throwIt(t);
+			getUtil().throwIt(t);
 		}
 	}
 	
@@ -110,7 +110,7 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 		provider.setDescription("Repository used in TestNG tests");
 		provider.setOaiProviderUrl(getProviderUrl());
 		provider.setCreatedAt(new java.util.Date());
-		providerService.insertProvider(provider);
+		getProviderService().insertProvider(provider);
 		
 		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(provider.getName());

@@ -6,21 +6,28 @@
   * website http://www.extensiblecatalog.org/.
   *
   */
-package xc.mst.service.impl.test;
-
-import org.testng.annotations.BeforeSuite;
+package xc.mst.test;
 
 import xc.mst.common.test.BaseTest;
+import xc.mst.services.MetadataService;
+import xc.mst.spring.TestTypeFilter;
 
 public class BaseMetadataServiceTest extends BaseTest {
-
+	
 	protected String getServiceName() {
-		return null;
+		return System.getenv("service.name");
 	}
-
-	@BeforeSuite
+	
+	protected MetadataService getMetadataService() {
+		return TestTypeFilter.metadataService;
+	}
+	
 	@Override
 	public void startup() {
-		super.startup();
 	}
+	
+	@Override
+	public void shutdown() {
+	}
+	
 }

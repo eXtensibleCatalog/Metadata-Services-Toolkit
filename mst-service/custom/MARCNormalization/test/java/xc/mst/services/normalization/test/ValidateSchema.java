@@ -44,13 +44,13 @@ public class ValidateSchema extends BaseTest {
 				if (!file.endsWith(".xml")) {
 					continue;
 				}
-				String xml = util.slurp(MockHarvestTest.EXPECTED_OUTPUT_FOLDER+"/randys-30/"+file);
+				String xml = getUtil().slurp(MockHarvestTest.EXPECTED_OUTPUT_FOLDER+"/randys-30/"+file);
 				Document doc = builder.build(new StringReader(xml));
 				LOG.debug("validated "+file);
 			}
 			
 		} catch (Throwable t) {
-			util.throwIt(t);
+			getUtil().throwIt(t);
 		}
 	}
 

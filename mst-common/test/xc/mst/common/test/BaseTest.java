@@ -36,7 +36,6 @@ import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.repository.SetService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
-import xc.mst.repo.Repository;
 import xc.mst.repo.RepositoryDAO;
 import xc.mst.repo.RepositoryService;
 import xc.mst.scheduling.Scheduler;
@@ -52,24 +51,6 @@ public class BaseTest {
 	protected static final Logger LOG = Logger.getLogger(BaseTest.class);
 	
 	protected ApplicationContext applicationContext = null;
-	protected JdbcTemplate jdbcTemplate = null;
-	
-	protected Util util = null;
-	protected Repository repo = null;
-	protected RepositoryDAO repositoryDAO = null;
-	protected RecordService recordService = null;
-	protected ProviderService providerService = null;
-	protected ScheduleService scheduleService = null;
-	protected FormatService formatService = null;
-	protected SetService setService = null;
-	protected UserService userService = null;	 	
-	protected ServerService serverService = null;
-	protected ValidateRepository validateRepository = null;
-	protected FormatDAO formatDAO = null;
-	protected SetDAO setDAO = null;
-	protected HarvestScheduleDAO harvestScheduleDAO = null;
-	protected ProcessingDirectiveDAO processingDirectiveDAO = null;
-	protected Scheduler scheduler = null;
 	protected XmlHelper xmlHelper = new XmlHelper();
 
 	@BeforeSuite
@@ -81,25 +62,6 @@ public class BaseTest {
 		} catch (Throwable t) {
 			t.printStackTrace(System.out);
 		}
-		util = (Util)MSTConfiguration.getInstance().getBean("Util");
-		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
-		repo.setName("r1");
-		repositoryDAO = (RepositoryDAO)getBean("RepositoryDAO");
-		recordService = (RecordService)getBean("RecordService");
-		providerService = (ProviderService)getBean("ProviderService");
-		scheduleService = (ScheduleService)getBean("ScheduleService");
-		formatService = (FormatService)getBean("FormatService");
-		setService = (SetService)getBean("SetService");
-		userService = (UserService)getBean("UserService");	 	
-		serverService = (ServerService)getBean("ServerService");
-		validateRepository = (ValidateRepository)getBean("ValidateRepository");
-		formatDAO = (FormatDAO)getBean("FormatDAO");
-		harvestScheduleDAO = (HarvestScheduleDAO)getBean("HarvestScheduleDAO");
-		setDAO = (SetDAO)getBean("SetDAO");  
-		processingDirectiveDAO = (ProcessingDirectiveDAO)getBean("ProcessingDirectiveDAO");
-		scheduler = (Scheduler)getBean("Scheduler");
-		
-		jdbcTemplate = new JdbcTemplate((DataSource)getBean("DataSource"));
 		
 		LOG.debug("startup complete");
 		/*
@@ -168,5 +130,53 @@ public class BaseTest {
 	
 	protected SolrIndexManager getSolrIndexManager() {
 		return (SolrIndexManager)getBean("SolrIndexManager");
+	}
+	
+	protected Util getUtil() {
+		return (Util)MSTConfiguration.getInstance().getBean("Util");
+	}
+	
+	protected RecordService getRecordService() {
+		return (RecordService)getBean("RecordService");
+	}
+
+	protected ProviderService getProviderService() {
+		return (ProviderService)getBean("ProviderService");	
+	}
+	
+	protected ScheduleService getScheduleService() {
+		return (ScheduleService)getBean("ScheduleService");	
+	}
+	
+	protected FormatService getFormatService() {
+		return (FormatService)getBean("FormatService");
+	}
+	
+	protected UserService getUserService() {
+		return (UserService)getBean("UserService");
+	}
+		 	
+	protected ServerService getServerService() {
+		return (ServerService)getBean("ServerService");
+	}
+	
+	protected ValidateRepository getValidateRepository() {
+		return (ValidateRepository)getBean("ValidateRepository");
+	}
+	
+	protected HarvestScheduleDAO getHarvestScheduleDAO() {
+		return (HarvestScheduleDAO)getBean("HarvestScheduleDAO");
+	}
+	
+	protected ProcessingDirectiveDAO getProcessingDirectiveDAO() {
+		return (ProcessingDirectiveDAO)getBean("ProcessingDirectiveDAO");	
+	}
+	
+	protected Scheduler getScheduler() {
+		return (Scheduler)getBean("Scheduler");
+	}
+	
+	protected JdbcTemplate getJdbcTemplate() {
+		return new JdbcTemplate((DataSource)getBean("DataSource"));
 	}
 }

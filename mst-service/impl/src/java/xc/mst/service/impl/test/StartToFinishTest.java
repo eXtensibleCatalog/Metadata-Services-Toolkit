@@ -22,7 +22,6 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
-import xc.mst.common.test.BaseTest;
 import xc.mst.constants.Status;
 import xc.mst.oai.Facade;
 import xc.mst.oai.OaiRequestBean;
@@ -30,6 +29,7 @@ import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
 import xc.mst.services.MetadataService;
 import xc.mst.services.MetadataServiceManager;
+import xc.mst.test.BaseMetadataServiceTest;
 import xc.mst.utils.MSTConfiguration;
 
 /**
@@ -38,17 +38,17 @@ import xc.mst.utils.MSTConfiguration;
  * @author Ben Anderson
  * @author Sharmila Ranaganathan
  */
-public abstract class StartToFinishTest extends BaseTest {
+public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	
 	private static final Logger LOG = Logger.getLogger(StartToFinishTest.class);
 	
 	protected Provider provider = null;
+	protected Repository repo = null;
 	
 	/** XML response of harvest out */
 	protected String harvestOutResponse = null;
 	
 	protected long getNumberOfRecordsToHarvest() {return 100000;}
-	protected abstract String getServiceName();
 	protected abstract String getRepoName();
 	protected abstract String getProviderUrl();
 	protected abstract Format getIncomingFormat() throws Exception;
@@ -101,14 +101,14 @@ public abstract class StartToFinishTest extends BaseTest {
 	}
 
 	protected Format getFormat(String[] arr) throws Exception {
-		Format f = formatDAO.getByName(arr[0]);
+		Format f = getFormatDAO().getByName(arr[0]);
 		if (f == null) {
 			f = new Format();
 			f.setName(arr[0]);
 			f.setNamespace(arr[1]);
 			f.setSchemaLocation(arr[2]);
-			formatDAO.insert(f);
-			f = formatDAO.getByName(arr[0]);
+			getFormatDAO().insert(f);
+			f = getFormatDAO().getByName(arr[0]);
 		}
 		return f;
 	}
@@ -159,11 +159,11 @@ public abstract class StartToFinishTest extends BaseTest {
 	
 	public void dropOldSchemas() {
 		try {
-			repositoryDAO.deleteSchema(getRepoName());
+			getRepositoryDAO().deleteSchema(getRepoName());
 		} catch (Throwable t) {
 		}
 		try {
-			repositoryDAO.deleteSchema(getServiceName());
+			getRepositoryDAO().deleteSchema(getServiceName());
 		} catch (Throwable t) {
 		}
 	}
@@ -178,8 +178,8 @@ public abstract class StartToFinishTest extends BaseTest {
 		provider.setOaiProviderUrl(getProviderUrl());
 		provider.setCreatedAt(new java.util.Date());
 		provider.setNumberOfRecordsToHarvest(getNumberOfRecordsToHarvest());
-		providerService.insertProvider(provider);
-		validateRepository.validate(provider.getId());
+		getProviderService().insertProvider(provider);
+		getValidateRepository().validate(provider.getId());
 		
 		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(provider.getName());
@@ -197,14 +197,14 @@ public abstract class StartToFinishTest extends BaseTest {
 		s.setSetSpec(getRepoName());
 		s.setIsProviderSet(false);
 		s.setIsRecordSet(true);
-		setDAO.insert(s);
+		getSetDAO().insert(s);
 		
 		s = new Set();
 		s.setDisplayName(getServiceName()+"-out");
 		s.setSetSpec(getServiceName()+"-out");
 		s.setIsProviderSet(false);
 		s.setIsRecordSet(true);
-		setDAO.insert(s);
+		getSetDAO().insert(s);
 		
 		Service service = getServicesService().getServiceByName(getServiceName());
 		ProcessingDirective pd = new ProcessingDirective();
@@ -214,10 +214,10 @@ public abstract class StartToFinishTest extends BaseTest {
 		formats.add(getIncomingFormat());
 		pd.setTriggeringFormats(formats);
 		List<Set> sets = new ArrayList<Set>();
-		sets.add(setDAO.getBySetSpec(getRepoName()));
+		sets.add(getSetDAO().getBySetSpec(getRepoName()));
 		pd.setTriggeringSets(sets);
 		pd.setOutputSet(s);
-		processingDirectiveDAO.insert(pd);
+		getProcessingDirectiveDAO().insert(pd);
 	}
 	
 	public void createHarvestSchedule() throws Exception {
@@ -235,14 +235,14 @@ public abstract class StartToFinishTest extends BaseTest {
         schedule.setRecurrence("Daily");
         schedule.setStartDate(java.sql.Date.valueOf("2009-05-01"));
 
-        scheduleService.insertSchedule(schedule);
+        getScheduleService().insertSchedule(schedule);
 	}
 	
 	public void updateHarvestSchedule() throws Exception {
 		Calendar nowCal = Calendar.getInstance();
-		HarvestSchedule schedule = scheduleService.getScheduleById(1);
+		HarvestSchedule schedule = getScheduleService().getScheduleById(1);
 		schedule.setMinute(nowCal.get(Calendar.MINUTE));
-		scheduleService.updateSchedule(schedule);
+		getScheduleService().updateSchedule(schedule);
 	}
 	
 	public void waitUntilFinished() {
@@ -257,12 +257,12 @@ public abstract class StartToFinishTest extends BaseTest {
 					LOG.debug("Future dated!");
 					continue;
 				}
-				if (scheduler.getRunningJob() != null) {
-					LOG.debug("scheduler.getRunningJob().getJobStatus(): "+scheduler.getRunningJob().getJobStatus());
-					LOG.debug("scheduler.getRunningJob().getJobName(): "+scheduler.getRunningJob().getJobName());
+				if (getScheduler().getRunningJob() != null) {
+					LOG.debug("scheduler.getRunningJob().getJobStatus(): "+getScheduler().getRunningJob().getJobStatus());
+					LOG.debug("scheduler.getRunningJob().getJobName(): "+getScheduler().getRunningJob().getJobName());
 				}
-				if (scheduler.getRunningJob() == null || 
-						Status.RUNNING != scheduler.getRunningJob().getJobStatus()) {
+				if (getScheduler().getRunningJob() == null || 
+						Status.RUNNING != getScheduler().getRunningJob().getJobStatus()) {
 					timesNotRunning++;
 				} else {
 					timesNotRunning = 0;

@@ -13,7 +13,7 @@ import gnu.trove.TLongHashSet;
 import org.testng.annotations.Test;
 
 import xc.mst.repo.Repository;
-import xc.mst.service.impl.test.BaseMetadataServiceTest;
+import xc.mst.test.BaseMetadataServiceTest;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 
@@ -29,7 +29,7 @@ public class QuickTest extends BaseMetadataServiceTest {
 	
 	@Test
 	public void quickTest() {
-		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
+		Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(getRepoName());
 		TLongHashSet predecessors = new TLongHashSet();
 		repo.populatePredecessors(predecessors);

@@ -15,7 +15,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.common.SolrDocumentList;
-import org.hibernate.util.XMLHelper;
 import org.jdom.Element;
 
 import xc.mst.bo.provider.Format;
@@ -50,7 +49,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	
 	protected void testProvider() throws Exception {
 		// Make sure we got the correct sets for the repository
-		assert setDAO.getSetsForProvider(provider.getId()).size() == 5 : "Expected 5 sets, but found " + setDAO.getSetsForProvider(provider.getId()).size() + " sets.";
+		assert getSetDAO().getSetsForProvider(provider.getId()).size() == 5 : "Expected 5 sets, but found " + getSetDAO().getSetsForProvider(provider.getId()).size() + " sets.";
 
 		// TODO:  Make the following test for sets work without encoding problems.
 		
@@ -66,7 +65,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		//assert setNames.contains("\u00ce\u2022\u00cf\u2026\u00cf\ufffd\u00ce\u00b5\u00cf\u201e\u00ce\u00ae\u00cf\ufffd\u00ce\u00b9\u00ce\u00b1") : "The set \u00ce\u2022\u00cf\u2026\u00cf\ufffd\u00ce\u00b5\u00cf\u201e\u00ce\u00ae\u00cf\ufffd\u00ce\u00b9\u00ce\u00b1 was expected but not found.";
 		
 		// Make sure we got the correct formats for the repository
-		List<Format> formats = formatDAO.getFormatsForProvider(provider.getId());
+		List<Format> formats = getFormatDAO().getFormatsForProvider(provider.getId());
 		java.util.Set<String> formatNames = new HashSet<String>();
 		for(Format format : formats)
 			formatNames.add(format.getName());

@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
 
 import xc.mst.bo.service.Service;
 import xc.mst.common.test.BaseTest;
-import xc.mst.services.impl.GenericMetadataService;
+import xc.mst.services.GenericMetadataService;
 
 public class UpdateVersionTest extends BaseTest  {
 	

@@ -24,8 +24,8 @@ import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.services.ServiceValidationException;
-import xc.mst.services.impl.GenericMetadataService;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.XmlHelper;
 

@@ -28,16 +28,16 @@
  
 
  <resolvers>
-     <filesystem name="local" checkmodified="true">
-         <ivy pattern="${ivy.local.default.root}/${ivy.local.default.ivy.pattern}" />
-         <artifact pattern="${ivy.local.default.root}/${ivy.local.default.artifact.pattern}" />
-     </filesystem>
-     <chain name="public">
+     <chain name="public" checkmodified="true">
+		 <filesystem name="local" checkmodified="true">
+			 <ivy pattern="${ivy.local.default.root}/${ivy.local.default.ivy.pattern}" />
+			 <artifact pattern="${ivy.local.default.root}/${ivy.local.default.artifact.pattern}" />
+		 </filesystem>
 
          <!-- official maven2 repo -->
          <ibiblio name="maven2" m2compatible="true" />
 
-         <ivyrep name="xcmetadataservicestoolkit" ivyroot="http://xcmetadataservicestoolkit.googlecode.com/svn/dist/ivy/"/>
+		 <ivyrep name="xcmetadataservicestoolkit" ivyroot="http://www.extensiblecatalog.org/doc/Ivy/" />
 
          <!-- apache incubating maven2 repo -->
          <ibiblio name="apache-incubating" m2compatible="true"

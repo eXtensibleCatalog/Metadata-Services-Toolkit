@@ -84,6 +84,9 @@ public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostP
 					m.invoke(bean, o);
 				} catch (Throwable t) {
 					LOG.error(bean.getClass()+"."+m.getName());
+					if (o != null) {
+						LOG.error("o: "+o);
+					}
 					LOG.error("", t);
 				}
 			}

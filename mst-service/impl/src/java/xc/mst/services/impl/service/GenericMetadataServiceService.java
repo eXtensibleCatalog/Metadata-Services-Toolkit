@@ -8,9 +8,9 @@
   */
 package xc.mst.services.impl.service;
 
+import xc.mst.dao.GenericMetadataDAO;
 import xc.mst.manager.BaseService;
 import xc.mst.services.MetadataService;
-import xc.mst.services.impl.dao.GenericMetadataDAO;
 
 public class GenericMetadataServiceService extends BaseService {
 	

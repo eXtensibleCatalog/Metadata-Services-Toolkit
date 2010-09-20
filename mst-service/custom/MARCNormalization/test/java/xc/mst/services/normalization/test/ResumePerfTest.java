@@ -20,7 +20,7 @@ import xc.mst.common.test.BaseTest;
 import xc.mst.constants.Status;
 import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
-import xc.mst.services.impl.GenericMetadataService;
+import xc.mst.services.GenericMetadataService;
 
 public class ResumePerfTest extends BaseTest {
 	
@@ -30,7 +30,7 @@ public class ResumePerfTest extends BaseTest {
 	public void resumePerfTest() {
 
 		try {
-			repositoryDAO.deleteSchema("MARCNormalization");
+			getRepositoryDAO().deleteSchema("MARCNormalization");
 			getServicesService().addNewService("MARCNormalization");
 			
 			Service s = getServicesService().getServiceByName("MARCNormalization");
@@ -45,7 +45,7 @@ public class ResumePerfTest extends BaseTest {
 			//LOG.debug("outgoingSet: "+outgoingSet);
 			Format format = getFormatDAO().getById(3);
 			
-			repo = (Repository)getBean("Repository");
+			Repository repo = (Repository)getBean("Repository");
 			repo.setName("135_5m");
 
 			//ms.process(repo, format, incomingSet, null);
@@ -69,14 +69,14 @@ public class ResumePerfTest extends BaseTest {
 					LOG.debug("Future dated!");
 					continue;
 				}
-				if (scheduler.getRunningJob() != null) {
-					LOG.debug("scheduler.getRunningJob().getJobStatus(): "+scheduler.getRunningJob().getJobStatus());
-					LOG.debug("scheduler.getRunningJob().getJobName(): "+scheduler.getRunningJob().getJobName());
+				if (getScheduler().getRunningJob() != null) {
+					LOG.debug("scheduler.getRunningJob().getJobStatus(): "+getScheduler().getRunningJob().getJobStatus());
+					LOG.debug("scheduler.getRunningJob().getJobName(): "+getScheduler().getRunningJob().getJobName());
 				} else {
 					LOG.debug("scheduler.getRunningJob() == null");
 				}
-				if (scheduler.getRunningJob() == null || 
-						Status.RUNNING != scheduler.getRunningJob().getJobStatus()) {
+				if (getScheduler().getRunningJob() == null || 
+						Status.RUNNING != getScheduler().getRunningJob().getJobStatus()) {
 					timesNotRunning++;
 				} else {
 					timesNotRunning = 0;

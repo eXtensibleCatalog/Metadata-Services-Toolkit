@@ -23,7 +23,9 @@ import org.testng.annotations.Test;
 import xc.mst.bo.service.Service;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.repo.Repository;
-import xc.mst.services.impl.GenericMetadataService;
+import xc.mst.repo.TestRepository;
+import xc.mst.services.GenericMetadataService;
+import xc.mst.test.BaseMetadataServiceTest;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.XmlHelper;
 
@@ -42,7 +44,7 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 			LOG.debug("serviceName: "+serviceName);
 			
 			try {
-				repositoryDAO.deleteSchema(serviceName);
+				getRepositoryDAO().deleteSchema(serviceName);
 			} catch (Throwable t) {
 			}
 			
@@ -73,13 +75,13 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 			}
 
 			for (String folderStr : folderStrs) {
-				long id = repositoryDAO.resetIdSequence(1);
+				long id = getRepositoryDAO().resetIdSequence(1);
 				Repository repo = (TestRepository)MSTConfiguration.getInstance().getBean("TestRepository");
 				repo.setName(folderStr);
 				ms.setRepository(repo);
 				LOG.debug("folderStr2: "+folderStr);
 				ms.process(repo, null, null, null);
-				repositoryDAO.resetIdSequence(id);
+				getRepositoryDAO().resetIdSequence(id);
 				
 				File expectedOutputFolder = new File(TestRepository.EXPECTED_OUTPUT_RECORDS+"/"+folderStr);
 				if (expectedOutputFolder.exists()) {
@@ -124,7 +126,7 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 			}
 			
 		} catch (Throwable t) {
-			util.throwIt(t);
+			getUtil().throwIt(t);
 		}
 	}
 

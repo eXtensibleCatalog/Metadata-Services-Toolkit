@@ -12,7 +12,7 @@ public class ServiceDAOTest extends BaseTest {
 	public void getServiceHarvest() {
 		deleteRecords();
 		int serviceId = 101;
-		this.jdbcTemplate.update(
+		getJdbcTemplate().update(
 				"insert into service_harvests ("+
 					"service_id, "+
 					"format_id, "+
@@ -39,7 +39,7 @@ public class ServiceDAOTest extends BaseTest {
 	}
 	
 	protected void deleteRecords() {
-		this.jdbcTemplate.update(
+		getJdbcTemplate().update(
 				"delete from service_harvests "+
 				"where repo_name = '"+this.getClass().getName()+"'");
 	}

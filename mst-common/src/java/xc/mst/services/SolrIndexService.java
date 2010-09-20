@@ -6,7 +6,7 @@
   * website http://www.extensiblecatalog.org/.
   *
   */
-package xc.mst.services.impl.service;
+package xc.mst.services;
 
 import java.util.List;
 
@@ -24,7 +24,6 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.record.RecordService;
 import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
-import xc.mst.services.impl.GenericMetadataService;
 import xc.mst.utils.TimingLogger;
 
 public class SolrIndexService extends GenericMetadataService  {
