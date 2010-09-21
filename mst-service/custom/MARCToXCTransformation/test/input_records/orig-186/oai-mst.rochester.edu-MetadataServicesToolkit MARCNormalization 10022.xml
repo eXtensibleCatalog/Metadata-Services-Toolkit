@@ -1,196 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>01827cem a2200385   45 A</marc:leader>
-	<marc:controlfield tag="001">1234020</marc:controlfield>
-	<marc:controlfield tag="008">780323s1976    okua      a     0   eng d</marc:controlfield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		
-		<marc:subfield code="a">(OCoLC)3741175</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="9">01184809</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">YSM</marc:subfield>
-		<marc:subfield code="c">YSM</marc:subfield>
-		<marc:subfield code="d">RRR</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="045" ind1=" " ind2=" ">
-		<marc:subfield code="a">x7x7</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RRRC</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="052" ind1=" " ind2=" ">
-		<marc:subfield code="a">3716</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="090" ind1=" " ind2=" ">
-		<marc:subfield code="a">G3721.C5</marc:subfield>
-		<marc:subfield code="b">1976 .B35</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="099" ind1=" " ind2="0">
-		<marc:subfield code="a">G3716</marc:subfield>
-		<marc:subfield code="a">.C5</marc:subfield>
-		<marc:subfield code="a">1976</marc:subfield>
-		<marc:subfield code="a">.B35</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="099" ind1=" " ind2=" ">
-		<marc:subfield code="a">G3716 .C5 1976 .B35</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="100" ind1="1" ind2=" ">
-		<marc:subfield code="a">Bennison, A. P.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="1" ind2="0">
-		<marc:subfield code="a">Geological highway map of the Northeastern region:</marc:subfield>
-		<marc:subfield code="b">Pennsylvania, Massachusetts, New Hampshire, Rhode Island, Connecticut, New Jersey, Maine, New York, Vermont.</marc:subfield>
-		<marc:subfield code="c">Compiled by Allan P. Bennison. Cartography by Van K. Higginbotham.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="250" ind1=" " ind2=" ">
-		<marc:subfield code="a">National bicentennial ed.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">Tulsa, Okla.,</marc:subfield>
-		<marc:subfield code="b">American Association of Petroleum Geologists,</marc:subfield>
-		<marc:subfield code="c">c1976.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">col. map</marc:subfield>
-		<marc:subfield code="c">70 x 90 cm. fold. to 24 x 12 cm.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="490" ind1="1" ind2=" ">
-		<marc:subfield code="a">United States geological highway map series;</marc:subfield>
-		<marc:subfield code="v">map no. 10</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Depths shown by contours.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">"Published by the American Association of Petroleum Geologists with the cooperation of the United States Geological Survey."</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Includes text, "Generalized chart of time and rock units," inset of "Land and sea changes through the ages" and 5 insets.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Text, 4 cross sections, bibliographies, index map, distance chart, maps of tectonic structure, physiography and interesting geological places on verso.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="507" ind1=" " ind2=" ">
-		<marc:subfield code="a">Scale 1:1,900,800;</marc:subfield>
-		<marc:subfield code="b">1 in. equals approx. 30 miles.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Geology</marc:subfield>
-		<marc:subfield code="z">Northeastern States</marc:subfield>
-		<marc:subfield code="x">Maps.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="651" ind1=" " ind2="0">
-		<marc:subfield code="a">Northeastern States</marc:subfield>
-		<marc:subfield code="x">Maps.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Higginbotham, Van K.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="710" ind1="2" ind2=" ">
-		<marc:subfield code="a">American Association of Petroleum Geologists.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="830" ind1=" " ind2="0">
-		<marc:subfield code="a">United States geological highway map series ;</marc:subfield>
-		<marc:subfield code="v">map no. 10</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="910" ind1=" " ind2=" ">
-		<marc:subfield code="a">950906</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="911" ind1=" " ind2=" ">
-		<marc:subfield code="a">p</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">CmapCs</marc:subfield>
-		<marc:subfield code="m">SCICMP</marc:subfield>
-		<marc:subfield code="s">G3716 .C5 1976 .B35</marc:subfield>
-		<marc:subfield code="b">39087014268090</marc:subfield>
-	</marc:datafield>
-
-<marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Cartographic material</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Monograph/Item</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="941" ind1=" " ind2=" ">
-	<marc:subfield code="a">eng</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="943" ind1=" " ind2=" ">
-	<marc:subfield code="a">English</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:controlfield tag="003">NRU</marc:controlfield>
-
-<marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)1234020</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="240" ind1="0" ind2="0">
-	<marc:subfield code="a">Geological highway map of the Northeastern region:</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="a">Geology</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="x">Maps.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="x">Maps.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="967" ind1=" " ind2="0">
-	<marc:subfield code="a">Northeastern States</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="967" ind1=" " ind2="0">
-	<marc:subfield code="z">Northeastern States</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-</marc:record>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:23</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01827cem a2200385   45 A</marc:leader>
+        <marc:controlfield tag="001">1234020</marc:controlfield>
+        <marc:controlfield tag="008">780323s1976    okua      a     0   eng d</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)3741175</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="9">01184809</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">YSM</marc:subfield>
+          <marc:subfield code="c">YSM</marc:subfield>
+          <marc:subfield code="d">RRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="045" ind1=" " ind2=" ">
+          <marc:subfield code="a">x7x7</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRC</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="052" ind1=" " ind2=" ">
+          <marc:subfield code="a">3716</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">G3721.C5</marc:subfield>
+          <marc:subfield code="b">1976 .B35</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2="0">
+          <marc:subfield code="a">G3716</marc:subfield>
+          <marc:subfield code="a">.C5</marc:subfield>
+          <marc:subfield code="a">1976</marc:subfield>
+          <marc:subfield code="a">.B35</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">G3716 .C5 1976 .B35</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Bennison, A. P.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Geological highway map of the Northeastern region:</marc:subfield>
+          <marc:subfield code="b">Pennsylvania, Massachusetts, New Hampshire, Rhode Island, Connecticut, New Jersey, Maine, New York, Vermont.</marc:subfield>
+          <marc:subfield code="c">Compiled by Allan P. Bennison. Cartography by Van K. Higginbotham.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="250" ind1=" " ind2=" ">
+          <marc:subfield code="a">National bicentennial ed.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Tulsa, Okla.,</marc:subfield>
+          <marc:subfield code="b">American Association of Petroleum Geologists,</marc:subfield>
+          <marc:subfield code="c">c1976.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">col. map</marc:subfield>
+          <marc:subfield code="c">70 x 90 cm. fold. to 24 x 12 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="490" ind1="1" ind2=" ">
+          <marc:subfield code="a">United States geological highway map series;</marc:subfield>
+          <marc:subfield code="v">map no. 10</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Depths shown by contours.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">"Published by the American Association of Petroleum Geologists with the cooperation of the United States Geological Survey."</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Includes text, "Generalized chart of time and rock units," inset of "Land and sea changes through the ages" and 5 insets.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text, 4 cross sections, bibliographies, index map, distance chart, maps of tectonic structure, physiography and interesting geological places on verso.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="507" ind1=" " ind2=" ">
+          <marc:subfield code="a">Scale 1:1,900,800;</marc:subfield>
+          <marc:subfield code="b">1 in. equals approx. 30 miles.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Geology</marc:subfield>
+          <marc:subfield code="z">Northeastern States</marc:subfield>
+          <marc:subfield code="x">Maps.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="651" ind1=" " ind2="0">
+          <marc:subfield code="a">Northeastern States</marc:subfield>
+          <marc:subfield code="x">Maps.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Higginbotham, Van K.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">American Association of Petroleum Geologists.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="830" ind1=" " ind2="0">
+          <marc:subfield code="a">United States geological highway map series ;</marc:subfield>
+          <marc:subfield code="v">map no. 10</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="910" ind1=" " ind2=" ">
+          <marc:subfield code="a">950906</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="911" ind1=" " ind2=" ">
+          <marc:subfield code="a">p</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">CmapCs</marc:subfield>
+          <marc:subfield code="m">SCICMP</marc:subfield>
+          <marc:subfield code="s">G3716 .C5 1976 .B35</marc:subfield>
+          <marc:subfield code="b">39087014268090</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Cartographic material</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="935" ind1=" " ind2=" ">
+          <marc:subfield code="a">Monograph/Item</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="941" ind1=" " ind2=" ">
+          <marc:subfield code="a">eng</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="943" ind1=" " ind2=" ">
+          <marc:subfield code="a">English</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(NRU)1234020</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="0" ind2="0">
+          <marc:subfield code="a">Geological highway map of the Northeastern region:</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="a">Geology</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="x">Maps.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="x">Maps.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="967" ind1=" " ind2="0">
+          <marc:subfield code="a">Northeastern States</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="967" ind1=" " ind2="0">
+          <marc:subfield code="z">Northeastern States</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

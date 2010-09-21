@@ -1,147 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>01140nam a2200265Ka 4500</marc:leader>
-	<marc:controlfield tag="001">3095212</marc:controlfield>
-	<marc:controlfield tag="005">20060403132010.0</marc:controlfield>
-	<marc:controlfield tag="006">m        d f      </marc:controlfield>
-	<marc:controlfield tag="008">060106s2004    dcu     s    f000 0 eng d</marc:controlfield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)62789882</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">GPO</marc:subfield>
-		<marc:subfield code="c">GPO</marc:subfield>
-		<marc:subfield code="d">MvI</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="074" ind1=" " ind2=" ">
-		<marc:subfield code="a">1089 (online)</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="086" ind1="0" ind2=" ">
-		<marc:subfield code="a">Y 3.2:AB 1/R 22</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="110" ind1="1" ind2=" ">
-		<marc:subfield code="a">United States.</marc:subfield>
-		<marc:subfield code="b">Abraham Lincoln Bicentennial Commission.</marc:subfield>
-		<marc:subfield code="4">aut</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="1" ind2="0">
-		<marc:subfield code="a">Interim report</marc:subfield>
-		<marc:subfield code="h">[electronic resource].</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">[Washington, D.C. :</marc:subfield>
-		<marc:subfield code="b">Abraham Lincoln Bicentennial Commission,</marc:subfield>
-		<marc:subfield code="c">2004]</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">91 p. :</marc:subfield>
-		<marc:subfield code="b">digital, PDF file.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="538" ind1=" " ind2=" ">
-		<marc:subfield code="a">Mode of access: Internet form the Commission web site. Address as of 1/6/06: http://www.lincolnbicentennial.gov/files/PDF/LOC%5FReport.pdf; current access is available via PURL.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Title from title screen (viewed on Jan. 6, 2006).</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">"June 2004."</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="600" ind1="1" ind2="0">
-		<marc:subfield code="a">Lincoln, Abraham,</marc:subfield>
-		<marc:subfield code="d">1809-1865</marc:subfield>
-		<marc:subfield code="x">Anniversaries, etc.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="610" ind1="1" ind2="0">
-		<marc:subfield code="a">United States.</marc:subfield>
-		<marc:subfield code="b">Abraham Lincoln Bicentennial Commission.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="856" ind1="4" ind2="0">
-		<marc:subfield code="u">http://purl.access.gpo.gov/GPO/LPS62010</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="999" ind1=" " ind2=" ">
-		<marc:subfield code="a">Text data RCL Internet GovDocs</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="949" ind1=" " ind2=" ">
-		<marc:subfield code="l">Internet</marc:subfield>
-		<marc:subfield code="u">http://purl.access.gpo.gov/GPO/LPS62010</marc:subfield>
-	</marc:datafield>
-
-<marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Language material</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Computer file</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Monograph/Item</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="937" ind1=" " ind2=" ">
-	<marc:subfield code="a">Non-Fiction</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="941" ind1=" " ind2=" ">
-	<marc:subfield code="a">eng</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="943" ind1=" " ind2=" ">
-	<marc:subfield code="a">English</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:controlfield tag="003">NRU</marc:controlfield>
-
-<marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)3095212</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="240" ind1="0" ind2="0">
-	<marc:subfield code="a">Interim report</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="965" ind1="1" ind2="0">
-	<marc:subfield code="a">Lincoln, Abraham,</marc:subfield>
-	<marc:subfield code="d">1809-1865</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="965" ind1="1" ind2="0">
-	<marc:subfield code="x">Anniversaries, etc.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-</marc:record>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:103</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01140nam a2200265Ka 4500</marc:leader>
+        <marc:controlfield tag="001">3095212</marc:controlfield>
+        <marc:controlfield tag="005">20060403132010.0</marc:controlfield>
+        <marc:controlfield tag="006">m        d f      </marc:controlfield>
+        <marc:controlfield tag="008">060106s2004    dcu     s    f000 0 eng d</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)62789882</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">GPO</marc:subfield>
+          <marc:subfield code="c">GPO</marc:subfield>
+          <marc:subfield code="d">MvI</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="074" ind1=" " ind2=" ">
+          <marc:subfield code="a">1089 (online)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="086" ind1="0" ind2=" ">
+          <marc:subfield code="a">Y 3.2:AB 1/R 22</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="110" ind1="1" ind2=" ">
+          <marc:subfield code="a">United States.</marc:subfield>
+          <marc:subfield code="b">Abraham Lincoln Bicentennial Commission.</marc:subfield>
+          <marc:subfield code="4">aut</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Interim report</marc:subfield>
+          <marc:subfield code="h">[electronic resource].</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">[Washington, D.C. :</marc:subfield>
+          <marc:subfield code="b">Abraham Lincoln Bicentennial Commission,</marc:subfield>
+          <marc:subfield code="c">2004]</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">91 p. :</marc:subfield>
+          <marc:subfield code="b">digital, PDF file.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="538" ind1=" " ind2=" ">
+          <marc:subfield code="a">Mode of access: Internet form the Commission web site. Address as of 1/6/06: http://www.lincolnbicentennial.gov/files/PDF/LOC%5FReport.pdf; current access is available via PURL.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Title from title screen (viewed on Jan. 6, 2006).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">"June 2004."</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="600" ind1="1" ind2="0">
+          <marc:subfield code="a">Lincoln, Abraham,</marc:subfield>
+          <marc:subfield code="d">1809-1865</marc:subfield>
+          <marc:subfield code="x">Anniversaries, etc.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="610" ind1="1" ind2="0">
+          <marc:subfield code="a">United States.</marc:subfield>
+          <marc:subfield code="b">Abraham Lincoln Bicentennial Commission.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="856" ind1="4" ind2="0">
+          <marc:subfield code="u">http://purl.access.gpo.gov/GPO/LPS62010</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="999" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text data RCL Internet GovDocs</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="949" ind1=" " ind2=" ">
+          <marc:subfield code="l">Internet</marc:subfield>
+          <marc:subfield code="u">http://purl.access.gpo.gov/GPO/LPS62010</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Language material</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Computer file</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="935" ind1=" " ind2=" ">
+          <marc:subfield code="a">Monograph/Item</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="937" ind1=" " ind2=" ">
+          <marc:subfield code="a">Non-Fiction</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="941" ind1=" " ind2=" ">
+          <marc:subfield code="a">eng</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="943" ind1=" " ind2=" ">
+          <marc:subfield code="a">English</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(NRU)3095212</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="0" ind2="0">
+          <marc:subfield code="a">Interim report</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1="1" ind2="0">
+          <marc:subfield code="a">Lincoln, Abraham,</marc:subfield>
+          <marc:subfield code="d">1809-1865</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1="1" ind2="0">
+          <marc:subfield code="x">Anniversaries, etc.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

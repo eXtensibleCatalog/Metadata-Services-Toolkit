@@ -1,232 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>02296cjm a2200445Ia 4500</marc:leader>
-	<marc:controlfield tag="001">3711415</marc:controlfield>
-	<marc:controlfield tag="005">20080221125447.0</marc:controlfield>
-	<marc:controlfield tag="007">sd fungnn|||eu</marc:controlfield>
-	<marc:controlfield tag="008">070103p20062006caumun   fi         eng d</marc:controlfield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)77520609</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">UUC</marc:subfield>
-		<marc:subfield code="c">UUC</marc:subfield>
-		<marc:subfield code="d">UUC</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="024" ind1="1" ind2=" ">
-		<marc:subfield code="a">081227479121</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="028" ind1="0" ind2="2">
-		<marc:subfield code="a">R2 74791</marc:subfield>
-		<marc:subfield code="b">Rhino</marc:subfield>
-	</marc:datafield>
-
-	
-
-	<marc:datafield tag="047" ind1=" " ind2=" ">
-		<marc:subfield code="a">pp</marc:subfield>
-		<marc:subfield code="a">mc</marc:subfield>
-		<marc:subfield code="a">mp</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RRRR</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="0" ind2="0">
-		<marc:subfield code="a">Shout!</marc:subfield>
-		<marc:subfield code="h">[sound recording] :</marc:subfield>
-		<marc:subfield code="b">the mod musical /</marc:subfield>
-		<marc:subfield code="c">[created by Phillip George &amp; David Lowenstein].</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="246" ind1="3" ind2="0">
-		<marc:subfield code="a">Mod musical</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">[S.l.] :</marc:subfield>
-		<marc:subfield code="b">Shout Partners ;</marc:subfield>
-		<marc:subfield code="a">Burbank, CA :</marc:subfield>
-		<marc:subfield code="b">Rhino,</marc:subfield>
-		<marc:subfield code="c">p2006.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">1 sound disc :</marc:subfield>
-		<marc:subfield code="b">digital ;</marc:subfield>
-		<marc:subfield code="c">4 3/4 in.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">"Original cast recording"--Container.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">"What is the soundtrack of your life?"--Container.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="511" ind1="0" ind2=" ">
-		<marc:subfield code="a">Vocalists: Marie-France Arcilla, Erin Crosby, Julie Dingman Evans, Erica Schroeder, Denise Summerford ; conductor, arranger: Bradley Vieth ; other musicians.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="508" ind1=" " ind2=" ">
-		<marc:subfield code="a">Producers: Steve Skinner, Emanuel Kallins.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="518" ind1=" " ind2=" ">
-		<marc:subfield code="a">Recorded Aug. 1, 2006 at Midtown Sound, NYC.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Compact disc.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Program notes, chronology, and credits ([20] p. : col. ill.) inserted in container.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="505" ind1="0" ind2=" ">
-		<marc:subfield code="a">England swings ; 'Round every corner ; I know a place -- I only want to be with you ; Tell the boys -- How can you tell -- Wishin' &amp; hopin' -- One two three -- To sir with love -- Don't sleep in the subway -- Son of a preacher man -- James bond theme ; Goldfinger -- You don't have to say you love me -- Diamonds are forever -- Puppet on a string -- Georgy girl ; Windy -- Who am I? -- Don't give up -- I just don't know what to do with myself -- These boots are made for walkin' -- I couldn't live without your love -- You're my world ; All I see is you -- Those were the days -- Shout! -- Goin' back -- Downtown -- Bonus track: Downtown (dance remix)</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Popular music</marc:subfield>
-		<marc:subfield code="y">1961-1970.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Musicals</marc:subfield>
-		<marc:subfield code="v">Excerpts.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="655" ind1=" " ind2="7">
-		<marc:subfield code="a">Operas/Musicals.</marc:subfield>
-		<marc:subfield code="2">local</marc:subfield>
-		<marc:subfield code="5">NRU</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">George, Phillip.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Lowenstein, David.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Arcilla, Marie-France.</marc:subfield>
-		<marc:subfield code="4">prf</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Crosby, Erin.</marc:subfield>
-		<marc:subfield code="4">prf</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Evans, Julie Dingman.</marc:subfield>
-		<marc:subfield code="4">prf</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Schroeder, Erica.</marc:subfield>
-		<marc:subfield code="4">prf</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Summerford, Denise.</marc:subfield>
-		<marc:subfield code="4">prf</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Vieth, Bradley.</marc:subfield>
-		<marc:subfield code="4">cnd</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="994" ind1=" " ind2=" ">
-		<marc:subfield code="a">C0</marc:subfield>
-		<marc:subfield code="b">RRR</marc:subfield>
-	</marc:datafield>
-
-<marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Sound</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Musical sound recording</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Sound recording</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Monograph/Item</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Sound</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Sound recording</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="934" ind1=" " ind2=" ">
-	<marc:subfield code="a">Sound disk</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="941" ind1=" " ind2=" ">
-	<marc:subfield code="a">eng</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="943" ind1=" " ind2=" ">
-	<marc:subfield code="a">English</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:controlfield tag="003">NRU</marc:controlfield>
-
-<marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)3711415</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="130" ind1="0" ind2=" ">
-	<marc:subfield code="a">Shout!</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="a">Popular music</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="a">Musicals</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="963" ind1=" " ind2="0">
-	<marc:subfield code="y">1961-1970.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="969" ind1=" " ind2="0">
-	<marc:subfield code="v">Excerpts.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-</marc:record>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:124</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>02296cjm a2200445Ia 4500</marc:leader>
+        <marc:controlfield tag="001">3711415</marc:controlfield>
+        <marc:controlfield tag="005">20080221125447.0</marc:controlfield>
+        <marc:controlfield tag="007">sd fungnn|||eu</marc:controlfield>
+        <marc:controlfield tag="008">070103p20062006caumun   fi         eng d</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)77520609</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">UUC</marc:subfield>
+          <marc:subfield code="c">UUC</marc:subfield>
+          <marc:subfield code="d">UUC</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="024" ind1="1" ind2=" ">
+          <marc:subfield code="a">081227479121</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="028" ind1="0" ind2="2">
+          <marc:subfield code="a">R2 74791</marc:subfield>
+          <marc:subfield code="b">Rhino</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="047" ind1=" " ind2=" ">
+          <marc:subfield code="a">pp</marc:subfield>
+          <marc:subfield code="a">mc</marc:subfield>
+          <marc:subfield code="a">mp</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">Shout!</marc:subfield>
+          <marc:subfield code="h">[sound recording] :</marc:subfield>
+          <marc:subfield code="b">the mod musical /</marc:subfield>
+          <marc:subfield code="c">[created by Phillip George &amp; David Lowenstein].</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="3" ind2="0">
+          <marc:subfield code="a">Mod musical</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">[S.l.] :</marc:subfield>
+          <marc:subfield code="b">Shout Partners ;</marc:subfield>
+          <marc:subfield code="a">Burbank, CA :</marc:subfield>
+          <marc:subfield code="b">Rhino,</marc:subfield>
+          <marc:subfield code="c">p2006.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">1 sound disc :</marc:subfield>
+          <marc:subfield code="b">digital ;</marc:subfield>
+          <marc:subfield code="c">4 3/4 in.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">"Original cast recording"--Container.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">"What is the soundtrack of your life?"--Container.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="511" ind1="0" ind2=" ">
+          <marc:subfield code="a">Vocalists: Marie-France Arcilla, Erin Crosby, Julie Dingman Evans, Erica Schroeder, Denise Summerford ; conductor, arranger: Bradley Vieth ; other musicians.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="508" ind1=" " ind2=" ">
+          <marc:subfield code="a">Producers: Steve Skinner, Emanuel Kallins.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="518" ind1=" " ind2=" ">
+          <marc:subfield code="a">Recorded Aug. 1, 2006 at Midtown Sound, NYC.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Compact disc.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Program notes, chronology, and credits ([20] p. : col. ill.) inserted in container.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="505" ind1="0" ind2=" ">
+          <marc:subfield code="a">England swings ; 'Round every corner ; I know a place -- I only want to be with you ; Tell the boys -- How can you tell -- Wishin' &amp; hopin' -- One two three -- To sir with love -- Don't sleep in the subway -- Son of a preacher man -- James bond theme ; Goldfinger -- You don't have to say you love me -- Diamonds are forever -- Puppet on a string -- Georgy girl ; Windy -- Who am I? -- Don't give up -- I just don't know what to do with myself -- These boots are made for walkin' -- I couldn't live without your love -- You're my world ; All I see is you -- Those were the days -- Shout! -- Goin' back -- Downtown -- Bonus track: Downtown (dance remix)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Popular music</marc:subfield>
+          <marc:subfield code="y">1961-1970.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Musicals</marc:subfield>
+          <marc:subfield code="v">Excerpts.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="655" ind1=" " ind2="7">
+          <marc:subfield code="a">Operas/Musicals.</marc:subfield>
+          <marc:subfield code="2">local</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">George, Phillip.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Lowenstein, David.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Arcilla, Marie-France.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Crosby, Erin.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Evans, Julie Dingman.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Schroeder, Erica.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Summerford, Denise.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Vieth, Bradley.</marc:subfield>
+          <marc:subfield code="4">cnd</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">C0</marc:subfield>
+          <marc:subfield code="b">RRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Musical sound recording</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound recording</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="935" ind1=" " ind2=" ">
+          <marc:subfield code="a">Monograph/Item</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound recording</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="934" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound disk</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="941" ind1=" " ind2=" ">
+          <marc:subfield code="a">eng</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="943" ind1=" " ind2=" ">
+          <marc:subfield code="a">English</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(NRU)3711415</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="130" ind1="0" ind2=" ">
+          <marc:subfield code="a">Shout!</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="a">Popular music</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="a">Musicals</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="963" ind1=" " ind2="0">
+          <marc:subfield code="y">1961-1970.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="969" ind1=" " ind2="0">
+          <marc:subfield code="v">Excerpts.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

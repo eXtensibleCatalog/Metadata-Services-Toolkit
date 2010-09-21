@@ -1,135 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>00943ccm a22002777a 4500</marc:leader>
-	<marc:controlfield tag="001">3159543</marc:controlfield>
-	<marc:controlfield tag="005">20070831112337.0</marc:controlfield>
-	<marc:controlfield tag="008">900529s1988    flusua         n    zxx  </marc:controlfield>
-
-	<marc:datafield tag="010" ind1=" " ind2=" ">
-		<marc:subfield code="a">   90752299 </marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)22114401</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">DLC</marc:subfield>
-		<marc:subfield code="c">DLC</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="019" ind1=" " ind2=" ">
-		<marc:subfield code="a">21327278</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="020" ind1=" " ind2=" ">
-		<marc:subfield code="c">$10.95</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="028" ind1="2" ind2="2">
-		<marc:subfield code="a">PA02282</marc:subfield>
-		<marc:subfield code="b">CPP/Belwin</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="090" ind1=" " ind2=" ">
-		<marc:subfield code="a">M215.C434</marc:subfield>
-		<marc:subfield code="b">S538 1988</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RESM</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="100" ind1="1" ind2=" ">
-		<marc:subfield code="a">Tchaikovsky, Peter Ilich,</marc:subfield>
-		<marc:subfield code="d">1840-1893.</marc:subfield>
-		<marc:subfield code="4">cmp</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="240" ind1="1" ind2="0">
-		<marc:subfield code="a">Shchelkunchik.</marc:subfield>
-		<marc:subfield code="p">Suite;</marc:subfield>
-		<marc:subfield code="o">arr.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="1" ind2="4">
-		<marc:subfield code="a">The nutcracker suite :</marc:subfield>
-		<marc:subfield code="b">for two pianos, four hands /</marc:subfield>
-		<marc:subfield code="c">Peter Ilyich Tschaikowsky ; arranged by Nicolas Economou ; edited by Dale Tucker.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">Miami, Fla. (15800 N.W. 48th Ave., Miami 33014) :</marc:subfield>
-		<marc:subfield code="b">CPP/Belwin,</marc:subfield>
-		<marc:subfield code="c">c1988.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">1 score (71 p.) ;</marc:subfield>
-		<marc:subfield code="c">31 cm.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="440" ind1=" " ind2="0">
-		<marc:subfield code="a">Keyboard ensemble series</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Originally for orchestra.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Minimal level cataloging.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Suites (Pianos (2)), Arranged</marc:subfield>
-		<marc:subfield code="v">Scores.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="994" ind1=" " ind2=" ">
-		<marc:subfield code="a">C0</marc:subfield>
-		<marc:subfield code="b">RES</marc:subfield>
-	</marc:datafield>
-
-<marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Image</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Notated music</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Notated music</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Monograph/Item</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:controlfield tag="003">NRU</marc:controlfield>
-
-<marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)3159543</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="a">Suites (Pianos (2)), Arranged</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="969" ind1=" " ind2="0">
-	<marc:subfield code="v">Scores.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="246" ind1="3" ind2="0">
-	<marc:subfield code="a">Nutcracker suite :</marc:subfield>
-</marc:datafield>
-
-</marc:record>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:106</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00943ccm a22002777a 4500</marc:leader>
+        <marc:controlfield tag="001">3159543</marc:controlfield>
+        <marc:controlfield tag="005">20070831112337.0</marc:controlfield>
+        <marc:controlfield tag="008">900529s1988    flusua         n    zxx  </marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">   90752299 </marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)22114401</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">DLC</marc:subfield>
+          <marc:subfield code="c">DLC</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="019" ind1=" " ind2=" ">
+          <marc:subfield code="a">21327278</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="c">$10.95</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="028" ind1="2" ind2="2">
+          <marc:subfield code="a">PA02282</marc:subfield>
+          <marc:subfield code="b">CPP/Belwin</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">M215.C434</marc:subfield>
+          <marc:subfield code="b">S538 1988</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RESM</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Tchaikovsky, Peter Ilich,</marc:subfield>
+          <marc:subfield code="d">1840-1893.</marc:subfield>
+          <marc:subfield code="4">cmp</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="1" ind2="0">
+          <marc:subfield code="a">Shchelkunchik.</marc:subfield>
+          <marc:subfield code="p">Suite;</marc:subfield>
+          <marc:subfield code="o">arr.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="4">
+          <marc:subfield code="a">The nutcracker suite :</marc:subfield>
+          <marc:subfield code="b">for two pianos, four hands /</marc:subfield>
+          <marc:subfield code="c">Peter Ilyich Tschaikowsky ; arranged by Nicolas Economou ; edited by Dale Tucker.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Miami, Fla. (15800 N.W. 48th Ave., Miami 33014) :</marc:subfield>
+          <marc:subfield code="b">CPP/Belwin,</marc:subfield>
+          <marc:subfield code="c">c1988.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">1 score (71 p.) ;</marc:subfield>
+          <marc:subfield code="c">31 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="440" ind1=" " ind2="0">
+          <marc:subfield code="a">Keyboard ensemble series</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Originally for orchestra.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Minimal level cataloging.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Suites (Pianos (2)), Arranged</marc:subfield>
+          <marc:subfield code="v">Scores.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">C0</marc:subfield>
+          <marc:subfield code="b">RES</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Image</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Notated music</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Notated music</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="935" ind1=" " ind2=" ">
+          <marc:subfield code="a">Monograph/Item</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(NRU)3159543</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="a">Suites (Pianos (2)), Arranged</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="969" ind1=" " ind2="0">
+          <marc:subfield code="v">Scores.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="3" ind2="0">
+          <marc:subfield code="a">Nutcracker suite :</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

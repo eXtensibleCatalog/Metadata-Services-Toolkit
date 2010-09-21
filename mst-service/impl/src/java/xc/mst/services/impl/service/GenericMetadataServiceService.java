@@ -15,7 +15,6 @@ import xc.mst.services.MetadataService;
 public class GenericMetadataServiceService extends BaseService {
 	
 	protected MetadataServiceDAO genericMetadataDAO = null;
-	protected MetadataService metadataService = null;
 
 	public MetadataServiceDAO getGenericMetadataDAO() {
 		return genericMetadataDAO;
@@ -26,11 +25,7 @@ public class GenericMetadataServiceService extends BaseService {
 	}
 
 	public MetadataService getMetadataService() {
-		return metadataService;
-	}
-
-	public void setMetadataService(MetadataService metadataService) {
-		this.metadataService = metadataService;
+		return (MetadataService)config.getBean("MetadataService");
 	}
 
 }

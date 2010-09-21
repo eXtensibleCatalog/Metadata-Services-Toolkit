@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 
 import xc.mst.bo.record.Record;
 import xc.mst.dao.BaseDAO;
@@ -153,30 +154,31 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 	}
 	
 	public void activateHeldHoldings(final TLongArrayList manifestionIdsPreviouslyHeld) {
-		TimingLogger.start("activateHeldHoldings");
-		StringBuilder sb = new StringBuilder("update "+RepositoryDAO.RECORDS_TABLE+
-			" set status='"+Record.ACTIVE+"'"+
-			" where record_id in (select from_record_id from links where to_record_id in (");
-		for (int i=0; i<manifestionIdsPreviouslyHeld.size(); i++) {
-			sb.append("?");
-			if (i+1 < manifestionIdsPreviouslyHeld.size()) {
-				sb.append(", ");
+		if (manifestionIdsPreviouslyHeld.size() > 0) {
+			TimingLogger.start("activateHeldHoldings");
+			StringBuilder sb = new StringBuilder("update "+RepositoryDAO.RECORDS_TABLE+
+				" set status='"+Record.ACTIVE+"'"+
+				" where record_id in (select from_record_id from links where to_record_id in (");
+			for (int i=0; i<manifestionIdsPreviouslyHeld.size(); i++) {
+				sb.append("?");
+				if (i+1 < manifestionIdsPreviouslyHeld.size()) {
+					sb.append(", ");
+				}
 			}
+			sb.append("))");
+			LOG.debug("sb.toString(): "+sb.toString());
+			
+	        int updateCount = jdbcTemplate.update(
+	        		sb.toString(), new PreparedStatementSetter() {
+						public void setValues(PreparedStatement ps) throws SQLException {
+							for (int i=0; i<manifestionIdsPreviouslyHeld.size(); i++) {
+								ps.setLong(i+1, manifestionIdsPreviouslyHeld.get(i));
+							}
+						}
+					});
+	        TimingLogger.stop("activateHeldHoldings");
+		} else {
+			LOG.debug("manifestionIdsPreviouslyHeld is null or empty");
 		}
-		sb.append("))");
-		LOG.debug("sb.toString(): "+sb.toString());
-		
-        int[] updateCounts = jdbcTemplate.batchUpdate(
-        		sb.toString(),
-                new BatchPreparedStatementSetter() {
-                    public void setValues(PreparedStatement ps, int j) throws SQLException {
-                    	long manId = manifestionIdsPreviouslyHeld.get(j);
-                    	ps.setLong(1, manId);
-                    }
-                    public int getBatchSize() {
-                        return manifestionIdsPreviouslyHeld.size();
-                    }
-                } );
-        TimingLogger.stop("activateHeldHoldings");
 	}
 }

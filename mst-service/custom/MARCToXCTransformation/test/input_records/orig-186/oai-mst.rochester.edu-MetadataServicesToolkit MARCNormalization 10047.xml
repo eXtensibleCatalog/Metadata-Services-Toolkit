@@ -1,268 +1,224 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>01820cas a2200421 a 4500</marc:leader>
-	<marc:controlfield tag="001">1595758</marc:controlfield>
-	<marc:controlfield tag="005">20060410153300.0</marc:controlfield>
-	<marc:controlfield tag="008">900813c19899999iv ar     s   0    0eng d</marc:controlfield>
-
-	<marc:datafield tag="010" ind1=" " ind2=" ">
-		<marc:subfield code="a">   94643540 </marc:subfield>
-		<marc:subfield code="z">sn 91022371 </marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)22211635</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">EEM</marc:subfield>
-		<marc:subfield code="c">EEM</marc:subfield>
-		<marc:subfield code="d">FUG</marc:subfield>
-		<marc:subfield code="d">NST</marc:subfield>
-		<marc:subfield code="d">DLC</marc:subfield>
-		<marc:subfield code="d">IUL</marc:subfield>
-		<marc:subfield code="d">GUA</marc:subfield>
-		<marc:subfield code="d">CLU</marc:subfield>
-		<marc:subfield code="d">SYS</marc:subfield>
-		<marc:subfield code="d">IUL</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="042" ind1=" " ind2=" ">
-		<marc:subfield code="a">lc</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="043" ind1=" " ind2=" ">
-		<marc:subfield code="a">f------</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="050" ind1="0" ind2="0">
-		<marc:subfield code="a">HC800.A1</marc:subfield>
-		<marc:subfield code="b">A354</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="082" ind1="0" ind2="0">
-		<marc:subfield code="a">330.96/005</marc:subfield>
-		<marc:subfield code="2">20</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RRRA</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="0" ind2="0">
-		<marc:subfield code="a">African development report.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">[Abidjan, Ivory Coast] :</marc:subfield>
-		<marc:subfield code="b">African Development Bank,</marc:subfield>
-		<marc:subfield code="c">[1989?-</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">v. ;</marc:subfield>
-		<marc:subfield code="c">30 cm.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="310" ind1=" " ind2=" ">
-		<marc:subfield code="a">Annual</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="362" ind1="0" ind2=" ">
-		<marc:subfield code="a">1989-</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Published: Oxford : Oxford University Press for the African Development Bank, &lt;1997-1999&gt;</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="541" ind1=" " ind2=" ">
-		<marc:subfield code="c">Rhees copy purchased by The Rush Rhees Library Campaign for the 90s Fund.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="580" ind1=" " ind2=" ">
-		<marc:subfield code="a">Has supplement: African development report. Executive summary,    -1995; African development report. Summary, 1996-</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="580" ind1=" " ind2=" ">
-		<marc:subfield code="a">Issues for &lt;1999-&gt; published for the Bank also by Economica in a French edition.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="651" ind1=" " ind2="0">
-		<marc:subfield code="a">Africa</marc:subfield>
-		<marc:subfield code="x">Economic conditions</marc:subfield>
-		<marc:subfield code="y">1960-</marc:subfield>
-		<marc:subfield code="v">Periodicals.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="651" ind1=" " ind2="0">
-		<marc:subfield code="a">Africa</marc:subfield>
-		<marc:subfield code="x">Economic policy</marc:subfield>
-		<marc:subfield code="v">Periodicals.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="651" ind1=" " ind2="0">
-		<marc:subfield code="a">Africa</marc:subfield>
-		<marc:subfield code="x">Commerce</marc:subfield>
-		<marc:subfield code="v">Periodicals.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="710" ind1="2" ind2=" ">
-		<marc:subfield code="a">African Development Bank.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="770" ind1="1" ind2=" ">
-		<marc:subfield code="t">African development report. Executive summary</marc:subfield>
-		<marc:subfield code="g">-1995</marc:subfield>
-		<marc:subfield code="w">(DLC)sn 96034548</marc:subfield>
-		<marc:subfield code="w">(OCoLC)35633716</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="770" ind1="1" ind2=" ">
-		<marc:subfield code="t">African development report. Summary</marc:subfield>
-		<marc:subfield code="g">1996-</marc:subfield>
-		<marc:subfield code="w">(DLC)sn 96034549</marc:subfield>
-		<marc:subfield code="w">(OCoLC)35633766</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="787" ind1="1" ind2=" ">
-		<marc:subfield code="t">Rapport sur le développement en Afrique</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="850" ind1=" " ind2=" ">
-		<marc:subfield code="a">DLC</marc:subfield>
-		<marc:subfield code="a">FU</marc:subfield>
-		<marc:subfield code="a">GU</marc:subfield>
-		<marc:subfield code="a">ICU</marc:subfield>
-		<marc:subfield code="a">InU</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="891" ind1="2" ind2="0">
-		<marc:subfield code="9">853</marc:subfield>
-		<marc:subfield code="8">1</marc:subfield>
-		<marc:subfield code="a">(year)</marc:subfield>
-		<marc:subfield code="w">a</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="891" ind1="4" ind2="1">
-		<marc:subfield code="9">863</marc:subfield>
-		<marc:subfield code="8">1.1</marc:subfield>
-		<marc:subfield code="a">1989</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="936" ind1=" " ind2=" ">
-		<marc:subfield code="a">2002 LIC</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="956" ind1="4" ind2="2">
-		<marc:subfield code="3">Rhees copy purchased by The Rush Rhees Library Campaign for the 90s Fund.</marc:subfield>
-		<marc:subfield code="u">http://www.library.rochester.edu/index.cfm?page=funds&amp;fund=rush rhees library campaign for the 90s</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="994" ind1=" " ind2=" ">
-		<marc:subfield code="a">92</marc:subfield>
-		<marc:subfield code="b">RRR</marc:subfield>
-	</marc:datafield>
-
-<marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Language material</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Serial</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="937" ind1=" " ind2=" ">
-	<marc:subfield code="a">Non-Fiction</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="939" ind1=" " ind2=" ">
-	<marc:subfield code="a">1989-    </marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="941" ind1=" " ind2=" ">
-	<marc:subfield code="a">eng</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="943" ind1=" " ind2=" ">
-	<marc:subfield code="a">English</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:controlfield tag="003">NRU</marc:controlfield>
-
-<marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)1595758</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="130" ind1="0" ind2=" ">
-	<marc:subfield code="a">African development report.</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="x">Economic conditions</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="x">Economic policy</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="x">Commerce</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="963" ind1=" " ind2="0">
-	<marc:subfield code="y">1960-</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="967" ind1=" " ind2="0">
-	<marc:subfield code="a">Africa</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="967" ind1=" " ind2="0">
-	<marc:subfield code="a">Africa</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="967" ind1=" " ind2="0">
-	<marc:subfield code="a">Africa</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="969" ind1=" " ind2="0">
-	<marc:subfield code="v">Periodicals.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="969" ind1=" " ind2="0">
-	<marc:subfield code="v">Periodicals.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="969" ind1=" " ind2="0">
-	<marc:subfield code="v">Periodicals.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-</marc:record>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:48</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01820cas a2200421 a 4500</marc:leader>
+        <marc:controlfield tag="001">1595758</marc:controlfield>
+        <marc:controlfield tag="005">20060410153300.0</marc:controlfield>
+        <marc:controlfield tag="008">900813c19899999iv ar     s   0    0eng d</marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">   94643540 </marc:subfield>
+          <marc:subfield code="z">sn 91022371 </marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)22211635</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">EEM</marc:subfield>
+          <marc:subfield code="c">EEM</marc:subfield>
+          <marc:subfield code="d">FUG</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">DLC</marc:subfield>
+          <marc:subfield code="d">IUL</marc:subfield>
+          <marc:subfield code="d">GUA</marc:subfield>
+          <marc:subfield code="d">CLU</marc:subfield>
+          <marc:subfield code="d">SYS</marc:subfield>
+          <marc:subfield code="d">IUL</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="042" ind1=" " ind2=" ">
+          <marc:subfield code="a">lc</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="043" ind1=" " ind2=" ">
+          <marc:subfield code="a">f------</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="050" ind1="0" ind2="0">
+          <marc:subfield code="a">HC800.A1</marc:subfield>
+          <marc:subfield code="b">A354</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="082" ind1="0" ind2="0">
+          <marc:subfield code="a">330.96/005</marc:subfield>
+          <marc:subfield code="2">20</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRA</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">African development report.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">[Abidjan, Ivory Coast] :</marc:subfield>
+          <marc:subfield code="b">African Development Bank,</marc:subfield>
+          <marc:subfield code="c">[1989?-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">v. ;</marc:subfield>
+          <marc:subfield code="c">30 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="310" ind1=" " ind2=" ">
+          <marc:subfield code="a">Annual</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="362" ind1="0" ind2=" ">
+          <marc:subfield code="a">1989-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Published: Oxford : Oxford University Press for the African Development Bank, &lt;1997-1999&gt;</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="541" ind1=" " ind2=" ">
+          <marc:subfield code="c">Rhees copy purchased by The Rush Rhees Library Campaign for the 90s Fund.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="580" ind1=" " ind2=" ">
+          <marc:subfield code="a">Has supplement: African development report. Executive summary,    -1995; African development report. Summary, 1996-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="580" ind1=" " ind2=" ">
+          <marc:subfield code="a">Issues for &lt;1999-&gt; published for the Bank also by Economica in a French edition.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="651" ind1=" " ind2="0">
+          <marc:subfield code="a">Africa</marc:subfield>
+          <marc:subfield code="x">Economic conditions</marc:subfield>
+          <marc:subfield code="y">1960-</marc:subfield>
+          <marc:subfield code="v">Periodicals.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="651" ind1=" " ind2="0">
+          <marc:subfield code="a">Africa</marc:subfield>
+          <marc:subfield code="x">Economic policy</marc:subfield>
+          <marc:subfield code="v">Periodicals.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="651" ind1=" " ind2="0">
+          <marc:subfield code="a">Africa</marc:subfield>
+          <marc:subfield code="x">Commerce</marc:subfield>
+          <marc:subfield code="v">Periodicals.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">African Development Bank.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="770" ind1="1" ind2=" ">
+          <marc:subfield code="t">African development report. Executive summary</marc:subfield>
+          <marc:subfield code="g">-1995</marc:subfield>
+          <marc:subfield code="w">(DLC)sn 96034548</marc:subfield>
+          <marc:subfield code="w">(OCoLC)35633716</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="770" ind1="1" ind2=" ">
+          <marc:subfield code="t">African development report. Summary</marc:subfield>
+          <marc:subfield code="g">1996-</marc:subfield>
+          <marc:subfield code="w">(DLC)sn 96034549</marc:subfield>
+          <marc:subfield code="w">(OCoLC)35633766</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="787" ind1="1" ind2=" ">
+          <marc:subfield code="t">Rapport sur le développement en Afrique</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="850" ind1=" " ind2=" ">
+          <marc:subfield code="a">DLC</marc:subfield>
+          <marc:subfield code="a">FU</marc:subfield>
+          <marc:subfield code="a">GU</marc:subfield>
+          <marc:subfield code="a">ICU</marc:subfield>
+          <marc:subfield code="a">InU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="891" ind1="2" ind2="0">
+          <marc:subfield code="9">853</marc:subfield>
+          <marc:subfield code="8">1</marc:subfield>
+          <marc:subfield code="a">(year)</marc:subfield>
+          <marc:subfield code="w">a</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="891" ind1="4" ind2="1">
+          <marc:subfield code="9">863</marc:subfield>
+          <marc:subfield code="8">1.1</marc:subfield>
+          <marc:subfield code="a">1989</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="936" ind1=" " ind2=" ">
+          <marc:subfield code="a">2002 LIC</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="956" ind1="4" ind2="2">
+          <marc:subfield code="3">Rhees copy purchased by The Rush Rhees Library Campaign for the 90s Fund.</marc:subfield>
+          <marc:subfield code="u">http://www.library.rochester.edu/index.cfm?page=funds&amp;fund=rush rhees library campaign for the 90s</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">92</marc:subfield>
+          <marc:subfield code="b">RRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Language material</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="935" ind1=" " ind2=" ">
+          <marc:subfield code="a">Serial</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="937" ind1=" " ind2=" ">
+          <marc:subfield code="a">Non-Fiction</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="939" ind1=" " ind2=" ">
+          <marc:subfield code="a">1989-    </marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="941" ind1=" " ind2=" ">
+          <marc:subfield code="a">eng</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="943" ind1=" " ind2=" ">
+          <marc:subfield code="a">English</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(NRU)1595758</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="130" ind1="0" ind2=" ">
+          <marc:subfield code="a">African development report.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="x">Economic conditions</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="x">Economic policy</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="x">Commerce</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="963" ind1=" " ind2="0">
+          <marc:subfield code="y">1960-</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="967" ind1=" " ind2="0">
+          <marc:subfield code="a">Africa</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="967" ind1=" " ind2="0">
+          <marc:subfield code="a">Africa</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="967" ind1=" " ind2="0">
+          <marc:subfield code="a">Africa</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="969" ind1=" " ind2="0">
+          <marc:subfield code="v">Periodicals.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="969" ind1=" " ind2="0">
+          <marc:subfield code="v">Periodicals.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="969" ind1=" " ind2="0">
+          <marc:subfield code="v">Periodicals.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

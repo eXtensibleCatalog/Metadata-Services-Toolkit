@@ -235,9 +235,9 @@ public class TransformationService extends SolrTransformationService {
 						manifestionIdsPreviouslyHeld.add(manifestationId);
 					} else {
 						if (ar.getPreviousManifestationId() != null) {
-							manifestationId = getRepositoryDAO().getNextId();	
-						} else {
 							manifestationId = ar.getPreviousManifestationId();
+						} else {
+							manifestationId = getRepositoryDAO().getNextId();
 						}
 					}
 					addManifestationId4BibProcessed(bib001, manifestationId);

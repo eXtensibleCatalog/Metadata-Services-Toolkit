@@ -1,145 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-
-	<marc:leader>01292cjm a2200325Ia 45x0</marc:leader>
-	<marc:controlfield tag="001">2465522</marc:controlfield>
-	<marc:controlfield tag="003">NRU</marc:controlfield>
-	<marc:controlfield tag="005">20030409135259.0</marc:controlfield>
-	<marc:controlfield tag="007">sd fsngnnamned</marc:controlfield>
-	<marc:controlfield tag="008">030214s2002    xx   n                  d</marc:controlfield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)51651917</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">2465522</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">RES</marc:subfield>
-		<marc:subfield code="c">RES</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="033" ind1="0" ind2=" ">
-		<marc:subfield code="a">20020916</marc:subfield>
-		<marc:subfield code="b">3804</marc:subfield>
-		<marc:subfield code="c">R6</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="099" ind1=" " ind2=" ">
-		<marc:subfield code="a">ECD 0368</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RESR</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="100" ind1="1" ind2=" ">
-		<marc:subfield code="a">Hu, Yih-Mei.</marc:subfield>
-		<marc:subfield code="4">prf</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="245" ind1="1" ind2="0">
-		<marc:subfield code="a">Yih-Mei Hu, piano</marc:subfield>
-		<marc:subfield code="h">[sound recording]</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="c">September 16, 2002.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">1 sound disc :</marc:subfield>
-		<marc:subfield code="b">digital, stereo ;</marc:subfield>
-		<marc:subfield code="c">4 3/4 in.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="490" ind1="1" ind2=" ">
-		<marc:subfield code="a">Program / Eastman School of Music, University of Rochester ;</marc:subfield>
-		<marc:subfield code="v">2002-03</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="511" ind1="0" ind2=" ">
-		<marc:subfield code="a">Yih-Mei Hu, piano ; Amber Shay, piano (last work).</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="518" ind1=" " ind2=" ">
-		<marc:subfield code="a">Recorded in Kilbourn Hall, September 16, 2002.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Candidate for the degree Doctor of Musical Arts in Performance and Literature (piano).</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="505" ind1="0" ind2=" ">
-		<marc:subfield code="a">From Annʹees de Pèlerinage : Suisse. Vallée d'Obermann / Franz Liszt (12:56) -- From North American ballads (1979). Winnsboro cotton mill blues / Frederic Rzewski (11:16) -- Piano concerto in C major, K. 503 / Wolfgang Amadeus Mozart (30:25).</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Piano music.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Concertos (Piano), Arranged.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Shay, Amber.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="810" ind1="2" ind2=" ">
-		<marc:subfield code="a">Eastman School of Music.</marc:subfield>
-		<marc:subfield code="t">Program ;</marc:subfield>
-		<marc:subfield code="v">2002-03.</marc:subfield>
-	</marc:datafield>
-
-	<marc:datafield tag="994" ind1=" " ind2=" ">
-		<marc:subfield code="a">X0</marc:subfield>
-		<marc:subfield code="b">RES</marc:subfield>
-	</marc:datafield>
-
-<marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Sound</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Musical sound recording</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Sound recording</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Monograph/Item</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)2465522</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Sound</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Sound recording</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="934" ind1=" " ind2=" ">
-	<marc:subfield code="a">Sound disk</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
-</marc:datafield>
-
-<marc:datafield tag="240" ind1="0" ind2="0">
-	<marc:subfield code="a">Yih-Mei Hu, piano</marc:subfield>
-</marc:datafield>
-
-</marc:record>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:77</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01292cjm a2200325Ia 45x0</marc:leader>
+        <marc:controlfield tag="001">2465522</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20030409135259.0</marc:controlfield>
+        <marc:controlfield tag="007">sd fsngnnamned</marc:controlfield>
+        <marc:controlfield tag="008">030214s2002    xx   n                  d</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)51651917</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">2465522</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">RES</marc:subfield>
+          <marc:subfield code="c">RES</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="033" ind1="0" ind2=" ">
+          <marc:subfield code="a">20020916</marc:subfield>
+          <marc:subfield code="b">3804</marc:subfield>
+          <marc:subfield code="c">R6</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">ECD 0368</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RESR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Hu, Yih-Mei.</marc:subfield>
+          <marc:subfield code="4">prf</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Yih-Mei Hu, piano</marc:subfield>
+          <marc:subfield code="h">[sound recording]</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="c">September 16, 2002.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">1 sound disc :</marc:subfield>
+          <marc:subfield code="b">digital, stereo ;</marc:subfield>
+          <marc:subfield code="c">4 3/4 in.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="490" ind1="1" ind2=" ">
+          <marc:subfield code="a">Program / Eastman School of Music, University of Rochester ;</marc:subfield>
+          <marc:subfield code="v">2002-03</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="511" ind1="0" ind2=" ">
+          <marc:subfield code="a">Yih-Mei Hu, piano ; Amber Shay, piano (last work).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="518" ind1=" " ind2=" ">
+          <marc:subfield code="a">Recorded in Kilbourn Hall, September 16, 2002.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Candidate for the degree Doctor of Musical Arts in Performance and Literature (piano).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="505" ind1="0" ind2=" ">
+          <marc:subfield code="a">From Annʹees de Pèlerinage : Suisse. Vallée d'Obermann / Franz Liszt (12:56) -- From North American ballads (1979). Winnsboro cotton mill blues / Frederic Rzewski (11:16) -- Piano concerto in C major, K. 503 / Wolfgang Amadeus Mozart (30:25).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Piano music.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Concertos (Piano), Arranged.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Shay, Amber.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="810" ind1="2" ind2=" ">
+          <marc:subfield code="a">Eastman School of Music.</marc:subfield>
+          <marc:subfield code="t">Program ;</marc:subfield>
+          <marc:subfield code="v">2002-03.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">X0</marc:subfield>
+          <marc:subfield code="b">RES</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Musical sound recording</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound recording</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="935" ind1=" " ind2=" ">
+          <marc:subfield code="a">Monograph/Item</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(NRU)2465522</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound recording</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="934" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound disk</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="0" ind2="0">
+          <marc:subfield code="a">Yih-Mei Hu, piano</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>
