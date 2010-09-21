@@ -35,7 +35,19 @@ public class TransformationDaoTest extends BaseMetadataServiceTest {
 		
 		bibsProcessedLongId.put(1, 2);
 		bibsProcessedLongId.put(3, 4);
+		
+		bibsProcessedStringId.put("5", 6L);
+		bibsProcessedStringId.put("7", 8L);
+		
+		bibsYet2ArriveLongId.put(9, 10);
+		bibsYet2ArriveLongId.put(11, 12);
+		
+		bibsYet2ArriveStringId.put("13", 14L);
+		bibsYet2ArriveStringId.put("15", 16L);
+		
 		transformationDAO.persistBibMaps(bibsProcessedLongId, bibsProcessedStringId, bibsYet2ArriveLongId, bibsYet2ArriveStringId);
+		
+		
 	}
 	
 }

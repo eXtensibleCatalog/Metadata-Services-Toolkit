@@ -8,20 +8,20 @@
   */
 package xc.mst.services.impl.service;
 
-import xc.mst.dao.GenericMetadataDAO;
+import xc.mst.dao.MetadataServiceDAO;
 import xc.mst.manager.BaseService;
 import xc.mst.services.MetadataService;
 
 public class GenericMetadataServiceService extends BaseService {
 	
-	protected GenericMetadataDAO genericMetadataDAO = null;
+	protected MetadataServiceDAO genericMetadataDAO = null;
 	protected MetadataService metadataService = null;
 
-	public GenericMetadataDAO getGenericMetadataDAO() {
+	public MetadataServiceDAO getGenericMetadataDAO() {
 		return genericMetadataDAO;
 	}
 
-	public void setGenericMetadataDAO(GenericMetadataDAO genericMetadataDAO) {
+	public void setGenericMetadataDAO(MetadataServiceDAO genericMetadataDAO) {
 		this.genericMetadataDAO = genericMetadataDAO;
 	}
 

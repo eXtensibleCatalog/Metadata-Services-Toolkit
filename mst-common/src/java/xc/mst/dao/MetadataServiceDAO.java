@@ -11,7 +11,8 @@ package xc.mst.dao;
 import org.apache.log4j.Logger;
 
 
-public class GenericMetadataDAO extends BaseDAO {
+public class MetadataServiceDAO extends BaseDAO {
 	
-	private static final Logger LOG = Logger.getLogger(GenericMetadataDAO.class);
+	private static final Logger LOG = Logger.getLogger(MetadataServiceDAO.class);
+	
 }

@@ -50,7 +50,7 @@ public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 				String filter = System.getenv("service.test");
 				LOG.debug("filter: "+filter);
 				LOG.debug("c.getName(): "+c.getName());
-				if (StringUtils.isEmpty(filter) || c.getName().contains(filter)) {
+				if (StringUtils.isEmpty(filter) || c.getName().toUpperCase().contains(filter.toUpperCase())) {
 					testClasses.add(c);
 					LOG.debug("adding class to test suite: "+c);
 				}

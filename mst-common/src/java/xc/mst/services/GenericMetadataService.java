@@ -36,7 +36,7 @@ import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
-import xc.mst.dao.GenericMetadataDAO;
+import xc.mst.dao.MetadataServiceDAO;
 import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.repo.TestRepository;
@@ -58,7 +58,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_PROCESSING);
 
 	protected ApplicationContext applicationContext = null;
-	protected GenericMetadataDAO genericMetadataDAO = null;
+	protected MetadataServiceDAO metadataServiceDAO = null;
 	protected List<ProcessingDirective> processingDirectives = null;
 	protected int warningCount = 0;
 	protected int errorCount = 0;
@@ -110,12 +110,12 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		this.service = service;
 	}
 	
-	public GenericMetadataDAO getGenericMetadataDAO() {
-		return genericMetadataDAO;
+	public MetadataServiceDAO getMetadataServiceDAO() {
+		return metadataServiceDAO;
 	}
 
-	public void setGenericMetadataDAO(GenericMetadataDAO genericMetadataDAO) {
-		this.genericMetadataDAO = genericMetadataDAO;
+	public void setMetadataServiceDAO(MetadataServiceDAO metadataServiceDAO) {
+		this.metadataServiceDAO = metadataServiceDAO;
 	}
 
 	public Set getOutputSet() {
@@ -144,7 +144,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	
 	public void install() {
 		try {
-			getGenericMetadataDAO().executeServiceDBScripts(config.getServicePath()+getServiceName()+"/sql/install.sql");
+			getMetadataServiceDAO().executeServiceDBScripts(config.getServicePath()+getServiceName()+"/sql/install.sql");
 			postInstall();
 		} catch (Throwable t) {
 			LOG.error("", t);
@@ -156,7 +156,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
 	public void uninstall() {
 		try {
-			getGenericMetadataDAO().executeServiceDBScripts(config.getServicePath()+getServiceName()+"/sql/uninstall.sql");
+			getMetadataServiceDAO().executeServiceDBScripts(config.getServicePath()+getServiceName()+"/sql/uninstall.sql");
 			postInstall();
 		} catch (Throwable t) {
 			LOG.error("", t);
@@ -186,7 +186,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		List<String> orderedFileNames2run = internalUpdate(pvStr, cvStr, fileNames);
 		for (String fn : orderedFileNames2run) {
 			try {
-				getGenericMetadataDAO().executeServiceDBScripts(fn);
+				getMetadataServiceDAO().executeServiceDBScripts(fn);
 			} catch (Throwable t) {
 				LOG.error("", t);
 			}
