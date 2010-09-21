@@ -8,11 +8,20 @@
   */
 package xc.mst.test;
 
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.testng.annotations.BeforeSuite;
+
 import xc.mst.common.test.BaseTest;
+import xc.mst.repo.Repository;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.services.MetadataService;
 import xc.mst.spring.TestTypeFilter;
 
 public class BaseMetadataServiceTest extends BaseTest {
+	
+	protected JdbcTemplate jdbcTemplate = null;
 	
 	protected String getServiceName() {
 		return System.getenv("service.name");
@@ -22,8 +31,19 @@ public class BaseMetadataServiceTest extends BaseTest {
 		return TestTypeFilter.metadataService;
 	}
 	
+	protected Repository getRepository() {
+		return TestTypeFilter.metadataService.getRepository();
+	}
+	
 	@Override
+	@BeforeSuite
 	public void startup() {
+		jdbcTemplate = new JdbcTemplate((DataSource)((GenericMetadataService)TestTypeFilter.metadataService).
+				getConfig().getBean("MetadataServiceDataSource"));
+	}
+	
+	protected JdbcTemplate getJdbcTemplate() {
+		return this.jdbcTemplate;
 	}
 	
 	@Override

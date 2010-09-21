@@ -68,6 +68,10 @@ public class TransformationService extends SolrTransformationService {
 	@Override
 	public void init() {
 		super.init();
+	}
+	
+	@Override
+	public void setup() {
 		getTransformationDAO().loadBibMaps(bibsProcessedLongId, bibsProcessedStringId, bibsYet2ArriveLongId, bibsYet2ArriveStringId);
 	}
 	

@@ -51,14 +51,14 @@ public class RepositoryDAO extends BaseDAO {
 	
 	private static Logger LOG = Logger.getLogger(RepositoryDAO.class);
 	
-	protected final static String RECORDS_TABLE = "records";
-	protected final static String RECORD_UPDATES_TABLE = "record_updates";
-	protected final static String RECORDS_XML_TABLE = "records_xml";
-	protected final static String RECORDS_SETS_TABLE = "record_sets";
-	protected final static String RECORD_PREDECESSORS_TABLE = "record_predecessors";
-	protected final static String RECORD_OAI_IDS = "record_oai_ids";
-	protected final static String REPOS_TABLE = "repos";
-	protected final static String RECORD_MESSAGES_TABLE = "RECORD_MESSAGES";
+	public final static String RECORDS_TABLE = "records";
+	public final static String RECORD_UPDATES_TABLE = "record_updates";
+	public final static String RECORDS_XML_TABLE = "records_xml";
+	public final static String RECORDS_SETS_TABLE = "record_sets";
+	public final static String RECORD_PREDECESSORS_TABLE = "record_predecessors";
+	public final static String RECORD_OAI_IDS = "record_oai_ids";
+	public final static String REPOS_TABLE = "repos";
+	public final static String RECORD_MESSAGES_TABLE = "RECORD_MESSAGES";
 	
 	protected Lock oaiIdLock = new ReentrantLock();
 	protected int nextId = -1;

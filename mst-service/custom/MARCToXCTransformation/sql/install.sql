@@ -36,7 +36,7 @@ create table bibsYet2ArriveStringId (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 create table links (
-	link_id          int          not null      AUTO_INCREMENT,
+	link_id          bigint       not null      AUTO_INCREMENT,
 	from_record_id   bigint       not null,
 	to_record_id     bigint       not null,
 	primary KEY (link_id),

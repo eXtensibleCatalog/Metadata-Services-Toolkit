@@ -41,6 +41,7 @@ import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.repo.TestRepository;
 import xc.mst.spring.TestTypeFilter;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
 /**
@@ -137,6 +138,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	public void setInputRecordCount(int inputRecordCount) {
 	}
 	
+	public void setup() {}
 	public void cancel() {stopped = true; running.acquireUninterruptibly(); running.release();}
 	public void finish() {running.acquireUninterruptibly(); running.release();}
 	public void pause()  {LOG.debug("pausing...");paused = true; running.acquireUninterruptibly(); running.release();LOG.debug("paused.");}
@@ -562,6 +564,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			}
 			predecessors.add(in.getId());
 		}
+	}
+	
+	public MSTConfiguration getConfig() {
+		return config;
 	}
 
 }

@@ -38,6 +38,7 @@ public interface MetadataService {
 	 * @param inputSet
 	 * @param outputSet
 	 */
+	public void setup();
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet);
 	public void pause();
 	public void resume();

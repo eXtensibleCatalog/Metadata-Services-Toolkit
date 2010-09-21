@@ -99,7 +99,10 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 		return false;
 	}
 
-	public void setup() {}
+	public void setup() {
+		metadataService.setup();
+	}
+	
 	public void finish() {
 		metadataService.finish();
 	}

@@ -20,10 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 
 import xc.mst.bo.record.Record;
 import xc.mst.dao.BaseDAO;
+import xc.mst.repo.RepositoryDAO;
+import xc.mst.services.impl.dao.GenericMetadataServiceDAO;
+import xc.mst.services.impl.service.GenericMetadataServiceService;
+import xc.mst.test.BaseMetadataServiceTest;
 import xc.mst.utils.TimingLogger;
 
 /**
@@ -31,7 +36,9 @@ import xc.mst.utils.TimingLogger;
  * @author Benjamin D. Anderson
  *
  */
-public class TransformationDAO extends BaseDAO {
+public class TransformationDAO extends GenericMetadataServiceDAO {
+	
+	private final static Logger LOG = Logger.getLogger(TransformationDAO.class);
 	
 	protected final static String bibsProcessedLongId_table = "bibsProcessedLongId";
 	protected final static String bibsProcessedStringId_table = "bibsProcessedStringId";
@@ -48,10 +55,10 @@ public class TransformationDAO extends BaseDAO {
 		
 		// TODO: probably change these string literals to the above statics
 		Object[] objArr = new Object[] {
-				bibsProcessedLongId, "bibsProcessedLongId",
-				bibsProcessedStringId, "bibsProcessedStringId",
-				bibsYet2ArriveLongId, "bibsYet2ArriveLongId",
-				bibsYet2ArriveStringId, "bibsYet2ArriveStringId"};
+				bibsProcessedLongId, bibsProcessedLongId_table,
+				bibsProcessedStringId, bibsProcessedStringId_table,
+				bibsYet2ArriveLongId, bibsYet2ArriveLongId_table,
+				bibsYet2ArriveStringId, bibsYet2ArriveStringId_table};
 		for (int i=0; i<objArr.length; i+=2){
 			String tableName = (String)objArr[i+1];
 			final List<Object[]> params = new ArrayList<Object[]>();
@@ -86,26 +93,90 @@ public class TransformationDAO extends BaseDAO {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void loadBibMaps	(
 			TLongLongHashMap bibsProcessedLongId, 
 			Map<String, Long> bibsProcessedStringId,
 			TLongLongHashMap bibsYet2ArriveLongId,
 			Map<String, Long> bibsYet2ArriveStringId ) {
-		String tableName = null;
-		String sql = "select bib_001, record_id from " +tableName;
-
+		
+		Object[] objArr = new Object[] {
+				bibsProcessedLongId, bibsProcessedLongId_table,
+				bibsProcessedStringId, bibsProcessedStringId_table,
+				bibsYet2ArriveLongId, bibsYet2ArriveLongId_table,
+				bibsYet2ArriveStringId, bibsYet2ArriveStringId_table};
+		for (int i=0; i<objArr.length; i+=2){
+			String tableName = (String)objArr[i+1];
+			String sql = "select bib_001, record_id from " +tableName;
+			List<Map<String, Object>> results = this.jdbcTemplate.queryForList(sql);
+			if (results != null) {
+				for (Map<String, Object> row : results) {
+					if (objArr[i] instanceof TLongLongHashMap) {
+						((TLongLongHashMap)objArr[i]).put((Long)row.get("bib_001"), (Long)row.get("record_id"));
+					} else if (objArr[i] instanceof Map) {
+						((Map)objArr[i]).put((String)row.get("bib_001"), (Long)row.get("record_id"));
+					}		
+				}
+			}
+		}
 	}
 	
 	public List<Long> getLinkedRecordIds(Long toRecordId) {
 		List<Long> linkedRecordsIds = new ArrayList<Long>();
+		String sql = "select from_record_id from links where to_record_id = ?";
+		List<Map<String, Object>> results = this.jdbcTemplate.queryForList(sql, toRecordId);
+		if (results != null) {
+			for (Map<String, Object> row : results) {
+				linkedRecordsIds.add((Long)row.get("from_record_id"));
+			}
+		}
 		return linkedRecordsIds;
 	}
 	
-	public void persistLinkedRecordIds(List<long[]> links) {
-		
+	public void persistLinkedRecordIds(final List<long[]> links) {
+		String sql = "insert into links (from_record_id, to_record_id) values (?,?)";
+		TimingLogger.start("links.insert");
+        int[] updateCounts = jdbcTemplate.batchUpdate(
+        		sql,
+                new BatchPreparedStatementSetter() {
+                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+                    	long[] link = links.get(j);
+                    	ps.setLong(1, link[0]);
+                    	ps.setLong(2, link[1]);
+                    }
+
+                    public int getBatchSize() {
+                        return links.size();
+                    }
+                } );
+        TimingLogger.stop("links.insert");
 	}
 	
-	public void activateHeldHoldings(TLongArrayList manifestionIdsPreviouslyHeld) {
+	public void activateHeldHoldings(final TLongArrayList manifestionIdsPreviouslyHeld) {
+		TimingLogger.start("activateHeldHoldings");
+		StringBuilder sb = new StringBuilder("update "+RepositoryDAO.RECORDS_TABLE+
+			" set status='"+Record.ACTIVE+"'"+
+			" where record_id in (select from_record_id from links where to_record_id in (");
+		for (int i=0; i<manifestionIdsPreviouslyHeld.size(); i++) {
+			sb.append("?");
+			if (i+1 < manifestionIdsPreviouslyHeld.size()) {
+				sb.append(", ");
+			}
+		}
+		sb.append("))");
+		LOG.debug("sb.toString(): "+sb.toString());
 		
+        int[] updateCounts = jdbcTemplate.batchUpdate(
+        		sb.toString(),
+                new BatchPreparedStatementSetter() {
+                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+                    	long manId = manifestionIdsPreviouslyHeld.get(j);
+                    	ps.setLong(1, manId);
+                    }
+                    public int getBatchSize() {
+                        return manifestionIdsPreviouslyHeld.size();
+                    }
+                } );
+        TimingLogger.stop("activateHeldHoldings");
 	}
 }
