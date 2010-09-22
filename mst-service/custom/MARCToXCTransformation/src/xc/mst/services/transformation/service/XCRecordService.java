@@ -15,6 +15,7 @@ import java.util.List;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.apache.log4j.Logger;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -37,6 +38,7 @@ import xc.mst.utils.XmlHelper;
  */
 public class XCRecordService extends GenericMetadataServiceService {
 
+	private static final Logger LOG = Logger.getLogger(XCRecordService.class);
 	protected XmlHelper xmlHelper = new XmlHelper();
 	
 	TransformationDAO transformationDAO = null;
@@ -506,9 +508,11 @@ public class XCRecordService extends GenericMetadataServiceService {
 			}
 			
 			// Set the OAI id
-			long newWorkId = getId(ar.getPreviousWorkIds()); 
+			long newWorkId = getId(ar.getPreviousWorkIds());
+			LOG.debug("newWorkId: "+newWorkId);
 			String newWorkOaiID = getRecordService().getOaiIdentifier(
 					newWorkId, getMetadataService().getService());
+			LOG.debug("newWorkOaiID: "+newWorkOaiID);
 			newWorkElement.setAttribute(new Attribute("id", newWorkOaiID));
 			ar.xcRootElement.addContent(newWorkElement);
 			records.add(createRecord(ar, newWorkId, (Element)ar.xcRootElement.clone(), null));
@@ -552,7 +556,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 			
 			List<String> workExpressedOaiIDs = new ArrayList<String>();
 			workExpressedOaiIDs.add(newWorkOaiID);
-			records.add(createRecord(ar, newWorkId, (Element)ar.xcRootElement.clone(), workExpressedOaiIDs));
+			records.add(createRecord(ar, newExpressionId, (Element)ar.xcRootElement.clone(), workExpressedOaiIDs));
 			ar.xcRootElement.removeContent();
 			
 			index++;

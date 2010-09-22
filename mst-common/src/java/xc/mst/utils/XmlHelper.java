@@ -144,17 +144,30 @@ public class XmlHelper {
 	public boolean diffXmlFiles(String file1, String file2) {
 		try {
 			//LOG.debug("file1: "+new Util().slurp(file1));
+			
+			//TODO some of these are temporary for the initial transformation check.  Remove the following going
+			//     forward:  identifier, predecessors, xmlns:, id, workExpressed
+			String[] regexps = new String[] {
+					"<identifier>.*</identifier>", "",
+					"<predecessor>.*</predecessor>", "",
+					"xmlns:[a-zA-Z]*=\\\".*\\\"", "",
+					"id=..*\\\"", "",
+					"<xc:workExpressed>.*</xc:workExpressed>", "",
+					"<datestamp>.*</datestamp>", "",
+					"<request.*</request>", "",
+					"<responseDate.*</responseDate>", ""
+			};
 			String file1contents = getString(getSaxBuilder().build(new FileInputStream(file1)).getRootElement());
-			file1contents = file1contents.replaceAll("<datestamp>.*</datestamp>", "");
-			file1contents = file1contents.replaceAll("<request.*</request>", "");
-			file1contents = file1contents.replaceAll("<responseDate.*</responseDate>", "");
+			for (int i=0; i<regexps.length; i+=2) {
+				file1contents = file1contents.replaceAll(regexps[i], regexps[i+1]);	
+			}
 			//LOG.debug("file1contents: "+file1contents);
 			
 			//LOG.debug("file2: "+new Util().slurp(file2));
 			String file2contents = getString(getSaxBuilder().build(new FileInputStream(file2)).getRootElement());
-			file2contents = file2contents.replaceAll("<datestamp>.*</datestamp>", "");
-			file2contents = file2contents.replaceAll("<request.*</request>", "");
-			file2contents = file2contents.replaceAll("<responseDate.*</responseDate>", "");
+			for (int i=0; i<regexps.length; i+=2) {
+				file1contents = file1contents.replaceAll(regexps[i], regexps[i+1]);	
+			}
 			//LOG.debug("file2contents: "+file2contents);
 			return !file1contents.equals(file2contents);
 		} catch (Throwable t) {
