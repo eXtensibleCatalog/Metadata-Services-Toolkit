@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/387</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/392</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:116</predecessor>
+      <predecessor>oai:mst.rochester.edu:121</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10381" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/392">
         <dcterms:subject xsi:type="dcterms:LCC">M25.G687</dcterms:subject>
         <rdarole:composer>Gottschalk, Louis Moreau, 1829-1869.</rdarole:composer>
         <rdvocab:titleOfWork>Bananier</rdvocab:titleOfWork>
@@ -20,33 +20,33 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/388</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/393</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:116</predecessor>
+      <predecessor>oai:mst.rochester.edu:121</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10382" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/393">
         <xc:titleOfExpression>Bananier</xc:titleOfExpression>
         <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10381</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/392</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/389</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/391</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:116</predecessor>
+      <predecessor>oai:mst.rochester.edu:121</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10383" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/391">
         <rdvocab:publisherNumber>7185</rdvocab:publisherNumber>
         <xc:recordID type="OCoLC">8441944</xc:recordID>
         <xc:recordID type="NRU">3643653</xc:recordID>
@@ -63,7 +63,7 @@
         <xc:typeLeader06>Notated music</xc:typeLeader06>
         <xc:type007>Notated music</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10382</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/393</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

@@ -1,0 +1,21 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="replaced">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/15</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:5</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/15">
+        <xc:location>SibStack</xc:location>
+        <xc:callNumber>M1013 .B887 FS</xc:callNumber>
+        <xc:recordID type="NRU">1053198</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/14</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

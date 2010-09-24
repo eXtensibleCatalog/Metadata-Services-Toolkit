@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/52</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/57</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:9</predecessor>
+      <predecessor>oai:mst.rochester.edu:14</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10046" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/57">
         <dcterms:subject xsi:type="dcterms:LCC">M1620</dcterms:subject>
         <rdarole:composer>Schreker, Franz, 1878-1934.</rdarole:composer>
         <rdvocab:titleOfWork>Gesänge, op. 2</rdvocab:titleOfWork>
@@ -20,34 +20,34 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/53</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/58</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:9</predecessor>
+      <predecessor>oai:mst.rochester.edu:14</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10047" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/58">
         <xc:titleOfExpression>Gesänge, op. 2</xc:titleOfExpression>
         <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
         <dcterms:language>German</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10046</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/57</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/54</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/56</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:9</predecessor>
+      <predecessor>oai:mst.rochester.edu:14</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10048" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/56">
         <rdvocab:publisherNumber>3870</rdvocab:publisherNumber>
         <rdvocab:publisherNumber>3871</rdvocab:publisherNumber>
         <rdvocab:plateNumber>J.E. 844</rdvocab:plateNumber>
@@ -66,7 +66,7 @@
         <xc:typeLeader06>Notated music</xc:typeLeader06>
         <xc:type007>Notated music</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10047</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/58</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

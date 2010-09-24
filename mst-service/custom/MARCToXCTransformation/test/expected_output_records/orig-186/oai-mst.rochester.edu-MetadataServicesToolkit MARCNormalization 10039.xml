@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/114</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/119</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:35</predecessor>
+      <predecessor>oai:mst.rochester.edu:40</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10108" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/119">
         <dcterms:subject xsi:type="dcterms:LCC">E85</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:LCC">PT2660.A1</dcterms:subject>
         <rdvocab:titleOfWork>Abenteuer unter den Indianern =</rdvocab:titleOfWork>
@@ -28,35 +28,35 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/115</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/120</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:35</predecessor>
+      <predecessor>oai:mst.rochester.edu:40</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10109" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/120">
         <xc:titleOfExpression>Abenteuer unter den Indianern =</xc:titleOfExpression>
         <dcterms:relation>Issued with the reprint of the 1860 ed. of Bone, J. H. A. The Indian captive. New York, 1977.</dcterms:relation>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10108</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/119</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/116</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/118</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:35</predecessor>
+      <predecessor>oai:mst.rochester.edu:40</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10110" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/118">
         <xc:recordID type="LCCN">76057230</xc:recordID>
         <xc:recordID type="OCoLC">2644644</xc:recordID>
         <xc:recordID type="NRU">147733</xc:recordID>
@@ -74,7 +74,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0824017005</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10109</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/120</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

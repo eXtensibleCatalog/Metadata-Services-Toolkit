@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/374</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/379</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:111</predecessor>
+      <predecessor>oai:mst.rochester.edu:116</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10368" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/379">
         <rdarole:author>Shore, Stephen M., 1961-</rdarole:author>
         <rdvocab:titleOfWork>Understanding autism for dummies /</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Autism in children-Popular works.</xc:subject>
@@ -25,36 +25,36 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/375</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/380</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:111</predecessor>
+      <predecessor>oai:mst.rochester.edu:116</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10369" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/380">
         <xc:titleOfExpression>Understanding autism for dummies /</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>Rastelli, Linda G.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10368</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/379</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/376</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/378</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:111</predecessor>
+      <predecessor>oai:mst.rochester.edu:116</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10370" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/378">
         <xc:recordID type="OCoLC">71517906</xc:recordID>
         <xc:recordID type="NRU">3494560</xc:recordID>
         <rdvocab:statementOfResponsibilityRelatingToTitle>by Stephen M. Shore and Linda G. Rastelli.</rdvocab:statementOfResponsibilityRelatingToTitle>
@@ -71,7 +71,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0764525476</dcterms:identifier>
         <dcterms:identifier type="ISBN">9780764525476</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10369</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/380</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

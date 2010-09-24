@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/188</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/193</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:47</predecessor>
+      <predecessor>oai:mst.rochester.edu:52</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10182" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/193">
         <dcterms:subject xsi:type="dcterms:LCC">QA76.9.D3</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">005.74</dcterms:subject>
         <rdarole:author>International Conference on Information and Knowledge Management.</rdarole:author>
@@ -30,15 +30,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/189</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/194</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:47</predecessor>
+      <predecessor>oai:mst.rochester.edu:52</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10183" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/194">
         <xc:titleOfExpression>Proceedings of the ... ACM CIKM International Conference on Information and Knowledge Management.</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill., maps ;</rdvocab:illustrationContent>
         <dcterms:description>Vols. for &lt;-1998&gt; sponsored by the Association for Computing Machinery's Special Interest Group on Information Retrieval (SIGIR) and Special Interest Group on Management Information Systems (SIGMIS).</dcterms:description>
@@ -46,22 +46,22 @@
         <dcterms:language>English</dcterms:language>
         <xc:contributor>Association for Computing Machinery. Special Interest Group on Information Retrieval.</xc:contributor>
         <xc:contributor>Association for Computing Machinery. Special Interest Group on Management Information Systems.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10182</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/193</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/190</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/192</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:47</predecessor>
+      <predecessor>oai:mst.rochester.edu:52</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10184" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/192">
         <xc:recordID type="LCCN">00238118</xc:recordID>
         <xc:recordID type="OCoLC">38095179</xc:recordID>
         <xc:recordID type="NRU">1707227</xc:recordID>
@@ -77,7 +77,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1993-1997</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10183</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/194</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

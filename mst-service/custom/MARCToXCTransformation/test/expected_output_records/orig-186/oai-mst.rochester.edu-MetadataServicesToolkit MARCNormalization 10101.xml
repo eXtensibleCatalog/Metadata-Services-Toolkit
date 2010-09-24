@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/336</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/341</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:97</predecessor>
+      <predecessor>oai:mst.rochester.edu:102</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10330" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/341">
         <dcterms:subject xsi:type="dcterms:LCC">CB417</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">820.9</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:LCC">PR468.R65</dcterms:subject>
@@ -32,43 +32,43 @@
         <xc:subject type="rvm">Romantisme</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">History and criticism.</xc:subject>
         <xc:subject type="rvm">Histoire et critique.</xc:subject>
-        <xc:spacial xsi:type="dcterms:LCSH">Great Britain.</xc:spacial>
-        <xc:spacial type="rvm">Grande-Bretagne.</xc:spacial>
+        <xc:spatial xsi:type="dcterms:LCSH">Great Britain.</xc:spatial>
+        <xc:spatial type="rvm">Grande-Bretagne.</xc:spatial>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/337</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/342</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:97</predecessor>
+      <predecessor>oai:mst.rochester.edu:102</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10331" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/342">
         <xc:titleOfExpression>Northrop Frye's writings on the eighteenth and nineteenth centuries /</xc:titleOfExpression>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>Salusinszky, Imre, 1955-</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10330</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/341</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/338</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/340</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:97</predecessor>
+      <predecessor>oai:mst.rochester.edu:102</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10332" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/340">
         <xc:identifier type="LAC">20059020687</xc:identifier>
         <xc:identifier type="YBP">99811772018</xc:identifier>
         <xc:recordID type="OCoLC">59338662</xc:recordID>
@@ -87,7 +87,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0802038247</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10331</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/342</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

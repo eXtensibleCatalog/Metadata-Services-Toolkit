@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/293</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/298</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:78</predecessor>
+      <predecessor>oai:mst.rochester.edu:83</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10287" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/298">
         <dcterms:subject xsi:type="dcterms:LCC">M11</dcterms:subject>
         <rdarole:composer>Reger, Max, 1873-1916.</rdarole:composer>
         <rdvocab:titleOfWork>Kleine Choralvorspiele</rdvocab:titleOfWork>
@@ -21,34 +21,34 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/294</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/299</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:78</predecessor>
+      <predecessor>oai:mst.rochester.edu:83</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10288" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/299">
         <xc:titleOfExpression>Kleine Choralvorspiele</xc:titleOfExpression>
         <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
         <xc:contributor>Kube, Michael, 1968-</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10287</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/298</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/295</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/297</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:78</predecessor>
+      <predecessor>oai:mst.rochester.edu:83</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10289" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/297">
         <xc:identifier type="ISMN">201807614</xc:identifier>
         <rdvocab:publisherNumber>HN 761</rdvocab:publisherNumber>
         <rdvocab:publisherNumber>761</rdvocab:publisherNumber>
@@ -67,7 +67,7 @@
         <xc:typeLeader06>Notated music</xc:typeLeader06>
         <xc:type007>Notated music</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10288</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/299</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

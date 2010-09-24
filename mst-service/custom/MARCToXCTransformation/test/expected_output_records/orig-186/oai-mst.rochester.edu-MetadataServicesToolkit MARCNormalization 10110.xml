@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/357</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/362</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:106</predecessor>
+      <predecessor>oai:mst.rochester.edu:111</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10351" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/362">
         <dcterms:subject xsi:type="dcterms:LCC">Z673.A5</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:NLM">Z 673 A508</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">020.973</dcterms:subject>
@@ -33,15 +33,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/358</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/363</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:106</predecessor>
+      <predecessor>oai:mst.rochester.edu:111</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10352" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/363">
         <xc:titleOfExpression>American libraries (Online)</xc:titleOfExpression>
         <dcterms:description>Official bulletin of the American Library Association.</dcterms:description>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
@@ -50,22 +50,22 @@
         <xc:contributor>EBSCO Publishing (Firm)</xc:contributor>
         <xc:contributor>ProQuest Information and Learning Company.</xc:contributor>
         <xc:contributor>H.W. Wilson Company.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10351</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/362</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/359</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/361</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:106</predecessor>
+      <predecessor>oai:mst.rochester.edu:111</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10353" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/361">
         <xc:recordID type="LCCN">70021767</xc:recordID>
         <xc:identifier type="DNLM">A25140000</xc:identifier>
         <xc:identifier type="ISSN">0002-9769</xc:identifier>
@@ -86,23 +86,23 @@
         <xc:typeSMD>Remote</xc:typeSMD>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1970-</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10352</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/363</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/360</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/364</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:106</predecessor>
+      <predecessor>oai:mst.rochester.edu:111</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10354" type="holdings">
-        <xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10353</xc:manifestationHeld>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/364">
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/361</xc:manifestationHeld>
       </xc:entity>
     </xc:frbr>
   </metadata>

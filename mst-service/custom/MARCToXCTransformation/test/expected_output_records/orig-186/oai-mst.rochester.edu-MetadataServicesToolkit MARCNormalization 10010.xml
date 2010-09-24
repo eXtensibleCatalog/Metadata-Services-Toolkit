@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/23</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/28</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10017" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/28">
         <rdvocab:titleOfWork>Eastman School of Music Trombone Alumni Concert</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
@@ -21,15 +21,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/24</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/29</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10018" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/29">
         <xc:titleOfExpression>Eastman School of Music Trombone Alumni Concert</xc:titleOfExpression>
         <rdvocab:performerNarratorAndOrPresenter>Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded in the Eastman Theatre, June 14, 1991.</rdvocab:placeAndDateOfCapture>
@@ -39,22 +39,22 @@
         <xc:contributor>Boone, Rob.</xc:contributor>
         <xc:contributor>Lusk, Mark.</xc:contributor>
         <xc:contributor>Mortenson, Steve.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10017</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/28</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/25</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/30</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10019" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/30">
         <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
         <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
@@ -66,15 +66,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/26</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/31</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10020" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/31">
         <rdvocab:performerNarratorAndOrPresenter>Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded in the Eastman Theatre, June 14, 1991.</rdvocab:placeAndDateOfCapture>
         <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
@@ -84,22 +84,22 @@
         <xc:contributor>Lusk, Mark.</xc:contributor>
         <xc:contributor>Mortenson, Steve.</xc:contributor>
         <rdvocab:titleOfExpression>Matthäuspassion. O Haupt voll Blut und Wunden; arr. </rdvocab:titleOfExpression>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10019</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/30</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/27</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/32</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10021" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/32">
         <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
         <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
@@ -111,15 +111,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/28</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/33</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10022" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/33">
         <rdvocab:performerNarratorAndOrPresenter>Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded in the Eastman Theatre, June 14, 1991.</rdvocab:placeAndDateOfCapture>
         <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
@@ -129,22 +129,22 @@
         <xc:contributor>Lusk, Mark.</xc:contributor>
         <xc:contributor>Mortenson, Steve.</xc:contributor>
         <rdvocab:titleOfExpression>Largo tah. </rdvocab:titleOfExpression>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10021</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/32</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/29</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/34</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10023" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/34">
         <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
         <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
@@ -156,15 +156,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/30</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/35</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10024" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/35">
         <rdvocab:performerNarratorAndOrPresenter>Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded in the Eastman Theatre, June 14, 1991.</rdvocab:placeAndDateOfCapture>
         <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
@@ -174,22 +174,22 @@
         <xc:contributor>Lusk, Mark.</xc:contributor>
         <xc:contributor>Mortenson, Steve.</xc:contributor>
         <rdvocab:titleOfExpression>Schöpfung. Vollendet ist das grosse Werk; arr. </rdvocab:titleOfExpression>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10023</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/34</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/31</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/36</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10025" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/36">
         <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
         <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
@@ -201,15 +201,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/32</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/37</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10026" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/37">
         <rdvocab:performerNarratorAndOrPresenter>Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded in the Eastman Theatre, June 14, 1991.</rdvocab:placeAndDateOfCapture>
         <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
@@ -219,22 +219,22 @@
         <xc:contributor>Lusk, Mark.</xc:contributor>
         <xc:contributor>Mortenson, Steve.</xc:contributor>
         <rdvocab:titleOfExpression>Adoramus te; arr. </rdvocab:titleOfExpression>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10025</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/36</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/33</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/38</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10027" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/38">
         <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
         <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
@@ -246,15 +246,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/34</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/39</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10028" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/39">
         <rdvocab:performerNarratorAndOrPresenter>Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded in the Eastman Theatre, June 14, 1991.</rdvocab:placeAndDateOfCapture>
         <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
@@ -264,22 +264,22 @@
         <xc:contributor>Lusk, Mark.</xc:contributor>
         <xc:contributor>Mortenson, Steve.</xc:contributor>
         <rdvocab:titleOfExpression>Symphonies, no. 3, op. 78, C minor. Adagio; arr. </rdvocab:titleOfExpression>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10027</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/38</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/35</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/40</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10029" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/40">
         <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
         <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
@@ -291,15 +291,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/36</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/41</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10030" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/41">
         <rdvocab:performerNarratorAndOrPresenter>Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded in the Eastman Theatre, June 14, 1991.</rdvocab:placeAndDateOfCapture>
         <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
@@ -309,22 +309,22 @@
         <xc:contributor>Lusk, Mark.</xc:contributor>
         <xc:contributor>Mortenson, Steve.</xc:contributor>
         <rdvocab:titleOfExpression>Sonara. </rdvocab:titleOfExpression>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10029</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/40</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/37</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/42</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10031" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/42">
         <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
         <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
@@ -336,15 +336,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/38</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/43</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10032" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/43">
         <rdvocab:performerNarratorAndOrPresenter>Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded in the Eastman Theatre, June 14, 1991.</rdvocab:placeAndDateOfCapture>
         <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
@@ -354,22 +354,22 @@
         <xc:contributor>Lusk, Mark.</xc:contributor>
         <xc:contributor>Mortenson, Steve.</xc:contributor>
         <rdvocab:titleOfExpression>Passacaglia, organ, BWV 582, C minor; arr. </rdvocab:titleOfExpression>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10031</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/42</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/39</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/44</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10033" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/44">
         <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
         <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
@@ -381,15 +381,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/40</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/45</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10034" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/45">
         <rdvocab:performerNarratorAndOrPresenter>Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded in the Eastman Theatre, June 14, 1991.</rdvocab:placeAndDateOfCapture>
         <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
@@ -399,22 +399,22 @@
         <xc:contributor>Lusk, Mark.</xc:contributor>
         <xc:contributor>Mortenson, Steve.</xc:contributor>
         <rdvocab:titleOfExpression>I'm gettin' sentimental over you. </rdvocab:titleOfExpression>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10033</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/44</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/41</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/46</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10035" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/46">
         <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
         <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
@@ -426,15 +426,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/42</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/47</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10036" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/47">
         <rdvocab:performerNarratorAndOrPresenter>Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded in the Eastman Theatre, June 14, 1991.</rdvocab:placeAndDateOfCapture>
         <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
@@ -444,22 +444,22 @@
         <xc:contributor>Lusk, Mark.</xc:contributor>
         <xc:contributor>Mortenson, Steve.</xc:contributor>
         <rdvocab:titleOfExpression>Wolf eyes. </rdvocab:titleOfExpression>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10035</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/46</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/43</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/48</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10037" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/48">
         <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
         <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
@@ -471,15 +471,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/44</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/49</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10038" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/49">
         <rdvocab:performerNarratorAndOrPresenter>Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded in the Eastman Theatre, June 14, 1991.</rdvocab:placeAndDateOfCapture>
         <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
@@ -489,22 +489,22 @@
         <xc:contributor>Lusk, Mark.</xc:contributor>
         <xc:contributor>Mortenson, Steve.</xc:contributor>
         <rdvocab:titleOfExpression>Stardust for the chief. </rdvocab:titleOfExpression>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10037</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/48</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/45</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/27</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:6</predecessor>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10039" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/27">
         <xc:recordID type="OCoLC">27295669</xc:recordID>
         <xc:recordID type="NRU">1177208</xc:recordID>
         <dcterms:title>Eastman School of Music Trombone Alumni Concert</dcterms:title>
@@ -523,17 +523,17 @@
         <xc:type007>Sound recording</xc:type007>
         <xc:typeSMD>Sound-tape reel</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10018</xc:expressionManifested>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10020</xc:expressionManifested>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10022</xc:expressionManifested>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10024</xc:expressionManifested>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10026</xc:expressionManifested>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10028</xc:expressionManifested>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10030</xc:expressionManifested>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10032</xc:expressionManifested>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10034</xc:expressionManifested>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10036</xc:expressionManifested>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10038</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/29</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/31</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/33</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/35</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/37</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/39</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/41</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/43</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/45</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/47</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/49</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

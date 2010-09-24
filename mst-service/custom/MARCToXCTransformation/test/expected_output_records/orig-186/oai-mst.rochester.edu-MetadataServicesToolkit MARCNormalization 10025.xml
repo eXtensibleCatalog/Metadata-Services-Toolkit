@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/84</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/89</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:21</predecessor>
+      <predecessor>oai:mst.rochester.edu:26</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10078" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/89">
         <dcterms:subject xsi:type="dcterms:DDC">FM051</dcterms:subject>
         <rdvocab:titleOfWork>Medical news (Philadelphia, Pa.)</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Medicine-Periodicals.</xc:subject>
@@ -24,37 +24,37 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/85</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/90</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:21</predecessor>
+      <predecessor>oai:mst.rochester.edu:26</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10079" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/90">
         <xc:titleOfExpression>Medical news (Philadelphia, Pa.)</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:hasFormat>Microfilm. Ann Arbor, Mich. : University Microfilms. 4 microfilm reels ; 35 mm. (American periodical series, 1800-1850 ; 1075-1087)</dcterms:hasFormat>
         <dcterms:HasFormat>Medical news (Philadelphia, Pa.)</dcterms:HasFormat>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10078</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/89</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/86</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/88</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:21</predecessor>
+      <predecessor>oai:mst.rochester.edu:26</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10080" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/88">
         <xc:recordID type="LCCN">sf 89092178</xc:recordID>
         <xc:recordID type="NRU">1323972</xc:recordID>
         <dcterms:title>The Medical news</dcterms:title>
@@ -73,7 +73,7 @@
         <xc:typeSMD>Microfilm reel</xc:typeSMD>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1882-1905</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10079</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/90</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

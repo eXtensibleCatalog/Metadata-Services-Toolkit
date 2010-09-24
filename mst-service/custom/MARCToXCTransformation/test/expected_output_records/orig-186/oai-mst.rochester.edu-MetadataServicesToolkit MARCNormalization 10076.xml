@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/277</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/282</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:72</predecessor>
+      <predecessor>oai:mst.rochester.edu:77</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10271" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/282">
         <rdvocab:titleOfWork>Yih-Mei Hu, piano</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Piano music.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Concertos (Piano), Arranged.</xc:subject>
@@ -19,37 +19,37 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/278</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/283</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:72</predecessor>
+      <predecessor>oai:mst.rochester.edu:77</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10272" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/283">
         <rdarole:performer>Hu, Yih-Mei.</rdarole:performer>
         <xc:titleOfExpression>Yih-Mei Hu, piano</xc:titleOfExpression>
         <rdvocab:performerNarratorAndOrPresenter>Yih-Mei Hu, piano ; Amber Shay, piano (last work).</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded in Kilbourn Hall, September 16, 2002.</rdvocab:placeAndDateOfCapture>
         <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
         <xc:contributor>Shay, Amber.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10271</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/282</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/279</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/281</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:72</predecessor>
+      <predecessor>oai:mst.rochester.edu:77</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10273" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/281">
         <xc:recordID type="OCoLC">51651917</xc:recordID>
         <xc:recordID type="NRU">2465522</xc:recordID>
         <dcterms:title>Yih-Mei Hu, piano</dcterms:title>
@@ -64,7 +64,7 @@
         <xc:type007>Sound recording</xc:type007>
         <xc:typeSMD>Sound disk</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10272</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/283</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

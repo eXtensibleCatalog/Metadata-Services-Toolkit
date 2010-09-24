@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/478</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/483</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:157</predecessor>
+      <predecessor>oai:mst.rochester.edu:162</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10472" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/483">
         <dcterms:subject xsi:type="dcterms:LCC">M238</dcterms:subject>
         <rdarole:composer>Birckenstock, Johann Adam, 1687-1733.</rdarole:composer>
         <rdvocab:titleOfWork>Sonatas, violin, continuo, op. 1. No. 11; arr.</rdvocab:titleOfWork>
@@ -22,35 +22,35 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/479</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/484</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:157</predecessor>
+      <predecessor>oai:mst.rochester.edu:162</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10473" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/484">
         <xc:titleOfExpression>Sonatas, violin, continuo, op. 1. No. 11; arr.</xc:titleOfExpression>
         <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
         <xc:contributor>Bigot, Eugène.</xc:contributor>
         <xc:contributor>Delmas-Boussagol, J.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10472</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/483</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/480</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/482</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:157</predecessor>
+      <predecessor>oai:mst.rochester.edu:162</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10474" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/482">
         <rdvocab:plateNumber>A.L. 21389</rdvocab:plateNumber>
         <rdvocab:publisherNumber>Pl. no. A.L. 21389</rdvocab:publisherNumber>
         <xc:recordID type="OCoLC">4359269</xc:recordID>
@@ -69,7 +69,7 @@
         <xc:typeLeader06>Notated music</xc:typeLeader06>
         <xc:type007>Notated music</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10473</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/484</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

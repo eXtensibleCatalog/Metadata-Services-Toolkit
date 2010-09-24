@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/477</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/481</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:156</predecessor>
+      <predecessor>oai:mst.rochester.edu:161</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10471" type="holdings">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/481">
         <xc:location>SibBJrnl</xc:location>
         <xc:callNumber>ML1 .I6198</xc:callNumber>
         <xc:textualHoldings type="Basic Bibliographic Unit">v. 1 1978/79</xc:textualHoldings>
@@ -17,7 +17,7 @@
         <xc:textualHoldings type="Basic Bibliographic Unit">v. 3 1981/82</xc:textualHoldings>
         <xc:textualHoldings type="Basic Bibliographic Unit">v. 4 1982-84 (lacks no. 4)</xc:textualHoldings>
         <xc:recordID type="NRU">656643</xc:recordID>
-        <xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10467</xc:manifestationHeld>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/475</xc:manifestationHeld>
       </xc:entity>
     </xc:frbr>
   </metadata>

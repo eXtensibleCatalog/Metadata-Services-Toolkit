@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/512</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/516</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:169</predecessor>
+      <predecessor>oai:mst.rochester.edu:175</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10505" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/516">
         <dcterms:subject xsi:type="dcterms:LCC">RM950</dcterms:subject>
         <rdarole:author>International Conference of the Association for the Advancement of Rehabilitation Technology (3rd : 1988 : Montréal, Québec)</rdarole:author>
         <rdvocab:titleOfWork>Proceedings :</rdvocab:titleOfWork>
@@ -23,15 +23,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/513</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/517</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:169</predecessor>
+      <predecessor>oai:mst.rochester.edu:175</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10506" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/517">
         <xc:titleOfExpression>Proceedings :</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
@@ -39,22 +39,22 @@
         <dcterms:language>French</dcterms:language>
         <xc:contributor>RESNA, Association for the Advancement of Rehabilitation Technology.</xc:contributor>
         <xc:contributor>Régie de l'assurance automobile du Québec.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10505</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/516</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/514</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/515</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:169</predecessor>
+      <predecessor>oai:mst.rochester.edu:175</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10507" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/515">
         <xc:recordID type="OCoLC">18671731</xc:recordID>
         <xc:recordID type="NRU">896124</xc:recordID>
         <dcterms:title>Proceedings : International Conference of the Association for the Advancement of Rehabilitation Technology, choice for all = Compte rendu : Conférence internationale pour le développement de la technologie en réadaptation, choix pour tous : ICAART 88, Montréal, Palais des Congrès, 25-30, June-juin 1988.</dcterms:title>
@@ -72,7 +72,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0932101178</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10506</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/517</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

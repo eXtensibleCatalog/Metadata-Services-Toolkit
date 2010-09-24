@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/407</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/412</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:124</predecessor>
+      <predecessor>oai:mst.rochester.edu:129</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10401" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/412">
         <dcterms:subject xsi:type="dcterms:DDC">791.43/72</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:LCC">PN1995.9.D4</dcterms:subject>
         <rdvocab:titleOfWork>No country for old men</rdvocab:titleOfWork>
@@ -27,15 +27,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/408</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/413</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:124</predecessor>
+      <predecessor>oai:mst.rochester.edu:129</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10402" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/413">
         <xc:titleOfExpression>No country for old men</xc:titleOfExpression>
         <dcterms:version>Widescreen version.</dcterms:version>
         <rdvocab:artisticAndOrTechnicalCredits>Director of photography, Roger Deakins ; editor, Roderick Jaynes ; music, Carter Burwell ; costume designer, Mary Zophres ; production designer, Jess Gonchor.</rdvocab:artisticAndOrTechnicalCredits>
@@ -60,22 +60,22 @@
         <xc:contributor>Paramount Vantage.</xc:contributor>
         <xc:contributor>Miramax Home Entertainment (Firm)</xc:contributor>
         <xc:contributor>Buena Vista Home Entertainment (Firm)</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10401</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/412</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/409</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/411</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:124</predecessor>
+      <predecessor>oai:mst.rochester.edu:129</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10403" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/411">
         <xc:identifier type="UPC">786936746754</xc:identifier>
         <xc:identifier type="VideoNr">55640</xc:identifier>
         <xc:recordID type="OCoLC">184908513</xc:recordID>
@@ -99,7 +99,7 @@
         <xc:typeSMD>Videodisc</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0788882988</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10402</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/413</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

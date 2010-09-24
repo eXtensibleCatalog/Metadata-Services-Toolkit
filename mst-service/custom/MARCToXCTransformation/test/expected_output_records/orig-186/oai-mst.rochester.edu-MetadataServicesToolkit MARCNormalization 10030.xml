@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/97</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/102</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:26</predecessor>
+      <predecessor>oai:mst.rochester.edu:31</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10091" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/102">
         <rdarole:author>Connecticut Academy of Arts and Sciences.</rdarole:author>
         <rdvocab:titleOfWork>Memoirs of the Connecticut Academy of Arts and Sciences</rdvocab:titleOfWork>
       </xc:entity>
@@ -18,15 +18,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/98</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/103</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:26</predecessor>
+      <predecessor>oai:mst.rochester.edu:31</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10092" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/103">
         <xc:titleOfExpression>Memoirs of the Connecticut Academy of Arts and Sciences</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill., plates (part col.) map, tables, diagrs. ;</rdvocab:illustrationContent>
         <dcterms:hasFormat>Microfilm. Ann Arbor, Mich. : University Microfilms. 1 microfilm reel ; 35 mm. (American periodical series, 1800-1850 ; 770)</dcterms:hasFormat>
@@ -36,22 +36,22 @@
         <dcterms:relation>American journal of science 1818-1865</dcterms:relation>
         <dcterms:relation>Connecticut Academy of Arts and Sciences. Transactions 1866-1909</dcterms:relation>
         <xc:contributor>Yale University.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10091</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/102</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/99</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/101</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:26</predecessor>
+      <predecessor>oai:mst.rochester.edu:31</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10093" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/101">
         <xc:recordID type="LCCN">sf 88093582</xc:recordID>
         <dcterms:title>Memoirs of the Connecticut Academy of Arts and Sciences</dcterms:title>
         <rdvocab:placeOfProduction>New Haven :</rdvocab:placeOfProduction>
@@ -62,7 +62,7 @@
         <rdvocab:numberingOfSerials>Vol. 1, pt. 1-</rdvocab:numberingOfSerials>
         <rdvocab:numberingOfSerials>Vol. 1 comprises 4 parts (412 p.) 8, published 1810-16.</rdvocab:numberingOfSerials>
         <dcterms:isPartOf>American periodical series, 1800-1850 ; 770.</dcterms:isPartOf>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10092</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/103</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

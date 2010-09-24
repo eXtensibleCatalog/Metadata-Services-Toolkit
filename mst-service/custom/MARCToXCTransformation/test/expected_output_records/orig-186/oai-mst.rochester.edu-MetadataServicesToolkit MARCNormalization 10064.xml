@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/215</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/220</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:60</predecessor>
+      <predecessor>oai:mst.rochester.edu:65</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10209" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/220">
         <rdarole:author>United States. Office of Management and Budget.</rdarole:author>
         <rdvocab:titleOfWork>Budget of the United States Government (Document edition)</rdvocab:titleOfWork>
         <xc:relation>Supplements accompany some issues.</xc:relation>
@@ -18,22 +18,22 @@
         <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
         <xc:subject xsi:type="dcterms:LCSH">Budget</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Periodicals.</xc:subject>
-        <xc:spacial xsi:type="dcterms:LCSH">United States</xc:spacial>
+        <xc:spatial xsi:type="dcterms:LCSH">United States</xc:spatial>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/216</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/221</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:60</predecessor>
+      <predecessor>oai:mst.rochester.edu:65</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10210" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/221">
         <xc:titleOfExpression>Budget of the United States Government (Document edition)</xc:titleOfExpression>
         <dcterms:version>[Doc. ed.]</dcterms:version>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
@@ -44,22 +44,22 @@
         <dcterms:relation>United States. Office of Management and Budget. Budget of the United States Government (Doc. ed.). Appendix</dcterms:relation>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10209</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/220</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/217</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/219</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:60</predecessor>
+      <predecessor>oai:mst.rochester.edu:65</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10211" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/219">
         <xc:recordID type="LCCN">sn 87042035</xc:recordID>
         <xc:recordID type="OCoLC">6018330</xc:recordID>
         <xc:recordID type="NRU">1975731</xc:recordID>
@@ -88,7 +88,7 @@
         <xc:typeSMD>Microfiche</xc:typeSMD>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1972-</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10210</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/221</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

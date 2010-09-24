@@ -1,20 +1,20 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/283</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/287</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:74</predecessor>
+      <predecessor>oai:mst.rochester.edu:79</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10277" type="holdings">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/287">
         <xc:location>NewsNewspr</xc:location>
         <xc:callNumber>FILM .N57</xc:callNumber>
         <xc:textualHoldings type="Basic Bibliographic Unit">Sept.14,1857-</xc:textualHoldings>
         <xc:recordID type="NRU">2483966</xc:recordID>
-        <xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10116</xc:manifestationHeld>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/124</xc:manifestationHeld>
       </xc:entity>
     </xc:frbr>
   </metadata>

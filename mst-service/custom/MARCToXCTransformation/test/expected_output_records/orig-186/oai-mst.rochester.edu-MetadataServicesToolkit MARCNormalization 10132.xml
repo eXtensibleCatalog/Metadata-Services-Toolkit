@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/419</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/424</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:128</predecessor>
+      <predecessor>oai:mst.rochester.edu:133</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10413" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/424">
         <dcterms:subject xsi:type="dcterms:LCC">RJ416.L4</dcterms:subject>
         <rdarole:author>Coerr, Eleanor.</rdarole:author>
         <rdvocab:titleOfWork>Sadako and the thousand paper cranes /</rdvocab:titleOfWork>
@@ -35,8 +35,8 @@
         <xc:subject xsi:type="dcterms:LCSH">History</xc:subject>
         <xc:subject type="lcac">Physiological effect.</xc:subject>
         <xc:subject type="lcac">History</xc:subject>
-        <xc:spacial xsi:type="dcterms:LCSH">Hiroshima-shi (Japan)</xc:spacial>
-        <xc:spacial type="lcac">Hiroshima-shi (Japan)</xc:spacial>
+        <xc:spatial xsi:type="dcterms:LCSH">Hiroshima-shi (Japan)</xc:spatial>
+        <xc:spatial type="lcac">Hiroshima-shi (Japan)</xc:spatial>
         <xc:type xsi:type="dcterms:LCSH">Juvenile literature.</xc:type>
       </xc:entity>
     </xc:frbr>
@@ -44,36 +44,36 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/420</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/425</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:128</predecessor>
+      <predecessor>oai:mst.rochester.edu:133</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10414" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/425">
         <xc:titleOfExpression>Sadako and the thousand paper cranes /</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>Himler, Ronald.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10413</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/424</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/421</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/423</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:128</predecessor>
+      <predecessor>oai:mst.rochester.edu:133</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10415" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/423">
         <xc:recordID type="OCoLC">31810399</xc:recordID>
         <xc:recordID type="NRU">3849844</xc:recordID>
         <rdvocab:statementOfResponsibilityRelatingToTitle>by Eleanor Coerr ; paintings by Ronald Himler.</rdvocab:statementOfResponsibilityRelatingToTitle>
@@ -91,7 +91,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0440474655</dcterms:identifier>
         <dcterms:identifier type="ISBN">9780440474654</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10414</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/425</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

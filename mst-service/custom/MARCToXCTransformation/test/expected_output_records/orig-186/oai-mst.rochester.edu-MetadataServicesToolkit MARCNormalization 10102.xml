@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/339</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/344</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:98</predecessor>
+      <predecessor>oai:mst.rochester.edu:103</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10333" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/344">
         <rdarole:author>United States. Abraham Lincoln Bicentennial Commission.</rdarole:author>
         <rdvocab:titleOfWork>Interim report</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Lincoln, Abraham, 1809-1865-Anniversaries, etc.</xc:subject>
@@ -23,36 +23,36 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/340</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/345</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:98</predecessor>
+      <predecessor>oai:mst.rochester.edu:103</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10334" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/345">
         <xc:titleOfExpression>Interim report</xc:titleOfExpression>
         <rdvocab:illustrationContent>digital, PDF file.</rdvocab:illustrationContent>
         <dcterms:requires>Mode of access: Internet form the Commission web site. Address as of 1/6/06: http://www.lincolnbicentennial.gov/files/PDF/LOC%5FReport.pdf; current access is available via PURL.</dcterms:requires>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10333</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/344</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/341</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/343</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:98</predecessor>
+      <predecessor>oai:mst.rochester.edu:103</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10335" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/343">
         <xc:recordID type="OCoLC">62789882</xc:recordID>
         <xc:recordID type="NRU">3095212</xc:recordID>
         <xc:identifier type="GPOItem">1089 (online)</xc:identifier>
@@ -69,7 +69,7 @@
         <xc:typeLeader06>Computer file</xc:typeLeader06>
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10334</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/345</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

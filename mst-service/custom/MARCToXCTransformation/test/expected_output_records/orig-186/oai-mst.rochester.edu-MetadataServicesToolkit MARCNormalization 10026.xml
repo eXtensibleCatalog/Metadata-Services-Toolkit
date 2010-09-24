@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/87</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/92</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:22</predecessor>
+      <predecessor>oai:mst.rochester.edu:27</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10081" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/92">
         <dcterms:subject xsi:type="dcterms:DDC">FM051</dcterms:subject>
         <rdvocab:titleOfWork>Port folio</rdvocab:titleOfWork>
         <dcterms:isReplacedBy>Port folio, and New York monthly magazine</dcterms:isReplacedBy>
@@ -20,15 +20,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/88</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/93</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:22</predecessor>
+      <predecessor>oai:mst.rochester.edu:27</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10082" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/93">
         <xc:titleOfExpression>Port folio</xc:titleOfExpression>
         <dcterms:hasFormat>Microfilm. Ann Arbor, Mich., : University Microfilms, 1946, 1952. 11 microfilm reels ; 35 mm. (American periodical series, 1800-1850 ; 40-42, 220-227)</dcterms:hasFormat>
         <dcterms:HasFormat>Port folio</dcterms:HasFormat>
@@ -36,22 +36,22 @@
         <dcterms:language>English</dcterms:language>
         <xc:contributor>Dennie, Joseph, 1768-1812.</xc:contributor>
         <xc:contributor>Hall, John E. (John Elihu), 1783-1829.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10081</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/92</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/89</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/91</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:22</predecessor>
+      <predecessor>oai:mst.rochester.edu:27</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10083" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/91">
         <xc:recordID type="LCCN">sf 88091571</xc:recordID>
         <xc:recordID type="OCoLC">3938164</xc:recordID>
         <xc:recordID type="NRU">1328233</xc:recordID>
@@ -75,7 +75,7 @@
         <xc:typeSMD>Microfilm reel</xc:typeSMD>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1801-1821</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10082</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/93</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

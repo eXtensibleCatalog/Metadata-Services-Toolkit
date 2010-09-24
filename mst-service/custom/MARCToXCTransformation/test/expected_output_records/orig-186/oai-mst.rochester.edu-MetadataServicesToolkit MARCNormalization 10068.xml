@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/255</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/260</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:64</predecessor>
+      <predecessor>oai:mst.rochester.edu:69</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10249" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/260">
         <dcterms:subject xsi:type="dcterms:LCC">G3700 svar</dcterms:subject>
         <xc:creator>Geological Survey (U.S.)</xc:creator>
         <rdvocab:titleOfWork>Surface vitrinite-reflectance map of the Uinta, Piceance, and Eagle Basins area, Utah and Colorado /</rdvocab:titleOfWork>
@@ -20,15 +20,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/256</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/261</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:64</predecessor>
+      <predecessor>oai:mst.rochester.edu:69</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10250" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/261">
         <xc:titleOfExpression>Surface vitrinite-reflectance map of the Uinta, Piceance, and Eagle Basins area, Utah and Colorado /</xc:titleOfExpression>
         <rdvocab:scale>Scale 1:500,000 (W 113⁰--W 107⁰/N 41⁰--N 38⁰).</rdvocab:scale>
         <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
@@ -37,22 +37,22 @@
         <xc:contributor>Johnson, Ronald Carl, 1950-</xc:contributor>
         <xc:contributor>Utah Geological and Mineral Survey.</xc:contributor>
         <xc:contributor>Colorado Geological Survey.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10249</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/260</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/257</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/259</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:64</predecessor>
+      <predecessor>oai:mst.rochester.edu:69</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10251" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/259">
         <xc:recordID type="OCoLC">17639275</xc:recordID>
         <xc:recordID type="NRU">2183193</xc:recordID>
         <xc:identifier type="GPOItem">619-G-11</xc:identifier>
@@ -76,7 +76,7 @@
         <xc:type007>Map</xc:type007>
         <xc:typeSMD>Map</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10250</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/261</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

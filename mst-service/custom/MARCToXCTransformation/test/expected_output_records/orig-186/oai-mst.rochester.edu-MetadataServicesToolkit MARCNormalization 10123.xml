@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/394</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/399</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:119</predecessor>
+      <predecessor>oai:mst.rochester.edu:124</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10388" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/399">
         <rdvocab:titleOfWork>Shout!</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Popular music-1961-1970.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Musicals-Excerpts.</xc:subject>
@@ -24,15 +24,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/395</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/400</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:119</predecessor>
+      <predecessor>oai:mst.rochester.edu:124</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10389" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/400">
         <xc:titleOfExpression>Shout!</xc:titleOfExpression>
         <rdvocab:artisticAndOrTechnicalCredits>Producers: Steve Skinner, Emanuel Kallins.</rdvocab:artisticAndOrTechnicalCredits>
         <rdvocab:performerNarratorAndOrPresenter>Vocalists: Marie-France Arcilla, Erin Crosby, Julie Dingman Evans, Erica Schroeder, Denise Summerford ; conductor, arranger: Bradley Vieth ; other musicians.</rdvocab:performerNarratorAndOrPresenter>
@@ -47,22 +47,22 @@
         <rdarole:performer>Schroeder, Erica.</rdarole:performer>
         <rdarole:performer>Summerford, Denise.</rdarole:performer>
         <rdarole:performer>Vieth, Bradley.</rdarole:performer>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10388</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/399</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/396</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/398</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:119</predecessor>
+      <predecessor>oai:mst.rochester.edu:124</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10390" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/398">
         <xc:identifier type="UPC">081227479121</xc:identifier>
         <xc:identifier type="SoundNr">R2 74791</xc:identifier>
         <xc:recordID type="OCoLC">77520609</xc:recordID>
@@ -87,7 +87,7 @@
         <xc:type007>Sound recording</xc:type007>
         <xc:typeSMD>Sound disk</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10389</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/400</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

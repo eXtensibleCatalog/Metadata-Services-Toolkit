@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/425</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/430</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:130</predecessor>
+      <predecessor>oai:mst.rochester.edu:135</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10419" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/430">
         <dcterms:subject xsi:type="dcterms:LCC">HB139</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">330.01/5195</dcterms:subject>
         <rdvocab:titleOfWork>Economics to econometrics :</rdvocab:titleOfWork>
@@ -24,15 +24,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/426</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/431</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:130</predecessor>
+      <predecessor>oai:mst.rochester.edu:135</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10420" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/431">
         <xc:titleOfExpression>Economics to econometrics :</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:relation>Publisher description http://www.loc.gov/catdir/enhancements/fy0806/2007050332-d.html</dcterms:relation>
@@ -44,22 +44,22 @@
         <xc:contributor>Wright, Randall, 1956-</xc:contributor>
         <xc:contributor>Manski, Charles F.</xc:contributor>
         <xc:contributor>Newey, Whitney K.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10419</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/430</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/427</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/429</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:130</predecessor>
+      <predecessor>oai:mst.rochester.edu:135</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10421" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/429">
         <xc:recordID type="LCCN">2007050332</xc:recordID>
         <xc:identifier type="YBP">99821656819</xc:identifier>
         <xc:recordID type="OCoLC">183179621</xc:recordID>
@@ -78,7 +78,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">9781405180337</dcterms:identifier>
         <dcterms:identifier type="ISBN">1405180331</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10420</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/431</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

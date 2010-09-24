@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/365</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/370</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:108</predecessor>
+      <predecessor>oai:mst.rochester.edu:113</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10359" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/370">
         <dcterms:subject xsi:type="dcterms:LCC">E840</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">327.73009/045</dcterms:subject>
         <rdvocab:titleOfWork>Dealing with dictators :</rdvocab:titleOfWork>
@@ -25,7 +25,7 @@
         <xc:subject xsi:type="dcterms:LCSH">Totalitarianism</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Foreign relations</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">History</xc:subject>
-        <xc:spacial xsi:type="dcterms:LCSH">United States</xc:spacial>
+        <xc:spatial xsi:type="dcterms:LCSH">United States</xc:spatial>
         <xc:type xsi:type="dcterms:LCSH">Case studies.</xc:type>
       </xc:entity>
     </xc:frbr>
@@ -33,15 +33,15 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/366</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/371</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:108</predecessor>
+      <predecessor>oai:mst.rochester.edu:113</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10360" type="expression">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/371">
         <xc:titleOfExpression>Dealing with dictators :</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
@@ -50,22 +50,22 @@
         <xc:contributor>Zelikow, Philip, 1954-</xc:contributor>
         <xc:contributor>Lundberg, Kirsten.</xc:contributor>
         <xc:contributor>Johnson, Robert David, 1967-</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10359</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/370</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/367</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/369</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:108</predecessor>
+      <predecessor>oai:mst.rochester.edu:113</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10361" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/369">
         <xc:recordID type="LCCN">2005058420</xc:recordID>
         <xc:identifier type="YBP">40013713909</xc:identifier>
         <xc:recordID type="OCoLC">62679945</xc:recordID>
@@ -84,7 +84,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0262134594</dcterms:identifier>
         <dcterms:identifier type="ISBN">0262633248</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10360</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/371</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

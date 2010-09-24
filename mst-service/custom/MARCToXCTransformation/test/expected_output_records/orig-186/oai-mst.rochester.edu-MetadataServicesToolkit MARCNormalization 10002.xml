@@ -1,15 +1,15 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/5</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/7</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:2</predecessor>
+      <predecessor>oai:mst.rochester.edu:3</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10003" type="work">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/7">
         <dcterms:subject xsi:type="dcterms:LCC">ML3502.5</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:LCC">ML3502.5.B458</dcterms:subject>
         <rdarole:author>Bender, Wolfgang.</rdarole:author>
@@ -18,7 +18,27 @@
         <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
         <xc:subject xsi:type="dcterms:LCSH">Popular music</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">History and criticism.</xc:subject>
-        <xc:spacial xsi:type="dcterms:LCSH">Africa</xc:spacial>
+        <xc:spatial xsi:type="dcterms:LCSH">Africa</xc:spatial>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/8</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:3</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/8">
+        <xc:titleOfExpression>Sweet mother. English</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/7</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
@@ -28,32 +48,12 @@
     <identifier>oai:mst.rochester.edu:marctoxctransformation/6</identifier>
     <datestamp />
     <predecessors>
-      <predecessor>oai:mst.rochester.edu:2</predecessor>
+      <predecessor>oai:mst.rochester.edu:3</predecessor>
     </predecessors>
   </header>
   <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10004" type="expression">
-        <xc:titleOfExpression>Sweet mother. English</xc:titleOfExpression>
-        <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
-        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
-        <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10003</xc:workExpressed>
-      </xc:entity>
-    </xc:frbr>
-  </metadata>
-</record>
-<record>
-  <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/7</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:2</predecessor>
-    </predecessors>
-  </header>
-  <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10005" type="manifestation">
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/6">
         <xc:recordID type="LCCN">90020316 /MN</xc:recordID>
         <xc:recordID type="OCoLC">22629928</xc:recordID>
         <xc:recordID type="NRU">1045129</xc:recordID>
@@ -73,7 +73,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0226042537</dcterms:identifier>
         <dcterms:identifier type="ISBN">0226042545</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10004</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/8</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>
