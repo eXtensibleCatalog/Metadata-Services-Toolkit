@@ -1,0 +1,82 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/110</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:33</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10104" type="work">
+        <dcterms:subject xsi:type="dcterms:LCC">E85</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:LCC">E99.S3</dcterms:subject>
+        <rdarole:author>Henry, William, fl. 1768.</rdarole:author>
+        <rdvocab:titleOfWork>Account of the captivity of William Henry.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Henry, William, fl. 1768.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Seneca Indians.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Seneca Indians-Captivities.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Indian captivities.</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">United States-Biography.</xc:spatial>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Seneca Indians</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Captivities.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Biography.</xc:subject>
+        <xc:spacial xsi:type="dcterms:LCSH">United States</xc:spacial>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/111</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:33</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10105" type="expression">
+        <xc:titleOfExpression>Account of the captivity of William Henry.</xc:titleOfExpression>
+        <dcterms:relation>Issued with the reprint of the 1764 ed. of Saunders, C. The horrid cruelty of the Indians. New York, 1977.</dcterms:relation>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10104</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/112</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:33</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10106" type="manifestation">
+        <xc:recordID type="LCCN">77000869</xc:recordID>
+        <xc:recordID type="OCoLC">2798668</xc:recordID>
+        <xc:recordID type="NRU">147041</xc:recordID>
+        <dcterms:title>Account of the captivity of William Henry.</dcterms:title>
+        <rdvocab:placeOfProduction>New York :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Garland Pub.,</dcterms:publisher>
+        <dcterms:issued>1977.</dcterms:issued>
+        <dcterms:extent>[2] fold. leaves ;</dcterms:extent>
+        <rdvocab:dimensions>23 cm.</rdvocab:dimensions>
+        <dcterms:description>Reprint of an article which appeared in the London chronicle, v. 23, no. 1798, June 23, 1768, and no. 1799, June 25, 1768.</dcterms:description>
+        <dcterms:isPartOf>Garland library of narratives of North American Indian captivities ; v. 10</dcterms:isPartOf>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">0824016343</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10105</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

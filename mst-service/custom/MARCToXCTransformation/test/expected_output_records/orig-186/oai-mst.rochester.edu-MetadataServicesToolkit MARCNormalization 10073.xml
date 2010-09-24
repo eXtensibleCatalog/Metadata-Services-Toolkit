@@ -1,0 +1,86 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/268</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:69</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10262" type="work">
+        <rdvocab:titleOfWork>Atlas &amp; argus (Albany, N.Y. : Daily)</rdvocab:titleOfWork>
+        <xc:spatial xsi:type="dcterms:LCSH">Albany (N.Y.)-Newspapers.</xc:spatial>
+        <xc:coverage>United States-New York-Albany-Albany.</xc:coverage>
+        <dcterms:replaces>Daily Albany argus</dcterms:replaces>
+        <dcterms:replaces>Albany evening Atlas (Albany, N.Y. : 1843)</dcterms:replaces>
+        <dcterms:isReplacedBy>Argus (Albany, N.Y. : Daily)</dcterms:isReplacedBy>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:spacial xsi:type="dcterms:LCSH">Albany (N.Y.)</xc:spacial>
+        <xc:type xsi:type="dcterms:LCSH">Newspapers.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/269</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:69</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10263" type="expression">
+        <xc:titleOfExpression>Atlas &amp; argus (Albany, N.Y. : Daily)</xc:titleOfExpression>
+        <dcterms:hasFormat>Microfilm. Cleveland, Ohio : Micro Photo, Inc. 21 microfilm reels ; 35 mm.</dcterms:hasFormat>
+        <dcterms:relation>Formed by the union of: Daily Albany argus; and, Albany evening atlas.</dcterms:relation>
+        <dcterms:relation>Continued by: Argus (Albany, N.Y. : Daily).</dcterms:relation>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10262</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/270</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:69</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10264" type="manifestation">
+        <xc:recordID type="OCoLC">10566490</xc:recordID>
+        <xc:recordID type="NRU">2393459</xc:recordID>
+        <dcterms:title>The Atlas &amp; argus</dcterms:title>
+        <dcterms:alternative>Daily atlas &amp; argus</dcterms:alternative>
+        <dcterms:alternative>Daily Atlas and Argus</dcterms:alternative>
+        <dcterms:alternative>Atlas and argus</dcterms:alternative>
+        <rdvocab:placeOfProduction>Albany, N.Y. :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Comstock &amp; Cassidy,</dcterms:publisher>
+        <dcterms:issued>1856-1865.</dcterms:issued>
+        <dcterms:extent>10 v.</dcterms:extent>
+        <rdvocab:frequency>Daily (except Sun.)</rdvocab:frequency>
+        <rdvocab:numberingOfSerials>Vol. 31, no. 9253 (Feb. 18, 1856)-v. 40, no. 12216 (May 13, 1865).</rdvocab:numberingOfSerials>
+        <dcterms:description>Published as: Atlas and Argus, &lt;1859-1863&gt;.</dcterms:description>
+        <dcterms:description>"And" appears within title ornament in small type, &lt;1859-1863&gt;.</dcterms:description>
+        <dcterms:description>"Democratic."</dcterms:description>
+        <dcterms:description>Also issued in semiweekly and weekly editions with the same title.</dcterms:description>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <xc:type007>Microform</xc:type007>
+        <xc:typeSMD>Microfilm reel</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+        <dcterms:issued>1856-1865</dcterms:issued>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10263</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

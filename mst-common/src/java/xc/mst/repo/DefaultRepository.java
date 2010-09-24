@@ -9,8 +9,10 @@
 
 package xc.mst.repo;
 
+import gnu.trove.TLongArrayList;
 import gnu.trove.TLongHashSet;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,7 +37,17 @@ public class DefaultRepository extends BaseService implements Repository {
 	
 	// This is meant only to be a cache of what is not yet in the DB.  This will not
 	// keep all pred-succs in memory.
-	Map<Long, java.util.Set<Long>> predSuccMap = new HashMap<Long, java.util.Set<Long>>();
+	protected Map<Long, java.util.Set<Long>> predSuccMap = new HashMap<Long, java.util.Set<Long>>();
+	
+	protected List<long[]> uplinks = new ArrayList<long[]>();
+	
+	// Struggled to come up with a good name here.  manifestations are not held,
+	// but holdings pointing to them are.  The point of this is to switch the status
+	// on holdings records from H to A.  Instead of keeping all the previously held
+	// holdings ids (that are no active) in memory, it'll be easier to keep the 
+	// manifestation id that was being waited on (but finally came through) since
+	// I already have it.
+	protected TLongArrayList linkedRecordsToActivate = new TLongArrayList();
 	
 	protected String name = null;
 	
@@ -130,6 +142,10 @@ public class DefaultRepository extends BaseService implements Repository {
 	public void endBatch() {
 		getRepositoryDAO().endBatch(name);
 		predSuccMap.clear();
+		getRepositoryDAO().persistLinkedRecordIds(name, uplinks);
+		uplinks.clear();
+		getRepositoryDAO().activateLinkedRecords(name, linkedRecordsToActivate);
+		linkedRecordsToActivate.clear();
 	}
 
 	public List<Long> getPredecessorIds(Record r) {
@@ -230,6 +246,18 @@ public class DefaultRepository extends BaseService implements Repository {
 	
 	public void deleteAllData() {
 		getRepositoryDAO().deleteAllData(this.name);
+	}
+
+	public void addLink(long fromRecordId, long toRecordId) {
+		uplinks.add(new long[] {fromRecordId, toRecordId});
+	}
+	
+	public void activateLinkedRecord(long toRecordId) {
+		linkedRecordsToActivate.add(toRecordId);
+	}
+	
+	public List<Long> getLinkedRecordIds(Long toRecordId) {
+		return getRepositoryDAO().getLinkedRecordIds(name, toRecordId);
 	}
 
 }

@@ -1,0 +1,83 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/384</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:115</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10378" type="work">
+        <dcterms:subject xsi:type="dcterms:LCC">E184.6</dcterms:subject>
+        <rdvocab:titleOfWork>African American newspapers</rdvocab:titleOfWork>
+        <dcterms:abstract>Complete texts of major 19th century African American newspapers. Includes first-hand reports of events and issues of the day, as well as biographies, vital statistics, essays and editorials, poetry and prose, and advertisements.</dcterms:abstract>
+        <xc:subject xsi:type="dcterms:LCSH">African Americans-History-19th century-Sources-Databases.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">African American newspapers-Databases.</xc:subject>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:temporal xsi:type="dcterms:LCSH">19th century</xc:temporal>
+        <xc:subject xsi:type="dcterms:LCSH">African Americans</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">African American newspapers</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">History</xc:subject>
+        <xc:type xsi:type="dcterms:LCSH">Sources</xc:type>
+        <xc:type xsi:type="dcterms:LCSH">Databases.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/385</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:115</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10379" type="expression">
+        <xc:titleOfExpression>African American newspapers</xc:titleOfExpression>
+        <dcterms:requires>Mode of access: World Wide Web.</dcterms:requires>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Accessible Archives.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10378</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/386</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:115</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10380" type="manifestation">
+        <xc:recordID type="LCCN">2003615712</xc:recordID>
+        <xc:recordID type="OCoLC">45453899</xc:recordID>
+        <xc:recordID type="NRU">3633121</xc:recordID>
+        <dcterms:title>African American newspapers the 19th century.</dcterms:title>
+        <rdvocab:placeOfProduction>Malvern, PA :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Accessible Archives</dcterms:publisher>
+        <rdvocab:frequency>Updated monthly</rdvocab:frequency>
+        <rdvocab:numberingOfSerials>Began in 1998?</rdvocab:numberingOfSerials>
+        <dcterms:description>Title from about archives page (viewed June 23, 2003).</dcterms:description>
+        <dcterms:tableOfContents>Freedom's journal (Mar. 16, 1827-Mar. 28, 1829) -- The Colored American / Weekly Advocate (Jan. 7, 1837-Dec. 25, 1841) -- The North Star (Dec. 3, 1847-Apr. 17, 1851) -- The National Era (Jan. 7, 1847-Dec. 1857; complete only through Dec. 1853) -- Provincial Freeman (1854-1857) -- Frederick Douglass Paper (1851-1859; complete only through Dec. 1852) -- The Christian Recorder (1861-June 1868; complete only through April, 1862).</dcterms:tableOfContents>
+        <dcterms:rights>Access restricted to subscribers.</dcterms:rights>
+        <dcterms:identifier>http://www.accessible.com For subscribers only; follow links to resource</dcterms:identifier>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <xc:type007>Electronic resource</xc:type007>
+        <xc:typeSMD>Remote</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10379</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

@@ -8,28 +8,16 @@
   */
 package xc.mst.services.transformation.dao;
 
-import gnu.trove.TLongArrayList;
 import gnu.trove.TLongLongHashMap;
 import gnu.trove.TLongLongProcedure;
-import gnu.trove.TLongProcedure;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 
-import xc.mst.bo.record.Record;
-import xc.mst.dao.BaseDAO;
-import xc.mst.repo.RepositoryDAO;
 import xc.mst.services.impl.dao.GenericMetadataServiceDAO;
-import xc.mst.services.impl.service.GenericMetadataServiceService;
-import xc.mst.test.BaseMetadataServiceTest;
 import xc.mst.utils.TimingLogger;
 
 /**
@@ -119,66 +107,6 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 					}		
 				}
 			}
-		}
-	}
-	
-	public List<Long> getLinkedRecordIds(Long toRecordId) {
-		List<Long> linkedRecordsIds = new ArrayList<Long>();
-		String sql = "select from_record_id from links where to_record_id = ?";
-		List<Map<String, Object>> results = this.jdbcTemplate.queryForList(sql, toRecordId);
-		if (results != null) {
-			for (Map<String, Object> row : results) {
-				linkedRecordsIds.add((Long)row.get("from_record_id"));
-			}
-		}
-		return linkedRecordsIds;
-	}
-	
-	public void persistLinkedRecordIds(final List<long[]> links) {
-		String sql = "insert into links (from_record_id, to_record_id) values (?,?)";
-		TimingLogger.start("links.insert");
-        int[] updateCounts = jdbcTemplate.batchUpdate(
-        		sql,
-                new BatchPreparedStatementSetter() {
-                    public void setValues(PreparedStatement ps, int j) throws SQLException {
-                    	long[] link = links.get(j);
-                    	ps.setLong(1, link[0]);
-                    	ps.setLong(2, link[1]);
-                    }
-
-                    public int getBatchSize() {
-                        return links.size();
-                    }
-                } );
-        TimingLogger.stop("links.insert");
-	}
-	
-	public void activateHeldHoldings(final TLongArrayList manifestionIdsPreviouslyHeld) {
-		if (manifestionIdsPreviouslyHeld.size() > 0) {
-			TimingLogger.start("activateHeldHoldings");
-			StringBuilder sb = new StringBuilder("update "+RepositoryDAO.RECORDS_TABLE+
-				" set status='"+Record.ACTIVE+"'"+
-				" where record_id in (select from_record_id from links where to_record_id in (");
-			for (int i=0; i<manifestionIdsPreviouslyHeld.size(); i++) {
-				sb.append("?");
-				if (i+1 < manifestionIdsPreviouslyHeld.size()) {
-					sb.append(", ");
-				}
-			}
-			sb.append("))");
-			LOG.debug("sb.toString(): "+sb.toString());
-			
-	        int updateCount = jdbcTemplate.update(
-	        		sb.toString(), new PreparedStatementSetter() {
-						public void setValues(PreparedStatement ps) throws SQLException {
-							for (int i=0; i<manifestionIdsPreviouslyHeld.size(); i++) {
-								ps.setLong(i+1, manifestionIdsPreviouslyHeld.get(i));
-							}
-						}
-					});
-	        TimingLogger.stop("activateHeldHoldings");
-		} else {
-			LOG.debug("manifestionIdsPreviouslyHeld is null or empty");
 		}
 	}
 }

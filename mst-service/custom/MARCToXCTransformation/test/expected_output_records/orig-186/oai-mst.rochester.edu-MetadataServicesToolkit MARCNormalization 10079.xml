@@ -1,0 +1,88 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/284</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:75</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10278" type="work">
+        <rdvocab:titleOfWork>Coltrane for lovers</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Jazz-1961-1970.</xc:subject>
+        <xc:temporal xsi:type="dcterms:LCSH">1961-1970.</xc:temporal>
+        <xc:subject xsi:type="dcterms:LCSH">Jazz</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/285</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:75</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10279" type="expression">
+        <rdarole:performer>Coltrane, John, 1926-1967.</rdarole:performer>
+        <xc:titleOfExpression>Coltrane for lovers</xc:titleOfExpression>
+        <rdvocab:artisticAndOrTechnicalCredits>Compiled and produced by Richard Seidel ; production managed by Bryan Koniarz ; production and research coordinated by Carlos Kase ; original recordings produced by Bob Thiele.</rdvocab:artisticAndOrTechnicalCredits>
+        <rdvocab:performerNarratorAndOrPresenter>John Coltrane, tenor saxophone, with, variously: McCoy Tyner, Duke Elllington, piano ; Jimmy Garrison, Aaron Bell, Reggie Workman, bass ; Elvin Jones, Roy Haynes, Sam Woodyard, drums ; Johnny Hartman, vocals.</rdvocab:performerNarratorAndOrPresenter>
+        <rdvocab:placeAndDateOfCapture>Recorded 1961-1963, by Rudy Van Gelder at Van Gelder Recording Studio, Englewood Cliffs, N.J.</rdvocab:placeAndDateOfCapture>
+        <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <rdarole:performer>Tyner, McCoy.</rdarole:performer>
+        <rdarole:performer>Ellington, Duke, 1899-1974.</rdarole:performer>
+        <rdarole:performer>Garrison, Jimmy.</rdarole:performer>
+        <rdarole:performer>Bell, Aaron, 1922-2003</rdarole:performer>
+        <rdarole:performer>Workman, Reggie.</rdarole:performer>
+        <rdarole:performer>Jones, Elvin.</rdarole:performer>
+        <rdarole:performer>Haynes, Roy.</rdarole:performer>
+        <rdarole:performer>Woodyard, Sam, 1925-1988</rdarole:performer>
+        <rdarole:performer>Hartman, Johnny.</rdarole:performer>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10278</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/286</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:75</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10280" type="manifestation">
+        <xc:identifier type="UPC">200956070000</xc:identifier>
+        <xc:identifier type="SoundNr">P2-49361</xc:identifier>
+        <xc:recordID type="OCoLC">53015834</xc:recordID>
+        <xc:recordID type="NRU">2510091</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>John Coltrane.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Coltrane for lovers</dcterms:title>
+        <rdvocab:placeOfProduction>Universal City, Calif. :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Verve,</dcterms:publisher>
+        <dcterms:issued>p2001.</dcterms:issued>
+        <dcterms:extent>1 sound disc :</dcterms:extent>
+        <rdvocab:soundCharacteristics>digital ;</rdvocab:soundCharacteristics>
+        <rdvocab:dimensions>4 3/4 in.</rdvocab:dimensions>
+        <dcterms:description>Compact disc.</dcterms:description>
+        <dcterms:description>Notes by Al Young on insert.</dcterms:description>
+        <dcterms:tableOfContents>My one and only love (4:57) -- Too young to go steady (4:24) -- In a sentimental mood (4:18) -- It's easy to remember (2:50) -- Dedicated to you (5:32) -- You don't know what love is (5:16) -- After the rain (4:13) -- My little brown book (5:26) -- Soul eyes (5:26) -- They say it's wonderful (5:22) -- Nancy (with the laughing face) (3:17).</dcterms:tableOfContents>
+        <xc:typeLeader06>Musical sound recording</xc:typeLeader06>
+        <xc:type007>Sound recording</xc:type007>
+        <xc:typeSMD>Sound disk</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10279</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

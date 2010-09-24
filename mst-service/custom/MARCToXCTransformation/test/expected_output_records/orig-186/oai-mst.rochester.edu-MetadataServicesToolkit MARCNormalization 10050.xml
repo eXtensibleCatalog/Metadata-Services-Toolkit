@@ -1,0 +1,78 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/185</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:46</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10179" type="work">
+        <dcterms:subject xsi:type="dcterms:LCC">PS3525.I972</dcterms:subject>
+        <rdarole:author>Mitchell, Margaret, 1900-1949.</rdarole:author>
+        <rdvocab:titleOfWork>Gone with the wind /</rdvocab:titleOfWork>
+        <xc:spatial xsi:type="dcterms:LCSH">United States-History-Civil War, 1861-1865-Fiction.</xc:spatial>
+        <xc:spatial xsi:type="dcterms:LCSH">Georgia-History-Civil War, 1861-1865-Fiction.</xc:spatial>
+        <rdvocab:natureOfContent>Fiction</rdvocab:natureOfContent>
+        <xc:temporal xsi:type="dcterms:LCSH">Civil War, 1861-1865</xc:temporal>
+        <xc:subject xsi:type="dcterms:LCSH">History</xc:subject>
+        <xc:spacial xsi:type="dcterms:LCSH">United States</xc:spacial>
+        <xc:spacial xsi:type="dcterms:LCSH">Georgia</xc:spacial>
+        <xc:type xsi:type="dcterms:LCSH">Fiction.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/186</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:46</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10180" type="expression">
+        <xc:titleOfExpression>Gone with the wind /</xc:titleOfExpression>
+        <dcterms:version>Warner Books ed.</dcterms:version>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10179</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/187</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:46</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10181" type="manifestation">
+        <xc:recordID type="OCoLC">28491920</xc:recordID>
+        <xc:recordID type="NRU">1694143</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Margaret Mitchell.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Gone with the wind /</dcterms:title>
+        <rdvocab:editionStatement>Warner Books ed.</rdvocab:editionStatement>
+        <rdvocab:placeOfProduction>New York, NY :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Warner Books,</dcterms:publisher>
+        <dcterms:issued>[1993], c1936.</dcterms:issued>
+        <dcterms:extent>1024 p. ;</dcterms:extent>
+        <rdvocab:dimensions>18 cm.</rdvocab:dimensions>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">0446365386</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10180</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

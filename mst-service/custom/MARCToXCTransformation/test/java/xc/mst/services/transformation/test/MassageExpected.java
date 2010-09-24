@@ -102,14 +102,7 @@ public class MassageExpected  extends BaseMetadataServiceTest {
 				if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
 					inputIsHolding = true;
 				}
-				LOG.debug("inputIsHolding: "+inputIsHolding);
 				
-				/*
-				Element actMetadataEl = actRecordEl.getChild("metadata", rootEl.getNamespace());
-				Element actFrbrEl = (Element)actMetadataEl.getChildren().get(0);
-				Element actEntityEl = actFrbrEl.getChild("entity", actFrbrEl.getNamespace());
-				String actType = actEntityEl.getAttributeValue("type");
-				*/
 				StringBuilder sb = new StringBuilder();
 				sb.append("<records xmlns=\"http://www.openarchives.org/OAI/2.0/\">");
 				while (true) {
@@ -151,47 +144,18 @@ public class MassageExpected  extends BaseMetadataServiceTest {
 						nextFile = contents;
 						break;
 					} else if ("holdings".equals(type)) {
-						
-						String linkedManiOaiId = entityEl.getChildText("manifestationHeld", frbr.getNamespace());
-						//if (holdingInOutputFile && !manifestationFound) {
+						manifestationOrHoldingFound = true;
 						LOG.debug("manifestationFound: "+manifestationFound);
 						LOG.debug("usingPriorInput: "+usingPriorInput);
 						if (!manifestationFound && !usingPriorInput) {
 							nextFile = contents;
 							break;
 						}
-						holdingInOutputFile = true;
-						manifestationOrHoldingFound = true;
-						boolean previouslyHeldRecordActivated = false;
-
-						LOG.debug("previousOrigExpectedManOaiId: "+previousOrigExpectedManOaiId);
-						LOG.debug("linkedManiOaiId: "+linkedManiOaiId);
-						/*
-						if (previousOrigExpectedManOaiId == null || !previousOrigExpectedManOaiId.equals(linkedManiOaiId)) {
-							if (manifestationFound && k+1 == inputFolderFileStrs.length){
-								previouslyHeldRecordActivated = true;
-							} else if (manifestationFound) {
-								//LOG.debug("inputFolderStr+/+inputFolderFileStrs[k+1]: "+inputFolderStr+"/"+inputFolderFileStrs[k+1]);
-								String nextInputFileContents = getUtil().slurp(new File(inputFolderStr+"/"+inputFolderFileStrs[k+1]));
-								//LOG.debug("nextInputFileContents: "+nextInputFileContents);
-								if (the001 != null && !(nextInputFileContents.contains(the001) || contents.contains(the001))) {
-									previouslyHeldRecordActivated = true;
-								}
-							}
-							if (!inputIsHolding && !previouslyHeldRecordActivated && !usingPriorInput) {
-								nextFile = contents;
-								break;	
-							} else if (!previouslyHeldRecordActivated) {
-								LOG.debug("previouslyHeldRecordActivated!!!");
-							}
-						} else */ if ((usingPriorInput && !manifestationFound) ||
-								nextInput004 == null || 
-								!nextInput004.equals(the001)) {
-							LOG.debug("nextInput004: "+nextInput004);
-							LOG.debug("previousOrigExpected001: "+previousOrigExpected001);
-						} else {
-							LOG.debug("nextInput004: "+nextInput004);
-							LOG.debug("previousOrigExpected001: "+previousOrigExpected001);
+						
+						String expectedHolding001 = frbr.getChild("entity", frbr.getNamespace()).getChildText("recordID", frbr.getNamespace());
+						LOG.debug("expectedHolding001: "+expectedHolding001);
+						LOG.debug("nextInput001: "+nextInput001);
+						if (expectedHolding001 != null && expectedHolding001.equals(nextInput001)) {
 							nextFile = contents;
 							break;
 						}

@@ -1,0 +1,92 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/365</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:108</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10359" type="work">
+        <dcterms:subject xsi:type="dcterms:LCC">E840</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:DDC">327.73009/045</dcterms:subject>
+        <rdvocab:titleOfWork>Dealing with dictators :</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Dictators-Case studies.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Intelligence service-United States-History-20th century-Case studies.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Totalitarianism-Case studies.</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">United States-Foreign relations-1945-1989-Case studies.</xc:spatial>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:temporal xsi:type="dcterms:LCSH">1945-1989</xc:temporal>
+        <xc:temporal xsi:type="dcterms:LCSH">20th century</xc:temporal>
+        <xc:subject xsi:type="dcterms:LCSH">Dictators</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Intelligence service</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Totalitarianism</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Foreign relations</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">History</xc:subject>
+        <xc:spacial xsi:type="dcterms:LCSH">United States</xc:spacial>
+        <xc:type xsi:type="dcterms:LCSH">Case studies.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/366</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:108</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10360" type="expression">
+        <xc:titleOfExpression>Dealing with dictators :</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>May, Ernest R.</xc:contributor>
+        <xc:contributor>Zelikow, Philip, 1954-</xc:contributor>
+        <xc:contributor>Lundberg, Kirsten.</xc:contributor>
+        <xc:contributor>Johnson, Robert David, 1967-</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10359</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/367</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:108</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10361" type="manifestation">
+        <xc:recordID type="LCCN">2005058420</xc:recordID>
+        <xc:identifier type="YBP">40013713909</xc:identifier>
+        <xc:recordID type="OCoLC">62679945</xc:recordID>
+        <xc:recordID type="NRU">3447574</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Ernest R. May and Philip D. Zelikow, editors ; with Kirsten Lundberg and Robert D. Johnson.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Dealing with dictators : dilemmas of U.S. diplomacy and intelligence analysis, 1945-1990 /</dcterms:title>
+        <rdvocab:placeOfProduction>Cambridge, Mass. :</rdvocab:placeOfProduction>
+        <dcterms:publisher>MIT Press,</dcterms:publisher>
+        <dcterms:issued>2006.</dcterms:issued>
+        <dcterms:extent>xiv, 227 p. :</dcterms:extent>
+        <rdvocab:dimensions>24 cm.</rdvocab:dimensions>
+        <xc:isPartOf>BCSIA studies in international security</xc:isPartOf>
+        <dcterms:description>Includes bibliographical references and index.</dcterms:description>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">0262134594</dcterms:identifier>
+        <dcterms:identifier type="ISBN">0262633248</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10360</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

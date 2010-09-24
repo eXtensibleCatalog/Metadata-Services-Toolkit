@@ -1,0 +1,82 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/20</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:5</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10014" type="work">
+        <dcterms:subject xsi:type="dcterms:LCC">HF5549</dcterms:subject>
+        <rdvocab:titleOfWork>Studies in personnel policy.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Personnel management.</xc:subject>
+        <dcterms:relation>Conference Board management record</dcterms:relation>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/21</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:5</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10015" type="expression">
+        <xc:titleOfExpression>Studies in personnel policy.</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill., tables</rdvocab:illustrationContent>
+        <dcterms:relation>No. 15-28 supplement to Conference Board management record.</dcterms:relation>
+        <dcterms:relation dcterms:ISSN="0547-7239">Digest of Studies in personnel policy</dcterms:relation>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>National Industrial Conference Board.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10014</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/22</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:5</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10016" type="manifestation">
+        <xc:recordID type="LCCN">38005696</xc:recordID>
+        <xc:identifier type="ISSN">0081-8356</xc:identifier>
+        <xc:recordID type="OCoLC">1240637</xc:recordID>
+        <xc:recordID type="NRU">1130480</xc:recordID>
+        <dcterms:title>Studies in personnel policy.</dcterms:title>
+        <dcterms:alternative>SPP no. 181-</dcterms:alternative>
+        <dcterms:alternative>Personnel policy study</dcterms:alternative>
+        <rdvocab:placeOfProduction>New York,</rdvocab:placeOfProduction>
+        <dcterms:publisher>National Industrial Conference Board.</dcterms:publisher>
+        <dcterms:issued>1937-1970.</dcterms:issued>
+        <dcterms:extent>v.</dcterms:extent>
+        <rdvocab:dimensions>29 cm.</rdvocab:dimensions>
+        <rdvocab:numberingOfSerials>no. 1-221.</rdvocab:numberingOfSerials>
+        <dcterms:isPartOf>National Industrial Conference Board. Conference Board reports, no. [1]-73; [1944]-55.</dcterms:isPartOf>
+        <dcterms:isPartOf dcterms:ISSN="0547-7352">National Industrial Conference Board. Research report from the Conference Board, no. 77-   1956 -</dcterms:isPartOf>
+        <dcterms:isPartOf>National Industrial Conference Board. Conference Board reports ; no. 29-</dcterms:isPartOf>
+        <dcterms:isPartOf>National Industrial Conference Board. Research report from the Conference Board.</dcterms:isPartOf>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+        <dcterms:issued>1937-1970</dcterms:issued>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10015</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

@@ -1,0 +1,83 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/381</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:114</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10375" type="work">
+        <dcterms:subject xsi:type="dcterms:DDC">947.086</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:LCC">DK510.32</dcterms:subject>
+        <rdvocab:titleOfWork>Encyclopedia of contemporary Russian culture /</rdvocab:titleOfWork>
+        <xc:spatial xsi:type="dcterms:LCSH">Russia (Federation)-Civilization-Encyclopedias.</xc:spatial>
+        <xc:spatial xsi:type="dcterms:LCSH">Soviet Union-Civilization-Encyclopedias.</xc:spatial>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Civilization</xc:subject>
+        <xc:spacial xsi:type="dcterms:LCSH">Russia (Federation)</xc:spacial>
+        <xc:spacial xsi:type="dcterms:LCSH">Soviet Union</xc:spacial>
+        <xc:type xsi:type="dcterms:LCSH">Encyclopedias.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/382</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:114</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10376" type="expression">
+        <xc:titleOfExpression>Encyclopedia of contemporary Russian culture /</xc:titleOfExpression>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Smorodinskaya, Tatiana, 1961-</xc:contributor>
+        <xc:contributor>Evans-Romaine, Karen.</xc:contributor>
+        <xc:contributor>Goscilo, Helena, 1945-</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10375</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/383</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:114</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10377" type="manifestation">
+        <xc:identifier type="YBP">99818175263</xc:identifier>
+        <xc:recordID type="OCoLC">146449285</xc:recordID>
+        <xc:recordID type="NRU">3619939</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>edited by Tatiana Smorodinskaya, Karen Evans-Romaine and Helena Goscilo.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Encyclopedia of contemporary Russian culture /</dcterms:title>
+        <rdvocab:placeOfProduction>London :</rdvocab:placeOfProduction>
+        <rdvocab:placeOfProduction>New York :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Routledge,</dcterms:publisher>
+        <dcterms:issued>2007.</dcterms:issued>
+        <dcterms:extent>lxv, 727 p. ;</dcterms:extent>
+        <rdvocab:dimensions>26 cm.</rdvocab:dimensions>
+        <dcterms:description>Includes bibliographical references and index.</dcterms:description>
+        <dcterms:isPartOf>Encyclopedias of contemporary culture series.</dcterms:isPartOf>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">9780415320948</dcterms:identifier>
+        <dcterms:identifier type="ISBN">0415320941</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10376</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

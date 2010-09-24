@@ -1,0 +1,104 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/120</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:37</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10114" type="work">
+        <rdvocab:titleOfWork>New York times.</rdvocab:titleOfWork>
+        <xc:spatial xsi:type="dcterms:LCSH">New York (N.Y.)-Newspapers.</xc:spatial>
+        <xc:spatial xsi:type="dcterms:LCSH">New York County (N.Y.)-Newspapers.</xc:spatial>
+        <xc:coverage>United States-New York-New York-New York.</xc:coverage>
+        <dcterms:replaces>New-York daily times</dcterms:replaces>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <dcterms:audience>Adult</dcterms:audience>
+        <xc:spacial xsi:type="dcterms:LCSH">New York (N.Y.)</xc:spacial>
+        <xc:spacial xsi:type="dcterms:LCSH">New York County (N.Y.)</xc:spacial>
+        <xc:type xsi:type="dcterms:LCSH">Newspapers.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/121</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:37</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10115" type="expression">
+        <xc:titleOfExpression>New York times.</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
+        <dcterms:isReferencedBy dcterms:ISSN="0006-3053">Biography index</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy>National newspaper index 1979-</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy>NEXIS June 1, 1980-</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy dcterms:ISSN="0006-1530">Bibliography of agriculture</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy>BioBusiness 1990-</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy dcterms:ISSN="0524-0581">Book review index</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy dcterms:ISSN="0045-639X">Chemical industry notes</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy dcterms:ISSN="0147-6521">Energy information abstracts</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy dcterms:ISSN="0093-3287">Environment abstracts</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy dcterms:ISSN="0093-6758">Film literature index</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy>Infobank Jan. 1969-</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy>Predicasts</dcterms:isReferencedBy>
+        <dcterms:hasFormat>Also available on microfilm from University Microfilms International and in an online version.</dcterms:hasFormat>
+        <dcterms:hasFormat>Also available via the Internet.</dcterms:hasFormat>
+        <dcterms:relation>Issued monthly reduced size publication titled: Little times, &lt;1924-1928&gt;.</dcterms:relation>
+        <dcterms:relation>Semi-weekly times (New York, N.Y.) 1857-1867</dcterms:relation>
+        <dcterms:relation>New-York weekly times 1857-&lt;1896&gt;</dcterms:relation>
+        <dcterms:HasFormat>New York times on the Web</dcterms:HasFormat>
+        <dcterms:relation>Little times</dcterms:relation>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10114</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/122</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:37</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10116" type="manifestation">
+        <xc:recordID type="LCCN">sn 78004456</xc:recordID>
+        <xc:identifier type="ISSN">0362-4331</xc:identifier>
+        <xc:identifier type="CODEN">NYTIAO</xc:identifier>
+        <xc:recordID type="OCoLC">1645522</xc:recordID>
+        <xc:recordID type="NRU">1557247</xc:recordID>
+        <dcterms:alternative>N. Y. times</dcterms:alternative>
+        <dcterms:alternative>New York times</dcterms:alternative>
+        <dcterms:title>The New York times.</dcterms:title>
+        <dcterms:alternative>Combined New York morning newspapers</dcterms:alternative>
+        <dcterms:alternative>Combined New York Sunday newspapers</dcterms:alternative>
+        <rdvocab:placeOfProduction>New-York [N.Y. :</rdvocab:placeOfProduction>
+        <dcterms:publisher>H.J. Raymond &amp; Co.],</dcterms:publisher>
+        <dcterms:issued>1857-</dcterms:issued>
+        <dcterms:extent>v. :</dcterms:extent>
+        <rdvocab:dimensions>59 cm.</rdvocab:dimensions>
+        <rdvocab:frequency>Daily, 1861-</rdvocab:frequency>
+        <rdvocab:frequency>Daily (except Sunday), 1857-1861</rdvocab:frequency>
+        <rdvocab:numberingOfSerials>Vol. 6, no. 1868 (Sept. 14, 1857)-</rdvocab:numberingOfSerials>
+        <rdvocab:numberingOfSerials>Suspended Dec. 12-28, 1958; Dec. 20, 1962-Mar. 1963; Sept. 17-Oct. 10, 1965; and Aug. 10-Nov. 5, 1978.</rdvocab:numberingOfSerials>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10115</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

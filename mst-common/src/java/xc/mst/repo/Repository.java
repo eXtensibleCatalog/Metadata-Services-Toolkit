@@ -81,5 +81,11 @@ public interface Repository {
 	public void setService(Service s);
 	
 	public void populatePredecessors(TLongHashSet predecessors);
+	
+	public void addLink(long fromRecordId, long toRecordId);
+	
+	public void activateLinkedRecord(long toRecordId);
+	
+	public List<Long> getLinkedRecordIds(Long toRecordId);
 
 }

@@ -1,0 +1,80 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/79</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:18</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10073" type="work">
+        <dcterms:subject xsi:type="dcterms:LCC">G3721.C5</dcterms:subject>
+        <xc:creator>Bennison, A. P.</xc:creator>
+        <rdvocab:titleOfWork>Geological highway map of the Northeastern region:</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Geology-Northeastern States-Maps.</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">Northeastern States-Maps.</xc:spatial>
+        <xc:subject xsi:type="dcterms:LCSH">Geology</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Maps.</xc:subject>
+        <xc:spacial xsi:type="dcterms:LCSH">Northeastern States</xc:spacial>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/80</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:18</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10074" type="expression">
+        <xc:titleOfExpression>Geological highway map of the Northeastern region:</xc:titleOfExpression>
+        <dcterms:version>National bicentennial ed.</dcterms:version>
+        <rdvocab:scale>Scale 1:1,900,800; 1 in. equals approx. 30 miles.</rdvocab:scale>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Higginbotham, Van K.</xc:contributor>
+        <xc:contributor>American Association of Petroleum Geologists.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10073</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/81</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:18</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10075" type="manifestation">
+        <xc:recordID type="OCoLC">3741175</xc:recordID>
+        <xc:recordID type="NRU">1234020</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Compiled by Allan P. Bennison. Cartography by Van K. Higginbotham.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Geological highway map of the Northeastern region: Pennsylvania, Massachusetts, New Hampshire, Rhode Island, Connecticut, New Jersey, Maine, New York, Vermont.</dcterms:title>
+        <rdvocab:editionStatement>National bicentennial ed.</rdvocab:editionStatement>
+        <rdvocab:placeOfProduction>Tulsa, Okla.,</rdvocab:placeOfProduction>
+        <dcterms:publisher>American Association of Petroleum Geologists,</dcterms:publisher>
+        <dcterms:issued>c1976.</dcterms:issued>
+        <dcterms:extent>col. map</dcterms:extent>
+        <rdvocab:dimensions>70 x 90 cm. fold. to 24 x 12 cm.</rdvocab:dimensions>
+        <dcterms:description>Depths shown by contours.</dcterms:description>
+        <dcterms:description>"Published by the American Association of Petroleum Geologists with the cooperation of the United States Geological Survey."</dcterms:description>
+        <dcterms:description>Includes text, "Generalized chart of time and rock units," inset of "Land and sea changes through the ages" and 5 insets.</dcterms:description>
+        <dcterms:description>Text, 4 cross sections, bibliographies, index map, distance chart, maps of tectonic structure, physiography and interesting geological places on verso.</dcterms:description>
+        <dcterms:isPartOf>United States geological highway map series ; map no. 10</dcterms:isPartOf>
+        <xc:typeLeader06>Cartographic material</xc:typeLeader06>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10074</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

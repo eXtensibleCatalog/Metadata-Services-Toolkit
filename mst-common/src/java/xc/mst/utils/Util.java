@@ -12,12 +12,16 @@ import gnu.trove.TLongHashSet;
 import gnu.trove.TLongProcedure;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -64,7 +68,7 @@ public class Util {
 	public String slurp(InputStream is) {
 		try {
 			BufferedReader br = null;
-			br = new BufferedReader(new InputStreamReader(is));
+			br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 			StringBuilder sb = new StringBuilder();
 			String line = null;
 			while ((line = br.readLine()) != null) {
@@ -97,9 +101,9 @@ public class Util {
 		if (f.exists()) {
 			f.delete();
 		}
-		FileWriter fw = null;
+		Writer fw = null;
 		try {
-			fw = new FileWriter(f);
+			fw = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
 			fw.write(content);
 			fw.close();
 		} catch (Throwable t) {

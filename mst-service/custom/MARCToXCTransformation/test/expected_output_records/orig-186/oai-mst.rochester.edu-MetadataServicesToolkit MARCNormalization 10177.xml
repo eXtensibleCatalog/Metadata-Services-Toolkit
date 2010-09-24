@@ -1,0 +1,76 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/519</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:171</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10511" type="work">
+        <dcterms:subject xsi:type="dcterms:LCC">M1070</dcterms:subject>
+        <rdarole:composer>Wagner, Richard, 1813-1883.</rdarole:composer>
+        <rdvocab:titleOfWork>Ring des Nibelungen. Götterdämmerung. Trauermarsch; arr.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Orchestral music, Arranged-Scores.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Operas-Excerpts, Arranged-Scores.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Orchestral music, Arranged</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Scores.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Excerpts, Arranged</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/520</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:171</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10512" type="expression">
+        <xc:titleOfExpression>Ring des Nibelungen. Götterdämmerung. Trauermarsch; arr.</xc:titleOfExpression>
+        <dcterms:version>Partitur.</dcterms:version>
+        <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+        <xc:contributor>Stasny, L. (Ludwig), 1823-1883.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10511</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/521</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:171</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10513" type="manifestation">
+        <rdvocab:plateNumber>22331</rdvocab:plateNumber>
+        <xc:recordID type="OCoLC">17729059</xc:recordID>
+        <xc:recordID type="NRU">931593</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>von Richard Wagner ; für Orchester bearbeitet von L. Stasny.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Siegfried's Tod und Trauermarsch aus dem Musik-Drama Götterdämmerung /</dcterms:title>
+        <rdvocab:editionStatement>Partitur.</rdvocab:editionStatement>
+        <rdvocab:placeOfProduction>Mainz :</rdvocab:placeOfProduction>
+        <dcterms:publisher>B. Schott's Söhne,</dcterms:publisher>
+        <dcterms:issued>[1878?]</dcterms:issued>
+        <dcterms:extent>1 score (28 p.) ;</dcterms:extent>
+        <rdvocab:dimensions>34 cm.</rdvocab:dimensions>
+        <xc:typeLeader06>Notated music</xc:typeLeader06>
+        <xc:type007>Notated music</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10512</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

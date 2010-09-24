@@ -9,6 +9,7 @@
 
 package xc.mst.repo;
 
+import gnu.trove.TLongArrayList;
 import gnu.trove.TLongHashSet;
 import gnu.trove.TObjectLongHashMap;
 
@@ -33,6 +34,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
@@ -59,6 +61,7 @@ public class RepositoryDAO extends BaseDAO {
 	public final static String RECORD_OAI_IDS = "record_oai_ids";
 	public final static String REPOS_TABLE = "repos";
 	public final static String RECORD_MESSAGES_TABLE = "RECORD_MESSAGES";
+	public final static String RECORD_LINKS_TABLE = "record_links";
 	
 	protected Lock oaiIdLock = new ReentrantLock();
 	protected int nextId = -1;
@@ -944,6 +947,66 @@ public class RepositoryDAO extends BaseDAO {
 			succIds.add(succId);
 		}
 		return succIds;
+	}
+	
+	public List<Long> getLinkedRecordIds(String name, Long toRecordId) {
+		List<Long> linkedRecordsIds = new ArrayList<Long>();
+		String sql = "select from_record_id from "+getTableName(name, RECORD_LINKS_TABLE)+" where to_record_id = ?";
+		List<Map<String, Object>> results = this.jdbcTemplate.queryForList(sql, toRecordId);
+		if (results != null) {
+			for (Map<String, Object> row : results) {
+				linkedRecordsIds.add((Long)row.get("from_record_id"));
+			}
+		}
+		return linkedRecordsIds;
+	}
+	
+	public void persistLinkedRecordIds(String name, final List<long[]> links) {
+		String sql = "insert into "+getTableName(name, RECORD_LINKS_TABLE)+" (from_record_id, to_record_id) values (?,?)";
+		TimingLogger.start(RECORD_LINKS_TABLE+".insert");
+        int[] updateCounts = jdbcTemplate.batchUpdate(
+        		sql,
+                new BatchPreparedStatementSetter() {
+                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+                    	long[] link = links.get(j);
+                    	ps.setLong(1, link[0]);
+                    	ps.setLong(2, link[1]);
+                    }
+
+                    public int getBatchSize() {
+                        return links.size();
+                    }
+                } );
+        TimingLogger.stop(RECORD_LINKS_TABLE+".insert");
+	}
+	
+	public void activateLinkedRecords(String name, final TLongArrayList linkedToIds) {
+		if (linkedToIds.size() > 0) {
+			TimingLogger.start("activateHeldHoldings");
+			StringBuilder sb = new StringBuilder("update "+getTableName(name, RepositoryDAO.RECORDS_TABLE)+
+				" set status='"+Record.ACTIVE+"'"+
+				" where record_id in (select from_record_id from links where to_record_id in (");
+			for (int i=0; i<linkedToIds.size(); i++) {
+				sb.append("?");
+				if (i+1 < linkedToIds.size()) {
+					sb.append(", ");
+				}
+			}
+			sb.append("))");
+			LOG.debug("sb.toString(): "+sb.toString());
+			
+	        int updateCount = jdbcTemplate.update(
+	        		sb.toString(), new PreparedStatementSetter() {
+						public void setValues(PreparedStatement ps) throws SQLException {
+							for (int i=0; i<linkedToIds.size(); i++) {
+								ps.setLong(i+1, linkedToIds.get(i));
+							}
+						}
+					});
+	        TimingLogger.stop("activateHeldHoldings");
+		} else {
+			LOG.debug("linkedToIds is null or empty");
+		}
 	}
 	
 	public void setAllLastModifiedOais(String name, Date d) {

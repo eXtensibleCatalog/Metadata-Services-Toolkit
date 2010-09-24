@@ -1,0 +1,78 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/403</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:122</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10397" type="work">
+        <dcterms:subject xsi:type="dcterms:LCC">PS3553</dcterms:subject>
+        <rdarole:author>Cussler, Clive.</rdarole:author>
+        <rdvocab:titleOfWork>Raise the Titanic!</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Titanic (Steamship)-Fiction.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Pitt, Dirk (Fictitious character)-Fiction.</xc:subject>
+        <rdvocab:natureOfContent>Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Pitt, Dirk (Fictitious character)</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Titanic (Steamship)</xc:subject>
+        <xc:type xsi:type="dcterms:LCSH">Fiction.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/404</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:122</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10398" type="expression">
+        <xc:titleOfExpression>Raise the Titanic! Japanese</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>Japanese</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10397</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/405</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:122</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10399" type="manifestation">
+        <xc:recordID type="OCoLC">32818412</xc:recordID>
+        <xc:recordID type="NRU">3724341</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Kuraibu Kassurā ; Nakayama Yoshiyuki yaku.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Taitanikku o hikiagero /</dcterms:title>
+        <rdvocab:placeOfProduction>Tōkyō :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Shinchōsha,</dcterms:publisher>
+        <dcterms:issued>Shōwa 56 [1981]</dcterms:issued>
+        <dcterms:issued>(1986 printing)</dcterms:issued>
+        <dcterms:extent>520 p. :</dcterms:extent>
+        <rdvocab:dimensions>15 cm.</rdvocab:dimensions>
+        <xc:isPartOf>Shinchō bunko ; 2713</xc:isPartOf>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">4102170022</dcterms:identifier>
+        <dcterms:identifier type="ISBN">9784102170021</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10398</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

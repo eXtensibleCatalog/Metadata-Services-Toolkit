@@ -1,0 +1,89 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/249</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:62</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10243" type="work">
+        <dcterms:subject xsi:type="dcterms:LCC">JX1977.2.U5</dcterms:subject>
+        <rdvocab:titleOfWork>U.S. participation in the UN.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">United Nations-United States.</xc:subject>
+        <dcterms:replaces dcterms:ISSN="0272-6769">United States and the United Nations</dcterms:replaces>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">United Nations</xc:subject>
+        <xc:spacial xsi:type="dcterms:LCSH">United States.</xc:spacial>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/250</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:62</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10244" type="expression">
+        <xc:titleOfExpression>U.S. participation in the UN.</xc:titleOfExpression>
+        <dcterms:version>Departmental edition</dcterms:version>
+        <dcterms:relation>Document edition</dcterms:relation>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>United States. Dept. of State. Bureau of International Organization Affairs.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10243</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/251</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:62</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10245" type="manifestation">
+        <xc:recordID type="LCCN">sn 80012547</xc:recordID>
+        <xc:identifier type="ISSN">0083-0208</xc:identifier>
+        <xc:recordID type="OCoLC">2939249</xc:recordID>
+        <xc:recordID type="NRU">21292</xc:recordID>
+        <xc:identifier type="GPO">044-000-01633-8</xc:identifier>
+        <xc:identifier type="GPOItem">0882-B</xc:identifier>
+        <xc:identifier type="SuDoc">S 1.70:</xc:identifier>
+        <dcterms:alternative>U.S. particip. UN</dcterms:alternative>
+        <dcterms:alternative>U.S. participation in the UN</dcterms:alternative>
+        <dcterms:title>U.S. participation in the UN.</dcterms:title>
+        <dcterms:alternative>United States participation in the United Nations</dcterms:alternative>
+        <dcterms:alternative>Report on the United Nations</dcterms:alternative>
+        <rdvocab:editionStatement>Departmental edition</rdvocab:editionStatement>
+        <rdvocab:placeOfProduction>[Washington]</rdvocab:placeOfProduction>
+        <dcterms:publisher>Dept. of State, Bureau of International Organization Affairs; for sale by the Supt. of Docs., U.S. Govt. Print. Off.</dcterms:publisher>
+        <dcterms:extent>v.</dcterms:extent>
+        <rdvocab:frequency>Annual</rdvocab:frequency>
+        <rdvocab:numberingOfSerials>1948-</rdvocab:numberingOfSerials>
+        <dcterms:description>"Report by the President to the Congress for the Year"</dcterms:description>
+        <dcterms:isPartOf>Department of State publication</dcterms:isPartOf>
+        <dcterms:isPartOf>International organization and conference series</dcterms:isPartOf>
+        <dcterms:isPartOf>Department of State publication.</dcterms:isPartOf>
+        <dcterms:isPartOf>Department of State publication. International organization and conference series.</dcterms:isPartOf>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+        <dcterms:issued>1948-</dcterms:issued>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10244</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

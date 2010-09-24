@@ -1,0 +1,84 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/342</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:99</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10336" type="work">
+        <rdvocab:titleOfWork>Directory of published proceedings</rdvocab:titleOfWork>
+        <dcterms:abstract>A database service that locates proceedings from conferences, congresses and symposia. Can also search for proceedings by sponsor and publisher, country, state/province, and year the event took place.</dcterms:abstract>
+        <xc:subject xsi:type="dcterms:MESH">Congresses-Database.</xc:subject>
+        <xc:subject xsi:type="dcterms:MESH">Congresses-Directory.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Congresses and conventions-Databases.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Meetings-Databases.</xc:subject>
+        <xc:subject xsi:type="dcterms:MESH">Congresses</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Congresses and conventions</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Meetings</xc:subject>
+        <xc:type xsi:type="dcterms:MESH">Database.</xc:type>
+        <xc:type xsi:type="dcterms:MESH">Directory.</xc:type>
+        <xc:type xsi:type="dcterms:LCSH">Databases.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/343</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:99</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10337" type="expression">
+        <xc:titleOfExpression>Directory of published proceedings</xc:titleOfExpression>
+        <dcterms:requires>Mode of access: World Wide Web.</dcterms:requires>
+        <dcterms:relation>Supersedes the print publications: Directory of published proceedings. Series SEMT, Science/engineering/medicine/technology; Directory of published proceedings. Series SSH, Social sciences/humanities; Directory of published proceedings. Series MLS, Medical/life sciences; and Directory of published proceedings. Series PCE, Pollution control/ecology.</dcterms:relation>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>InterDok Corp.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10336</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/344</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:99</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10338" type="manifestation">
+        <xc:recordID type="OCoLC">58597443</xc:recordID>
+        <xc:recordID type="NRU">3157056</xc:recordID>
+        <dcterms:title>Directory of published proceedings</dcterms:title>
+        <dcterms:alternative>InterDok -- Directory of published proceedings</dcterms:alternative>
+        <dcterms:alternative>Directory of published conference proceedings</dcterms:alternative>
+        <dcterms:alternative>DoPP</dcterms:alternative>
+        <rdvocab:placeOfProduction>Harrison, NY :</rdvocab:placeOfProduction>
+        <dcterms:publisher>InterDok Corp.</dcterms:publisher>
+        <rdvocab:numberingOfSerials>Began in 2005?</rdvocab:numberingOfSerials>
+        <dcterms:description>Title from opening screen (viewed Mar. 24, 2005).</dcterms:description>
+        <dcterms:description>Database coverage: 1995-</dcterms:description>
+        <dcterms:tableOfContents>Science/technology -- Medical/life sciences -- Pollution control/ecology -- Social sciences/humanitites.</dcterms:tableOfContents>
+        <dcterms:rights>Access restricted to subscribers.</dcterms:rights>
+        <dcterms:identifier>http://www.interdok.com/dopp/index.cfm</dcterms:identifier>
+        <xc:typeLeader06>Computer file</xc:typeLeader06>
+        <xc:type007>Electronic resource</xc:type007>
+        <xc:typeSMD>Remote</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10337</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

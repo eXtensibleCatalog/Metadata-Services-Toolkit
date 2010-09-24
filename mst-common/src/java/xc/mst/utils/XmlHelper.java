@@ -148,27 +148,34 @@ public class XmlHelper {
 			//TODO some of these are temporary for the initial transformation check.  Remove the following going
 			//     forward:  identifier, predecessors, xmlns:, id, workExpressed
 			String[] regexps = new String[] {
-					"<identifier>.*</identifier>", "",
-					"<predecessor>.*</predecessor>", "",
-					"xmlns:[a-zA-Z]*=\\\".*\\\"", "",
-					"id=..*\\\"", "",
-					"<xc:workExpressed>.*</xc:workExpressed>", "",
-					"<datestamp>.*</datestamp>", "",
-					"<request.*</request>", "",
-					"<responseDate.*</responseDate>", ""
+					"<identifier>.*?</identifier>", "<identifier />",
+					"<predecessor>.*?</predecessor>", "<predecessor />",
+					"xmlns:[a-zA-Z]*?=\\\".*?\\\" ?", "",
+					"id=..*?\\\" ?", "",
+					" >", ">",
+					"spacial", "spatial",
+					"<xc:workExpressed>.*?</xc:workExpressed>", "<xc:workExpressed />",
+					"<xc:expressionManifested>.*?</xc:expressionManifested>", "<xc:expressionManifested />",
+					"<xc:manifestationHeld>.*?</xc:manifestationHeld>", "<xc:manifestationHeld />",
+					"<datestamp>.*?</datestamp>", "",
+					"<request.*?</request>", "",
+					"<responseDate.*?</responseDate>", ""
 			};
 			String file1contents = getString(getSaxBuilder().build(new FileInputStream(file1)).getRootElement());
 			for (int i=0; i<regexps.length; i+=2) {
 				file1contents = file1contents.replaceAll(regexps[i], regexps[i+1]);	
 			}
-			//LOG.debug("file1contents: "+file1contents);
+			LOG.debug("final char @@"+file1contents.charAt(file1contents.length()-1)+"@@");
+			LOG.debug("file1contents:"+file1+"\n"+file1contents);
 			
 			//LOG.debug("file2: "+new Util().slurp(file2));
 			String file2contents = getString(getSaxBuilder().build(new FileInputStream(file2)).getRootElement());
 			for (int i=0; i<regexps.length; i+=2) {
-				file1contents = file1contents.replaceAll(regexps[i], regexps[i+1]);	
+				file2contents = file2contents.replaceAll(regexps[i], regexps[i+1]);	
 			}
-			//LOG.debug("file2contents: "+file2contents);
+			LOG.debug("final char @@"+file2contents.charAt(file2contents.length()-1)+"@@");
+			LOG.debug("file2contents: "+file2+"\n"+file2contents);
+			LOG.debug("!file1contents.equals(file2contents): "+!file1contents.equals(file2contents));
 			return !file1contents.equals(file2contents);
 		} catch (Throwable t) {
 			Util.getUtil().throwIt(t);

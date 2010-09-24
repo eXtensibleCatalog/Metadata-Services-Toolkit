@@ -1,0 +1,95 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/336</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:97</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10330" type="work">
+        <dcterms:subject xsi:type="dcterms:LCC">CB417</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:DDC">820.9</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:LCC">PR468.R65</dcterms:subject>
+        <rdarole:author>Frye, Northrop.</rdarole:author>
+        <rdvocab:titleOfWork>Northrop Frye's writings on the eighteenth and nineteenth centuries /</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">English literature-19th century-History and criticism.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Romanticism-Great Britain.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">English literature-18th century-History and criticism.</xc:subject>
+        <xc:subject type="rvm">Littérature anglaise-19e siècle-Histoire et critique.</xc:subject>
+        <xc:subject type="rvm">Romantisme-Grande-Bretagne.</xc:subject>
+        <xc:subject type="rvm">Littérature anglaise-18e siècle-Histoire et critique.</xc:subject>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:temporal xsi:type="dcterms:LCSH">19th century</xc:temporal>
+        <xc:temporal xsi:type="dcterms:LCSH">18th century</xc:temporal>
+        <xc:temporal type="rvm">19e siècle</xc:temporal>
+        <xc:temporal type="rvm">18e siècle</xc:temporal>
+        <xc:subject xsi:type="dcterms:LCSH">English literature</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Romanticism</xc:subject>
+        <xc:subject type="rvm">Littérature anglaise</xc:subject>
+        <xc:subject type="rvm">Romantisme</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">History and criticism.</xc:subject>
+        <xc:subject type="rvm">Histoire et critique.</xc:subject>
+        <xc:spacial xsi:type="dcterms:LCSH">Great Britain.</xc:spacial>
+        <xc:spacial type="rvm">Grande-Bretagne.</xc:spacial>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/337</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:97</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10331" type="expression">
+        <xc:titleOfExpression>Northrop Frye's writings on the eighteenth and nineteenth centuries /</xc:titleOfExpression>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Salusinszky, Imre, 1955-</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10330</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/338</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:97</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10332" type="manifestation">
+        <xc:identifier type="LAC">20059020687</xc:identifier>
+        <xc:identifier type="YBP">99811772018</xc:identifier>
+        <xc:recordID type="OCoLC">59338662</xc:recordID>
+        <xc:recordID type="NRU">3030852</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>edited by Imre Salusinszky.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Northrop Frye's writings on the eighteenth and nineteenth centuries /</dcterms:title>
+        <rdvocab:placeOfProduction>Toronto :</rdvocab:placeOfProduction>
+        <dcterms:publisher>University of Toronto Press,</dcterms:publisher>
+        <dcterms:issued>c2005.</dcterms:issued>
+        <dcterms:extent>xli, 415 p. ;</dcterms:extent>
+        <rdvocab:dimensions>24 cm.</rdvocab:dimensions>
+        <dcterms:description>Includes bibliographical references (p. [355]-381) and index.</dcterms:description>
+        <dcterms:tableOfContents>On the eighteenth century -- 1. The young Boswell -- 2. Towards defining an age of sensibility -- 3. Nature methodized -- 4. Varieties of eighteenth-century sensibility -- On romanticism -- 5. CBC Goethe salute -- 6. Long sequacious notes -- 7. Lord Byron -- 8. Foreword to Romanticism reconsidered -- 9. The drunken boat : the revolutionary element in Romanticism -- 10. A study of English Romanticism -- I. The Romantic myth -- II. Yorick : the Romantic macabre -- III. Prometheus : the Romantic revolutionary -- IV. Endymion : the Romantic epiphanic -- 11. John Keats -- 12. Kathleen Hazel Coburn -- 13. How it was -- 14. In the earth, or in the air? -- On the nineteenth century -- 15. Review of Patience and The silver box -- 16. Review of H. M. S. Pinafore -- 17. Iolanthe -- 18. Review of Iolanthe -- 19. Review of Bradbrook's Ibsen the Norwegian -- 20. James, LeFanu, and Morris -- 21. An important influence -- 22. Review of Joan Evans's John Ruskin -- 23. Emily Dickinson -- 24. The problem of spiritual authority in the nineteenth century -- 25. Dickens and the comedy of humours -- 26. The meeting of past and future in William Morris -- 27. The world as music and idea in Wagner's Parsifal -- 28. Some reflections on life and habit.</dcterms:tableOfContents>
+        <dcterms:isPartOf>Frye, Northrop. Works. 1996 ; v. 17.</dcterms:isPartOf>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">0802038247</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10331</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

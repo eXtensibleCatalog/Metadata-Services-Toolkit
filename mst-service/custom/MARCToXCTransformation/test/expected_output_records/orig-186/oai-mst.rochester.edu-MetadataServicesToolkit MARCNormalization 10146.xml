@@ -1,0 +1,22 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/449</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:142</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10443" type="holdings">
+        <xc:location>Offsite2</xc:location>
+        <xc:callNumber>Q11 .N567m</xc:callNumber>
+        <xc:textualHoldings type="Basic Bibliographic Unit">no.3-491 Incomplete</xc:textualHoldings>
+        <xc:recordID type="NRU">49443</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10329</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

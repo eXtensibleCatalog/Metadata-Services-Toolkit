@@ -35,11 +35,3 @@ create table bibsYet2ArriveStringId (
 	KEY bibsYet2ArriveStringId_record_id(record_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-create table links (
-	link_id          bigint       not null      AUTO_INCREMENT,
-	from_record_id   bigint       not null,
-	to_record_id     bigint       not null,
-	primary KEY (link_id),
-	KEY idx_links_from_record_id(from_record_id),
-	KEY idx_links_to_record_id(to_record_id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;

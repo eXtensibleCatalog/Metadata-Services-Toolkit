@@ -33,7 +33,7 @@ import xc.mst.utils.TimingLogger;
  */
 public class MarcXmlRecord
 {
-	protected static boolean useXpath = false; 
+	protected static boolean useXpath = true; 
 	
 	/**
 	 * The logger object

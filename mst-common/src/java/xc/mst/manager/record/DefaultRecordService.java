@@ -1335,9 +1335,19 @@ public class DefaultRecordService extends RecordService
 			r.setMode(Record.JDOM_MODE);
 		}
 		if (!r.getDeleted()) {
-			Element metadataEl = new Element("metadata", namespace);
-			recordEl.addContent(metadataEl);
-			metadataEl.addContent(r.getOaiXmlEl());
+			boolean noContent = false;
+			if (r.getMode().equals(Record.STRING_MODE) && StringUtils.isEmpty(r.getOaiXml())) {
+				noContent = true;;
+			}
+			if (r.getMode().equals(Record.JDOM_MODE) && r.getOaiXmlEl() == null) {
+				noContent = true;
+			}
+			if (!noContent) {
+				r.setMode(Record.JDOM_MODE);
+				Element metadataEl = new Element("metadata", namespace);
+				recordEl.addContent(metadataEl);
+				metadataEl.addContent(r.getOaiXmlEl());
+			}
 		}
 		LOG.debug("r: "+r);
 		return recordEl;

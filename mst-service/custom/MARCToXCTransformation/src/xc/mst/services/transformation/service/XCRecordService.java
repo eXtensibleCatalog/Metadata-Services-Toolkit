@@ -25,6 +25,7 @@ import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.repo.Repository;
 import xc.mst.services.impl.service.GenericMetadataServiceService;
 import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
 import xc.mst.services.transformation.bo.AggregateXCRecord;
@@ -412,7 +413,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 	 * @param transformationService 
 	 * @return
 	 */
-	public List<OutputRecord> getSplitXCRecordXML(List<long[]> links, AggregateXCRecord ar, Long manifestationId) 
+	public List<OutputRecord> getSplitXCRecordXML(Repository repo, AggregateXCRecord ar, Long manifestationId) 
 			throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 
 		List<Long> expressionIds = new ArrayList<Long>();
@@ -601,8 +602,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 		List<String> manifestationHeldOAIIds = new ArrayList<String>();
 		for(Element holdingsElement : ar.holdingsElements){
 			long holdingId = getId(ar.getPreviousHoldingIds());
-			long[] link = new long[]{holdingId, manifestationId};
-			links.add(link);
+			repo.addLink(holdingId, manifestationId);
 			String holdingOaiId = getRecordService().getOaiIdentifier(
 					holdingId, getMetadataService().getService());
 			holdingsElement.setAttribute("id", holdingOaiId);
@@ -672,6 +672,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 	 * @return
 	 */
 	public List<OutputRecord> getSplitXCRecordXMLForHoldingRecord(
+			Repository repo,
 			AggregateXCRecord ar,
 			long manifestationId) 
 				throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
@@ -707,6 +708,8 @@ public class XCRecordService extends GenericMetadataServiceService {
 
 			ar.xcRootElement.addContent(holdingsElement);
 			records.add(createRecord(ar, holdingId, (Element)ar.xcRootElement.clone(), manifestationHeldOAIIds));
+			
+			repo.addLink(holdingId, manifestationId);
 			
 			ar.xcRootElement.removeContent();
 		}

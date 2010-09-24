@@ -17,9 +17,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -53,6 +55,7 @@ public class TestRepository extends BaseService implements Repository {
 	protected Map<String, List<Record>> outputFiles = new HashMap<String, List<Record>>();
 	protected TLongObjectHashMap repo = new TLongObjectHashMap();
 	protected Map<String, List<Record>> successorMap = new HashMap<String, List<Record>>();
+	protected Map<Long, Set<Long>> links = new HashMap<Long, Set<Long>>();
 	protected String folderName = null;
 	protected String basePath = null;
 	protected String currentFile = null;
@@ -167,12 +170,16 @@ public class TestRepository extends BaseService implements Repository {
 		}
 		repo.put(r.getId(), r);
 		LOG.debug("r.getStatus(): "+r.getStatus());
+		getOutputRecords().add(r);
+	}
+	
+	protected List<Record> getOutputRecords() {
 		List<Record> outputRecordsInFile = outputFiles.get(this.currentFile);
 		if (outputRecordsInFile == null) {
 			outputRecordsInFile = new ArrayList<Record>();
 			outputFiles.put(this.currentFile, outputRecordsInFile);
 		}
-		outputRecordsInFile.add(r);
+		return outputRecordsInFile;
 	}
 
 	public void addRecords(List<Record> records) {
@@ -319,5 +326,43 @@ public class TestRepository extends BaseService implements Repository {
 				r.getSuccessors().add(out);	
 			}
 		}
+	}
+
+	public void activateLinkedRecord(long toRecordId) {
+		LOG.debug("activateLinkedRecord: "+toRecordId);
+		Set<Long> fromIds = links.get(toRecordId);
+		LOG.debug("fromIds: "+fromIds);
+		if (fromIds != null && fromIds.size() > 0) {
+			for (Long fid : fromIds) {
+				Record r = new Record();
+				r.setId(fid);
+				Record prevRecord = getRecord(fid);
+				r.setService(prevRecord.getService());
+				r.setOaiXmlEl(prevRecord.getOaiXmlEl());
+				addRecord(r);	
+			}
+		}
+	}
+
+	@Override
+	public void addLink(long fromRecordId, long toRecordId) {
+		LOG.debug("fromRecordId: "+fromRecordId);
+		LOG.debug("toRecordId: "+toRecordId);
+		Set<Long> fromIds = links.get(toRecordId);
+		if (fromIds == null) {
+			fromIds = new HashSet<Long>();
+			links.put(toRecordId, fromIds);
+		}
+		fromIds.add(fromRecordId);
+	}
+
+	@Override
+	public List<Long> getLinkedRecordIds(Long toRecordId) {
+		List<Long> fromRecordIds = new ArrayList<Long>();
+		Set<Long> fromIds = links.get(toRecordId);
+		if (fromIds != null && fromIds.size() > 0) {
+			fromRecordIds.addAll(fromIds);
+		}
+		return fromRecordIds;
 	}
 }

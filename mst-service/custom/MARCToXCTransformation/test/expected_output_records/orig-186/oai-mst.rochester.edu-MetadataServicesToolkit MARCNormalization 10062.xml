@@ -1,0 +1,21 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/213</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:58</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10207" type="holdings">
+        <xc:location>RheesStack</xc:location>
+        <xc:callNumber>PR2063.M34 A8 1999</xc:callNumber>
+        <xc:recordID type="NRU">1911916</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10197</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

@@ -1,0 +1,77 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/339</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:98</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10333" type="work">
+        <rdarole:author>United States. Abraham Lincoln Bicentennial Commission.</rdarole:author>
+        <rdvocab:titleOfWork>Interim report</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Lincoln, Abraham, 1809-1865-Anniversaries, etc.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">United States. Abraham Lincoln Bicentennial Commission.</xc:subject>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Lincoln, Abraham,</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Anniversaries, etc.</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/340</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:98</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10334" type="expression">
+        <xc:titleOfExpression>Interim report</xc:titleOfExpression>
+        <rdvocab:illustrationContent>digital, PDF file.</rdvocab:illustrationContent>
+        <dcterms:requires>Mode of access: Internet form the Commission web site. Address as of 1/6/06: http://www.lincolnbicentennial.gov/files/PDF/LOC%5FReport.pdf; current access is available via PURL.</dcterms:requires>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10333</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/341</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:98</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10335" type="manifestation">
+        <xc:recordID type="OCoLC">62789882</xc:recordID>
+        <xc:recordID type="NRU">3095212</xc:recordID>
+        <xc:identifier type="GPOItem">1089 (online)</xc:identifier>
+        <xc:identifier type="SuDoc">Y 3.2:AB 1/R 22</xc:identifier>
+        <dcterms:title>Interim report</dcterms:title>
+        <rdvocab:placeOfProduction>[Washington, D.C. :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Abraham Lincoln Bicentennial Commission,</dcterms:publisher>
+        <dcterms:issued>2004]</dcterms:issued>
+        <dcterms:extent>91 p. :</dcterms:extent>
+        <dcterms:description>Title from title screen (viewed on Jan. 6, 2006).</dcterms:description>
+        <dcterms:description>"June 2004."</dcterms:description>
+        <dcterms:identifier>http://purl.access.gpo.gov/GPO/LPS62010</dcterms:identifier>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:typeLeader06>Computer file</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10334</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

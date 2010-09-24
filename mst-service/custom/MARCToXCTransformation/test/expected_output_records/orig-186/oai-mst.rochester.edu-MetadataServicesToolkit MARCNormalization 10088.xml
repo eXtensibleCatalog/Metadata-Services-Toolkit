@@ -1,0 +1,111 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/305</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:84</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10299" type="work">
+        <dcterms:subject xsi:type="dcterms:DDC">791.43/72</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:LCC">PN1997</dcterms:subject>
+        <rdvocab:titleOfWork>On the waterfront</rdvocab:titleOfWork>
+        <dcterms:abstract>An ex-fighter gets a job working on the gang-ridden waterfront under a crooked gangster boss.</dcterms:abstract>
+        <dcterms:audience>Not rated.</dcterms:audience>
+        <xc:subject xsi:type="dcterms:LCSH">Stevedores-Labor unions-Corrupt practices-Drama.</xc:subject>
+        <xc:type xsi:type="dcterms:LCSH">Gangster films.</xc:type>
+        <xc:type xsi:type="dcterms:LCSH">Feature films.</xc:type>
+        <xc:type xsi:type="dcterms:LCSH">Video recordings for the hearing impaired.</xc:type>
+        <dcterms:audience>General</dcterms:audience>
+        <xc:subject xsi:type="dcterms:LCSH">Stevedores</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Labor unions</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Corrupt practices</xc:subject>
+        <xc:type xsi:type="dcterms:LCSH">Drama.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/306</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:84</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10300" type="expression">
+        <xc:titleOfExpression>On the waterfront</xc:titleOfExpression>
+        <dcterms:version>Special ed.</dcterms:version>
+        <rdvocab:artisticAndOrTechnicalCredits>Photographer, Boris Kaufman ; editor, Gene Milford ; music, Leonard Bernstein.</rdvocab:artisticAndOrTechnicalCredits>
+        <rdvocab:performerNarratorAndOrPresenter>Marlon Brando, Karl Malden, Lee J. Cobb, Rod Steiger, Pat Henning, Leif Erickson, James Westerfield, Eva Marie Saint.</rdvocab:performerNarratorAndOrPresenter>
+        <dcterms:requires>DVD, Dolby digital; full screen presentation.</dcterms:requires>
+        <rdvocab:awards>Academy Award for Best Picture, 1954.</rdvocab:awards>
+        <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+        <dcterms:type xsi:type="dcterms:DCMIType">MovingImage</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <dcterms:language>French</dcterms:language>
+        <rdarole:director>Kazan, Elia.</rdarole:director>
+        <xc:contributor>Spiegel, Sam.</xc:contributor>
+        <xc:contributor>Schulberg, Budd.</xc:contributor>
+        <xc:contributor>Brando, Marlon.</xc:contributor>
+        <xc:contributor>Malden, Karl.</xc:contributor>
+        <xc:contributor>Cobb, Lee J., 1911-1976.</xc:contributor>
+        <xc:contributor>Steiger, Rod, 1925-2002.</xc:contributor>
+        <xc:contributor>Henning, Pat, 1911-1973.</xc:contributor>
+        <xc:contributor>Erickson, Leif, 1911-1986.</xc:contributor>
+        <xc:contributor>Westerfield, James, 1913-1971.</xc:contributor>
+        <xc:contributor>Saint, Eva Marie, 1924-</xc:contributor>
+        <xc:contributor>Kaufman, Boris.</xc:contributor>
+        <xc:contributor>Milford, Gene.</xc:contributor>
+        <xc:contributor>Bernstein, Leonard, 1918-1990.</xc:contributor>
+        <xc:contributor>Columbia Pictures Corporation.</xc:contributor>
+        <xc:contributor>Columbia TriStar Home Entertainment (Firm)</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10299</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/307</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:84</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10301" type="manifestation">
+        <xc:identifier type="UPC">043396784093</xc:identifier>
+        <xc:identifier type="VideoNr">78409</xc:identifier>
+        <xc:recordID type="OCoLC">48239414</xc:recordID>
+        <xc:recordID type="NRU">2707414</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Columbia Pictures Corporation ; screenplay by Budd Schulberg ; produced by Sam Spiegel ; directed by Elia Kazan.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>On the waterfront</dcterms:title>
+        <rdvocab:editionStatement>Special ed.</rdvocab:editionStatement>
+        <rdvocab:placeOfProduction>Culver City, CA :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Columbia Tristar Home Entertainment,</dcterms:publisher>
+        <dcterms:issued>c2001.</dcterms:issued>
+        <dcterms:extent>1 videodisc (ca. 108 min.) :</dcterms:extent>
+        <xc:otherPhysicalDetails>sd., b&amp;w ;</xc:otherPhysicalDetails>
+        <rdvocab:dimensions>1/2 in.</rdvocab:dimensions>
+        <dcterms:description>Originally produced as a motion picture in 1954.</dcterms:description>
+        <dcterms:description>Based on a story by Budd Schulberg.</dcterms:description>
+        <dcterms:description>Special features: audio commentary; Elia Kazan interview; trailers; filmographies; production notes; video photo gallery.</dcterms:description>
+        <dcterms:description>Closed-captioned; English and French soundtracks; subtitles in English, French, Spanish, Portuguese, Chinese, Korean and Thai.</dcterms:description>
+        <xc:typeLeader06>Projected medium</xc:typeLeader06>
+        <xc:type007>Video recording</xc:type007>
+        <xc:typeSMD>Videodisc</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">0767804279</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10300</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

@@ -1,0 +1,93 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/530</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:175</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10522" type="work">
+        <dcterms:subject xsi:type="dcterms:LCC">M1013</dcterms:subject>
+        <rdarole:composer>Bruch, Max, 1838-1920.</rdarole:composer>
+        <rdvocab:titleOfWork>Schottische Fantasie; arr.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Violin with orchestra-Solo with piano.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Violin with orchestra</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Solo with piano.</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/531</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:175</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10523" type="expression">
+        <xc:titleOfExpression>Schottische Fantasie; arr.</xc:titleOfExpression>
+        <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+        <xc:contributor>Spiering, Theodore, 1871-1925.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10522</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/532</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:175</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10524" type="manifestation">
+        <rdvocab:plateNumber>19159-48</rdvocab:plateNumber>
+        <xc:recordID type="OCoLC">11955372</xc:recordID>
+        <xc:recordID type="NRU">952978</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Max Bruch ; edited by Theodore Spiering.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Fantasia on Scottish folk-melodies : op. 46 /</dcterms:title>
+        <rdvocab:placeOfProduction>New York :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Fischer,</dcterms:publisher>
+        <dcterms:issued>1916.</dcterms:issued>
+        <dcterms:extent>1 score (35 p.) + 1 part (15 p.) ;</dcterms:extent>
+        <rdvocab:dimensions>30 cm.</rdvocab:dimensions>
+        <dcterms:tableOfContents>Introduction -- Adagio -- Scherzo -- Andante -- Finale.</dcterms:tableOfContents>
+        <dcterms:description>Sibley Music Library copy is bound with his Romance, Op. 42.</dcterms:description>
+        <dcterms:isPartOf>C. Fischer's music library ; no. 784.</dcterms:isPartOf>
+        <xc:typeLeader06>Notated music</xc:typeLeader06>
+        <xc:type007>Notated music</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10523</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/533</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:175</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10525" type="holdings">
+        <xc:location>SibStack</xc:location>
+        <xc:callNumber>M1013 .B887 FS</xc:callNumber>
+        <xc:recordID type="NRU">1053198</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10524</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

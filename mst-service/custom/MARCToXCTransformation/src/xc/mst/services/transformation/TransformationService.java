@@ -9,7 +9,6 @@
  
 package xc.mst.services.transformation;
 
-import gnu.trove.TLongArrayList;
 import gnu.trove.TLongLongHashMap;
 
 import java.util.ArrayList;
@@ -55,15 +54,6 @@ public class TransformationService extends SolrTransformationService {
 	
 	protected TLongLongHashMap bibsYet2ArriveLongId = new TLongLongHashMap();
 	protected Map<String, Long> bibsYet2ArriveStringId = new HashMap<String, Long>();
-	protected List<long[]> uplinks = new ArrayList<long[]>();
-	
-	// Struggled to come up with a good name here.  manifestations are not held,
-	// but holdings pointing to them are.  The point of this is to switch the status
-	// on holdings records from H to A.  Instead of keeping all the previously held
-	// holdings ids (that are no active) in memory, it'll be easier to keep the 
-	// manifestation id that was being waited on (but finally came through) since
-	// I already have it.
-	protected TLongArrayList manifestionIdsPreviouslyHeld = new TLongArrayList();
 	
 	@Override
 	public void init() {
@@ -132,15 +122,7 @@ public class TransformationService extends SolrTransformationService {
 			// persist 4 001->recordId maps
 			getTransformationDAO().persistBibMaps(bibsProcessedLongId, bibsProcessedStringId, 
 					bibsYet2ArriveLongId, bibsYet2ArriveStringId);
-			
-			// persist links
-			getTransformationDAO().persistLinkedRecordIds(uplinks);
-			uplinks.clear();
-			
-			// flip holdings records from H to A based on manifestionIdsPreviouslyHeld
-			//   (use the links table)  
-			getTransformationDAO().activateHeldHoldings(manifestionIdsPreviouslyHeld);
-			manifestionIdsPreviouslyHeld.clear();
+
 		} catch (Throwable t) {
 			getUtil().throwIt(t);
 		}
@@ -164,7 +146,7 @@ public class TransformationService extends SolrTransformationService {
 						}
 					}
 					if (manifestationId != null) {
-						List<Long> holdingIds = getTransformationDAO().getLinkedRecordIds(manifestationId);
+						List<Long> holdingIds = getRepository().getLinkedRecordIds(manifestationId);
 						if (holdingIds != null) {
 							for (Long holdingId : holdingIds) {
 								Record orphanedHolding = new Record();
@@ -232,7 +214,7 @@ public class TransformationService extends SolrTransformationService {
 					Long manifestationId = getManifestationId4BibYet2Arrive(bib001);
 					if (manifestationId != null) {
 						removeManifestationId4BibYet2Arrive(bib001);
-						manifestionIdsPreviouslyHeld.add(manifestationId);
+						getRepository().activateLinkedRecord(manifestationId);
 					} else {
 						if (ar.getPreviousManifestationId() != null) {
 							manifestationId = ar.getPreviousManifestationId();
@@ -241,7 +223,8 @@ public class TransformationService extends SolrTransformationService {
 						}
 					}
 					addManifestationId4BibProcessed(bib001, manifestationId);
-					List<OutputRecord> bibRecords = getXCRecordService().getSplitXCRecordXML(uplinks, ar, manifestationId);
+					List<OutputRecord> bibRecords = getXCRecordService().getSplitXCRecordXML(
+							getRepository(), ar, manifestationId);
 					if (bibRecords != null) {
 						results.addAll(bibRecords);
 					}
@@ -260,7 +243,7 @@ public class TransformationService extends SolrTransformationService {
 						}
 					}
 					List<OutputRecord> holdingsRecords = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
-							ar, manifestationId);
+							getRepository(), ar, manifestationId);
 					if (holdingsRecords != null) {
 						for (OutputRecord r : holdingsRecords) {
 							r.setStatus(status);

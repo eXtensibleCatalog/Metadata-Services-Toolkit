@@ -73,12 +73,12 @@ public class TransformationDaoTest extends BaseMetadataServiceTest {
 		links.add(new long[]{3L, 2L});
 		links.add(new long[]{4L, 5L});
 		
-		getTransformationDAO().persistLinkedRecordIds(links);
+		getRepositoryDAO().persistLinkedRecordIds(getServiceName(), links);
 		
 		Set<Long> expectedRecordIds = new HashSet<Long>();
 		expectedRecordIds.add(1L);
 		expectedRecordIds.add(3L);
-		List<Long> recordIds = getTransformationDAO().getLinkedRecordIds(2L);
+		List<Long> recordIds = getRepositoryDAO().getLinkedRecordIds(getServiceName(), 2L);
 		for (Long id : recordIds) {
 			assert expectedRecordIds.contains(id);
 			expectedRecordIds.remove(id);
@@ -86,7 +86,7 @@ public class TransformationDaoTest extends BaseMetadataServiceTest {
 		assert expectedRecordIds.size() == 0;
 		expectedRecordIds = new HashSet<Long>();
 		expectedRecordIds.add(4L);
-		recordIds = getTransformationDAO().getLinkedRecordIds(5L);
+		recordIds = getRepositoryDAO().getLinkedRecordIds(getServiceName(), 5L);
 		for (Long id : recordIds) {
 			assert expectedRecordIds.contains(id);
 			expectedRecordIds.remove(id);
@@ -110,15 +110,15 @@ public class TransformationDaoTest extends BaseMetadataServiceTest {
 		getRepository().endBatch();
 		List<long[]> links = new ArrayList<long[]>();
 		
-		getTransformationDAO().persistLinkedRecordIds(links);
+		getRepositoryDAO().persistLinkedRecordIds(getServiceName(), links);
 		for (int i=0 ; i<numRecords/2; i++) {
 			links.add(new long[]{holdingIds.get(i), manId});
 		}
-		getTransformationDAO().persistLinkedRecordIds(links);
+		getRepositoryDAO().persistLinkedRecordIds(getServiceName(), links);
 		
 		TLongArrayList manifestionIdsPreviouslyHeld = new TLongArrayList();
 		manifestionIdsPreviouslyHeld.add(manId);
-		getTransformationDAO().activateHeldHoldings(manifestionIdsPreviouslyHeld);
+		getRepositoryDAO().activateLinkedRecords(getServiceName(), manifestionIdsPreviouslyHeld);
 		
 		List<Map<String, Object>> records = getJdbcTemplate().queryForList(
 				" select record_id, status "+

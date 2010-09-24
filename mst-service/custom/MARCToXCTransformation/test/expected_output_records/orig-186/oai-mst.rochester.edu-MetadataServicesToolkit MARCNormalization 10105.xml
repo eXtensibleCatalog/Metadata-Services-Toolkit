@@ -1,0 +1,75 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/348</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:101</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10342" type="work">
+        <dcterms:subject xsi:type="dcterms:LCC">M215.C434</dcterms:subject>
+        <rdarole:composer>Tchaikovsky, Peter Ilich, 1840-1893.</rdarole:composer>
+        <rdvocab:titleOfWork>Shchelkunchik. Suite; arr.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Suites (Pianos (2)), Arranged-Scores.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Suites (Pianos (2)), Arranged</xc:subject>
+        <xc:type xsi:type="dcterms:LCSH">Scores.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/349</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:101</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10343" type="expression">
+        <xc:titleOfExpression>Shchelkunchik. Suite; arr.</xc:titleOfExpression>
+        <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+        <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10342</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/350</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:101</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10344" type="manifestation">
+        <xc:recordID type="LCCN">90752299</xc:recordID>
+        <rdvocab:plateNumber>PA02282</rdvocab:plateNumber>
+        <xc:recordID type="OCoLC">22114401</xc:recordID>
+        <xc:recordID type="NRU">3159543</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Peter Ilyich Tschaikowsky ; arranged by Nicolas Economou ; edited by Dale Tucker.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>The nutcracker suite : for two pianos, four hands /</dcterms:title>
+        <dcterms:alternative>Nutcracker suite :</dcterms:alternative>
+        <rdvocab:placeOfProduction>Miami, Fla. (15800 N.W. 48th Ave., Miami 33014) :</rdvocab:placeOfProduction>
+        <dcterms:publisher>CPP/Belwin,</dcterms:publisher>
+        <dcterms:issued>c1988.</dcterms:issued>
+        <dcterms:extent>1 score (71 p.) ;</dcterms:extent>
+        <rdvocab:dimensions>31 cm.</rdvocab:dimensions>
+        <xc:isPartOf>Keyboard ensemble series</xc:isPartOf>
+        <dcterms:description>Originally for orchestra.</dcterms:description>
+        <dcterms:description>Minimal level cataloging.</dcterms:description>
+        <xc:typeLeader06>Notated music</xc:typeLeader06>
+        <xc:type007>Notated music</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10343</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>
