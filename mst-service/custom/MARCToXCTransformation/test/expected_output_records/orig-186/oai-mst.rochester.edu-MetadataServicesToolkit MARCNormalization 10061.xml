@@ -11,6 +11,7 @@
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
       <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/216">
         <xc:location>SibNet</xc:location>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v.1 (Oct. 1995)-</xc:textualHoldings>
         <dcterms:identifier>http://sscm-jscm.press.uiuc.edu/</dcterms:identifier>
         <xc:recordID type="NRU">1850431</xc:recordID>
         <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/121</xc:manifestationHeld>

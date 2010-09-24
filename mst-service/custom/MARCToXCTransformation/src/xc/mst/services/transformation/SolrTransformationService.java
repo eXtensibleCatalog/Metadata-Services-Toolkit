@@ -3276,6 +3276,13 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields("852");
+		
+		List<Element> relevantSiblings = new ArrayList<Element>();
+		for (String df : new String[] {"866", "867", "868"}) {
+			List<Element> sibs = transformMe.getDataFields(df);
+			if (sibs != null && sibs.size() > 0)
+				relevantSiblings.addAll(sibs);
+		}
 
 		// The subfields of the 852 datafield we're processing
 		String locationTargetSubfields = "bc";
@@ -3376,10 +3383,9 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 			// the 866, 867, and 868 datafields immediately following the current datafield.
 			ArrayList<Element> textualHoldings = new ArrayList<Element>();
 
-			Element sibling = MarcXmlRecord.getSiblingOfField(element);
-			String siblingTag = sibling.getAttributeValue("tag");
-			while(siblingTag.equals("866") || siblingTag.equals("867") || siblingTag.equals("868"))
-			{
+			
+			for (Element sibling : relevantSiblings) {
+				String siblingTag = sibling.getAttributeValue("tag");	
 				StringBuilder textualHoldingsBuilder = new StringBuilder();
 
 				// Get the subfields of the current element
@@ -3408,11 +3414,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 						Attribute attribute = new Attribute("type","Indexes");
 						textualHoldings.add(new Element("textualHoldings", AggregateXCRecord.XC_NAMESPACE).setText(textualHoldingsValue).setAttribute(attribute));
 					}
-				}
-					
-
-				sibling = MarcXmlRecord.getSiblingOfField(sibling);
-				siblingTag = sibling.getAttributeValue("tag");
+				}				
 			}
 
 			// If any target fields were found
@@ -4100,6 +4102,13 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Element> elements = transformMe.getDataFields("852");
+		
+		List<Element> relevantSiblings = new ArrayList();
+		for (String df : new String[] {"866", "867", "868"}) {
+			List<Element> sibs = transformMe.getDataFields(df);
+			if (sibs != null && sibs.size() > 0)
+				relevantSiblings.addAll(sibs);
+		}
 
 		// The subfields of the 852 datafield we're processing
 		String locationTargetSubfields = "b";
@@ -4137,13 +4146,9 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 			// the 866, 867, and 868 datafields immediately following the current datafield.
 			ArrayList<Element> textualHoldingsElements = new ArrayList<Element>();
 
-			Element sibling = MarcXmlRecord.getSiblingOfField(element);
-			String siblingTag = null;
-			if(sibling != null)
-				siblingTag = sibling.getAttributeValue("tag");
-
-			while(sibling != null && (siblingTag.equals("866") || siblingTag.equals("867") || siblingTag.equals("868")))
-			{
+			for (Element sibling : relevantSiblings) {
+				String siblingTag = sibling.getAttributeValue("tag");
+				
 				StringBuilder textualHoldingsBuilder = new StringBuilder();
 
 				// Get the subfields of the current element
@@ -4171,10 +4176,6 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 						textualHoldingsElements.add(new Element("textualHoldings", AggregateXCRecord.XC_NAMESPACE).setText(textualHoldingsBuilder.substring(0, textualHoldingsBuilder.length()-1)).setAttribute(new Attribute("type","Indexes")));
 					}
 				}
-
-				sibling = MarcXmlRecord.getSiblingOfField(sibling);
-				if(sibling != null)
-					siblingTag = sibling.getAttributeValue("tag");
 			}
 
 			List<Element> holdingsContent = new ArrayList<Element>();

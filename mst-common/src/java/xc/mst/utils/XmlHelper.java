@@ -148,6 +148,7 @@ public class XmlHelper {
 			//TODO some of these are temporary for the initial transformation check.  Remove the following going
 			//     forward:  identifier, predecessors, xmlns:, id, workExpressed
 			String[] regexps = new String[] {
+					/*
 					"<identifier>.*?</identifier>", "<identifier />",
 					"<predecessor>.*?</predecessor>", "<predecessor />",
 					"xmlns:[a-zA-Z]*?=\\\".*?\\\" ?", "",
@@ -157,6 +158,7 @@ public class XmlHelper {
 					"<xc:workExpressed>.*?</xc:workExpressed>", "<xc:workExpressed />",
 					"<xc:expressionManifested>.*?</xc:expressionManifested>", "<xc:expressionManifested />",
 					"<xc:manifestationHeld>.*?</xc:manifestationHeld>", "<xc:manifestationHeld />",
+					*/
 					"<datestamp>.*?</datestamp>", "",
 					"<request.*?</request>", "",
 					"<responseDate.*?</responseDate>", ""

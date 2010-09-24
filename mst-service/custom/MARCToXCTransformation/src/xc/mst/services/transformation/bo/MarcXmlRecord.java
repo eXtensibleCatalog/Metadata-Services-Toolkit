@@ -33,7 +33,7 @@ import xc.mst.utils.TimingLogger;
  */
 public class MarcXmlRecord
 {
-	protected static boolean useXpath = true; 
+	protected static boolean useXpath = false;
 	
 	/**
 	 * The logger object
@@ -436,73 +436,6 @@ public class MarcXmlRecord
 			log.error("An error occurred getting the $" + subfield + " subfields of the passed datafields.", e);
 			TimingLogger.stop("getSubfieldOfField");
 			return results;
-		}
-	}
-
-	/**
-	 * Given an Element containing a MARC XML datafield, return the value of the specified subfield of that Element
-	 *
-	 * @param datafield The Element we're getting the subfield of
-	 * @return The value of the requested subfield of the datafield
-	 */
-	@SuppressWarnings("unchecked")
-	public static Element getSiblingOfField(Element datafield)
-	{
-		TimingLogger.start("getSiblingOfField");
-		if(log.isDebugEnabled())
-			log.debug("Getting the sibling of the passed datafield.");
-
-		try
-		{
-			Element element = null;
-			
-			TimingLogger.start("getSiblingOfField.xpath");
-			TimingLogger.start("xpath");
-			if (useXpath) {
-				// An XPATH expression to get the requested subfields
-				XPath xpath = XPath.newInstance("following-sibling::*[1]");
-
-				// Get the subfields.
-				List<Element> elements = xpath.selectNodes(datafield);
-				
-				if (elements != null && elements.size() > 0) {
-					element = elements.get(0);
-				}
-			} else {
-				boolean found = false;
-				for (Object o : ((Element)datafield.getParent()).getChildren()) {
-					Element e = (Element)o;
-					if (found) {
-						element = e;
-					}
-					if (e.equals(datafield)) {
-						found = true;
-					}
-				}
-			}
-			TimingLogger.stop("getSiblingOfField.xpath");
-			TimingLogger.stop("xpath");
-
-			// Return the empty list if there were no matching subfields
-			if(element == null) {
-				if(log.isDebugEnabled())
-					log.debug("The passed datafield did not have a sibling.");
-
-				TimingLogger.stop("getSiblingOfField");
-				return null;
-			} else {
-				if(log.isDebugEnabled())
-					log.debug("Found the sibling of the passed datafield.");
-
-				TimingLogger.stop("getSiblingOfField");
-				return element;
-			}
-		}
-		catch(JDOMException e)
-		{
-			log.error("An error occurred getting the sibling of the passed datafields.", e);
-			TimingLogger.stop("getSiblingOfField");
-			return null;
 		}
 	}
 
