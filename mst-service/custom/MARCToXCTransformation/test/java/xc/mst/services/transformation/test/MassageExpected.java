@@ -3,6 +3,7 @@ package xc.mst.services.transformation.test;
 import java.io.File;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.jdom.Element;
 import org.testng.annotations.Test;
 
@@ -38,23 +39,71 @@ public class MassageExpected  extends BaseMetadataServiceTest {
 			}
 			newExpectedOutputFolder.mkdir();
 			
-			String nextWork = null;
-			String nextExpression = null;
-			for (String fStr : inputFolderFileStrs) {
+			
+			String nextFile = null;
+			//for (String fStr : inputFolderFileStrs) {
+			for (int k=0; k<inputFolderFileStrs.length; k++) {
+				String previousOrigExpectedManOaiId = null;
+				String previousOrigExpected001 = null;
+				boolean holdingInOutputFile = false;
+				String fStr = inputFolderFileStrs[k];
 				LOG.debug("processing: "+fStr);
 				if (fStr.contains("svn")) {
 					continue;
 				}
+				boolean manifestationOrHoldingFound = false;
 				boolean manifestationFound = false;
 				String actualContents = getUtil().slurp(actualOutputFolderStr+"/"+fStr);
 				Element rootEl = (Element)xmlHelper.getJDomDocument(actualContents).detachRootElement();
 				Element actRecordEl = (Element)rootEl.getChildren("record", rootEl.getNamespace()).get(0);
 				Element actHeaderEl = (Element)actRecordEl.getChild("header", rootEl.getNamespace());
 				String status = actHeaderEl.getAttributeValue("status");
-				if ("held".equals(status)) {
+				if ("held".equals(status) || "replaced".equals(status)) {
 					recordId++;
 					continue;
 				}
+				
+				String inputContents = getUtil().slurp(inputFolderStr+"/"+fStr);
+				Element inputRecordsEl = xmlHelper.getJDomDocument(inputContents).detachRootElement();
+				Element inputRecordEl = (Element)inputRecordsEl.getChildren().get(0);
+				Element inputMetadataEl = inputRecordEl.getChild("metadata", inputRecordsEl.getNamespace());
+				Element inputMarc = (Element)inputMetadataEl.getChildren().get(0);
+				String leader = inputMarc.getChildText("leader", inputMarc.getNamespace());
+				String the001 = null;
+				for (Object cfObj : inputMarc.getChildren("controlfield", inputMarc.getNamespace())) {
+					Element cf = (Element)cfObj;
+					if ("001".equals(cf.getAttributeValue("tag"))) {
+						the001 = cf.getText();
+					}	
+				}
+				LOG.debug("the001: "+the001);
+				
+				String nextInput004 = null;
+				String nextInput001 = null;
+				if (k+1 != inputFolderFileStrs.length) {
+					String ic = getUtil().slurp(inputFolderStr+"/"+inputFolderFileStrs[k+1]);
+					Element irsEl = xmlHelper.getJDomDocument(ic).detachRootElement();
+					Element irEl = (Element)irsEl.getChildren().get(0);
+					Element imEl = irEl.getChild("metadata", inputRecordsEl.getNamespace());
+					Element im = (Element)imEl.getChildren().get(0);
+					for (Object cfObj : im.getChildren("controlfield", im.getNamespace())) {
+						Element cf = (Element)cfObj;
+						if ("004".equals(cf.getAttributeValue("tag"))) {
+							nextInput004 = cf.getText();
+						} else if ("001".equals(cf.getAttributeValue("tag"))) {
+							nextInput001 = cf.getText();
+						}		
+					}
+				}
+				LOG.debug("leader: "+leader);
+				
+				boolean inputIsHolding = false;
+				char leader06 = leader.charAt(6);
+				if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
+					inputIsHolding = true;
+				}
+				LOG.debug("inputIsHolding: "+inputIsHolding);
+				
 				/*
 				Element actMetadataEl = actRecordEl.getChild("metadata", rootEl.getNamespace());
 				Element actFrbrEl = (Element)actMetadataEl.getChildren().get(0);
@@ -64,21 +113,19 @@ public class MassageExpected  extends BaseMetadataServiceTest {
 				StringBuilder sb = new StringBuilder();
 				sb.append("<records xmlns=\"http://www.openarchives.org/OAI/2.0/\">");
 				while (true) {
+					boolean usingPriorInput = false;
 					String contents = null;
-					if (nextExpression != null) {
-						if (nextWork != null) {
-							contents = nextWork;
-							nextWork = null;	
-						} else {
-							contents = nextExpression;
-							nextExpression = null;
-						}
+					if (nextFile != null) {
+						contents = nextFile;
+						nextFile = null;
+						usingPriorInput = true;
 					} else {
 						String oeof = null;
 						while (oeof == null || oeof.contains("svn")) {
-							LOG.debug("oeofidx: "+oeofidx);
+							LOG.debug("oeofidx-1: "+(oeofidx-1));
 							if (oeofidx < origExpectedOutputFolderFileStrs.length) {
-								oeof = origExpectedOutputFolderFileStrs[oeofidx++];	
+								oeof = origExpectedOutputFolderFileStrs[oeofidx];
+								oeofidx++;
 							} else {
 								break;
 							}
@@ -94,14 +141,64 @@ public class MassageExpected  extends BaseMetadataServiceTest {
 					}
 
 					Element frbr = (Element)xmlHelper.getJDomDocument(contents).getRootElement().detach();
+					Element entityEl = (Element)frbr.getChild("entity", frbr.getNamespace());
+					String oaiId = entityEl.getAttributeValue("id"); 
+						
 					String type = frbr.getChild("entity", frbr.getNamespace()).getAttributeValue("type");
-					//LOG.debug("type: "+type);
-					if (manifestationFound && "work".equals(type)) {
-						nextWork = contents;
-					} else if (manifestationFound && "expression".equals(type)) {
-						nextExpression = contents;
+					LOG.debug("type: "+type);
+					LOG.debug("manifestationFound: "+manifestationOrHoldingFound);
+					if (manifestationOrHoldingFound && "work".equals(type)) {
+						nextFile = contents;
 						break;
+					} else if ("holdings".equals(type)) {
+						
+						String linkedManiOaiId = entityEl.getChildText("manifestationHeld", frbr.getNamespace());
+						//if (holdingInOutputFile && !manifestationFound) {
+						LOG.debug("manifestationFound: "+manifestationFound);
+						LOG.debug("usingPriorInput: "+usingPriorInput);
+						if (!manifestationFound && !usingPriorInput) {
+							nextFile = contents;
+							break;
+						}
+						holdingInOutputFile = true;
+						manifestationOrHoldingFound = true;
+						boolean previouslyHeldRecordActivated = false;
+
+						LOG.debug("previousOrigExpectedManOaiId: "+previousOrigExpectedManOaiId);
+						LOG.debug("linkedManiOaiId: "+linkedManiOaiId);
+						/*
+						if (previousOrigExpectedManOaiId == null || !previousOrigExpectedManOaiId.equals(linkedManiOaiId)) {
+							if (manifestationFound && k+1 == inputFolderFileStrs.length){
+								previouslyHeldRecordActivated = true;
+							} else if (manifestationFound) {
+								//LOG.debug("inputFolderStr+/+inputFolderFileStrs[k+1]: "+inputFolderStr+"/"+inputFolderFileStrs[k+1]);
+								String nextInputFileContents = getUtil().slurp(new File(inputFolderStr+"/"+inputFolderFileStrs[k+1]));
+								//LOG.debug("nextInputFileContents: "+nextInputFileContents);
+								if (the001 != null && !(nextInputFileContents.contains(the001) || contents.contains(the001))) {
+									previouslyHeldRecordActivated = true;
+								}
+							}
+							if (!inputIsHolding && !previouslyHeldRecordActivated && !usingPriorInput) {
+								nextFile = contents;
+								break;	
+							} else if (!previouslyHeldRecordActivated) {
+								LOG.debug("previouslyHeldRecordActivated!!!");
+							}
+						} else */ if ((usingPriorInput && !manifestationFound) ||
+								nextInput004 == null || 
+								!nextInput004.equals(the001)) {
+							LOG.debug("nextInput004: "+nextInput004);
+							LOG.debug("previousOrigExpected001: "+previousOrigExpected001);
+						} else {
+							LOG.debug("nextInput004: "+nextInput004);
+							LOG.debug("previousOrigExpected001: "+previousOrigExpected001);
+							nextFile = contents;
+							break;
+						}
 					} else if ("manifestation".equals(type)) {
+						previousOrigExpected001 = the001;
+						previousOrigExpectedManOaiId = oaiId;
+						manifestationOrHoldingFound = true;
 						manifestationFound = true;
 					}
 
@@ -135,7 +232,7 @@ public class MassageExpected  extends BaseMetadataServiceTest {
 					}
 				}
 				sb.append("\n</records>");
-				FileUtils.writeStringToFile(new File(newExpectedOutputFolder+"/"+fStr), sb.toString());
+				FileUtils.writeStringToFile(new File(newExpectedOutputFolder+"/"+fStr), sb.toString(), "UTF-8");
 				inputIdx++;
 			}
 		} catch (Throwable t) {
