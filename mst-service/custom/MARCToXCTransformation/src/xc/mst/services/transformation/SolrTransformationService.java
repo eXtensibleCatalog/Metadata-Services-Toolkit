@@ -106,6 +106,20 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		roles.put("pro", "producer");
 		roles.put("trl", "translator");
 	}
+	
+	protected void holdingsProcess004(MarcXmlRecord transformMe, AggregateXCRecord transformInto) {
+		List<String> the004s = transformMe.get004s();
+		if (the004s != null && the004s.size() > 0) {
+			transformInto.getReferencedBibs().addAll(the004s);
+		}
+	}
+
+	protected void holdingsProcess014(MarcXmlRecord transformMe, AggregateXCRecord transformInto) {
+		List<String> the014s = transformMe.get014s("1", "a");
+		if (the014s != null && the014s.size() > 0) {
+			transformInto.getReferencedBibs().addAll(the014s);
+		}
+	}
 
 	/**
 	 * Processes the 010 field from the MarcXmlRecord we're transforming.

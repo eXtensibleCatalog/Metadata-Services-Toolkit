@@ -580,6 +580,32 @@ public class MarcXmlRecord
 			return null;
 		}
 	}
+	
+	public List<String> get004s() {
+		List<String> the004s = new ArrayList<String>();
+		for (Object cfObj : marcXml.getChildren("controlfield", marcXml.getNamespace())) {
+			Element cf = (Element)cfObj;
+			if ("004".equals(cf.getAttributeValue("tag")))
+				the004s.add(cf.getText());
+		}
+		return the004s;
+	}
+	
+	public List<String> get014s(String indicator, String code) {
+		List<String> the014s = new ArrayList<String>();
+		for (Object dfObj : marcXml.getChildren("datafield", marcXml.getNamespace())) {
+			Element df = (Element)dfObj;
+			if ("014".equals(df.getAttributeValue("tag")) && (
+					indicator == null || indicator.equals(df.getAttributeValue("ind1")))) {
+				for (Object sfObj : marcXml.getChildren("subfield", marcXml.getNamespace())) {
+					Element sf = (Element)sfObj;
+					if (code == null || code.equals(df.getAttributeValue("code")))
+						the014s.add(sf.getText());
+				}
+			}
+		}
+		return the014s;
+	}
 
 	/**
 	 * Initializes the MARC XML data fields' cached values.

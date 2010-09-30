@@ -35,3 +35,10 @@ create table bibsYet2ArriveStringId (
 	KEY bibsYet2ArriveStringId_record_id(record_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+create table held_holdings (
+	held_holding_id     bigint       not null,
+	manifestation_id    bigint       not null,
+	primary key (held_holding_id, manifestation_id),
+	KEY idx_held_holdings_held_holding_id (held_holding_id),
+	KEY idx_held_holdings_manifestation_id (manifestation_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

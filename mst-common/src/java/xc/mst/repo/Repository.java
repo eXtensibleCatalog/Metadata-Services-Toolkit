@@ -84,7 +84,7 @@ public interface Repository {
 	
 	public void addLink(long fromRecordId, long toRecordId);
 	
-	public void activateLinkedRecord(long toRecordId);
+	public void activateRecord(long recordId);
 	
 	public List<Long> getLinkedRecordIds(Long toRecordId);
 

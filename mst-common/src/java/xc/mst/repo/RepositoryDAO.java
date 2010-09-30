@@ -11,6 +11,7 @@ package xc.mst.repo;
 
 import gnu.trove.TLongArrayList;
 import gnu.trove.TLongHashSet;
+import gnu.trove.TLongIterator;
 import gnu.trove.TObjectLongHashMap;
 
 import java.sql.PreparedStatement;
@@ -978,6 +979,29 @@ public class RepositoryDAO extends BaseDAO {
                     }
                 } );
         TimingLogger.stop(RECORD_LINKS_TABLE+".insert");
+	}
+
+	public void activateRecords(String name, final TLongHashSet recordIds) {
+		if (recordIds.size() > 0) {
+			TimingLogger.start("activateRecords");
+			String sql = "update "+getTableName(name, RepositoryDAO.RECORDS_TABLE)+
+				" set status='"+Record.ACTIVE+"'"+
+				" where record_id = ?";
+			final TLongIterator it = recordIds.iterator();
+	        int[] updateCount = jdbcTemplate.batchUpdate(
+	        		sql, 
+	        		new BatchPreparedStatementSetter() {
+						public void setValues(PreparedStatement ps, int j) throws SQLException {
+							ps.setLong(1, it.next());
+						}
+						public int getBatchSize() {
+							return recordIds.size();
+						}
+					});
+	        TimingLogger.stop("activateRecords");
+		} else {
+			LOG.debug("linkedToIds is null or empty");
+		}
 	}
 	
 	public void activateLinkedRecords(String name, final TLongArrayList linkedToIds) {

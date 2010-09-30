@@ -9,7 +9,9 @@
  
 package xc.mst.services.transformation;
 
+import gnu.trove.TLongHashSet;
 import gnu.trove.TLongLongHashMap;
+import gnu.trove.TLongProcedure;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +30,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
+import xc.mst.repo.TestRepository;
 import xc.mst.services.transformation.bo.AggregateXCRecord;
 import xc.mst.services.transformation.bo.MarcXmlRecord;
 import xc.mst.utils.XmlHelper;
@@ -54,6 +57,9 @@ public class TransformationService extends SolrTransformationService {
 	
 	protected TLongLongHashMap bibsYet2ArriveLongId = new TLongLongHashMap();
 	protected Map<String, Long> bibsYet2ArriveStringId = new HashMap<String, Long>();
+	
+	protected TLongHashSet previouslyHeldManifestationIds = new TLongHashSet();
+	protected List<long[]> heldHoldings = new ArrayList<long[]>();
 	
 	@Override
 	public void init() {
@@ -122,16 +128,48 @@ public class TransformationService extends SolrTransformationService {
 			// persist 4 001->recordId maps
 			getTransformationDAO().persistBibMaps(bibsProcessedLongId, bibsProcessedStringId, 
 					bibsYet2ArriveLongId, bibsYet2ArriveStringId);
-
+			previouslyHeldManifestationIds.forEach(new TLongProcedure() {
+				public boolean execute(long recordId) {
+					LOG.debug("previouslyHeldManifestationId: "+recordId+"");
+					return true;
+				}
+			});
+			getTransformationDAO().persistHeldHoldings(heldHoldings);
+			getTransformationDAO().getHoldingIdsToActivate(previouslyHeldManifestationIds).forEach(
+					new TLongProcedure() {
+						public boolean execute(long recordId) {
+							LOG.debug("getRepository().activateRecord("+recordId+")");
+							getRepository().activateRecord(recordId);
+							return true;
+						}
+					});
+			super.endBatch();
+			heldHoldings.clear();
+			getTransformationDAO().deleteHeldHoldings(previouslyHeldManifestationIds);
+			previouslyHeldManifestationIds.clear();
+			/*
+			// TODO: use polymorphism instead
+			if (!(getRepository() instanceof TestRepository)) {
+				super.endBatch();				
+			}
+			getTransformationDAO().persistHeldHoldings(heldHoldings);
+			heldHoldings.clear();
+			getTransformationDAO().deleteHeldHoldings(previouslyHeldManifestationIds);
+			if (getRepository() instanceof TestRepository) {
+				super.endBatch();				
+			}
+			*/
 		} catch (Throwable t) {
 			getUtil().throwIt(t);
 		}
-		super.endBatch();
 	}
 	
 	@Override
 	public List<OutputRecord> process(InputRecord record) {
-		try {			
+		LOG.debug("getHarvestedOaiIdentifier(): "+((Record)record).getHarvestedOaiIdentifier());
+		LOG.debug("getOaiIdentifier(): "+((Record)record).getOaiIdentifier());
+		LOG.debug("getId(): "+((Record)record).getId());
+		try {
 			List<OutputRecord> results = new ArrayList<OutputRecord>();
 
 			if (Record.DELETED == record.getStatus()) {
@@ -214,7 +252,7 @@ public class TransformationService extends SolrTransformationService {
 					Long manifestationId = getManifestationId4BibYet2Arrive(bib001);
 					if (manifestationId != null) {
 						removeManifestationId4BibYet2Arrive(bib001);
-						getRepository().activateLinkedRecord(manifestationId);
+						previouslyHeldManifestationIds.add(manifestationId);
 					} else {
 						if (ar.getPreviousManifestationId() != null) {
 							manifestationId = ar.getPreviousManifestationId();
@@ -229,25 +267,40 @@ public class TransformationService extends SolrTransformationService {
 						results.addAll(bibRecords);
 					}
 				} else if (isHolding) {
-					String holding004 = originalRecord.getControlField("004");
-					Long manifestationId = getManifestationId4BibProcessed(holding004);
-					char status = 0;
-					if (manifestationId != null) {
-						status = Record.ACTIVE;
+					char status = Record.ACTIVE;
+					List<Long> manifestationIds = new ArrayList<Long>();
+					List<Long> manifestaionsIdsInWaiting = new ArrayList<Long>();
+					if (ar.getReferencedBibs() == null) {
+						LOG.error("ar.getReferencedBibs() == null");
 					} else {
-						manifestationId = getManifestationId4BibYet2Arrive(holding004);
-						status = Record.HELD;
-						if (manifestationId == null) {
-							manifestationId = getRepositoryDAO().getNextId();
-							addManifestationId4BibYet2Arrive(holding004, manifestationId);
+						for (String ref001 : ar.getReferencedBibs()) {
+							Long manifestationId = getManifestationId4BibProcessed(ref001);
+							
+							LOG.debug("input "+record.getId()+ "manifestationId: "+manifestationId);
+							if (manifestationId == null) {
+								manifestationId = getManifestationId4BibYet2Arrive(ref001);
+								status = Record.HELD;
+								if (manifestationId == null) {
+									manifestationId = getRepositoryDAO().getNextId();
+									addManifestationId4BibYet2Arrive(ref001, manifestationId);
+								}
+								manifestaionsIdsInWaiting.add(manifestationId);
+							}
+							manifestationIds.add(manifestationId);
 						}
-					}
-					List<OutputRecord> holdingsRecords = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
-							getRepository(), ar, manifestationId);
-					if (holdingsRecords != null) {
-						for (OutputRecord r : holdingsRecords) {
-							r.setStatus(status);
-							results.add(r);	
+						List<OutputRecord> holdingsRecords = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
+								getRepository(), ar, manifestationIds);
+						
+						if (holdingsRecords != null) {
+							for (OutputRecord r : holdingsRecords) {
+								for (Long mid : manifestationIds) {
+									heldHoldings.add(new long[] {r.getId(), mid});								
+								}
+								r.setStatus(status);
+								results.add(r);	
+							}
+						} else {
+							LOG.debug("holdingsRecords == null");
 						}
 					}
 				}
@@ -407,6 +460,8 @@ public class TransformationService extends SolrTransformationService {
 		// Run the transformation steps
 		// Each one processes a different MARC XML field and adds the appropriate
 		// XC fields to transformedRecord based on the field it processes.
+		holdingsProcess004(originalRecord, transformedRecord);
+		holdingsProcess014(originalRecord, transformedRecord);
 		transformedRecord = holdingsProcess506(originalRecord, transformedRecord);
 		transformedRecord = holdingsProcess852(originalRecord, transformedRecord);
 		transformedRecord = holdingsProcess856(originalRecord, transformedRecord);

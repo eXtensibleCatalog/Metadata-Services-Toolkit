@@ -41,13 +41,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	
 	protected List<long[]> uplinks = new ArrayList<long[]>();
 	
-	// Struggled to come up with a good name here.  manifestations are not held,
-	// but holdings pointing to them are.  The point of this is to switch the status
-	// on holdings records from H to A.  Instead of keeping all the previously held
-	// holdings ids (that are no active) in memory, it'll be easier to keep the 
-	// manifestation id that was being waited on (but finally came through) since
-	// I already have it.
-	protected TLongArrayList linkedRecordsToActivate = new TLongArrayList();
+	protected TLongHashSet recordsToActivate = new TLongHashSet();
 	
 	protected String name = null;
 	
@@ -144,8 +138,8 @@ public class DefaultRepository extends BaseService implements Repository {
 		predSuccMap.clear();
 		getRepositoryDAO().persistLinkedRecordIds(name, uplinks);
 		uplinks.clear();
-		getRepositoryDAO().activateLinkedRecords(name, linkedRecordsToActivate);
-		linkedRecordsToActivate.clear();
+		getRepositoryDAO().activateRecords(name, recordsToActivate);
+		recordsToActivate.clear();
 	}
 
 	public List<Long> getPredecessorIds(Record r) {
@@ -251,13 +245,13 @@ public class DefaultRepository extends BaseService implements Repository {
 	public void addLink(long fromRecordId, long toRecordId) {
 		uplinks.add(new long[] {fromRecordId, toRecordId});
 	}
-	
-	public void activateLinkedRecord(long toRecordId) {
-		linkedRecordsToActivate.add(toRecordId);
-	}
-	
+
 	public List<Long> getLinkedRecordIds(Long toRecordId) {
 		return getRepositoryDAO().getLinkedRecordIds(name, toRecordId);
+	}
+
+	public void activateRecord(long recordId) {
+		recordsToActivate.add(recordId);		
 	}
 
 }

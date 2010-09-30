@@ -365,4 +365,14 @@ public class TestRepository extends BaseService implements Repository {
 		}
 		return fromRecordIds;
 	}
+
+	@Override
+	public void activateRecord(long recordId) {
+		Record pr = getRecord(recordId);
+		Record r = new Record();
+		r.setId(recordId);
+		r.setService(pr.getService());
+		r.setOaiXmlEl(pr.getOaiXmlEl());
+		addRecord(r);
+	}
 }

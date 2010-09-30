@@ -50,7 +50,7 @@ import xc.mst.utils.TimingLogger;
  * class.  The MetadataService class provides a common interface through which the MST can invoke functionality on
  * a Metadata Service.
  *
- * @author Eric Osisek
+ * @author Benjamin D. Anderson
  */
 
 public abstract class GenericMetadataService extends SolrMetadataService 
@@ -432,6 +432,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	}
 	
 	protected void endBatch() {
+		if (getRepository() != null) {
+			getRepository().endBatch();
+		}
 		TimingLogger.reset();
 	}
 	
@@ -532,15 +535,12 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			}
 			
 			getRecordLoops++;
-			if (getRecordLoops % 10 == 0) {
-				endBatch();	
+			if (getRecordLoops % 10 == 0 && !(getRepository() instanceof TestRepository)) {
+				endBatch();
 			}
 		}
 		//  TODO not inserting errors on input record.
 //		repo.endBatch();
-		if (getRepository() != null) {
-			getRepository().endBatch();
-		}
 		if (!stopped) {
 			sh.setHighestId(null);
 			getServiceDAO().persist(sh);

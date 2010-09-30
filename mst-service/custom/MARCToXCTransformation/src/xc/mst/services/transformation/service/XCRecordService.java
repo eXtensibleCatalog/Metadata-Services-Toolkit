@@ -674,7 +674,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 	public List<OutputRecord> getSplitXCRecordXMLForHoldingRecord(
 			Repository repo,
 			AggregateXCRecord ar,
-			long manifestationId) 
+			List<Long> manifestationIds) 
 				throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 
 		List<OutputRecord> records = new ArrayList<OutputRecord>();
@@ -689,8 +689,6 @@ public class XCRecordService extends GenericMetadataServiceService {
 		/*$$ HOLDINGS $$*/
 		// Create the Holdings documents
 		List<String> manifestationHeldOAIIds = new ArrayList<String>();
-		manifestationHeldOAIIds.add(getRecordService().getOaiIdentifier(manifestationId, 
-				getMetadataService().getService()));
 		for(Element holdingsElement : ar.holdingsElements){
 			
 			long holdingId = getRepositoryDAO().getNextId();
@@ -699,18 +697,21 @@ public class XCRecordService extends GenericMetadataServiceService {
 			
 			holdingsElement.setAttribute("id", holdingOaiId);
 			
-			// Create back links to Manifestation
-			Element linkManifestation =  new Element(
-					"manifestationHeld", AggregateXCRecord.XC_NAMESPACE);
-			linkManifestation.setText(getRecordService().getOaiIdentifier(manifestationId, 
-					getMetadataService().getService()));
-			holdingsElement.addContent(linkManifestation.detach());
-
+			for (Long manifestationId : manifestationIds) {
+				manifestationHeldOAIIds.add(getRecordService().getOaiIdentifier(manifestationId, 
+						getMetadataService().getService()));
+				
+				// Create back links to Manifestation
+				Element linkManifestation =  new Element(
+						"manifestationHeld", AggregateXCRecord.XC_NAMESPACE);
+				linkManifestation.setText(getRecordService().getOaiIdentifier(manifestationId, 
+						getMetadataService().getService()));
+				holdingsElement.addContent(linkManifestation.detach());
+				repo.addLink(holdingId, manifestationId);
+			}
+			
 			ar.xcRootElement.addContent(holdingsElement);
 			records.add(createRecord(ar, holdingId, (Element)ar.xcRootElement.clone(), manifestationHeldOAIIds));
-			
-			repo.addLink(holdingId, manifestationId);
-			
 			ar.xcRootElement.removeContent();
 		}
 

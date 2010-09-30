@@ -149,6 +149,7 @@ public class AggregateXCRecord
 	protected List<Long> previousExpressionIds = null;
 	protected Long previousManifestationId = null;
 	protected List<Long> previousHoldingIds = null;
+	protected List<String> referencedBibs = new ArrayList<String>();
 
 	/**
 	 * Gets the xc:recordID's type followed by its value
@@ -195,6 +196,14 @@ public class AggregateXCRecord
 
 	public void setPreviousHoldingIds(List<Long> previousHoldingIds) {
 		this.previousHoldingIds = previousHoldingIds;
+	}
+
+	public List<String> getReferencedBibs() {
+		return referencedBibs;
+	}
+
+	public void setReferencedBibs(List<String> referencedBibs) {
+		this.referencedBibs = referencedBibs;
 	}
 
 	/**
