@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/295</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/296</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:82</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/295">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/296">
         <dcterms:subject xsi:type="dcterms:LCC">QC1</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">530/.05</dcterms:subject>
         <rdvocab:titleOfWork>International journal of theoretical physics.</rdvocab:titleOfWork>
@@ -23,7 +23,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/296</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/297</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:82</predecessor>
@@ -31,7 +31,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/296">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/297">
         <xc:titleOfExpression>International journal of theoretical physics.</xc:titleOfExpression>
         <dcterms:isReferencedBy dcterms:ISSN="0009-2258">Chemical abstracts</dcterms:isReferencedBy>
         <dcterms:HasFormat>Online version: International journal of theoretical physics (Online)</dcterms:HasFormat>
@@ -39,14 +39,14 @@
         <dcterms:language>English</dcterms:language>
         <dcterms:language>French</dcterms:language>
         <dcterms:language>German</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/295</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/296</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/294</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/295</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:82</predecessor>
@@ -54,7 +54,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/294">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/295">
         <xc:recordID type="LCCN">76004087</xc:recordID>
         <xc:identifier type="ISSN">0020-7748</xc:identifier>
         <xc:identifier type="CODEN">IJTPBM</xc:identifier>
@@ -74,7 +74,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1968-</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/296</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/297</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

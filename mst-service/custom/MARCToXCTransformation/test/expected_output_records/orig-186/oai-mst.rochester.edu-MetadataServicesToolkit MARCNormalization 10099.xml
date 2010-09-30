@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/335</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/336</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:100</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/335">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/336">
         <dcterms:subject xsi:type="dcterms:LCC">PG3366</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">891.733</dcterms:subject>
         <rdarole:author>Tolstoy, Leo, graf, 1828-1910.</rdarole:author>
@@ -30,7 +30,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/336</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/337</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:100</predecessor>
@@ -38,21 +38,21 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/336">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/337">
         <xc:titleOfExpression>War and peace /</xc:titleOfExpression>
         <rdvocab:illustrationContent>maps ;</rdvocab:illustrationContent>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>Briggs, A. D. P.</xc:contributor>
         <xc:contributor>Figes, Orlando.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/335</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/336</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/334</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/335</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:100</predecessor>
@@ -60,7 +60,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/334">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/335">
         <xc:identifier type="bnb">GBA544116</xc:identifier>
         <xc:identifier type="Uk">013205789</xc:identifier>
         <xc:recordID type="OCoLC">60512859</xc:recordID>
@@ -79,7 +79,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0713998334</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/336</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/337</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

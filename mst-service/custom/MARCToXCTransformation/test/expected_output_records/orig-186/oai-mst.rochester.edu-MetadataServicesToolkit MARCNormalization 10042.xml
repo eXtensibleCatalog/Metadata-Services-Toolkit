@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/128</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/129</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:43</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/128">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/129">
         <dcterms:subject xsi:type="dcterms:LCC">QB1</dcterms:subject>
         <rdvocab:titleOfWork>Astronomical journal.</rdvocab:titleOfWork>
         <xc:relation>Supplements accompany some issues.</xc:relation>
@@ -24,7 +24,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/129</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/130</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:43</predecessor>
@@ -32,7 +32,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/129">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/130">
         <xc:titleOfExpression>Astronomical journal.</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill.</rdvocab:illustrationContent>
         <dcterms:isReferencedBy dcterms:ISSN="0036-8113">Computer &amp; control abstracts 1968-</dcterms:isReferencedBy>
@@ -58,14 +58,14 @@
         <xc:contributor>Hubbard, Joseph Stillman, 1823-1863, former owner.</xc:contributor>
         <xc:contributor>American Institute of Physics.</xc:contributor>
         <xc:contributor>American Astronomical Society.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/128</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/129</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/127</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/128</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:43</predecessor>
@@ -73,7 +73,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/127">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/128">
         <xc:recordID type="LCCN">sf 78000620 //r98</xc:recordID>
         <xc:identifier type="ISSN">0004-6256</xc:identifier>
         <xc:identifier type="CODEN">ANJOAA</xc:identifier>
@@ -98,7 +98,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1849-</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/129</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/130</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

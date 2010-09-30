@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/273</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/274</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:74</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/273">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/274">
         <rdvocab:titleOfWork>Atlas &amp; argus (Albany, N.Y. : Daily)</rdvocab:titleOfWork>
         <xc:spatial xsi:type="dcterms:LCSH">Albany (N.Y.)-Newspapers.</xc:spatial>
         <xc:coverage>United States-New York-Albany-Albany.</xc:coverage>
@@ -25,7 +25,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/274</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/275</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:74</predecessor>
@@ -33,21 +33,21 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/274">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/275">
         <xc:titleOfExpression>Atlas &amp; argus (Albany, N.Y. : Daily)</xc:titleOfExpression>
         <dcterms:hasFormat>Microfilm. Cleveland, Ohio : Micro Photo, Inc. 21 microfilm reels ; 35 mm.</dcterms:hasFormat>
         <dcterms:relation>Formed by the union of: Daily Albany argus; and, Albany evening atlas.</dcterms:relation>
         <dcterms:relation>Continued by: Argus (Albany, N.Y. : Daily).</dcterms:relation>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/273</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/274</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/272</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/273</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:74</predecessor>
@@ -55,7 +55,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/272">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/273">
         <xc:recordID type="OCoLC">10566490</xc:recordID>
         <xc:recordID type="NRU">2393459</xc:recordID>
         <dcterms:title>The Atlas &amp; argus</dcterms:title>
@@ -78,7 +78,7 @@
         <xc:typeSMD>Microfilm reel</xc:typeSMD>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1856-1865</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/274</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/275</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

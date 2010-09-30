@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/474</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/475</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:158</predecessor>
@@ -9,11 +9,11 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/474">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/475">
         <xc:location>MinerStack</xc:location>
         <xc:callNumber>QH205 .P895 v.7 1978</xc:callNumber>
         <xc:recordID type="NRU">573953</xc:recordID>
-        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/465</xc:manifestationHeld>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/466</xc:manifestationHeld>
       </xc:entity>
     </xc:frbr>
   </metadata>

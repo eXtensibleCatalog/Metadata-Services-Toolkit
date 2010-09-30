@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/99</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/100</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:30</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/99">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/100">
         <dcterms:subject xsi:type="dcterms:LCC">Q1</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">505</dcterms:subject>
         <rdvocab:titleOfWork>American journal of science (1880)</rdvocab:titleOfWork>
@@ -21,7 +21,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/100</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/101</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:30</predecessor>
@@ -29,19 +29,19 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/100">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/101">
         <xc:titleOfExpression>American journal of science (1880)</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:hasFormat>Microfilm. Ann Arbor, Mich. : University Microfilms. 11 microfilm reels ; 35 mm. (American periodical series, 1800-1850 ; 820-830)</dcterms:hasFormat>
         <dcterms:HasFormat dcterms:ISSN="0002-9599">American journal of science (1880)</dcterms:HasFormat>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/99</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/100</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/98</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/99</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:30</predecessor>
@@ -49,7 +49,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/98">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/99">
         <xc:recordID type="LCCN">sf 88092303</xc:recordID>
         <xc:identifier type="ISSN">0002-9599</xc:identifier>
         <xc:identifier type="CODEN">AJSCAP</xc:identifier>
@@ -72,7 +72,7 @@
         <rdvocab:numberingOfSerials>Since 1938 the numbering by series has been discontinued.</rdvocab:numberingOfSerials>
         <rdvocab:numberingOfSerials>Vols. 101-150 also numbered ser. 3, v. 1-50; Vol. 151-200 as ser. 4, Vol. 1-50; v. 201-236 as ser. 5, v. 1-36.</rdvocab:numberingOfSerials>
         <dcterms:isPartOf>American periodical series, 1800-1850 ; 820-830.</dcterms:isPartOf>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/100</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/101</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

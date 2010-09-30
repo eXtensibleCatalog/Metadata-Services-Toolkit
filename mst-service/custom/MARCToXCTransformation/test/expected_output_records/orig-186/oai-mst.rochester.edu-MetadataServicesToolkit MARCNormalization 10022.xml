@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/84</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/85</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:23</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/84">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/85">
         <dcterms:subject xsi:type="dcterms:LCC">G3721.C5</dcterms:subject>
         <xc:creator>Bennison, A. P.</xc:creator>
         <rdvocab:titleOfWork>Geological highway map of the Northeastern region:</rdvocab:titleOfWork>
@@ -24,7 +24,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/85</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/86</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:23</predecessor>
@@ -32,21 +32,21 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/85">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/86">
         <xc:titleOfExpression>Geological highway map of the Northeastern region:</xc:titleOfExpression>
         <dcterms:version>National bicentennial ed.</dcterms:version>
         <rdvocab:scale>Scale 1:1,900,800; 1 in. equals approx. 30 miles.</rdvocab:scale>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>Higginbotham, Van K.</xc:contributor>
         <xc:contributor>American Association of Petroleum Geologists.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/84</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/85</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/83</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/84</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:23</predecessor>
@@ -54,7 +54,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/83">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/84">
         <xc:recordID type="OCoLC">3741175</xc:recordID>
         <xc:recordID type="NRU">1234020</xc:recordID>
         <rdvocab:statementOfResponsibilityRelatingToTitle>Compiled by Allan P. Bennison. Cartography by Van K. Higginbotham.</rdvocab:statementOfResponsibilityRelatingToTitle>
@@ -72,7 +72,7 @@
         <dcterms:isPartOf>United States geological highway map series ; map no. 10</dcterms:isPartOf>
         <xc:typeLeader06>Cartographic material</xc:typeLeader06>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/85</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/86</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

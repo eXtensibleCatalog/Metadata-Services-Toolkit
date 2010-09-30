@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/373</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/374</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:114</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/373">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/374">
         <dcterms:subject xsi:type="dcterms:DDC">782.1</dcterms:subject>
         <rdvocab:titleOfWork>Best of the 3 tenors</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Operas-Excerpts.</xc:subject>
@@ -27,7 +27,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/374</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/375</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:114</predecessor>
@@ -35,7 +35,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/374">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/375">
         <xc:titleOfExpression>Best of the 3 tenors</xc:titleOfExpression>
         <rdvocab:performerNarratorAndOrPresenter>José Carreras, Plácido Domingo, Luciano Pavarotti, tenors ; Orchestra de maggio musicale fiorentino, Orchestra del teatro dell'opera di Roma, Los Angeles Philharmonic, Orchestre de Paris ; James Levine, Zubin Mehta, conductors.</rdvocab:performerNarratorAndOrPresenter>
         <rdvocab:placeAndDateOfCapture>Recorded live in Rome (July 7, 1990), Los Angeles (July 16, 1994), and Paris (July 10, 1998).</rdvocab:placeAndDateOfCapture>
@@ -52,14 +52,14 @@
         <xc:contributor>Los Angeles Philharmonic Orchestra.</xc:contributor>
         <xc:contributor>Orchestre de Paris.</xc:contributor>
         <rdarole:performer>Maggio musicale fiorentino. Orchestra.</rdarole:performer>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/373</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/374</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/372</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/373</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:114</predecessor>
@@ -67,7 +67,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/372">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/373">
         <xc:recordID type="LCCN">2003583369</xc:recordID>
         <xc:identifier type="UPC">028946699928</xc:identifier>
         <xc:identifier type="SoundNr">289 466 999-2</xc:identifier>
@@ -95,7 +95,7 @@
         <xc:type007>Sound recording</xc:type007>
         <xc:typeSMD>Sound disk</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/374</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/375</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

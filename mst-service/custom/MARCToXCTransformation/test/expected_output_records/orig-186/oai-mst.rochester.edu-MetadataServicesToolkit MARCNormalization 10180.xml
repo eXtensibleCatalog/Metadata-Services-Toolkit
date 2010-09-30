@@ -41,7 +41,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/529</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/15</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:181</predecessor>
@@ -49,7 +49,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/529">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/15">
         <rdvocab:plateNumber>18792-15</rdvocab:plateNumber>
         <xc:recordID type="OCoLC">14874368</xc:recordID>
         <xc:recordID type="NRU">952977</xc:recordID>

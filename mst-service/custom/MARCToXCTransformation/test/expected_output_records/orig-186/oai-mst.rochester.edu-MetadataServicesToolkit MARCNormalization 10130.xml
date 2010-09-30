@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/418</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/419</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:131</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/418">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/419">
         <xc:creator>Geological Survey (U.S.)</xc:creator>
         <rdvocab:titleOfWork>[Tonto National Forest and other adjacent Forest Service areas] :</rdvocab:titleOfWork>
         <xc:spatial xsi:type="dcterms:LCSH">Tonto National Forest (Ariz.)-Maps.</xc:spatial>
@@ -26,7 +26,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/419</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/420</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:131</predecessor>
@@ -34,21 +34,21 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/419">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/420">
         <xc:titleOfExpression>[Tonto National Forest and other adjacent Forest Service areas] :</xc:titleOfExpression>
         <dcterms:version>Rev. 2004.</dcterms:version>
         <rdvocab:scale>Scale 1:24,000 ; universal transverse Mercator proj. (W 112⁰07ʹ30ʺ--W 110⁰30ʹ00ʺ/N 34⁰30ʹ00ʺ--N 33⁰07ʹ30ʺ).</rdvocab:scale>
         <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>United States. Forest Service.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/418</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/419</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/417</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/418</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:131</predecessor>
@@ -56,7 +56,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/417">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/418">
         <xc:recordID type="OCoLC">213487976</xc:recordID>
         <xc:recordID type="NRU">3810683</xc:recordID>
         <xc:identifier type="GPOItem">0619-M-03</xc:identifier>
@@ -84,7 +84,7 @@
         <xc:type007>Map</xc:type007>
         <xc:typeSMD>Map</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/419</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/420</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

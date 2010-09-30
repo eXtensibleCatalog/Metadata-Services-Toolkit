@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/196</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/197</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:53</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/196">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/197">
         <rdarole:author>Friedman, Thomas L.</rdarole:author>
         <rdvocab:titleOfWork>Orchestra music. Selections</rdvocab:titleOfWork>
         <rdvocab:dissertationOrThesisInformation>Thesis.</rdvocab:dissertationOrThesisInformation>
@@ -26,7 +26,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/197</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/198</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:53</predecessor>
@@ -34,7 +34,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/197">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/198">
         <xc:titleOfExpression>Orchestra music. Selections</xc:titleOfExpression>
         <dcterms:isFormatOf>Originally published: New York : Harper &amp; Row, 1972, 1st ed.</dcterms:isFormatOf>
         <dcterms:contributor>U.S. Energy Information Administration, Coal Statistics Division</dcterms:contributor>
@@ -44,14 +44,14 @@
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>International Conference on Neoplatonism and Gnosticism (1984 : University of Oklahoma)</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/196</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/197</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/198</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/199</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:53</predecessor>
@@ -59,7 +59,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/198">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/199">
         <rdvocab:dissertationOrThesisInformation>Thesis.</rdvocab:dissertationOrThesisInformation>
         <dcterms:temporal>Interim report; Jan.-July 1977.</dcterms:temporal>
         <dcterms:spatial>County-level data from four Northwestern states.</dcterms:spatial>
@@ -76,7 +76,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/199</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/200</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:53</predecessor>
@@ -84,7 +84,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/199">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/200">
         <dcterms:isFormatOf>Originally published: New York : Harper &amp; Row, 1972, 1st ed.</dcterms:isFormatOf>
         <dcterms:contributor>U.S. Energy Information Administration, Coal Statistics Division</dcterms:contributor>
         <dcterms:isVersionOf>Mashinovedenie</dcterms:isVersionOf>
@@ -94,14 +94,14 @@
         <dcterms:language>English</dcterms:language>
         <xc:contributor>International Conference on Neoplatonism and Gnosticism (1984 : University of Oklahoma)</xc:contributor>
         <rdvocab:titleOfExpression>National electrical code (1993) </rdvocab:titleOfExpression>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/198</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/199</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/200</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/201</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:53</predecessor>
@@ -109,7 +109,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/200">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/201">
         <rdvocab:dissertationOrThesisInformation>Thesis.</rdvocab:dissertationOrThesisInformation>
         <dcterms:temporal>Interim report; Jan.-July 1977.</dcterms:temporal>
         <dcterms:spatial>County-level data from four Northwestern states.</dcterms:spatial>
@@ -126,7 +126,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/201</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/202</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:53</predecessor>
@@ -134,7 +134,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/201">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/202">
         <dcterms:isFormatOf>Originally published: New York : Harper &amp; Row, 1972, 1st ed.</dcterms:isFormatOf>
         <dcterms:contributor>U.S. Energy Information Administration, Coal Statistics Division</dcterms:contributor>
         <dcterms:isVersionOf>Mashinovedenie</dcterms:isVersionOf>
@@ -144,14 +144,14 @@
         <dcterms:language>English</dcterms:language>
         <xc:contributor>International Conference on Neoplatonism and Gnosticism (1984 : University of Oklahoma)</xc:contributor>
         <rdvocab:titleOfExpression>Report. 1991. </rdvocab:titleOfExpression>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/200</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/201</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/195</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/196</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:53</predecessor>
@@ -159,7 +159,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/195">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/196">
         <xc:identifier type="SICI">8756-2324(198603/04)65:21.4QTP;1-E</xc:identifier>
         <xc:identifier type="ISMN">M011234564</xc:identifier>
         <xc:identifier type="IAN">9780449906200</xc:identifier>
@@ -175,27 +175,9 @@
         <xc:typeLeader06>Language material</xc:typeLeader06>
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/197</xc:expressionManifested>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/199</xc:expressionManifested>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/201</xc:expressionManifested>
-      </xc:entity>
-    </xc:frbr>
-  </metadata>
-</record>
-<record>
-  <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/202</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:53</predecessor>
-    </predecessors>
-  </header>
-  <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/202">
-        <xc:location>RheesRare</xc:location>
-        <xc:callNumber>F130.2.P74 R63 2006</xc:callNumber>
-        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/195</xc:manifestationHeld>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/198</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/200</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/202</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>
@@ -213,7 +195,25 @@
       <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/203">
         <xc:location>ArtMusicRR</xc:location>
         <xc:callNumber>RCD 2345</xc:callNumber>
-        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/195</xc:manifestationHeld>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/196</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/204</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:53</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/204">
+        <xc:location>RheesRare</xc:location>
+        <xc:callNumber>F130.2.P74 R63 2006</xc:callNumber>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/196</xc:manifestationHeld>
       </xc:entity>
     </xc:frbr>
   </metadata>

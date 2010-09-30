@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/110</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/111</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:34</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/110">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/111">
         <xc:location>NewsMicro</xc:location>
         <xc:callNumber>FILM .Una191 reel 1075-1087</xc:callNumber>
         <xc:textualHoldings type="Basic Bibliographic Unit">Vol. 40, no. 1 (Jan. 7, 1882)-v. 87, no. 27 (Dec. 30, 1905)</xc:textualHoldings>
@@ -27,7 +27,7 @@
         <xc:textualHoldings type="Basic Bibliographic Unit">v. 83-85 (July 4, 1903-Dec. 31, 1904) = reel 1086</xc:textualHoldings>
         <xc:textualHoldings type="Basic Bibliographic Unit">v. 86-87 (Jan. 7-Dec. 30, 1905) = reel 1087</xc:textualHoldings>
         <xc:recordID type="NRU">1441021</xc:recordID>
-        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/88</xc:manifestationHeld>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/89</xc:manifestationHeld>
       </xc:entity>
     </xc:frbr>
   </metadata>

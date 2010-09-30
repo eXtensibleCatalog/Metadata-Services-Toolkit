@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/382</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/383</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:117</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/382">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/383">
         <dcterms:subject xsi:type="dcterms:LCC">PL857.I793</dcterms:subject>
         <rdarole:author>Nishimura, Toshiyuki, 1930-2007.</rdarole:author>
         <rdarole:author>西村寿行, 1930-</rdarole:author>
@@ -21,7 +21,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/383</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/384</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:117</predecessor>
@@ -29,18 +29,18 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/383">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/384">
         <xc:titleOfExpression>Shōkōgun :</xc:titleOfExpression>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>Japanese</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/382</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/383</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/381</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/382</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:117</predecessor>
@@ -48,7 +48,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/381">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/382">
         <xc:recordID type="OCoLC">47830396</xc:recordID>
         <xc:recordID type="NRU">3527545</xc:recordID>
         <rdvocab:statementOfResponsibilityRelatingToTitle>Nishimura Jukō.</rdvocab:statementOfResponsibilityRelatingToTitle>
@@ -71,7 +71,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">4334704964</dcterms:identifier>
         <dcterms:identifier type="ISBN">9784334704964</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/383</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/384</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

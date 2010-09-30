@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/408</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/409</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:127</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/408">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/409">
         <dcterms:subject xsi:type="dcterms:LCC">PS3553</dcterms:subject>
         <rdarole:author>Cussler, Clive.</rdarole:author>
         <rdvocab:titleOfWork>Raise the Titanic!</rdvocab:titleOfWork>
@@ -25,7 +25,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/409</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/410</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:127</predecessor>
@@ -33,19 +33,19 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/409">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/410">
         <xc:titleOfExpression>Raise the Titanic! Japanese</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>Japanese</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/408</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/409</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/407</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/408</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:127</predecessor>
@@ -53,7 +53,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/407">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/408">
         <xc:recordID type="OCoLC">32818412</xc:recordID>
         <xc:recordID type="NRU">3724341</xc:recordID>
         <rdvocab:statementOfResponsibilityRelatingToTitle>Kuraibu Kassurā ; Nakayama Yoshiyuki yaku.</rdvocab:statementOfResponsibilityRelatingToTitle>
@@ -70,7 +70,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">4102170022</dcterms:identifier>
         <dcterms:identifier type="ISBN">9784102170021</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/409</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/410</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

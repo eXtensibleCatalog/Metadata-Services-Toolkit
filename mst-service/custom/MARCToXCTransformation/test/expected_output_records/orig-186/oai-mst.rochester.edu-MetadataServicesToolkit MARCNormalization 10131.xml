@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/421</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/422</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:132</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/421">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/422">
         <dcterms:subject xsi:type="dcterms:LCC">BX4700.C567</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">271/.9</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">B</dcterms:subject>
@@ -26,7 +26,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/422</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/423</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:132</predecessor>
@@ -34,21 +34,21 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/422">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/423">
         <xc:titleOfExpression>Life of Christina of Markyate /</xc:titleOfExpression>
         <rdvocab:illustrationContent>map ;</rdvocab:illustrationContent>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>Fanous, Samuel, 1962-</xc:contributor>
         <xc:contributor>Leyser, Henrietta.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/421</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/422</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/420</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/421</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:132</predecessor>
@@ -56,7 +56,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/420">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/421">
         <xc:recordID type="LCCN">2007035102</xc:recordID>
         <xc:identifier type="bnb">GBA785807</xc:identifier>
         <xc:identifier type="Uk">014199404</xc:identifier>
@@ -79,7 +79,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">9780192806772</dcterms:identifier>
         <dcterms:identifier type="ISBN">0192806777</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/422</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/423</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

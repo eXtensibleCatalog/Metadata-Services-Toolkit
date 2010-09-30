@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/292</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/293</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:81</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/292">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/293">
         <dcterms:subject xsi:type="dcterms:LCC">RS53</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:NLM">QV 772 N2763</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">615/.1/0285425</dcterms:subject>
@@ -36,7 +36,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/293</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/294</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:81</predecessor>
@@ -44,7 +44,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/293">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/294">
         <xc:titleOfExpression>National drug code directory /</xc:titleOfExpression>
         <dcterms:hasFormat>Some issues also available via Internet from the FDA web site. Address as of 8/29/99: http://www.fda.gov/cder/ndc/index.htm; current access available via PURL.</dcterms:hasFormat>
         <dcterms:description>Issues for 1971-1972 prepared by: the Office of Scientific Coordination, Bureau of Drugs, Food and Drug Administration; 1976-1985 by: the Drug Listing Branch, Food and Drug Administration; 1995-   by: Product Information Management Branch, Division of Management and Budget, Center for Drug Evaluation and Research, Food and Drug Administration.</dcterms:description>
@@ -55,14 +55,14 @@
         <xc:contributor>United States. Food and Drug Administration. Bureau of Drugs. Office of Scientific Coordination.</xc:contributor>
         <xc:contributor>United States. Food and Drug Administration. Drug Listing Branch.</xc:contributor>
         <xc:contributor>Center for Drug Evaluation and Research (U.S.). Product Information Management Branch.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/292</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/293</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/291</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/292</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:81</predecessor>
@@ -70,7 +70,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/291">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/292">
         <xc:recordID type="LCCN">76604050</xc:recordID>
         <xc:recordID type="OCoLC">1759180</xc:recordID>
         <xc:recordID type="NRU">2516299</xc:recordID>
@@ -99,7 +99,7 @@
         <xc:typeLeader06>Language material</xc:typeLeader06>
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/293</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/294</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

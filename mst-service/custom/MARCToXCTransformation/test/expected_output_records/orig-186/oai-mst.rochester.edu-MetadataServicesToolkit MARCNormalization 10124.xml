@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/402</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/403</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:125</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/402">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/403">
         <dcterms:subject xsi:type="dcterms:LCC">PG3485.8.D77</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">891.7/3/5</dcterms:subject>
         <rdarole:author>Sadur, Nina, 1950-</rdarole:author>
@@ -22,7 +22,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/403</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/404</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:125</predecessor>
@@ -30,18 +30,18 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/403">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/404">
         <xc:titleOfExpression>Igolka li︠u︡bvi :</xc:titleOfExpression>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>Russian</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/402</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/403</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/401</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/402</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:125</predecessor>
@@ -49,7 +49,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/401">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/402">
         <xc:recordID type="OCoLC">175286707</xc:recordID>
         <xc:recordID type="NRU">3722562</xc:recordID>
         <rdvocab:statementOfResponsibilityRelatingToTitle>N. Sadur.</rdvocab:statementOfResponsibilityRelatingToTitle>
@@ -70,7 +70,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">9785969704084</dcterms:identifier>
         <dcterms:identifier type="ISBN">5969704083</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/403</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/404</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

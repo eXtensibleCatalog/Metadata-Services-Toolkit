@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/437</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/438</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:138</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/437">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/438">
         <rdvocab:titleOfWork>Hartford courant</rdvocab:titleOfWork>
         <xc:spatial xsi:type="dcterms:LCSH">Hartford (Conn.)-Newspapers.</xc:spatial>
         <xc:coverage>United States-Connecticut-Hartford</xc:coverage>
@@ -23,7 +23,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/438</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/439</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:138</predecessor>
@@ -31,20 +31,20 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/438">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/439">
         <xc:titleOfExpression>Hartford courant</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill.</rdvocab:illustrationContent>
         <dcterms:hasFormat>Microfilm. Sanford, N.C., Microfilming Corp. of America, n.d. 130 reels. 35 mm.</dcterms:hasFormat>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/437</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/438</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/436</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/437</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:138</predecessor>
@@ -52,7 +52,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/436">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/437">
         <xc:recordID type="OCoLC">6777408</xc:recordID>
         <xc:recordID type="NRU">4385</xc:recordID>
         <dcterms:title>Hartford courant</dcterms:title>
@@ -68,7 +68,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1837-</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/438</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/439</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

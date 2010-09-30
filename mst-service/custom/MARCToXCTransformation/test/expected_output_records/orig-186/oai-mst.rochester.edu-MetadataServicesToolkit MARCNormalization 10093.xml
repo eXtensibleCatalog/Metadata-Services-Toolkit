@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/321</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/322</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:94</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/321">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/322">
         <rdvocab:titleOfWork>Illegal alien resident population</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Illegal aliens-United States-Statistics.</xc:subject>
         <xc:subject xsi:type="dcterms:LCSH">Immigrants-United States-Statistics.</xc:subject>
@@ -24,7 +24,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/322</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/323</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:94</predecessor>
@@ -32,7 +32,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/322">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/323">
         <xc:titleOfExpression>Illegal alien resident population</xc:titleOfExpression>
         <dcterms:version>Updated Dec. 2001.</dcterms:version>
         <dcterms:requires>System requirements: Adobe Acrobat Reader.</dcterms:requires>
@@ -40,14 +40,14 @@
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>United States. Immigration and Naturalization Service.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/321</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/322</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/320</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/321</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:94</predecessor>
@@ -55,7 +55,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/320">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/321">
         <xc:recordID type="OCoLC">49315959</xc:recordID>
         <xc:recordID type="NRU">2767993</xc:recordID>
         <xc:identifier type="GPOItem">0725 (online)</xc:identifier>
@@ -72,7 +72,7 @@
         <xc:typeLeader06>Computer file</xc:typeLeader06>
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/322</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/323</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/214</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/215</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:61</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/214">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/215">
         <dcterms:subject xsi:type="dcterms:LCC">ML159.B5</dcterms:subject>
         <rdarole:author>Vischer, Dora Christiane.</rdarole:author>
         <rdvocab:titleOfWork>Musikgeschichtliche.</rdvocab:titleOfWork>
@@ -22,7 +22,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/215</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/216</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:61</predecessor>
@@ -30,18 +30,18 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/215">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/216">
         <xc:titleOfExpression>Musikgeschichtliche.</xc:titleOfExpression>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>German</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/214</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/215</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/213</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/214</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:61</predecessor>
@@ -49,7 +49,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/213">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/214">
         <xc:recordID type="LCCN">49052183</xc:recordID>
         <xc:recordID type="OCoLC">564693</xc:recordID>
         <xc:recordID type="NRU">18206</xc:recordID>
@@ -67,7 +67,7 @@
         <xc:typeLeader06>Language material</xc:typeLeader06>
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/215</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/216</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

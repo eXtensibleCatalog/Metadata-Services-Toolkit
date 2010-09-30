@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/264</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/265</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:71</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/264">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/265">
         <rdvocab:titleOfWork>County business patterns, Georgia.</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Industrial statistics-Georgia-Periodicals.</xc:subject>
         <dcterms:replaces>County business patterns. Pt. 6B, South Atlantic states, Florida, Georgia, North Carolina, South Carolina</dcterms:replaces>
@@ -23,7 +23,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/265</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/266</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:71</predecessor>
@@ -31,7 +31,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/265">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/266">
         <xc:titleOfExpression>County business patterns, Georgia.</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:hasFormat>Some issues also available via Internet from the Census Bureau web site. Address as of 08/04/00: http://www.census.gov/prod/www/abs/cbptotal.html; current access available via PURL.</dcterms:hasFormat>
@@ -41,14 +41,14 @@
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>United States. Bureau of the Census.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/264</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/265</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/263</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/264</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:71</predecessor>
@@ -56,7 +56,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/263">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/264">
         <xc:recordID type="LCCN">sn 87042357</xc:recordID>
         <xc:recordID type="OCoLC">7537123</xc:recordID>
         <xc:recordID type="NRU">2257790</xc:recordID>
@@ -79,7 +79,7 @@
         <xc:typeSMD>Remote</xc:typeSMD>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1964-</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/265</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/266</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

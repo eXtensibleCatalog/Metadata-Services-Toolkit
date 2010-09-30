@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/22</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/23</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:9</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/22">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/23">
         <dcterms:subject xsi:type="dcterms:LCC">BX3703</dcterms:subject>
         <rdarole:author>Jesuits.</rdarole:author>
         <rdvocab:titleOfWork>Decreta congregationum.</rdvocab:titleOfWork>
@@ -21,7 +21,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/23</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/24</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:9</predecessor>
@@ -29,19 +29,19 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/23">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/24">
         <xc:titleOfExpression>Decreta congregationum. English</xc:titleOfExpression>
         <dcterms:version>[New ed.]</dcterms:version>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/22</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/23</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/21</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/22</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:9</predecessor>
@@ -49,7 +49,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/21">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/22">
         <xc:recordID type="OCoLC">8492230</xc:recordID>
         <xc:recordID type="NRU">1120580</xc:recordID>
         <dcterms:title>Statutes on poverty and related matters : revised by mandate of the 32nd General Congregation and promulgated by Very Reverend Father General Pedro Arrupe on September 8, 1976, from the generalate of the Society of Jesus, Rome.</dcterms:title>
@@ -65,7 +65,7 @@
         <xc:typeLeader06>Language material</xc:typeLeader06>
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/23</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/24</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

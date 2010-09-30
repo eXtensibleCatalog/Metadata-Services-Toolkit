@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/125</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/126</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:42</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/125">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/126">
         <rdvocab:titleOfWork>New York times.</rdvocab:titleOfWork>
         <xc:spatial xsi:type="dcterms:LCSH">New York (N.Y.)-Newspapers.</xc:spatial>
         <xc:spatial xsi:type="dcterms:LCSH">New York County (N.Y.)-Newspapers.</xc:spatial>
@@ -26,7 +26,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/126</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/127</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:42</predecessor>
@@ -34,7 +34,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/126">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/127">
         <xc:titleOfExpression>New York times.</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:isReferencedBy dcterms:ISSN="0006-3053">Biography index</dcterms:isReferencedBy>
@@ -58,14 +58,14 @@
         <dcterms:relation>Little times</dcterms:relation>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/125</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/126</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/124</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/125</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:42</predecessor>
@@ -73,7 +73,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/124">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/125">
         <xc:recordID type="LCCN">sn 78004456</xc:recordID>
         <xc:identifier type="ISSN">0362-4331</xc:identifier>
         <xc:identifier type="CODEN">NYTIAO</xc:identifier>
@@ -96,7 +96,7 @@
         <xc:typeLeader06>Language material</xc:typeLeader06>
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/126</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/127</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

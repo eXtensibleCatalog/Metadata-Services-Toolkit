@@ -1,24 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/20</identifier>
-    <datestamp />
-    <predecessors />
-  </header>
-  <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/20">
-        <xc:location>RheesStack</xc:location>
-        <xc:callNumber>D16.15 .O83 1995</xc:callNumber>
-        <xc:recordID type="NRU">108120</xc:recordID>
-        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/19</xc:manifestationHeld>
-      </xc:entity>
-    </xc:frbr>
-  </metadata>
-</record>
-<record>
-  <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/501</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/502</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:170</predecessor>
@@ -26,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/501">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/502">
         <dcterms:subject xsi:type="dcterms:LCC">D16.15</dcterms:subject>
         <rdarole:author>Osborne, Peter, 1958-</rdarole:author>
         <rdvocab:titleOfWork>Politics of time :</rdvocab:titleOfWork>
@@ -42,7 +25,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/502</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/503</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:170</predecessor>
@@ -50,19 +33,19 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/502">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/503">
         <xc:titleOfExpression>Politics of time :</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/501</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/502</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/19</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/20</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:170</predecessor>
@@ -70,7 +53,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/19">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/20">
         <xc:recordID type="LCCN">95030097</xc:recordID>
         <xc:recordID type="OCoLC">32778715</xc:recordID>
         <xc:recordID type="NRU">84562</xc:recordID>
@@ -90,7 +73,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0860914828</dcterms:identifier>
         <dcterms:identifier type="ISBN">0860916529</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/502</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/503</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

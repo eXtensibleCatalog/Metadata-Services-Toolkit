@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/289</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/290</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:80</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/289">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/290">
         <rdvocab:titleOfWork>Coltrane for lovers</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Jazz-1961-1970.</xc:subject>
         <xc:temporal xsi:type="dcterms:LCSH">1961-1970.</xc:temporal>
@@ -20,7 +20,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/290</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/291</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:80</predecessor>
@@ -28,7 +28,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/290">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/291">
         <rdarole:performer>Coltrane, John, 1926-1967.</rdarole:performer>
         <xc:titleOfExpression>Coltrane for lovers</xc:titleOfExpression>
         <rdvocab:artisticAndOrTechnicalCredits>Compiled and produced by Richard Seidel ; production managed by Bryan Koniarz ; production and research coordinated by Carlos Kase ; original recordings produced by Bob Thiele.</rdvocab:artisticAndOrTechnicalCredits>
@@ -45,14 +45,14 @@
         <rdarole:performer>Haynes, Roy.</rdarole:performer>
         <rdarole:performer>Woodyard, Sam, 1925-1988</rdarole:performer>
         <rdarole:performer>Hartman, Johnny.</rdarole:performer>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/289</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/290</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/288</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/289</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:80</predecessor>
@@ -60,7 +60,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/288">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/289">
         <xc:identifier type="UPC">200956070000</xc:identifier>
         <xc:identifier type="SoundNr">P2-49361</xc:identifier>
         <xc:recordID type="OCoLC">53015834</xc:recordID>
@@ -80,7 +80,7 @@
         <xc:type007>Sound recording</xc:type007>
         <xc:typeSMD>Sound disk</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/290</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/291</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

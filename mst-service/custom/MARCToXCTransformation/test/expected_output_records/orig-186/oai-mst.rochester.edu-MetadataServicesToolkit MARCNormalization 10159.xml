@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/479</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/480</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:160</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/479">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/480">
         <dcterms:subject xsi:type="dcterms:LCC">ML95.2</dcterms:subject>
         <rdarole:author>Vogan, Wayne Hamilton.</rdarole:author>
         <rdvocab:titleOfWork>Rare union of literature with music :</rdvocab:titleOfWork>
@@ -27,7 +27,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/480</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/481</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:160</predecessor>
@@ -35,18 +35,18 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/480">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/481">
         <xc:titleOfExpression>Rare union of literature with music :</xc:titleOfExpression>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/479</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/480</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/478</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/479</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:160</predecessor>
@@ -54,7 +54,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/478">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/479">
         <xc:recordID type="OCoLC">5764222</xc:recordID>
         <xc:recordID type="NRU">589584</xc:recordID>
         <rdvocab:statementOfResponsibilityRelatingToTitle>by Wayne Hamilton Vogan.</rdvocab:statementOfResponsibilityRelatingToTitle>
@@ -68,7 +68,7 @@
         <xc:typeLeader06>Language material</xc:typeLeader06>
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/480</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/481</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

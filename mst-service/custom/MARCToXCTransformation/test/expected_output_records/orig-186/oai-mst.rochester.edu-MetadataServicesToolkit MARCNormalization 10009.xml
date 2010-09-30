@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/25</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/26</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:10</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/25">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/26">
         <dcterms:subject xsi:type="dcterms:LCC">HF5549</dcterms:subject>
         <rdvocab:titleOfWork>Studies in personnel policy.</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Personnel management.</xc:subject>
@@ -21,7 +21,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/26</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/27</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:10</predecessor>
@@ -29,7 +29,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/26">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/27">
         <xc:titleOfExpression>Studies in personnel policy.</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill., tables</rdvocab:illustrationContent>
         <dcterms:relation>No. 15-28 supplement to Conference Board management record.</dcterms:relation>
@@ -37,14 +37,14 @@
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>National Industrial Conference Board.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/25</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/26</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/24</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/25</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:10</predecessor>
@@ -52,7 +52,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/24">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/25">
         <xc:recordID type="LCCN">38005696</xc:recordID>
         <xc:identifier type="ISSN">0081-8356</xc:identifier>
         <xc:recordID type="OCoLC">1240637</xc:recordID>
@@ -74,7 +74,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1937-1970</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/26</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/27</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

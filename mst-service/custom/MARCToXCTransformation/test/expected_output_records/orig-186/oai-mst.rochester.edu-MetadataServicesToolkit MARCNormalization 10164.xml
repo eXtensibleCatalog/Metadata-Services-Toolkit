@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/490</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/491</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:165</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/490">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/491">
         <xc:location>MinerSer</xc:location>
         <xc:callNumber>Serial</xc:callNumber>
         <xc:textualHoldings type="Basic Bibliographic Unit">v. 69 (1929)-</xc:textualHoldings>
@@ -35,7 +35,7 @@
         <xc:textualHoldings type="Basic Bibliographic Unit">v. 322, no. 5904 (Nov. 14 2008)</xc:textualHoldings>
         <xc:textualHoldings type="Basic Bibliographic Unit">v. 322, no. 5905 (Nov. 21 2008)</xc:textualHoldings>
         <xc:recordID type="NRU">807</xc:recordID>
-        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/450</xc:manifestationHeld>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/451</xc:manifestationHeld>
       </xc:entity>
     </xc:frbr>
   </metadata>

@@ -1,23 +1,6 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/338</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:101</predecessor>
-    </predecessors>
-  </header>
-  <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/338">
-        <rdvocab:titleOfWork>Bulletin (New York State Museum)</rdvocab:titleOfWork>
-        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
-      </xc:entity>
-    </xc:frbr>
-  </metadata>
-</record>
-<record>
-  <header status="active">
     <identifier>oai:mst.rochester.edu:marctoxctransformation/339</identifier>
     <datestamp />
     <predecessors>
@@ -26,19 +9,16 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/339">
-        <xc:titleOfExpression>Bulletin (New York State Museum)</xc:titleOfExpression>
-        <dcterms:hasVersion>http://purl.org/net/nysl/nysdocs/bulletin</dcterms:hasVersion>
-        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
-        <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/338</xc:workExpressed>
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/339">
+        <rdvocab:titleOfWork>Bulletin (New York State Museum)</rdvocab:titleOfWork>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/337</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/340</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:101</predecessor>
@@ -46,7 +26,27 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/337">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/340">
+        <xc:titleOfExpression>Bulletin (New York State Museum)</xc:titleOfExpression>
+        <dcterms:hasVersion>http://purl.org/net/nysl/nysdocs/bulletin</dcterms:hasVersion>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/339</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/338</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:101</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/338">
         <xc:recordID type="NRU">29692</xc:recordID>
         <dcterms:title>Bulletin of the New York State Museum.</dcterms:title>
         <dcterms:alternative>Bulletin of the New York State Museum, no.1 (1887)-no.46 (1901)</dcterms:alternative>
@@ -67,7 +67,7 @@
         <xc:typeSMD>Remote</xc:typeSMD>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1887-</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/339</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/340</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>
