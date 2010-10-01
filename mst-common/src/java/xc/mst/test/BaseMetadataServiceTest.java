@@ -24,7 +24,7 @@ public class BaseMetadataServiceTest extends BaseTest {
 	protected JdbcTemplate jdbcTemplate = null;
 	
 	protected String getServiceName() {
-		return System.getenv("service.name");
+		return getUtil().normalizeName(System.getenv("service.name"));
 	}
 	
 	protected MetadataService getMetadataService() {

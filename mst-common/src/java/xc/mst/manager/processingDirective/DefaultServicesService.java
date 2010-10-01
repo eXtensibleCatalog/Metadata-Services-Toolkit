@@ -273,14 +273,16 @@ public class DefaultServicesService extends BaseService
     	
     	try
     	{
-    		props = new PropertiesConfiguration(MSTConfiguration.getUrlPath()+"/services/"+name+
+    		props = new PropertiesConfiguration(MSTConfiguration.getUrlPath()+"/services/"+getUtil().normalizeName(name)+
     				"/META-INF/classes/xc/mst/services/custom.properties");
 
     		String logFileName = getLogDAO().getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 
     		// The version of the service, which must appear in the second line of the configuration file
     		String version = props.getString("service.version");
-    		if (!name.equals(props.getString("service.name"))) {
+    		if (!name.equals(getUtil().normalizeName(props.getString("service.name")))) {
+    			LOG.error("name: "+name);
+    			LOG.error("props.getString(service.name): "+getUtil().normalizeName("service.name"));
     			throw new RuntimeException("service folder name must match the name in the properties file.");
     		}
     		

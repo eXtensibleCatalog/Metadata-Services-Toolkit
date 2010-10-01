@@ -10,7 +10,18 @@
 
 	<import file="build-custom.xml" />
 	<property file="custom.properties" />
+    <scriptdef name="normalize" language="javascript">
+        <attribute name="property"/>
+        <attribute name="value"/>
+        project.setNewProperty(attributes.get("property"),
+			attributes.get("value").toLowerCase().replaceAll(" ", "_"));
+    </scriptdef>
+    <normalize property="normalized.service.name" value="${service.name}"/>
 	<property file="build.properties" />
+
+	<target name="echo.normalized.service.name"> 
+		<echo>normalized.service.name: ${normalized.service.name}</echo>
+	</target>
 
 	<target name="init">
 		<mkdir dir="${build.test.classes}" />
@@ -219,19 +230,19 @@
 	<target name="jar" depends="copy-resources, jar.nodep" />
 
 	<target name="jar.nodep" depends="copy-resources.nodep">
-		<jar destfile="${build.dir}/${service.name}-${service.version}.jar"
+		<jar destfile="${build.dir}/${normalized.service.name}-${service.version}.jar"
 			basedir="${build.classes}" />
 	</target>
 
 	<target name="zip" depends="jar, zip.nodep" />
 	<target name="zip.nodep" depends="jar.nodep">
-		<zip destfile="${build.dir}/${service.name}-${service.version}.zip">
-			<zipfileset  dir="${build.zip}" prefix="${service.name}"/>
+		<zip destfile="${build.dir}/${normalized.service.name}-${service.version}.zip">
+			<zipfileset  dir="${build.zip}" prefix="${normalized.service.name}"/>
 		</zip>
 	</target>
 
 	<target name="zip-dev-env">
-		<zip destfile="${build.dir}/${service.name}-${service.version}-dev-env.zip">
+		<zip destfile="${build.dir}/${normalized.service.name}-${service.version}-dev-env.zip">
 			<zipfileset  dir="." >
 				<exclude name="build" />
 				<exclude name="build/**/*" />
@@ -303,7 +314,7 @@
 
 		<testng classpathref="classpath.test.run" outputdir="${build.test}"
 				workingDir="${build.dir}">
-			<env key="service.name" value="${service.name}"/>
+			<env key="service.name" value="${normalized.service.name}"/>
 			<env key="service.test" value="${test}"/>
 			<jvmarg value="-server" />
 			<jvmarg value="-Xms700M" />
@@ -317,7 +328,7 @@
 				classname="xc.mst.services.test.MetadataServiceSpecificTest"
 				fork="true" 
 				dir="${build.dir}" >
-			<env key="service.name" value="${service.name}"/>
+			<env key="service.name" value="${normalized.service.name}"/>
 			<env key="service.test" value="${test}"/>
 			<env key="skip.mst.install" value="${skip.mst.install}"/>
 			<jvmarg value="-server" />
@@ -336,7 +347,7 @@
 				classname="xc.mst.services.test.MetadataServiceSpecificTest"
 				fork="true" 
 				dir="${build.dir}" >
-			<env key="service.name" value="${service.name}"/>
+			<env key="service.name" value="${normalized.service.name}"/>
 		</java>
 	</target>
 

@@ -32,7 +32,8 @@
 
 	<bean id="MetadataServiceDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="${DatabaseUrl}/${service.name}?useUnicode=yes&amp;characterEncoding=UTF-8"/>
+		<!--  normalized.service.name is a normalized version of service.name - see MSTConfiguration.java -->
+		<property name="url" value="${DatabaseUrl}/${normalized.service.name}?useUnicode=yes&amp;characterEncoding=UTF-8"/>
 		<property name="username" value="${DatabaseUsername}"/>
 		<property name="password" value="${DatabasePassword}"/>
 		<property name="maxIdle" value="10" />

@@ -102,7 +102,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 
 	public void setName(String name) {
-		this.name = name.toLowerCase().replaceAll(" ", "_");
+		this.name = getUtil().normalizeName(name);
 	}
 	
 	public int getSize() {

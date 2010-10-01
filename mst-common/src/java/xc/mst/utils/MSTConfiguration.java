@@ -78,14 +78,26 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	protected boolean resolvePlaceholderVisited = false;
 	@Override
 	protected String resolvePlaceholder(String placeholder, Properties props, int systemPropertiesMode) {
+		if ("normalized.service.name".equals(placeholder)) {
+			return getUtil().normalizeName(resolvePlaceholder("service.name", props, systemPropertiesMode));
+		}
 		String val = super.resolvePlaceholder(placeholder, props, systemPropertiesMode);
+		if ("service.name".equals(placeholder)) {
+			val = getUtil().normalizeName(val);
+		}
 		if (!resolvePlaceholderVisited) {
 			resolvePlaceholderVisited = true;
 			for (Object key : props.keySet()) {
 				String keyStr = key.toString();
 				String pval = props.getProperty(keyStr);
-				properties.put(keyStr, pval);
-				log.info("key: "+key+" val: "+pval);
+				if ("service.name".equals(keyStr)) {
+					properties.put("normalized.service.name", getUtil().normalizeName(pval));
+					properties.put(keyStr, getUtil().normalizeName(pval));
+					log.info("key: (normalized.)service.name val: "+getUtil().normalizeName(pval));	
+				} else {
+					properties.put(keyStr, pval);
+					log.info("key: "+key+" val: "+pval);
+				}
 			}
 			init2();
 		}
@@ -209,6 +221,10 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	
 	public Properties getProperties() {
 		return properties;
+	}
+	
+	protected Util getUtil() {
+		return (Util)instance.getBean("Util");
 	}
 
 	public void setProperties(Properties properties) {

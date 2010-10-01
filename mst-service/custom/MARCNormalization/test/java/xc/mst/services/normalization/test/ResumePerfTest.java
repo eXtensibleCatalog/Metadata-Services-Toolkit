@@ -21,19 +21,21 @@ import xc.mst.constants.Status;
 import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
 import xc.mst.services.GenericMetadataService;
+import xc.mst.test.BaseMetadataServiceTest;
 
-public class ResumePerfTest extends BaseTest {
+public class ResumePerfTest extends BaseMetadataServiceTest {
 	
 	private static final Logger LOG = Logger.getLogger(ResumePerfTest.class);
+	
 	
 	@Test
 	public void resumePerfTest() {
 
 		try {
-			getRepositoryDAO().deleteSchema("MARCNormalization");
-			getServicesService().addNewService("MARCNormalization");
+			getRepositoryDAO().deleteSchema(getServiceName());
+			getServicesService().addNewService(getServiceName());
 			
-			Service s = getServicesService().getServiceByName("MARCNormalization");
+			Service s = getServicesService().getServiceByName(getServiceName());
 			GenericMetadataService ms = (GenericMetadataService)s.getMetadataService();
 			
 			((DefaultRepository)ms.getRepository()).deleteAllData();
