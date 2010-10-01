@@ -31,8 +31,8 @@ import xc.mst.utils.TimingLogger;
  *
  * @author Eric Osisek
  */
-public class MarcXmlRecord
-{
+public class MarcXmlRecord {
+	
 	protected static boolean useXpath = false;
 	
 	/**
@@ -592,14 +592,17 @@ public class MarcXmlRecord
 	}
 	
 	public List<String> get014s(String indicator, String code) {
+		log.debug("get014s("+indicator+", "+code+")");
 		List<String> the014s = new ArrayList<String>();
 		for (Object dfObj : marcXml.getChildren("datafield", marcXml.getNamespace())) {
 			Element df = (Element)dfObj;
+			log.debug("df: "+df);
 			if ("014".equals(df.getAttributeValue("tag")) && (
 					indicator == null || indicator.equals(df.getAttributeValue("ind1")))) {
-				for (Object sfObj : marcXml.getChildren("subfield", marcXml.getNamespace())) {
+				for (Object sfObj : df.getChildren("subfield", marcXml.getNamespace())) {
 					Element sf = (Element)sfObj;
-					if (code == null || code.equals(df.getAttributeValue("code")))
+					log.debug("df: "+sf);
+					if (code == null || code.equals(sf.getAttributeValue("code")))
 						the014s.add(sf.getText());
 				}
 			}

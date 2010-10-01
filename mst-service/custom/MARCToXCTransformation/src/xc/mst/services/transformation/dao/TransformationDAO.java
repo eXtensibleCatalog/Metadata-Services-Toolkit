@@ -178,7 +178,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 	}
 	
 	public void persistHeldHoldings(final List<long[]> links) {
-		String sql = "insert into "+held_holdings_table+" (held_holding_id, manifestation_id) values (?,?)";
+		String sql = "insert ignore into "+held_holdings_table+" (held_holding_id, manifestation_id) values (?,?)";
 		TimingLogger.start(held_holdings_table+".insert");
         int[] updateCounts = jdbcTemplate.batchUpdate(
         		sql,

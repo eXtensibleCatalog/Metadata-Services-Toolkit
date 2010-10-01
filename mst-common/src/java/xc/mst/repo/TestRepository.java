@@ -10,6 +10,7 @@ package xc.mst.repo;
 
 import gnu.trove.TLongHashSet;
 import gnu.trove.TLongObjectHashMap;
+import gnu.trove.TLongObjectProcedure;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -369,6 +370,17 @@ public class TestRepository extends BaseService implements Repository {
 	@Override
 	public void activateRecord(long recordId) {
 		Record pr = getRecord(recordId);
+		if (pr == null) {
+			LOG.debug("record not found");
+			LOG.debug("recordId: "+recordId);
+			repo.forEachEntry(new TLongObjectProcedure() {
+				public boolean execute(long key, Object val) {
+					LOG.debug("key: "+key);
+					LOG.debug("val: "+val);
+					return true;
+				}
+			});
+		}
 		Record r = new Record();
 		r.setId(recordId);
 		r.setService(pr.getService());

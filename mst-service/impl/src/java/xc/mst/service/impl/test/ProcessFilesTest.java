@@ -43,19 +43,8 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 			LOG.debug("folderStr: "+inFolderStr);
 			LOG.debug("serviceName: "+serviceName);
 			
-			try {
-				getRepositoryDAO().deleteSchema(serviceName);
-			} catch (Throwable t) {
-			}
-			
-			ServicesService ss = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
-			
 			Map<String, String> testFailures = new HashMap<String, String>();
 	
-			Service s = ss.getServiceByName(serviceName);
-			ss.addNewService(serviceName);
-			s = ss.getServiceByName(serviceName);
-			GenericMetadataService ms = (GenericMetadataService)s.getMetadataService();
 			
 			File inputRecordsDir = new File(TestRepository.INPUT_RECORDS_DIR);
 			LOG.debug("inputRecordsDir: "+inputRecordsDir);
@@ -68,20 +57,46 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 				for (String folderStr2 : inputRecordsDir.list()) {
 					LOG.debug("folderStr2: "+folderStr2);
 					if (!folderStr2.contains(".svn")) {
-						folderStr2 = new File(folderStr2).getName();
-						folderStrs.add(folderStr2);
+						LOG.debug(TestRepository.INPUT_RECORDS_DIR+"/"+folderStr2);
+						if (new File(TestRepository.INPUT_RECORDS_DIR+"/"+folderStr2).isDirectory()) {
+							LOG.debug("adding test for: "+folderStr2);
+							folderStrs.add(folderStr2);
+						}
 					}
 				}
 			}
 
 			for (String folderStr : folderStrs) {
+				try {
+					getRepositoryDAO().deleteSchema(serviceName);
+					LOG.debug("serviceName: "+serviceName);
+					List<String> tables = getJdbcTemplate().queryForList("show tables", String.class);
+					LOG.debug("tables: "+tables);
+				} catch (Throwable t) {
+					LOG.error("moving on from: ", t);
+				}
+				
+				ServicesService ss = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
+				
+				Service s = ss.getServiceByName(serviceName);
+				ss.addNewService(serviceName);
+				s = ss.getServiceByName(serviceName);
+				GenericMetadataService ms = (GenericMetadataService)s.getMetadataService();
+				
 				long id = getRepositoryDAO().resetIdSequence(1);
 				Repository repo = (TestRepository)MSTConfiguration.getInstance().getBean("TestRepository");
+				LOG.debug("testRepo: "+repo);
+				LOG.debug("ms: "+ms);
 				repo.setName(folderStr);
 				ms.setRepository(repo);
 				LOG.debug("folderStr2: "+folderStr);
 				ms.process(repo, null, null, null);
 				getRepositoryDAO().resetIdSequence(id);
+				try {
+					ss.deleteService(ms.getService());
+				} catch (Throwable t) {
+					LOG.error("couldn't delete service", t);
+				}
 				
 				File expectedOutputFolder = new File(TestRepository.EXPECTED_OUTPUT_RECORDS+"/"+folderStr);
 				if (expectedOutputFolder.exists()) {

@@ -265,7 +265,7 @@
 
 	<target name="install-mst">
 		<delete dir="${build.mst-instances.dir}" />
-		<unzip src="${build.lib}/MST-instances-${mst-instances.version}.jar"
+		<unzip src="${build.lib}/mst-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />
 		<sql classpathref="classpath.mst"
 				driver="com.mysql.jdbc.Driver"
@@ -295,8 +295,8 @@
 		</delete>
 	</target>
 
-	<target name="test" depends="install-mst, compile.test, unzip-base-tests, test.nodep" />
-	<target name="test.nodep" depends="init.test, init.skip.mst.install, compile.test.nodep">
+	<target name="test" depends="install-mst, compile.test, test.nodep" />
+	<target name="test.nodep" depends="init.test, init.skip.mst.install, unzip-base-tests, compile.test.nodep">
 		<!--
 		<taskdef name="testng" classpathref="classpath.mst"
 			classname="org.testng.TestNGAntTask" />

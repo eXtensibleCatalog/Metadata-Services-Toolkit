@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.jdom.Document;
@@ -145,11 +146,11 @@ public class AggregateXCRecord
 	/*
 	 * BDA - These contain the ids of previously output records.
 	 */
-	protected List<Long> previousWorkIds = null;
-	protected List<Long> previousExpressionIds = null;
+	protected List<Long> previousWorkIds = new ArrayList<Long>();
+	protected List<Long> previousExpressionIds = new ArrayList<Long>();
 	protected Long previousManifestationId = null;
-	protected List<Long> previousHoldingIds = null;
-	protected List<String> referencedBibs = new ArrayList<String>();
+	protected List<Long> previousHoldingIds = new ArrayList<Long>();
+	protected Set<String> referencedBibs = new HashSet<String>();
 
 	/**
 	 * Gets the xc:recordID's type followed by its value
@@ -198,11 +199,11 @@ public class AggregateXCRecord
 		this.previousHoldingIds = previousHoldingIds;
 	}
 
-	public List<String> getReferencedBibs() {
+	public Set<String> getReferencedBibs() {
 		return referencedBibs;
 	}
 
-	public void setReferencedBibs(List<String> referencedBibs) {
+	public void setReferencedBibs(Set<String> referencedBibs) {
 		this.referencedBibs = referencedBibs;
 	}
 

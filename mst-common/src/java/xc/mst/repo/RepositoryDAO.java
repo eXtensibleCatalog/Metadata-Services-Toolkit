@@ -195,6 +195,8 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public long resetIdSequence(long id) {
+		this.nextId = -1;
+		this.nextIdInDB = -1;
 		oaiIdLock.lock();
 		long retId = this.jdbcTemplate.queryForLong("select id from oai_id_sequence");
 		this.jdbcTemplate.update("update oai_id_sequence set id=?", id);
