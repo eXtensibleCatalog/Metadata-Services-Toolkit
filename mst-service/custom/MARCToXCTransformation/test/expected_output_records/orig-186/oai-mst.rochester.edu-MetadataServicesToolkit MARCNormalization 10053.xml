@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/205</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/206</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:54</predecessor>
@@ -9,14 +9,14 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/205">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/206">
         <xc:location>SibStack</xc:location>
         <xc:callNumber>M1620 .G84n</xc:callNumber>
         <xc:recordID type="NRU">1724781</xc:recordID>
-        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/66</xc:manifestationHeld>
-        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/69</xc:manifestationHeld>
         <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/72</xc:manifestationHeld>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/69</xc:manifestationHeld>
         <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/75</xc:manifestationHeld>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/66</xc:manifestationHeld>
       </xc:entity>
     </xc:frbr>
   </metadata>

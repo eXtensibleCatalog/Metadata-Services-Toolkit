@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/271</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/272</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:73</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/271">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/272">
         <dcterms:subject xsi:type="dcterms:LCC">PN1992.8.D7</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">791.4572</dcterms:subject>
         <rdvocab:titleOfWork>Sopranos [Second season] /</rdvocab:titleOfWork>
@@ -28,7 +28,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/272</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/273</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:73</predecessor>
@@ -36,7 +36,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/272">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/273">
         <xc:titleOfExpression>Sopranos [Second season] /</xc:titleOfExpression>
         <rdvocab:artisticAndOrTechnicalCredits>Director of photography, Phil Abraham ; editor, Sidney Wolinsky.</rdvocab:artisticAndOrTechnicalCredits>
         <rdvocab:performerNarratorAndOrPresenter>James Gandolfini, Lorraine Bracco, Edie Falco, Michael Imperioli, Dominic Chianese, Vincent Pastore, Steven Van Zandt, Tony Siricio, Robert Iler, Jamie-Lynn Sigler, Drea de Matteo.</rdvocab:performerNarratorAndOrPresenter>
@@ -62,14 +62,14 @@
         <rdarole:director>Patterson, John,</rdarole:director>
         <xc:contributor>Brad Grey Television Productions.</xc:contributor>
         <xc:contributor>HBO Video (Firm)</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/271</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/272</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/270</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/271</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:73</predecessor>
@@ -77,7 +77,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/270">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/271">
         <xc:identifier type="VideoNr">99247</xc:identifier>
         <xc:recordID type="OCoLC">48448172</xc:recordID>
         <xc:recordID type="NRU">2386823</xc:recordID>
@@ -97,7 +97,7 @@
         <xc:typeSMD>Videodisc</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0783119364</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/272</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/273</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

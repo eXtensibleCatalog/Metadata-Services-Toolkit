@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/258</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/259</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:68</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/258">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/259">
         <dcterms:subject xsi:type="dcterms:LCC">MT6</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">781/.05</dcterms:subject>
         <rdvocab:titleOfWork>Indiana theory review.</rdvocab:titleOfWork>
@@ -23,7 +23,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/259</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/260</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:68</predecessor>
@@ -31,19 +31,19 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/259">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/260">
         <xc:titleOfExpression>Indiana theory review.</xc:titleOfExpression>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>Indiana University, Bloomington. School of Music. Graduate Theory Association.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/258</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/259</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/257</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/258</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:68</predecessor>
@@ -51,7 +51,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/257">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/258">
         <xc:recordID type="LCCN">80645056</xc:recordID>
         <xc:identifier type="ISSN">0271-8022</xc:identifier>
         <xc:recordID type="OCoLC">4216235</xc:recordID>
@@ -70,7 +70,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1977-</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/259</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/260</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/317</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/319</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:91</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/317">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/319">
         <dcterms:subject xsi:type="dcterms:LCC">TA455.C43</dcterms:subject>
         <rdvocab:titleOfWork>International journal of applied ceramic technology.</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Ceramic materials-Periodicals.</xc:subject>
@@ -24,7 +24,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/318</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/320</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:91</predecessor>
@@ -32,7 +32,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/318">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/320">
         <xc:titleOfExpression>International journal of applied ceramic technology.</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:isReferencedBy dcterms:ISSN="0009-2258">Chemical abstracts</dcterms:isReferencedBy>
@@ -41,14 +41,14 @@
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>American Ceramic Society.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/317</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/319</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/316</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/318</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:91</predecessor>
@@ -56,7 +56,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/316">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/318">
         <xc:recordID type="LCCN">2003215496</xc:recordID>
         <xc:identifier type="ISSN">1546-542X</xc:identifier>
         <xc:identifier type="CODEN">IJACCP</xc:identifier>
@@ -79,7 +79,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>2004-</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/318</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/320</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

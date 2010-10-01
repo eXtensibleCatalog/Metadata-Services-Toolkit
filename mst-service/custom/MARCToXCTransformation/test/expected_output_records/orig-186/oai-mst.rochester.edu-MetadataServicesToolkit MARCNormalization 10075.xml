@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/280</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/281</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:76</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/280">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/281">
         <rdvocab:titleOfWork>Blues music sampler</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Blues (Music)-Periodicals.</xc:subject>
         <xc:type type="local">Jazz/Blues/American Folk Music.</xc:type>
@@ -23,7 +23,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/281</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/282</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:76</predecessor>
@@ -31,21 +31,21 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/281">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/282">
         <xc:titleOfExpression>Blues music sampler</xc:titleOfExpression>
         <rdvocab:illustrationContent>digital ;</rdvocab:illustrationContent>
         <dcterms:relation>Issued as supplement to: Blues revue, which is shelved at: ML3520.8 .B57.</dcterms:relation>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/280</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/281</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/279</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/280</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:76</predecessor>
@@ -53,7 +53,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/279">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/280">
         <xc:recordID type="OCoLC">51071370</xc:recordID>
         <xc:recordID type="NRU">2427871</xc:recordID>
         <dcterms:title>Blues music sampler</dcterms:title>
@@ -73,7 +73,7 @@
         <xc:typeSMD>Sound disk</xc:typeSMD>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>2002-</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/281</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/282</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/268</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/269</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:72</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/268">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/269">
         <dcterms:subject xsi:type="dcterms:LCC">Q175.46</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:NLM">Q 175.46</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">509</dcterms:subject>
@@ -31,7 +31,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/269</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/270</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:72</predecessor>
@@ -39,21 +39,21 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/269">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/270">
         <xc:titleOfExpression>Science and its times :</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill., maps ;</rdvocab:illustrationContent>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>Schlager, Neil, 1966-</xc:contributor>
         <xc:contributor>Lauer, Josh.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/268</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/269</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/267</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/268</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:72</predecessor>
@@ -61,7 +61,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/267">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/268">
         <xc:recordID type="LCCN">00037542</xc:recordID>
         <xc:identifier type="DNLM">101090724</xc:identifier>
         <xc:identifier type="YBP">99804148031</xc:identifier>
@@ -88,7 +88,7 @@
         <dcterms:identifier type="ISBN">0787639389</dcterms:identifier>
         <dcterms:identifier type="ISBN">0787639397</dcterms:identifier>
         <dcterms:identifier type="ISBN">0787658170</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/269</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/270</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

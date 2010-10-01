@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/334</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/336</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:99</predecessor>
@@ -9,11 +9,11 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/334">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/336">
         <xc:location>Internet</xc:location>
         <dcterms:identifier>http://purl.access.gpo.gov/GPO/LPS18167</dcterms:identifier>
         <xc:recordID type="NRU">2941762</xc:recordID>
-        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/321</xc:manifestationHeld>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/323</xc:manifestationHeld>
       </xc:entity>
     </xc:frbr>
   </metadata>

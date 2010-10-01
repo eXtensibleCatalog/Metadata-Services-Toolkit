@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/534</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/538</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:183</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/534">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/538">
         <dcterms:subject xsi:type="dcterms:LCC">M1611.A748</dcterms:subject>
         <rdarole:composer>Arne, Thomas Augustine, 1710-1778.</rdarole:composer>
         <rdvocab:titleOfWork>Vocal music. Selections</rdvocab:titleOfWork>
@@ -22,7 +22,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/535</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/539</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:183</predecessor>
@@ -30,11 +30,11 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/535">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/539">
         <xc:titleOfExpression>Vocal music. Selections</xc:titleOfExpression>
         <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/534</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/538</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
@@ -69,7 +69,7 @@
         <xc:typeLeader06>Notated music</xc:typeLeader06>
         <xc:type007>Notated music</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/535</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/539</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
-  <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/118</identifier>
+  <header status="held">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/119</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:39</predecessor>
@@ -9,11 +9,12 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/118">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/119">
         <xc:location>NewsMicro</xc:location>
         <xc:callNumber>PRINT AC2 .E12 Ser.2 no. 6422.</xc:callNumber>
         <xc:recordID type="NRU">1472600</xc:recordID>
         <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/108</xc:manifestationHeld>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/118</xc:manifestationHeld>
       </xc:entity>
     </xc:frbr>
   </metadata>

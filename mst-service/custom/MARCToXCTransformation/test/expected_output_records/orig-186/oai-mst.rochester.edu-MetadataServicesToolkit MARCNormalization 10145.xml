@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/452</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/455</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:146</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/452">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/455">
         <dcterms:subject xsi:type="dcterms:LCC">Q1</dcterms:subject>
         <rdvocab:titleOfWork>Science (Weekly)</rdvocab:titleOfWork>
         <dcterms:abstract>Since Jan. 1901 the official proceedings and most of the papers of the American Association for the Advancement of Science have been included in Science.</dcterms:abstract>
@@ -29,7 +29,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/453</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/456</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:146</predecessor>
@@ -37,7 +37,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/453">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/456">
         <xc:titleOfExpression>Science (Weekly)</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:relation>Vols. for 1911-1913 contain: the Proceedings of the Helminthological Society of Washington, 1st-15th meeting.</dcterms:relation>
@@ -46,14 +46,14 @@
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>American Association for the Advancement of Science.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/452</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/455</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/451</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/454</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:146</predecessor>
@@ -61,7 +61,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/451">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/454">
         <xc:recordID type="LCCN">17024346 //r862</xc:recordID>
         <xc:identifier type="ISSN">0036-8075</xc:identifier>
         <xc:identifier type="CODEN">SCIEAS</xc:identifier>
@@ -83,7 +83,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1883-</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/453</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/456</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

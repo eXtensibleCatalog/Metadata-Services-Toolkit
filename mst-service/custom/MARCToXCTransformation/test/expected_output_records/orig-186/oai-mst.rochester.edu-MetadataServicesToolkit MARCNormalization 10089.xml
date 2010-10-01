@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/314</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/316</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:90</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/314">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/316">
         <dcterms:subject xsi:type="dcterms:DDC">791.45/75</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:LCC">PN1992.8.C55</dcterms:subject>
         <rdvocab:titleOfWork>Seinfeld. Seasons 1 &amp; 2</rdvocab:titleOfWork>
@@ -25,7 +25,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/315</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/317</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:90</predecessor>
@@ -33,7 +33,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/315">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/317">
         <xc:titleOfExpression>Seinfeld. Seasons 1 &amp; 2</xc:titleOfExpression>
         <rdvocab:artisticAndOrTechnicalCredits>Directors of photography, Robert Berry, Jerry D. Good ; editors, Janet Ashikaga ... [et al.] ; music, Jonathan Wolff ; costume designer, Charmaine Simmons ; production designer, Thomas Azzari.</rdvocab:artisticAndOrTechnicalCredits>
         <rdvocab:performerNarratorAndOrPresenter>Jerry Seinfeld, Julia Louis-Dreyfus, Michael Richards, Jason Alexander, Richard Fancy, Len Lesser.</rdvocab:performerNarratorAndOrPresenter>
@@ -57,14 +57,14 @@
         <xc:contributor>West-Shapiro.</xc:contributor>
         <xc:contributor>Castle Rock Entertainment (Firm)</xc:contributor>
         <xc:contributor>Columbia TriStar Home Entertainment (Firm)</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/314</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/316</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/313</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/315</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:90</predecessor>
@@ -72,7 +72,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/313">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/315">
         <xc:identifier type="UPC">043396053410</xc:identifier>
         <xc:identifier type="VideoNr">05341</xc:identifier>
         <xc:recordID type="OCoLC">56133006</xc:recordID>
@@ -96,7 +96,7 @@
         <xc:typeSMD>Videodisc</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">1404957464</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/315</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/317</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

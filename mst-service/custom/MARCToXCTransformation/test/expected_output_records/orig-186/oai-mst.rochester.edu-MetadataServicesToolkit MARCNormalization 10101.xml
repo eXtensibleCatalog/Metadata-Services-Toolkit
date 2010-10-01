@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/342</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/344</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:102</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/342">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/344">
         <dcterms:subject xsi:type="dcterms:LCC">CB417</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">820.9</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:LCC">PR468.R65</dcterms:subject>
@@ -40,6 +40,26 @@
 </record>
 <record>
   <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/345</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:102</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/345">
+        <xc:titleOfExpression>Northrop Frye's writings on the eighteenth and nineteenth centuries /</xc:titleOfExpression>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Salusinszky, Imre, 1955-</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/344</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
     <identifier>oai:mst.rochester.edu:marctoxctransformation/343</identifier>
     <datestamp />
     <predecessors>
@@ -48,27 +68,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/343">
-        <xc:titleOfExpression>Northrop Frye's writings on the eighteenth and nineteenth centuries /</xc:titleOfExpression>
-        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
-        <dcterms:language>English</dcterms:language>
-        <xc:contributor>Salusinszky, Imre, 1955-</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/342</xc:workExpressed>
-      </xc:entity>
-    </xc:frbr>
-  </metadata>
-</record>
-<record>
-  <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/341</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:102</predecessor>
-    </predecessors>
-  </header>
-  <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/341">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/343">
         <xc:identifier type="LAC">20059020687</xc:identifier>
         <xc:identifier type="YBP">99811772018</xc:identifier>
         <xc:recordID type="OCoLC">59338662</xc:recordID>
@@ -87,7 +87,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0802038247</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/343</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/345</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

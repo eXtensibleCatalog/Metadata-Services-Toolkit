@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/311</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/313</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:89</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/311">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/313">
         <dcterms:subject xsi:type="dcterms:DDC">791.43/72</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:LCC">PN1997</dcterms:subject>
         <rdvocab:titleOfWork>On the waterfront</rdvocab:titleOfWork>
@@ -30,7 +30,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/312</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/314</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:89</predecessor>
@@ -38,7 +38,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/312">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/314">
         <xc:titleOfExpression>On the waterfront</xc:titleOfExpression>
         <dcterms:version>Special ed.</dcterms:version>
         <rdvocab:artisticAndOrTechnicalCredits>Photographer, Boris Kaufman ; editor, Gene Milford ; music, Leonard Bernstein.</rdvocab:artisticAndOrTechnicalCredits>
@@ -65,14 +65,14 @@
         <xc:contributor>Bernstein, Leonard, 1918-1990.</xc:contributor>
         <xc:contributor>Columbia Pictures Corporation.</xc:contributor>
         <xc:contributor>Columbia TriStar Home Entertainment (Firm)</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/311</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/313</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/310</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/312</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:89</predecessor>
@@ -80,7 +80,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/310">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/312">
         <xc:identifier type="UPC">043396784093</xc:identifier>
         <xc:identifier type="VideoNr">78409</xc:identifier>
         <xc:recordID type="OCoLC">48239414</xc:recordID>
@@ -103,7 +103,7 @@
         <xc:typeSMD>Videodisc</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0767804279</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/312</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/314</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

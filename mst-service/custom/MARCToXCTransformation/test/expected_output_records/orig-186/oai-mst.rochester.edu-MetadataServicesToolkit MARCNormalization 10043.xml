@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/132</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/133</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:44</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/132">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/133">
         <dcterms:subject xsi:type="dcterms:LCC">HQ1106</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">305.42</dcterms:subject>
         <rdvocab:titleOfWork>Beijing Declaration ;</rdvocab:titleOfWork>
@@ -30,7 +30,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/133</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/134</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:44</predecessor>
@@ -38,21 +38,21 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/133">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/134">
         <xc:titleOfExpression>Beijing Declaration ;</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
         <xc:contributor>United Nations. Dept. of Public Information.</xc:contributor>
         <xc:contributor>World Conference on Women (4th : 1995 : Beijing, China)</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/132</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/133</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/131</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/132</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:44</predecessor>
@@ -60,7 +60,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/131">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/132">
         <xc:recordID type="LCCN">96192894</xc:recordID>
         <xc:recordID type="OCoLC">35028055</xc:recordID>
         <xc:recordID type="NRU">1564330</xc:recordID>
@@ -77,7 +77,7 @@
         <xc:typeLeader06>Language material</xc:typeLeader06>
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/133</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/134</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

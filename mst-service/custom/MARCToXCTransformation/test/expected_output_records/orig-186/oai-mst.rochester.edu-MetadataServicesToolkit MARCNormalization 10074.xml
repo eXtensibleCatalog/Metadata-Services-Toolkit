@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/277</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/278</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:75</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/277">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/278">
         <rdvocab:titleOfWork>Stephane Grappelli</rdvocab:titleOfWork>
         <dcterms:abstract>Stéphane Grappelli tells his own story of a 77-year career. Contains all known film footage of Django Reinhardt including 7 minutes of the Hot Club Quintet of France.</dcterms:abstract>
         <xc:subject xsi:type="dcterms:LCSH">Grappelli, Stéphane.</xc:subject>
@@ -26,7 +26,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/278</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/279</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:75</predecessor>
@@ -34,7 +34,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/278">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/279">
         <xc:titleOfExpression>Stephane Grappelli</xc:titleOfExpression>
         <dcterms:requires>DVD, Dolby digital stereo.</dcterms:requires>
         <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
@@ -43,14 +43,14 @@
         <xc:contributor>Balmer, Paul.</xc:contributor>
         <rdarole:performer>Grappelli, Stéphane.</rdarole:performer>
         <xc:contributor>Reinhardt, Django, 1910-1953.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/277</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/278</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/276</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/277</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:75</predecessor>
@@ -58,7 +58,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/276">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/277">
         <xc:identifier type="UPC">2012066206651</xc:identifier>
         <xc:identifier type="VideoNr">MoE 001</xc:identifier>
         <xc:recordID type="OCoLC">53213246</xc:recordID>
@@ -79,7 +79,7 @@
         <xc:type007>Video recording</xc:type007>
         <xc:typeSMD>Videodisc</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/278</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/279</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

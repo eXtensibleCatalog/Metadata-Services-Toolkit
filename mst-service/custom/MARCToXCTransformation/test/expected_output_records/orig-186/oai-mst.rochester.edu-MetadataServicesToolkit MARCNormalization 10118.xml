@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/387</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/389</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:119</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/387">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/389">
         <dcterms:subject xsi:type="dcterms:DDC">947.086</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:LCC">DK510.32</dcterms:subject>
         <rdvocab:titleOfWork>Encyclopedia of contemporary Russian culture /</rdvocab:titleOfWork>
@@ -26,6 +26,28 @@
 </record>
 <record>
   <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/390</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:119</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/390">
+        <xc:titleOfExpression>Encyclopedia of contemporary Russian culture /</xc:titleOfExpression>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Smorodinskaya, Tatiana, 1961-</xc:contributor>
+        <xc:contributor>Evans-Romaine, Karen.</xc:contributor>
+        <xc:contributor>Goscilo, Helena, 1945-</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/389</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
     <identifier>oai:mst.rochester.edu:marctoxctransformation/388</identifier>
     <datestamp />
     <predecessors>
@@ -34,29 +56,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/388">
-        <xc:titleOfExpression>Encyclopedia of contemporary Russian culture /</xc:titleOfExpression>
-        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
-        <dcterms:language>English</dcterms:language>
-        <xc:contributor>Smorodinskaya, Tatiana, 1961-</xc:contributor>
-        <xc:contributor>Evans-Romaine, Karen.</xc:contributor>
-        <xc:contributor>Goscilo, Helena, 1945-</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/387</xc:workExpressed>
-      </xc:entity>
-    </xc:frbr>
-  </metadata>
-</record>
-<record>
-  <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/386</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:119</predecessor>
-    </predecessors>
-  </header>
-  <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/386">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/388">
         <xc:identifier type="YBP">99818175263</xc:identifier>
         <xc:recordID type="OCoLC">146449285</xc:recordID>
         <xc:recordID type="NRU">3619939</xc:recordID>
@@ -75,7 +75,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">9780415320948</dcterms:identifier>
         <dcterms:identifier type="ISBN">0415320941</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/388</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/390</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

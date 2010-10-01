@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/187</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/188</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:49</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/187">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/188">
         <dcterms:subject xsi:type="dcterms:LCC">TA174</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:LCC">TA174.A1</dcterms:subject>
         <rdarole:author>ACM IEEE Design Automation Conference.</rdarole:author>
@@ -29,7 +29,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/188</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/189</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:49</predecessor>
@@ -37,7 +37,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/188">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/189">
         <xc:titleOfExpression>Proceedings /</xc:titleOfExpression>
         <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
         <dcterms:isReferencedBy dcterms:ISSN="0099-1368">Index to IEEE publications</dcterms:isReferencedBy>
@@ -50,14 +50,14 @@
         <xc:contributor>ACM Special Interest Group on Design Automation.</xc:contributor>
         <xc:contributor>IEEE Computer Society. Design Automation Technical Committee.</xc:contributor>
         <xc:contributor>Electronic Design Automation Companies.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/187</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/188</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/186</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/187</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:49</predecessor>
@@ -65,7 +65,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/186">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/187">
         <xc:recordID type="LCCN">85644294</xc:recordID>
         <xc:identifier type="ISSN">0738-100X</xc:identifier>
         <xc:recordID type="OCoLC">9508687</xc:recordID>
@@ -88,7 +88,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
         <dcterms:issued>1981-1992</dcterms:issued>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/188</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/189</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

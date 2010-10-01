@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/325</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/327</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:95</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/325">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/327">
         <dcterms:subject xsi:type="dcterms:LCC">PZ7.R79835</dcterms:subject>
         <rdarole:author>Rowling, J. K.</rdarole:author>
         <rdvocab:titleOfWork>Harry Potter and the Chamber of Secrets.</rdvocab:titleOfWork>
@@ -32,6 +32,26 @@
 </record>
 <record>
   <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/328</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:95</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/328">
+        <xc:titleOfExpression>Harry Potter and the Chamber of Secrets. German</xc:titleOfExpression>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>German</dcterms:language>
+        <xc:contributor>Fritz, Klaus.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/327</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
     <identifier>oai:mst.rochester.edu:marctoxctransformation/326</identifier>
     <datestamp />
     <predecessors>
@@ -40,27 +60,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/326">
-        <xc:titleOfExpression>Harry Potter and the Chamber of Secrets. German</xc:titleOfExpression>
-        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
-        <dcterms:language>German</dcterms:language>
-        <xc:contributor>Fritz, Klaus.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/325</xc:workExpressed>
-      </xc:entity>
-    </xc:frbr>
-  </metadata>
-</record>
-<record>
-  <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/324</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:95</predecessor>
-    </predecessors>
-  </header>
-  <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/324">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/326">
         <xc:recordID type="OCoLC">45199584</xc:recordID>
         <xc:recordID type="NRU">2768134</xc:recordID>
         <rdvocab:statementOfResponsibilityRelatingToTitle>Joanne K. Rowling ; aus dem Englischen von Klaus Fritz.</rdvocab:statementOfResponsibilityRelatingToTitle>
@@ -75,7 +75,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">3551551685</dcterms:identifier>
         <dcterms:identifier type="ISBN">3551552096</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/326</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/328</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

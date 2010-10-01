@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/191</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/192</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:51</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/191">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/192">
         <dcterms:subject xsi:type="dcterms:LCC">PS3525.I972</dcterms:subject>
         <rdarole:author>Mitchell, Margaret, 1900-1949.</rdarole:author>
         <rdvocab:titleOfWork>Gone with the wind /</rdvocab:titleOfWork>
@@ -27,7 +27,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/192</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/193</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:51</predecessor>
@@ -35,19 +35,19 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/192">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/193">
         <xc:titleOfExpression>Gone with the wind /</xc:titleOfExpression>
         <dcterms:version>Warner Books ed.</dcterms:version>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/191</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/192</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/190</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/191</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:51</predecessor>
@@ -55,7 +55,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/190">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/191">
         <xc:recordID type="OCoLC">28491920</xc:recordID>
         <xc:recordID type="NRU">1694143</xc:recordID>
         <rdvocab:statementOfResponsibilityRelatingToTitle>Margaret Mitchell.</rdvocab:statementOfResponsibilityRelatingToTitle>
@@ -70,7 +70,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0446365386</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/192</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/193</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

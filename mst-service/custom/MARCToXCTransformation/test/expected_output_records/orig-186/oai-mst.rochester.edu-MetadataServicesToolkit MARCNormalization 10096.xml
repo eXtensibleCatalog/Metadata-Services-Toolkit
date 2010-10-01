@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/331</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/333</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:97</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/331">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/333">
         <rdvocab:titleOfWork>Journal of morphology (Philadelphia, Pa.)</rdvocab:titleOfWork>
         <xc:subject xsi:type="dcterms:LCSH">Morphology (Animals)-Periodicals.</xc:subject>
         <xc:subject xsi:type="dcterms:MESH">Anatomy-Periodicals.</xc:subject>
@@ -26,6 +26,27 @@
 </record>
 <record>
   <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/334</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:97</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/334">
+        <xc:titleOfExpression>Journal of morphology (Philadelphia, Pa.)</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Wistar Institute of Anatomy and Biology.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/333</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
     <identifier>oai:mst.rochester.edu:marctoxctransformation/332</identifier>
     <datestamp />
     <predecessors>
@@ -34,28 +55,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/332">
-        <xc:titleOfExpression>Journal of morphology (Philadelphia, Pa.)</xc:titleOfExpression>
-        <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
-        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
-        <dcterms:language>English</dcterms:language>
-        <xc:contributor>Wistar Institute of Anatomy and Biology.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/331</xc:workExpressed>
-      </xc:entity>
-    </xc:frbr>
-  </metadata>
-</record>
-<record>
-  <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/330</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:97</predecessor>
-    </predecessors>
-  </header>
-  <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/330">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/332">
         <xc:recordID type="LCCN">sn 78005638</xc:recordID>
         <xc:identifier type="ISSN">0362-2525</xc:identifier>
         <xc:identifier type="CODEN">JOMOAT</xc:identifier>
@@ -75,7 +75,7 @@
         <xc:typeLeader06>Language material</xc:typeLeader06>
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/332</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/334</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

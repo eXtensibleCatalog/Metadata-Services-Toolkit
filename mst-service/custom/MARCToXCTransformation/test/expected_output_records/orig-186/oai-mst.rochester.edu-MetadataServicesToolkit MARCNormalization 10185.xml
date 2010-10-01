@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/539</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/543</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:186</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/539">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/543">
         <dcterms:subject xsi:type="dcterms:LCC">PR2801</dcterms:subject>
         <rdarole:author>Zitner, Sheldon P.</rdarole:author>
         <rdvocab:titleOfWork>All's well that ends well /</rdvocab:titleOfWork>
@@ -21,7 +21,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/540</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/544</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:186</predecessor>
@@ -29,18 +29,18 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/540">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/544">
         <xc:titleOfExpression>All's well that ends well /</xc:titleOfExpression>
         <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
         <dcterms:language>English</dcterms:language>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/539</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/543</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/538</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/542</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:186</predecessor>
@@ -48,7 +48,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/538">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/542">
         <xc:recordID type="LCCN">89015525</xc:recordID>
         <xc:recordID type="OCoLC">20016870</xc:recordID>
         <xc:recordID type="NRU">997125</xc:recordID>
@@ -66,7 +66,7 @@
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">0805787186</dcterms:identifier>
         <dcterms:identifier type="ISBN">0805787194</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/540</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/544</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

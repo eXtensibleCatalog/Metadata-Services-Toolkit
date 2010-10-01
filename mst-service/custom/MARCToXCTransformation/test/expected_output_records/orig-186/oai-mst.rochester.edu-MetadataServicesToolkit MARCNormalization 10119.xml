@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/390</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/392</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:120</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/390">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/392">
         <dcterms:subject xsi:type="dcterms:LCC">E184.6</dcterms:subject>
         <rdvocab:titleOfWork>African American newspapers</rdvocab:titleOfWork>
         <dcterms:abstract>Complete texts of major 19th century African American newspapers. Includes first-hand reports of events and issues of the day, as well as biographies, vital statistics, essays and editorials, poetry and prose, and advertisements.</dcterms:abstract>
@@ -28,6 +28,27 @@
 </record>
 <record>
   <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/393</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:120</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/393">
+        <xc:titleOfExpression>African American newspapers</xc:titleOfExpression>
+        <dcterms:requires>Mode of access: World Wide Web.</dcterms:requires>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Accessible Archives.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/392</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
     <identifier>oai:mst.rochester.edu:marctoxctransformation/391</identifier>
     <datestamp />
     <predecessors>
@@ -36,28 +57,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/391">
-        <xc:titleOfExpression>African American newspapers</xc:titleOfExpression>
-        <dcterms:requires>Mode of access: World Wide Web.</dcterms:requires>
-        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
-        <dcterms:language>English</dcterms:language>
-        <xc:contributor>Accessible Archives.</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/390</xc:workExpressed>
-      </xc:entity>
-    </xc:frbr>
-  </metadata>
-</record>
-<record>
-  <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/389</identifier>
-    <datestamp />
-    <predecessors>
-      <predecessor>oai:mst.rochester.edu:120</predecessor>
-    </predecessors>
-  </header>
-  <metadata>
-    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/389">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/391">
         <xc:recordID type="LCCN">2003615712</xc:recordID>
         <xc:recordID type="OCoLC">45453899</xc:recordID>
         <xc:recordID type="NRU">3633121</xc:recordID>
@@ -75,7 +75,7 @@
         <xc:type007>Electronic resource</xc:type007>
         <xc:typeSMD>Remote</xc:typeSMD>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/391</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/393</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>

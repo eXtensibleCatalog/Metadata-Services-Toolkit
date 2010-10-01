@@ -1,7 +1,7 @@
 <records xmlns="http://www.openarchives.org/OAI/2.0/">
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/207</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/208</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:55</predecessor>
@@ -9,7 +9,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/207">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/208">
         <dcterms:subject xsi:type="dcterms:LCC">PR2063.M34</dcterms:subject>
         <dcterms:subject xsi:type="dcterms:DDC">821/.2</dcterms:subject>
         <rdarole:author>Metham, John, fl. 1448.</rdarole:author>
@@ -28,7 +28,7 @@
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/208</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/209</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:55</predecessor>
@@ -36,7 +36,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/208">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/209">
         <xc:titleOfExpression>Amoryus and Cleopes /</xc:titleOfExpression>
         <dcterms:hasFormat>Also available via the Internet.</dcterms:hasFormat>
         <dcterms:hasVersion>http://www.lib.rochester.edu/camelot/teams/page.htm</dcterms:hasVersion>
@@ -44,14 +44,14 @@
         <dcterms:language>English</dcterms:language>
         <dcterms:language>English, Middle (1100-1500)</dcterms:language>
         <xc:contributor>Page, Stephen F., 1951-</xc:contributor>
-        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/207</xc:workExpressed>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/208</xc:workExpressed>
       </xc:entity>
     </xc:frbr>
   </metadata>
 </record>
 <record>
   <header status="active">
-    <identifier>oai:mst.rochester.edu:marctoxctransformation/206</identifier>
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/207</identifier>
     <datestamp />
     <predecessors>
       <predecessor>oai:mst.rochester.edu:55</predecessor>
@@ -59,7 +59,7 @@
   </header>
   <metadata>
     <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/206">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/207">
         <xc:recordID type="LCCN">98031520</xc:recordID>
         <xc:recordID type="OCoLC">39982173</xc:recordID>
         <xc:recordID type="NRU">1781042</xc:recordID>
@@ -76,7 +76,7 @@
         <xc:type007>Text</xc:type007>
         <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
         <dcterms:identifier type="ISBN">1580440169</dcterms:identifier>
-        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/208</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/209</xc:expressionManifested>
       </xc:entity>
     </xc:frbr>
   </metadata>
